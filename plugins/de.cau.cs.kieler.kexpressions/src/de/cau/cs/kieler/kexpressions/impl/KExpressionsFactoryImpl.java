@@ -68,6 +68,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
             case KExpressionsPackage.BOOL_VALUE: return createBoolValue();
             case KExpressionsPackage.STRING_VALUE: return createStringValue();
             case KExpressionsPackage.VECTOR_VALUE: return createVectorValue();
+            case KExpressionsPackage.IGNORE_VALUE: return createIgnoreValue();
             case KExpressionsPackage.OPERATOR_EXPRESSION: return createOperatorExpression();
             case KExpressionsPackage.TEXT_EXPRESSION: return createTextExpression();
             case KExpressionsPackage.VARIABLE_DECLARATION: return createVariableDeclaration();
@@ -294,6 +295,16 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
     public VectorValue createVectorValue() {
         VectorValueImpl vectorValue = new VectorValueImpl();
         return vectorValue;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public IgnoreValue createIgnoreValue() {
+        IgnoreValueImpl ignoreValue = new IgnoreValueImpl();
+        return ignoreValue;
     }
 
     /**

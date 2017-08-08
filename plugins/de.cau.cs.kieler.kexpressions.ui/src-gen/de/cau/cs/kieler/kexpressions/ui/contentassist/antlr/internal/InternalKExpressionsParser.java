@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalKExpressionsParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_BOOLEAN", "RULE_ID", "RULE_INT", "RULE_FLOAT", "RULE_HOSTCODE", "RULE_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_SL_COMMENT_ANNOTATION", "RULE_SL_COMMENT", "RULE_NUMBER", "RULE_WS", "RULE_ANY_OTHER", "'pre'", "'|'", "'&'", "'!'", "'+'", "'-'", "'*'", "'%'", "'/'", "'val'", "'||'", "'&&'", "'()'", "'.'", "'=='", "'<'", "'<='", "'>'", "'>='", "'!='", "'schedule'", "'('", "')'", "'\\''", "'['", "']'", "','", "'extern'", "'@'", "'#'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_BOOLEAN", "RULE_ID", "RULE_INT", "RULE_FLOAT", "RULE_HOSTCODE", "RULE_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_SL_COMMENT_ANNOTATION", "RULE_SL_COMMENT", "RULE_NUMBER", "RULE_WS", "RULE_ANY_OTHER", "'pre'", "'|'", "'&'", "'!'", "'+'", "'-'", "'*'", "'%'", "'/'", "'val'", "'||'", "'&&'", "'()'", "'.'", "'=='", "'<'", "'<='", "'>'", "'>='", "'!='", "'schedule'", "'('", "')'", "'\\''", "'['", "']'", "','", "'extern'", "'_'", "'@'", "'#'"
     };
     public static final int RULE_BOOLEAN=5;
     public static final int T__19=19;
@@ -65,6 +65,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
     public static final int T__45=45;
     public static final int RULE_FLOAT=8;
     public static final int T__46=46;
+    public static final int T__47=47;
     public static final int T__40=40;
     public static final int T__41=41;
     public static final int T__42=42;
@@ -2809,12 +2810,182 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
     // $ANTLR end "ruleVectorValue"
 
 
+    // $ANTLR start "entryRuleVectorValueMember"
+    // InternalKExpressions.g:957:1: entryRuleVectorValueMember : ruleVectorValueMember EOF ;
+    public final void entryRuleVectorValueMember() throws RecognitionException {
+        try {
+            // InternalKExpressions.g:958:1: ( ruleVectorValueMember EOF )
+            // InternalKExpressions.g:959:1: ruleVectorValueMember EOF
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getVectorValueMemberRule()); 
+            }
+            pushFollow(FollowSets000.FOLLOW_1);
+            ruleVectorValueMember();
+
+            state._fsp--;
+            if (state.failed) return ;
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getVectorValueMemberRule()); 
+            }
+            match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+        }
+        return ;
+    }
+    // $ANTLR end "entryRuleVectorValueMember"
+
+
+    // $ANTLR start "ruleVectorValueMember"
+    // InternalKExpressions.g:966:1: ruleVectorValueMember : ( ( rule__VectorValueMember__Alternatives ) ) ;
+    public final void ruleVectorValueMember() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalKExpressions.g:970:2: ( ( ( rule__VectorValueMember__Alternatives ) ) )
+            // InternalKExpressions.g:971:1: ( ( rule__VectorValueMember__Alternatives ) )
+            {
+            // InternalKExpressions.g:971:1: ( ( rule__VectorValueMember__Alternatives ) )
+            // InternalKExpressions.g:972:1: ( rule__VectorValueMember__Alternatives )
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getVectorValueMemberAccess().getAlternatives()); 
+            }
+            // InternalKExpressions.g:973:1: ( rule__VectorValueMember__Alternatives )
+            // InternalKExpressions.g:973:2: rule__VectorValueMember__Alternatives
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__VectorValueMember__Alternatives();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getVectorValueMemberAccess().getAlternatives()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "ruleVectorValueMember"
+
+
+    // $ANTLR start "entryRuleIgnoreValue"
+    // InternalKExpressions.g:985:1: entryRuleIgnoreValue : ruleIgnoreValue EOF ;
+    public final void entryRuleIgnoreValue() throws RecognitionException {
+        try {
+            // InternalKExpressions.g:986:1: ( ruleIgnoreValue EOF )
+            // InternalKExpressions.g:987:1: ruleIgnoreValue EOF
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getIgnoreValueRule()); 
+            }
+            pushFollow(FollowSets000.FOLLOW_1);
+            ruleIgnoreValue();
+
+            state._fsp--;
+            if (state.failed) return ;
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getIgnoreValueRule()); 
+            }
+            match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+        }
+        return ;
+    }
+    // $ANTLR end "entryRuleIgnoreValue"
+
+
+    // $ANTLR start "ruleIgnoreValue"
+    // InternalKExpressions.g:994:1: ruleIgnoreValue : ( ( rule__IgnoreValue__Group__0 ) ) ;
+    public final void ruleIgnoreValue() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalKExpressions.g:998:2: ( ( ( rule__IgnoreValue__Group__0 ) ) )
+            // InternalKExpressions.g:999:1: ( ( rule__IgnoreValue__Group__0 ) )
+            {
+            // InternalKExpressions.g:999:1: ( ( rule__IgnoreValue__Group__0 ) )
+            // InternalKExpressions.g:1000:1: ( rule__IgnoreValue__Group__0 )
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getIgnoreValueAccess().getGroup()); 
+            }
+            // InternalKExpressions.g:1001:1: ( rule__IgnoreValue__Group__0 )
+            // InternalKExpressions.g:1001:2: rule__IgnoreValue__Group__0
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__IgnoreValue__Group__0();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getIgnoreValueAccess().getGroup()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "ruleIgnoreValue"
+
+
     // $ANTLR start "entryRuleCommentAnnotation"
-    // InternalKExpressions.g:971:1: entryRuleCommentAnnotation : ruleCommentAnnotation EOF ;
+    // InternalKExpressions.g:1027:1: entryRuleCommentAnnotation : ruleCommentAnnotation EOF ;
     public final void entryRuleCommentAnnotation() throws RecognitionException {
         try {
-            // InternalKExpressions.g:972:1: ( ruleCommentAnnotation EOF )
-            // InternalKExpressions.g:973:1: ruleCommentAnnotation EOF
+            // InternalKExpressions.g:1028:1: ( ruleCommentAnnotation EOF )
+            // InternalKExpressions.g:1029:1: ruleCommentAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCommentAnnotationRule()); 
@@ -2844,23 +3015,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "ruleCommentAnnotation"
-    // InternalKExpressions.g:980:1: ruleCommentAnnotation : ( ( rule__CommentAnnotation__ValuesAssignment ) ) ;
+    // InternalKExpressions.g:1036:1: ruleCommentAnnotation : ( ( rule__CommentAnnotation__ValuesAssignment ) ) ;
     public final void ruleCommentAnnotation() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:984:2: ( ( ( rule__CommentAnnotation__ValuesAssignment ) ) )
-            // InternalKExpressions.g:985:1: ( ( rule__CommentAnnotation__ValuesAssignment ) )
+            // InternalKExpressions.g:1040:2: ( ( ( rule__CommentAnnotation__ValuesAssignment ) ) )
+            // InternalKExpressions.g:1041:1: ( ( rule__CommentAnnotation__ValuesAssignment ) )
             {
-            // InternalKExpressions.g:985:1: ( ( rule__CommentAnnotation__ValuesAssignment ) )
-            // InternalKExpressions.g:986:1: ( rule__CommentAnnotation__ValuesAssignment )
+            // InternalKExpressions.g:1041:1: ( ( rule__CommentAnnotation__ValuesAssignment ) )
+            // InternalKExpressions.g:1042:1: ( rule__CommentAnnotation__ValuesAssignment )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCommentAnnotationAccess().getValuesAssignment()); 
             }
-            // InternalKExpressions.g:987:1: ( rule__CommentAnnotation__ValuesAssignment )
-            // InternalKExpressions.g:987:2: rule__CommentAnnotation__ValuesAssignment
+            // InternalKExpressions.g:1043:1: ( rule__CommentAnnotation__ValuesAssignment )
+            // InternalKExpressions.g:1043:2: rule__CommentAnnotation__ValuesAssignment
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__CommentAnnotation__ValuesAssignment();
@@ -2895,11 +3066,11 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "entryRuleTagAnnotation"
-    // InternalKExpressions.g:1001:1: entryRuleTagAnnotation : ruleTagAnnotation EOF ;
+    // InternalKExpressions.g:1057:1: entryRuleTagAnnotation : ruleTagAnnotation EOF ;
     public final void entryRuleTagAnnotation() throws RecognitionException {
         try {
-            // InternalKExpressions.g:1002:1: ( ruleTagAnnotation EOF )
-            // InternalKExpressions.g:1003:1: ruleTagAnnotation EOF
+            // InternalKExpressions.g:1058:1: ( ruleTagAnnotation EOF )
+            // InternalKExpressions.g:1059:1: ruleTagAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTagAnnotationRule()); 
@@ -2929,23 +3100,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "ruleTagAnnotation"
-    // InternalKExpressions.g:1010:1: ruleTagAnnotation : ( ( rule__TagAnnotation__Group__0 ) ) ;
+    // InternalKExpressions.g:1066:1: ruleTagAnnotation : ( ( rule__TagAnnotation__Group__0 ) ) ;
     public final void ruleTagAnnotation() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1014:2: ( ( ( rule__TagAnnotation__Group__0 ) ) )
-            // InternalKExpressions.g:1015:1: ( ( rule__TagAnnotation__Group__0 ) )
+            // InternalKExpressions.g:1070:2: ( ( ( rule__TagAnnotation__Group__0 ) ) )
+            // InternalKExpressions.g:1071:1: ( ( rule__TagAnnotation__Group__0 ) )
             {
-            // InternalKExpressions.g:1015:1: ( ( rule__TagAnnotation__Group__0 ) )
-            // InternalKExpressions.g:1016:1: ( rule__TagAnnotation__Group__0 )
+            // InternalKExpressions.g:1071:1: ( ( rule__TagAnnotation__Group__0 ) )
+            // InternalKExpressions.g:1072:1: ( rule__TagAnnotation__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTagAnnotationAccess().getGroup()); 
             }
-            // InternalKExpressions.g:1017:1: ( rule__TagAnnotation__Group__0 )
-            // InternalKExpressions.g:1017:2: rule__TagAnnotation__Group__0
+            // InternalKExpressions.g:1073:1: ( rule__TagAnnotation__Group__0 )
+            // InternalKExpressions.g:1073:2: rule__TagAnnotation__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TagAnnotation__Group__0();
@@ -2980,11 +3151,11 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "entryRulePragmaTag"
-    // InternalKExpressions.g:1029:1: entryRulePragmaTag : rulePragmaTag EOF ;
+    // InternalKExpressions.g:1085:1: entryRulePragmaTag : rulePragmaTag EOF ;
     public final void entryRulePragmaTag() throws RecognitionException {
         try {
-            // InternalKExpressions.g:1030:1: ( rulePragmaTag EOF )
-            // InternalKExpressions.g:1031:1: rulePragmaTag EOF
+            // InternalKExpressions.g:1086:1: ( rulePragmaTag EOF )
+            // InternalKExpressions.g:1087:1: rulePragmaTag EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPragmaTagRule()); 
@@ -3014,23 +3185,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rulePragmaTag"
-    // InternalKExpressions.g:1038:1: rulePragmaTag : ( ( rule__PragmaTag__Group__0 ) ) ;
+    // InternalKExpressions.g:1094:1: rulePragmaTag : ( ( rule__PragmaTag__Group__0 ) ) ;
     public final void rulePragmaTag() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1042:2: ( ( ( rule__PragmaTag__Group__0 ) ) )
-            // InternalKExpressions.g:1043:1: ( ( rule__PragmaTag__Group__0 ) )
+            // InternalKExpressions.g:1098:2: ( ( ( rule__PragmaTag__Group__0 ) ) )
+            // InternalKExpressions.g:1099:1: ( ( rule__PragmaTag__Group__0 ) )
             {
-            // InternalKExpressions.g:1043:1: ( ( rule__PragmaTag__Group__0 ) )
-            // InternalKExpressions.g:1044:1: ( rule__PragmaTag__Group__0 )
+            // InternalKExpressions.g:1099:1: ( ( rule__PragmaTag__Group__0 ) )
+            // InternalKExpressions.g:1100:1: ( rule__PragmaTag__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPragmaTagAccess().getGroup()); 
             }
-            // InternalKExpressions.g:1045:1: ( rule__PragmaTag__Group__0 )
-            // InternalKExpressions.g:1045:2: rule__PragmaTag__Group__0
+            // InternalKExpressions.g:1101:1: ( rule__PragmaTag__Group__0 )
+            // InternalKExpressions.g:1101:2: rule__PragmaTag__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__PragmaTag__Group__0();
@@ -3065,11 +3236,11 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "entryRuleKeyStringValueAnnotation"
-    // InternalKExpressions.g:1057:1: entryRuleKeyStringValueAnnotation : ruleKeyStringValueAnnotation EOF ;
+    // InternalKExpressions.g:1113:1: entryRuleKeyStringValueAnnotation : ruleKeyStringValueAnnotation EOF ;
     public final void entryRuleKeyStringValueAnnotation() throws RecognitionException {
         try {
-            // InternalKExpressions.g:1058:1: ( ruleKeyStringValueAnnotation EOF )
-            // InternalKExpressions.g:1059:1: ruleKeyStringValueAnnotation EOF
+            // InternalKExpressions.g:1114:1: ( ruleKeyStringValueAnnotation EOF )
+            // InternalKExpressions.g:1115:1: ruleKeyStringValueAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationRule()); 
@@ -3099,23 +3270,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "ruleKeyStringValueAnnotation"
-    // InternalKExpressions.g:1066:1: ruleKeyStringValueAnnotation : ( ( rule__KeyStringValueAnnotation__Group__0 ) ) ;
+    // InternalKExpressions.g:1122:1: ruleKeyStringValueAnnotation : ( ( rule__KeyStringValueAnnotation__Group__0 ) ) ;
     public final void ruleKeyStringValueAnnotation() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1070:2: ( ( ( rule__KeyStringValueAnnotation__Group__0 ) ) )
-            // InternalKExpressions.g:1071:1: ( ( rule__KeyStringValueAnnotation__Group__0 ) )
+            // InternalKExpressions.g:1126:2: ( ( ( rule__KeyStringValueAnnotation__Group__0 ) ) )
+            // InternalKExpressions.g:1127:1: ( ( rule__KeyStringValueAnnotation__Group__0 ) )
             {
-            // InternalKExpressions.g:1071:1: ( ( rule__KeyStringValueAnnotation__Group__0 ) )
-            // InternalKExpressions.g:1072:1: ( rule__KeyStringValueAnnotation__Group__0 )
+            // InternalKExpressions.g:1127:1: ( ( rule__KeyStringValueAnnotation__Group__0 ) )
+            // InternalKExpressions.g:1128:1: ( rule__KeyStringValueAnnotation__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getGroup()); 
             }
-            // InternalKExpressions.g:1073:1: ( rule__KeyStringValueAnnotation__Group__0 )
-            // InternalKExpressions.g:1073:2: rule__KeyStringValueAnnotation__Group__0
+            // InternalKExpressions.g:1129:1: ( rule__KeyStringValueAnnotation__Group__0 )
+            // InternalKExpressions.g:1129:2: rule__KeyStringValueAnnotation__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__KeyStringValueAnnotation__Group__0();
@@ -3150,11 +3321,11 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "entryRuleRestrictedKeyStringValueAnnotation"
-    // InternalKExpressions.g:1085:1: entryRuleRestrictedKeyStringValueAnnotation : ruleRestrictedKeyStringValueAnnotation EOF ;
+    // InternalKExpressions.g:1141:1: entryRuleRestrictedKeyStringValueAnnotation : ruleRestrictedKeyStringValueAnnotation EOF ;
     public final void entryRuleRestrictedKeyStringValueAnnotation() throws RecognitionException {
         try {
-            // InternalKExpressions.g:1086:1: ( ruleRestrictedKeyStringValueAnnotation EOF )
-            // InternalKExpressions.g:1087:1: ruleRestrictedKeyStringValueAnnotation EOF
+            // InternalKExpressions.g:1142:1: ( ruleRestrictedKeyStringValueAnnotation EOF )
+            // InternalKExpressions.g:1143:1: ruleRestrictedKeyStringValueAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedKeyStringValueAnnotationRule()); 
@@ -3184,23 +3355,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "ruleRestrictedKeyStringValueAnnotation"
-    // InternalKExpressions.g:1094:1: ruleRestrictedKeyStringValueAnnotation : ( ( rule__RestrictedKeyStringValueAnnotation__Group__0 ) ) ;
+    // InternalKExpressions.g:1150:1: ruleRestrictedKeyStringValueAnnotation : ( ( rule__RestrictedKeyStringValueAnnotation__Group__0 ) ) ;
     public final void ruleRestrictedKeyStringValueAnnotation() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1098:2: ( ( ( rule__RestrictedKeyStringValueAnnotation__Group__0 ) ) )
-            // InternalKExpressions.g:1099:1: ( ( rule__RestrictedKeyStringValueAnnotation__Group__0 ) )
+            // InternalKExpressions.g:1154:2: ( ( ( rule__RestrictedKeyStringValueAnnotation__Group__0 ) ) )
+            // InternalKExpressions.g:1155:1: ( ( rule__RestrictedKeyStringValueAnnotation__Group__0 ) )
             {
-            // InternalKExpressions.g:1099:1: ( ( rule__RestrictedKeyStringValueAnnotation__Group__0 ) )
-            // InternalKExpressions.g:1100:1: ( rule__RestrictedKeyStringValueAnnotation__Group__0 )
+            // InternalKExpressions.g:1155:1: ( ( rule__RestrictedKeyStringValueAnnotation__Group__0 ) )
+            // InternalKExpressions.g:1156:1: ( rule__RestrictedKeyStringValueAnnotation__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getGroup()); 
             }
-            // InternalKExpressions.g:1101:1: ( rule__RestrictedKeyStringValueAnnotation__Group__0 )
-            // InternalKExpressions.g:1101:2: rule__RestrictedKeyStringValueAnnotation__Group__0
+            // InternalKExpressions.g:1157:1: ( rule__RestrictedKeyStringValueAnnotation__Group__0 )
+            // InternalKExpressions.g:1157:2: rule__RestrictedKeyStringValueAnnotation__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RestrictedKeyStringValueAnnotation__Group__0();
@@ -3235,11 +3406,11 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "entryRuleStringPragma"
-    // InternalKExpressions.g:1113:1: entryRuleStringPragma : ruleStringPragma EOF ;
+    // InternalKExpressions.g:1169:1: entryRuleStringPragma : ruleStringPragma EOF ;
     public final void entryRuleStringPragma() throws RecognitionException {
         try {
-            // InternalKExpressions.g:1114:1: ( ruleStringPragma EOF )
-            // InternalKExpressions.g:1115:1: ruleStringPragma EOF
+            // InternalKExpressions.g:1170:1: ( ruleStringPragma EOF )
+            // InternalKExpressions.g:1171:1: ruleStringPragma EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringPragmaRule()); 
@@ -3269,23 +3440,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "ruleStringPragma"
-    // InternalKExpressions.g:1122:1: ruleStringPragma : ( ( rule__StringPragma__Group__0 ) ) ;
+    // InternalKExpressions.g:1178:1: ruleStringPragma : ( ( rule__StringPragma__Group__0 ) ) ;
     public final void ruleStringPragma() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1126:2: ( ( ( rule__StringPragma__Group__0 ) ) )
-            // InternalKExpressions.g:1127:1: ( ( rule__StringPragma__Group__0 ) )
+            // InternalKExpressions.g:1182:2: ( ( ( rule__StringPragma__Group__0 ) ) )
+            // InternalKExpressions.g:1183:1: ( ( rule__StringPragma__Group__0 ) )
             {
-            // InternalKExpressions.g:1127:1: ( ( rule__StringPragma__Group__0 ) )
-            // InternalKExpressions.g:1128:1: ( rule__StringPragma__Group__0 )
+            // InternalKExpressions.g:1183:1: ( ( rule__StringPragma__Group__0 ) )
+            // InternalKExpressions.g:1184:1: ( rule__StringPragma__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringPragmaAccess().getGroup()); 
             }
-            // InternalKExpressions.g:1129:1: ( rule__StringPragma__Group__0 )
-            // InternalKExpressions.g:1129:2: rule__StringPragma__Group__0
+            // InternalKExpressions.g:1185:1: ( rule__StringPragma__Group__0 )
+            // InternalKExpressions.g:1185:2: rule__StringPragma__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__StringPragma__Group__0();
@@ -3320,11 +3491,11 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "entryRuleTypedKeyStringValueAnnotation"
-    // InternalKExpressions.g:1141:1: entryRuleTypedKeyStringValueAnnotation : ruleTypedKeyStringValueAnnotation EOF ;
+    // InternalKExpressions.g:1197:1: entryRuleTypedKeyStringValueAnnotation : ruleTypedKeyStringValueAnnotation EOF ;
     public final void entryRuleTypedKeyStringValueAnnotation() throws RecognitionException {
         try {
-            // InternalKExpressions.g:1142:1: ( ruleTypedKeyStringValueAnnotation EOF )
-            // InternalKExpressions.g:1143:1: ruleTypedKeyStringValueAnnotation EOF
+            // InternalKExpressions.g:1198:1: ( ruleTypedKeyStringValueAnnotation EOF )
+            // InternalKExpressions.g:1199:1: ruleTypedKeyStringValueAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationRule()); 
@@ -3354,23 +3525,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "ruleTypedKeyStringValueAnnotation"
-    // InternalKExpressions.g:1150:1: ruleTypedKeyStringValueAnnotation : ( ( rule__TypedKeyStringValueAnnotation__Group__0 ) ) ;
+    // InternalKExpressions.g:1206:1: ruleTypedKeyStringValueAnnotation : ( ( rule__TypedKeyStringValueAnnotation__Group__0 ) ) ;
     public final void ruleTypedKeyStringValueAnnotation() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1154:2: ( ( ( rule__TypedKeyStringValueAnnotation__Group__0 ) ) )
-            // InternalKExpressions.g:1155:1: ( ( rule__TypedKeyStringValueAnnotation__Group__0 ) )
+            // InternalKExpressions.g:1210:2: ( ( ( rule__TypedKeyStringValueAnnotation__Group__0 ) ) )
+            // InternalKExpressions.g:1211:1: ( ( rule__TypedKeyStringValueAnnotation__Group__0 ) )
             {
-            // InternalKExpressions.g:1155:1: ( ( rule__TypedKeyStringValueAnnotation__Group__0 ) )
-            // InternalKExpressions.g:1156:1: ( rule__TypedKeyStringValueAnnotation__Group__0 )
+            // InternalKExpressions.g:1211:1: ( ( rule__TypedKeyStringValueAnnotation__Group__0 ) )
+            // InternalKExpressions.g:1212:1: ( rule__TypedKeyStringValueAnnotation__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getGroup()); 
             }
-            // InternalKExpressions.g:1157:1: ( rule__TypedKeyStringValueAnnotation__Group__0 )
-            // InternalKExpressions.g:1157:2: rule__TypedKeyStringValueAnnotation__Group__0
+            // InternalKExpressions.g:1213:1: ( rule__TypedKeyStringValueAnnotation__Group__0 )
+            // InternalKExpressions.g:1213:2: rule__TypedKeyStringValueAnnotation__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TypedKeyStringValueAnnotation__Group__0();
@@ -3405,11 +3576,11 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "entryRuleRestrictedTypedKeyStringValueAnnotation"
-    // InternalKExpressions.g:1169:1: entryRuleRestrictedTypedKeyStringValueAnnotation : ruleRestrictedTypedKeyStringValueAnnotation EOF ;
+    // InternalKExpressions.g:1225:1: entryRuleRestrictedTypedKeyStringValueAnnotation : ruleRestrictedTypedKeyStringValueAnnotation EOF ;
     public final void entryRuleRestrictedTypedKeyStringValueAnnotation() throws RecognitionException {
         try {
-            // InternalKExpressions.g:1170:1: ( ruleRestrictedTypedKeyStringValueAnnotation EOF )
-            // InternalKExpressions.g:1171:1: ruleRestrictedTypedKeyStringValueAnnotation EOF
+            // InternalKExpressions.g:1226:1: ( ruleRestrictedTypedKeyStringValueAnnotation EOF )
+            // InternalKExpressions.g:1227:1: ruleRestrictedTypedKeyStringValueAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule()); 
@@ -3439,23 +3610,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "ruleRestrictedTypedKeyStringValueAnnotation"
-    // InternalKExpressions.g:1178:1: ruleRestrictedTypedKeyStringValueAnnotation : ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group__0 ) ) ;
+    // InternalKExpressions.g:1234:1: ruleRestrictedTypedKeyStringValueAnnotation : ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group__0 ) ) ;
     public final void ruleRestrictedTypedKeyStringValueAnnotation() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1182:2: ( ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group__0 ) ) )
-            // InternalKExpressions.g:1183:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group__0 ) )
+            // InternalKExpressions.g:1238:2: ( ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group__0 ) ) )
+            // InternalKExpressions.g:1239:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group__0 ) )
             {
-            // InternalKExpressions.g:1183:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group__0 ) )
-            // InternalKExpressions.g:1184:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__0 )
+            // InternalKExpressions.g:1239:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group__0 ) )
+            // InternalKExpressions.g:1240:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getGroup()); 
             }
-            // InternalKExpressions.g:1185:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__0 )
-            // InternalKExpressions.g:1185:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__0
+            // InternalKExpressions.g:1241:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__0 )
+            // InternalKExpressions.g:1241:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__0();
@@ -3490,11 +3661,11 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "entryRuleQuotedKeyStringValueAnnotation"
-    // InternalKExpressions.g:1197:1: entryRuleQuotedKeyStringValueAnnotation : ruleQuotedKeyStringValueAnnotation EOF ;
+    // InternalKExpressions.g:1253:1: entryRuleQuotedKeyStringValueAnnotation : ruleQuotedKeyStringValueAnnotation EOF ;
     public final void entryRuleQuotedKeyStringValueAnnotation() throws RecognitionException {
         try {
-            // InternalKExpressions.g:1198:1: ( ruleQuotedKeyStringValueAnnotation EOF )
-            // InternalKExpressions.g:1199:1: ruleQuotedKeyStringValueAnnotation EOF
+            // InternalKExpressions.g:1254:1: ( ruleQuotedKeyStringValueAnnotation EOF )
+            // InternalKExpressions.g:1255:1: ruleQuotedKeyStringValueAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedKeyStringValueAnnotationRule()); 
@@ -3524,23 +3695,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "ruleQuotedKeyStringValueAnnotation"
-    // InternalKExpressions.g:1206:1: ruleQuotedKeyStringValueAnnotation : ( ( rule__QuotedKeyStringValueAnnotation__Group__0 ) ) ;
+    // InternalKExpressions.g:1262:1: ruleQuotedKeyStringValueAnnotation : ( ( rule__QuotedKeyStringValueAnnotation__Group__0 ) ) ;
     public final void ruleQuotedKeyStringValueAnnotation() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1210:2: ( ( ( rule__QuotedKeyStringValueAnnotation__Group__0 ) ) )
-            // InternalKExpressions.g:1211:1: ( ( rule__QuotedKeyStringValueAnnotation__Group__0 ) )
+            // InternalKExpressions.g:1266:2: ( ( ( rule__QuotedKeyStringValueAnnotation__Group__0 ) ) )
+            // InternalKExpressions.g:1267:1: ( ( rule__QuotedKeyStringValueAnnotation__Group__0 ) )
             {
-            // InternalKExpressions.g:1211:1: ( ( rule__QuotedKeyStringValueAnnotation__Group__0 ) )
-            // InternalKExpressions.g:1212:1: ( rule__QuotedKeyStringValueAnnotation__Group__0 )
+            // InternalKExpressions.g:1267:1: ( ( rule__QuotedKeyStringValueAnnotation__Group__0 ) )
+            // InternalKExpressions.g:1268:1: ( rule__QuotedKeyStringValueAnnotation__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getGroup()); 
             }
-            // InternalKExpressions.g:1213:1: ( rule__QuotedKeyStringValueAnnotation__Group__0 )
-            // InternalKExpressions.g:1213:2: rule__QuotedKeyStringValueAnnotation__Group__0
+            // InternalKExpressions.g:1269:1: ( rule__QuotedKeyStringValueAnnotation__Group__0 )
+            // InternalKExpressions.g:1269:2: rule__QuotedKeyStringValueAnnotation__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedKeyStringValueAnnotation__Group__0();
@@ -3575,11 +3746,11 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "entryRuleQuotedTypedKeyStringValueAnnotation"
-    // InternalKExpressions.g:1225:1: entryRuleQuotedTypedKeyStringValueAnnotation : ruleQuotedTypedKeyStringValueAnnotation EOF ;
+    // InternalKExpressions.g:1281:1: entryRuleQuotedTypedKeyStringValueAnnotation : ruleQuotedTypedKeyStringValueAnnotation EOF ;
     public final void entryRuleQuotedTypedKeyStringValueAnnotation() throws RecognitionException {
         try {
-            // InternalKExpressions.g:1226:1: ( ruleQuotedTypedKeyStringValueAnnotation EOF )
-            // InternalKExpressions.g:1227:1: ruleQuotedTypedKeyStringValueAnnotation EOF
+            // InternalKExpressions.g:1282:1: ( ruleQuotedTypedKeyStringValueAnnotation EOF )
+            // InternalKExpressions.g:1283:1: ruleQuotedTypedKeyStringValueAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule()); 
@@ -3609,23 +3780,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "ruleQuotedTypedKeyStringValueAnnotation"
-    // InternalKExpressions.g:1234:1: ruleQuotedTypedKeyStringValueAnnotation : ( ( rule__QuotedTypedKeyStringValueAnnotation__Group__0 ) ) ;
+    // InternalKExpressions.g:1290:1: ruleQuotedTypedKeyStringValueAnnotation : ( ( rule__QuotedTypedKeyStringValueAnnotation__Group__0 ) ) ;
     public final void ruleQuotedTypedKeyStringValueAnnotation() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1238:2: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__Group__0 ) ) )
-            // InternalKExpressions.g:1239:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__Group__0 ) )
+            // InternalKExpressions.g:1294:2: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__Group__0 ) ) )
+            // InternalKExpressions.g:1295:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__Group__0 ) )
             {
-            // InternalKExpressions.g:1239:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__Group__0 ) )
-            // InternalKExpressions.g:1240:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__0 )
+            // InternalKExpressions.g:1295:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__Group__0 ) )
+            // InternalKExpressions.g:1296:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getGroup()); 
             }
-            // InternalKExpressions.g:1241:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__0 )
-            // InternalKExpressions.g:1241:2: rule__QuotedTypedKeyStringValueAnnotation__Group__0
+            // InternalKExpressions.g:1297:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__0 )
+            // InternalKExpressions.g:1297:2: rule__QuotedTypedKeyStringValueAnnotation__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedTypedKeyStringValueAnnotation__Group__0();
@@ -3660,11 +3831,11 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "entryRuleEStringBoolean"
-    // InternalKExpressions.g:1255:1: entryRuleEStringBoolean : ruleEStringBoolean EOF ;
+    // InternalKExpressions.g:1311:1: entryRuleEStringBoolean : ruleEStringBoolean EOF ;
     public final void entryRuleEStringBoolean() throws RecognitionException {
         try {
-            // InternalKExpressions.g:1256:1: ( ruleEStringBoolean EOF )
-            // InternalKExpressions.g:1257:1: ruleEStringBoolean EOF
+            // InternalKExpressions.g:1312:1: ( ruleEStringBoolean EOF )
+            // InternalKExpressions.g:1313:1: ruleEStringBoolean EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEStringBooleanRule()); 
@@ -3694,23 +3865,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "ruleEStringBoolean"
-    // InternalKExpressions.g:1264:1: ruleEStringBoolean : ( ( rule__EStringBoolean__Alternatives ) ) ;
+    // InternalKExpressions.g:1320:1: ruleEStringBoolean : ( ( rule__EStringBoolean__Alternatives ) ) ;
     public final void ruleEStringBoolean() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1268:2: ( ( ( rule__EStringBoolean__Alternatives ) ) )
-            // InternalKExpressions.g:1269:1: ( ( rule__EStringBoolean__Alternatives ) )
+            // InternalKExpressions.g:1324:2: ( ( ( rule__EStringBoolean__Alternatives ) ) )
+            // InternalKExpressions.g:1325:1: ( ( rule__EStringBoolean__Alternatives ) )
             {
-            // InternalKExpressions.g:1269:1: ( ( rule__EStringBoolean__Alternatives ) )
-            // InternalKExpressions.g:1270:1: ( rule__EStringBoolean__Alternatives )
+            // InternalKExpressions.g:1325:1: ( ( rule__EStringBoolean__Alternatives ) )
+            // InternalKExpressions.g:1326:1: ( rule__EStringBoolean__Alternatives )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEStringBooleanAccess().getAlternatives()); 
             }
-            // InternalKExpressions.g:1271:1: ( rule__EStringBoolean__Alternatives )
-            // InternalKExpressions.g:1271:2: rule__EStringBoolean__Alternatives
+            // InternalKExpressions.g:1327:1: ( rule__EStringBoolean__Alternatives )
+            // InternalKExpressions.g:1327:2: rule__EStringBoolean__Alternatives
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__EStringBoolean__Alternatives();
@@ -3745,11 +3916,11 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "entryRuleEStringAllTypes"
-    // InternalKExpressions.g:1283:1: entryRuleEStringAllTypes : ruleEStringAllTypes EOF ;
+    // InternalKExpressions.g:1339:1: entryRuleEStringAllTypes : ruleEStringAllTypes EOF ;
     public final void entryRuleEStringAllTypes() throws RecognitionException {
         try {
-            // InternalKExpressions.g:1284:1: ( ruleEStringAllTypes EOF )
-            // InternalKExpressions.g:1285:1: ruleEStringAllTypes EOF
+            // InternalKExpressions.g:1340:1: ( ruleEStringAllTypes EOF )
+            // InternalKExpressions.g:1341:1: ruleEStringAllTypes EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEStringAllTypesRule()); 
@@ -3779,23 +3950,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "ruleEStringAllTypes"
-    // InternalKExpressions.g:1292:1: ruleEStringAllTypes : ( ( rule__EStringAllTypes__Alternatives ) ) ;
+    // InternalKExpressions.g:1348:1: ruleEStringAllTypes : ( ( rule__EStringAllTypes__Alternatives ) ) ;
     public final void ruleEStringAllTypes() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1296:2: ( ( ( rule__EStringAllTypes__Alternatives ) ) )
-            // InternalKExpressions.g:1297:1: ( ( rule__EStringAllTypes__Alternatives ) )
+            // InternalKExpressions.g:1352:2: ( ( ( rule__EStringAllTypes__Alternatives ) ) )
+            // InternalKExpressions.g:1353:1: ( ( rule__EStringAllTypes__Alternatives ) )
             {
-            // InternalKExpressions.g:1297:1: ( ( rule__EStringAllTypes__Alternatives ) )
-            // InternalKExpressions.g:1298:1: ( rule__EStringAllTypes__Alternatives )
+            // InternalKExpressions.g:1353:1: ( ( rule__EStringAllTypes__Alternatives ) )
+            // InternalKExpressions.g:1354:1: ( rule__EStringAllTypes__Alternatives )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEStringAllTypesAccess().getAlternatives()); 
             }
-            // InternalKExpressions.g:1299:1: ( rule__EStringAllTypes__Alternatives )
-            // InternalKExpressions.g:1299:2: rule__EStringAllTypes__Alternatives
+            // InternalKExpressions.g:1355:1: ( rule__EStringAllTypes__Alternatives )
+            // InternalKExpressions.g:1355:2: rule__EStringAllTypes__Alternatives
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__EStringAllTypes__Alternatives();
@@ -3830,11 +4001,11 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "entryRuleExtendedID"
-    // InternalKExpressions.g:1311:1: entryRuleExtendedID : ruleExtendedID EOF ;
+    // InternalKExpressions.g:1367:1: entryRuleExtendedID : ruleExtendedID EOF ;
     public final void entryRuleExtendedID() throws RecognitionException {
         try {
-            // InternalKExpressions.g:1312:1: ( ruleExtendedID EOF )
-            // InternalKExpressions.g:1313:1: ruleExtendedID EOF
+            // InternalKExpressions.g:1368:1: ( ruleExtendedID EOF )
+            // InternalKExpressions.g:1369:1: ruleExtendedID EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExtendedIDRule()); 
@@ -3864,23 +4035,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "ruleExtendedID"
-    // InternalKExpressions.g:1320:1: ruleExtendedID : ( ( rule__ExtendedID__Group__0 ) ) ;
+    // InternalKExpressions.g:1376:1: ruleExtendedID : ( ( rule__ExtendedID__Group__0 ) ) ;
     public final void ruleExtendedID() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1324:2: ( ( ( rule__ExtendedID__Group__0 ) ) )
-            // InternalKExpressions.g:1325:1: ( ( rule__ExtendedID__Group__0 ) )
+            // InternalKExpressions.g:1380:2: ( ( ( rule__ExtendedID__Group__0 ) ) )
+            // InternalKExpressions.g:1381:1: ( ( rule__ExtendedID__Group__0 ) )
             {
-            // InternalKExpressions.g:1325:1: ( ( rule__ExtendedID__Group__0 ) )
-            // InternalKExpressions.g:1326:1: ( rule__ExtendedID__Group__0 )
+            // InternalKExpressions.g:1381:1: ( ( rule__ExtendedID__Group__0 ) )
+            // InternalKExpressions.g:1382:1: ( rule__ExtendedID__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExtendedIDAccess().getGroup()); 
             }
-            // InternalKExpressions.g:1327:1: ( rule__ExtendedID__Group__0 )
-            // InternalKExpressions.g:1327:2: rule__ExtendedID__Group__0
+            // InternalKExpressions.g:1383:1: ( rule__ExtendedID__Group__0 )
+            // InternalKExpressions.g:1383:2: rule__ExtendedID__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ExtendedID__Group__0();
@@ -3915,11 +4086,11 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "entryRuleInteger"
-    // InternalKExpressions.g:1341:1: entryRuleInteger : ruleInteger EOF ;
+    // InternalKExpressions.g:1397:1: entryRuleInteger : ruleInteger EOF ;
     public final void entryRuleInteger() throws RecognitionException {
         try {
-            // InternalKExpressions.g:1342:1: ( ruleInteger EOF )
-            // InternalKExpressions.g:1343:1: ruleInteger EOF
+            // InternalKExpressions.g:1398:1: ( ruleInteger EOF )
+            // InternalKExpressions.g:1399:1: ruleInteger EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIntegerRule()); 
@@ -3949,23 +4120,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "ruleInteger"
-    // InternalKExpressions.g:1350:1: ruleInteger : ( ( rule__Integer__Group__0 ) ) ;
+    // InternalKExpressions.g:1406:1: ruleInteger : ( ( rule__Integer__Group__0 ) ) ;
     public final void ruleInteger() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1354:2: ( ( ( rule__Integer__Group__0 ) ) )
-            // InternalKExpressions.g:1355:1: ( ( rule__Integer__Group__0 ) )
+            // InternalKExpressions.g:1410:2: ( ( ( rule__Integer__Group__0 ) ) )
+            // InternalKExpressions.g:1411:1: ( ( rule__Integer__Group__0 ) )
             {
-            // InternalKExpressions.g:1355:1: ( ( rule__Integer__Group__0 ) )
-            // InternalKExpressions.g:1356:1: ( rule__Integer__Group__0 )
+            // InternalKExpressions.g:1411:1: ( ( rule__Integer__Group__0 ) )
+            // InternalKExpressions.g:1412:1: ( rule__Integer__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIntegerAccess().getGroup()); 
             }
-            // InternalKExpressions.g:1357:1: ( rule__Integer__Group__0 )
-            // InternalKExpressions.g:1357:2: rule__Integer__Group__0
+            // InternalKExpressions.g:1413:1: ( rule__Integer__Group__0 )
+            // InternalKExpressions.g:1413:2: rule__Integer__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Integer__Group__0();
@@ -4000,11 +4171,11 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "entryRuleFloateger"
-    // InternalKExpressions.g:1369:1: entryRuleFloateger : ruleFloateger EOF ;
+    // InternalKExpressions.g:1425:1: entryRuleFloateger : ruleFloateger EOF ;
     public final void entryRuleFloateger() throws RecognitionException {
         try {
-            // InternalKExpressions.g:1370:1: ( ruleFloateger EOF )
-            // InternalKExpressions.g:1371:1: ruleFloateger EOF
+            // InternalKExpressions.g:1426:1: ( ruleFloateger EOF )
+            // InternalKExpressions.g:1427:1: ruleFloateger EOF
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFloategerRule()); 
@@ -4034,23 +4205,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "ruleFloateger"
-    // InternalKExpressions.g:1378:1: ruleFloateger : ( ( rule__Floateger__Group__0 ) ) ;
+    // InternalKExpressions.g:1434:1: ruleFloateger : ( ( rule__Floateger__Group__0 ) ) ;
     public final void ruleFloateger() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1382:2: ( ( ( rule__Floateger__Group__0 ) ) )
-            // InternalKExpressions.g:1383:1: ( ( rule__Floateger__Group__0 ) )
+            // InternalKExpressions.g:1438:2: ( ( ( rule__Floateger__Group__0 ) ) )
+            // InternalKExpressions.g:1439:1: ( ( rule__Floateger__Group__0 ) )
             {
-            // InternalKExpressions.g:1383:1: ( ( rule__Floateger__Group__0 ) )
-            // InternalKExpressions.g:1384:1: ( rule__Floateger__Group__0 )
+            // InternalKExpressions.g:1439:1: ( ( rule__Floateger__Group__0 ) )
+            // InternalKExpressions.g:1440:1: ( rule__Floateger__Group__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFloategerAccess().getGroup()); 
             }
-            // InternalKExpressions.g:1385:1: ( rule__Floateger__Group__0 )
-            // InternalKExpressions.g:1385:2: rule__Floateger__Group__0
+            // InternalKExpressions.g:1441:1: ( rule__Floateger__Group__0 )
+            // InternalKExpressions.g:1441:2: rule__Floateger__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Floateger__Group__0();
@@ -4085,23 +4256,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "ruleCompareOperator"
-    // InternalKExpressions.g:1398:1: ruleCompareOperator : ( ( rule__CompareOperator__Alternatives ) ) ;
+    // InternalKExpressions.g:1454:1: ruleCompareOperator : ( ( rule__CompareOperator__Alternatives ) ) ;
     public final void ruleCompareOperator() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1402:1: ( ( ( rule__CompareOperator__Alternatives ) ) )
-            // InternalKExpressions.g:1403:1: ( ( rule__CompareOperator__Alternatives ) )
+            // InternalKExpressions.g:1458:1: ( ( ( rule__CompareOperator__Alternatives ) ) )
+            // InternalKExpressions.g:1459:1: ( ( rule__CompareOperator__Alternatives ) )
             {
-            // InternalKExpressions.g:1403:1: ( ( rule__CompareOperator__Alternatives ) )
-            // InternalKExpressions.g:1404:1: ( rule__CompareOperator__Alternatives )
+            // InternalKExpressions.g:1459:1: ( ( rule__CompareOperator__Alternatives ) )
+            // InternalKExpressions.g:1460:1: ( rule__CompareOperator__Alternatives )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCompareOperatorAccess().getAlternatives()); 
             }
-            // InternalKExpressions.g:1405:1: ( rule__CompareOperator__Alternatives )
-            // InternalKExpressions.g:1405:2: rule__CompareOperator__Alternatives
+            // InternalKExpressions.g:1461:1: ( rule__CompareOperator__Alternatives )
+            // InternalKExpressions.g:1461:2: rule__CompareOperator__Alternatives
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__CompareOperator__Alternatives();
@@ -4136,23 +4307,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rulePreOperator"
-    // InternalKExpressions.g:1417:1: rulePreOperator : ( ( 'pre' ) ) ;
+    // InternalKExpressions.g:1473:1: rulePreOperator : ( ( 'pre' ) ) ;
     public final void rulePreOperator() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1421:1: ( ( ( 'pre' ) ) )
-            // InternalKExpressions.g:1422:1: ( ( 'pre' ) )
+            // InternalKExpressions.g:1477:1: ( ( ( 'pre' ) ) )
+            // InternalKExpressions.g:1478:1: ( ( 'pre' ) )
             {
-            // InternalKExpressions.g:1422:1: ( ( 'pre' ) )
-            // InternalKExpressions.g:1423:1: ( 'pre' )
+            // InternalKExpressions.g:1478:1: ( ( 'pre' ) )
+            // InternalKExpressions.g:1479:1: ( 'pre' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPreOperatorAccess().getPREEnumLiteralDeclaration()); 
             }
-            // InternalKExpressions.g:1424:1: ( 'pre' )
-            // InternalKExpressions.g:1424:3: 'pre'
+            // InternalKExpressions.g:1480:1: ( 'pre' )
+            // InternalKExpressions.g:1480:3: 'pre'
             {
             match(input,17,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -4183,23 +4354,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "ruleBitwiseOrOperator"
-    // InternalKExpressions.g:1437:1: ruleBitwiseOrOperator : ( ( '|' ) ) ;
+    // InternalKExpressions.g:1493:1: ruleBitwiseOrOperator : ( ( '|' ) ) ;
     public final void ruleBitwiseOrOperator() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1441:1: ( ( ( '|' ) ) )
-            // InternalKExpressions.g:1442:1: ( ( '|' ) )
+            // InternalKExpressions.g:1497:1: ( ( ( '|' ) ) )
+            // InternalKExpressions.g:1498:1: ( ( '|' ) )
             {
-            // InternalKExpressions.g:1442:1: ( ( '|' ) )
-            // InternalKExpressions.g:1443:1: ( '|' )
+            // InternalKExpressions.g:1498:1: ( ( '|' ) )
+            // InternalKExpressions.g:1499:1: ( '|' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseOrOperatorAccess().getBITWISE_OREnumLiteralDeclaration()); 
             }
-            // InternalKExpressions.g:1444:1: ( '|' )
-            // InternalKExpressions.g:1444:3: '|'
+            // InternalKExpressions.g:1500:1: ( '|' )
+            // InternalKExpressions.g:1500:3: '|'
             {
             match(input,18,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -4230,23 +4401,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "ruleBitwiseAndOperator"
-    // InternalKExpressions.g:1457:1: ruleBitwiseAndOperator : ( ( '&' ) ) ;
+    // InternalKExpressions.g:1513:1: ruleBitwiseAndOperator : ( ( '&' ) ) ;
     public final void ruleBitwiseAndOperator() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1461:1: ( ( ( '&' ) ) )
-            // InternalKExpressions.g:1462:1: ( ( '&' ) )
+            // InternalKExpressions.g:1517:1: ( ( ( '&' ) ) )
+            // InternalKExpressions.g:1518:1: ( ( '&' ) )
             {
-            // InternalKExpressions.g:1462:1: ( ( '&' ) )
-            // InternalKExpressions.g:1463:1: ( '&' )
+            // InternalKExpressions.g:1518:1: ( ( '&' ) )
+            // InternalKExpressions.g:1519:1: ( '&' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseAndOperatorAccess().getBITWISE_ANDEnumLiteralDeclaration()); 
             }
-            // InternalKExpressions.g:1464:1: ( '&' )
-            // InternalKExpressions.g:1464:3: '&'
+            // InternalKExpressions.g:1520:1: ( '&' )
+            // InternalKExpressions.g:1520:3: '&'
             {
             match(input,19,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -4277,23 +4448,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "ruleNotOperator"
-    // InternalKExpressions.g:1477:1: ruleNotOperator : ( ( '!' ) ) ;
+    // InternalKExpressions.g:1533:1: ruleNotOperator : ( ( '!' ) ) ;
     public final void ruleNotOperator() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1481:1: ( ( ( '!' ) ) )
-            // InternalKExpressions.g:1482:1: ( ( '!' ) )
+            // InternalKExpressions.g:1537:1: ( ( ( '!' ) ) )
+            // InternalKExpressions.g:1538:1: ( ( '!' ) )
             {
-            // InternalKExpressions.g:1482:1: ( ( '!' ) )
-            // InternalKExpressions.g:1483:1: ( '!' )
+            // InternalKExpressions.g:1538:1: ( ( '!' ) )
+            // InternalKExpressions.g:1539:1: ( '!' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNotOperatorAccess().getNOTEnumLiteralDeclaration()); 
             }
-            // InternalKExpressions.g:1484:1: ( '!' )
-            // InternalKExpressions.g:1484:3: '!'
+            // InternalKExpressions.g:1540:1: ( '!' )
+            // InternalKExpressions.g:1540:3: '!'
             {
             match(input,20,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -4324,23 +4495,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "ruleAddOperator"
-    // InternalKExpressions.g:1497:1: ruleAddOperator : ( ( '+' ) ) ;
+    // InternalKExpressions.g:1553:1: ruleAddOperator : ( ( '+' ) ) ;
     public final void ruleAddOperator() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1501:1: ( ( ( '+' ) ) )
-            // InternalKExpressions.g:1502:1: ( ( '+' ) )
+            // InternalKExpressions.g:1557:1: ( ( ( '+' ) ) )
+            // InternalKExpressions.g:1558:1: ( ( '+' ) )
             {
-            // InternalKExpressions.g:1502:1: ( ( '+' ) )
-            // InternalKExpressions.g:1503:1: ( '+' )
+            // InternalKExpressions.g:1558:1: ( ( '+' ) )
+            // InternalKExpressions.g:1559:1: ( '+' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAddOperatorAccess().getADDEnumLiteralDeclaration()); 
             }
-            // InternalKExpressions.g:1504:1: ( '+' )
-            // InternalKExpressions.g:1504:3: '+'
+            // InternalKExpressions.g:1560:1: ( '+' )
+            // InternalKExpressions.g:1560:3: '+'
             {
             match(input,21,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -4371,23 +4542,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "ruleSubOperator"
-    // InternalKExpressions.g:1517:1: ruleSubOperator : ( ( '-' ) ) ;
+    // InternalKExpressions.g:1573:1: ruleSubOperator : ( ( '-' ) ) ;
     public final void ruleSubOperator() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1521:1: ( ( ( '-' ) ) )
-            // InternalKExpressions.g:1522:1: ( ( '-' ) )
+            // InternalKExpressions.g:1577:1: ( ( ( '-' ) ) )
+            // InternalKExpressions.g:1578:1: ( ( '-' ) )
             {
-            // InternalKExpressions.g:1522:1: ( ( '-' ) )
-            // InternalKExpressions.g:1523:1: ( '-' )
+            // InternalKExpressions.g:1578:1: ( ( '-' ) )
+            // InternalKExpressions.g:1579:1: ( '-' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubOperatorAccess().getSUBEnumLiteralDeclaration()); 
             }
-            // InternalKExpressions.g:1524:1: ( '-' )
-            // InternalKExpressions.g:1524:3: '-'
+            // InternalKExpressions.g:1580:1: ( '-' )
+            // InternalKExpressions.g:1580:3: '-'
             {
             match(input,22,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -4418,23 +4589,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "ruleMultOperator"
-    // InternalKExpressions.g:1537:1: ruleMultOperator : ( ( '*' ) ) ;
+    // InternalKExpressions.g:1593:1: ruleMultOperator : ( ( '*' ) ) ;
     public final void ruleMultOperator() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1541:1: ( ( ( '*' ) ) )
-            // InternalKExpressions.g:1542:1: ( ( '*' ) )
+            // InternalKExpressions.g:1597:1: ( ( ( '*' ) ) )
+            // InternalKExpressions.g:1598:1: ( ( '*' ) )
             {
-            // InternalKExpressions.g:1542:1: ( ( '*' ) )
-            // InternalKExpressions.g:1543:1: ( '*' )
+            // InternalKExpressions.g:1598:1: ( ( '*' ) )
+            // InternalKExpressions.g:1599:1: ( '*' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultOperatorAccess().getMULTEnumLiteralDeclaration()); 
             }
-            // InternalKExpressions.g:1544:1: ( '*' )
-            // InternalKExpressions.g:1544:3: '*'
+            // InternalKExpressions.g:1600:1: ( '*' )
+            // InternalKExpressions.g:1600:3: '*'
             {
             match(input,23,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -4465,23 +4636,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "ruleModOperator"
-    // InternalKExpressions.g:1557:1: ruleModOperator : ( ( '%' ) ) ;
+    // InternalKExpressions.g:1613:1: ruleModOperator : ( ( '%' ) ) ;
     public final void ruleModOperator() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1561:1: ( ( ( '%' ) ) )
-            // InternalKExpressions.g:1562:1: ( ( '%' ) )
+            // InternalKExpressions.g:1617:1: ( ( ( '%' ) ) )
+            // InternalKExpressions.g:1618:1: ( ( '%' ) )
             {
-            // InternalKExpressions.g:1562:1: ( ( '%' ) )
-            // InternalKExpressions.g:1563:1: ( '%' )
+            // InternalKExpressions.g:1618:1: ( ( '%' ) )
+            // InternalKExpressions.g:1619:1: ( '%' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModOperatorAccess().getMODEnumLiteralDeclaration()); 
             }
-            // InternalKExpressions.g:1564:1: ( '%' )
-            // InternalKExpressions.g:1564:3: '%'
+            // InternalKExpressions.g:1620:1: ( '%' )
+            // InternalKExpressions.g:1620:3: '%'
             {
             match(input,24,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -4512,23 +4683,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "ruleDivOperator"
-    // InternalKExpressions.g:1577:1: ruleDivOperator : ( ( '/' ) ) ;
+    // InternalKExpressions.g:1633:1: ruleDivOperator : ( ( '/' ) ) ;
     public final void ruleDivOperator() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1581:1: ( ( ( '/' ) ) )
-            // InternalKExpressions.g:1582:1: ( ( '/' ) )
+            // InternalKExpressions.g:1637:1: ( ( ( '/' ) ) )
+            // InternalKExpressions.g:1638:1: ( ( '/' ) )
             {
-            // InternalKExpressions.g:1582:1: ( ( '/' ) )
-            // InternalKExpressions.g:1583:1: ( '/' )
+            // InternalKExpressions.g:1638:1: ( ( '/' ) )
+            // InternalKExpressions.g:1639:1: ( '/' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDivOperatorAccess().getDIVEnumLiteralDeclaration()); 
             }
-            // InternalKExpressions.g:1584:1: ( '/' )
-            // InternalKExpressions.g:1584:3: '/'
+            // InternalKExpressions.g:1640:1: ( '/' )
+            // InternalKExpressions.g:1640:3: '/'
             {
             match(input,25,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -4559,23 +4730,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "ruleValOperator"
-    // InternalKExpressions.g:1597:1: ruleValOperator : ( ( 'val' ) ) ;
+    // InternalKExpressions.g:1653:1: ruleValOperator : ( ( 'val' ) ) ;
     public final void ruleValOperator() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1601:1: ( ( ( 'val' ) ) )
-            // InternalKExpressions.g:1602:1: ( ( 'val' ) )
+            // InternalKExpressions.g:1657:1: ( ( ( 'val' ) ) )
+            // InternalKExpressions.g:1658:1: ( ( 'val' ) )
             {
-            // InternalKExpressions.g:1602:1: ( ( 'val' ) )
-            // InternalKExpressions.g:1603:1: ( 'val' )
+            // InternalKExpressions.g:1658:1: ( ( 'val' ) )
+            // InternalKExpressions.g:1659:1: ( 'val' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValOperatorAccess().getVALEnumLiteralDeclaration()); 
             }
-            // InternalKExpressions.g:1604:1: ( 'val' )
-            // InternalKExpressions.g:1604:3: 'val'
+            // InternalKExpressions.g:1660:1: ( 'val' )
+            // InternalKExpressions.g:1660:3: 'val'
             {
             match(input,26,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -4606,23 +4777,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "ruleLogicalOrOperator"
-    // InternalKExpressions.g:1617:1: ruleLogicalOrOperator : ( ( '||' ) ) ;
+    // InternalKExpressions.g:1673:1: ruleLogicalOrOperator : ( ( '||' ) ) ;
     public final void ruleLogicalOrOperator() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1621:1: ( ( ( '||' ) ) )
-            // InternalKExpressions.g:1622:1: ( ( '||' ) )
+            // InternalKExpressions.g:1677:1: ( ( ( '||' ) ) )
+            // InternalKExpressions.g:1678:1: ( ( '||' ) )
             {
-            // InternalKExpressions.g:1622:1: ( ( '||' ) )
-            // InternalKExpressions.g:1623:1: ( '||' )
+            // InternalKExpressions.g:1678:1: ( ( '||' ) )
+            // InternalKExpressions.g:1679:1: ( '||' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalOrOperatorAccess().getLOGICAL_OREnumLiteralDeclaration()); 
             }
-            // InternalKExpressions.g:1624:1: ( '||' )
-            // InternalKExpressions.g:1624:3: '||'
+            // InternalKExpressions.g:1680:1: ( '||' )
+            // InternalKExpressions.g:1680:3: '||'
             {
             match(input,27,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -4653,23 +4824,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "ruleLogicalAndOperator"
-    // InternalKExpressions.g:1637:1: ruleLogicalAndOperator : ( ( '&&' ) ) ;
+    // InternalKExpressions.g:1693:1: ruleLogicalAndOperator : ( ( '&&' ) ) ;
     public final void ruleLogicalAndOperator() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1641:1: ( ( ( '&&' ) ) )
-            // InternalKExpressions.g:1642:1: ( ( '&&' ) )
+            // InternalKExpressions.g:1697:1: ( ( ( '&&' ) ) )
+            // InternalKExpressions.g:1698:1: ( ( '&&' ) )
             {
-            // InternalKExpressions.g:1642:1: ( ( '&&' ) )
-            // InternalKExpressions.g:1643:1: ( '&&' )
+            // InternalKExpressions.g:1698:1: ( ( '&&' ) )
+            // InternalKExpressions.g:1699:1: ( '&&' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalAndOperatorAccess().getLOGICAL_ANDEnumLiteralDeclaration()); 
             }
-            // InternalKExpressions.g:1644:1: ( '&&' )
-            // InternalKExpressions.g:1644:3: '&&'
+            // InternalKExpressions.g:1700:1: ( '&&' )
+            // InternalKExpressions.g:1700:3: '&&'
             {
             match(input,28,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -4700,21 +4871,21 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Expression__Alternatives_0"
-    // InternalKExpressions.g:1666:1: rule__Expression__Alternatives_0 : ( ( ruleBoolExpression ) | ( ruleValuedExpression ) );
+    // InternalKExpressions.g:1722:1: rule__Expression__Alternatives_0 : ( ( ruleBoolExpression ) | ( ruleValuedExpression ) );
     public final void rule__Expression__Alternatives_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1670:1: ( ( ruleBoolExpression ) | ( ruleValuedExpression ) )
+            // InternalKExpressions.g:1726:1: ( ( ruleBoolExpression ) | ( ruleValuedExpression ) )
             int alt1=2;
             alt1 = dfa1.predict(input);
             switch (alt1) {
                 case 1 :
-                    // InternalKExpressions.g:1671:1: ( ruleBoolExpression )
+                    // InternalKExpressions.g:1727:1: ( ruleBoolExpression )
                     {
-                    // InternalKExpressions.g:1671:1: ( ruleBoolExpression )
-                    // InternalKExpressions.g:1672:1: ruleBoolExpression
+                    // InternalKExpressions.g:1727:1: ( ruleBoolExpression )
+                    // InternalKExpressions.g:1728:1: ruleBoolExpression
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_0_0()); 
@@ -4734,10 +4905,10 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 2 :
-                    // InternalKExpressions.g:1677:6: ( ruleValuedExpression )
+                    // InternalKExpressions.g:1733:6: ( ruleValuedExpression )
                     {
-                    // InternalKExpressions.g:1677:6: ( ruleValuedExpression )
-                    // InternalKExpressions.g:1678:1: ruleValuedExpression
+                    // InternalKExpressions.g:1733:6: ( ruleValuedExpression )
+                    // InternalKExpressions.g:1734:1: ruleValuedExpression
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_0_1()); 
@@ -4774,21 +4945,21 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__NotOrValuedExpression__Alternatives"
-    // InternalKExpressions.g:1688:1: rule__NotOrValuedExpression__Alternatives : ( ( ruleValuedExpression ) | ( ruleNotExpression ) );
+    // InternalKExpressions.g:1744:1: rule__NotOrValuedExpression__Alternatives : ( ( ruleValuedExpression ) | ( ruleNotExpression ) );
     public final void rule__NotOrValuedExpression__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1692:1: ( ( ruleValuedExpression ) | ( ruleNotExpression ) )
+            // InternalKExpressions.g:1748:1: ( ( ruleValuedExpression ) | ( ruleNotExpression ) )
             int alt2=2;
             alt2 = dfa2.predict(input);
             switch (alt2) {
                 case 1 :
-                    // InternalKExpressions.g:1693:1: ( ruleValuedExpression )
+                    // InternalKExpressions.g:1749:1: ( ruleValuedExpression )
                     {
-                    // InternalKExpressions.g:1693:1: ( ruleValuedExpression )
-                    // InternalKExpressions.g:1694:1: ruleValuedExpression
+                    // InternalKExpressions.g:1749:1: ( ruleValuedExpression )
+                    // InternalKExpressions.g:1750:1: ruleValuedExpression
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getNotOrValuedExpressionAccess().getValuedExpressionParserRuleCall_0()); 
@@ -4808,10 +4979,10 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 2 :
-                    // InternalKExpressions.g:1699:6: ( ruleNotExpression )
+                    // InternalKExpressions.g:1755:6: ( ruleNotExpression )
                     {
-                    // InternalKExpressions.g:1699:6: ( ruleNotExpression )
-                    // InternalKExpressions.g:1700:1: ruleNotExpression
+                    // InternalKExpressions.g:1755:6: ( ruleNotExpression )
+                    // InternalKExpressions.g:1756:1: ruleNotExpression
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getNotOrValuedExpressionAccess().getNotExpressionParserRuleCall_1()); 
@@ -4848,13 +5019,13 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__NotExpression__Alternatives"
-    // InternalKExpressions.g:1710:1: rule__NotExpression__Alternatives : ( ( ( rule__NotExpression__Group_0__0 ) ) | ( ruleAtomicExpression ) );
+    // InternalKExpressions.g:1766:1: rule__NotExpression__Alternatives : ( ( ( rule__NotExpression__Group_0__0 ) ) | ( ruleAtomicExpression ) );
     public final void rule__NotExpression__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1714:1: ( ( ( rule__NotExpression__Group_0__0 ) ) | ( ruleAtomicExpression ) )
+            // InternalKExpressions.g:1770:1: ( ( ( rule__NotExpression__Group_0__0 ) ) | ( ruleAtomicExpression ) )
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -4873,16 +5044,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             }
             switch (alt3) {
                 case 1 :
-                    // InternalKExpressions.g:1715:1: ( ( rule__NotExpression__Group_0__0 ) )
+                    // InternalKExpressions.g:1771:1: ( ( rule__NotExpression__Group_0__0 ) )
                     {
-                    // InternalKExpressions.g:1715:1: ( ( rule__NotExpression__Group_0__0 ) )
-                    // InternalKExpressions.g:1716:1: ( rule__NotExpression__Group_0__0 )
+                    // InternalKExpressions.g:1771:1: ( ( rule__NotExpression__Group_0__0 ) )
+                    // InternalKExpressions.g:1772:1: ( rule__NotExpression__Group_0__0 )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getNotExpressionAccess().getGroup_0()); 
                     }
-                    // InternalKExpressions.g:1717:1: ( rule__NotExpression__Group_0__0 )
-                    // InternalKExpressions.g:1717:2: rule__NotExpression__Group_0__0
+                    // InternalKExpressions.g:1773:1: ( rule__NotExpression__Group_0__0 )
+                    // InternalKExpressions.g:1773:2: rule__NotExpression__Group_0__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__NotExpression__Group_0__0();
@@ -4902,10 +5073,10 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 2 :
-                    // InternalKExpressions.g:1721:6: ( ruleAtomicExpression )
+                    // InternalKExpressions.g:1777:6: ( ruleAtomicExpression )
                     {
-                    // InternalKExpressions.g:1721:6: ( ruleAtomicExpression )
-                    // InternalKExpressions.g:1722:1: ruleAtomicExpression
+                    // InternalKExpressions.g:1777:6: ( ruleAtomicExpression )
+                    // InternalKExpressions.g:1778:1: ruleAtomicExpression
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getNotExpressionAccess().getAtomicExpressionParserRuleCall_1()); 
@@ -4942,13 +5113,13 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__NegExpression__Alternatives"
-    // InternalKExpressions.g:1732:1: rule__NegExpression__Alternatives : ( ( ( rule__NegExpression__Group_0__0 ) ) | ( ruleAtomicValuedExpression ) );
+    // InternalKExpressions.g:1788:1: rule__NegExpression__Alternatives : ( ( ( rule__NegExpression__Group_0__0 ) ) | ( ruleAtomicValuedExpression ) );
     public final void rule__NegExpression__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1736:1: ( ( ( rule__NegExpression__Group_0__0 ) ) | ( ruleAtomicValuedExpression ) )
+            // InternalKExpressions.g:1792:1: ( ( ( rule__NegExpression__Group_0__0 ) ) | ( ruleAtomicValuedExpression ) )
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -4967,16 +5138,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             }
             switch (alt4) {
                 case 1 :
-                    // InternalKExpressions.g:1737:1: ( ( rule__NegExpression__Group_0__0 ) )
+                    // InternalKExpressions.g:1793:1: ( ( rule__NegExpression__Group_0__0 ) )
                     {
-                    // InternalKExpressions.g:1737:1: ( ( rule__NegExpression__Group_0__0 ) )
-                    // InternalKExpressions.g:1738:1: ( rule__NegExpression__Group_0__0 )
+                    // InternalKExpressions.g:1793:1: ( ( rule__NegExpression__Group_0__0 ) )
+                    // InternalKExpressions.g:1794:1: ( rule__NegExpression__Group_0__0 )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getNegExpressionAccess().getGroup_0()); 
                     }
-                    // InternalKExpressions.g:1739:1: ( rule__NegExpression__Group_0__0 )
-                    // InternalKExpressions.g:1739:2: rule__NegExpression__Group_0__0
+                    // InternalKExpressions.g:1795:1: ( rule__NegExpression__Group_0__0 )
+                    // InternalKExpressions.g:1795:2: rule__NegExpression__Group_0__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__NegExpression__Group_0__0();
@@ -4996,10 +5167,10 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 2 :
-                    // InternalKExpressions.g:1743:6: ( ruleAtomicValuedExpression )
+                    // InternalKExpressions.g:1799:6: ( ruleAtomicValuedExpression )
                     {
-                    // InternalKExpressions.g:1743:6: ( ruleAtomicValuedExpression )
-                    // InternalKExpressions.g:1744:1: ruleAtomicValuedExpression
+                    // InternalKExpressions.g:1799:6: ( ruleAtomicValuedExpression )
+                    // InternalKExpressions.g:1800:1: ruleAtomicValuedExpression
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getNegExpressionAccess().getAtomicValuedExpressionParserRuleCall_1()); 
@@ -5036,21 +5207,21 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AtomicExpression__Alternatives"
-    // InternalKExpressions.g:1754:1: rule__AtomicExpression__Alternatives : ( ( ruleBoolValue ) | ( ruleValuedObjectTestExpression ) | ( ( rule__AtomicExpression__Group_2__0 ) ) | ( ruleReferenceCall ) | ( ruleFunctionCall ) | ( ruleTextExpression ) );
+    // InternalKExpressions.g:1810:1: rule__AtomicExpression__Alternatives : ( ( ruleBoolValue ) | ( ruleValuedObjectTestExpression ) | ( ( rule__AtomicExpression__Group_2__0 ) ) | ( ruleReferenceCall ) | ( ruleFunctionCall ) | ( ruleTextExpression ) );
     public final void rule__AtomicExpression__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1758:1: ( ( ruleBoolValue ) | ( ruleValuedObjectTestExpression ) | ( ( rule__AtomicExpression__Group_2__0 ) ) | ( ruleReferenceCall ) | ( ruleFunctionCall ) | ( ruleTextExpression ) )
+            // InternalKExpressions.g:1814:1: ( ( ruleBoolValue ) | ( ruleValuedObjectTestExpression ) | ( ( rule__AtomicExpression__Group_2__0 ) ) | ( ruleReferenceCall ) | ( ruleFunctionCall ) | ( ruleTextExpression ) )
             int alt5=6;
             alt5 = dfa5.predict(input);
             switch (alt5) {
                 case 1 :
-                    // InternalKExpressions.g:1759:1: ( ruleBoolValue )
+                    // InternalKExpressions.g:1815:1: ( ruleBoolValue )
                     {
-                    // InternalKExpressions.g:1759:1: ( ruleBoolValue )
-                    // InternalKExpressions.g:1760:1: ruleBoolValue
+                    // InternalKExpressions.g:1815:1: ( ruleBoolValue )
+                    // InternalKExpressions.g:1816:1: ruleBoolValue
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getAtomicExpressionAccess().getBoolValueParserRuleCall_0()); 
@@ -5070,10 +5241,10 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 2 :
-                    // InternalKExpressions.g:1765:6: ( ruleValuedObjectTestExpression )
+                    // InternalKExpressions.g:1821:6: ( ruleValuedObjectTestExpression )
                     {
-                    // InternalKExpressions.g:1765:6: ( ruleValuedObjectTestExpression )
-                    // InternalKExpressions.g:1766:1: ruleValuedObjectTestExpression
+                    // InternalKExpressions.g:1821:6: ( ruleValuedObjectTestExpression )
+                    // InternalKExpressions.g:1822:1: ruleValuedObjectTestExpression
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getAtomicExpressionAccess().getValuedObjectTestExpressionParserRuleCall_1()); 
@@ -5093,16 +5264,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 3 :
-                    // InternalKExpressions.g:1771:6: ( ( rule__AtomicExpression__Group_2__0 ) )
+                    // InternalKExpressions.g:1827:6: ( ( rule__AtomicExpression__Group_2__0 ) )
                     {
-                    // InternalKExpressions.g:1771:6: ( ( rule__AtomicExpression__Group_2__0 ) )
-                    // InternalKExpressions.g:1772:1: ( rule__AtomicExpression__Group_2__0 )
+                    // InternalKExpressions.g:1827:6: ( ( rule__AtomicExpression__Group_2__0 ) )
+                    // InternalKExpressions.g:1828:1: ( rule__AtomicExpression__Group_2__0 )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getAtomicExpressionAccess().getGroup_2()); 
                     }
-                    // InternalKExpressions.g:1773:1: ( rule__AtomicExpression__Group_2__0 )
-                    // InternalKExpressions.g:1773:2: rule__AtomicExpression__Group_2__0
+                    // InternalKExpressions.g:1829:1: ( rule__AtomicExpression__Group_2__0 )
+                    // InternalKExpressions.g:1829:2: rule__AtomicExpression__Group_2__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__AtomicExpression__Group_2__0();
@@ -5122,10 +5293,10 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 4 :
-                    // InternalKExpressions.g:1777:6: ( ruleReferenceCall )
+                    // InternalKExpressions.g:1833:6: ( ruleReferenceCall )
                     {
-                    // InternalKExpressions.g:1777:6: ( ruleReferenceCall )
-                    // InternalKExpressions.g:1778:1: ruleReferenceCall
+                    // InternalKExpressions.g:1833:6: ( ruleReferenceCall )
+                    // InternalKExpressions.g:1834:1: ruleReferenceCall
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getAtomicExpressionAccess().getReferenceCallParserRuleCall_3()); 
@@ -5145,10 +5316,10 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 5 :
-                    // InternalKExpressions.g:1783:6: ( ruleFunctionCall )
+                    // InternalKExpressions.g:1839:6: ( ruleFunctionCall )
                     {
-                    // InternalKExpressions.g:1783:6: ( ruleFunctionCall )
-                    // InternalKExpressions.g:1784:1: ruleFunctionCall
+                    // InternalKExpressions.g:1839:6: ( ruleFunctionCall )
+                    // InternalKExpressions.g:1840:1: ruleFunctionCall
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getAtomicExpressionAccess().getFunctionCallParserRuleCall_4()); 
@@ -5168,10 +5339,10 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 6 :
-                    // InternalKExpressions.g:1789:6: ( ruleTextExpression )
+                    // InternalKExpressions.g:1845:6: ( ruleTextExpression )
                     {
-                    // InternalKExpressions.g:1789:6: ( ruleTextExpression )
-                    // InternalKExpressions.g:1790:1: ruleTextExpression
+                    // InternalKExpressions.g:1845:6: ( ruleTextExpression )
+                    // InternalKExpressions.g:1846:1: ruleTextExpression
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getAtomicExpressionAccess().getTextExpressionParserRuleCall_5()); 
@@ -5208,21 +5379,21 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AtomicValuedExpression__Alternatives"
-    // InternalKExpressions.g:1800:1: rule__AtomicValuedExpression__Alternatives : ( ( ruleIntValue ) | ( ruleFloatValue ) | ( ruleStringValue ) | ( ruleVectorValue ) | ( ( rule__AtomicValuedExpression__Group_4__0 ) ) | ( ruleAtomicExpression ) );
+    // InternalKExpressions.g:1856:1: rule__AtomicValuedExpression__Alternatives : ( ( ruleIntValue ) | ( ruleFloatValue ) | ( ruleStringValue ) | ( ruleVectorValue ) | ( ( rule__AtomicValuedExpression__Group_4__0 ) ) | ( ruleAtomicExpression ) );
     public final void rule__AtomicValuedExpression__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1804:1: ( ( ruleIntValue ) | ( ruleFloatValue ) | ( ruleStringValue ) | ( ruleVectorValue ) | ( ( rule__AtomicValuedExpression__Group_4__0 ) ) | ( ruleAtomicExpression ) )
+            // InternalKExpressions.g:1860:1: ( ( ruleIntValue ) | ( ruleFloatValue ) | ( ruleStringValue ) | ( ruleVectorValue ) | ( ( rule__AtomicValuedExpression__Group_4__0 ) ) | ( ruleAtomicExpression ) )
             int alt6=6;
             alt6 = dfa6.predict(input);
             switch (alt6) {
                 case 1 :
-                    // InternalKExpressions.g:1805:1: ( ruleIntValue )
+                    // InternalKExpressions.g:1861:1: ( ruleIntValue )
                     {
-                    // InternalKExpressions.g:1805:1: ( ruleIntValue )
-                    // InternalKExpressions.g:1806:1: ruleIntValue
+                    // InternalKExpressions.g:1861:1: ( ruleIntValue )
+                    // InternalKExpressions.g:1862:1: ruleIntValue
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getAtomicValuedExpressionAccess().getIntValueParserRuleCall_0()); 
@@ -5242,10 +5413,10 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 2 :
-                    // InternalKExpressions.g:1811:6: ( ruleFloatValue )
+                    // InternalKExpressions.g:1867:6: ( ruleFloatValue )
                     {
-                    // InternalKExpressions.g:1811:6: ( ruleFloatValue )
-                    // InternalKExpressions.g:1812:1: ruleFloatValue
+                    // InternalKExpressions.g:1867:6: ( ruleFloatValue )
+                    // InternalKExpressions.g:1868:1: ruleFloatValue
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getAtomicValuedExpressionAccess().getFloatValueParserRuleCall_1()); 
@@ -5265,10 +5436,10 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 3 :
-                    // InternalKExpressions.g:1817:6: ( ruleStringValue )
+                    // InternalKExpressions.g:1873:6: ( ruleStringValue )
                     {
-                    // InternalKExpressions.g:1817:6: ( ruleStringValue )
-                    // InternalKExpressions.g:1818:1: ruleStringValue
+                    // InternalKExpressions.g:1873:6: ( ruleStringValue )
+                    // InternalKExpressions.g:1874:1: ruleStringValue
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getAtomicValuedExpressionAccess().getStringValueParserRuleCall_2()); 
@@ -5288,10 +5459,10 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 4 :
-                    // InternalKExpressions.g:1823:6: ( ruleVectorValue )
+                    // InternalKExpressions.g:1879:6: ( ruleVectorValue )
                     {
-                    // InternalKExpressions.g:1823:6: ( ruleVectorValue )
-                    // InternalKExpressions.g:1824:1: ruleVectorValue
+                    // InternalKExpressions.g:1879:6: ( ruleVectorValue )
+                    // InternalKExpressions.g:1880:1: ruleVectorValue
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getAtomicValuedExpressionAccess().getVectorValueParserRuleCall_3()); 
@@ -5311,16 +5482,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 5 :
-                    // InternalKExpressions.g:1829:6: ( ( rule__AtomicValuedExpression__Group_4__0 ) )
+                    // InternalKExpressions.g:1885:6: ( ( rule__AtomicValuedExpression__Group_4__0 ) )
                     {
-                    // InternalKExpressions.g:1829:6: ( ( rule__AtomicValuedExpression__Group_4__0 ) )
-                    // InternalKExpressions.g:1830:1: ( rule__AtomicValuedExpression__Group_4__0 )
+                    // InternalKExpressions.g:1885:6: ( ( rule__AtomicValuedExpression__Group_4__0 ) )
+                    // InternalKExpressions.g:1886:1: ( rule__AtomicValuedExpression__Group_4__0 )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getAtomicValuedExpressionAccess().getGroup_4()); 
                     }
-                    // InternalKExpressions.g:1831:1: ( rule__AtomicValuedExpression__Group_4__0 )
-                    // InternalKExpressions.g:1831:2: rule__AtomicValuedExpression__Group_4__0
+                    // InternalKExpressions.g:1887:1: ( rule__AtomicValuedExpression__Group_4__0 )
+                    // InternalKExpressions.g:1887:2: rule__AtomicValuedExpression__Group_4__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__AtomicValuedExpression__Group_4__0();
@@ -5340,10 +5511,10 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 6 :
-                    // InternalKExpressions.g:1835:6: ( ruleAtomicExpression )
+                    // InternalKExpressions.g:1891:6: ( ruleAtomicExpression )
                     {
-                    // InternalKExpressions.g:1835:6: ( ruleAtomicExpression )
-                    // InternalKExpressions.g:1836:1: ruleAtomicExpression
+                    // InternalKExpressions.g:1891:6: ( ruleAtomicExpression )
+                    // InternalKExpressions.g:1892:1: ruleAtomicExpression
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getAtomicValuedExpressionAccess().getAtomicExpressionParserRuleCall_5()); 
@@ -5380,13 +5551,13 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectTestExpression__Alternatives"
-    // InternalKExpressions.g:1846:1: rule__ValuedObjectTestExpression__Alternatives : ( ( ( rule__ValuedObjectTestExpression__Group_0__0 ) ) | ( ruleValuedObjectReference ) );
+    // InternalKExpressions.g:1902:1: rule__ValuedObjectTestExpression__Alternatives : ( ( ( rule__ValuedObjectTestExpression__Group_0__0 ) ) | ( ruleValuedObjectReference ) );
     public final void rule__ValuedObjectTestExpression__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1850:1: ( ( ( rule__ValuedObjectTestExpression__Group_0__0 ) ) | ( ruleValuedObjectReference ) )
+            // InternalKExpressions.g:1906:1: ( ( ( rule__ValuedObjectTestExpression__Group_0__0 ) ) | ( ruleValuedObjectReference ) )
             int alt7=2;
             int LA7_0 = input.LA(1);
 
@@ -5405,16 +5576,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             }
             switch (alt7) {
                 case 1 :
-                    // InternalKExpressions.g:1851:1: ( ( rule__ValuedObjectTestExpression__Group_0__0 ) )
+                    // InternalKExpressions.g:1907:1: ( ( rule__ValuedObjectTestExpression__Group_0__0 ) )
                     {
-                    // InternalKExpressions.g:1851:1: ( ( rule__ValuedObjectTestExpression__Group_0__0 ) )
-                    // InternalKExpressions.g:1852:1: ( rule__ValuedObjectTestExpression__Group_0__0 )
+                    // InternalKExpressions.g:1907:1: ( ( rule__ValuedObjectTestExpression__Group_0__0 ) )
+                    // InternalKExpressions.g:1908:1: ( rule__ValuedObjectTestExpression__Group_0__0 )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0()); 
                     }
-                    // InternalKExpressions.g:1853:1: ( rule__ValuedObjectTestExpression__Group_0__0 )
-                    // InternalKExpressions.g:1853:2: rule__ValuedObjectTestExpression__Group_0__0
+                    // InternalKExpressions.g:1909:1: ( rule__ValuedObjectTestExpression__Group_0__0 )
+                    // InternalKExpressions.g:1909:2: rule__ValuedObjectTestExpression__Group_0__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__ValuedObjectTestExpression__Group_0__0();
@@ -5434,10 +5605,10 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 2 :
-                    // InternalKExpressions.g:1857:6: ( ruleValuedObjectReference )
+                    // InternalKExpressions.g:1913:6: ( ruleValuedObjectReference )
                     {
-                    // InternalKExpressions.g:1857:6: ( ruleValuedObjectReference )
-                    // InternalKExpressions.g:1858:1: ruleValuedObjectReference
+                    // InternalKExpressions.g:1913:6: ( ruleValuedObjectReference )
+                    // InternalKExpressions.g:1914:1: ruleValuedObjectReference
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getValuedObjectTestExpressionAccess().getValuedObjectReferenceParserRuleCall_1()); 
@@ -5474,13 +5645,13 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0"
-    // InternalKExpressions.g:1868:1: rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0 : ( ( rulePreOperator ) | ( ruleValOperator ) );
+    // InternalKExpressions.g:1924:1: rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0 : ( ( rulePreOperator ) | ( ruleValOperator ) );
     public final void rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1872:1: ( ( rulePreOperator ) | ( ruleValOperator ) )
+            // InternalKExpressions.g:1928:1: ( ( rulePreOperator ) | ( ruleValOperator ) )
             int alt8=2;
             int LA8_0 = input.LA(1);
 
@@ -5499,10 +5670,10 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             }
             switch (alt8) {
                 case 1 :
-                    // InternalKExpressions.g:1873:1: ( rulePreOperator )
+                    // InternalKExpressions.g:1929:1: ( rulePreOperator )
                     {
-                    // InternalKExpressions.g:1873:1: ( rulePreOperator )
-                    // InternalKExpressions.g:1874:1: rulePreOperator
+                    // InternalKExpressions.g:1929:1: ( rulePreOperator )
+                    // InternalKExpressions.g:1930:1: rulePreOperator
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorPreOperatorEnumRuleCall_0_1_0_0()); 
@@ -5522,10 +5693,10 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 2 :
-                    // InternalKExpressions.g:1879:6: ( ruleValOperator )
+                    // InternalKExpressions.g:1935:6: ( ruleValOperator )
                     {
-                    // InternalKExpressions.g:1879:6: ( ruleValOperator )
-                    // InternalKExpressions.g:1880:1: ruleValOperator
+                    // InternalKExpressions.g:1935:6: ( ruleValOperator )
+                    // InternalKExpressions.g:1936:1: ruleValOperator
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorValOperatorEnumRuleCall_0_1_0_1()); 
@@ -5562,13 +5733,13 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ReferenceCall__Alternatives_1"
-    // InternalKExpressions.g:1890:1: rule__ReferenceCall__Alternatives_1 : ( ( ( rule__ReferenceCall__Group_1_0__0 ) ) | ( '()' ) );
+    // InternalKExpressions.g:1946:1: rule__ReferenceCall__Alternatives_1 : ( ( ( rule__ReferenceCall__Group_1_0__0 ) ) | ( '()' ) );
     public final void rule__ReferenceCall__Alternatives_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1894:1: ( ( ( rule__ReferenceCall__Group_1_0__0 ) ) | ( '()' ) )
+            // InternalKExpressions.g:1950:1: ( ( ( rule__ReferenceCall__Group_1_0__0 ) ) | ( '()' ) )
             int alt9=2;
             int LA9_0 = input.LA(1);
 
@@ -5587,16 +5758,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             }
             switch (alt9) {
                 case 1 :
-                    // InternalKExpressions.g:1895:1: ( ( rule__ReferenceCall__Group_1_0__0 ) )
+                    // InternalKExpressions.g:1951:1: ( ( rule__ReferenceCall__Group_1_0__0 ) )
                     {
-                    // InternalKExpressions.g:1895:1: ( ( rule__ReferenceCall__Group_1_0__0 ) )
-                    // InternalKExpressions.g:1896:1: ( rule__ReferenceCall__Group_1_0__0 )
+                    // InternalKExpressions.g:1951:1: ( ( rule__ReferenceCall__Group_1_0__0 ) )
+                    // InternalKExpressions.g:1952:1: ( rule__ReferenceCall__Group_1_0__0 )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getReferenceCallAccess().getGroup_1_0()); 
                     }
-                    // InternalKExpressions.g:1897:1: ( rule__ReferenceCall__Group_1_0__0 )
-                    // InternalKExpressions.g:1897:2: rule__ReferenceCall__Group_1_0__0
+                    // InternalKExpressions.g:1953:1: ( rule__ReferenceCall__Group_1_0__0 )
+                    // InternalKExpressions.g:1953:2: rule__ReferenceCall__Group_1_0__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__ReferenceCall__Group_1_0__0();
@@ -5616,10 +5787,10 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 2 :
-                    // InternalKExpressions.g:1901:6: ( '()' )
+                    // InternalKExpressions.g:1957:6: ( '()' )
                     {
-                    // InternalKExpressions.g:1901:6: ( '()' )
-                    // InternalKExpressions.g:1902:1: '()'
+                    // InternalKExpressions.g:1957:6: ( '()' )
+                    // InternalKExpressions.g:1958:1: '()'
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getReferenceCallAccess().getLeftParenthesisRightParenthesisKeyword_1_1()); 
@@ -5652,13 +5823,13 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Alternatives"
-    // InternalKExpressions.g:1914:1: rule__FunctionCall__Alternatives : ( ( ( rule__FunctionCall__Group_0__0 ) ) | ( ( rule__FunctionCall__Group_1__0 ) ) );
+    // InternalKExpressions.g:1970:1: rule__FunctionCall__Alternatives : ( ( ( rule__FunctionCall__Group_0__0 ) ) | ( ( rule__FunctionCall__Group_1__0 ) ) );
     public final void rule__FunctionCall__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1918:1: ( ( ( rule__FunctionCall__Group_0__0 ) ) | ( ( rule__FunctionCall__Group_1__0 ) ) )
+            // InternalKExpressions.g:1974:1: ( ( ( rule__FunctionCall__Group_0__0 ) ) | ( ( rule__FunctionCall__Group_1__0 ) ) )
             int alt10=2;
             int LA10_0 = input.LA(1);
 
@@ -5677,16 +5848,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             }
             switch (alt10) {
                 case 1 :
-                    // InternalKExpressions.g:1919:1: ( ( rule__FunctionCall__Group_0__0 ) )
+                    // InternalKExpressions.g:1975:1: ( ( rule__FunctionCall__Group_0__0 ) )
                     {
-                    // InternalKExpressions.g:1919:1: ( ( rule__FunctionCall__Group_0__0 ) )
-                    // InternalKExpressions.g:1920:1: ( rule__FunctionCall__Group_0__0 )
+                    // InternalKExpressions.g:1975:1: ( ( rule__FunctionCall__Group_0__0 ) )
+                    // InternalKExpressions.g:1976:1: ( rule__FunctionCall__Group_0__0 )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getFunctionCallAccess().getGroup_0()); 
                     }
-                    // InternalKExpressions.g:1921:1: ( rule__FunctionCall__Group_0__0 )
-                    // InternalKExpressions.g:1921:2: rule__FunctionCall__Group_0__0
+                    // InternalKExpressions.g:1977:1: ( rule__FunctionCall__Group_0__0 )
+                    // InternalKExpressions.g:1977:2: rule__FunctionCall__Group_0__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__FunctionCall__Group_0__0();
@@ -5706,16 +5877,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 2 :
-                    // InternalKExpressions.g:1925:6: ( ( rule__FunctionCall__Group_1__0 ) )
+                    // InternalKExpressions.g:1981:6: ( ( rule__FunctionCall__Group_1__0 ) )
                     {
-                    // InternalKExpressions.g:1925:6: ( ( rule__FunctionCall__Group_1__0 ) )
-                    // InternalKExpressions.g:1926:1: ( rule__FunctionCall__Group_1__0 )
+                    // InternalKExpressions.g:1981:6: ( ( rule__FunctionCall__Group_1__0 ) )
+                    // InternalKExpressions.g:1982:1: ( rule__FunctionCall__Group_1__0 )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getFunctionCallAccess().getGroup_1()); 
                     }
-                    // InternalKExpressions.g:1927:1: ( rule__FunctionCall__Group_1__0 )
-                    // InternalKExpressions.g:1927:2: rule__FunctionCall__Group_1__0
+                    // InternalKExpressions.g:1983:1: ( rule__FunctionCall__Group_1__0 )
+                    // InternalKExpressions.g:1983:2: rule__FunctionCall__Group_1__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__FunctionCall__Group_1__0();
@@ -5752,13 +5923,13 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Alternatives_0_2"
-    // InternalKExpressions.g:1936:1: rule__FunctionCall__Alternatives_0_2 : ( ( ( rule__FunctionCall__Group_0_2_0__0 ) ) | ( '()' ) );
+    // InternalKExpressions.g:1992:1: rule__FunctionCall__Alternatives_0_2 : ( ( ( rule__FunctionCall__Group_0_2_0__0 ) ) | ( '()' ) );
     public final void rule__FunctionCall__Alternatives_0_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1940:1: ( ( ( rule__FunctionCall__Group_0_2_0__0 ) ) | ( '()' ) )
+            // InternalKExpressions.g:1996:1: ( ( ( rule__FunctionCall__Group_0_2_0__0 ) ) | ( '()' ) )
             int alt11=2;
             int LA11_0 = input.LA(1);
 
@@ -5777,16 +5948,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             }
             switch (alt11) {
                 case 1 :
-                    // InternalKExpressions.g:1941:1: ( ( rule__FunctionCall__Group_0_2_0__0 ) )
+                    // InternalKExpressions.g:1997:1: ( ( rule__FunctionCall__Group_0_2_0__0 ) )
                     {
-                    // InternalKExpressions.g:1941:1: ( ( rule__FunctionCall__Group_0_2_0__0 ) )
-                    // InternalKExpressions.g:1942:1: ( rule__FunctionCall__Group_0_2_0__0 )
+                    // InternalKExpressions.g:1997:1: ( ( rule__FunctionCall__Group_0_2_0__0 ) )
+                    // InternalKExpressions.g:1998:1: ( rule__FunctionCall__Group_0_2_0__0 )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getFunctionCallAccess().getGroup_0_2_0()); 
                     }
-                    // InternalKExpressions.g:1943:1: ( rule__FunctionCall__Group_0_2_0__0 )
-                    // InternalKExpressions.g:1943:2: rule__FunctionCall__Group_0_2_0__0
+                    // InternalKExpressions.g:1999:1: ( rule__FunctionCall__Group_0_2_0__0 )
+                    // InternalKExpressions.g:1999:2: rule__FunctionCall__Group_0_2_0__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__FunctionCall__Group_0_2_0__0();
@@ -5806,10 +5977,10 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 2 :
-                    // InternalKExpressions.g:1947:6: ( '()' )
+                    // InternalKExpressions.g:2003:6: ( '()' )
                     {
-                    // InternalKExpressions.g:1947:6: ( '()' )
-                    // InternalKExpressions.g:1948:1: '()'
+                    // InternalKExpressions.g:2003:6: ( '()' )
+                    // InternalKExpressions.g:2004:1: '()'
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getFunctionCallAccess().getLeftParenthesisRightParenthesisKeyword_0_2_1()); 
@@ -5842,13 +6013,13 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Alternatives_1_2"
-    // InternalKExpressions.g:1960:1: rule__FunctionCall__Alternatives_1_2 : ( ( ( rule__FunctionCall__Group_1_2_0__0 ) ) | ( '()' ) );
+    // InternalKExpressions.g:2016:1: rule__FunctionCall__Alternatives_1_2 : ( ( ( rule__FunctionCall__Group_1_2_0__0 ) ) | ( '()' ) );
     public final void rule__FunctionCall__Alternatives_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1964:1: ( ( ( rule__FunctionCall__Group_1_2_0__0 ) ) | ( '()' ) )
+            // InternalKExpressions.g:2020:1: ( ( ( rule__FunctionCall__Group_1_2_0__0 ) ) | ( '()' ) )
             int alt12=2;
             int LA12_0 = input.LA(1);
 
@@ -5867,16 +6038,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             }
             switch (alt12) {
                 case 1 :
-                    // InternalKExpressions.g:1965:1: ( ( rule__FunctionCall__Group_1_2_0__0 ) )
+                    // InternalKExpressions.g:2021:1: ( ( rule__FunctionCall__Group_1_2_0__0 ) )
                     {
-                    // InternalKExpressions.g:1965:1: ( ( rule__FunctionCall__Group_1_2_0__0 ) )
-                    // InternalKExpressions.g:1966:1: ( rule__FunctionCall__Group_1_2_0__0 )
+                    // InternalKExpressions.g:2021:1: ( ( rule__FunctionCall__Group_1_2_0__0 ) )
+                    // InternalKExpressions.g:2022:1: ( rule__FunctionCall__Group_1_2_0__0 )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getFunctionCallAccess().getGroup_1_2_0()); 
                     }
-                    // InternalKExpressions.g:1967:1: ( rule__FunctionCall__Group_1_2_0__0 )
-                    // InternalKExpressions.g:1967:2: rule__FunctionCall__Group_1_2_0__0
+                    // InternalKExpressions.g:2023:1: ( rule__FunctionCall__Group_1_2_0__0 )
+                    // InternalKExpressions.g:2023:2: rule__FunctionCall__Group_1_2_0__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__FunctionCall__Group_1_2_0__0();
@@ -5896,10 +6067,10 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 2 :
-                    // InternalKExpressions.g:1971:6: ( '()' )
+                    // InternalKExpressions.g:2027:6: ( '()' )
                     {
-                    // InternalKExpressions.g:1971:6: ( '()' )
-                    // InternalKExpressions.g:1972:1: '()'
+                    // InternalKExpressions.g:2027:6: ( '()' )
+                    // InternalKExpressions.g:2028:1: '()'
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getFunctionCallAccess().getLeftParenthesisRightParenthesisKeyword_1_2_1()); 
@@ -5931,45 +6102,133 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
     // $ANTLR end "rule__FunctionCall__Alternatives_1_2"
 
 
-    // $ANTLR start "rule__EStringBoolean__Alternatives"
-    // InternalKExpressions.g:1992:1: rule__EStringBoolean__Alternatives : ( ( RULE_STRING ) | ( ruleExtendedID ) | ( RULE_BOOLEAN ) );
-    public final void rule__EStringBoolean__Alternatives() throws RecognitionException {
+    // $ANTLR start "rule__VectorValueMember__Alternatives"
+    // InternalKExpressions.g:2040:1: rule__VectorValueMember__Alternatives : ( ( ruleExpression ) | ( ruleIgnoreValue ) );
+    public final void rule__VectorValueMember__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:1996:1: ( ( RULE_STRING ) | ( ruleExtendedID ) | ( RULE_BOOLEAN ) )
-            int alt13=3;
-            switch ( input.LA(1) ) {
-            case RULE_STRING:
-                {
+            // InternalKExpressions.g:2044:1: ( ( ruleExpression ) | ( ruleIgnoreValue ) )
+            int alt13=2;
+            int LA13_0 = input.LA(1);
+
+            if ( ((LA13_0>=RULE_STRING && LA13_0<=RULE_HOSTCODE)||LA13_0==17||LA13_0==20||LA13_0==22||LA13_0==26||LA13_0==32||LA13_0==38||LA13_0==44) ) {
                 alt13=1;
-                }
-                break;
-            case RULE_ID:
-                {
+            }
+            else if ( (LA13_0==45) ) {
                 alt13=2;
-                }
-                break;
-            case RULE_BOOLEAN:
-                {
-                alt13=3;
-                }
-                break;
-            default:
+            }
+            else {
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
                     new NoViableAltException("", 13, 0, input);
 
                 throw nvae;
             }
-
             switch (alt13) {
                 case 1 :
-                    // InternalKExpressions.g:1997:1: ( RULE_STRING )
+                    // InternalKExpressions.g:2045:1: ( ruleExpression )
                     {
-                    // InternalKExpressions.g:1997:1: ( RULE_STRING )
-                    // InternalKExpressions.g:1998:1: RULE_STRING
+                    // InternalKExpressions.g:2045:1: ( ruleExpression )
+                    // InternalKExpressions.g:2046:1: ruleExpression
+                    {
+                    if ( state.backtracking==0 ) {
+                       before(grammarAccess.getVectorValueMemberAccess().getExpressionParserRuleCall_0()); 
+                    }
+                    pushFollow(FollowSets000.FOLLOW_2);
+                    ruleExpression();
+
+                    state._fsp--;
+                    if (state.failed) return ;
+                    if ( state.backtracking==0 ) {
+                       after(grammarAccess.getVectorValueMemberAccess().getExpressionParserRuleCall_0()); 
+                    }
+
+                    }
+
+
+                    }
+                    break;
+                case 2 :
+                    // InternalKExpressions.g:2051:6: ( ruleIgnoreValue )
+                    {
+                    // InternalKExpressions.g:2051:6: ( ruleIgnoreValue )
+                    // InternalKExpressions.g:2052:1: ruleIgnoreValue
+                    {
+                    if ( state.backtracking==0 ) {
+                       before(grammarAccess.getVectorValueMemberAccess().getIgnoreValueParserRuleCall_1()); 
+                    }
+                    pushFollow(FollowSets000.FOLLOW_2);
+                    ruleIgnoreValue();
+
+                    state._fsp--;
+                    if (state.failed) return ;
+                    if ( state.backtracking==0 ) {
+                       after(grammarAccess.getVectorValueMemberAccess().getIgnoreValueParserRuleCall_1()); 
+                    }
+
+                    }
+
+
+                    }
+                    break;
+
+            }
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__VectorValueMember__Alternatives"
+
+
+    // $ANTLR start "rule__EStringBoolean__Alternatives"
+    // InternalKExpressions.g:2070:1: rule__EStringBoolean__Alternatives : ( ( RULE_STRING ) | ( ruleExtendedID ) | ( RULE_BOOLEAN ) );
+    public final void rule__EStringBoolean__Alternatives() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalKExpressions.g:2074:1: ( ( RULE_STRING ) | ( ruleExtendedID ) | ( RULE_BOOLEAN ) )
+            int alt14=3;
+            switch ( input.LA(1) ) {
+            case RULE_STRING:
+                {
+                alt14=1;
+                }
+                break;
+            case RULE_ID:
+                {
+                alt14=2;
+                }
+                break;
+            case RULE_BOOLEAN:
+                {
+                alt14=3;
+                }
+                break;
+            default:
+                if (state.backtracking>0) {state.failed=true; return ;}
+                NoViableAltException nvae =
+                    new NoViableAltException("", 14, 0, input);
+
+                throw nvae;
+            }
+
+            switch (alt14) {
+                case 1 :
+                    // InternalKExpressions.g:2075:1: ( RULE_STRING )
+                    {
+                    // InternalKExpressions.g:2075:1: ( RULE_STRING )
+                    // InternalKExpressions.g:2076:1: RULE_STRING
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getEStringBooleanAccess().getSTRINGTerminalRuleCall_0()); 
@@ -5985,10 +6244,10 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 2 :
-                    // InternalKExpressions.g:2003:6: ( ruleExtendedID )
+                    // InternalKExpressions.g:2081:6: ( ruleExtendedID )
                     {
-                    // InternalKExpressions.g:2003:6: ( ruleExtendedID )
-                    // InternalKExpressions.g:2004:1: ruleExtendedID
+                    // InternalKExpressions.g:2081:6: ( ruleExtendedID )
+                    // InternalKExpressions.g:2082:1: ruleExtendedID
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getEStringBooleanAccess().getExtendedIDParserRuleCall_1()); 
@@ -6008,10 +6267,10 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 3 :
-                    // InternalKExpressions.g:2009:6: ( RULE_BOOLEAN )
+                    // InternalKExpressions.g:2087:6: ( RULE_BOOLEAN )
                     {
-                    // InternalKExpressions.g:2009:6: ( RULE_BOOLEAN )
-                    // InternalKExpressions.g:2010:1: RULE_BOOLEAN
+                    // InternalKExpressions.g:2087:6: ( RULE_BOOLEAN )
+                    // InternalKExpressions.g:2088:1: RULE_BOOLEAN
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getEStringBooleanAccess().getBOOLEANTerminalRuleCall_2()); 
@@ -6044,44 +6303,44 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__EStringAllTypes__Alternatives"
-    // InternalKExpressions.g:2020:1: rule__EStringAllTypes__Alternatives : ( ( RULE_STRING ) | ( ruleExtendedID ) | ( RULE_BOOLEAN ) | ( ruleInteger ) | ( ruleFloateger ) );
+    // InternalKExpressions.g:2098:1: rule__EStringAllTypes__Alternatives : ( ( RULE_STRING ) | ( ruleExtendedID ) | ( RULE_BOOLEAN ) | ( ruleInteger ) | ( ruleFloateger ) );
     public final void rule__EStringAllTypes__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2024:1: ( ( RULE_STRING ) | ( ruleExtendedID ) | ( RULE_BOOLEAN ) | ( ruleInteger ) | ( ruleFloateger ) )
-            int alt14=5;
+            // InternalKExpressions.g:2102:1: ( ( RULE_STRING ) | ( ruleExtendedID ) | ( RULE_BOOLEAN ) | ( ruleInteger ) | ( ruleFloateger ) )
+            int alt15=5;
             switch ( input.LA(1) ) {
             case RULE_STRING:
                 {
-                alt14=1;
+                alt15=1;
                 }
                 break;
             case RULE_ID:
                 {
-                alt14=2;
+                alt15=2;
                 }
                 break;
             case RULE_BOOLEAN:
                 {
-                alt14=3;
+                alt15=3;
                 }
                 break;
             case 22:
                 {
-                int LA14_4 = input.LA(2);
+                int LA15_4 = input.LA(2);
 
-                if ( (LA14_4==RULE_FLOAT) ) {
-                    alt14=5;
+                if ( (LA15_4==RULE_FLOAT) ) {
+                    alt15=5;
                 }
-                else if ( (LA14_4==RULE_INT) ) {
-                    alt14=4;
+                else if ( (LA15_4==RULE_INT) ) {
+                    alt15=4;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("", 14, 4, input);
+                        new NoViableAltException("", 15, 4, input);
 
                     throw nvae;
                 }
@@ -6089,28 +6348,28 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                 break;
             case RULE_INT:
                 {
-                alt14=4;
+                alt15=4;
                 }
                 break;
             case RULE_FLOAT:
                 {
-                alt14=5;
+                alt15=5;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 14, 0, input);
+                    new NoViableAltException("", 15, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt14) {
+            switch (alt15) {
                 case 1 :
-                    // InternalKExpressions.g:2025:1: ( RULE_STRING )
+                    // InternalKExpressions.g:2103:1: ( RULE_STRING )
                     {
-                    // InternalKExpressions.g:2025:1: ( RULE_STRING )
-                    // InternalKExpressions.g:2026:1: RULE_STRING
+                    // InternalKExpressions.g:2103:1: ( RULE_STRING )
+                    // InternalKExpressions.g:2104:1: RULE_STRING
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getEStringAllTypesAccess().getSTRINGTerminalRuleCall_0()); 
@@ -6126,10 +6385,10 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 2 :
-                    // InternalKExpressions.g:2031:6: ( ruleExtendedID )
+                    // InternalKExpressions.g:2109:6: ( ruleExtendedID )
                     {
-                    // InternalKExpressions.g:2031:6: ( ruleExtendedID )
-                    // InternalKExpressions.g:2032:1: ruleExtendedID
+                    // InternalKExpressions.g:2109:6: ( ruleExtendedID )
+                    // InternalKExpressions.g:2110:1: ruleExtendedID
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getEStringAllTypesAccess().getExtendedIDParserRuleCall_1()); 
@@ -6149,10 +6408,10 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 3 :
-                    // InternalKExpressions.g:2037:6: ( RULE_BOOLEAN )
+                    // InternalKExpressions.g:2115:6: ( RULE_BOOLEAN )
                     {
-                    // InternalKExpressions.g:2037:6: ( RULE_BOOLEAN )
-                    // InternalKExpressions.g:2038:1: RULE_BOOLEAN
+                    // InternalKExpressions.g:2115:6: ( RULE_BOOLEAN )
+                    // InternalKExpressions.g:2116:1: RULE_BOOLEAN
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getEStringAllTypesAccess().getBOOLEANTerminalRuleCall_2()); 
@@ -6168,10 +6427,10 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 4 :
-                    // InternalKExpressions.g:2043:6: ( ruleInteger )
+                    // InternalKExpressions.g:2121:6: ( ruleInteger )
                     {
-                    // InternalKExpressions.g:2043:6: ( ruleInteger )
-                    // InternalKExpressions.g:2044:1: ruleInteger
+                    // InternalKExpressions.g:2121:6: ( ruleInteger )
+                    // InternalKExpressions.g:2122:1: ruleInteger
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getEStringAllTypesAccess().getIntegerParserRuleCall_3()); 
@@ -6191,10 +6450,10 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 5 :
-                    // InternalKExpressions.g:2049:6: ( ruleFloateger )
+                    // InternalKExpressions.g:2127:6: ( ruleFloateger )
                     {
-                    // InternalKExpressions.g:2049:6: ( ruleFloateger )
-                    // InternalKExpressions.g:2050:1: ruleFloateger
+                    // InternalKExpressions.g:2127:6: ( ruleFloateger )
+                    // InternalKExpressions.g:2128:1: ruleFloateger
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getEStringAllTypesAccess().getFloategerParserRuleCall_4()); 
@@ -6231,35 +6490,35 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ExtendedID__Alternatives_1_0"
-    // InternalKExpressions.g:2060:1: rule__ExtendedID__Alternatives_1_0 : ( ( '.' ) | ( '-' ) );
+    // InternalKExpressions.g:2138:1: rule__ExtendedID__Alternatives_1_0 : ( ( '.' ) | ( '-' ) );
     public final void rule__ExtendedID__Alternatives_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2064:1: ( ( '.' ) | ( '-' ) )
-            int alt15=2;
-            int LA15_0 = input.LA(1);
+            // InternalKExpressions.g:2142:1: ( ( '.' ) | ( '-' ) )
+            int alt16=2;
+            int LA16_0 = input.LA(1);
 
-            if ( (LA15_0==30) ) {
-                alt15=1;
+            if ( (LA16_0==30) ) {
+                alt16=1;
             }
-            else if ( (LA15_0==22) ) {
-                alt15=2;
+            else if ( (LA16_0==22) ) {
+                alt16=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 15, 0, input);
+                    new NoViableAltException("", 16, 0, input);
 
                 throw nvae;
             }
-            switch (alt15) {
+            switch (alt16) {
                 case 1 :
-                    // InternalKExpressions.g:2065:1: ( '.' )
+                    // InternalKExpressions.g:2143:1: ( '.' )
                     {
-                    // InternalKExpressions.g:2065:1: ( '.' )
-                    // InternalKExpressions.g:2066:1: '.'
+                    // InternalKExpressions.g:2143:1: ( '.' )
+                    // InternalKExpressions.g:2144:1: '.'
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0_0()); 
@@ -6275,10 +6534,10 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 2 :
-                    // InternalKExpressions.g:2073:6: ( '-' )
+                    // InternalKExpressions.g:2151:6: ( '-' )
                     {
-                    // InternalKExpressions.g:2073:6: ( '-' )
-                    // InternalKExpressions.g:2074:1: '-'
+                    // InternalKExpressions.g:2151:6: ( '-' )
+                    // InternalKExpressions.g:2152:1: '-'
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getExtendedIDAccess().getHyphenMinusKeyword_1_0_1()); 
@@ -6311,65 +6570,65 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__CompareOperator__Alternatives"
-    // InternalKExpressions.g:2086:1: rule__CompareOperator__Alternatives : ( ( ( '==' ) ) | ( ( '<' ) ) | ( ( '<=' ) ) | ( ( '>' ) ) | ( ( '>=' ) ) | ( ( '!=' ) ) );
+    // InternalKExpressions.g:2164:1: rule__CompareOperator__Alternatives : ( ( ( '==' ) ) | ( ( '<' ) ) | ( ( '<=' ) ) | ( ( '>' ) ) | ( ( '>=' ) ) | ( ( '!=' ) ) );
     public final void rule__CompareOperator__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2090:1: ( ( ( '==' ) ) | ( ( '<' ) ) | ( ( '<=' ) ) | ( ( '>' ) ) | ( ( '>=' ) ) | ( ( '!=' ) ) )
-            int alt16=6;
+            // InternalKExpressions.g:2168:1: ( ( ( '==' ) ) | ( ( '<' ) ) | ( ( '<=' ) ) | ( ( '>' ) ) | ( ( '>=' ) ) | ( ( '!=' ) ) )
+            int alt17=6;
             switch ( input.LA(1) ) {
             case 31:
                 {
-                alt16=1;
+                alt17=1;
                 }
                 break;
             case 32:
                 {
-                alt16=2;
+                alt17=2;
                 }
                 break;
             case 33:
                 {
-                alt16=3;
+                alt17=3;
                 }
                 break;
             case 34:
                 {
-                alt16=4;
+                alt17=4;
                 }
                 break;
             case 35:
                 {
-                alt16=5;
+                alt17=5;
                 }
                 break;
             case 36:
                 {
-                alt16=6;
+                alt17=6;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 16, 0, input);
+                    new NoViableAltException("", 17, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt16) {
+            switch (alt17) {
                 case 1 :
-                    // InternalKExpressions.g:2091:1: ( ( '==' ) )
+                    // InternalKExpressions.g:2169:1: ( ( '==' ) )
                     {
-                    // InternalKExpressions.g:2091:1: ( ( '==' ) )
-                    // InternalKExpressions.g:2092:1: ( '==' )
+                    // InternalKExpressions.g:2169:1: ( ( '==' ) )
+                    // InternalKExpressions.g:2170:1: ( '==' )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getCompareOperatorAccess().getEQEnumLiteralDeclaration_0()); 
                     }
-                    // InternalKExpressions.g:2093:1: ( '==' )
-                    // InternalKExpressions.g:2093:3: '=='
+                    // InternalKExpressions.g:2171:1: ( '==' )
+                    // InternalKExpressions.g:2171:3: '=='
                     {
                     match(input,31,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -6385,16 +6644,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 2 :
-                    // InternalKExpressions.g:2098:6: ( ( '<' ) )
+                    // InternalKExpressions.g:2176:6: ( ( '<' ) )
                     {
-                    // InternalKExpressions.g:2098:6: ( ( '<' ) )
-                    // InternalKExpressions.g:2099:1: ( '<' )
+                    // InternalKExpressions.g:2176:6: ( ( '<' ) )
+                    // InternalKExpressions.g:2177:1: ( '<' )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getCompareOperatorAccess().getLTEnumLiteralDeclaration_1()); 
                     }
-                    // InternalKExpressions.g:2100:1: ( '<' )
-                    // InternalKExpressions.g:2100:3: '<'
+                    // InternalKExpressions.g:2178:1: ( '<' )
+                    // InternalKExpressions.g:2178:3: '<'
                     {
                     match(input,32,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -6410,16 +6669,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 3 :
-                    // InternalKExpressions.g:2105:6: ( ( '<=' ) )
+                    // InternalKExpressions.g:2183:6: ( ( '<=' ) )
                     {
-                    // InternalKExpressions.g:2105:6: ( ( '<=' ) )
-                    // InternalKExpressions.g:2106:1: ( '<=' )
+                    // InternalKExpressions.g:2183:6: ( ( '<=' ) )
+                    // InternalKExpressions.g:2184:1: ( '<=' )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getCompareOperatorAccess().getLEQEnumLiteralDeclaration_2()); 
                     }
-                    // InternalKExpressions.g:2107:1: ( '<=' )
-                    // InternalKExpressions.g:2107:3: '<='
+                    // InternalKExpressions.g:2185:1: ( '<=' )
+                    // InternalKExpressions.g:2185:3: '<='
                     {
                     match(input,33,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -6435,16 +6694,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 4 :
-                    // InternalKExpressions.g:2112:6: ( ( '>' ) )
+                    // InternalKExpressions.g:2190:6: ( ( '>' ) )
                     {
-                    // InternalKExpressions.g:2112:6: ( ( '>' ) )
-                    // InternalKExpressions.g:2113:1: ( '>' )
+                    // InternalKExpressions.g:2190:6: ( ( '>' ) )
+                    // InternalKExpressions.g:2191:1: ( '>' )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getCompareOperatorAccess().getGTEnumLiteralDeclaration_3()); 
                     }
-                    // InternalKExpressions.g:2114:1: ( '>' )
-                    // InternalKExpressions.g:2114:3: '>'
+                    // InternalKExpressions.g:2192:1: ( '>' )
+                    // InternalKExpressions.g:2192:3: '>'
                     {
                     match(input,34,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -6460,16 +6719,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 5 :
-                    // InternalKExpressions.g:2119:6: ( ( '>=' ) )
+                    // InternalKExpressions.g:2197:6: ( ( '>=' ) )
                     {
-                    // InternalKExpressions.g:2119:6: ( ( '>=' ) )
-                    // InternalKExpressions.g:2120:1: ( '>=' )
+                    // InternalKExpressions.g:2197:6: ( ( '>=' ) )
+                    // InternalKExpressions.g:2198:1: ( '>=' )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getCompareOperatorAccess().getGEQEnumLiteralDeclaration_4()); 
                     }
-                    // InternalKExpressions.g:2121:1: ( '>=' )
-                    // InternalKExpressions.g:2121:3: '>='
+                    // InternalKExpressions.g:2199:1: ( '>=' )
+                    // InternalKExpressions.g:2199:3: '>='
                     {
                     match(input,35,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -6485,16 +6744,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 6 :
-                    // InternalKExpressions.g:2126:6: ( ( '!=' ) )
+                    // InternalKExpressions.g:2204:6: ( ( '!=' ) )
                     {
-                    // InternalKExpressions.g:2126:6: ( ( '!=' ) )
-                    // InternalKExpressions.g:2127:1: ( '!=' )
+                    // InternalKExpressions.g:2204:6: ( ( '!=' ) )
+                    // InternalKExpressions.g:2205:1: ( '!=' )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getCompareOperatorAccess().getNEEnumLiteralDeclaration_5()); 
                     }
-                    // InternalKExpressions.g:2128:1: ( '!=' )
-                    // InternalKExpressions.g:2128:3: '!='
+                    // InternalKExpressions.g:2206:1: ( '!=' )
+                    // InternalKExpressions.g:2206:3: '!='
                     {
                     match(input,36,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -6527,14 +6786,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Expression__Group__0"
-    // InternalKExpressions.g:2142:1: rule__Expression__Group__0 : rule__Expression__Group__0__Impl rule__Expression__Group__1 ;
+    // InternalKExpressions.g:2220:1: rule__Expression__Group__0 : rule__Expression__Group__0__Impl rule__Expression__Group__1 ;
     public final void rule__Expression__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2146:1: ( rule__Expression__Group__0__Impl rule__Expression__Group__1 )
-            // InternalKExpressions.g:2147:2: rule__Expression__Group__0__Impl rule__Expression__Group__1
+            // InternalKExpressions.g:2224:1: ( rule__Expression__Group__0__Impl rule__Expression__Group__1 )
+            // InternalKExpressions.g:2225:2: rule__Expression__Group__0__Impl rule__Expression__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_3);
             rule__Expression__Group__0__Impl();
@@ -6565,23 +6824,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Expression__Group__0__Impl"
-    // InternalKExpressions.g:2154:1: rule__Expression__Group__0__Impl : ( ( rule__Expression__Alternatives_0 ) ) ;
+    // InternalKExpressions.g:2232:1: rule__Expression__Group__0__Impl : ( ( rule__Expression__Alternatives_0 ) ) ;
     public final void rule__Expression__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2158:1: ( ( ( rule__Expression__Alternatives_0 ) ) )
-            // InternalKExpressions.g:2159:1: ( ( rule__Expression__Alternatives_0 ) )
+            // InternalKExpressions.g:2236:1: ( ( ( rule__Expression__Alternatives_0 ) ) )
+            // InternalKExpressions.g:2237:1: ( ( rule__Expression__Alternatives_0 ) )
             {
-            // InternalKExpressions.g:2159:1: ( ( rule__Expression__Alternatives_0 ) )
-            // InternalKExpressions.g:2160:1: ( rule__Expression__Alternatives_0 )
+            // InternalKExpressions.g:2237:1: ( ( rule__Expression__Alternatives_0 ) )
+            // InternalKExpressions.g:2238:1: ( rule__Expression__Alternatives_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExpressionAccess().getAlternatives_0()); 
             }
-            // InternalKExpressions.g:2161:1: ( rule__Expression__Alternatives_0 )
-            // InternalKExpressions.g:2161:2: rule__Expression__Alternatives_0
+            // InternalKExpressions.g:2239:1: ( rule__Expression__Alternatives_0 )
+            // InternalKExpressions.g:2239:2: rule__Expression__Alternatives_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Expression__Alternatives_0();
@@ -6616,14 +6875,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Expression__Group__1"
-    // InternalKExpressions.g:2171:1: rule__Expression__Group__1 : rule__Expression__Group__1__Impl ;
+    // InternalKExpressions.g:2249:1: rule__Expression__Group__1 : rule__Expression__Group__1__Impl ;
     public final void rule__Expression__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2175:1: ( rule__Expression__Group__1__Impl )
-            // InternalKExpressions.g:2176:2: rule__Expression__Group__1__Impl
+            // InternalKExpressions.g:2253:1: ( rule__Expression__Group__1__Impl )
+            // InternalKExpressions.g:2254:2: rule__Expression__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Expression__Group__1__Impl();
@@ -6649,31 +6908,31 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Expression__Group__1__Impl"
-    // InternalKExpressions.g:2182:1: rule__Expression__Group__1__Impl : ( ( rule__Expression__Group_1__0 )? ) ;
+    // InternalKExpressions.g:2260:1: rule__Expression__Group__1__Impl : ( ( rule__Expression__Group_1__0 )? ) ;
     public final void rule__Expression__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2186:1: ( ( ( rule__Expression__Group_1__0 )? ) )
-            // InternalKExpressions.g:2187:1: ( ( rule__Expression__Group_1__0 )? )
+            // InternalKExpressions.g:2264:1: ( ( ( rule__Expression__Group_1__0 )? ) )
+            // InternalKExpressions.g:2265:1: ( ( rule__Expression__Group_1__0 )? )
             {
-            // InternalKExpressions.g:2187:1: ( ( rule__Expression__Group_1__0 )? )
-            // InternalKExpressions.g:2188:1: ( rule__Expression__Group_1__0 )?
+            // InternalKExpressions.g:2265:1: ( ( rule__Expression__Group_1__0 )? )
+            // InternalKExpressions.g:2266:1: ( rule__Expression__Group_1__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExpressionAccess().getGroup_1()); 
             }
-            // InternalKExpressions.g:2189:1: ( rule__Expression__Group_1__0 )?
-            int alt17=2;
-            int LA17_0 = input.LA(1);
+            // InternalKExpressions.g:2267:1: ( rule__Expression__Group_1__0 )?
+            int alt18=2;
+            int LA18_0 = input.LA(1);
 
-            if ( (LA17_0==37) ) {
-                alt17=1;
+            if ( (LA18_0==37) ) {
+                alt18=1;
             }
-            switch (alt17) {
+            switch (alt18) {
                 case 1 :
-                    // InternalKExpressions.g:2189:2: rule__Expression__Group_1__0
+                    // InternalKExpressions.g:2267:2: rule__Expression__Group_1__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__Expression__Group_1__0();
@@ -6711,14 +6970,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Expression__Group_1__0"
-    // InternalKExpressions.g:2203:1: rule__Expression__Group_1__0 : rule__Expression__Group_1__0__Impl rule__Expression__Group_1__1 ;
+    // InternalKExpressions.g:2281:1: rule__Expression__Group_1__0 : rule__Expression__Group_1__0__Impl rule__Expression__Group_1__1 ;
     public final void rule__Expression__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2207:1: ( rule__Expression__Group_1__0__Impl rule__Expression__Group_1__1 )
-            // InternalKExpressions.g:2208:2: rule__Expression__Group_1__0__Impl rule__Expression__Group_1__1
+            // InternalKExpressions.g:2285:1: ( rule__Expression__Group_1__0__Impl rule__Expression__Group_1__1 )
+            // InternalKExpressions.g:2286:2: rule__Expression__Group_1__0__Impl rule__Expression__Group_1__1
             {
             pushFollow(FollowSets000.FOLLOW_4);
             rule__Expression__Group_1__0__Impl();
@@ -6749,17 +7008,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Expression__Group_1__0__Impl"
-    // InternalKExpressions.g:2215:1: rule__Expression__Group_1__0__Impl : ( 'schedule' ) ;
+    // InternalKExpressions.g:2293:1: rule__Expression__Group_1__0__Impl : ( 'schedule' ) ;
     public final void rule__Expression__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2219:1: ( ( 'schedule' ) )
-            // InternalKExpressions.g:2220:1: ( 'schedule' )
+            // InternalKExpressions.g:2297:1: ( ( 'schedule' ) )
+            // InternalKExpressions.g:2298:1: ( 'schedule' )
             {
-            // InternalKExpressions.g:2220:1: ( 'schedule' )
-            // InternalKExpressions.g:2221:1: 'schedule'
+            // InternalKExpressions.g:2298:1: ( 'schedule' )
+            // InternalKExpressions.g:2299:1: 'schedule'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExpressionAccess().getScheduleKeyword_1_0()); 
@@ -6790,14 +7049,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Expression__Group_1__1"
-    // InternalKExpressions.g:2234:1: rule__Expression__Group_1__1 : rule__Expression__Group_1__1__Impl ;
+    // InternalKExpressions.g:2312:1: rule__Expression__Group_1__1 : rule__Expression__Group_1__1__Impl ;
     public final void rule__Expression__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2238:1: ( rule__Expression__Group_1__1__Impl )
-            // InternalKExpressions.g:2239:2: rule__Expression__Group_1__1__Impl
+            // InternalKExpressions.g:2316:1: ( rule__Expression__Group_1__1__Impl )
+            // InternalKExpressions.g:2317:2: rule__Expression__Group_1__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Expression__Group_1__1__Impl();
@@ -6823,26 +7082,26 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Expression__Group_1__1__Impl"
-    // InternalKExpressions.g:2245:1: rule__Expression__Group_1__1__Impl : ( ( ( rule__Expression__ScheduleAssignment_1_1 ) ) ( ( rule__Expression__ScheduleAssignment_1_1 )* ) ) ;
+    // InternalKExpressions.g:2323:1: rule__Expression__Group_1__1__Impl : ( ( ( rule__Expression__ScheduleAssignment_1_1 ) ) ( ( rule__Expression__ScheduleAssignment_1_1 )* ) ) ;
     public final void rule__Expression__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2249:1: ( ( ( ( rule__Expression__ScheduleAssignment_1_1 ) ) ( ( rule__Expression__ScheduleAssignment_1_1 )* ) ) )
-            // InternalKExpressions.g:2250:1: ( ( ( rule__Expression__ScheduleAssignment_1_1 ) ) ( ( rule__Expression__ScheduleAssignment_1_1 )* ) )
+            // InternalKExpressions.g:2327:1: ( ( ( ( rule__Expression__ScheduleAssignment_1_1 ) ) ( ( rule__Expression__ScheduleAssignment_1_1 )* ) ) )
+            // InternalKExpressions.g:2328:1: ( ( ( rule__Expression__ScheduleAssignment_1_1 ) ) ( ( rule__Expression__ScheduleAssignment_1_1 )* ) )
             {
-            // InternalKExpressions.g:2250:1: ( ( ( rule__Expression__ScheduleAssignment_1_1 ) ) ( ( rule__Expression__ScheduleAssignment_1_1 )* ) )
-            // InternalKExpressions.g:2251:1: ( ( rule__Expression__ScheduleAssignment_1_1 ) ) ( ( rule__Expression__ScheduleAssignment_1_1 )* )
+            // InternalKExpressions.g:2328:1: ( ( ( rule__Expression__ScheduleAssignment_1_1 ) ) ( ( rule__Expression__ScheduleAssignment_1_1 )* ) )
+            // InternalKExpressions.g:2329:1: ( ( rule__Expression__ScheduleAssignment_1_1 ) ) ( ( rule__Expression__ScheduleAssignment_1_1 )* )
             {
-            // InternalKExpressions.g:2251:1: ( ( rule__Expression__ScheduleAssignment_1_1 ) )
-            // InternalKExpressions.g:2252:1: ( rule__Expression__ScheduleAssignment_1_1 )
+            // InternalKExpressions.g:2329:1: ( ( rule__Expression__ScheduleAssignment_1_1 ) )
+            // InternalKExpressions.g:2330:1: ( rule__Expression__ScheduleAssignment_1_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExpressionAccess().getScheduleAssignment_1_1()); 
             }
-            // InternalKExpressions.g:2253:1: ( rule__Expression__ScheduleAssignment_1_1 )
-            // InternalKExpressions.g:2253:2: rule__Expression__ScheduleAssignment_1_1
+            // InternalKExpressions.g:2331:1: ( rule__Expression__ScheduleAssignment_1_1 )
+            // InternalKExpressions.g:2331:2: rule__Expression__ScheduleAssignment_1_1
             {
             pushFollow(FollowSets000.FOLLOW_5);
             rule__Expression__ScheduleAssignment_1_1();
@@ -6858,26 +7117,26 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
             }
 
-            // InternalKExpressions.g:2256:1: ( ( rule__Expression__ScheduleAssignment_1_1 )* )
-            // InternalKExpressions.g:2257:1: ( rule__Expression__ScheduleAssignment_1_1 )*
+            // InternalKExpressions.g:2334:1: ( ( rule__Expression__ScheduleAssignment_1_1 )* )
+            // InternalKExpressions.g:2335:1: ( rule__Expression__ScheduleAssignment_1_1 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExpressionAccess().getScheduleAssignment_1_1()); 
             }
-            // InternalKExpressions.g:2258:1: ( rule__Expression__ScheduleAssignment_1_1 )*
-            loop18:
+            // InternalKExpressions.g:2336:1: ( rule__Expression__ScheduleAssignment_1_1 )*
+            loop19:
             do {
-                int alt18=2;
-                int LA18_0 = input.LA(1);
+                int alt19=2;
+                int LA19_0 = input.LA(1);
 
-                if ( (LA18_0==RULE_ID) ) {
-                    alt18=1;
+                if ( (LA19_0==RULE_ID) ) {
+                    alt19=1;
                 }
 
 
-                switch (alt18) {
+                switch (alt19) {
             	case 1 :
-            	    // InternalKExpressions.g:2258:2: rule__Expression__ScheduleAssignment_1_1
+            	    // InternalKExpressions.g:2336:2: rule__Expression__ScheduleAssignment_1_1
             	    {
             	    pushFollow(FollowSets000.FOLLOW_5);
             	    rule__Expression__ScheduleAssignment_1_1();
@@ -6889,7 +7148,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop18;
+            	    break loop19;
                 }
             } while (true);
 
@@ -6921,14 +7180,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalOrExpression__Group__0"
-    // InternalKExpressions.g:2273:1: rule__LogicalOrExpression__Group__0 : rule__LogicalOrExpression__Group__0__Impl rule__LogicalOrExpression__Group__1 ;
+    // InternalKExpressions.g:2351:1: rule__LogicalOrExpression__Group__0 : rule__LogicalOrExpression__Group__0__Impl rule__LogicalOrExpression__Group__1 ;
     public final void rule__LogicalOrExpression__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2277:1: ( rule__LogicalOrExpression__Group__0__Impl rule__LogicalOrExpression__Group__1 )
-            // InternalKExpressions.g:2278:2: rule__LogicalOrExpression__Group__0__Impl rule__LogicalOrExpression__Group__1
+            // InternalKExpressions.g:2355:1: ( rule__LogicalOrExpression__Group__0__Impl rule__LogicalOrExpression__Group__1 )
+            // InternalKExpressions.g:2356:2: rule__LogicalOrExpression__Group__0__Impl rule__LogicalOrExpression__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_6);
             rule__LogicalOrExpression__Group__0__Impl();
@@ -6959,17 +7218,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalOrExpression__Group__0__Impl"
-    // InternalKExpressions.g:2285:1: rule__LogicalOrExpression__Group__0__Impl : ( ruleLogicalAndExpression ) ;
+    // InternalKExpressions.g:2363:1: rule__LogicalOrExpression__Group__0__Impl : ( ruleLogicalAndExpression ) ;
     public final void rule__LogicalOrExpression__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2289:1: ( ( ruleLogicalAndExpression ) )
-            // InternalKExpressions.g:2290:1: ( ruleLogicalAndExpression )
+            // InternalKExpressions.g:2367:1: ( ( ruleLogicalAndExpression ) )
+            // InternalKExpressions.g:2368:1: ( ruleLogicalAndExpression )
             {
-            // InternalKExpressions.g:2290:1: ( ruleLogicalAndExpression )
-            // InternalKExpressions.g:2291:1: ruleLogicalAndExpression
+            // InternalKExpressions.g:2368:1: ( ruleLogicalAndExpression )
+            // InternalKExpressions.g:2369:1: ruleLogicalAndExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalOrExpressionAccess().getLogicalAndExpressionParserRuleCall_0()); 
@@ -7004,14 +7263,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalOrExpression__Group__1"
-    // InternalKExpressions.g:2302:1: rule__LogicalOrExpression__Group__1 : rule__LogicalOrExpression__Group__1__Impl ;
+    // InternalKExpressions.g:2380:1: rule__LogicalOrExpression__Group__1 : rule__LogicalOrExpression__Group__1__Impl ;
     public final void rule__LogicalOrExpression__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2306:1: ( rule__LogicalOrExpression__Group__1__Impl )
-            // InternalKExpressions.g:2307:2: rule__LogicalOrExpression__Group__1__Impl
+            // InternalKExpressions.g:2384:1: ( rule__LogicalOrExpression__Group__1__Impl )
+            // InternalKExpressions.g:2385:2: rule__LogicalOrExpression__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__LogicalOrExpression__Group__1__Impl();
@@ -7037,31 +7296,31 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalOrExpression__Group__1__Impl"
-    // InternalKExpressions.g:2313:1: rule__LogicalOrExpression__Group__1__Impl : ( ( rule__LogicalOrExpression__Group_1__0 )? ) ;
+    // InternalKExpressions.g:2391:1: rule__LogicalOrExpression__Group__1__Impl : ( ( rule__LogicalOrExpression__Group_1__0 )? ) ;
     public final void rule__LogicalOrExpression__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2317:1: ( ( ( rule__LogicalOrExpression__Group_1__0 )? ) )
-            // InternalKExpressions.g:2318:1: ( ( rule__LogicalOrExpression__Group_1__0 )? )
+            // InternalKExpressions.g:2395:1: ( ( ( rule__LogicalOrExpression__Group_1__0 )? ) )
+            // InternalKExpressions.g:2396:1: ( ( rule__LogicalOrExpression__Group_1__0 )? )
             {
-            // InternalKExpressions.g:2318:1: ( ( rule__LogicalOrExpression__Group_1__0 )? )
-            // InternalKExpressions.g:2319:1: ( rule__LogicalOrExpression__Group_1__0 )?
+            // InternalKExpressions.g:2396:1: ( ( rule__LogicalOrExpression__Group_1__0 )? )
+            // InternalKExpressions.g:2397:1: ( rule__LogicalOrExpression__Group_1__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalOrExpressionAccess().getGroup_1()); 
             }
-            // InternalKExpressions.g:2320:1: ( rule__LogicalOrExpression__Group_1__0 )?
-            int alt19=2;
-            int LA19_0 = input.LA(1);
+            // InternalKExpressions.g:2398:1: ( rule__LogicalOrExpression__Group_1__0 )?
+            int alt20=2;
+            int LA20_0 = input.LA(1);
 
-            if ( (LA19_0==27) ) {
-                alt19=1;
+            if ( (LA20_0==27) ) {
+                alt20=1;
             }
-            switch (alt19) {
+            switch (alt20) {
                 case 1 :
-                    // InternalKExpressions.g:2320:2: rule__LogicalOrExpression__Group_1__0
+                    // InternalKExpressions.g:2398:2: rule__LogicalOrExpression__Group_1__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__LogicalOrExpression__Group_1__0();
@@ -7099,14 +7358,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalOrExpression__Group_1__0"
-    // InternalKExpressions.g:2334:1: rule__LogicalOrExpression__Group_1__0 : rule__LogicalOrExpression__Group_1__0__Impl rule__LogicalOrExpression__Group_1__1 ;
+    // InternalKExpressions.g:2412:1: rule__LogicalOrExpression__Group_1__0 : rule__LogicalOrExpression__Group_1__0__Impl rule__LogicalOrExpression__Group_1__1 ;
     public final void rule__LogicalOrExpression__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2338:1: ( rule__LogicalOrExpression__Group_1__0__Impl rule__LogicalOrExpression__Group_1__1 )
-            // InternalKExpressions.g:2339:2: rule__LogicalOrExpression__Group_1__0__Impl rule__LogicalOrExpression__Group_1__1
+            // InternalKExpressions.g:2416:1: ( rule__LogicalOrExpression__Group_1__0__Impl rule__LogicalOrExpression__Group_1__1 )
+            // InternalKExpressions.g:2417:2: rule__LogicalOrExpression__Group_1__0__Impl rule__LogicalOrExpression__Group_1__1
             {
             pushFollow(FollowSets000.FOLLOW_6);
             rule__LogicalOrExpression__Group_1__0__Impl();
@@ -7137,23 +7396,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalOrExpression__Group_1__0__Impl"
-    // InternalKExpressions.g:2346:1: rule__LogicalOrExpression__Group_1__0__Impl : ( () ) ;
+    // InternalKExpressions.g:2424:1: rule__LogicalOrExpression__Group_1__0__Impl : ( () ) ;
     public final void rule__LogicalOrExpression__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2350:1: ( ( () ) )
-            // InternalKExpressions.g:2351:1: ( () )
+            // InternalKExpressions.g:2428:1: ( ( () ) )
+            // InternalKExpressions.g:2429:1: ( () )
             {
-            // InternalKExpressions.g:2351:1: ( () )
-            // InternalKExpressions.g:2352:1: ()
+            // InternalKExpressions.g:2429:1: ( () )
+            // InternalKExpressions.g:2430:1: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()); 
             }
-            // InternalKExpressions.g:2353:1: ()
-            // InternalKExpressions.g:2355:1: 
+            // InternalKExpressions.g:2431:1: ()
+            // InternalKExpressions.g:2433:1: 
             {
             }
 
@@ -7178,14 +7437,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalOrExpression__Group_1__1"
-    // InternalKExpressions.g:2365:1: rule__LogicalOrExpression__Group_1__1 : rule__LogicalOrExpression__Group_1__1__Impl rule__LogicalOrExpression__Group_1__2 ;
+    // InternalKExpressions.g:2443:1: rule__LogicalOrExpression__Group_1__1 : rule__LogicalOrExpression__Group_1__1__Impl rule__LogicalOrExpression__Group_1__2 ;
     public final void rule__LogicalOrExpression__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2369:1: ( rule__LogicalOrExpression__Group_1__1__Impl rule__LogicalOrExpression__Group_1__2 )
-            // InternalKExpressions.g:2370:2: rule__LogicalOrExpression__Group_1__1__Impl rule__LogicalOrExpression__Group_1__2
+            // InternalKExpressions.g:2447:1: ( rule__LogicalOrExpression__Group_1__1__Impl rule__LogicalOrExpression__Group_1__2 )
+            // InternalKExpressions.g:2448:2: rule__LogicalOrExpression__Group_1__1__Impl rule__LogicalOrExpression__Group_1__2
             {
             pushFollow(FollowSets000.FOLLOW_6);
             rule__LogicalOrExpression__Group_1__1__Impl();
@@ -7216,23 +7475,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalOrExpression__Group_1__1__Impl"
-    // InternalKExpressions.g:2377:1: rule__LogicalOrExpression__Group_1__1__Impl : ( ( rule__LogicalOrExpression__Group_1_1__0 ) ) ;
+    // InternalKExpressions.g:2455:1: rule__LogicalOrExpression__Group_1__1__Impl : ( ( rule__LogicalOrExpression__Group_1_1__0 ) ) ;
     public final void rule__LogicalOrExpression__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2381:1: ( ( ( rule__LogicalOrExpression__Group_1_1__0 ) ) )
-            // InternalKExpressions.g:2382:1: ( ( rule__LogicalOrExpression__Group_1_1__0 ) )
+            // InternalKExpressions.g:2459:1: ( ( ( rule__LogicalOrExpression__Group_1_1__0 ) ) )
+            // InternalKExpressions.g:2460:1: ( ( rule__LogicalOrExpression__Group_1_1__0 ) )
             {
-            // InternalKExpressions.g:2382:1: ( ( rule__LogicalOrExpression__Group_1_1__0 ) )
-            // InternalKExpressions.g:2383:1: ( rule__LogicalOrExpression__Group_1_1__0 )
+            // InternalKExpressions.g:2460:1: ( ( rule__LogicalOrExpression__Group_1_1__0 ) )
+            // InternalKExpressions.g:2461:1: ( rule__LogicalOrExpression__Group_1_1__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalOrExpressionAccess().getGroup_1_1()); 
             }
-            // InternalKExpressions.g:2384:1: ( rule__LogicalOrExpression__Group_1_1__0 )
-            // InternalKExpressions.g:2384:2: rule__LogicalOrExpression__Group_1_1__0
+            // InternalKExpressions.g:2462:1: ( rule__LogicalOrExpression__Group_1_1__0 )
+            // InternalKExpressions.g:2462:2: rule__LogicalOrExpression__Group_1_1__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__LogicalOrExpression__Group_1_1__0();
@@ -7267,14 +7526,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalOrExpression__Group_1__2"
-    // InternalKExpressions.g:2394:1: rule__LogicalOrExpression__Group_1__2 : rule__LogicalOrExpression__Group_1__2__Impl ;
+    // InternalKExpressions.g:2472:1: rule__LogicalOrExpression__Group_1__2 : rule__LogicalOrExpression__Group_1__2__Impl ;
     public final void rule__LogicalOrExpression__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2398:1: ( rule__LogicalOrExpression__Group_1__2__Impl )
-            // InternalKExpressions.g:2399:2: rule__LogicalOrExpression__Group_1__2__Impl
+            // InternalKExpressions.g:2476:1: ( rule__LogicalOrExpression__Group_1__2__Impl )
+            // InternalKExpressions.g:2477:2: rule__LogicalOrExpression__Group_1__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__LogicalOrExpression__Group_1__2__Impl();
@@ -7300,35 +7559,35 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalOrExpression__Group_1__2__Impl"
-    // InternalKExpressions.g:2405:1: rule__LogicalOrExpression__Group_1__2__Impl : ( ( rule__LogicalOrExpression__Group_1_2__0 )* ) ;
+    // InternalKExpressions.g:2483:1: rule__LogicalOrExpression__Group_1__2__Impl : ( ( rule__LogicalOrExpression__Group_1_2__0 )* ) ;
     public final void rule__LogicalOrExpression__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2409:1: ( ( ( rule__LogicalOrExpression__Group_1_2__0 )* ) )
-            // InternalKExpressions.g:2410:1: ( ( rule__LogicalOrExpression__Group_1_2__0 )* )
+            // InternalKExpressions.g:2487:1: ( ( ( rule__LogicalOrExpression__Group_1_2__0 )* ) )
+            // InternalKExpressions.g:2488:1: ( ( rule__LogicalOrExpression__Group_1_2__0 )* )
             {
-            // InternalKExpressions.g:2410:1: ( ( rule__LogicalOrExpression__Group_1_2__0 )* )
-            // InternalKExpressions.g:2411:1: ( rule__LogicalOrExpression__Group_1_2__0 )*
+            // InternalKExpressions.g:2488:1: ( ( rule__LogicalOrExpression__Group_1_2__0 )* )
+            // InternalKExpressions.g:2489:1: ( rule__LogicalOrExpression__Group_1_2__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalOrExpressionAccess().getGroup_1_2()); 
             }
-            // InternalKExpressions.g:2412:1: ( rule__LogicalOrExpression__Group_1_2__0 )*
-            loop20:
+            // InternalKExpressions.g:2490:1: ( rule__LogicalOrExpression__Group_1_2__0 )*
+            loop21:
             do {
-                int alt20=2;
-                int LA20_0 = input.LA(1);
+                int alt21=2;
+                int LA21_0 = input.LA(1);
 
-                if ( (LA20_0==27) ) {
-                    alt20=1;
+                if ( (LA21_0==27) ) {
+                    alt21=1;
                 }
 
 
-                switch (alt20) {
+                switch (alt21) {
             	case 1 :
-            	    // InternalKExpressions.g:2412:2: rule__LogicalOrExpression__Group_1_2__0
+            	    // InternalKExpressions.g:2490:2: rule__LogicalOrExpression__Group_1_2__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_7);
             	    rule__LogicalOrExpression__Group_1_2__0();
@@ -7340,7 +7599,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop20;
+            	    break loop21;
                 }
             } while (true);
 
@@ -7369,14 +7628,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalOrExpression__Group_1_1__0"
-    // InternalKExpressions.g:2428:1: rule__LogicalOrExpression__Group_1_1__0 : rule__LogicalOrExpression__Group_1_1__0__Impl rule__LogicalOrExpression__Group_1_1__1 ;
+    // InternalKExpressions.g:2506:1: rule__LogicalOrExpression__Group_1_1__0 : rule__LogicalOrExpression__Group_1_1__0__Impl rule__LogicalOrExpression__Group_1_1__1 ;
     public final void rule__LogicalOrExpression__Group_1_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2432:1: ( rule__LogicalOrExpression__Group_1_1__0__Impl rule__LogicalOrExpression__Group_1_1__1 )
-            // InternalKExpressions.g:2433:2: rule__LogicalOrExpression__Group_1_1__0__Impl rule__LogicalOrExpression__Group_1_1__1
+            // InternalKExpressions.g:2510:1: ( rule__LogicalOrExpression__Group_1_1__0__Impl rule__LogicalOrExpression__Group_1_1__1 )
+            // InternalKExpressions.g:2511:2: rule__LogicalOrExpression__Group_1_1__0__Impl rule__LogicalOrExpression__Group_1_1__1
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__LogicalOrExpression__Group_1_1__0__Impl();
@@ -7407,23 +7666,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalOrExpression__Group_1_1__0__Impl"
-    // InternalKExpressions.g:2440:1: rule__LogicalOrExpression__Group_1_1__0__Impl : ( ( rule__LogicalOrExpression__OperatorAssignment_1_1_0 ) ) ;
+    // InternalKExpressions.g:2518:1: rule__LogicalOrExpression__Group_1_1__0__Impl : ( ( rule__LogicalOrExpression__OperatorAssignment_1_1_0 ) ) ;
     public final void rule__LogicalOrExpression__Group_1_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2444:1: ( ( ( rule__LogicalOrExpression__OperatorAssignment_1_1_0 ) ) )
-            // InternalKExpressions.g:2445:1: ( ( rule__LogicalOrExpression__OperatorAssignment_1_1_0 ) )
+            // InternalKExpressions.g:2522:1: ( ( ( rule__LogicalOrExpression__OperatorAssignment_1_1_0 ) ) )
+            // InternalKExpressions.g:2523:1: ( ( rule__LogicalOrExpression__OperatorAssignment_1_1_0 ) )
             {
-            // InternalKExpressions.g:2445:1: ( ( rule__LogicalOrExpression__OperatorAssignment_1_1_0 ) )
-            // InternalKExpressions.g:2446:1: ( rule__LogicalOrExpression__OperatorAssignment_1_1_0 )
+            // InternalKExpressions.g:2523:1: ( ( rule__LogicalOrExpression__OperatorAssignment_1_1_0 ) )
+            // InternalKExpressions.g:2524:1: ( rule__LogicalOrExpression__OperatorAssignment_1_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalOrExpressionAccess().getOperatorAssignment_1_1_0()); 
             }
-            // InternalKExpressions.g:2447:1: ( rule__LogicalOrExpression__OperatorAssignment_1_1_0 )
-            // InternalKExpressions.g:2447:2: rule__LogicalOrExpression__OperatorAssignment_1_1_0
+            // InternalKExpressions.g:2525:1: ( rule__LogicalOrExpression__OperatorAssignment_1_1_0 )
+            // InternalKExpressions.g:2525:2: rule__LogicalOrExpression__OperatorAssignment_1_1_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__LogicalOrExpression__OperatorAssignment_1_1_0();
@@ -7458,14 +7717,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalOrExpression__Group_1_1__1"
-    // InternalKExpressions.g:2457:1: rule__LogicalOrExpression__Group_1_1__1 : rule__LogicalOrExpression__Group_1_1__1__Impl ;
+    // InternalKExpressions.g:2535:1: rule__LogicalOrExpression__Group_1_1__1 : rule__LogicalOrExpression__Group_1_1__1__Impl ;
     public final void rule__LogicalOrExpression__Group_1_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2461:1: ( rule__LogicalOrExpression__Group_1_1__1__Impl )
-            // InternalKExpressions.g:2462:2: rule__LogicalOrExpression__Group_1_1__1__Impl
+            // InternalKExpressions.g:2539:1: ( rule__LogicalOrExpression__Group_1_1__1__Impl )
+            // InternalKExpressions.g:2540:2: rule__LogicalOrExpression__Group_1_1__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__LogicalOrExpression__Group_1_1__1__Impl();
@@ -7491,23 +7750,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalOrExpression__Group_1_1__1__Impl"
-    // InternalKExpressions.g:2468:1: rule__LogicalOrExpression__Group_1_1__1__Impl : ( ( rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1 ) ) ;
+    // InternalKExpressions.g:2546:1: rule__LogicalOrExpression__Group_1_1__1__Impl : ( ( rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1 ) ) ;
     public final void rule__LogicalOrExpression__Group_1_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2472:1: ( ( ( rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1 ) ) )
-            // InternalKExpressions.g:2473:1: ( ( rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1 ) )
+            // InternalKExpressions.g:2550:1: ( ( ( rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1 ) ) )
+            // InternalKExpressions.g:2551:1: ( ( rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1 ) )
             {
-            // InternalKExpressions.g:2473:1: ( ( rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1 ) )
-            // InternalKExpressions.g:2474:1: ( rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1 )
+            // InternalKExpressions.g:2551:1: ( ( rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1 ) )
+            // InternalKExpressions.g:2552:1: ( rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalOrExpressionAccess().getSubExpressionsAssignment_1_1_1()); 
             }
-            // InternalKExpressions.g:2475:1: ( rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1 )
-            // InternalKExpressions.g:2475:2: rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1
+            // InternalKExpressions.g:2553:1: ( rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1 )
+            // InternalKExpressions.g:2553:2: rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1();
@@ -7542,14 +7801,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalOrExpression__Group_1_2__0"
-    // InternalKExpressions.g:2489:1: rule__LogicalOrExpression__Group_1_2__0 : rule__LogicalOrExpression__Group_1_2__0__Impl rule__LogicalOrExpression__Group_1_2__1 ;
+    // InternalKExpressions.g:2567:1: rule__LogicalOrExpression__Group_1_2__0 : rule__LogicalOrExpression__Group_1_2__0__Impl rule__LogicalOrExpression__Group_1_2__1 ;
     public final void rule__LogicalOrExpression__Group_1_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2493:1: ( rule__LogicalOrExpression__Group_1_2__0__Impl rule__LogicalOrExpression__Group_1_2__1 )
-            // InternalKExpressions.g:2494:2: rule__LogicalOrExpression__Group_1_2__0__Impl rule__LogicalOrExpression__Group_1_2__1
+            // InternalKExpressions.g:2571:1: ( rule__LogicalOrExpression__Group_1_2__0__Impl rule__LogicalOrExpression__Group_1_2__1 )
+            // InternalKExpressions.g:2572:2: rule__LogicalOrExpression__Group_1_2__0__Impl rule__LogicalOrExpression__Group_1_2__1
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__LogicalOrExpression__Group_1_2__0__Impl();
@@ -7580,17 +7839,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalOrExpression__Group_1_2__0__Impl"
-    // InternalKExpressions.g:2501:1: rule__LogicalOrExpression__Group_1_2__0__Impl : ( '||' ) ;
+    // InternalKExpressions.g:2579:1: rule__LogicalOrExpression__Group_1_2__0__Impl : ( '||' ) ;
     public final void rule__LogicalOrExpression__Group_1_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2505:1: ( ( '||' ) )
-            // InternalKExpressions.g:2506:1: ( '||' )
+            // InternalKExpressions.g:2583:1: ( ( '||' ) )
+            // InternalKExpressions.g:2584:1: ( '||' )
             {
-            // InternalKExpressions.g:2506:1: ( '||' )
-            // InternalKExpressions.g:2507:1: '||'
+            // InternalKExpressions.g:2584:1: ( '||' )
+            // InternalKExpressions.g:2585:1: '||'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalOrExpressionAccess().getVerticalLineVerticalLineKeyword_1_2_0()); 
@@ -7621,14 +7880,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalOrExpression__Group_1_2__1"
-    // InternalKExpressions.g:2520:1: rule__LogicalOrExpression__Group_1_2__1 : rule__LogicalOrExpression__Group_1_2__1__Impl ;
+    // InternalKExpressions.g:2598:1: rule__LogicalOrExpression__Group_1_2__1 : rule__LogicalOrExpression__Group_1_2__1__Impl ;
     public final void rule__LogicalOrExpression__Group_1_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2524:1: ( rule__LogicalOrExpression__Group_1_2__1__Impl )
-            // InternalKExpressions.g:2525:2: rule__LogicalOrExpression__Group_1_2__1__Impl
+            // InternalKExpressions.g:2602:1: ( rule__LogicalOrExpression__Group_1_2__1__Impl )
+            // InternalKExpressions.g:2603:2: rule__LogicalOrExpression__Group_1_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__LogicalOrExpression__Group_1_2__1__Impl();
@@ -7654,23 +7913,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalOrExpression__Group_1_2__1__Impl"
-    // InternalKExpressions.g:2531:1: rule__LogicalOrExpression__Group_1_2__1__Impl : ( ( rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1 ) ) ;
+    // InternalKExpressions.g:2609:1: rule__LogicalOrExpression__Group_1_2__1__Impl : ( ( rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1 ) ) ;
     public final void rule__LogicalOrExpression__Group_1_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2535:1: ( ( ( rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1 ) ) )
-            // InternalKExpressions.g:2536:1: ( ( rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1 ) )
+            // InternalKExpressions.g:2613:1: ( ( ( rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1 ) ) )
+            // InternalKExpressions.g:2614:1: ( ( rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1 ) )
             {
-            // InternalKExpressions.g:2536:1: ( ( rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1 ) )
-            // InternalKExpressions.g:2537:1: ( rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1 )
+            // InternalKExpressions.g:2614:1: ( ( rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1 ) )
+            // InternalKExpressions.g:2615:1: ( rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalOrExpressionAccess().getSubExpressionsAssignment_1_2_1()); 
             }
-            // InternalKExpressions.g:2538:1: ( rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1 )
-            // InternalKExpressions.g:2538:2: rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1
+            // InternalKExpressions.g:2616:1: ( rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1 )
+            // InternalKExpressions.g:2616:2: rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1();
@@ -7705,14 +7964,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalAndExpression__Group__0"
-    // InternalKExpressions.g:2552:1: rule__LogicalAndExpression__Group__0 : rule__LogicalAndExpression__Group__0__Impl rule__LogicalAndExpression__Group__1 ;
+    // InternalKExpressions.g:2630:1: rule__LogicalAndExpression__Group__0 : rule__LogicalAndExpression__Group__0__Impl rule__LogicalAndExpression__Group__1 ;
     public final void rule__LogicalAndExpression__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2556:1: ( rule__LogicalAndExpression__Group__0__Impl rule__LogicalAndExpression__Group__1 )
-            // InternalKExpressions.g:2557:2: rule__LogicalAndExpression__Group__0__Impl rule__LogicalAndExpression__Group__1
+            // InternalKExpressions.g:2634:1: ( rule__LogicalAndExpression__Group__0__Impl rule__LogicalAndExpression__Group__1 )
+            // InternalKExpressions.g:2635:2: rule__LogicalAndExpression__Group__0__Impl rule__LogicalAndExpression__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_9);
             rule__LogicalAndExpression__Group__0__Impl();
@@ -7743,17 +8002,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalAndExpression__Group__0__Impl"
-    // InternalKExpressions.g:2564:1: rule__LogicalAndExpression__Group__0__Impl : ( ruleBitwiseOrExpression ) ;
+    // InternalKExpressions.g:2642:1: rule__LogicalAndExpression__Group__0__Impl : ( ruleBitwiseOrExpression ) ;
     public final void rule__LogicalAndExpression__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2568:1: ( ( ruleBitwiseOrExpression ) )
-            // InternalKExpressions.g:2569:1: ( ruleBitwiseOrExpression )
+            // InternalKExpressions.g:2646:1: ( ( ruleBitwiseOrExpression ) )
+            // InternalKExpressions.g:2647:1: ( ruleBitwiseOrExpression )
             {
-            // InternalKExpressions.g:2569:1: ( ruleBitwiseOrExpression )
-            // InternalKExpressions.g:2570:1: ruleBitwiseOrExpression
+            // InternalKExpressions.g:2647:1: ( ruleBitwiseOrExpression )
+            // InternalKExpressions.g:2648:1: ruleBitwiseOrExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalAndExpressionAccess().getBitwiseOrExpressionParserRuleCall_0()); 
@@ -7788,14 +8047,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalAndExpression__Group__1"
-    // InternalKExpressions.g:2581:1: rule__LogicalAndExpression__Group__1 : rule__LogicalAndExpression__Group__1__Impl ;
+    // InternalKExpressions.g:2659:1: rule__LogicalAndExpression__Group__1 : rule__LogicalAndExpression__Group__1__Impl ;
     public final void rule__LogicalAndExpression__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2585:1: ( rule__LogicalAndExpression__Group__1__Impl )
-            // InternalKExpressions.g:2586:2: rule__LogicalAndExpression__Group__1__Impl
+            // InternalKExpressions.g:2663:1: ( rule__LogicalAndExpression__Group__1__Impl )
+            // InternalKExpressions.g:2664:2: rule__LogicalAndExpression__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__LogicalAndExpression__Group__1__Impl();
@@ -7821,31 +8080,31 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalAndExpression__Group__1__Impl"
-    // InternalKExpressions.g:2592:1: rule__LogicalAndExpression__Group__1__Impl : ( ( rule__LogicalAndExpression__Group_1__0 )? ) ;
+    // InternalKExpressions.g:2670:1: rule__LogicalAndExpression__Group__1__Impl : ( ( rule__LogicalAndExpression__Group_1__0 )? ) ;
     public final void rule__LogicalAndExpression__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2596:1: ( ( ( rule__LogicalAndExpression__Group_1__0 )? ) )
-            // InternalKExpressions.g:2597:1: ( ( rule__LogicalAndExpression__Group_1__0 )? )
+            // InternalKExpressions.g:2674:1: ( ( ( rule__LogicalAndExpression__Group_1__0 )? ) )
+            // InternalKExpressions.g:2675:1: ( ( rule__LogicalAndExpression__Group_1__0 )? )
             {
-            // InternalKExpressions.g:2597:1: ( ( rule__LogicalAndExpression__Group_1__0 )? )
-            // InternalKExpressions.g:2598:1: ( rule__LogicalAndExpression__Group_1__0 )?
+            // InternalKExpressions.g:2675:1: ( ( rule__LogicalAndExpression__Group_1__0 )? )
+            // InternalKExpressions.g:2676:1: ( rule__LogicalAndExpression__Group_1__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalAndExpressionAccess().getGroup_1()); 
             }
-            // InternalKExpressions.g:2599:1: ( rule__LogicalAndExpression__Group_1__0 )?
-            int alt21=2;
-            int LA21_0 = input.LA(1);
+            // InternalKExpressions.g:2677:1: ( rule__LogicalAndExpression__Group_1__0 )?
+            int alt22=2;
+            int LA22_0 = input.LA(1);
 
-            if ( (LA21_0==28) ) {
-                alt21=1;
+            if ( (LA22_0==28) ) {
+                alt22=1;
             }
-            switch (alt21) {
+            switch (alt22) {
                 case 1 :
-                    // InternalKExpressions.g:2599:2: rule__LogicalAndExpression__Group_1__0
+                    // InternalKExpressions.g:2677:2: rule__LogicalAndExpression__Group_1__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__LogicalAndExpression__Group_1__0();
@@ -7883,14 +8142,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalAndExpression__Group_1__0"
-    // InternalKExpressions.g:2613:1: rule__LogicalAndExpression__Group_1__0 : rule__LogicalAndExpression__Group_1__0__Impl rule__LogicalAndExpression__Group_1__1 ;
+    // InternalKExpressions.g:2691:1: rule__LogicalAndExpression__Group_1__0 : rule__LogicalAndExpression__Group_1__0__Impl rule__LogicalAndExpression__Group_1__1 ;
     public final void rule__LogicalAndExpression__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2617:1: ( rule__LogicalAndExpression__Group_1__0__Impl rule__LogicalAndExpression__Group_1__1 )
-            // InternalKExpressions.g:2618:2: rule__LogicalAndExpression__Group_1__0__Impl rule__LogicalAndExpression__Group_1__1
+            // InternalKExpressions.g:2695:1: ( rule__LogicalAndExpression__Group_1__0__Impl rule__LogicalAndExpression__Group_1__1 )
+            // InternalKExpressions.g:2696:2: rule__LogicalAndExpression__Group_1__0__Impl rule__LogicalAndExpression__Group_1__1
             {
             pushFollow(FollowSets000.FOLLOW_9);
             rule__LogicalAndExpression__Group_1__0__Impl();
@@ -7921,23 +8180,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalAndExpression__Group_1__0__Impl"
-    // InternalKExpressions.g:2625:1: rule__LogicalAndExpression__Group_1__0__Impl : ( () ) ;
+    // InternalKExpressions.g:2703:1: rule__LogicalAndExpression__Group_1__0__Impl : ( () ) ;
     public final void rule__LogicalAndExpression__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2629:1: ( ( () ) )
-            // InternalKExpressions.g:2630:1: ( () )
+            // InternalKExpressions.g:2707:1: ( ( () ) )
+            // InternalKExpressions.g:2708:1: ( () )
             {
-            // InternalKExpressions.g:2630:1: ( () )
-            // InternalKExpressions.g:2631:1: ()
+            // InternalKExpressions.g:2708:1: ( () )
+            // InternalKExpressions.g:2709:1: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()); 
             }
-            // InternalKExpressions.g:2632:1: ()
-            // InternalKExpressions.g:2634:1: 
+            // InternalKExpressions.g:2710:1: ()
+            // InternalKExpressions.g:2712:1: 
             {
             }
 
@@ -7962,14 +8221,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalAndExpression__Group_1__1"
-    // InternalKExpressions.g:2644:1: rule__LogicalAndExpression__Group_1__1 : rule__LogicalAndExpression__Group_1__1__Impl rule__LogicalAndExpression__Group_1__2 ;
+    // InternalKExpressions.g:2722:1: rule__LogicalAndExpression__Group_1__1 : rule__LogicalAndExpression__Group_1__1__Impl rule__LogicalAndExpression__Group_1__2 ;
     public final void rule__LogicalAndExpression__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2648:1: ( rule__LogicalAndExpression__Group_1__1__Impl rule__LogicalAndExpression__Group_1__2 )
-            // InternalKExpressions.g:2649:2: rule__LogicalAndExpression__Group_1__1__Impl rule__LogicalAndExpression__Group_1__2
+            // InternalKExpressions.g:2726:1: ( rule__LogicalAndExpression__Group_1__1__Impl rule__LogicalAndExpression__Group_1__2 )
+            // InternalKExpressions.g:2727:2: rule__LogicalAndExpression__Group_1__1__Impl rule__LogicalAndExpression__Group_1__2
             {
             pushFollow(FollowSets000.FOLLOW_9);
             rule__LogicalAndExpression__Group_1__1__Impl();
@@ -8000,23 +8259,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalAndExpression__Group_1__1__Impl"
-    // InternalKExpressions.g:2656:1: rule__LogicalAndExpression__Group_1__1__Impl : ( ( rule__LogicalAndExpression__Group_1_1__0 ) ) ;
+    // InternalKExpressions.g:2734:1: rule__LogicalAndExpression__Group_1__1__Impl : ( ( rule__LogicalAndExpression__Group_1_1__0 ) ) ;
     public final void rule__LogicalAndExpression__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2660:1: ( ( ( rule__LogicalAndExpression__Group_1_1__0 ) ) )
-            // InternalKExpressions.g:2661:1: ( ( rule__LogicalAndExpression__Group_1_1__0 ) )
+            // InternalKExpressions.g:2738:1: ( ( ( rule__LogicalAndExpression__Group_1_1__0 ) ) )
+            // InternalKExpressions.g:2739:1: ( ( rule__LogicalAndExpression__Group_1_1__0 ) )
             {
-            // InternalKExpressions.g:2661:1: ( ( rule__LogicalAndExpression__Group_1_1__0 ) )
-            // InternalKExpressions.g:2662:1: ( rule__LogicalAndExpression__Group_1_1__0 )
+            // InternalKExpressions.g:2739:1: ( ( rule__LogicalAndExpression__Group_1_1__0 ) )
+            // InternalKExpressions.g:2740:1: ( rule__LogicalAndExpression__Group_1_1__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalAndExpressionAccess().getGroup_1_1()); 
             }
-            // InternalKExpressions.g:2663:1: ( rule__LogicalAndExpression__Group_1_1__0 )
-            // InternalKExpressions.g:2663:2: rule__LogicalAndExpression__Group_1_1__0
+            // InternalKExpressions.g:2741:1: ( rule__LogicalAndExpression__Group_1_1__0 )
+            // InternalKExpressions.g:2741:2: rule__LogicalAndExpression__Group_1_1__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__LogicalAndExpression__Group_1_1__0();
@@ -8051,14 +8310,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalAndExpression__Group_1__2"
-    // InternalKExpressions.g:2673:1: rule__LogicalAndExpression__Group_1__2 : rule__LogicalAndExpression__Group_1__2__Impl ;
+    // InternalKExpressions.g:2751:1: rule__LogicalAndExpression__Group_1__2 : rule__LogicalAndExpression__Group_1__2__Impl ;
     public final void rule__LogicalAndExpression__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2677:1: ( rule__LogicalAndExpression__Group_1__2__Impl )
-            // InternalKExpressions.g:2678:2: rule__LogicalAndExpression__Group_1__2__Impl
+            // InternalKExpressions.g:2755:1: ( rule__LogicalAndExpression__Group_1__2__Impl )
+            // InternalKExpressions.g:2756:2: rule__LogicalAndExpression__Group_1__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__LogicalAndExpression__Group_1__2__Impl();
@@ -8084,35 +8343,35 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalAndExpression__Group_1__2__Impl"
-    // InternalKExpressions.g:2684:1: rule__LogicalAndExpression__Group_1__2__Impl : ( ( rule__LogicalAndExpression__Group_1_2__0 )* ) ;
+    // InternalKExpressions.g:2762:1: rule__LogicalAndExpression__Group_1__2__Impl : ( ( rule__LogicalAndExpression__Group_1_2__0 )* ) ;
     public final void rule__LogicalAndExpression__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2688:1: ( ( ( rule__LogicalAndExpression__Group_1_2__0 )* ) )
-            // InternalKExpressions.g:2689:1: ( ( rule__LogicalAndExpression__Group_1_2__0 )* )
+            // InternalKExpressions.g:2766:1: ( ( ( rule__LogicalAndExpression__Group_1_2__0 )* ) )
+            // InternalKExpressions.g:2767:1: ( ( rule__LogicalAndExpression__Group_1_2__0 )* )
             {
-            // InternalKExpressions.g:2689:1: ( ( rule__LogicalAndExpression__Group_1_2__0 )* )
-            // InternalKExpressions.g:2690:1: ( rule__LogicalAndExpression__Group_1_2__0 )*
+            // InternalKExpressions.g:2767:1: ( ( rule__LogicalAndExpression__Group_1_2__0 )* )
+            // InternalKExpressions.g:2768:1: ( rule__LogicalAndExpression__Group_1_2__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalAndExpressionAccess().getGroup_1_2()); 
             }
-            // InternalKExpressions.g:2691:1: ( rule__LogicalAndExpression__Group_1_2__0 )*
-            loop22:
+            // InternalKExpressions.g:2769:1: ( rule__LogicalAndExpression__Group_1_2__0 )*
+            loop23:
             do {
-                int alt22=2;
-                int LA22_0 = input.LA(1);
+                int alt23=2;
+                int LA23_0 = input.LA(1);
 
-                if ( (LA22_0==28) ) {
-                    alt22=1;
+                if ( (LA23_0==28) ) {
+                    alt23=1;
                 }
 
 
-                switch (alt22) {
+                switch (alt23) {
             	case 1 :
-            	    // InternalKExpressions.g:2691:2: rule__LogicalAndExpression__Group_1_2__0
+            	    // InternalKExpressions.g:2769:2: rule__LogicalAndExpression__Group_1_2__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_10);
             	    rule__LogicalAndExpression__Group_1_2__0();
@@ -8124,7 +8383,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop22;
+            	    break loop23;
                 }
             } while (true);
 
@@ -8153,14 +8412,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalAndExpression__Group_1_1__0"
-    // InternalKExpressions.g:2707:1: rule__LogicalAndExpression__Group_1_1__0 : rule__LogicalAndExpression__Group_1_1__0__Impl rule__LogicalAndExpression__Group_1_1__1 ;
+    // InternalKExpressions.g:2785:1: rule__LogicalAndExpression__Group_1_1__0 : rule__LogicalAndExpression__Group_1_1__0__Impl rule__LogicalAndExpression__Group_1_1__1 ;
     public final void rule__LogicalAndExpression__Group_1_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2711:1: ( rule__LogicalAndExpression__Group_1_1__0__Impl rule__LogicalAndExpression__Group_1_1__1 )
-            // InternalKExpressions.g:2712:2: rule__LogicalAndExpression__Group_1_1__0__Impl rule__LogicalAndExpression__Group_1_1__1
+            // InternalKExpressions.g:2789:1: ( rule__LogicalAndExpression__Group_1_1__0__Impl rule__LogicalAndExpression__Group_1_1__1 )
+            // InternalKExpressions.g:2790:2: rule__LogicalAndExpression__Group_1_1__0__Impl rule__LogicalAndExpression__Group_1_1__1
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__LogicalAndExpression__Group_1_1__0__Impl();
@@ -8191,23 +8450,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalAndExpression__Group_1_1__0__Impl"
-    // InternalKExpressions.g:2719:1: rule__LogicalAndExpression__Group_1_1__0__Impl : ( ( rule__LogicalAndExpression__OperatorAssignment_1_1_0 ) ) ;
+    // InternalKExpressions.g:2797:1: rule__LogicalAndExpression__Group_1_1__0__Impl : ( ( rule__LogicalAndExpression__OperatorAssignment_1_1_0 ) ) ;
     public final void rule__LogicalAndExpression__Group_1_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2723:1: ( ( ( rule__LogicalAndExpression__OperatorAssignment_1_1_0 ) ) )
-            // InternalKExpressions.g:2724:1: ( ( rule__LogicalAndExpression__OperatorAssignment_1_1_0 ) )
+            // InternalKExpressions.g:2801:1: ( ( ( rule__LogicalAndExpression__OperatorAssignment_1_1_0 ) ) )
+            // InternalKExpressions.g:2802:1: ( ( rule__LogicalAndExpression__OperatorAssignment_1_1_0 ) )
             {
-            // InternalKExpressions.g:2724:1: ( ( rule__LogicalAndExpression__OperatorAssignment_1_1_0 ) )
-            // InternalKExpressions.g:2725:1: ( rule__LogicalAndExpression__OperatorAssignment_1_1_0 )
+            // InternalKExpressions.g:2802:1: ( ( rule__LogicalAndExpression__OperatorAssignment_1_1_0 ) )
+            // InternalKExpressions.g:2803:1: ( rule__LogicalAndExpression__OperatorAssignment_1_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalAndExpressionAccess().getOperatorAssignment_1_1_0()); 
             }
-            // InternalKExpressions.g:2726:1: ( rule__LogicalAndExpression__OperatorAssignment_1_1_0 )
-            // InternalKExpressions.g:2726:2: rule__LogicalAndExpression__OperatorAssignment_1_1_0
+            // InternalKExpressions.g:2804:1: ( rule__LogicalAndExpression__OperatorAssignment_1_1_0 )
+            // InternalKExpressions.g:2804:2: rule__LogicalAndExpression__OperatorAssignment_1_1_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__LogicalAndExpression__OperatorAssignment_1_1_0();
@@ -8242,14 +8501,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalAndExpression__Group_1_1__1"
-    // InternalKExpressions.g:2736:1: rule__LogicalAndExpression__Group_1_1__1 : rule__LogicalAndExpression__Group_1_1__1__Impl ;
+    // InternalKExpressions.g:2814:1: rule__LogicalAndExpression__Group_1_1__1 : rule__LogicalAndExpression__Group_1_1__1__Impl ;
     public final void rule__LogicalAndExpression__Group_1_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2740:1: ( rule__LogicalAndExpression__Group_1_1__1__Impl )
-            // InternalKExpressions.g:2741:2: rule__LogicalAndExpression__Group_1_1__1__Impl
+            // InternalKExpressions.g:2818:1: ( rule__LogicalAndExpression__Group_1_1__1__Impl )
+            // InternalKExpressions.g:2819:2: rule__LogicalAndExpression__Group_1_1__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__LogicalAndExpression__Group_1_1__1__Impl();
@@ -8275,23 +8534,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalAndExpression__Group_1_1__1__Impl"
-    // InternalKExpressions.g:2747:1: rule__LogicalAndExpression__Group_1_1__1__Impl : ( ( rule__LogicalAndExpression__SubExpressionsAssignment_1_1_1 ) ) ;
+    // InternalKExpressions.g:2825:1: rule__LogicalAndExpression__Group_1_1__1__Impl : ( ( rule__LogicalAndExpression__SubExpressionsAssignment_1_1_1 ) ) ;
     public final void rule__LogicalAndExpression__Group_1_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2751:1: ( ( ( rule__LogicalAndExpression__SubExpressionsAssignment_1_1_1 ) ) )
-            // InternalKExpressions.g:2752:1: ( ( rule__LogicalAndExpression__SubExpressionsAssignment_1_1_1 ) )
+            // InternalKExpressions.g:2829:1: ( ( ( rule__LogicalAndExpression__SubExpressionsAssignment_1_1_1 ) ) )
+            // InternalKExpressions.g:2830:1: ( ( rule__LogicalAndExpression__SubExpressionsAssignment_1_1_1 ) )
             {
-            // InternalKExpressions.g:2752:1: ( ( rule__LogicalAndExpression__SubExpressionsAssignment_1_1_1 ) )
-            // InternalKExpressions.g:2753:1: ( rule__LogicalAndExpression__SubExpressionsAssignment_1_1_1 )
+            // InternalKExpressions.g:2830:1: ( ( rule__LogicalAndExpression__SubExpressionsAssignment_1_1_1 ) )
+            // InternalKExpressions.g:2831:1: ( rule__LogicalAndExpression__SubExpressionsAssignment_1_1_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalAndExpressionAccess().getSubExpressionsAssignment_1_1_1()); 
             }
-            // InternalKExpressions.g:2754:1: ( rule__LogicalAndExpression__SubExpressionsAssignment_1_1_1 )
-            // InternalKExpressions.g:2754:2: rule__LogicalAndExpression__SubExpressionsAssignment_1_1_1
+            // InternalKExpressions.g:2832:1: ( rule__LogicalAndExpression__SubExpressionsAssignment_1_1_1 )
+            // InternalKExpressions.g:2832:2: rule__LogicalAndExpression__SubExpressionsAssignment_1_1_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__LogicalAndExpression__SubExpressionsAssignment_1_1_1();
@@ -8326,14 +8585,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalAndExpression__Group_1_2__0"
-    // InternalKExpressions.g:2768:1: rule__LogicalAndExpression__Group_1_2__0 : rule__LogicalAndExpression__Group_1_2__0__Impl rule__LogicalAndExpression__Group_1_2__1 ;
+    // InternalKExpressions.g:2846:1: rule__LogicalAndExpression__Group_1_2__0 : rule__LogicalAndExpression__Group_1_2__0__Impl rule__LogicalAndExpression__Group_1_2__1 ;
     public final void rule__LogicalAndExpression__Group_1_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2772:1: ( rule__LogicalAndExpression__Group_1_2__0__Impl rule__LogicalAndExpression__Group_1_2__1 )
-            // InternalKExpressions.g:2773:2: rule__LogicalAndExpression__Group_1_2__0__Impl rule__LogicalAndExpression__Group_1_2__1
+            // InternalKExpressions.g:2850:1: ( rule__LogicalAndExpression__Group_1_2__0__Impl rule__LogicalAndExpression__Group_1_2__1 )
+            // InternalKExpressions.g:2851:2: rule__LogicalAndExpression__Group_1_2__0__Impl rule__LogicalAndExpression__Group_1_2__1
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__LogicalAndExpression__Group_1_2__0__Impl();
@@ -8364,17 +8623,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalAndExpression__Group_1_2__0__Impl"
-    // InternalKExpressions.g:2780:1: rule__LogicalAndExpression__Group_1_2__0__Impl : ( '&&' ) ;
+    // InternalKExpressions.g:2858:1: rule__LogicalAndExpression__Group_1_2__0__Impl : ( '&&' ) ;
     public final void rule__LogicalAndExpression__Group_1_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2784:1: ( ( '&&' ) )
-            // InternalKExpressions.g:2785:1: ( '&&' )
+            // InternalKExpressions.g:2862:1: ( ( '&&' ) )
+            // InternalKExpressions.g:2863:1: ( '&&' )
             {
-            // InternalKExpressions.g:2785:1: ( '&&' )
-            // InternalKExpressions.g:2786:1: '&&'
+            // InternalKExpressions.g:2863:1: ( '&&' )
+            // InternalKExpressions.g:2864:1: '&&'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalAndExpressionAccess().getAmpersandAmpersandKeyword_1_2_0()); 
@@ -8405,14 +8664,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalAndExpression__Group_1_2__1"
-    // InternalKExpressions.g:2799:1: rule__LogicalAndExpression__Group_1_2__1 : rule__LogicalAndExpression__Group_1_2__1__Impl ;
+    // InternalKExpressions.g:2877:1: rule__LogicalAndExpression__Group_1_2__1 : rule__LogicalAndExpression__Group_1_2__1__Impl ;
     public final void rule__LogicalAndExpression__Group_1_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2803:1: ( rule__LogicalAndExpression__Group_1_2__1__Impl )
-            // InternalKExpressions.g:2804:2: rule__LogicalAndExpression__Group_1_2__1__Impl
+            // InternalKExpressions.g:2881:1: ( rule__LogicalAndExpression__Group_1_2__1__Impl )
+            // InternalKExpressions.g:2882:2: rule__LogicalAndExpression__Group_1_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__LogicalAndExpression__Group_1_2__1__Impl();
@@ -8438,23 +8697,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalAndExpression__Group_1_2__1__Impl"
-    // InternalKExpressions.g:2810:1: rule__LogicalAndExpression__Group_1_2__1__Impl : ( ( rule__LogicalAndExpression__SubExpressionsAssignment_1_2_1 ) ) ;
+    // InternalKExpressions.g:2888:1: rule__LogicalAndExpression__Group_1_2__1__Impl : ( ( rule__LogicalAndExpression__SubExpressionsAssignment_1_2_1 ) ) ;
     public final void rule__LogicalAndExpression__Group_1_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2814:1: ( ( ( rule__LogicalAndExpression__SubExpressionsAssignment_1_2_1 ) ) )
-            // InternalKExpressions.g:2815:1: ( ( rule__LogicalAndExpression__SubExpressionsAssignment_1_2_1 ) )
+            // InternalKExpressions.g:2892:1: ( ( ( rule__LogicalAndExpression__SubExpressionsAssignment_1_2_1 ) ) )
+            // InternalKExpressions.g:2893:1: ( ( rule__LogicalAndExpression__SubExpressionsAssignment_1_2_1 ) )
             {
-            // InternalKExpressions.g:2815:1: ( ( rule__LogicalAndExpression__SubExpressionsAssignment_1_2_1 ) )
-            // InternalKExpressions.g:2816:1: ( rule__LogicalAndExpression__SubExpressionsAssignment_1_2_1 )
+            // InternalKExpressions.g:2893:1: ( ( rule__LogicalAndExpression__SubExpressionsAssignment_1_2_1 ) )
+            // InternalKExpressions.g:2894:1: ( rule__LogicalAndExpression__SubExpressionsAssignment_1_2_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalAndExpressionAccess().getSubExpressionsAssignment_1_2_1()); 
             }
-            // InternalKExpressions.g:2817:1: ( rule__LogicalAndExpression__SubExpressionsAssignment_1_2_1 )
-            // InternalKExpressions.g:2817:2: rule__LogicalAndExpression__SubExpressionsAssignment_1_2_1
+            // InternalKExpressions.g:2895:1: ( rule__LogicalAndExpression__SubExpressionsAssignment_1_2_1 )
+            // InternalKExpressions.g:2895:2: rule__LogicalAndExpression__SubExpressionsAssignment_1_2_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__LogicalAndExpression__SubExpressionsAssignment_1_2_1();
@@ -8489,14 +8748,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseOrExpression__Group__0"
-    // InternalKExpressions.g:2831:1: rule__BitwiseOrExpression__Group__0 : rule__BitwiseOrExpression__Group__0__Impl rule__BitwiseOrExpression__Group__1 ;
+    // InternalKExpressions.g:2909:1: rule__BitwiseOrExpression__Group__0 : rule__BitwiseOrExpression__Group__0__Impl rule__BitwiseOrExpression__Group__1 ;
     public final void rule__BitwiseOrExpression__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2835:1: ( rule__BitwiseOrExpression__Group__0__Impl rule__BitwiseOrExpression__Group__1 )
-            // InternalKExpressions.g:2836:2: rule__BitwiseOrExpression__Group__0__Impl rule__BitwiseOrExpression__Group__1
+            // InternalKExpressions.g:2913:1: ( rule__BitwiseOrExpression__Group__0__Impl rule__BitwiseOrExpression__Group__1 )
+            // InternalKExpressions.g:2914:2: rule__BitwiseOrExpression__Group__0__Impl rule__BitwiseOrExpression__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_11);
             rule__BitwiseOrExpression__Group__0__Impl();
@@ -8527,17 +8786,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseOrExpression__Group__0__Impl"
-    // InternalKExpressions.g:2843:1: rule__BitwiseOrExpression__Group__0__Impl : ( ruleBitwiseAndExpression ) ;
+    // InternalKExpressions.g:2921:1: rule__BitwiseOrExpression__Group__0__Impl : ( ruleBitwiseAndExpression ) ;
     public final void rule__BitwiseOrExpression__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2847:1: ( ( ruleBitwiseAndExpression ) )
-            // InternalKExpressions.g:2848:1: ( ruleBitwiseAndExpression )
+            // InternalKExpressions.g:2925:1: ( ( ruleBitwiseAndExpression ) )
+            // InternalKExpressions.g:2926:1: ( ruleBitwiseAndExpression )
             {
-            // InternalKExpressions.g:2848:1: ( ruleBitwiseAndExpression )
-            // InternalKExpressions.g:2849:1: ruleBitwiseAndExpression
+            // InternalKExpressions.g:2926:1: ( ruleBitwiseAndExpression )
+            // InternalKExpressions.g:2927:1: ruleBitwiseAndExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseOrExpressionAccess().getBitwiseAndExpressionParserRuleCall_0()); 
@@ -8572,14 +8831,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseOrExpression__Group__1"
-    // InternalKExpressions.g:2860:1: rule__BitwiseOrExpression__Group__1 : rule__BitwiseOrExpression__Group__1__Impl ;
+    // InternalKExpressions.g:2938:1: rule__BitwiseOrExpression__Group__1 : rule__BitwiseOrExpression__Group__1__Impl ;
     public final void rule__BitwiseOrExpression__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2864:1: ( rule__BitwiseOrExpression__Group__1__Impl )
-            // InternalKExpressions.g:2865:2: rule__BitwiseOrExpression__Group__1__Impl
+            // InternalKExpressions.g:2942:1: ( rule__BitwiseOrExpression__Group__1__Impl )
+            // InternalKExpressions.g:2943:2: rule__BitwiseOrExpression__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__BitwiseOrExpression__Group__1__Impl();
@@ -8605,31 +8864,31 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseOrExpression__Group__1__Impl"
-    // InternalKExpressions.g:2871:1: rule__BitwiseOrExpression__Group__1__Impl : ( ( rule__BitwiseOrExpression__Group_1__0 )? ) ;
+    // InternalKExpressions.g:2949:1: rule__BitwiseOrExpression__Group__1__Impl : ( ( rule__BitwiseOrExpression__Group_1__0 )? ) ;
     public final void rule__BitwiseOrExpression__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2875:1: ( ( ( rule__BitwiseOrExpression__Group_1__0 )? ) )
-            // InternalKExpressions.g:2876:1: ( ( rule__BitwiseOrExpression__Group_1__0 )? )
+            // InternalKExpressions.g:2953:1: ( ( ( rule__BitwiseOrExpression__Group_1__0 )? ) )
+            // InternalKExpressions.g:2954:1: ( ( rule__BitwiseOrExpression__Group_1__0 )? )
             {
-            // InternalKExpressions.g:2876:1: ( ( rule__BitwiseOrExpression__Group_1__0 )? )
-            // InternalKExpressions.g:2877:1: ( rule__BitwiseOrExpression__Group_1__0 )?
+            // InternalKExpressions.g:2954:1: ( ( rule__BitwiseOrExpression__Group_1__0 )? )
+            // InternalKExpressions.g:2955:1: ( rule__BitwiseOrExpression__Group_1__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseOrExpressionAccess().getGroup_1()); 
             }
-            // InternalKExpressions.g:2878:1: ( rule__BitwiseOrExpression__Group_1__0 )?
-            int alt23=2;
-            int LA23_0 = input.LA(1);
+            // InternalKExpressions.g:2956:1: ( rule__BitwiseOrExpression__Group_1__0 )?
+            int alt24=2;
+            int LA24_0 = input.LA(1);
 
-            if ( (LA23_0==18) ) {
-                alt23=1;
+            if ( (LA24_0==18) ) {
+                alt24=1;
             }
-            switch (alt23) {
+            switch (alt24) {
                 case 1 :
-                    // InternalKExpressions.g:2878:2: rule__BitwiseOrExpression__Group_1__0
+                    // InternalKExpressions.g:2956:2: rule__BitwiseOrExpression__Group_1__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__BitwiseOrExpression__Group_1__0();
@@ -8667,14 +8926,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseOrExpression__Group_1__0"
-    // InternalKExpressions.g:2892:1: rule__BitwiseOrExpression__Group_1__0 : rule__BitwiseOrExpression__Group_1__0__Impl rule__BitwiseOrExpression__Group_1__1 ;
+    // InternalKExpressions.g:2970:1: rule__BitwiseOrExpression__Group_1__0 : rule__BitwiseOrExpression__Group_1__0__Impl rule__BitwiseOrExpression__Group_1__1 ;
     public final void rule__BitwiseOrExpression__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2896:1: ( rule__BitwiseOrExpression__Group_1__0__Impl rule__BitwiseOrExpression__Group_1__1 )
-            // InternalKExpressions.g:2897:2: rule__BitwiseOrExpression__Group_1__0__Impl rule__BitwiseOrExpression__Group_1__1
+            // InternalKExpressions.g:2974:1: ( rule__BitwiseOrExpression__Group_1__0__Impl rule__BitwiseOrExpression__Group_1__1 )
+            // InternalKExpressions.g:2975:2: rule__BitwiseOrExpression__Group_1__0__Impl rule__BitwiseOrExpression__Group_1__1
             {
             pushFollow(FollowSets000.FOLLOW_11);
             rule__BitwiseOrExpression__Group_1__0__Impl();
@@ -8705,23 +8964,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseOrExpression__Group_1__0__Impl"
-    // InternalKExpressions.g:2904:1: rule__BitwiseOrExpression__Group_1__0__Impl : ( () ) ;
+    // InternalKExpressions.g:2982:1: rule__BitwiseOrExpression__Group_1__0__Impl : ( () ) ;
     public final void rule__BitwiseOrExpression__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2908:1: ( ( () ) )
-            // InternalKExpressions.g:2909:1: ( () )
+            // InternalKExpressions.g:2986:1: ( ( () ) )
+            // InternalKExpressions.g:2987:1: ( () )
             {
-            // InternalKExpressions.g:2909:1: ( () )
-            // InternalKExpressions.g:2910:1: ()
+            // InternalKExpressions.g:2987:1: ( () )
+            // InternalKExpressions.g:2988:1: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()); 
             }
-            // InternalKExpressions.g:2911:1: ()
-            // InternalKExpressions.g:2913:1: 
+            // InternalKExpressions.g:2989:1: ()
+            // InternalKExpressions.g:2991:1: 
             {
             }
 
@@ -8746,14 +9005,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseOrExpression__Group_1__1"
-    // InternalKExpressions.g:2923:1: rule__BitwiseOrExpression__Group_1__1 : rule__BitwiseOrExpression__Group_1__1__Impl rule__BitwiseOrExpression__Group_1__2 ;
+    // InternalKExpressions.g:3001:1: rule__BitwiseOrExpression__Group_1__1 : rule__BitwiseOrExpression__Group_1__1__Impl rule__BitwiseOrExpression__Group_1__2 ;
     public final void rule__BitwiseOrExpression__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2927:1: ( rule__BitwiseOrExpression__Group_1__1__Impl rule__BitwiseOrExpression__Group_1__2 )
-            // InternalKExpressions.g:2928:2: rule__BitwiseOrExpression__Group_1__1__Impl rule__BitwiseOrExpression__Group_1__2
+            // InternalKExpressions.g:3005:1: ( rule__BitwiseOrExpression__Group_1__1__Impl rule__BitwiseOrExpression__Group_1__2 )
+            // InternalKExpressions.g:3006:2: rule__BitwiseOrExpression__Group_1__1__Impl rule__BitwiseOrExpression__Group_1__2
             {
             pushFollow(FollowSets000.FOLLOW_11);
             rule__BitwiseOrExpression__Group_1__1__Impl();
@@ -8784,23 +9043,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseOrExpression__Group_1__1__Impl"
-    // InternalKExpressions.g:2935:1: rule__BitwiseOrExpression__Group_1__1__Impl : ( ( rule__BitwiseOrExpression__Group_1_1__0 ) ) ;
+    // InternalKExpressions.g:3013:1: rule__BitwiseOrExpression__Group_1__1__Impl : ( ( rule__BitwiseOrExpression__Group_1_1__0 ) ) ;
     public final void rule__BitwiseOrExpression__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2939:1: ( ( ( rule__BitwiseOrExpression__Group_1_1__0 ) ) )
-            // InternalKExpressions.g:2940:1: ( ( rule__BitwiseOrExpression__Group_1_1__0 ) )
+            // InternalKExpressions.g:3017:1: ( ( ( rule__BitwiseOrExpression__Group_1_1__0 ) ) )
+            // InternalKExpressions.g:3018:1: ( ( rule__BitwiseOrExpression__Group_1_1__0 ) )
             {
-            // InternalKExpressions.g:2940:1: ( ( rule__BitwiseOrExpression__Group_1_1__0 ) )
-            // InternalKExpressions.g:2941:1: ( rule__BitwiseOrExpression__Group_1_1__0 )
+            // InternalKExpressions.g:3018:1: ( ( rule__BitwiseOrExpression__Group_1_1__0 ) )
+            // InternalKExpressions.g:3019:1: ( rule__BitwiseOrExpression__Group_1_1__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseOrExpressionAccess().getGroup_1_1()); 
             }
-            // InternalKExpressions.g:2942:1: ( rule__BitwiseOrExpression__Group_1_1__0 )
-            // InternalKExpressions.g:2942:2: rule__BitwiseOrExpression__Group_1_1__0
+            // InternalKExpressions.g:3020:1: ( rule__BitwiseOrExpression__Group_1_1__0 )
+            // InternalKExpressions.g:3020:2: rule__BitwiseOrExpression__Group_1_1__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__BitwiseOrExpression__Group_1_1__0();
@@ -8835,14 +9094,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseOrExpression__Group_1__2"
-    // InternalKExpressions.g:2952:1: rule__BitwiseOrExpression__Group_1__2 : rule__BitwiseOrExpression__Group_1__2__Impl ;
+    // InternalKExpressions.g:3030:1: rule__BitwiseOrExpression__Group_1__2 : rule__BitwiseOrExpression__Group_1__2__Impl ;
     public final void rule__BitwiseOrExpression__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2956:1: ( rule__BitwiseOrExpression__Group_1__2__Impl )
-            // InternalKExpressions.g:2957:2: rule__BitwiseOrExpression__Group_1__2__Impl
+            // InternalKExpressions.g:3034:1: ( rule__BitwiseOrExpression__Group_1__2__Impl )
+            // InternalKExpressions.g:3035:2: rule__BitwiseOrExpression__Group_1__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__BitwiseOrExpression__Group_1__2__Impl();
@@ -8868,35 +9127,35 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseOrExpression__Group_1__2__Impl"
-    // InternalKExpressions.g:2963:1: rule__BitwiseOrExpression__Group_1__2__Impl : ( ( rule__BitwiseOrExpression__Group_1_2__0 )* ) ;
+    // InternalKExpressions.g:3041:1: rule__BitwiseOrExpression__Group_1__2__Impl : ( ( rule__BitwiseOrExpression__Group_1_2__0 )* ) ;
     public final void rule__BitwiseOrExpression__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2967:1: ( ( ( rule__BitwiseOrExpression__Group_1_2__0 )* ) )
-            // InternalKExpressions.g:2968:1: ( ( rule__BitwiseOrExpression__Group_1_2__0 )* )
+            // InternalKExpressions.g:3045:1: ( ( ( rule__BitwiseOrExpression__Group_1_2__0 )* ) )
+            // InternalKExpressions.g:3046:1: ( ( rule__BitwiseOrExpression__Group_1_2__0 )* )
             {
-            // InternalKExpressions.g:2968:1: ( ( rule__BitwiseOrExpression__Group_1_2__0 )* )
-            // InternalKExpressions.g:2969:1: ( rule__BitwiseOrExpression__Group_1_2__0 )*
+            // InternalKExpressions.g:3046:1: ( ( rule__BitwiseOrExpression__Group_1_2__0 )* )
+            // InternalKExpressions.g:3047:1: ( rule__BitwiseOrExpression__Group_1_2__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseOrExpressionAccess().getGroup_1_2()); 
             }
-            // InternalKExpressions.g:2970:1: ( rule__BitwiseOrExpression__Group_1_2__0 )*
-            loop24:
+            // InternalKExpressions.g:3048:1: ( rule__BitwiseOrExpression__Group_1_2__0 )*
+            loop25:
             do {
-                int alt24=2;
-                int LA24_0 = input.LA(1);
+                int alt25=2;
+                int LA25_0 = input.LA(1);
 
-                if ( (LA24_0==18) ) {
-                    alt24=1;
+                if ( (LA25_0==18) ) {
+                    alt25=1;
                 }
 
 
-                switch (alt24) {
+                switch (alt25) {
             	case 1 :
-            	    // InternalKExpressions.g:2970:2: rule__BitwiseOrExpression__Group_1_2__0
+            	    // InternalKExpressions.g:3048:2: rule__BitwiseOrExpression__Group_1_2__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_12);
             	    rule__BitwiseOrExpression__Group_1_2__0();
@@ -8908,7 +9167,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop24;
+            	    break loop25;
                 }
             } while (true);
 
@@ -8937,14 +9196,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseOrExpression__Group_1_1__0"
-    // InternalKExpressions.g:2986:1: rule__BitwiseOrExpression__Group_1_1__0 : rule__BitwiseOrExpression__Group_1_1__0__Impl rule__BitwiseOrExpression__Group_1_1__1 ;
+    // InternalKExpressions.g:3064:1: rule__BitwiseOrExpression__Group_1_1__0 : rule__BitwiseOrExpression__Group_1_1__0__Impl rule__BitwiseOrExpression__Group_1_1__1 ;
     public final void rule__BitwiseOrExpression__Group_1_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:2990:1: ( rule__BitwiseOrExpression__Group_1_1__0__Impl rule__BitwiseOrExpression__Group_1_1__1 )
-            // InternalKExpressions.g:2991:2: rule__BitwiseOrExpression__Group_1_1__0__Impl rule__BitwiseOrExpression__Group_1_1__1
+            // InternalKExpressions.g:3068:1: ( rule__BitwiseOrExpression__Group_1_1__0__Impl rule__BitwiseOrExpression__Group_1_1__1 )
+            // InternalKExpressions.g:3069:2: rule__BitwiseOrExpression__Group_1_1__0__Impl rule__BitwiseOrExpression__Group_1_1__1
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__BitwiseOrExpression__Group_1_1__0__Impl();
@@ -8975,23 +9234,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseOrExpression__Group_1_1__0__Impl"
-    // InternalKExpressions.g:2998:1: rule__BitwiseOrExpression__Group_1_1__0__Impl : ( ( rule__BitwiseOrExpression__OperatorAssignment_1_1_0 ) ) ;
+    // InternalKExpressions.g:3076:1: rule__BitwiseOrExpression__Group_1_1__0__Impl : ( ( rule__BitwiseOrExpression__OperatorAssignment_1_1_0 ) ) ;
     public final void rule__BitwiseOrExpression__Group_1_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3002:1: ( ( ( rule__BitwiseOrExpression__OperatorAssignment_1_1_0 ) ) )
-            // InternalKExpressions.g:3003:1: ( ( rule__BitwiseOrExpression__OperatorAssignment_1_1_0 ) )
+            // InternalKExpressions.g:3080:1: ( ( ( rule__BitwiseOrExpression__OperatorAssignment_1_1_0 ) ) )
+            // InternalKExpressions.g:3081:1: ( ( rule__BitwiseOrExpression__OperatorAssignment_1_1_0 ) )
             {
-            // InternalKExpressions.g:3003:1: ( ( rule__BitwiseOrExpression__OperatorAssignment_1_1_0 ) )
-            // InternalKExpressions.g:3004:1: ( rule__BitwiseOrExpression__OperatorAssignment_1_1_0 )
+            // InternalKExpressions.g:3081:1: ( ( rule__BitwiseOrExpression__OperatorAssignment_1_1_0 ) )
+            // InternalKExpressions.g:3082:1: ( rule__BitwiseOrExpression__OperatorAssignment_1_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseOrExpressionAccess().getOperatorAssignment_1_1_0()); 
             }
-            // InternalKExpressions.g:3005:1: ( rule__BitwiseOrExpression__OperatorAssignment_1_1_0 )
-            // InternalKExpressions.g:3005:2: rule__BitwiseOrExpression__OperatorAssignment_1_1_0
+            // InternalKExpressions.g:3083:1: ( rule__BitwiseOrExpression__OperatorAssignment_1_1_0 )
+            // InternalKExpressions.g:3083:2: rule__BitwiseOrExpression__OperatorAssignment_1_1_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__BitwiseOrExpression__OperatorAssignment_1_1_0();
@@ -9026,14 +9285,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseOrExpression__Group_1_1__1"
-    // InternalKExpressions.g:3015:1: rule__BitwiseOrExpression__Group_1_1__1 : rule__BitwiseOrExpression__Group_1_1__1__Impl ;
+    // InternalKExpressions.g:3093:1: rule__BitwiseOrExpression__Group_1_1__1 : rule__BitwiseOrExpression__Group_1_1__1__Impl ;
     public final void rule__BitwiseOrExpression__Group_1_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3019:1: ( rule__BitwiseOrExpression__Group_1_1__1__Impl )
-            // InternalKExpressions.g:3020:2: rule__BitwiseOrExpression__Group_1_1__1__Impl
+            // InternalKExpressions.g:3097:1: ( rule__BitwiseOrExpression__Group_1_1__1__Impl )
+            // InternalKExpressions.g:3098:2: rule__BitwiseOrExpression__Group_1_1__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__BitwiseOrExpression__Group_1_1__1__Impl();
@@ -9059,23 +9318,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseOrExpression__Group_1_1__1__Impl"
-    // InternalKExpressions.g:3026:1: rule__BitwiseOrExpression__Group_1_1__1__Impl : ( ( rule__BitwiseOrExpression__SubExpressionsAssignment_1_1_1 ) ) ;
+    // InternalKExpressions.g:3104:1: rule__BitwiseOrExpression__Group_1_1__1__Impl : ( ( rule__BitwiseOrExpression__SubExpressionsAssignment_1_1_1 ) ) ;
     public final void rule__BitwiseOrExpression__Group_1_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3030:1: ( ( ( rule__BitwiseOrExpression__SubExpressionsAssignment_1_1_1 ) ) )
-            // InternalKExpressions.g:3031:1: ( ( rule__BitwiseOrExpression__SubExpressionsAssignment_1_1_1 ) )
+            // InternalKExpressions.g:3108:1: ( ( ( rule__BitwiseOrExpression__SubExpressionsAssignment_1_1_1 ) ) )
+            // InternalKExpressions.g:3109:1: ( ( rule__BitwiseOrExpression__SubExpressionsAssignment_1_1_1 ) )
             {
-            // InternalKExpressions.g:3031:1: ( ( rule__BitwiseOrExpression__SubExpressionsAssignment_1_1_1 ) )
-            // InternalKExpressions.g:3032:1: ( rule__BitwiseOrExpression__SubExpressionsAssignment_1_1_1 )
+            // InternalKExpressions.g:3109:1: ( ( rule__BitwiseOrExpression__SubExpressionsAssignment_1_1_1 ) )
+            // InternalKExpressions.g:3110:1: ( rule__BitwiseOrExpression__SubExpressionsAssignment_1_1_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseOrExpressionAccess().getSubExpressionsAssignment_1_1_1()); 
             }
-            // InternalKExpressions.g:3033:1: ( rule__BitwiseOrExpression__SubExpressionsAssignment_1_1_1 )
-            // InternalKExpressions.g:3033:2: rule__BitwiseOrExpression__SubExpressionsAssignment_1_1_1
+            // InternalKExpressions.g:3111:1: ( rule__BitwiseOrExpression__SubExpressionsAssignment_1_1_1 )
+            // InternalKExpressions.g:3111:2: rule__BitwiseOrExpression__SubExpressionsAssignment_1_1_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__BitwiseOrExpression__SubExpressionsAssignment_1_1_1();
@@ -9110,14 +9369,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseOrExpression__Group_1_2__0"
-    // InternalKExpressions.g:3047:1: rule__BitwiseOrExpression__Group_1_2__0 : rule__BitwiseOrExpression__Group_1_2__0__Impl rule__BitwiseOrExpression__Group_1_2__1 ;
+    // InternalKExpressions.g:3125:1: rule__BitwiseOrExpression__Group_1_2__0 : rule__BitwiseOrExpression__Group_1_2__0__Impl rule__BitwiseOrExpression__Group_1_2__1 ;
     public final void rule__BitwiseOrExpression__Group_1_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3051:1: ( rule__BitwiseOrExpression__Group_1_2__0__Impl rule__BitwiseOrExpression__Group_1_2__1 )
-            // InternalKExpressions.g:3052:2: rule__BitwiseOrExpression__Group_1_2__0__Impl rule__BitwiseOrExpression__Group_1_2__1
+            // InternalKExpressions.g:3129:1: ( rule__BitwiseOrExpression__Group_1_2__0__Impl rule__BitwiseOrExpression__Group_1_2__1 )
+            // InternalKExpressions.g:3130:2: rule__BitwiseOrExpression__Group_1_2__0__Impl rule__BitwiseOrExpression__Group_1_2__1
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__BitwiseOrExpression__Group_1_2__0__Impl();
@@ -9148,17 +9407,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseOrExpression__Group_1_2__0__Impl"
-    // InternalKExpressions.g:3059:1: rule__BitwiseOrExpression__Group_1_2__0__Impl : ( '|' ) ;
+    // InternalKExpressions.g:3137:1: rule__BitwiseOrExpression__Group_1_2__0__Impl : ( '|' ) ;
     public final void rule__BitwiseOrExpression__Group_1_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3063:1: ( ( '|' ) )
-            // InternalKExpressions.g:3064:1: ( '|' )
+            // InternalKExpressions.g:3141:1: ( ( '|' ) )
+            // InternalKExpressions.g:3142:1: ( '|' )
             {
-            // InternalKExpressions.g:3064:1: ( '|' )
-            // InternalKExpressions.g:3065:1: '|'
+            // InternalKExpressions.g:3142:1: ( '|' )
+            // InternalKExpressions.g:3143:1: '|'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseOrExpressionAccess().getVerticalLineKeyword_1_2_0()); 
@@ -9189,14 +9448,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseOrExpression__Group_1_2__1"
-    // InternalKExpressions.g:3078:1: rule__BitwiseOrExpression__Group_1_2__1 : rule__BitwiseOrExpression__Group_1_2__1__Impl ;
+    // InternalKExpressions.g:3156:1: rule__BitwiseOrExpression__Group_1_2__1 : rule__BitwiseOrExpression__Group_1_2__1__Impl ;
     public final void rule__BitwiseOrExpression__Group_1_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3082:1: ( rule__BitwiseOrExpression__Group_1_2__1__Impl )
-            // InternalKExpressions.g:3083:2: rule__BitwiseOrExpression__Group_1_2__1__Impl
+            // InternalKExpressions.g:3160:1: ( rule__BitwiseOrExpression__Group_1_2__1__Impl )
+            // InternalKExpressions.g:3161:2: rule__BitwiseOrExpression__Group_1_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__BitwiseOrExpression__Group_1_2__1__Impl();
@@ -9222,23 +9481,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseOrExpression__Group_1_2__1__Impl"
-    // InternalKExpressions.g:3089:1: rule__BitwiseOrExpression__Group_1_2__1__Impl : ( ( rule__BitwiseOrExpression__SubExpressionsAssignment_1_2_1 ) ) ;
+    // InternalKExpressions.g:3167:1: rule__BitwiseOrExpression__Group_1_2__1__Impl : ( ( rule__BitwiseOrExpression__SubExpressionsAssignment_1_2_1 ) ) ;
     public final void rule__BitwiseOrExpression__Group_1_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3093:1: ( ( ( rule__BitwiseOrExpression__SubExpressionsAssignment_1_2_1 ) ) )
-            // InternalKExpressions.g:3094:1: ( ( rule__BitwiseOrExpression__SubExpressionsAssignment_1_2_1 ) )
+            // InternalKExpressions.g:3171:1: ( ( ( rule__BitwiseOrExpression__SubExpressionsAssignment_1_2_1 ) ) )
+            // InternalKExpressions.g:3172:1: ( ( rule__BitwiseOrExpression__SubExpressionsAssignment_1_2_1 ) )
             {
-            // InternalKExpressions.g:3094:1: ( ( rule__BitwiseOrExpression__SubExpressionsAssignment_1_2_1 ) )
-            // InternalKExpressions.g:3095:1: ( rule__BitwiseOrExpression__SubExpressionsAssignment_1_2_1 )
+            // InternalKExpressions.g:3172:1: ( ( rule__BitwiseOrExpression__SubExpressionsAssignment_1_2_1 ) )
+            // InternalKExpressions.g:3173:1: ( rule__BitwiseOrExpression__SubExpressionsAssignment_1_2_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseOrExpressionAccess().getSubExpressionsAssignment_1_2_1()); 
             }
-            // InternalKExpressions.g:3096:1: ( rule__BitwiseOrExpression__SubExpressionsAssignment_1_2_1 )
-            // InternalKExpressions.g:3096:2: rule__BitwiseOrExpression__SubExpressionsAssignment_1_2_1
+            // InternalKExpressions.g:3174:1: ( rule__BitwiseOrExpression__SubExpressionsAssignment_1_2_1 )
+            // InternalKExpressions.g:3174:2: rule__BitwiseOrExpression__SubExpressionsAssignment_1_2_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__BitwiseOrExpression__SubExpressionsAssignment_1_2_1();
@@ -9273,14 +9532,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseAndExpression__Group__0"
-    // InternalKExpressions.g:3110:1: rule__BitwiseAndExpression__Group__0 : rule__BitwiseAndExpression__Group__0__Impl rule__BitwiseAndExpression__Group__1 ;
+    // InternalKExpressions.g:3188:1: rule__BitwiseAndExpression__Group__0 : rule__BitwiseAndExpression__Group__0__Impl rule__BitwiseAndExpression__Group__1 ;
     public final void rule__BitwiseAndExpression__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3114:1: ( rule__BitwiseAndExpression__Group__0__Impl rule__BitwiseAndExpression__Group__1 )
-            // InternalKExpressions.g:3115:2: rule__BitwiseAndExpression__Group__0__Impl rule__BitwiseAndExpression__Group__1
+            // InternalKExpressions.g:3192:1: ( rule__BitwiseAndExpression__Group__0__Impl rule__BitwiseAndExpression__Group__1 )
+            // InternalKExpressions.g:3193:2: rule__BitwiseAndExpression__Group__0__Impl rule__BitwiseAndExpression__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_13);
             rule__BitwiseAndExpression__Group__0__Impl();
@@ -9311,17 +9570,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseAndExpression__Group__0__Impl"
-    // InternalKExpressions.g:3122:1: rule__BitwiseAndExpression__Group__0__Impl : ( ruleCompareOperation ) ;
+    // InternalKExpressions.g:3200:1: rule__BitwiseAndExpression__Group__0__Impl : ( ruleCompareOperation ) ;
     public final void rule__BitwiseAndExpression__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3126:1: ( ( ruleCompareOperation ) )
-            // InternalKExpressions.g:3127:1: ( ruleCompareOperation )
+            // InternalKExpressions.g:3204:1: ( ( ruleCompareOperation ) )
+            // InternalKExpressions.g:3205:1: ( ruleCompareOperation )
             {
-            // InternalKExpressions.g:3127:1: ( ruleCompareOperation )
-            // InternalKExpressions.g:3128:1: ruleCompareOperation
+            // InternalKExpressions.g:3205:1: ( ruleCompareOperation )
+            // InternalKExpressions.g:3206:1: ruleCompareOperation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseAndExpressionAccess().getCompareOperationParserRuleCall_0()); 
@@ -9356,14 +9615,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseAndExpression__Group__1"
-    // InternalKExpressions.g:3139:1: rule__BitwiseAndExpression__Group__1 : rule__BitwiseAndExpression__Group__1__Impl ;
+    // InternalKExpressions.g:3217:1: rule__BitwiseAndExpression__Group__1 : rule__BitwiseAndExpression__Group__1__Impl ;
     public final void rule__BitwiseAndExpression__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3143:1: ( rule__BitwiseAndExpression__Group__1__Impl )
-            // InternalKExpressions.g:3144:2: rule__BitwiseAndExpression__Group__1__Impl
+            // InternalKExpressions.g:3221:1: ( rule__BitwiseAndExpression__Group__1__Impl )
+            // InternalKExpressions.g:3222:2: rule__BitwiseAndExpression__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__BitwiseAndExpression__Group__1__Impl();
@@ -9389,31 +9648,31 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseAndExpression__Group__1__Impl"
-    // InternalKExpressions.g:3150:1: rule__BitwiseAndExpression__Group__1__Impl : ( ( rule__BitwiseAndExpression__Group_1__0 )? ) ;
+    // InternalKExpressions.g:3228:1: rule__BitwiseAndExpression__Group__1__Impl : ( ( rule__BitwiseAndExpression__Group_1__0 )? ) ;
     public final void rule__BitwiseAndExpression__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3154:1: ( ( ( rule__BitwiseAndExpression__Group_1__0 )? ) )
-            // InternalKExpressions.g:3155:1: ( ( rule__BitwiseAndExpression__Group_1__0 )? )
+            // InternalKExpressions.g:3232:1: ( ( ( rule__BitwiseAndExpression__Group_1__0 )? ) )
+            // InternalKExpressions.g:3233:1: ( ( rule__BitwiseAndExpression__Group_1__0 )? )
             {
-            // InternalKExpressions.g:3155:1: ( ( rule__BitwiseAndExpression__Group_1__0 )? )
-            // InternalKExpressions.g:3156:1: ( rule__BitwiseAndExpression__Group_1__0 )?
+            // InternalKExpressions.g:3233:1: ( ( rule__BitwiseAndExpression__Group_1__0 )? )
+            // InternalKExpressions.g:3234:1: ( rule__BitwiseAndExpression__Group_1__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseAndExpressionAccess().getGroup_1()); 
             }
-            // InternalKExpressions.g:3157:1: ( rule__BitwiseAndExpression__Group_1__0 )?
-            int alt25=2;
-            int LA25_0 = input.LA(1);
+            // InternalKExpressions.g:3235:1: ( rule__BitwiseAndExpression__Group_1__0 )?
+            int alt26=2;
+            int LA26_0 = input.LA(1);
 
-            if ( (LA25_0==19) ) {
-                alt25=1;
+            if ( (LA26_0==19) ) {
+                alt26=1;
             }
-            switch (alt25) {
+            switch (alt26) {
                 case 1 :
-                    // InternalKExpressions.g:3157:2: rule__BitwiseAndExpression__Group_1__0
+                    // InternalKExpressions.g:3235:2: rule__BitwiseAndExpression__Group_1__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__BitwiseAndExpression__Group_1__0();
@@ -9451,14 +9710,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseAndExpression__Group_1__0"
-    // InternalKExpressions.g:3171:1: rule__BitwiseAndExpression__Group_1__0 : rule__BitwiseAndExpression__Group_1__0__Impl rule__BitwiseAndExpression__Group_1__1 ;
+    // InternalKExpressions.g:3249:1: rule__BitwiseAndExpression__Group_1__0 : rule__BitwiseAndExpression__Group_1__0__Impl rule__BitwiseAndExpression__Group_1__1 ;
     public final void rule__BitwiseAndExpression__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3175:1: ( rule__BitwiseAndExpression__Group_1__0__Impl rule__BitwiseAndExpression__Group_1__1 )
-            // InternalKExpressions.g:3176:2: rule__BitwiseAndExpression__Group_1__0__Impl rule__BitwiseAndExpression__Group_1__1
+            // InternalKExpressions.g:3253:1: ( rule__BitwiseAndExpression__Group_1__0__Impl rule__BitwiseAndExpression__Group_1__1 )
+            // InternalKExpressions.g:3254:2: rule__BitwiseAndExpression__Group_1__0__Impl rule__BitwiseAndExpression__Group_1__1
             {
             pushFollow(FollowSets000.FOLLOW_13);
             rule__BitwiseAndExpression__Group_1__0__Impl();
@@ -9489,23 +9748,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseAndExpression__Group_1__0__Impl"
-    // InternalKExpressions.g:3183:1: rule__BitwiseAndExpression__Group_1__0__Impl : ( () ) ;
+    // InternalKExpressions.g:3261:1: rule__BitwiseAndExpression__Group_1__0__Impl : ( () ) ;
     public final void rule__BitwiseAndExpression__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3187:1: ( ( () ) )
-            // InternalKExpressions.g:3188:1: ( () )
+            // InternalKExpressions.g:3265:1: ( ( () ) )
+            // InternalKExpressions.g:3266:1: ( () )
             {
-            // InternalKExpressions.g:3188:1: ( () )
-            // InternalKExpressions.g:3189:1: ()
+            // InternalKExpressions.g:3266:1: ( () )
+            // InternalKExpressions.g:3267:1: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()); 
             }
-            // InternalKExpressions.g:3190:1: ()
-            // InternalKExpressions.g:3192:1: 
+            // InternalKExpressions.g:3268:1: ()
+            // InternalKExpressions.g:3270:1: 
             {
             }
 
@@ -9530,14 +9789,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseAndExpression__Group_1__1"
-    // InternalKExpressions.g:3202:1: rule__BitwiseAndExpression__Group_1__1 : rule__BitwiseAndExpression__Group_1__1__Impl rule__BitwiseAndExpression__Group_1__2 ;
+    // InternalKExpressions.g:3280:1: rule__BitwiseAndExpression__Group_1__1 : rule__BitwiseAndExpression__Group_1__1__Impl rule__BitwiseAndExpression__Group_1__2 ;
     public final void rule__BitwiseAndExpression__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3206:1: ( rule__BitwiseAndExpression__Group_1__1__Impl rule__BitwiseAndExpression__Group_1__2 )
-            // InternalKExpressions.g:3207:2: rule__BitwiseAndExpression__Group_1__1__Impl rule__BitwiseAndExpression__Group_1__2
+            // InternalKExpressions.g:3284:1: ( rule__BitwiseAndExpression__Group_1__1__Impl rule__BitwiseAndExpression__Group_1__2 )
+            // InternalKExpressions.g:3285:2: rule__BitwiseAndExpression__Group_1__1__Impl rule__BitwiseAndExpression__Group_1__2
             {
             pushFollow(FollowSets000.FOLLOW_13);
             rule__BitwiseAndExpression__Group_1__1__Impl();
@@ -9568,23 +9827,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseAndExpression__Group_1__1__Impl"
-    // InternalKExpressions.g:3214:1: rule__BitwiseAndExpression__Group_1__1__Impl : ( ( rule__BitwiseAndExpression__Group_1_1__0 ) ) ;
+    // InternalKExpressions.g:3292:1: rule__BitwiseAndExpression__Group_1__1__Impl : ( ( rule__BitwiseAndExpression__Group_1_1__0 ) ) ;
     public final void rule__BitwiseAndExpression__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3218:1: ( ( ( rule__BitwiseAndExpression__Group_1_1__0 ) ) )
-            // InternalKExpressions.g:3219:1: ( ( rule__BitwiseAndExpression__Group_1_1__0 ) )
+            // InternalKExpressions.g:3296:1: ( ( ( rule__BitwiseAndExpression__Group_1_1__0 ) ) )
+            // InternalKExpressions.g:3297:1: ( ( rule__BitwiseAndExpression__Group_1_1__0 ) )
             {
-            // InternalKExpressions.g:3219:1: ( ( rule__BitwiseAndExpression__Group_1_1__0 ) )
-            // InternalKExpressions.g:3220:1: ( rule__BitwiseAndExpression__Group_1_1__0 )
+            // InternalKExpressions.g:3297:1: ( ( rule__BitwiseAndExpression__Group_1_1__0 ) )
+            // InternalKExpressions.g:3298:1: ( rule__BitwiseAndExpression__Group_1_1__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseAndExpressionAccess().getGroup_1_1()); 
             }
-            // InternalKExpressions.g:3221:1: ( rule__BitwiseAndExpression__Group_1_1__0 )
-            // InternalKExpressions.g:3221:2: rule__BitwiseAndExpression__Group_1_1__0
+            // InternalKExpressions.g:3299:1: ( rule__BitwiseAndExpression__Group_1_1__0 )
+            // InternalKExpressions.g:3299:2: rule__BitwiseAndExpression__Group_1_1__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__BitwiseAndExpression__Group_1_1__0();
@@ -9619,14 +9878,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseAndExpression__Group_1__2"
-    // InternalKExpressions.g:3231:1: rule__BitwiseAndExpression__Group_1__2 : rule__BitwiseAndExpression__Group_1__2__Impl ;
+    // InternalKExpressions.g:3309:1: rule__BitwiseAndExpression__Group_1__2 : rule__BitwiseAndExpression__Group_1__2__Impl ;
     public final void rule__BitwiseAndExpression__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3235:1: ( rule__BitwiseAndExpression__Group_1__2__Impl )
-            // InternalKExpressions.g:3236:2: rule__BitwiseAndExpression__Group_1__2__Impl
+            // InternalKExpressions.g:3313:1: ( rule__BitwiseAndExpression__Group_1__2__Impl )
+            // InternalKExpressions.g:3314:2: rule__BitwiseAndExpression__Group_1__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__BitwiseAndExpression__Group_1__2__Impl();
@@ -9652,35 +9911,35 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseAndExpression__Group_1__2__Impl"
-    // InternalKExpressions.g:3242:1: rule__BitwiseAndExpression__Group_1__2__Impl : ( ( rule__BitwiseAndExpression__Group_1_2__0 )* ) ;
+    // InternalKExpressions.g:3320:1: rule__BitwiseAndExpression__Group_1__2__Impl : ( ( rule__BitwiseAndExpression__Group_1_2__0 )* ) ;
     public final void rule__BitwiseAndExpression__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3246:1: ( ( ( rule__BitwiseAndExpression__Group_1_2__0 )* ) )
-            // InternalKExpressions.g:3247:1: ( ( rule__BitwiseAndExpression__Group_1_2__0 )* )
+            // InternalKExpressions.g:3324:1: ( ( ( rule__BitwiseAndExpression__Group_1_2__0 )* ) )
+            // InternalKExpressions.g:3325:1: ( ( rule__BitwiseAndExpression__Group_1_2__0 )* )
             {
-            // InternalKExpressions.g:3247:1: ( ( rule__BitwiseAndExpression__Group_1_2__0 )* )
-            // InternalKExpressions.g:3248:1: ( rule__BitwiseAndExpression__Group_1_2__0 )*
+            // InternalKExpressions.g:3325:1: ( ( rule__BitwiseAndExpression__Group_1_2__0 )* )
+            // InternalKExpressions.g:3326:1: ( rule__BitwiseAndExpression__Group_1_2__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseAndExpressionAccess().getGroup_1_2()); 
             }
-            // InternalKExpressions.g:3249:1: ( rule__BitwiseAndExpression__Group_1_2__0 )*
-            loop26:
+            // InternalKExpressions.g:3327:1: ( rule__BitwiseAndExpression__Group_1_2__0 )*
+            loop27:
             do {
-                int alt26=2;
-                int LA26_0 = input.LA(1);
+                int alt27=2;
+                int LA27_0 = input.LA(1);
 
-                if ( (LA26_0==19) ) {
-                    alt26=1;
+                if ( (LA27_0==19) ) {
+                    alt27=1;
                 }
 
 
-                switch (alt26) {
+                switch (alt27) {
             	case 1 :
-            	    // InternalKExpressions.g:3249:2: rule__BitwiseAndExpression__Group_1_2__0
+            	    // InternalKExpressions.g:3327:2: rule__BitwiseAndExpression__Group_1_2__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_14);
             	    rule__BitwiseAndExpression__Group_1_2__0();
@@ -9692,7 +9951,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop26;
+            	    break loop27;
                 }
             } while (true);
 
@@ -9721,14 +9980,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseAndExpression__Group_1_1__0"
-    // InternalKExpressions.g:3265:1: rule__BitwiseAndExpression__Group_1_1__0 : rule__BitwiseAndExpression__Group_1_1__0__Impl rule__BitwiseAndExpression__Group_1_1__1 ;
+    // InternalKExpressions.g:3343:1: rule__BitwiseAndExpression__Group_1_1__0 : rule__BitwiseAndExpression__Group_1_1__0__Impl rule__BitwiseAndExpression__Group_1_1__1 ;
     public final void rule__BitwiseAndExpression__Group_1_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3269:1: ( rule__BitwiseAndExpression__Group_1_1__0__Impl rule__BitwiseAndExpression__Group_1_1__1 )
-            // InternalKExpressions.g:3270:2: rule__BitwiseAndExpression__Group_1_1__0__Impl rule__BitwiseAndExpression__Group_1_1__1
+            // InternalKExpressions.g:3347:1: ( rule__BitwiseAndExpression__Group_1_1__0__Impl rule__BitwiseAndExpression__Group_1_1__1 )
+            // InternalKExpressions.g:3348:2: rule__BitwiseAndExpression__Group_1_1__0__Impl rule__BitwiseAndExpression__Group_1_1__1
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__BitwiseAndExpression__Group_1_1__0__Impl();
@@ -9759,23 +10018,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseAndExpression__Group_1_1__0__Impl"
-    // InternalKExpressions.g:3277:1: rule__BitwiseAndExpression__Group_1_1__0__Impl : ( ( rule__BitwiseAndExpression__OperatorAssignment_1_1_0 ) ) ;
+    // InternalKExpressions.g:3355:1: rule__BitwiseAndExpression__Group_1_1__0__Impl : ( ( rule__BitwiseAndExpression__OperatorAssignment_1_1_0 ) ) ;
     public final void rule__BitwiseAndExpression__Group_1_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3281:1: ( ( ( rule__BitwiseAndExpression__OperatorAssignment_1_1_0 ) ) )
-            // InternalKExpressions.g:3282:1: ( ( rule__BitwiseAndExpression__OperatorAssignment_1_1_0 ) )
+            // InternalKExpressions.g:3359:1: ( ( ( rule__BitwiseAndExpression__OperatorAssignment_1_1_0 ) ) )
+            // InternalKExpressions.g:3360:1: ( ( rule__BitwiseAndExpression__OperatorAssignment_1_1_0 ) )
             {
-            // InternalKExpressions.g:3282:1: ( ( rule__BitwiseAndExpression__OperatorAssignment_1_1_0 ) )
-            // InternalKExpressions.g:3283:1: ( rule__BitwiseAndExpression__OperatorAssignment_1_1_0 )
+            // InternalKExpressions.g:3360:1: ( ( rule__BitwiseAndExpression__OperatorAssignment_1_1_0 ) )
+            // InternalKExpressions.g:3361:1: ( rule__BitwiseAndExpression__OperatorAssignment_1_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseAndExpressionAccess().getOperatorAssignment_1_1_0()); 
             }
-            // InternalKExpressions.g:3284:1: ( rule__BitwiseAndExpression__OperatorAssignment_1_1_0 )
-            // InternalKExpressions.g:3284:2: rule__BitwiseAndExpression__OperatorAssignment_1_1_0
+            // InternalKExpressions.g:3362:1: ( rule__BitwiseAndExpression__OperatorAssignment_1_1_0 )
+            // InternalKExpressions.g:3362:2: rule__BitwiseAndExpression__OperatorAssignment_1_1_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__BitwiseAndExpression__OperatorAssignment_1_1_0();
@@ -9810,14 +10069,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseAndExpression__Group_1_1__1"
-    // InternalKExpressions.g:3294:1: rule__BitwiseAndExpression__Group_1_1__1 : rule__BitwiseAndExpression__Group_1_1__1__Impl ;
+    // InternalKExpressions.g:3372:1: rule__BitwiseAndExpression__Group_1_1__1 : rule__BitwiseAndExpression__Group_1_1__1__Impl ;
     public final void rule__BitwiseAndExpression__Group_1_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3298:1: ( rule__BitwiseAndExpression__Group_1_1__1__Impl )
-            // InternalKExpressions.g:3299:2: rule__BitwiseAndExpression__Group_1_1__1__Impl
+            // InternalKExpressions.g:3376:1: ( rule__BitwiseAndExpression__Group_1_1__1__Impl )
+            // InternalKExpressions.g:3377:2: rule__BitwiseAndExpression__Group_1_1__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__BitwiseAndExpression__Group_1_1__1__Impl();
@@ -9843,23 +10102,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseAndExpression__Group_1_1__1__Impl"
-    // InternalKExpressions.g:3305:1: rule__BitwiseAndExpression__Group_1_1__1__Impl : ( ( rule__BitwiseAndExpression__SubExpressionsAssignment_1_1_1 ) ) ;
+    // InternalKExpressions.g:3383:1: rule__BitwiseAndExpression__Group_1_1__1__Impl : ( ( rule__BitwiseAndExpression__SubExpressionsAssignment_1_1_1 ) ) ;
     public final void rule__BitwiseAndExpression__Group_1_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3309:1: ( ( ( rule__BitwiseAndExpression__SubExpressionsAssignment_1_1_1 ) ) )
-            // InternalKExpressions.g:3310:1: ( ( rule__BitwiseAndExpression__SubExpressionsAssignment_1_1_1 ) )
+            // InternalKExpressions.g:3387:1: ( ( ( rule__BitwiseAndExpression__SubExpressionsAssignment_1_1_1 ) ) )
+            // InternalKExpressions.g:3388:1: ( ( rule__BitwiseAndExpression__SubExpressionsAssignment_1_1_1 ) )
             {
-            // InternalKExpressions.g:3310:1: ( ( rule__BitwiseAndExpression__SubExpressionsAssignment_1_1_1 ) )
-            // InternalKExpressions.g:3311:1: ( rule__BitwiseAndExpression__SubExpressionsAssignment_1_1_1 )
+            // InternalKExpressions.g:3388:1: ( ( rule__BitwiseAndExpression__SubExpressionsAssignment_1_1_1 ) )
+            // InternalKExpressions.g:3389:1: ( rule__BitwiseAndExpression__SubExpressionsAssignment_1_1_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseAndExpressionAccess().getSubExpressionsAssignment_1_1_1()); 
             }
-            // InternalKExpressions.g:3312:1: ( rule__BitwiseAndExpression__SubExpressionsAssignment_1_1_1 )
-            // InternalKExpressions.g:3312:2: rule__BitwiseAndExpression__SubExpressionsAssignment_1_1_1
+            // InternalKExpressions.g:3390:1: ( rule__BitwiseAndExpression__SubExpressionsAssignment_1_1_1 )
+            // InternalKExpressions.g:3390:2: rule__BitwiseAndExpression__SubExpressionsAssignment_1_1_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__BitwiseAndExpression__SubExpressionsAssignment_1_1_1();
@@ -9894,14 +10153,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseAndExpression__Group_1_2__0"
-    // InternalKExpressions.g:3326:1: rule__BitwiseAndExpression__Group_1_2__0 : rule__BitwiseAndExpression__Group_1_2__0__Impl rule__BitwiseAndExpression__Group_1_2__1 ;
+    // InternalKExpressions.g:3404:1: rule__BitwiseAndExpression__Group_1_2__0 : rule__BitwiseAndExpression__Group_1_2__0__Impl rule__BitwiseAndExpression__Group_1_2__1 ;
     public final void rule__BitwiseAndExpression__Group_1_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3330:1: ( rule__BitwiseAndExpression__Group_1_2__0__Impl rule__BitwiseAndExpression__Group_1_2__1 )
-            // InternalKExpressions.g:3331:2: rule__BitwiseAndExpression__Group_1_2__0__Impl rule__BitwiseAndExpression__Group_1_2__1
+            // InternalKExpressions.g:3408:1: ( rule__BitwiseAndExpression__Group_1_2__0__Impl rule__BitwiseAndExpression__Group_1_2__1 )
+            // InternalKExpressions.g:3409:2: rule__BitwiseAndExpression__Group_1_2__0__Impl rule__BitwiseAndExpression__Group_1_2__1
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__BitwiseAndExpression__Group_1_2__0__Impl();
@@ -9932,17 +10191,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseAndExpression__Group_1_2__0__Impl"
-    // InternalKExpressions.g:3338:1: rule__BitwiseAndExpression__Group_1_2__0__Impl : ( '&' ) ;
+    // InternalKExpressions.g:3416:1: rule__BitwiseAndExpression__Group_1_2__0__Impl : ( '&' ) ;
     public final void rule__BitwiseAndExpression__Group_1_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3342:1: ( ( '&' ) )
-            // InternalKExpressions.g:3343:1: ( '&' )
+            // InternalKExpressions.g:3420:1: ( ( '&' ) )
+            // InternalKExpressions.g:3421:1: ( '&' )
             {
-            // InternalKExpressions.g:3343:1: ( '&' )
-            // InternalKExpressions.g:3344:1: '&'
+            // InternalKExpressions.g:3421:1: ( '&' )
+            // InternalKExpressions.g:3422:1: '&'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseAndExpressionAccess().getAmpersandKeyword_1_2_0()); 
@@ -9973,14 +10232,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseAndExpression__Group_1_2__1"
-    // InternalKExpressions.g:3357:1: rule__BitwiseAndExpression__Group_1_2__1 : rule__BitwiseAndExpression__Group_1_2__1__Impl ;
+    // InternalKExpressions.g:3435:1: rule__BitwiseAndExpression__Group_1_2__1 : rule__BitwiseAndExpression__Group_1_2__1__Impl ;
     public final void rule__BitwiseAndExpression__Group_1_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3361:1: ( rule__BitwiseAndExpression__Group_1_2__1__Impl )
-            // InternalKExpressions.g:3362:2: rule__BitwiseAndExpression__Group_1_2__1__Impl
+            // InternalKExpressions.g:3439:1: ( rule__BitwiseAndExpression__Group_1_2__1__Impl )
+            // InternalKExpressions.g:3440:2: rule__BitwiseAndExpression__Group_1_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__BitwiseAndExpression__Group_1_2__1__Impl();
@@ -10006,23 +10265,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseAndExpression__Group_1_2__1__Impl"
-    // InternalKExpressions.g:3368:1: rule__BitwiseAndExpression__Group_1_2__1__Impl : ( ( rule__BitwiseAndExpression__SubExpressionsAssignment_1_2_1 ) ) ;
+    // InternalKExpressions.g:3446:1: rule__BitwiseAndExpression__Group_1_2__1__Impl : ( ( rule__BitwiseAndExpression__SubExpressionsAssignment_1_2_1 ) ) ;
     public final void rule__BitwiseAndExpression__Group_1_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3372:1: ( ( ( rule__BitwiseAndExpression__SubExpressionsAssignment_1_2_1 ) ) )
-            // InternalKExpressions.g:3373:1: ( ( rule__BitwiseAndExpression__SubExpressionsAssignment_1_2_1 ) )
+            // InternalKExpressions.g:3450:1: ( ( ( rule__BitwiseAndExpression__SubExpressionsAssignment_1_2_1 ) ) )
+            // InternalKExpressions.g:3451:1: ( ( rule__BitwiseAndExpression__SubExpressionsAssignment_1_2_1 ) )
             {
-            // InternalKExpressions.g:3373:1: ( ( rule__BitwiseAndExpression__SubExpressionsAssignment_1_2_1 ) )
-            // InternalKExpressions.g:3374:1: ( rule__BitwiseAndExpression__SubExpressionsAssignment_1_2_1 )
+            // InternalKExpressions.g:3451:1: ( ( rule__BitwiseAndExpression__SubExpressionsAssignment_1_2_1 ) )
+            // InternalKExpressions.g:3452:1: ( rule__BitwiseAndExpression__SubExpressionsAssignment_1_2_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseAndExpressionAccess().getSubExpressionsAssignment_1_2_1()); 
             }
-            // InternalKExpressions.g:3375:1: ( rule__BitwiseAndExpression__SubExpressionsAssignment_1_2_1 )
-            // InternalKExpressions.g:3375:2: rule__BitwiseAndExpression__SubExpressionsAssignment_1_2_1
+            // InternalKExpressions.g:3453:1: ( rule__BitwiseAndExpression__SubExpressionsAssignment_1_2_1 )
+            // InternalKExpressions.g:3453:2: rule__BitwiseAndExpression__SubExpressionsAssignment_1_2_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__BitwiseAndExpression__SubExpressionsAssignment_1_2_1();
@@ -10057,14 +10316,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__CompareOperation__Group__0"
-    // InternalKExpressions.g:3389:1: rule__CompareOperation__Group__0 : rule__CompareOperation__Group__0__Impl rule__CompareOperation__Group__1 ;
+    // InternalKExpressions.g:3467:1: rule__CompareOperation__Group__0 : rule__CompareOperation__Group__0__Impl rule__CompareOperation__Group__1 ;
     public final void rule__CompareOperation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3393:1: ( rule__CompareOperation__Group__0__Impl rule__CompareOperation__Group__1 )
-            // InternalKExpressions.g:3394:2: rule__CompareOperation__Group__0__Impl rule__CompareOperation__Group__1
+            // InternalKExpressions.g:3471:1: ( rule__CompareOperation__Group__0__Impl rule__CompareOperation__Group__1 )
+            // InternalKExpressions.g:3472:2: rule__CompareOperation__Group__0__Impl rule__CompareOperation__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_15);
             rule__CompareOperation__Group__0__Impl();
@@ -10095,17 +10354,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__CompareOperation__Group__0__Impl"
-    // InternalKExpressions.g:3401:1: rule__CompareOperation__Group__0__Impl : ( ruleNotOrValuedExpression ) ;
+    // InternalKExpressions.g:3479:1: rule__CompareOperation__Group__0__Impl : ( ruleNotOrValuedExpression ) ;
     public final void rule__CompareOperation__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3405:1: ( ( ruleNotOrValuedExpression ) )
-            // InternalKExpressions.g:3406:1: ( ruleNotOrValuedExpression )
+            // InternalKExpressions.g:3483:1: ( ( ruleNotOrValuedExpression ) )
+            // InternalKExpressions.g:3484:1: ( ruleNotOrValuedExpression )
             {
-            // InternalKExpressions.g:3406:1: ( ruleNotOrValuedExpression )
-            // InternalKExpressions.g:3407:1: ruleNotOrValuedExpression
+            // InternalKExpressions.g:3484:1: ( ruleNotOrValuedExpression )
+            // InternalKExpressions.g:3485:1: ruleNotOrValuedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCompareOperationAccess().getNotOrValuedExpressionParserRuleCall_0()); 
@@ -10140,14 +10399,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__CompareOperation__Group__1"
-    // InternalKExpressions.g:3418:1: rule__CompareOperation__Group__1 : rule__CompareOperation__Group__1__Impl ;
+    // InternalKExpressions.g:3496:1: rule__CompareOperation__Group__1 : rule__CompareOperation__Group__1__Impl ;
     public final void rule__CompareOperation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3422:1: ( rule__CompareOperation__Group__1__Impl )
-            // InternalKExpressions.g:3423:2: rule__CompareOperation__Group__1__Impl
+            // InternalKExpressions.g:3500:1: ( rule__CompareOperation__Group__1__Impl )
+            // InternalKExpressions.g:3501:2: rule__CompareOperation__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__CompareOperation__Group__1__Impl();
@@ -10173,31 +10432,31 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__CompareOperation__Group__1__Impl"
-    // InternalKExpressions.g:3429:1: rule__CompareOperation__Group__1__Impl : ( ( rule__CompareOperation__Group_1__0 )? ) ;
+    // InternalKExpressions.g:3507:1: rule__CompareOperation__Group__1__Impl : ( ( rule__CompareOperation__Group_1__0 )? ) ;
     public final void rule__CompareOperation__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3433:1: ( ( ( rule__CompareOperation__Group_1__0 )? ) )
-            // InternalKExpressions.g:3434:1: ( ( rule__CompareOperation__Group_1__0 )? )
+            // InternalKExpressions.g:3511:1: ( ( ( rule__CompareOperation__Group_1__0 )? ) )
+            // InternalKExpressions.g:3512:1: ( ( rule__CompareOperation__Group_1__0 )? )
             {
-            // InternalKExpressions.g:3434:1: ( ( rule__CompareOperation__Group_1__0 )? )
-            // InternalKExpressions.g:3435:1: ( rule__CompareOperation__Group_1__0 )?
+            // InternalKExpressions.g:3512:1: ( ( rule__CompareOperation__Group_1__0 )? )
+            // InternalKExpressions.g:3513:1: ( rule__CompareOperation__Group_1__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCompareOperationAccess().getGroup_1()); 
             }
-            // InternalKExpressions.g:3436:1: ( rule__CompareOperation__Group_1__0 )?
-            int alt27=2;
-            int LA27_0 = input.LA(1);
+            // InternalKExpressions.g:3514:1: ( rule__CompareOperation__Group_1__0 )?
+            int alt28=2;
+            int LA28_0 = input.LA(1);
 
-            if ( ((LA27_0>=31 && LA27_0<=36)) ) {
-                alt27=1;
+            if ( ((LA28_0>=31 && LA28_0<=36)) ) {
+                alt28=1;
             }
-            switch (alt27) {
+            switch (alt28) {
                 case 1 :
-                    // InternalKExpressions.g:3436:2: rule__CompareOperation__Group_1__0
+                    // InternalKExpressions.g:3514:2: rule__CompareOperation__Group_1__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__CompareOperation__Group_1__0();
@@ -10235,14 +10494,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__CompareOperation__Group_1__0"
-    // InternalKExpressions.g:3450:1: rule__CompareOperation__Group_1__0 : rule__CompareOperation__Group_1__0__Impl rule__CompareOperation__Group_1__1 ;
+    // InternalKExpressions.g:3528:1: rule__CompareOperation__Group_1__0 : rule__CompareOperation__Group_1__0__Impl rule__CompareOperation__Group_1__1 ;
     public final void rule__CompareOperation__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3454:1: ( rule__CompareOperation__Group_1__0__Impl rule__CompareOperation__Group_1__1 )
-            // InternalKExpressions.g:3455:2: rule__CompareOperation__Group_1__0__Impl rule__CompareOperation__Group_1__1
+            // InternalKExpressions.g:3532:1: ( rule__CompareOperation__Group_1__0__Impl rule__CompareOperation__Group_1__1 )
+            // InternalKExpressions.g:3533:2: rule__CompareOperation__Group_1__0__Impl rule__CompareOperation__Group_1__1
             {
             pushFollow(FollowSets000.FOLLOW_15);
             rule__CompareOperation__Group_1__0__Impl();
@@ -10273,23 +10532,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__CompareOperation__Group_1__0__Impl"
-    // InternalKExpressions.g:3462:1: rule__CompareOperation__Group_1__0__Impl : ( () ) ;
+    // InternalKExpressions.g:3540:1: rule__CompareOperation__Group_1__0__Impl : ( () ) ;
     public final void rule__CompareOperation__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3466:1: ( ( () ) )
-            // InternalKExpressions.g:3467:1: ( () )
+            // InternalKExpressions.g:3544:1: ( ( () ) )
+            // InternalKExpressions.g:3545:1: ( () )
             {
-            // InternalKExpressions.g:3467:1: ( () )
-            // InternalKExpressions.g:3468:1: ()
+            // InternalKExpressions.g:3545:1: ( () )
+            // InternalKExpressions.g:3546:1: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()); 
             }
-            // InternalKExpressions.g:3469:1: ()
-            // InternalKExpressions.g:3471:1: 
+            // InternalKExpressions.g:3547:1: ()
+            // InternalKExpressions.g:3549:1: 
             {
             }
 
@@ -10314,14 +10573,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__CompareOperation__Group_1__1"
-    // InternalKExpressions.g:3481:1: rule__CompareOperation__Group_1__1 : rule__CompareOperation__Group_1__1__Impl rule__CompareOperation__Group_1__2 ;
+    // InternalKExpressions.g:3559:1: rule__CompareOperation__Group_1__1 : rule__CompareOperation__Group_1__1__Impl rule__CompareOperation__Group_1__2 ;
     public final void rule__CompareOperation__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3485:1: ( rule__CompareOperation__Group_1__1__Impl rule__CompareOperation__Group_1__2 )
-            // InternalKExpressions.g:3486:2: rule__CompareOperation__Group_1__1__Impl rule__CompareOperation__Group_1__2
+            // InternalKExpressions.g:3563:1: ( rule__CompareOperation__Group_1__1__Impl rule__CompareOperation__Group_1__2 )
+            // InternalKExpressions.g:3564:2: rule__CompareOperation__Group_1__1__Impl rule__CompareOperation__Group_1__2
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__CompareOperation__Group_1__1__Impl();
@@ -10352,23 +10611,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__CompareOperation__Group_1__1__Impl"
-    // InternalKExpressions.g:3493:1: rule__CompareOperation__Group_1__1__Impl : ( ( rule__CompareOperation__OperatorAssignment_1_1 ) ) ;
+    // InternalKExpressions.g:3571:1: rule__CompareOperation__Group_1__1__Impl : ( ( rule__CompareOperation__OperatorAssignment_1_1 ) ) ;
     public final void rule__CompareOperation__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3497:1: ( ( ( rule__CompareOperation__OperatorAssignment_1_1 ) ) )
-            // InternalKExpressions.g:3498:1: ( ( rule__CompareOperation__OperatorAssignment_1_1 ) )
+            // InternalKExpressions.g:3575:1: ( ( ( rule__CompareOperation__OperatorAssignment_1_1 ) ) )
+            // InternalKExpressions.g:3576:1: ( ( rule__CompareOperation__OperatorAssignment_1_1 ) )
             {
-            // InternalKExpressions.g:3498:1: ( ( rule__CompareOperation__OperatorAssignment_1_1 ) )
-            // InternalKExpressions.g:3499:1: ( rule__CompareOperation__OperatorAssignment_1_1 )
+            // InternalKExpressions.g:3576:1: ( ( rule__CompareOperation__OperatorAssignment_1_1 ) )
+            // InternalKExpressions.g:3577:1: ( rule__CompareOperation__OperatorAssignment_1_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCompareOperationAccess().getOperatorAssignment_1_1()); 
             }
-            // InternalKExpressions.g:3500:1: ( rule__CompareOperation__OperatorAssignment_1_1 )
-            // InternalKExpressions.g:3500:2: rule__CompareOperation__OperatorAssignment_1_1
+            // InternalKExpressions.g:3578:1: ( rule__CompareOperation__OperatorAssignment_1_1 )
+            // InternalKExpressions.g:3578:2: rule__CompareOperation__OperatorAssignment_1_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__CompareOperation__OperatorAssignment_1_1();
@@ -10403,14 +10662,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__CompareOperation__Group_1__2"
-    // InternalKExpressions.g:3510:1: rule__CompareOperation__Group_1__2 : rule__CompareOperation__Group_1__2__Impl ;
+    // InternalKExpressions.g:3588:1: rule__CompareOperation__Group_1__2 : rule__CompareOperation__Group_1__2__Impl ;
     public final void rule__CompareOperation__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3514:1: ( rule__CompareOperation__Group_1__2__Impl )
-            // InternalKExpressions.g:3515:2: rule__CompareOperation__Group_1__2__Impl
+            // InternalKExpressions.g:3592:1: ( rule__CompareOperation__Group_1__2__Impl )
+            // InternalKExpressions.g:3593:2: rule__CompareOperation__Group_1__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__CompareOperation__Group_1__2__Impl();
@@ -10436,23 +10695,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__CompareOperation__Group_1__2__Impl"
-    // InternalKExpressions.g:3521:1: rule__CompareOperation__Group_1__2__Impl : ( ( rule__CompareOperation__SubExpressionsAssignment_1_2 ) ) ;
+    // InternalKExpressions.g:3599:1: rule__CompareOperation__Group_1__2__Impl : ( ( rule__CompareOperation__SubExpressionsAssignment_1_2 ) ) ;
     public final void rule__CompareOperation__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3525:1: ( ( ( rule__CompareOperation__SubExpressionsAssignment_1_2 ) ) )
-            // InternalKExpressions.g:3526:1: ( ( rule__CompareOperation__SubExpressionsAssignment_1_2 ) )
+            // InternalKExpressions.g:3603:1: ( ( ( rule__CompareOperation__SubExpressionsAssignment_1_2 ) ) )
+            // InternalKExpressions.g:3604:1: ( ( rule__CompareOperation__SubExpressionsAssignment_1_2 ) )
             {
-            // InternalKExpressions.g:3526:1: ( ( rule__CompareOperation__SubExpressionsAssignment_1_2 ) )
-            // InternalKExpressions.g:3527:1: ( rule__CompareOperation__SubExpressionsAssignment_1_2 )
+            // InternalKExpressions.g:3604:1: ( ( rule__CompareOperation__SubExpressionsAssignment_1_2 ) )
+            // InternalKExpressions.g:3605:1: ( rule__CompareOperation__SubExpressionsAssignment_1_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCompareOperationAccess().getSubExpressionsAssignment_1_2()); 
             }
-            // InternalKExpressions.g:3528:1: ( rule__CompareOperation__SubExpressionsAssignment_1_2 )
-            // InternalKExpressions.g:3528:2: rule__CompareOperation__SubExpressionsAssignment_1_2
+            // InternalKExpressions.g:3606:1: ( rule__CompareOperation__SubExpressionsAssignment_1_2 )
+            // InternalKExpressions.g:3606:2: rule__CompareOperation__SubExpressionsAssignment_1_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__CompareOperation__SubExpressionsAssignment_1_2();
@@ -10487,14 +10746,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__NotExpression__Group_0__0"
-    // InternalKExpressions.g:3544:1: rule__NotExpression__Group_0__0 : rule__NotExpression__Group_0__0__Impl rule__NotExpression__Group_0__1 ;
+    // InternalKExpressions.g:3622:1: rule__NotExpression__Group_0__0 : rule__NotExpression__Group_0__0__Impl rule__NotExpression__Group_0__1 ;
     public final void rule__NotExpression__Group_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3548:1: ( rule__NotExpression__Group_0__0__Impl rule__NotExpression__Group_0__1 )
-            // InternalKExpressions.g:3549:2: rule__NotExpression__Group_0__0__Impl rule__NotExpression__Group_0__1
+            // InternalKExpressions.g:3626:1: ( rule__NotExpression__Group_0__0__Impl rule__NotExpression__Group_0__1 )
+            // InternalKExpressions.g:3627:2: rule__NotExpression__Group_0__0__Impl rule__NotExpression__Group_0__1
             {
             pushFollow(FollowSets000.FOLLOW_16);
             rule__NotExpression__Group_0__0__Impl();
@@ -10525,23 +10784,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__NotExpression__Group_0__0__Impl"
-    // InternalKExpressions.g:3556:1: rule__NotExpression__Group_0__0__Impl : ( () ) ;
+    // InternalKExpressions.g:3634:1: rule__NotExpression__Group_0__0__Impl : ( () ) ;
     public final void rule__NotExpression__Group_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3560:1: ( ( () ) )
-            // InternalKExpressions.g:3561:1: ( () )
+            // InternalKExpressions.g:3638:1: ( ( () ) )
+            // InternalKExpressions.g:3639:1: ( () )
             {
-            // InternalKExpressions.g:3561:1: ( () )
-            // InternalKExpressions.g:3562:1: ()
+            // InternalKExpressions.g:3639:1: ( () )
+            // InternalKExpressions.g:3640:1: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNotExpressionAccess().getOperatorExpressionAction_0_0()); 
             }
-            // InternalKExpressions.g:3563:1: ()
-            // InternalKExpressions.g:3565:1: 
+            // InternalKExpressions.g:3641:1: ()
+            // InternalKExpressions.g:3643:1: 
             {
             }
 
@@ -10566,14 +10825,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__NotExpression__Group_0__1"
-    // InternalKExpressions.g:3575:1: rule__NotExpression__Group_0__1 : rule__NotExpression__Group_0__1__Impl rule__NotExpression__Group_0__2 ;
+    // InternalKExpressions.g:3653:1: rule__NotExpression__Group_0__1 : rule__NotExpression__Group_0__1__Impl rule__NotExpression__Group_0__2 ;
     public final void rule__NotExpression__Group_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3579:1: ( rule__NotExpression__Group_0__1__Impl rule__NotExpression__Group_0__2 )
-            // InternalKExpressions.g:3580:2: rule__NotExpression__Group_0__1__Impl rule__NotExpression__Group_0__2
+            // InternalKExpressions.g:3657:1: ( rule__NotExpression__Group_0__1__Impl rule__NotExpression__Group_0__2 )
+            // InternalKExpressions.g:3658:2: rule__NotExpression__Group_0__1__Impl rule__NotExpression__Group_0__2
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__NotExpression__Group_0__1__Impl();
@@ -10604,23 +10863,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__NotExpression__Group_0__1__Impl"
-    // InternalKExpressions.g:3587:1: rule__NotExpression__Group_0__1__Impl : ( ( rule__NotExpression__OperatorAssignment_0_1 ) ) ;
+    // InternalKExpressions.g:3665:1: rule__NotExpression__Group_0__1__Impl : ( ( rule__NotExpression__OperatorAssignment_0_1 ) ) ;
     public final void rule__NotExpression__Group_0__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3591:1: ( ( ( rule__NotExpression__OperatorAssignment_0_1 ) ) )
-            // InternalKExpressions.g:3592:1: ( ( rule__NotExpression__OperatorAssignment_0_1 ) )
+            // InternalKExpressions.g:3669:1: ( ( ( rule__NotExpression__OperatorAssignment_0_1 ) ) )
+            // InternalKExpressions.g:3670:1: ( ( rule__NotExpression__OperatorAssignment_0_1 ) )
             {
-            // InternalKExpressions.g:3592:1: ( ( rule__NotExpression__OperatorAssignment_0_1 ) )
-            // InternalKExpressions.g:3593:1: ( rule__NotExpression__OperatorAssignment_0_1 )
+            // InternalKExpressions.g:3670:1: ( ( rule__NotExpression__OperatorAssignment_0_1 ) )
+            // InternalKExpressions.g:3671:1: ( rule__NotExpression__OperatorAssignment_0_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNotExpressionAccess().getOperatorAssignment_0_1()); 
             }
-            // InternalKExpressions.g:3594:1: ( rule__NotExpression__OperatorAssignment_0_1 )
-            // InternalKExpressions.g:3594:2: rule__NotExpression__OperatorAssignment_0_1
+            // InternalKExpressions.g:3672:1: ( rule__NotExpression__OperatorAssignment_0_1 )
+            // InternalKExpressions.g:3672:2: rule__NotExpression__OperatorAssignment_0_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__NotExpression__OperatorAssignment_0_1();
@@ -10655,14 +10914,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__NotExpression__Group_0__2"
-    // InternalKExpressions.g:3604:1: rule__NotExpression__Group_0__2 : rule__NotExpression__Group_0__2__Impl ;
+    // InternalKExpressions.g:3682:1: rule__NotExpression__Group_0__2 : rule__NotExpression__Group_0__2__Impl ;
     public final void rule__NotExpression__Group_0__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3608:1: ( rule__NotExpression__Group_0__2__Impl )
-            // InternalKExpressions.g:3609:2: rule__NotExpression__Group_0__2__Impl
+            // InternalKExpressions.g:3686:1: ( rule__NotExpression__Group_0__2__Impl )
+            // InternalKExpressions.g:3687:2: rule__NotExpression__Group_0__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__NotExpression__Group_0__2__Impl();
@@ -10688,23 +10947,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__NotExpression__Group_0__2__Impl"
-    // InternalKExpressions.g:3615:1: rule__NotExpression__Group_0__2__Impl : ( ( rule__NotExpression__SubExpressionsAssignment_0_2 ) ) ;
+    // InternalKExpressions.g:3693:1: rule__NotExpression__Group_0__2__Impl : ( ( rule__NotExpression__SubExpressionsAssignment_0_2 ) ) ;
     public final void rule__NotExpression__Group_0__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3619:1: ( ( ( rule__NotExpression__SubExpressionsAssignment_0_2 ) ) )
-            // InternalKExpressions.g:3620:1: ( ( rule__NotExpression__SubExpressionsAssignment_0_2 ) )
+            // InternalKExpressions.g:3697:1: ( ( ( rule__NotExpression__SubExpressionsAssignment_0_2 ) ) )
+            // InternalKExpressions.g:3698:1: ( ( rule__NotExpression__SubExpressionsAssignment_0_2 ) )
             {
-            // InternalKExpressions.g:3620:1: ( ( rule__NotExpression__SubExpressionsAssignment_0_2 ) )
-            // InternalKExpressions.g:3621:1: ( rule__NotExpression__SubExpressionsAssignment_0_2 )
+            // InternalKExpressions.g:3698:1: ( ( rule__NotExpression__SubExpressionsAssignment_0_2 ) )
+            // InternalKExpressions.g:3699:1: ( rule__NotExpression__SubExpressionsAssignment_0_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNotExpressionAccess().getSubExpressionsAssignment_0_2()); 
             }
-            // InternalKExpressions.g:3622:1: ( rule__NotExpression__SubExpressionsAssignment_0_2 )
-            // InternalKExpressions.g:3622:2: rule__NotExpression__SubExpressionsAssignment_0_2
+            // InternalKExpressions.g:3700:1: ( rule__NotExpression__SubExpressionsAssignment_0_2 )
+            // InternalKExpressions.g:3700:2: rule__NotExpression__SubExpressionsAssignment_0_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__NotExpression__SubExpressionsAssignment_0_2();
@@ -10739,14 +10998,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AddExpression__Group__0"
-    // InternalKExpressions.g:3638:1: rule__AddExpression__Group__0 : rule__AddExpression__Group__0__Impl rule__AddExpression__Group__1 ;
+    // InternalKExpressions.g:3716:1: rule__AddExpression__Group__0 : rule__AddExpression__Group__0__Impl rule__AddExpression__Group__1 ;
     public final void rule__AddExpression__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3642:1: ( rule__AddExpression__Group__0__Impl rule__AddExpression__Group__1 )
-            // InternalKExpressions.g:3643:2: rule__AddExpression__Group__0__Impl rule__AddExpression__Group__1
+            // InternalKExpressions.g:3720:1: ( rule__AddExpression__Group__0__Impl rule__AddExpression__Group__1 )
+            // InternalKExpressions.g:3721:2: rule__AddExpression__Group__0__Impl rule__AddExpression__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_17);
             rule__AddExpression__Group__0__Impl();
@@ -10777,17 +11036,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AddExpression__Group__0__Impl"
-    // InternalKExpressions.g:3650:1: rule__AddExpression__Group__0__Impl : ( ruleSubExpression ) ;
+    // InternalKExpressions.g:3728:1: rule__AddExpression__Group__0__Impl : ( ruleSubExpression ) ;
     public final void rule__AddExpression__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3654:1: ( ( ruleSubExpression ) )
-            // InternalKExpressions.g:3655:1: ( ruleSubExpression )
+            // InternalKExpressions.g:3732:1: ( ( ruleSubExpression ) )
+            // InternalKExpressions.g:3733:1: ( ruleSubExpression )
             {
-            // InternalKExpressions.g:3655:1: ( ruleSubExpression )
-            // InternalKExpressions.g:3656:1: ruleSubExpression
+            // InternalKExpressions.g:3733:1: ( ruleSubExpression )
+            // InternalKExpressions.g:3734:1: ruleSubExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAddExpressionAccess().getSubExpressionParserRuleCall_0()); 
@@ -10822,14 +11081,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AddExpression__Group__1"
-    // InternalKExpressions.g:3667:1: rule__AddExpression__Group__1 : rule__AddExpression__Group__1__Impl ;
+    // InternalKExpressions.g:3745:1: rule__AddExpression__Group__1 : rule__AddExpression__Group__1__Impl ;
     public final void rule__AddExpression__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3671:1: ( rule__AddExpression__Group__1__Impl )
-            // InternalKExpressions.g:3672:2: rule__AddExpression__Group__1__Impl
+            // InternalKExpressions.g:3749:1: ( rule__AddExpression__Group__1__Impl )
+            // InternalKExpressions.g:3750:2: rule__AddExpression__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__AddExpression__Group__1__Impl();
@@ -10855,31 +11114,31 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AddExpression__Group__1__Impl"
-    // InternalKExpressions.g:3678:1: rule__AddExpression__Group__1__Impl : ( ( rule__AddExpression__Group_1__0 )? ) ;
+    // InternalKExpressions.g:3756:1: rule__AddExpression__Group__1__Impl : ( ( rule__AddExpression__Group_1__0 )? ) ;
     public final void rule__AddExpression__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3682:1: ( ( ( rule__AddExpression__Group_1__0 )? ) )
-            // InternalKExpressions.g:3683:1: ( ( rule__AddExpression__Group_1__0 )? )
+            // InternalKExpressions.g:3760:1: ( ( ( rule__AddExpression__Group_1__0 )? ) )
+            // InternalKExpressions.g:3761:1: ( ( rule__AddExpression__Group_1__0 )? )
             {
-            // InternalKExpressions.g:3683:1: ( ( rule__AddExpression__Group_1__0 )? )
-            // InternalKExpressions.g:3684:1: ( rule__AddExpression__Group_1__0 )?
+            // InternalKExpressions.g:3761:1: ( ( rule__AddExpression__Group_1__0 )? )
+            // InternalKExpressions.g:3762:1: ( rule__AddExpression__Group_1__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAddExpressionAccess().getGroup_1()); 
             }
-            // InternalKExpressions.g:3685:1: ( rule__AddExpression__Group_1__0 )?
-            int alt28=2;
-            int LA28_0 = input.LA(1);
+            // InternalKExpressions.g:3763:1: ( rule__AddExpression__Group_1__0 )?
+            int alt29=2;
+            int LA29_0 = input.LA(1);
 
-            if ( (LA28_0==21) ) {
-                alt28=1;
+            if ( (LA29_0==21) ) {
+                alt29=1;
             }
-            switch (alt28) {
+            switch (alt29) {
                 case 1 :
-                    // InternalKExpressions.g:3685:2: rule__AddExpression__Group_1__0
+                    // InternalKExpressions.g:3763:2: rule__AddExpression__Group_1__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__AddExpression__Group_1__0();
@@ -10917,14 +11176,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AddExpression__Group_1__0"
-    // InternalKExpressions.g:3699:1: rule__AddExpression__Group_1__0 : rule__AddExpression__Group_1__0__Impl rule__AddExpression__Group_1__1 ;
+    // InternalKExpressions.g:3777:1: rule__AddExpression__Group_1__0 : rule__AddExpression__Group_1__0__Impl rule__AddExpression__Group_1__1 ;
     public final void rule__AddExpression__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3703:1: ( rule__AddExpression__Group_1__0__Impl rule__AddExpression__Group_1__1 )
-            // InternalKExpressions.g:3704:2: rule__AddExpression__Group_1__0__Impl rule__AddExpression__Group_1__1
+            // InternalKExpressions.g:3781:1: ( rule__AddExpression__Group_1__0__Impl rule__AddExpression__Group_1__1 )
+            // InternalKExpressions.g:3782:2: rule__AddExpression__Group_1__0__Impl rule__AddExpression__Group_1__1
             {
             pushFollow(FollowSets000.FOLLOW_17);
             rule__AddExpression__Group_1__0__Impl();
@@ -10955,23 +11214,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AddExpression__Group_1__0__Impl"
-    // InternalKExpressions.g:3711:1: rule__AddExpression__Group_1__0__Impl : ( () ) ;
+    // InternalKExpressions.g:3789:1: rule__AddExpression__Group_1__0__Impl : ( () ) ;
     public final void rule__AddExpression__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3715:1: ( ( () ) )
-            // InternalKExpressions.g:3716:1: ( () )
+            // InternalKExpressions.g:3793:1: ( ( () ) )
+            // InternalKExpressions.g:3794:1: ( () )
             {
-            // InternalKExpressions.g:3716:1: ( () )
-            // InternalKExpressions.g:3717:1: ()
+            // InternalKExpressions.g:3794:1: ( () )
+            // InternalKExpressions.g:3795:1: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()); 
             }
-            // InternalKExpressions.g:3718:1: ()
-            // InternalKExpressions.g:3720:1: 
+            // InternalKExpressions.g:3796:1: ()
+            // InternalKExpressions.g:3798:1: 
             {
             }
 
@@ -10996,14 +11255,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AddExpression__Group_1__1"
-    // InternalKExpressions.g:3730:1: rule__AddExpression__Group_1__1 : rule__AddExpression__Group_1__1__Impl rule__AddExpression__Group_1__2 ;
+    // InternalKExpressions.g:3808:1: rule__AddExpression__Group_1__1 : rule__AddExpression__Group_1__1__Impl rule__AddExpression__Group_1__2 ;
     public final void rule__AddExpression__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3734:1: ( rule__AddExpression__Group_1__1__Impl rule__AddExpression__Group_1__2 )
-            // InternalKExpressions.g:3735:2: rule__AddExpression__Group_1__1__Impl rule__AddExpression__Group_1__2
+            // InternalKExpressions.g:3812:1: ( rule__AddExpression__Group_1__1__Impl rule__AddExpression__Group_1__2 )
+            // InternalKExpressions.g:3813:2: rule__AddExpression__Group_1__1__Impl rule__AddExpression__Group_1__2
             {
             pushFollow(FollowSets000.FOLLOW_17);
             rule__AddExpression__Group_1__1__Impl();
@@ -11034,23 +11293,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AddExpression__Group_1__1__Impl"
-    // InternalKExpressions.g:3742:1: rule__AddExpression__Group_1__1__Impl : ( ( rule__AddExpression__Group_1_1__0 ) ) ;
+    // InternalKExpressions.g:3820:1: rule__AddExpression__Group_1__1__Impl : ( ( rule__AddExpression__Group_1_1__0 ) ) ;
     public final void rule__AddExpression__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3746:1: ( ( ( rule__AddExpression__Group_1_1__0 ) ) )
-            // InternalKExpressions.g:3747:1: ( ( rule__AddExpression__Group_1_1__0 ) )
+            // InternalKExpressions.g:3824:1: ( ( ( rule__AddExpression__Group_1_1__0 ) ) )
+            // InternalKExpressions.g:3825:1: ( ( rule__AddExpression__Group_1_1__0 ) )
             {
-            // InternalKExpressions.g:3747:1: ( ( rule__AddExpression__Group_1_1__0 ) )
-            // InternalKExpressions.g:3748:1: ( rule__AddExpression__Group_1_1__0 )
+            // InternalKExpressions.g:3825:1: ( ( rule__AddExpression__Group_1_1__0 ) )
+            // InternalKExpressions.g:3826:1: ( rule__AddExpression__Group_1_1__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAddExpressionAccess().getGroup_1_1()); 
             }
-            // InternalKExpressions.g:3749:1: ( rule__AddExpression__Group_1_1__0 )
-            // InternalKExpressions.g:3749:2: rule__AddExpression__Group_1_1__0
+            // InternalKExpressions.g:3827:1: ( rule__AddExpression__Group_1_1__0 )
+            // InternalKExpressions.g:3827:2: rule__AddExpression__Group_1_1__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__AddExpression__Group_1_1__0();
@@ -11085,14 +11344,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AddExpression__Group_1__2"
-    // InternalKExpressions.g:3759:1: rule__AddExpression__Group_1__2 : rule__AddExpression__Group_1__2__Impl ;
+    // InternalKExpressions.g:3837:1: rule__AddExpression__Group_1__2 : rule__AddExpression__Group_1__2__Impl ;
     public final void rule__AddExpression__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3763:1: ( rule__AddExpression__Group_1__2__Impl )
-            // InternalKExpressions.g:3764:2: rule__AddExpression__Group_1__2__Impl
+            // InternalKExpressions.g:3841:1: ( rule__AddExpression__Group_1__2__Impl )
+            // InternalKExpressions.g:3842:2: rule__AddExpression__Group_1__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__AddExpression__Group_1__2__Impl();
@@ -11118,35 +11377,35 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AddExpression__Group_1__2__Impl"
-    // InternalKExpressions.g:3770:1: rule__AddExpression__Group_1__2__Impl : ( ( rule__AddExpression__Group_1_2__0 )* ) ;
+    // InternalKExpressions.g:3848:1: rule__AddExpression__Group_1__2__Impl : ( ( rule__AddExpression__Group_1_2__0 )* ) ;
     public final void rule__AddExpression__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3774:1: ( ( ( rule__AddExpression__Group_1_2__0 )* ) )
-            // InternalKExpressions.g:3775:1: ( ( rule__AddExpression__Group_1_2__0 )* )
+            // InternalKExpressions.g:3852:1: ( ( ( rule__AddExpression__Group_1_2__0 )* ) )
+            // InternalKExpressions.g:3853:1: ( ( rule__AddExpression__Group_1_2__0 )* )
             {
-            // InternalKExpressions.g:3775:1: ( ( rule__AddExpression__Group_1_2__0 )* )
-            // InternalKExpressions.g:3776:1: ( rule__AddExpression__Group_1_2__0 )*
+            // InternalKExpressions.g:3853:1: ( ( rule__AddExpression__Group_1_2__0 )* )
+            // InternalKExpressions.g:3854:1: ( rule__AddExpression__Group_1_2__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAddExpressionAccess().getGroup_1_2()); 
             }
-            // InternalKExpressions.g:3777:1: ( rule__AddExpression__Group_1_2__0 )*
-            loop29:
+            // InternalKExpressions.g:3855:1: ( rule__AddExpression__Group_1_2__0 )*
+            loop30:
             do {
-                int alt29=2;
-                int LA29_0 = input.LA(1);
+                int alt30=2;
+                int LA30_0 = input.LA(1);
 
-                if ( (LA29_0==21) ) {
-                    alt29=1;
+                if ( (LA30_0==21) ) {
+                    alt30=1;
                 }
 
 
-                switch (alt29) {
+                switch (alt30) {
             	case 1 :
-            	    // InternalKExpressions.g:3777:2: rule__AddExpression__Group_1_2__0
+            	    // InternalKExpressions.g:3855:2: rule__AddExpression__Group_1_2__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_18);
             	    rule__AddExpression__Group_1_2__0();
@@ -11158,7 +11417,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop29;
+            	    break loop30;
                 }
             } while (true);
 
@@ -11187,14 +11446,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AddExpression__Group_1_1__0"
-    // InternalKExpressions.g:3793:1: rule__AddExpression__Group_1_1__0 : rule__AddExpression__Group_1_1__0__Impl rule__AddExpression__Group_1_1__1 ;
+    // InternalKExpressions.g:3871:1: rule__AddExpression__Group_1_1__0 : rule__AddExpression__Group_1_1__0__Impl rule__AddExpression__Group_1_1__1 ;
     public final void rule__AddExpression__Group_1_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3797:1: ( rule__AddExpression__Group_1_1__0__Impl rule__AddExpression__Group_1_1__1 )
-            // InternalKExpressions.g:3798:2: rule__AddExpression__Group_1_1__0__Impl rule__AddExpression__Group_1_1__1
+            // InternalKExpressions.g:3875:1: ( rule__AddExpression__Group_1_1__0__Impl rule__AddExpression__Group_1_1__1 )
+            // InternalKExpressions.g:3876:2: rule__AddExpression__Group_1_1__0__Impl rule__AddExpression__Group_1_1__1
             {
             pushFollow(FollowSets000.FOLLOW_19);
             rule__AddExpression__Group_1_1__0__Impl();
@@ -11225,23 +11484,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AddExpression__Group_1_1__0__Impl"
-    // InternalKExpressions.g:3805:1: rule__AddExpression__Group_1_1__0__Impl : ( ( rule__AddExpression__OperatorAssignment_1_1_0 ) ) ;
+    // InternalKExpressions.g:3883:1: rule__AddExpression__Group_1_1__0__Impl : ( ( rule__AddExpression__OperatorAssignment_1_1_0 ) ) ;
     public final void rule__AddExpression__Group_1_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3809:1: ( ( ( rule__AddExpression__OperatorAssignment_1_1_0 ) ) )
-            // InternalKExpressions.g:3810:1: ( ( rule__AddExpression__OperatorAssignment_1_1_0 ) )
+            // InternalKExpressions.g:3887:1: ( ( ( rule__AddExpression__OperatorAssignment_1_1_0 ) ) )
+            // InternalKExpressions.g:3888:1: ( ( rule__AddExpression__OperatorAssignment_1_1_0 ) )
             {
-            // InternalKExpressions.g:3810:1: ( ( rule__AddExpression__OperatorAssignment_1_1_0 ) )
-            // InternalKExpressions.g:3811:1: ( rule__AddExpression__OperatorAssignment_1_1_0 )
+            // InternalKExpressions.g:3888:1: ( ( rule__AddExpression__OperatorAssignment_1_1_0 ) )
+            // InternalKExpressions.g:3889:1: ( rule__AddExpression__OperatorAssignment_1_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAddExpressionAccess().getOperatorAssignment_1_1_0()); 
             }
-            // InternalKExpressions.g:3812:1: ( rule__AddExpression__OperatorAssignment_1_1_0 )
-            // InternalKExpressions.g:3812:2: rule__AddExpression__OperatorAssignment_1_1_0
+            // InternalKExpressions.g:3890:1: ( rule__AddExpression__OperatorAssignment_1_1_0 )
+            // InternalKExpressions.g:3890:2: rule__AddExpression__OperatorAssignment_1_1_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__AddExpression__OperatorAssignment_1_1_0();
@@ -11276,14 +11535,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AddExpression__Group_1_1__1"
-    // InternalKExpressions.g:3822:1: rule__AddExpression__Group_1_1__1 : rule__AddExpression__Group_1_1__1__Impl ;
+    // InternalKExpressions.g:3900:1: rule__AddExpression__Group_1_1__1 : rule__AddExpression__Group_1_1__1__Impl ;
     public final void rule__AddExpression__Group_1_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3826:1: ( rule__AddExpression__Group_1_1__1__Impl )
-            // InternalKExpressions.g:3827:2: rule__AddExpression__Group_1_1__1__Impl
+            // InternalKExpressions.g:3904:1: ( rule__AddExpression__Group_1_1__1__Impl )
+            // InternalKExpressions.g:3905:2: rule__AddExpression__Group_1_1__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__AddExpression__Group_1_1__1__Impl();
@@ -11309,23 +11568,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AddExpression__Group_1_1__1__Impl"
-    // InternalKExpressions.g:3833:1: rule__AddExpression__Group_1_1__1__Impl : ( ( rule__AddExpression__SubExpressionsAssignment_1_1_1 ) ) ;
+    // InternalKExpressions.g:3911:1: rule__AddExpression__Group_1_1__1__Impl : ( ( rule__AddExpression__SubExpressionsAssignment_1_1_1 ) ) ;
     public final void rule__AddExpression__Group_1_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3837:1: ( ( ( rule__AddExpression__SubExpressionsAssignment_1_1_1 ) ) )
-            // InternalKExpressions.g:3838:1: ( ( rule__AddExpression__SubExpressionsAssignment_1_1_1 ) )
+            // InternalKExpressions.g:3915:1: ( ( ( rule__AddExpression__SubExpressionsAssignment_1_1_1 ) ) )
+            // InternalKExpressions.g:3916:1: ( ( rule__AddExpression__SubExpressionsAssignment_1_1_1 ) )
             {
-            // InternalKExpressions.g:3838:1: ( ( rule__AddExpression__SubExpressionsAssignment_1_1_1 ) )
-            // InternalKExpressions.g:3839:1: ( rule__AddExpression__SubExpressionsAssignment_1_1_1 )
+            // InternalKExpressions.g:3916:1: ( ( rule__AddExpression__SubExpressionsAssignment_1_1_1 ) )
+            // InternalKExpressions.g:3917:1: ( rule__AddExpression__SubExpressionsAssignment_1_1_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAddExpressionAccess().getSubExpressionsAssignment_1_1_1()); 
             }
-            // InternalKExpressions.g:3840:1: ( rule__AddExpression__SubExpressionsAssignment_1_1_1 )
-            // InternalKExpressions.g:3840:2: rule__AddExpression__SubExpressionsAssignment_1_1_1
+            // InternalKExpressions.g:3918:1: ( rule__AddExpression__SubExpressionsAssignment_1_1_1 )
+            // InternalKExpressions.g:3918:2: rule__AddExpression__SubExpressionsAssignment_1_1_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__AddExpression__SubExpressionsAssignment_1_1_1();
@@ -11360,14 +11619,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AddExpression__Group_1_2__0"
-    // InternalKExpressions.g:3854:1: rule__AddExpression__Group_1_2__0 : rule__AddExpression__Group_1_2__0__Impl rule__AddExpression__Group_1_2__1 ;
+    // InternalKExpressions.g:3932:1: rule__AddExpression__Group_1_2__0 : rule__AddExpression__Group_1_2__0__Impl rule__AddExpression__Group_1_2__1 ;
     public final void rule__AddExpression__Group_1_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3858:1: ( rule__AddExpression__Group_1_2__0__Impl rule__AddExpression__Group_1_2__1 )
-            // InternalKExpressions.g:3859:2: rule__AddExpression__Group_1_2__0__Impl rule__AddExpression__Group_1_2__1
+            // InternalKExpressions.g:3936:1: ( rule__AddExpression__Group_1_2__0__Impl rule__AddExpression__Group_1_2__1 )
+            // InternalKExpressions.g:3937:2: rule__AddExpression__Group_1_2__0__Impl rule__AddExpression__Group_1_2__1
             {
             pushFollow(FollowSets000.FOLLOW_19);
             rule__AddExpression__Group_1_2__0__Impl();
@@ -11398,17 +11657,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AddExpression__Group_1_2__0__Impl"
-    // InternalKExpressions.g:3866:1: rule__AddExpression__Group_1_2__0__Impl : ( '+' ) ;
+    // InternalKExpressions.g:3944:1: rule__AddExpression__Group_1_2__0__Impl : ( '+' ) ;
     public final void rule__AddExpression__Group_1_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3870:1: ( ( '+' ) )
-            // InternalKExpressions.g:3871:1: ( '+' )
+            // InternalKExpressions.g:3948:1: ( ( '+' ) )
+            // InternalKExpressions.g:3949:1: ( '+' )
             {
-            // InternalKExpressions.g:3871:1: ( '+' )
-            // InternalKExpressions.g:3872:1: '+'
+            // InternalKExpressions.g:3949:1: ( '+' )
+            // InternalKExpressions.g:3950:1: '+'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAddExpressionAccess().getPlusSignKeyword_1_2_0()); 
@@ -11439,14 +11698,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AddExpression__Group_1_2__1"
-    // InternalKExpressions.g:3885:1: rule__AddExpression__Group_1_2__1 : rule__AddExpression__Group_1_2__1__Impl ;
+    // InternalKExpressions.g:3963:1: rule__AddExpression__Group_1_2__1 : rule__AddExpression__Group_1_2__1__Impl ;
     public final void rule__AddExpression__Group_1_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3889:1: ( rule__AddExpression__Group_1_2__1__Impl )
-            // InternalKExpressions.g:3890:2: rule__AddExpression__Group_1_2__1__Impl
+            // InternalKExpressions.g:3967:1: ( rule__AddExpression__Group_1_2__1__Impl )
+            // InternalKExpressions.g:3968:2: rule__AddExpression__Group_1_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__AddExpression__Group_1_2__1__Impl();
@@ -11472,23 +11731,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AddExpression__Group_1_2__1__Impl"
-    // InternalKExpressions.g:3896:1: rule__AddExpression__Group_1_2__1__Impl : ( ( rule__AddExpression__SubExpressionsAssignment_1_2_1 ) ) ;
+    // InternalKExpressions.g:3974:1: rule__AddExpression__Group_1_2__1__Impl : ( ( rule__AddExpression__SubExpressionsAssignment_1_2_1 ) ) ;
     public final void rule__AddExpression__Group_1_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3900:1: ( ( ( rule__AddExpression__SubExpressionsAssignment_1_2_1 ) ) )
-            // InternalKExpressions.g:3901:1: ( ( rule__AddExpression__SubExpressionsAssignment_1_2_1 ) )
+            // InternalKExpressions.g:3978:1: ( ( ( rule__AddExpression__SubExpressionsAssignment_1_2_1 ) ) )
+            // InternalKExpressions.g:3979:1: ( ( rule__AddExpression__SubExpressionsAssignment_1_2_1 ) )
             {
-            // InternalKExpressions.g:3901:1: ( ( rule__AddExpression__SubExpressionsAssignment_1_2_1 ) )
-            // InternalKExpressions.g:3902:1: ( rule__AddExpression__SubExpressionsAssignment_1_2_1 )
+            // InternalKExpressions.g:3979:1: ( ( rule__AddExpression__SubExpressionsAssignment_1_2_1 ) )
+            // InternalKExpressions.g:3980:1: ( rule__AddExpression__SubExpressionsAssignment_1_2_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAddExpressionAccess().getSubExpressionsAssignment_1_2_1()); 
             }
-            // InternalKExpressions.g:3903:1: ( rule__AddExpression__SubExpressionsAssignment_1_2_1 )
-            // InternalKExpressions.g:3903:2: rule__AddExpression__SubExpressionsAssignment_1_2_1
+            // InternalKExpressions.g:3981:1: ( rule__AddExpression__SubExpressionsAssignment_1_2_1 )
+            // InternalKExpressions.g:3981:2: rule__AddExpression__SubExpressionsAssignment_1_2_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__AddExpression__SubExpressionsAssignment_1_2_1();
@@ -11523,14 +11782,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__SubExpression__Group__0"
-    // InternalKExpressions.g:3917:1: rule__SubExpression__Group__0 : rule__SubExpression__Group__0__Impl rule__SubExpression__Group__1 ;
+    // InternalKExpressions.g:3995:1: rule__SubExpression__Group__0 : rule__SubExpression__Group__0__Impl rule__SubExpression__Group__1 ;
     public final void rule__SubExpression__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3921:1: ( rule__SubExpression__Group__0__Impl rule__SubExpression__Group__1 )
-            // InternalKExpressions.g:3922:2: rule__SubExpression__Group__0__Impl rule__SubExpression__Group__1
+            // InternalKExpressions.g:3999:1: ( rule__SubExpression__Group__0__Impl rule__SubExpression__Group__1 )
+            // InternalKExpressions.g:4000:2: rule__SubExpression__Group__0__Impl rule__SubExpression__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_20);
             rule__SubExpression__Group__0__Impl();
@@ -11561,17 +11820,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__SubExpression__Group__0__Impl"
-    // InternalKExpressions.g:3929:1: rule__SubExpression__Group__0__Impl : ( ruleMultExpression ) ;
+    // InternalKExpressions.g:4007:1: rule__SubExpression__Group__0__Impl : ( ruleMultExpression ) ;
     public final void rule__SubExpression__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3933:1: ( ( ruleMultExpression ) )
-            // InternalKExpressions.g:3934:1: ( ruleMultExpression )
+            // InternalKExpressions.g:4011:1: ( ( ruleMultExpression ) )
+            // InternalKExpressions.g:4012:1: ( ruleMultExpression )
             {
-            // InternalKExpressions.g:3934:1: ( ruleMultExpression )
-            // InternalKExpressions.g:3935:1: ruleMultExpression
+            // InternalKExpressions.g:4012:1: ( ruleMultExpression )
+            // InternalKExpressions.g:4013:1: ruleMultExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubExpressionAccess().getMultExpressionParserRuleCall_0()); 
@@ -11606,14 +11865,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__SubExpression__Group__1"
-    // InternalKExpressions.g:3946:1: rule__SubExpression__Group__1 : rule__SubExpression__Group__1__Impl ;
+    // InternalKExpressions.g:4024:1: rule__SubExpression__Group__1 : rule__SubExpression__Group__1__Impl ;
     public final void rule__SubExpression__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3950:1: ( rule__SubExpression__Group__1__Impl )
-            // InternalKExpressions.g:3951:2: rule__SubExpression__Group__1__Impl
+            // InternalKExpressions.g:4028:1: ( rule__SubExpression__Group__1__Impl )
+            // InternalKExpressions.g:4029:2: rule__SubExpression__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__SubExpression__Group__1__Impl();
@@ -11639,31 +11898,31 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__SubExpression__Group__1__Impl"
-    // InternalKExpressions.g:3957:1: rule__SubExpression__Group__1__Impl : ( ( rule__SubExpression__Group_1__0 )? ) ;
+    // InternalKExpressions.g:4035:1: rule__SubExpression__Group__1__Impl : ( ( rule__SubExpression__Group_1__0 )? ) ;
     public final void rule__SubExpression__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3961:1: ( ( ( rule__SubExpression__Group_1__0 )? ) )
-            // InternalKExpressions.g:3962:1: ( ( rule__SubExpression__Group_1__0 )? )
+            // InternalKExpressions.g:4039:1: ( ( ( rule__SubExpression__Group_1__0 )? ) )
+            // InternalKExpressions.g:4040:1: ( ( rule__SubExpression__Group_1__0 )? )
             {
-            // InternalKExpressions.g:3962:1: ( ( rule__SubExpression__Group_1__0 )? )
-            // InternalKExpressions.g:3963:1: ( rule__SubExpression__Group_1__0 )?
+            // InternalKExpressions.g:4040:1: ( ( rule__SubExpression__Group_1__0 )? )
+            // InternalKExpressions.g:4041:1: ( rule__SubExpression__Group_1__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubExpressionAccess().getGroup_1()); 
             }
-            // InternalKExpressions.g:3964:1: ( rule__SubExpression__Group_1__0 )?
-            int alt30=2;
-            int LA30_0 = input.LA(1);
+            // InternalKExpressions.g:4042:1: ( rule__SubExpression__Group_1__0 )?
+            int alt31=2;
+            int LA31_0 = input.LA(1);
 
-            if ( (LA30_0==22) ) {
-                alt30=1;
+            if ( (LA31_0==22) ) {
+                alt31=1;
             }
-            switch (alt30) {
+            switch (alt31) {
                 case 1 :
-                    // InternalKExpressions.g:3964:2: rule__SubExpression__Group_1__0
+                    // InternalKExpressions.g:4042:2: rule__SubExpression__Group_1__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__SubExpression__Group_1__0();
@@ -11701,14 +11960,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__SubExpression__Group_1__0"
-    // InternalKExpressions.g:3978:1: rule__SubExpression__Group_1__0 : rule__SubExpression__Group_1__0__Impl rule__SubExpression__Group_1__1 ;
+    // InternalKExpressions.g:4056:1: rule__SubExpression__Group_1__0 : rule__SubExpression__Group_1__0__Impl rule__SubExpression__Group_1__1 ;
     public final void rule__SubExpression__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3982:1: ( rule__SubExpression__Group_1__0__Impl rule__SubExpression__Group_1__1 )
-            // InternalKExpressions.g:3983:2: rule__SubExpression__Group_1__0__Impl rule__SubExpression__Group_1__1
+            // InternalKExpressions.g:4060:1: ( rule__SubExpression__Group_1__0__Impl rule__SubExpression__Group_1__1 )
+            // InternalKExpressions.g:4061:2: rule__SubExpression__Group_1__0__Impl rule__SubExpression__Group_1__1
             {
             pushFollow(FollowSets000.FOLLOW_20);
             rule__SubExpression__Group_1__0__Impl();
@@ -11739,23 +11998,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__SubExpression__Group_1__0__Impl"
-    // InternalKExpressions.g:3990:1: rule__SubExpression__Group_1__0__Impl : ( () ) ;
+    // InternalKExpressions.g:4068:1: rule__SubExpression__Group_1__0__Impl : ( () ) ;
     public final void rule__SubExpression__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:3994:1: ( ( () ) )
-            // InternalKExpressions.g:3995:1: ( () )
+            // InternalKExpressions.g:4072:1: ( ( () ) )
+            // InternalKExpressions.g:4073:1: ( () )
             {
-            // InternalKExpressions.g:3995:1: ( () )
-            // InternalKExpressions.g:3996:1: ()
+            // InternalKExpressions.g:4073:1: ( () )
+            // InternalKExpressions.g:4074:1: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()); 
             }
-            // InternalKExpressions.g:3997:1: ()
-            // InternalKExpressions.g:3999:1: 
+            // InternalKExpressions.g:4075:1: ()
+            // InternalKExpressions.g:4077:1: 
             {
             }
 
@@ -11780,14 +12039,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__SubExpression__Group_1__1"
-    // InternalKExpressions.g:4009:1: rule__SubExpression__Group_1__1 : rule__SubExpression__Group_1__1__Impl rule__SubExpression__Group_1__2 ;
+    // InternalKExpressions.g:4087:1: rule__SubExpression__Group_1__1 : rule__SubExpression__Group_1__1__Impl rule__SubExpression__Group_1__2 ;
     public final void rule__SubExpression__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4013:1: ( rule__SubExpression__Group_1__1__Impl rule__SubExpression__Group_1__2 )
-            // InternalKExpressions.g:4014:2: rule__SubExpression__Group_1__1__Impl rule__SubExpression__Group_1__2
+            // InternalKExpressions.g:4091:1: ( rule__SubExpression__Group_1__1__Impl rule__SubExpression__Group_1__2 )
+            // InternalKExpressions.g:4092:2: rule__SubExpression__Group_1__1__Impl rule__SubExpression__Group_1__2
             {
             pushFollow(FollowSets000.FOLLOW_20);
             rule__SubExpression__Group_1__1__Impl();
@@ -11818,23 +12077,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__SubExpression__Group_1__1__Impl"
-    // InternalKExpressions.g:4021:1: rule__SubExpression__Group_1__1__Impl : ( ( rule__SubExpression__Group_1_1__0 ) ) ;
+    // InternalKExpressions.g:4099:1: rule__SubExpression__Group_1__1__Impl : ( ( rule__SubExpression__Group_1_1__0 ) ) ;
     public final void rule__SubExpression__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4025:1: ( ( ( rule__SubExpression__Group_1_1__0 ) ) )
-            // InternalKExpressions.g:4026:1: ( ( rule__SubExpression__Group_1_1__0 ) )
+            // InternalKExpressions.g:4103:1: ( ( ( rule__SubExpression__Group_1_1__0 ) ) )
+            // InternalKExpressions.g:4104:1: ( ( rule__SubExpression__Group_1_1__0 ) )
             {
-            // InternalKExpressions.g:4026:1: ( ( rule__SubExpression__Group_1_1__0 ) )
-            // InternalKExpressions.g:4027:1: ( rule__SubExpression__Group_1_1__0 )
+            // InternalKExpressions.g:4104:1: ( ( rule__SubExpression__Group_1_1__0 ) )
+            // InternalKExpressions.g:4105:1: ( rule__SubExpression__Group_1_1__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubExpressionAccess().getGroup_1_1()); 
             }
-            // InternalKExpressions.g:4028:1: ( rule__SubExpression__Group_1_1__0 )
-            // InternalKExpressions.g:4028:2: rule__SubExpression__Group_1_1__0
+            // InternalKExpressions.g:4106:1: ( rule__SubExpression__Group_1_1__0 )
+            // InternalKExpressions.g:4106:2: rule__SubExpression__Group_1_1__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__SubExpression__Group_1_1__0();
@@ -11869,14 +12128,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__SubExpression__Group_1__2"
-    // InternalKExpressions.g:4038:1: rule__SubExpression__Group_1__2 : rule__SubExpression__Group_1__2__Impl ;
+    // InternalKExpressions.g:4116:1: rule__SubExpression__Group_1__2 : rule__SubExpression__Group_1__2__Impl ;
     public final void rule__SubExpression__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4042:1: ( rule__SubExpression__Group_1__2__Impl )
-            // InternalKExpressions.g:4043:2: rule__SubExpression__Group_1__2__Impl
+            // InternalKExpressions.g:4120:1: ( rule__SubExpression__Group_1__2__Impl )
+            // InternalKExpressions.g:4121:2: rule__SubExpression__Group_1__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__SubExpression__Group_1__2__Impl();
@@ -11902,35 +12161,35 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__SubExpression__Group_1__2__Impl"
-    // InternalKExpressions.g:4049:1: rule__SubExpression__Group_1__2__Impl : ( ( rule__SubExpression__Group_1_2__0 )* ) ;
+    // InternalKExpressions.g:4127:1: rule__SubExpression__Group_1__2__Impl : ( ( rule__SubExpression__Group_1_2__0 )* ) ;
     public final void rule__SubExpression__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4053:1: ( ( ( rule__SubExpression__Group_1_2__0 )* ) )
-            // InternalKExpressions.g:4054:1: ( ( rule__SubExpression__Group_1_2__0 )* )
+            // InternalKExpressions.g:4131:1: ( ( ( rule__SubExpression__Group_1_2__0 )* ) )
+            // InternalKExpressions.g:4132:1: ( ( rule__SubExpression__Group_1_2__0 )* )
             {
-            // InternalKExpressions.g:4054:1: ( ( rule__SubExpression__Group_1_2__0 )* )
-            // InternalKExpressions.g:4055:1: ( rule__SubExpression__Group_1_2__0 )*
+            // InternalKExpressions.g:4132:1: ( ( rule__SubExpression__Group_1_2__0 )* )
+            // InternalKExpressions.g:4133:1: ( rule__SubExpression__Group_1_2__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubExpressionAccess().getGroup_1_2()); 
             }
-            // InternalKExpressions.g:4056:1: ( rule__SubExpression__Group_1_2__0 )*
-            loop31:
+            // InternalKExpressions.g:4134:1: ( rule__SubExpression__Group_1_2__0 )*
+            loop32:
             do {
-                int alt31=2;
-                int LA31_0 = input.LA(1);
+                int alt32=2;
+                int LA32_0 = input.LA(1);
 
-                if ( (LA31_0==22) ) {
-                    alt31=1;
+                if ( (LA32_0==22) ) {
+                    alt32=1;
                 }
 
 
-                switch (alt31) {
+                switch (alt32) {
             	case 1 :
-            	    // InternalKExpressions.g:4056:2: rule__SubExpression__Group_1_2__0
+            	    // InternalKExpressions.g:4134:2: rule__SubExpression__Group_1_2__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_21);
             	    rule__SubExpression__Group_1_2__0();
@@ -11942,7 +12201,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop31;
+            	    break loop32;
                 }
             } while (true);
 
@@ -11971,14 +12230,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__SubExpression__Group_1_1__0"
-    // InternalKExpressions.g:4072:1: rule__SubExpression__Group_1_1__0 : rule__SubExpression__Group_1_1__0__Impl rule__SubExpression__Group_1_1__1 ;
+    // InternalKExpressions.g:4150:1: rule__SubExpression__Group_1_1__0 : rule__SubExpression__Group_1_1__0__Impl rule__SubExpression__Group_1_1__1 ;
     public final void rule__SubExpression__Group_1_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4076:1: ( rule__SubExpression__Group_1_1__0__Impl rule__SubExpression__Group_1_1__1 )
-            // InternalKExpressions.g:4077:2: rule__SubExpression__Group_1_1__0__Impl rule__SubExpression__Group_1_1__1
+            // InternalKExpressions.g:4154:1: ( rule__SubExpression__Group_1_1__0__Impl rule__SubExpression__Group_1_1__1 )
+            // InternalKExpressions.g:4155:2: rule__SubExpression__Group_1_1__0__Impl rule__SubExpression__Group_1_1__1
             {
             pushFollow(FollowSets000.FOLLOW_19);
             rule__SubExpression__Group_1_1__0__Impl();
@@ -12009,23 +12268,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__SubExpression__Group_1_1__0__Impl"
-    // InternalKExpressions.g:4084:1: rule__SubExpression__Group_1_1__0__Impl : ( ( rule__SubExpression__OperatorAssignment_1_1_0 ) ) ;
+    // InternalKExpressions.g:4162:1: rule__SubExpression__Group_1_1__0__Impl : ( ( rule__SubExpression__OperatorAssignment_1_1_0 ) ) ;
     public final void rule__SubExpression__Group_1_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4088:1: ( ( ( rule__SubExpression__OperatorAssignment_1_1_0 ) ) )
-            // InternalKExpressions.g:4089:1: ( ( rule__SubExpression__OperatorAssignment_1_1_0 ) )
+            // InternalKExpressions.g:4166:1: ( ( ( rule__SubExpression__OperatorAssignment_1_1_0 ) ) )
+            // InternalKExpressions.g:4167:1: ( ( rule__SubExpression__OperatorAssignment_1_1_0 ) )
             {
-            // InternalKExpressions.g:4089:1: ( ( rule__SubExpression__OperatorAssignment_1_1_0 ) )
-            // InternalKExpressions.g:4090:1: ( rule__SubExpression__OperatorAssignment_1_1_0 )
+            // InternalKExpressions.g:4167:1: ( ( rule__SubExpression__OperatorAssignment_1_1_0 ) )
+            // InternalKExpressions.g:4168:1: ( rule__SubExpression__OperatorAssignment_1_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubExpressionAccess().getOperatorAssignment_1_1_0()); 
             }
-            // InternalKExpressions.g:4091:1: ( rule__SubExpression__OperatorAssignment_1_1_0 )
-            // InternalKExpressions.g:4091:2: rule__SubExpression__OperatorAssignment_1_1_0
+            // InternalKExpressions.g:4169:1: ( rule__SubExpression__OperatorAssignment_1_1_0 )
+            // InternalKExpressions.g:4169:2: rule__SubExpression__OperatorAssignment_1_1_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__SubExpression__OperatorAssignment_1_1_0();
@@ -12060,14 +12319,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__SubExpression__Group_1_1__1"
-    // InternalKExpressions.g:4101:1: rule__SubExpression__Group_1_1__1 : rule__SubExpression__Group_1_1__1__Impl ;
+    // InternalKExpressions.g:4179:1: rule__SubExpression__Group_1_1__1 : rule__SubExpression__Group_1_1__1__Impl ;
     public final void rule__SubExpression__Group_1_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4105:1: ( rule__SubExpression__Group_1_1__1__Impl )
-            // InternalKExpressions.g:4106:2: rule__SubExpression__Group_1_1__1__Impl
+            // InternalKExpressions.g:4183:1: ( rule__SubExpression__Group_1_1__1__Impl )
+            // InternalKExpressions.g:4184:2: rule__SubExpression__Group_1_1__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__SubExpression__Group_1_1__1__Impl();
@@ -12093,23 +12352,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__SubExpression__Group_1_1__1__Impl"
-    // InternalKExpressions.g:4112:1: rule__SubExpression__Group_1_1__1__Impl : ( ( rule__SubExpression__SubExpressionsAssignment_1_1_1 ) ) ;
+    // InternalKExpressions.g:4190:1: rule__SubExpression__Group_1_1__1__Impl : ( ( rule__SubExpression__SubExpressionsAssignment_1_1_1 ) ) ;
     public final void rule__SubExpression__Group_1_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4116:1: ( ( ( rule__SubExpression__SubExpressionsAssignment_1_1_1 ) ) )
-            // InternalKExpressions.g:4117:1: ( ( rule__SubExpression__SubExpressionsAssignment_1_1_1 ) )
+            // InternalKExpressions.g:4194:1: ( ( ( rule__SubExpression__SubExpressionsAssignment_1_1_1 ) ) )
+            // InternalKExpressions.g:4195:1: ( ( rule__SubExpression__SubExpressionsAssignment_1_1_1 ) )
             {
-            // InternalKExpressions.g:4117:1: ( ( rule__SubExpression__SubExpressionsAssignment_1_1_1 ) )
-            // InternalKExpressions.g:4118:1: ( rule__SubExpression__SubExpressionsAssignment_1_1_1 )
+            // InternalKExpressions.g:4195:1: ( ( rule__SubExpression__SubExpressionsAssignment_1_1_1 ) )
+            // InternalKExpressions.g:4196:1: ( rule__SubExpression__SubExpressionsAssignment_1_1_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubExpressionAccess().getSubExpressionsAssignment_1_1_1()); 
             }
-            // InternalKExpressions.g:4119:1: ( rule__SubExpression__SubExpressionsAssignment_1_1_1 )
-            // InternalKExpressions.g:4119:2: rule__SubExpression__SubExpressionsAssignment_1_1_1
+            // InternalKExpressions.g:4197:1: ( rule__SubExpression__SubExpressionsAssignment_1_1_1 )
+            // InternalKExpressions.g:4197:2: rule__SubExpression__SubExpressionsAssignment_1_1_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__SubExpression__SubExpressionsAssignment_1_1_1();
@@ -12144,14 +12403,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__SubExpression__Group_1_2__0"
-    // InternalKExpressions.g:4133:1: rule__SubExpression__Group_1_2__0 : rule__SubExpression__Group_1_2__0__Impl rule__SubExpression__Group_1_2__1 ;
+    // InternalKExpressions.g:4211:1: rule__SubExpression__Group_1_2__0 : rule__SubExpression__Group_1_2__0__Impl rule__SubExpression__Group_1_2__1 ;
     public final void rule__SubExpression__Group_1_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4137:1: ( rule__SubExpression__Group_1_2__0__Impl rule__SubExpression__Group_1_2__1 )
-            // InternalKExpressions.g:4138:2: rule__SubExpression__Group_1_2__0__Impl rule__SubExpression__Group_1_2__1
+            // InternalKExpressions.g:4215:1: ( rule__SubExpression__Group_1_2__0__Impl rule__SubExpression__Group_1_2__1 )
+            // InternalKExpressions.g:4216:2: rule__SubExpression__Group_1_2__0__Impl rule__SubExpression__Group_1_2__1
             {
             pushFollow(FollowSets000.FOLLOW_19);
             rule__SubExpression__Group_1_2__0__Impl();
@@ -12182,17 +12441,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__SubExpression__Group_1_2__0__Impl"
-    // InternalKExpressions.g:4145:1: rule__SubExpression__Group_1_2__0__Impl : ( '-' ) ;
+    // InternalKExpressions.g:4223:1: rule__SubExpression__Group_1_2__0__Impl : ( '-' ) ;
     public final void rule__SubExpression__Group_1_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4149:1: ( ( '-' ) )
-            // InternalKExpressions.g:4150:1: ( '-' )
+            // InternalKExpressions.g:4227:1: ( ( '-' ) )
+            // InternalKExpressions.g:4228:1: ( '-' )
             {
-            // InternalKExpressions.g:4150:1: ( '-' )
-            // InternalKExpressions.g:4151:1: '-'
+            // InternalKExpressions.g:4228:1: ( '-' )
+            // InternalKExpressions.g:4229:1: '-'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubExpressionAccess().getHyphenMinusKeyword_1_2_0()); 
@@ -12223,14 +12482,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__SubExpression__Group_1_2__1"
-    // InternalKExpressions.g:4164:1: rule__SubExpression__Group_1_2__1 : rule__SubExpression__Group_1_2__1__Impl ;
+    // InternalKExpressions.g:4242:1: rule__SubExpression__Group_1_2__1 : rule__SubExpression__Group_1_2__1__Impl ;
     public final void rule__SubExpression__Group_1_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4168:1: ( rule__SubExpression__Group_1_2__1__Impl )
-            // InternalKExpressions.g:4169:2: rule__SubExpression__Group_1_2__1__Impl
+            // InternalKExpressions.g:4246:1: ( rule__SubExpression__Group_1_2__1__Impl )
+            // InternalKExpressions.g:4247:2: rule__SubExpression__Group_1_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__SubExpression__Group_1_2__1__Impl();
@@ -12256,23 +12515,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__SubExpression__Group_1_2__1__Impl"
-    // InternalKExpressions.g:4175:1: rule__SubExpression__Group_1_2__1__Impl : ( ( rule__SubExpression__SubExpressionsAssignment_1_2_1 ) ) ;
+    // InternalKExpressions.g:4253:1: rule__SubExpression__Group_1_2__1__Impl : ( ( rule__SubExpression__SubExpressionsAssignment_1_2_1 ) ) ;
     public final void rule__SubExpression__Group_1_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4179:1: ( ( ( rule__SubExpression__SubExpressionsAssignment_1_2_1 ) ) )
-            // InternalKExpressions.g:4180:1: ( ( rule__SubExpression__SubExpressionsAssignment_1_2_1 ) )
+            // InternalKExpressions.g:4257:1: ( ( ( rule__SubExpression__SubExpressionsAssignment_1_2_1 ) ) )
+            // InternalKExpressions.g:4258:1: ( ( rule__SubExpression__SubExpressionsAssignment_1_2_1 ) )
             {
-            // InternalKExpressions.g:4180:1: ( ( rule__SubExpression__SubExpressionsAssignment_1_2_1 ) )
-            // InternalKExpressions.g:4181:1: ( rule__SubExpression__SubExpressionsAssignment_1_2_1 )
+            // InternalKExpressions.g:4258:1: ( ( rule__SubExpression__SubExpressionsAssignment_1_2_1 ) )
+            // InternalKExpressions.g:4259:1: ( rule__SubExpression__SubExpressionsAssignment_1_2_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubExpressionAccess().getSubExpressionsAssignment_1_2_1()); 
             }
-            // InternalKExpressions.g:4182:1: ( rule__SubExpression__SubExpressionsAssignment_1_2_1 )
-            // InternalKExpressions.g:4182:2: rule__SubExpression__SubExpressionsAssignment_1_2_1
+            // InternalKExpressions.g:4260:1: ( rule__SubExpression__SubExpressionsAssignment_1_2_1 )
+            // InternalKExpressions.g:4260:2: rule__SubExpression__SubExpressionsAssignment_1_2_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__SubExpression__SubExpressionsAssignment_1_2_1();
@@ -12307,14 +12566,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__MultExpression__Group__0"
-    // InternalKExpressions.g:4196:1: rule__MultExpression__Group__0 : rule__MultExpression__Group__0__Impl rule__MultExpression__Group__1 ;
+    // InternalKExpressions.g:4274:1: rule__MultExpression__Group__0 : rule__MultExpression__Group__0__Impl rule__MultExpression__Group__1 ;
     public final void rule__MultExpression__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4200:1: ( rule__MultExpression__Group__0__Impl rule__MultExpression__Group__1 )
-            // InternalKExpressions.g:4201:2: rule__MultExpression__Group__0__Impl rule__MultExpression__Group__1
+            // InternalKExpressions.g:4278:1: ( rule__MultExpression__Group__0__Impl rule__MultExpression__Group__1 )
+            // InternalKExpressions.g:4279:2: rule__MultExpression__Group__0__Impl rule__MultExpression__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_22);
             rule__MultExpression__Group__0__Impl();
@@ -12345,17 +12604,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__MultExpression__Group__0__Impl"
-    // InternalKExpressions.g:4208:1: rule__MultExpression__Group__0__Impl : ( ruleDivExpression ) ;
+    // InternalKExpressions.g:4286:1: rule__MultExpression__Group__0__Impl : ( ruleDivExpression ) ;
     public final void rule__MultExpression__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4212:1: ( ( ruleDivExpression ) )
-            // InternalKExpressions.g:4213:1: ( ruleDivExpression )
+            // InternalKExpressions.g:4290:1: ( ( ruleDivExpression ) )
+            // InternalKExpressions.g:4291:1: ( ruleDivExpression )
             {
-            // InternalKExpressions.g:4213:1: ( ruleDivExpression )
-            // InternalKExpressions.g:4214:1: ruleDivExpression
+            // InternalKExpressions.g:4291:1: ( ruleDivExpression )
+            // InternalKExpressions.g:4292:1: ruleDivExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultExpressionAccess().getDivExpressionParserRuleCall_0()); 
@@ -12390,14 +12649,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__MultExpression__Group__1"
-    // InternalKExpressions.g:4225:1: rule__MultExpression__Group__1 : rule__MultExpression__Group__1__Impl ;
+    // InternalKExpressions.g:4303:1: rule__MultExpression__Group__1 : rule__MultExpression__Group__1__Impl ;
     public final void rule__MultExpression__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4229:1: ( rule__MultExpression__Group__1__Impl )
-            // InternalKExpressions.g:4230:2: rule__MultExpression__Group__1__Impl
+            // InternalKExpressions.g:4307:1: ( rule__MultExpression__Group__1__Impl )
+            // InternalKExpressions.g:4308:2: rule__MultExpression__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__MultExpression__Group__1__Impl();
@@ -12423,31 +12682,31 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__MultExpression__Group__1__Impl"
-    // InternalKExpressions.g:4236:1: rule__MultExpression__Group__1__Impl : ( ( rule__MultExpression__Group_1__0 )? ) ;
+    // InternalKExpressions.g:4314:1: rule__MultExpression__Group__1__Impl : ( ( rule__MultExpression__Group_1__0 )? ) ;
     public final void rule__MultExpression__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4240:1: ( ( ( rule__MultExpression__Group_1__0 )? ) )
-            // InternalKExpressions.g:4241:1: ( ( rule__MultExpression__Group_1__0 )? )
+            // InternalKExpressions.g:4318:1: ( ( ( rule__MultExpression__Group_1__0 )? ) )
+            // InternalKExpressions.g:4319:1: ( ( rule__MultExpression__Group_1__0 )? )
             {
-            // InternalKExpressions.g:4241:1: ( ( rule__MultExpression__Group_1__0 )? )
-            // InternalKExpressions.g:4242:1: ( rule__MultExpression__Group_1__0 )?
+            // InternalKExpressions.g:4319:1: ( ( rule__MultExpression__Group_1__0 )? )
+            // InternalKExpressions.g:4320:1: ( rule__MultExpression__Group_1__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultExpressionAccess().getGroup_1()); 
             }
-            // InternalKExpressions.g:4243:1: ( rule__MultExpression__Group_1__0 )?
-            int alt32=2;
-            int LA32_0 = input.LA(1);
+            // InternalKExpressions.g:4321:1: ( rule__MultExpression__Group_1__0 )?
+            int alt33=2;
+            int LA33_0 = input.LA(1);
 
-            if ( (LA32_0==23) ) {
-                alt32=1;
+            if ( (LA33_0==23) ) {
+                alt33=1;
             }
-            switch (alt32) {
+            switch (alt33) {
                 case 1 :
-                    // InternalKExpressions.g:4243:2: rule__MultExpression__Group_1__0
+                    // InternalKExpressions.g:4321:2: rule__MultExpression__Group_1__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__MultExpression__Group_1__0();
@@ -12485,14 +12744,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__MultExpression__Group_1__0"
-    // InternalKExpressions.g:4257:1: rule__MultExpression__Group_1__0 : rule__MultExpression__Group_1__0__Impl rule__MultExpression__Group_1__1 ;
+    // InternalKExpressions.g:4335:1: rule__MultExpression__Group_1__0 : rule__MultExpression__Group_1__0__Impl rule__MultExpression__Group_1__1 ;
     public final void rule__MultExpression__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4261:1: ( rule__MultExpression__Group_1__0__Impl rule__MultExpression__Group_1__1 )
-            // InternalKExpressions.g:4262:2: rule__MultExpression__Group_1__0__Impl rule__MultExpression__Group_1__1
+            // InternalKExpressions.g:4339:1: ( rule__MultExpression__Group_1__0__Impl rule__MultExpression__Group_1__1 )
+            // InternalKExpressions.g:4340:2: rule__MultExpression__Group_1__0__Impl rule__MultExpression__Group_1__1
             {
             pushFollow(FollowSets000.FOLLOW_22);
             rule__MultExpression__Group_1__0__Impl();
@@ -12523,23 +12782,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__MultExpression__Group_1__0__Impl"
-    // InternalKExpressions.g:4269:1: rule__MultExpression__Group_1__0__Impl : ( () ) ;
+    // InternalKExpressions.g:4347:1: rule__MultExpression__Group_1__0__Impl : ( () ) ;
     public final void rule__MultExpression__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4273:1: ( ( () ) )
-            // InternalKExpressions.g:4274:1: ( () )
+            // InternalKExpressions.g:4351:1: ( ( () ) )
+            // InternalKExpressions.g:4352:1: ( () )
             {
-            // InternalKExpressions.g:4274:1: ( () )
-            // InternalKExpressions.g:4275:1: ()
+            // InternalKExpressions.g:4352:1: ( () )
+            // InternalKExpressions.g:4353:1: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()); 
             }
-            // InternalKExpressions.g:4276:1: ()
-            // InternalKExpressions.g:4278:1: 
+            // InternalKExpressions.g:4354:1: ()
+            // InternalKExpressions.g:4356:1: 
             {
             }
 
@@ -12564,14 +12823,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__MultExpression__Group_1__1"
-    // InternalKExpressions.g:4288:1: rule__MultExpression__Group_1__1 : rule__MultExpression__Group_1__1__Impl rule__MultExpression__Group_1__2 ;
+    // InternalKExpressions.g:4366:1: rule__MultExpression__Group_1__1 : rule__MultExpression__Group_1__1__Impl rule__MultExpression__Group_1__2 ;
     public final void rule__MultExpression__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4292:1: ( rule__MultExpression__Group_1__1__Impl rule__MultExpression__Group_1__2 )
-            // InternalKExpressions.g:4293:2: rule__MultExpression__Group_1__1__Impl rule__MultExpression__Group_1__2
+            // InternalKExpressions.g:4370:1: ( rule__MultExpression__Group_1__1__Impl rule__MultExpression__Group_1__2 )
+            // InternalKExpressions.g:4371:2: rule__MultExpression__Group_1__1__Impl rule__MultExpression__Group_1__2
             {
             pushFollow(FollowSets000.FOLLOW_22);
             rule__MultExpression__Group_1__1__Impl();
@@ -12602,23 +12861,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__MultExpression__Group_1__1__Impl"
-    // InternalKExpressions.g:4300:1: rule__MultExpression__Group_1__1__Impl : ( ( rule__MultExpression__Group_1_1__0 ) ) ;
+    // InternalKExpressions.g:4378:1: rule__MultExpression__Group_1__1__Impl : ( ( rule__MultExpression__Group_1_1__0 ) ) ;
     public final void rule__MultExpression__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4304:1: ( ( ( rule__MultExpression__Group_1_1__0 ) ) )
-            // InternalKExpressions.g:4305:1: ( ( rule__MultExpression__Group_1_1__0 ) )
+            // InternalKExpressions.g:4382:1: ( ( ( rule__MultExpression__Group_1_1__0 ) ) )
+            // InternalKExpressions.g:4383:1: ( ( rule__MultExpression__Group_1_1__0 ) )
             {
-            // InternalKExpressions.g:4305:1: ( ( rule__MultExpression__Group_1_1__0 ) )
-            // InternalKExpressions.g:4306:1: ( rule__MultExpression__Group_1_1__0 )
+            // InternalKExpressions.g:4383:1: ( ( rule__MultExpression__Group_1_1__0 ) )
+            // InternalKExpressions.g:4384:1: ( rule__MultExpression__Group_1_1__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultExpressionAccess().getGroup_1_1()); 
             }
-            // InternalKExpressions.g:4307:1: ( rule__MultExpression__Group_1_1__0 )
-            // InternalKExpressions.g:4307:2: rule__MultExpression__Group_1_1__0
+            // InternalKExpressions.g:4385:1: ( rule__MultExpression__Group_1_1__0 )
+            // InternalKExpressions.g:4385:2: rule__MultExpression__Group_1_1__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__MultExpression__Group_1_1__0();
@@ -12653,14 +12912,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__MultExpression__Group_1__2"
-    // InternalKExpressions.g:4317:1: rule__MultExpression__Group_1__2 : rule__MultExpression__Group_1__2__Impl ;
+    // InternalKExpressions.g:4395:1: rule__MultExpression__Group_1__2 : rule__MultExpression__Group_1__2__Impl ;
     public final void rule__MultExpression__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4321:1: ( rule__MultExpression__Group_1__2__Impl )
-            // InternalKExpressions.g:4322:2: rule__MultExpression__Group_1__2__Impl
+            // InternalKExpressions.g:4399:1: ( rule__MultExpression__Group_1__2__Impl )
+            // InternalKExpressions.g:4400:2: rule__MultExpression__Group_1__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__MultExpression__Group_1__2__Impl();
@@ -12686,35 +12945,35 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__MultExpression__Group_1__2__Impl"
-    // InternalKExpressions.g:4328:1: rule__MultExpression__Group_1__2__Impl : ( ( rule__MultExpression__Group_1_2__0 )* ) ;
+    // InternalKExpressions.g:4406:1: rule__MultExpression__Group_1__2__Impl : ( ( rule__MultExpression__Group_1_2__0 )* ) ;
     public final void rule__MultExpression__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4332:1: ( ( ( rule__MultExpression__Group_1_2__0 )* ) )
-            // InternalKExpressions.g:4333:1: ( ( rule__MultExpression__Group_1_2__0 )* )
+            // InternalKExpressions.g:4410:1: ( ( ( rule__MultExpression__Group_1_2__0 )* ) )
+            // InternalKExpressions.g:4411:1: ( ( rule__MultExpression__Group_1_2__0 )* )
             {
-            // InternalKExpressions.g:4333:1: ( ( rule__MultExpression__Group_1_2__0 )* )
-            // InternalKExpressions.g:4334:1: ( rule__MultExpression__Group_1_2__0 )*
+            // InternalKExpressions.g:4411:1: ( ( rule__MultExpression__Group_1_2__0 )* )
+            // InternalKExpressions.g:4412:1: ( rule__MultExpression__Group_1_2__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultExpressionAccess().getGroup_1_2()); 
             }
-            // InternalKExpressions.g:4335:1: ( rule__MultExpression__Group_1_2__0 )*
-            loop33:
+            // InternalKExpressions.g:4413:1: ( rule__MultExpression__Group_1_2__0 )*
+            loop34:
             do {
-                int alt33=2;
-                int LA33_0 = input.LA(1);
+                int alt34=2;
+                int LA34_0 = input.LA(1);
 
-                if ( (LA33_0==23) ) {
-                    alt33=1;
+                if ( (LA34_0==23) ) {
+                    alt34=1;
                 }
 
 
-                switch (alt33) {
+                switch (alt34) {
             	case 1 :
-            	    // InternalKExpressions.g:4335:2: rule__MultExpression__Group_1_2__0
+            	    // InternalKExpressions.g:4413:2: rule__MultExpression__Group_1_2__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_23);
             	    rule__MultExpression__Group_1_2__0();
@@ -12726,7 +12985,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop33;
+            	    break loop34;
                 }
             } while (true);
 
@@ -12755,14 +13014,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__MultExpression__Group_1_1__0"
-    // InternalKExpressions.g:4351:1: rule__MultExpression__Group_1_1__0 : rule__MultExpression__Group_1_1__0__Impl rule__MultExpression__Group_1_1__1 ;
+    // InternalKExpressions.g:4429:1: rule__MultExpression__Group_1_1__0 : rule__MultExpression__Group_1_1__0__Impl rule__MultExpression__Group_1_1__1 ;
     public final void rule__MultExpression__Group_1_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4355:1: ( rule__MultExpression__Group_1_1__0__Impl rule__MultExpression__Group_1_1__1 )
-            // InternalKExpressions.g:4356:2: rule__MultExpression__Group_1_1__0__Impl rule__MultExpression__Group_1_1__1
+            // InternalKExpressions.g:4433:1: ( rule__MultExpression__Group_1_1__0__Impl rule__MultExpression__Group_1_1__1 )
+            // InternalKExpressions.g:4434:2: rule__MultExpression__Group_1_1__0__Impl rule__MultExpression__Group_1_1__1
             {
             pushFollow(FollowSets000.FOLLOW_19);
             rule__MultExpression__Group_1_1__0__Impl();
@@ -12793,23 +13052,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__MultExpression__Group_1_1__0__Impl"
-    // InternalKExpressions.g:4363:1: rule__MultExpression__Group_1_1__0__Impl : ( ( rule__MultExpression__OperatorAssignment_1_1_0 ) ) ;
+    // InternalKExpressions.g:4441:1: rule__MultExpression__Group_1_1__0__Impl : ( ( rule__MultExpression__OperatorAssignment_1_1_0 ) ) ;
     public final void rule__MultExpression__Group_1_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4367:1: ( ( ( rule__MultExpression__OperatorAssignment_1_1_0 ) ) )
-            // InternalKExpressions.g:4368:1: ( ( rule__MultExpression__OperatorAssignment_1_1_0 ) )
+            // InternalKExpressions.g:4445:1: ( ( ( rule__MultExpression__OperatorAssignment_1_1_0 ) ) )
+            // InternalKExpressions.g:4446:1: ( ( rule__MultExpression__OperatorAssignment_1_1_0 ) )
             {
-            // InternalKExpressions.g:4368:1: ( ( rule__MultExpression__OperatorAssignment_1_1_0 ) )
-            // InternalKExpressions.g:4369:1: ( rule__MultExpression__OperatorAssignment_1_1_0 )
+            // InternalKExpressions.g:4446:1: ( ( rule__MultExpression__OperatorAssignment_1_1_0 ) )
+            // InternalKExpressions.g:4447:1: ( rule__MultExpression__OperatorAssignment_1_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultExpressionAccess().getOperatorAssignment_1_1_0()); 
             }
-            // InternalKExpressions.g:4370:1: ( rule__MultExpression__OperatorAssignment_1_1_0 )
-            // InternalKExpressions.g:4370:2: rule__MultExpression__OperatorAssignment_1_1_0
+            // InternalKExpressions.g:4448:1: ( rule__MultExpression__OperatorAssignment_1_1_0 )
+            // InternalKExpressions.g:4448:2: rule__MultExpression__OperatorAssignment_1_1_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__MultExpression__OperatorAssignment_1_1_0();
@@ -12844,14 +13103,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__MultExpression__Group_1_1__1"
-    // InternalKExpressions.g:4380:1: rule__MultExpression__Group_1_1__1 : rule__MultExpression__Group_1_1__1__Impl ;
+    // InternalKExpressions.g:4458:1: rule__MultExpression__Group_1_1__1 : rule__MultExpression__Group_1_1__1__Impl ;
     public final void rule__MultExpression__Group_1_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4384:1: ( rule__MultExpression__Group_1_1__1__Impl )
-            // InternalKExpressions.g:4385:2: rule__MultExpression__Group_1_1__1__Impl
+            // InternalKExpressions.g:4462:1: ( rule__MultExpression__Group_1_1__1__Impl )
+            // InternalKExpressions.g:4463:2: rule__MultExpression__Group_1_1__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__MultExpression__Group_1_1__1__Impl();
@@ -12877,23 +13136,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__MultExpression__Group_1_1__1__Impl"
-    // InternalKExpressions.g:4391:1: rule__MultExpression__Group_1_1__1__Impl : ( ( rule__MultExpression__SubExpressionsAssignment_1_1_1 ) ) ;
+    // InternalKExpressions.g:4469:1: rule__MultExpression__Group_1_1__1__Impl : ( ( rule__MultExpression__SubExpressionsAssignment_1_1_1 ) ) ;
     public final void rule__MultExpression__Group_1_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4395:1: ( ( ( rule__MultExpression__SubExpressionsAssignment_1_1_1 ) ) )
-            // InternalKExpressions.g:4396:1: ( ( rule__MultExpression__SubExpressionsAssignment_1_1_1 ) )
+            // InternalKExpressions.g:4473:1: ( ( ( rule__MultExpression__SubExpressionsAssignment_1_1_1 ) ) )
+            // InternalKExpressions.g:4474:1: ( ( rule__MultExpression__SubExpressionsAssignment_1_1_1 ) )
             {
-            // InternalKExpressions.g:4396:1: ( ( rule__MultExpression__SubExpressionsAssignment_1_1_1 ) )
-            // InternalKExpressions.g:4397:1: ( rule__MultExpression__SubExpressionsAssignment_1_1_1 )
+            // InternalKExpressions.g:4474:1: ( ( rule__MultExpression__SubExpressionsAssignment_1_1_1 ) )
+            // InternalKExpressions.g:4475:1: ( rule__MultExpression__SubExpressionsAssignment_1_1_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultExpressionAccess().getSubExpressionsAssignment_1_1_1()); 
             }
-            // InternalKExpressions.g:4398:1: ( rule__MultExpression__SubExpressionsAssignment_1_1_1 )
-            // InternalKExpressions.g:4398:2: rule__MultExpression__SubExpressionsAssignment_1_1_1
+            // InternalKExpressions.g:4476:1: ( rule__MultExpression__SubExpressionsAssignment_1_1_1 )
+            // InternalKExpressions.g:4476:2: rule__MultExpression__SubExpressionsAssignment_1_1_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__MultExpression__SubExpressionsAssignment_1_1_1();
@@ -12928,14 +13187,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__MultExpression__Group_1_2__0"
-    // InternalKExpressions.g:4412:1: rule__MultExpression__Group_1_2__0 : rule__MultExpression__Group_1_2__0__Impl rule__MultExpression__Group_1_2__1 ;
+    // InternalKExpressions.g:4490:1: rule__MultExpression__Group_1_2__0 : rule__MultExpression__Group_1_2__0__Impl rule__MultExpression__Group_1_2__1 ;
     public final void rule__MultExpression__Group_1_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4416:1: ( rule__MultExpression__Group_1_2__0__Impl rule__MultExpression__Group_1_2__1 )
-            // InternalKExpressions.g:4417:2: rule__MultExpression__Group_1_2__0__Impl rule__MultExpression__Group_1_2__1
+            // InternalKExpressions.g:4494:1: ( rule__MultExpression__Group_1_2__0__Impl rule__MultExpression__Group_1_2__1 )
+            // InternalKExpressions.g:4495:2: rule__MultExpression__Group_1_2__0__Impl rule__MultExpression__Group_1_2__1
             {
             pushFollow(FollowSets000.FOLLOW_19);
             rule__MultExpression__Group_1_2__0__Impl();
@@ -12966,17 +13225,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__MultExpression__Group_1_2__0__Impl"
-    // InternalKExpressions.g:4424:1: rule__MultExpression__Group_1_2__0__Impl : ( '*' ) ;
+    // InternalKExpressions.g:4502:1: rule__MultExpression__Group_1_2__0__Impl : ( '*' ) ;
     public final void rule__MultExpression__Group_1_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4428:1: ( ( '*' ) )
-            // InternalKExpressions.g:4429:1: ( '*' )
+            // InternalKExpressions.g:4506:1: ( ( '*' ) )
+            // InternalKExpressions.g:4507:1: ( '*' )
             {
-            // InternalKExpressions.g:4429:1: ( '*' )
-            // InternalKExpressions.g:4430:1: '*'
+            // InternalKExpressions.g:4507:1: ( '*' )
+            // InternalKExpressions.g:4508:1: '*'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultExpressionAccess().getAsteriskKeyword_1_2_0()); 
@@ -13007,14 +13266,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__MultExpression__Group_1_2__1"
-    // InternalKExpressions.g:4443:1: rule__MultExpression__Group_1_2__1 : rule__MultExpression__Group_1_2__1__Impl ;
+    // InternalKExpressions.g:4521:1: rule__MultExpression__Group_1_2__1 : rule__MultExpression__Group_1_2__1__Impl ;
     public final void rule__MultExpression__Group_1_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4447:1: ( rule__MultExpression__Group_1_2__1__Impl )
-            // InternalKExpressions.g:4448:2: rule__MultExpression__Group_1_2__1__Impl
+            // InternalKExpressions.g:4525:1: ( rule__MultExpression__Group_1_2__1__Impl )
+            // InternalKExpressions.g:4526:2: rule__MultExpression__Group_1_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__MultExpression__Group_1_2__1__Impl();
@@ -13040,23 +13299,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__MultExpression__Group_1_2__1__Impl"
-    // InternalKExpressions.g:4454:1: rule__MultExpression__Group_1_2__1__Impl : ( ( rule__MultExpression__SubExpressionsAssignment_1_2_1 ) ) ;
+    // InternalKExpressions.g:4532:1: rule__MultExpression__Group_1_2__1__Impl : ( ( rule__MultExpression__SubExpressionsAssignment_1_2_1 ) ) ;
     public final void rule__MultExpression__Group_1_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4458:1: ( ( ( rule__MultExpression__SubExpressionsAssignment_1_2_1 ) ) )
-            // InternalKExpressions.g:4459:1: ( ( rule__MultExpression__SubExpressionsAssignment_1_2_1 ) )
+            // InternalKExpressions.g:4536:1: ( ( ( rule__MultExpression__SubExpressionsAssignment_1_2_1 ) ) )
+            // InternalKExpressions.g:4537:1: ( ( rule__MultExpression__SubExpressionsAssignment_1_2_1 ) )
             {
-            // InternalKExpressions.g:4459:1: ( ( rule__MultExpression__SubExpressionsAssignment_1_2_1 ) )
-            // InternalKExpressions.g:4460:1: ( rule__MultExpression__SubExpressionsAssignment_1_2_1 )
+            // InternalKExpressions.g:4537:1: ( ( rule__MultExpression__SubExpressionsAssignment_1_2_1 ) )
+            // InternalKExpressions.g:4538:1: ( rule__MultExpression__SubExpressionsAssignment_1_2_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultExpressionAccess().getSubExpressionsAssignment_1_2_1()); 
             }
-            // InternalKExpressions.g:4461:1: ( rule__MultExpression__SubExpressionsAssignment_1_2_1 )
-            // InternalKExpressions.g:4461:2: rule__MultExpression__SubExpressionsAssignment_1_2_1
+            // InternalKExpressions.g:4539:1: ( rule__MultExpression__SubExpressionsAssignment_1_2_1 )
+            // InternalKExpressions.g:4539:2: rule__MultExpression__SubExpressionsAssignment_1_2_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__MultExpression__SubExpressionsAssignment_1_2_1();
@@ -13091,14 +13350,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__DivExpression__Group__0"
-    // InternalKExpressions.g:4475:1: rule__DivExpression__Group__0 : rule__DivExpression__Group__0__Impl rule__DivExpression__Group__1 ;
+    // InternalKExpressions.g:4553:1: rule__DivExpression__Group__0 : rule__DivExpression__Group__0__Impl rule__DivExpression__Group__1 ;
     public final void rule__DivExpression__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4479:1: ( rule__DivExpression__Group__0__Impl rule__DivExpression__Group__1 )
-            // InternalKExpressions.g:4480:2: rule__DivExpression__Group__0__Impl rule__DivExpression__Group__1
+            // InternalKExpressions.g:4557:1: ( rule__DivExpression__Group__0__Impl rule__DivExpression__Group__1 )
+            // InternalKExpressions.g:4558:2: rule__DivExpression__Group__0__Impl rule__DivExpression__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_24);
             rule__DivExpression__Group__0__Impl();
@@ -13129,17 +13388,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__DivExpression__Group__0__Impl"
-    // InternalKExpressions.g:4487:1: rule__DivExpression__Group__0__Impl : ( ruleModExpression ) ;
+    // InternalKExpressions.g:4565:1: rule__DivExpression__Group__0__Impl : ( ruleModExpression ) ;
     public final void rule__DivExpression__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4491:1: ( ( ruleModExpression ) )
-            // InternalKExpressions.g:4492:1: ( ruleModExpression )
+            // InternalKExpressions.g:4569:1: ( ( ruleModExpression ) )
+            // InternalKExpressions.g:4570:1: ( ruleModExpression )
             {
-            // InternalKExpressions.g:4492:1: ( ruleModExpression )
-            // InternalKExpressions.g:4493:1: ruleModExpression
+            // InternalKExpressions.g:4570:1: ( ruleModExpression )
+            // InternalKExpressions.g:4571:1: ruleModExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDivExpressionAccess().getModExpressionParserRuleCall_0()); 
@@ -13174,14 +13433,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__DivExpression__Group__1"
-    // InternalKExpressions.g:4504:1: rule__DivExpression__Group__1 : rule__DivExpression__Group__1__Impl ;
+    // InternalKExpressions.g:4582:1: rule__DivExpression__Group__1 : rule__DivExpression__Group__1__Impl ;
     public final void rule__DivExpression__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4508:1: ( rule__DivExpression__Group__1__Impl )
-            // InternalKExpressions.g:4509:2: rule__DivExpression__Group__1__Impl
+            // InternalKExpressions.g:4586:1: ( rule__DivExpression__Group__1__Impl )
+            // InternalKExpressions.g:4587:2: rule__DivExpression__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__DivExpression__Group__1__Impl();
@@ -13207,31 +13466,31 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__DivExpression__Group__1__Impl"
-    // InternalKExpressions.g:4515:1: rule__DivExpression__Group__1__Impl : ( ( rule__DivExpression__Group_1__0 )? ) ;
+    // InternalKExpressions.g:4593:1: rule__DivExpression__Group__1__Impl : ( ( rule__DivExpression__Group_1__0 )? ) ;
     public final void rule__DivExpression__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4519:1: ( ( ( rule__DivExpression__Group_1__0 )? ) )
-            // InternalKExpressions.g:4520:1: ( ( rule__DivExpression__Group_1__0 )? )
+            // InternalKExpressions.g:4597:1: ( ( ( rule__DivExpression__Group_1__0 )? ) )
+            // InternalKExpressions.g:4598:1: ( ( rule__DivExpression__Group_1__0 )? )
             {
-            // InternalKExpressions.g:4520:1: ( ( rule__DivExpression__Group_1__0 )? )
-            // InternalKExpressions.g:4521:1: ( rule__DivExpression__Group_1__0 )?
+            // InternalKExpressions.g:4598:1: ( ( rule__DivExpression__Group_1__0 )? )
+            // InternalKExpressions.g:4599:1: ( rule__DivExpression__Group_1__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDivExpressionAccess().getGroup_1()); 
             }
-            // InternalKExpressions.g:4522:1: ( rule__DivExpression__Group_1__0 )?
-            int alt34=2;
-            int LA34_0 = input.LA(1);
+            // InternalKExpressions.g:4600:1: ( rule__DivExpression__Group_1__0 )?
+            int alt35=2;
+            int LA35_0 = input.LA(1);
 
-            if ( (LA34_0==25) ) {
-                alt34=1;
+            if ( (LA35_0==25) ) {
+                alt35=1;
             }
-            switch (alt34) {
+            switch (alt35) {
                 case 1 :
-                    // InternalKExpressions.g:4522:2: rule__DivExpression__Group_1__0
+                    // InternalKExpressions.g:4600:2: rule__DivExpression__Group_1__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__DivExpression__Group_1__0();
@@ -13269,14 +13528,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__DivExpression__Group_1__0"
-    // InternalKExpressions.g:4536:1: rule__DivExpression__Group_1__0 : rule__DivExpression__Group_1__0__Impl rule__DivExpression__Group_1__1 ;
+    // InternalKExpressions.g:4614:1: rule__DivExpression__Group_1__0 : rule__DivExpression__Group_1__0__Impl rule__DivExpression__Group_1__1 ;
     public final void rule__DivExpression__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4540:1: ( rule__DivExpression__Group_1__0__Impl rule__DivExpression__Group_1__1 )
-            // InternalKExpressions.g:4541:2: rule__DivExpression__Group_1__0__Impl rule__DivExpression__Group_1__1
+            // InternalKExpressions.g:4618:1: ( rule__DivExpression__Group_1__0__Impl rule__DivExpression__Group_1__1 )
+            // InternalKExpressions.g:4619:2: rule__DivExpression__Group_1__0__Impl rule__DivExpression__Group_1__1
             {
             pushFollow(FollowSets000.FOLLOW_24);
             rule__DivExpression__Group_1__0__Impl();
@@ -13307,23 +13566,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__DivExpression__Group_1__0__Impl"
-    // InternalKExpressions.g:4548:1: rule__DivExpression__Group_1__0__Impl : ( () ) ;
+    // InternalKExpressions.g:4626:1: rule__DivExpression__Group_1__0__Impl : ( () ) ;
     public final void rule__DivExpression__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4552:1: ( ( () ) )
-            // InternalKExpressions.g:4553:1: ( () )
+            // InternalKExpressions.g:4630:1: ( ( () ) )
+            // InternalKExpressions.g:4631:1: ( () )
             {
-            // InternalKExpressions.g:4553:1: ( () )
-            // InternalKExpressions.g:4554:1: ()
+            // InternalKExpressions.g:4631:1: ( () )
+            // InternalKExpressions.g:4632:1: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()); 
             }
-            // InternalKExpressions.g:4555:1: ()
-            // InternalKExpressions.g:4557:1: 
+            // InternalKExpressions.g:4633:1: ()
+            // InternalKExpressions.g:4635:1: 
             {
             }
 
@@ -13348,14 +13607,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__DivExpression__Group_1__1"
-    // InternalKExpressions.g:4567:1: rule__DivExpression__Group_1__1 : rule__DivExpression__Group_1__1__Impl rule__DivExpression__Group_1__2 ;
+    // InternalKExpressions.g:4645:1: rule__DivExpression__Group_1__1 : rule__DivExpression__Group_1__1__Impl rule__DivExpression__Group_1__2 ;
     public final void rule__DivExpression__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4571:1: ( rule__DivExpression__Group_1__1__Impl rule__DivExpression__Group_1__2 )
-            // InternalKExpressions.g:4572:2: rule__DivExpression__Group_1__1__Impl rule__DivExpression__Group_1__2
+            // InternalKExpressions.g:4649:1: ( rule__DivExpression__Group_1__1__Impl rule__DivExpression__Group_1__2 )
+            // InternalKExpressions.g:4650:2: rule__DivExpression__Group_1__1__Impl rule__DivExpression__Group_1__2
             {
             pushFollow(FollowSets000.FOLLOW_24);
             rule__DivExpression__Group_1__1__Impl();
@@ -13386,23 +13645,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__DivExpression__Group_1__1__Impl"
-    // InternalKExpressions.g:4579:1: rule__DivExpression__Group_1__1__Impl : ( ( rule__DivExpression__Group_1_1__0 ) ) ;
+    // InternalKExpressions.g:4657:1: rule__DivExpression__Group_1__1__Impl : ( ( rule__DivExpression__Group_1_1__0 ) ) ;
     public final void rule__DivExpression__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4583:1: ( ( ( rule__DivExpression__Group_1_1__0 ) ) )
-            // InternalKExpressions.g:4584:1: ( ( rule__DivExpression__Group_1_1__0 ) )
+            // InternalKExpressions.g:4661:1: ( ( ( rule__DivExpression__Group_1_1__0 ) ) )
+            // InternalKExpressions.g:4662:1: ( ( rule__DivExpression__Group_1_1__0 ) )
             {
-            // InternalKExpressions.g:4584:1: ( ( rule__DivExpression__Group_1_1__0 ) )
-            // InternalKExpressions.g:4585:1: ( rule__DivExpression__Group_1_1__0 )
+            // InternalKExpressions.g:4662:1: ( ( rule__DivExpression__Group_1_1__0 ) )
+            // InternalKExpressions.g:4663:1: ( rule__DivExpression__Group_1_1__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDivExpressionAccess().getGroup_1_1()); 
             }
-            // InternalKExpressions.g:4586:1: ( rule__DivExpression__Group_1_1__0 )
-            // InternalKExpressions.g:4586:2: rule__DivExpression__Group_1_1__0
+            // InternalKExpressions.g:4664:1: ( rule__DivExpression__Group_1_1__0 )
+            // InternalKExpressions.g:4664:2: rule__DivExpression__Group_1_1__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__DivExpression__Group_1_1__0();
@@ -13437,14 +13696,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__DivExpression__Group_1__2"
-    // InternalKExpressions.g:4596:1: rule__DivExpression__Group_1__2 : rule__DivExpression__Group_1__2__Impl ;
+    // InternalKExpressions.g:4674:1: rule__DivExpression__Group_1__2 : rule__DivExpression__Group_1__2__Impl ;
     public final void rule__DivExpression__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4600:1: ( rule__DivExpression__Group_1__2__Impl )
-            // InternalKExpressions.g:4601:2: rule__DivExpression__Group_1__2__Impl
+            // InternalKExpressions.g:4678:1: ( rule__DivExpression__Group_1__2__Impl )
+            // InternalKExpressions.g:4679:2: rule__DivExpression__Group_1__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__DivExpression__Group_1__2__Impl();
@@ -13470,35 +13729,35 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__DivExpression__Group_1__2__Impl"
-    // InternalKExpressions.g:4607:1: rule__DivExpression__Group_1__2__Impl : ( ( rule__DivExpression__Group_1_2__0 )* ) ;
+    // InternalKExpressions.g:4685:1: rule__DivExpression__Group_1__2__Impl : ( ( rule__DivExpression__Group_1_2__0 )* ) ;
     public final void rule__DivExpression__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4611:1: ( ( ( rule__DivExpression__Group_1_2__0 )* ) )
-            // InternalKExpressions.g:4612:1: ( ( rule__DivExpression__Group_1_2__0 )* )
+            // InternalKExpressions.g:4689:1: ( ( ( rule__DivExpression__Group_1_2__0 )* ) )
+            // InternalKExpressions.g:4690:1: ( ( rule__DivExpression__Group_1_2__0 )* )
             {
-            // InternalKExpressions.g:4612:1: ( ( rule__DivExpression__Group_1_2__0 )* )
-            // InternalKExpressions.g:4613:1: ( rule__DivExpression__Group_1_2__0 )*
+            // InternalKExpressions.g:4690:1: ( ( rule__DivExpression__Group_1_2__0 )* )
+            // InternalKExpressions.g:4691:1: ( rule__DivExpression__Group_1_2__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDivExpressionAccess().getGroup_1_2()); 
             }
-            // InternalKExpressions.g:4614:1: ( rule__DivExpression__Group_1_2__0 )*
-            loop35:
+            // InternalKExpressions.g:4692:1: ( rule__DivExpression__Group_1_2__0 )*
+            loop36:
             do {
-                int alt35=2;
-                int LA35_0 = input.LA(1);
+                int alt36=2;
+                int LA36_0 = input.LA(1);
 
-                if ( (LA35_0==25) ) {
-                    alt35=1;
+                if ( (LA36_0==25) ) {
+                    alt36=1;
                 }
 
 
-                switch (alt35) {
+                switch (alt36) {
             	case 1 :
-            	    // InternalKExpressions.g:4614:2: rule__DivExpression__Group_1_2__0
+            	    // InternalKExpressions.g:4692:2: rule__DivExpression__Group_1_2__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_25);
             	    rule__DivExpression__Group_1_2__0();
@@ -13510,7 +13769,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop35;
+            	    break loop36;
                 }
             } while (true);
 
@@ -13539,14 +13798,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__DivExpression__Group_1_1__0"
-    // InternalKExpressions.g:4630:1: rule__DivExpression__Group_1_1__0 : rule__DivExpression__Group_1_1__0__Impl rule__DivExpression__Group_1_1__1 ;
+    // InternalKExpressions.g:4708:1: rule__DivExpression__Group_1_1__0 : rule__DivExpression__Group_1_1__0__Impl rule__DivExpression__Group_1_1__1 ;
     public final void rule__DivExpression__Group_1_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4634:1: ( rule__DivExpression__Group_1_1__0__Impl rule__DivExpression__Group_1_1__1 )
-            // InternalKExpressions.g:4635:2: rule__DivExpression__Group_1_1__0__Impl rule__DivExpression__Group_1_1__1
+            // InternalKExpressions.g:4712:1: ( rule__DivExpression__Group_1_1__0__Impl rule__DivExpression__Group_1_1__1 )
+            // InternalKExpressions.g:4713:2: rule__DivExpression__Group_1_1__0__Impl rule__DivExpression__Group_1_1__1
             {
             pushFollow(FollowSets000.FOLLOW_19);
             rule__DivExpression__Group_1_1__0__Impl();
@@ -13577,23 +13836,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__DivExpression__Group_1_1__0__Impl"
-    // InternalKExpressions.g:4642:1: rule__DivExpression__Group_1_1__0__Impl : ( ( rule__DivExpression__OperatorAssignment_1_1_0 ) ) ;
+    // InternalKExpressions.g:4720:1: rule__DivExpression__Group_1_1__0__Impl : ( ( rule__DivExpression__OperatorAssignment_1_1_0 ) ) ;
     public final void rule__DivExpression__Group_1_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4646:1: ( ( ( rule__DivExpression__OperatorAssignment_1_1_0 ) ) )
-            // InternalKExpressions.g:4647:1: ( ( rule__DivExpression__OperatorAssignment_1_1_0 ) )
+            // InternalKExpressions.g:4724:1: ( ( ( rule__DivExpression__OperatorAssignment_1_1_0 ) ) )
+            // InternalKExpressions.g:4725:1: ( ( rule__DivExpression__OperatorAssignment_1_1_0 ) )
             {
-            // InternalKExpressions.g:4647:1: ( ( rule__DivExpression__OperatorAssignment_1_1_0 ) )
-            // InternalKExpressions.g:4648:1: ( rule__DivExpression__OperatorAssignment_1_1_0 )
+            // InternalKExpressions.g:4725:1: ( ( rule__DivExpression__OperatorAssignment_1_1_0 ) )
+            // InternalKExpressions.g:4726:1: ( rule__DivExpression__OperatorAssignment_1_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDivExpressionAccess().getOperatorAssignment_1_1_0()); 
             }
-            // InternalKExpressions.g:4649:1: ( rule__DivExpression__OperatorAssignment_1_1_0 )
-            // InternalKExpressions.g:4649:2: rule__DivExpression__OperatorAssignment_1_1_0
+            // InternalKExpressions.g:4727:1: ( rule__DivExpression__OperatorAssignment_1_1_0 )
+            // InternalKExpressions.g:4727:2: rule__DivExpression__OperatorAssignment_1_1_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__DivExpression__OperatorAssignment_1_1_0();
@@ -13628,14 +13887,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__DivExpression__Group_1_1__1"
-    // InternalKExpressions.g:4659:1: rule__DivExpression__Group_1_1__1 : rule__DivExpression__Group_1_1__1__Impl ;
+    // InternalKExpressions.g:4737:1: rule__DivExpression__Group_1_1__1 : rule__DivExpression__Group_1_1__1__Impl ;
     public final void rule__DivExpression__Group_1_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4663:1: ( rule__DivExpression__Group_1_1__1__Impl )
-            // InternalKExpressions.g:4664:2: rule__DivExpression__Group_1_1__1__Impl
+            // InternalKExpressions.g:4741:1: ( rule__DivExpression__Group_1_1__1__Impl )
+            // InternalKExpressions.g:4742:2: rule__DivExpression__Group_1_1__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__DivExpression__Group_1_1__1__Impl();
@@ -13661,23 +13920,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__DivExpression__Group_1_1__1__Impl"
-    // InternalKExpressions.g:4670:1: rule__DivExpression__Group_1_1__1__Impl : ( ( rule__DivExpression__SubExpressionsAssignment_1_1_1 ) ) ;
+    // InternalKExpressions.g:4748:1: rule__DivExpression__Group_1_1__1__Impl : ( ( rule__DivExpression__SubExpressionsAssignment_1_1_1 ) ) ;
     public final void rule__DivExpression__Group_1_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4674:1: ( ( ( rule__DivExpression__SubExpressionsAssignment_1_1_1 ) ) )
-            // InternalKExpressions.g:4675:1: ( ( rule__DivExpression__SubExpressionsAssignment_1_1_1 ) )
+            // InternalKExpressions.g:4752:1: ( ( ( rule__DivExpression__SubExpressionsAssignment_1_1_1 ) ) )
+            // InternalKExpressions.g:4753:1: ( ( rule__DivExpression__SubExpressionsAssignment_1_1_1 ) )
             {
-            // InternalKExpressions.g:4675:1: ( ( rule__DivExpression__SubExpressionsAssignment_1_1_1 ) )
-            // InternalKExpressions.g:4676:1: ( rule__DivExpression__SubExpressionsAssignment_1_1_1 )
+            // InternalKExpressions.g:4753:1: ( ( rule__DivExpression__SubExpressionsAssignment_1_1_1 ) )
+            // InternalKExpressions.g:4754:1: ( rule__DivExpression__SubExpressionsAssignment_1_1_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDivExpressionAccess().getSubExpressionsAssignment_1_1_1()); 
             }
-            // InternalKExpressions.g:4677:1: ( rule__DivExpression__SubExpressionsAssignment_1_1_1 )
-            // InternalKExpressions.g:4677:2: rule__DivExpression__SubExpressionsAssignment_1_1_1
+            // InternalKExpressions.g:4755:1: ( rule__DivExpression__SubExpressionsAssignment_1_1_1 )
+            // InternalKExpressions.g:4755:2: rule__DivExpression__SubExpressionsAssignment_1_1_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__DivExpression__SubExpressionsAssignment_1_1_1();
@@ -13712,14 +13971,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__DivExpression__Group_1_2__0"
-    // InternalKExpressions.g:4691:1: rule__DivExpression__Group_1_2__0 : rule__DivExpression__Group_1_2__0__Impl rule__DivExpression__Group_1_2__1 ;
+    // InternalKExpressions.g:4769:1: rule__DivExpression__Group_1_2__0 : rule__DivExpression__Group_1_2__0__Impl rule__DivExpression__Group_1_2__1 ;
     public final void rule__DivExpression__Group_1_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4695:1: ( rule__DivExpression__Group_1_2__0__Impl rule__DivExpression__Group_1_2__1 )
-            // InternalKExpressions.g:4696:2: rule__DivExpression__Group_1_2__0__Impl rule__DivExpression__Group_1_2__1
+            // InternalKExpressions.g:4773:1: ( rule__DivExpression__Group_1_2__0__Impl rule__DivExpression__Group_1_2__1 )
+            // InternalKExpressions.g:4774:2: rule__DivExpression__Group_1_2__0__Impl rule__DivExpression__Group_1_2__1
             {
             pushFollow(FollowSets000.FOLLOW_19);
             rule__DivExpression__Group_1_2__0__Impl();
@@ -13750,17 +14009,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__DivExpression__Group_1_2__0__Impl"
-    // InternalKExpressions.g:4703:1: rule__DivExpression__Group_1_2__0__Impl : ( '/' ) ;
+    // InternalKExpressions.g:4781:1: rule__DivExpression__Group_1_2__0__Impl : ( '/' ) ;
     public final void rule__DivExpression__Group_1_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4707:1: ( ( '/' ) )
-            // InternalKExpressions.g:4708:1: ( '/' )
+            // InternalKExpressions.g:4785:1: ( ( '/' ) )
+            // InternalKExpressions.g:4786:1: ( '/' )
             {
-            // InternalKExpressions.g:4708:1: ( '/' )
-            // InternalKExpressions.g:4709:1: '/'
+            // InternalKExpressions.g:4786:1: ( '/' )
+            // InternalKExpressions.g:4787:1: '/'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDivExpressionAccess().getSolidusKeyword_1_2_0()); 
@@ -13791,14 +14050,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__DivExpression__Group_1_2__1"
-    // InternalKExpressions.g:4722:1: rule__DivExpression__Group_1_2__1 : rule__DivExpression__Group_1_2__1__Impl ;
+    // InternalKExpressions.g:4800:1: rule__DivExpression__Group_1_2__1 : rule__DivExpression__Group_1_2__1__Impl ;
     public final void rule__DivExpression__Group_1_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4726:1: ( rule__DivExpression__Group_1_2__1__Impl )
-            // InternalKExpressions.g:4727:2: rule__DivExpression__Group_1_2__1__Impl
+            // InternalKExpressions.g:4804:1: ( rule__DivExpression__Group_1_2__1__Impl )
+            // InternalKExpressions.g:4805:2: rule__DivExpression__Group_1_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__DivExpression__Group_1_2__1__Impl();
@@ -13824,23 +14083,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__DivExpression__Group_1_2__1__Impl"
-    // InternalKExpressions.g:4733:1: rule__DivExpression__Group_1_2__1__Impl : ( ( rule__DivExpression__SubExpressionsAssignment_1_2_1 ) ) ;
+    // InternalKExpressions.g:4811:1: rule__DivExpression__Group_1_2__1__Impl : ( ( rule__DivExpression__SubExpressionsAssignment_1_2_1 ) ) ;
     public final void rule__DivExpression__Group_1_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4737:1: ( ( ( rule__DivExpression__SubExpressionsAssignment_1_2_1 ) ) )
-            // InternalKExpressions.g:4738:1: ( ( rule__DivExpression__SubExpressionsAssignment_1_2_1 ) )
+            // InternalKExpressions.g:4815:1: ( ( ( rule__DivExpression__SubExpressionsAssignment_1_2_1 ) ) )
+            // InternalKExpressions.g:4816:1: ( ( rule__DivExpression__SubExpressionsAssignment_1_2_1 ) )
             {
-            // InternalKExpressions.g:4738:1: ( ( rule__DivExpression__SubExpressionsAssignment_1_2_1 ) )
-            // InternalKExpressions.g:4739:1: ( rule__DivExpression__SubExpressionsAssignment_1_2_1 )
+            // InternalKExpressions.g:4816:1: ( ( rule__DivExpression__SubExpressionsAssignment_1_2_1 ) )
+            // InternalKExpressions.g:4817:1: ( rule__DivExpression__SubExpressionsAssignment_1_2_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDivExpressionAccess().getSubExpressionsAssignment_1_2_1()); 
             }
-            // InternalKExpressions.g:4740:1: ( rule__DivExpression__SubExpressionsAssignment_1_2_1 )
-            // InternalKExpressions.g:4740:2: rule__DivExpression__SubExpressionsAssignment_1_2_1
+            // InternalKExpressions.g:4818:1: ( rule__DivExpression__SubExpressionsAssignment_1_2_1 )
+            // InternalKExpressions.g:4818:2: rule__DivExpression__SubExpressionsAssignment_1_2_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__DivExpression__SubExpressionsAssignment_1_2_1();
@@ -13875,14 +14134,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ModExpression__Group__0"
-    // InternalKExpressions.g:4754:1: rule__ModExpression__Group__0 : rule__ModExpression__Group__0__Impl rule__ModExpression__Group__1 ;
+    // InternalKExpressions.g:4832:1: rule__ModExpression__Group__0 : rule__ModExpression__Group__0__Impl rule__ModExpression__Group__1 ;
     public final void rule__ModExpression__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4758:1: ( rule__ModExpression__Group__0__Impl rule__ModExpression__Group__1 )
-            // InternalKExpressions.g:4759:2: rule__ModExpression__Group__0__Impl rule__ModExpression__Group__1
+            // InternalKExpressions.g:4836:1: ( rule__ModExpression__Group__0__Impl rule__ModExpression__Group__1 )
+            // InternalKExpressions.g:4837:2: rule__ModExpression__Group__0__Impl rule__ModExpression__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_26);
             rule__ModExpression__Group__0__Impl();
@@ -13913,17 +14172,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ModExpression__Group__0__Impl"
-    // InternalKExpressions.g:4766:1: rule__ModExpression__Group__0__Impl : ( ruleNegExpression ) ;
+    // InternalKExpressions.g:4844:1: rule__ModExpression__Group__0__Impl : ( ruleNegExpression ) ;
     public final void rule__ModExpression__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4770:1: ( ( ruleNegExpression ) )
-            // InternalKExpressions.g:4771:1: ( ruleNegExpression )
+            // InternalKExpressions.g:4848:1: ( ( ruleNegExpression ) )
+            // InternalKExpressions.g:4849:1: ( ruleNegExpression )
             {
-            // InternalKExpressions.g:4771:1: ( ruleNegExpression )
-            // InternalKExpressions.g:4772:1: ruleNegExpression
+            // InternalKExpressions.g:4849:1: ( ruleNegExpression )
+            // InternalKExpressions.g:4850:1: ruleNegExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModExpressionAccess().getNegExpressionParserRuleCall_0()); 
@@ -13958,14 +14217,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ModExpression__Group__1"
-    // InternalKExpressions.g:4783:1: rule__ModExpression__Group__1 : rule__ModExpression__Group__1__Impl ;
+    // InternalKExpressions.g:4861:1: rule__ModExpression__Group__1 : rule__ModExpression__Group__1__Impl ;
     public final void rule__ModExpression__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4787:1: ( rule__ModExpression__Group__1__Impl )
-            // InternalKExpressions.g:4788:2: rule__ModExpression__Group__1__Impl
+            // InternalKExpressions.g:4865:1: ( rule__ModExpression__Group__1__Impl )
+            // InternalKExpressions.g:4866:2: rule__ModExpression__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ModExpression__Group__1__Impl();
@@ -13991,31 +14250,31 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ModExpression__Group__1__Impl"
-    // InternalKExpressions.g:4794:1: rule__ModExpression__Group__1__Impl : ( ( rule__ModExpression__Group_1__0 )? ) ;
+    // InternalKExpressions.g:4872:1: rule__ModExpression__Group__1__Impl : ( ( rule__ModExpression__Group_1__0 )? ) ;
     public final void rule__ModExpression__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4798:1: ( ( ( rule__ModExpression__Group_1__0 )? ) )
-            // InternalKExpressions.g:4799:1: ( ( rule__ModExpression__Group_1__0 )? )
+            // InternalKExpressions.g:4876:1: ( ( ( rule__ModExpression__Group_1__0 )? ) )
+            // InternalKExpressions.g:4877:1: ( ( rule__ModExpression__Group_1__0 )? )
             {
-            // InternalKExpressions.g:4799:1: ( ( rule__ModExpression__Group_1__0 )? )
-            // InternalKExpressions.g:4800:1: ( rule__ModExpression__Group_1__0 )?
+            // InternalKExpressions.g:4877:1: ( ( rule__ModExpression__Group_1__0 )? )
+            // InternalKExpressions.g:4878:1: ( rule__ModExpression__Group_1__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModExpressionAccess().getGroup_1()); 
             }
-            // InternalKExpressions.g:4801:1: ( rule__ModExpression__Group_1__0 )?
-            int alt36=2;
-            int LA36_0 = input.LA(1);
+            // InternalKExpressions.g:4879:1: ( rule__ModExpression__Group_1__0 )?
+            int alt37=2;
+            int LA37_0 = input.LA(1);
 
-            if ( (LA36_0==24) ) {
-                alt36=1;
+            if ( (LA37_0==24) ) {
+                alt37=1;
             }
-            switch (alt36) {
+            switch (alt37) {
                 case 1 :
-                    // InternalKExpressions.g:4801:2: rule__ModExpression__Group_1__0
+                    // InternalKExpressions.g:4879:2: rule__ModExpression__Group_1__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__ModExpression__Group_1__0();
@@ -14053,14 +14312,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ModExpression__Group_1__0"
-    // InternalKExpressions.g:4815:1: rule__ModExpression__Group_1__0 : rule__ModExpression__Group_1__0__Impl rule__ModExpression__Group_1__1 ;
+    // InternalKExpressions.g:4893:1: rule__ModExpression__Group_1__0 : rule__ModExpression__Group_1__0__Impl rule__ModExpression__Group_1__1 ;
     public final void rule__ModExpression__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4819:1: ( rule__ModExpression__Group_1__0__Impl rule__ModExpression__Group_1__1 )
-            // InternalKExpressions.g:4820:2: rule__ModExpression__Group_1__0__Impl rule__ModExpression__Group_1__1
+            // InternalKExpressions.g:4897:1: ( rule__ModExpression__Group_1__0__Impl rule__ModExpression__Group_1__1 )
+            // InternalKExpressions.g:4898:2: rule__ModExpression__Group_1__0__Impl rule__ModExpression__Group_1__1
             {
             pushFollow(FollowSets000.FOLLOW_26);
             rule__ModExpression__Group_1__0__Impl();
@@ -14091,23 +14350,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ModExpression__Group_1__0__Impl"
-    // InternalKExpressions.g:4827:1: rule__ModExpression__Group_1__0__Impl : ( () ) ;
+    // InternalKExpressions.g:4905:1: rule__ModExpression__Group_1__0__Impl : ( () ) ;
     public final void rule__ModExpression__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4831:1: ( ( () ) )
-            // InternalKExpressions.g:4832:1: ( () )
+            // InternalKExpressions.g:4909:1: ( ( () ) )
+            // InternalKExpressions.g:4910:1: ( () )
             {
-            // InternalKExpressions.g:4832:1: ( () )
-            // InternalKExpressions.g:4833:1: ()
+            // InternalKExpressions.g:4910:1: ( () )
+            // InternalKExpressions.g:4911:1: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()); 
             }
-            // InternalKExpressions.g:4834:1: ()
-            // InternalKExpressions.g:4836:1: 
+            // InternalKExpressions.g:4912:1: ()
+            // InternalKExpressions.g:4914:1: 
             {
             }
 
@@ -14132,14 +14391,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ModExpression__Group_1__1"
-    // InternalKExpressions.g:4846:1: rule__ModExpression__Group_1__1 : rule__ModExpression__Group_1__1__Impl rule__ModExpression__Group_1__2 ;
+    // InternalKExpressions.g:4924:1: rule__ModExpression__Group_1__1 : rule__ModExpression__Group_1__1__Impl rule__ModExpression__Group_1__2 ;
     public final void rule__ModExpression__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4850:1: ( rule__ModExpression__Group_1__1__Impl rule__ModExpression__Group_1__2 )
-            // InternalKExpressions.g:4851:2: rule__ModExpression__Group_1__1__Impl rule__ModExpression__Group_1__2
+            // InternalKExpressions.g:4928:1: ( rule__ModExpression__Group_1__1__Impl rule__ModExpression__Group_1__2 )
+            // InternalKExpressions.g:4929:2: rule__ModExpression__Group_1__1__Impl rule__ModExpression__Group_1__2
             {
             pushFollow(FollowSets000.FOLLOW_26);
             rule__ModExpression__Group_1__1__Impl();
@@ -14170,23 +14429,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ModExpression__Group_1__1__Impl"
-    // InternalKExpressions.g:4858:1: rule__ModExpression__Group_1__1__Impl : ( ( rule__ModExpression__Group_1_1__0 ) ) ;
+    // InternalKExpressions.g:4936:1: rule__ModExpression__Group_1__1__Impl : ( ( rule__ModExpression__Group_1_1__0 ) ) ;
     public final void rule__ModExpression__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4862:1: ( ( ( rule__ModExpression__Group_1_1__0 ) ) )
-            // InternalKExpressions.g:4863:1: ( ( rule__ModExpression__Group_1_1__0 ) )
+            // InternalKExpressions.g:4940:1: ( ( ( rule__ModExpression__Group_1_1__0 ) ) )
+            // InternalKExpressions.g:4941:1: ( ( rule__ModExpression__Group_1_1__0 ) )
             {
-            // InternalKExpressions.g:4863:1: ( ( rule__ModExpression__Group_1_1__0 ) )
-            // InternalKExpressions.g:4864:1: ( rule__ModExpression__Group_1_1__0 )
+            // InternalKExpressions.g:4941:1: ( ( rule__ModExpression__Group_1_1__0 ) )
+            // InternalKExpressions.g:4942:1: ( rule__ModExpression__Group_1_1__0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModExpressionAccess().getGroup_1_1()); 
             }
-            // InternalKExpressions.g:4865:1: ( rule__ModExpression__Group_1_1__0 )
-            // InternalKExpressions.g:4865:2: rule__ModExpression__Group_1_1__0
+            // InternalKExpressions.g:4943:1: ( rule__ModExpression__Group_1_1__0 )
+            // InternalKExpressions.g:4943:2: rule__ModExpression__Group_1_1__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ModExpression__Group_1_1__0();
@@ -14221,14 +14480,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ModExpression__Group_1__2"
-    // InternalKExpressions.g:4875:1: rule__ModExpression__Group_1__2 : rule__ModExpression__Group_1__2__Impl ;
+    // InternalKExpressions.g:4953:1: rule__ModExpression__Group_1__2 : rule__ModExpression__Group_1__2__Impl ;
     public final void rule__ModExpression__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4879:1: ( rule__ModExpression__Group_1__2__Impl )
-            // InternalKExpressions.g:4880:2: rule__ModExpression__Group_1__2__Impl
+            // InternalKExpressions.g:4957:1: ( rule__ModExpression__Group_1__2__Impl )
+            // InternalKExpressions.g:4958:2: rule__ModExpression__Group_1__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ModExpression__Group_1__2__Impl();
@@ -14254,35 +14513,35 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ModExpression__Group_1__2__Impl"
-    // InternalKExpressions.g:4886:1: rule__ModExpression__Group_1__2__Impl : ( ( rule__ModExpression__Group_1_2__0 )* ) ;
+    // InternalKExpressions.g:4964:1: rule__ModExpression__Group_1__2__Impl : ( ( rule__ModExpression__Group_1_2__0 )* ) ;
     public final void rule__ModExpression__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4890:1: ( ( ( rule__ModExpression__Group_1_2__0 )* ) )
-            // InternalKExpressions.g:4891:1: ( ( rule__ModExpression__Group_1_2__0 )* )
+            // InternalKExpressions.g:4968:1: ( ( ( rule__ModExpression__Group_1_2__0 )* ) )
+            // InternalKExpressions.g:4969:1: ( ( rule__ModExpression__Group_1_2__0 )* )
             {
-            // InternalKExpressions.g:4891:1: ( ( rule__ModExpression__Group_1_2__0 )* )
-            // InternalKExpressions.g:4892:1: ( rule__ModExpression__Group_1_2__0 )*
+            // InternalKExpressions.g:4969:1: ( ( rule__ModExpression__Group_1_2__0 )* )
+            // InternalKExpressions.g:4970:1: ( rule__ModExpression__Group_1_2__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModExpressionAccess().getGroup_1_2()); 
             }
-            // InternalKExpressions.g:4893:1: ( rule__ModExpression__Group_1_2__0 )*
-            loop37:
+            // InternalKExpressions.g:4971:1: ( rule__ModExpression__Group_1_2__0 )*
+            loop38:
             do {
-                int alt37=2;
-                int LA37_0 = input.LA(1);
+                int alt38=2;
+                int LA38_0 = input.LA(1);
 
-                if ( (LA37_0==24) ) {
-                    alt37=1;
+                if ( (LA38_0==24) ) {
+                    alt38=1;
                 }
 
 
-                switch (alt37) {
+                switch (alt38) {
             	case 1 :
-            	    // InternalKExpressions.g:4893:2: rule__ModExpression__Group_1_2__0
+            	    // InternalKExpressions.g:4971:2: rule__ModExpression__Group_1_2__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_27);
             	    rule__ModExpression__Group_1_2__0();
@@ -14294,7 +14553,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop37;
+            	    break loop38;
                 }
             } while (true);
 
@@ -14323,14 +14582,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ModExpression__Group_1_1__0"
-    // InternalKExpressions.g:4909:1: rule__ModExpression__Group_1_1__0 : rule__ModExpression__Group_1_1__0__Impl rule__ModExpression__Group_1_1__1 ;
+    // InternalKExpressions.g:4987:1: rule__ModExpression__Group_1_1__0 : rule__ModExpression__Group_1_1__0__Impl rule__ModExpression__Group_1_1__1 ;
     public final void rule__ModExpression__Group_1_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4913:1: ( rule__ModExpression__Group_1_1__0__Impl rule__ModExpression__Group_1_1__1 )
-            // InternalKExpressions.g:4914:2: rule__ModExpression__Group_1_1__0__Impl rule__ModExpression__Group_1_1__1
+            // InternalKExpressions.g:4991:1: ( rule__ModExpression__Group_1_1__0__Impl rule__ModExpression__Group_1_1__1 )
+            // InternalKExpressions.g:4992:2: rule__ModExpression__Group_1_1__0__Impl rule__ModExpression__Group_1_1__1
             {
             pushFollow(FollowSets000.FOLLOW_19);
             rule__ModExpression__Group_1_1__0__Impl();
@@ -14361,23 +14620,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ModExpression__Group_1_1__0__Impl"
-    // InternalKExpressions.g:4921:1: rule__ModExpression__Group_1_1__0__Impl : ( ( rule__ModExpression__OperatorAssignment_1_1_0 ) ) ;
+    // InternalKExpressions.g:4999:1: rule__ModExpression__Group_1_1__0__Impl : ( ( rule__ModExpression__OperatorAssignment_1_1_0 ) ) ;
     public final void rule__ModExpression__Group_1_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4925:1: ( ( ( rule__ModExpression__OperatorAssignment_1_1_0 ) ) )
-            // InternalKExpressions.g:4926:1: ( ( rule__ModExpression__OperatorAssignment_1_1_0 ) )
+            // InternalKExpressions.g:5003:1: ( ( ( rule__ModExpression__OperatorAssignment_1_1_0 ) ) )
+            // InternalKExpressions.g:5004:1: ( ( rule__ModExpression__OperatorAssignment_1_1_0 ) )
             {
-            // InternalKExpressions.g:4926:1: ( ( rule__ModExpression__OperatorAssignment_1_1_0 ) )
-            // InternalKExpressions.g:4927:1: ( rule__ModExpression__OperatorAssignment_1_1_0 )
+            // InternalKExpressions.g:5004:1: ( ( rule__ModExpression__OperatorAssignment_1_1_0 ) )
+            // InternalKExpressions.g:5005:1: ( rule__ModExpression__OperatorAssignment_1_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModExpressionAccess().getOperatorAssignment_1_1_0()); 
             }
-            // InternalKExpressions.g:4928:1: ( rule__ModExpression__OperatorAssignment_1_1_0 )
-            // InternalKExpressions.g:4928:2: rule__ModExpression__OperatorAssignment_1_1_0
+            // InternalKExpressions.g:5006:1: ( rule__ModExpression__OperatorAssignment_1_1_0 )
+            // InternalKExpressions.g:5006:2: rule__ModExpression__OperatorAssignment_1_1_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ModExpression__OperatorAssignment_1_1_0();
@@ -14412,14 +14671,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ModExpression__Group_1_1__1"
-    // InternalKExpressions.g:4938:1: rule__ModExpression__Group_1_1__1 : rule__ModExpression__Group_1_1__1__Impl ;
+    // InternalKExpressions.g:5016:1: rule__ModExpression__Group_1_1__1 : rule__ModExpression__Group_1_1__1__Impl ;
     public final void rule__ModExpression__Group_1_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4942:1: ( rule__ModExpression__Group_1_1__1__Impl )
-            // InternalKExpressions.g:4943:2: rule__ModExpression__Group_1_1__1__Impl
+            // InternalKExpressions.g:5020:1: ( rule__ModExpression__Group_1_1__1__Impl )
+            // InternalKExpressions.g:5021:2: rule__ModExpression__Group_1_1__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ModExpression__Group_1_1__1__Impl();
@@ -14445,23 +14704,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ModExpression__Group_1_1__1__Impl"
-    // InternalKExpressions.g:4949:1: rule__ModExpression__Group_1_1__1__Impl : ( ( rule__ModExpression__SubExpressionsAssignment_1_1_1 ) ) ;
+    // InternalKExpressions.g:5027:1: rule__ModExpression__Group_1_1__1__Impl : ( ( rule__ModExpression__SubExpressionsAssignment_1_1_1 ) ) ;
     public final void rule__ModExpression__Group_1_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4953:1: ( ( ( rule__ModExpression__SubExpressionsAssignment_1_1_1 ) ) )
-            // InternalKExpressions.g:4954:1: ( ( rule__ModExpression__SubExpressionsAssignment_1_1_1 ) )
+            // InternalKExpressions.g:5031:1: ( ( ( rule__ModExpression__SubExpressionsAssignment_1_1_1 ) ) )
+            // InternalKExpressions.g:5032:1: ( ( rule__ModExpression__SubExpressionsAssignment_1_1_1 ) )
             {
-            // InternalKExpressions.g:4954:1: ( ( rule__ModExpression__SubExpressionsAssignment_1_1_1 ) )
-            // InternalKExpressions.g:4955:1: ( rule__ModExpression__SubExpressionsAssignment_1_1_1 )
+            // InternalKExpressions.g:5032:1: ( ( rule__ModExpression__SubExpressionsAssignment_1_1_1 ) )
+            // InternalKExpressions.g:5033:1: ( rule__ModExpression__SubExpressionsAssignment_1_1_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModExpressionAccess().getSubExpressionsAssignment_1_1_1()); 
             }
-            // InternalKExpressions.g:4956:1: ( rule__ModExpression__SubExpressionsAssignment_1_1_1 )
-            // InternalKExpressions.g:4956:2: rule__ModExpression__SubExpressionsAssignment_1_1_1
+            // InternalKExpressions.g:5034:1: ( rule__ModExpression__SubExpressionsAssignment_1_1_1 )
+            // InternalKExpressions.g:5034:2: rule__ModExpression__SubExpressionsAssignment_1_1_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ModExpression__SubExpressionsAssignment_1_1_1();
@@ -14496,14 +14755,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ModExpression__Group_1_2__0"
-    // InternalKExpressions.g:4970:1: rule__ModExpression__Group_1_2__0 : rule__ModExpression__Group_1_2__0__Impl rule__ModExpression__Group_1_2__1 ;
+    // InternalKExpressions.g:5048:1: rule__ModExpression__Group_1_2__0 : rule__ModExpression__Group_1_2__0__Impl rule__ModExpression__Group_1_2__1 ;
     public final void rule__ModExpression__Group_1_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4974:1: ( rule__ModExpression__Group_1_2__0__Impl rule__ModExpression__Group_1_2__1 )
-            // InternalKExpressions.g:4975:2: rule__ModExpression__Group_1_2__0__Impl rule__ModExpression__Group_1_2__1
+            // InternalKExpressions.g:5052:1: ( rule__ModExpression__Group_1_2__0__Impl rule__ModExpression__Group_1_2__1 )
+            // InternalKExpressions.g:5053:2: rule__ModExpression__Group_1_2__0__Impl rule__ModExpression__Group_1_2__1
             {
             pushFollow(FollowSets000.FOLLOW_19);
             rule__ModExpression__Group_1_2__0__Impl();
@@ -14534,17 +14793,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ModExpression__Group_1_2__0__Impl"
-    // InternalKExpressions.g:4982:1: rule__ModExpression__Group_1_2__0__Impl : ( '%' ) ;
+    // InternalKExpressions.g:5060:1: rule__ModExpression__Group_1_2__0__Impl : ( '%' ) ;
     public final void rule__ModExpression__Group_1_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4986:1: ( ( '%' ) )
-            // InternalKExpressions.g:4987:1: ( '%' )
+            // InternalKExpressions.g:5064:1: ( ( '%' ) )
+            // InternalKExpressions.g:5065:1: ( '%' )
             {
-            // InternalKExpressions.g:4987:1: ( '%' )
-            // InternalKExpressions.g:4988:1: '%'
+            // InternalKExpressions.g:5065:1: ( '%' )
+            // InternalKExpressions.g:5066:1: '%'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModExpressionAccess().getPercentSignKeyword_1_2_0()); 
@@ -14575,14 +14834,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ModExpression__Group_1_2__1"
-    // InternalKExpressions.g:5001:1: rule__ModExpression__Group_1_2__1 : rule__ModExpression__Group_1_2__1__Impl ;
+    // InternalKExpressions.g:5079:1: rule__ModExpression__Group_1_2__1 : rule__ModExpression__Group_1_2__1__Impl ;
     public final void rule__ModExpression__Group_1_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5005:1: ( rule__ModExpression__Group_1_2__1__Impl )
-            // InternalKExpressions.g:5006:2: rule__ModExpression__Group_1_2__1__Impl
+            // InternalKExpressions.g:5083:1: ( rule__ModExpression__Group_1_2__1__Impl )
+            // InternalKExpressions.g:5084:2: rule__ModExpression__Group_1_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ModExpression__Group_1_2__1__Impl();
@@ -14608,23 +14867,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ModExpression__Group_1_2__1__Impl"
-    // InternalKExpressions.g:5012:1: rule__ModExpression__Group_1_2__1__Impl : ( ( rule__ModExpression__SubExpressionsAssignment_1_2_1 ) ) ;
+    // InternalKExpressions.g:5090:1: rule__ModExpression__Group_1_2__1__Impl : ( ( rule__ModExpression__SubExpressionsAssignment_1_2_1 ) ) ;
     public final void rule__ModExpression__Group_1_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5016:1: ( ( ( rule__ModExpression__SubExpressionsAssignment_1_2_1 ) ) )
-            // InternalKExpressions.g:5017:1: ( ( rule__ModExpression__SubExpressionsAssignment_1_2_1 ) )
+            // InternalKExpressions.g:5094:1: ( ( ( rule__ModExpression__SubExpressionsAssignment_1_2_1 ) ) )
+            // InternalKExpressions.g:5095:1: ( ( rule__ModExpression__SubExpressionsAssignment_1_2_1 ) )
             {
-            // InternalKExpressions.g:5017:1: ( ( rule__ModExpression__SubExpressionsAssignment_1_2_1 ) )
-            // InternalKExpressions.g:5018:1: ( rule__ModExpression__SubExpressionsAssignment_1_2_1 )
+            // InternalKExpressions.g:5095:1: ( ( rule__ModExpression__SubExpressionsAssignment_1_2_1 ) )
+            // InternalKExpressions.g:5096:1: ( rule__ModExpression__SubExpressionsAssignment_1_2_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModExpressionAccess().getSubExpressionsAssignment_1_2_1()); 
             }
-            // InternalKExpressions.g:5019:1: ( rule__ModExpression__SubExpressionsAssignment_1_2_1 )
-            // InternalKExpressions.g:5019:2: rule__ModExpression__SubExpressionsAssignment_1_2_1
+            // InternalKExpressions.g:5097:1: ( rule__ModExpression__SubExpressionsAssignment_1_2_1 )
+            // InternalKExpressions.g:5097:2: rule__ModExpression__SubExpressionsAssignment_1_2_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ModExpression__SubExpressionsAssignment_1_2_1();
@@ -14659,14 +14918,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__NegExpression__Group_0__0"
-    // InternalKExpressions.g:5033:1: rule__NegExpression__Group_0__0 : rule__NegExpression__Group_0__0__Impl rule__NegExpression__Group_0__1 ;
+    // InternalKExpressions.g:5111:1: rule__NegExpression__Group_0__0 : rule__NegExpression__Group_0__0__Impl rule__NegExpression__Group_0__1 ;
     public final void rule__NegExpression__Group_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5037:1: ( rule__NegExpression__Group_0__0__Impl rule__NegExpression__Group_0__1 )
-            // InternalKExpressions.g:5038:2: rule__NegExpression__Group_0__0__Impl rule__NegExpression__Group_0__1
+            // InternalKExpressions.g:5115:1: ( rule__NegExpression__Group_0__0__Impl rule__NegExpression__Group_0__1 )
+            // InternalKExpressions.g:5116:2: rule__NegExpression__Group_0__0__Impl rule__NegExpression__Group_0__1
             {
             pushFollow(FollowSets000.FOLLOW_20);
             rule__NegExpression__Group_0__0__Impl();
@@ -14697,23 +14956,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__NegExpression__Group_0__0__Impl"
-    // InternalKExpressions.g:5045:1: rule__NegExpression__Group_0__0__Impl : ( () ) ;
+    // InternalKExpressions.g:5123:1: rule__NegExpression__Group_0__0__Impl : ( () ) ;
     public final void rule__NegExpression__Group_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5049:1: ( ( () ) )
-            // InternalKExpressions.g:5050:1: ( () )
+            // InternalKExpressions.g:5127:1: ( ( () ) )
+            // InternalKExpressions.g:5128:1: ( () )
             {
-            // InternalKExpressions.g:5050:1: ( () )
-            // InternalKExpressions.g:5051:1: ()
+            // InternalKExpressions.g:5128:1: ( () )
+            // InternalKExpressions.g:5129:1: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNegExpressionAccess().getOperatorExpressionAction_0_0()); 
             }
-            // InternalKExpressions.g:5052:1: ()
-            // InternalKExpressions.g:5054:1: 
+            // InternalKExpressions.g:5130:1: ()
+            // InternalKExpressions.g:5132:1: 
             {
             }
 
@@ -14738,14 +14997,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__NegExpression__Group_0__1"
-    // InternalKExpressions.g:5064:1: rule__NegExpression__Group_0__1 : rule__NegExpression__Group_0__1__Impl rule__NegExpression__Group_0__2 ;
+    // InternalKExpressions.g:5142:1: rule__NegExpression__Group_0__1 : rule__NegExpression__Group_0__1__Impl rule__NegExpression__Group_0__2 ;
     public final void rule__NegExpression__Group_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5068:1: ( rule__NegExpression__Group_0__1__Impl rule__NegExpression__Group_0__2 )
-            // InternalKExpressions.g:5069:2: rule__NegExpression__Group_0__1__Impl rule__NegExpression__Group_0__2
+            // InternalKExpressions.g:5146:1: ( rule__NegExpression__Group_0__1__Impl rule__NegExpression__Group_0__2 )
+            // InternalKExpressions.g:5147:2: rule__NegExpression__Group_0__1__Impl rule__NegExpression__Group_0__2
             {
             pushFollow(FollowSets000.FOLLOW_19);
             rule__NegExpression__Group_0__1__Impl();
@@ -14776,23 +15035,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__NegExpression__Group_0__1__Impl"
-    // InternalKExpressions.g:5076:1: rule__NegExpression__Group_0__1__Impl : ( ( rule__NegExpression__OperatorAssignment_0_1 ) ) ;
+    // InternalKExpressions.g:5154:1: rule__NegExpression__Group_0__1__Impl : ( ( rule__NegExpression__OperatorAssignment_0_1 ) ) ;
     public final void rule__NegExpression__Group_0__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5080:1: ( ( ( rule__NegExpression__OperatorAssignment_0_1 ) ) )
-            // InternalKExpressions.g:5081:1: ( ( rule__NegExpression__OperatorAssignment_0_1 ) )
+            // InternalKExpressions.g:5158:1: ( ( ( rule__NegExpression__OperatorAssignment_0_1 ) ) )
+            // InternalKExpressions.g:5159:1: ( ( rule__NegExpression__OperatorAssignment_0_1 ) )
             {
-            // InternalKExpressions.g:5081:1: ( ( rule__NegExpression__OperatorAssignment_0_1 ) )
-            // InternalKExpressions.g:5082:1: ( rule__NegExpression__OperatorAssignment_0_1 )
+            // InternalKExpressions.g:5159:1: ( ( rule__NegExpression__OperatorAssignment_0_1 ) )
+            // InternalKExpressions.g:5160:1: ( rule__NegExpression__OperatorAssignment_0_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNegExpressionAccess().getOperatorAssignment_0_1()); 
             }
-            // InternalKExpressions.g:5083:1: ( rule__NegExpression__OperatorAssignment_0_1 )
-            // InternalKExpressions.g:5083:2: rule__NegExpression__OperatorAssignment_0_1
+            // InternalKExpressions.g:5161:1: ( rule__NegExpression__OperatorAssignment_0_1 )
+            // InternalKExpressions.g:5161:2: rule__NegExpression__OperatorAssignment_0_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__NegExpression__OperatorAssignment_0_1();
@@ -14827,14 +15086,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__NegExpression__Group_0__2"
-    // InternalKExpressions.g:5093:1: rule__NegExpression__Group_0__2 : rule__NegExpression__Group_0__2__Impl ;
+    // InternalKExpressions.g:5171:1: rule__NegExpression__Group_0__2 : rule__NegExpression__Group_0__2__Impl ;
     public final void rule__NegExpression__Group_0__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5097:1: ( rule__NegExpression__Group_0__2__Impl )
-            // InternalKExpressions.g:5098:2: rule__NegExpression__Group_0__2__Impl
+            // InternalKExpressions.g:5175:1: ( rule__NegExpression__Group_0__2__Impl )
+            // InternalKExpressions.g:5176:2: rule__NegExpression__Group_0__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__NegExpression__Group_0__2__Impl();
@@ -14860,23 +15119,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__NegExpression__Group_0__2__Impl"
-    // InternalKExpressions.g:5104:1: rule__NegExpression__Group_0__2__Impl : ( ( rule__NegExpression__SubExpressionsAssignment_0_2 ) ) ;
+    // InternalKExpressions.g:5182:1: rule__NegExpression__Group_0__2__Impl : ( ( rule__NegExpression__SubExpressionsAssignment_0_2 ) ) ;
     public final void rule__NegExpression__Group_0__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5108:1: ( ( ( rule__NegExpression__SubExpressionsAssignment_0_2 ) ) )
-            // InternalKExpressions.g:5109:1: ( ( rule__NegExpression__SubExpressionsAssignment_0_2 ) )
+            // InternalKExpressions.g:5186:1: ( ( ( rule__NegExpression__SubExpressionsAssignment_0_2 ) ) )
+            // InternalKExpressions.g:5187:1: ( ( rule__NegExpression__SubExpressionsAssignment_0_2 ) )
             {
-            // InternalKExpressions.g:5109:1: ( ( rule__NegExpression__SubExpressionsAssignment_0_2 ) )
-            // InternalKExpressions.g:5110:1: ( rule__NegExpression__SubExpressionsAssignment_0_2 )
+            // InternalKExpressions.g:5187:1: ( ( rule__NegExpression__SubExpressionsAssignment_0_2 ) )
+            // InternalKExpressions.g:5188:1: ( rule__NegExpression__SubExpressionsAssignment_0_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNegExpressionAccess().getSubExpressionsAssignment_0_2()); 
             }
-            // InternalKExpressions.g:5111:1: ( rule__NegExpression__SubExpressionsAssignment_0_2 )
-            // InternalKExpressions.g:5111:2: rule__NegExpression__SubExpressionsAssignment_0_2
+            // InternalKExpressions.g:5189:1: ( rule__NegExpression__SubExpressionsAssignment_0_2 )
+            // InternalKExpressions.g:5189:2: rule__NegExpression__SubExpressionsAssignment_0_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__NegExpression__SubExpressionsAssignment_0_2();
@@ -14911,14 +15170,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AtomicExpression__Group_2__0"
-    // InternalKExpressions.g:5127:1: rule__AtomicExpression__Group_2__0 : rule__AtomicExpression__Group_2__0__Impl rule__AtomicExpression__Group_2__1 ;
+    // InternalKExpressions.g:5205:1: rule__AtomicExpression__Group_2__0 : rule__AtomicExpression__Group_2__0__Impl rule__AtomicExpression__Group_2__1 ;
     public final void rule__AtomicExpression__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5131:1: ( rule__AtomicExpression__Group_2__0__Impl rule__AtomicExpression__Group_2__1 )
-            // InternalKExpressions.g:5132:2: rule__AtomicExpression__Group_2__0__Impl rule__AtomicExpression__Group_2__1
+            // InternalKExpressions.g:5209:1: ( rule__AtomicExpression__Group_2__0__Impl rule__AtomicExpression__Group_2__1 )
+            // InternalKExpressions.g:5210:2: rule__AtomicExpression__Group_2__0__Impl rule__AtomicExpression__Group_2__1
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__AtomicExpression__Group_2__0__Impl();
@@ -14949,17 +15208,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AtomicExpression__Group_2__0__Impl"
-    // InternalKExpressions.g:5139:1: rule__AtomicExpression__Group_2__0__Impl : ( '(' ) ;
+    // InternalKExpressions.g:5217:1: rule__AtomicExpression__Group_2__0__Impl : ( '(' ) ;
     public final void rule__AtomicExpression__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5143:1: ( ( '(' ) )
-            // InternalKExpressions.g:5144:1: ( '(' )
+            // InternalKExpressions.g:5221:1: ( ( '(' ) )
+            // InternalKExpressions.g:5222:1: ( '(' )
             {
-            // InternalKExpressions.g:5144:1: ( '(' )
-            // InternalKExpressions.g:5145:1: '('
+            // InternalKExpressions.g:5222:1: ( '(' )
+            // InternalKExpressions.g:5223:1: '('
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()); 
@@ -14990,14 +15249,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AtomicExpression__Group_2__1"
-    // InternalKExpressions.g:5158:1: rule__AtomicExpression__Group_2__1 : rule__AtomicExpression__Group_2__1__Impl rule__AtomicExpression__Group_2__2 ;
+    // InternalKExpressions.g:5236:1: rule__AtomicExpression__Group_2__1 : rule__AtomicExpression__Group_2__1__Impl rule__AtomicExpression__Group_2__2 ;
     public final void rule__AtomicExpression__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5162:1: ( rule__AtomicExpression__Group_2__1__Impl rule__AtomicExpression__Group_2__2 )
-            // InternalKExpressions.g:5163:2: rule__AtomicExpression__Group_2__1__Impl rule__AtomicExpression__Group_2__2
+            // InternalKExpressions.g:5240:1: ( rule__AtomicExpression__Group_2__1__Impl rule__AtomicExpression__Group_2__2 )
+            // InternalKExpressions.g:5241:2: rule__AtomicExpression__Group_2__1__Impl rule__AtomicExpression__Group_2__2
             {
             pushFollow(FollowSets000.FOLLOW_28);
             rule__AtomicExpression__Group_2__1__Impl();
@@ -15028,17 +15287,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AtomicExpression__Group_2__1__Impl"
-    // InternalKExpressions.g:5170:1: rule__AtomicExpression__Group_2__1__Impl : ( ruleBoolExpression ) ;
+    // InternalKExpressions.g:5248:1: rule__AtomicExpression__Group_2__1__Impl : ( ruleBoolExpression ) ;
     public final void rule__AtomicExpression__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5174:1: ( ( ruleBoolExpression ) )
-            // InternalKExpressions.g:5175:1: ( ruleBoolExpression )
+            // InternalKExpressions.g:5252:1: ( ( ruleBoolExpression ) )
+            // InternalKExpressions.g:5253:1: ( ruleBoolExpression )
             {
-            // InternalKExpressions.g:5175:1: ( ruleBoolExpression )
-            // InternalKExpressions.g:5176:1: ruleBoolExpression
+            // InternalKExpressions.g:5253:1: ( ruleBoolExpression )
+            // InternalKExpressions.g:5254:1: ruleBoolExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAtomicExpressionAccess().getBoolExpressionParserRuleCall_2_1()); 
@@ -15073,14 +15332,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AtomicExpression__Group_2__2"
-    // InternalKExpressions.g:5187:1: rule__AtomicExpression__Group_2__2 : rule__AtomicExpression__Group_2__2__Impl ;
+    // InternalKExpressions.g:5265:1: rule__AtomicExpression__Group_2__2 : rule__AtomicExpression__Group_2__2__Impl ;
     public final void rule__AtomicExpression__Group_2__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5191:1: ( rule__AtomicExpression__Group_2__2__Impl )
-            // InternalKExpressions.g:5192:2: rule__AtomicExpression__Group_2__2__Impl
+            // InternalKExpressions.g:5269:1: ( rule__AtomicExpression__Group_2__2__Impl )
+            // InternalKExpressions.g:5270:2: rule__AtomicExpression__Group_2__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__AtomicExpression__Group_2__2__Impl();
@@ -15106,17 +15365,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AtomicExpression__Group_2__2__Impl"
-    // InternalKExpressions.g:5198:1: rule__AtomicExpression__Group_2__2__Impl : ( ')' ) ;
+    // InternalKExpressions.g:5276:1: rule__AtomicExpression__Group_2__2__Impl : ( ')' ) ;
     public final void rule__AtomicExpression__Group_2__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5202:1: ( ( ')' ) )
-            // InternalKExpressions.g:5203:1: ( ')' )
+            // InternalKExpressions.g:5280:1: ( ( ')' ) )
+            // InternalKExpressions.g:5281:1: ( ')' )
             {
-            // InternalKExpressions.g:5203:1: ( ')' )
-            // InternalKExpressions.g:5204:1: ')'
+            // InternalKExpressions.g:5281:1: ( ')' )
+            // InternalKExpressions.g:5282:1: ')'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAtomicExpressionAccess().getRightParenthesisKeyword_2_2()); 
@@ -15147,14 +15406,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AtomicValuedExpression__Group_4__0"
-    // InternalKExpressions.g:5223:1: rule__AtomicValuedExpression__Group_4__0 : rule__AtomicValuedExpression__Group_4__0__Impl rule__AtomicValuedExpression__Group_4__1 ;
+    // InternalKExpressions.g:5301:1: rule__AtomicValuedExpression__Group_4__0 : rule__AtomicValuedExpression__Group_4__0__Impl rule__AtomicValuedExpression__Group_4__1 ;
     public final void rule__AtomicValuedExpression__Group_4__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5227:1: ( rule__AtomicValuedExpression__Group_4__0__Impl rule__AtomicValuedExpression__Group_4__1 )
-            // InternalKExpressions.g:5228:2: rule__AtomicValuedExpression__Group_4__0__Impl rule__AtomicValuedExpression__Group_4__1
+            // InternalKExpressions.g:5305:1: ( rule__AtomicValuedExpression__Group_4__0__Impl rule__AtomicValuedExpression__Group_4__1 )
+            // InternalKExpressions.g:5306:2: rule__AtomicValuedExpression__Group_4__0__Impl rule__AtomicValuedExpression__Group_4__1
             {
             pushFollow(FollowSets000.FOLLOW_19);
             rule__AtomicValuedExpression__Group_4__0__Impl();
@@ -15185,17 +15444,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AtomicValuedExpression__Group_4__0__Impl"
-    // InternalKExpressions.g:5235:1: rule__AtomicValuedExpression__Group_4__0__Impl : ( '(' ) ;
+    // InternalKExpressions.g:5313:1: rule__AtomicValuedExpression__Group_4__0__Impl : ( '(' ) ;
     public final void rule__AtomicValuedExpression__Group_4__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5239:1: ( ( '(' ) )
-            // InternalKExpressions.g:5240:1: ( '(' )
+            // InternalKExpressions.g:5317:1: ( ( '(' ) )
+            // InternalKExpressions.g:5318:1: ( '(' )
             {
-            // InternalKExpressions.g:5240:1: ( '(' )
-            // InternalKExpressions.g:5241:1: '('
+            // InternalKExpressions.g:5318:1: ( '(' )
+            // InternalKExpressions.g:5319:1: '('
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()); 
@@ -15226,14 +15485,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AtomicValuedExpression__Group_4__1"
-    // InternalKExpressions.g:5254:1: rule__AtomicValuedExpression__Group_4__1 : rule__AtomicValuedExpression__Group_4__1__Impl rule__AtomicValuedExpression__Group_4__2 ;
+    // InternalKExpressions.g:5332:1: rule__AtomicValuedExpression__Group_4__1 : rule__AtomicValuedExpression__Group_4__1__Impl rule__AtomicValuedExpression__Group_4__2 ;
     public final void rule__AtomicValuedExpression__Group_4__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5258:1: ( rule__AtomicValuedExpression__Group_4__1__Impl rule__AtomicValuedExpression__Group_4__2 )
-            // InternalKExpressions.g:5259:2: rule__AtomicValuedExpression__Group_4__1__Impl rule__AtomicValuedExpression__Group_4__2
+            // InternalKExpressions.g:5336:1: ( rule__AtomicValuedExpression__Group_4__1__Impl rule__AtomicValuedExpression__Group_4__2 )
+            // InternalKExpressions.g:5337:2: rule__AtomicValuedExpression__Group_4__1__Impl rule__AtomicValuedExpression__Group_4__2
             {
             pushFollow(FollowSets000.FOLLOW_28);
             rule__AtomicValuedExpression__Group_4__1__Impl();
@@ -15264,17 +15523,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AtomicValuedExpression__Group_4__1__Impl"
-    // InternalKExpressions.g:5266:1: rule__AtomicValuedExpression__Group_4__1__Impl : ( ruleValuedExpression ) ;
+    // InternalKExpressions.g:5344:1: rule__AtomicValuedExpression__Group_4__1__Impl : ( ruleValuedExpression ) ;
     public final void rule__AtomicValuedExpression__Group_4__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5270:1: ( ( ruleValuedExpression ) )
-            // InternalKExpressions.g:5271:1: ( ruleValuedExpression )
+            // InternalKExpressions.g:5348:1: ( ( ruleValuedExpression ) )
+            // InternalKExpressions.g:5349:1: ( ruleValuedExpression )
             {
-            // InternalKExpressions.g:5271:1: ( ruleValuedExpression )
-            // InternalKExpressions.g:5272:1: ruleValuedExpression
+            // InternalKExpressions.g:5349:1: ( ruleValuedExpression )
+            // InternalKExpressions.g:5350:1: ruleValuedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAtomicValuedExpressionAccess().getValuedExpressionParserRuleCall_4_1()); 
@@ -15309,14 +15568,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AtomicValuedExpression__Group_4__2"
-    // InternalKExpressions.g:5283:1: rule__AtomicValuedExpression__Group_4__2 : rule__AtomicValuedExpression__Group_4__2__Impl ;
+    // InternalKExpressions.g:5361:1: rule__AtomicValuedExpression__Group_4__2 : rule__AtomicValuedExpression__Group_4__2__Impl ;
     public final void rule__AtomicValuedExpression__Group_4__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5287:1: ( rule__AtomicValuedExpression__Group_4__2__Impl )
-            // InternalKExpressions.g:5288:2: rule__AtomicValuedExpression__Group_4__2__Impl
+            // InternalKExpressions.g:5365:1: ( rule__AtomicValuedExpression__Group_4__2__Impl )
+            // InternalKExpressions.g:5366:2: rule__AtomicValuedExpression__Group_4__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__AtomicValuedExpression__Group_4__2__Impl();
@@ -15342,17 +15601,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AtomicValuedExpression__Group_4__2__Impl"
-    // InternalKExpressions.g:5294:1: rule__AtomicValuedExpression__Group_4__2__Impl : ( ')' ) ;
+    // InternalKExpressions.g:5372:1: rule__AtomicValuedExpression__Group_4__2__Impl : ( ')' ) ;
     public final void rule__AtomicValuedExpression__Group_4__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5298:1: ( ( ')' ) )
-            // InternalKExpressions.g:5299:1: ( ')' )
+            // InternalKExpressions.g:5376:1: ( ( ')' ) )
+            // InternalKExpressions.g:5377:1: ( ')' )
             {
-            // InternalKExpressions.g:5299:1: ( ')' )
-            // InternalKExpressions.g:5300:1: ')'
+            // InternalKExpressions.g:5377:1: ( ')' )
+            // InternalKExpressions.g:5378:1: ')'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAtomicValuedExpressionAccess().getRightParenthesisKeyword_4_2()); 
@@ -15383,14 +15642,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectTestExpression__Group_0__0"
-    // InternalKExpressions.g:5319:1: rule__ValuedObjectTestExpression__Group_0__0 : rule__ValuedObjectTestExpression__Group_0__0__Impl rule__ValuedObjectTestExpression__Group_0__1 ;
+    // InternalKExpressions.g:5397:1: rule__ValuedObjectTestExpression__Group_0__0 : rule__ValuedObjectTestExpression__Group_0__0__Impl rule__ValuedObjectTestExpression__Group_0__1 ;
     public final void rule__ValuedObjectTestExpression__Group_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5323:1: ( rule__ValuedObjectTestExpression__Group_0__0__Impl rule__ValuedObjectTestExpression__Group_0__1 )
-            // InternalKExpressions.g:5324:2: rule__ValuedObjectTestExpression__Group_0__0__Impl rule__ValuedObjectTestExpression__Group_0__1
+            // InternalKExpressions.g:5401:1: ( rule__ValuedObjectTestExpression__Group_0__0__Impl rule__ValuedObjectTestExpression__Group_0__1 )
+            // InternalKExpressions.g:5402:2: rule__ValuedObjectTestExpression__Group_0__0__Impl rule__ValuedObjectTestExpression__Group_0__1
             {
             pushFollow(FollowSets000.FOLLOW_29);
             rule__ValuedObjectTestExpression__Group_0__0__Impl();
@@ -15421,23 +15680,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectTestExpression__Group_0__0__Impl"
-    // InternalKExpressions.g:5331:1: rule__ValuedObjectTestExpression__Group_0__0__Impl : ( () ) ;
+    // InternalKExpressions.g:5409:1: rule__ValuedObjectTestExpression__Group_0__0__Impl : ( () ) ;
     public final void rule__ValuedObjectTestExpression__Group_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5335:1: ( ( () ) )
-            // InternalKExpressions.g:5336:1: ( () )
+            // InternalKExpressions.g:5413:1: ( ( () ) )
+            // InternalKExpressions.g:5414:1: ( () )
             {
-            // InternalKExpressions.g:5336:1: ( () )
-            // InternalKExpressions.g:5337:1: ()
+            // InternalKExpressions.g:5414:1: ( () )
+            // InternalKExpressions.g:5415:1: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorExpressionAction_0_0()); 
             }
-            // InternalKExpressions.g:5338:1: ()
-            // InternalKExpressions.g:5340:1: 
+            // InternalKExpressions.g:5416:1: ()
+            // InternalKExpressions.g:5418:1: 
             {
             }
 
@@ -15462,14 +15721,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectTestExpression__Group_0__1"
-    // InternalKExpressions.g:5350:1: rule__ValuedObjectTestExpression__Group_0__1 : rule__ValuedObjectTestExpression__Group_0__1__Impl rule__ValuedObjectTestExpression__Group_0__2 ;
+    // InternalKExpressions.g:5428:1: rule__ValuedObjectTestExpression__Group_0__1 : rule__ValuedObjectTestExpression__Group_0__1__Impl rule__ValuedObjectTestExpression__Group_0__2 ;
     public final void rule__ValuedObjectTestExpression__Group_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5354:1: ( rule__ValuedObjectTestExpression__Group_0__1__Impl rule__ValuedObjectTestExpression__Group_0__2 )
-            // InternalKExpressions.g:5355:2: rule__ValuedObjectTestExpression__Group_0__1__Impl rule__ValuedObjectTestExpression__Group_0__2
+            // InternalKExpressions.g:5432:1: ( rule__ValuedObjectTestExpression__Group_0__1__Impl rule__ValuedObjectTestExpression__Group_0__2 )
+            // InternalKExpressions.g:5433:2: rule__ValuedObjectTestExpression__Group_0__1__Impl rule__ValuedObjectTestExpression__Group_0__2
             {
             pushFollow(FollowSets000.FOLLOW_30);
             rule__ValuedObjectTestExpression__Group_0__1__Impl();
@@ -15500,23 +15759,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectTestExpression__Group_0__1__Impl"
-    // InternalKExpressions.g:5362:1: rule__ValuedObjectTestExpression__Group_0__1__Impl : ( ( rule__ValuedObjectTestExpression__OperatorAssignment_0_1 ) ) ;
+    // InternalKExpressions.g:5440:1: rule__ValuedObjectTestExpression__Group_0__1__Impl : ( ( rule__ValuedObjectTestExpression__OperatorAssignment_0_1 ) ) ;
     public final void rule__ValuedObjectTestExpression__Group_0__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5366:1: ( ( ( rule__ValuedObjectTestExpression__OperatorAssignment_0_1 ) ) )
-            // InternalKExpressions.g:5367:1: ( ( rule__ValuedObjectTestExpression__OperatorAssignment_0_1 ) )
+            // InternalKExpressions.g:5444:1: ( ( ( rule__ValuedObjectTestExpression__OperatorAssignment_0_1 ) ) )
+            // InternalKExpressions.g:5445:1: ( ( rule__ValuedObjectTestExpression__OperatorAssignment_0_1 ) )
             {
-            // InternalKExpressions.g:5367:1: ( ( rule__ValuedObjectTestExpression__OperatorAssignment_0_1 ) )
-            // InternalKExpressions.g:5368:1: ( rule__ValuedObjectTestExpression__OperatorAssignment_0_1 )
+            // InternalKExpressions.g:5445:1: ( ( rule__ValuedObjectTestExpression__OperatorAssignment_0_1 ) )
+            // InternalKExpressions.g:5446:1: ( rule__ValuedObjectTestExpression__OperatorAssignment_0_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAssignment_0_1()); 
             }
-            // InternalKExpressions.g:5369:1: ( rule__ValuedObjectTestExpression__OperatorAssignment_0_1 )
-            // InternalKExpressions.g:5369:2: rule__ValuedObjectTestExpression__OperatorAssignment_0_1
+            // InternalKExpressions.g:5447:1: ( rule__ValuedObjectTestExpression__OperatorAssignment_0_1 )
+            // InternalKExpressions.g:5447:2: rule__ValuedObjectTestExpression__OperatorAssignment_0_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ValuedObjectTestExpression__OperatorAssignment_0_1();
@@ -15551,14 +15810,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectTestExpression__Group_0__2"
-    // InternalKExpressions.g:5379:1: rule__ValuedObjectTestExpression__Group_0__2 : rule__ValuedObjectTestExpression__Group_0__2__Impl rule__ValuedObjectTestExpression__Group_0__3 ;
+    // InternalKExpressions.g:5457:1: rule__ValuedObjectTestExpression__Group_0__2 : rule__ValuedObjectTestExpression__Group_0__2__Impl rule__ValuedObjectTestExpression__Group_0__3 ;
     public final void rule__ValuedObjectTestExpression__Group_0__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5383:1: ( rule__ValuedObjectTestExpression__Group_0__2__Impl rule__ValuedObjectTestExpression__Group_0__3 )
-            // InternalKExpressions.g:5384:2: rule__ValuedObjectTestExpression__Group_0__2__Impl rule__ValuedObjectTestExpression__Group_0__3
+            // InternalKExpressions.g:5461:1: ( rule__ValuedObjectTestExpression__Group_0__2__Impl rule__ValuedObjectTestExpression__Group_0__3 )
+            // InternalKExpressions.g:5462:2: rule__ValuedObjectTestExpression__Group_0__2__Impl rule__ValuedObjectTestExpression__Group_0__3
             {
             pushFollow(FollowSets000.FOLLOW_31);
             rule__ValuedObjectTestExpression__Group_0__2__Impl();
@@ -15589,17 +15848,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectTestExpression__Group_0__2__Impl"
-    // InternalKExpressions.g:5391:1: rule__ValuedObjectTestExpression__Group_0__2__Impl : ( '(' ) ;
+    // InternalKExpressions.g:5469:1: rule__ValuedObjectTestExpression__Group_0__2__Impl : ( '(' ) ;
     public final void rule__ValuedObjectTestExpression__Group_0__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5395:1: ( ( '(' ) )
-            // InternalKExpressions.g:5396:1: ( '(' )
+            // InternalKExpressions.g:5473:1: ( ( '(' ) )
+            // InternalKExpressions.g:5474:1: ( '(' )
             {
-            // InternalKExpressions.g:5396:1: ( '(' )
-            // InternalKExpressions.g:5397:1: '('
+            // InternalKExpressions.g:5474:1: ( '(' )
+            // InternalKExpressions.g:5475:1: '('
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectTestExpressionAccess().getLeftParenthesisKeyword_0_2()); 
@@ -15630,14 +15889,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectTestExpression__Group_0__3"
-    // InternalKExpressions.g:5410:1: rule__ValuedObjectTestExpression__Group_0__3 : rule__ValuedObjectTestExpression__Group_0__3__Impl rule__ValuedObjectTestExpression__Group_0__4 ;
+    // InternalKExpressions.g:5488:1: rule__ValuedObjectTestExpression__Group_0__3 : rule__ValuedObjectTestExpression__Group_0__3__Impl rule__ValuedObjectTestExpression__Group_0__4 ;
     public final void rule__ValuedObjectTestExpression__Group_0__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5414:1: ( rule__ValuedObjectTestExpression__Group_0__3__Impl rule__ValuedObjectTestExpression__Group_0__4 )
-            // InternalKExpressions.g:5415:2: rule__ValuedObjectTestExpression__Group_0__3__Impl rule__ValuedObjectTestExpression__Group_0__4
+            // InternalKExpressions.g:5492:1: ( rule__ValuedObjectTestExpression__Group_0__3__Impl rule__ValuedObjectTestExpression__Group_0__4 )
+            // InternalKExpressions.g:5493:2: rule__ValuedObjectTestExpression__Group_0__3__Impl rule__ValuedObjectTestExpression__Group_0__4
             {
             pushFollow(FollowSets000.FOLLOW_28);
             rule__ValuedObjectTestExpression__Group_0__3__Impl();
@@ -15668,23 +15927,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectTestExpression__Group_0__3__Impl"
-    // InternalKExpressions.g:5422:1: rule__ValuedObjectTestExpression__Group_0__3__Impl : ( ( rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3 ) ) ;
+    // InternalKExpressions.g:5500:1: rule__ValuedObjectTestExpression__Group_0__3__Impl : ( ( rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3 ) ) ;
     public final void rule__ValuedObjectTestExpression__Group_0__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5426:1: ( ( ( rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3 ) ) )
-            // InternalKExpressions.g:5427:1: ( ( rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3 ) )
+            // InternalKExpressions.g:5504:1: ( ( ( rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3 ) ) )
+            // InternalKExpressions.g:5505:1: ( ( rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3 ) )
             {
-            // InternalKExpressions.g:5427:1: ( ( rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3 ) )
-            // InternalKExpressions.g:5428:1: ( rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3 )
+            // InternalKExpressions.g:5505:1: ( ( rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3 ) )
+            // InternalKExpressions.g:5506:1: ( rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsAssignment_0_3()); 
             }
-            // InternalKExpressions.g:5429:1: ( rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3 )
-            // InternalKExpressions.g:5429:2: rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3
+            // InternalKExpressions.g:5507:1: ( rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3 )
+            // InternalKExpressions.g:5507:2: rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3();
@@ -15719,14 +15978,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectTestExpression__Group_0__4"
-    // InternalKExpressions.g:5439:1: rule__ValuedObjectTestExpression__Group_0__4 : rule__ValuedObjectTestExpression__Group_0__4__Impl ;
+    // InternalKExpressions.g:5517:1: rule__ValuedObjectTestExpression__Group_0__4 : rule__ValuedObjectTestExpression__Group_0__4__Impl ;
     public final void rule__ValuedObjectTestExpression__Group_0__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5443:1: ( rule__ValuedObjectTestExpression__Group_0__4__Impl )
-            // InternalKExpressions.g:5444:2: rule__ValuedObjectTestExpression__Group_0__4__Impl
+            // InternalKExpressions.g:5521:1: ( rule__ValuedObjectTestExpression__Group_0__4__Impl )
+            // InternalKExpressions.g:5522:2: rule__ValuedObjectTestExpression__Group_0__4__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ValuedObjectTestExpression__Group_0__4__Impl();
@@ -15752,17 +16011,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectTestExpression__Group_0__4__Impl"
-    // InternalKExpressions.g:5450:1: rule__ValuedObjectTestExpression__Group_0__4__Impl : ( ')' ) ;
+    // InternalKExpressions.g:5528:1: rule__ValuedObjectTestExpression__Group_0__4__Impl : ( ')' ) ;
     public final void rule__ValuedObjectTestExpression__Group_0__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5454:1: ( ( ')' ) )
-            // InternalKExpressions.g:5455:1: ( ')' )
+            // InternalKExpressions.g:5532:1: ( ( ')' ) )
+            // InternalKExpressions.g:5533:1: ( ')' )
             {
-            // InternalKExpressions.g:5455:1: ( ')' )
-            // InternalKExpressions.g:5456:1: ')'
+            // InternalKExpressions.g:5533:1: ( ')' )
+            // InternalKExpressions.g:5534:1: ')'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectTestExpressionAccess().getRightParenthesisKeyword_0_4()); 
@@ -15793,14 +16052,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__PrimeID__Group__0"
-    // InternalKExpressions.g:5479:1: rule__PrimeID__Group__0 : rule__PrimeID__Group__0__Impl rule__PrimeID__Group__1 ;
+    // InternalKExpressions.g:5557:1: rule__PrimeID__Group__0 : rule__PrimeID__Group__0__Impl rule__PrimeID__Group__1 ;
     public final void rule__PrimeID__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5483:1: ( rule__PrimeID__Group__0__Impl rule__PrimeID__Group__1 )
-            // InternalKExpressions.g:5484:2: rule__PrimeID__Group__0__Impl rule__PrimeID__Group__1
+            // InternalKExpressions.g:5561:1: ( rule__PrimeID__Group__0__Impl rule__PrimeID__Group__1 )
+            // InternalKExpressions.g:5562:2: rule__PrimeID__Group__0__Impl rule__PrimeID__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_32);
             rule__PrimeID__Group__0__Impl();
@@ -15831,17 +16090,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__PrimeID__Group__0__Impl"
-    // InternalKExpressions.g:5491:1: rule__PrimeID__Group__0__Impl : ( RULE_ID ) ;
+    // InternalKExpressions.g:5569:1: rule__PrimeID__Group__0__Impl : ( RULE_ID ) ;
     public final void rule__PrimeID__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5495:1: ( ( RULE_ID ) )
-            // InternalKExpressions.g:5496:1: ( RULE_ID )
+            // InternalKExpressions.g:5573:1: ( ( RULE_ID ) )
+            // InternalKExpressions.g:5574:1: ( RULE_ID )
             {
-            // InternalKExpressions.g:5496:1: ( RULE_ID )
-            // InternalKExpressions.g:5497:1: RULE_ID
+            // InternalKExpressions.g:5574:1: ( RULE_ID )
+            // InternalKExpressions.g:5575:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPrimeIDAccess().getIDTerminalRuleCall_0()); 
@@ -15872,14 +16131,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__PrimeID__Group__1"
-    // InternalKExpressions.g:5508:1: rule__PrimeID__Group__1 : rule__PrimeID__Group__1__Impl ;
+    // InternalKExpressions.g:5586:1: rule__PrimeID__Group__1 : rule__PrimeID__Group__1__Impl ;
     public final void rule__PrimeID__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5512:1: ( rule__PrimeID__Group__1__Impl )
-            // InternalKExpressions.g:5513:2: rule__PrimeID__Group__1__Impl
+            // InternalKExpressions.g:5590:1: ( rule__PrimeID__Group__1__Impl )
+            // InternalKExpressions.g:5591:2: rule__PrimeID__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__PrimeID__Group__1__Impl();
@@ -15905,35 +16164,35 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__PrimeID__Group__1__Impl"
-    // InternalKExpressions.g:5519:1: rule__PrimeID__Group__1__Impl : ( ( '\\'' )* ) ;
+    // InternalKExpressions.g:5597:1: rule__PrimeID__Group__1__Impl : ( ( '\\'' )* ) ;
     public final void rule__PrimeID__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5523:1: ( ( ( '\\'' )* ) )
-            // InternalKExpressions.g:5524:1: ( ( '\\'' )* )
+            // InternalKExpressions.g:5601:1: ( ( ( '\\'' )* ) )
+            // InternalKExpressions.g:5602:1: ( ( '\\'' )* )
             {
-            // InternalKExpressions.g:5524:1: ( ( '\\'' )* )
-            // InternalKExpressions.g:5525:1: ( '\\'' )*
+            // InternalKExpressions.g:5602:1: ( ( '\\'' )* )
+            // InternalKExpressions.g:5603:1: ( '\\'' )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPrimeIDAccess().getApostropheKeyword_1()); 
             }
-            // InternalKExpressions.g:5526:1: ( '\\'' )*
-            loop38:
+            // InternalKExpressions.g:5604:1: ( '\\'' )*
+            loop39:
             do {
-                int alt38=2;
-                int LA38_0 = input.LA(1);
+                int alt39=2;
+                int LA39_0 = input.LA(1);
 
-                if ( (LA38_0==40) ) {
-                    alt38=1;
+                if ( (LA39_0==40) ) {
+                    alt39=1;
                 }
 
 
-                switch (alt38) {
+                switch (alt39) {
             	case 1 :
-            	    // InternalKExpressions.g:5527:2: '\\''
+            	    // InternalKExpressions.g:5605:2: '\\''
             	    {
             	    match(input,40,FollowSets000.FOLLOW_33); if (state.failed) return ;
 
@@ -15941,7 +16200,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop38;
+            	    break loop39;
                 }
             } while (true);
 
@@ -15970,14 +16229,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group__0"
-    // InternalKExpressions.g:5542:1: rule__ValuedObjectReference__Group__0 : rule__ValuedObjectReference__Group__0__Impl rule__ValuedObjectReference__Group__1 ;
+    // InternalKExpressions.g:5620:1: rule__ValuedObjectReference__Group__0 : rule__ValuedObjectReference__Group__0__Impl rule__ValuedObjectReference__Group__1 ;
     public final void rule__ValuedObjectReference__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5546:1: ( rule__ValuedObjectReference__Group__0__Impl rule__ValuedObjectReference__Group__1 )
-            // InternalKExpressions.g:5547:2: rule__ValuedObjectReference__Group__0__Impl rule__ValuedObjectReference__Group__1
+            // InternalKExpressions.g:5624:1: ( rule__ValuedObjectReference__Group__0__Impl rule__ValuedObjectReference__Group__1 )
+            // InternalKExpressions.g:5625:2: rule__ValuedObjectReference__Group__0__Impl rule__ValuedObjectReference__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_34);
             rule__ValuedObjectReference__Group__0__Impl();
@@ -16008,23 +16267,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group__0__Impl"
-    // InternalKExpressions.g:5554:1: rule__ValuedObjectReference__Group__0__Impl : ( ( rule__ValuedObjectReference__ValuedObjectAssignment_0 ) ) ;
+    // InternalKExpressions.g:5632:1: rule__ValuedObjectReference__Group__0__Impl : ( ( rule__ValuedObjectReference__ValuedObjectAssignment_0 ) ) ;
     public final void rule__ValuedObjectReference__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5558:1: ( ( ( rule__ValuedObjectReference__ValuedObjectAssignment_0 ) ) )
-            // InternalKExpressions.g:5559:1: ( ( rule__ValuedObjectReference__ValuedObjectAssignment_0 ) )
+            // InternalKExpressions.g:5636:1: ( ( ( rule__ValuedObjectReference__ValuedObjectAssignment_0 ) ) )
+            // InternalKExpressions.g:5637:1: ( ( rule__ValuedObjectReference__ValuedObjectAssignment_0 ) )
             {
-            // InternalKExpressions.g:5559:1: ( ( rule__ValuedObjectReference__ValuedObjectAssignment_0 ) )
-            // InternalKExpressions.g:5560:1: ( rule__ValuedObjectReference__ValuedObjectAssignment_0 )
+            // InternalKExpressions.g:5637:1: ( ( rule__ValuedObjectReference__ValuedObjectAssignment_0 ) )
+            // InternalKExpressions.g:5638:1: ( rule__ValuedObjectReference__ValuedObjectAssignment_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectAssignment_0()); 
             }
-            // InternalKExpressions.g:5561:1: ( rule__ValuedObjectReference__ValuedObjectAssignment_0 )
-            // InternalKExpressions.g:5561:2: rule__ValuedObjectReference__ValuedObjectAssignment_0
+            // InternalKExpressions.g:5639:1: ( rule__ValuedObjectReference__ValuedObjectAssignment_0 )
+            // InternalKExpressions.g:5639:2: rule__ValuedObjectReference__ValuedObjectAssignment_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ValuedObjectReference__ValuedObjectAssignment_0();
@@ -16059,14 +16318,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group__1"
-    // InternalKExpressions.g:5571:1: rule__ValuedObjectReference__Group__1 : rule__ValuedObjectReference__Group__1__Impl rule__ValuedObjectReference__Group__2 ;
+    // InternalKExpressions.g:5649:1: rule__ValuedObjectReference__Group__1 : rule__ValuedObjectReference__Group__1__Impl rule__ValuedObjectReference__Group__2 ;
     public final void rule__ValuedObjectReference__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5575:1: ( rule__ValuedObjectReference__Group__1__Impl rule__ValuedObjectReference__Group__2 )
-            // InternalKExpressions.g:5576:2: rule__ValuedObjectReference__Group__1__Impl rule__ValuedObjectReference__Group__2
+            // InternalKExpressions.g:5653:1: ( rule__ValuedObjectReference__Group__1__Impl rule__ValuedObjectReference__Group__2 )
+            // InternalKExpressions.g:5654:2: rule__ValuedObjectReference__Group__1__Impl rule__ValuedObjectReference__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_34);
             rule__ValuedObjectReference__Group__1__Impl();
@@ -16097,35 +16356,35 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group__1__Impl"
-    // InternalKExpressions.g:5583:1: rule__ValuedObjectReference__Group__1__Impl : ( ( rule__ValuedObjectReference__Group_1__0 )* ) ;
+    // InternalKExpressions.g:5661:1: rule__ValuedObjectReference__Group__1__Impl : ( ( rule__ValuedObjectReference__Group_1__0 )* ) ;
     public final void rule__ValuedObjectReference__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5587:1: ( ( ( rule__ValuedObjectReference__Group_1__0 )* ) )
-            // InternalKExpressions.g:5588:1: ( ( rule__ValuedObjectReference__Group_1__0 )* )
+            // InternalKExpressions.g:5665:1: ( ( ( rule__ValuedObjectReference__Group_1__0 )* ) )
+            // InternalKExpressions.g:5666:1: ( ( rule__ValuedObjectReference__Group_1__0 )* )
             {
-            // InternalKExpressions.g:5588:1: ( ( rule__ValuedObjectReference__Group_1__0 )* )
-            // InternalKExpressions.g:5589:1: ( rule__ValuedObjectReference__Group_1__0 )*
+            // InternalKExpressions.g:5666:1: ( ( rule__ValuedObjectReference__Group_1__0 )* )
+            // InternalKExpressions.g:5667:1: ( rule__ValuedObjectReference__Group_1__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getGroup_1()); 
             }
-            // InternalKExpressions.g:5590:1: ( rule__ValuedObjectReference__Group_1__0 )*
-            loop39:
+            // InternalKExpressions.g:5668:1: ( rule__ValuedObjectReference__Group_1__0 )*
+            loop40:
             do {
-                int alt39=2;
-                int LA39_0 = input.LA(1);
+                int alt40=2;
+                int LA40_0 = input.LA(1);
 
-                if ( (LA39_0==41) ) {
-                    alt39=1;
+                if ( (LA40_0==41) ) {
+                    alt40=1;
                 }
 
 
-                switch (alt39) {
+                switch (alt40) {
             	case 1 :
-            	    // InternalKExpressions.g:5590:2: rule__ValuedObjectReference__Group_1__0
+            	    // InternalKExpressions.g:5668:2: rule__ValuedObjectReference__Group_1__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_35);
             	    rule__ValuedObjectReference__Group_1__0();
@@ -16137,7 +16396,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop39;
+            	    break loop40;
                 }
             } while (true);
 
@@ -16166,14 +16425,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group__2"
-    // InternalKExpressions.g:5600:1: rule__ValuedObjectReference__Group__2 : rule__ValuedObjectReference__Group__2__Impl ;
+    // InternalKExpressions.g:5678:1: rule__ValuedObjectReference__Group__2 : rule__ValuedObjectReference__Group__2__Impl ;
     public final void rule__ValuedObjectReference__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5604:1: ( rule__ValuedObjectReference__Group__2__Impl )
-            // InternalKExpressions.g:5605:2: rule__ValuedObjectReference__Group__2__Impl
+            // InternalKExpressions.g:5682:1: ( rule__ValuedObjectReference__Group__2__Impl )
+            // InternalKExpressions.g:5683:2: rule__ValuedObjectReference__Group__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ValuedObjectReference__Group__2__Impl();
@@ -16199,31 +16458,31 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group__2__Impl"
-    // InternalKExpressions.g:5611:1: rule__ValuedObjectReference__Group__2__Impl : ( ( rule__ValuedObjectReference__Group_2__0 )? ) ;
+    // InternalKExpressions.g:5689:1: rule__ValuedObjectReference__Group__2__Impl : ( ( rule__ValuedObjectReference__Group_2__0 )? ) ;
     public final void rule__ValuedObjectReference__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5615:1: ( ( ( rule__ValuedObjectReference__Group_2__0 )? ) )
-            // InternalKExpressions.g:5616:1: ( ( rule__ValuedObjectReference__Group_2__0 )? )
+            // InternalKExpressions.g:5693:1: ( ( ( rule__ValuedObjectReference__Group_2__0 )? ) )
+            // InternalKExpressions.g:5694:1: ( ( rule__ValuedObjectReference__Group_2__0 )? )
             {
-            // InternalKExpressions.g:5616:1: ( ( rule__ValuedObjectReference__Group_2__0 )? )
-            // InternalKExpressions.g:5617:1: ( rule__ValuedObjectReference__Group_2__0 )?
+            // InternalKExpressions.g:5694:1: ( ( rule__ValuedObjectReference__Group_2__0 )? )
+            // InternalKExpressions.g:5695:1: ( rule__ValuedObjectReference__Group_2__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getGroup_2()); 
             }
-            // InternalKExpressions.g:5618:1: ( rule__ValuedObjectReference__Group_2__0 )?
-            int alt40=2;
-            int LA40_0 = input.LA(1);
+            // InternalKExpressions.g:5696:1: ( rule__ValuedObjectReference__Group_2__0 )?
+            int alt41=2;
+            int LA41_0 = input.LA(1);
 
-            if ( (LA40_0==30) ) {
-                alt40=1;
+            if ( (LA41_0==30) ) {
+                alt41=1;
             }
-            switch (alt40) {
+            switch (alt41) {
                 case 1 :
-                    // InternalKExpressions.g:5618:2: rule__ValuedObjectReference__Group_2__0
+                    // InternalKExpressions.g:5696:2: rule__ValuedObjectReference__Group_2__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__ValuedObjectReference__Group_2__0();
@@ -16261,14 +16520,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group_1__0"
-    // InternalKExpressions.g:5634:1: rule__ValuedObjectReference__Group_1__0 : rule__ValuedObjectReference__Group_1__0__Impl rule__ValuedObjectReference__Group_1__1 ;
+    // InternalKExpressions.g:5712:1: rule__ValuedObjectReference__Group_1__0 : rule__ValuedObjectReference__Group_1__0__Impl rule__ValuedObjectReference__Group_1__1 ;
     public final void rule__ValuedObjectReference__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5638:1: ( rule__ValuedObjectReference__Group_1__0__Impl rule__ValuedObjectReference__Group_1__1 )
-            // InternalKExpressions.g:5639:2: rule__ValuedObjectReference__Group_1__0__Impl rule__ValuedObjectReference__Group_1__1
+            // InternalKExpressions.g:5716:1: ( rule__ValuedObjectReference__Group_1__0__Impl rule__ValuedObjectReference__Group_1__1 )
+            // InternalKExpressions.g:5717:2: rule__ValuedObjectReference__Group_1__0__Impl rule__ValuedObjectReference__Group_1__1
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__ValuedObjectReference__Group_1__0__Impl();
@@ -16299,17 +16558,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group_1__0__Impl"
-    // InternalKExpressions.g:5646:1: rule__ValuedObjectReference__Group_1__0__Impl : ( '[' ) ;
+    // InternalKExpressions.g:5724:1: rule__ValuedObjectReference__Group_1__0__Impl : ( '[' ) ;
     public final void rule__ValuedObjectReference__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5650:1: ( ( '[' ) )
-            // InternalKExpressions.g:5651:1: ( '[' )
+            // InternalKExpressions.g:5728:1: ( ( '[' ) )
+            // InternalKExpressions.g:5729:1: ( '[' )
             {
-            // InternalKExpressions.g:5651:1: ( '[' )
-            // InternalKExpressions.g:5652:1: '['
+            // InternalKExpressions.g:5729:1: ( '[' )
+            // InternalKExpressions.g:5730:1: '['
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getLeftSquareBracketKeyword_1_0()); 
@@ -16340,14 +16599,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group_1__1"
-    // InternalKExpressions.g:5665:1: rule__ValuedObjectReference__Group_1__1 : rule__ValuedObjectReference__Group_1__1__Impl rule__ValuedObjectReference__Group_1__2 ;
+    // InternalKExpressions.g:5743:1: rule__ValuedObjectReference__Group_1__1 : rule__ValuedObjectReference__Group_1__1__Impl rule__ValuedObjectReference__Group_1__2 ;
     public final void rule__ValuedObjectReference__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5669:1: ( rule__ValuedObjectReference__Group_1__1__Impl rule__ValuedObjectReference__Group_1__2 )
-            // InternalKExpressions.g:5670:2: rule__ValuedObjectReference__Group_1__1__Impl rule__ValuedObjectReference__Group_1__2
+            // InternalKExpressions.g:5747:1: ( rule__ValuedObjectReference__Group_1__1__Impl rule__ValuedObjectReference__Group_1__2 )
+            // InternalKExpressions.g:5748:2: rule__ValuedObjectReference__Group_1__1__Impl rule__ValuedObjectReference__Group_1__2
             {
             pushFollow(FollowSets000.FOLLOW_36);
             rule__ValuedObjectReference__Group_1__1__Impl();
@@ -16378,23 +16637,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group_1__1__Impl"
-    // InternalKExpressions.g:5677:1: rule__ValuedObjectReference__Group_1__1__Impl : ( ( rule__ValuedObjectReference__IndicesAssignment_1_1 ) ) ;
+    // InternalKExpressions.g:5755:1: rule__ValuedObjectReference__Group_1__1__Impl : ( ( rule__ValuedObjectReference__IndicesAssignment_1_1 ) ) ;
     public final void rule__ValuedObjectReference__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5681:1: ( ( ( rule__ValuedObjectReference__IndicesAssignment_1_1 ) ) )
-            // InternalKExpressions.g:5682:1: ( ( rule__ValuedObjectReference__IndicesAssignment_1_1 ) )
+            // InternalKExpressions.g:5759:1: ( ( ( rule__ValuedObjectReference__IndicesAssignment_1_1 ) ) )
+            // InternalKExpressions.g:5760:1: ( ( rule__ValuedObjectReference__IndicesAssignment_1_1 ) )
             {
-            // InternalKExpressions.g:5682:1: ( ( rule__ValuedObjectReference__IndicesAssignment_1_1 ) )
-            // InternalKExpressions.g:5683:1: ( rule__ValuedObjectReference__IndicesAssignment_1_1 )
+            // InternalKExpressions.g:5760:1: ( ( rule__ValuedObjectReference__IndicesAssignment_1_1 ) )
+            // InternalKExpressions.g:5761:1: ( rule__ValuedObjectReference__IndicesAssignment_1_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getIndicesAssignment_1_1()); 
             }
-            // InternalKExpressions.g:5684:1: ( rule__ValuedObjectReference__IndicesAssignment_1_1 )
-            // InternalKExpressions.g:5684:2: rule__ValuedObjectReference__IndicesAssignment_1_1
+            // InternalKExpressions.g:5762:1: ( rule__ValuedObjectReference__IndicesAssignment_1_1 )
+            // InternalKExpressions.g:5762:2: rule__ValuedObjectReference__IndicesAssignment_1_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ValuedObjectReference__IndicesAssignment_1_1();
@@ -16429,14 +16688,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group_1__2"
-    // InternalKExpressions.g:5694:1: rule__ValuedObjectReference__Group_1__2 : rule__ValuedObjectReference__Group_1__2__Impl ;
+    // InternalKExpressions.g:5772:1: rule__ValuedObjectReference__Group_1__2 : rule__ValuedObjectReference__Group_1__2__Impl ;
     public final void rule__ValuedObjectReference__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5698:1: ( rule__ValuedObjectReference__Group_1__2__Impl )
-            // InternalKExpressions.g:5699:2: rule__ValuedObjectReference__Group_1__2__Impl
+            // InternalKExpressions.g:5776:1: ( rule__ValuedObjectReference__Group_1__2__Impl )
+            // InternalKExpressions.g:5777:2: rule__ValuedObjectReference__Group_1__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ValuedObjectReference__Group_1__2__Impl();
@@ -16462,17 +16721,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group_1__2__Impl"
-    // InternalKExpressions.g:5705:1: rule__ValuedObjectReference__Group_1__2__Impl : ( ']' ) ;
+    // InternalKExpressions.g:5783:1: rule__ValuedObjectReference__Group_1__2__Impl : ( ']' ) ;
     public final void rule__ValuedObjectReference__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5709:1: ( ( ']' ) )
-            // InternalKExpressions.g:5710:1: ( ']' )
+            // InternalKExpressions.g:5787:1: ( ( ']' ) )
+            // InternalKExpressions.g:5788:1: ( ']' )
             {
-            // InternalKExpressions.g:5710:1: ( ']' )
-            // InternalKExpressions.g:5711:1: ']'
+            // InternalKExpressions.g:5788:1: ( ']' )
+            // InternalKExpressions.g:5789:1: ']'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getRightSquareBracketKeyword_1_2()); 
@@ -16503,14 +16762,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group_2__0"
-    // InternalKExpressions.g:5730:1: rule__ValuedObjectReference__Group_2__0 : rule__ValuedObjectReference__Group_2__0__Impl rule__ValuedObjectReference__Group_2__1 ;
+    // InternalKExpressions.g:5808:1: rule__ValuedObjectReference__Group_2__0 : rule__ValuedObjectReference__Group_2__0__Impl rule__ValuedObjectReference__Group_2__1 ;
     public final void rule__ValuedObjectReference__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5734:1: ( rule__ValuedObjectReference__Group_2__0__Impl rule__ValuedObjectReference__Group_2__1 )
-            // InternalKExpressions.g:5735:2: rule__ValuedObjectReference__Group_2__0__Impl rule__ValuedObjectReference__Group_2__1
+            // InternalKExpressions.g:5812:1: ( rule__ValuedObjectReference__Group_2__0__Impl rule__ValuedObjectReference__Group_2__1 )
+            // InternalKExpressions.g:5813:2: rule__ValuedObjectReference__Group_2__0__Impl rule__ValuedObjectReference__Group_2__1
             {
             pushFollow(FollowSets000.FOLLOW_31);
             rule__ValuedObjectReference__Group_2__0__Impl();
@@ -16541,17 +16800,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group_2__0__Impl"
-    // InternalKExpressions.g:5742:1: rule__ValuedObjectReference__Group_2__0__Impl : ( '.' ) ;
+    // InternalKExpressions.g:5820:1: rule__ValuedObjectReference__Group_2__0__Impl : ( '.' ) ;
     public final void rule__ValuedObjectReference__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5746:1: ( ( '.' ) )
-            // InternalKExpressions.g:5747:1: ( '.' )
+            // InternalKExpressions.g:5824:1: ( ( '.' ) )
+            // InternalKExpressions.g:5825:1: ( '.' )
             {
-            // InternalKExpressions.g:5747:1: ( '.' )
-            // InternalKExpressions.g:5748:1: '.'
+            // InternalKExpressions.g:5825:1: ( '.' )
+            // InternalKExpressions.g:5826:1: '.'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getFullStopKeyword_2_0()); 
@@ -16582,14 +16841,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group_2__1"
-    // InternalKExpressions.g:5761:1: rule__ValuedObjectReference__Group_2__1 : rule__ValuedObjectReference__Group_2__1__Impl ;
+    // InternalKExpressions.g:5839:1: rule__ValuedObjectReference__Group_2__1 : rule__ValuedObjectReference__Group_2__1__Impl ;
     public final void rule__ValuedObjectReference__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5765:1: ( rule__ValuedObjectReference__Group_2__1__Impl )
-            // InternalKExpressions.g:5766:2: rule__ValuedObjectReference__Group_2__1__Impl
+            // InternalKExpressions.g:5843:1: ( rule__ValuedObjectReference__Group_2__1__Impl )
+            // InternalKExpressions.g:5844:2: rule__ValuedObjectReference__Group_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ValuedObjectReference__Group_2__1__Impl();
@@ -16615,23 +16874,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group_2__1__Impl"
-    // InternalKExpressions.g:5772:1: rule__ValuedObjectReference__Group_2__1__Impl : ( ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 ) ) ;
+    // InternalKExpressions.g:5850:1: rule__ValuedObjectReference__Group_2__1__Impl : ( ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 ) ) ;
     public final void rule__ValuedObjectReference__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5776:1: ( ( ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 ) ) )
-            // InternalKExpressions.g:5777:1: ( ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 ) )
+            // InternalKExpressions.g:5854:1: ( ( ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 ) ) )
+            // InternalKExpressions.g:5855:1: ( ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 ) )
             {
-            // InternalKExpressions.g:5777:1: ( ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 ) )
-            // InternalKExpressions.g:5778:1: ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 )
+            // InternalKExpressions.g:5855:1: ( ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 ) )
+            // InternalKExpressions.g:5856:1: ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceAssignment_2_1()); 
             }
-            // InternalKExpressions.g:5779:1: ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 )
-            // InternalKExpressions.g:5779:2: rule__ValuedObjectReference__SubReferenceAssignment_2_1
+            // InternalKExpressions.g:5857:1: ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 )
+            // InternalKExpressions.g:5857:2: rule__ValuedObjectReference__SubReferenceAssignment_2_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ValuedObjectReference__SubReferenceAssignment_2_1();
@@ -16666,14 +16925,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ScheduleObjectReference__Group__0"
-    // InternalKExpressions.g:5793:1: rule__ScheduleObjectReference__Group__0 : rule__ScheduleObjectReference__Group__0__Impl rule__ScheduleObjectReference__Group__1 ;
+    // InternalKExpressions.g:5871:1: rule__ScheduleObjectReference__Group__0 : rule__ScheduleObjectReference__Group__0__Impl rule__ScheduleObjectReference__Group__1 ;
     public final void rule__ScheduleObjectReference__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5797:1: ( rule__ScheduleObjectReference__Group__0__Impl rule__ScheduleObjectReference__Group__1 )
-            // InternalKExpressions.g:5798:2: rule__ScheduleObjectReference__Group__0__Impl rule__ScheduleObjectReference__Group__1
+            // InternalKExpressions.g:5875:1: ( rule__ScheduleObjectReference__Group__0__Impl rule__ScheduleObjectReference__Group__1 )
+            // InternalKExpressions.g:5876:2: rule__ScheduleObjectReference__Group__0__Impl rule__ScheduleObjectReference__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_37);
             rule__ScheduleObjectReference__Group__0__Impl();
@@ -16704,23 +16963,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ScheduleObjectReference__Group__0__Impl"
-    // InternalKExpressions.g:5805:1: rule__ScheduleObjectReference__Group__0__Impl : ( ( rule__ScheduleObjectReference__ValuedObjectAssignment_0 ) ) ;
+    // InternalKExpressions.g:5883:1: rule__ScheduleObjectReference__Group__0__Impl : ( ( rule__ScheduleObjectReference__ValuedObjectAssignment_0 ) ) ;
     public final void rule__ScheduleObjectReference__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5809:1: ( ( ( rule__ScheduleObjectReference__ValuedObjectAssignment_0 ) ) )
-            // InternalKExpressions.g:5810:1: ( ( rule__ScheduleObjectReference__ValuedObjectAssignment_0 ) )
+            // InternalKExpressions.g:5887:1: ( ( ( rule__ScheduleObjectReference__ValuedObjectAssignment_0 ) ) )
+            // InternalKExpressions.g:5888:1: ( ( rule__ScheduleObjectReference__ValuedObjectAssignment_0 ) )
             {
-            // InternalKExpressions.g:5810:1: ( ( rule__ScheduleObjectReference__ValuedObjectAssignment_0 ) )
-            // InternalKExpressions.g:5811:1: ( rule__ScheduleObjectReference__ValuedObjectAssignment_0 )
+            // InternalKExpressions.g:5888:1: ( ( rule__ScheduleObjectReference__ValuedObjectAssignment_0 ) )
+            // InternalKExpressions.g:5889:1: ( rule__ScheduleObjectReference__ValuedObjectAssignment_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleObjectReferenceAccess().getValuedObjectAssignment_0()); 
             }
-            // InternalKExpressions.g:5812:1: ( rule__ScheduleObjectReference__ValuedObjectAssignment_0 )
-            // InternalKExpressions.g:5812:2: rule__ScheduleObjectReference__ValuedObjectAssignment_0
+            // InternalKExpressions.g:5890:1: ( rule__ScheduleObjectReference__ValuedObjectAssignment_0 )
+            // InternalKExpressions.g:5890:2: rule__ScheduleObjectReference__ValuedObjectAssignment_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ScheduleObjectReference__ValuedObjectAssignment_0();
@@ -16755,14 +17014,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ScheduleObjectReference__Group__1"
-    // InternalKExpressions.g:5822:1: rule__ScheduleObjectReference__Group__1 : rule__ScheduleObjectReference__Group__1__Impl ;
+    // InternalKExpressions.g:5900:1: rule__ScheduleObjectReference__Group__1 : rule__ScheduleObjectReference__Group__1__Impl ;
     public final void rule__ScheduleObjectReference__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5826:1: ( rule__ScheduleObjectReference__Group__1__Impl )
-            // InternalKExpressions.g:5827:2: rule__ScheduleObjectReference__Group__1__Impl
+            // InternalKExpressions.g:5904:1: ( rule__ScheduleObjectReference__Group__1__Impl )
+            // InternalKExpressions.g:5905:2: rule__ScheduleObjectReference__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ScheduleObjectReference__Group__1__Impl();
@@ -16788,23 +17047,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ScheduleObjectReference__Group__1__Impl"
-    // InternalKExpressions.g:5833:1: rule__ScheduleObjectReference__Group__1__Impl : ( ( rule__ScheduleObjectReference__PriorityAssignment_1 ) ) ;
+    // InternalKExpressions.g:5911:1: rule__ScheduleObjectReference__Group__1__Impl : ( ( rule__ScheduleObjectReference__PriorityAssignment_1 ) ) ;
     public final void rule__ScheduleObjectReference__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5837:1: ( ( ( rule__ScheduleObjectReference__PriorityAssignment_1 ) ) )
-            // InternalKExpressions.g:5838:1: ( ( rule__ScheduleObjectReference__PriorityAssignment_1 ) )
+            // InternalKExpressions.g:5915:1: ( ( ( rule__ScheduleObjectReference__PriorityAssignment_1 ) ) )
+            // InternalKExpressions.g:5916:1: ( ( rule__ScheduleObjectReference__PriorityAssignment_1 ) )
             {
-            // InternalKExpressions.g:5838:1: ( ( rule__ScheduleObjectReference__PriorityAssignment_1 ) )
-            // InternalKExpressions.g:5839:1: ( rule__ScheduleObjectReference__PriorityAssignment_1 )
+            // InternalKExpressions.g:5916:1: ( ( rule__ScheduleObjectReference__PriorityAssignment_1 ) )
+            // InternalKExpressions.g:5917:1: ( rule__ScheduleObjectReference__PriorityAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleObjectReferenceAccess().getPriorityAssignment_1()); 
             }
-            // InternalKExpressions.g:5840:1: ( rule__ScheduleObjectReference__PriorityAssignment_1 )
-            // InternalKExpressions.g:5840:2: rule__ScheduleObjectReference__PriorityAssignment_1
+            // InternalKExpressions.g:5918:1: ( rule__ScheduleObjectReference__PriorityAssignment_1 )
+            // InternalKExpressions.g:5918:2: rule__ScheduleObjectReference__PriorityAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ScheduleObjectReference__PriorityAssignment_1();
@@ -16839,14 +17098,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ReferenceCall__Group__0"
-    // InternalKExpressions.g:5854:1: rule__ReferenceCall__Group__0 : rule__ReferenceCall__Group__0__Impl rule__ReferenceCall__Group__1 ;
+    // InternalKExpressions.g:5932:1: rule__ReferenceCall__Group__0 : rule__ReferenceCall__Group__0__Impl rule__ReferenceCall__Group__1 ;
     public final void rule__ReferenceCall__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5858:1: ( rule__ReferenceCall__Group__0__Impl rule__ReferenceCall__Group__1 )
-            // InternalKExpressions.g:5859:2: rule__ReferenceCall__Group__0__Impl rule__ReferenceCall__Group__1
+            // InternalKExpressions.g:5936:1: ( rule__ReferenceCall__Group__0__Impl rule__ReferenceCall__Group__1 )
+            // InternalKExpressions.g:5937:2: rule__ReferenceCall__Group__0__Impl rule__ReferenceCall__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_38);
             rule__ReferenceCall__Group__0__Impl();
@@ -16877,23 +17136,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ReferenceCall__Group__0__Impl"
-    // InternalKExpressions.g:5866:1: rule__ReferenceCall__Group__0__Impl : ( ( rule__ReferenceCall__ValuedObjectAssignment_0 ) ) ;
+    // InternalKExpressions.g:5944:1: rule__ReferenceCall__Group__0__Impl : ( ( rule__ReferenceCall__ValuedObjectAssignment_0 ) ) ;
     public final void rule__ReferenceCall__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5870:1: ( ( ( rule__ReferenceCall__ValuedObjectAssignment_0 ) ) )
-            // InternalKExpressions.g:5871:1: ( ( rule__ReferenceCall__ValuedObjectAssignment_0 ) )
+            // InternalKExpressions.g:5948:1: ( ( ( rule__ReferenceCall__ValuedObjectAssignment_0 ) ) )
+            // InternalKExpressions.g:5949:1: ( ( rule__ReferenceCall__ValuedObjectAssignment_0 ) )
             {
-            // InternalKExpressions.g:5871:1: ( ( rule__ReferenceCall__ValuedObjectAssignment_0 ) )
-            // InternalKExpressions.g:5872:1: ( rule__ReferenceCall__ValuedObjectAssignment_0 )
+            // InternalKExpressions.g:5949:1: ( ( rule__ReferenceCall__ValuedObjectAssignment_0 ) )
+            // InternalKExpressions.g:5950:1: ( rule__ReferenceCall__ValuedObjectAssignment_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallAccess().getValuedObjectAssignment_0()); 
             }
-            // InternalKExpressions.g:5873:1: ( rule__ReferenceCall__ValuedObjectAssignment_0 )
-            // InternalKExpressions.g:5873:2: rule__ReferenceCall__ValuedObjectAssignment_0
+            // InternalKExpressions.g:5951:1: ( rule__ReferenceCall__ValuedObjectAssignment_0 )
+            // InternalKExpressions.g:5951:2: rule__ReferenceCall__ValuedObjectAssignment_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ReferenceCall__ValuedObjectAssignment_0();
@@ -16928,14 +17187,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ReferenceCall__Group__1"
-    // InternalKExpressions.g:5883:1: rule__ReferenceCall__Group__1 : rule__ReferenceCall__Group__1__Impl ;
+    // InternalKExpressions.g:5961:1: rule__ReferenceCall__Group__1 : rule__ReferenceCall__Group__1__Impl ;
     public final void rule__ReferenceCall__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5887:1: ( rule__ReferenceCall__Group__1__Impl )
-            // InternalKExpressions.g:5888:2: rule__ReferenceCall__Group__1__Impl
+            // InternalKExpressions.g:5965:1: ( rule__ReferenceCall__Group__1__Impl )
+            // InternalKExpressions.g:5966:2: rule__ReferenceCall__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ReferenceCall__Group__1__Impl();
@@ -16961,23 +17220,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ReferenceCall__Group__1__Impl"
-    // InternalKExpressions.g:5894:1: rule__ReferenceCall__Group__1__Impl : ( ( rule__ReferenceCall__Alternatives_1 ) ) ;
+    // InternalKExpressions.g:5972:1: rule__ReferenceCall__Group__1__Impl : ( ( rule__ReferenceCall__Alternatives_1 ) ) ;
     public final void rule__ReferenceCall__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5898:1: ( ( ( rule__ReferenceCall__Alternatives_1 ) ) )
-            // InternalKExpressions.g:5899:1: ( ( rule__ReferenceCall__Alternatives_1 ) )
+            // InternalKExpressions.g:5976:1: ( ( ( rule__ReferenceCall__Alternatives_1 ) ) )
+            // InternalKExpressions.g:5977:1: ( ( rule__ReferenceCall__Alternatives_1 ) )
             {
-            // InternalKExpressions.g:5899:1: ( ( rule__ReferenceCall__Alternatives_1 ) )
-            // InternalKExpressions.g:5900:1: ( rule__ReferenceCall__Alternatives_1 )
+            // InternalKExpressions.g:5977:1: ( ( rule__ReferenceCall__Alternatives_1 ) )
+            // InternalKExpressions.g:5978:1: ( rule__ReferenceCall__Alternatives_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallAccess().getAlternatives_1()); 
             }
-            // InternalKExpressions.g:5901:1: ( rule__ReferenceCall__Alternatives_1 )
-            // InternalKExpressions.g:5901:2: rule__ReferenceCall__Alternatives_1
+            // InternalKExpressions.g:5979:1: ( rule__ReferenceCall__Alternatives_1 )
+            // InternalKExpressions.g:5979:2: rule__ReferenceCall__Alternatives_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ReferenceCall__Alternatives_1();
@@ -17012,14 +17271,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ReferenceCall__Group_1_0__0"
-    // InternalKExpressions.g:5915:1: rule__ReferenceCall__Group_1_0__0 : rule__ReferenceCall__Group_1_0__0__Impl rule__ReferenceCall__Group_1_0__1 ;
+    // InternalKExpressions.g:5993:1: rule__ReferenceCall__Group_1_0__0 : rule__ReferenceCall__Group_1_0__0__Impl rule__ReferenceCall__Group_1_0__1 ;
     public final void rule__ReferenceCall__Group_1_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5919:1: ( rule__ReferenceCall__Group_1_0__0__Impl rule__ReferenceCall__Group_1_0__1 )
-            // InternalKExpressions.g:5920:2: rule__ReferenceCall__Group_1_0__0__Impl rule__ReferenceCall__Group_1_0__1
+            // InternalKExpressions.g:5997:1: ( rule__ReferenceCall__Group_1_0__0__Impl rule__ReferenceCall__Group_1_0__1 )
+            // InternalKExpressions.g:5998:2: rule__ReferenceCall__Group_1_0__0__Impl rule__ReferenceCall__Group_1_0__1
             {
             pushFollow(FollowSets000.FOLLOW_39);
             rule__ReferenceCall__Group_1_0__0__Impl();
@@ -17050,17 +17309,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ReferenceCall__Group_1_0__0__Impl"
-    // InternalKExpressions.g:5927:1: rule__ReferenceCall__Group_1_0__0__Impl : ( '(' ) ;
+    // InternalKExpressions.g:6005:1: rule__ReferenceCall__Group_1_0__0__Impl : ( '(' ) ;
     public final void rule__ReferenceCall__Group_1_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5931:1: ( ( '(' ) )
-            // InternalKExpressions.g:5932:1: ( '(' )
+            // InternalKExpressions.g:6009:1: ( ( '(' ) )
+            // InternalKExpressions.g:6010:1: ( '(' )
             {
-            // InternalKExpressions.g:5932:1: ( '(' )
-            // InternalKExpressions.g:5933:1: '('
+            // InternalKExpressions.g:6010:1: ( '(' )
+            // InternalKExpressions.g:6011:1: '('
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallAccess().getLeftParenthesisKeyword_1_0_0()); 
@@ -17091,14 +17350,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ReferenceCall__Group_1_0__1"
-    // InternalKExpressions.g:5946:1: rule__ReferenceCall__Group_1_0__1 : rule__ReferenceCall__Group_1_0__1__Impl rule__ReferenceCall__Group_1_0__2 ;
+    // InternalKExpressions.g:6024:1: rule__ReferenceCall__Group_1_0__1 : rule__ReferenceCall__Group_1_0__1__Impl rule__ReferenceCall__Group_1_0__2 ;
     public final void rule__ReferenceCall__Group_1_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5950:1: ( rule__ReferenceCall__Group_1_0__1__Impl rule__ReferenceCall__Group_1_0__2 )
-            // InternalKExpressions.g:5951:2: rule__ReferenceCall__Group_1_0__1__Impl rule__ReferenceCall__Group_1_0__2
+            // InternalKExpressions.g:6028:1: ( rule__ReferenceCall__Group_1_0__1__Impl rule__ReferenceCall__Group_1_0__2 )
+            // InternalKExpressions.g:6029:2: rule__ReferenceCall__Group_1_0__1__Impl rule__ReferenceCall__Group_1_0__2
             {
             pushFollow(FollowSets000.FOLLOW_40);
             rule__ReferenceCall__Group_1_0__1__Impl();
@@ -17129,23 +17388,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ReferenceCall__Group_1_0__1__Impl"
-    // InternalKExpressions.g:5958:1: rule__ReferenceCall__Group_1_0__1__Impl : ( ( rule__ReferenceCall__ParametersAssignment_1_0_1 ) ) ;
+    // InternalKExpressions.g:6036:1: rule__ReferenceCall__Group_1_0__1__Impl : ( ( rule__ReferenceCall__ParametersAssignment_1_0_1 ) ) ;
     public final void rule__ReferenceCall__Group_1_0__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5962:1: ( ( ( rule__ReferenceCall__ParametersAssignment_1_0_1 ) ) )
-            // InternalKExpressions.g:5963:1: ( ( rule__ReferenceCall__ParametersAssignment_1_0_1 ) )
+            // InternalKExpressions.g:6040:1: ( ( ( rule__ReferenceCall__ParametersAssignment_1_0_1 ) ) )
+            // InternalKExpressions.g:6041:1: ( ( rule__ReferenceCall__ParametersAssignment_1_0_1 ) )
             {
-            // InternalKExpressions.g:5963:1: ( ( rule__ReferenceCall__ParametersAssignment_1_0_1 ) )
-            // InternalKExpressions.g:5964:1: ( rule__ReferenceCall__ParametersAssignment_1_0_1 )
+            // InternalKExpressions.g:6041:1: ( ( rule__ReferenceCall__ParametersAssignment_1_0_1 ) )
+            // InternalKExpressions.g:6042:1: ( rule__ReferenceCall__ParametersAssignment_1_0_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallAccess().getParametersAssignment_1_0_1()); 
             }
-            // InternalKExpressions.g:5965:1: ( rule__ReferenceCall__ParametersAssignment_1_0_1 )
-            // InternalKExpressions.g:5965:2: rule__ReferenceCall__ParametersAssignment_1_0_1
+            // InternalKExpressions.g:6043:1: ( rule__ReferenceCall__ParametersAssignment_1_0_1 )
+            // InternalKExpressions.g:6043:2: rule__ReferenceCall__ParametersAssignment_1_0_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ReferenceCall__ParametersAssignment_1_0_1();
@@ -17180,14 +17439,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ReferenceCall__Group_1_0__2"
-    // InternalKExpressions.g:5975:1: rule__ReferenceCall__Group_1_0__2 : rule__ReferenceCall__Group_1_0__2__Impl rule__ReferenceCall__Group_1_0__3 ;
+    // InternalKExpressions.g:6053:1: rule__ReferenceCall__Group_1_0__2 : rule__ReferenceCall__Group_1_0__2__Impl rule__ReferenceCall__Group_1_0__3 ;
     public final void rule__ReferenceCall__Group_1_0__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5979:1: ( rule__ReferenceCall__Group_1_0__2__Impl rule__ReferenceCall__Group_1_0__3 )
-            // InternalKExpressions.g:5980:2: rule__ReferenceCall__Group_1_0__2__Impl rule__ReferenceCall__Group_1_0__3
+            // InternalKExpressions.g:6057:1: ( rule__ReferenceCall__Group_1_0__2__Impl rule__ReferenceCall__Group_1_0__3 )
+            // InternalKExpressions.g:6058:2: rule__ReferenceCall__Group_1_0__2__Impl rule__ReferenceCall__Group_1_0__3
             {
             pushFollow(FollowSets000.FOLLOW_40);
             rule__ReferenceCall__Group_1_0__2__Impl();
@@ -17218,35 +17477,35 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ReferenceCall__Group_1_0__2__Impl"
-    // InternalKExpressions.g:5987:1: rule__ReferenceCall__Group_1_0__2__Impl : ( ( rule__ReferenceCall__Group_1_0_2__0 )* ) ;
+    // InternalKExpressions.g:6065:1: rule__ReferenceCall__Group_1_0__2__Impl : ( ( rule__ReferenceCall__Group_1_0_2__0 )* ) ;
     public final void rule__ReferenceCall__Group_1_0__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:5991:1: ( ( ( rule__ReferenceCall__Group_1_0_2__0 )* ) )
-            // InternalKExpressions.g:5992:1: ( ( rule__ReferenceCall__Group_1_0_2__0 )* )
+            // InternalKExpressions.g:6069:1: ( ( ( rule__ReferenceCall__Group_1_0_2__0 )* ) )
+            // InternalKExpressions.g:6070:1: ( ( rule__ReferenceCall__Group_1_0_2__0 )* )
             {
-            // InternalKExpressions.g:5992:1: ( ( rule__ReferenceCall__Group_1_0_2__0 )* )
-            // InternalKExpressions.g:5993:1: ( rule__ReferenceCall__Group_1_0_2__0 )*
+            // InternalKExpressions.g:6070:1: ( ( rule__ReferenceCall__Group_1_0_2__0 )* )
+            // InternalKExpressions.g:6071:1: ( rule__ReferenceCall__Group_1_0_2__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallAccess().getGroup_1_0_2()); 
             }
-            // InternalKExpressions.g:5994:1: ( rule__ReferenceCall__Group_1_0_2__0 )*
-            loop41:
+            // InternalKExpressions.g:6072:1: ( rule__ReferenceCall__Group_1_0_2__0 )*
+            loop42:
             do {
-                int alt41=2;
-                int LA41_0 = input.LA(1);
+                int alt42=2;
+                int LA42_0 = input.LA(1);
 
-                if ( (LA41_0==43) ) {
-                    alt41=1;
+                if ( (LA42_0==43) ) {
+                    alt42=1;
                 }
 
 
-                switch (alt41) {
+                switch (alt42) {
             	case 1 :
-            	    // InternalKExpressions.g:5994:2: rule__ReferenceCall__Group_1_0_2__0
+            	    // InternalKExpressions.g:6072:2: rule__ReferenceCall__Group_1_0_2__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_41);
             	    rule__ReferenceCall__Group_1_0_2__0();
@@ -17258,7 +17517,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop41;
+            	    break loop42;
                 }
             } while (true);
 
@@ -17287,14 +17546,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ReferenceCall__Group_1_0__3"
-    // InternalKExpressions.g:6004:1: rule__ReferenceCall__Group_1_0__3 : rule__ReferenceCall__Group_1_0__3__Impl ;
+    // InternalKExpressions.g:6082:1: rule__ReferenceCall__Group_1_0__3 : rule__ReferenceCall__Group_1_0__3__Impl ;
     public final void rule__ReferenceCall__Group_1_0__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6008:1: ( rule__ReferenceCall__Group_1_0__3__Impl )
-            // InternalKExpressions.g:6009:2: rule__ReferenceCall__Group_1_0__3__Impl
+            // InternalKExpressions.g:6086:1: ( rule__ReferenceCall__Group_1_0__3__Impl )
+            // InternalKExpressions.g:6087:2: rule__ReferenceCall__Group_1_0__3__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ReferenceCall__Group_1_0__3__Impl();
@@ -17320,17 +17579,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ReferenceCall__Group_1_0__3__Impl"
-    // InternalKExpressions.g:6015:1: rule__ReferenceCall__Group_1_0__3__Impl : ( ')' ) ;
+    // InternalKExpressions.g:6093:1: rule__ReferenceCall__Group_1_0__3__Impl : ( ')' ) ;
     public final void rule__ReferenceCall__Group_1_0__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6019:1: ( ( ')' ) )
-            // InternalKExpressions.g:6020:1: ( ')' )
+            // InternalKExpressions.g:6097:1: ( ( ')' ) )
+            // InternalKExpressions.g:6098:1: ( ')' )
             {
-            // InternalKExpressions.g:6020:1: ( ')' )
-            // InternalKExpressions.g:6021:1: ')'
+            // InternalKExpressions.g:6098:1: ( ')' )
+            // InternalKExpressions.g:6099:1: ')'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallAccess().getRightParenthesisKeyword_1_0_3()); 
@@ -17361,14 +17620,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ReferenceCall__Group_1_0_2__0"
-    // InternalKExpressions.g:6042:1: rule__ReferenceCall__Group_1_0_2__0 : rule__ReferenceCall__Group_1_0_2__0__Impl rule__ReferenceCall__Group_1_0_2__1 ;
+    // InternalKExpressions.g:6120:1: rule__ReferenceCall__Group_1_0_2__0 : rule__ReferenceCall__Group_1_0_2__0__Impl rule__ReferenceCall__Group_1_0_2__1 ;
     public final void rule__ReferenceCall__Group_1_0_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6046:1: ( rule__ReferenceCall__Group_1_0_2__0__Impl rule__ReferenceCall__Group_1_0_2__1 )
-            // InternalKExpressions.g:6047:2: rule__ReferenceCall__Group_1_0_2__0__Impl rule__ReferenceCall__Group_1_0_2__1
+            // InternalKExpressions.g:6124:1: ( rule__ReferenceCall__Group_1_0_2__0__Impl rule__ReferenceCall__Group_1_0_2__1 )
+            // InternalKExpressions.g:6125:2: rule__ReferenceCall__Group_1_0_2__0__Impl rule__ReferenceCall__Group_1_0_2__1
             {
             pushFollow(FollowSets000.FOLLOW_39);
             rule__ReferenceCall__Group_1_0_2__0__Impl();
@@ -17399,17 +17658,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ReferenceCall__Group_1_0_2__0__Impl"
-    // InternalKExpressions.g:6054:1: rule__ReferenceCall__Group_1_0_2__0__Impl : ( ',' ) ;
+    // InternalKExpressions.g:6132:1: rule__ReferenceCall__Group_1_0_2__0__Impl : ( ',' ) ;
     public final void rule__ReferenceCall__Group_1_0_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6058:1: ( ( ',' ) )
-            // InternalKExpressions.g:6059:1: ( ',' )
+            // InternalKExpressions.g:6136:1: ( ( ',' ) )
+            // InternalKExpressions.g:6137:1: ( ',' )
             {
-            // InternalKExpressions.g:6059:1: ( ',' )
-            // InternalKExpressions.g:6060:1: ','
+            // InternalKExpressions.g:6137:1: ( ',' )
+            // InternalKExpressions.g:6138:1: ','
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallAccess().getCommaKeyword_1_0_2_0()); 
@@ -17440,14 +17699,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ReferenceCall__Group_1_0_2__1"
-    // InternalKExpressions.g:6073:1: rule__ReferenceCall__Group_1_0_2__1 : rule__ReferenceCall__Group_1_0_2__1__Impl ;
+    // InternalKExpressions.g:6151:1: rule__ReferenceCall__Group_1_0_2__1 : rule__ReferenceCall__Group_1_0_2__1__Impl ;
     public final void rule__ReferenceCall__Group_1_0_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6077:1: ( rule__ReferenceCall__Group_1_0_2__1__Impl )
-            // InternalKExpressions.g:6078:2: rule__ReferenceCall__Group_1_0_2__1__Impl
+            // InternalKExpressions.g:6155:1: ( rule__ReferenceCall__Group_1_0_2__1__Impl )
+            // InternalKExpressions.g:6156:2: rule__ReferenceCall__Group_1_0_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ReferenceCall__Group_1_0_2__1__Impl();
@@ -17473,23 +17732,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ReferenceCall__Group_1_0_2__1__Impl"
-    // InternalKExpressions.g:6084:1: rule__ReferenceCall__Group_1_0_2__1__Impl : ( ( rule__ReferenceCall__ParametersAssignment_1_0_2_1 ) ) ;
+    // InternalKExpressions.g:6162:1: rule__ReferenceCall__Group_1_0_2__1__Impl : ( ( rule__ReferenceCall__ParametersAssignment_1_0_2_1 ) ) ;
     public final void rule__ReferenceCall__Group_1_0_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6088:1: ( ( ( rule__ReferenceCall__ParametersAssignment_1_0_2_1 ) ) )
-            // InternalKExpressions.g:6089:1: ( ( rule__ReferenceCall__ParametersAssignment_1_0_2_1 ) )
+            // InternalKExpressions.g:6166:1: ( ( ( rule__ReferenceCall__ParametersAssignment_1_0_2_1 ) ) )
+            // InternalKExpressions.g:6167:1: ( ( rule__ReferenceCall__ParametersAssignment_1_0_2_1 ) )
             {
-            // InternalKExpressions.g:6089:1: ( ( rule__ReferenceCall__ParametersAssignment_1_0_2_1 ) )
-            // InternalKExpressions.g:6090:1: ( rule__ReferenceCall__ParametersAssignment_1_0_2_1 )
+            // InternalKExpressions.g:6167:1: ( ( rule__ReferenceCall__ParametersAssignment_1_0_2_1 ) )
+            // InternalKExpressions.g:6168:1: ( rule__ReferenceCall__ParametersAssignment_1_0_2_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallAccess().getParametersAssignment_1_0_2_1()); 
             }
-            // InternalKExpressions.g:6091:1: ( rule__ReferenceCall__ParametersAssignment_1_0_2_1 )
-            // InternalKExpressions.g:6091:2: rule__ReferenceCall__ParametersAssignment_1_0_2_1
+            // InternalKExpressions.g:6169:1: ( rule__ReferenceCall__ParametersAssignment_1_0_2_1 )
+            // InternalKExpressions.g:6169:2: rule__ReferenceCall__ParametersAssignment_1_0_2_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ReferenceCall__ParametersAssignment_1_0_2_1();
@@ -17524,14 +17783,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_0__0"
-    // InternalKExpressions.g:6105:1: rule__FunctionCall__Group_0__0 : rule__FunctionCall__Group_0__0__Impl rule__FunctionCall__Group_0__1 ;
+    // InternalKExpressions.g:6183:1: rule__FunctionCall__Group_0__0 : rule__FunctionCall__Group_0__0__Impl rule__FunctionCall__Group_0__1 ;
     public final void rule__FunctionCall__Group_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6109:1: ( rule__FunctionCall__Group_0__0__Impl rule__FunctionCall__Group_0__1 )
-            // InternalKExpressions.g:6110:2: rule__FunctionCall__Group_0__0__Impl rule__FunctionCall__Group_0__1
+            // InternalKExpressions.g:6187:1: ( rule__FunctionCall__Group_0__0__Impl rule__FunctionCall__Group_0__1 )
+            // InternalKExpressions.g:6188:2: rule__FunctionCall__Group_0__0__Impl rule__FunctionCall__Group_0__1
             {
             pushFollow(FollowSets000.FOLLOW_4);
             rule__FunctionCall__Group_0__0__Impl();
@@ -17562,17 +17821,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_0__0__Impl"
-    // InternalKExpressions.g:6117:1: rule__FunctionCall__Group_0__0__Impl : ( 'extern' ) ;
+    // InternalKExpressions.g:6195:1: rule__FunctionCall__Group_0__0__Impl : ( 'extern' ) ;
     public final void rule__FunctionCall__Group_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6121:1: ( ( 'extern' ) )
-            // InternalKExpressions.g:6122:1: ( 'extern' )
+            // InternalKExpressions.g:6199:1: ( ( 'extern' ) )
+            // InternalKExpressions.g:6200:1: ( 'extern' )
             {
-            // InternalKExpressions.g:6122:1: ( 'extern' )
-            // InternalKExpressions.g:6123:1: 'extern'
+            // InternalKExpressions.g:6200:1: ( 'extern' )
+            // InternalKExpressions.g:6201:1: 'extern'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getExternKeyword_0_0()); 
@@ -17603,14 +17862,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_0__1"
-    // InternalKExpressions.g:6136:1: rule__FunctionCall__Group_0__1 : rule__FunctionCall__Group_0__1__Impl rule__FunctionCall__Group_0__2 ;
+    // InternalKExpressions.g:6214:1: rule__FunctionCall__Group_0__1 : rule__FunctionCall__Group_0__1__Impl rule__FunctionCall__Group_0__2 ;
     public final void rule__FunctionCall__Group_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6140:1: ( rule__FunctionCall__Group_0__1__Impl rule__FunctionCall__Group_0__2 )
-            // InternalKExpressions.g:6141:2: rule__FunctionCall__Group_0__1__Impl rule__FunctionCall__Group_0__2
+            // InternalKExpressions.g:6218:1: ( rule__FunctionCall__Group_0__1__Impl rule__FunctionCall__Group_0__2 )
+            // InternalKExpressions.g:6219:2: rule__FunctionCall__Group_0__1__Impl rule__FunctionCall__Group_0__2
             {
             pushFollow(FollowSets000.FOLLOW_38);
             rule__FunctionCall__Group_0__1__Impl();
@@ -17641,23 +17900,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_0__1__Impl"
-    // InternalKExpressions.g:6148:1: rule__FunctionCall__Group_0__1__Impl : ( ( rule__FunctionCall__FunctionNameAssignment_0_1 ) ) ;
+    // InternalKExpressions.g:6226:1: rule__FunctionCall__Group_0__1__Impl : ( ( rule__FunctionCall__FunctionNameAssignment_0_1 ) ) ;
     public final void rule__FunctionCall__Group_0__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6152:1: ( ( ( rule__FunctionCall__FunctionNameAssignment_0_1 ) ) )
-            // InternalKExpressions.g:6153:1: ( ( rule__FunctionCall__FunctionNameAssignment_0_1 ) )
+            // InternalKExpressions.g:6230:1: ( ( ( rule__FunctionCall__FunctionNameAssignment_0_1 ) ) )
+            // InternalKExpressions.g:6231:1: ( ( rule__FunctionCall__FunctionNameAssignment_0_1 ) )
             {
-            // InternalKExpressions.g:6153:1: ( ( rule__FunctionCall__FunctionNameAssignment_0_1 ) )
-            // InternalKExpressions.g:6154:1: ( rule__FunctionCall__FunctionNameAssignment_0_1 )
+            // InternalKExpressions.g:6231:1: ( ( rule__FunctionCall__FunctionNameAssignment_0_1 ) )
+            // InternalKExpressions.g:6232:1: ( rule__FunctionCall__FunctionNameAssignment_0_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getFunctionNameAssignment_0_1()); 
             }
-            // InternalKExpressions.g:6155:1: ( rule__FunctionCall__FunctionNameAssignment_0_1 )
-            // InternalKExpressions.g:6155:2: rule__FunctionCall__FunctionNameAssignment_0_1
+            // InternalKExpressions.g:6233:1: ( rule__FunctionCall__FunctionNameAssignment_0_1 )
+            // InternalKExpressions.g:6233:2: rule__FunctionCall__FunctionNameAssignment_0_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__FunctionCall__FunctionNameAssignment_0_1();
@@ -17692,14 +17951,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_0__2"
-    // InternalKExpressions.g:6165:1: rule__FunctionCall__Group_0__2 : rule__FunctionCall__Group_0__2__Impl ;
+    // InternalKExpressions.g:6243:1: rule__FunctionCall__Group_0__2 : rule__FunctionCall__Group_0__2__Impl ;
     public final void rule__FunctionCall__Group_0__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6169:1: ( rule__FunctionCall__Group_0__2__Impl )
-            // InternalKExpressions.g:6170:2: rule__FunctionCall__Group_0__2__Impl
+            // InternalKExpressions.g:6247:1: ( rule__FunctionCall__Group_0__2__Impl )
+            // InternalKExpressions.g:6248:2: rule__FunctionCall__Group_0__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__FunctionCall__Group_0__2__Impl();
@@ -17725,23 +17984,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_0__2__Impl"
-    // InternalKExpressions.g:6176:1: rule__FunctionCall__Group_0__2__Impl : ( ( rule__FunctionCall__Alternatives_0_2 ) ) ;
+    // InternalKExpressions.g:6254:1: rule__FunctionCall__Group_0__2__Impl : ( ( rule__FunctionCall__Alternatives_0_2 ) ) ;
     public final void rule__FunctionCall__Group_0__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6180:1: ( ( ( rule__FunctionCall__Alternatives_0_2 ) ) )
-            // InternalKExpressions.g:6181:1: ( ( rule__FunctionCall__Alternatives_0_2 ) )
+            // InternalKExpressions.g:6258:1: ( ( ( rule__FunctionCall__Alternatives_0_2 ) ) )
+            // InternalKExpressions.g:6259:1: ( ( rule__FunctionCall__Alternatives_0_2 ) )
             {
-            // InternalKExpressions.g:6181:1: ( ( rule__FunctionCall__Alternatives_0_2 ) )
-            // InternalKExpressions.g:6182:1: ( rule__FunctionCall__Alternatives_0_2 )
+            // InternalKExpressions.g:6259:1: ( ( rule__FunctionCall__Alternatives_0_2 ) )
+            // InternalKExpressions.g:6260:1: ( rule__FunctionCall__Alternatives_0_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getAlternatives_0_2()); 
             }
-            // InternalKExpressions.g:6183:1: ( rule__FunctionCall__Alternatives_0_2 )
-            // InternalKExpressions.g:6183:2: rule__FunctionCall__Alternatives_0_2
+            // InternalKExpressions.g:6261:1: ( rule__FunctionCall__Alternatives_0_2 )
+            // InternalKExpressions.g:6261:2: rule__FunctionCall__Alternatives_0_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__FunctionCall__Alternatives_0_2();
@@ -17776,14 +18035,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_0_2_0__0"
-    // InternalKExpressions.g:6199:1: rule__FunctionCall__Group_0_2_0__0 : rule__FunctionCall__Group_0_2_0__0__Impl rule__FunctionCall__Group_0_2_0__1 ;
+    // InternalKExpressions.g:6277:1: rule__FunctionCall__Group_0_2_0__0 : rule__FunctionCall__Group_0_2_0__0__Impl rule__FunctionCall__Group_0_2_0__1 ;
     public final void rule__FunctionCall__Group_0_2_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6203:1: ( rule__FunctionCall__Group_0_2_0__0__Impl rule__FunctionCall__Group_0_2_0__1 )
-            // InternalKExpressions.g:6204:2: rule__FunctionCall__Group_0_2_0__0__Impl rule__FunctionCall__Group_0_2_0__1
+            // InternalKExpressions.g:6281:1: ( rule__FunctionCall__Group_0_2_0__0__Impl rule__FunctionCall__Group_0_2_0__1 )
+            // InternalKExpressions.g:6282:2: rule__FunctionCall__Group_0_2_0__0__Impl rule__FunctionCall__Group_0_2_0__1
             {
             pushFollow(FollowSets000.FOLLOW_39);
             rule__FunctionCall__Group_0_2_0__0__Impl();
@@ -17814,17 +18073,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_0_2_0__0__Impl"
-    // InternalKExpressions.g:6211:1: rule__FunctionCall__Group_0_2_0__0__Impl : ( '(' ) ;
+    // InternalKExpressions.g:6289:1: rule__FunctionCall__Group_0_2_0__0__Impl : ( '(' ) ;
     public final void rule__FunctionCall__Group_0_2_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6215:1: ( ( '(' ) )
-            // InternalKExpressions.g:6216:1: ( '(' )
+            // InternalKExpressions.g:6293:1: ( ( '(' ) )
+            // InternalKExpressions.g:6294:1: ( '(' )
             {
-            // InternalKExpressions.g:6216:1: ( '(' )
-            // InternalKExpressions.g:6217:1: '('
+            // InternalKExpressions.g:6294:1: ( '(' )
+            // InternalKExpressions.g:6295:1: '('
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getLeftParenthesisKeyword_0_2_0_0()); 
@@ -17855,14 +18114,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_0_2_0__1"
-    // InternalKExpressions.g:6230:1: rule__FunctionCall__Group_0_2_0__1 : rule__FunctionCall__Group_0_2_0__1__Impl rule__FunctionCall__Group_0_2_0__2 ;
+    // InternalKExpressions.g:6308:1: rule__FunctionCall__Group_0_2_0__1 : rule__FunctionCall__Group_0_2_0__1__Impl rule__FunctionCall__Group_0_2_0__2 ;
     public final void rule__FunctionCall__Group_0_2_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6234:1: ( rule__FunctionCall__Group_0_2_0__1__Impl rule__FunctionCall__Group_0_2_0__2 )
-            // InternalKExpressions.g:6235:2: rule__FunctionCall__Group_0_2_0__1__Impl rule__FunctionCall__Group_0_2_0__2
+            // InternalKExpressions.g:6312:1: ( rule__FunctionCall__Group_0_2_0__1__Impl rule__FunctionCall__Group_0_2_0__2 )
+            // InternalKExpressions.g:6313:2: rule__FunctionCall__Group_0_2_0__1__Impl rule__FunctionCall__Group_0_2_0__2
             {
             pushFollow(FollowSets000.FOLLOW_40);
             rule__FunctionCall__Group_0_2_0__1__Impl();
@@ -17893,23 +18152,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_0_2_0__1__Impl"
-    // InternalKExpressions.g:6242:1: rule__FunctionCall__Group_0_2_0__1__Impl : ( ( rule__FunctionCall__ParametersAssignment_0_2_0_1 ) ) ;
+    // InternalKExpressions.g:6320:1: rule__FunctionCall__Group_0_2_0__1__Impl : ( ( rule__FunctionCall__ParametersAssignment_0_2_0_1 ) ) ;
     public final void rule__FunctionCall__Group_0_2_0__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6246:1: ( ( ( rule__FunctionCall__ParametersAssignment_0_2_0_1 ) ) )
-            // InternalKExpressions.g:6247:1: ( ( rule__FunctionCall__ParametersAssignment_0_2_0_1 ) )
+            // InternalKExpressions.g:6324:1: ( ( ( rule__FunctionCall__ParametersAssignment_0_2_0_1 ) ) )
+            // InternalKExpressions.g:6325:1: ( ( rule__FunctionCall__ParametersAssignment_0_2_0_1 ) )
             {
-            // InternalKExpressions.g:6247:1: ( ( rule__FunctionCall__ParametersAssignment_0_2_0_1 ) )
-            // InternalKExpressions.g:6248:1: ( rule__FunctionCall__ParametersAssignment_0_2_0_1 )
+            // InternalKExpressions.g:6325:1: ( ( rule__FunctionCall__ParametersAssignment_0_2_0_1 ) )
+            // InternalKExpressions.g:6326:1: ( rule__FunctionCall__ParametersAssignment_0_2_0_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getParametersAssignment_0_2_0_1()); 
             }
-            // InternalKExpressions.g:6249:1: ( rule__FunctionCall__ParametersAssignment_0_2_0_1 )
-            // InternalKExpressions.g:6249:2: rule__FunctionCall__ParametersAssignment_0_2_0_1
+            // InternalKExpressions.g:6327:1: ( rule__FunctionCall__ParametersAssignment_0_2_0_1 )
+            // InternalKExpressions.g:6327:2: rule__FunctionCall__ParametersAssignment_0_2_0_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__FunctionCall__ParametersAssignment_0_2_0_1();
@@ -17944,14 +18203,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_0_2_0__2"
-    // InternalKExpressions.g:6259:1: rule__FunctionCall__Group_0_2_0__2 : rule__FunctionCall__Group_0_2_0__2__Impl rule__FunctionCall__Group_0_2_0__3 ;
+    // InternalKExpressions.g:6337:1: rule__FunctionCall__Group_0_2_0__2 : rule__FunctionCall__Group_0_2_0__2__Impl rule__FunctionCall__Group_0_2_0__3 ;
     public final void rule__FunctionCall__Group_0_2_0__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6263:1: ( rule__FunctionCall__Group_0_2_0__2__Impl rule__FunctionCall__Group_0_2_0__3 )
-            // InternalKExpressions.g:6264:2: rule__FunctionCall__Group_0_2_0__2__Impl rule__FunctionCall__Group_0_2_0__3
+            // InternalKExpressions.g:6341:1: ( rule__FunctionCall__Group_0_2_0__2__Impl rule__FunctionCall__Group_0_2_0__3 )
+            // InternalKExpressions.g:6342:2: rule__FunctionCall__Group_0_2_0__2__Impl rule__FunctionCall__Group_0_2_0__3
             {
             pushFollow(FollowSets000.FOLLOW_40);
             rule__FunctionCall__Group_0_2_0__2__Impl();
@@ -17982,35 +18241,35 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_0_2_0__2__Impl"
-    // InternalKExpressions.g:6271:1: rule__FunctionCall__Group_0_2_0__2__Impl : ( ( rule__FunctionCall__Group_0_2_0_2__0 )* ) ;
+    // InternalKExpressions.g:6349:1: rule__FunctionCall__Group_0_2_0__2__Impl : ( ( rule__FunctionCall__Group_0_2_0_2__0 )* ) ;
     public final void rule__FunctionCall__Group_0_2_0__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6275:1: ( ( ( rule__FunctionCall__Group_0_2_0_2__0 )* ) )
-            // InternalKExpressions.g:6276:1: ( ( rule__FunctionCall__Group_0_2_0_2__0 )* )
+            // InternalKExpressions.g:6353:1: ( ( ( rule__FunctionCall__Group_0_2_0_2__0 )* ) )
+            // InternalKExpressions.g:6354:1: ( ( rule__FunctionCall__Group_0_2_0_2__0 )* )
             {
-            // InternalKExpressions.g:6276:1: ( ( rule__FunctionCall__Group_0_2_0_2__0 )* )
-            // InternalKExpressions.g:6277:1: ( rule__FunctionCall__Group_0_2_0_2__0 )*
+            // InternalKExpressions.g:6354:1: ( ( rule__FunctionCall__Group_0_2_0_2__0 )* )
+            // InternalKExpressions.g:6355:1: ( rule__FunctionCall__Group_0_2_0_2__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getGroup_0_2_0_2()); 
             }
-            // InternalKExpressions.g:6278:1: ( rule__FunctionCall__Group_0_2_0_2__0 )*
-            loop42:
+            // InternalKExpressions.g:6356:1: ( rule__FunctionCall__Group_0_2_0_2__0 )*
+            loop43:
             do {
-                int alt42=2;
-                int LA42_0 = input.LA(1);
+                int alt43=2;
+                int LA43_0 = input.LA(1);
 
-                if ( (LA42_0==43) ) {
-                    alt42=1;
+                if ( (LA43_0==43) ) {
+                    alt43=1;
                 }
 
 
-                switch (alt42) {
+                switch (alt43) {
             	case 1 :
-            	    // InternalKExpressions.g:6278:2: rule__FunctionCall__Group_0_2_0_2__0
+            	    // InternalKExpressions.g:6356:2: rule__FunctionCall__Group_0_2_0_2__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_41);
             	    rule__FunctionCall__Group_0_2_0_2__0();
@@ -18022,7 +18281,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop42;
+            	    break loop43;
                 }
             } while (true);
 
@@ -18051,14 +18310,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_0_2_0__3"
-    // InternalKExpressions.g:6288:1: rule__FunctionCall__Group_0_2_0__3 : rule__FunctionCall__Group_0_2_0__3__Impl ;
+    // InternalKExpressions.g:6366:1: rule__FunctionCall__Group_0_2_0__3 : rule__FunctionCall__Group_0_2_0__3__Impl ;
     public final void rule__FunctionCall__Group_0_2_0__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6292:1: ( rule__FunctionCall__Group_0_2_0__3__Impl )
-            // InternalKExpressions.g:6293:2: rule__FunctionCall__Group_0_2_0__3__Impl
+            // InternalKExpressions.g:6370:1: ( rule__FunctionCall__Group_0_2_0__3__Impl )
+            // InternalKExpressions.g:6371:2: rule__FunctionCall__Group_0_2_0__3__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__FunctionCall__Group_0_2_0__3__Impl();
@@ -18084,17 +18343,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_0_2_0__3__Impl"
-    // InternalKExpressions.g:6299:1: rule__FunctionCall__Group_0_2_0__3__Impl : ( ')' ) ;
+    // InternalKExpressions.g:6377:1: rule__FunctionCall__Group_0_2_0__3__Impl : ( ')' ) ;
     public final void rule__FunctionCall__Group_0_2_0__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6303:1: ( ( ')' ) )
-            // InternalKExpressions.g:6304:1: ( ')' )
+            // InternalKExpressions.g:6381:1: ( ( ')' ) )
+            // InternalKExpressions.g:6382:1: ( ')' )
             {
-            // InternalKExpressions.g:6304:1: ( ')' )
-            // InternalKExpressions.g:6305:1: ')'
+            // InternalKExpressions.g:6382:1: ( ')' )
+            // InternalKExpressions.g:6383:1: ')'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getRightParenthesisKeyword_0_2_0_3()); 
@@ -18125,14 +18384,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_0_2_0_2__0"
-    // InternalKExpressions.g:6326:1: rule__FunctionCall__Group_0_2_0_2__0 : rule__FunctionCall__Group_0_2_0_2__0__Impl rule__FunctionCall__Group_0_2_0_2__1 ;
+    // InternalKExpressions.g:6404:1: rule__FunctionCall__Group_0_2_0_2__0 : rule__FunctionCall__Group_0_2_0_2__0__Impl rule__FunctionCall__Group_0_2_0_2__1 ;
     public final void rule__FunctionCall__Group_0_2_0_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6330:1: ( rule__FunctionCall__Group_0_2_0_2__0__Impl rule__FunctionCall__Group_0_2_0_2__1 )
-            // InternalKExpressions.g:6331:2: rule__FunctionCall__Group_0_2_0_2__0__Impl rule__FunctionCall__Group_0_2_0_2__1
+            // InternalKExpressions.g:6408:1: ( rule__FunctionCall__Group_0_2_0_2__0__Impl rule__FunctionCall__Group_0_2_0_2__1 )
+            // InternalKExpressions.g:6409:2: rule__FunctionCall__Group_0_2_0_2__0__Impl rule__FunctionCall__Group_0_2_0_2__1
             {
             pushFollow(FollowSets000.FOLLOW_39);
             rule__FunctionCall__Group_0_2_0_2__0__Impl();
@@ -18163,17 +18422,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_0_2_0_2__0__Impl"
-    // InternalKExpressions.g:6338:1: rule__FunctionCall__Group_0_2_0_2__0__Impl : ( ',' ) ;
+    // InternalKExpressions.g:6416:1: rule__FunctionCall__Group_0_2_0_2__0__Impl : ( ',' ) ;
     public final void rule__FunctionCall__Group_0_2_0_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6342:1: ( ( ',' ) )
-            // InternalKExpressions.g:6343:1: ( ',' )
+            // InternalKExpressions.g:6420:1: ( ( ',' ) )
+            // InternalKExpressions.g:6421:1: ( ',' )
             {
-            // InternalKExpressions.g:6343:1: ( ',' )
-            // InternalKExpressions.g:6344:1: ','
+            // InternalKExpressions.g:6421:1: ( ',' )
+            // InternalKExpressions.g:6422:1: ','
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getCommaKeyword_0_2_0_2_0()); 
@@ -18204,14 +18463,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_0_2_0_2__1"
-    // InternalKExpressions.g:6357:1: rule__FunctionCall__Group_0_2_0_2__1 : rule__FunctionCall__Group_0_2_0_2__1__Impl ;
+    // InternalKExpressions.g:6435:1: rule__FunctionCall__Group_0_2_0_2__1 : rule__FunctionCall__Group_0_2_0_2__1__Impl ;
     public final void rule__FunctionCall__Group_0_2_0_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6361:1: ( rule__FunctionCall__Group_0_2_0_2__1__Impl )
-            // InternalKExpressions.g:6362:2: rule__FunctionCall__Group_0_2_0_2__1__Impl
+            // InternalKExpressions.g:6439:1: ( rule__FunctionCall__Group_0_2_0_2__1__Impl )
+            // InternalKExpressions.g:6440:2: rule__FunctionCall__Group_0_2_0_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__FunctionCall__Group_0_2_0_2__1__Impl();
@@ -18237,23 +18496,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_0_2_0_2__1__Impl"
-    // InternalKExpressions.g:6368:1: rule__FunctionCall__Group_0_2_0_2__1__Impl : ( ( rule__FunctionCall__ParametersAssignment_0_2_0_2_1 ) ) ;
+    // InternalKExpressions.g:6446:1: rule__FunctionCall__Group_0_2_0_2__1__Impl : ( ( rule__FunctionCall__ParametersAssignment_0_2_0_2_1 ) ) ;
     public final void rule__FunctionCall__Group_0_2_0_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6372:1: ( ( ( rule__FunctionCall__ParametersAssignment_0_2_0_2_1 ) ) )
-            // InternalKExpressions.g:6373:1: ( ( rule__FunctionCall__ParametersAssignment_0_2_0_2_1 ) )
+            // InternalKExpressions.g:6450:1: ( ( ( rule__FunctionCall__ParametersAssignment_0_2_0_2_1 ) ) )
+            // InternalKExpressions.g:6451:1: ( ( rule__FunctionCall__ParametersAssignment_0_2_0_2_1 ) )
             {
-            // InternalKExpressions.g:6373:1: ( ( rule__FunctionCall__ParametersAssignment_0_2_0_2_1 ) )
-            // InternalKExpressions.g:6374:1: ( rule__FunctionCall__ParametersAssignment_0_2_0_2_1 )
+            // InternalKExpressions.g:6451:1: ( ( rule__FunctionCall__ParametersAssignment_0_2_0_2_1 ) )
+            // InternalKExpressions.g:6452:1: ( rule__FunctionCall__ParametersAssignment_0_2_0_2_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getParametersAssignment_0_2_0_2_1()); 
             }
-            // InternalKExpressions.g:6375:1: ( rule__FunctionCall__ParametersAssignment_0_2_0_2_1 )
-            // InternalKExpressions.g:6375:2: rule__FunctionCall__ParametersAssignment_0_2_0_2_1
+            // InternalKExpressions.g:6453:1: ( rule__FunctionCall__ParametersAssignment_0_2_0_2_1 )
+            // InternalKExpressions.g:6453:2: rule__FunctionCall__ParametersAssignment_0_2_0_2_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__FunctionCall__ParametersAssignment_0_2_0_2_1();
@@ -18288,14 +18547,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_1__0"
-    // InternalKExpressions.g:6389:1: rule__FunctionCall__Group_1__0 : rule__FunctionCall__Group_1__0__Impl rule__FunctionCall__Group_1__1 ;
+    // InternalKExpressions.g:6467:1: rule__FunctionCall__Group_1__0 : rule__FunctionCall__Group_1__0__Impl rule__FunctionCall__Group_1__1 ;
     public final void rule__FunctionCall__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6393:1: ( rule__FunctionCall__Group_1__0__Impl rule__FunctionCall__Group_1__1 )
-            // InternalKExpressions.g:6394:2: rule__FunctionCall__Group_1__0__Impl rule__FunctionCall__Group_1__1
+            // InternalKExpressions.g:6471:1: ( rule__FunctionCall__Group_1__0__Impl rule__FunctionCall__Group_1__1 )
+            // InternalKExpressions.g:6472:2: rule__FunctionCall__Group_1__0__Impl rule__FunctionCall__Group_1__1
             {
             pushFollow(FollowSets000.FOLLOW_4);
             rule__FunctionCall__Group_1__0__Impl();
@@ -18326,17 +18585,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_1__0__Impl"
-    // InternalKExpressions.g:6401:1: rule__FunctionCall__Group_1__0__Impl : ( '<' ) ;
+    // InternalKExpressions.g:6479:1: rule__FunctionCall__Group_1__0__Impl : ( '<' ) ;
     public final void rule__FunctionCall__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6405:1: ( ( '<' ) )
-            // InternalKExpressions.g:6406:1: ( '<' )
+            // InternalKExpressions.g:6483:1: ( ( '<' ) )
+            // InternalKExpressions.g:6484:1: ( '<' )
             {
-            // InternalKExpressions.g:6406:1: ( '<' )
-            // InternalKExpressions.g:6407:1: '<'
+            // InternalKExpressions.g:6484:1: ( '<' )
+            // InternalKExpressions.g:6485:1: '<'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getLessThanSignKeyword_1_0()); 
@@ -18367,14 +18626,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_1__1"
-    // InternalKExpressions.g:6420:1: rule__FunctionCall__Group_1__1 : rule__FunctionCall__Group_1__1__Impl rule__FunctionCall__Group_1__2 ;
+    // InternalKExpressions.g:6498:1: rule__FunctionCall__Group_1__1 : rule__FunctionCall__Group_1__1__Impl rule__FunctionCall__Group_1__2 ;
     public final void rule__FunctionCall__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6424:1: ( rule__FunctionCall__Group_1__1__Impl rule__FunctionCall__Group_1__2 )
-            // InternalKExpressions.g:6425:2: rule__FunctionCall__Group_1__1__Impl rule__FunctionCall__Group_1__2
+            // InternalKExpressions.g:6502:1: ( rule__FunctionCall__Group_1__1__Impl rule__FunctionCall__Group_1__2 )
+            // InternalKExpressions.g:6503:2: rule__FunctionCall__Group_1__1__Impl rule__FunctionCall__Group_1__2
             {
             pushFollow(FollowSets000.FOLLOW_38);
             rule__FunctionCall__Group_1__1__Impl();
@@ -18405,23 +18664,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_1__1__Impl"
-    // InternalKExpressions.g:6432:1: rule__FunctionCall__Group_1__1__Impl : ( ( rule__FunctionCall__FunctionNameAssignment_1_1 ) ) ;
+    // InternalKExpressions.g:6510:1: rule__FunctionCall__Group_1__1__Impl : ( ( rule__FunctionCall__FunctionNameAssignment_1_1 ) ) ;
     public final void rule__FunctionCall__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6436:1: ( ( ( rule__FunctionCall__FunctionNameAssignment_1_1 ) ) )
-            // InternalKExpressions.g:6437:1: ( ( rule__FunctionCall__FunctionNameAssignment_1_1 ) )
+            // InternalKExpressions.g:6514:1: ( ( ( rule__FunctionCall__FunctionNameAssignment_1_1 ) ) )
+            // InternalKExpressions.g:6515:1: ( ( rule__FunctionCall__FunctionNameAssignment_1_1 ) )
             {
-            // InternalKExpressions.g:6437:1: ( ( rule__FunctionCall__FunctionNameAssignment_1_1 ) )
-            // InternalKExpressions.g:6438:1: ( rule__FunctionCall__FunctionNameAssignment_1_1 )
+            // InternalKExpressions.g:6515:1: ( ( rule__FunctionCall__FunctionNameAssignment_1_1 ) )
+            // InternalKExpressions.g:6516:1: ( rule__FunctionCall__FunctionNameAssignment_1_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getFunctionNameAssignment_1_1()); 
             }
-            // InternalKExpressions.g:6439:1: ( rule__FunctionCall__FunctionNameAssignment_1_1 )
-            // InternalKExpressions.g:6439:2: rule__FunctionCall__FunctionNameAssignment_1_1
+            // InternalKExpressions.g:6517:1: ( rule__FunctionCall__FunctionNameAssignment_1_1 )
+            // InternalKExpressions.g:6517:2: rule__FunctionCall__FunctionNameAssignment_1_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__FunctionCall__FunctionNameAssignment_1_1();
@@ -18456,14 +18715,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_1__2"
-    // InternalKExpressions.g:6449:1: rule__FunctionCall__Group_1__2 : rule__FunctionCall__Group_1__2__Impl rule__FunctionCall__Group_1__3 ;
+    // InternalKExpressions.g:6527:1: rule__FunctionCall__Group_1__2 : rule__FunctionCall__Group_1__2__Impl rule__FunctionCall__Group_1__3 ;
     public final void rule__FunctionCall__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6453:1: ( rule__FunctionCall__Group_1__2__Impl rule__FunctionCall__Group_1__3 )
-            // InternalKExpressions.g:6454:2: rule__FunctionCall__Group_1__2__Impl rule__FunctionCall__Group_1__3
+            // InternalKExpressions.g:6531:1: ( rule__FunctionCall__Group_1__2__Impl rule__FunctionCall__Group_1__3 )
+            // InternalKExpressions.g:6532:2: rule__FunctionCall__Group_1__2__Impl rule__FunctionCall__Group_1__3
             {
             pushFollow(FollowSets000.FOLLOW_42);
             rule__FunctionCall__Group_1__2__Impl();
@@ -18494,23 +18753,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_1__2__Impl"
-    // InternalKExpressions.g:6461:1: rule__FunctionCall__Group_1__2__Impl : ( ( rule__FunctionCall__Alternatives_1_2 ) ) ;
+    // InternalKExpressions.g:6539:1: rule__FunctionCall__Group_1__2__Impl : ( ( rule__FunctionCall__Alternatives_1_2 ) ) ;
     public final void rule__FunctionCall__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6465:1: ( ( ( rule__FunctionCall__Alternatives_1_2 ) ) )
-            // InternalKExpressions.g:6466:1: ( ( rule__FunctionCall__Alternatives_1_2 ) )
+            // InternalKExpressions.g:6543:1: ( ( ( rule__FunctionCall__Alternatives_1_2 ) ) )
+            // InternalKExpressions.g:6544:1: ( ( rule__FunctionCall__Alternatives_1_2 ) )
             {
-            // InternalKExpressions.g:6466:1: ( ( rule__FunctionCall__Alternatives_1_2 ) )
-            // InternalKExpressions.g:6467:1: ( rule__FunctionCall__Alternatives_1_2 )
+            // InternalKExpressions.g:6544:1: ( ( rule__FunctionCall__Alternatives_1_2 ) )
+            // InternalKExpressions.g:6545:1: ( rule__FunctionCall__Alternatives_1_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getAlternatives_1_2()); 
             }
-            // InternalKExpressions.g:6468:1: ( rule__FunctionCall__Alternatives_1_2 )
-            // InternalKExpressions.g:6468:2: rule__FunctionCall__Alternatives_1_2
+            // InternalKExpressions.g:6546:1: ( rule__FunctionCall__Alternatives_1_2 )
+            // InternalKExpressions.g:6546:2: rule__FunctionCall__Alternatives_1_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__FunctionCall__Alternatives_1_2();
@@ -18545,14 +18804,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_1__3"
-    // InternalKExpressions.g:6478:1: rule__FunctionCall__Group_1__3 : rule__FunctionCall__Group_1__3__Impl ;
+    // InternalKExpressions.g:6556:1: rule__FunctionCall__Group_1__3 : rule__FunctionCall__Group_1__3__Impl ;
     public final void rule__FunctionCall__Group_1__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6482:1: ( rule__FunctionCall__Group_1__3__Impl )
-            // InternalKExpressions.g:6483:2: rule__FunctionCall__Group_1__3__Impl
+            // InternalKExpressions.g:6560:1: ( rule__FunctionCall__Group_1__3__Impl )
+            // InternalKExpressions.g:6561:2: rule__FunctionCall__Group_1__3__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__FunctionCall__Group_1__3__Impl();
@@ -18578,17 +18837,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_1__3__Impl"
-    // InternalKExpressions.g:6489:1: rule__FunctionCall__Group_1__3__Impl : ( '>' ) ;
+    // InternalKExpressions.g:6567:1: rule__FunctionCall__Group_1__3__Impl : ( '>' ) ;
     public final void rule__FunctionCall__Group_1__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6493:1: ( ( '>' ) )
-            // InternalKExpressions.g:6494:1: ( '>' )
+            // InternalKExpressions.g:6571:1: ( ( '>' ) )
+            // InternalKExpressions.g:6572:1: ( '>' )
             {
-            // InternalKExpressions.g:6494:1: ( '>' )
-            // InternalKExpressions.g:6495:1: '>'
+            // InternalKExpressions.g:6572:1: ( '>' )
+            // InternalKExpressions.g:6573:1: '>'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getGreaterThanSignKeyword_1_3()); 
@@ -18619,14 +18878,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_1_2_0__0"
-    // InternalKExpressions.g:6516:1: rule__FunctionCall__Group_1_2_0__0 : rule__FunctionCall__Group_1_2_0__0__Impl rule__FunctionCall__Group_1_2_0__1 ;
+    // InternalKExpressions.g:6594:1: rule__FunctionCall__Group_1_2_0__0 : rule__FunctionCall__Group_1_2_0__0__Impl rule__FunctionCall__Group_1_2_0__1 ;
     public final void rule__FunctionCall__Group_1_2_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6520:1: ( rule__FunctionCall__Group_1_2_0__0__Impl rule__FunctionCall__Group_1_2_0__1 )
-            // InternalKExpressions.g:6521:2: rule__FunctionCall__Group_1_2_0__0__Impl rule__FunctionCall__Group_1_2_0__1
+            // InternalKExpressions.g:6598:1: ( rule__FunctionCall__Group_1_2_0__0__Impl rule__FunctionCall__Group_1_2_0__1 )
+            // InternalKExpressions.g:6599:2: rule__FunctionCall__Group_1_2_0__0__Impl rule__FunctionCall__Group_1_2_0__1
             {
             pushFollow(FollowSets000.FOLLOW_39);
             rule__FunctionCall__Group_1_2_0__0__Impl();
@@ -18657,17 +18916,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_1_2_0__0__Impl"
-    // InternalKExpressions.g:6528:1: rule__FunctionCall__Group_1_2_0__0__Impl : ( '(' ) ;
+    // InternalKExpressions.g:6606:1: rule__FunctionCall__Group_1_2_0__0__Impl : ( '(' ) ;
     public final void rule__FunctionCall__Group_1_2_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6532:1: ( ( '(' ) )
-            // InternalKExpressions.g:6533:1: ( '(' )
+            // InternalKExpressions.g:6610:1: ( ( '(' ) )
+            // InternalKExpressions.g:6611:1: ( '(' )
             {
-            // InternalKExpressions.g:6533:1: ( '(' )
-            // InternalKExpressions.g:6534:1: '('
+            // InternalKExpressions.g:6611:1: ( '(' )
+            // InternalKExpressions.g:6612:1: '('
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getLeftParenthesisKeyword_1_2_0_0()); 
@@ -18698,14 +18957,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_1_2_0__1"
-    // InternalKExpressions.g:6547:1: rule__FunctionCall__Group_1_2_0__1 : rule__FunctionCall__Group_1_2_0__1__Impl rule__FunctionCall__Group_1_2_0__2 ;
+    // InternalKExpressions.g:6625:1: rule__FunctionCall__Group_1_2_0__1 : rule__FunctionCall__Group_1_2_0__1__Impl rule__FunctionCall__Group_1_2_0__2 ;
     public final void rule__FunctionCall__Group_1_2_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6551:1: ( rule__FunctionCall__Group_1_2_0__1__Impl rule__FunctionCall__Group_1_2_0__2 )
-            // InternalKExpressions.g:6552:2: rule__FunctionCall__Group_1_2_0__1__Impl rule__FunctionCall__Group_1_2_0__2
+            // InternalKExpressions.g:6629:1: ( rule__FunctionCall__Group_1_2_0__1__Impl rule__FunctionCall__Group_1_2_0__2 )
+            // InternalKExpressions.g:6630:2: rule__FunctionCall__Group_1_2_0__1__Impl rule__FunctionCall__Group_1_2_0__2
             {
             pushFollow(FollowSets000.FOLLOW_40);
             rule__FunctionCall__Group_1_2_0__1__Impl();
@@ -18736,23 +18995,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_1_2_0__1__Impl"
-    // InternalKExpressions.g:6559:1: rule__FunctionCall__Group_1_2_0__1__Impl : ( ( rule__FunctionCall__ParametersAssignment_1_2_0_1 ) ) ;
+    // InternalKExpressions.g:6637:1: rule__FunctionCall__Group_1_2_0__1__Impl : ( ( rule__FunctionCall__ParametersAssignment_1_2_0_1 ) ) ;
     public final void rule__FunctionCall__Group_1_2_0__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6563:1: ( ( ( rule__FunctionCall__ParametersAssignment_1_2_0_1 ) ) )
-            // InternalKExpressions.g:6564:1: ( ( rule__FunctionCall__ParametersAssignment_1_2_0_1 ) )
+            // InternalKExpressions.g:6641:1: ( ( ( rule__FunctionCall__ParametersAssignment_1_2_0_1 ) ) )
+            // InternalKExpressions.g:6642:1: ( ( rule__FunctionCall__ParametersAssignment_1_2_0_1 ) )
             {
-            // InternalKExpressions.g:6564:1: ( ( rule__FunctionCall__ParametersAssignment_1_2_0_1 ) )
-            // InternalKExpressions.g:6565:1: ( rule__FunctionCall__ParametersAssignment_1_2_0_1 )
+            // InternalKExpressions.g:6642:1: ( ( rule__FunctionCall__ParametersAssignment_1_2_0_1 ) )
+            // InternalKExpressions.g:6643:1: ( rule__FunctionCall__ParametersAssignment_1_2_0_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getParametersAssignment_1_2_0_1()); 
             }
-            // InternalKExpressions.g:6566:1: ( rule__FunctionCall__ParametersAssignment_1_2_0_1 )
-            // InternalKExpressions.g:6566:2: rule__FunctionCall__ParametersAssignment_1_2_0_1
+            // InternalKExpressions.g:6644:1: ( rule__FunctionCall__ParametersAssignment_1_2_0_1 )
+            // InternalKExpressions.g:6644:2: rule__FunctionCall__ParametersAssignment_1_2_0_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__FunctionCall__ParametersAssignment_1_2_0_1();
@@ -18787,14 +19046,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_1_2_0__2"
-    // InternalKExpressions.g:6576:1: rule__FunctionCall__Group_1_2_0__2 : rule__FunctionCall__Group_1_2_0__2__Impl rule__FunctionCall__Group_1_2_0__3 ;
+    // InternalKExpressions.g:6654:1: rule__FunctionCall__Group_1_2_0__2 : rule__FunctionCall__Group_1_2_0__2__Impl rule__FunctionCall__Group_1_2_0__3 ;
     public final void rule__FunctionCall__Group_1_2_0__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6580:1: ( rule__FunctionCall__Group_1_2_0__2__Impl rule__FunctionCall__Group_1_2_0__3 )
-            // InternalKExpressions.g:6581:2: rule__FunctionCall__Group_1_2_0__2__Impl rule__FunctionCall__Group_1_2_0__3
+            // InternalKExpressions.g:6658:1: ( rule__FunctionCall__Group_1_2_0__2__Impl rule__FunctionCall__Group_1_2_0__3 )
+            // InternalKExpressions.g:6659:2: rule__FunctionCall__Group_1_2_0__2__Impl rule__FunctionCall__Group_1_2_0__3
             {
             pushFollow(FollowSets000.FOLLOW_40);
             rule__FunctionCall__Group_1_2_0__2__Impl();
@@ -18825,35 +19084,35 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_1_2_0__2__Impl"
-    // InternalKExpressions.g:6588:1: rule__FunctionCall__Group_1_2_0__2__Impl : ( ( rule__FunctionCall__Group_1_2_0_2__0 )* ) ;
+    // InternalKExpressions.g:6666:1: rule__FunctionCall__Group_1_2_0__2__Impl : ( ( rule__FunctionCall__Group_1_2_0_2__0 )* ) ;
     public final void rule__FunctionCall__Group_1_2_0__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6592:1: ( ( ( rule__FunctionCall__Group_1_2_0_2__0 )* ) )
-            // InternalKExpressions.g:6593:1: ( ( rule__FunctionCall__Group_1_2_0_2__0 )* )
+            // InternalKExpressions.g:6670:1: ( ( ( rule__FunctionCall__Group_1_2_0_2__0 )* ) )
+            // InternalKExpressions.g:6671:1: ( ( rule__FunctionCall__Group_1_2_0_2__0 )* )
             {
-            // InternalKExpressions.g:6593:1: ( ( rule__FunctionCall__Group_1_2_0_2__0 )* )
-            // InternalKExpressions.g:6594:1: ( rule__FunctionCall__Group_1_2_0_2__0 )*
+            // InternalKExpressions.g:6671:1: ( ( rule__FunctionCall__Group_1_2_0_2__0 )* )
+            // InternalKExpressions.g:6672:1: ( rule__FunctionCall__Group_1_2_0_2__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getGroup_1_2_0_2()); 
             }
-            // InternalKExpressions.g:6595:1: ( rule__FunctionCall__Group_1_2_0_2__0 )*
-            loop43:
+            // InternalKExpressions.g:6673:1: ( rule__FunctionCall__Group_1_2_0_2__0 )*
+            loop44:
             do {
-                int alt43=2;
-                int LA43_0 = input.LA(1);
+                int alt44=2;
+                int LA44_0 = input.LA(1);
 
-                if ( (LA43_0==43) ) {
-                    alt43=1;
+                if ( (LA44_0==43) ) {
+                    alt44=1;
                 }
 
 
-                switch (alt43) {
+                switch (alt44) {
             	case 1 :
-            	    // InternalKExpressions.g:6595:2: rule__FunctionCall__Group_1_2_0_2__0
+            	    // InternalKExpressions.g:6673:2: rule__FunctionCall__Group_1_2_0_2__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_41);
             	    rule__FunctionCall__Group_1_2_0_2__0();
@@ -18865,7 +19124,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop43;
+            	    break loop44;
                 }
             } while (true);
 
@@ -18894,14 +19153,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_1_2_0__3"
-    // InternalKExpressions.g:6605:1: rule__FunctionCall__Group_1_2_0__3 : rule__FunctionCall__Group_1_2_0__3__Impl ;
+    // InternalKExpressions.g:6683:1: rule__FunctionCall__Group_1_2_0__3 : rule__FunctionCall__Group_1_2_0__3__Impl ;
     public final void rule__FunctionCall__Group_1_2_0__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6609:1: ( rule__FunctionCall__Group_1_2_0__3__Impl )
-            // InternalKExpressions.g:6610:2: rule__FunctionCall__Group_1_2_0__3__Impl
+            // InternalKExpressions.g:6687:1: ( rule__FunctionCall__Group_1_2_0__3__Impl )
+            // InternalKExpressions.g:6688:2: rule__FunctionCall__Group_1_2_0__3__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__FunctionCall__Group_1_2_0__3__Impl();
@@ -18927,17 +19186,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_1_2_0__3__Impl"
-    // InternalKExpressions.g:6616:1: rule__FunctionCall__Group_1_2_0__3__Impl : ( ')' ) ;
+    // InternalKExpressions.g:6694:1: rule__FunctionCall__Group_1_2_0__3__Impl : ( ')' ) ;
     public final void rule__FunctionCall__Group_1_2_0__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6620:1: ( ( ')' ) )
-            // InternalKExpressions.g:6621:1: ( ')' )
+            // InternalKExpressions.g:6698:1: ( ( ')' ) )
+            // InternalKExpressions.g:6699:1: ( ')' )
             {
-            // InternalKExpressions.g:6621:1: ( ')' )
-            // InternalKExpressions.g:6622:1: ')'
+            // InternalKExpressions.g:6699:1: ( ')' )
+            // InternalKExpressions.g:6700:1: ')'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getRightParenthesisKeyword_1_2_0_3()); 
@@ -18968,14 +19227,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_1_2_0_2__0"
-    // InternalKExpressions.g:6643:1: rule__FunctionCall__Group_1_2_0_2__0 : rule__FunctionCall__Group_1_2_0_2__0__Impl rule__FunctionCall__Group_1_2_0_2__1 ;
+    // InternalKExpressions.g:6721:1: rule__FunctionCall__Group_1_2_0_2__0 : rule__FunctionCall__Group_1_2_0_2__0__Impl rule__FunctionCall__Group_1_2_0_2__1 ;
     public final void rule__FunctionCall__Group_1_2_0_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6647:1: ( rule__FunctionCall__Group_1_2_0_2__0__Impl rule__FunctionCall__Group_1_2_0_2__1 )
-            // InternalKExpressions.g:6648:2: rule__FunctionCall__Group_1_2_0_2__0__Impl rule__FunctionCall__Group_1_2_0_2__1
+            // InternalKExpressions.g:6725:1: ( rule__FunctionCall__Group_1_2_0_2__0__Impl rule__FunctionCall__Group_1_2_0_2__1 )
+            // InternalKExpressions.g:6726:2: rule__FunctionCall__Group_1_2_0_2__0__Impl rule__FunctionCall__Group_1_2_0_2__1
             {
             pushFollow(FollowSets000.FOLLOW_39);
             rule__FunctionCall__Group_1_2_0_2__0__Impl();
@@ -19006,17 +19265,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_1_2_0_2__0__Impl"
-    // InternalKExpressions.g:6655:1: rule__FunctionCall__Group_1_2_0_2__0__Impl : ( ',' ) ;
+    // InternalKExpressions.g:6733:1: rule__FunctionCall__Group_1_2_0_2__0__Impl : ( ',' ) ;
     public final void rule__FunctionCall__Group_1_2_0_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6659:1: ( ( ',' ) )
-            // InternalKExpressions.g:6660:1: ( ',' )
+            // InternalKExpressions.g:6737:1: ( ( ',' ) )
+            // InternalKExpressions.g:6738:1: ( ',' )
             {
-            // InternalKExpressions.g:6660:1: ( ',' )
-            // InternalKExpressions.g:6661:1: ','
+            // InternalKExpressions.g:6738:1: ( ',' )
+            // InternalKExpressions.g:6739:1: ','
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getCommaKeyword_1_2_0_2_0()); 
@@ -19047,14 +19306,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_1_2_0_2__1"
-    // InternalKExpressions.g:6674:1: rule__FunctionCall__Group_1_2_0_2__1 : rule__FunctionCall__Group_1_2_0_2__1__Impl ;
+    // InternalKExpressions.g:6752:1: rule__FunctionCall__Group_1_2_0_2__1 : rule__FunctionCall__Group_1_2_0_2__1__Impl ;
     public final void rule__FunctionCall__Group_1_2_0_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6678:1: ( rule__FunctionCall__Group_1_2_0_2__1__Impl )
-            // InternalKExpressions.g:6679:2: rule__FunctionCall__Group_1_2_0_2__1__Impl
+            // InternalKExpressions.g:6756:1: ( rule__FunctionCall__Group_1_2_0_2__1__Impl )
+            // InternalKExpressions.g:6757:2: rule__FunctionCall__Group_1_2_0_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__FunctionCall__Group_1_2_0_2__1__Impl();
@@ -19080,23 +19339,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__Group_1_2_0_2__1__Impl"
-    // InternalKExpressions.g:6685:1: rule__FunctionCall__Group_1_2_0_2__1__Impl : ( ( rule__FunctionCall__ParametersAssignment_1_2_0_2_1 ) ) ;
+    // InternalKExpressions.g:6763:1: rule__FunctionCall__Group_1_2_0_2__1__Impl : ( ( rule__FunctionCall__ParametersAssignment_1_2_0_2_1 ) ) ;
     public final void rule__FunctionCall__Group_1_2_0_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6689:1: ( ( ( rule__FunctionCall__ParametersAssignment_1_2_0_2_1 ) ) )
-            // InternalKExpressions.g:6690:1: ( ( rule__FunctionCall__ParametersAssignment_1_2_0_2_1 ) )
+            // InternalKExpressions.g:6767:1: ( ( ( rule__FunctionCall__ParametersAssignment_1_2_0_2_1 ) ) )
+            // InternalKExpressions.g:6768:1: ( ( rule__FunctionCall__ParametersAssignment_1_2_0_2_1 ) )
             {
-            // InternalKExpressions.g:6690:1: ( ( rule__FunctionCall__ParametersAssignment_1_2_0_2_1 ) )
-            // InternalKExpressions.g:6691:1: ( rule__FunctionCall__ParametersAssignment_1_2_0_2_1 )
+            // InternalKExpressions.g:6768:1: ( ( rule__FunctionCall__ParametersAssignment_1_2_0_2_1 ) )
+            // InternalKExpressions.g:6769:1: ( rule__FunctionCall__ParametersAssignment_1_2_0_2_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getParametersAssignment_1_2_0_2_1()); 
             }
-            // InternalKExpressions.g:6692:1: ( rule__FunctionCall__ParametersAssignment_1_2_0_2_1 )
-            // InternalKExpressions.g:6692:2: rule__FunctionCall__ParametersAssignment_1_2_0_2_1
+            // InternalKExpressions.g:6770:1: ( rule__FunctionCall__ParametersAssignment_1_2_0_2_1 )
+            // InternalKExpressions.g:6770:2: rule__FunctionCall__ParametersAssignment_1_2_0_2_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__FunctionCall__ParametersAssignment_1_2_0_2_1();
@@ -19131,14 +19390,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Parameter__Group__0"
-    // InternalKExpressions.g:6706:1: rule__Parameter__Group__0 : rule__Parameter__Group__0__Impl rule__Parameter__Group__1 ;
+    // InternalKExpressions.g:6784:1: rule__Parameter__Group__0 : rule__Parameter__Group__0__Impl rule__Parameter__Group__1 ;
     public final void rule__Parameter__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6710:1: ( rule__Parameter__Group__0__Impl rule__Parameter__Group__1 )
-            // InternalKExpressions.g:6711:2: rule__Parameter__Group__0__Impl rule__Parameter__Group__1
+            // InternalKExpressions.g:6788:1: ( rule__Parameter__Group__0__Impl rule__Parameter__Group__1 )
+            // InternalKExpressions.g:6789:2: rule__Parameter__Group__0__Impl rule__Parameter__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_39);
             rule__Parameter__Group__0__Impl();
@@ -19169,38 +19428,38 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Parameter__Group__0__Impl"
-    // InternalKExpressions.g:6718:1: rule__Parameter__Group__0__Impl : ( ( rule__Parameter__Group_0__0 )? ) ;
+    // InternalKExpressions.g:6796:1: rule__Parameter__Group__0__Impl : ( ( rule__Parameter__Group_0__0 )? ) ;
     public final void rule__Parameter__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6722:1: ( ( ( rule__Parameter__Group_0__0 )? ) )
-            // InternalKExpressions.g:6723:1: ( ( rule__Parameter__Group_0__0 )? )
+            // InternalKExpressions.g:6800:1: ( ( ( rule__Parameter__Group_0__0 )? ) )
+            // InternalKExpressions.g:6801:1: ( ( rule__Parameter__Group_0__0 )? )
             {
-            // InternalKExpressions.g:6723:1: ( ( rule__Parameter__Group_0__0 )? )
-            // InternalKExpressions.g:6724:1: ( rule__Parameter__Group_0__0 )?
+            // InternalKExpressions.g:6801:1: ( ( rule__Parameter__Group_0__0 )? )
+            // InternalKExpressions.g:6802:1: ( rule__Parameter__Group_0__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterAccess().getGroup_0()); 
             }
-            // InternalKExpressions.g:6725:1: ( rule__Parameter__Group_0__0 )?
-            int alt44=2;
-            int LA44_0 = input.LA(1);
+            // InternalKExpressions.g:6803:1: ( rule__Parameter__Group_0__0 )?
+            int alt45=2;
+            int LA45_0 = input.LA(1);
 
-            if ( (LA44_0==20) ) {
-                int LA44_1 = input.LA(2);
+            if ( (LA45_0==20) ) {
+                int LA45_1 = input.LA(2);
 
-                if ( (LA44_1==19) ) {
-                    alt44=1;
+                if ( (LA45_1==19) ) {
+                    alt45=1;
                 }
             }
-            else if ( (LA44_0==19) ) {
-                alt44=1;
+            else if ( (LA45_0==19) ) {
+                alt45=1;
             }
-            switch (alt44) {
+            switch (alt45) {
                 case 1 :
-                    // InternalKExpressions.g:6725:2: rule__Parameter__Group_0__0
+                    // InternalKExpressions.g:6803:2: rule__Parameter__Group_0__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__Parameter__Group_0__0();
@@ -19238,14 +19497,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Parameter__Group__1"
-    // InternalKExpressions.g:6735:1: rule__Parameter__Group__1 : rule__Parameter__Group__1__Impl ;
+    // InternalKExpressions.g:6813:1: rule__Parameter__Group__1 : rule__Parameter__Group__1__Impl ;
     public final void rule__Parameter__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6739:1: ( rule__Parameter__Group__1__Impl )
-            // InternalKExpressions.g:6740:2: rule__Parameter__Group__1__Impl
+            // InternalKExpressions.g:6817:1: ( rule__Parameter__Group__1__Impl )
+            // InternalKExpressions.g:6818:2: rule__Parameter__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Parameter__Group__1__Impl();
@@ -19271,23 +19530,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Parameter__Group__1__Impl"
-    // InternalKExpressions.g:6746:1: rule__Parameter__Group__1__Impl : ( ( rule__Parameter__ExpressionAssignment_1 ) ) ;
+    // InternalKExpressions.g:6824:1: rule__Parameter__Group__1__Impl : ( ( rule__Parameter__ExpressionAssignment_1 ) ) ;
     public final void rule__Parameter__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6750:1: ( ( ( rule__Parameter__ExpressionAssignment_1 ) ) )
-            // InternalKExpressions.g:6751:1: ( ( rule__Parameter__ExpressionAssignment_1 ) )
+            // InternalKExpressions.g:6828:1: ( ( ( rule__Parameter__ExpressionAssignment_1 ) ) )
+            // InternalKExpressions.g:6829:1: ( ( rule__Parameter__ExpressionAssignment_1 ) )
             {
-            // InternalKExpressions.g:6751:1: ( ( rule__Parameter__ExpressionAssignment_1 ) )
-            // InternalKExpressions.g:6752:1: ( rule__Parameter__ExpressionAssignment_1 )
+            // InternalKExpressions.g:6829:1: ( ( rule__Parameter__ExpressionAssignment_1 ) )
+            // InternalKExpressions.g:6830:1: ( rule__Parameter__ExpressionAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterAccess().getExpressionAssignment_1()); 
             }
-            // InternalKExpressions.g:6753:1: ( rule__Parameter__ExpressionAssignment_1 )
-            // InternalKExpressions.g:6753:2: rule__Parameter__ExpressionAssignment_1
+            // InternalKExpressions.g:6831:1: ( rule__Parameter__ExpressionAssignment_1 )
+            // InternalKExpressions.g:6831:2: rule__Parameter__ExpressionAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Parameter__ExpressionAssignment_1();
@@ -19322,14 +19581,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Parameter__Group_0__0"
-    // InternalKExpressions.g:6767:1: rule__Parameter__Group_0__0 : rule__Parameter__Group_0__0__Impl rule__Parameter__Group_0__1 ;
+    // InternalKExpressions.g:6845:1: rule__Parameter__Group_0__0 : rule__Parameter__Group_0__0__Impl rule__Parameter__Group_0__1 ;
     public final void rule__Parameter__Group_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6771:1: ( rule__Parameter__Group_0__0__Impl rule__Parameter__Group_0__1 )
-            // InternalKExpressions.g:6772:2: rule__Parameter__Group_0__0__Impl rule__Parameter__Group_0__1
+            // InternalKExpressions.g:6849:1: ( rule__Parameter__Group_0__0__Impl rule__Parameter__Group_0__1 )
+            // InternalKExpressions.g:6850:2: rule__Parameter__Group_0__0__Impl rule__Parameter__Group_0__1
             {
             pushFollow(FollowSets000.FOLLOW_43);
             rule__Parameter__Group_0__0__Impl();
@@ -19360,31 +19619,31 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Parameter__Group_0__0__Impl"
-    // InternalKExpressions.g:6779:1: rule__Parameter__Group_0__0__Impl : ( ( rule__Parameter__PureOutputAssignment_0_0 )? ) ;
+    // InternalKExpressions.g:6857:1: rule__Parameter__Group_0__0__Impl : ( ( rule__Parameter__PureOutputAssignment_0_0 )? ) ;
     public final void rule__Parameter__Group_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6783:1: ( ( ( rule__Parameter__PureOutputAssignment_0_0 )? ) )
-            // InternalKExpressions.g:6784:1: ( ( rule__Parameter__PureOutputAssignment_0_0 )? )
+            // InternalKExpressions.g:6861:1: ( ( ( rule__Parameter__PureOutputAssignment_0_0 )? ) )
+            // InternalKExpressions.g:6862:1: ( ( rule__Parameter__PureOutputAssignment_0_0 )? )
             {
-            // InternalKExpressions.g:6784:1: ( ( rule__Parameter__PureOutputAssignment_0_0 )? )
-            // InternalKExpressions.g:6785:1: ( rule__Parameter__PureOutputAssignment_0_0 )?
+            // InternalKExpressions.g:6862:1: ( ( rule__Parameter__PureOutputAssignment_0_0 )? )
+            // InternalKExpressions.g:6863:1: ( rule__Parameter__PureOutputAssignment_0_0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterAccess().getPureOutputAssignment_0_0()); 
             }
-            // InternalKExpressions.g:6786:1: ( rule__Parameter__PureOutputAssignment_0_0 )?
-            int alt45=2;
-            int LA45_0 = input.LA(1);
+            // InternalKExpressions.g:6864:1: ( rule__Parameter__PureOutputAssignment_0_0 )?
+            int alt46=2;
+            int LA46_0 = input.LA(1);
 
-            if ( (LA45_0==20) ) {
-                alt45=1;
+            if ( (LA46_0==20) ) {
+                alt46=1;
             }
-            switch (alt45) {
+            switch (alt46) {
                 case 1 :
-                    // InternalKExpressions.g:6786:2: rule__Parameter__PureOutputAssignment_0_0
+                    // InternalKExpressions.g:6864:2: rule__Parameter__PureOutputAssignment_0_0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__Parameter__PureOutputAssignment_0_0();
@@ -19422,14 +19681,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Parameter__Group_0__1"
-    // InternalKExpressions.g:6796:1: rule__Parameter__Group_0__1 : rule__Parameter__Group_0__1__Impl ;
+    // InternalKExpressions.g:6874:1: rule__Parameter__Group_0__1 : rule__Parameter__Group_0__1__Impl ;
     public final void rule__Parameter__Group_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6800:1: ( rule__Parameter__Group_0__1__Impl )
-            // InternalKExpressions.g:6801:2: rule__Parameter__Group_0__1__Impl
+            // InternalKExpressions.g:6878:1: ( rule__Parameter__Group_0__1__Impl )
+            // InternalKExpressions.g:6879:2: rule__Parameter__Group_0__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Parameter__Group_0__1__Impl();
@@ -19455,23 +19714,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Parameter__Group_0__1__Impl"
-    // InternalKExpressions.g:6807:1: rule__Parameter__Group_0__1__Impl : ( ( rule__Parameter__CallByReferenceAssignment_0_1 ) ) ;
+    // InternalKExpressions.g:6885:1: rule__Parameter__Group_0__1__Impl : ( ( rule__Parameter__CallByReferenceAssignment_0_1 ) ) ;
     public final void rule__Parameter__Group_0__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6811:1: ( ( ( rule__Parameter__CallByReferenceAssignment_0_1 ) ) )
-            // InternalKExpressions.g:6812:1: ( ( rule__Parameter__CallByReferenceAssignment_0_1 ) )
+            // InternalKExpressions.g:6889:1: ( ( ( rule__Parameter__CallByReferenceAssignment_0_1 ) ) )
+            // InternalKExpressions.g:6890:1: ( ( rule__Parameter__CallByReferenceAssignment_0_1 ) )
             {
-            // InternalKExpressions.g:6812:1: ( ( rule__Parameter__CallByReferenceAssignment_0_1 ) )
-            // InternalKExpressions.g:6813:1: ( rule__Parameter__CallByReferenceAssignment_0_1 )
+            // InternalKExpressions.g:6890:1: ( ( rule__Parameter__CallByReferenceAssignment_0_1 ) )
+            // InternalKExpressions.g:6891:1: ( rule__Parameter__CallByReferenceAssignment_0_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterAccess().getCallByReferenceAssignment_0_1()); 
             }
-            // InternalKExpressions.g:6814:1: ( rule__Parameter__CallByReferenceAssignment_0_1 )
-            // InternalKExpressions.g:6814:2: rule__Parameter__CallByReferenceAssignment_0_1
+            // InternalKExpressions.g:6892:1: ( rule__Parameter__CallByReferenceAssignment_0_1 )
+            // InternalKExpressions.g:6892:2: rule__Parameter__CallByReferenceAssignment_0_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Parameter__CallByReferenceAssignment_0_1();
@@ -19506,16 +19765,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__VectorValue__Group__0"
-    // InternalKExpressions.g:6828:1: rule__VectorValue__Group__0 : rule__VectorValue__Group__0__Impl rule__VectorValue__Group__1 ;
+    // InternalKExpressions.g:6906:1: rule__VectorValue__Group__0 : rule__VectorValue__Group__0__Impl rule__VectorValue__Group__1 ;
     public final void rule__VectorValue__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6832:1: ( rule__VectorValue__Group__0__Impl rule__VectorValue__Group__1 )
-            // InternalKExpressions.g:6833:2: rule__VectorValue__Group__0__Impl rule__VectorValue__Group__1
+            // InternalKExpressions.g:6910:1: ( rule__VectorValue__Group__0__Impl rule__VectorValue__Group__1 )
+            // InternalKExpressions.g:6911:2: rule__VectorValue__Group__0__Impl rule__VectorValue__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_8);
+            pushFollow(FollowSets000.FOLLOW_44);
             rule__VectorValue__Group__0__Impl();
 
             state._fsp--;
@@ -19544,17 +19803,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__VectorValue__Group__0__Impl"
-    // InternalKExpressions.g:6840:1: rule__VectorValue__Group__0__Impl : ( '(' ) ;
+    // InternalKExpressions.g:6918:1: rule__VectorValue__Group__0__Impl : ( '(' ) ;
     public final void rule__VectorValue__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6844:1: ( ( '(' ) )
-            // InternalKExpressions.g:6845:1: ( '(' )
+            // InternalKExpressions.g:6922:1: ( ( '(' ) )
+            // InternalKExpressions.g:6923:1: ( '(' )
             {
-            // InternalKExpressions.g:6845:1: ( '(' )
-            // InternalKExpressions.g:6846:1: '('
+            // InternalKExpressions.g:6923:1: ( '(' )
+            // InternalKExpressions.g:6924:1: '('
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVectorValueAccess().getLeftParenthesisKeyword_0()); 
@@ -19585,14 +19844,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__VectorValue__Group__1"
-    // InternalKExpressions.g:6859:1: rule__VectorValue__Group__1 : rule__VectorValue__Group__1__Impl rule__VectorValue__Group__2 ;
+    // InternalKExpressions.g:6937:1: rule__VectorValue__Group__1 : rule__VectorValue__Group__1__Impl rule__VectorValue__Group__2 ;
     public final void rule__VectorValue__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6863:1: ( rule__VectorValue__Group__1__Impl rule__VectorValue__Group__2 )
-            // InternalKExpressions.g:6864:2: rule__VectorValue__Group__1__Impl rule__VectorValue__Group__2
+            // InternalKExpressions.g:6941:1: ( rule__VectorValue__Group__1__Impl rule__VectorValue__Group__2 )
+            // InternalKExpressions.g:6942:2: rule__VectorValue__Group__1__Impl rule__VectorValue__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_40);
             rule__VectorValue__Group__1__Impl();
@@ -19623,23 +19882,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__VectorValue__Group__1__Impl"
-    // InternalKExpressions.g:6871:1: rule__VectorValue__Group__1__Impl : ( ( rule__VectorValue__ValuesAssignment_1 ) ) ;
+    // InternalKExpressions.g:6949:1: rule__VectorValue__Group__1__Impl : ( ( rule__VectorValue__ValuesAssignment_1 ) ) ;
     public final void rule__VectorValue__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6875:1: ( ( ( rule__VectorValue__ValuesAssignment_1 ) ) )
-            // InternalKExpressions.g:6876:1: ( ( rule__VectorValue__ValuesAssignment_1 ) )
+            // InternalKExpressions.g:6953:1: ( ( ( rule__VectorValue__ValuesAssignment_1 ) ) )
+            // InternalKExpressions.g:6954:1: ( ( rule__VectorValue__ValuesAssignment_1 ) )
             {
-            // InternalKExpressions.g:6876:1: ( ( rule__VectorValue__ValuesAssignment_1 ) )
-            // InternalKExpressions.g:6877:1: ( rule__VectorValue__ValuesAssignment_1 )
+            // InternalKExpressions.g:6954:1: ( ( rule__VectorValue__ValuesAssignment_1 ) )
+            // InternalKExpressions.g:6955:1: ( rule__VectorValue__ValuesAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVectorValueAccess().getValuesAssignment_1()); 
             }
-            // InternalKExpressions.g:6878:1: ( rule__VectorValue__ValuesAssignment_1 )
-            // InternalKExpressions.g:6878:2: rule__VectorValue__ValuesAssignment_1
+            // InternalKExpressions.g:6956:1: ( rule__VectorValue__ValuesAssignment_1 )
+            // InternalKExpressions.g:6956:2: rule__VectorValue__ValuesAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__VectorValue__ValuesAssignment_1();
@@ -19674,14 +19933,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__VectorValue__Group__2"
-    // InternalKExpressions.g:6888:1: rule__VectorValue__Group__2 : rule__VectorValue__Group__2__Impl rule__VectorValue__Group__3 ;
+    // InternalKExpressions.g:6966:1: rule__VectorValue__Group__2 : rule__VectorValue__Group__2__Impl rule__VectorValue__Group__3 ;
     public final void rule__VectorValue__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6892:1: ( rule__VectorValue__Group__2__Impl rule__VectorValue__Group__3 )
-            // InternalKExpressions.g:6893:2: rule__VectorValue__Group__2__Impl rule__VectorValue__Group__3
+            // InternalKExpressions.g:6970:1: ( rule__VectorValue__Group__2__Impl rule__VectorValue__Group__3 )
+            // InternalKExpressions.g:6971:2: rule__VectorValue__Group__2__Impl rule__VectorValue__Group__3
             {
             pushFollow(FollowSets000.FOLLOW_40);
             rule__VectorValue__Group__2__Impl();
@@ -19712,35 +19971,35 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__VectorValue__Group__2__Impl"
-    // InternalKExpressions.g:6900:1: rule__VectorValue__Group__2__Impl : ( ( rule__VectorValue__Group_2__0 )* ) ;
+    // InternalKExpressions.g:6978:1: rule__VectorValue__Group__2__Impl : ( ( rule__VectorValue__Group_2__0 )* ) ;
     public final void rule__VectorValue__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6904:1: ( ( ( rule__VectorValue__Group_2__0 )* ) )
-            // InternalKExpressions.g:6905:1: ( ( rule__VectorValue__Group_2__0 )* )
+            // InternalKExpressions.g:6982:1: ( ( ( rule__VectorValue__Group_2__0 )* ) )
+            // InternalKExpressions.g:6983:1: ( ( rule__VectorValue__Group_2__0 )* )
             {
-            // InternalKExpressions.g:6905:1: ( ( rule__VectorValue__Group_2__0 )* )
-            // InternalKExpressions.g:6906:1: ( rule__VectorValue__Group_2__0 )*
+            // InternalKExpressions.g:6983:1: ( ( rule__VectorValue__Group_2__0 )* )
+            // InternalKExpressions.g:6984:1: ( rule__VectorValue__Group_2__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVectorValueAccess().getGroup_2()); 
             }
-            // InternalKExpressions.g:6907:1: ( rule__VectorValue__Group_2__0 )*
-            loop46:
+            // InternalKExpressions.g:6985:1: ( rule__VectorValue__Group_2__0 )*
+            loop47:
             do {
-                int alt46=2;
-                int LA46_0 = input.LA(1);
+                int alt47=2;
+                int LA47_0 = input.LA(1);
 
-                if ( (LA46_0==43) ) {
-                    alt46=1;
+                if ( (LA47_0==43) ) {
+                    alt47=1;
                 }
 
 
-                switch (alt46) {
+                switch (alt47) {
             	case 1 :
-            	    // InternalKExpressions.g:6907:2: rule__VectorValue__Group_2__0
+            	    // InternalKExpressions.g:6985:2: rule__VectorValue__Group_2__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_41);
             	    rule__VectorValue__Group_2__0();
@@ -19752,7 +20011,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop46;
+            	    break loop47;
                 }
             } while (true);
 
@@ -19781,14 +20040,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__VectorValue__Group__3"
-    // InternalKExpressions.g:6917:1: rule__VectorValue__Group__3 : rule__VectorValue__Group__3__Impl ;
+    // InternalKExpressions.g:6995:1: rule__VectorValue__Group__3 : rule__VectorValue__Group__3__Impl ;
     public final void rule__VectorValue__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6921:1: ( rule__VectorValue__Group__3__Impl )
-            // InternalKExpressions.g:6922:2: rule__VectorValue__Group__3__Impl
+            // InternalKExpressions.g:6999:1: ( rule__VectorValue__Group__3__Impl )
+            // InternalKExpressions.g:7000:2: rule__VectorValue__Group__3__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__VectorValue__Group__3__Impl();
@@ -19814,17 +20073,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__VectorValue__Group__3__Impl"
-    // InternalKExpressions.g:6928:1: rule__VectorValue__Group__3__Impl : ( ')' ) ;
+    // InternalKExpressions.g:7006:1: rule__VectorValue__Group__3__Impl : ( ')' ) ;
     public final void rule__VectorValue__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6932:1: ( ( ')' ) )
-            // InternalKExpressions.g:6933:1: ( ')' )
+            // InternalKExpressions.g:7010:1: ( ( ')' ) )
+            // InternalKExpressions.g:7011:1: ( ')' )
             {
-            // InternalKExpressions.g:6933:1: ( ')' )
-            // InternalKExpressions.g:6934:1: ')'
+            // InternalKExpressions.g:7011:1: ( ')' )
+            // InternalKExpressions.g:7012:1: ')'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVectorValueAccess().getRightParenthesisKeyword_3()); 
@@ -19855,16 +20114,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__VectorValue__Group_2__0"
-    // InternalKExpressions.g:6955:1: rule__VectorValue__Group_2__0 : rule__VectorValue__Group_2__0__Impl rule__VectorValue__Group_2__1 ;
+    // InternalKExpressions.g:7033:1: rule__VectorValue__Group_2__0 : rule__VectorValue__Group_2__0__Impl rule__VectorValue__Group_2__1 ;
     public final void rule__VectorValue__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6959:1: ( rule__VectorValue__Group_2__0__Impl rule__VectorValue__Group_2__1 )
-            // InternalKExpressions.g:6960:2: rule__VectorValue__Group_2__0__Impl rule__VectorValue__Group_2__1
+            // InternalKExpressions.g:7037:1: ( rule__VectorValue__Group_2__0__Impl rule__VectorValue__Group_2__1 )
+            // InternalKExpressions.g:7038:2: rule__VectorValue__Group_2__0__Impl rule__VectorValue__Group_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_8);
+            pushFollow(FollowSets000.FOLLOW_44);
             rule__VectorValue__Group_2__0__Impl();
 
             state._fsp--;
@@ -19893,17 +20152,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__VectorValue__Group_2__0__Impl"
-    // InternalKExpressions.g:6967:1: rule__VectorValue__Group_2__0__Impl : ( ',' ) ;
+    // InternalKExpressions.g:7045:1: rule__VectorValue__Group_2__0__Impl : ( ',' ) ;
     public final void rule__VectorValue__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6971:1: ( ( ',' ) )
-            // InternalKExpressions.g:6972:1: ( ',' )
+            // InternalKExpressions.g:7049:1: ( ( ',' ) )
+            // InternalKExpressions.g:7050:1: ( ',' )
             {
-            // InternalKExpressions.g:6972:1: ( ',' )
-            // InternalKExpressions.g:6973:1: ','
+            // InternalKExpressions.g:7050:1: ( ',' )
+            // InternalKExpressions.g:7051:1: ','
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVectorValueAccess().getCommaKeyword_2_0()); 
@@ -19934,14 +20193,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__VectorValue__Group_2__1"
-    // InternalKExpressions.g:6986:1: rule__VectorValue__Group_2__1 : rule__VectorValue__Group_2__1__Impl ;
+    // InternalKExpressions.g:7064:1: rule__VectorValue__Group_2__1 : rule__VectorValue__Group_2__1__Impl ;
     public final void rule__VectorValue__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:6990:1: ( rule__VectorValue__Group_2__1__Impl )
-            // InternalKExpressions.g:6991:2: rule__VectorValue__Group_2__1__Impl
+            // InternalKExpressions.g:7068:1: ( rule__VectorValue__Group_2__1__Impl )
+            // InternalKExpressions.g:7069:2: rule__VectorValue__Group_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__VectorValue__Group_2__1__Impl();
@@ -19967,23 +20226,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__VectorValue__Group_2__1__Impl"
-    // InternalKExpressions.g:6997:1: rule__VectorValue__Group_2__1__Impl : ( ( rule__VectorValue__ValuesAssignment_2_1 ) ) ;
+    // InternalKExpressions.g:7075:1: rule__VectorValue__Group_2__1__Impl : ( ( rule__VectorValue__ValuesAssignment_2_1 ) ) ;
     public final void rule__VectorValue__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7001:1: ( ( ( rule__VectorValue__ValuesAssignment_2_1 ) ) )
-            // InternalKExpressions.g:7002:1: ( ( rule__VectorValue__ValuesAssignment_2_1 ) )
+            // InternalKExpressions.g:7079:1: ( ( ( rule__VectorValue__ValuesAssignment_2_1 ) ) )
+            // InternalKExpressions.g:7080:1: ( ( rule__VectorValue__ValuesAssignment_2_1 ) )
             {
-            // InternalKExpressions.g:7002:1: ( ( rule__VectorValue__ValuesAssignment_2_1 ) )
-            // InternalKExpressions.g:7003:1: ( rule__VectorValue__ValuesAssignment_2_1 )
+            // InternalKExpressions.g:7080:1: ( ( rule__VectorValue__ValuesAssignment_2_1 ) )
+            // InternalKExpressions.g:7081:1: ( rule__VectorValue__ValuesAssignment_2_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVectorValueAccess().getValuesAssignment_2_1()); 
             }
-            // InternalKExpressions.g:7004:1: ( rule__VectorValue__ValuesAssignment_2_1 )
-            // InternalKExpressions.g:7004:2: rule__VectorValue__ValuesAssignment_2_1
+            // InternalKExpressions.g:7082:1: ( rule__VectorValue__ValuesAssignment_2_1 )
+            // InternalKExpressions.g:7082:2: rule__VectorValue__ValuesAssignment_2_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__VectorValue__ValuesAssignment_2_1();
@@ -20017,15 +20276,168 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
     // $ANTLR end "rule__VectorValue__Group_2__1__Impl"
 
 
+    // $ANTLR start "rule__IgnoreValue__Group__0"
+    // InternalKExpressions.g:7096:1: rule__IgnoreValue__Group__0 : rule__IgnoreValue__Group__0__Impl rule__IgnoreValue__Group__1 ;
+    public final void rule__IgnoreValue__Group__0() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalKExpressions.g:7100:1: ( rule__IgnoreValue__Group__0__Impl rule__IgnoreValue__Group__1 )
+            // InternalKExpressions.g:7101:2: rule__IgnoreValue__Group__0__Impl rule__IgnoreValue__Group__1
+            {
+            pushFollow(FollowSets000.FOLLOW_44);
+            rule__IgnoreValue__Group__0__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__IgnoreValue__Group__1();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__IgnoreValue__Group__0"
+
+
+    // $ANTLR start "rule__IgnoreValue__Group__0__Impl"
+    // InternalKExpressions.g:7108:1: rule__IgnoreValue__Group__0__Impl : ( () ) ;
+    public final void rule__IgnoreValue__Group__0__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalKExpressions.g:7112:1: ( ( () ) )
+            // InternalKExpressions.g:7113:1: ( () )
+            {
+            // InternalKExpressions.g:7113:1: ( () )
+            // InternalKExpressions.g:7114:1: ()
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getIgnoreValueAccess().getIgnoreValueAction_0()); 
+            }
+            // InternalKExpressions.g:7115:1: ()
+            // InternalKExpressions.g:7117:1: 
+            {
+            }
+
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getIgnoreValueAccess().getIgnoreValueAction_0()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__IgnoreValue__Group__0__Impl"
+
+
+    // $ANTLR start "rule__IgnoreValue__Group__1"
+    // InternalKExpressions.g:7127:1: rule__IgnoreValue__Group__1 : rule__IgnoreValue__Group__1__Impl ;
+    public final void rule__IgnoreValue__Group__1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalKExpressions.g:7131:1: ( rule__IgnoreValue__Group__1__Impl )
+            // InternalKExpressions.g:7132:2: rule__IgnoreValue__Group__1__Impl
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__IgnoreValue__Group__1__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__IgnoreValue__Group__1"
+
+
+    // $ANTLR start "rule__IgnoreValue__Group__1__Impl"
+    // InternalKExpressions.g:7138:1: rule__IgnoreValue__Group__1__Impl : ( '_' ) ;
+    public final void rule__IgnoreValue__Group__1__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalKExpressions.g:7142:1: ( ( '_' ) )
+            // InternalKExpressions.g:7143:1: ( '_' )
+            {
+            // InternalKExpressions.g:7143:1: ( '_' )
+            // InternalKExpressions.g:7144:1: '_'
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getIgnoreValueAccess().get_Keyword_1()); 
+            }
+            match(input,45,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getIgnoreValueAccess().get_Keyword_1()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__IgnoreValue__Group__1__Impl"
+
+
     // $ANTLR start "rule__TagAnnotation__Group__0"
-    // InternalKExpressions.g:7018:1: rule__TagAnnotation__Group__0 : rule__TagAnnotation__Group__0__Impl rule__TagAnnotation__Group__1 ;
+    // InternalKExpressions.g:7161:1: rule__TagAnnotation__Group__0 : rule__TagAnnotation__Group__0__Impl rule__TagAnnotation__Group__1 ;
     public final void rule__TagAnnotation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7022:1: ( rule__TagAnnotation__Group__0__Impl rule__TagAnnotation__Group__1 )
-            // InternalKExpressions.g:7023:2: rule__TagAnnotation__Group__0__Impl rule__TagAnnotation__Group__1
+            // InternalKExpressions.g:7165:1: ( rule__TagAnnotation__Group__0__Impl rule__TagAnnotation__Group__1 )
+            // InternalKExpressions.g:7166:2: rule__TagAnnotation__Group__0__Impl rule__TagAnnotation__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_4);
             rule__TagAnnotation__Group__0__Impl();
@@ -20056,22 +20468,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TagAnnotation__Group__0__Impl"
-    // InternalKExpressions.g:7030:1: rule__TagAnnotation__Group__0__Impl : ( '@' ) ;
+    // InternalKExpressions.g:7173:1: rule__TagAnnotation__Group__0__Impl : ( '@' ) ;
     public final void rule__TagAnnotation__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7034:1: ( ( '@' ) )
-            // InternalKExpressions.g:7035:1: ( '@' )
+            // InternalKExpressions.g:7177:1: ( ( '@' ) )
+            // InternalKExpressions.g:7178:1: ( '@' )
             {
-            // InternalKExpressions.g:7035:1: ( '@' )
-            // InternalKExpressions.g:7036:1: '@'
+            // InternalKExpressions.g:7178:1: ( '@' )
+            // InternalKExpressions.g:7179:1: '@'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTagAnnotationAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,45,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,46,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTagAnnotationAccess().getCommercialAtKeyword_0()); 
             }
@@ -20097,14 +20509,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TagAnnotation__Group__1"
-    // InternalKExpressions.g:7049:1: rule__TagAnnotation__Group__1 : rule__TagAnnotation__Group__1__Impl ;
+    // InternalKExpressions.g:7192:1: rule__TagAnnotation__Group__1 : rule__TagAnnotation__Group__1__Impl ;
     public final void rule__TagAnnotation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7053:1: ( rule__TagAnnotation__Group__1__Impl )
-            // InternalKExpressions.g:7054:2: rule__TagAnnotation__Group__1__Impl
+            // InternalKExpressions.g:7196:1: ( rule__TagAnnotation__Group__1__Impl )
+            // InternalKExpressions.g:7197:2: rule__TagAnnotation__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TagAnnotation__Group__1__Impl();
@@ -20130,23 +20542,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TagAnnotation__Group__1__Impl"
-    // InternalKExpressions.g:7060:1: rule__TagAnnotation__Group__1__Impl : ( ( rule__TagAnnotation__NameAssignment_1 ) ) ;
+    // InternalKExpressions.g:7203:1: rule__TagAnnotation__Group__1__Impl : ( ( rule__TagAnnotation__NameAssignment_1 ) ) ;
     public final void rule__TagAnnotation__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7064:1: ( ( ( rule__TagAnnotation__NameAssignment_1 ) ) )
-            // InternalKExpressions.g:7065:1: ( ( rule__TagAnnotation__NameAssignment_1 ) )
+            // InternalKExpressions.g:7207:1: ( ( ( rule__TagAnnotation__NameAssignment_1 ) ) )
+            // InternalKExpressions.g:7208:1: ( ( rule__TagAnnotation__NameAssignment_1 ) )
             {
-            // InternalKExpressions.g:7065:1: ( ( rule__TagAnnotation__NameAssignment_1 ) )
-            // InternalKExpressions.g:7066:1: ( rule__TagAnnotation__NameAssignment_1 )
+            // InternalKExpressions.g:7208:1: ( ( rule__TagAnnotation__NameAssignment_1 ) )
+            // InternalKExpressions.g:7209:1: ( rule__TagAnnotation__NameAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTagAnnotationAccess().getNameAssignment_1()); 
             }
-            // InternalKExpressions.g:7067:1: ( rule__TagAnnotation__NameAssignment_1 )
-            // InternalKExpressions.g:7067:2: rule__TagAnnotation__NameAssignment_1
+            // InternalKExpressions.g:7210:1: ( rule__TagAnnotation__NameAssignment_1 )
+            // InternalKExpressions.g:7210:2: rule__TagAnnotation__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TagAnnotation__NameAssignment_1();
@@ -20181,14 +20593,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__PragmaTag__Group__0"
-    // InternalKExpressions.g:7081:1: rule__PragmaTag__Group__0 : rule__PragmaTag__Group__0__Impl rule__PragmaTag__Group__1 ;
+    // InternalKExpressions.g:7224:1: rule__PragmaTag__Group__0 : rule__PragmaTag__Group__0__Impl rule__PragmaTag__Group__1 ;
     public final void rule__PragmaTag__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7085:1: ( rule__PragmaTag__Group__0__Impl rule__PragmaTag__Group__1 )
-            // InternalKExpressions.g:7086:2: rule__PragmaTag__Group__0__Impl rule__PragmaTag__Group__1
+            // InternalKExpressions.g:7228:1: ( rule__PragmaTag__Group__0__Impl rule__PragmaTag__Group__1 )
+            // InternalKExpressions.g:7229:2: rule__PragmaTag__Group__0__Impl rule__PragmaTag__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_4);
             rule__PragmaTag__Group__0__Impl();
@@ -20219,22 +20631,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__PragmaTag__Group__0__Impl"
-    // InternalKExpressions.g:7093:1: rule__PragmaTag__Group__0__Impl : ( '#' ) ;
+    // InternalKExpressions.g:7236:1: rule__PragmaTag__Group__0__Impl : ( '#' ) ;
     public final void rule__PragmaTag__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7097:1: ( ( '#' ) )
-            // InternalKExpressions.g:7098:1: ( '#' )
+            // InternalKExpressions.g:7240:1: ( ( '#' ) )
+            // InternalKExpressions.g:7241:1: ( '#' )
             {
-            // InternalKExpressions.g:7098:1: ( '#' )
-            // InternalKExpressions.g:7099:1: '#'
+            // InternalKExpressions.g:7241:1: ( '#' )
+            // InternalKExpressions.g:7242:1: '#'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPragmaTagAccess().getNumberSignKeyword_0()); 
             }
-            match(input,46,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,47,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getPragmaTagAccess().getNumberSignKeyword_0()); 
             }
@@ -20260,14 +20672,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__PragmaTag__Group__1"
-    // InternalKExpressions.g:7112:1: rule__PragmaTag__Group__1 : rule__PragmaTag__Group__1__Impl ;
+    // InternalKExpressions.g:7255:1: rule__PragmaTag__Group__1 : rule__PragmaTag__Group__1__Impl ;
     public final void rule__PragmaTag__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7116:1: ( rule__PragmaTag__Group__1__Impl )
-            // InternalKExpressions.g:7117:2: rule__PragmaTag__Group__1__Impl
+            // InternalKExpressions.g:7259:1: ( rule__PragmaTag__Group__1__Impl )
+            // InternalKExpressions.g:7260:2: rule__PragmaTag__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__PragmaTag__Group__1__Impl();
@@ -20293,23 +20705,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__PragmaTag__Group__1__Impl"
-    // InternalKExpressions.g:7123:1: rule__PragmaTag__Group__1__Impl : ( ( rule__PragmaTag__NameAssignment_1 ) ) ;
+    // InternalKExpressions.g:7266:1: rule__PragmaTag__Group__1__Impl : ( ( rule__PragmaTag__NameAssignment_1 ) ) ;
     public final void rule__PragmaTag__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7127:1: ( ( ( rule__PragmaTag__NameAssignment_1 ) ) )
-            // InternalKExpressions.g:7128:1: ( ( rule__PragmaTag__NameAssignment_1 ) )
+            // InternalKExpressions.g:7270:1: ( ( ( rule__PragmaTag__NameAssignment_1 ) ) )
+            // InternalKExpressions.g:7271:1: ( ( rule__PragmaTag__NameAssignment_1 ) )
             {
-            // InternalKExpressions.g:7128:1: ( ( rule__PragmaTag__NameAssignment_1 ) )
-            // InternalKExpressions.g:7129:1: ( rule__PragmaTag__NameAssignment_1 )
+            // InternalKExpressions.g:7271:1: ( ( rule__PragmaTag__NameAssignment_1 ) )
+            // InternalKExpressions.g:7272:1: ( rule__PragmaTag__NameAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPragmaTagAccess().getNameAssignment_1()); 
             }
-            // InternalKExpressions.g:7130:1: ( rule__PragmaTag__NameAssignment_1 )
-            // InternalKExpressions.g:7130:2: rule__PragmaTag__NameAssignment_1
+            // InternalKExpressions.g:7273:1: ( rule__PragmaTag__NameAssignment_1 )
+            // InternalKExpressions.g:7273:2: rule__PragmaTag__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__PragmaTag__NameAssignment_1();
@@ -20344,14 +20756,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group__0"
-    // InternalKExpressions.g:7144:1: rule__KeyStringValueAnnotation__Group__0 : rule__KeyStringValueAnnotation__Group__0__Impl rule__KeyStringValueAnnotation__Group__1 ;
+    // InternalKExpressions.g:7287:1: rule__KeyStringValueAnnotation__Group__0 : rule__KeyStringValueAnnotation__Group__0__Impl rule__KeyStringValueAnnotation__Group__1 ;
     public final void rule__KeyStringValueAnnotation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7148:1: ( rule__KeyStringValueAnnotation__Group__0__Impl rule__KeyStringValueAnnotation__Group__1 )
-            // InternalKExpressions.g:7149:2: rule__KeyStringValueAnnotation__Group__0__Impl rule__KeyStringValueAnnotation__Group__1
+            // InternalKExpressions.g:7291:1: ( rule__KeyStringValueAnnotation__Group__0__Impl rule__KeyStringValueAnnotation__Group__1 )
+            // InternalKExpressions.g:7292:2: rule__KeyStringValueAnnotation__Group__0__Impl rule__KeyStringValueAnnotation__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_4);
             rule__KeyStringValueAnnotation__Group__0__Impl();
@@ -20382,22 +20794,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group__0__Impl"
-    // InternalKExpressions.g:7156:1: rule__KeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
+    // InternalKExpressions.g:7299:1: rule__KeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
     public final void rule__KeyStringValueAnnotation__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7160:1: ( ( '@' ) )
-            // InternalKExpressions.g:7161:1: ( '@' )
+            // InternalKExpressions.g:7303:1: ( ( '@' ) )
+            // InternalKExpressions.g:7304:1: ( '@' )
             {
-            // InternalKExpressions.g:7161:1: ( '@' )
-            // InternalKExpressions.g:7162:1: '@'
+            // InternalKExpressions.g:7304:1: ( '@' )
+            // InternalKExpressions.g:7305:1: '@'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,45,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,46,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
@@ -20423,16 +20835,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group__1"
-    // InternalKExpressions.g:7175:1: rule__KeyStringValueAnnotation__Group__1 : rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2 ;
+    // InternalKExpressions.g:7318:1: rule__KeyStringValueAnnotation__Group__1 : rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2 ;
     public final void rule__KeyStringValueAnnotation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7179:1: ( rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2 )
-            // InternalKExpressions.g:7180:2: rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2
+            // InternalKExpressions.g:7322:1: ( rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2 )
+            // InternalKExpressions.g:7323:2: rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_44);
+            pushFollow(FollowSets000.FOLLOW_45);
             rule__KeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -20461,23 +20873,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group__1__Impl"
-    // InternalKExpressions.g:7187:1: rule__KeyStringValueAnnotation__Group__1__Impl : ( ( rule__KeyStringValueAnnotation__NameAssignment_1 ) ) ;
+    // InternalKExpressions.g:7330:1: rule__KeyStringValueAnnotation__Group__1__Impl : ( ( rule__KeyStringValueAnnotation__NameAssignment_1 ) ) ;
     public final void rule__KeyStringValueAnnotation__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7191:1: ( ( ( rule__KeyStringValueAnnotation__NameAssignment_1 ) ) )
-            // InternalKExpressions.g:7192:1: ( ( rule__KeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalKExpressions.g:7334:1: ( ( ( rule__KeyStringValueAnnotation__NameAssignment_1 ) ) )
+            // InternalKExpressions.g:7335:1: ( ( rule__KeyStringValueAnnotation__NameAssignment_1 ) )
             {
-            // InternalKExpressions.g:7192:1: ( ( rule__KeyStringValueAnnotation__NameAssignment_1 ) )
-            // InternalKExpressions.g:7193:1: ( rule__KeyStringValueAnnotation__NameAssignment_1 )
+            // InternalKExpressions.g:7335:1: ( ( rule__KeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalKExpressions.g:7336:1: ( rule__KeyStringValueAnnotation__NameAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getNameAssignment_1()); 
             }
-            // InternalKExpressions.g:7194:1: ( rule__KeyStringValueAnnotation__NameAssignment_1 )
-            // InternalKExpressions.g:7194:2: rule__KeyStringValueAnnotation__NameAssignment_1
+            // InternalKExpressions.g:7337:1: ( rule__KeyStringValueAnnotation__NameAssignment_1 )
+            // InternalKExpressions.g:7337:2: rule__KeyStringValueAnnotation__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__KeyStringValueAnnotation__NameAssignment_1();
@@ -20512,16 +20924,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group__2"
-    // InternalKExpressions.g:7204:1: rule__KeyStringValueAnnotation__Group__2 : rule__KeyStringValueAnnotation__Group__2__Impl rule__KeyStringValueAnnotation__Group__3 ;
+    // InternalKExpressions.g:7347:1: rule__KeyStringValueAnnotation__Group__2 : rule__KeyStringValueAnnotation__Group__2__Impl rule__KeyStringValueAnnotation__Group__3 ;
     public final void rule__KeyStringValueAnnotation__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7208:1: ( rule__KeyStringValueAnnotation__Group__2__Impl rule__KeyStringValueAnnotation__Group__3 )
-            // InternalKExpressions.g:7209:2: rule__KeyStringValueAnnotation__Group__2__Impl rule__KeyStringValueAnnotation__Group__3
+            // InternalKExpressions.g:7351:1: ( rule__KeyStringValueAnnotation__Group__2__Impl rule__KeyStringValueAnnotation__Group__3 )
+            // InternalKExpressions.g:7352:2: rule__KeyStringValueAnnotation__Group__2__Impl rule__KeyStringValueAnnotation__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_45);
+            pushFollow(FollowSets000.FOLLOW_46);
             rule__KeyStringValueAnnotation__Group__2__Impl();
 
             state._fsp--;
@@ -20550,23 +20962,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group__2__Impl"
-    // InternalKExpressions.g:7216:1: rule__KeyStringValueAnnotation__Group__2__Impl : ( ( rule__KeyStringValueAnnotation__ValuesAssignment_2 ) ) ;
+    // InternalKExpressions.g:7359:1: rule__KeyStringValueAnnotation__Group__2__Impl : ( ( rule__KeyStringValueAnnotation__ValuesAssignment_2 ) ) ;
     public final void rule__KeyStringValueAnnotation__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7220:1: ( ( ( rule__KeyStringValueAnnotation__ValuesAssignment_2 ) ) )
-            // InternalKExpressions.g:7221:1: ( ( rule__KeyStringValueAnnotation__ValuesAssignment_2 ) )
+            // InternalKExpressions.g:7363:1: ( ( ( rule__KeyStringValueAnnotation__ValuesAssignment_2 ) ) )
+            // InternalKExpressions.g:7364:1: ( ( rule__KeyStringValueAnnotation__ValuesAssignment_2 ) )
             {
-            // InternalKExpressions.g:7221:1: ( ( rule__KeyStringValueAnnotation__ValuesAssignment_2 ) )
-            // InternalKExpressions.g:7222:1: ( rule__KeyStringValueAnnotation__ValuesAssignment_2 )
+            // InternalKExpressions.g:7364:1: ( ( rule__KeyStringValueAnnotation__ValuesAssignment_2 ) )
+            // InternalKExpressions.g:7365:1: ( rule__KeyStringValueAnnotation__ValuesAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getValuesAssignment_2()); 
             }
-            // InternalKExpressions.g:7223:1: ( rule__KeyStringValueAnnotation__ValuesAssignment_2 )
-            // InternalKExpressions.g:7223:2: rule__KeyStringValueAnnotation__ValuesAssignment_2
+            // InternalKExpressions.g:7366:1: ( rule__KeyStringValueAnnotation__ValuesAssignment_2 )
+            // InternalKExpressions.g:7366:2: rule__KeyStringValueAnnotation__ValuesAssignment_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__KeyStringValueAnnotation__ValuesAssignment_2();
@@ -20601,14 +21013,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group__3"
-    // InternalKExpressions.g:7233:1: rule__KeyStringValueAnnotation__Group__3 : rule__KeyStringValueAnnotation__Group__3__Impl ;
+    // InternalKExpressions.g:7376:1: rule__KeyStringValueAnnotation__Group__3 : rule__KeyStringValueAnnotation__Group__3__Impl ;
     public final void rule__KeyStringValueAnnotation__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7237:1: ( rule__KeyStringValueAnnotation__Group__3__Impl )
-            // InternalKExpressions.g:7238:2: rule__KeyStringValueAnnotation__Group__3__Impl
+            // InternalKExpressions.g:7380:1: ( rule__KeyStringValueAnnotation__Group__3__Impl )
+            // InternalKExpressions.g:7381:2: rule__KeyStringValueAnnotation__Group__3__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__KeyStringValueAnnotation__Group__3__Impl();
@@ -20634,35 +21046,35 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group__3__Impl"
-    // InternalKExpressions.g:7244:1: rule__KeyStringValueAnnotation__Group__3__Impl : ( ( rule__KeyStringValueAnnotation__Group_3__0 )* ) ;
+    // InternalKExpressions.g:7387:1: rule__KeyStringValueAnnotation__Group__3__Impl : ( ( rule__KeyStringValueAnnotation__Group_3__0 )* ) ;
     public final void rule__KeyStringValueAnnotation__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7248:1: ( ( ( rule__KeyStringValueAnnotation__Group_3__0 )* ) )
-            // InternalKExpressions.g:7249:1: ( ( rule__KeyStringValueAnnotation__Group_3__0 )* )
+            // InternalKExpressions.g:7391:1: ( ( ( rule__KeyStringValueAnnotation__Group_3__0 )* ) )
+            // InternalKExpressions.g:7392:1: ( ( rule__KeyStringValueAnnotation__Group_3__0 )* )
             {
-            // InternalKExpressions.g:7249:1: ( ( rule__KeyStringValueAnnotation__Group_3__0 )* )
-            // InternalKExpressions.g:7250:1: ( rule__KeyStringValueAnnotation__Group_3__0 )*
+            // InternalKExpressions.g:7392:1: ( ( rule__KeyStringValueAnnotation__Group_3__0 )* )
+            // InternalKExpressions.g:7393:1: ( rule__KeyStringValueAnnotation__Group_3__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getGroup_3()); 
             }
-            // InternalKExpressions.g:7251:1: ( rule__KeyStringValueAnnotation__Group_3__0 )*
-            loop47:
+            // InternalKExpressions.g:7394:1: ( rule__KeyStringValueAnnotation__Group_3__0 )*
+            loop48:
             do {
-                int alt47=2;
-                int LA47_0 = input.LA(1);
+                int alt48=2;
+                int LA48_0 = input.LA(1);
 
-                if ( (LA47_0==43) ) {
-                    alt47=1;
+                if ( (LA48_0==43) ) {
+                    alt48=1;
                 }
 
 
-                switch (alt47) {
+                switch (alt48) {
             	case 1 :
-            	    // InternalKExpressions.g:7251:2: rule__KeyStringValueAnnotation__Group_3__0
+            	    // InternalKExpressions.g:7394:2: rule__KeyStringValueAnnotation__Group_3__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_41);
             	    rule__KeyStringValueAnnotation__Group_3__0();
@@ -20674,7 +21086,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop47;
+            	    break loop48;
                 }
             } while (true);
 
@@ -20703,16 +21115,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group_3__0"
-    // InternalKExpressions.g:7269:1: rule__KeyStringValueAnnotation__Group_3__0 : rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1 ;
+    // InternalKExpressions.g:7412:1: rule__KeyStringValueAnnotation__Group_3__0 : rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1 ;
     public final void rule__KeyStringValueAnnotation__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7273:1: ( rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1 )
-            // InternalKExpressions.g:7274:2: rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1
+            // InternalKExpressions.g:7416:1: ( rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1 )
+            // InternalKExpressions.g:7417:2: rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_44);
+            pushFollow(FollowSets000.FOLLOW_45);
             rule__KeyStringValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
@@ -20741,17 +21153,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group_3__0__Impl"
-    // InternalKExpressions.g:7281:1: rule__KeyStringValueAnnotation__Group_3__0__Impl : ( ',' ) ;
+    // InternalKExpressions.g:7424:1: rule__KeyStringValueAnnotation__Group_3__0__Impl : ( ',' ) ;
     public final void rule__KeyStringValueAnnotation__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7285:1: ( ( ',' ) )
-            // InternalKExpressions.g:7286:1: ( ',' )
+            // InternalKExpressions.g:7428:1: ( ( ',' ) )
+            // InternalKExpressions.g:7429:1: ( ',' )
             {
-            // InternalKExpressions.g:7286:1: ( ',' )
-            // InternalKExpressions.g:7287:1: ','
+            // InternalKExpressions.g:7429:1: ( ',' )
+            // InternalKExpressions.g:7430:1: ','
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getCommaKeyword_3_0()); 
@@ -20782,14 +21194,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group_3__1"
-    // InternalKExpressions.g:7300:1: rule__KeyStringValueAnnotation__Group_3__1 : rule__KeyStringValueAnnotation__Group_3__1__Impl ;
+    // InternalKExpressions.g:7443:1: rule__KeyStringValueAnnotation__Group_3__1 : rule__KeyStringValueAnnotation__Group_3__1__Impl ;
     public final void rule__KeyStringValueAnnotation__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7304:1: ( rule__KeyStringValueAnnotation__Group_3__1__Impl )
-            // InternalKExpressions.g:7305:2: rule__KeyStringValueAnnotation__Group_3__1__Impl
+            // InternalKExpressions.g:7447:1: ( rule__KeyStringValueAnnotation__Group_3__1__Impl )
+            // InternalKExpressions.g:7448:2: rule__KeyStringValueAnnotation__Group_3__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__KeyStringValueAnnotation__Group_3__1__Impl();
@@ -20815,23 +21227,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group_3__1__Impl"
-    // InternalKExpressions.g:7311:1: rule__KeyStringValueAnnotation__Group_3__1__Impl : ( ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 ) ) ;
+    // InternalKExpressions.g:7454:1: rule__KeyStringValueAnnotation__Group_3__1__Impl : ( ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 ) ) ;
     public final void rule__KeyStringValueAnnotation__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7315:1: ( ( ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 ) ) )
-            // InternalKExpressions.g:7316:1: ( ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 ) )
+            // InternalKExpressions.g:7458:1: ( ( ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 ) ) )
+            // InternalKExpressions.g:7459:1: ( ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 ) )
             {
-            // InternalKExpressions.g:7316:1: ( ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 ) )
-            // InternalKExpressions.g:7317:1: ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 )
+            // InternalKExpressions.g:7459:1: ( ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 ) )
+            // InternalKExpressions.g:7460:1: ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getValuesAssignment_3_1()); 
             }
-            // InternalKExpressions.g:7318:1: ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 )
-            // InternalKExpressions.g:7318:2: rule__KeyStringValueAnnotation__ValuesAssignment_3_1
+            // InternalKExpressions.g:7461:1: ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 )
+            // InternalKExpressions.g:7461:2: rule__KeyStringValueAnnotation__ValuesAssignment_3_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__KeyStringValueAnnotation__ValuesAssignment_3_1();
@@ -20866,14 +21278,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group__0"
-    // InternalKExpressions.g:7332:1: rule__RestrictedKeyStringValueAnnotation__Group__0 : rule__RestrictedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedKeyStringValueAnnotation__Group__1 ;
+    // InternalKExpressions.g:7475:1: rule__RestrictedKeyStringValueAnnotation__Group__0 : rule__RestrictedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedKeyStringValueAnnotation__Group__1 ;
     public final void rule__RestrictedKeyStringValueAnnotation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7336:1: ( rule__RestrictedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedKeyStringValueAnnotation__Group__1 )
-            // InternalKExpressions.g:7337:2: rule__RestrictedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedKeyStringValueAnnotation__Group__1
+            // InternalKExpressions.g:7479:1: ( rule__RestrictedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedKeyStringValueAnnotation__Group__1 )
+            // InternalKExpressions.g:7480:2: rule__RestrictedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedKeyStringValueAnnotation__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_4);
             rule__RestrictedKeyStringValueAnnotation__Group__0__Impl();
@@ -20904,22 +21316,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group__0__Impl"
-    // InternalKExpressions.g:7344:1: rule__RestrictedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
+    // InternalKExpressions.g:7487:1: rule__RestrictedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
     public final void rule__RestrictedKeyStringValueAnnotation__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7348:1: ( ( '@' ) )
-            // InternalKExpressions.g:7349:1: ( '@' )
+            // InternalKExpressions.g:7491:1: ( ( '@' ) )
+            // InternalKExpressions.g:7492:1: ( '@' )
             {
-            // InternalKExpressions.g:7349:1: ( '@' )
-            // InternalKExpressions.g:7350:1: '@'
+            // InternalKExpressions.g:7492:1: ( '@' )
+            // InternalKExpressions.g:7493:1: '@'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,45,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,46,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
@@ -20945,16 +21357,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group__1"
-    // InternalKExpressions.g:7363:1: rule__RestrictedKeyStringValueAnnotation__Group__1 : rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2 ;
+    // InternalKExpressions.g:7506:1: rule__RestrictedKeyStringValueAnnotation__Group__1 : rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2 ;
     public final void rule__RestrictedKeyStringValueAnnotation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7367:1: ( rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2 )
-            // InternalKExpressions.g:7368:2: rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2
+            // InternalKExpressions.g:7510:1: ( rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2 )
+            // InternalKExpressions.g:7511:2: rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_46);
+            pushFollow(FollowSets000.FOLLOW_47);
             rule__RestrictedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -20983,23 +21395,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group__1__Impl"
-    // InternalKExpressions.g:7375:1: rule__RestrictedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
+    // InternalKExpressions.g:7518:1: rule__RestrictedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
     public final void rule__RestrictedKeyStringValueAnnotation__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7379:1: ( ( ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 ) ) )
-            // InternalKExpressions.g:7380:1: ( ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalKExpressions.g:7522:1: ( ( ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 ) ) )
+            // InternalKExpressions.g:7523:1: ( ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 ) )
             {
-            // InternalKExpressions.g:7380:1: ( ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 ) )
-            // InternalKExpressions.g:7381:1: ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalKExpressions.g:7523:1: ( ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalKExpressions.g:7524:1: ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getNameAssignment_1()); 
             }
-            // InternalKExpressions.g:7382:1: ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 )
-            // InternalKExpressions.g:7382:2: rule__RestrictedKeyStringValueAnnotation__NameAssignment_1
+            // InternalKExpressions.g:7525:1: ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalKExpressions.g:7525:2: rule__RestrictedKeyStringValueAnnotation__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RestrictedKeyStringValueAnnotation__NameAssignment_1();
@@ -21034,16 +21446,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group__2"
-    // InternalKExpressions.g:7392:1: rule__RestrictedKeyStringValueAnnotation__Group__2 : rule__RestrictedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedKeyStringValueAnnotation__Group__3 ;
+    // InternalKExpressions.g:7535:1: rule__RestrictedKeyStringValueAnnotation__Group__2 : rule__RestrictedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedKeyStringValueAnnotation__Group__3 ;
     public final void rule__RestrictedKeyStringValueAnnotation__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7396:1: ( rule__RestrictedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedKeyStringValueAnnotation__Group__3 )
-            // InternalKExpressions.g:7397:2: rule__RestrictedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedKeyStringValueAnnotation__Group__3
+            // InternalKExpressions.g:7539:1: ( rule__RestrictedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedKeyStringValueAnnotation__Group__3 )
+            // InternalKExpressions.g:7540:2: rule__RestrictedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedKeyStringValueAnnotation__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_45);
+            pushFollow(FollowSets000.FOLLOW_46);
             rule__RestrictedKeyStringValueAnnotation__Group__2__Impl();
 
             state._fsp--;
@@ -21072,23 +21484,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group__2__Impl"
-    // InternalKExpressions.g:7404:1: rule__RestrictedKeyStringValueAnnotation__Group__2__Impl : ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 ) ) ;
+    // InternalKExpressions.g:7547:1: rule__RestrictedKeyStringValueAnnotation__Group__2__Impl : ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 ) ) ;
     public final void rule__RestrictedKeyStringValueAnnotation__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7408:1: ( ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 ) ) )
-            // InternalKExpressions.g:7409:1: ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 ) )
+            // InternalKExpressions.g:7551:1: ( ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 ) ) )
+            // InternalKExpressions.g:7552:1: ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 ) )
             {
-            // InternalKExpressions.g:7409:1: ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 ) )
-            // InternalKExpressions.g:7410:1: ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 )
+            // InternalKExpressions.g:7552:1: ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 ) )
+            // InternalKExpressions.g:7553:1: ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesAssignment_2()); 
             }
-            // InternalKExpressions.g:7411:1: ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 )
-            // InternalKExpressions.g:7411:2: rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2
+            // InternalKExpressions.g:7554:1: ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 )
+            // InternalKExpressions.g:7554:2: rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2();
@@ -21123,14 +21535,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group__3"
-    // InternalKExpressions.g:7421:1: rule__RestrictedKeyStringValueAnnotation__Group__3 : rule__RestrictedKeyStringValueAnnotation__Group__3__Impl ;
+    // InternalKExpressions.g:7564:1: rule__RestrictedKeyStringValueAnnotation__Group__3 : rule__RestrictedKeyStringValueAnnotation__Group__3__Impl ;
     public final void rule__RestrictedKeyStringValueAnnotation__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7425:1: ( rule__RestrictedKeyStringValueAnnotation__Group__3__Impl )
-            // InternalKExpressions.g:7426:2: rule__RestrictedKeyStringValueAnnotation__Group__3__Impl
+            // InternalKExpressions.g:7568:1: ( rule__RestrictedKeyStringValueAnnotation__Group__3__Impl )
+            // InternalKExpressions.g:7569:2: rule__RestrictedKeyStringValueAnnotation__Group__3__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RestrictedKeyStringValueAnnotation__Group__3__Impl();
@@ -21156,35 +21568,35 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group__3__Impl"
-    // InternalKExpressions.g:7432:1: rule__RestrictedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )* ) ;
+    // InternalKExpressions.g:7575:1: rule__RestrictedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )* ) ;
     public final void rule__RestrictedKeyStringValueAnnotation__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7436:1: ( ( ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )* ) )
-            // InternalKExpressions.g:7437:1: ( ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )* )
+            // InternalKExpressions.g:7579:1: ( ( ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )* ) )
+            // InternalKExpressions.g:7580:1: ( ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )* )
             {
-            // InternalKExpressions.g:7437:1: ( ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )* )
-            // InternalKExpressions.g:7438:1: ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )*
+            // InternalKExpressions.g:7580:1: ( ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )* )
+            // InternalKExpressions.g:7581:1: ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getGroup_3()); 
             }
-            // InternalKExpressions.g:7439:1: ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )*
-            loop48:
+            // InternalKExpressions.g:7582:1: ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )*
+            loop49:
             do {
-                int alt48=2;
-                int LA48_0 = input.LA(1);
+                int alt49=2;
+                int LA49_0 = input.LA(1);
 
-                if ( (LA48_0==43) ) {
-                    alt48=1;
+                if ( (LA49_0==43) ) {
+                    alt49=1;
                 }
 
 
-                switch (alt48) {
+                switch (alt49) {
             	case 1 :
-            	    // InternalKExpressions.g:7439:2: rule__RestrictedKeyStringValueAnnotation__Group_3__0
+            	    // InternalKExpressions.g:7582:2: rule__RestrictedKeyStringValueAnnotation__Group_3__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_41);
             	    rule__RestrictedKeyStringValueAnnotation__Group_3__0();
@@ -21196,7 +21608,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop48;
+            	    break loop49;
                 }
             } while (true);
 
@@ -21225,16 +21637,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group_3__0"
-    // InternalKExpressions.g:7457:1: rule__RestrictedKeyStringValueAnnotation__Group_3__0 : rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1 ;
+    // InternalKExpressions.g:7600:1: rule__RestrictedKeyStringValueAnnotation__Group_3__0 : rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1 ;
     public final void rule__RestrictedKeyStringValueAnnotation__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7461:1: ( rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1 )
-            // InternalKExpressions.g:7462:2: rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1
+            // InternalKExpressions.g:7604:1: ( rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1 )
+            // InternalKExpressions.g:7605:2: rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_46);
+            pushFollow(FollowSets000.FOLLOW_47);
             rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
@@ -21263,17 +21675,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl"
-    // InternalKExpressions.g:7469:1: rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl : ( ',' ) ;
+    // InternalKExpressions.g:7612:1: rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl : ( ',' ) ;
     public final void rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7473:1: ( ( ',' ) )
-            // InternalKExpressions.g:7474:1: ( ',' )
+            // InternalKExpressions.g:7616:1: ( ( ',' ) )
+            // InternalKExpressions.g:7617:1: ( ',' )
             {
-            // InternalKExpressions.g:7474:1: ( ',' )
-            // InternalKExpressions.g:7475:1: ','
+            // InternalKExpressions.g:7617:1: ( ',' )
+            // InternalKExpressions.g:7618:1: ','
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommaKeyword_3_0()); 
@@ -21304,14 +21716,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group_3__1"
-    // InternalKExpressions.g:7488:1: rule__RestrictedKeyStringValueAnnotation__Group_3__1 : rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl ;
+    // InternalKExpressions.g:7631:1: rule__RestrictedKeyStringValueAnnotation__Group_3__1 : rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl ;
     public final void rule__RestrictedKeyStringValueAnnotation__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7492:1: ( rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl )
-            // InternalKExpressions.g:7493:2: rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl
+            // InternalKExpressions.g:7635:1: ( rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl )
+            // InternalKExpressions.g:7636:2: rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl();
@@ -21337,23 +21749,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl"
-    // InternalKExpressions.g:7499:1: rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl : ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 ) ) ;
+    // InternalKExpressions.g:7642:1: rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl : ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 ) ) ;
     public final void rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7503:1: ( ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 ) ) )
-            // InternalKExpressions.g:7504:1: ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 ) )
+            // InternalKExpressions.g:7646:1: ( ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 ) ) )
+            // InternalKExpressions.g:7647:1: ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 ) )
             {
-            // InternalKExpressions.g:7504:1: ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 ) )
-            // InternalKExpressions.g:7505:1: ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 )
+            // InternalKExpressions.g:7647:1: ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 ) )
+            // InternalKExpressions.g:7648:1: ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesAssignment_3_1()); 
             }
-            // InternalKExpressions.g:7506:1: ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 )
-            // InternalKExpressions.g:7506:2: rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1
+            // InternalKExpressions.g:7649:1: ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 )
+            // InternalKExpressions.g:7649:2: rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1();
@@ -21388,14 +21800,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__StringPragma__Group__0"
-    // InternalKExpressions.g:7520:1: rule__StringPragma__Group__0 : rule__StringPragma__Group__0__Impl rule__StringPragma__Group__1 ;
+    // InternalKExpressions.g:7663:1: rule__StringPragma__Group__0 : rule__StringPragma__Group__0__Impl rule__StringPragma__Group__1 ;
     public final void rule__StringPragma__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7524:1: ( rule__StringPragma__Group__0__Impl rule__StringPragma__Group__1 )
-            // InternalKExpressions.g:7525:2: rule__StringPragma__Group__0__Impl rule__StringPragma__Group__1
+            // InternalKExpressions.g:7667:1: ( rule__StringPragma__Group__0__Impl rule__StringPragma__Group__1 )
+            // InternalKExpressions.g:7668:2: rule__StringPragma__Group__0__Impl rule__StringPragma__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_4);
             rule__StringPragma__Group__0__Impl();
@@ -21426,22 +21838,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__StringPragma__Group__0__Impl"
-    // InternalKExpressions.g:7532:1: rule__StringPragma__Group__0__Impl : ( '#' ) ;
+    // InternalKExpressions.g:7675:1: rule__StringPragma__Group__0__Impl : ( '#' ) ;
     public final void rule__StringPragma__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7536:1: ( ( '#' ) )
-            // InternalKExpressions.g:7537:1: ( '#' )
+            // InternalKExpressions.g:7679:1: ( ( '#' ) )
+            // InternalKExpressions.g:7680:1: ( '#' )
             {
-            // InternalKExpressions.g:7537:1: ( '#' )
-            // InternalKExpressions.g:7538:1: '#'
+            // InternalKExpressions.g:7680:1: ( '#' )
+            // InternalKExpressions.g:7681:1: '#'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringPragmaAccess().getNumberSignKeyword_0()); 
             }
-            match(input,46,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,47,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getStringPragmaAccess().getNumberSignKeyword_0()); 
             }
@@ -21467,16 +21879,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__StringPragma__Group__1"
-    // InternalKExpressions.g:7551:1: rule__StringPragma__Group__1 : rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2 ;
+    // InternalKExpressions.g:7694:1: rule__StringPragma__Group__1 : rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2 ;
     public final void rule__StringPragma__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7555:1: ( rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2 )
-            // InternalKExpressions.g:7556:2: rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2
+            // InternalKExpressions.g:7698:1: ( rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2 )
+            // InternalKExpressions.g:7699:2: rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_44);
+            pushFollow(FollowSets000.FOLLOW_45);
             rule__StringPragma__Group__1__Impl();
 
             state._fsp--;
@@ -21505,23 +21917,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__StringPragma__Group__1__Impl"
-    // InternalKExpressions.g:7563:1: rule__StringPragma__Group__1__Impl : ( ( rule__StringPragma__NameAssignment_1 ) ) ;
+    // InternalKExpressions.g:7706:1: rule__StringPragma__Group__1__Impl : ( ( rule__StringPragma__NameAssignment_1 ) ) ;
     public final void rule__StringPragma__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7567:1: ( ( ( rule__StringPragma__NameAssignment_1 ) ) )
-            // InternalKExpressions.g:7568:1: ( ( rule__StringPragma__NameAssignment_1 ) )
+            // InternalKExpressions.g:7710:1: ( ( ( rule__StringPragma__NameAssignment_1 ) ) )
+            // InternalKExpressions.g:7711:1: ( ( rule__StringPragma__NameAssignment_1 ) )
             {
-            // InternalKExpressions.g:7568:1: ( ( rule__StringPragma__NameAssignment_1 ) )
-            // InternalKExpressions.g:7569:1: ( rule__StringPragma__NameAssignment_1 )
+            // InternalKExpressions.g:7711:1: ( ( rule__StringPragma__NameAssignment_1 ) )
+            // InternalKExpressions.g:7712:1: ( rule__StringPragma__NameAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringPragmaAccess().getNameAssignment_1()); 
             }
-            // InternalKExpressions.g:7570:1: ( rule__StringPragma__NameAssignment_1 )
-            // InternalKExpressions.g:7570:2: rule__StringPragma__NameAssignment_1
+            // InternalKExpressions.g:7713:1: ( rule__StringPragma__NameAssignment_1 )
+            // InternalKExpressions.g:7713:2: rule__StringPragma__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__StringPragma__NameAssignment_1();
@@ -21556,16 +21968,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__StringPragma__Group__2"
-    // InternalKExpressions.g:7580:1: rule__StringPragma__Group__2 : rule__StringPragma__Group__2__Impl rule__StringPragma__Group__3 ;
+    // InternalKExpressions.g:7723:1: rule__StringPragma__Group__2 : rule__StringPragma__Group__2__Impl rule__StringPragma__Group__3 ;
     public final void rule__StringPragma__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7584:1: ( rule__StringPragma__Group__2__Impl rule__StringPragma__Group__3 )
-            // InternalKExpressions.g:7585:2: rule__StringPragma__Group__2__Impl rule__StringPragma__Group__3
+            // InternalKExpressions.g:7727:1: ( rule__StringPragma__Group__2__Impl rule__StringPragma__Group__3 )
+            // InternalKExpressions.g:7728:2: rule__StringPragma__Group__2__Impl rule__StringPragma__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_45);
+            pushFollow(FollowSets000.FOLLOW_46);
             rule__StringPragma__Group__2__Impl();
 
             state._fsp--;
@@ -21594,23 +22006,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__StringPragma__Group__2__Impl"
-    // InternalKExpressions.g:7592:1: rule__StringPragma__Group__2__Impl : ( ( rule__StringPragma__ValuesAssignment_2 ) ) ;
+    // InternalKExpressions.g:7735:1: rule__StringPragma__Group__2__Impl : ( ( rule__StringPragma__ValuesAssignment_2 ) ) ;
     public final void rule__StringPragma__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7596:1: ( ( ( rule__StringPragma__ValuesAssignment_2 ) ) )
-            // InternalKExpressions.g:7597:1: ( ( rule__StringPragma__ValuesAssignment_2 ) )
+            // InternalKExpressions.g:7739:1: ( ( ( rule__StringPragma__ValuesAssignment_2 ) ) )
+            // InternalKExpressions.g:7740:1: ( ( rule__StringPragma__ValuesAssignment_2 ) )
             {
-            // InternalKExpressions.g:7597:1: ( ( rule__StringPragma__ValuesAssignment_2 ) )
-            // InternalKExpressions.g:7598:1: ( rule__StringPragma__ValuesAssignment_2 )
+            // InternalKExpressions.g:7740:1: ( ( rule__StringPragma__ValuesAssignment_2 ) )
+            // InternalKExpressions.g:7741:1: ( rule__StringPragma__ValuesAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringPragmaAccess().getValuesAssignment_2()); 
             }
-            // InternalKExpressions.g:7599:1: ( rule__StringPragma__ValuesAssignment_2 )
-            // InternalKExpressions.g:7599:2: rule__StringPragma__ValuesAssignment_2
+            // InternalKExpressions.g:7742:1: ( rule__StringPragma__ValuesAssignment_2 )
+            // InternalKExpressions.g:7742:2: rule__StringPragma__ValuesAssignment_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__StringPragma__ValuesAssignment_2();
@@ -21645,14 +22057,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__StringPragma__Group__3"
-    // InternalKExpressions.g:7609:1: rule__StringPragma__Group__3 : rule__StringPragma__Group__3__Impl ;
+    // InternalKExpressions.g:7752:1: rule__StringPragma__Group__3 : rule__StringPragma__Group__3__Impl ;
     public final void rule__StringPragma__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7613:1: ( rule__StringPragma__Group__3__Impl )
-            // InternalKExpressions.g:7614:2: rule__StringPragma__Group__3__Impl
+            // InternalKExpressions.g:7756:1: ( rule__StringPragma__Group__3__Impl )
+            // InternalKExpressions.g:7757:2: rule__StringPragma__Group__3__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__StringPragma__Group__3__Impl();
@@ -21678,35 +22090,35 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__StringPragma__Group__3__Impl"
-    // InternalKExpressions.g:7620:1: rule__StringPragma__Group__3__Impl : ( ( rule__StringPragma__Group_3__0 )* ) ;
+    // InternalKExpressions.g:7763:1: rule__StringPragma__Group__3__Impl : ( ( rule__StringPragma__Group_3__0 )* ) ;
     public final void rule__StringPragma__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7624:1: ( ( ( rule__StringPragma__Group_3__0 )* ) )
-            // InternalKExpressions.g:7625:1: ( ( rule__StringPragma__Group_3__0 )* )
+            // InternalKExpressions.g:7767:1: ( ( ( rule__StringPragma__Group_3__0 )* ) )
+            // InternalKExpressions.g:7768:1: ( ( rule__StringPragma__Group_3__0 )* )
             {
-            // InternalKExpressions.g:7625:1: ( ( rule__StringPragma__Group_3__0 )* )
-            // InternalKExpressions.g:7626:1: ( rule__StringPragma__Group_3__0 )*
+            // InternalKExpressions.g:7768:1: ( ( rule__StringPragma__Group_3__0 )* )
+            // InternalKExpressions.g:7769:1: ( rule__StringPragma__Group_3__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringPragmaAccess().getGroup_3()); 
             }
-            // InternalKExpressions.g:7627:1: ( rule__StringPragma__Group_3__0 )*
-            loop49:
+            // InternalKExpressions.g:7770:1: ( rule__StringPragma__Group_3__0 )*
+            loop50:
             do {
-                int alt49=2;
-                int LA49_0 = input.LA(1);
+                int alt50=2;
+                int LA50_0 = input.LA(1);
 
-                if ( (LA49_0==43) ) {
-                    alt49=1;
+                if ( (LA50_0==43) ) {
+                    alt50=1;
                 }
 
 
-                switch (alt49) {
+                switch (alt50) {
             	case 1 :
-            	    // InternalKExpressions.g:7627:2: rule__StringPragma__Group_3__0
+            	    // InternalKExpressions.g:7770:2: rule__StringPragma__Group_3__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_41);
             	    rule__StringPragma__Group_3__0();
@@ -21718,7 +22130,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop49;
+            	    break loop50;
                 }
             } while (true);
 
@@ -21747,16 +22159,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__StringPragma__Group_3__0"
-    // InternalKExpressions.g:7645:1: rule__StringPragma__Group_3__0 : rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1 ;
+    // InternalKExpressions.g:7788:1: rule__StringPragma__Group_3__0 : rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1 ;
     public final void rule__StringPragma__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7649:1: ( rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1 )
-            // InternalKExpressions.g:7650:2: rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1
+            // InternalKExpressions.g:7792:1: ( rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1 )
+            // InternalKExpressions.g:7793:2: rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_44);
+            pushFollow(FollowSets000.FOLLOW_45);
             rule__StringPragma__Group_3__0__Impl();
 
             state._fsp--;
@@ -21785,17 +22197,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__StringPragma__Group_3__0__Impl"
-    // InternalKExpressions.g:7657:1: rule__StringPragma__Group_3__0__Impl : ( ',' ) ;
+    // InternalKExpressions.g:7800:1: rule__StringPragma__Group_3__0__Impl : ( ',' ) ;
     public final void rule__StringPragma__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7661:1: ( ( ',' ) )
-            // InternalKExpressions.g:7662:1: ( ',' )
+            // InternalKExpressions.g:7804:1: ( ( ',' ) )
+            // InternalKExpressions.g:7805:1: ( ',' )
             {
-            // InternalKExpressions.g:7662:1: ( ',' )
-            // InternalKExpressions.g:7663:1: ','
+            // InternalKExpressions.g:7805:1: ( ',' )
+            // InternalKExpressions.g:7806:1: ','
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringPragmaAccess().getCommaKeyword_3_0()); 
@@ -21826,14 +22238,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__StringPragma__Group_3__1"
-    // InternalKExpressions.g:7676:1: rule__StringPragma__Group_3__1 : rule__StringPragma__Group_3__1__Impl ;
+    // InternalKExpressions.g:7819:1: rule__StringPragma__Group_3__1 : rule__StringPragma__Group_3__1__Impl ;
     public final void rule__StringPragma__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7680:1: ( rule__StringPragma__Group_3__1__Impl )
-            // InternalKExpressions.g:7681:2: rule__StringPragma__Group_3__1__Impl
+            // InternalKExpressions.g:7823:1: ( rule__StringPragma__Group_3__1__Impl )
+            // InternalKExpressions.g:7824:2: rule__StringPragma__Group_3__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__StringPragma__Group_3__1__Impl();
@@ -21859,23 +22271,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__StringPragma__Group_3__1__Impl"
-    // InternalKExpressions.g:7687:1: rule__StringPragma__Group_3__1__Impl : ( ( rule__StringPragma__ValuesAssignment_3_1 ) ) ;
+    // InternalKExpressions.g:7830:1: rule__StringPragma__Group_3__1__Impl : ( ( rule__StringPragma__ValuesAssignment_3_1 ) ) ;
     public final void rule__StringPragma__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7691:1: ( ( ( rule__StringPragma__ValuesAssignment_3_1 ) ) )
-            // InternalKExpressions.g:7692:1: ( ( rule__StringPragma__ValuesAssignment_3_1 ) )
+            // InternalKExpressions.g:7834:1: ( ( ( rule__StringPragma__ValuesAssignment_3_1 ) ) )
+            // InternalKExpressions.g:7835:1: ( ( rule__StringPragma__ValuesAssignment_3_1 ) )
             {
-            // InternalKExpressions.g:7692:1: ( ( rule__StringPragma__ValuesAssignment_3_1 ) )
-            // InternalKExpressions.g:7693:1: ( rule__StringPragma__ValuesAssignment_3_1 )
+            // InternalKExpressions.g:7835:1: ( ( rule__StringPragma__ValuesAssignment_3_1 ) )
+            // InternalKExpressions.g:7836:1: ( rule__StringPragma__ValuesAssignment_3_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringPragmaAccess().getValuesAssignment_3_1()); 
             }
-            // InternalKExpressions.g:7694:1: ( rule__StringPragma__ValuesAssignment_3_1 )
-            // InternalKExpressions.g:7694:2: rule__StringPragma__ValuesAssignment_3_1
+            // InternalKExpressions.g:7837:1: ( rule__StringPragma__ValuesAssignment_3_1 )
+            // InternalKExpressions.g:7837:2: rule__StringPragma__ValuesAssignment_3_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__StringPragma__ValuesAssignment_3_1();
@@ -21910,14 +22322,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__0"
-    // InternalKExpressions.g:7708:1: rule__TypedKeyStringValueAnnotation__Group__0 : rule__TypedKeyStringValueAnnotation__Group__0__Impl rule__TypedKeyStringValueAnnotation__Group__1 ;
+    // InternalKExpressions.g:7851:1: rule__TypedKeyStringValueAnnotation__Group__0 : rule__TypedKeyStringValueAnnotation__Group__0__Impl rule__TypedKeyStringValueAnnotation__Group__1 ;
     public final void rule__TypedKeyStringValueAnnotation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7712:1: ( rule__TypedKeyStringValueAnnotation__Group__0__Impl rule__TypedKeyStringValueAnnotation__Group__1 )
-            // InternalKExpressions.g:7713:2: rule__TypedKeyStringValueAnnotation__Group__0__Impl rule__TypedKeyStringValueAnnotation__Group__1
+            // InternalKExpressions.g:7855:1: ( rule__TypedKeyStringValueAnnotation__Group__0__Impl rule__TypedKeyStringValueAnnotation__Group__1 )
+            // InternalKExpressions.g:7856:2: rule__TypedKeyStringValueAnnotation__Group__0__Impl rule__TypedKeyStringValueAnnotation__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_4);
             rule__TypedKeyStringValueAnnotation__Group__0__Impl();
@@ -21948,22 +22360,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__0__Impl"
-    // InternalKExpressions.g:7720:1: rule__TypedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
+    // InternalKExpressions.g:7863:1: rule__TypedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
     public final void rule__TypedKeyStringValueAnnotation__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7724:1: ( ( '@' ) )
-            // InternalKExpressions.g:7725:1: ( '@' )
+            // InternalKExpressions.g:7867:1: ( ( '@' ) )
+            // InternalKExpressions.g:7868:1: ( '@' )
             {
-            // InternalKExpressions.g:7725:1: ( '@' )
-            // InternalKExpressions.g:7726:1: '@'
+            // InternalKExpressions.g:7868:1: ( '@' )
+            // InternalKExpressions.g:7869:1: '@'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,45,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,46,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
@@ -21989,16 +22401,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__1"
-    // InternalKExpressions.g:7739:1: rule__TypedKeyStringValueAnnotation__Group__1 : rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2 ;
+    // InternalKExpressions.g:7882:1: rule__TypedKeyStringValueAnnotation__Group__1 : rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2 ;
     public final void rule__TypedKeyStringValueAnnotation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7743:1: ( rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2 )
-            // InternalKExpressions.g:7744:2: rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2
+            // InternalKExpressions.g:7886:1: ( rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2 )
+            // InternalKExpressions.g:7887:2: rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_47);
+            pushFollow(FollowSets000.FOLLOW_48);
             rule__TypedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -22027,23 +22439,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__1__Impl"
-    // InternalKExpressions.g:7751:1: rule__TypedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
+    // InternalKExpressions.g:7894:1: rule__TypedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
     public final void rule__TypedKeyStringValueAnnotation__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7755:1: ( ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) ) )
-            // InternalKExpressions.g:7756:1: ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalKExpressions.g:7898:1: ( ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) ) )
+            // InternalKExpressions.g:7899:1: ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) )
             {
-            // InternalKExpressions.g:7756:1: ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) )
-            // InternalKExpressions.g:7757:1: ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalKExpressions.g:7899:1: ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalKExpressions.g:7900:1: ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameAssignment_1()); 
             }
-            // InternalKExpressions.g:7758:1: ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 )
-            // InternalKExpressions.g:7758:2: rule__TypedKeyStringValueAnnotation__NameAssignment_1
+            // InternalKExpressions.g:7901:1: ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalKExpressions.g:7901:2: rule__TypedKeyStringValueAnnotation__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TypedKeyStringValueAnnotation__NameAssignment_1();
@@ -22078,14 +22490,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__2"
-    // InternalKExpressions.g:7768:1: rule__TypedKeyStringValueAnnotation__Group__2 : rule__TypedKeyStringValueAnnotation__Group__2__Impl rule__TypedKeyStringValueAnnotation__Group__3 ;
+    // InternalKExpressions.g:7911:1: rule__TypedKeyStringValueAnnotation__Group__2 : rule__TypedKeyStringValueAnnotation__Group__2__Impl rule__TypedKeyStringValueAnnotation__Group__3 ;
     public final void rule__TypedKeyStringValueAnnotation__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7772:1: ( rule__TypedKeyStringValueAnnotation__Group__2__Impl rule__TypedKeyStringValueAnnotation__Group__3 )
-            // InternalKExpressions.g:7773:2: rule__TypedKeyStringValueAnnotation__Group__2__Impl rule__TypedKeyStringValueAnnotation__Group__3
+            // InternalKExpressions.g:7915:1: ( rule__TypedKeyStringValueAnnotation__Group__2__Impl rule__TypedKeyStringValueAnnotation__Group__3 )
+            // InternalKExpressions.g:7916:2: rule__TypedKeyStringValueAnnotation__Group__2__Impl rule__TypedKeyStringValueAnnotation__Group__3
             {
             pushFollow(FollowSets000.FOLLOW_4);
             rule__TypedKeyStringValueAnnotation__Group__2__Impl();
@@ -22116,17 +22528,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__2__Impl"
-    // InternalKExpressions.g:7780:1: rule__TypedKeyStringValueAnnotation__Group__2__Impl : ( '[' ) ;
+    // InternalKExpressions.g:7923:1: rule__TypedKeyStringValueAnnotation__Group__2__Impl : ( '[' ) ;
     public final void rule__TypedKeyStringValueAnnotation__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7784:1: ( ( '[' ) )
-            // InternalKExpressions.g:7785:1: ( '[' )
+            // InternalKExpressions.g:7927:1: ( ( '[' ) )
+            // InternalKExpressions.g:7928:1: ( '[' )
             {
-            // InternalKExpressions.g:7785:1: ( '[' )
-            // InternalKExpressions.g:7786:1: '['
+            // InternalKExpressions.g:7928:1: ( '[' )
+            // InternalKExpressions.g:7929:1: '['
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2()); 
@@ -22157,14 +22569,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__3"
-    // InternalKExpressions.g:7799:1: rule__TypedKeyStringValueAnnotation__Group__3 : rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4 ;
+    // InternalKExpressions.g:7942:1: rule__TypedKeyStringValueAnnotation__Group__3 : rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4 ;
     public final void rule__TypedKeyStringValueAnnotation__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7803:1: ( rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4 )
-            // InternalKExpressions.g:7804:2: rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4
+            // InternalKExpressions.g:7946:1: ( rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4 )
+            // InternalKExpressions.g:7947:2: rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4
             {
             pushFollow(FollowSets000.FOLLOW_36);
             rule__TypedKeyStringValueAnnotation__Group__3__Impl();
@@ -22195,23 +22607,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__3__Impl"
-    // InternalKExpressions.g:7811:1: rule__TypedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 ) ) ;
+    // InternalKExpressions.g:7954:1: rule__TypedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 ) ) ;
     public final void rule__TypedKeyStringValueAnnotation__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7815:1: ( ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 ) ) )
-            // InternalKExpressions.g:7816:1: ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 ) )
+            // InternalKExpressions.g:7958:1: ( ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 ) ) )
+            // InternalKExpressions.g:7959:1: ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 ) )
             {
-            // InternalKExpressions.g:7816:1: ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 ) )
-            // InternalKExpressions.g:7817:1: ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 )
+            // InternalKExpressions.g:7959:1: ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 ) )
+            // InternalKExpressions.g:7960:1: ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeAssignment_3()); 
             }
-            // InternalKExpressions.g:7818:1: ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 )
-            // InternalKExpressions.g:7818:2: rule__TypedKeyStringValueAnnotation__TypeAssignment_3
+            // InternalKExpressions.g:7961:1: ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 )
+            // InternalKExpressions.g:7961:2: rule__TypedKeyStringValueAnnotation__TypeAssignment_3
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TypedKeyStringValueAnnotation__TypeAssignment_3();
@@ -22246,16 +22658,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__4"
-    // InternalKExpressions.g:7828:1: rule__TypedKeyStringValueAnnotation__Group__4 : rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5 ;
+    // InternalKExpressions.g:7971:1: rule__TypedKeyStringValueAnnotation__Group__4 : rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5 ;
     public final void rule__TypedKeyStringValueAnnotation__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7832:1: ( rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5 )
-            // InternalKExpressions.g:7833:2: rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5
+            // InternalKExpressions.g:7975:1: ( rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5 )
+            // InternalKExpressions.g:7976:2: rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_44);
+            pushFollow(FollowSets000.FOLLOW_45);
             rule__TypedKeyStringValueAnnotation__Group__4__Impl();
 
             state._fsp--;
@@ -22284,17 +22696,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__4__Impl"
-    // InternalKExpressions.g:7840:1: rule__TypedKeyStringValueAnnotation__Group__4__Impl : ( ']' ) ;
+    // InternalKExpressions.g:7983:1: rule__TypedKeyStringValueAnnotation__Group__4__Impl : ( ']' ) ;
     public final void rule__TypedKeyStringValueAnnotation__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7844:1: ( ( ']' ) )
-            // InternalKExpressions.g:7845:1: ( ']' )
+            // InternalKExpressions.g:7987:1: ( ( ']' ) )
+            // InternalKExpressions.g:7988:1: ( ']' )
             {
-            // InternalKExpressions.g:7845:1: ( ']' )
-            // InternalKExpressions.g:7846:1: ']'
+            // InternalKExpressions.g:7988:1: ( ']' )
+            // InternalKExpressions.g:7989:1: ']'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4()); 
@@ -22325,16 +22737,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__5"
-    // InternalKExpressions.g:7859:1: rule__TypedKeyStringValueAnnotation__Group__5 : rule__TypedKeyStringValueAnnotation__Group__5__Impl rule__TypedKeyStringValueAnnotation__Group__6 ;
+    // InternalKExpressions.g:8002:1: rule__TypedKeyStringValueAnnotation__Group__5 : rule__TypedKeyStringValueAnnotation__Group__5__Impl rule__TypedKeyStringValueAnnotation__Group__6 ;
     public final void rule__TypedKeyStringValueAnnotation__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7863:1: ( rule__TypedKeyStringValueAnnotation__Group__5__Impl rule__TypedKeyStringValueAnnotation__Group__6 )
-            // InternalKExpressions.g:7864:2: rule__TypedKeyStringValueAnnotation__Group__5__Impl rule__TypedKeyStringValueAnnotation__Group__6
+            // InternalKExpressions.g:8006:1: ( rule__TypedKeyStringValueAnnotation__Group__5__Impl rule__TypedKeyStringValueAnnotation__Group__6 )
+            // InternalKExpressions.g:8007:2: rule__TypedKeyStringValueAnnotation__Group__5__Impl rule__TypedKeyStringValueAnnotation__Group__6
             {
-            pushFollow(FollowSets000.FOLLOW_45);
+            pushFollow(FollowSets000.FOLLOW_46);
             rule__TypedKeyStringValueAnnotation__Group__5__Impl();
 
             state._fsp--;
@@ -22363,23 +22775,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__5__Impl"
-    // InternalKExpressions.g:7871:1: rule__TypedKeyStringValueAnnotation__Group__5__Impl : ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) ;
+    // InternalKExpressions.g:8014:1: rule__TypedKeyStringValueAnnotation__Group__5__Impl : ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) ;
     public final void rule__TypedKeyStringValueAnnotation__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7875:1: ( ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) )
-            // InternalKExpressions.g:7876:1: ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
+            // InternalKExpressions.g:8018:1: ( ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) )
+            // InternalKExpressions.g:8019:1: ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
             {
-            // InternalKExpressions.g:7876:1: ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
-            // InternalKExpressions.g:7877:1: ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 )
+            // InternalKExpressions.g:8019:1: ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
+            // InternalKExpressions.g:8020:1: ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesAssignment_5()); 
             }
-            // InternalKExpressions.g:7878:1: ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 )
-            // InternalKExpressions.g:7878:2: rule__TypedKeyStringValueAnnotation__ValuesAssignment_5
+            // InternalKExpressions.g:8021:1: ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 )
+            // InternalKExpressions.g:8021:2: rule__TypedKeyStringValueAnnotation__ValuesAssignment_5
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TypedKeyStringValueAnnotation__ValuesAssignment_5();
@@ -22414,14 +22826,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__6"
-    // InternalKExpressions.g:7888:1: rule__TypedKeyStringValueAnnotation__Group__6 : rule__TypedKeyStringValueAnnotation__Group__6__Impl ;
+    // InternalKExpressions.g:8031:1: rule__TypedKeyStringValueAnnotation__Group__6 : rule__TypedKeyStringValueAnnotation__Group__6__Impl ;
     public final void rule__TypedKeyStringValueAnnotation__Group__6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7892:1: ( rule__TypedKeyStringValueAnnotation__Group__6__Impl )
-            // InternalKExpressions.g:7893:2: rule__TypedKeyStringValueAnnotation__Group__6__Impl
+            // InternalKExpressions.g:8035:1: ( rule__TypedKeyStringValueAnnotation__Group__6__Impl )
+            // InternalKExpressions.g:8036:2: rule__TypedKeyStringValueAnnotation__Group__6__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TypedKeyStringValueAnnotation__Group__6__Impl();
@@ -22447,35 +22859,35 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__6__Impl"
-    // InternalKExpressions.g:7899:1: rule__TypedKeyStringValueAnnotation__Group__6__Impl : ( ( rule__TypedKeyStringValueAnnotation__Group_6__0 )* ) ;
+    // InternalKExpressions.g:8042:1: rule__TypedKeyStringValueAnnotation__Group__6__Impl : ( ( rule__TypedKeyStringValueAnnotation__Group_6__0 )* ) ;
     public final void rule__TypedKeyStringValueAnnotation__Group__6__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7903:1: ( ( ( rule__TypedKeyStringValueAnnotation__Group_6__0 )* ) )
-            // InternalKExpressions.g:7904:1: ( ( rule__TypedKeyStringValueAnnotation__Group_6__0 )* )
+            // InternalKExpressions.g:8046:1: ( ( ( rule__TypedKeyStringValueAnnotation__Group_6__0 )* ) )
+            // InternalKExpressions.g:8047:1: ( ( rule__TypedKeyStringValueAnnotation__Group_6__0 )* )
             {
-            // InternalKExpressions.g:7904:1: ( ( rule__TypedKeyStringValueAnnotation__Group_6__0 )* )
-            // InternalKExpressions.g:7905:1: ( rule__TypedKeyStringValueAnnotation__Group_6__0 )*
+            // InternalKExpressions.g:8047:1: ( ( rule__TypedKeyStringValueAnnotation__Group_6__0 )* )
+            // InternalKExpressions.g:8048:1: ( rule__TypedKeyStringValueAnnotation__Group_6__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getGroup_6()); 
             }
-            // InternalKExpressions.g:7906:1: ( rule__TypedKeyStringValueAnnotation__Group_6__0 )*
-            loop50:
+            // InternalKExpressions.g:8049:1: ( rule__TypedKeyStringValueAnnotation__Group_6__0 )*
+            loop51:
             do {
-                int alt50=2;
-                int LA50_0 = input.LA(1);
+                int alt51=2;
+                int LA51_0 = input.LA(1);
 
-                if ( (LA50_0==43) ) {
-                    alt50=1;
+                if ( (LA51_0==43) ) {
+                    alt51=1;
                 }
 
 
-                switch (alt50) {
+                switch (alt51) {
             	case 1 :
-            	    // InternalKExpressions.g:7906:2: rule__TypedKeyStringValueAnnotation__Group_6__0
+            	    // InternalKExpressions.g:8049:2: rule__TypedKeyStringValueAnnotation__Group_6__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_41);
             	    rule__TypedKeyStringValueAnnotation__Group_6__0();
@@ -22487,7 +22899,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop50;
+            	    break loop51;
                 }
             } while (true);
 
@@ -22516,16 +22928,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group_6__0"
-    // InternalKExpressions.g:7930:1: rule__TypedKeyStringValueAnnotation__Group_6__0 : rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1 ;
+    // InternalKExpressions.g:8073:1: rule__TypedKeyStringValueAnnotation__Group_6__0 : rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1 ;
     public final void rule__TypedKeyStringValueAnnotation__Group_6__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7934:1: ( rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1 )
-            // InternalKExpressions.g:7935:2: rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1
+            // InternalKExpressions.g:8077:1: ( rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1 )
+            // InternalKExpressions.g:8078:2: rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1
             {
-            pushFollow(FollowSets000.FOLLOW_44);
+            pushFollow(FollowSets000.FOLLOW_45);
             rule__TypedKeyStringValueAnnotation__Group_6__0__Impl();
 
             state._fsp--;
@@ -22554,17 +22966,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group_6__0__Impl"
-    // InternalKExpressions.g:7942:1: rule__TypedKeyStringValueAnnotation__Group_6__0__Impl : ( ',' ) ;
+    // InternalKExpressions.g:8085:1: rule__TypedKeyStringValueAnnotation__Group_6__0__Impl : ( ',' ) ;
     public final void rule__TypedKeyStringValueAnnotation__Group_6__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7946:1: ( ( ',' ) )
-            // InternalKExpressions.g:7947:1: ( ',' )
+            // InternalKExpressions.g:8089:1: ( ( ',' ) )
+            // InternalKExpressions.g:8090:1: ( ',' )
             {
-            // InternalKExpressions.g:7947:1: ( ',' )
-            // InternalKExpressions.g:7948:1: ','
+            // InternalKExpressions.g:8090:1: ( ',' )
+            // InternalKExpressions.g:8091:1: ','
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0()); 
@@ -22595,14 +23007,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group_6__1"
-    // InternalKExpressions.g:7961:1: rule__TypedKeyStringValueAnnotation__Group_6__1 : rule__TypedKeyStringValueAnnotation__Group_6__1__Impl ;
+    // InternalKExpressions.g:8104:1: rule__TypedKeyStringValueAnnotation__Group_6__1 : rule__TypedKeyStringValueAnnotation__Group_6__1__Impl ;
     public final void rule__TypedKeyStringValueAnnotation__Group_6__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7965:1: ( rule__TypedKeyStringValueAnnotation__Group_6__1__Impl )
-            // InternalKExpressions.g:7966:2: rule__TypedKeyStringValueAnnotation__Group_6__1__Impl
+            // InternalKExpressions.g:8108:1: ( rule__TypedKeyStringValueAnnotation__Group_6__1__Impl )
+            // InternalKExpressions.g:8109:2: rule__TypedKeyStringValueAnnotation__Group_6__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TypedKeyStringValueAnnotation__Group_6__1__Impl();
@@ -22628,23 +23040,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group_6__1__Impl"
-    // InternalKExpressions.g:7972:1: rule__TypedKeyStringValueAnnotation__Group_6__1__Impl : ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) ;
+    // InternalKExpressions.g:8115:1: rule__TypedKeyStringValueAnnotation__Group_6__1__Impl : ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) ;
     public final void rule__TypedKeyStringValueAnnotation__Group_6__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7976:1: ( ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) )
-            // InternalKExpressions.g:7977:1: ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
+            // InternalKExpressions.g:8119:1: ( ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) )
+            // InternalKExpressions.g:8120:1: ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
             {
-            // InternalKExpressions.g:7977:1: ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
-            // InternalKExpressions.g:7978:1: ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
+            // InternalKExpressions.g:8120:1: ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
+            // InternalKExpressions.g:8121:1: ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesAssignment_6_1()); 
             }
-            // InternalKExpressions.g:7979:1: ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
-            // InternalKExpressions.g:7979:2: rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1
+            // InternalKExpressions.g:8122:1: ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
+            // InternalKExpressions.g:8122:2: rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1();
@@ -22679,14 +23091,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__0"
-    // InternalKExpressions.g:7993:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__0 : rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__1 ;
+    // InternalKExpressions.g:8136:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__0 : rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__1 ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:7997:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__1 )
-            // InternalKExpressions.g:7998:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__1
+            // InternalKExpressions.g:8140:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__1 )
+            // InternalKExpressions.g:8141:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_4);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl();
@@ -22717,22 +23129,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl"
-    // InternalKExpressions.g:8005:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
+    // InternalKExpressions.g:8148:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8009:1: ( ( '@' ) )
-            // InternalKExpressions.g:8010:1: ( '@' )
+            // InternalKExpressions.g:8152:1: ( ( '@' ) )
+            // InternalKExpressions.g:8153:1: ( '@' )
             {
-            // InternalKExpressions.g:8010:1: ( '@' )
-            // InternalKExpressions.g:8011:1: '@'
+            // InternalKExpressions.g:8153:1: ( '@' )
+            // InternalKExpressions.g:8154:1: '@'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,45,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,46,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
@@ -22758,16 +23170,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__1"
-    // InternalKExpressions.g:8024:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__1 : rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__2 ;
+    // InternalKExpressions.g:8167:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__1 : rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__2 ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8028:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__2 )
-            // InternalKExpressions.g:8029:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__2
+            // InternalKExpressions.g:8171:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__2 )
+            // InternalKExpressions.g:8172:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_47);
+            pushFollow(FollowSets000.FOLLOW_48);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -22796,23 +23208,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl"
-    // InternalKExpressions.g:8036:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
+    // InternalKExpressions.g:8179:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8040:1: ( ( ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 ) ) )
-            // InternalKExpressions.g:8041:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalKExpressions.g:8183:1: ( ( ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 ) ) )
+            // InternalKExpressions.g:8184:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 ) )
             {
-            // InternalKExpressions.g:8041:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 ) )
-            // InternalKExpressions.g:8042:1: ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalKExpressions.g:8184:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalKExpressions.g:8185:1: ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getNameAssignment_1()); 
             }
-            // InternalKExpressions.g:8043:1: ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 )
-            // InternalKExpressions.g:8043:2: rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1
+            // InternalKExpressions.g:8186:1: ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalKExpressions.g:8186:2: rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1();
@@ -22847,14 +23259,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__2"
-    // InternalKExpressions.g:8053:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__2 : rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__3 ;
+    // InternalKExpressions.g:8196:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__2 : rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__3 ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8057:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__3 )
-            // InternalKExpressions.g:8058:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__3
+            // InternalKExpressions.g:8200:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__3 )
+            // InternalKExpressions.g:8201:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__3
             {
             pushFollow(FollowSets000.FOLLOW_4);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl();
@@ -22885,17 +23297,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl"
-    // InternalKExpressions.g:8065:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl : ( '[' ) ;
+    // InternalKExpressions.g:8208:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl : ( '[' ) ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8069:1: ( ( '[' ) )
-            // InternalKExpressions.g:8070:1: ( '[' )
+            // InternalKExpressions.g:8212:1: ( ( '[' ) )
+            // InternalKExpressions.g:8213:1: ( '[' )
             {
-            // InternalKExpressions.g:8070:1: ( '[' )
-            // InternalKExpressions.g:8071:1: '['
+            // InternalKExpressions.g:8213:1: ( '[' )
+            // InternalKExpressions.g:8214:1: '['
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2()); 
@@ -22926,14 +23338,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__3"
-    // InternalKExpressions.g:8084:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__3 : rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__4 ;
+    // InternalKExpressions.g:8227:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__3 : rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__4 ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8088:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__4 )
-            // InternalKExpressions.g:8089:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__4
+            // InternalKExpressions.g:8231:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__4 )
+            // InternalKExpressions.g:8232:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__4
             {
             pushFollow(FollowSets000.FOLLOW_36);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl();
@@ -22964,23 +23376,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl"
-    // InternalKExpressions.g:8096:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 ) ) ;
+    // InternalKExpressions.g:8239:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 ) ) ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8100:1: ( ( ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 ) ) )
-            // InternalKExpressions.g:8101:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 ) )
+            // InternalKExpressions.g:8243:1: ( ( ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 ) ) )
+            // InternalKExpressions.g:8244:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 ) )
             {
-            // InternalKExpressions.g:8101:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 ) )
-            // InternalKExpressions.g:8102:1: ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 )
+            // InternalKExpressions.g:8244:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 ) )
+            // InternalKExpressions.g:8245:1: ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getTypeAssignment_3()); 
             }
-            // InternalKExpressions.g:8103:1: ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 )
-            // InternalKExpressions.g:8103:2: rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3
+            // InternalKExpressions.g:8246:1: ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 )
+            // InternalKExpressions.g:8246:2: rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3();
@@ -23015,16 +23427,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__4"
-    // InternalKExpressions.g:8113:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__4 : rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5 ;
+    // InternalKExpressions.g:8256:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__4 : rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5 ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8117:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5 )
-            // InternalKExpressions.g:8118:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5
+            // InternalKExpressions.g:8260:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5 )
+            // InternalKExpressions.g:8261:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_46);
+            pushFollow(FollowSets000.FOLLOW_47);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl();
 
             state._fsp--;
@@ -23053,17 +23465,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl"
-    // InternalKExpressions.g:8125:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl : ( ']' ) ;
+    // InternalKExpressions.g:8268:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl : ( ']' ) ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8129:1: ( ( ']' ) )
-            // InternalKExpressions.g:8130:1: ( ']' )
+            // InternalKExpressions.g:8272:1: ( ( ']' ) )
+            // InternalKExpressions.g:8273:1: ( ']' )
             {
-            // InternalKExpressions.g:8130:1: ( ']' )
-            // InternalKExpressions.g:8131:1: ']'
+            // InternalKExpressions.g:8273:1: ( ']' )
+            // InternalKExpressions.g:8274:1: ']'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4()); 
@@ -23094,16 +23506,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__5"
-    // InternalKExpressions.g:8144:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__5 : rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__6 ;
+    // InternalKExpressions.g:8287:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__5 : rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__6 ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8148:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__6 )
-            // InternalKExpressions.g:8149:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__6
+            // InternalKExpressions.g:8291:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__6 )
+            // InternalKExpressions.g:8292:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__6
             {
-            pushFollow(FollowSets000.FOLLOW_45);
+            pushFollow(FollowSets000.FOLLOW_46);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl();
 
             state._fsp--;
@@ -23132,23 +23544,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl"
-    // InternalKExpressions.g:8156:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl : ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) ;
+    // InternalKExpressions.g:8299:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl : ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8160:1: ( ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) )
-            // InternalKExpressions.g:8161:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
+            // InternalKExpressions.g:8303:1: ( ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) )
+            // InternalKExpressions.g:8304:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
             {
-            // InternalKExpressions.g:8161:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
-            // InternalKExpressions.g:8162:1: ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 )
+            // InternalKExpressions.g:8304:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
+            // InternalKExpressions.g:8305:1: ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesAssignment_5()); 
             }
-            // InternalKExpressions.g:8163:1: ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 )
-            // InternalKExpressions.g:8163:2: rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5
+            // InternalKExpressions.g:8306:1: ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 )
+            // InternalKExpressions.g:8306:2: rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5();
@@ -23183,14 +23595,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__6"
-    // InternalKExpressions.g:8173:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__6 : rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl ;
+    // InternalKExpressions.g:8316:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__6 : rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8177:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl )
-            // InternalKExpressions.g:8178:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl
+            // InternalKExpressions.g:8320:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl )
+            // InternalKExpressions.g:8321:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl();
@@ -23216,35 +23628,35 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl"
-    // InternalKExpressions.g:8184:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl : ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )* ) ;
+    // InternalKExpressions.g:8327:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl : ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )* ) ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8188:1: ( ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )* ) )
-            // InternalKExpressions.g:8189:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )* )
+            // InternalKExpressions.g:8331:1: ( ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )* ) )
+            // InternalKExpressions.g:8332:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )* )
             {
-            // InternalKExpressions.g:8189:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )* )
-            // InternalKExpressions.g:8190:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )*
+            // InternalKExpressions.g:8332:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )* )
+            // InternalKExpressions.g:8333:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getGroup_6()); 
             }
-            // InternalKExpressions.g:8191:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )*
-            loop51:
+            // InternalKExpressions.g:8334:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )*
+            loop52:
             do {
-                int alt51=2;
-                int LA51_0 = input.LA(1);
+                int alt52=2;
+                int LA52_0 = input.LA(1);
 
-                if ( (LA51_0==43) ) {
-                    alt51=1;
+                if ( (LA52_0==43) ) {
+                    alt52=1;
                 }
 
 
-                switch (alt51) {
+                switch (alt52) {
             	case 1 :
-            	    // InternalKExpressions.g:8191:2: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0
+            	    // InternalKExpressions.g:8334:2: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_41);
             	    rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0();
@@ -23256,7 +23668,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop51;
+            	    break loop52;
                 }
             } while (true);
 
@@ -23285,16 +23697,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0"
-    // InternalKExpressions.g:8215:1: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 : rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1 ;
+    // InternalKExpressions.g:8358:1: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 : rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1 ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8219:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1 )
-            // InternalKExpressions.g:8220:2: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1
+            // InternalKExpressions.g:8362:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1 )
+            // InternalKExpressions.g:8363:2: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1
             {
-            pushFollow(FollowSets000.FOLLOW_46);
+            pushFollow(FollowSets000.FOLLOW_47);
             rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl();
 
             state._fsp--;
@@ -23323,17 +23735,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl"
-    // InternalKExpressions.g:8227:1: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl : ( ',' ) ;
+    // InternalKExpressions.g:8370:1: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl : ( ',' ) ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8231:1: ( ( ',' ) )
-            // InternalKExpressions.g:8232:1: ( ',' )
+            // InternalKExpressions.g:8374:1: ( ( ',' ) )
+            // InternalKExpressions.g:8375:1: ( ',' )
             {
-            // InternalKExpressions.g:8232:1: ( ',' )
-            // InternalKExpressions.g:8233:1: ','
+            // InternalKExpressions.g:8375:1: ( ',' )
+            // InternalKExpressions.g:8376:1: ','
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0()); 
@@ -23364,14 +23776,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1"
-    // InternalKExpressions.g:8246:1: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1 : rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl ;
+    // InternalKExpressions.g:8389:1: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1 : rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8250:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl )
-            // InternalKExpressions.g:8251:2: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl
+            // InternalKExpressions.g:8393:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl )
+            // InternalKExpressions.g:8394:2: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl();
@@ -23397,23 +23809,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl"
-    // InternalKExpressions.g:8257:1: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl : ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) ;
+    // InternalKExpressions.g:8400:1: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl : ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8261:1: ( ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) )
-            // InternalKExpressions.g:8262:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
+            // InternalKExpressions.g:8404:1: ( ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) )
+            // InternalKExpressions.g:8405:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
             {
-            // InternalKExpressions.g:8262:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
-            // InternalKExpressions.g:8263:1: ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
+            // InternalKExpressions.g:8405:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
+            // InternalKExpressions.g:8406:1: ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesAssignment_6_1()); 
             }
-            // InternalKExpressions.g:8264:1: ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
-            // InternalKExpressions.g:8264:2: rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1
+            // InternalKExpressions.g:8407:1: ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
+            // InternalKExpressions.g:8407:2: rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1();
@@ -23448,14 +23860,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group__0"
-    // InternalKExpressions.g:8278:1: rule__QuotedKeyStringValueAnnotation__Group__0 : rule__QuotedKeyStringValueAnnotation__Group__0__Impl rule__QuotedKeyStringValueAnnotation__Group__1 ;
+    // InternalKExpressions.g:8421:1: rule__QuotedKeyStringValueAnnotation__Group__0 : rule__QuotedKeyStringValueAnnotation__Group__0__Impl rule__QuotedKeyStringValueAnnotation__Group__1 ;
     public final void rule__QuotedKeyStringValueAnnotation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8282:1: ( rule__QuotedKeyStringValueAnnotation__Group__0__Impl rule__QuotedKeyStringValueAnnotation__Group__1 )
-            // InternalKExpressions.g:8283:2: rule__QuotedKeyStringValueAnnotation__Group__0__Impl rule__QuotedKeyStringValueAnnotation__Group__1
+            // InternalKExpressions.g:8425:1: ( rule__QuotedKeyStringValueAnnotation__Group__0__Impl rule__QuotedKeyStringValueAnnotation__Group__1 )
+            // InternalKExpressions.g:8426:2: rule__QuotedKeyStringValueAnnotation__Group__0__Impl rule__QuotedKeyStringValueAnnotation__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_4);
             rule__QuotedKeyStringValueAnnotation__Group__0__Impl();
@@ -23486,22 +23898,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group__0__Impl"
-    // InternalKExpressions.g:8290:1: rule__QuotedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
+    // InternalKExpressions.g:8433:1: rule__QuotedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
     public final void rule__QuotedKeyStringValueAnnotation__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8294:1: ( ( '@' ) )
-            // InternalKExpressions.g:8295:1: ( '@' )
+            // InternalKExpressions.g:8437:1: ( ( '@' ) )
+            // InternalKExpressions.g:8438:1: ( '@' )
             {
-            // InternalKExpressions.g:8295:1: ( '@' )
-            // InternalKExpressions.g:8296:1: '@'
+            // InternalKExpressions.g:8438:1: ( '@' )
+            // InternalKExpressions.g:8439:1: '@'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,45,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,46,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
@@ -23527,16 +23939,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group__1"
-    // InternalKExpressions.g:8309:1: rule__QuotedKeyStringValueAnnotation__Group__1 : rule__QuotedKeyStringValueAnnotation__Group__1__Impl rule__QuotedKeyStringValueAnnotation__Group__2 ;
+    // InternalKExpressions.g:8452:1: rule__QuotedKeyStringValueAnnotation__Group__1 : rule__QuotedKeyStringValueAnnotation__Group__1__Impl rule__QuotedKeyStringValueAnnotation__Group__2 ;
     public final void rule__QuotedKeyStringValueAnnotation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8313:1: ( rule__QuotedKeyStringValueAnnotation__Group__1__Impl rule__QuotedKeyStringValueAnnotation__Group__2 )
-            // InternalKExpressions.g:8314:2: rule__QuotedKeyStringValueAnnotation__Group__1__Impl rule__QuotedKeyStringValueAnnotation__Group__2
+            // InternalKExpressions.g:8456:1: ( rule__QuotedKeyStringValueAnnotation__Group__1__Impl rule__QuotedKeyStringValueAnnotation__Group__2 )
+            // InternalKExpressions.g:8457:2: rule__QuotedKeyStringValueAnnotation__Group__1__Impl rule__QuotedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_48);
+            pushFollow(FollowSets000.FOLLOW_49);
             rule__QuotedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -23565,23 +23977,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group__1__Impl"
-    // InternalKExpressions.g:8321:1: rule__QuotedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
+    // InternalKExpressions.g:8464:1: rule__QuotedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
     public final void rule__QuotedKeyStringValueAnnotation__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8325:1: ( ( ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 ) ) )
-            // InternalKExpressions.g:8326:1: ( ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalKExpressions.g:8468:1: ( ( ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 ) ) )
+            // InternalKExpressions.g:8469:1: ( ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 ) )
             {
-            // InternalKExpressions.g:8326:1: ( ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 ) )
-            // InternalKExpressions.g:8327:1: ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalKExpressions.g:8469:1: ( ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalKExpressions.g:8470:1: ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getNameAssignment_1()); 
             }
-            // InternalKExpressions.g:8328:1: ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 )
-            // InternalKExpressions.g:8328:2: rule__QuotedKeyStringValueAnnotation__NameAssignment_1
+            // InternalKExpressions.g:8471:1: ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalKExpressions.g:8471:2: rule__QuotedKeyStringValueAnnotation__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedKeyStringValueAnnotation__NameAssignment_1();
@@ -23616,16 +24028,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group__2"
-    // InternalKExpressions.g:8338:1: rule__QuotedKeyStringValueAnnotation__Group__2 : rule__QuotedKeyStringValueAnnotation__Group__2__Impl rule__QuotedKeyStringValueAnnotation__Group__3 ;
+    // InternalKExpressions.g:8481:1: rule__QuotedKeyStringValueAnnotation__Group__2 : rule__QuotedKeyStringValueAnnotation__Group__2__Impl rule__QuotedKeyStringValueAnnotation__Group__3 ;
     public final void rule__QuotedKeyStringValueAnnotation__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8342:1: ( rule__QuotedKeyStringValueAnnotation__Group__2__Impl rule__QuotedKeyStringValueAnnotation__Group__3 )
-            // InternalKExpressions.g:8343:2: rule__QuotedKeyStringValueAnnotation__Group__2__Impl rule__QuotedKeyStringValueAnnotation__Group__3
+            // InternalKExpressions.g:8485:1: ( rule__QuotedKeyStringValueAnnotation__Group__2__Impl rule__QuotedKeyStringValueAnnotation__Group__3 )
+            // InternalKExpressions.g:8486:2: rule__QuotedKeyStringValueAnnotation__Group__2__Impl rule__QuotedKeyStringValueAnnotation__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_45);
+            pushFollow(FollowSets000.FOLLOW_46);
             rule__QuotedKeyStringValueAnnotation__Group__2__Impl();
 
             state._fsp--;
@@ -23654,23 +24066,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group__2__Impl"
-    // InternalKExpressions.g:8350:1: rule__QuotedKeyStringValueAnnotation__Group__2__Impl : ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 ) ) ;
+    // InternalKExpressions.g:8493:1: rule__QuotedKeyStringValueAnnotation__Group__2__Impl : ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 ) ) ;
     public final void rule__QuotedKeyStringValueAnnotation__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8354:1: ( ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 ) ) )
-            // InternalKExpressions.g:8355:1: ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 ) )
+            // InternalKExpressions.g:8497:1: ( ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 ) ) )
+            // InternalKExpressions.g:8498:1: ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 ) )
             {
-            // InternalKExpressions.g:8355:1: ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 ) )
-            // InternalKExpressions.g:8356:1: ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 )
+            // InternalKExpressions.g:8498:1: ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 ) )
+            // InternalKExpressions.g:8499:1: ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesAssignment_2()); 
             }
-            // InternalKExpressions.g:8357:1: ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 )
-            // InternalKExpressions.g:8357:2: rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2
+            // InternalKExpressions.g:8500:1: ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 )
+            // InternalKExpressions.g:8500:2: rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2();
@@ -23705,14 +24117,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group__3"
-    // InternalKExpressions.g:8367:1: rule__QuotedKeyStringValueAnnotation__Group__3 : rule__QuotedKeyStringValueAnnotation__Group__3__Impl ;
+    // InternalKExpressions.g:8510:1: rule__QuotedKeyStringValueAnnotation__Group__3 : rule__QuotedKeyStringValueAnnotation__Group__3__Impl ;
     public final void rule__QuotedKeyStringValueAnnotation__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8371:1: ( rule__QuotedKeyStringValueAnnotation__Group__3__Impl )
-            // InternalKExpressions.g:8372:2: rule__QuotedKeyStringValueAnnotation__Group__3__Impl
+            // InternalKExpressions.g:8514:1: ( rule__QuotedKeyStringValueAnnotation__Group__3__Impl )
+            // InternalKExpressions.g:8515:2: rule__QuotedKeyStringValueAnnotation__Group__3__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedKeyStringValueAnnotation__Group__3__Impl();
@@ -23738,35 +24150,35 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group__3__Impl"
-    // InternalKExpressions.g:8378:1: rule__QuotedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )* ) ;
+    // InternalKExpressions.g:8521:1: rule__QuotedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )* ) ;
     public final void rule__QuotedKeyStringValueAnnotation__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8382:1: ( ( ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )* ) )
-            // InternalKExpressions.g:8383:1: ( ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )* )
+            // InternalKExpressions.g:8525:1: ( ( ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )* ) )
+            // InternalKExpressions.g:8526:1: ( ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )* )
             {
-            // InternalKExpressions.g:8383:1: ( ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )* )
-            // InternalKExpressions.g:8384:1: ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )*
+            // InternalKExpressions.g:8526:1: ( ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )* )
+            // InternalKExpressions.g:8527:1: ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getGroup_3()); 
             }
-            // InternalKExpressions.g:8385:1: ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )*
-            loop52:
+            // InternalKExpressions.g:8528:1: ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )*
+            loop53:
             do {
-                int alt52=2;
-                int LA52_0 = input.LA(1);
+                int alt53=2;
+                int LA53_0 = input.LA(1);
 
-                if ( (LA52_0==43) ) {
-                    alt52=1;
+                if ( (LA53_0==43) ) {
+                    alt53=1;
                 }
 
 
-                switch (alt52) {
+                switch (alt53) {
             	case 1 :
-            	    // InternalKExpressions.g:8385:2: rule__QuotedKeyStringValueAnnotation__Group_3__0
+            	    // InternalKExpressions.g:8528:2: rule__QuotedKeyStringValueAnnotation__Group_3__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_41);
             	    rule__QuotedKeyStringValueAnnotation__Group_3__0();
@@ -23778,7 +24190,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop52;
+            	    break loop53;
                 }
             } while (true);
 
@@ -23807,16 +24219,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group_3__0"
-    // InternalKExpressions.g:8403:1: rule__QuotedKeyStringValueAnnotation__Group_3__0 : rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl rule__QuotedKeyStringValueAnnotation__Group_3__1 ;
+    // InternalKExpressions.g:8546:1: rule__QuotedKeyStringValueAnnotation__Group_3__0 : rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl rule__QuotedKeyStringValueAnnotation__Group_3__1 ;
     public final void rule__QuotedKeyStringValueAnnotation__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8407:1: ( rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl rule__QuotedKeyStringValueAnnotation__Group_3__1 )
-            // InternalKExpressions.g:8408:2: rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl rule__QuotedKeyStringValueAnnotation__Group_3__1
+            // InternalKExpressions.g:8550:1: ( rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl rule__QuotedKeyStringValueAnnotation__Group_3__1 )
+            // InternalKExpressions.g:8551:2: rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl rule__QuotedKeyStringValueAnnotation__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_48);
+            pushFollow(FollowSets000.FOLLOW_49);
             rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
@@ -23845,17 +24257,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl"
-    // InternalKExpressions.g:8415:1: rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl : ( ',' ) ;
+    // InternalKExpressions.g:8558:1: rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl : ( ',' ) ;
     public final void rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8419:1: ( ( ',' ) )
-            // InternalKExpressions.g:8420:1: ( ',' )
+            // InternalKExpressions.g:8562:1: ( ( ',' ) )
+            // InternalKExpressions.g:8563:1: ( ',' )
             {
-            // InternalKExpressions.g:8420:1: ( ',' )
-            // InternalKExpressions.g:8421:1: ','
+            // InternalKExpressions.g:8563:1: ( ',' )
+            // InternalKExpressions.g:8564:1: ','
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommaKeyword_3_0()); 
@@ -23886,14 +24298,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group_3__1"
-    // InternalKExpressions.g:8434:1: rule__QuotedKeyStringValueAnnotation__Group_3__1 : rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl ;
+    // InternalKExpressions.g:8577:1: rule__QuotedKeyStringValueAnnotation__Group_3__1 : rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl ;
     public final void rule__QuotedKeyStringValueAnnotation__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8438:1: ( rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl )
-            // InternalKExpressions.g:8439:2: rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl
+            // InternalKExpressions.g:8581:1: ( rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl )
+            // InternalKExpressions.g:8582:2: rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl();
@@ -23919,23 +24331,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl"
-    // InternalKExpressions.g:8445:1: rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl : ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 ) ) ;
+    // InternalKExpressions.g:8588:1: rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl : ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 ) ) ;
     public final void rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8449:1: ( ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 ) ) )
-            // InternalKExpressions.g:8450:1: ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 ) )
+            // InternalKExpressions.g:8592:1: ( ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 ) ) )
+            // InternalKExpressions.g:8593:1: ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 ) )
             {
-            // InternalKExpressions.g:8450:1: ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 ) )
-            // InternalKExpressions.g:8451:1: ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 )
+            // InternalKExpressions.g:8593:1: ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 ) )
+            // InternalKExpressions.g:8594:1: ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesAssignment_3_1()); 
             }
-            // InternalKExpressions.g:8452:1: ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 )
-            // InternalKExpressions.g:8452:2: rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1
+            // InternalKExpressions.g:8595:1: ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 )
+            // InternalKExpressions.g:8595:2: rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1();
@@ -23970,14 +24382,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__0"
-    // InternalKExpressions.g:8466:1: rule__QuotedTypedKeyStringValueAnnotation__Group__0 : rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__1 ;
+    // InternalKExpressions.g:8609:1: rule__QuotedTypedKeyStringValueAnnotation__Group__0 : rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__1 ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8470:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__1 )
-            // InternalKExpressions.g:8471:2: rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__1
+            // InternalKExpressions.g:8613:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__1 )
+            // InternalKExpressions.g:8614:2: rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_4);
             rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl();
@@ -24008,22 +24420,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl"
-    // InternalKExpressions.g:8478:1: rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
+    // InternalKExpressions.g:8621:1: rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8482:1: ( ( '@' ) )
-            // InternalKExpressions.g:8483:1: ( '@' )
+            // InternalKExpressions.g:8625:1: ( ( '@' ) )
+            // InternalKExpressions.g:8626:1: ( '@' )
             {
-            // InternalKExpressions.g:8483:1: ( '@' )
-            // InternalKExpressions.g:8484:1: '@'
+            // InternalKExpressions.g:8626:1: ( '@' )
+            // InternalKExpressions.g:8627:1: '@'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,45,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,46,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
@@ -24049,16 +24461,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__1"
-    // InternalKExpressions.g:8497:1: rule__QuotedTypedKeyStringValueAnnotation__Group__1 : rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2 ;
+    // InternalKExpressions.g:8640:1: rule__QuotedTypedKeyStringValueAnnotation__Group__1 : rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2 ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8501:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2 )
-            // InternalKExpressions.g:8502:2: rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2
+            // InternalKExpressions.g:8644:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2 )
+            // InternalKExpressions.g:8645:2: rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_47);
+            pushFollow(FollowSets000.FOLLOW_48);
             rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -24087,23 +24499,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl"
-    // InternalKExpressions.g:8509:1: rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
+    // InternalKExpressions.g:8652:1: rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8513:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 ) ) )
-            // InternalKExpressions.g:8514:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalKExpressions.g:8656:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 ) ) )
+            // InternalKExpressions.g:8657:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 ) )
             {
-            // InternalKExpressions.g:8514:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 ) )
-            // InternalKExpressions.g:8515:1: ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalKExpressions.g:8657:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalKExpressions.g:8658:1: ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getNameAssignment_1()); 
             }
-            // InternalKExpressions.g:8516:1: ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 )
-            // InternalKExpressions.g:8516:2: rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1
+            // InternalKExpressions.g:8659:1: ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalKExpressions.g:8659:2: rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1();
@@ -24138,14 +24550,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__2"
-    // InternalKExpressions.g:8526:1: rule__QuotedTypedKeyStringValueAnnotation__Group__2 : rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__3 ;
+    // InternalKExpressions.g:8669:1: rule__QuotedTypedKeyStringValueAnnotation__Group__2 : rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__3 ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8530:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__3 )
-            // InternalKExpressions.g:8531:2: rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__3
+            // InternalKExpressions.g:8673:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__3 )
+            // InternalKExpressions.g:8674:2: rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__3
             {
             pushFollow(FollowSets000.FOLLOW_4);
             rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl();
@@ -24176,17 +24588,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl"
-    // InternalKExpressions.g:8538:1: rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl : ( '[' ) ;
+    // InternalKExpressions.g:8681:1: rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl : ( '[' ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8542:1: ( ( '[' ) )
-            // InternalKExpressions.g:8543:1: ( '[' )
+            // InternalKExpressions.g:8685:1: ( ( '[' ) )
+            // InternalKExpressions.g:8686:1: ( '[' )
             {
-            // InternalKExpressions.g:8543:1: ( '[' )
-            // InternalKExpressions.g:8544:1: '['
+            // InternalKExpressions.g:8686:1: ( '[' )
+            // InternalKExpressions.g:8687:1: '['
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2()); 
@@ -24217,14 +24629,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__3"
-    // InternalKExpressions.g:8557:1: rule__QuotedTypedKeyStringValueAnnotation__Group__3 : rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__4 ;
+    // InternalKExpressions.g:8700:1: rule__QuotedTypedKeyStringValueAnnotation__Group__3 : rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__4 ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8561:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__4 )
-            // InternalKExpressions.g:8562:2: rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__4
+            // InternalKExpressions.g:8704:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__4 )
+            // InternalKExpressions.g:8705:2: rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__4
             {
             pushFollow(FollowSets000.FOLLOW_36);
             rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl();
@@ -24255,23 +24667,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl"
-    // InternalKExpressions.g:8569:1: rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 ) ) ;
+    // InternalKExpressions.g:8712:1: rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 ) ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8573:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 ) ) )
-            // InternalKExpressions.g:8574:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 ) )
+            // InternalKExpressions.g:8716:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 ) ) )
+            // InternalKExpressions.g:8717:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 ) )
             {
-            // InternalKExpressions.g:8574:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 ) )
-            // InternalKExpressions.g:8575:1: ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 )
+            // InternalKExpressions.g:8717:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 ) )
+            // InternalKExpressions.g:8718:1: ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getTypeAssignment_3()); 
             }
-            // InternalKExpressions.g:8576:1: ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 )
-            // InternalKExpressions.g:8576:2: rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3
+            // InternalKExpressions.g:8719:1: ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 )
+            // InternalKExpressions.g:8719:2: rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3();
@@ -24306,16 +24718,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__4"
-    // InternalKExpressions.g:8586:1: rule__QuotedTypedKeyStringValueAnnotation__Group__4 : rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__5 ;
+    // InternalKExpressions.g:8729:1: rule__QuotedTypedKeyStringValueAnnotation__Group__4 : rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__5 ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8590:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__5 )
-            // InternalKExpressions.g:8591:2: rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__5
+            // InternalKExpressions.g:8733:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__5 )
+            // InternalKExpressions.g:8734:2: rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_48);
+            pushFollow(FollowSets000.FOLLOW_49);
             rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl();
 
             state._fsp--;
@@ -24344,17 +24756,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl"
-    // InternalKExpressions.g:8598:1: rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl : ( ']' ) ;
+    // InternalKExpressions.g:8741:1: rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl : ( ']' ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8602:1: ( ( ']' ) )
-            // InternalKExpressions.g:8603:1: ( ']' )
+            // InternalKExpressions.g:8745:1: ( ( ']' ) )
+            // InternalKExpressions.g:8746:1: ( ']' )
             {
-            // InternalKExpressions.g:8603:1: ( ']' )
-            // InternalKExpressions.g:8604:1: ']'
+            // InternalKExpressions.g:8746:1: ( ']' )
+            // InternalKExpressions.g:8747:1: ']'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4()); 
@@ -24385,16 +24797,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__5"
-    // InternalKExpressions.g:8617:1: rule__QuotedTypedKeyStringValueAnnotation__Group__5 : rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__6 ;
+    // InternalKExpressions.g:8760:1: rule__QuotedTypedKeyStringValueAnnotation__Group__5 : rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__6 ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8621:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__6 )
-            // InternalKExpressions.g:8622:2: rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__6
+            // InternalKExpressions.g:8764:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__6 )
+            // InternalKExpressions.g:8765:2: rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__6
             {
-            pushFollow(FollowSets000.FOLLOW_45);
+            pushFollow(FollowSets000.FOLLOW_46);
             rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl();
 
             state._fsp--;
@@ -24423,23 +24835,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl"
-    // InternalKExpressions.g:8629:1: rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) ;
+    // InternalKExpressions.g:8772:1: rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8633:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) )
-            // InternalKExpressions.g:8634:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
+            // InternalKExpressions.g:8776:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) )
+            // InternalKExpressions.g:8777:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
             {
-            // InternalKExpressions.g:8634:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
-            // InternalKExpressions.g:8635:1: ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 )
+            // InternalKExpressions.g:8777:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
+            // InternalKExpressions.g:8778:1: ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesAssignment_5()); 
             }
-            // InternalKExpressions.g:8636:1: ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 )
-            // InternalKExpressions.g:8636:2: rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5
+            // InternalKExpressions.g:8779:1: ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 )
+            // InternalKExpressions.g:8779:2: rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5();
@@ -24474,14 +24886,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__6"
-    // InternalKExpressions.g:8646:1: rule__QuotedTypedKeyStringValueAnnotation__Group__6 : rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl ;
+    // InternalKExpressions.g:8789:1: rule__QuotedTypedKeyStringValueAnnotation__Group__6 : rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8650:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl )
-            // InternalKExpressions.g:8651:2: rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl
+            // InternalKExpressions.g:8793:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl )
+            // InternalKExpressions.g:8794:2: rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl();
@@ -24507,35 +24919,35 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl"
-    // InternalKExpressions.g:8657:1: rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )* ) ;
+    // InternalKExpressions.g:8800:1: rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )* ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8661:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )* ) )
-            // InternalKExpressions.g:8662:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )* )
+            // InternalKExpressions.g:8804:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )* ) )
+            // InternalKExpressions.g:8805:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )* )
             {
-            // InternalKExpressions.g:8662:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )* )
-            // InternalKExpressions.g:8663:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )*
+            // InternalKExpressions.g:8805:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )* )
+            // InternalKExpressions.g:8806:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getGroup_6()); 
             }
-            // InternalKExpressions.g:8664:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )*
-            loop53:
+            // InternalKExpressions.g:8807:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )*
+            loop54:
             do {
-                int alt53=2;
-                int LA53_0 = input.LA(1);
+                int alt54=2;
+                int LA54_0 = input.LA(1);
 
-                if ( (LA53_0==43) ) {
-                    alt53=1;
+                if ( (LA54_0==43) ) {
+                    alt54=1;
                 }
 
 
-                switch (alt53) {
+                switch (alt54) {
             	case 1 :
-            	    // InternalKExpressions.g:8664:2: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0
+            	    // InternalKExpressions.g:8807:2: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_41);
             	    rule__QuotedTypedKeyStringValueAnnotation__Group_6__0();
@@ -24547,7 +24959,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop53;
+            	    break loop54;
                 }
             } while (true);
 
@@ -24576,16 +24988,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group_6__0"
-    // InternalKExpressions.g:8688:1: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 : rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group_6__1 ;
+    // InternalKExpressions.g:8831:1: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 : rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group_6__1 ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group_6__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8692:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group_6__1 )
-            // InternalKExpressions.g:8693:2: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group_6__1
+            // InternalKExpressions.g:8835:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group_6__1 )
+            // InternalKExpressions.g:8836:2: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group_6__1
             {
-            pushFollow(FollowSets000.FOLLOW_48);
+            pushFollow(FollowSets000.FOLLOW_49);
             rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl();
 
             state._fsp--;
@@ -24614,17 +25026,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl"
-    // InternalKExpressions.g:8700:1: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl : ( ',' ) ;
+    // InternalKExpressions.g:8843:1: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl : ( ',' ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8704:1: ( ( ',' ) )
-            // InternalKExpressions.g:8705:1: ( ',' )
+            // InternalKExpressions.g:8847:1: ( ( ',' ) )
+            // InternalKExpressions.g:8848:1: ( ',' )
             {
-            // InternalKExpressions.g:8705:1: ( ',' )
-            // InternalKExpressions.g:8706:1: ','
+            // InternalKExpressions.g:8848:1: ( ',' )
+            // InternalKExpressions.g:8849:1: ','
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0()); 
@@ -24655,14 +25067,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group_6__1"
-    // InternalKExpressions.g:8719:1: rule__QuotedTypedKeyStringValueAnnotation__Group_6__1 : rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl ;
+    // InternalKExpressions.g:8862:1: rule__QuotedTypedKeyStringValueAnnotation__Group_6__1 : rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group_6__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8723:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl )
-            // InternalKExpressions.g:8724:2: rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl
+            // InternalKExpressions.g:8866:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl )
+            // InternalKExpressions.g:8867:2: rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl();
@@ -24688,23 +25100,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl"
-    // InternalKExpressions.g:8730:1: rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) ;
+    // InternalKExpressions.g:8873:1: rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8734:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) )
-            // InternalKExpressions.g:8735:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
+            // InternalKExpressions.g:8877:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) )
+            // InternalKExpressions.g:8878:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
             {
-            // InternalKExpressions.g:8735:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
-            // InternalKExpressions.g:8736:1: ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
+            // InternalKExpressions.g:8878:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
+            // InternalKExpressions.g:8879:1: ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesAssignment_6_1()); 
             }
-            // InternalKExpressions.g:8737:1: ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
-            // InternalKExpressions.g:8737:2: rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1
+            // InternalKExpressions.g:8880:1: ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
+            // InternalKExpressions.g:8880:2: rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1();
@@ -24739,16 +25151,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ExtendedID__Group__0"
-    // InternalKExpressions.g:8751:1: rule__ExtendedID__Group__0 : rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1 ;
+    // InternalKExpressions.g:8894:1: rule__ExtendedID__Group__0 : rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1 ;
     public final void rule__ExtendedID__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8755:1: ( rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1 )
-            // InternalKExpressions.g:8756:2: rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1
+            // InternalKExpressions.g:8898:1: ( rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1 )
+            // InternalKExpressions.g:8899:2: rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_49);
+            pushFollow(FollowSets000.FOLLOW_50);
             rule__ExtendedID__Group__0__Impl();
 
             state._fsp--;
@@ -24777,17 +25189,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ExtendedID__Group__0__Impl"
-    // InternalKExpressions.g:8763:1: rule__ExtendedID__Group__0__Impl : ( RULE_ID ) ;
+    // InternalKExpressions.g:8906:1: rule__ExtendedID__Group__0__Impl : ( RULE_ID ) ;
     public final void rule__ExtendedID__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8767:1: ( ( RULE_ID ) )
-            // InternalKExpressions.g:8768:1: ( RULE_ID )
+            // InternalKExpressions.g:8910:1: ( ( RULE_ID ) )
+            // InternalKExpressions.g:8911:1: ( RULE_ID )
             {
-            // InternalKExpressions.g:8768:1: ( RULE_ID )
-            // InternalKExpressions.g:8769:1: RULE_ID
+            // InternalKExpressions.g:8911:1: ( RULE_ID )
+            // InternalKExpressions.g:8912:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_0()); 
@@ -24818,16 +25230,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ExtendedID__Group__1"
-    // InternalKExpressions.g:8780:1: rule__ExtendedID__Group__1 : rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2 ;
+    // InternalKExpressions.g:8923:1: rule__ExtendedID__Group__1 : rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2 ;
     public final void rule__ExtendedID__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8784:1: ( rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2 )
-            // InternalKExpressions.g:8785:2: rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2
+            // InternalKExpressions.g:8927:1: ( rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2 )
+            // InternalKExpressions.g:8928:2: rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_49);
+            pushFollow(FollowSets000.FOLLOW_50);
             rule__ExtendedID__Group__1__Impl();
 
             state._fsp--;
@@ -24856,46 +25268,46 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ExtendedID__Group__1__Impl"
-    // InternalKExpressions.g:8792:1: rule__ExtendedID__Group__1__Impl : ( ( rule__ExtendedID__Group_1__0 )* ) ;
+    // InternalKExpressions.g:8935:1: rule__ExtendedID__Group__1__Impl : ( ( rule__ExtendedID__Group_1__0 )* ) ;
     public final void rule__ExtendedID__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8796:1: ( ( ( rule__ExtendedID__Group_1__0 )* ) )
-            // InternalKExpressions.g:8797:1: ( ( rule__ExtendedID__Group_1__0 )* )
+            // InternalKExpressions.g:8939:1: ( ( ( rule__ExtendedID__Group_1__0 )* ) )
+            // InternalKExpressions.g:8940:1: ( ( rule__ExtendedID__Group_1__0 )* )
             {
-            // InternalKExpressions.g:8797:1: ( ( rule__ExtendedID__Group_1__0 )* )
-            // InternalKExpressions.g:8798:1: ( rule__ExtendedID__Group_1__0 )*
+            // InternalKExpressions.g:8940:1: ( ( rule__ExtendedID__Group_1__0 )* )
+            // InternalKExpressions.g:8941:1: ( rule__ExtendedID__Group_1__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExtendedIDAccess().getGroup_1()); 
             }
-            // InternalKExpressions.g:8799:1: ( rule__ExtendedID__Group_1__0 )*
-            loop54:
+            // InternalKExpressions.g:8942:1: ( rule__ExtendedID__Group_1__0 )*
+            loop55:
             do {
-                int alt54=2;
-                int LA54_0 = input.LA(1);
+                int alt55=2;
+                int LA55_0 = input.LA(1);
 
-                if ( (LA54_0==22) ) {
-                    int LA54_2 = input.LA(2);
+                if ( (LA55_0==22) ) {
+                    int LA55_2 = input.LA(2);
 
-                    if ( (LA54_2==RULE_ID) ) {
-                        alt54=1;
+                    if ( (LA55_2==RULE_ID) ) {
+                        alt55=1;
                     }
 
 
                 }
-                else if ( (LA54_0==30) ) {
-                    alt54=1;
+                else if ( (LA55_0==30) ) {
+                    alt55=1;
                 }
 
 
-                switch (alt54) {
+                switch (alt55) {
             	case 1 :
-            	    // InternalKExpressions.g:8799:2: rule__ExtendedID__Group_1__0
+            	    // InternalKExpressions.g:8942:2: rule__ExtendedID__Group_1__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_50);
+            	    pushFollow(FollowSets000.FOLLOW_51);
             	    rule__ExtendedID__Group_1__0();
 
             	    state._fsp--;
@@ -24905,7 +25317,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             	    break;
 
             	default :
-            	    break loop54;
+            	    break loop55;
                 }
             } while (true);
 
@@ -24934,14 +25346,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ExtendedID__Group__2"
-    // InternalKExpressions.g:8809:1: rule__ExtendedID__Group__2 : rule__ExtendedID__Group__2__Impl ;
+    // InternalKExpressions.g:8952:1: rule__ExtendedID__Group__2 : rule__ExtendedID__Group__2__Impl ;
     public final void rule__ExtendedID__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8813:1: ( rule__ExtendedID__Group__2__Impl )
-            // InternalKExpressions.g:8814:2: rule__ExtendedID__Group__2__Impl
+            // InternalKExpressions.g:8956:1: ( rule__ExtendedID__Group__2__Impl )
+            // InternalKExpressions.g:8957:2: rule__ExtendedID__Group__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ExtendedID__Group__2__Impl();
@@ -24967,31 +25379,31 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ExtendedID__Group__2__Impl"
-    // InternalKExpressions.g:8820:1: rule__ExtendedID__Group__2__Impl : ( ( rule__ExtendedID__Group_2__0 )? ) ;
+    // InternalKExpressions.g:8963:1: rule__ExtendedID__Group__2__Impl : ( ( rule__ExtendedID__Group_2__0 )? ) ;
     public final void rule__ExtendedID__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8824:1: ( ( ( rule__ExtendedID__Group_2__0 )? ) )
-            // InternalKExpressions.g:8825:1: ( ( rule__ExtendedID__Group_2__0 )? )
+            // InternalKExpressions.g:8967:1: ( ( ( rule__ExtendedID__Group_2__0 )? ) )
+            // InternalKExpressions.g:8968:1: ( ( rule__ExtendedID__Group_2__0 )? )
             {
-            // InternalKExpressions.g:8825:1: ( ( rule__ExtendedID__Group_2__0 )? )
-            // InternalKExpressions.g:8826:1: ( rule__ExtendedID__Group_2__0 )?
+            // InternalKExpressions.g:8968:1: ( ( rule__ExtendedID__Group_2__0 )? )
+            // InternalKExpressions.g:8969:1: ( rule__ExtendedID__Group_2__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExtendedIDAccess().getGroup_2()); 
             }
-            // InternalKExpressions.g:8827:1: ( rule__ExtendedID__Group_2__0 )?
-            int alt55=2;
-            int LA55_0 = input.LA(1);
+            // InternalKExpressions.g:8970:1: ( rule__ExtendedID__Group_2__0 )?
+            int alt56=2;
+            int LA56_0 = input.LA(1);
 
-            if ( (LA55_0==46) ) {
-                alt55=1;
+            if ( (LA56_0==47) ) {
+                alt56=1;
             }
-            switch (alt55) {
+            switch (alt56) {
                 case 1 :
-                    // InternalKExpressions.g:8827:2: rule__ExtendedID__Group_2__0
+                    // InternalKExpressions.g:8970:2: rule__ExtendedID__Group_2__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__ExtendedID__Group_2__0();
@@ -25029,14 +25441,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ExtendedID__Group_1__0"
-    // InternalKExpressions.g:8843:1: rule__ExtendedID__Group_1__0 : rule__ExtendedID__Group_1__0__Impl rule__ExtendedID__Group_1__1 ;
+    // InternalKExpressions.g:8986:1: rule__ExtendedID__Group_1__0 : rule__ExtendedID__Group_1__0__Impl rule__ExtendedID__Group_1__1 ;
     public final void rule__ExtendedID__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8847:1: ( rule__ExtendedID__Group_1__0__Impl rule__ExtendedID__Group_1__1 )
-            // InternalKExpressions.g:8848:2: rule__ExtendedID__Group_1__0__Impl rule__ExtendedID__Group_1__1
+            // InternalKExpressions.g:8990:1: ( rule__ExtendedID__Group_1__0__Impl rule__ExtendedID__Group_1__1 )
+            // InternalKExpressions.g:8991:2: rule__ExtendedID__Group_1__0__Impl rule__ExtendedID__Group_1__1
             {
             pushFollow(FollowSets000.FOLLOW_4);
             rule__ExtendedID__Group_1__0__Impl();
@@ -25067,23 +25479,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ExtendedID__Group_1__0__Impl"
-    // InternalKExpressions.g:8855:1: rule__ExtendedID__Group_1__0__Impl : ( ( rule__ExtendedID__Alternatives_1_0 ) ) ;
+    // InternalKExpressions.g:8998:1: rule__ExtendedID__Group_1__0__Impl : ( ( rule__ExtendedID__Alternatives_1_0 ) ) ;
     public final void rule__ExtendedID__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8859:1: ( ( ( rule__ExtendedID__Alternatives_1_0 ) ) )
-            // InternalKExpressions.g:8860:1: ( ( rule__ExtendedID__Alternatives_1_0 ) )
+            // InternalKExpressions.g:9002:1: ( ( ( rule__ExtendedID__Alternatives_1_0 ) ) )
+            // InternalKExpressions.g:9003:1: ( ( rule__ExtendedID__Alternatives_1_0 ) )
             {
-            // InternalKExpressions.g:8860:1: ( ( rule__ExtendedID__Alternatives_1_0 ) )
-            // InternalKExpressions.g:8861:1: ( rule__ExtendedID__Alternatives_1_0 )
+            // InternalKExpressions.g:9003:1: ( ( rule__ExtendedID__Alternatives_1_0 ) )
+            // InternalKExpressions.g:9004:1: ( rule__ExtendedID__Alternatives_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExtendedIDAccess().getAlternatives_1_0()); 
             }
-            // InternalKExpressions.g:8862:1: ( rule__ExtendedID__Alternatives_1_0 )
-            // InternalKExpressions.g:8862:2: rule__ExtendedID__Alternatives_1_0
+            // InternalKExpressions.g:9005:1: ( rule__ExtendedID__Alternatives_1_0 )
+            // InternalKExpressions.g:9005:2: rule__ExtendedID__Alternatives_1_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ExtendedID__Alternatives_1_0();
@@ -25118,14 +25530,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ExtendedID__Group_1__1"
-    // InternalKExpressions.g:8872:1: rule__ExtendedID__Group_1__1 : rule__ExtendedID__Group_1__1__Impl ;
+    // InternalKExpressions.g:9015:1: rule__ExtendedID__Group_1__1 : rule__ExtendedID__Group_1__1__Impl ;
     public final void rule__ExtendedID__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8876:1: ( rule__ExtendedID__Group_1__1__Impl )
-            // InternalKExpressions.g:8877:2: rule__ExtendedID__Group_1__1__Impl
+            // InternalKExpressions.g:9019:1: ( rule__ExtendedID__Group_1__1__Impl )
+            // InternalKExpressions.g:9020:2: rule__ExtendedID__Group_1__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ExtendedID__Group_1__1__Impl();
@@ -25151,17 +25563,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ExtendedID__Group_1__1__Impl"
-    // InternalKExpressions.g:8883:1: rule__ExtendedID__Group_1__1__Impl : ( RULE_ID ) ;
+    // InternalKExpressions.g:9026:1: rule__ExtendedID__Group_1__1__Impl : ( RULE_ID ) ;
     public final void rule__ExtendedID__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8887:1: ( ( RULE_ID ) )
-            // InternalKExpressions.g:8888:1: ( RULE_ID )
+            // InternalKExpressions.g:9030:1: ( ( RULE_ID ) )
+            // InternalKExpressions.g:9031:1: ( RULE_ID )
             {
-            // InternalKExpressions.g:8888:1: ( RULE_ID )
-            // InternalKExpressions.g:8889:1: RULE_ID
+            // InternalKExpressions.g:9031:1: ( RULE_ID )
+            // InternalKExpressions.g:9032:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_1_1()); 
@@ -25192,14 +25604,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ExtendedID__Group_2__0"
-    // InternalKExpressions.g:8904:1: rule__ExtendedID__Group_2__0 : rule__ExtendedID__Group_2__0__Impl rule__ExtendedID__Group_2__1 ;
+    // InternalKExpressions.g:9047:1: rule__ExtendedID__Group_2__0 : rule__ExtendedID__Group_2__0__Impl rule__ExtendedID__Group_2__1 ;
     public final void rule__ExtendedID__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8908:1: ( rule__ExtendedID__Group_2__0__Impl rule__ExtendedID__Group_2__1 )
-            // InternalKExpressions.g:8909:2: rule__ExtendedID__Group_2__0__Impl rule__ExtendedID__Group_2__1
+            // InternalKExpressions.g:9051:1: ( rule__ExtendedID__Group_2__0__Impl rule__ExtendedID__Group_2__1 )
+            // InternalKExpressions.g:9052:2: rule__ExtendedID__Group_2__0__Impl rule__ExtendedID__Group_2__1
             {
             pushFollow(FollowSets000.FOLLOW_37);
             rule__ExtendedID__Group_2__0__Impl();
@@ -25230,22 +25642,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ExtendedID__Group_2__0__Impl"
-    // InternalKExpressions.g:8916:1: rule__ExtendedID__Group_2__0__Impl : ( '#' ) ;
+    // InternalKExpressions.g:9059:1: rule__ExtendedID__Group_2__0__Impl : ( '#' ) ;
     public final void rule__ExtendedID__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8920:1: ( ( '#' ) )
-            // InternalKExpressions.g:8921:1: ( '#' )
+            // InternalKExpressions.g:9063:1: ( ( '#' ) )
+            // InternalKExpressions.g:9064:1: ( '#' )
             {
-            // InternalKExpressions.g:8921:1: ( '#' )
-            // InternalKExpressions.g:8922:1: '#'
+            // InternalKExpressions.g:9064:1: ( '#' )
+            // InternalKExpressions.g:9065:1: '#'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExtendedIDAccess().getNumberSignKeyword_2_0()); 
             }
-            match(input,46,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,47,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExtendedIDAccess().getNumberSignKeyword_2_0()); 
             }
@@ -25271,14 +25683,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ExtendedID__Group_2__1"
-    // InternalKExpressions.g:8935:1: rule__ExtendedID__Group_2__1 : rule__ExtendedID__Group_2__1__Impl ;
+    // InternalKExpressions.g:9078:1: rule__ExtendedID__Group_2__1 : rule__ExtendedID__Group_2__1__Impl ;
     public final void rule__ExtendedID__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8939:1: ( rule__ExtendedID__Group_2__1__Impl )
-            // InternalKExpressions.g:8940:2: rule__ExtendedID__Group_2__1__Impl
+            // InternalKExpressions.g:9082:1: ( rule__ExtendedID__Group_2__1__Impl )
+            // InternalKExpressions.g:9083:2: rule__ExtendedID__Group_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ExtendedID__Group_2__1__Impl();
@@ -25304,17 +25716,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ExtendedID__Group_2__1__Impl"
-    // InternalKExpressions.g:8946:1: rule__ExtendedID__Group_2__1__Impl : ( RULE_INT ) ;
+    // InternalKExpressions.g:9089:1: rule__ExtendedID__Group_2__1__Impl : ( RULE_INT ) ;
     public final void rule__ExtendedID__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8950:1: ( ( RULE_INT ) )
-            // InternalKExpressions.g:8951:1: ( RULE_INT )
+            // InternalKExpressions.g:9093:1: ( ( RULE_INT ) )
+            // InternalKExpressions.g:9094:1: ( RULE_INT )
             {
-            // InternalKExpressions.g:8951:1: ( RULE_INT )
-            // InternalKExpressions.g:8952:1: RULE_INT
+            // InternalKExpressions.g:9094:1: ( RULE_INT )
+            // InternalKExpressions.g:9095:1: RULE_INT
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExtendedIDAccess().getINTTerminalRuleCall_2_1()); 
@@ -25345,16 +25757,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Integer__Group__0"
-    // InternalKExpressions.g:8969:1: rule__Integer__Group__0 : rule__Integer__Group__0__Impl rule__Integer__Group__1 ;
+    // InternalKExpressions.g:9112:1: rule__Integer__Group__0 : rule__Integer__Group__0__Impl rule__Integer__Group__1 ;
     public final void rule__Integer__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8973:1: ( rule__Integer__Group__0__Impl rule__Integer__Group__1 )
-            // InternalKExpressions.g:8974:2: rule__Integer__Group__0__Impl rule__Integer__Group__1
+            // InternalKExpressions.g:9116:1: ( rule__Integer__Group__0__Impl rule__Integer__Group__1 )
+            // InternalKExpressions.g:9117:2: rule__Integer__Group__0__Impl rule__Integer__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_51);
+            pushFollow(FollowSets000.FOLLOW_52);
             rule__Integer__Group__0__Impl();
 
             state._fsp--;
@@ -25383,31 +25795,31 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Integer__Group__0__Impl"
-    // InternalKExpressions.g:8981:1: rule__Integer__Group__0__Impl : ( ( '-' )? ) ;
+    // InternalKExpressions.g:9124:1: rule__Integer__Group__0__Impl : ( ( '-' )? ) ;
     public final void rule__Integer__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8985:1: ( ( ( '-' )? ) )
-            // InternalKExpressions.g:8986:1: ( ( '-' )? )
+            // InternalKExpressions.g:9128:1: ( ( ( '-' )? ) )
+            // InternalKExpressions.g:9129:1: ( ( '-' )? )
             {
-            // InternalKExpressions.g:8986:1: ( ( '-' )? )
-            // InternalKExpressions.g:8987:1: ( '-' )?
+            // InternalKExpressions.g:9129:1: ( ( '-' )? )
+            // InternalKExpressions.g:9130:1: ( '-' )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIntegerAccess().getHyphenMinusKeyword_0()); 
             }
-            // InternalKExpressions.g:8988:1: ( '-' )?
-            int alt56=2;
-            int LA56_0 = input.LA(1);
+            // InternalKExpressions.g:9131:1: ( '-' )?
+            int alt57=2;
+            int LA57_0 = input.LA(1);
 
-            if ( (LA56_0==22) ) {
-                alt56=1;
+            if ( (LA57_0==22) ) {
+                alt57=1;
             }
-            switch (alt56) {
+            switch (alt57) {
                 case 1 :
-                    // InternalKExpressions.g:8989:2: '-'
+                    // InternalKExpressions.g:9132:2: '-'
                     {
                     match(input,22,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -25441,14 +25853,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Integer__Group__1"
-    // InternalKExpressions.g:9000:1: rule__Integer__Group__1 : rule__Integer__Group__1__Impl ;
+    // InternalKExpressions.g:9143:1: rule__Integer__Group__1 : rule__Integer__Group__1__Impl ;
     public final void rule__Integer__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9004:1: ( rule__Integer__Group__1__Impl )
-            // InternalKExpressions.g:9005:2: rule__Integer__Group__1__Impl
+            // InternalKExpressions.g:9147:1: ( rule__Integer__Group__1__Impl )
+            // InternalKExpressions.g:9148:2: rule__Integer__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Integer__Group__1__Impl();
@@ -25474,17 +25886,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Integer__Group__1__Impl"
-    // InternalKExpressions.g:9011:1: rule__Integer__Group__1__Impl : ( RULE_INT ) ;
+    // InternalKExpressions.g:9154:1: rule__Integer__Group__1__Impl : ( RULE_INT ) ;
     public final void rule__Integer__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9015:1: ( ( RULE_INT ) )
-            // InternalKExpressions.g:9016:1: ( RULE_INT )
+            // InternalKExpressions.g:9158:1: ( ( RULE_INT ) )
+            // InternalKExpressions.g:9159:1: ( RULE_INT )
             {
-            // InternalKExpressions.g:9016:1: ( RULE_INT )
-            // InternalKExpressions.g:9017:1: RULE_INT
+            // InternalKExpressions.g:9159:1: ( RULE_INT )
+            // InternalKExpressions.g:9160:1: RULE_INT
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIntegerAccess().getINTTerminalRuleCall_1()); 
@@ -25515,16 +25927,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Floateger__Group__0"
-    // InternalKExpressions.g:9032:1: rule__Floateger__Group__0 : rule__Floateger__Group__0__Impl rule__Floateger__Group__1 ;
+    // InternalKExpressions.g:9175:1: rule__Floateger__Group__0 : rule__Floateger__Group__0__Impl rule__Floateger__Group__1 ;
     public final void rule__Floateger__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9036:1: ( rule__Floateger__Group__0__Impl rule__Floateger__Group__1 )
-            // InternalKExpressions.g:9037:2: rule__Floateger__Group__0__Impl rule__Floateger__Group__1
+            // InternalKExpressions.g:9179:1: ( rule__Floateger__Group__0__Impl rule__Floateger__Group__1 )
+            // InternalKExpressions.g:9180:2: rule__Floateger__Group__0__Impl rule__Floateger__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_44);
+            pushFollow(FollowSets000.FOLLOW_45);
             rule__Floateger__Group__0__Impl();
 
             state._fsp--;
@@ -25553,31 +25965,31 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Floateger__Group__0__Impl"
-    // InternalKExpressions.g:9044:1: rule__Floateger__Group__0__Impl : ( ( '-' )? ) ;
+    // InternalKExpressions.g:9187:1: rule__Floateger__Group__0__Impl : ( ( '-' )? ) ;
     public final void rule__Floateger__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9048:1: ( ( ( '-' )? ) )
-            // InternalKExpressions.g:9049:1: ( ( '-' )? )
+            // InternalKExpressions.g:9191:1: ( ( ( '-' )? ) )
+            // InternalKExpressions.g:9192:1: ( ( '-' )? )
             {
-            // InternalKExpressions.g:9049:1: ( ( '-' )? )
-            // InternalKExpressions.g:9050:1: ( '-' )?
+            // InternalKExpressions.g:9192:1: ( ( '-' )? )
+            // InternalKExpressions.g:9193:1: ( '-' )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFloategerAccess().getHyphenMinusKeyword_0()); 
             }
-            // InternalKExpressions.g:9051:1: ( '-' )?
-            int alt57=2;
-            int LA57_0 = input.LA(1);
+            // InternalKExpressions.g:9194:1: ( '-' )?
+            int alt58=2;
+            int LA58_0 = input.LA(1);
 
-            if ( (LA57_0==22) ) {
-                alt57=1;
+            if ( (LA58_0==22) ) {
+                alt58=1;
             }
-            switch (alt57) {
+            switch (alt58) {
                 case 1 :
-                    // InternalKExpressions.g:9052:2: '-'
+                    // InternalKExpressions.g:9195:2: '-'
                     {
                     match(input,22,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -25611,14 +26023,14 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Floateger__Group__1"
-    // InternalKExpressions.g:9063:1: rule__Floateger__Group__1 : rule__Floateger__Group__1__Impl ;
+    // InternalKExpressions.g:9206:1: rule__Floateger__Group__1 : rule__Floateger__Group__1__Impl ;
     public final void rule__Floateger__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9067:1: ( rule__Floateger__Group__1__Impl )
-            // InternalKExpressions.g:9068:2: rule__Floateger__Group__1__Impl
+            // InternalKExpressions.g:9210:1: ( rule__Floateger__Group__1__Impl )
+            // InternalKExpressions.g:9211:2: rule__Floateger__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Floateger__Group__1__Impl();
@@ -25644,17 +26056,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Floateger__Group__1__Impl"
-    // InternalKExpressions.g:9074:1: rule__Floateger__Group__1__Impl : ( RULE_FLOAT ) ;
+    // InternalKExpressions.g:9217:1: rule__Floateger__Group__1__Impl : ( RULE_FLOAT ) ;
     public final void rule__Floateger__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9078:1: ( ( RULE_FLOAT ) )
-            // InternalKExpressions.g:9079:1: ( RULE_FLOAT )
+            // InternalKExpressions.g:9221:1: ( ( RULE_FLOAT ) )
+            // InternalKExpressions.g:9222:1: ( RULE_FLOAT )
             {
-            // InternalKExpressions.g:9079:1: ( RULE_FLOAT )
-            // InternalKExpressions.g:9080:1: RULE_FLOAT
+            // InternalKExpressions.g:9222:1: ( RULE_FLOAT )
+            // InternalKExpressions.g:9223:1: RULE_FLOAT
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFloategerAccess().getFLOATTerminalRuleCall_1()); 
@@ -25685,17 +26097,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Expression__ScheduleAssignment_1_1"
-    // InternalKExpressions.g:9096:1: rule__Expression__ScheduleAssignment_1_1 : ( ruleScheduleObjectReference ) ;
+    // InternalKExpressions.g:9239:1: rule__Expression__ScheduleAssignment_1_1 : ( ruleScheduleObjectReference ) ;
     public final void rule__Expression__ScheduleAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9100:1: ( ( ruleScheduleObjectReference ) )
-            // InternalKExpressions.g:9101:1: ( ruleScheduleObjectReference )
+            // InternalKExpressions.g:9243:1: ( ( ruleScheduleObjectReference ) )
+            // InternalKExpressions.g:9244:1: ( ruleScheduleObjectReference )
             {
-            // InternalKExpressions.g:9101:1: ( ruleScheduleObjectReference )
-            // InternalKExpressions.g:9102:1: ruleScheduleObjectReference
+            // InternalKExpressions.g:9244:1: ( ruleScheduleObjectReference )
+            // InternalKExpressions.g:9245:1: ruleScheduleObjectReference
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExpressionAccess().getScheduleScheduleObjectReferenceParserRuleCall_1_1_0()); 
@@ -25730,17 +26142,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalOrExpression__OperatorAssignment_1_1_0"
-    // InternalKExpressions.g:9111:1: rule__LogicalOrExpression__OperatorAssignment_1_1_0 : ( ruleLogicalOrOperator ) ;
+    // InternalKExpressions.g:9254:1: rule__LogicalOrExpression__OperatorAssignment_1_1_0 : ( ruleLogicalOrOperator ) ;
     public final void rule__LogicalOrExpression__OperatorAssignment_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9115:1: ( ( ruleLogicalOrOperator ) )
-            // InternalKExpressions.g:9116:1: ( ruleLogicalOrOperator )
+            // InternalKExpressions.g:9258:1: ( ( ruleLogicalOrOperator ) )
+            // InternalKExpressions.g:9259:1: ( ruleLogicalOrOperator )
             {
-            // InternalKExpressions.g:9116:1: ( ruleLogicalOrOperator )
-            // InternalKExpressions.g:9117:1: ruleLogicalOrOperator
+            // InternalKExpressions.g:9259:1: ( ruleLogicalOrOperator )
+            // InternalKExpressions.g:9260:1: ruleLogicalOrOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalOrExpressionAccess().getOperatorLogicalOrOperatorEnumRuleCall_1_1_0_0()); 
@@ -25775,17 +26187,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1"
-    // InternalKExpressions.g:9126:1: rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1 : ( ruleLogicalAndExpression ) ;
+    // InternalKExpressions.g:9269:1: rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1 : ( ruleLogicalAndExpression ) ;
     public final void rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9130:1: ( ( ruleLogicalAndExpression ) )
-            // InternalKExpressions.g:9131:1: ( ruleLogicalAndExpression )
+            // InternalKExpressions.g:9273:1: ( ( ruleLogicalAndExpression ) )
+            // InternalKExpressions.g:9274:1: ( ruleLogicalAndExpression )
             {
-            // InternalKExpressions.g:9131:1: ( ruleLogicalAndExpression )
-            // InternalKExpressions.g:9132:1: ruleLogicalAndExpression
+            // InternalKExpressions.g:9274:1: ( ruleLogicalAndExpression )
+            // InternalKExpressions.g:9275:1: ruleLogicalAndExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalOrExpressionAccess().getSubExpressionsLogicalAndExpressionParserRuleCall_1_1_1_0()); 
@@ -25820,17 +26232,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1"
-    // InternalKExpressions.g:9141:1: rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1 : ( ruleLogicalAndExpression ) ;
+    // InternalKExpressions.g:9284:1: rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1 : ( ruleLogicalAndExpression ) ;
     public final void rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9145:1: ( ( ruleLogicalAndExpression ) )
-            // InternalKExpressions.g:9146:1: ( ruleLogicalAndExpression )
+            // InternalKExpressions.g:9288:1: ( ( ruleLogicalAndExpression ) )
+            // InternalKExpressions.g:9289:1: ( ruleLogicalAndExpression )
             {
-            // InternalKExpressions.g:9146:1: ( ruleLogicalAndExpression )
-            // InternalKExpressions.g:9147:1: ruleLogicalAndExpression
+            // InternalKExpressions.g:9289:1: ( ruleLogicalAndExpression )
+            // InternalKExpressions.g:9290:1: ruleLogicalAndExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalOrExpressionAccess().getSubExpressionsLogicalAndExpressionParserRuleCall_1_2_1_0()); 
@@ -25865,17 +26277,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalAndExpression__OperatorAssignment_1_1_0"
-    // InternalKExpressions.g:9156:1: rule__LogicalAndExpression__OperatorAssignment_1_1_0 : ( ruleLogicalAndOperator ) ;
+    // InternalKExpressions.g:9299:1: rule__LogicalAndExpression__OperatorAssignment_1_1_0 : ( ruleLogicalAndOperator ) ;
     public final void rule__LogicalAndExpression__OperatorAssignment_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9160:1: ( ( ruleLogicalAndOperator ) )
-            // InternalKExpressions.g:9161:1: ( ruleLogicalAndOperator )
+            // InternalKExpressions.g:9303:1: ( ( ruleLogicalAndOperator ) )
+            // InternalKExpressions.g:9304:1: ( ruleLogicalAndOperator )
             {
-            // InternalKExpressions.g:9161:1: ( ruleLogicalAndOperator )
-            // InternalKExpressions.g:9162:1: ruleLogicalAndOperator
+            // InternalKExpressions.g:9304:1: ( ruleLogicalAndOperator )
+            // InternalKExpressions.g:9305:1: ruleLogicalAndOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalAndExpressionAccess().getOperatorLogicalAndOperatorEnumRuleCall_1_1_0_0()); 
@@ -25910,17 +26322,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalAndExpression__SubExpressionsAssignment_1_1_1"
-    // InternalKExpressions.g:9171:1: rule__LogicalAndExpression__SubExpressionsAssignment_1_1_1 : ( ruleBitwiseOrExpression ) ;
+    // InternalKExpressions.g:9314:1: rule__LogicalAndExpression__SubExpressionsAssignment_1_1_1 : ( ruleBitwiseOrExpression ) ;
     public final void rule__LogicalAndExpression__SubExpressionsAssignment_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9175:1: ( ( ruleBitwiseOrExpression ) )
-            // InternalKExpressions.g:9176:1: ( ruleBitwiseOrExpression )
+            // InternalKExpressions.g:9318:1: ( ( ruleBitwiseOrExpression ) )
+            // InternalKExpressions.g:9319:1: ( ruleBitwiseOrExpression )
             {
-            // InternalKExpressions.g:9176:1: ( ruleBitwiseOrExpression )
-            // InternalKExpressions.g:9177:1: ruleBitwiseOrExpression
+            // InternalKExpressions.g:9319:1: ( ruleBitwiseOrExpression )
+            // InternalKExpressions.g:9320:1: ruleBitwiseOrExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalAndExpressionAccess().getSubExpressionsBitwiseOrExpressionParserRuleCall_1_1_1_0()); 
@@ -25955,17 +26367,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__LogicalAndExpression__SubExpressionsAssignment_1_2_1"
-    // InternalKExpressions.g:9186:1: rule__LogicalAndExpression__SubExpressionsAssignment_1_2_1 : ( ruleBitwiseOrExpression ) ;
+    // InternalKExpressions.g:9329:1: rule__LogicalAndExpression__SubExpressionsAssignment_1_2_1 : ( ruleBitwiseOrExpression ) ;
     public final void rule__LogicalAndExpression__SubExpressionsAssignment_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9190:1: ( ( ruleBitwiseOrExpression ) )
-            // InternalKExpressions.g:9191:1: ( ruleBitwiseOrExpression )
+            // InternalKExpressions.g:9333:1: ( ( ruleBitwiseOrExpression ) )
+            // InternalKExpressions.g:9334:1: ( ruleBitwiseOrExpression )
             {
-            // InternalKExpressions.g:9191:1: ( ruleBitwiseOrExpression )
-            // InternalKExpressions.g:9192:1: ruleBitwiseOrExpression
+            // InternalKExpressions.g:9334:1: ( ruleBitwiseOrExpression )
+            // InternalKExpressions.g:9335:1: ruleBitwiseOrExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalAndExpressionAccess().getSubExpressionsBitwiseOrExpressionParserRuleCall_1_2_1_0()); 
@@ -26000,17 +26412,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseOrExpression__OperatorAssignment_1_1_0"
-    // InternalKExpressions.g:9201:1: rule__BitwiseOrExpression__OperatorAssignment_1_1_0 : ( ruleBitwiseOrOperator ) ;
+    // InternalKExpressions.g:9344:1: rule__BitwiseOrExpression__OperatorAssignment_1_1_0 : ( ruleBitwiseOrOperator ) ;
     public final void rule__BitwiseOrExpression__OperatorAssignment_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9205:1: ( ( ruleBitwiseOrOperator ) )
-            // InternalKExpressions.g:9206:1: ( ruleBitwiseOrOperator )
+            // InternalKExpressions.g:9348:1: ( ( ruleBitwiseOrOperator ) )
+            // InternalKExpressions.g:9349:1: ( ruleBitwiseOrOperator )
             {
-            // InternalKExpressions.g:9206:1: ( ruleBitwiseOrOperator )
-            // InternalKExpressions.g:9207:1: ruleBitwiseOrOperator
+            // InternalKExpressions.g:9349:1: ( ruleBitwiseOrOperator )
+            // InternalKExpressions.g:9350:1: ruleBitwiseOrOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseOrExpressionAccess().getOperatorBitwiseOrOperatorEnumRuleCall_1_1_0_0()); 
@@ -26045,17 +26457,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseOrExpression__SubExpressionsAssignment_1_1_1"
-    // InternalKExpressions.g:9216:1: rule__BitwiseOrExpression__SubExpressionsAssignment_1_1_1 : ( ruleBitwiseAndExpression ) ;
+    // InternalKExpressions.g:9359:1: rule__BitwiseOrExpression__SubExpressionsAssignment_1_1_1 : ( ruleBitwiseAndExpression ) ;
     public final void rule__BitwiseOrExpression__SubExpressionsAssignment_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9220:1: ( ( ruleBitwiseAndExpression ) )
-            // InternalKExpressions.g:9221:1: ( ruleBitwiseAndExpression )
+            // InternalKExpressions.g:9363:1: ( ( ruleBitwiseAndExpression ) )
+            // InternalKExpressions.g:9364:1: ( ruleBitwiseAndExpression )
             {
-            // InternalKExpressions.g:9221:1: ( ruleBitwiseAndExpression )
-            // InternalKExpressions.g:9222:1: ruleBitwiseAndExpression
+            // InternalKExpressions.g:9364:1: ( ruleBitwiseAndExpression )
+            // InternalKExpressions.g:9365:1: ruleBitwiseAndExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseOrExpressionAccess().getSubExpressionsBitwiseAndExpressionParserRuleCall_1_1_1_0()); 
@@ -26090,17 +26502,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseOrExpression__SubExpressionsAssignment_1_2_1"
-    // InternalKExpressions.g:9231:1: rule__BitwiseOrExpression__SubExpressionsAssignment_1_2_1 : ( ruleBitwiseAndExpression ) ;
+    // InternalKExpressions.g:9374:1: rule__BitwiseOrExpression__SubExpressionsAssignment_1_2_1 : ( ruleBitwiseAndExpression ) ;
     public final void rule__BitwiseOrExpression__SubExpressionsAssignment_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9235:1: ( ( ruleBitwiseAndExpression ) )
-            // InternalKExpressions.g:9236:1: ( ruleBitwiseAndExpression )
+            // InternalKExpressions.g:9378:1: ( ( ruleBitwiseAndExpression ) )
+            // InternalKExpressions.g:9379:1: ( ruleBitwiseAndExpression )
             {
-            // InternalKExpressions.g:9236:1: ( ruleBitwiseAndExpression )
-            // InternalKExpressions.g:9237:1: ruleBitwiseAndExpression
+            // InternalKExpressions.g:9379:1: ( ruleBitwiseAndExpression )
+            // InternalKExpressions.g:9380:1: ruleBitwiseAndExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseOrExpressionAccess().getSubExpressionsBitwiseAndExpressionParserRuleCall_1_2_1_0()); 
@@ -26135,17 +26547,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseAndExpression__OperatorAssignment_1_1_0"
-    // InternalKExpressions.g:9246:1: rule__BitwiseAndExpression__OperatorAssignment_1_1_0 : ( ruleBitwiseAndOperator ) ;
+    // InternalKExpressions.g:9389:1: rule__BitwiseAndExpression__OperatorAssignment_1_1_0 : ( ruleBitwiseAndOperator ) ;
     public final void rule__BitwiseAndExpression__OperatorAssignment_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9250:1: ( ( ruleBitwiseAndOperator ) )
-            // InternalKExpressions.g:9251:1: ( ruleBitwiseAndOperator )
+            // InternalKExpressions.g:9393:1: ( ( ruleBitwiseAndOperator ) )
+            // InternalKExpressions.g:9394:1: ( ruleBitwiseAndOperator )
             {
-            // InternalKExpressions.g:9251:1: ( ruleBitwiseAndOperator )
-            // InternalKExpressions.g:9252:1: ruleBitwiseAndOperator
+            // InternalKExpressions.g:9394:1: ( ruleBitwiseAndOperator )
+            // InternalKExpressions.g:9395:1: ruleBitwiseAndOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseAndExpressionAccess().getOperatorBitwiseAndOperatorEnumRuleCall_1_1_0_0()); 
@@ -26180,17 +26592,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseAndExpression__SubExpressionsAssignment_1_1_1"
-    // InternalKExpressions.g:9261:1: rule__BitwiseAndExpression__SubExpressionsAssignment_1_1_1 : ( ruleCompareOperation ) ;
+    // InternalKExpressions.g:9404:1: rule__BitwiseAndExpression__SubExpressionsAssignment_1_1_1 : ( ruleCompareOperation ) ;
     public final void rule__BitwiseAndExpression__SubExpressionsAssignment_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9265:1: ( ( ruleCompareOperation ) )
-            // InternalKExpressions.g:9266:1: ( ruleCompareOperation )
+            // InternalKExpressions.g:9408:1: ( ( ruleCompareOperation ) )
+            // InternalKExpressions.g:9409:1: ( ruleCompareOperation )
             {
-            // InternalKExpressions.g:9266:1: ( ruleCompareOperation )
-            // InternalKExpressions.g:9267:1: ruleCompareOperation
+            // InternalKExpressions.g:9409:1: ( ruleCompareOperation )
+            // InternalKExpressions.g:9410:1: ruleCompareOperation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseAndExpressionAccess().getSubExpressionsCompareOperationParserRuleCall_1_1_1_0()); 
@@ -26225,17 +26637,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BitwiseAndExpression__SubExpressionsAssignment_1_2_1"
-    // InternalKExpressions.g:9276:1: rule__BitwiseAndExpression__SubExpressionsAssignment_1_2_1 : ( ruleCompareOperation ) ;
+    // InternalKExpressions.g:9419:1: rule__BitwiseAndExpression__SubExpressionsAssignment_1_2_1 : ( ruleCompareOperation ) ;
     public final void rule__BitwiseAndExpression__SubExpressionsAssignment_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9280:1: ( ( ruleCompareOperation ) )
-            // InternalKExpressions.g:9281:1: ( ruleCompareOperation )
+            // InternalKExpressions.g:9423:1: ( ( ruleCompareOperation ) )
+            // InternalKExpressions.g:9424:1: ( ruleCompareOperation )
             {
-            // InternalKExpressions.g:9281:1: ( ruleCompareOperation )
-            // InternalKExpressions.g:9282:1: ruleCompareOperation
+            // InternalKExpressions.g:9424:1: ( ruleCompareOperation )
+            // InternalKExpressions.g:9425:1: ruleCompareOperation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseAndExpressionAccess().getSubExpressionsCompareOperationParserRuleCall_1_2_1_0()); 
@@ -26270,17 +26682,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__CompareOperation__OperatorAssignment_1_1"
-    // InternalKExpressions.g:9291:1: rule__CompareOperation__OperatorAssignment_1_1 : ( ruleCompareOperator ) ;
+    // InternalKExpressions.g:9434:1: rule__CompareOperation__OperatorAssignment_1_1 : ( ruleCompareOperator ) ;
     public final void rule__CompareOperation__OperatorAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9295:1: ( ( ruleCompareOperator ) )
-            // InternalKExpressions.g:9296:1: ( ruleCompareOperator )
+            // InternalKExpressions.g:9438:1: ( ( ruleCompareOperator ) )
+            // InternalKExpressions.g:9439:1: ( ruleCompareOperator )
             {
-            // InternalKExpressions.g:9296:1: ( ruleCompareOperator )
-            // InternalKExpressions.g:9297:1: ruleCompareOperator
+            // InternalKExpressions.g:9439:1: ( ruleCompareOperator )
+            // InternalKExpressions.g:9440:1: ruleCompareOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCompareOperationAccess().getOperatorCompareOperatorEnumRuleCall_1_1_0()); 
@@ -26315,17 +26727,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__CompareOperation__SubExpressionsAssignment_1_2"
-    // InternalKExpressions.g:9306:1: rule__CompareOperation__SubExpressionsAssignment_1_2 : ( ruleNotOrValuedExpression ) ;
+    // InternalKExpressions.g:9449:1: rule__CompareOperation__SubExpressionsAssignment_1_2 : ( ruleNotOrValuedExpression ) ;
     public final void rule__CompareOperation__SubExpressionsAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9310:1: ( ( ruleNotOrValuedExpression ) )
-            // InternalKExpressions.g:9311:1: ( ruleNotOrValuedExpression )
+            // InternalKExpressions.g:9453:1: ( ( ruleNotOrValuedExpression ) )
+            // InternalKExpressions.g:9454:1: ( ruleNotOrValuedExpression )
             {
-            // InternalKExpressions.g:9311:1: ( ruleNotOrValuedExpression )
-            // InternalKExpressions.g:9312:1: ruleNotOrValuedExpression
+            // InternalKExpressions.g:9454:1: ( ruleNotOrValuedExpression )
+            // InternalKExpressions.g:9455:1: ruleNotOrValuedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCompareOperationAccess().getSubExpressionsNotOrValuedExpressionParserRuleCall_1_2_0()); 
@@ -26360,17 +26772,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__NotExpression__OperatorAssignment_0_1"
-    // InternalKExpressions.g:9321:1: rule__NotExpression__OperatorAssignment_0_1 : ( ruleNotOperator ) ;
+    // InternalKExpressions.g:9464:1: rule__NotExpression__OperatorAssignment_0_1 : ( ruleNotOperator ) ;
     public final void rule__NotExpression__OperatorAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9325:1: ( ( ruleNotOperator ) )
-            // InternalKExpressions.g:9326:1: ( ruleNotOperator )
+            // InternalKExpressions.g:9468:1: ( ( ruleNotOperator ) )
+            // InternalKExpressions.g:9469:1: ( ruleNotOperator )
             {
-            // InternalKExpressions.g:9326:1: ( ruleNotOperator )
-            // InternalKExpressions.g:9327:1: ruleNotOperator
+            // InternalKExpressions.g:9469:1: ( ruleNotOperator )
+            // InternalKExpressions.g:9470:1: ruleNotOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNotExpressionAccess().getOperatorNotOperatorEnumRuleCall_0_1_0()); 
@@ -26405,17 +26817,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__NotExpression__SubExpressionsAssignment_0_2"
-    // InternalKExpressions.g:9336:1: rule__NotExpression__SubExpressionsAssignment_0_2 : ( ruleNotExpression ) ;
+    // InternalKExpressions.g:9479:1: rule__NotExpression__SubExpressionsAssignment_0_2 : ( ruleNotExpression ) ;
     public final void rule__NotExpression__SubExpressionsAssignment_0_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9340:1: ( ( ruleNotExpression ) )
-            // InternalKExpressions.g:9341:1: ( ruleNotExpression )
+            // InternalKExpressions.g:9483:1: ( ( ruleNotExpression ) )
+            // InternalKExpressions.g:9484:1: ( ruleNotExpression )
             {
-            // InternalKExpressions.g:9341:1: ( ruleNotExpression )
-            // InternalKExpressions.g:9342:1: ruleNotExpression
+            // InternalKExpressions.g:9484:1: ( ruleNotExpression )
+            // InternalKExpressions.g:9485:1: ruleNotExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNotExpressionAccess().getSubExpressionsNotExpressionParserRuleCall_0_2_0()); 
@@ -26450,17 +26862,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AddExpression__OperatorAssignment_1_1_0"
-    // InternalKExpressions.g:9351:1: rule__AddExpression__OperatorAssignment_1_1_0 : ( ruleAddOperator ) ;
+    // InternalKExpressions.g:9494:1: rule__AddExpression__OperatorAssignment_1_1_0 : ( ruleAddOperator ) ;
     public final void rule__AddExpression__OperatorAssignment_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9355:1: ( ( ruleAddOperator ) )
-            // InternalKExpressions.g:9356:1: ( ruleAddOperator )
+            // InternalKExpressions.g:9498:1: ( ( ruleAddOperator ) )
+            // InternalKExpressions.g:9499:1: ( ruleAddOperator )
             {
-            // InternalKExpressions.g:9356:1: ( ruleAddOperator )
-            // InternalKExpressions.g:9357:1: ruleAddOperator
+            // InternalKExpressions.g:9499:1: ( ruleAddOperator )
+            // InternalKExpressions.g:9500:1: ruleAddOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAddExpressionAccess().getOperatorAddOperatorEnumRuleCall_1_1_0_0()); 
@@ -26495,17 +26907,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AddExpression__SubExpressionsAssignment_1_1_1"
-    // InternalKExpressions.g:9366:1: rule__AddExpression__SubExpressionsAssignment_1_1_1 : ( ruleSubExpression ) ;
+    // InternalKExpressions.g:9509:1: rule__AddExpression__SubExpressionsAssignment_1_1_1 : ( ruleSubExpression ) ;
     public final void rule__AddExpression__SubExpressionsAssignment_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9370:1: ( ( ruleSubExpression ) )
-            // InternalKExpressions.g:9371:1: ( ruleSubExpression )
+            // InternalKExpressions.g:9513:1: ( ( ruleSubExpression ) )
+            // InternalKExpressions.g:9514:1: ( ruleSubExpression )
             {
-            // InternalKExpressions.g:9371:1: ( ruleSubExpression )
-            // InternalKExpressions.g:9372:1: ruleSubExpression
+            // InternalKExpressions.g:9514:1: ( ruleSubExpression )
+            // InternalKExpressions.g:9515:1: ruleSubExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAddExpressionAccess().getSubExpressionsSubExpressionParserRuleCall_1_1_1_0()); 
@@ -26540,17 +26952,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AddExpression__SubExpressionsAssignment_1_2_1"
-    // InternalKExpressions.g:9381:1: rule__AddExpression__SubExpressionsAssignment_1_2_1 : ( ruleSubExpression ) ;
+    // InternalKExpressions.g:9524:1: rule__AddExpression__SubExpressionsAssignment_1_2_1 : ( ruleSubExpression ) ;
     public final void rule__AddExpression__SubExpressionsAssignment_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9385:1: ( ( ruleSubExpression ) )
-            // InternalKExpressions.g:9386:1: ( ruleSubExpression )
+            // InternalKExpressions.g:9528:1: ( ( ruleSubExpression ) )
+            // InternalKExpressions.g:9529:1: ( ruleSubExpression )
             {
-            // InternalKExpressions.g:9386:1: ( ruleSubExpression )
-            // InternalKExpressions.g:9387:1: ruleSubExpression
+            // InternalKExpressions.g:9529:1: ( ruleSubExpression )
+            // InternalKExpressions.g:9530:1: ruleSubExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAddExpressionAccess().getSubExpressionsSubExpressionParserRuleCall_1_2_1_0()); 
@@ -26585,17 +26997,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__SubExpression__OperatorAssignment_1_1_0"
-    // InternalKExpressions.g:9396:1: rule__SubExpression__OperatorAssignment_1_1_0 : ( ruleSubOperator ) ;
+    // InternalKExpressions.g:9539:1: rule__SubExpression__OperatorAssignment_1_1_0 : ( ruleSubOperator ) ;
     public final void rule__SubExpression__OperatorAssignment_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9400:1: ( ( ruleSubOperator ) )
-            // InternalKExpressions.g:9401:1: ( ruleSubOperator )
+            // InternalKExpressions.g:9543:1: ( ( ruleSubOperator ) )
+            // InternalKExpressions.g:9544:1: ( ruleSubOperator )
             {
-            // InternalKExpressions.g:9401:1: ( ruleSubOperator )
-            // InternalKExpressions.g:9402:1: ruleSubOperator
+            // InternalKExpressions.g:9544:1: ( ruleSubOperator )
+            // InternalKExpressions.g:9545:1: ruleSubOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubExpressionAccess().getOperatorSubOperatorEnumRuleCall_1_1_0_0()); 
@@ -26630,17 +27042,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__SubExpression__SubExpressionsAssignment_1_1_1"
-    // InternalKExpressions.g:9411:1: rule__SubExpression__SubExpressionsAssignment_1_1_1 : ( ruleMultExpression ) ;
+    // InternalKExpressions.g:9554:1: rule__SubExpression__SubExpressionsAssignment_1_1_1 : ( ruleMultExpression ) ;
     public final void rule__SubExpression__SubExpressionsAssignment_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9415:1: ( ( ruleMultExpression ) )
-            // InternalKExpressions.g:9416:1: ( ruleMultExpression )
+            // InternalKExpressions.g:9558:1: ( ( ruleMultExpression ) )
+            // InternalKExpressions.g:9559:1: ( ruleMultExpression )
             {
-            // InternalKExpressions.g:9416:1: ( ruleMultExpression )
-            // InternalKExpressions.g:9417:1: ruleMultExpression
+            // InternalKExpressions.g:9559:1: ( ruleMultExpression )
+            // InternalKExpressions.g:9560:1: ruleMultExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubExpressionAccess().getSubExpressionsMultExpressionParserRuleCall_1_1_1_0()); 
@@ -26675,17 +27087,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__SubExpression__SubExpressionsAssignment_1_2_1"
-    // InternalKExpressions.g:9426:1: rule__SubExpression__SubExpressionsAssignment_1_2_1 : ( ruleMultExpression ) ;
+    // InternalKExpressions.g:9569:1: rule__SubExpression__SubExpressionsAssignment_1_2_1 : ( ruleMultExpression ) ;
     public final void rule__SubExpression__SubExpressionsAssignment_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9430:1: ( ( ruleMultExpression ) )
-            // InternalKExpressions.g:9431:1: ( ruleMultExpression )
+            // InternalKExpressions.g:9573:1: ( ( ruleMultExpression ) )
+            // InternalKExpressions.g:9574:1: ( ruleMultExpression )
             {
-            // InternalKExpressions.g:9431:1: ( ruleMultExpression )
-            // InternalKExpressions.g:9432:1: ruleMultExpression
+            // InternalKExpressions.g:9574:1: ( ruleMultExpression )
+            // InternalKExpressions.g:9575:1: ruleMultExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubExpressionAccess().getSubExpressionsMultExpressionParserRuleCall_1_2_1_0()); 
@@ -26720,17 +27132,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__MultExpression__OperatorAssignment_1_1_0"
-    // InternalKExpressions.g:9441:1: rule__MultExpression__OperatorAssignment_1_1_0 : ( ruleMultOperator ) ;
+    // InternalKExpressions.g:9584:1: rule__MultExpression__OperatorAssignment_1_1_0 : ( ruleMultOperator ) ;
     public final void rule__MultExpression__OperatorAssignment_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9445:1: ( ( ruleMultOperator ) )
-            // InternalKExpressions.g:9446:1: ( ruleMultOperator )
+            // InternalKExpressions.g:9588:1: ( ( ruleMultOperator ) )
+            // InternalKExpressions.g:9589:1: ( ruleMultOperator )
             {
-            // InternalKExpressions.g:9446:1: ( ruleMultOperator )
-            // InternalKExpressions.g:9447:1: ruleMultOperator
+            // InternalKExpressions.g:9589:1: ( ruleMultOperator )
+            // InternalKExpressions.g:9590:1: ruleMultOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultExpressionAccess().getOperatorMultOperatorEnumRuleCall_1_1_0_0()); 
@@ -26765,17 +27177,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__MultExpression__SubExpressionsAssignment_1_1_1"
-    // InternalKExpressions.g:9456:1: rule__MultExpression__SubExpressionsAssignment_1_1_1 : ( ruleDivExpression ) ;
+    // InternalKExpressions.g:9599:1: rule__MultExpression__SubExpressionsAssignment_1_1_1 : ( ruleDivExpression ) ;
     public final void rule__MultExpression__SubExpressionsAssignment_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9460:1: ( ( ruleDivExpression ) )
-            // InternalKExpressions.g:9461:1: ( ruleDivExpression )
+            // InternalKExpressions.g:9603:1: ( ( ruleDivExpression ) )
+            // InternalKExpressions.g:9604:1: ( ruleDivExpression )
             {
-            // InternalKExpressions.g:9461:1: ( ruleDivExpression )
-            // InternalKExpressions.g:9462:1: ruleDivExpression
+            // InternalKExpressions.g:9604:1: ( ruleDivExpression )
+            // InternalKExpressions.g:9605:1: ruleDivExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultExpressionAccess().getSubExpressionsDivExpressionParserRuleCall_1_1_1_0()); 
@@ -26810,17 +27222,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__MultExpression__SubExpressionsAssignment_1_2_1"
-    // InternalKExpressions.g:9471:1: rule__MultExpression__SubExpressionsAssignment_1_2_1 : ( ruleDivExpression ) ;
+    // InternalKExpressions.g:9614:1: rule__MultExpression__SubExpressionsAssignment_1_2_1 : ( ruleDivExpression ) ;
     public final void rule__MultExpression__SubExpressionsAssignment_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9475:1: ( ( ruleDivExpression ) )
-            // InternalKExpressions.g:9476:1: ( ruleDivExpression )
+            // InternalKExpressions.g:9618:1: ( ( ruleDivExpression ) )
+            // InternalKExpressions.g:9619:1: ( ruleDivExpression )
             {
-            // InternalKExpressions.g:9476:1: ( ruleDivExpression )
-            // InternalKExpressions.g:9477:1: ruleDivExpression
+            // InternalKExpressions.g:9619:1: ( ruleDivExpression )
+            // InternalKExpressions.g:9620:1: ruleDivExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultExpressionAccess().getSubExpressionsDivExpressionParserRuleCall_1_2_1_0()); 
@@ -26855,17 +27267,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__DivExpression__OperatorAssignment_1_1_0"
-    // InternalKExpressions.g:9486:1: rule__DivExpression__OperatorAssignment_1_1_0 : ( ruleDivOperator ) ;
+    // InternalKExpressions.g:9629:1: rule__DivExpression__OperatorAssignment_1_1_0 : ( ruleDivOperator ) ;
     public final void rule__DivExpression__OperatorAssignment_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9490:1: ( ( ruleDivOperator ) )
-            // InternalKExpressions.g:9491:1: ( ruleDivOperator )
+            // InternalKExpressions.g:9633:1: ( ( ruleDivOperator ) )
+            // InternalKExpressions.g:9634:1: ( ruleDivOperator )
             {
-            // InternalKExpressions.g:9491:1: ( ruleDivOperator )
-            // InternalKExpressions.g:9492:1: ruleDivOperator
+            // InternalKExpressions.g:9634:1: ( ruleDivOperator )
+            // InternalKExpressions.g:9635:1: ruleDivOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDivExpressionAccess().getOperatorDivOperatorEnumRuleCall_1_1_0_0()); 
@@ -26900,17 +27312,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__DivExpression__SubExpressionsAssignment_1_1_1"
-    // InternalKExpressions.g:9501:1: rule__DivExpression__SubExpressionsAssignment_1_1_1 : ( ruleModExpression ) ;
+    // InternalKExpressions.g:9644:1: rule__DivExpression__SubExpressionsAssignment_1_1_1 : ( ruleModExpression ) ;
     public final void rule__DivExpression__SubExpressionsAssignment_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9505:1: ( ( ruleModExpression ) )
-            // InternalKExpressions.g:9506:1: ( ruleModExpression )
+            // InternalKExpressions.g:9648:1: ( ( ruleModExpression ) )
+            // InternalKExpressions.g:9649:1: ( ruleModExpression )
             {
-            // InternalKExpressions.g:9506:1: ( ruleModExpression )
-            // InternalKExpressions.g:9507:1: ruleModExpression
+            // InternalKExpressions.g:9649:1: ( ruleModExpression )
+            // InternalKExpressions.g:9650:1: ruleModExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDivExpressionAccess().getSubExpressionsModExpressionParserRuleCall_1_1_1_0()); 
@@ -26945,17 +27357,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__DivExpression__SubExpressionsAssignment_1_2_1"
-    // InternalKExpressions.g:9516:1: rule__DivExpression__SubExpressionsAssignment_1_2_1 : ( ruleModExpression ) ;
+    // InternalKExpressions.g:9659:1: rule__DivExpression__SubExpressionsAssignment_1_2_1 : ( ruleModExpression ) ;
     public final void rule__DivExpression__SubExpressionsAssignment_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9520:1: ( ( ruleModExpression ) )
-            // InternalKExpressions.g:9521:1: ( ruleModExpression )
+            // InternalKExpressions.g:9663:1: ( ( ruleModExpression ) )
+            // InternalKExpressions.g:9664:1: ( ruleModExpression )
             {
-            // InternalKExpressions.g:9521:1: ( ruleModExpression )
-            // InternalKExpressions.g:9522:1: ruleModExpression
+            // InternalKExpressions.g:9664:1: ( ruleModExpression )
+            // InternalKExpressions.g:9665:1: ruleModExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDivExpressionAccess().getSubExpressionsModExpressionParserRuleCall_1_2_1_0()); 
@@ -26990,17 +27402,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ModExpression__OperatorAssignment_1_1_0"
-    // InternalKExpressions.g:9531:1: rule__ModExpression__OperatorAssignment_1_1_0 : ( ruleModOperator ) ;
+    // InternalKExpressions.g:9674:1: rule__ModExpression__OperatorAssignment_1_1_0 : ( ruleModOperator ) ;
     public final void rule__ModExpression__OperatorAssignment_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9535:1: ( ( ruleModOperator ) )
-            // InternalKExpressions.g:9536:1: ( ruleModOperator )
+            // InternalKExpressions.g:9678:1: ( ( ruleModOperator ) )
+            // InternalKExpressions.g:9679:1: ( ruleModOperator )
             {
-            // InternalKExpressions.g:9536:1: ( ruleModOperator )
-            // InternalKExpressions.g:9537:1: ruleModOperator
+            // InternalKExpressions.g:9679:1: ( ruleModOperator )
+            // InternalKExpressions.g:9680:1: ruleModOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModExpressionAccess().getOperatorModOperatorEnumRuleCall_1_1_0_0()); 
@@ -27035,17 +27447,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ModExpression__SubExpressionsAssignment_1_1_1"
-    // InternalKExpressions.g:9546:1: rule__ModExpression__SubExpressionsAssignment_1_1_1 : ( ruleAtomicValuedExpression ) ;
+    // InternalKExpressions.g:9689:1: rule__ModExpression__SubExpressionsAssignment_1_1_1 : ( ruleAtomicValuedExpression ) ;
     public final void rule__ModExpression__SubExpressionsAssignment_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9550:1: ( ( ruleAtomicValuedExpression ) )
-            // InternalKExpressions.g:9551:1: ( ruleAtomicValuedExpression )
+            // InternalKExpressions.g:9693:1: ( ( ruleAtomicValuedExpression ) )
+            // InternalKExpressions.g:9694:1: ( ruleAtomicValuedExpression )
             {
-            // InternalKExpressions.g:9551:1: ( ruleAtomicValuedExpression )
-            // InternalKExpressions.g:9552:1: ruleAtomicValuedExpression
+            // InternalKExpressions.g:9694:1: ( ruleAtomicValuedExpression )
+            // InternalKExpressions.g:9695:1: ruleAtomicValuedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_1_1_1_0()); 
@@ -27080,17 +27492,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ModExpression__SubExpressionsAssignment_1_2_1"
-    // InternalKExpressions.g:9561:1: rule__ModExpression__SubExpressionsAssignment_1_2_1 : ( ruleAtomicValuedExpression ) ;
+    // InternalKExpressions.g:9704:1: rule__ModExpression__SubExpressionsAssignment_1_2_1 : ( ruleAtomicValuedExpression ) ;
     public final void rule__ModExpression__SubExpressionsAssignment_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9565:1: ( ( ruleAtomicValuedExpression ) )
-            // InternalKExpressions.g:9566:1: ( ruleAtomicValuedExpression )
+            // InternalKExpressions.g:9708:1: ( ( ruleAtomicValuedExpression ) )
+            // InternalKExpressions.g:9709:1: ( ruleAtomicValuedExpression )
             {
-            // InternalKExpressions.g:9566:1: ( ruleAtomicValuedExpression )
-            // InternalKExpressions.g:9567:1: ruleAtomicValuedExpression
+            // InternalKExpressions.g:9709:1: ( ruleAtomicValuedExpression )
+            // InternalKExpressions.g:9710:1: ruleAtomicValuedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_1_2_1_0()); 
@@ -27125,17 +27537,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__NegExpression__OperatorAssignment_0_1"
-    // InternalKExpressions.g:9576:1: rule__NegExpression__OperatorAssignment_0_1 : ( ruleSubOperator ) ;
+    // InternalKExpressions.g:9719:1: rule__NegExpression__OperatorAssignment_0_1 : ( ruleSubOperator ) ;
     public final void rule__NegExpression__OperatorAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9580:1: ( ( ruleSubOperator ) )
-            // InternalKExpressions.g:9581:1: ( ruleSubOperator )
+            // InternalKExpressions.g:9723:1: ( ( ruleSubOperator ) )
+            // InternalKExpressions.g:9724:1: ( ruleSubOperator )
             {
-            // InternalKExpressions.g:9581:1: ( ruleSubOperator )
-            // InternalKExpressions.g:9582:1: ruleSubOperator
+            // InternalKExpressions.g:9724:1: ( ruleSubOperator )
+            // InternalKExpressions.g:9725:1: ruleSubOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNegExpressionAccess().getOperatorSubOperatorEnumRuleCall_0_1_0()); 
@@ -27170,17 +27582,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__NegExpression__SubExpressionsAssignment_0_2"
-    // InternalKExpressions.g:9591:1: rule__NegExpression__SubExpressionsAssignment_0_2 : ( ruleNegExpression ) ;
+    // InternalKExpressions.g:9734:1: rule__NegExpression__SubExpressionsAssignment_0_2 : ( ruleNegExpression ) ;
     public final void rule__NegExpression__SubExpressionsAssignment_0_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9595:1: ( ( ruleNegExpression ) )
-            // InternalKExpressions.g:9596:1: ( ruleNegExpression )
+            // InternalKExpressions.g:9738:1: ( ( ruleNegExpression ) )
+            // InternalKExpressions.g:9739:1: ( ruleNegExpression )
             {
-            // InternalKExpressions.g:9596:1: ( ruleNegExpression )
-            // InternalKExpressions.g:9597:1: ruleNegExpression
+            // InternalKExpressions.g:9739:1: ( ruleNegExpression )
+            // InternalKExpressions.g:9740:1: ruleNegExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNegExpressionAccess().getSubExpressionsNegExpressionParserRuleCall_0_2_0()); 
@@ -27215,23 +27627,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectTestExpression__OperatorAssignment_0_1"
-    // InternalKExpressions.g:9606:1: rule__ValuedObjectTestExpression__OperatorAssignment_0_1 : ( ( rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0 ) ) ;
+    // InternalKExpressions.g:9749:1: rule__ValuedObjectTestExpression__OperatorAssignment_0_1 : ( ( rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0 ) ) ;
     public final void rule__ValuedObjectTestExpression__OperatorAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9610:1: ( ( ( rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0 ) ) )
-            // InternalKExpressions.g:9611:1: ( ( rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0 ) )
+            // InternalKExpressions.g:9753:1: ( ( ( rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0 ) ) )
+            // InternalKExpressions.g:9754:1: ( ( rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0 ) )
             {
-            // InternalKExpressions.g:9611:1: ( ( rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0 ) )
-            // InternalKExpressions.g:9612:1: ( rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0 )
+            // InternalKExpressions.g:9754:1: ( ( rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0 ) )
+            // InternalKExpressions.g:9755:1: ( rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAlternatives_0_1_0()); 
             }
-            // InternalKExpressions.g:9613:1: ( rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0 )
-            // InternalKExpressions.g:9613:2: rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0
+            // InternalKExpressions.g:9756:1: ( rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0 )
+            // InternalKExpressions.g:9756:2: rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0();
@@ -27266,17 +27678,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3"
-    // InternalKExpressions.g:9622:1: rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3 : ( ruleValuedObjectTestExpression ) ;
+    // InternalKExpressions.g:9765:1: rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3 : ( ruleValuedObjectTestExpression ) ;
     public final void rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9626:1: ( ( ruleValuedObjectTestExpression ) )
-            // InternalKExpressions.g:9627:1: ( ruleValuedObjectTestExpression )
+            // InternalKExpressions.g:9769:1: ( ( ruleValuedObjectTestExpression ) )
+            // InternalKExpressions.g:9770:1: ( ruleValuedObjectTestExpression )
             {
-            // InternalKExpressions.g:9627:1: ( ruleValuedObjectTestExpression )
-            // InternalKExpressions.g:9628:1: ruleValuedObjectTestExpression
+            // InternalKExpressions.g:9770:1: ( ruleValuedObjectTestExpression )
+            // InternalKExpressions.g:9771:1: ruleValuedObjectTestExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsValuedObjectTestExpressionParserRuleCall_0_3_0()); 
@@ -27311,23 +27723,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__ValuedObjectAssignment_0"
-    // InternalKExpressions.g:9637:1: rule__ValuedObjectReference__ValuedObjectAssignment_0 : ( ( rulePrimeID ) ) ;
+    // InternalKExpressions.g:9780:1: rule__ValuedObjectReference__ValuedObjectAssignment_0 : ( ( rulePrimeID ) ) ;
     public final void rule__ValuedObjectReference__ValuedObjectAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9641:1: ( ( ( rulePrimeID ) ) )
-            // InternalKExpressions.g:9642:1: ( ( rulePrimeID ) )
+            // InternalKExpressions.g:9784:1: ( ( ( rulePrimeID ) ) )
+            // InternalKExpressions.g:9785:1: ( ( rulePrimeID ) )
             {
-            // InternalKExpressions.g:9642:1: ( ( rulePrimeID ) )
-            // InternalKExpressions.g:9643:1: ( rulePrimeID )
+            // InternalKExpressions.g:9785:1: ( ( rulePrimeID ) )
+            // InternalKExpressions.g:9786:1: ( rulePrimeID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectValuedObjectCrossReference_0_0()); 
             }
-            // InternalKExpressions.g:9644:1: ( rulePrimeID )
-            // InternalKExpressions.g:9645:1: rulePrimeID
+            // InternalKExpressions.g:9787:1: ( rulePrimeID )
+            // InternalKExpressions.g:9788:1: rulePrimeID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1()); 
@@ -27368,17 +27780,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__IndicesAssignment_1_1"
-    // InternalKExpressions.g:9656:1: rule__ValuedObjectReference__IndicesAssignment_1_1 : ( ruleExpression ) ;
+    // InternalKExpressions.g:9799:1: rule__ValuedObjectReference__IndicesAssignment_1_1 : ( ruleExpression ) ;
     public final void rule__ValuedObjectReference__IndicesAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9660:1: ( ( ruleExpression ) )
-            // InternalKExpressions.g:9661:1: ( ruleExpression )
+            // InternalKExpressions.g:9803:1: ( ( ruleExpression ) )
+            // InternalKExpressions.g:9804:1: ( ruleExpression )
             {
-            // InternalKExpressions.g:9661:1: ( ruleExpression )
-            // InternalKExpressions.g:9662:1: ruleExpression
+            // InternalKExpressions.g:9804:1: ( ruleExpression )
+            // InternalKExpressions.g:9805:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getIndicesExpressionParserRuleCall_1_1_0()); 
@@ -27413,17 +27825,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__SubReferenceAssignment_2_1"
-    // InternalKExpressions.g:9671:1: rule__ValuedObjectReference__SubReferenceAssignment_2_1 : ( ruleValuedObjectReference ) ;
+    // InternalKExpressions.g:9814:1: rule__ValuedObjectReference__SubReferenceAssignment_2_1 : ( ruleValuedObjectReference ) ;
     public final void rule__ValuedObjectReference__SubReferenceAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9675:1: ( ( ruleValuedObjectReference ) )
-            // InternalKExpressions.g:9676:1: ( ruleValuedObjectReference )
+            // InternalKExpressions.g:9818:1: ( ( ruleValuedObjectReference ) )
+            // InternalKExpressions.g:9819:1: ( ruleValuedObjectReference )
             {
-            // InternalKExpressions.g:9676:1: ( ruleValuedObjectReference )
-            // InternalKExpressions.g:9677:1: ruleValuedObjectReference
+            // InternalKExpressions.g:9819:1: ( ruleValuedObjectReference )
+            // InternalKExpressions.g:9820:1: ruleValuedObjectReference
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceValuedObjectReferenceParserRuleCall_2_1_0()); 
@@ -27458,23 +27870,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ScheduleObjectReference__ValuedObjectAssignment_0"
-    // InternalKExpressions.g:9686:1: rule__ScheduleObjectReference__ValuedObjectAssignment_0 : ( ( rulePrimeID ) ) ;
+    // InternalKExpressions.g:9829:1: rule__ScheduleObjectReference__ValuedObjectAssignment_0 : ( ( rulePrimeID ) ) ;
     public final void rule__ScheduleObjectReference__ValuedObjectAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9690:1: ( ( ( rulePrimeID ) ) )
-            // InternalKExpressions.g:9691:1: ( ( rulePrimeID ) )
+            // InternalKExpressions.g:9833:1: ( ( ( rulePrimeID ) ) )
+            // InternalKExpressions.g:9834:1: ( ( rulePrimeID ) )
             {
-            // InternalKExpressions.g:9691:1: ( ( rulePrimeID ) )
-            // InternalKExpressions.g:9692:1: ( rulePrimeID )
+            // InternalKExpressions.g:9834:1: ( ( rulePrimeID ) )
+            // InternalKExpressions.g:9835:1: ( rulePrimeID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleObjectReferenceAccess().getValuedObjectValuedObjectCrossReference_0_0()); 
             }
-            // InternalKExpressions.g:9693:1: ( rulePrimeID )
-            // InternalKExpressions.g:9694:1: rulePrimeID
+            // InternalKExpressions.g:9836:1: ( rulePrimeID )
+            // InternalKExpressions.g:9837:1: rulePrimeID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleObjectReferenceAccess().getValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1()); 
@@ -27515,17 +27927,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ScheduleObjectReference__PriorityAssignment_1"
-    // InternalKExpressions.g:9705:1: rule__ScheduleObjectReference__PriorityAssignment_1 : ( RULE_INT ) ;
+    // InternalKExpressions.g:9848:1: rule__ScheduleObjectReference__PriorityAssignment_1 : ( RULE_INT ) ;
     public final void rule__ScheduleObjectReference__PriorityAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9709:1: ( ( RULE_INT ) )
-            // InternalKExpressions.g:9710:1: ( RULE_INT )
+            // InternalKExpressions.g:9852:1: ( ( RULE_INT ) )
+            // InternalKExpressions.g:9853:1: ( RULE_INT )
             {
-            // InternalKExpressions.g:9710:1: ( RULE_INT )
-            // InternalKExpressions.g:9711:1: RULE_INT
+            // InternalKExpressions.g:9853:1: ( RULE_INT )
+            // InternalKExpressions.g:9854:1: RULE_INT
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleObjectReferenceAccess().getPriorityINTTerminalRuleCall_1_0()); 
@@ -27556,23 +27968,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ReferenceCall__ValuedObjectAssignment_0"
-    // InternalKExpressions.g:9720:1: rule__ReferenceCall__ValuedObjectAssignment_0 : ( ( rulePrimeID ) ) ;
+    // InternalKExpressions.g:9863:1: rule__ReferenceCall__ValuedObjectAssignment_0 : ( ( rulePrimeID ) ) ;
     public final void rule__ReferenceCall__ValuedObjectAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9724:1: ( ( ( rulePrimeID ) ) )
-            // InternalKExpressions.g:9725:1: ( ( rulePrimeID ) )
+            // InternalKExpressions.g:9867:1: ( ( ( rulePrimeID ) ) )
+            // InternalKExpressions.g:9868:1: ( ( rulePrimeID ) )
             {
-            // InternalKExpressions.g:9725:1: ( ( rulePrimeID ) )
-            // InternalKExpressions.g:9726:1: ( rulePrimeID )
+            // InternalKExpressions.g:9868:1: ( ( rulePrimeID ) )
+            // InternalKExpressions.g:9869:1: ( rulePrimeID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallAccess().getValuedObjectValuedObjectCrossReference_0_0()); 
             }
-            // InternalKExpressions.g:9727:1: ( rulePrimeID )
-            // InternalKExpressions.g:9728:1: rulePrimeID
+            // InternalKExpressions.g:9870:1: ( rulePrimeID )
+            // InternalKExpressions.g:9871:1: rulePrimeID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallAccess().getValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1()); 
@@ -27613,17 +28025,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ReferenceCall__ParametersAssignment_1_0_1"
-    // InternalKExpressions.g:9739:1: rule__ReferenceCall__ParametersAssignment_1_0_1 : ( ruleParameter ) ;
+    // InternalKExpressions.g:9882:1: rule__ReferenceCall__ParametersAssignment_1_0_1 : ( ruleParameter ) ;
     public final void rule__ReferenceCall__ParametersAssignment_1_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9743:1: ( ( ruleParameter ) )
-            // InternalKExpressions.g:9744:1: ( ruleParameter )
+            // InternalKExpressions.g:9886:1: ( ( ruleParameter ) )
+            // InternalKExpressions.g:9887:1: ( ruleParameter )
             {
-            // InternalKExpressions.g:9744:1: ( ruleParameter )
-            // InternalKExpressions.g:9745:1: ruleParameter
+            // InternalKExpressions.g:9887:1: ( ruleParameter )
+            // InternalKExpressions.g:9888:1: ruleParameter
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallAccess().getParametersParameterParserRuleCall_1_0_1_0()); 
@@ -27658,17 +28070,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ReferenceCall__ParametersAssignment_1_0_2_1"
-    // InternalKExpressions.g:9754:1: rule__ReferenceCall__ParametersAssignment_1_0_2_1 : ( ruleParameter ) ;
+    // InternalKExpressions.g:9897:1: rule__ReferenceCall__ParametersAssignment_1_0_2_1 : ( ruleParameter ) ;
     public final void rule__ReferenceCall__ParametersAssignment_1_0_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9758:1: ( ( ruleParameter ) )
-            // InternalKExpressions.g:9759:1: ( ruleParameter )
+            // InternalKExpressions.g:9901:1: ( ( ruleParameter ) )
+            // InternalKExpressions.g:9902:1: ( ruleParameter )
             {
-            // InternalKExpressions.g:9759:1: ( ruleParameter )
-            // InternalKExpressions.g:9760:1: ruleParameter
+            // InternalKExpressions.g:9902:1: ( ruleParameter )
+            // InternalKExpressions.g:9903:1: ruleParameter
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallAccess().getParametersParameterParserRuleCall_1_0_2_1_0()); 
@@ -27703,17 +28115,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__FunctionNameAssignment_0_1"
-    // InternalKExpressions.g:9769:1: rule__FunctionCall__FunctionNameAssignment_0_1 : ( RULE_ID ) ;
+    // InternalKExpressions.g:9912:1: rule__FunctionCall__FunctionNameAssignment_0_1 : ( RULE_ID ) ;
     public final void rule__FunctionCall__FunctionNameAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9773:1: ( ( RULE_ID ) )
-            // InternalKExpressions.g:9774:1: ( RULE_ID )
+            // InternalKExpressions.g:9916:1: ( ( RULE_ID ) )
+            // InternalKExpressions.g:9917:1: ( RULE_ID )
             {
-            // InternalKExpressions.g:9774:1: ( RULE_ID )
-            // InternalKExpressions.g:9775:1: RULE_ID
+            // InternalKExpressions.g:9917:1: ( RULE_ID )
+            // InternalKExpressions.g:9918:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getFunctionNameIDTerminalRuleCall_0_1_0()); 
@@ -27744,17 +28156,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__ParametersAssignment_0_2_0_1"
-    // InternalKExpressions.g:9784:1: rule__FunctionCall__ParametersAssignment_0_2_0_1 : ( ruleParameter ) ;
+    // InternalKExpressions.g:9927:1: rule__FunctionCall__ParametersAssignment_0_2_0_1 : ( ruleParameter ) ;
     public final void rule__FunctionCall__ParametersAssignment_0_2_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9788:1: ( ( ruleParameter ) )
-            // InternalKExpressions.g:9789:1: ( ruleParameter )
+            // InternalKExpressions.g:9931:1: ( ( ruleParameter ) )
+            // InternalKExpressions.g:9932:1: ( ruleParameter )
             {
-            // InternalKExpressions.g:9789:1: ( ruleParameter )
-            // InternalKExpressions.g:9790:1: ruleParameter
+            // InternalKExpressions.g:9932:1: ( ruleParameter )
+            // InternalKExpressions.g:9933:1: ruleParameter
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getParametersParameterParserRuleCall_0_2_0_1_0()); 
@@ -27789,17 +28201,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__ParametersAssignment_0_2_0_2_1"
-    // InternalKExpressions.g:9799:1: rule__FunctionCall__ParametersAssignment_0_2_0_2_1 : ( ruleParameter ) ;
+    // InternalKExpressions.g:9942:1: rule__FunctionCall__ParametersAssignment_0_2_0_2_1 : ( ruleParameter ) ;
     public final void rule__FunctionCall__ParametersAssignment_0_2_0_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9803:1: ( ( ruleParameter ) )
-            // InternalKExpressions.g:9804:1: ( ruleParameter )
+            // InternalKExpressions.g:9946:1: ( ( ruleParameter ) )
+            // InternalKExpressions.g:9947:1: ( ruleParameter )
             {
-            // InternalKExpressions.g:9804:1: ( ruleParameter )
-            // InternalKExpressions.g:9805:1: ruleParameter
+            // InternalKExpressions.g:9947:1: ( ruleParameter )
+            // InternalKExpressions.g:9948:1: ruleParameter
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getParametersParameterParserRuleCall_0_2_0_2_1_0()); 
@@ -27834,17 +28246,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__FunctionNameAssignment_1_1"
-    // InternalKExpressions.g:9814:1: rule__FunctionCall__FunctionNameAssignment_1_1 : ( RULE_ID ) ;
+    // InternalKExpressions.g:9957:1: rule__FunctionCall__FunctionNameAssignment_1_1 : ( RULE_ID ) ;
     public final void rule__FunctionCall__FunctionNameAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9818:1: ( ( RULE_ID ) )
-            // InternalKExpressions.g:9819:1: ( RULE_ID )
+            // InternalKExpressions.g:9961:1: ( ( RULE_ID ) )
+            // InternalKExpressions.g:9962:1: ( RULE_ID )
             {
-            // InternalKExpressions.g:9819:1: ( RULE_ID )
-            // InternalKExpressions.g:9820:1: RULE_ID
+            // InternalKExpressions.g:9962:1: ( RULE_ID )
+            // InternalKExpressions.g:9963:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getFunctionNameIDTerminalRuleCall_1_1_0()); 
@@ -27875,17 +28287,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__ParametersAssignment_1_2_0_1"
-    // InternalKExpressions.g:9829:1: rule__FunctionCall__ParametersAssignment_1_2_0_1 : ( ruleParameter ) ;
+    // InternalKExpressions.g:9972:1: rule__FunctionCall__ParametersAssignment_1_2_0_1 : ( ruleParameter ) ;
     public final void rule__FunctionCall__ParametersAssignment_1_2_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9833:1: ( ( ruleParameter ) )
-            // InternalKExpressions.g:9834:1: ( ruleParameter )
+            // InternalKExpressions.g:9976:1: ( ( ruleParameter ) )
+            // InternalKExpressions.g:9977:1: ( ruleParameter )
             {
-            // InternalKExpressions.g:9834:1: ( ruleParameter )
-            // InternalKExpressions.g:9835:1: ruleParameter
+            // InternalKExpressions.g:9977:1: ( ruleParameter )
+            // InternalKExpressions.g:9978:1: ruleParameter
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getParametersParameterParserRuleCall_1_2_0_1_0()); 
@@ -27920,17 +28332,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FunctionCall__ParametersAssignment_1_2_0_2_1"
-    // InternalKExpressions.g:9844:1: rule__FunctionCall__ParametersAssignment_1_2_0_2_1 : ( ruleParameter ) ;
+    // InternalKExpressions.g:9987:1: rule__FunctionCall__ParametersAssignment_1_2_0_2_1 : ( ruleParameter ) ;
     public final void rule__FunctionCall__ParametersAssignment_1_2_0_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9848:1: ( ( ruleParameter ) )
-            // InternalKExpressions.g:9849:1: ( ruleParameter )
+            // InternalKExpressions.g:9991:1: ( ( ruleParameter ) )
+            // InternalKExpressions.g:9992:1: ( ruleParameter )
             {
-            // InternalKExpressions.g:9849:1: ( ruleParameter )
-            // InternalKExpressions.g:9850:1: ruleParameter
+            // InternalKExpressions.g:9992:1: ( ruleParameter )
+            // InternalKExpressions.g:9993:1: ruleParameter
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getParametersParameterParserRuleCall_1_2_0_2_1_0()); 
@@ -27965,23 +28377,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Parameter__PureOutputAssignment_0_0"
-    // InternalKExpressions.g:9859:1: rule__Parameter__PureOutputAssignment_0_0 : ( ( '!' ) ) ;
+    // InternalKExpressions.g:10002:1: rule__Parameter__PureOutputAssignment_0_0 : ( ( '!' ) ) ;
     public final void rule__Parameter__PureOutputAssignment_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9863:1: ( ( ( '!' ) ) )
-            // InternalKExpressions.g:9864:1: ( ( '!' ) )
+            // InternalKExpressions.g:10006:1: ( ( ( '!' ) ) )
+            // InternalKExpressions.g:10007:1: ( ( '!' ) )
             {
-            // InternalKExpressions.g:9864:1: ( ( '!' ) )
-            // InternalKExpressions.g:9865:1: ( '!' )
+            // InternalKExpressions.g:10007:1: ( ( '!' ) )
+            // InternalKExpressions.g:10008:1: ( '!' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterAccess().getPureOutputExclamationMarkKeyword_0_0_0()); 
             }
-            // InternalKExpressions.g:9866:1: ( '!' )
-            // InternalKExpressions.g:9867:1: '!'
+            // InternalKExpressions.g:10009:1: ( '!' )
+            // InternalKExpressions.g:10010:1: '!'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterAccess().getPureOutputExclamationMarkKeyword_0_0_0()); 
@@ -28018,23 +28430,23 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Parameter__CallByReferenceAssignment_0_1"
-    // InternalKExpressions.g:9882:1: rule__Parameter__CallByReferenceAssignment_0_1 : ( ( '&' ) ) ;
+    // InternalKExpressions.g:10025:1: rule__Parameter__CallByReferenceAssignment_0_1 : ( ( '&' ) ) ;
     public final void rule__Parameter__CallByReferenceAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9886:1: ( ( ( '&' ) ) )
-            // InternalKExpressions.g:9887:1: ( ( '&' ) )
+            // InternalKExpressions.g:10029:1: ( ( ( '&' ) ) )
+            // InternalKExpressions.g:10030:1: ( ( '&' ) )
             {
-            // InternalKExpressions.g:9887:1: ( ( '&' ) )
-            // InternalKExpressions.g:9888:1: ( '&' )
+            // InternalKExpressions.g:10030:1: ( ( '&' ) )
+            // InternalKExpressions.g:10031:1: ( '&' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterAccess().getCallByReferenceAmpersandKeyword_0_1_0()); 
             }
-            // InternalKExpressions.g:9889:1: ( '&' )
-            // InternalKExpressions.g:9890:1: '&'
+            // InternalKExpressions.g:10032:1: ( '&' )
+            // InternalKExpressions.g:10033:1: '&'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterAccess().getCallByReferenceAmpersandKeyword_0_1_0()); 
@@ -28071,17 +28483,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Parameter__ExpressionAssignment_1"
-    // InternalKExpressions.g:9905:1: rule__Parameter__ExpressionAssignment_1 : ( ruleExpression ) ;
+    // InternalKExpressions.g:10048:1: rule__Parameter__ExpressionAssignment_1 : ( ruleExpression ) ;
     public final void rule__Parameter__ExpressionAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9909:1: ( ( ruleExpression ) )
-            // InternalKExpressions.g:9910:1: ( ruleExpression )
+            // InternalKExpressions.g:10052:1: ( ( ruleExpression ) )
+            // InternalKExpressions.g:10053:1: ( ruleExpression )
             {
-            // InternalKExpressions.g:9910:1: ( ruleExpression )
-            // InternalKExpressions.g:9911:1: ruleExpression
+            // InternalKExpressions.g:10053:1: ( ruleExpression )
+            // InternalKExpressions.g:10054:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterAccess().getExpressionExpressionParserRuleCall_1_0()); 
@@ -28116,17 +28528,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TextExpression__TextAssignment"
-    // InternalKExpressions.g:9920:1: rule__TextExpression__TextAssignment : ( RULE_HOSTCODE ) ;
+    // InternalKExpressions.g:10063:1: rule__TextExpression__TextAssignment : ( RULE_HOSTCODE ) ;
     public final void rule__TextExpression__TextAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9924:1: ( ( RULE_HOSTCODE ) )
-            // InternalKExpressions.g:9925:1: ( RULE_HOSTCODE )
+            // InternalKExpressions.g:10067:1: ( ( RULE_HOSTCODE ) )
+            // InternalKExpressions.g:10068:1: ( RULE_HOSTCODE )
             {
-            // InternalKExpressions.g:9925:1: ( RULE_HOSTCODE )
-            // InternalKExpressions.g:9926:1: RULE_HOSTCODE
+            // InternalKExpressions.g:10068:1: ( RULE_HOSTCODE )
+            // InternalKExpressions.g:10069:1: RULE_HOSTCODE
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTextExpressionAccess().getTextHOSTCODETerminalRuleCall_0()); 
@@ -28157,17 +28569,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__IntValue__ValueAssignment"
-    // InternalKExpressions.g:9935:1: rule__IntValue__ValueAssignment : ( RULE_INT ) ;
+    // InternalKExpressions.g:10078:1: rule__IntValue__ValueAssignment : ( RULE_INT ) ;
     public final void rule__IntValue__ValueAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9939:1: ( ( RULE_INT ) )
-            // InternalKExpressions.g:9940:1: ( RULE_INT )
+            // InternalKExpressions.g:10082:1: ( ( RULE_INT ) )
+            // InternalKExpressions.g:10083:1: ( RULE_INT )
             {
-            // InternalKExpressions.g:9940:1: ( RULE_INT )
-            // InternalKExpressions.g:9941:1: RULE_INT
+            // InternalKExpressions.g:10083:1: ( RULE_INT )
+            // InternalKExpressions.g:10084:1: RULE_INT
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIntValueAccess().getValueINTTerminalRuleCall_0()); 
@@ -28198,17 +28610,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FloatValue__ValueAssignment"
-    // InternalKExpressions.g:9950:1: rule__FloatValue__ValueAssignment : ( RULE_FLOAT ) ;
+    // InternalKExpressions.g:10093:1: rule__FloatValue__ValueAssignment : ( RULE_FLOAT ) ;
     public final void rule__FloatValue__ValueAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9954:1: ( ( RULE_FLOAT ) )
-            // InternalKExpressions.g:9955:1: ( RULE_FLOAT )
+            // InternalKExpressions.g:10097:1: ( ( RULE_FLOAT ) )
+            // InternalKExpressions.g:10098:1: ( RULE_FLOAT )
             {
-            // InternalKExpressions.g:9955:1: ( RULE_FLOAT )
-            // InternalKExpressions.g:9956:1: RULE_FLOAT
+            // InternalKExpressions.g:10098:1: ( RULE_FLOAT )
+            // InternalKExpressions.g:10099:1: RULE_FLOAT
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFloatValueAccess().getValueFLOATTerminalRuleCall_0()); 
@@ -28239,17 +28651,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BoolValue__ValueAssignment"
-    // InternalKExpressions.g:9965:1: rule__BoolValue__ValueAssignment : ( RULE_BOOLEAN ) ;
+    // InternalKExpressions.g:10108:1: rule__BoolValue__ValueAssignment : ( RULE_BOOLEAN ) ;
     public final void rule__BoolValue__ValueAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9969:1: ( ( RULE_BOOLEAN ) )
-            // InternalKExpressions.g:9970:1: ( RULE_BOOLEAN )
+            // InternalKExpressions.g:10112:1: ( ( RULE_BOOLEAN ) )
+            // InternalKExpressions.g:10113:1: ( RULE_BOOLEAN )
             {
-            // InternalKExpressions.g:9970:1: ( RULE_BOOLEAN )
-            // InternalKExpressions.g:9971:1: RULE_BOOLEAN
+            // InternalKExpressions.g:10113:1: ( RULE_BOOLEAN )
+            // InternalKExpressions.g:10114:1: RULE_BOOLEAN
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBoolValueAccess().getValueBOOLEANTerminalRuleCall_0()); 
@@ -28280,17 +28692,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__StringValue__ValueAssignment"
-    // InternalKExpressions.g:9980:1: rule__StringValue__ValueAssignment : ( RULE_STRING ) ;
+    // InternalKExpressions.g:10123:1: rule__StringValue__ValueAssignment : ( RULE_STRING ) ;
     public final void rule__StringValue__ValueAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9984:1: ( ( RULE_STRING ) )
-            // InternalKExpressions.g:9985:1: ( RULE_STRING )
+            // InternalKExpressions.g:10127:1: ( ( RULE_STRING ) )
+            // InternalKExpressions.g:10128:1: ( RULE_STRING )
             {
-            // InternalKExpressions.g:9985:1: ( RULE_STRING )
-            // InternalKExpressions.g:9986:1: RULE_STRING
+            // InternalKExpressions.g:10128:1: ( RULE_STRING )
+            // InternalKExpressions.g:10129:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringValueAccess().getValueSTRINGTerminalRuleCall_0()); 
@@ -28321,28 +28733,28 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__VectorValue__ValuesAssignment_1"
-    // InternalKExpressions.g:9995:1: rule__VectorValue__ValuesAssignment_1 : ( ruleExpression ) ;
+    // InternalKExpressions.g:10138:1: rule__VectorValue__ValuesAssignment_1 : ( ruleVectorValueMember ) ;
     public final void rule__VectorValue__ValuesAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:9999:1: ( ( ruleExpression ) )
-            // InternalKExpressions.g:10000:1: ( ruleExpression )
+            // InternalKExpressions.g:10142:1: ( ( ruleVectorValueMember ) )
+            // InternalKExpressions.g:10143:1: ( ruleVectorValueMember )
             {
-            // InternalKExpressions.g:10000:1: ( ruleExpression )
-            // InternalKExpressions.g:10001:1: ruleExpression
+            // InternalKExpressions.g:10143:1: ( ruleVectorValueMember )
+            // InternalKExpressions.g:10144:1: ruleVectorValueMember
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getVectorValueAccess().getValuesExpressionParserRuleCall_1_0()); 
+               before(grammarAccess.getVectorValueAccess().getValuesVectorValueMemberParserRuleCall_1_0()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
-            ruleExpression();
+            ruleVectorValueMember();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getVectorValueAccess().getValuesExpressionParserRuleCall_1_0()); 
+               after(grammarAccess.getVectorValueAccess().getValuesVectorValueMemberParserRuleCall_1_0()); 
             }
 
             }
@@ -28366,28 +28778,28 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__VectorValue__ValuesAssignment_2_1"
-    // InternalKExpressions.g:10010:1: rule__VectorValue__ValuesAssignment_2_1 : ( ruleExpression ) ;
+    // InternalKExpressions.g:10153:1: rule__VectorValue__ValuesAssignment_2_1 : ( ruleVectorValueMember ) ;
     public final void rule__VectorValue__ValuesAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:10014:1: ( ( ruleExpression ) )
-            // InternalKExpressions.g:10015:1: ( ruleExpression )
+            // InternalKExpressions.g:10157:1: ( ( ruleVectorValueMember ) )
+            // InternalKExpressions.g:10158:1: ( ruleVectorValueMember )
             {
-            // InternalKExpressions.g:10015:1: ( ruleExpression )
-            // InternalKExpressions.g:10016:1: ruleExpression
+            // InternalKExpressions.g:10158:1: ( ruleVectorValueMember )
+            // InternalKExpressions.g:10159:1: ruleVectorValueMember
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getVectorValueAccess().getValuesExpressionParserRuleCall_2_1_0()); 
+               before(grammarAccess.getVectorValueAccess().getValuesVectorValueMemberParserRuleCall_2_1_0()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
-            ruleExpression();
+            ruleVectorValueMember();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getVectorValueAccess().getValuesExpressionParserRuleCall_2_1_0()); 
+               after(grammarAccess.getVectorValueAccess().getValuesVectorValueMemberParserRuleCall_2_1_0()); 
             }
 
             }
@@ -28411,17 +28823,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__CommentAnnotation__ValuesAssignment"
-    // InternalKExpressions.g:10025:1: rule__CommentAnnotation__ValuesAssignment : ( RULE_COMMENT_ANNOTATION ) ;
+    // InternalKExpressions.g:10168:1: rule__CommentAnnotation__ValuesAssignment : ( RULE_COMMENT_ANNOTATION ) ;
     public final void rule__CommentAnnotation__ValuesAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:10029:1: ( ( RULE_COMMENT_ANNOTATION ) )
-            // InternalKExpressions.g:10030:1: ( RULE_COMMENT_ANNOTATION )
+            // InternalKExpressions.g:10172:1: ( ( RULE_COMMENT_ANNOTATION ) )
+            // InternalKExpressions.g:10173:1: ( RULE_COMMENT_ANNOTATION )
             {
-            // InternalKExpressions.g:10030:1: ( RULE_COMMENT_ANNOTATION )
-            // InternalKExpressions.g:10031:1: RULE_COMMENT_ANNOTATION
+            // InternalKExpressions.g:10173:1: ( RULE_COMMENT_ANNOTATION )
+            // InternalKExpressions.g:10174:1: RULE_COMMENT_ANNOTATION
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCommentAnnotationAccess().getValuesCOMMENT_ANNOTATIONTerminalRuleCall_0()); 
@@ -28452,17 +28864,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TagAnnotation__NameAssignment_1"
-    // InternalKExpressions.g:10041:1: rule__TagAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
+    // InternalKExpressions.g:10184:1: rule__TagAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__TagAnnotation__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:10045:1: ( ( ruleExtendedID ) )
-            // InternalKExpressions.g:10046:1: ( ruleExtendedID )
+            // InternalKExpressions.g:10188:1: ( ( ruleExtendedID ) )
+            // InternalKExpressions.g:10189:1: ( ruleExtendedID )
             {
-            // InternalKExpressions.g:10046:1: ( ruleExtendedID )
-            // InternalKExpressions.g:10047:1: ruleExtendedID
+            // InternalKExpressions.g:10189:1: ( ruleExtendedID )
+            // InternalKExpressions.g:10190:1: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTagAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
@@ -28497,17 +28909,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__PragmaTag__NameAssignment_1"
-    // InternalKExpressions.g:10056:1: rule__PragmaTag__NameAssignment_1 : ( ruleExtendedID ) ;
+    // InternalKExpressions.g:10199:1: rule__PragmaTag__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__PragmaTag__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:10060:1: ( ( ruleExtendedID ) )
-            // InternalKExpressions.g:10061:1: ( ruleExtendedID )
+            // InternalKExpressions.g:10203:1: ( ( ruleExtendedID ) )
+            // InternalKExpressions.g:10204:1: ( ruleExtendedID )
             {
-            // InternalKExpressions.g:10061:1: ( ruleExtendedID )
-            // InternalKExpressions.g:10062:1: ruleExtendedID
+            // InternalKExpressions.g:10204:1: ( ruleExtendedID )
+            // InternalKExpressions.g:10205:1: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPragmaTagAccess().getNameExtendedIDParserRuleCall_1_0()); 
@@ -28542,17 +28954,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__NameAssignment_1"
-    // InternalKExpressions.g:10071:1: rule__KeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
+    // InternalKExpressions.g:10214:1: rule__KeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__KeyStringValueAnnotation__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:10075:1: ( ( ruleExtendedID ) )
-            // InternalKExpressions.g:10076:1: ( ruleExtendedID )
+            // InternalKExpressions.g:10218:1: ( ( ruleExtendedID ) )
+            // InternalKExpressions.g:10219:1: ( ruleExtendedID )
             {
-            // InternalKExpressions.g:10076:1: ( ruleExtendedID )
-            // InternalKExpressions.g:10077:1: ruleExtendedID
+            // InternalKExpressions.g:10219:1: ( ruleExtendedID )
+            // InternalKExpressions.g:10220:1: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
@@ -28587,17 +28999,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__ValuesAssignment_2"
-    // InternalKExpressions.g:10086:1: rule__KeyStringValueAnnotation__ValuesAssignment_2 : ( ruleEStringAllTypes ) ;
+    // InternalKExpressions.g:10229:1: rule__KeyStringValueAnnotation__ValuesAssignment_2 : ( ruleEStringAllTypes ) ;
     public final void rule__KeyStringValueAnnotation__ValuesAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:10090:1: ( ( ruleEStringAllTypes ) )
-            // InternalKExpressions.g:10091:1: ( ruleEStringAllTypes )
+            // InternalKExpressions.g:10233:1: ( ( ruleEStringAllTypes ) )
+            // InternalKExpressions.g:10234:1: ( ruleEStringAllTypes )
             {
-            // InternalKExpressions.g:10091:1: ( ruleEStringAllTypes )
-            // InternalKExpressions.g:10092:1: ruleEStringAllTypes
+            // InternalKExpressions.g:10234:1: ( ruleEStringAllTypes )
+            // InternalKExpressions.g:10235:1: ruleEStringAllTypes
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_2_0()); 
@@ -28632,17 +29044,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__ValuesAssignment_3_1"
-    // InternalKExpressions.g:10101:1: rule__KeyStringValueAnnotation__ValuesAssignment_3_1 : ( ruleEStringAllTypes ) ;
+    // InternalKExpressions.g:10244:1: rule__KeyStringValueAnnotation__ValuesAssignment_3_1 : ( ruleEStringAllTypes ) ;
     public final void rule__KeyStringValueAnnotation__ValuesAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:10105:1: ( ( ruleEStringAllTypes ) )
-            // InternalKExpressions.g:10106:1: ( ruleEStringAllTypes )
+            // InternalKExpressions.g:10248:1: ( ( ruleEStringAllTypes ) )
+            // InternalKExpressions.g:10249:1: ( ruleEStringAllTypes )
             {
-            // InternalKExpressions.g:10106:1: ( ruleEStringAllTypes )
-            // InternalKExpressions.g:10107:1: ruleEStringAllTypes
+            // InternalKExpressions.g:10249:1: ( ruleEStringAllTypes )
+            // InternalKExpressions.g:10250:1: ruleEStringAllTypes
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_3_1_0()); 
@@ -28677,17 +29089,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__NameAssignment_1"
-    // InternalKExpressions.g:10116:1: rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
+    // InternalKExpressions.g:10259:1: rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__RestrictedKeyStringValueAnnotation__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:10120:1: ( ( ruleExtendedID ) )
-            // InternalKExpressions.g:10121:1: ( ruleExtendedID )
+            // InternalKExpressions.g:10263:1: ( ( ruleExtendedID ) )
+            // InternalKExpressions.g:10264:1: ( ruleExtendedID )
             {
-            // InternalKExpressions.g:10121:1: ( ruleExtendedID )
-            // InternalKExpressions.g:10122:1: ruleExtendedID
+            // InternalKExpressions.g:10264:1: ( ruleExtendedID )
+            // InternalKExpressions.g:10265:1: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
@@ -28722,17 +29134,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2"
-    // InternalKExpressions.g:10131:1: rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 : ( ruleEStringBoolean ) ;
+    // InternalKExpressions.g:10274:1: rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 : ( ruleEStringBoolean ) ;
     public final void rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:10135:1: ( ( ruleEStringBoolean ) )
-            // InternalKExpressions.g:10136:1: ( ruleEStringBoolean )
+            // InternalKExpressions.g:10278:1: ( ( ruleEStringBoolean ) )
+            // InternalKExpressions.g:10279:1: ( ruleEStringBoolean )
             {
-            // InternalKExpressions.g:10136:1: ( ruleEStringBoolean )
-            // InternalKExpressions.g:10137:1: ruleEStringBoolean
+            // InternalKExpressions.g:10279:1: ( ruleEStringBoolean )
+            // InternalKExpressions.g:10280:1: ruleEStringBoolean
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_2_0()); 
@@ -28767,17 +29179,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1"
-    // InternalKExpressions.g:10146:1: rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 : ( ruleEStringBoolean ) ;
+    // InternalKExpressions.g:10289:1: rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 : ( ruleEStringBoolean ) ;
     public final void rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:10150:1: ( ( ruleEStringBoolean ) )
-            // InternalKExpressions.g:10151:1: ( ruleEStringBoolean )
+            // InternalKExpressions.g:10293:1: ( ( ruleEStringBoolean ) )
+            // InternalKExpressions.g:10294:1: ( ruleEStringBoolean )
             {
-            // InternalKExpressions.g:10151:1: ( ruleEStringBoolean )
-            // InternalKExpressions.g:10152:1: ruleEStringBoolean
+            // InternalKExpressions.g:10294:1: ( ruleEStringBoolean )
+            // InternalKExpressions.g:10295:1: ruleEStringBoolean
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_3_1_0()); 
@@ -28812,17 +29224,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__StringPragma__NameAssignment_1"
-    // InternalKExpressions.g:10161:1: rule__StringPragma__NameAssignment_1 : ( ruleExtendedID ) ;
+    // InternalKExpressions.g:10304:1: rule__StringPragma__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__StringPragma__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:10165:1: ( ( ruleExtendedID ) )
-            // InternalKExpressions.g:10166:1: ( ruleExtendedID )
+            // InternalKExpressions.g:10308:1: ( ( ruleExtendedID ) )
+            // InternalKExpressions.g:10309:1: ( ruleExtendedID )
             {
-            // InternalKExpressions.g:10166:1: ( ruleExtendedID )
-            // InternalKExpressions.g:10167:1: ruleExtendedID
+            // InternalKExpressions.g:10309:1: ( ruleExtendedID )
+            // InternalKExpressions.g:10310:1: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringPragmaAccess().getNameExtendedIDParserRuleCall_1_0()); 
@@ -28857,17 +29269,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__StringPragma__ValuesAssignment_2"
-    // InternalKExpressions.g:10176:1: rule__StringPragma__ValuesAssignment_2 : ( ruleEStringAllTypes ) ;
+    // InternalKExpressions.g:10319:1: rule__StringPragma__ValuesAssignment_2 : ( ruleEStringAllTypes ) ;
     public final void rule__StringPragma__ValuesAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:10180:1: ( ( ruleEStringAllTypes ) )
-            // InternalKExpressions.g:10181:1: ( ruleEStringAllTypes )
+            // InternalKExpressions.g:10323:1: ( ( ruleEStringAllTypes ) )
+            // InternalKExpressions.g:10324:1: ( ruleEStringAllTypes )
             {
-            // InternalKExpressions.g:10181:1: ( ruleEStringAllTypes )
-            // InternalKExpressions.g:10182:1: ruleEStringAllTypes
+            // InternalKExpressions.g:10324:1: ( ruleEStringAllTypes )
+            // InternalKExpressions.g:10325:1: ruleEStringAllTypes
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_2_0()); 
@@ -28902,17 +29314,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__StringPragma__ValuesAssignment_3_1"
-    // InternalKExpressions.g:10191:1: rule__StringPragma__ValuesAssignment_3_1 : ( ruleEStringAllTypes ) ;
+    // InternalKExpressions.g:10334:1: rule__StringPragma__ValuesAssignment_3_1 : ( ruleEStringAllTypes ) ;
     public final void rule__StringPragma__ValuesAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:10195:1: ( ( ruleEStringAllTypes ) )
-            // InternalKExpressions.g:10196:1: ( ruleEStringAllTypes )
+            // InternalKExpressions.g:10338:1: ( ( ruleEStringAllTypes ) )
+            // InternalKExpressions.g:10339:1: ( ruleEStringAllTypes )
             {
-            // InternalKExpressions.g:10196:1: ( ruleEStringAllTypes )
-            // InternalKExpressions.g:10197:1: ruleEStringAllTypes
+            // InternalKExpressions.g:10339:1: ( ruleEStringAllTypes )
+            // InternalKExpressions.g:10340:1: ruleEStringAllTypes
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_3_1_0()); 
@@ -28947,17 +29359,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__NameAssignment_1"
-    // InternalKExpressions.g:10206:1: rule__TypedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
+    // InternalKExpressions.g:10349:1: rule__TypedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__TypedKeyStringValueAnnotation__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:10210:1: ( ( ruleExtendedID ) )
-            // InternalKExpressions.g:10211:1: ( ruleExtendedID )
+            // InternalKExpressions.g:10353:1: ( ( ruleExtendedID ) )
+            // InternalKExpressions.g:10354:1: ( ruleExtendedID )
             {
-            // InternalKExpressions.g:10211:1: ( ruleExtendedID )
-            // InternalKExpressions.g:10212:1: ruleExtendedID
+            // InternalKExpressions.g:10354:1: ( ruleExtendedID )
+            // InternalKExpressions.g:10355:1: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
@@ -28992,17 +29404,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__TypeAssignment_3"
-    // InternalKExpressions.g:10221:1: rule__TypedKeyStringValueAnnotation__TypeAssignment_3 : ( ruleExtendedID ) ;
+    // InternalKExpressions.g:10364:1: rule__TypedKeyStringValueAnnotation__TypeAssignment_3 : ( ruleExtendedID ) ;
     public final void rule__TypedKeyStringValueAnnotation__TypeAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:10225:1: ( ( ruleExtendedID ) )
-            // InternalKExpressions.g:10226:1: ( ruleExtendedID )
+            // InternalKExpressions.g:10368:1: ( ( ruleExtendedID ) )
+            // InternalKExpressions.g:10369:1: ( ruleExtendedID )
             {
-            // InternalKExpressions.g:10226:1: ( ruleExtendedID )
-            // InternalKExpressions.g:10227:1: ruleExtendedID
+            // InternalKExpressions.g:10369:1: ( ruleExtendedID )
+            // InternalKExpressions.g:10370:1: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0()); 
@@ -29037,17 +29449,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__ValuesAssignment_5"
-    // InternalKExpressions.g:10236:1: rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 : ( ruleEStringAllTypes ) ;
+    // InternalKExpressions.g:10379:1: rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 : ( ruleEStringAllTypes ) ;
     public final void rule__TypedKeyStringValueAnnotation__ValuesAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:10240:1: ( ( ruleEStringAllTypes ) )
-            // InternalKExpressions.g:10241:1: ( ruleEStringAllTypes )
+            // InternalKExpressions.g:10383:1: ( ( ruleEStringAllTypes ) )
+            // InternalKExpressions.g:10384:1: ( ruleEStringAllTypes )
             {
-            // InternalKExpressions.g:10241:1: ( ruleEStringAllTypes )
-            // InternalKExpressions.g:10242:1: ruleEStringAllTypes
+            // InternalKExpressions.g:10384:1: ( ruleEStringAllTypes )
+            // InternalKExpressions.g:10385:1: ruleEStringAllTypes
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_5_0()); 
@@ -29082,17 +29494,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1"
-    // InternalKExpressions.g:10251:1: rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 : ( ruleEStringAllTypes ) ;
+    // InternalKExpressions.g:10394:1: rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 : ( ruleEStringAllTypes ) ;
     public final void rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:10255:1: ( ( ruleEStringAllTypes ) )
-            // InternalKExpressions.g:10256:1: ( ruleEStringAllTypes )
+            // InternalKExpressions.g:10398:1: ( ( ruleEStringAllTypes ) )
+            // InternalKExpressions.g:10399:1: ( ruleEStringAllTypes )
             {
-            // InternalKExpressions.g:10256:1: ( ruleEStringAllTypes )
-            // InternalKExpressions.g:10257:1: ruleEStringAllTypes
+            // InternalKExpressions.g:10399:1: ( ruleEStringAllTypes )
+            // InternalKExpressions.g:10400:1: ruleEStringAllTypes
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_6_1_0()); 
@@ -29127,17 +29539,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1"
-    // InternalKExpressions.g:10266:1: rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
+    // InternalKExpressions.g:10409:1: rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:10270:1: ( ( ruleExtendedID ) )
-            // InternalKExpressions.g:10271:1: ( ruleExtendedID )
+            // InternalKExpressions.g:10413:1: ( ( ruleExtendedID ) )
+            // InternalKExpressions.g:10414:1: ( ruleExtendedID )
             {
-            // InternalKExpressions.g:10271:1: ( ruleExtendedID )
-            // InternalKExpressions.g:10272:1: ruleExtendedID
+            // InternalKExpressions.g:10414:1: ( ruleExtendedID )
+            // InternalKExpressions.g:10415:1: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
@@ -29172,17 +29584,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3"
-    // InternalKExpressions.g:10281:1: rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 : ( ruleExtendedID ) ;
+    // InternalKExpressions.g:10424:1: rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 : ( ruleExtendedID ) ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:10285:1: ( ( ruleExtendedID ) )
-            // InternalKExpressions.g:10286:1: ( ruleExtendedID )
+            // InternalKExpressions.g:10428:1: ( ( ruleExtendedID ) )
+            // InternalKExpressions.g:10429:1: ( ruleExtendedID )
             {
-            // InternalKExpressions.g:10286:1: ( ruleExtendedID )
-            // InternalKExpressions.g:10287:1: ruleExtendedID
+            // InternalKExpressions.g:10429:1: ( ruleExtendedID )
+            // InternalKExpressions.g:10430:1: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0()); 
@@ -29217,17 +29629,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5"
-    // InternalKExpressions.g:10296:1: rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 : ( ruleEStringBoolean ) ;
+    // InternalKExpressions.g:10439:1: rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 : ( ruleEStringBoolean ) ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:10300:1: ( ( ruleEStringBoolean ) )
-            // InternalKExpressions.g:10301:1: ( ruleEStringBoolean )
+            // InternalKExpressions.g:10443:1: ( ( ruleEStringBoolean ) )
+            // InternalKExpressions.g:10444:1: ( ruleEStringBoolean )
             {
-            // InternalKExpressions.g:10301:1: ( ruleEStringBoolean )
-            // InternalKExpressions.g:10302:1: ruleEStringBoolean
+            // InternalKExpressions.g:10444:1: ( ruleEStringBoolean )
+            // InternalKExpressions.g:10445:1: ruleEStringBoolean
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_5_0()); 
@@ -29262,17 +29674,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1"
-    // InternalKExpressions.g:10311:1: rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 : ( ruleEStringBoolean ) ;
+    // InternalKExpressions.g:10454:1: rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 : ( ruleEStringBoolean ) ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:10315:1: ( ( ruleEStringBoolean ) )
-            // InternalKExpressions.g:10316:1: ( ruleEStringBoolean )
+            // InternalKExpressions.g:10458:1: ( ( ruleEStringBoolean ) )
+            // InternalKExpressions.g:10459:1: ( ruleEStringBoolean )
             {
-            // InternalKExpressions.g:10316:1: ( ruleEStringBoolean )
-            // InternalKExpressions.g:10317:1: ruleEStringBoolean
+            // InternalKExpressions.g:10459:1: ( ruleEStringBoolean )
+            // InternalKExpressions.g:10460:1: ruleEStringBoolean
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_6_1_0()); 
@@ -29307,17 +29719,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__NameAssignment_1"
-    // InternalKExpressions.g:10326:1: rule__QuotedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
+    // InternalKExpressions.g:10469:1: rule__QuotedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__QuotedKeyStringValueAnnotation__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:10330:1: ( ( ruleExtendedID ) )
-            // InternalKExpressions.g:10331:1: ( ruleExtendedID )
+            // InternalKExpressions.g:10473:1: ( ( ruleExtendedID ) )
+            // InternalKExpressions.g:10474:1: ( ruleExtendedID )
             {
-            // InternalKExpressions.g:10331:1: ( ruleExtendedID )
-            // InternalKExpressions.g:10332:1: ruleExtendedID
+            // InternalKExpressions.g:10474:1: ( ruleExtendedID )
+            // InternalKExpressions.g:10475:1: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
@@ -29352,17 +29764,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2"
-    // InternalKExpressions.g:10341:1: rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 : ( RULE_STRING ) ;
+    // InternalKExpressions.g:10484:1: rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 : ( RULE_STRING ) ;
     public final void rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:10345:1: ( ( RULE_STRING ) )
-            // InternalKExpressions.g:10346:1: ( RULE_STRING )
+            // InternalKExpressions.g:10488:1: ( ( RULE_STRING ) )
+            // InternalKExpressions.g:10489:1: ( RULE_STRING )
             {
-            // InternalKExpressions.g:10346:1: ( RULE_STRING )
-            // InternalKExpressions.g:10347:1: RULE_STRING
+            // InternalKExpressions.g:10489:1: ( RULE_STRING )
+            // InternalKExpressions.g:10490:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_2_0()); 
@@ -29393,17 +29805,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1"
-    // InternalKExpressions.g:10356:1: rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 : ( RULE_STRING ) ;
+    // InternalKExpressions.g:10499:1: rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 : ( RULE_STRING ) ;
     public final void rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:10360:1: ( ( RULE_STRING ) )
-            // InternalKExpressions.g:10361:1: ( RULE_STRING )
+            // InternalKExpressions.g:10503:1: ( ( RULE_STRING ) )
+            // InternalKExpressions.g:10504:1: ( RULE_STRING )
             {
-            // InternalKExpressions.g:10361:1: ( RULE_STRING )
-            // InternalKExpressions.g:10362:1: RULE_STRING
+            // InternalKExpressions.g:10504:1: ( RULE_STRING )
+            // InternalKExpressions.g:10505:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_3_1_0()); 
@@ -29434,17 +29846,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1"
-    // InternalKExpressions.g:10371:1: rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
+    // InternalKExpressions.g:10514:1: rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:10375:1: ( ( ruleExtendedID ) )
-            // InternalKExpressions.g:10376:1: ( ruleExtendedID )
+            // InternalKExpressions.g:10518:1: ( ( ruleExtendedID ) )
+            // InternalKExpressions.g:10519:1: ( ruleExtendedID )
             {
-            // InternalKExpressions.g:10376:1: ( ruleExtendedID )
-            // InternalKExpressions.g:10377:1: ruleExtendedID
+            // InternalKExpressions.g:10519:1: ( ruleExtendedID )
+            // InternalKExpressions.g:10520:1: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
@@ -29479,17 +29891,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3"
-    // InternalKExpressions.g:10386:1: rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 : ( ruleExtendedID ) ;
+    // InternalKExpressions.g:10529:1: rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 : ( ruleExtendedID ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:10390:1: ( ( ruleExtendedID ) )
-            // InternalKExpressions.g:10391:1: ( ruleExtendedID )
+            // InternalKExpressions.g:10533:1: ( ( ruleExtendedID ) )
+            // InternalKExpressions.g:10534:1: ( ruleExtendedID )
             {
-            // InternalKExpressions.g:10391:1: ( ruleExtendedID )
-            // InternalKExpressions.g:10392:1: ruleExtendedID
+            // InternalKExpressions.g:10534:1: ( ruleExtendedID )
+            // InternalKExpressions.g:10535:1: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0()); 
@@ -29524,17 +29936,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5"
-    // InternalKExpressions.g:10401:1: rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 : ( RULE_STRING ) ;
+    // InternalKExpressions.g:10544:1: rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 : ( RULE_STRING ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:10405:1: ( ( RULE_STRING ) )
-            // InternalKExpressions.g:10406:1: ( RULE_STRING )
+            // InternalKExpressions.g:10548:1: ( ( RULE_STRING ) )
+            // InternalKExpressions.g:10549:1: ( RULE_STRING )
             {
-            // InternalKExpressions.g:10406:1: ( RULE_STRING )
-            // InternalKExpressions.g:10407:1: RULE_STRING
+            // InternalKExpressions.g:10549:1: ( RULE_STRING )
+            // InternalKExpressions.g:10550:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_5_0()); 
@@ -29565,17 +29977,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1"
-    // InternalKExpressions.g:10416:1: rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 : ( RULE_STRING ) ;
+    // InternalKExpressions.g:10559:1: rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 : ( RULE_STRING ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:10420:1: ( ( RULE_STRING ) )
-            // InternalKExpressions.g:10421:1: ( RULE_STRING )
+            // InternalKExpressions.g:10563:1: ( ( RULE_STRING ) )
+            // InternalKExpressions.g:10564:1: ( RULE_STRING )
             {
-            // InternalKExpressions.g:10421:1: ( RULE_STRING )
-            // InternalKExpressions.g:10422:1: RULE_STRING
+            // InternalKExpressions.g:10564:1: ( RULE_STRING )
+            // InternalKExpressions.g:10565:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_6_1_0()); 
@@ -29606,11 +30018,11 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
     // $ANTLR start synpred1_InternalKExpressions
     public final void synpred1_InternalKExpressions_fragment() throws RecognitionException {   
-        // InternalKExpressions.g:1671:1: ( ( ruleBoolExpression ) )
-        // InternalKExpressions.g:1671:1: ( ruleBoolExpression )
+        // InternalKExpressions.g:1727:1: ( ( ruleBoolExpression ) )
+        // InternalKExpressions.g:1727:1: ( ruleBoolExpression )
         {
-        // InternalKExpressions.g:1671:1: ( ruleBoolExpression )
-        // InternalKExpressions.g:1672:1: ruleBoolExpression
+        // InternalKExpressions.g:1727:1: ( ruleBoolExpression )
+        // InternalKExpressions.g:1728:1: ruleBoolExpression
         {
         if ( state.backtracking==0 ) {
            before(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_0_0()); 
@@ -29630,11 +30042,11 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
     // $ANTLR start synpred2_InternalKExpressions
     public final void synpred2_InternalKExpressions_fragment() throws RecognitionException {   
-        // InternalKExpressions.g:1693:1: ( ( ruleValuedExpression ) )
-        // InternalKExpressions.g:1693:1: ( ruleValuedExpression )
+        // InternalKExpressions.g:1749:1: ( ( ruleValuedExpression ) )
+        // InternalKExpressions.g:1749:1: ( ruleValuedExpression )
         {
-        // InternalKExpressions.g:1693:1: ( ruleValuedExpression )
-        // InternalKExpressions.g:1694:1: ruleValuedExpression
+        // InternalKExpressions.g:1749:1: ( ruleValuedExpression )
+        // InternalKExpressions.g:1750:1: ruleValuedExpression
         {
         if ( state.backtracking==0 ) {
            before(grammarAccess.getNotOrValuedExpressionAccess().getValuedExpressionParserRuleCall_0()); 
@@ -29654,11 +30066,11 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
     // $ANTLR start synpred13_InternalKExpressions
     public final void synpred13_InternalKExpressions_fragment() throws RecognitionException {   
-        // InternalKExpressions.g:1823:6: ( ( ruleVectorValue ) )
-        // InternalKExpressions.g:1823:6: ( ruleVectorValue )
+        // InternalKExpressions.g:1879:6: ( ( ruleVectorValue ) )
+        // InternalKExpressions.g:1879:6: ( ruleVectorValue )
         {
-        // InternalKExpressions.g:1823:6: ( ruleVectorValue )
-        // InternalKExpressions.g:1824:1: ruleVectorValue
+        // InternalKExpressions.g:1879:6: ( ruleVectorValue )
+        // InternalKExpressions.g:1880:1: ruleVectorValue
         {
         if ( state.backtracking==0 ) {
            before(grammarAccess.getAtomicValuedExpressionAccess().getVectorValueParserRuleCall_3()); 
@@ -29678,17 +30090,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
     // $ANTLR start synpred14_InternalKExpressions
     public final void synpred14_InternalKExpressions_fragment() throws RecognitionException {   
-        // InternalKExpressions.g:1829:6: ( ( ( rule__AtomicValuedExpression__Group_4__0 ) ) )
-        // InternalKExpressions.g:1829:6: ( ( rule__AtomicValuedExpression__Group_4__0 ) )
+        // InternalKExpressions.g:1885:6: ( ( ( rule__AtomicValuedExpression__Group_4__0 ) ) )
+        // InternalKExpressions.g:1885:6: ( ( rule__AtomicValuedExpression__Group_4__0 ) )
         {
-        // InternalKExpressions.g:1829:6: ( ( rule__AtomicValuedExpression__Group_4__0 ) )
-        // InternalKExpressions.g:1830:1: ( rule__AtomicValuedExpression__Group_4__0 )
+        // InternalKExpressions.g:1885:6: ( ( rule__AtomicValuedExpression__Group_4__0 ) )
+        // InternalKExpressions.g:1886:1: ( rule__AtomicValuedExpression__Group_4__0 )
         {
         if ( state.backtracking==0 ) {
            before(grammarAccess.getAtomicValuedExpressionAccess().getGroup_4()); 
         }
-        // InternalKExpressions.g:1831:1: ( rule__AtomicValuedExpression__Group_4__0 )
-        // InternalKExpressions.g:1831:2: rule__AtomicValuedExpression__Group_4__0
+        // InternalKExpressions.g:1887:1: ( rule__AtomicValuedExpression__Group_4__0 )
+        // InternalKExpressions.g:1887:2: rule__AtomicValuedExpression__Group_4__0
         {
         pushFollow(FollowSets000.FOLLOW_2);
         rule__AtomicValuedExpression__Group_4__0();
@@ -29814,7 +30226,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             this.transition = dfa_6;
         }
         public String getDescription() {
-            return "1666:1: rule__Expression__Alternatives_0 : ( ( ruleBoolExpression ) | ( ruleValuedExpression ) );";
+            return "1722:1: rule__Expression__Alternatives_0 : ( ( ruleBoolExpression ) | ( ruleValuedExpression ) );";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -30051,7 +30463,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             this.transition = dfa_12;
         }
         public String getDescription() {
-            return "1688:1: rule__NotOrValuedExpression__Alternatives : ( ( ruleValuedExpression ) | ( ruleNotExpression ) );";
+            return "1744:1: rule__NotOrValuedExpression__Alternatives : ( ( ruleValuedExpression ) | ( ruleNotExpression ) );";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -30225,7 +30637,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             this.transition = dfa_19;
         }
         public String getDescription() {
-            return "1754:1: rule__AtomicExpression__Alternatives : ( ( ruleBoolValue ) | ( ruleValuedObjectTestExpression ) | ( ( rule__AtomicExpression__Group_2__0 ) ) | ( ruleReferenceCall ) | ( ruleFunctionCall ) | ( ruleTextExpression ) );";
+            return "1810:1: rule__AtomicExpression__Alternatives : ( ( ruleBoolValue ) | ( ruleValuedObjectTestExpression ) | ( ( rule__AtomicExpression__Group_2__0 ) ) | ( ruleReferenceCall ) | ( ruleFunctionCall ) | ( ruleTextExpression ) );";
         }
     }
     static final String dfa_20s = "\1\4\3\uffff\1\0\11\uffff";
@@ -30268,7 +30680,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             this.transition = dfa_24;
         }
         public String getDescription() {
-            return "1800:1: rule__AtomicValuedExpression__Alternatives : ( ( ruleIntValue ) | ( ruleFloatValue ) | ( ruleStringValue ) | ( ruleVectorValue ) | ( ( rule__AtomicValuedExpression__Group_4__0 ) ) | ( ruleAtomicExpression ) );";
+            return "1856:1: rule__AtomicValuedExpression__Alternatives : ( ( ruleIntValue ) | ( ruleFloatValue ) | ( ruleStringValue ) | ( ruleVectorValue ) | ( ( rule__AtomicValuedExpression__Group_4__0 ) ) | ( ruleAtomicExpression ) );";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -30346,14 +30758,15 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
         public static final BitSet FOLLOW_41 = new BitSet(new long[]{0x0000080000000002L});
         public static final BitSet FOLLOW_42 = new BitSet(new long[]{0x0000000400000000L});
         public static final BitSet FOLLOW_43 = new BitSet(new long[]{0x0000000000180000L});
-        public static final BitSet FOLLOW_44 = new BitSet(new long[]{0x00000000004001F0L});
-        public static final BitSet FOLLOW_45 = new BitSet(new long[]{0x0000080000000000L});
-        public static final BitSet FOLLOW_46 = new BitSet(new long[]{0x0000000000000070L});
-        public static final BitSet FOLLOW_47 = new BitSet(new long[]{0x0000020000000000L});
-        public static final BitSet FOLLOW_48 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_49 = new BitSet(new long[]{0x0000400040400000L});
-        public static final BitSet FOLLOW_50 = new BitSet(new long[]{0x0000000040400002L});
-        public static final BitSet FOLLOW_51 = new BitSet(new long[]{0x0000000000400080L});
+        public static final BitSet FOLLOW_44 = new BitSet(new long[]{0x00003041045203F0L});
+        public static final BitSet FOLLOW_45 = new BitSet(new long[]{0x00000000004001F0L});
+        public static final BitSet FOLLOW_46 = new BitSet(new long[]{0x0000080000000000L});
+        public static final BitSet FOLLOW_47 = new BitSet(new long[]{0x0000000000000070L});
+        public static final BitSet FOLLOW_48 = new BitSet(new long[]{0x0000020000000000L});
+        public static final BitSet FOLLOW_49 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_50 = new BitSet(new long[]{0x0000800040400000L});
+        public static final BitSet FOLLOW_51 = new BitSet(new long[]{0x0000000040400002L});
+        public static final BitSet FOLLOW_52 = new BitSet(new long[]{0x0000000000400080L});
     }
 
 

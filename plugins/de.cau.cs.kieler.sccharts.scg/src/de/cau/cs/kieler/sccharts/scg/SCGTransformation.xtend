@@ -81,6 +81,7 @@ import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect
 import de.cau.cs.kieler.kexpressions.PrintCall
 import de.cau.cs.kieler.kexpressions.VectorValue
+import de.cau.cs.kieler.kexpressions.IgnoreValue
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -817,6 +818,10 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
                 it.values += value.convertToSCGExpression
             }
         ]
+    }
+    
+    def dispatch Expression convertToSCGExpression(IgnoreValue expression) {
+        createIgnoreValue.trace(expression)
     }
 
     // Apply conversion to textual host code 

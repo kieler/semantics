@@ -2086,13 +2086,33 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//VectorValue:
-	//	'(' values+=Expression (',' values+=Expression)* ')';
+	//	'(' values+=VectorValueMember (',' values+=VectorValueMember)* ')';
 	public KExpressionsGrammarAccess.VectorValueElements getVectorValueAccess() {
 		return gaKExpressions.getVectorValueAccess();
 	}
 	
 	public ParserRule getVectorValueRule() {
 		return getVectorValueAccess().getRule();
+	}
+
+	//VectorValueMember Expression:
+	//	Expression | IgnoreValue
+	public KExpressionsGrammarAccess.VectorValueMemberElements getVectorValueMemberAccess() {
+		return gaKExpressions.getVectorValueMemberAccess();
+	}
+	
+	public ParserRule getVectorValueMemberRule() {
+		return getVectorValueMemberAccess().getRule();
+	}
+
+	//IgnoreValue:
+	//	{IgnoreValue} '_';
+	public KExpressionsGrammarAccess.IgnoreValueElements getIgnoreValueAccess() {
+		return gaKExpressions.getIgnoreValueAccess();
+	}
+	
+	public ParserRule getIgnoreValueRule() {
+		return getIgnoreValueAccess().getRule();
 	}
 
 	//// Any Type Rule

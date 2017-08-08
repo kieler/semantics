@@ -1541,43 +1541,83 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cLeftParenthesisKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cValuesAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cValuesExpressionParserRuleCall_1_0 = (RuleCall)cValuesAssignment_1.eContents().get(0);
+		private final RuleCall cValuesVectorValueMemberParserRuleCall_1_0 = (RuleCall)cValuesAssignment_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
 		private final Keyword cCommaKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cValuesAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cValuesExpressionParserRuleCall_2_1_0 = (RuleCall)cValuesAssignment_2_1.eContents().get(0);
+		private final RuleCall cValuesVectorValueMemberParserRuleCall_2_1_0 = (RuleCall)cValuesAssignment_2_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//VectorValue:
-		//	'(' values+=Expression (',' values+=Expression)* ')';
+		//	'(' values+=VectorValueMember (',' values+=VectorValueMember)* ')';
 		@Override public ParserRule getRule() { return rule; }
 
-		//'(' values+=Expression (',' values+=Expression)* ')'
+		//'(' values+=VectorValueMember (',' values+=VectorValueMember)* ')'
 		public Group getGroup() { return cGroup; }
 
 		//'('
 		public Keyword getLeftParenthesisKeyword_0() { return cLeftParenthesisKeyword_0; }
 
-		//values+=Expression
+		//values+=VectorValueMember
 		public Assignment getValuesAssignment_1() { return cValuesAssignment_1; }
 
-		//Expression
-		public RuleCall getValuesExpressionParserRuleCall_1_0() { return cValuesExpressionParserRuleCall_1_0; }
+		//VectorValueMember
+		public RuleCall getValuesVectorValueMemberParserRuleCall_1_0() { return cValuesVectorValueMemberParserRuleCall_1_0; }
 
-		//(',' values+=Expression)*
+		//(',' values+=VectorValueMember)*
 		public Group getGroup_2() { return cGroup_2; }
 
 		//','
 		public Keyword getCommaKeyword_2_0() { return cCommaKeyword_2_0; }
 
-		//values+=Expression
+		//values+=VectorValueMember
 		public Assignment getValuesAssignment_2_1() { return cValuesAssignment_2_1; }
 
-		//Expression
-		public RuleCall getValuesExpressionParserRuleCall_2_1_0() { return cValuesExpressionParserRuleCall_2_1_0; }
+		//VectorValueMember
+		public RuleCall getValuesVectorValueMemberParserRuleCall_2_1_0() { return cValuesVectorValueMemberParserRuleCall_2_1_0; }
 
 		//')'
 		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
+	}
+
+	public class VectorValueMemberElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.VectorValueMember");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cExpressionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cIgnoreValueParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//VectorValueMember Expression:
+		//	Expression | IgnoreValue
+		@Override public ParserRule getRule() { return rule; }
+
+		//Expression | IgnoreValue
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//Expression
+		public RuleCall getExpressionParserRuleCall_0() { return cExpressionParserRuleCall_0; }
+
+		//IgnoreValue
+		public RuleCall getIgnoreValueParserRuleCall_1() { return cIgnoreValueParserRuleCall_1; }
+	}
+
+	public class IgnoreValueElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.IgnoreValue");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cIgnoreValueAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword c_Keyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//IgnoreValue:
+		//	{IgnoreValue} '_';
+		@Override public ParserRule getRule() { return rule; }
+
+		//{IgnoreValue} '_'
+		public Group getGroup() { return cGroup; }
+
+		//{IgnoreValue}
+		public Action getIgnoreValueAction_0() { return cIgnoreValueAction_0; }
+
+		//'_'
+		public Keyword get_Keyword_1() { return c_Keyword_1; }
 	}
 
 	public class AnyTypeElements extends AbstractParserRuleElementFinder {
@@ -2123,6 +2163,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final BoolValueElements pBoolValue;
 	private final StringValueElements pStringValue;
 	private final VectorValueElements pVectorValue;
+	private final VectorValueMemberElements pVectorValueMember;
+	private final IgnoreValueElements pIgnoreValue;
 	private final AnyTypeElements pAnyType;
 	private final AnyValueElements pAnyValue;
 	private final CompareOperatorElements eCompareOperator;
@@ -2190,6 +2232,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pBoolValue = new BoolValueElements();
 		this.pStringValue = new StringValueElements();
 		this.pVectorValue = new VectorValueElements();
+		this.pVectorValueMember = new VectorValueMemberElements();
+		this.pIgnoreValue = new IgnoreValueElements();
 		this.pAnyType = new AnyTypeElements();
 		this.pAnyValue = new AnyValueElements();
 		this.eCompareOperator = new CompareOperatorElements();
@@ -2707,13 +2751,33 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//VectorValue:
-	//	'(' values+=Expression (',' values+=Expression)* ')';
+	//	'(' values+=VectorValueMember (',' values+=VectorValueMember)* ')';
 	public VectorValueElements getVectorValueAccess() {
 		return pVectorValue;
 	}
 	
 	public ParserRule getVectorValueRule() {
 		return getVectorValueAccess().getRule();
+	}
+
+	//VectorValueMember Expression:
+	//	Expression | IgnoreValue
+	public VectorValueMemberElements getVectorValueMemberAccess() {
+		return pVectorValueMember;
+	}
+	
+	public ParserRule getVectorValueMemberRule() {
+		return getVectorValueMemberAccess().getRule();
+	}
+
+	//IgnoreValue:
+	//	{IgnoreValue} '_';
+	public IgnoreValueElements getIgnoreValueAccess() {
+		return pIgnoreValue;
+	}
+	
+	public ParserRule getIgnoreValueRule() {
+		return getIgnoreValueAccess().getRule();
 	}
 
 	//// Any Type Rule

@@ -70,7 +70,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getSchedulable()
      * @generated
      */
-    int SCHEDULABLE = 23;
+    int SCHEDULABLE = 24;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -384,7 +384,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getOperatorExpression()
      * @generated
      */
-    int OPERATOR_EXPRESSION = 9;
+    int OPERATOR_EXPRESSION = 10;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.TextExpressionImpl <em>Text Expression</em>}' class.
@@ -394,7 +394,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getTextExpression()
      * @generated
      */
-    int TEXT_EXPRESSION = 10;
+    int TEXT_EXPRESSION = 11;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.DeclarationImpl <em>Declaration</em>}' class.
@@ -404,7 +404,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getDeclaration()
      * @generated
      */
-    int DECLARATION = 11;
+    int DECLARATION = 12;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.VariableDeclarationImpl <em>Variable Declaration</em>}' class.
@@ -414,7 +414,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getVariableDeclaration()
      * @generated
      */
-    int VARIABLE_DECLARATION = 12;
+    int VARIABLE_DECLARATION = 13;
 
                 /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.ReferenceDeclarationImpl <em>Reference Declaration</em>}' class.
@@ -424,7 +424,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getReferenceDeclaration()
      * @generated
      */
-    int REFERENCE_DECLARATION = 13;
+    int REFERENCE_DECLARATION = 14;
 
                 /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.FunctionCallImpl <em>Function Call</em>}' class.
@@ -434,7 +434,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getFunctionCall()
      * @generated
      */
-    int FUNCTION_CALL = 20;
+    int FUNCTION_CALL = 21;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.Referenceable <em>Referenceable</em>}' class.
@@ -444,7 +444,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getReferenceable()
      * @generated
      */
-    int REFERENCEABLE = 22;
+    int REFERENCEABLE = 23;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.ParameterImpl <em>Parameter</em>}' class.
@@ -454,7 +454,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getParameter()
      * @generated
      */
-    int PARAMETER = 17;
+    int PARAMETER = 18;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.StringValueImpl <em>String Value</em>}' class.
@@ -529,6 +529,34 @@ public interface KExpressionsPackage extends EPackage {
      * @ordered
      */
     int VECTOR_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.IgnoreValueImpl <em>Ignore Value</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.impl.IgnoreValueImpl
+     * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getIgnoreValue()
+     * @generated
+     */
+    int IGNORE_VALUE = 9;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IGNORE_VALUE__SCHEDULE = VALUE__SCHEDULE;
+
+    /**
+     * The number of structural features of the '<em>Ignore Value</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IGNORE_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 0;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -790,7 +818,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getScheduleDeclaration()
      * @generated
      */
-    int SCHEDULE_DECLARATION = 14;
+    int SCHEDULE_DECLARATION = 15;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -854,7 +882,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getSchedulePriority()
      * @generated
      */
-    int SCHEDULE_PRIORITY = 15;
+    int SCHEDULE_PRIORITY = 16;
 
     /**
      * The feature id for the '<em><b>Priority</b></em>' attribute.
@@ -891,7 +919,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getScheduleObjectReference()
      * @generated
      */
-    int SCHEDULE_OBJECT_REFERENCE = 16;
+    int SCHEDULE_OBJECT_REFERENCE = 17;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -1009,7 +1037,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getCall()
      * @generated
      */
-    int CALL = 18;
+    int CALL = 19;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -1046,7 +1074,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getReferenceCall()
      * @generated
      */
-    int REFERENCE_CALL = 19;
+    int REFERENCE_CALL = 20;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -1146,7 +1174,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getPrintCall()
      * @generated
      */
-    int PRINT_CALL = 21;
+    int PRINT_CALL = 22;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -1192,7 +1220,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getCombineOperator()
      * @generated
      */
-    int COMBINE_OPERATOR = 24;
+    int COMBINE_OPERATOR = 25;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.OperatorType <em>Operator Type</em>}' enum.
@@ -1202,7 +1230,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getOperatorType()
      * @generated
      */
-    int OPERATOR_TYPE = 25;
+    int OPERATOR_TYPE = 26;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.ValueType <em>Value Type</em>}' enum.
@@ -1212,7 +1240,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getValueType()
      * @generated
      */
-    int VALUE_TYPE = 26;
+    int VALUE_TYPE = 27;
 
 
     /**
@@ -1223,7 +1251,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getSchedulePriorityType()
      * @generated
      */
-    int SCHEDULE_PRIORITY_TYPE = 27;
+    int SCHEDULE_PRIORITY_TYPE = 28;
 
 
     /**
@@ -1887,6 +1915,16 @@ public interface KExpressionsPackage extends EPackage {
     EReference getVectorValue_Values();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.IgnoreValue <em>Ignore Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Ignore Value</em>'.
+     * @see de.cau.cs.kieler.kexpressions.IgnoreValue
+     * @generated
+     */
+    EClass getIgnoreValue();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.Call <em>Call</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2518,6 +2556,16 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EReference VECTOR_VALUE__VALUES = eINSTANCE.getVectorValue_Values();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.IgnoreValueImpl <em>Ignore Value</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.impl.IgnoreValueImpl
+         * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getIgnoreValue()
+         * @generated
+         */
+        EClass IGNORE_VALUE = eINSTANCE.getIgnoreValue();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.Call <em>Call</em>}' class.

@@ -32,6 +32,7 @@ import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.VectorValue
+import de.cau.cs.kieler.kexpressions.IgnoreValue
 
 /**
  * Serialization of KExpressions.
@@ -306,6 +307,10 @@ class KExpressionsSerializeExtensions {
             s = s + value.serialize + ", "
         }
         return s.substring(0, s.length - 2) + ")"
+    }
+    
+    def dispatch CharSequence serialize(IgnoreValue expression) {
+        "_"
     }
 
     // Expand a boolean expression value (true or false).

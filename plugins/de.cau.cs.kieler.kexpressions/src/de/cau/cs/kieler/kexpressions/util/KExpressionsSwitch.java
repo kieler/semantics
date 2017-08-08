@@ -151,6 +151,15 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case KExpressionsPackage.IGNORE_VALUE: {
+                IgnoreValue ignoreValue = (IgnoreValue)theEObject;
+                T result = caseIgnoreValue(ignoreValue);
+                if (result == null) result = caseValue(ignoreValue);
+                if (result == null) result = caseExpression(ignoreValue);
+                if (result == null) result = caseSchedulable(ignoreValue);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case KExpressionsPackage.OPERATOR_EXPRESSION: {
                 OperatorExpression operatorExpression = (OperatorExpression)theEObject;
                 T result = caseOperatorExpression(operatorExpression);
@@ -613,6 +622,21 @@ public class KExpressionsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseVectorValue(VectorValue object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Ignore Value</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Ignore Value</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseIgnoreValue(IgnoreValue object) {
         return null;
     }
 

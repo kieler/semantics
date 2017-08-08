@@ -27,6 +27,7 @@ import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.PrintCall
 import de.cau.cs.kieler.kexpressions.VectorValue
+import de.cau.cs.kieler.kexpressions.IgnoreValue
 
 /**
  * @author ssm
@@ -269,6 +270,10 @@ class KExpressionsCreateExtensions {
     
     def VectorValue createVectorValue() {
         KExpressionsFactory::eINSTANCE.createVectorValue
+    }
+    
+    def IgnoreValue createIgnoreValue() {
+        KExpressionsFactory::eINSTANCE.createIgnoreValue
     }
 
     def TextExpression createTextExpression() {

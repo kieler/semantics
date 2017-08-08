@@ -62,6 +62,7 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFunctionCallAccess().getAlternatives(), "rule__FunctionCall__Alternatives");
 					put(grammarAccess.getFunctionCallAccess().getAlternatives_0_2(), "rule__FunctionCall__Alternatives_0_2");
 					put(grammarAccess.getFunctionCallAccess().getAlternatives_1_2(), "rule__FunctionCall__Alternatives_1_2");
+					put(grammarAccess.getVectorValueMemberAccess().getAlternatives(), "rule__VectorValueMember__Alternatives");
 					put(grammarAccess.getAnyTypeAccess().getAlternatives(), "rule__AnyType__Alternatives");
 					put(grammarAccess.getAnyValueAccess().getAlternatives(), "rule__AnyValue__Alternatives");
 					put(grammarAccess.getAnnotationAccess().getAlternatives(), "rule__Annotation__Alternatives");
@@ -223,6 +224,7 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getParameterAccess().getGroup_0(), "rule__Parameter__Group_0__0");
 					put(grammarAccess.getVectorValueAccess().getGroup(), "rule__VectorValue__Group__0");
 					put(grammarAccess.getVectorValueAccess().getGroup_2(), "rule__VectorValue__Group_2__0");
+					put(grammarAccess.getIgnoreValueAccess().getGroup(), "rule__IgnoreValue__Group__0");
 					put(grammarAccess.getTagAnnotationAccess().getGroup(), "rule__TagAnnotation__Group__0");
 					put(grammarAccess.getPragmaTagAccess().getGroup(), "rule__PragmaTag__Group__0");
 					put(grammarAccess.getKeyStringValueAnnotationAccess().getGroup(), "rule__KeyStringValueAnnotation__Group__0");

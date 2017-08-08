@@ -2467,9 +2467,9 @@ ruleVectorValue returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getVectorValueAccess().getValuesExpressionParserRuleCall_1_0()); 
+	        newCompositeNode(grammarAccess.getVectorValueAccess().getValuesVectorValueMemberParserRuleCall_1_0()); 
 	    }
-		lv_values_1_0=ruleExpression		{
+		lv_values_1_0=ruleVectorValueMember		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getVectorValueRule());
 	        }
@@ -2477,7 +2477,7 @@ ruleVectorValue returns [EObject current=null]
        			$current, 
        			"values",
         		lv_values_1_0, 
-        		"de.cau.cs.kieler.kexpressions.KExpressions.Expression");
+        		"de.cau.cs.kieler.kexpressions.KExpressions.VectorValueMember");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2489,9 +2489,9 @@ ruleVectorValue returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getVectorValueAccess().getValuesExpressionParserRuleCall_2_1_0()); 
+	        newCompositeNode(grammarAccess.getVectorValueAccess().getValuesVectorValueMemberParserRuleCall_2_1_0()); 
 	    }
-		lv_values_3_0=ruleExpression		{
+		lv_values_3_0=ruleVectorValueMember		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getVectorValueRule());
 	        }
@@ -2499,7 +2499,7 @@ ruleVectorValue returns [EObject current=null]
        			$current, 
        			"values",
         		lv_values_3_0, 
-        		"de.cau.cs.kieler.kexpressions.KExpressions.Expression");
+        		"de.cau.cs.kieler.kexpressions.KExpressions.VectorValueMember");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2507,6 +2507,86 @@ ruleVectorValue returns [EObject current=null]
 ))*	otherlv_4=')' 
     {
     	newLeafNode(otherlv_4, grammarAccess.getVectorValueAccess().getRightParenthesisKeyword_3());
+    }
+)
+;
+
+
+
+
+
+// Entry rule entryRuleVectorValueMember
+entryRuleVectorValueMember returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getVectorValueMemberRule()); }
+	 iv_ruleVectorValueMember=ruleVectorValueMember 
+	 { $current=$iv_ruleVectorValueMember.current; } 
+	 EOF 
+;
+
+// Rule VectorValueMember
+ruleVectorValueMember returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getVectorValueMemberAccess().getExpressionParserRuleCall_0()); 
+    }
+    this_Expression_0=ruleExpression
+    { 
+        $current = $this_Expression_0.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getVectorValueMemberAccess().getIgnoreValueParserRuleCall_1()); 
+    }
+    this_IgnoreValue_1=ruleIgnoreValue
+    { 
+        $current = $this_IgnoreValue_1.current; 
+        afterParserOrEnumRuleCall();
+    }
+)
+;
+
+
+
+
+
+// Entry rule entryRuleIgnoreValue
+entryRuleIgnoreValue returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getIgnoreValueRule()); }
+	 iv_ruleIgnoreValue=ruleIgnoreValue 
+	 { $current=$iv_ruleIgnoreValue.current; } 
+	 EOF 
+;
+
+// Rule IgnoreValue
+ruleIgnoreValue returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+	{ 
+	  /* */ 
+	}
+    {
+        $current = forceCreateModelElement(
+            grammarAccess.getIgnoreValueAccess().getIgnoreValueAction_0(),
+            $current);
+    }
+)	otherlv_1='_' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getIgnoreValueAccess().get_Keyword_1());
     }
 )
 ;

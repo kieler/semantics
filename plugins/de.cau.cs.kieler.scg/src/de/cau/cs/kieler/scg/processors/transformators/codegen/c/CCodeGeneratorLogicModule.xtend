@@ -31,13 +31,12 @@ import de.cau.cs.kieler.scg.ControlFlow
 import java.util.Deque
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.VectorValue
-import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import java.util.LinkedList
+import de.cau.cs.kieler.kexpressions.IgnoreValue
 
 /**
  * C Code Generator Logic Module
@@ -218,20 +217,22 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     protected def List<Assignment> splitAssignmentHelper(VectorValue vector, ValuedObject vo, Deque<Integer> indexStack, List<Assignment> assignments) {
         var index = 0
         for (v : vector.values) {
-            if (v instanceof VectorValue) {
-                indexStack.push(index)     
-                v.splitAssignmentHelper(vo, indexStack, assignments)
-                indexStack.pop           
-            } else {
-                val newAssignment = ScgFactory.eINSTANCE.createAssignment
-                newAssignment.valuedObject = vo
-                for (is : indexStack) {
-                    newAssignment.indices.add(createIntValue(is))
+            if (!(v instanceof IgnoreValue)) {
+                if (v instanceof VectorValue) {
+                    indexStack.push(index)     
+                    v.splitAssignmentHelper(vo, indexStack, assignments)
+                    indexStack.pop           
+                } else {
+                    val newAssignment = ScgFactory.eINSTANCE.createAssignment
+                    newAssignment.valuedObject = vo
+                    for (is : indexStack) {
+                        newAssignment.indices.add(createIntValue(is))
+                    }
+                    newAssignment.indices.add(createIntValue(index))
+                    newAssignment.expression = v.copy
+                    
+                    assignments += newAssignment
                 }
-                newAssignment.indices.add(createIntValue(index))
-                newAssignment.expression = v.copy
-                
-                assignments += newAssignment
             }
             index++
         }         

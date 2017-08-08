@@ -314,7 +314,13 @@ StringValue returns StringValue:
     value=STRING;
     
 VectorValue returns VectorValue:
-    '(' values+=Expression (',' values+=Expression)* ')';
+    '(' values+=VectorValueMember (',' values+=VectorValueMember)* ')';
+    
+VectorValueMember returns Expression:
+    Expression | IgnoreValue;
+    
+IgnoreValue returns IgnoreValue:
+    {IgnoreValue} '_';
 
 // Any Type Rule
 // Data type rule allowing any kind of value to be accepted,
