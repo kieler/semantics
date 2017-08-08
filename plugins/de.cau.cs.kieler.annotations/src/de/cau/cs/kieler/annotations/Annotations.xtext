@@ -211,4 +211,6 @@ terminal BOOLEAN returns ecore::EBooleanObject :
 terminal STRING returns ecore::EString:
     '"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|'"') )* '"';
 
+terminal ID: 
+    '^'?(('_'?'a'..'z'|'_'?'A'..'Z')|'_''0'..'9'|'__') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
     

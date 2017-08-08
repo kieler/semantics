@@ -641,7 +641,7 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"name",
                               		lv_name_1_0, 
-                              		"org.eclipse.xtext.common.Terminals.ID");
+                              		"de.cau.cs.kieler.annotations.Annotations.ID");
                       	    
                     }
 
@@ -6956,7 +6956,7 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"functionName",
                               		lv_functionName_2_0, 
-                              		"org.eclipse.xtext.common.Terminals.ID");
+                              		"de.cau.cs.kieler.annotations.Annotations.ID");
                       	    
                     }
 
@@ -7164,7 +7164,7 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"functionName",
                               		lv_functionName_10_0, 
-                              		"org.eclipse.xtext.common.Terminals.ID");
+                              		"de.cau.cs.kieler.annotations.Annotations.ID");
                       	    
                     }
 
@@ -13117,7 +13117,7 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"functionName",
                               		lv_functionName_1_0, 
-                              		"org.eclipse.xtext.common.Terminals.ID");
+                              		"de.cau.cs.kieler.annotations.Annotations.ID");
                       	    
                     }
 
@@ -13322,7 +13322,7 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"functionName",
                               		lv_functionName_9_0, 
-                              		"org.eclipse.xtext.common.Terminals.ID");
+                              		"de.cau.cs.kieler.annotations.Annotations.ID");
                       	    
                     }
 

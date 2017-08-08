@@ -5731,7 +5731,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"functionName",
                               		lv_functionName_1_0, 
-                              		"org.eclipse.xtext.common.Terminals.ID");
+                              		"de.cau.cs.kieler.annotations.Annotations.ID");
                       	    
                     }
 
@@ -5936,7 +5936,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"functionName",
                               		lv_functionName_9_0, 
-                              		"org.eclipse.xtext.common.Terminals.ID");
+                              		"de.cau.cs.kieler.annotations.Annotations.ID");
                       	    
                     }
 
