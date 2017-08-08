@@ -99,10 +99,10 @@ public class SCTXResource extends LazyLinkingResource {
     // ---------------------------------------------------------------------------------------
 
     protected def void updateResourceSet() {
-        val rootObject = getContents
-        if (!(rootObject.get(0) instanceof SCCharts)) return
+        val contents = getContents
+        if (contents !== null && (contents.size == 0 || !(contents.head instanceof SCCharts))) return;
         
-        val scc = rootObject.get(0) as SCCharts
+        val scc = contents.head as SCCharts
         val ownR = scc.eResource
         val segments = ownR.URI.segments
         val base = ownR.URI.scheme + ":/" + String.join("/", segments.subList(0, segments.length - 1)) + "/"
