@@ -7,7 +7,8 @@ Bundle-SymbolicName: de.cau.cs.kieler.railsl.ide;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: de.cau.cs.kieler.railsl,
  org.eclipse.xtext.ide,
- org.eclipse.xtext.xbase.ide
+ org.eclipse.xtext.xbase.ide,
+ org.eclipse.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.railsl.ide.contentassist.antlr,
  de.cau.cs.kieler.railsl.ide.contentassist.antlr.internal

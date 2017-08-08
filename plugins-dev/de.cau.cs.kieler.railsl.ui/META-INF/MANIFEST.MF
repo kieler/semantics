@@ -18,7 +18,11 @@ Require-Bundle: de.cau.cs.kieler.railsl.ide,
  org.eclipse.xtext.xbase.lib,
  de.cau.cs.kieler.kvis.ui;bundle-version="0.1.0",
  de.cau.cs.kieler.simulation;bundle-version="0.1.0",
- de.cau.cs.kieler.railsl;bundle-version="1.0.0"
+ de.cau.cs.kieler.railsl;bundle-version="1.0.0",
+ org.eclipse.ui.ide.application;bundle-version="1.1.101",
+ org.eclipse.core.resources,
+ org.eclipse.ui.navigator,
+ org.eclipse.ui.navigator.resources
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.railsl.ui.contentassist,
