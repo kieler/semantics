@@ -10038,7 +10038,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                 if ( (LA6_1==81) ) {
                     alt6=2;
                 }
-                else if ( ((LA6_1>=RULE_STRING && LA6_1<=RULE_HOSTCODE)||LA6_1==17||(LA6_1>=19 && LA6_1<=20)||LA6_1==22||LA6_1==26||LA6_1==60||LA6_1==80||LA6_1==104) ) {
+                else if ( ((LA6_1>=RULE_STRING && LA6_1<=RULE_HOSTCODE)||LA6_1==17||(LA6_1>=19 && LA6_1<=20)||LA6_1==22||LA6_1==26||LA6_1==60||LA6_1==76||LA6_1==80||LA6_1==104) ) {
                     alt6=1;
                 }
                 else {
@@ -12389,7 +12389,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             if ( (LA29_0==22) ) {
                 alt29=1;
             }
-            else if ( ((LA29_0>=RULE_STRING && LA29_0<=RULE_HOSTCODE)||LA29_0==17||LA29_0==26||LA29_0==60||LA29_0==80||LA29_0==104) ) {
+            else if ( ((LA29_0>=RULE_STRING && LA29_0<=RULE_HOSTCODE)||LA29_0==17||LA29_0==26||LA29_0==60||LA29_0==76||LA29_0==80||LA29_0==104) ) {
                 alt29=2;
             }
             else {
@@ -13376,7 +13376,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             int alt38=2;
             int LA38_0 = input.LA(1);
 
-            if ( ((LA38_0>=RULE_STRING && LA38_0<=RULE_HOSTCODE)||LA38_0==17||LA38_0==20||LA38_0==22||LA38_0==26||LA38_0==60||LA38_0==80||LA38_0==104) ) {
+            if ( ((LA38_0>=RULE_STRING && LA38_0<=RULE_HOSTCODE)||LA38_0==17||LA38_0==20||LA38_0==22||LA38_0==26||LA38_0==60||LA38_0==76||LA38_0==80||LA38_0==104) ) {
                 alt38=1;
             }
             else if ( (LA38_0==110) ) {
@@ -64220,24 +64220,24 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VectorValue__Group__0__Impl"
-    // InternalSCTX.g:21877:1: rule__VectorValue__Group__0__Impl : ( '(' ) ;
+    // InternalSCTX.g:21877:1: rule__VectorValue__Group__0__Impl : ( '{' ) ;
     public final void rule__VectorValue__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalSCTX.g:21881:1: ( ( '(' ) )
-            // InternalSCTX.g:21882:1: ( '(' )
+            // InternalSCTX.g:21881:1: ( ( '{' ) )
+            // InternalSCTX.g:21882:1: ( '{' )
             {
-            // InternalSCTX.g:21882:1: ( '(' )
-            // InternalSCTX.g:21883:1: '('
+            // InternalSCTX.g:21882:1: ( '{' )
+            // InternalSCTX.g:21883:1: '{'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getVectorValueAccess().getLeftParenthesisKeyword_0()); 
+               before(grammarAccess.getVectorValueAccess().getLeftCurlyBracketKeyword_0()); 
             }
-            match(input,80,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,76,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getVectorValueAccess().getLeftParenthesisKeyword_0()); 
+               after(grammarAccess.getVectorValueAccess().getLeftCurlyBracketKeyword_0()); 
             }
 
             }
@@ -64270,7 +64270,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             // InternalSCTX.g:21900:1: ( rule__VectorValue__Group__1__Impl rule__VectorValue__Group__2 )
             // InternalSCTX.g:21901:2: rule__VectorValue__Group__1__Impl rule__VectorValue__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_21);
+            pushFollow(FollowSets000.FOLLOW_114);
             rule__VectorValue__Group__1__Impl();
 
             state._fsp--;
@@ -64359,7 +64359,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             // InternalSCTX.g:21929:1: ( rule__VectorValue__Group__2__Impl rule__VectorValue__Group__3 )
             // InternalSCTX.g:21930:2: rule__VectorValue__Group__2__Impl rule__VectorValue__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_21);
+            pushFollow(FollowSets000.FOLLOW_114);
             rule__VectorValue__Group__2__Impl();
 
             state._fsp--;
@@ -64490,24 +64490,24 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VectorValue__Group__3__Impl"
-    // InternalSCTX.g:21965:1: rule__VectorValue__Group__3__Impl : ( ')' ) ;
+    // InternalSCTX.g:21965:1: rule__VectorValue__Group__3__Impl : ( '}' ) ;
     public final void rule__VectorValue__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalSCTX.g:21969:1: ( ( ')' ) )
-            // InternalSCTX.g:21970:1: ( ')' )
+            // InternalSCTX.g:21969:1: ( ( '}' ) )
+            // InternalSCTX.g:21970:1: ( '}' )
             {
-            // InternalSCTX.g:21970:1: ( ')' )
-            // InternalSCTX.g:21971:1: ')'
+            // InternalSCTX.g:21970:1: ( '}' )
+            // InternalSCTX.g:21971:1: '}'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getVectorValueAccess().getRightParenthesisKeyword_3()); 
+               before(grammarAccess.getVectorValueAccess().getRightCurlyBracketKeyword_3()); 
             }
-            match(input,81,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,77,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getVectorValueAccess().getRightParenthesisKeyword_3()); 
+               after(grammarAccess.getVectorValueAccess().getRightCurlyBracketKeyword_3()); 
             }
 
             }
@@ -65261,7 +65261,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             // InternalSCTX.g:22281:1: ( rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2 )
             // InternalSCTX.g:22282:2: rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_114);
+            pushFollow(FollowSets000.FOLLOW_115);
             rule__KeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -65541,7 +65541,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             // InternalSCTX.g:22375:1: ( rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1 )
             // InternalSCTX.g:22376:2: rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_114);
+            pushFollow(FollowSets000.FOLLOW_115);
             rule__KeyStringValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
@@ -65783,7 +65783,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             // InternalSCTX.g:22469:1: ( rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2 )
             // InternalSCTX.g:22470:2: rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_115);
+            pushFollow(FollowSets000.FOLLOW_116);
             rule__RestrictedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -66063,7 +66063,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             // InternalSCTX.g:22563:1: ( rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1 )
             // InternalSCTX.g:22564:2: rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_115);
+            pushFollow(FollowSets000.FOLLOW_116);
             rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
@@ -66305,7 +66305,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             // InternalSCTX.g:22657:1: ( rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2 )
             // InternalSCTX.g:22658:2: rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_114);
+            pushFollow(FollowSets000.FOLLOW_115);
             rule__StringPragma__Group__1__Impl();
 
             state._fsp--;
@@ -66585,7 +66585,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             // InternalSCTX.g:22751:1: ( rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1 )
             // InternalSCTX.g:22752:2: rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_114);
+            pushFollow(FollowSets000.FOLLOW_115);
             rule__StringPragma__Group_3__0__Impl();
 
             state._fsp--;
@@ -67084,7 +67084,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             // InternalSCTX.g:22934:1: ( rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5 )
             // InternalSCTX.g:22935:2: rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_114);
+            pushFollow(FollowSets000.FOLLOW_115);
             rule__TypedKeyStringValueAnnotation__Group__4__Impl();
 
             state._fsp--;
@@ -67354,7 +67354,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             // InternalSCTX.g:23036:1: ( rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1 )
             // InternalSCTX.g:23037:2: rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1
             {
-            pushFollow(FollowSets000.FOLLOW_114);
+            pushFollow(FollowSets000.FOLLOW_115);
             rule__TypedKeyStringValueAnnotation__Group_6__0__Impl();
 
             state._fsp--;
@@ -67853,7 +67853,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             // InternalSCTX.g:23219:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5 )
             // InternalSCTX.g:23220:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_115);
+            pushFollow(FollowSets000.FOLLOW_116);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl();
 
             state._fsp--;
@@ -68123,7 +68123,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             // InternalSCTX.g:23321:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1 )
             // InternalSCTX.g:23322:2: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1
             {
-            pushFollow(FollowSets000.FOLLOW_115);
+            pushFollow(FollowSets000.FOLLOW_116);
             rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl();
 
             state._fsp--;
@@ -69577,7 +69577,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             // InternalSCTX.g:23857:1: ( rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1 )
             // InternalSCTX.g:23858:2: rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_116);
+            pushFollow(FollowSets000.FOLLOW_117);
             rule__ExtendedID__Group__0__Impl();
 
             state._fsp--;
@@ -69656,7 +69656,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             // InternalSCTX.g:23886:1: ( rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2 )
             // InternalSCTX.g:23887:2: rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_116);
+            pushFollow(FollowSets000.FOLLOW_117);
             rule__ExtendedID__Group__1__Impl();
 
             state._fsp--;
@@ -69724,7 +69724,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalSCTX.g:23901:2: rule__ExtendedID__Group_1__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_117);
+            	    pushFollow(FollowSets000.FOLLOW_118);
             	    rule__ExtendedID__Group_1__0();
 
             	    state._fsp--;
@@ -70187,7 +70187,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             // InternalSCTX.g:24075:1: ( rule__Integer__Group__0__Impl rule__Integer__Group__1 )
             // InternalSCTX.g:24076:2: rule__Integer__Group__0__Impl rule__Integer__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_118);
+            pushFollow(FollowSets000.FOLLOW_119);
             rule__Integer__Group__0__Impl();
 
             state._fsp--;
@@ -70357,7 +70357,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             // InternalSCTX.g:24138:1: ( rule__Floateger__Group__0__Impl rule__Floateger__Group__1 )
             // InternalSCTX.g:24139:2: rule__Floateger__Group__0__Impl rule__Floateger__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_114);
+            pushFollow(FollowSets000.FOLLOW_115);
             rule__Floateger__Group__0__Impl();
 
             state._fsp--;
@@ -84027,30 +84027,6 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
     }
     // $ANTLR end synpred41_InternalSCTX
 
-    // $ANTLR start synpred52_InternalSCTX
-    public final void synpred52_InternalSCTX_fragment() throws RecognitionException {   
-        // InternalSCTX.g:4026:6: ( ( ruleVectorValue ) )
-        // InternalSCTX.g:4026:6: ( ruleVectorValue )
-        {
-        // InternalSCTX.g:4026:6: ( ruleVectorValue )
-        // InternalSCTX.g:4027:1: ruleVectorValue
-        {
-        if ( state.backtracking==0 ) {
-           before(grammarAccess.getAtomicValuedExpressionAccess().getVectorValueParserRuleCall_3()); 
-        }
-        pushFollow(FollowSets000.FOLLOW_2);
-        ruleVectorValue();
-
-        state._fsp--;
-        if (state.failed) return ;
-
-        }
-
-
-        }
-    }
-    // $ANTLR end synpred52_InternalSCTX
-
     // $ANTLR start synpred53_InternalSCTX
     public final void synpred53_InternalSCTX_fragment() throws RecognitionException {   
         // InternalSCTX.g:4032:6: ( ( ( rule__AtomicValuedExpression__Group_4__0 ) ) )
@@ -84217,20 +84193,6 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
         int start = input.mark();
         try {
             synpred53_InternalSCTX_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
-    public final boolean synpred52_InternalSCTX() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred52_InternalSCTX_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -84794,13 +84756,14 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_7s = "\17\uffff";
-    static final String dfa_8s = "\1\4\4\uffff\10\0\2\uffff";
-    static final String dfa_9s = "\1\150\4\uffff\10\0\2\uffff";
-    static final String dfa_10s = "\1\uffff\1\1\14\uffff\1\2";
-    static final String dfa_11s = "\5\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\2\uffff}>";
+    static final String dfa_7s = "\20\uffff";
+    static final String dfa_8s = "\1\4\5\uffff\10\0\2\uffff";
+    static final String dfa_9s = "\1\150\5\uffff\10\0\2\uffff";
+    static final String dfa_10s = "\1\uffff\1\1\15\uffff\1\2";
+    static final String dfa_11s = "\6\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\2\uffff}>";
     static final String[] dfa_12s = {
-            "\1\1\1\6\1\11\2\1\1\14\7\uffff\1\7\2\uffff\1\1\1\uffff\1\1\3\uffff\1\10\41\uffff\1\13\23\uffff\1\5\27\uffff\1\12",
+            "\1\1\1\7\1\12\2\1\1\15\7\uffff\1\10\2\uffff\1\1\1\uffff\1\1\3\uffff\1\11\41\uffff\1\14\17\uffff\1\1\3\uffff\1\6\27\uffff\1\13",
+            "",
             "",
             "",
             "",
@@ -84845,21 +84808,6 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA8_5 = input.LA(1);
-
-                         
-                        int index8_5 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred10_InternalSCTX()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 14;}
-
-                         
-                        input.seek(index8_5);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 1 : 
                         int LA8_6 = input.LA(1);
 
                          
@@ -84868,13 +84816,13 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         s = -1;
                         if ( (synpred10_InternalSCTX()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index8_6);
                         if ( s>=0 ) return s;
                         break;
-                    case 2 : 
+                    case 1 : 
                         int LA8_7 = input.LA(1);
 
                          
@@ -84883,13 +84831,13 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         s = -1;
                         if ( (synpred10_InternalSCTX()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index8_7);
                         if ( s>=0 ) return s;
                         break;
-                    case 3 : 
+                    case 2 : 
                         int LA8_8 = input.LA(1);
 
                          
@@ -84898,13 +84846,13 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         s = -1;
                         if ( (synpred10_InternalSCTX()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index8_8);
                         if ( s>=0 ) return s;
                         break;
-                    case 4 : 
+                    case 3 : 
                         int LA8_9 = input.LA(1);
 
                          
@@ -84913,13 +84861,13 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         s = -1;
                         if ( (synpred10_InternalSCTX()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index8_9);
                         if ( s>=0 ) return s;
                         break;
-                    case 5 : 
+                    case 4 : 
                         int LA8_10 = input.LA(1);
 
                          
@@ -84928,13 +84876,13 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         s = -1;
                         if ( (synpred10_InternalSCTX()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index8_10);
                         if ( s>=0 ) return s;
                         break;
-                    case 6 : 
+                    case 5 : 
                         int LA8_11 = input.LA(1);
 
                          
@@ -84943,13 +84891,13 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         s = -1;
                         if ( (synpred10_InternalSCTX()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index8_11);
                         if ( s>=0 ) return s;
                         break;
-                    case 7 : 
+                    case 6 : 
                         int LA8_12 = input.LA(1);
 
                          
@@ -84958,10 +84906,25 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         s = -1;
                         if ( (synpred10_InternalSCTX()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index8_12);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 7 : 
+                        int LA8_13 = input.LA(1);
+
+                         
+                        int index8_13 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred10_InternalSCTX()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 15;}
+
+                         
+                        input.seek(index8_13);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -85571,12 +85534,13 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_46s = "\1\4\14\0\2\uffff";
-    static final String dfa_47s = "\1\150\14\0\2\uffff";
-    static final String dfa_48s = "\15\uffff\1\1\1\2";
-    static final String dfa_49s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\2\uffff}>";
+    static final String dfa_46s = "\1\4\15\0\2\uffff";
+    static final String dfa_47s = "\1\150\15\0\2\uffff";
+    static final String dfa_48s = "\16\uffff\1\1\1\2";
+    static final String dfa_49s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\2\uffff}>";
     static final String[] dfa_50s = {
-            "\1\4\1\6\1\11\1\2\1\3\1\14\7\uffff\1\7\2\uffff\1\15\1\uffff\1\1\3\uffff\1\10\41\uffff\1\13\23\uffff\1\5\27\uffff\1\12",
+            "\1\4\1\7\1\12\1\2\1\3\1\15\7\uffff\1\10\2\uffff\1\16\1\uffff\1\1\3\uffff\1\11\41\uffff\1\14\17\uffff\1\5\3\uffff\1\6\27\uffff\1\13",
+            "\1\uffff",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -85625,9 +85589,9 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         int index26_1 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred40_InternalSCTX()) ) {s = 13;}
+                        if ( (synpred40_InternalSCTX()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index26_1);
@@ -85640,9 +85604,9 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         int index26_2 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred40_InternalSCTX()) ) {s = 13;}
+                        if ( (synpred40_InternalSCTX()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index26_2);
@@ -85655,9 +85619,9 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         int index26_3 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred40_InternalSCTX()) ) {s = 13;}
+                        if ( (synpred40_InternalSCTX()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index26_3);
@@ -85670,9 +85634,9 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         int index26_4 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred40_InternalSCTX()) ) {s = 13;}
+                        if ( (synpred40_InternalSCTX()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index26_4);
@@ -85685,9 +85649,9 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         int index26_5 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred40_InternalSCTX()) ) {s = 13;}
+                        if ( (synpred40_InternalSCTX()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index26_5);
@@ -85700,9 +85664,9 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         int index26_6 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred40_InternalSCTX()) ) {s = 13;}
+                        if ( (synpred40_InternalSCTX()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index26_6);
@@ -85715,9 +85679,9 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         int index26_7 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred40_InternalSCTX()) ) {s = 13;}
+                        if ( (synpred40_InternalSCTX()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index26_7);
@@ -85730,9 +85694,9 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         int index26_8 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred40_InternalSCTX()) ) {s = 13;}
+                        if ( (synpred40_InternalSCTX()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index26_8);
@@ -85745,9 +85709,9 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         int index26_9 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred40_InternalSCTX()) ) {s = 13;}
+                        if ( (synpred40_InternalSCTX()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index26_9);
@@ -85760,9 +85724,9 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         int index26_10 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred40_InternalSCTX()) ) {s = 13;}
+                        if ( (synpred40_InternalSCTX()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index26_10);
@@ -85775,9 +85739,9 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         int index26_11 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred40_InternalSCTX()) ) {s = 13;}
+                        if ( (synpred40_InternalSCTX()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index26_11);
@@ -85790,12 +85754,27 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         int index26_12 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred40_InternalSCTX()) ) {s = 13;}
+                        if ( (synpred40_InternalSCTX()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index26_12);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 12 : 
+                        int LA26_13 = input.LA(1);
+
+                         
+                        int index26_13 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred40_InternalSCTX()) ) {s = 14;}
+
+                        else if ( (true) ) {s = 15;}
+
+                         
+                        input.seek(index26_13);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -85806,13 +85785,14 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_51s = "\16\uffff";
-    static final String dfa_52s = "\1\4\4\uffff\10\0\1\uffff";
-    static final String dfa_53s = "\1\150\4\uffff\10\0\1\uffff";
-    static final String dfa_54s = "\1\uffff\1\1\13\uffff\1\2";
-    static final String dfa_55s = "\5\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\uffff}>";
+    static final String dfa_51s = "\17\uffff";
+    static final String dfa_52s = "\1\4\5\uffff\10\0\1\uffff";
+    static final String dfa_53s = "\1\150\5\uffff\10\0\1\uffff";
+    static final String dfa_54s = "\1\uffff\1\1\14\uffff\1\2";
+    static final String dfa_55s = "\6\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\uffff}>";
     static final String[] dfa_56s = {
-            "\1\1\1\6\1\11\2\1\1\14\7\uffff\1\7\2\uffff\1\15\1\uffff\1\1\3\uffff\1\10\41\uffff\1\13\23\uffff\1\5\27\uffff\1\12",
+            "\1\1\1\7\1\12\2\1\1\15\7\uffff\1\10\2\uffff\1\16\1\uffff\1\1\3\uffff\1\11\41\uffff\1\14\17\uffff\1\1\3\uffff\1\6\27\uffff\1\13",
+            "",
             "",
             "",
             "",
@@ -85856,21 +85836,6 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA27_5 = input.LA(1);
-
-                         
-                        int index27_5 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred41_InternalSCTX()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 13;}
-
-                         
-                        input.seek(index27_5);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 1 : 
                         int LA27_6 = input.LA(1);
 
                          
@@ -85879,13 +85844,13 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         s = -1;
                         if ( (synpred41_InternalSCTX()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index27_6);
                         if ( s>=0 ) return s;
                         break;
-                    case 2 : 
+                    case 1 : 
                         int LA27_7 = input.LA(1);
 
                          
@@ -85894,13 +85859,13 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         s = -1;
                         if ( (synpred41_InternalSCTX()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index27_7);
                         if ( s>=0 ) return s;
                         break;
-                    case 3 : 
+                    case 2 : 
                         int LA27_8 = input.LA(1);
 
                          
@@ -85909,13 +85874,13 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         s = -1;
                         if ( (synpred41_InternalSCTX()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index27_8);
                         if ( s>=0 ) return s;
                         break;
-                    case 4 : 
+                    case 3 : 
                         int LA27_9 = input.LA(1);
 
                          
@@ -85924,13 +85889,13 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         s = -1;
                         if ( (synpred41_InternalSCTX()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index27_9);
                         if ( s>=0 ) return s;
                         break;
-                    case 5 : 
+                    case 4 : 
                         int LA27_10 = input.LA(1);
 
                          
@@ -85939,13 +85904,13 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         s = -1;
                         if ( (synpred41_InternalSCTX()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index27_10);
                         if ( s>=0 ) return s;
                         break;
-                    case 6 : 
+                    case 5 : 
                         int LA27_11 = input.LA(1);
 
                          
@@ -85954,13 +85919,13 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         s = -1;
                         if ( (synpred41_InternalSCTX()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index27_11);
                         if ( s>=0 ) return s;
                         break;
-                    case 7 : 
+                    case 6 : 
                         int LA27_12 = input.LA(1);
 
                          
@@ -85969,10 +85934,25 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         s = -1;
                         if ( (synpred41_InternalSCTX()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index27_12);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 7 : 
+                        int LA27_13 = input.LA(1);
+
+                         
+                        int index27_13 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred41_InternalSCTX()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 14;}
+
+                         
+                        input.seek(index27_13);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -86026,12 +86006,14 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             return "3957:1: rule__AtomicExpression__Alternatives : ( ( ruleBoolValue ) | ( ruleValuedObjectTestExpression ) | ( ( rule__AtomicExpression__Group_2__0 ) ) | ( ruleReferenceCall ) | ( ruleFunctionCall ) | ( ruleTextExpression ) );";
         }
     }
-    static final String dfa_64s = "\1\4\3\uffff\1\0\11\uffff";
-    static final String dfa_65s = "\1\150\3\uffff\1\0\11\uffff";
-    static final String dfa_66s = "\1\uffff\1\1\1\2\1\3\1\uffff\1\6\6\uffff\1\4\1\5";
-    static final String dfa_67s = "\4\uffff\1\0\11\uffff}>";
-    static final String[] dfa_68s = {
-            "\1\3\2\5\1\1\1\2\1\5\7\uffff\1\5\10\uffff\1\5\41\uffff\1\5\23\uffff\1\4\27\uffff\1\5",
+    static final String dfa_64s = "\16\uffff";
+    static final String dfa_65s = "\1\4\4\uffff\1\0\10\uffff";
+    static final String dfa_66s = "\1\150\4\uffff\1\0\10\uffff";
+    static final String dfa_67s = "\1\uffff\1\1\1\2\1\3\1\4\1\uffff\1\6\6\uffff\1\5";
+    static final String dfa_68s = "\5\uffff\1\0\10\uffff}>";
+    static final String[] dfa_69s = {
+            "\1\3\2\6\1\1\1\2\1\6\7\uffff\1\6\10\uffff\1\6\41\uffff\1\6\17\uffff\1\4\3\uffff\1\5\27\uffff\1\6",
+            "",
             "",
             "",
             "",
@@ -86043,27 +86025,28 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "",
             "",
             "",
-            "",
             ""
     };
-    static final char[] dfa_64 = DFA.unpackEncodedStringToUnsignedChars(dfa_64s);
+
+    static final short[] dfa_64 = DFA.unpackEncodedString(dfa_64s);
     static final char[] dfa_65 = DFA.unpackEncodedStringToUnsignedChars(dfa_65s);
-    static final short[] dfa_66 = DFA.unpackEncodedString(dfa_66s);
+    static final char[] dfa_66 = DFA.unpackEncodedStringToUnsignedChars(dfa_66s);
     static final short[] dfa_67 = DFA.unpackEncodedString(dfa_67s);
-    static final short[][] dfa_68 = unpackEncodedStringArray(dfa_68s);
+    static final short[] dfa_68 = DFA.unpackEncodedString(dfa_68s);
+    static final short[][] dfa_69 = unpackEncodedStringArray(dfa_69s);
 
     class DFA31 extends DFA {
 
         public DFA31(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 31;
-            this.eot = dfa_51;
-            this.eof = dfa_51;
-            this.min = dfa_64;
-            this.max = dfa_65;
-            this.accept = dfa_66;
-            this.special = dfa_67;
-            this.transition = dfa_68;
+            this.eot = dfa_64;
+            this.eof = dfa_64;
+            this.min = dfa_65;
+            this.max = dfa_66;
+            this.accept = dfa_67;
+            this.special = dfa_68;
+            this.transition = dfa_69;
         }
         public String getDescription() {
             return "4003:1: rule__AtomicValuedExpression__Alternatives : ( ( ruleIntValue ) | ( ruleFloatValue ) | ( ruleStringValue ) | ( ruleVectorValue ) | ( ( rule__AtomicValuedExpression__Group_4__0 ) ) | ( ruleAtomicExpression ) );";
@@ -86073,20 +86056,18 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA31_4 = input.LA(1);
+                        int LA31_5 = input.LA(1);
 
                          
-                        int index31_4 = input.index();
+                        int index31_5 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred52_InternalSCTX()) ) {s = 12;}
+                        if ( (synpred53_InternalSCTX()) ) {s = 13;}
 
-                        else if ( (synpred53_InternalSCTX()) ) {s = 13;}
-
-                        else if ( (true) ) {s = 5;}
+                        else if ( (true) ) {s = 6;}
 
                          
-                        input.seek(index31_4);
+                        input.seek(index31_5);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -86097,13 +86078,13 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_69s = "\26\uffff";
-    static final String dfa_70s = "\3\uffff\1\11\4\uffff\1\7\2\uffff\2\11\1\uffff\1\7\1\uffff\1\7\1\uffff\1\7\1\uffff\1\7\1\uffff";
-    static final String dfa_71s = "\1\12\1\uffff\1\6\1\4\2\6\1\7\1\uffff\1\6\2\uffff\2\4\10\6\1\0";
-    static final String dfa_72s = "\1\157\1\uffff\1\6\1\173\1\6\1\10\1\7\1\uffff\1\173\2\uffff\2\173\1\6\1\173\1\6\1\173\1\6\1\173\1\6\1\173\1\0";
-    static final String dfa_73s = "\1\uffff\1\1\5\uffff\1\2\1\uffff\1\4\1\3\13\uffff";
-    static final String dfa_74s = "\25\uffff\1\0}>";
-    static final String[] dfa_75s = {
+    static final String dfa_70s = "\26\uffff";
+    static final String dfa_71s = "\3\uffff\1\11\4\uffff\1\7\2\uffff\2\11\1\uffff\1\7\1\uffff\1\7\1\uffff\1\7\1\uffff\1\7\1\uffff";
+    static final String dfa_72s = "\1\12\1\uffff\1\6\1\4\2\6\1\7\1\uffff\1\6\2\uffff\2\4\10\6\1\0";
+    static final String dfa_73s = "\1\157\1\uffff\1\6\1\173\1\6\1\10\1\7\1\uffff\1\173\2\uffff\2\173\1\6\1\173\1\6\1\173\1\6\1\173\1\6\1\173\1\0";
+    static final String dfa_74s = "\1\uffff\1\1\5\uffff\1\2\1\uffff\1\4\1\3\13\uffff";
+    static final String dfa_75s = "\25\uffff\1\0}>";
+    static final String[] dfa_76s = {
             "\1\1\144\uffff\1\2",
             "",
             "\1\3",
@@ -86128,26 +86109,26 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "\1\uffff"
     };
 
-    static final short[] dfa_69 = DFA.unpackEncodedString(dfa_69s);
     static final short[] dfa_70 = DFA.unpackEncodedString(dfa_70s);
-    static final char[] dfa_71 = DFA.unpackEncodedStringToUnsignedChars(dfa_71s);
+    static final short[] dfa_71 = DFA.unpackEncodedString(dfa_71s);
     static final char[] dfa_72 = DFA.unpackEncodedStringToUnsignedChars(dfa_72s);
-    static final short[] dfa_73 = DFA.unpackEncodedString(dfa_73s);
+    static final char[] dfa_73 = DFA.unpackEncodedStringToUnsignedChars(dfa_73s);
     static final short[] dfa_74 = DFA.unpackEncodedString(dfa_74s);
-    static final short[][] dfa_75 = unpackEncodedStringArray(dfa_75s);
+    static final short[] dfa_75 = DFA.unpackEncodedString(dfa_75s);
+    static final short[][] dfa_76 = unpackEncodedStringArray(dfa_76s);
 
     class DFA39 extends DFA {
 
         public DFA39(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 39;
-            this.eot = dfa_69;
-            this.eof = dfa_70;
-            this.min = dfa_71;
-            this.max = dfa_72;
-            this.accept = dfa_73;
-            this.special = dfa_74;
-            this.transition = dfa_75;
+            this.eot = dfa_70;
+            this.eof = dfa_71;
+            this.min = dfa_72;
+            this.max = dfa_73;
+            this.accept = dfa_74;
+            this.special = dfa_75;
+            this.transition = dfa_76;
         }
         public String getDescription() {
             return "4211:1: rule__Annotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedKeyStringValueAnnotation ) | ( ruleTagAnnotation ) );";
@@ -86179,13 +86160,13 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_76s = "\12\uffff";
-    static final String dfa_77s = "\2\uffff\1\6\5\uffff\2\6";
-    static final String dfa_78s = "\1\160\1\6\1\4\3\6\2\uffff\2\4";
-    static final String dfa_79s = "\1\160\1\6\1\160\1\6\1\10\1\7\2\uffff\2\160";
-    static final String dfa_80s = "\6\uffff\1\2\1\1\2\uffff";
-    static final String dfa_81s = "\12\uffff}>";
-    static final String[] dfa_82s = {
+    static final String dfa_77s = "\12\uffff";
+    static final String dfa_78s = "\2\uffff\1\6\5\uffff\2\6";
+    static final String dfa_79s = "\1\160\1\6\1\4\3\6\2\uffff\2\4";
+    static final String dfa_80s = "\1\160\1\6\1\160\1\6\1\10\1\7\2\uffff\2\160";
+    static final String dfa_81s = "\6\uffff\1\2\1\1\2\uffff";
+    static final String dfa_82s = "\12\uffff}>";
+    static final String[] dfa_83s = {
             "\1\1",
             "\1\2",
             "\5\7\1\uffff\1\6\13\uffff\1\4\7\uffff\1\3\54\uffff\1\6\43\uffff\1\6\1\5",
@@ -86198,37 +86179,37 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "\5\7\1\uffff\1\6\13\uffff\1\7\64\uffff\1\6\43\uffff\2\6"
     };
 
-    static final short[] dfa_76 = DFA.unpackEncodedString(dfa_76s);
     static final short[] dfa_77 = DFA.unpackEncodedString(dfa_77s);
-    static final char[] dfa_78 = DFA.unpackEncodedStringToUnsignedChars(dfa_78s);
+    static final short[] dfa_78 = DFA.unpackEncodedString(dfa_78s);
     static final char[] dfa_79 = DFA.unpackEncodedStringToUnsignedChars(dfa_79s);
-    static final short[] dfa_80 = DFA.unpackEncodedString(dfa_80s);
+    static final char[] dfa_80 = DFA.unpackEncodedStringToUnsignedChars(dfa_80s);
     static final short[] dfa_81 = DFA.unpackEncodedString(dfa_81s);
-    static final short[][] dfa_82 = unpackEncodedStringArray(dfa_82s);
+    static final short[] dfa_82 = DFA.unpackEncodedString(dfa_82s);
+    static final short[][] dfa_83 = unpackEncodedStringArray(dfa_83s);
 
     class DFA40 extends DFA {
 
         public DFA40(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 40;
-            this.eot = dfa_76;
-            this.eof = dfa_77;
-            this.min = dfa_78;
-            this.max = dfa_79;
-            this.accept = dfa_80;
-            this.special = dfa_81;
-            this.transition = dfa_82;
+            this.eot = dfa_77;
+            this.eof = dfa_78;
+            this.min = dfa_79;
+            this.max = dfa_80;
+            this.accept = dfa_81;
+            this.special = dfa_82;
+            this.transition = dfa_83;
         }
         public String getDescription() {
             return "4245:1: rule__Pragma__Alternatives : ( ( ruleStringPragma ) | ( rulePragmaTag ) );";
         }
     }
-    static final String dfa_83s = "\3\uffff\1\10\6\uffff\2\10";
-    static final String dfa_84s = "\1\12\1\uffff\1\6\1\4\2\6\1\7\3\uffff\2\4";
-    static final String dfa_85s = "\1\157\1\uffff\1\6\1\160\2\6\1\7\3\uffff\1\160\1\157";
-    static final String dfa_86s = "\1\uffff\1\1\5\uffff\1\3\1\4\1\2\2\uffff";
-    static final String dfa_87s = "\14\uffff}>";
-    static final String[] dfa_88s = {
+    static final String dfa_84s = "\3\uffff\1\10\6\uffff\2\10";
+    static final String dfa_85s = "\1\12\1\uffff\1\6\1\4\2\6\1\7\3\uffff\2\4";
+    static final String dfa_86s = "\1\157\1\uffff\1\6\1\160\2\6\1\7\3\uffff\1\160\1\157";
+    static final String dfa_87s = "\1\uffff\1\1\5\uffff\1\3\1\4\1\2\2\uffff";
+    static final String dfa_88s = "\14\uffff}>";
+    static final String[] dfa_89s = {
             "\1\1\144\uffff\1\2",
             "",
             "\1\3",
@@ -86242,12 +86223,12 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "\3\11\3\uffff\1\10\13\uffff\1\5\7\uffff\1\4\6\10\57\uffff\1\7\32\uffff\1\10\1\6",
             "\3\11\3\uffff\1\10\24\uffff\6\10\57\uffff\1\7\32\uffff\1\10"
     };
-    static final short[] dfa_83 = DFA.unpackEncodedString(dfa_83s);
-    static final char[] dfa_84 = DFA.unpackEncodedStringToUnsignedChars(dfa_84s);
+    static final short[] dfa_84 = DFA.unpackEncodedString(dfa_84s);
     static final char[] dfa_85 = DFA.unpackEncodedStringToUnsignedChars(dfa_85s);
-    static final short[] dfa_86 = DFA.unpackEncodedString(dfa_86s);
+    static final char[] dfa_86 = DFA.unpackEncodedStringToUnsignedChars(dfa_86s);
     static final short[] dfa_87 = DFA.unpackEncodedString(dfa_87s);
-    static final short[][] dfa_88 = unpackEncodedStringArray(dfa_88s);
+    static final short[] dfa_88 = DFA.unpackEncodedString(dfa_88s);
+    static final short[][] dfa_89 = unpackEncodedStringArray(dfa_89s);
 
     class DFA41 extends DFA {
 
@@ -86255,20 +86236,20 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             this.recognizer = recognizer;
             this.decisionNumber = 41;
             this.eot = dfa_40;
-            this.eof = dfa_83;
-            this.min = dfa_84;
-            this.max = dfa_85;
-            this.accept = dfa_86;
-            this.special = dfa_87;
-            this.transition = dfa_88;
+            this.eof = dfa_84;
+            this.min = dfa_85;
+            this.max = dfa_86;
+            this.accept = dfa_87;
+            this.special = dfa_88;
+            this.transition = dfa_89;
         }
         public String getDescription() {
             return "4268:1: rule__RestrictedTypeAnnotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleRestrictedKeyStringValueAnnotation ) | ( ruleRestrictedTypedKeyStringValueAnnotation ) | ( ruleTagAnnotation ) );";
         }
     }
-    static final String dfa_89s = "\3\uffff\1\7\6\uffff\2\7";
-    static final String dfa_90s = "\1\uffff\1\1\5\uffff\1\4\1\3\1\2\2\uffff";
-    static final String[] dfa_91s = {
+    static final String dfa_90s = "\3\uffff\1\7\6\uffff\2\7";
+    static final String dfa_91s = "\1\uffff\1\1\5\uffff\1\4\1\3\1\2\2\uffff";
+    static final String[] dfa_92s = {
             "\1\1\144\uffff\1\2",
             "",
             "\1\3",
@@ -86282,9 +86263,9 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "\1\11\1\uffff\1\7\3\uffff\1\7\13\uffff\1\5\7\uffff\1\4\65\uffff\1\10\32\uffff\1\7\1\6",
             "\1\11\1\uffff\1\7\3\uffff\1\7\111\uffff\1\10\32\uffff\1\7"
     };
-    static final short[] dfa_89 = DFA.unpackEncodedString(dfa_89s);
     static final short[] dfa_90 = DFA.unpackEncodedString(dfa_90s);
-    static final short[][] dfa_91 = unpackEncodedStringArray(dfa_91s);
+    static final short[] dfa_91 = DFA.unpackEncodedString(dfa_91s);
+    static final short[][] dfa_92 = unpackEncodedStringArray(dfa_92s);
 
     class DFA42 extends DFA {
 
@@ -86292,23 +86273,23 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             this.recognizer = recognizer;
             this.decisionNumber = 42;
             this.eot = dfa_40;
-            this.eof = dfa_89;
-            this.min = dfa_84;
-            this.max = dfa_85;
-            this.accept = dfa_90;
-            this.special = dfa_87;
-            this.transition = dfa_91;
+            this.eof = dfa_90;
+            this.min = dfa_85;
+            this.max = dfa_86;
+            this.accept = dfa_91;
+            this.special = dfa_88;
+            this.transition = dfa_92;
         }
         public String getDescription() {
             return "4302:1: rule__QuotedStringAnnotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleQuotedKeyStringValueAnnotation ) | ( ruleQuotedTypedKeyStringValueAnnotation ) | ( ruleTagAnnotation ) );";
         }
     }
-    static final String dfa_92s = "\112\uffff";
-    static final String dfa_93s = "\1\6\1\uffff\2\6\1\uffff\1\4\2\6\1\7\6\6\2\4\1\26\1\4\2\6\2\7\2\6\1\7\1\4\3\6\1\7\5\6\1\26\1\125\3\6\1\7\4\6\1\7\2\6\1\4\2\6\1\7\6\6\1\7\7\6\1\7\5\6\1\0";
-    static final String dfa_94s = "\1\173\1\uffff\1\173\1\6\1\uffff\1\173\1\6\1\10\1\7\1\6\7\173\1\160\1\26\2\6\1\7\1\10\2\6\1\7\1\26\3\173\1\10\5\173\1\160\1\125\3\173\1\10\2\173\2\6\1\7\2\6\1\26\2\6\1\7\6\173\1\10\4\173\3\6\1\7\3\173\1\6\1\173\1\0";
-    static final String dfa_95s = "\1\uffff\1\2\2\uffff\1\1\105\uffff";
-    static final String dfa_96s = "\111\uffff\1\0}>";
-    static final String[] dfa_97s = {
+    static final String dfa_93s = "\112\uffff";
+    static final String dfa_94s = "\1\6\1\uffff\2\6\1\uffff\1\4\2\6\1\7\6\6\2\4\1\26\1\4\2\6\2\7\2\6\1\7\1\4\3\6\1\7\5\6\1\26\1\125\3\6\1\7\4\6\1\7\2\6\1\4\2\6\1\7\6\6\1\7\7\6\1\7\5\6\1\0";
+    static final String dfa_95s = "\1\173\1\uffff\1\173\1\6\1\uffff\1\173\1\6\1\10\1\7\1\6\7\173\1\160\1\26\2\6\1\7\1\10\2\6\1\7\1\26\3\173\1\10\5\173\1\160\1\125\3\173\1\10\2\173\2\6\1\7\2\6\1\26\2\6\1\7\6\173\1\10\4\173\3\6\1\7\3\173\1\6\1\173\1\0";
+    static final String dfa_96s = "\1\uffff\1\2\2\uffff\1\1\105\uffff";
+    static final String dfa_97s = "\111\uffff\1\0}>";
+    static final String[] dfa_98s = {
             "\1\1\3\uffff\1\2\32\uffff\4\1\30\uffff\7\4\5\uffff\2\1\13\uffff\1\1\3\uffff\7\1\2\uffff\3\4\5\uffff\1\3\1\uffff\4\1\1\uffff\1\1\5\4",
             "",
             "\1\1\3\uffff\1\2\66\uffff\7\4\6\uffff\1\1\13\uffff\1\1\3\uffff\1\1\10\uffff\3\4\5\uffff\1\3\1\uffff\4\1\2\uffff\5\4",
@@ -86385,25 +86366,25 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "\1\uffff"
     };
 
-    static final short[] dfa_92 = DFA.unpackEncodedString(dfa_92s);
-    static final char[] dfa_93 = DFA.unpackEncodedStringToUnsignedChars(dfa_93s);
+    static final short[] dfa_93 = DFA.unpackEncodedString(dfa_93s);
     static final char[] dfa_94 = DFA.unpackEncodedStringToUnsignedChars(dfa_94s);
-    static final short[] dfa_95 = DFA.unpackEncodedString(dfa_95s);
+    static final char[] dfa_95 = DFA.unpackEncodedStringToUnsignedChars(dfa_95s);
     static final short[] dfa_96 = DFA.unpackEncodedString(dfa_96s);
-    static final short[][] dfa_97 = unpackEncodedStringArray(dfa_97s);
+    static final short[] dfa_97 = DFA.unpackEncodedString(dfa_97s);
+    static final short[][] dfa_98 = unpackEncodedStringArray(dfa_98s);
 
     class DFA60 extends DFA {
 
         public DFA60(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 60;
-            this.eot = dfa_92;
-            this.eof = dfa_92;
-            this.min = dfa_93;
-            this.max = dfa_94;
-            this.accept = dfa_95;
-            this.special = dfa_96;
-            this.transition = dfa_97;
+            this.eot = dfa_93;
+            this.eof = dfa_93;
+            this.min = dfa_94;
+            this.max = dfa_95;
+            this.accept = dfa_96;
+            this.special = dfa_97;
+            this.transition = dfa_98;
         }
         public String getDescription() {
             return "()* loopback of 5105:1: ( rule__RootState__DeclarationsAssignment_5 )*";
@@ -86435,13 +86416,13 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_98s = "\65\uffff";
-    static final String dfa_99s = "\1\1\64\uffff";
-    static final String dfa_100s = "\1\12\1\uffff\1\12\1\6\1\uffff\1\4\2\6\1\7\1\6\3\12\2\4\1\26\1\4\2\6\1\7\2\6\1\7\1\4\5\12\1\26\1\125\3\12\2\6\1\7\1\4\2\6\1\7\7\12\2\6\1\7\2\12";
-    static final String dfa_101s = "\1\164\1\uffff\1\164\1\6\1\uffff\1\164\1\6\1\10\1\7\1\6\5\164\1\160\1\26\2\6\1\7\2\6\1\7\1\26\5\164\1\160\1\125\3\164\2\6\1\7\1\26\2\6\1\7\7\164\2\6\1\7\2\164";
-    static final String dfa_102s = "\1\uffff\1\2\2\uffff\1\1\60\uffff";
-    static final String dfa_103s = "\65\uffff}>";
-    static final String[] dfa_104s = {
+    static final String dfa_99s = "\65\uffff";
+    static final String dfa_100s = "\1\1\64\uffff";
+    static final String dfa_101s = "\1\12\1\uffff\1\12\1\6\1\uffff\1\4\2\6\1\7\1\6\3\12\2\4\1\26\1\4\2\6\1\7\2\6\1\7\1\4\5\12\1\26\1\125\3\12\2\6\1\7\1\4\2\6\1\7\7\12\2\6\1\7\2\12";
+    static final String dfa_102s = "\1\164\1\uffff\1\164\1\6\1\uffff\1\164\1\6\1\10\1\7\1\6\5\164\1\160\1\26\2\6\1\7\2\6\1\7\1\26\5\164\1\160\1\125\3\164\2\6\1\7\1\26\2\6\1\7\7\164\2\6\1\7\2\164";
+    static final String dfa_103s = "\1\uffff\1\2\2\uffff\1\1\60\uffff";
+    static final String dfa_104s = "\65\uffff}>";
+    static final String[] dfa_105s = {
             "\1\2\24\uffff\6\4\50\uffff\2\1\13\uffff\1\1\3\uffff\1\1\20\uffff\1\3\1\uffff\4\1",
             "",
             "\1\2\24\uffff\6\4\51\uffff\1\1\13\uffff\1\1\3\uffff\1\1\20\uffff\1\3\1\uffff\4\1",
@@ -86497,34 +86478,34 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "\1\2\24\uffff\6\4\51\uffff\1\1\3\uffff\1\45\7\uffff\1\1\3\uffff\1\1\20\uffff\1\3\1\uffff\4\1"
     };
 
-    static final short[] dfa_98 = DFA.unpackEncodedString(dfa_98s);
     static final short[] dfa_99 = DFA.unpackEncodedString(dfa_99s);
-    static final char[] dfa_100 = DFA.unpackEncodedStringToUnsignedChars(dfa_100s);
+    static final short[] dfa_100 = DFA.unpackEncodedString(dfa_100s);
     static final char[] dfa_101 = DFA.unpackEncodedStringToUnsignedChars(dfa_101s);
-    static final short[] dfa_102 = DFA.unpackEncodedString(dfa_102s);
+    static final char[] dfa_102 = DFA.unpackEncodedStringToUnsignedChars(dfa_102s);
     static final short[] dfa_103 = DFA.unpackEncodedString(dfa_103s);
-    static final short[][] dfa_104 = unpackEncodedStringArray(dfa_104s);
+    static final short[] dfa_104 = DFA.unpackEncodedString(dfa_104s);
+    static final short[][] dfa_105 = unpackEncodedStringArray(dfa_105s);
 
     class DFA69 extends DFA {
 
         public DFA69(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 69;
-            this.eot = dfa_98;
-            this.eof = dfa_99;
-            this.min = dfa_100;
-            this.max = dfa_101;
-            this.accept = dfa_102;
-            this.special = dfa_103;
-            this.transition = dfa_104;
+            this.eot = dfa_99;
+            this.eof = dfa_100;
+            this.min = dfa_101;
+            this.max = dfa_102;
+            this.accept = dfa_103;
+            this.special = dfa_104;
+            this.transition = dfa_105;
         }
         public String getDescription() {
             return "()* loopback of 5502:1: ( rule__State__OutgoingTransitionsAssignment_9 )*";
         }
     }
-    static final String dfa_105s = "\1\6\1\uffff\2\6\1\uffff\1\4\2\6\1\7\6\6\3\4\2\6\1\7\1\26\1\7\3\6\1\7\7\6\1\7\1\4\2\6\1\7\2\6\1\26\1\125\3\6\1\7\5\6\1\4\2\6\1\7\4\6\1\7\7\6\1\7\4\6\1\0";
-    static final String dfa_106s = "\1\173\1\uffff\1\173\1\6\1\uffff\1\173\1\6\1\10\1\7\5\173\1\6\2\173\1\26\2\6\1\7\1\160\1\10\3\173\1\10\5\173\2\6\1\7\1\26\2\6\1\7\2\6\1\160\1\125\3\173\1\10\5\173\1\26\2\6\1\7\1\6\3\173\1\10\5\173\2\6\1\7\1\6\3\173\1\0";
-    static final String[] dfa_107s = {
+    static final String dfa_106s = "\1\6\1\uffff\2\6\1\uffff\1\4\2\6\1\7\6\6\3\4\2\6\1\7\1\26\1\7\3\6\1\7\7\6\1\7\1\4\2\6\1\7\2\6\1\26\1\125\3\6\1\7\5\6\1\4\2\6\1\7\4\6\1\7\7\6\1\7\4\6\1\0";
+    static final String dfa_107s = "\1\173\1\uffff\1\173\1\6\1\uffff\1\173\1\6\1\10\1\7\5\173\1\6\2\173\1\26\2\6\1\7\1\160\1\10\3\173\1\10\5\173\2\6\1\7\1\26\2\6\1\7\2\6\1\160\1\125\3\173\1\10\5\173\1\26\2\6\1\7\1\6\3\173\1\10\5\173\2\6\1\7\1\6\3\173\1\0";
+    static final String[] dfa_108s = {
             "\1\1\3\uffff\1\2\32\uffff\4\1\30\uffff\7\4\5\uffff\2\1\13\uffff\1\1\3\uffff\7\1\2\uffff\3\4\5\uffff\1\3\1\uffff\4\1\1\uffff\1\1\5\4",
             "",
             "\1\1\3\uffff\1\2\66\uffff\7\4\6\uffff\1\1\13\uffff\1\1\3\uffff\1\1\10\uffff\3\4\5\uffff\1\3\1\uffff\4\1\2\uffff\5\4",
@@ -86600,22 +86581,22 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "\1\1\3\uffff\1\2\13\uffff\1\23\7\uffff\1\111\17\uffff\13\1\10\uffff\7\4\6\uffff\1\1\3\uffff\1\21\1\uffff\1\1\5\uffff\1\1\3\uffff\1\1\10\uffff\3\4\3\uffff\1\1\1\uffff\1\3\1\24\4\1\2\uffff\5\4",
             "\1\uffff"
     };
-    static final char[] dfa_105 = DFA.unpackEncodedStringToUnsignedChars(dfa_105s);
     static final char[] dfa_106 = DFA.unpackEncodedStringToUnsignedChars(dfa_106s);
-    static final short[][] dfa_107 = unpackEncodedStringArray(dfa_107s);
+    static final char[] dfa_107 = DFA.unpackEncodedStringToUnsignedChars(dfa_107s);
+    static final short[][] dfa_108 = unpackEncodedStringArray(dfa_108s);
 
     class DFA70 extends DFA {
 
         public DFA70(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 70;
-            this.eot = dfa_92;
-            this.eof = dfa_92;
-            this.min = dfa_105;
-            this.max = dfa_106;
-            this.accept = dfa_95;
-            this.special = dfa_96;
-            this.transition = dfa_107;
+            this.eot = dfa_93;
+            this.eof = dfa_93;
+            this.min = dfa_106;
+            this.max = dfa_107;
+            this.accept = dfa_96;
+            this.special = dfa_97;
+            this.transition = dfa_108;
         }
         public String getDescription() {
             return "()* loopback of 5645:1: ( rule__State__DeclarationsAssignment_8_1_1 )*";
@@ -86647,13 +86628,14 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_108s = "\1\4\1\0\15\uffff";
-    static final String dfa_109s = "\1\150\1\0\15\uffff";
-    static final String dfa_110s = "\2\uffff\1\2\13\uffff\1\1";
-    static final String dfa_111s = "\1\uffff\1\0\15\uffff}>";
-    static final String[] dfa_112s = {
-            "\3\2\1\1\2\2\7\uffff\1\2\2\uffff\1\2\1\uffff\1\2\3\uffff\1\2\41\uffff\1\2\23\uffff\1\2\27\uffff\1\2",
+    static final String dfa_109s = "\1\4\1\0\16\uffff";
+    static final String dfa_110s = "\1\150\1\0\16\uffff";
+    static final String dfa_111s = "\2\uffff\1\2\14\uffff\1\1";
+    static final String dfa_112s = "\1\uffff\1\0\16\uffff}>";
+    static final String[] dfa_113s = {
+            "\3\2\1\1\2\2\7\uffff\1\2\2\uffff\1\2\1\uffff\1\2\3\uffff\1\2\41\uffff\1\2\17\uffff\1\2\3\uffff\1\2\27\uffff\1\2",
             "\1\uffff",
+            "",
             "",
             "",
             "",
@@ -86668,11 +86650,11 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "",
             ""
     };
-    static final char[] dfa_108 = DFA.unpackEncodedStringToUnsignedChars(dfa_108s);
     static final char[] dfa_109 = DFA.unpackEncodedStringToUnsignedChars(dfa_109s);
-    static final short[] dfa_110 = DFA.unpackEncodedString(dfa_110s);
+    static final char[] dfa_110 = DFA.unpackEncodedStringToUnsignedChars(dfa_110s);
     static final short[] dfa_111 = DFA.unpackEncodedString(dfa_111s);
-    static final short[][] dfa_112 = unpackEncodedStringArray(dfa_112s);
+    static final short[] dfa_112 = DFA.unpackEncodedString(dfa_112s);
+    static final short[][] dfa_113 = unpackEncodedStringArray(dfa_113s);
 
     class DFA86 extends DFA {
 
@@ -86681,11 +86663,11 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             this.decisionNumber = 86;
             this.eot = dfa_7;
             this.eof = dfa_7;
-            this.min = dfa_108;
-            this.max = dfa_109;
-            this.accept = dfa_110;
-            this.special = dfa_111;
-            this.transition = dfa_112;
+            this.min = dfa_109;
+            this.max = dfa_110;
+            this.accept = dfa_111;
+            this.special = dfa_112;
+            this.transition = dfa_113;
         }
         public String getDescription() {
             return "6810:1: ( rule__Transition__TriggerDelayAssignment_6_1 )?";
@@ -86701,7 +86683,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
                         int index86_1 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred147_InternalSCTX()) ) {s = 14;}
+                        if ( (synpred147_InternalSCTX()) ) {s = 15;}
 
                         else if ( (true) ) {s = 2;}
 
@@ -86717,10 +86699,10 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_113s = "\2\12\1\6\2\uffff\1\4\2\6\1\7\1\6\5\12\2\4\1\26\1\4\2\6\2\7\2\6\1\7\1\4\3\12\1\7\4\12\1\26\1\125\3\12\1\7\2\12\2\6\1\7\1\4\2\6\1\7\5\12\1\7\4\12\2\6\1\7\2\12";
-    static final String dfa_114s = "\2\173\1\6\2\uffff\1\173\1\6\1\10\1\7\1\6\7\173\1\160\1\26\2\6\1\7\1\10\2\6\1\7\1\26\3\173\1\10\4\173\1\160\1\125\3\173\1\10\2\173\2\6\1\7\1\26\2\6\1\7\5\173\1\10\4\173\2\6\1\7\2\173";
-    static final String dfa_115s = "\3\uffff\1\2\1\1\74\uffff";
-    static final String[] dfa_116s = {
+    static final String dfa_114s = "\2\12\1\6\2\uffff\1\4\2\6\1\7\1\6\5\12\2\4\1\26\1\4\2\6\2\7\2\6\1\7\1\4\3\12\1\7\4\12\1\26\1\125\3\12\1\7\2\12\2\6\1\7\1\4\2\6\1\7\5\12\1\7\4\12\2\6\1\7\2\12";
+    static final String dfa_115s = "\2\173\1\6\2\uffff\1\173\1\6\1\10\1\7\1\6\7\173\1\160\1\26\2\6\1\7\1\10\2\6\1\7\1\26\3\173\1\10\4\173\1\160\1\125\3\173\1\10\2\173\2\6\1\7\1\26\2\6\1\7\5\173\1\10\4\173\2\6\1\7\2\173";
+    static final String dfa_116s = "\3\uffff\1\2\1\1\74\uffff";
+    static final String[] dfa_117s = {
             "\1\1\66\uffff\7\4\6\uffff\1\3\30\uffff\3\4\5\uffff\1\2\1\uffff\4\3\2\uffff\5\4",
             "\1\1\66\uffff\7\4\6\uffff\1\3\30\uffff\3\4\5\uffff\1\2\1\uffff\4\3\2\uffff\5\4",
             "\1\5",
@@ -86787,10 +86769,10 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "\1\1\13\uffff\1\75\7\uffff\1\74\42\uffff\7\4\6\uffff\1\3\3\uffff\1\56\24\uffff\3\4\5\uffff\1\2\1\76\4\3\2\uffff\5\4",
             "\1\1\66\uffff\7\4\6\uffff\1\3\3\uffff\1\56\24\uffff\3\4\5\uffff\1\2\1\uffff\4\3\2\uffff\5\4"
     };
-    static final char[] dfa_113 = DFA.unpackEncodedStringToUnsignedChars(dfa_113s);
     static final char[] dfa_114 = DFA.unpackEncodedStringToUnsignedChars(dfa_114s);
-    static final short[] dfa_115 = DFA.unpackEncodedString(dfa_115s);
-    static final short[][] dfa_116 = unpackEncodedStringArray(dfa_116s);
+    static final char[] dfa_115 = DFA.unpackEncodedStringToUnsignedChars(dfa_115s);
+    static final short[] dfa_116 = DFA.unpackEncodedString(dfa_116s);
+    static final short[][] dfa_117 = unpackEncodedStringArray(dfa_117s);
 
     class DFA94 extends DFA {
 
@@ -86799,21 +86781,21 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             this.decisionNumber = 94;
             this.eot = dfa_13;
             this.eof = dfa_13;
-            this.min = dfa_113;
-            this.max = dfa_114;
-            this.accept = dfa_115;
+            this.min = dfa_114;
+            this.max = dfa_115;
+            this.accept = dfa_116;
             this.special = dfa_17;
-            this.transition = dfa_116;
+            this.transition = dfa_117;
         }
         public String getDescription() {
             return "()* loopback of 7442:1: ( rule__ControlflowRegion__DeclarationsAssignment_7 )*";
         }
     }
-    static final String dfa_117s = "\1\1\100\uffff";
-    static final String dfa_118s = "\1\12\1\uffff\1\12\1\6\1\uffff\1\4\2\6\1\7\1\6\5\12\2\4\1\26\1\4\2\6\2\7\2\6\1\7\1\4\3\12\1\7\4\12\1\26\1\125\3\12\1\7\2\12\2\6\1\7\1\4\2\6\1\7\5\12\1\7\4\12\2\6\1\7\2\12";
-    static final String dfa_119s = "\1\164\1\uffff\1\164\1\6\1\uffff\1\164\1\6\1\10\1\7\1\6\7\164\1\160\1\26\2\6\1\7\1\10\2\6\1\7\1\26\3\164\1\10\4\164\1\160\1\125\3\164\1\10\2\164\2\6\1\7\1\26\2\6\1\7\5\164\1\10\4\164\2\6\1\7\2\164";
-    static final String dfa_120s = "\1\uffff\1\2\2\uffff\1\1\74\uffff";
-    static final String[] dfa_121s = {
+    static final String dfa_118s = "\1\1\100\uffff";
+    static final String dfa_119s = "\1\12\1\uffff\1\12\1\6\1\uffff\1\4\2\6\1\7\1\6\5\12\2\4\1\26\1\4\2\6\2\7\2\6\1\7\1\4\3\12\1\7\4\12\1\26\1\125\3\12\1\7\2\12\2\6\1\7\1\4\2\6\1\7\5\12\1\7\4\12\2\6\1\7\2\12";
+    static final String dfa_120s = "\1\164\1\uffff\1\164\1\6\1\uffff\1\164\1\6\1\10\1\7\1\6\7\164\1\160\1\26\2\6\1\7\1\10\2\6\1\7\1\26\3\164\1\10\4\164\1\160\1\125\3\164\1\10\2\164\2\6\1\7\1\26\2\6\1\7\5\164\1\10\4\164\2\6\1\7\2\164";
+    static final String dfa_121s = "\1\uffff\1\2\2\uffff\1\1\74\uffff";
+    static final String[] dfa_122s = {
             "\1\2\102\uffff\1\1\1\4\13\uffff\1\1\3\uffff\1\1\20\uffff\1\3\1\uffff\4\4",
             "",
             "\1\2\103\uffff\1\4\13\uffff\1\1\3\uffff\1\1\20\uffff\1\3\1\uffff\4\4",
@@ -86880,11 +86862,11 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "\1\2\13\uffff\1\75\7\uffff\1\74\57\uffff\1\4\3\uffff\1\56\7\uffff\1\1\3\uffff\1\1\20\uffff\1\3\1\76\4\4",
             "\1\2\103\uffff\1\4\3\uffff\1\56\7\uffff\1\1\3\uffff\1\1\20\uffff\1\3\1\uffff\4\4"
     };
-    static final short[] dfa_117 = DFA.unpackEncodedString(dfa_117s);
-    static final char[] dfa_118 = DFA.unpackEncodedStringToUnsignedChars(dfa_118s);
+    static final short[] dfa_118 = DFA.unpackEncodedString(dfa_118s);
     static final char[] dfa_119 = DFA.unpackEncodedStringToUnsignedChars(dfa_119s);
-    static final short[] dfa_120 = DFA.unpackEncodedString(dfa_120s);
-    static final short[][] dfa_121 = unpackEncodedStringArray(dfa_121s);
+    static final char[] dfa_120 = DFA.unpackEncodedStringToUnsignedChars(dfa_120s);
+    static final short[] dfa_121 = DFA.unpackEncodedString(dfa_121s);
+    static final short[][] dfa_122 = unpackEncodedStringArray(dfa_122s);
 
     class DFA95 extends DFA {
 
@@ -86892,19 +86874,19 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             this.recognizer = recognizer;
             this.decisionNumber = 95;
             this.eot = dfa_13;
-            this.eof = dfa_117;
-            this.min = dfa_118;
-            this.max = dfa_119;
-            this.accept = dfa_120;
+            this.eof = dfa_118;
+            this.min = dfa_119;
+            this.max = dfa_120;
+            this.accept = dfa_121;
             this.special = dfa_17;
-            this.transition = dfa_121;
+            this.transition = dfa_122;
         }
         public String getDescription() {
             return "()* loopback of 7476:1: ( rule__ControlflowRegion__StatesAssignment_8 )*";
         }
     }
-    static final String dfa_122s = "\2\173\1\6\2\uffff\1\173\1\6\1\10\1\7\5\173\1\6\2\173\1\26\2\6\1\7\1\160\1\10\3\173\1\10\4\173\2\6\1\7\1\26\2\6\1\7\1\160\1\125\3\173\1\10\4\173\1\26\2\6\1\7\3\173\1\10\4\173\2\6\1\7\2\173";
-    static final String[] dfa_123s = {
+    static final String dfa_123s = "\2\173\1\6\2\uffff\1\173\1\6\1\10\1\7\5\173\1\6\2\173\1\26\2\6\1\7\1\160\1\10\3\173\1\10\4\173\2\6\1\7\1\26\2\6\1\7\1\160\1\125\3\173\1\10\4\173\1\26\2\6\1\7\3\173\1\10\4\173\2\6\1\7\2\173";
+    static final String[] dfa_124s = {
             "\1\1\66\uffff\7\4\6\uffff\1\3\13\uffff\1\3\3\uffff\1\3\10\uffff\3\4\5\uffff\1\2\1\uffff\4\3\2\uffff\5\4",
             "\1\1\66\uffff\7\4\6\uffff\1\3\13\uffff\1\3\3\uffff\1\3\10\uffff\3\4\5\uffff\1\2\1\uffff\4\3\2\uffff\5\4",
             "\1\5",
@@ -86971,8 +86953,8 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "\1\1\13\uffff\1\75\7\uffff\1\74\42\uffff\7\4\6\uffff\1\3\3\uffff\1\60\7\uffff\1\3\3\uffff\1\3\10\uffff\3\4\5\uffff\1\2\1\76\4\3\2\uffff\5\4",
             "\1\1\66\uffff\7\4\6\uffff\1\3\3\uffff\1\60\7\uffff\1\3\3\uffff\1\3\10\uffff\3\4\5\uffff\1\2\1\uffff\4\3\2\uffff\5\4"
     };
-    static final char[] dfa_122 = DFA.unpackEncodedStringToUnsignedChars(dfa_122s);
-    static final short[][] dfa_123 = unpackEncodedStringArray(dfa_123s);
+    static final char[] dfa_123 = DFA.unpackEncodedStringToUnsignedChars(dfa_123s);
+    static final short[][] dfa_124 = unpackEncodedStringArray(dfa_124s);
 
     class DFA101 extends DFA {
 
@@ -86982,19 +86964,19 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             this.eot = dfa_13;
             this.eof = dfa_13;
             this.min = dfa_14;
-            this.max = dfa_122;
-            this.accept = dfa_115;
+            this.max = dfa_123;
+            this.accept = dfa_116;
             this.special = dfa_17;
-            this.transition = dfa_123;
+            this.transition = dfa_124;
         }
         public String getDescription() {
             return "()* loopback of 7954:1: ( rule__NestedControlflowRegion__DeclarationsAssignment_7 )*";
         }
     }
-    static final String dfa_124s = "\3\6\2\uffff\1\4\2\6\1\7\6\6\2\4\1\26\1\4\2\6\2\7\2\6\1\7\1\4\3\6\1\7\5\6\1\26\1\125\3\6\1\7\4\6\1\7\2\6\1\4\2\6\1\7\6\6\1\7\7\6\1\7\5\6\1\0";
-    static final String dfa_125s = "\2\173\1\6\2\uffff\1\173\1\6\1\10\1\7\1\6\7\173\1\160\1\26\2\6\1\7\1\10\2\6\1\7\1\26\3\173\1\10\5\173\1\160\1\125\3\173\1\10\2\173\2\6\1\7\2\6\1\26\2\6\1\7\6\173\1\10\4\173\3\6\1\7\3\173\1\6\1\173\1\0";
-    static final String dfa_126s = "\3\uffff\1\2\1\1\105\uffff";
-    static final String[] dfa_127s = {
+    static final String dfa_125s = "\3\6\2\uffff\1\4\2\6\1\7\6\6\2\4\1\26\1\4\2\6\2\7\2\6\1\7\1\4\3\6\1\7\5\6\1\26\1\125\3\6\1\7\4\6\1\7\2\6\1\4\2\6\1\7\6\6\1\7\7\6\1\7\5\6\1\0";
+    static final String dfa_126s = "\2\173\1\6\2\uffff\1\173\1\6\1\10\1\7\1\6\7\173\1\160\1\26\2\6\1\7\1\10\2\6\1\7\1\26\3\173\1\10\5\173\1\160\1\125\3\173\1\10\2\173\2\6\1\7\2\6\1\26\2\6\1\7\6\173\1\10\4\173\3\6\1\7\3\173\1\6\1\173\1\0";
+    static final String dfa_127s = "\3\uffff\1\2\1\1\105\uffff";
+    static final String[] dfa_128s = {
             "\1\3\3\uffff\1\1\66\uffff\7\4\37\uffff\3\4\5\uffff\1\2\7\uffff\5\4",
             "\1\3\3\uffff\1\1\66\uffff\7\4\37\uffff\3\4\5\uffff\1\2\7\uffff\5\4",
             "\1\5",
@@ -87070,23 +87052,23 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "\1\3\3\uffff\1\1\13\uffff\1\24\7\uffff\1\111\17\uffff\13\3\10\uffff\7\4\12\uffff\1\22\1\uffff\1\3\22\uffff\3\4\3\uffff\1\3\1\uffff\1\2\1\25\6\uffff\5\4",
             "\1\uffff"
     };
-    static final char[] dfa_124 = DFA.unpackEncodedStringToUnsignedChars(dfa_124s);
     static final char[] dfa_125 = DFA.unpackEncodedStringToUnsignedChars(dfa_125s);
-    static final short[] dfa_126 = DFA.unpackEncodedString(dfa_126s);
-    static final short[][] dfa_127 = unpackEncodedStringArray(dfa_127s);
+    static final char[] dfa_126 = DFA.unpackEncodedStringToUnsignedChars(dfa_126s);
+    static final short[] dfa_127 = DFA.unpackEncodedString(dfa_127s);
+    static final short[][] dfa_128 = unpackEncodedStringArray(dfa_128s);
 
     class DFA107 extends DFA {
 
         public DFA107(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 107;
-            this.eot = dfa_92;
-            this.eof = dfa_92;
-            this.min = dfa_124;
-            this.max = dfa_125;
-            this.accept = dfa_126;
-            this.special = dfa_96;
-            this.transition = dfa_127;
+            this.eot = dfa_93;
+            this.eof = dfa_93;
+            this.min = dfa_125;
+            this.max = dfa_126;
+            this.accept = dfa_127;
+            this.special = dfa_97;
+            this.transition = dfa_128;
         }
         public String getDescription() {
             return "()* loopback of 8492:1: ( rule__DataflowRegion__DeclarationsAssignment_7 )*";
@@ -87118,9 +87100,9 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_128s = "\1\1\111\uffff";
-    static final String dfa_129s = "\1\157\1\uffff\1\157\1\6\1\uffff\1\160\1\6\1\10\1\7\1\6\1\157\1\160\3\157\1\160\1\157\1\160\1\26\2\6\1\7\1\10\2\6\1\7\1\26\1\157\1\160\1\157\1\10\2\157\2\160\1\157\1\160\1\125\1\157\1\160\1\157\1\10\2\157\2\6\1\7\2\6\1\26\2\6\1\7\1\160\1\157\1\160\1\157\1\160\1\157\1\10\2\157\1\160\1\157\3\6\1\7\2\160\1\157\1\6\1\160\1\0";
-    static final String[] dfa_130s = {
+    static final String dfa_129s = "\1\1\111\uffff";
+    static final String dfa_130s = "\1\157\1\uffff\1\157\1\6\1\uffff\1\160\1\6\1\10\1\7\1\6\1\157\1\160\3\157\1\160\1\157\1\160\1\26\2\6\1\7\1\10\2\6\1\7\1\26\1\157\1\160\1\157\1\10\2\157\2\160\1\157\1\160\1\125\1\157\1\160\1\157\1\10\2\157\2\6\1\7\2\6\1\26\2\6\1\7\1\160\1\157\1\160\1\157\1\160\1\157\1\10\2\157\1\160\1\157\3\6\1\7\2\160\1\157\1\6\1\160\1\0";
+    static final String[] dfa_131s = {
             "\1\4\3\uffff\1\2\102\uffff\1\1\14\uffff\1\1\3\uffff\1\1\20\uffff\1\3",
             "",
             "\1\4\3\uffff\1\2\117\uffff\1\1\3\uffff\1\1\20\uffff\1\3",
@@ -87196,22 +87178,22 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "\1\4\3\uffff\1\2\13\uffff\1\24\7\uffff\1\111\17\uffff\13\4\31\uffff\1\22\1\uffff\1\4\5\uffff\1\1\3\uffff\1\1\16\uffff\1\4\1\uffff\1\3\1\25",
             "\1\uffff"
     };
-    static final short[] dfa_128 = DFA.unpackEncodedString(dfa_128s);
-    static final char[] dfa_129 = DFA.unpackEncodedStringToUnsignedChars(dfa_129s);
-    static final short[][] dfa_130 = unpackEncodedStringArray(dfa_130s);
+    static final short[] dfa_129 = DFA.unpackEncodedString(dfa_129s);
+    static final char[] dfa_130 = DFA.unpackEncodedStringToUnsignedChars(dfa_130s);
+    static final short[][] dfa_131 = unpackEncodedStringArray(dfa_131s);
 
     class DFA108 extends DFA {
 
         public DFA108(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 108;
-            this.eot = dfa_92;
-            this.eof = dfa_128;
-            this.min = dfa_93;
-            this.max = dfa_129;
-            this.accept = dfa_95;
-            this.special = dfa_96;
-            this.transition = dfa_130;
+            this.eot = dfa_93;
+            this.eof = dfa_129;
+            this.min = dfa_94;
+            this.max = dfa_130;
+            this.accept = dfa_96;
+            this.special = dfa_97;
+            this.transition = dfa_131;
         }
         public String getDescription() {
             return "()* loopback of 8526:1: ( rule__DataflowRegion__EquationsAssignment_8 )*";
@@ -87243,13 +87225,13 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_131s = "\134\uffff";
-    static final String dfa_132s = "\1\3\13\uffff\1\3\117\uffff";
-    static final String dfa_133s = "\3\6\1\uffff\1\4\1\uffff\1\4\2\6\1\7\6\6\2\4\1\26\1\4\3\6\1\7\1\4\2\6\1\7\2\6\1\7\1\4\3\6\1\7\6\6\1\4\1\26\1\125\3\6\1\7\4\6\1\7\3\6\1\7\3\6\1\4\2\6\1\7\1\4\2\6\2\4\1\26\3\6\1\7\7\6\1\7\1\4\2\6\1\7\1\26\1\125\3\6";
-    static final String dfa_134s = "\2\173\1\6\1\uffff\1\6\1\uffff\1\173\1\6\1\10\1\7\1\6\7\173\1\160\1\26\3\6\1\7\1\26\1\173\1\6\1\10\2\6\1\7\1\26\3\173\1\10\2\173\1\157\4\173\1\160\1\125\3\173\1\10\2\173\2\6\1\7\1\157\1\6\1\10\1\7\1\6\2\173\1\26\2\6\1\7\1\26\4\173\1\160\3\173\1\10\5\173\2\6\1\7\1\26\2\6\1\7\1\160\1\125\3\173";
-    static final String dfa_135s = "\3\uffff\1\2\1\uffff\1\1\126\uffff";
-    static final String dfa_136s = "\134\uffff}>";
-    static final String[] dfa_137s = {
+    static final String dfa_132s = "\134\uffff";
+    static final String dfa_133s = "\1\3\13\uffff\1\3\117\uffff";
+    static final String dfa_134s = "\3\6\1\uffff\1\4\1\uffff\1\4\2\6\1\7\6\6\2\4\1\26\1\4\3\6\1\7\1\4\2\6\1\7\2\6\1\7\1\4\3\6\1\7\6\6\1\4\1\26\1\125\3\6\1\7\4\6\1\7\3\6\1\7\3\6\1\4\2\6\1\7\1\4\2\6\2\4\1\26\3\6\1\7\7\6\1\7\1\4\2\6\1\7\1\26\1\125\3\6";
+    static final String dfa_135s = "\2\173\1\6\1\uffff\1\6\1\uffff\1\173\1\6\1\10\1\7\1\6\7\173\1\160\1\26\3\6\1\7\1\26\1\173\1\6\1\10\2\6\1\7\1\26\3\173\1\10\2\173\1\157\4\173\1\160\1\125\3\173\1\10\2\173\2\6\1\7\1\157\1\6\1\10\1\7\1\6\2\173\1\26\2\6\1\7\1\26\4\173\1\160\3\173\1\10\5\173\2\6\1\7\1\26\2\6\1\7\1\160\1\125\3\173";
+    static final String dfa_136s = "\3\uffff\1\2\1\uffff\1\1\126\uffff";
+    static final String dfa_137s = "\134\uffff}>";
+    static final String[] dfa_138s = {
             "\1\3\2\uffff\1\3\1\1\61\uffff\1\3\4\uffff\7\5\35\uffff\2\3\1\5\1\4\1\5\2\uffff\1\3\2\uffff\1\2\7\uffff\5\5",
             "\1\3\2\uffff\1\3\1\1\66\uffff\7\5\36\uffff\1\3\1\5\1\4\1\5\2\uffff\1\3\2\uffff\1\2\7\uffff\5\5",
             "\1\6",
@@ -87344,34 +87326,34 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "\1\3\2\uffff\1\3\1\31\66\uffff\7\5\12\uffff\1\101\23\uffff\1\3\1\5\1\4\1\5\2\uffff\1\3\2\uffff\1\32\7\uffff\5\5"
     };
 
-    static final short[] dfa_131 = DFA.unpackEncodedString(dfa_131s);
     static final short[] dfa_132 = DFA.unpackEncodedString(dfa_132s);
-    static final char[] dfa_133 = DFA.unpackEncodedStringToUnsignedChars(dfa_133s);
+    static final short[] dfa_133 = DFA.unpackEncodedString(dfa_133s);
     static final char[] dfa_134 = DFA.unpackEncodedStringToUnsignedChars(dfa_134s);
-    static final short[] dfa_135 = DFA.unpackEncodedString(dfa_135s);
+    static final char[] dfa_135 = DFA.unpackEncodedStringToUnsignedChars(dfa_135s);
     static final short[] dfa_136 = DFA.unpackEncodedString(dfa_136s);
-    static final short[][] dfa_137 = unpackEncodedStringArray(dfa_137s);
+    static final short[] dfa_137 = DFA.unpackEncodedString(dfa_137s);
+    static final short[][] dfa_138 = unpackEncodedStringArray(dfa_138s);
 
     class DFA135 extends DFA {
 
         public DFA135(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 135;
-            this.eot = dfa_131;
-            this.eof = dfa_132;
-            this.min = dfa_133;
-            this.max = dfa_134;
-            this.accept = dfa_135;
-            this.special = dfa_136;
-            this.transition = dfa_137;
+            this.eot = dfa_132;
+            this.eof = dfa_133;
+            this.min = dfa_134;
+            this.max = dfa_135;
+            this.accept = dfa_136;
+            this.special = dfa_137;
+            this.transition = dfa_138;
         }
         public String getDescription() {
             return "()* loopback of 11379:1: ( rule__RootScope__DeclarationsAssignment_1 )*";
         }
     }
-    static final String dfa_138s = "\3\6\1\uffff\1\4\1\uffff\1\4\2\6\1\7\6\6\3\4\2\6\1\7\1\4\3\6\1\26\1\7\3\6\1\7\6\6\1\4\2\6\1\7\1\4\2\6\1\7\3\6\1\7\3\6\1\26\1\125\3\6\1\7\4\6\2\4\1\26\1\4\2\6\1\7\1\4\2\6\1\7\1\4\3\6\1\7\5\6\1\26\1\125\3\6\1\7\2\6";
-    static final String dfa_139s = "\2\173\1\6\1\uffff\1\6\1\uffff\1\173\1\6\1\10\1\7\5\173\1\6\2\173\1\26\2\6\1\7\1\26\1\6\1\173\1\6\1\160\1\10\3\173\1\10\5\173\1\157\1\173\2\6\1\7\1\26\2\6\1\7\1\157\1\6\1\10\1\7\2\173\1\6\1\160\1\125\3\173\1\10\6\173\1\160\1\26\2\6\1\7\1\26\2\6\1\7\1\26\3\173\1\10\5\173\1\160\1\125\1\173\2\6\1\7\2\173";
-    static final String[] dfa_140s = {
+    static final String dfa_139s = "\3\6\1\uffff\1\4\1\uffff\1\4\2\6\1\7\6\6\3\4\2\6\1\7\1\4\3\6\1\26\1\7\3\6\1\7\6\6\1\4\2\6\1\7\1\4\2\6\1\7\3\6\1\7\3\6\1\26\1\125\3\6\1\7\4\6\2\4\1\26\1\4\2\6\1\7\1\4\2\6\1\7\1\4\3\6\1\7\5\6\1\26\1\125\3\6\1\7\2\6";
+    static final String dfa_140s = "\2\173\1\6\1\uffff\1\6\1\uffff\1\173\1\6\1\10\1\7\5\173\1\6\2\173\1\26\2\6\1\7\1\26\1\6\1\173\1\6\1\160\1\10\3\173\1\10\5\173\1\157\1\173\2\6\1\7\1\26\2\6\1\7\1\157\1\6\1\10\1\7\2\173\1\6\1\160\1\125\3\173\1\10\6\173\1\160\1\26\2\6\1\7\1\26\2\6\1\7\1\26\3\173\1\10\5\173\1\160\1\125\1\173\2\6\1\7\2\173";
+    static final String[] dfa_141s = {
             "\1\3\2\uffff\1\3\1\1\61\uffff\1\3\4\uffff\7\5\5\uffff\1\3\27\uffff\2\3\1\5\1\4\1\5\2\uffff\1\3\2\uffff\1\2\7\uffff\5\5",
             "\1\3\2\uffff\1\3\1\1\66\uffff\7\5\36\uffff\1\3\1\5\1\4\1\5\2\uffff\1\3\2\uffff\1\2\7\uffff\5\5",
             "\1\6",
@@ -87465,34 +87447,34 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             "\1\3\2\uffff\1\3\1\30\13\uffff\1\130\7\uffff\1\127\42\uffff\7\5\12\uffff\1\106\23\uffff\1\3\1\5\1\4\1\5\2\uffff\1\3\2\uffff\1\31\1\131\6\uffff\5\5",
             "\1\3\2\uffff\1\3\1\30\66\uffff\7\5\12\uffff\1\106\23\uffff\1\3\1\5\1\4\1\5\2\uffff\1\3\2\uffff\1\31\7\uffff\5\5"
     };
-    static final char[] dfa_138 = DFA.unpackEncodedStringToUnsignedChars(dfa_138s);
     static final char[] dfa_139 = DFA.unpackEncodedStringToUnsignedChars(dfa_139s);
-    static final short[][] dfa_140 = unpackEncodedStringArray(dfa_140s);
+    static final char[] dfa_140 = DFA.unpackEncodedStringToUnsignedChars(dfa_140s);
+    static final short[][] dfa_141 = unpackEncodedStringArray(dfa_141s);
 
     class DFA139 extends DFA {
 
         public DFA139(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 139;
-            this.eot = dfa_131;
-            this.eof = dfa_131;
-            this.min = dfa_138;
-            this.max = dfa_139;
-            this.accept = dfa_135;
-            this.special = dfa_136;
-            this.transition = dfa_140;
+            this.eot = dfa_132;
+            this.eof = dfa_132;
+            this.min = dfa_139;
+            this.max = dfa_140;
+            this.accept = dfa_136;
+            this.special = dfa_137;
+            this.transition = dfa_141;
         }
         public String getDescription() {
             return "()* loopback of 11627:1: ( rule__Scope__DeclarationsAssignment_3 )*";
         }
     }
-    static final String dfa_141s = "\5\uffff";
-    static final String dfa_142s = "\1\1\1\uffff\2\1\1\uffff";
-    static final String dfa_143s = "\1\6\1\uffff\2\6\1\uffff";
-    static final String dfa_144s = "\1\166\1\uffff\2\157\1\uffff";
-    static final String dfa_145s = "\1\uffff\1\2\2\uffff\1\1";
-    static final String dfa_146s = "\5\uffff}>";
-    static final String[] dfa_147s = {
+    static final String dfa_142s = "\5\uffff";
+    static final String dfa_143s = "\1\1\1\uffff\2\1\1\uffff";
+    static final String dfa_144s = "\1\6\1\uffff\2\6\1\uffff";
+    static final String dfa_145s = "\1\166\1\uffff\2\157\1\uffff";
+    static final String dfa_146s = "\1\uffff\1\2\2\uffff\1\1";
+    static final String dfa_147s = "\5\uffff}>";
+    static final String[] dfa_148s = {
             "\1\2\2\uffff\2\1\24\uffff\12\1\23\uffff\1\1\20\uffff\2\1\11\uffff\3\1\3\uffff\11\1\1\uffff\1\1\3\uffff\1\1\2\uffff\1\1\1\uffff\4\1\1\uffff\1\1",
             "",
             "\1\1\1\4\1\uffff\2\1\22\uffff\2\1\17\uffff\15\1\1\uffff\1\1\20\uffff\1\1\2\uffff\1\1\3\uffff\1\1\20\uffff\2\1\1\uffff\2\1\2\uffff\1\1\1\3\1\uffff\1\1",
@@ -87500,26 +87482,26 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             ""
     };
 
-    static final short[] dfa_141 = DFA.unpackEncodedString(dfa_141s);
     static final short[] dfa_142 = DFA.unpackEncodedString(dfa_142s);
-    static final char[] dfa_143 = DFA.unpackEncodedStringToUnsignedChars(dfa_143s);
+    static final short[] dfa_143 = DFA.unpackEncodedString(dfa_143s);
     static final char[] dfa_144 = DFA.unpackEncodedStringToUnsignedChars(dfa_144s);
-    static final short[] dfa_145 = DFA.unpackEncodedString(dfa_145s);
+    static final char[] dfa_145 = DFA.unpackEncodedStringToUnsignedChars(dfa_145s);
     static final short[] dfa_146 = DFA.unpackEncodedString(dfa_146s);
-    static final short[][] dfa_147 = unpackEncodedStringArray(dfa_147s);
+    static final short[] dfa_147 = DFA.unpackEncodedString(dfa_147s);
+    static final short[][] dfa_148 = unpackEncodedStringArray(dfa_148s);
 
     class DFA183 extends DFA {
 
         public DFA183(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 183;
-            this.eot = dfa_141;
-            this.eof = dfa_142;
-            this.min = dfa_143;
-            this.max = dfa_144;
-            this.accept = dfa_145;
-            this.special = dfa_146;
-            this.transition = dfa_147;
+            this.eot = dfa_142;
+            this.eof = dfa_143;
+            this.min = dfa_144;
+            this.max = dfa_145;
+            this.accept = dfa_146;
+            this.special = dfa_147;
+            this.transition = dfa_148;
         }
         public String getDescription() {
             return "()* loopback of 14977:1: ( rule__Emission__ScheduleAssignment_3_1 )*";
@@ -87531,45 +87513,45 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
         public DFA187(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 187;
-            this.eot = dfa_141;
-            this.eof = dfa_142;
-            this.min = dfa_143;
-            this.max = dfa_144;
-            this.accept = dfa_145;
-            this.special = dfa_146;
-            this.transition = dfa_147;
+            this.eot = dfa_142;
+            this.eof = dfa_143;
+            this.min = dfa_144;
+            this.max = dfa_145;
+            this.accept = dfa_146;
+            this.special = dfa_147;
+            this.transition = dfa_148;
         }
         public String getDescription() {
             return "()* loopback of 15328:1: ( rule__Assignment__ScheduleAssignment_5_1 )*";
         }
     }
-    static final String dfa_148s = "\1\1\4\uffff";
-    static final String dfa_149s = "\1\6\1\uffff\2\7\1\uffff";
-    static final String dfa_150s = "\1\157\1\uffff\2\155\1\uffff";
-    static final String[] dfa_151s = {
+    static final String dfa_149s = "\1\1\4\uffff";
+    static final String dfa_150s = "\1\6\1\uffff\2\7\1\uffff";
+    static final String dfa_151s = "\1\157\1\uffff\2\155\1\uffff";
+    static final String[] dfa_152s = {
             "\1\2\3\uffff\1\1\102\uffff\1\1\14\uffff\1\1\3\uffff\1\1\20\uffff\1\1",
             "",
             "\1\4\26\uffff\1\1\17\uffff\13\1\33\uffff\1\1\30\uffff\1\3",
             "\1\4\26\uffff\1\1\17\uffff\13\1\33\uffff\1\1\30\uffff\1\3",
             ""
     };
-    static final short[] dfa_148 = DFA.unpackEncodedString(dfa_148s);
-    static final char[] dfa_149 = DFA.unpackEncodedStringToUnsignedChars(dfa_149s);
+    static final short[] dfa_149 = DFA.unpackEncodedString(dfa_149s);
     static final char[] dfa_150 = DFA.unpackEncodedStringToUnsignedChars(dfa_150s);
-    static final short[][] dfa_151 = unpackEncodedStringArray(dfa_151s);
+    static final char[] dfa_151 = DFA.unpackEncodedStringToUnsignedChars(dfa_151s);
+    static final short[][] dfa_152 = unpackEncodedStringArray(dfa_152s);
 
     class DFA192 extends DFA {
 
         public DFA192(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 192;
-            this.eot = dfa_141;
-            this.eof = dfa_148;
-            this.min = dfa_149;
-            this.max = dfa_150;
-            this.accept = dfa_145;
-            this.special = dfa_146;
-            this.transition = dfa_151;
+            this.eot = dfa_142;
+            this.eof = dfa_149;
+            this.min = dfa_150;
+            this.max = dfa_151;
+            this.accept = dfa_146;
+            this.special = dfa_147;
+            this.transition = dfa_152;
         }
         public String getDescription() {
             return "()* loopback of 15773:1: ( rule__SubReferenceAssignment__ScheduleAssignment_6_1 )*";
@@ -87581,25 +87563,25 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
         public DFA196(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 196;
-            this.eot = dfa_141;
-            this.eof = dfa_142;
-            this.min = dfa_143;
-            this.max = dfa_144;
-            this.accept = dfa_145;
-            this.special = dfa_146;
-            this.transition = dfa_147;
+            this.eot = dfa_142;
+            this.eof = dfa_143;
+            this.min = dfa_144;
+            this.max = dfa_145;
+            this.accept = dfa_146;
+            this.special = dfa_147;
+            this.transition = dfa_148;
         }
         public String getDescription() {
             return "()* loopback of 16093:1: ( rule__PostfixEffect__ScheduleAssignment_4_1 )*";
         }
     }
-    static final String dfa_152s = "\7\uffff";
-    static final String dfa_153s = "\1\2\6\uffff";
-    static final String dfa_154s = "\2\6\1\uffff\2\6\1\0\1\uffff";
-    static final String dfa_155s = "\1\173\1\6\1\uffff\2\157\1\0\1\uffff";
-    static final String dfa_156s = "\2\uffff\1\2\3\uffff\1\1";
-    static final String dfa_157s = "\5\uffff\1\0\1\uffff}>";
-    static final String[] dfa_158s = {
+    static final String dfa_153s = "\7\uffff";
+    static final String dfa_154s = "\1\2\6\uffff";
+    static final String dfa_155s = "\2\6\1\uffff\2\6\1\0\1\uffff";
+    static final String dfa_156s = "\1\173\1\6\1\uffff\2\157\1\0\1\uffff";
+    static final String dfa_157s = "\2\uffff\1\2\3\uffff\1\1";
+    static final String dfa_158s = "\5\uffff\1\0\1\uffff}>";
+    static final String[] dfa_159s = {
             "\1\2\2\uffff\3\2\23\uffff\12\2\23\uffff\1\2\4\uffff\7\2\5\uffff\2\2\2\uffff\3\2\1\uffff\1\2\2\uffff\3\2\3\uffff\13\2\1\1\1\uffff\2\2\2\uffff\1\2\1\uffff\4\2\1\uffff\6\2",
             "\1\3",
             "",
@@ -87609,26 +87591,26 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             ""
     };
 
-    static final short[] dfa_152 = DFA.unpackEncodedString(dfa_152s);
     static final short[] dfa_153 = DFA.unpackEncodedString(dfa_153s);
-    static final char[] dfa_154 = DFA.unpackEncodedStringToUnsignedChars(dfa_154s);
+    static final short[] dfa_154 = DFA.unpackEncodedString(dfa_154s);
     static final char[] dfa_155 = DFA.unpackEncodedStringToUnsignedChars(dfa_155s);
-    static final short[] dfa_156 = DFA.unpackEncodedString(dfa_156s);
+    static final char[] dfa_156 = DFA.unpackEncodedStringToUnsignedChars(dfa_156s);
     static final short[] dfa_157 = DFA.unpackEncodedString(dfa_157s);
-    static final short[][] dfa_158 = unpackEncodedStringArray(dfa_158s);
+    static final short[] dfa_158 = DFA.unpackEncodedString(dfa_158s);
+    static final short[][] dfa_159 = unpackEncodedStringArray(dfa_159s);
 
     class DFA205 extends DFA {
 
         public DFA205(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 205;
-            this.eot = dfa_152;
-            this.eof = dfa_153;
-            this.min = dfa_154;
-            this.max = dfa_155;
-            this.accept = dfa_156;
-            this.special = dfa_157;
-            this.transition = dfa_158;
+            this.eot = dfa_153;
+            this.eof = dfa_154;
+            this.min = dfa_155;
+            this.max = dfa_156;
+            this.accept = dfa_157;
+            this.special = dfa_158;
+            this.transition = dfa_159;
         }
         public String getDescription() {
             return "17348:1: ( rule__Expression__Group_1__0 )?";
@@ -87660,41 +87642,41 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_159s = "\1\173\1\uffff\2\157\1\uffff";
-    static final String[] dfa_160s = {
+    static final String dfa_160s = "\1\173\1\uffff\2\157\1\uffff";
+    static final String[] dfa_161s = {
             "\1\2\2\uffff\3\1\23\uffff\12\1\23\uffff\1\1\4\uffff\7\1\5\uffff\2\1\2\uffff\3\1\1\uffff\1\1\2\uffff\3\1\3\uffff\14\1\1\uffff\2\1\2\uffff\1\1\1\uffff\4\1\1\uffff\6\1",
             "",
             "\1\1\1\4\1\uffff\2\1\22\uffff\2\1\17\uffff\15\1\1\uffff\1\1\20\uffff\1\1\2\uffff\1\1\3\uffff\1\1\20\uffff\2\1\1\uffff\2\1\2\uffff\1\1\1\3\1\uffff\1\1",
             "\1\1\1\4\1\uffff\2\1\22\uffff\2\1\17\uffff\15\1\1\uffff\1\1\20\uffff\1\1\2\uffff\1\1\3\uffff\1\1\20\uffff\2\1\1\uffff\2\1\2\uffff\1\1\1\3\1\uffff\1\1",
             ""
     };
-    static final char[] dfa_159 = DFA.unpackEncodedStringToUnsignedChars(dfa_159s);
-    static final short[][] dfa_160 = unpackEncodedStringArray(dfa_160s);
+    static final char[] dfa_160 = DFA.unpackEncodedStringToUnsignedChars(dfa_160s);
+    static final short[][] dfa_161 = unpackEncodedStringArray(dfa_161s);
 
     class DFA206 extends DFA {
 
         public DFA206(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 206;
-            this.eot = dfa_141;
-            this.eof = dfa_142;
-            this.min = dfa_143;
-            this.max = dfa_159;
-            this.accept = dfa_145;
-            this.special = dfa_146;
-            this.transition = dfa_160;
+            this.eot = dfa_142;
+            this.eof = dfa_143;
+            this.min = dfa_144;
+            this.max = dfa_160;
+            this.accept = dfa_146;
+            this.special = dfa_147;
+            this.transition = dfa_161;
         }
         public String getDescription() {
             return "()* loopback of 17417:1: ( rule__Expression__ScheduleAssignment_1_1 )*";
         }
     }
-    static final String dfa_161s = "\104\uffff";
-    static final String dfa_162s = "\1\7\103\uffff";
-    static final String dfa_163s = "\1\6\1\uffff\1\0\101\uffff";
-    static final String dfa_164s = "\1\173\1\uffff\1\0\101\uffff";
-    static final String dfa_165s = "\1\uffff\1\1\5\uffff\1\2\74\uffff";
-    static final String dfa_166s = "\2\uffff\1\0\101\uffff}>";
-    static final String[] dfa_167s = {
+    static final String dfa_162s = "\104\uffff";
+    static final String dfa_163s = "\1\7\103\uffff";
+    static final String dfa_164s = "\1\6\1\uffff\1\0\101\uffff";
+    static final String dfa_165s = "\1\173\1\uffff\1\0\101\uffff";
+    static final String dfa_166s = "\1\uffff\1\1\5\uffff\1\2\74\uffff";
+    static final String dfa_167s = "\2\uffff\1\0\101\uffff}>";
+    static final String[] dfa_168s = {
             "\1\7\2\uffff\3\7\6\uffff\2\7\7\uffff\2\7\2\uffff\12\7\22\uffff\1\1\1\2\4\1\7\7\5\uffff\2\7\2\uffff\3\7\1\uffff\1\7\1\uffff\4\7\3\uffff\14\7\1\uffff\2\7\2\uffff\1\7\1\uffff\4\7\1\uffff\6\7",
             "",
             "\1\uffff",
@@ -87765,26 +87747,26 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             ""
     };
 
-    static final short[] dfa_161 = DFA.unpackEncodedString(dfa_161s);
     static final short[] dfa_162 = DFA.unpackEncodedString(dfa_162s);
-    static final char[] dfa_163 = DFA.unpackEncodedStringToUnsignedChars(dfa_163s);
+    static final short[] dfa_163 = DFA.unpackEncodedString(dfa_163s);
     static final char[] dfa_164 = DFA.unpackEncodedStringToUnsignedChars(dfa_164s);
-    static final short[] dfa_165 = DFA.unpackEncodedString(dfa_165s);
+    static final char[] dfa_165 = DFA.unpackEncodedStringToUnsignedChars(dfa_165s);
     static final short[] dfa_166 = DFA.unpackEncodedString(dfa_166s);
-    static final short[][] dfa_167 = unpackEncodedStringArray(dfa_167s);
+    static final short[] dfa_167 = DFA.unpackEncodedString(dfa_167s);
+    static final short[][] dfa_168 = unpackEncodedStringArray(dfa_168s);
 
     class DFA215 extends DFA {
 
         public DFA215(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 215;
-            this.eot = dfa_161;
-            this.eof = dfa_162;
-            this.min = dfa_163;
-            this.max = dfa_164;
-            this.accept = dfa_165;
-            this.special = dfa_166;
-            this.transition = dfa_167;
+            this.eot = dfa_162;
+            this.eof = dfa_163;
+            this.min = dfa_164;
+            this.max = dfa_165;
+            this.accept = dfa_166;
+            this.special = dfa_167;
+            this.transition = dfa_168;
         }
         public String getDescription() {
             return "18595:1: ( rule__CompareOperation__Group_1__0 )?";
@@ -87839,7 +87821,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000001F80000402L,0x0000800000000000L});
         public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0000000000000400L,0x0000800044000000L});
         public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0000000000000000L,0x0000000000010000L});
-        public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x10000000045A07F0L,0x0000810000010000L});
+        public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x10000000045A07F0L,0x0000810000011000L});
         public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0000000000000000L,0x0000000000060000L});
         public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x0000000000000002L,0x0000000000040000L});
         public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0000000000000000L,0x0000000000020000L});
@@ -87850,7 +87832,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x0000000000000000L,0x0000000000200000L});
         public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x0000001F80000400L,0x0000800000000000L});
         public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x00000FE000000000L,0x0020000002C00000L});
-        public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x10000000045207F0L,0x0000810000010000L});
+        public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x10000000045207F0L,0x0000810000011000L});
         public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x1000000000000640L,0x0000910000000000L});
         public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x0000000000000000L,0x0000000001000000L});
         public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x0000000000000002L,0x0000000001000000L});
@@ -87919,7 +87901,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_97 = new BitSet(new long[]{0x0000000000100000L});
         public static final BitSet FOLLOW_98 = new BitSet(new long[]{0x0000000000200000L});
         public static final BitSet FOLLOW_99 = new BitSet(new long[]{0x0000000000200002L});
-        public static final BitSet FOLLOW_100 = new BitSet(new long[]{0x10000000044207F0L,0x0000810000010000L});
+        public static final BitSet FOLLOW_100 = new BitSet(new long[]{0x10000000044207F0L,0x0000810000011000L});
         public static final BitSet FOLLOW_101 = new BitSet(new long[]{0x0000000000400000L});
         public static final BitSet FOLLOW_102 = new BitSet(new long[]{0x0000000000400002L});
         public static final BitSet FOLLOW_103 = new BitSet(new long[]{0x0000000000800000L});
@@ -87932,12 +87914,13 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_110 = new BitSet(new long[]{0x0000000000000000L,0x0000200000000000L});
         public static final BitSet FOLLOW_111 = new BitSet(new long[]{0x0000000000000002L,0x0000200000000000L});
         public static final BitSet FOLLOW_112 = new BitSet(new long[]{0x0000000040000000L,0x0000000000100000L});
-        public static final BitSet FOLLOW_113 = new BitSet(new long[]{0x10000000045A07F0L,0x0000C10000010000L});
-        public static final BitSet FOLLOW_114 = new BitSet(new long[]{0x00000000004001F0L});
-        public static final BitSet FOLLOW_115 = new BitSet(new long[]{0x0000000000000070L});
-        public static final BitSet FOLLOW_116 = new BitSet(new long[]{0x0000000040400000L,0x0001000000000000L});
-        public static final BitSet FOLLOW_117 = new BitSet(new long[]{0x0000000040400002L});
-        public static final BitSet FOLLOW_118 = new BitSet(new long[]{0x0000000000400080L});
+        public static final BitSet FOLLOW_113 = new BitSet(new long[]{0x10000000045A07F0L,0x0000C10000011000L});
+        public static final BitSet FOLLOW_114 = new BitSet(new long[]{0x0000000000000000L,0x0000000000042000L});
+        public static final BitSet FOLLOW_115 = new BitSet(new long[]{0x00000000004001F0L});
+        public static final BitSet FOLLOW_116 = new BitSet(new long[]{0x0000000000000070L});
+        public static final BitSet FOLLOW_117 = new BitSet(new long[]{0x0000000040400000L,0x0001000000000000L});
+        public static final BitSet FOLLOW_118 = new BitSet(new long[]{0x0000000040400002L});
+        public static final BitSet FOLLOW_119 = new BitSet(new long[]{0x0000000000400080L});
     }
 
 

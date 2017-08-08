@@ -3331,9 +3331,9 @@ ruleVectorValue returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(	otherlv_0='(' 
+(	otherlv_0='{' 
     {
-    	newLeafNode(otherlv_0, grammarAccess.getVectorValueAccess().getLeftParenthesisKeyword_0());
+    	newLeafNode(otherlv_0, grammarAccess.getVectorValueAccess().getLeftCurlyBracketKeyword_0());
     }
 (
 (
@@ -3375,9 +3375,9 @@ ruleVectorValue returns [EObject current=null]
 	    }
 
 )
-))*	otherlv_4=')' 
+))*	otherlv_4='}' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getVectorValueAccess().getRightParenthesisKeyword_3());
+    	newLeafNode(otherlv_4, grammarAccess.getVectorValueAccess().getRightCurlyBracketKeyword_3());
     }
 )
 ;

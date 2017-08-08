@@ -6365,7 +6365,7 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
             if ( (LA43_0==33) ) {
                 alt43=1;
             }
-            else if ( ((LA43_0>=RULE_ID && LA43_0<=RULE_STRING)||LA43_0==37||(LA43_0>=44 && LA43_0<=45)||(LA43_0>=55 && LA43_0<=56)) ) {
+            else if ( ((LA43_0>=RULE_ID && LA43_0<=RULE_STRING)||LA43_0==19||LA43_0==37||(LA43_0>=44 && LA43_0<=45)||(LA43_0>=55 && LA43_0<=56)) ) {
                 alt43=2;
             }
             else {
@@ -9450,7 +9450,7 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleVectorValue"
-    // InternalKiBuild.g:3330:1: ruleVectorValue returns [EObject current=null] : (otherlv_0= '(' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= ')' ) ;
+    // InternalKiBuild.g:3330:1: ruleVectorValue returns [EObject current=null] : (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' ) ;
     public final EObject ruleVectorValue() throws RecognitionException {
         EObject current = null;
 
@@ -9465,16 +9465,16 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalKiBuild.g:3333:28: ( (otherlv_0= '(' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= ')' ) )
-            // InternalKiBuild.g:3334:1: (otherlv_0= '(' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= ')' )
+            // InternalKiBuild.g:3333:28: ( (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' ) )
+            // InternalKiBuild.g:3334:1: (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' )
             {
-            // InternalKiBuild.g:3334:1: (otherlv_0= '(' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= ')' )
-            // InternalKiBuild.g:3334:3: otherlv_0= '(' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= ')'
+            // InternalKiBuild.g:3334:1: (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' )
+            // InternalKiBuild.g:3334:3: otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}'
             {
-            otherlv_0=(Token)match(input,37,FollowSets000.FOLLOW_46); if (state.failed) return current;
+            otherlv_0=(Token)match(input,19,FollowSets000.FOLLOW_46); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_0, grammarAccess.getVectorValueAccess().getLeftParenthesisKeyword_0());
+                  	newLeafNode(otherlv_0, grammarAccess.getVectorValueAccess().getLeftCurlyBracketKeyword_0());
                   
             }
             // InternalKiBuild.g:3338:1: ( (lv_values_1_0= ruleVectorValueMember ) )
@@ -9488,7 +9488,7 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
               	        newCompositeNode(grammarAccess.getVectorValueAccess().getValuesVectorValueMemberParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FollowSets000.FOLLOW_43);
+            pushFollow(FollowSets000.FOLLOW_47);
             lv_values_1_0=ruleVectorValueMember();
 
             state._fsp--;
@@ -9544,7 +9544,7 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
             	      	        newCompositeNode(grammarAccess.getVectorValueAccess().getValuesVectorValueMemberParserRuleCall_2_1_0()); 
             	      	    
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_43);
+            	    pushFollow(FollowSets000.FOLLOW_47);
             	    lv_values_3_0=ruleVectorValueMember();
 
             	    state._fsp--;
@@ -9577,10 +9577,10 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_4=(Token)match(input,38,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_4=(Token)match(input,20,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_4, grammarAccess.getVectorValueAccess().getRightParenthesisKeyword_3());
+                  	newLeafNode(otherlv_4, grammarAccess.getVectorValueAccess().getRightCurlyBracketKeyword_3());
                   
             }
 
@@ -9665,7 +9665,7 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
             int alt61=2;
             int LA61_0 = input.LA(1);
 
-            if ( ((LA61_0>=RULE_ID && LA61_0<=RULE_STRING)||LA61_0==33||LA61_0==37||(LA61_0>=44 && LA61_0<=45)||LA61_0==47||(LA61_0>=55 && LA61_0<=56)) ) {
+            if ( ((LA61_0>=RULE_ID && LA61_0<=RULE_STRING)||LA61_0==19||LA61_0==33||LA61_0==37||(LA61_0>=44 && LA61_0<=45)||LA61_0==47||(LA61_0>=55 && LA61_0<=56)) ) {
                 alt61=1;
             }
             else if ( (LA61_0==48) ) {
@@ -10503,7 +10503,7 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
               	        newCompositeNode(grammarAccess.getKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FollowSets000.FOLLOW_47);
+            pushFollow(FollowSets000.FOLLOW_48);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -10577,7 +10577,7 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalKiBuild.g:3734:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) )
             	    {
-            	    otherlv_3=(Token)match(input,26,FollowSets000.FOLLOW_47); if (state.failed) return current;
+            	    otherlv_3=(Token)match(input,26,FollowSets000.FOLLOW_48); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_3, grammarAccess.getKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
@@ -10729,7 +10729,7 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
               	        newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FollowSets000.FOLLOW_48);
+            pushFollow(FollowSets000.FOLLOW_49);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -10803,7 +10803,7 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalKiBuild.g:3817:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) )
             	    {
-            	    otherlv_3=(Token)match(input,26,FollowSets000.FOLLOW_48); if (state.failed) return current;
+            	    otherlv_3=(Token)match(input,26,FollowSets000.FOLLOW_49); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_3, grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
@@ -10955,7 +10955,7 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
               	        newCompositeNode(grammarAccess.getStringPragmaAccess().getNameExtendedIDParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FollowSets000.FOLLOW_47);
+            pushFollow(FollowSets000.FOLLOW_48);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -11029,7 +11029,7 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalKiBuild.g:3900:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) )
             	    {
-            	    otherlv_3=(Token)match(input,26,FollowSets000.FOLLOW_47); if (state.failed) return current;
+            	    otherlv_3=(Token)match(input,26,FollowSets000.FOLLOW_48); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_3, grammarAccess.getStringPragmaAccess().getCommaKeyword_3_0());
@@ -11185,7 +11185,7 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
               	        newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FollowSets000.FOLLOW_49);
+            pushFollow(FollowSets000.FOLLOW_50);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -11250,7 +11250,7 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,41,FollowSets000.FOLLOW_47); if (state.failed) return current;
+            otherlv_4=(Token)match(input,41,FollowSets000.FOLLOW_48); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_4, grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
@@ -11306,7 +11306,7 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalKiBuild.g:4009:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) )
             	    {
-            	    otherlv_6=(Token)match(input,26,FollowSets000.FOLLOW_47); if (state.failed) return current;
+            	    otherlv_6=(Token)match(input,26,FollowSets000.FOLLOW_48); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_6, grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
@@ -11462,7 +11462,7 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
               	        newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FollowSets000.FOLLOW_49);
+            pushFollow(FollowSets000.FOLLOW_50);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -11527,7 +11527,7 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,41,FollowSets000.FOLLOW_48); if (state.failed) return current;
+            otherlv_4=(Token)match(input,41,FollowSets000.FOLLOW_49); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_4, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
@@ -11583,7 +11583,7 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalKiBuild.g:4118:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) )
             	    {
-            	    otherlv_6=(Token)match(input,26,FollowSets000.FOLLOW_48); if (state.failed) return current;
+            	    otherlv_6=(Token)match(input,26,FollowSets000.FOLLOW_49); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_6, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
@@ -11733,7 +11733,7 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
               	        newCompositeNode(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FollowSets000.FOLLOW_50);
+            pushFollow(FollowSets000.FOLLOW_51);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -11802,7 +11802,7 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalKiBuild.g:4201:4: otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) )
             	    {
-            	    otherlv_3=(Token)match(input,26,FollowSets000.FOLLOW_50); if (state.failed) return current;
+            	    otherlv_3=(Token)match(input,26,FollowSets000.FOLLOW_51); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_3, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
@@ -11951,7 +11951,7 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
               	        newCompositeNode(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FollowSets000.FOLLOW_49);
+            pushFollow(FollowSets000.FOLLOW_50);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -12016,7 +12016,7 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,41,FollowSets000.FOLLOW_50); if (state.failed) return current;
+            otherlv_4=(Token)match(input,41,FollowSets000.FOLLOW_51); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_4, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
@@ -12067,7 +12067,7 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalKiBuild.g:4310:4: otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) )
             	    {
-            	    otherlv_6=(Token)match(input,26,FollowSets000.FOLLOW_50); if (state.failed) return current;
+            	    otherlv_6=(Token)match(input,26,FollowSets000.FOLLOW_51); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_6, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
@@ -12608,7 +12608,7 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
             // InternalKiBuild.g:4475:1: (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? )
             // InternalKiBuild.g:4475:6: this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )?
             {
-            this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_51); if (state.failed) return current;
+            this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_52); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               		current.merge(this_ID_0);
@@ -12690,7 +12690,7 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    this_ID_3=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_51); if (state.failed) return current;
+            	    this_ID_3=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_52); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      		current.merge(this_ID_3);
@@ -13924,29 +13924,6 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
     }
     // $ANTLR end synpred35_InternalKiBuild
 
-    // $ANTLR start synpred56_InternalKiBuild
-    public final void synpred56_InternalKiBuild_fragment() throws RecognitionException {   
-        EObject this_VectorValue_3 = null;
-
-
-        // InternalKiBuild.g:2453:2: (this_VectorValue_3= ruleVectorValue )
-        // InternalKiBuild.g:2453:2: this_VectorValue_3= ruleVectorValue
-        {
-        if ( state.backtracking==0 ) {
-           
-          	  /* */ 
-          	
-        }
-        pushFollow(FollowSets000.FOLLOW_2);
-        this_VectorValue_3=ruleVectorValue();
-
-        state._fsp--;
-        if (state.failed) return ;
-
-        }
-    }
-    // $ANTLR end synpred56_InternalKiBuild
-
     // $ANTLR start synpred57_InternalKiBuild
     public final void synpred57_InternalKiBuild_fragment() throws RecognitionException {   
         Token otherlv_4=null;
@@ -13982,20 +13959,6 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
         int start = input.mark();
         try {
             synpred19_InternalKiBuild_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
-    public final boolean synpred56_InternalKiBuild() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred56_InternalKiBuild_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -14116,13 +14079,14 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
             return "621:2: ( (otherlv_1= ':' ( (lv_value_2_0= ruleLiteral ) ) ) | (otherlv_3= ':' ( (lv_values_4_0= ruleLiteral ) ) (otherlv_5= ',' ( (lv_values_6_0= ruleLiteral ) ) )+ ) | ( (otherlv_7= ':' )? otherlv_8= '{' ( (lv_attributes_9_0= ruleAttributeMapping ) )+ otherlv_10= '}' ) )";
         }
     }
-    static final String dfa_8s = "\17\uffff";
-    static final String dfa_9s = "\1\4\14\0\2\uffff";
-    static final String dfa_10s = "\1\70\14\0\2\uffff";
-    static final String dfa_11s = "\15\uffff\1\1\1\2";
-    static final String dfa_12s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\2\uffff}>";
+    static final String dfa_8s = "\20\uffff";
+    static final String dfa_9s = "\1\4\15\0\2\uffff";
+    static final String dfa_10s = "\1\70\15\0\2\uffff";
+    static final String dfa_11s = "\16\uffff\1\1\1\2";
+    static final String dfa_12s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\2\uffff}>";
     static final String[] dfa_13s = {
-            "\1\11\1\3\1\2\1\14\1\6\1\4\27\uffff\1\1\3\uffff\1\5\6\uffff\1\12\1\13\1\uffff\1\15\7\uffff\1\7\1\10",
+            "\1\12\1\3\1\2\1\15\1\7\1\4\11\uffff\1\5\15\uffff\1\1\3\uffff\1\6\6\uffff\1\13\1\14\1\uffff\1\16\7\uffff\1\10\1\11",
+            "\1\uffff",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -14173,9 +14137,9 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
                         int index19_1 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred23_InternalKiBuild()) ) {s = 13;}
+                        if ( (synpred23_InternalKiBuild()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index19_1);
@@ -14188,9 +14152,9 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
                         int index19_2 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred23_InternalKiBuild()) ) {s = 13;}
+                        if ( (synpred23_InternalKiBuild()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index19_2);
@@ -14203,9 +14167,9 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
                         int index19_3 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred23_InternalKiBuild()) ) {s = 13;}
+                        if ( (synpred23_InternalKiBuild()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index19_3);
@@ -14218,9 +14182,9 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
                         int index19_4 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred23_InternalKiBuild()) ) {s = 13;}
+                        if ( (synpred23_InternalKiBuild()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index19_4);
@@ -14233,9 +14197,9 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
                         int index19_5 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred23_InternalKiBuild()) ) {s = 13;}
+                        if ( (synpred23_InternalKiBuild()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index19_5);
@@ -14248,9 +14212,9 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
                         int index19_6 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred23_InternalKiBuild()) ) {s = 13;}
+                        if ( (synpred23_InternalKiBuild()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index19_6);
@@ -14263,9 +14227,9 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
                         int index19_7 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred23_InternalKiBuild()) ) {s = 13;}
+                        if ( (synpred23_InternalKiBuild()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index19_7);
@@ -14278,9 +14242,9 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
                         int index19_8 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred23_InternalKiBuild()) ) {s = 13;}
+                        if ( (synpred23_InternalKiBuild()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index19_8);
@@ -14293,9 +14257,9 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
                         int index19_9 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred23_InternalKiBuild()) ) {s = 13;}
+                        if ( (synpred23_InternalKiBuild()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index19_9);
@@ -14308,9 +14272,9 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
                         int index19_10 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred23_InternalKiBuild()) ) {s = 13;}
+                        if ( (synpred23_InternalKiBuild()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index19_10);
@@ -14323,9 +14287,9 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
                         int index19_11 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred23_InternalKiBuild()) ) {s = 13;}
+                        if ( (synpred23_InternalKiBuild()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index19_11);
@@ -14338,12 +14302,27 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
                         int index19_12 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred23_InternalKiBuild()) ) {s = 13;}
+                        if ( (synpred23_InternalKiBuild()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index19_12);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 12 : 
+                        int LA19_13 = input.LA(1);
+
+                         
+                        int index19_13 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred23_InternalKiBuild()) ) {s = 14;}
+
+                        else if ( (true) ) {s = 15;}
+
+                         
+                        input.seek(index19_13);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -14354,12 +14333,14 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_14s = "\1\4\4\uffff\10\0\1\uffff";
-    static final String dfa_15s = "\1\70\4\uffff\10\0\1\uffff";
-    static final String dfa_16s = "\1\uffff\1\1\13\uffff\1\2";
-    static final String dfa_17s = "\5\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\uffff}>";
-    static final String[] dfa_18s = {
-            "\1\11\2\1\1\14\1\6\1\1\27\uffff\1\1\3\uffff\1\5\6\uffff\1\12\1\13\1\uffff\1\15\7\uffff\1\7\1\10",
+    static final String dfa_14s = "\17\uffff";
+    static final String dfa_15s = "\1\4\5\uffff\10\0\1\uffff";
+    static final String dfa_16s = "\1\70\5\uffff\10\0\1\uffff";
+    static final String dfa_17s = "\1\uffff\1\1\14\uffff\1\2";
+    static final String dfa_18s = "\6\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\uffff}>";
+    static final String[] dfa_19s = {
+            "\1\12\2\1\1\15\1\7\1\1\11\uffff\1\1\15\uffff\1\1\3\uffff\1\6\6\uffff\1\13\1\14\1\uffff\1\16\7\uffff\1\10\1\11",
+            "",
             "",
             "",
             "",
@@ -14374,24 +14355,26 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
             "\1\uffff",
             ""
     };
-    static final char[] dfa_14 = DFA.unpackEncodedStringToUnsignedChars(dfa_14s);
+
+    static final short[] dfa_14 = DFA.unpackEncodedString(dfa_14s);
     static final char[] dfa_15 = DFA.unpackEncodedStringToUnsignedChars(dfa_15s);
-    static final short[] dfa_16 = DFA.unpackEncodedString(dfa_16s);
+    static final char[] dfa_16 = DFA.unpackEncodedStringToUnsignedChars(dfa_16s);
     static final short[] dfa_17 = DFA.unpackEncodedString(dfa_17s);
-    static final short[][] dfa_18 = unpackEncodedStringArray(dfa_18s);
+    static final short[] dfa_18 = DFA.unpackEncodedString(dfa_18s);
+    static final short[][] dfa_19 = unpackEncodedStringArray(dfa_19s);
 
     class DFA31 extends DFA {
 
         public DFA31(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 31;
-            this.eot = dfa_1;
-            this.eof = dfa_1;
-            this.min = dfa_14;
-            this.max = dfa_15;
-            this.accept = dfa_16;
-            this.special = dfa_17;
-            this.transition = dfa_18;
+            this.eot = dfa_14;
+            this.eof = dfa_14;
+            this.min = dfa_15;
+            this.max = dfa_16;
+            this.accept = dfa_17;
+            this.special = dfa_18;
+            this.transition = dfa_19;
         }
         public String getDescription() {
             return "1570:1: (this_ValuedExpression_0= ruleValuedExpression | this_NotExpression_1= ruleNotExpression )";
@@ -14401,21 +14384,6 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA31_5 = input.LA(1);
-
-                         
-                        int index31_5 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred35_InternalKiBuild()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 13;}
-
-                         
-                        input.seek(index31_5);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 1 : 
                         int LA31_6 = input.LA(1);
 
                          
@@ -14424,13 +14392,13 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred35_InternalKiBuild()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index31_6);
                         if ( s>=0 ) return s;
                         break;
-                    case 2 : 
+                    case 1 : 
                         int LA31_7 = input.LA(1);
 
                          
@@ -14439,13 +14407,13 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred35_InternalKiBuild()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index31_7);
                         if ( s>=0 ) return s;
                         break;
-                    case 3 : 
+                    case 2 : 
                         int LA31_8 = input.LA(1);
 
                          
@@ -14454,13 +14422,13 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred35_InternalKiBuild()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index31_8);
                         if ( s>=0 ) return s;
                         break;
-                    case 4 : 
+                    case 3 : 
                         int LA31_9 = input.LA(1);
 
                          
@@ -14469,13 +14437,13 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred35_InternalKiBuild()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index31_9);
                         if ( s>=0 ) return s;
                         break;
-                    case 5 : 
+                    case 4 : 
                         int LA31_10 = input.LA(1);
 
                          
@@ -14484,13 +14452,13 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred35_InternalKiBuild()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index31_10);
                         if ( s>=0 ) return s;
                         break;
-                    case 6 : 
+                    case 5 : 
                         int LA31_11 = input.LA(1);
 
                          
@@ -14499,13 +14467,13 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred35_InternalKiBuild()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index31_11);
                         if ( s>=0 ) return s;
                         break;
-                    case 7 : 
+                    case 6 : 
                         int LA31_12 = input.LA(1);
 
                          
@@ -14514,10 +14482,25 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred35_InternalKiBuild()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index31_12);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 7 : 
+                        int LA31_13 = input.LA(1);
+
+                         
+                        int index31_13 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred35_InternalKiBuild()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 14;}
+
+                         
+                        input.seek(index31_13);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -14528,55 +14511,56 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_19s = "\11\uffff";
-    static final String dfa_20s = "\3\uffff\1\2\3\uffff\1\2\1\uffff";
-    static final String dfa_21s = "\1\4\2\uffff\1\32\3\uffff\1\32\1\uffff";
-    static final String dfa_22s = "\1\70\2\uffff\1\66\3\uffff\1\66\1\uffff";
-    static final String dfa_23s = "\1\uffff\1\1\1\2\1\uffff\1\3\1\5\1\6\1\uffff\1\4";
-    static final String dfa_24s = "\11\uffff}>";
-    static final String[] dfa_25s = {
+    static final String dfa_20s = "\11\uffff";
+    static final String dfa_21s = "\3\uffff\1\2\3\uffff\1\2\1\uffff";
+    static final String dfa_22s = "\1\4\2\uffff\1\24\3\uffff\1\24\1\uffff";
+    static final String dfa_23s = "\1\70\2\uffff\1\66\3\uffff\1\66\1\uffff";
+    static final String dfa_24s = "\1\uffff\1\1\1\2\1\uffff\1\3\1\5\1\6\1\uffff\1\4";
+    static final String dfa_25s = "\11\uffff}>";
+    static final String[] dfa_26s = {
             "\1\3\2\uffff\1\6\1\1\34\uffff\1\4\6\uffff\2\5\11\uffff\2\2",
             "",
             "",
-            "\13\2\1\10\1\2\1\7\3\2\1\10\1\uffff\2\2\4\uffff\4\2",
+            "\1\2\5\uffff\13\2\1\10\1\2\1\7\3\2\1\10\1\uffff\2\2\4\uffff\4\2",
             "",
             "",
             "",
-            "\13\2\1\10\1\2\1\7\3\2\1\10\1\uffff\2\2\4\uffff\4\2",
+            "\1\2\5\uffff\13\2\1\10\1\2\1\7\3\2\1\10\1\uffff\2\2\4\uffff\4\2",
             ""
     };
 
-    static final short[] dfa_19 = DFA.unpackEncodedString(dfa_19s);
     static final short[] dfa_20 = DFA.unpackEncodedString(dfa_20s);
-    static final char[] dfa_21 = DFA.unpackEncodedStringToUnsignedChars(dfa_21s);
+    static final short[] dfa_21 = DFA.unpackEncodedString(dfa_21s);
     static final char[] dfa_22 = DFA.unpackEncodedStringToUnsignedChars(dfa_22s);
-    static final short[] dfa_23 = DFA.unpackEncodedString(dfa_23s);
+    static final char[] dfa_23 = DFA.unpackEncodedStringToUnsignedChars(dfa_23s);
     static final short[] dfa_24 = DFA.unpackEncodedString(dfa_24s);
-    static final short[][] dfa_25 = unpackEncodedStringArray(dfa_25s);
+    static final short[] dfa_25 = DFA.unpackEncodedString(dfa_25s);
+    static final short[][] dfa_26 = unpackEncodedStringArray(dfa_26s);
 
     class DFA44 extends DFA {
 
         public DFA44(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 44;
-            this.eot = dfa_19;
-            this.eof = dfa_20;
-            this.min = dfa_21;
-            this.max = dfa_22;
-            this.accept = dfa_23;
-            this.special = dfa_24;
-            this.transition = dfa_25;
+            this.eot = dfa_20;
+            this.eof = dfa_21;
+            this.min = dfa_22;
+            this.max = dfa_23;
+            this.accept = dfa_24;
+            this.special = dfa_25;
+            this.transition = dfa_26;
         }
         public String getDescription() {
             return "2307:1: (this_BoolValue_0= ruleBoolValue | this_ValuedObjectTestExpression_1= ruleValuedObjectTestExpression | (otherlv_2= '(' this_BoolExpression_3= ruleBoolExpression otherlv_4= ')' ) | this_ReferenceCall_5= ruleReferenceCall | this_FunctionCall_6= ruleFunctionCall | this_TextExpression_7= ruleTextExpression )";
         }
     }
-    static final String dfa_26s = "\1\4\3\uffff\1\0\11\uffff";
-    static final String dfa_27s = "\1\70\3\uffff\1\0\11\uffff";
-    static final String dfa_28s = "\1\uffff\1\1\1\2\1\3\1\uffff\1\6\6\uffff\1\4\1\5";
-    static final String dfa_29s = "\4\uffff\1\0\11\uffff}>";
-    static final String[] dfa_30s = {
-            "\1\5\1\2\1\1\2\5\1\3\33\uffff\1\4\6\uffff\2\5\11\uffff\2\5",
+    static final String dfa_27s = "\1\4\4\uffff\1\0\10\uffff";
+    static final String dfa_28s = "\1\70\4\uffff\1\0\10\uffff";
+    static final String dfa_29s = "\1\uffff\1\1\1\2\1\3\1\4\1\uffff\1\6\6\uffff\1\5";
+    static final String dfa_30s = "\5\uffff\1\0\10\uffff}>";
+    static final String[] dfa_31s = {
+            "\1\6\1\2\1\1\2\6\1\3\11\uffff\1\4\21\uffff\1\5\6\uffff\2\6\11\uffff\2\6",
+            "",
             "",
             "",
             "",
@@ -14588,14 +14572,13 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
             "",
             "",
             "",
-            "",
             ""
     };
-    static final char[] dfa_26 = DFA.unpackEncodedStringToUnsignedChars(dfa_26s);
     static final char[] dfa_27 = DFA.unpackEncodedStringToUnsignedChars(dfa_27s);
-    static final short[] dfa_28 = DFA.unpackEncodedString(dfa_28s);
+    static final char[] dfa_28 = DFA.unpackEncodedStringToUnsignedChars(dfa_28s);
     static final short[] dfa_29 = DFA.unpackEncodedString(dfa_29s);
-    static final short[][] dfa_30 = unpackEncodedStringArray(dfa_30s);
+    static final short[] dfa_30 = DFA.unpackEncodedString(dfa_30s);
+    static final short[][] dfa_31 = unpackEncodedStringArray(dfa_31s);
 
     class DFA45 extends DFA {
 
@@ -14604,11 +14587,11 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
             this.decisionNumber = 45;
             this.eot = dfa_1;
             this.eof = dfa_1;
-            this.min = dfa_26;
-            this.max = dfa_27;
-            this.accept = dfa_28;
-            this.special = dfa_29;
-            this.transition = dfa_30;
+            this.min = dfa_27;
+            this.max = dfa_28;
+            this.accept = dfa_29;
+            this.special = dfa_30;
+            this.transition = dfa_31;
         }
         public String getDescription() {
             return "2413:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | this_VectorValue_3= ruleVectorValue | (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' ) | this_AtomicExpression_7= ruleAtomicExpression )";
@@ -14618,20 +14601,18 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA45_4 = input.LA(1);
+                        int LA45_5 = input.LA(1);
 
                          
-                        int index45_4 = input.index();
+                        int index45_5 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred56_InternalKiBuild()) ) {s = 12;}
+                        if ( (synpred57_InternalKiBuild()) ) {s = 13;}
 
-                        else if ( (synpred57_InternalKiBuild()) ) {s = 13;}
-
-                        else if ( (true) ) {s = 5;}
+                        else if ( (true) ) {s = 6;}
 
                          
-                        input.seek(index45_4);
+                        input.seek(index45_5);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -14669,13 +14650,13 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0000000008000002L});
         public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x0000000000000012L});
         public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0000000010000002L});
-        public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0180B023000003F0L});
+        public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0180B023000803F0L});
         public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x0000000020000002L});
         public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x0000000040000002L});
         public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x0000000080000002L});
         public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x0078600000000002L});
         public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x0000000100000002L});
-        public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x01803023000003F0L});
+        public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x01803023000803F0L});
         public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x0000000200000002L});
         public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0000000400000002L});
         public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x0000000800000002L});
@@ -14687,16 +14668,17 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x0000050000000002L});
         public static final BitSet FOLLOW_40 = new BitSet(new long[]{0x0000020000000000L});
         public static final BitSet FOLLOW_41 = new BitSet(new long[]{0x0000082000000000L});
-        public static final BitSet FOLLOW_42 = new BitSet(new long[]{0x0180B023800003F0L});
+        public static final BitSet FOLLOW_42 = new BitSet(new long[]{0x0180B023800803F0L});
         public static final BitSet FOLLOW_43 = new BitSet(new long[]{0x0000004004000000L});
         public static final BitSet FOLLOW_44 = new BitSet(new long[]{0x0000400000000000L});
         public static final BitSet FOLLOW_45 = new BitSet(new long[]{0x0000000080000000L});
-        public static final BitSet FOLLOW_46 = new BitSet(new long[]{0x0181B023000003F0L});
-        public static final BitSet FOLLOW_47 = new BitSet(new long[]{0x0000000200000370L});
-        public static final BitSet FOLLOW_48 = new BitSet(new long[]{0x0000000000000310L});
-        public static final BitSet FOLLOW_49 = new BitSet(new long[]{0x0000010000000000L});
-        public static final BitSet FOLLOW_50 = new BitSet(new long[]{0x0000000000000200L});
-        public static final BitSet FOLLOW_51 = new BitSet(new long[]{0x0004040200000002L});
+        public static final BitSet FOLLOW_46 = new BitSet(new long[]{0x0181B023000803F0L});
+        public static final BitSet FOLLOW_47 = new BitSet(new long[]{0x0000000004100000L});
+        public static final BitSet FOLLOW_48 = new BitSet(new long[]{0x0000000200000370L});
+        public static final BitSet FOLLOW_49 = new BitSet(new long[]{0x0000000000000310L});
+        public static final BitSet FOLLOW_50 = new BitSet(new long[]{0x0000010000000000L});
+        public static final BitSet FOLLOW_51 = new BitSet(new long[]{0x0000000000000200L});
+        public static final BitSet FOLLOW_52 = new BitSet(new long[]{0x0004040200000002L});
     }
 
 

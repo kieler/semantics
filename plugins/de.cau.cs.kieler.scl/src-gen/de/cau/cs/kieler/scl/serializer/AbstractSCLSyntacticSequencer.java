@@ -102,7 +102,7 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 	 *     ('(' '('*)+
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) '(' values+=VectorValueMember
+	 *     (rule start) (ambiguity) '{' values+=VectorValueMember
 	 *     (rule start) (ambiguity) operator=SubOperator
 	 *     (rule start) (ambiguity) value=FLOAT
 	 *     (rule start) (ambiguity) value=INT
@@ -129,9 +129,9 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 	 *     ('(' | '(')*
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) '(' values+=VectorValueMember
 	 *     (rule start) (ambiguity) '<' functionName=ID
 	 *     (rule start) (ambiguity) 'extern' functionName=ID
+	 *     (rule start) (ambiguity) '{' values+=VectorValueMember
 	 *     (rule start) (ambiguity) operator=PreOperator
 	 *     (rule start) (ambiguity) operator=SubOperator
 	 *     (rule start) (ambiguity) operator=ValOperator

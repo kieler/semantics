@@ -302,11 +302,11 @@ class KExpressionsSerializeExtensions {
     }
     
     def dispatch CharSequence serialize(VectorValue expression) {
-        var s = "(" 
+        var s = "{" 
         for (value : expression.values) {
             s = s + value.serialize + ", "
         }
-        return s.substring(0, s.length - 2) + ")"
+        return s.substring(0, s.length - 2) + "}"
     }
     
     def dispatch CharSequence serialize(IgnoreValue expression) {

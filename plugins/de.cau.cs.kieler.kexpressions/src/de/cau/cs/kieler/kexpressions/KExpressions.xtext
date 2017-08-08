@@ -314,7 +314,7 @@ StringValue returns StringValue:
     value=STRING;
     
 VectorValue returns VectorValue:
-    '(' values+=VectorValueMember (',' values+=VectorValueMember)* ')';
+    '{' values+=VectorValueMember (',' values+=VectorValueMember)* '}';
     
 VectorValueMember returns Expression:
     Expression | IgnoreValue;

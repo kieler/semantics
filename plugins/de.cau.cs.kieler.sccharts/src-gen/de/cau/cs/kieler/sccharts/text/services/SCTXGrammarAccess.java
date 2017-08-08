@@ -3321,7 +3321,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//VectorValue:
-	//	'(' values+=VectorValueMember (',' values+=VectorValueMember)* ')';
+	//	'{' values+=VectorValueMember (',' values+=VectorValueMember)* '}';
 	public KExpressionsGrammarAccess.VectorValueElements getVectorValueAccess() {
 		return gaKExpressions.getVectorValueAccess();
 	}

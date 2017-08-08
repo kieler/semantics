@@ -2217,7 +2217,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//VectorValue:
-	//	'(' values+=VectorValueMember (',' values+=VectorValueMember)* ')';
+	//	'{' values+=VectorValueMember (',' values+=VectorValueMember)* '}';
 	public KExpressionsGrammarAccess.VectorValueElements getVectorValueAccess() {
 		return gaKExpressions.getVectorValueAccess();
 	}

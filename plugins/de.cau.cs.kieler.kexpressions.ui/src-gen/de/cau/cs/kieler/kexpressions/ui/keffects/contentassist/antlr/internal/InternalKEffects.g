@@ -9691,11 +9691,11 @@ rule__VectorValue__Group__0__Impl
     }
 :
 (
-{ before(grammarAccess.getVectorValueAccess().getLeftParenthesisKeyword_0()); }
+{ before(grammarAccess.getVectorValueAccess().getLeftCurlyBracketKeyword_0()); }
 
-	'(' 
+	'{' 
 
-{ after(grammarAccess.getVectorValueAccess().getLeftParenthesisKeyword_0()); }
+{ after(grammarAccess.getVectorValueAccess().getLeftCurlyBracketKeyword_0()); }
 )
 
 ;
@@ -9779,11 +9779,11 @@ rule__VectorValue__Group__3__Impl
     }
 :
 (
-{ before(grammarAccess.getVectorValueAccess().getRightParenthesisKeyword_3()); }
+{ before(grammarAccess.getVectorValueAccess().getRightCurlyBracketKeyword_3()); }
 
-	')' 
+	'}' 
 
-{ after(grammarAccess.getVectorValueAccess().getRightParenthesisKeyword_3()); }
+{ after(grammarAccess.getVectorValueAccess().getRightCurlyBracketKeyword_3()); }
 )
 
 ;

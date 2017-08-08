@@ -6697,7 +6697,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             if ( (LA7_0==22) ) {
                 alt7=1;
             }
-            else if ( ((LA7_0>=RULE_STRING && LA7_0<=RULE_HOSTCODE)||LA7_0==17||LA7_0==26||LA7_0==32||LA7_0==48||LA7_0==53) ) {
+            else if ( ((LA7_0>=RULE_STRING && LA7_0<=RULE_HOSTCODE)||LA7_0==17||LA7_0==26||LA7_0==32||LA7_0==39||LA7_0==48||LA7_0==53) ) {
                 alt7=2;
             }
             else {
@@ -7684,7 +7684,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             int alt16=2;
             int LA16_0 = input.LA(1);
 
-            if ( ((LA16_0>=RULE_STRING && LA16_0<=RULE_HOSTCODE)||LA16_0==17||LA16_0==20||LA16_0==22||LA16_0==26||LA16_0==32||LA16_0==48||LA16_0==53) ) {
+            if ( ((LA16_0>=RULE_STRING && LA16_0<=RULE_HOSTCODE)||LA16_0==17||LA16_0==20||LA16_0==22||LA16_0==26||LA16_0==32||LA16_0==39||LA16_0==48||LA16_0==53) ) {
                 alt16=1;
             }
             else if ( (LA16_0==54) ) {
@@ -26351,24 +26351,24 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VectorValue__Group__0__Impl"
-    // InternalKiBuild.g:9157:1: rule__VectorValue__Group__0__Impl : ( '(' ) ;
+    // InternalKiBuild.g:9157:1: rule__VectorValue__Group__0__Impl : ( '{' ) ;
     public final void rule__VectorValue__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKiBuild.g:9161:1: ( ( '(' ) )
-            // InternalKiBuild.g:9162:1: ( '(' )
+            // InternalKiBuild.g:9161:1: ( ( '{' ) )
+            // InternalKiBuild.g:9162:1: ( '{' )
             {
-            // InternalKiBuild.g:9162:1: ( '(' )
-            // InternalKiBuild.g:9163:1: '('
+            // InternalKiBuild.g:9162:1: ( '{' )
+            // InternalKiBuild.g:9163:1: '{'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getVectorValueAccess().getLeftParenthesisKeyword_0()); 
+               before(grammarAccess.getVectorValueAccess().getLeftCurlyBracketKeyword_0()); 
             }
-            match(input,48,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,39,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getVectorValueAccess().getLeftParenthesisKeyword_0()); 
+               after(grammarAccess.getVectorValueAccess().getLeftCurlyBracketKeyword_0()); 
             }
 
             }
@@ -26401,7 +26401,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             // InternalKiBuild.g:9180:1: ( rule__VectorValue__Group__1__Impl rule__VectorValue__Group__2 )
             // InternalKiBuild.g:9181:2: rule__VectorValue__Group__1__Impl rule__VectorValue__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_58);
+            pushFollow(FollowSets000.FOLLOW_62);
             rule__VectorValue__Group__1__Impl();
 
             state._fsp--;
@@ -26490,7 +26490,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             // InternalKiBuild.g:9209:1: ( rule__VectorValue__Group__2__Impl rule__VectorValue__Group__3 )
             // InternalKiBuild.g:9210:2: rule__VectorValue__Group__2__Impl rule__VectorValue__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_58);
+            pushFollow(FollowSets000.FOLLOW_62);
             rule__VectorValue__Group__2__Impl();
 
             state._fsp--;
@@ -26621,24 +26621,24 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VectorValue__Group__3__Impl"
-    // InternalKiBuild.g:9245:1: rule__VectorValue__Group__3__Impl : ( ')' ) ;
+    // InternalKiBuild.g:9245:1: rule__VectorValue__Group__3__Impl : ( '}' ) ;
     public final void rule__VectorValue__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKiBuild.g:9249:1: ( ( ')' ) )
-            // InternalKiBuild.g:9250:1: ( ')' )
+            // InternalKiBuild.g:9249:1: ( ( '}' ) )
+            // InternalKiBuild.g:9250:1: ( '}' )
             {
-            // InternalKiBuild.g:9250:1: ( ')' )
-            // InternalKiBuild.g:9251:1: ')'
+            // InternalKiBuild.g:9250:1: ( '}' )
+            // InternalKiBuild.g:9251:1: '}'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getVectorValueAccess().getRightParenthesisKeyword_3()); 
+               before(grammarAccess.getVectorValueAccess().getRightCurlyBracketKeyword_3()); 
             }
-            match(input,49,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,40,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getVectorValueAccess().getRightParenthesisKeyword_3()); 
+               after(grammarAccess.getVectorValueAccess().getRightCurlyBracketKeyword_3()); 
             }
 
             }
@@ -27392,7 +27392,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             // InternalKiBuild.g:9561:1: ( rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2 )
             // InternalKiBuild.g:9562:2: rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_62);
+            pushFollow(FollowSets000.FOLLOW_63);
             rule__KeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -27672,7 +27672,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             // InternalKiBuild.g:9655:1: ( rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1 )
             // InternalKiBuild.g:9656:2: rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_62);
+            pushFollow(FollowSets000.FOLLOW_63);
             rule__KeyStringValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
@@ -27914,7 +27914,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             // InternalKiBuild.g:9749:1: ( rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2 )
             // InternalKiBuild.g:9750:2: rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_63);
+            pushFollow(FollowSets000.FOLLOW_64);
             rule__RestrictedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -28194,7 +28194,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             // InternalKiBuild.g:9843:1: ( rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1 )
             // InternalKiBuild.g:9844:2: rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_63);
+            pushFollow(FollowSets000.FOLLOW_64);
             rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
@@ -28436,7 +28436,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             // InternalKiBuild.g:9937:1: ( rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2 )
             // InternalKiBuild.g:9938:2: rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_62);
+            pushFollow(FollowSets000.FOLLOW_63);
             rule__StringPragma__Group__1__Impl();
 
             state._fsp--;
@@ -28716,7 +28716,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             // InternalKiBuild.g:10031:1: ( rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1 )
             // InternalKiBuild.g:10032:2: rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_62);
+            pushFollow(FollowSets000.FOLLOW_63);
             rule__StringPragma__Group_3__0__Impl();
 
             state._fsp--;
@@ -28958,7 +28958,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             // InternalKiBuild.g:10125:1: ( rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2 )
             // InternalKiBuild.g:10126:2: rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_64);
+            pushFollow(FollowSets000.FOLLOW_65);
             rule__TypedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -29215,7 +29215,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             // InternalKiBuild.g:10214:1: ( rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5 )
             // InternalKiBuild.g:10215:2: rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_62);
+            pushFollow(FollowSets000.FOLLOW_63);
             rule__TypedKeyStringValueAnnotation__Group__4__Impl();
 
             state._fsp--;
@@ -29485,7 +29485,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             // InternalKiBuild.g:10316:1: ( rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1 )
             // InternalKiBuild.g:10317:2: rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1
             {
-            pushFollow(FollowSets000.FOLLOW_62);
+            pushFollow(FollowSets000.FOLLOW_63);
             rule__TypedKeyStringValueAnnotation__Group_6__0__Impl();
 
             state._fsp--;
@@ -29727,7 +29727,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             // InternalKiBuild.g:10410:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__2 )
             // InternalKiBuild.g:10411:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_64);
+            pushFollow(FollowSets000.FOLLOW_65);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -29984,7 +29984,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             // InternalKiBuild.g:10499:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5 )
             // InternalKiBuild.g:10500:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_63);
+            pushFollow(FollowSets000.FOLLOW_64);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl();
 
             state._fsp--;
@@ -30254,7 +30254,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             // InternalKiBuild.g:10601:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1 )
             // InternalKiBuild.g:10602:2: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1
             {
-            pushFollow(FollowSets000.FOLLOW_63);
+            pushFollow(FollowSets000.FOLLOW_64);
             rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl();
 
             state._fsp--;
@@ -30496,7 +30496,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             // InternalKiBuild.g:10695:1: ( rule__QuotedKeyStringValueAnnotation__Group__1__Impl rule__QuotedKeyStringValueAnnotation__Group__2 )
             // InternalKiBuild.g:10696:2: rule__QuotedKeyStringValueAnnotation__Group__1__Impl rule__QuotedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_65);
+            pushFollow(FollowSets000.FOLLOW_66);
             rule__QuotedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -30776,7 +30776,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             // InternalKiBuild.g:10789:1: ( rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl rule__QuotedKeyStringValueAnnotation__Group_3__1 )
             // InternalKiBuild.g:10790:2: rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl rule__QuotedKeyStringValueAnnotation__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_65);
+            pushFollow(FollowSets000.FOLLOW_66);
             rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
@@ -31018,7 +31018,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             // InternalKiBuild.g:10883:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2 )
             // InternalKiBuild.g:10884:2: rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_64);
+            pushFollow(FollowSets000.FOLLOW_65);
             rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -31275,7 +31275,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             // InternalKiBuild.g:10972:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__5 )
             // InternalKiBuild.g:10973:2: rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_65);
+            pushFollow(FollowSets000.FOLLOW_66);
             rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl();
 
             state._fsp--;
@@ -31545,7 +31545,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             // InternalKiBuild.g:11074:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group_6__1 )
             // InternalKiBuild.g:11075:2: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group_6__1
             {
-            pushFollow(FollowSets000.FOLLOW_65);
+            pushFollow(FollowSets000.FOLLOW_66);
             rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl();
 
             state._fsp--;
@@ -31708,7 +31708,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             // InternalKiBuild.g:11137:1: ( rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1 )
             // InternalKiBuild.g:11138:2: rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_66);
+            pushFollow(FollowSets000.FOLLOW_67);
             rule__ExtendedID__Group__0__Impl();
 
             state._fsp--;
@@ -31787,7 +31787,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             // InternalKiBuild.g:11166:1: ( rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2 )
             // InternalKiBuild.g:11167:2: rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_66);
+            pushFollow(FollowSets000.FOLLOW_67);
             rule__ExtendedID__Group__1__Impl();
 
             state._fsp--;
@@ -31855,7 +31855,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalKiBuild.g:11181:2: rule__ExtendedID__Group_1__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_67);
+            	    pushFollow(FollowSets000.FOLLOW_68);
             	    rule__ExtendedID__Group_1__0();
 
             	    state._fsp--;
@@ -32314,7 +32314,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             // InternalKiBuild.g:11355:1: ( rule__Integer__Group__0__Impl rule__Integer__Group__1 )
             // InternalKiBuild.g:11356:2: rule__Integer__Group__0__Impl rule__Integer__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_68);
+            pushFollow(FollowSets000.FOLLOW_69);
             rule__Integer__Group__0__Impl();
 
             state._fsp--;
@@ -32484,7 +32484,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             // InternalKiBuild.g:11418:1: ( rule__Floateger__Group__0__Impl rule__Floateger__Group__1 )
             // InternalKiBuild.g:11419:2: rule__Floateger__Group__0__Impl rule__Floateger__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_62);
+            pushFollow(FollowSets000.FOLLOW_63);
             rule__Floateger__Group__0__Impl();
 
             state._fsp--;
@@ -37818,30 +37818,6 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
     }
     // $ANTLR end synpred9_InternalKiBuild
 
-    // $ANTLR start synpred20_InternalKiBuild
-    public final void synpred20_InternalKiBuild_fragment() throws RecognitionException {   
-        // InternalKiBuild.g:2324:6: ( ( ruleVectorValue ) )
-        // InternalKiBuild.g:2324:6: ( ruleVectorValue )
-        {
-        // InternalKiBuild.g:2324:6: ( ruleVectorValue )
-        // InternalKiBuild.g:2325:1: ruleVectorValue
-        {
-        if ( state.backtracking==0 ) {
-           before(grammarAccess.getAtomicValuedExpressionAccess().getVectorValueParserRuleCall_3()); 
-        }
-        pushFollow(FollowSets000.FOLLOW_2);
-        ruleVectorValue();
-
-        state._fsp--;
-        if (state.failed) return ;
-
-        }
-
-
-        }
-    }
-    // $ANTLR end synpred20_InternalKiBuild
-
     // $ANTLR start synpred21_InternalKiBuild
     public final void synpred21_InternalKiBuild_fragment() throws RecognitionException {   
         // InternalKiBuild.g:2330:6: ( ( ( rule__AtomicValuedExpression__Group_4__0 ) ) )
@@ -37893,20 +37869,6 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
         int start = input.mark();
         try {
             synpred21_InternalKiBuild_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
-    public final boolean synpred20_InternalKiBuild() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred20_InternalKiBuild_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -38013,13 +37975,14 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             return "2105:1: rule__AttributeMapping__Alternatives_1 : ( ( ( rule__AttributeMapping__Group_1_0__0 ) ) | ( ( rule__AttributeMapping__Group_1_1__0 ) ) | ( ( rule__AttributeMapping__Group_1_2__0 ) ) );";
         }
     }
-    static final String dfa_8s = "\17\uffff";
-    static final String dfa_9s = "\1\4\14\0\2\uffff";
-    static final String dfa_10s = "\1\65\14\0\2\uffff";
-    static final String dfa_11s = "\15\uffff\1\1\1\2";
-    static final String dfa_12s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\2\uffff}>";
+    static final String dfa_8s = "\20\uffff";
+    static final String dfa_9s = "\1\4\15\0\2\uffff";
+    static final String dfa_10s = "\1\65\15\0\2\uffff";
+    static final String dfa_11s = "\16\uffff\1\1\1\2";
+    static final String dfa_12s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\2\uffff}>";
     static final String[] dfa_13s = {
-            "\1\4\1\6\1\11\1\2\1\3\1\14\7\uffff\1\7\2\uffff\1\15\1\uffff\1\1\3\uffff\1\10\5\uffff\1\13\17\uffff\1\5\4\uffff\1\12",
+            "\1\4\1\7\1\12\1\2\1\3\1\15\7\uffff\1\10\2\uffff\1\16\1\uffff\1\1\3\uffff\1\11\5\uffff\1\14\6\uffff\1\5\10\uffff\1\6\4\uffff\1\13",
+            "\1\uffff",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -38070,9 +38033,9 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
                         int index4_1 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred8_InternalKiBuild()) ) {s = 13;}
+                        if ( (synpred8_InternalKiBuild()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index4_1);
@@ -38085,9 +38048,9 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
                         int index4_2 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred8_InternalKiBuild()) ) {s = 13;}
+                        if ( (synpred8_InternalKiBuild()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index4_2);
@@ -38100,9 +38063,9 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
                         int index4_3 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred8_InternalKiBuild()) ) {s = 13;}
+                        if ( (synpred8_InternalKiBuild()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index4_3);
@@ -38115,9 +38078,9 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
                         int index4_4 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred8_InternalKiBuild()) ) {s = 13;}
+                        if ( (synpred8_InternalKiBuild()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index4_4);
@@ -38130,9 +38093,9 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
                         int index4_5 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred8_InternalKiBuild()) ) {s = 13;}
+                        if ( (synpred8_InternalKiBuild()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index4_5);
@@ -38145,9 +38108,9 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
                         int index4_6 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred8_InternalKiBuild()) ) {s = 13;}
+                        if ( (synpred8_InternalKiBuild()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index4_6);
@@ -38160,9 +38123,9 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
                         int index4_7 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred8_InternalKiBuild()) ) {s = 13;}
+                        if ( (synpred8_InternalKiBuild()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index4_7);
@@ -38175,9 +38138,9 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
                         int index4_8 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred8_InternalKiBuild()) ) {s = 13;}
+                        if ( (synpred8_InternalKiBuild()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index4_8);
@@ -38190,9 +38153,9 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
                         int index4_9 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred8_InternalKiBuild()) ) {s = 13;}
+                        if ( (synpred8_InternalKiBuild()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index4_9);
@@ -38205,9 +38168,9 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
                         int index4_10 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred8_InternalKiBuild()) ) {s = 13;}
+                        if ( (synpred8_InternalKiBuild()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index4_10);
@@ -38220,9 +38183,9 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
                         int index4_11 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred8_InternalKiBuild()) ) {s = 13;}
+                        if ( (synpred8_InternalKiBuild()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index4_11);
@@ -38235,12 +38198,27 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
                         int index4_12 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred8_InternalKiBuild()) ) {s = 13;}
+                        if ( (synpred8_InternalKiBuild()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index4_12);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 12 : 
+                        int LA4_13 = input.LA(1);
+
+                         
+                        int index4_13 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred8_InternalKiBuild()) ) {s = 14;}
+
+                        else if ( (true) ) {s = 15;}
+
+                         
+                        input.seek(index4_13);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -38251,12 +38229,14 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_14s = "\1\4\4\uffff\10\0\1\uffff";
-    static final String dfa_15s = "\1\65\4\uffff\10\0\1\uffff";
-    static final String dfa_16s = "\1\uffff\1\1\13\uffff\1\2";
-    static final String dfa_17s = "\5\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\uffff}>";
-    static final String[] dfa_18s = {
-            "\1\1\1\6\1\11\2\1\1\14\7\uffff\1\7\2\uffff\1\15\1\uffff\1\1\3\uffff\1\10\5\uffff\1\13\17\uffff\1\5\4\uffff\1\12",
+    static final String dfa_14s = "\17\uffff";
+    static final String dfa_15s = "\1\4\5\uffff\10\0\1\uffff";
+    static final String dfa_16s = "\1\65\5\uffff\10\0\1\uffff";
+    static final String dfa_17s = "\1\uffff\1\1\14\uffff\1\2";
+    static final String dfa_18s = "\6\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\uffff}>";
+    static final String[] dfa_19s = {
+            "\1\1\1\7\1\12\2\1\1\15\7\uffff\1\10\2\uffff\1\16\1\uffff\1\1\3\uffff\1\11\5\uffff\1\14\6\uffff\1\1\10\uffff\1\6\4\uffff\1\13",
+            "",
             "",
             "",
             "",
@@ -38271,24 +38251,26 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             "\1\uffff",
             ""
     };
-    static final char[] dfa_14 = DFA.unpackEncodedStringToUnsignedChars(dfa_14s);
+
+    static final short[] dfa_14 = DFA.unpackEncodedString(dfa_14s);
     static final char[] dfa_15 = DFA.unpackEncodedStringToUnsignedChars(dfa_15s);
-    static final short[] dfa_16 = DFA.unpackEncodedString(dfa_16s);
+    static final char[] dfa_16 = DFA.unpackEncodedStringToUnsignedChars(dfa_16s);
     static final short[] dfa_17 = DFA.unpackEncodedString(dfa_17s);
-    static final short[][] dfa_18 = unpackEncodedStringArray(dfa_18s);
+    static final short[] dfa_18 = DFA.unpackEncodedString(dfa_18s);
+    static final short[][] dfa_19 = unpackEncodedStringArray(dfa_19s);
 
     class DFA5 extends DFA {
 
         public DFA5(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 5;
-            this.eot = dfa_1;
-            this.eof = dfa_1;
-            this.min = dfa_14;
-            this.max = dfa_15;
-            this.accept = dfa_16;
-            this.special = dfa_17;
-            this.transition = dfa_18;
+            this.eot = dfa_14;
+            this.eof = dfa_14;
+            this.min = dfa_15;
+            this.max = dfa_16;
+            this.accept = dfa_17;
+            this.special = dfa_18;
+            this.transition = dfa_19;
         }
         public String getDescription() {
             return "2189:1: rule__NotOrValuedExpression__Alternatives : ( ( ruleValuedExpression ) | ( ruleNotExpression ) );";
@@ -38298,21 +38280,6 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA5_5 = input.LA(1);
-
-                         
-                        int index5_5 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred9_InternalKiBuild()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 13;}
-
-                         
-                        input.seek(index5_5);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 1 : 
                         int LA5_6 = input.LA(1);
 
                          
@@ -38321,13 +38288,13 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
                         s = -1;
                         if ( (synpred9_InternalKiBuild()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index5_6);
                         if ( s>=0 ) return s;
                         break;
-                    case 2 : 
+                    case 1 : 
                         int LA5_7 = input.LA(1);
 
                          
@@ -38336,13 +38303,13 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
                         s = -1;
                         if ( (synpred9_InternalKiBuild()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index5_7);
                         if ( s>=0 ) return s;
                         break;
-                    case 3 : 
+                    case 2 : 
                         int LA5_8 = input.LA(1);
 
                          
@@ -38351,13 +38318,13 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
                         s = -1;
                         if ( (synpred9_InternalKiBuild()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index5_8);
                         if ( s>=0 ) return s;
                         break;
-                    case 4 : 
+                    case 3 : 
                         int LA5_9 = input.LA(1);
 
                          
@@ -38366,13 +38333,13 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
                         s = -1;
                         if ( (synpred9_InternalKiBuild()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index5_9);
                         if ( s>=0 ) return s;
                         break;
-                    case 5 : 
+                    case 4 : 
                         int LA5_10 = input.LA(1);
 
                          
@@ -38381,13 +38348,13 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
                         s = -1;
                         if ( (synpred9_InternalKiBuild()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index5_10);
                         if ( s>=0 ) return s;
                         break;
-                    case 6 : 
+                    case 5 : 
                         int LA5_11 = input.LA(1);
 
                          
@@ -38396,13 +38363,13 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
                         s = -1;
                         if ( (synpred9_InternalKiBuild()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index5_11);
                         if ( s>=0 ) return s;
                         break;
-                    case 7 : 
+                    case 6 : 
                         int LA5_12 = input.LA(1);
 
                          
@@ -38411,10 +38378,25 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
                         s = -1;
                         if ( (synpred9_InternalKiBuild()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index5_12);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 7 : 
+                        int LA5_13 = input.LA(1);
+
+                         
+                        int index5_13 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred9_InternalKiBuild()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 14;}
+
+                         
+                        input.seek(index5_13);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -38425,55 +38407,56 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_19s = "\11\uffff";
-    static final String dfa_20s = "\3\uffff\1\2\3\uffff\1\2\1\uffff";
-    static final String dfa_21s = "\1\5\2\uffff\1\22\3\uffff\1\22\1\uffff";
-    static final String dfa_22s = "\1\65\2\uffff\1\64\3\uffff\1\64\1\uffff";
-    static final String dfa_23s = "\1\uffff\1\1\1\2\1\uffff\1\3\1\5\1\6\1\uffff\1\4";
-    static final String dfa_24s = "\11\uffff}>";
-    static final String[] dfa_25s = {
+    static final String dfa_20s = "\11\uffff";
+    static final String dfa_21s = "\3\uffff\1\2\3\uffff\1\2\1\uffff";
+    static final String dfa_22s = "\1\5\2\uffff\1\22\3\uffff\1\22\1\uffff";
+    static final String dfa_23s = "\1\65\2\uffff\1\64\3\uffff\1\64\1\uffff";
+    static final String dfa_24s = "\1\uffff\1\1\1\2\1\uffff\1\3\1\5\1\6\1\uffff\1\4";
+    static final String dfa_25s = "\11\uffff}>";
+    static final String[] dfa_26s = {
             "\1\1\1\3\2\uffff\1\6\7\uffff\1\2\10\uffff\1\2\5\uffff\1\5\17\uffff\1\4\4\uffff\1\5",
             "",
             "",
-            "\2\2\1\uffff\5\2\1\uffff\2\2\1\10\7\2\11\uffff\2\2\1\10\1\2\1\7\2\2",
+            "\2\2\1\uffff\5\2\1\uffff\2\2\1\10\7\2\3\uffff\1\2\5\uffff\2\2\1\10\1\2\1\7\2\2",
             "",
             "",
             "",
-            "\2\2\1\uffff\5\2\1\uffff\2\2\1\10\7\2\11\uffff\2\2\1\10\1\2\1\7\2\2",
+            "\2\2\1\uffff\5\2\1\uffff\2\2\1\10\7\2\3\uffff\1\2\5\uffff\2\2\1\10\1\2\1\7\2\2",
             ""
     };
 
-    static final short[] dfa_19 = DFA.unpackEncodedString(dfa_19s);
     static final short[] dfa_20 = DFA.unpackEncodedString(dfa_20s);
-    static final char[] dfa_21 = DFA.unpackEncodedStringToUnsignedChars(dfa_21s);
+    static final short[] dfa_21 = DFA.unpackEncodedString(dfa_21s);
     static final char[] dfa_22 = DFA.unpackEncodedStringToUnsignedChars(dfa_22s);
-    static final short[] dfa_23 = DFA.unpackEncodedString(dfa_23s);
+    static final char[] dfa_23 = DFA.unpackEncodedStringToUnsignedChars(dfa_23s);
     static final short[] dfa_24 = DFA.unpackEncodedString(dfa_24s);
-    static final short[][] dfa_25 = unpackEncodedStringArray(dfa_25s);
+    static final short[] dfa_25 = DFA.unpackEncodedString(dfa_25s);
+    static final short[][] dfa_26 = unpackEncodedStringArray(dfa_26s);
 
     class DFA8 extends DFA {
 
         public DFA8(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 8;
-            this.eot = dfa_19;
-            this.eof = dfa_20;
-            this.min = dfa_21;
-            this.max = dfa_22;
-            this.accept = dfa_23;
-            this.special = dfa_24;
-            this.transition = dfa_25;
+            this.eot = dfa_20;
+            this.eof = dfa_21;
+            this.min = dfa_22;
+            this.max = dfa_23;
+            this.accept = dfa_24;
+            this.special = dfa_25;
+            this.transition = dfa_26;
         }
         public String getDescription() {
             return "2255:1: rule__AtomicExpression__Alternatives : ( ( ruleBoolValue ) | ( ruleValuedObjectTestExpression ) | ( ( rule__AtomicExpression__Group_2__0 ) ) | ( ruleReferenceCall ) | ( ruleFunctionCall ) | ( ruleTextExpression ) );";
         }
     }
-    static final String dfa_26s = "\1\4\3\uffff\1\0\11\uffff";
-    static final String dfa_27s = "\1\65\3\uffff\1\0\11\uffff";
-    static final String dfa_28s = "\1\uffff\1\1\1\2\1\3\1\uffff\1\6\6\uffff\1\4\1\5";
-    static final String dfa_29s = "\4\uffff\1\0\11\uffff}>";
-    static final String[] dfa_30s = {
-            "\1\3\2\5\1\1\1\2\1\5\7\uffff\1\5\10\uffff\1\5\5\uffff\1\5\17\uffff\1\4\4\uffff\1\5",
+    static final String dfa_27s = "\1\4\4\uffff\1\0\10\uffff";
+    static final String dfa_28s = "\1\65\4\uffff\1\0\10\uffff";
+    static final String dfa_29s = "\1\uffff\1\1\1\2\1\3\1\4\1\uffff\1\6\6\uffff\1\5";
+    static final String dfa_30s = "\5\uffff\1\0\10\uffff}>";
+    static final String[] dfa_31s = {
+            "\1\3\2\6\1\1\1\2\1\6\7\uffff\1\6\10\uffff\1\6\5\uffff\1\6\6\uffff\1\4\10\uffff\1\5\4\uffff\1\6",
+            "",
             "",
             "",
             "",
@@ -38485,14 +38468,13 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             "",
             "",
             "",
-            "",
             ""
     };
-    static final char[] dfa_26 = DFA.unpackEncodedStringToUnsignedChars(dfa_26s);
     static final char[] dfa_27 = DFA.unpackEncodedStringToUnsignedChars(dfa_27s);
-    static final short[] dfa_28 = DFA.unpackEncodedString(dfa_28s);
+    static final char[] dfa_28 = DFA.unpackEncodedStringToUnsignedChars(dfa_28s);
     static final short[] dfa_29 = DFA.unpackEncodedString(dfa_29s);
-    static final short[][] dfa_30 = unpackEncodedStringArray(dfa_30s);
+    static final short[] dfa_30 = DFA.unpackEncodedString(dfa_30s);
+    static final short[][] dfa_31 = unpackEncodedStringArray(dfa_31s);
 
     class DFA9 extends DFA {
 
@@ -38501,11 +38483,11 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             this.decisionNumber = 9;
             this.eot = dfa_1;
             this.eof = dfa_1;
-            this.min = dfa_26;
-            this.max = dfa_27;
-            this.accept = dfa_28;
-            this.special = dfa_29;
-            this.transition = dfa_30;
+            this.min = dfa_27;
+            this.max = dfa_28;
+            this.accept = dfa_29;
+            this.special = dfa_30;
+            this.transition = dfa_31;
         }
         public String getDescription() {
             return "2301:1: rule__AtomicValuedExpression__Alternatives : ( ( ruleIntValue ) | ( ruleFloatValue ) | ( ruleStringValue ) | ( ruleVectorValue ) | ( ( rule__AtomicValuedExpression__Group_4__0 ) ) | ( ruleAtomicExpression ) );";
@@ -38515,20 +38497,18 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA9_4 = input.LA(1);
+                        int LA9_5 = input.LA(1);
 
                          
-                        int index9_4 = input.index();
+                        int index9_5 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred20_InternalKiBuild()) ) {s = 12;}
+                        if ( (synpred21_InternalKiBuild()) ) {s = 13;}
 
-                        else if ( (synpred21_InternalKiBuild()) ) {s = 13;}
-
-                        else if ( (true) ) {s = 5;}
+                        else if ( (true) ) {s = 6;}
 
                          
-                        input.seek(index9_4);
+                        input.seek(index9_5);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -38568,7 +38548,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0000800000000000L});
         public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0000000008000000L});
         public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x0000000008000002L});
-        public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x00210001047203F0L});
+        public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x00210081047203F0L});
         public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x0000000010000000L});
         public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x0000000010000002L});
         public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x0000000000040000L});
@@ -38579,7 +38559,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x0000000000100000L});
         public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x0000000000200000L});
         public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x0000000000200002L});
-        public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x00210001046203F0L});
+        public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x00210081046203F0L});
         public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x0000000000400000L});
         public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x0000000000400002L});
         public static final BitSet FOLLOW_40 = new BitSet(new long[]{0x0000000000800000L});
@@ -38599,18 +38579,19 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_54 = new BitSet(new long[]{0x0010000000000000L});
         public static final BitSet FOLLOW_55 = new BitSet(new long[]{0x0000000000000080L});
         public static final BitSet FOLLOW_56 = new BitSet(new long[]{0x0001000020000000L});
-        public static final BitSet FOLLOW_57 = new BitSet(new long[]{0x00210001047A03F0L});
+        public static final BitSet FOLLOW_57 = new BitSet(new long[]{0x00210081047A03F0L});
         public static final BitSet FOLLOW_58 = new BitSet(new long[]{0x0002400000000000L});
         public static final BitSet FOLLOW_59 = new BitSet(new long[]{0x0000000400000000L});
         public static final BitSet FOLLOW_60 = new BitSet(new long[]{0x0000000000180000L});
-        public static final BitSet FOLLOW_61 = new BitSet(new long[]{0x00610001047203F0L});
-        public static final BitSet FOLLOW_62 = new BitSet(new long[]{0x00000000004001F0L});
-        public static final BitSet FOLLOW_63 = new BitSet(new long[]{0x0000000000000070L});
-        public static final BitSet FOLLOW_64 = new BitSet(new long[]{0x0008000000000000L});
-        public static final BitSet FOLLOW_65 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_66 = new BitSet(new long[]{0x0100000040400000L});
-        public static final BitSet FOLLOW_67 = new BitSet(new long[]{0x0000000040400002L});
-        public static final BitSet FOLLOW_68 = new BitSet(new long[]{0x0000000000400080L});
+        public static final BitSet FOLLOW_61 = new BitSet(new long[]{0x00610081047203F0L});
+        public static final BitSet FOLLOW_62 = new BitSet(new long[]{0x0000410000000000L});
+        public static final BitSet FOLLOW_63 = new BitSet(new long[]{0x00000000004001F0L});
+        public static final BitSet FOLLOW_64 = new BitSet(new long[]{0x0000000000000070L});
+        public static final BitSet FOLLOW_65 = new BitSet(new long[]{0x0008000000000000L});
+        public static final BitSet FOLLOW_66 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_67 = new BitSet(new long[]{0x0100000040400000L});
+        public static final BitSet FOLLOW_68 = new BitSet(new long[]{0x0000000040400002L});
+        public static final BitSet FOLLOW_69 = new BitSet(new long[]{0x0000000000400080L});
     }
 
 

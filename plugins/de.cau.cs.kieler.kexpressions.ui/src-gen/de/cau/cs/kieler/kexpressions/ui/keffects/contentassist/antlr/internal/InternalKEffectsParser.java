@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalKEffectsParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_BOOLEAN", "RULE_ID", "RULE_INT", "RULE_FLOAT", "RULE_HOSTCODE", "RULE_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_SL_COMMENT_ANNOTATION", "RULE_SL_COMMENT", "RULE_NUMBER", "RULE_WS", "RULE_ANY_OTHER", "'pre'", "'|'", "'&'", "'!'", "'+'", "'-'", "'*'", "'%'", "'/'", "'val'", "'||'", "'&&'", "'()'", "'.'", "'='", "'+='", "'-='", "'*='", "'/='", "'%='", "'&='", "'|='", "'^='", "'min='", "'max='", "'++'", "'--'", "'=='", "'<'", "'<='", "'>'", "'>='", "'!='", "'('", "')'", "'schedule'", "'['", "']'", "','", "'extern'", "'print'", "'\\''", "'_'", "'@'", "'#'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_BOOLEAN", "RULE_ID", "RULE_INT", "RULE_FLOAT", "RULE_HOSTCODE", "RULE_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_SL_COMMENT_ANNOTATION", "RULE_SL_COMMENT", "RULE_NUMBER", "RULE_WS", "RULE_ANY_OTHER", "'pre'", "'|'", "'&'", "'!'", "'+'", "'-'", "'*'", "'%'", "'/'", "'val'", "'||'", "'&&'", "'()'", "'.'", "'='", "'+='", "'-='", "'*='", "'/='", "'%='", "'&='", "'|='", "'^='", "'min='", "'max='", "'++'", "'--'", "'=='", "'<'", "'<='", "'>'", "'>='", "'!='", "'('", "')'", "'schedule'", "'['", "']'", "','", "'extern'", "'print'", "'\\''", "'{'", "'}'", "'_'", "'@'", "'#'"
     };
     public static final int T__50=50;
     public static final int RULE_BOOLEAN=5;
@@ -53,6 +53,8 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
     public static final int T__23=23;
     public static final int T__24=24;
     public static final int T__25=25;
+    public static final int T__62=62;
+    public static final int T__63=63;
     public static final int T__20=20;
     public static final int T__21=21;
     public static final int RULE_COMMENT_ANNOTATION=10;
@@ -6047,7 +6049,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             int alt3=2;
             int LA3_0 = input.LA(1);
 
-            if ( (LA3_0==RULE_COMMENT_ANNOTATION||LA3_0==56||LA3_0==60) ) {
+            if ( (LA3_0==RULE_COMMENT_ANNOTATION||LA3_0==56||LA3_0==62) ) {
                 alt3=1;
             }
             else if ( (LA3_0==45) ) {
@@ -6572,7 +6574,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             if ( (LA9_0==22) ) {
                 alt9=1;
             }
-            else if ( ((LA9_0>=RULE_STRING && LA9_0<=RULE_HOSTCODE)||LA9_0==17||LA9_0==26||LA9_0==45||LA9_0==50||LA9_0==56) ) {
+            else if ( ((LA9_0>=RULE_STRING && LA9_0<=RULE_HOSTCODE)||LA9_0==17||LA9_0==26||LA9_0==45||LA9_0==50||LA9_0==56||LA9_0==59) ) {
                 alt9=2;
             }
             else {
@@ -7559,10 +7561,10 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             int alt18=2;
             int LA18_0 = input.LA(1);
 
-            if ( ((LA18_0>=RULE_STRING && LA18_0<=RULE_HOSTCODE)||LA18_0==17||LA18_0==20||LA18_0==22||LA18_0==26||LA18_0==45||LA18_0==50||LA18_0==56) ) {
+            if ( ((LA18_0>=RULE_STRING && LA18_0<=RULE_HOSTCODE)||LA18_0==17||LA18_0==20||LA18_0==22||LA18_0==26||LA18_0==45||LA18_0==50||LA18_0==56||LA18_0==59) ) {
                 alt18=1;
             }
-            else if ( (LA18_0==59) ) {
+            else if ( (LA18_0==61) ) {
                 alt18=2;
             }
             else {
@@ -8989,7 +8991,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
                 int alt27=2;
                 int LA27_0 = input.LA(1);
 
-                if ( (LA27_0==RULE_COMMENT_ANNOTATION||LA27_0==60) ) {
+                if ( (LA27_0==RULE_COMMENT_ANNOTATION||LA27_0==62) ) {
                     alt27=1;
                 }
 
@@ -9832,7 +9834,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
                 int alt31=2;
                 int LA31_0 = input.LA(1);
 
-                if ( (LA31_0==RULE_COMMENT_ANNOTATION||LA31_0==60) ) {
+                if ( (LA31_0==RULE_COMMENT_ANNOTATION||LA31_0==62) ) {
                     alt31=1;
                 }
 
@@ -10860,7 +10862,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
                 int alt35=2;
                 int LA35_0 = input.LA(1);
 
-                if ( (LA35_0==RULE_COMMENT_ANNOTATION||LA35_0==60) ) {
+                if ( (LA35_0==RULE_COMMENT_ANNOTATION||LA35_0==62) ) {
                     alt35=1;
                 }
 
@@ -11799,7 +11801,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
                 int alt39=2;
                 int LA39_0 = input.LA(1);
 
-                if ( (LA39_0==RULE_COMMENT_ANNOTATION||LA39_0==60) ) {
+                if ( (LA39_0==RULE_COMMENT_ANNOTATION||LA39_0==62) ) {
                     alt39=1;
                 }
 
@@ -11990,7 +11992,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
                 int alt40=2;
                 int LA40_0 = input.LA(1);
 
-                if ( (LA40_0==RULE_COMMENT_ANNOTATION||LA40_0==60) ) {
+                if ( (LA40_0==RULE_COMMENT_ANNOTATION||LA40_0==62) ) {
                     alt40=1;
                 }
 
@@ -12782,7 +12784,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
                 int alt42=2;
                 int LA42_0 = input.LA(1);
 
-                if ( (LA42_0==RULE_COMMENT_ANNOTATION||LA42_0==60) ) {
+                if ( (LA42_0==RULE_COMMENT_ANNOTATION||LA42_0==62) ) {
                     alt42=1;
                 }
 
@@ -14580,7 +14582,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
                 int alt45=2;
                 int LA45_0 = input.LA(1);
 
-                if ( (LA45_0==RULE_COMMENT_ANNOTATION||LA45_0==60) ) {
+                if ( (LA45_0==RULE_COMMENT_ANNOTATION||LA45_0==62) ) {
                     alt45=1;
                 }
 
@@ -28074,24 +28076,24 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
 
 
     // $ANTLR start "rule__VectorValue__Group__0__Impl"
-    // InternalKEffects.g:9688:1: rule__VectorValue__Group__0__Impl : ( '(' ) ;
+    // InternalKEffects.g:9688:1: rule__VectorValue__Group__0__Impl : ( '{' ) ;
     public final void rule__VectorValue__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKEffects.g:9692:1: ( ( '(' ) )
-            // InternalKEffects.g:9693:1: ( '(' )
+            // InternalKEffects.g:9692:1: ( ( '{' ) )
+            // InternalKEffects.g:9693:1: ( '{' )
             {
-            // InternalKEffects.g:9693:1: ( '(' )
-            // InternalKEffects.g:9694:1: '('
+            // InternalKEffects.g:9693:1: ( '{' )
+            // InternalKEffects.g:9694:1: '{'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getVectorValueAccess().getLeftParenthesisKeyword_0()); 
+               before(grammarAccess.getVectorValueAccess().getLeftCurlyBracketKeyword_0()); 
             }
-            match(input,50,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,59,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getVectorValueAccess().getLeftParenthesisKeyword_0()); 
+               after(grammarAccess.getVectorValueAccess().getLeftCurlyBracketKeyword_0()); 
             }
 
             }
@@ -28124,7 +28126,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:9711:1: ( rule__VectorValue__Group__1__Impl rule__VectorValue__Group__2 )
             // InternalKEffects.g:9712:2: rule__VectorValue__Group__1__Impl rule__VectorValue__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_17);
+            pushFollow(FollowSets000.FOLLOW_53);
             rule__VectorValue__Group__1__Impl();
 
             state._fsp--;
@@ -28213,7 +28215,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:9740:1: ( rule__VectorValue__Group__2__Impl rule__VectorValue__Group__3 )
             // InternalKEffects.g:9741:2: rule__VectorValue__Group__2__Impl rule__VectorValue__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_17);
+            pushFollow(FollowSets000.FOLLOW_53);
             rule__VectorValue__Group__2__Impl();
 
             state._fsp--;
@@ -28344,24 +28346,24 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
 
 
     // $ANTLR start "rule__VectorValue__Group__3__Impl"
-    // InternalKEffects.g:9776:1: rule__VectorValue__Group__3__Impl : ( ')' ) ;
+    // InternalKEffects.g:9776:1: rule__VectorValue__Group__3__Impl : ( '}' ) ;
     public final void rule__VectorValue__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKEffects.g:9780:1: ( ( ')' ) )
-            // InternalKEffects.g:9781:1: ( ')' )
+            // InternalKEffects.g:9780:1: ( ( '}' ) )
+            // InternalKEffects.g:9781:1: ( '}' )
             {
-            // InternalKEffects.g:9781:1: ( ')' )
-            // InternalKEffects.g:9782:1: ')'
+            // InternalKEffects.g:9781:1: ( '}' )
+            // InternalKEffects.g:9782:1: '}'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getVectorValueAccess().getRightParenthesisKeyword_3()); 
+               before(grammarAccess.getVectorValueAccess().getRightCurlyBracketKeyword_3()); 
             }
-            match(input,51,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,60,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getVectorValueAccess().getRightParenthesisKeyword_3()); 
+               after(grammarAccess.getVectorValueAccess().getRightCurlyBracketKeyword_3()); 
             }
 
             }
@@ -28675,7 +28677,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIgnoreValueAccess().get_Keyword_1()); 
             }
-            match(input,59,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,61,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getIgnoreValueAccess().get_Keyword_1()); 
             }
@@ -28754,7 +28756,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTagAnnotationAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,60,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,62,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTagAnnotationAccess().getCommercialAtKeyword_0()); 
             }
@@ -28917,7 +28919,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPragmaTagAccess().getNumberSignKeyword_0()); 
             }
-            match(input,61,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,63,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getPragmaTagAccess().getNumberSignKeyword_0()); 
             }
@@ -29080,7 +29082,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,60,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,62,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
@@ -29115,7 +29117,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:10092:1: ( rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2 )
             // InternalKEffects.g:10093:2: rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_53);
+            pushFollow(FollowSets000.FOLLOW_54);
             rule__KeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -29395,7 +29397,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:10186:1: ( rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1 )
             // InternalKEffects.g:10187:2: rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_53);
+            pushFollow(FollowSets000.FOLLOW_54);
             rule__KeyStringValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
@@ -29602,7 +29604,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,60,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,62,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
@@ -29637,7 +29639,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:10280:1: ( rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2 )
             // InternalKEffects.g:10281:2: rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_54);
+            pushFollow(FollowSets000.FOLLOW_55);
             rule__RestrictedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -29917,7 +29919,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:10374:1: ( rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1 )
             // InternalKEffects.g:10375:2: rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_54);
+            pushFollow(FollowSets000.FOLLOW_55);
             rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
@@ -30124,7 +30126,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringPragmaAccess().getNumberSignKeyword_0()); 
             }
-            match(input,61,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,63,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getStringPragmaAccess().getNumberSignKeyword_0()); 
             }
@@ -30159,7 +30161,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:10468:1: ( rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2 )
             // InternalKEffects.g:10469:2: rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_53);
+            pushFollow(FollowSets000.FOLLOW_54);
             rule__StringPragma__Group__1__Impl();
 
             state._fsp--;
@@ -30439,7 +30441,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:10562:1: ( rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1 )
             // InternalKEffects.g:10563:2: rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_53);
+            pushFollow(FollowSets000.FOLLOW_54);
             rule__StringPragma__Group_3__0__Impl();
 
             state._fsp--;
@@ -30646,7 +30648,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,60,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,62,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
@@ -30681,7 +30683,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:10656:1: ( rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2 )
             // InternalKEffects.g:10657:2: rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_55);
+            pushFollow(FollowSets000.FOLLOW_56);
             rule__TypedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -30938,7 +30940,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:10745:1: ( rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5 )
             // InternalKEffects.g:10746:2: rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_53);
+            pushFollow(FollowSets000.FOLLOW_54);
             rule__TypedKeyStringValueAnnotation__Group__4__Impl();
 
             state._fsp--;
@@ -31208,7 +31210,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:10847:1: ( rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1 )
             // InternalKEffects.g:10848:2: rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1
             {
-            pushFollow(FollowSets000.FOLLOW_53);
+            pushFollow(FollowSets000.FOLLOW_54);
             rule__TypedKeyStringValueAnnotation__Group_6__0__Impl();
 
             state._fsp--;
@@ -31415,7 +31417,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,60,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,62,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
@@ -31450,7 +31452,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:10941:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__2 )
             // InternalKEffects.g:10942:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_55);
+            pushFollow(FollowSets000.FOLLOW_56);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -31707,7 +31709,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:11030:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5 )
             // InternalKEffects.g:11031:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_54);
+            pushFollow(FollowSets000.FOLLOW_55);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl();
 
             state._fsp--;
@@ -31977,7 +31979,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:11132:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1 )
             // InternalKEffects.g:11133:2: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1
             {
-            pushFollow(FollowSets000.FOLLOW_54);
+            pushFollow(FollowSets000.FOLLOW_55);
             rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl();
 
             state._fsp--;
@@ -32184,7 +32186,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,60,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,62,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
@@ -32219,7 +32221,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:11226:1: ( rule__QuotedKeyStringValueAnnotation__Group__1__Impl rule__QuotedKeyStringValueAnnotation__Group__2 )
             // InternalKEffects.g:11227:2: rule__QuotedKeyStringValueAnnotation__Group__1__Impl rule__QuotedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_56);
+            pushFollow(FollowSets000.FOLLOW_57);
             rule__QuotedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -32499,7 +32501,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:11320:1: ( rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl rule__QuotedKeyStringValueAnnotation__Group_3__1 )
             // InternalKEffects.g:11321:2: rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl rule__QuotedKeyStringValueAnnotation__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_56);
+            pushFollow(FollowSets000.FOLLOW_57);
             rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
@@ -32706,7 +32708,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,60,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,62,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
@@ -32741,7 +32743,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:11414:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2 )
             // InternalKEffects.g:11415:2: rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_55);
+            pushFollow(FollowSets000.FOLLOW_56);
             rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -32998,7 +33000,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:11503:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__5 )
             // InternalKEffects.g:11504:2: rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_56);
+            pushFollow(FollowSets000.FOLLOW_57);
             rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl();
 
             state._fsp--;
@@ -33268,7 +33270,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:11605:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group_6__1 )
             // InternalKEffects.g:11606:2: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group_6__1
             {
-            pushFollow(FollowSets000.FOLLOW_56);
+            pushFollow(FollowSets000.FOLLOW_57);
             rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl();
 
             state._fsp--;
@@ -33431,7 +33433,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:11668:1: ( rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1 )
             // InternalKEffects.g:11669:2: rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_57);
+            pushFollow(FollowSets000.FOLLOW_58);
             rule__ExtendedID__Group__0__Impl();
 
             state._fsp--;
@@ -33510,7 +33512,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:11697:1: ( rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2 )
             // InternalKEffects.g:11698:2: rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_57);
+            pushFollow(FollowSets000.FOLLOW_58);
             rule__ExtendedID__Group__1__Impl();
 
             state._fsp--;
@@ -33578,7 +33580,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             	case 1 :
             	    // InternalKEffects.g:11712:2: rule__ExtendedID__Group_1__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_58);
+            	    pushFollow(FollowSets000.FOLLOW_59);
             	    rule__ExtendedID__Group_1__0();
 
             	    state._fsp--;
@@ -33669,7 +33671,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             int alt85=2;
             int LA85_0 = input.LA(1);
 
-            if ( (LA85_0==61) ) {
+            if ( (LA85_0==63) ) {
                 alt85=1;
             }
             switch (alt85) {
@@ -33928,7 +33930,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExtendedIDAccess().getNumberSignKeyword_2_0()); 
             }
-            match(input,61,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,63,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExtendedIDAccess().getNumberSignKeyword_2_0()); 
             }
@@ -34037,7 +34039,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:11886:1: ( rule__Integer__Group__0__Impl rule__Integer__Group__1 )
             // InternalKEffects.g:11887:2: rule__Integer__Group__0__Impl rule__Integer__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_59);
+            pushFollow(FollowSets000.FOLLOW_60);
             rule__Integer__Group__0__Impl();
 
             state._fsp--;
@@ -34207,7 +34209,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:11949:1: ( rule__Floateger__Group__0__Impl rule__Floateger__Group__1 )
             // InternalKEffects.g:11950:2: rule__Floateger__Group__0__Impl rule__Floateger__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_53);
+            pushFollow(FollowSets000.FOLLOW_54);
             rule__Floateger__Group__0__Impl();
 
             state._fsp--;
@@ -39910,30 +39912,6 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
     }
     // $ANTLR end synpred12_InternalKEffects
 
-    // $ANTLR start synpred23_InternalKEffects
-    public final void synpred23_InternalKEffects_fragment() throws RecognitionException {   
-        // InternalKEffects.g:2315:6: ( ( ruleVectorValue ) )
-        // InternalKEffects.g:2315:6: ( ruleVectorValue )
-        {
-        // InternalKEffects.g:2315:6: ( ruleVectorValue )
-        // InternalKEffects.g:2316:1: ruleVectorValue
-        {
-        if ( state.backtracking==0 ) {
-           before(grammarAccess.getAtomicValuedExpressionAccess().getVectorValueParserRuleCall_3()); 
-        }
-        pushFollow(FollowSets000.FOLLOW_2);
-        ruleVectorValue();
-
-        state._fsp--;
-        if (state.failed) return ;
-
-        }
-
-
-        }
-    }
-    // $ANTLR end synpred23_InternalKEffects
-
     // $ANTLR start synpred24_InternalKEffects
     public final void synpred24_InternalKEffects_fragment() throws RecognitionException {   
         // InternalKEffects.g:2321:6: ( ( ( rule__AtomicValuedExpression__Group_4__0 ) ) )
@@ -40121,20 +40099,6 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         state.failed=false;
         return success;
     }
-    public final boolean synpred23_InternalKEffects() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred23_InternalKEffects_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
 
 
     protected DFA1 dfa1 = new DFA1(this);
@@ -40147,11 +40111,11 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
     protected DFA47 dfa47 = new DFA47(this);
     static final String dfa_1s = "\14\uffff";
     static final String dfa_2s = "\1\6\3\0\10\uffff";
-    static final String dfa_3s = "\1\74\3\0\10\uffff";
+    static final String dfa_3s = "\1\76\3\0\10\uffff";
     static final String dfa_4s = "\4\uffff\1\4\1\6\1\uffff\1\7\1\1\1\2\1\3\1\5";
     static final String dfa_5s = "\1\uffff\1\0\1\1\1\2\10\uffff}>";
     static final String[] dfa_6s = {
-            "\1\3\2\uffff\1\4\1\1\42\uffff\1\5\12\uffff\1\5\1\7\2\uffff\1\2",
+            "\1\3\2\uffff\1\4\1\1\42\uffff\1\5\12\uffff\1\5\1\7\4\uffff\1\2",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -40269,13 +40233,14 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             throw nvae;
         }
     }
-    static final String dfa_7s = "\17\uffff";
-    static final String dfa_8s = "\1\4\14\0\2\uffff";
-    static final String dfa_9s = "\1\70\14\0\2\uffff";
-    static final String dfa_10s = "\15\uffff\1\1\1\2";
-    static final String dfa_11s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\2\uffff}>";
+    static final String dfa_7s = "\20\uffff";
+    static final String dfa_8s = "\1\4\15\0\2\uffff";
+    static final String dfa_9s = "\1\73\15\0\2\uffff";
+    static final String dfa_10s = "\16\uffff\1\1\1\2";
+    static final String dfa_11s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\2\uffff}>";
     static final String[] dfa_12s = {
-            "\1\4\1\6\1\11\1\2\1\3\1\14\7\uffff\1\7\2\uffff\1\15\1\uffff\1\1\3\uffff\1\10\22\uffff\1\13\4\uffff\1\5\5\uffff\1\12",
+            "\1\4\1\7\1\12\1\2\1\3\1\15\7\uffff\1\10\2\uffff\1\16\1\uffff\1\1\3\uffff\1\11\22\uffff\1\14\4\uffff\1\6\5\uffff\1\13\2\uffff\1\5",
+            "\1\uffff",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -40326,9 +40291,9 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
                         int index6_1 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred11_InternalKEffects()) ) {s = 13;}
+                        if ( (synpred11_InternalKEffects()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index6_1);
@@ -40341,9 +40306,9 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
                         int index6_2 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred11_InternalKEffects()) ) {s = 13;}
+                        if ( (synpred11_InternalKEffects()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index6_2);
@@ -40356,9 +40321,9 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
                         int index6_3 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred11_InternalKEffects()) ) {s = 13;}
+                        if ( (synpred11_InternalKEffects()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index6_3);
@@ -40371,9 +40336,9 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
                         int index6_4 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred11_InternalKEffects()) ) {s = 13;}
+                        if ( (synpred11_InternalKEffects()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index6_4);
@@ -40386,9 +40351,9 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
                         int index6_5 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred11_InternalKEffects()) ) {s = 13;}
+                        if ( (synpred11_InternalKEffects()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index6_5);
@@ -40401,9 +40366,9 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
                         int index6_6 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred11_InternalKEffects()) ) {s = 13;}
+                        if ( (synpred11_InternalKEffects()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index6_6);
@@ -40416,9 +40381,9 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
                         int index6_7 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred11_InternalKEffects()) ) {s = 13;}
+                        if ( (synpred11_InternalKEffects()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index6_7);
@@ -40431,9 +40396,9 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
                         int index6_8 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred11_InternalKEffects()) ) {s = 13;}
+                        if ( (synpred11_InternalKEffects()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index6_8);
@@ -40446,9 +40411,9 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
                         int index6_9 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred11_InternalKEffects()) ) {s = 13;}
+                        if ( (synpred11_InternalKEffects()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index6_9);
@@ -40461,9 +40426,9 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
                         int index6_10 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred11_InternalKEffects()) ) {s = 13;}
+                        if ( (synpred11_InternalKEffects()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index6_10);
@@ -40476,9 +40441,9 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
                         int index6_11 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred11_InternalKEffects()) ) {s = 13;}
+                        if ( (synpred11_InternalKEffects()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index6_11);
@@ -40491,12 +40456,27 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
                         int index6_12 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred11_InternalKEffects()) ) {s = 13;}
+                        if ( (synpred11_InternalKEffects()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index6_12);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 12 : 
+                        int LA6_13 = input.LA(1);
+
+                         
+                        int index6_13 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred11_InternalKEffects()) ) {s = 14;}
+
+                        else if ( (true) ) {s = 15;}
+
+                         
+                        input.seek(index6_13);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -40507,13 +40487,14 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             throw nvae;
         }
     }
-    static final String dfa_13s = "\16\uffff";
-    static final String dfa_14s = "\1\4\4\uffff\10\0\1\uffff";
-    static final String dfa_15s = "\1\70\4\uffff\10\0\1\uffff";
-    static final String dfa_16s = "\1\uffff\1\1\13\uffff\1\2";
-    static final String dfa_17s = "\5\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\uffff}>";
+    static final String dfa_13s = "\17\uffff";
+    static final String dfa_14s = "\1\4\5\uffff\10\0\1\uffff";
+    static final String dfa_15s = "\1\73\5\uffff\10\0\1\uffff";
+    static final String dfa_16s = "\1\uffff\1\1\14\uffff\1\2";
+    static final String dfa_17s = "\6\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\uffff}>";
     static final String[] dfa_18s = {
-            "\1\1\1\6\1\11\2\1\1\14\7\uffff\1\7\2\uffff\1\15\1\uffff\1\1\3\uffff\1\10\22\uffff\1\13\4\uffff\1\5\5\uffff\1\12",
+            "\1\1\1\7\1\12\2\1\1\15\7\uffff\1\10\2\uffff\1\16\1\uffff\1\1\3\uffff\1\11\22\uffff\1\14\4\uffff\1\6\5\uffff\1\13\2\uffff\1\1",
+            "",
             "",
             "",
             "",
@@ -40557,21 +40538,6 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA7_5 = input.LA(1);
-
-                         
-                        int index7_5 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred12_InternalKEffects()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 13;}
-
-                         
-                        input.seek(index7_5);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 1 : 
                         int LA7_6 = input.LA(1);
 
                          
@@ -40580,13 +40546,13 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
                         s = -1;
                         if ( (synpred12_InternalKEffects()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index7_6);
                         if ( s>=0 ) return s;
                         break;
-                    case 2 : 
+                    case 1 : 
                         int LA7_7 = input.LA(1);
 
                          
@@ -40595,13 +40561,13 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
                         s = -1;
                         if ( (synpred12_InternalKEffects()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index7_7);
                         if ( s>=0 ) return s;
                         break;
-                    case 3 : 
+                    case 2 : 
                         int LA7_8 = input.LA(1);
 
                          
@@ -40610,13 +40576,13 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
                         s = -1;
                         if ( (synpred12_InternalKEffects()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index7_8);
                         if ( s>=0 ) return s;
                         break;
-                    case 4 : 
+                    case 3 : 
                         int LA7_9 = input.LA(1);
 
                          
@@ -40625,13 +40591,13 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
                         s = -1;
                         if ( (synpred12_InternalKEffects()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index7_9);
                         if ( s>=0 ) return s;
                         break;
-                    case 5 : 
+                    case 4 : 
                         int LA7_10 = input.LA(1);
 
                          
@@ -40640,13 +40606,13 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
                         s = -1;
                         if ( (synpred12_InternalKEffects()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index7_10);
                         if ( s>=0 ) return s;
                         break;
-                    case 6 : 
+                    case 5 : 
                         int LA7_11 = input.LA(1);
 
                          
@@ -40655,13 +40621,13 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
                         s = -1;
                         if ( (synpred12_InternalKEffects()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index7_11);
                         if ( s>=0 ) return s;
                         break;
-                    case 7 : 
+                    case 6 : 
                         int LA7_12 = input.LA(1);
 
                          
@@ -40670,10 +40636,25 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
                         s = -1;
                         if ( (synpred12_InternalKEffects()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index7_12);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 7 : 
+                        int LA7_13 = input.LA(1);
+
+                         
+                        int index7_13 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred12_InternalKEffects()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 14;}
+
+                         
+                        input.seek(index7_13);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -40687,18 +40668,18 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
     static final String dfa_19s = "\11\uffff";
     static final String dfa_20s = "\3\uffff\1\2\3\uffff\1\2\1\uffff";
     static final String dfa_21s = "\1\5\2\uffff\1\22\3\uffff\1\22\1\uffff";
-    static final String dfa_22s = "\1\70\2\uffff\1\72\3\uffff\1\72\1\uffff";
+    static final String dfa_22s = "\1\70\2\uffff\1\74\3\uffff\1\74\1\uffff";
     static final String dfa_23s = "\1\uffff\1\1\1\2\1\uffff\1\3\1\5\1\6\1\uffff\1\4";
     static final String dfa_24s = "\11\uffff}>";
     static final String[] dfa_25s = {
             "\1\1\1\3\2\uffff\1\6\7\uffff\1\2\10\uffff\1\2\22\uffff\1\5\4\uffff\1\4\5\uffff\1\5",
             "",
             "",
-            "\2\2\1\uffff\5\2\1\uffff\2\2\1\10\1\2\15\uffff\6\2\1\10\5\2\2\uffff\1\7",
+            "\2\2\1\uffff\5\2\1\uffff\2\2\1\10\1\2\15\uffff\6\2\1\10\5\2\2\uffff\1\7\1\uffff\1\2",
             "",
             "",
             "",
-            "\2\2\1\uffff\5\2\1\uffff\2\2\1\10\1\2\15\uffff\6\2\1\10\5\2\2\uffff\1\7",
+            "\2\2\1\uffff\5\2\1\uffff\2\2\1\10\1\2\15\uffff\6\2\1\10\5\2\2\uffff\1\7\1\uffff\1\2",
             ""
     };
 
@@ -40727,12 +40708,14 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             return "2246:1: rule__AtomicExpression__Alternatives : ( ( ruleBoolValue ) | ( ruleValuedObjectTestExpression ) | ( ( rule__AtomicExpression__Group_2__0 ) ) | ( ruleReferenceCall ) | ( ruleFunctionCall ) | ( ruleTextExpression ) );";
         }
     }
-    static final String dfa_26s = "\1\4\3\uffff\1\0\11\uffff";
-    static final String dfa_27s = "\1\70\3\uffff\1\0\11\uffff";
-    static final String dfa_28s = "\1\uffff\1\1\1\2\1\3\1\uffff\1\6\6\uffff\1\4\1\5";
-    static final String dfa_29s = "\4\uffff\1\0\11\uffff}>";
-    static final String[] dfa_30s = {
-            "\1\3\2\5\1\1\1\2\1\5\7\uffff\1\5\10\uffff\1\5\22\uffff\1\5\4\uffff\1\4\5\uffff\1\5",
+    static final String dfa_26s = "\16\uffff";
+    static final String dfa_27s = "\1\4\4\uffff\1\0\10\uffff";
+    static final String dfa_28s = "\1\73\4\uffff\1\0\10\uffff";
+    static final String dfa_29s = "\1\uffff\1\1\1\2\1\3\1\4\1\uffff\1\6\6\uffff\1\5";
+    static final String dfa_30s = "\5\uffff\1\0\10\uffff}>";
+    static final String[] dfa_31s = {
+            "\1\3\2\6\1\1\1\2\1\6\7\uffff\1\6\10\uffff\1\6\22\uffff\1\6\4\uffff\1\5\5\uffff\1\6\2\uffff\1\4",
+            "",
             "",
             "",
             "",
@@ -40744,27 +40727,28 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             "",
             "",
             "",
-            "",
             ""
     };
-    static final char[] dfa_26 = DFA.unpackEncodedStringToUnsignedChars(dfa_26s);
+
+    static final short[] dfa_26 = DFA.unpackEncodedString(dfa_26s);
     static final char[] dfa_27 = DFA.unpackEncodedStringToUnsignedChars(dfa_27s);
-    static final short[] dfa_28 = DFA.unpackEncodedString(dfa_28s);
+    static final char[] dfa_28 = DFA.unpackEncodedStringToUnsignedChars(dfa_28s);
     static final short[] dfa_29 = DFA.unpackEncodedString(dfa_29s);
-    static final short[][] dfa_30 = unpackEncodedStringArray(dfa_30s);
+    static final short[] dfa_30 = DFA.unpackEncodedString(dfa_30s);
+    static final short[][] dfa_31 = unpackEncodedStringArray(dfa_31s);
 
     class DFA11 extends DFA {
 
         public DFA11(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 11;
-            this.eot = dfa_13;
-            this.eof = dfa_13;
-            this.min = dfa_26;
-            this.max = dfa_27;
-            this.accept = dfa_28;
-            this.special = dfa_29;
-            this.transition = dfa_30;
+            this.eot = dfa_26;
+            this.eof = dfa_26;
+            this.min = dfa_27;
+            this.max = dfa_28;
+            this.accept = dfa_29;
+            this.special = dfa_30;
+            this.transition = dfa_31;
         }
         public String getDescription() {
             return "2292:1: rule__AtomicValuedExpression__Alternatives : ( ( ruleIntValue ) | ( ruleFloatValue ) | ( ruleStringValue ) | ( ruleVectorValue ) | ( ( rule__AtomicValuedExpression__Group_4__0 ) ) | ( ruleAtomicExpression ) );";
@@ -40774,20 +40758,18 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA11_4 = input.LA(1);
+                        int LA11_5 = input.LA(1);
 
                          
-                        int index11_4 = input.index();
+                        int index11_5 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred23_InternalKEffects()) ) {s = 12;}
+                        if ( (synpred24_InternalKEffects()) ) {s = 13;}
 
-                        else if ( (synpred24_InternalKEffects()) ) {s = 13;}
-
-                        else if ( (true) ) {s = 5;}
+                        else if ( (true) ) {s = 6;}
 
                          
-                        input.seek(index11_4);
+                        input.seek(index11_5);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -40798,78 +40780,78 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             throw nvae;
         }
     }
-    static final String dfa_31s = "\15\uffff";
-    static final String dfa_32s = "\3\uffff\1\12\5\uffff\1\10\1\uffff\2\12";
-    static final String dfa_33s = "\1\12\1\uffff\1\6\1\4\2\6\1\7\2\uffff\1\6\1\uffff\2\4";
-    static final String dfa_34s = "\1\74\1\uffff\1\6\1\75\1\6\1\10\1\7\2\uffff\1\75\1\uffff\1\75\1\74";
-    static final String dfa_35s = "\1\uffff\1\1\5\uffff\1\3\1\2\1\uffff\1\4\2\uffff";
-    static final String dfa_36s = "\15\uffff}>";
-    static final String[] dfa_37s = {
-            "\1\1\61\uffff\1\2",
+    static final String dfa_32s = "\15\uffff";
+    static final String dfa_33s = "\3\uffff\1\12\5\uffff\1\10\1\uffff\2\12";
+    static final String dfa_34s = "\1\12\1\uffff\1\6\1\4\2\6\1\7\2\uffff\1\6\1\uffff\2\4";
+    static final String dfa_35s = "\1\76\1\uffff\1\6\1\77\1\6\1\10\1\7\2\uffff\1\77\1\uffff\1\77\1\76";
+    static final String dfa_36s = "\1\uffff\1\1\5\uffff\1\3\1\2\1\uffff\1\4\2\uffff";
+    static final String dfa_37s = "\15\uffff}>";
+    static final String[] dfa_38s = {
+            "\1\1\63\uffff\1\2",
             "",
             "\1\3",
-            "\2\10\1\11\2\10\2\12\13\uffff\1\5\7\uffff\1\4\26\uffff\1\7\2\uffff\2\12\2\uffff\1\12\1\6",
+            "\2\10\1\11\2\10\2\12\13\uffff\1\5\7\uffff\1\4\26\uffff\1\7\2\uffff\2\12\4\uffff\1\12\1\6",
             "\1\13",
             "\1\13\2\10",
             "\1\14",
             "",
             "",
-            "\1\10\2\uffff\2\10\13\uffff\1\10\6\uffff\1\12\1\10\15\12\6\uffff\1\12\2\uffff\1\12\1\uffff\3\10\1\12\1\uffff\2\10",
+            "\1\10\2\uffff\2\10\13\uffff\1\10\6\uffff\1\12\1\10\15\12\6\uffff\1\12\2\uffff\1\12\1\uffff\3\10\1\12\3\uffff\2\10",
             "",
-            "\2\10\1\11\2\10\2\12\13\uffff\1\5\7\uffff\1\4\26\uffff\1\7\2\uffff\2\12\2\uffff\1\12\1\6",
-            "\2\10\1\11\2\10\2\12\13\uffff\1\10\36\uffff\1\7\2\uffff\2\12\2\uffff\1\12"
+            "\2\10\1\11\2\10\2\12\13\uffff\1\5\7\uffff\1\4\26\uffff\1\7\2\uffff\2\12\4\uffff\1\12\1\6",
+            "\2\10\1\11\2\10\2\12\13\uffff\1\10\36\uffff\1\7\2\uffff\2\12\4\uffff\1\12"
     };
 
-    static final short[] dfa_31 = DFA.unpackEncodedString(dfa_31s);
     static final short[] dfa_32 = DFA.unpackEncodedString(dfa_32s);
-    static final char[] dfa_33 = DFA.unpackEncodedStringToUnsignedChars(dfa_33s);
+    static final short[] dfa_33 = DFA.unpackEncodedString(dfa_33s);
     static final char[] dfa_34 = DFA.unpackEncodedStringToUnsignedChars(dfa_34s);
-    static final short[] dfa_35 = DFA.unpackEncodedString(dfa_35s);
+    static final char[] dfa_35 = DFA.unpackEncodedStringToUnsignedChars(dfa_35s);
     static final short[] dfa_36 = DFA.unpackEncodedString(dfa_36s);
-    static final short[][] dfa_37 = unpackEncodedStringArray(dfa_37s);
+    static final short[] dfa_37 = DFA.unpackEncodedString(dfa_37s);
+    static final short[][] dfa_38 = unpackEncodedStringArray(dfa_38s);
 
     class DFA19 extends DFA {
 
         public DFA19(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 19;
-            this.eot = dfa_31;
-            this.eof = dfa_32;
-            this.min = dfa_33;
-            this.max = dfa_34;
-            this.accept = dfa_35;
-            this.special = dfa_36;
-            this.transition = dfa_37;
+            this.eot = dfa_32;
+            this.eof = dfa_33;
+            this.min = dfa_34;
+            this.max = dfa_35;
+            this.accept = dfa_36;
+            this.special = dfa_37;
+            this.transition = dfa_38;
         }
         public String getDescription() {
             return "2500:1: rule__Annotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedKeyStringValueAnnotation ) | ( ruleTagAnnotation ) );";
         }
     }
-    static final String dfa_38s = "\3\uffff\1\10\6\uffff\2\10";
-    static final String dfa_39s = "\1\12\1\uffff\1\6\1\4\2\6\1\7\3\uffff\2\4";
-    static final String dfa_40s = "\1\74\1\uffff\1\6\1\75\2\6\1\7\3\uffff\1\75\1\74";
-    static final String dfa_41s = "\1\uffff\1\1\5\uffff\1\2\1\4\1\3\2\uffff";
-    static final String dfa_42s = "\14\uffff}>";
-    static final String[] dfa_43s = {
-            "\1\1\61\uffff\1\2",
+    static final String dfa_39s = "\3\uffff\1\10\6\uffff\2\10";
+    static final String dfa_40s = "\1\12\1\uffff\1\6\1\4\2\6\1\7\3\uffff\2\4";
+    static final String dfa_41s = "\1\76\1\uffff\1\6\1\77\2\6\1\7\3\uffff\1\77\1\76";
+    static final String dfa_42s = "\1\uffff\1\1\5\uffff\1\2\1\4\1\3\2\uffff";
+    static final String dfa_43s = "\14\uffff}>";
+    static final String[] dfa_44s = {
+            "\1\1\63\uffff\1\2",
             "",
             "\1\3",
-            "\1\7\1\uffff\1\10\3\uffff\1\10\13\uffff\1\5\7\uffff\1\4\26\uffff\1\11\6\uffff\1\10\1\6",
+            "\1\7\1\uffff\1\10\3\uffff\1\10\13\uffff\1\5\7\uffff\1\4\26\uffff\1\11\10\uffff\1\10\1\6",
             "\1\12",
             "\1\12",
             "\1\13",
             "",
             "",
             "",
-            "\1\7\1\uffff\1\10\3\uffff\1\10\13\uffff\1\5\7\uffff\1\4\26\uffff\1\11\6\uffff\1\10\1\6",
-            "\1\7\1\uffff\1\10\3\uffff\1\10\52\uffff\1\11\6\uffff\1\10"
+            "\1\7\1\uffff\1\10\3\uffff\1\10\13\uffff\1\5\7\uffff\1\4\26\uffff\1\11\10\uffff\1\10\1\6",
+            "\1\7\1\uffff\1\10\3\uffff\1\10\52\uffff\1\11\10\uffff\1\10"
     };
-    static final short[] dfa_38 = DFA.unpackEncodedString(dfa_38s);
-    static final char[] dfa_39 = DFA.unpackEncodedStringToUnsignedChars(dfa_39s);
+    static final short[] dfa_39 = DFA.unpackEncodedString(dfa_39s);
     static final char[] dfa_40 = DFA.unpackEncodedStringToUnsignedChars(dfa_40s);
-    static final short[] dfa_41 = DFA.unpackEncodedString(dfa_41s);
+    static final char[] dfa_41 = DFA.unpackEncodedStringToUnsignedChars(dfa_41s);
     static final short[] dfa_42 = DFA.unpackEncodedString(dfa_42s);
-    static final short[][] dfa_43 = unpackEncodedStringArray(dfa_43s);
+    static final short[] dfa_43 = DFA.unpackEncodedString(dfa_43s);
+    static final short[][] dfa_44 = unpackEncodedStringArray(dfa_44s);
 
     class DFA20 extends DFA {
 
@@ -40877,25 +40859,25 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             this.recognizer = recognizer;
             this.decisionNumber = 20;
             this.eot = dfa_1;
-            this.eof = dfa_38;
-            this.min = dfa_39;
-            this.max = dfa_40;
-            this.accept = dfa_41;
-            this.special = dfa_42;
-            this.transition = dfa_43;
+            this.eof = dfa_39;
+            this.min = dfa_40;
+            this.max = dfa_41;
+            this.accept = dfa_42;
+            this.special = dfa_43;
+            this.transition = dfa_44;
         }
         public String getDescription() {
             return "2537:1: rule__QuotedStringAnnotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleQuotedKeyStringValueAnnotation ) | ( ruleQuotedTypedKeyStringValueAnnotation ) | ( ruleTagAnnotation ) );";
         }
     }
-    static final String dfa_44s = "\7\uffff";
-    static final String dfa_45s = "\1\2\6\uffff";
-    static final String dfa_46s = "\1\63\1\6\1\uffff\2\7\1\0\1\uffff";
-    static final String dfa_47s = "\1\67\1\6\1\uffff\2\72\1\0\1\uffff";
-    static final String dfa_48s = "\2\uffff\1\2\3\uffff\1\1";
-    static final String dfa_49s = "\5\uffff\1\0\1\uffff}>";
-    static final String[] dfa_50s = {
-            "\1\2\1\1\1\uffff\2\2",
+    static final String dfa_45s = "\7\uffff";
+    static final String dfa_46s = "\1\2\6\uffff";
+    static final String dfa_47s = "\1\63\1\6\1\uffff\2\7\1\0\1\uffff";
+    static final String dfa_48s = "\1\74\1\6\1\uffff\2\72\1\0\1\uffff";
+    static final String dfa_49s = "\2\uffff\1\2\3\uffff\1\1";
+    static final String dfa_50s = "\5\uffff\1\0\1\uffff}>";
+    static final String[] dfa_51s = {
+            "\1\2\1\1\1\uffff\2\2\4\uffff\1\2",
             "\1\3",
             "",
             "\1\5\62\uffff\1\4",
@@ -40904,26 +40886,26 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             ""
     };
 
-    static final short[] dfa_44 = DFA.unpackEncodedString(dfa_44s);
     static final short[] dfa_45 = DFA.unpackEncodedString(dfa_45s);
-    static final char[] dfa_46 = DFA.unpackEncodedStringToUnsignedChars(dfa_46s);
+    static final short[] dfa_46 = DFA.unpackEncodedString(dfa_46s);
     static final char[] dfa_47 = DFA.unpackEncodedStringToUnsignedChars(dfa_47s);
-    static final short[] dfa_48 = DFA.unpackEncodedString(dfa_48s);
+    static final char[] dfa_48 = DFA.unpackEncodedStringToUnsignedChars(dfa_48s);
     static final short[] dfa_49 = DFA.unpackEncodedString(dfa_49s);
-    static final short[][] dfa_50 = unpackEncodedStringArray(dfa_50s);
+    static final short[] dfa_50 = DFA.unpackEncodedString(dfa_50s);
+    static final short[][] dfa_51 = unpackEncodedStringArray(dfa_51s);
 
     class DFA47 extends DFA {
 
         public DFA47(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 47;
-            this.eot = dfa_44;
-            this.eof = dfa_45;
-            this.min = dfa_46;
-            this.max = dfa_47;
-            this.accept = dfa_48;
-            this.special = dfa_49;
-            this.transition = dfa_50;
+            this.eot = dfa_45;
+            this.eof = dfa_46;
+            this.min = dfa_47;
+            this.max = dfa_48;
+            this.accept = dfa_49;
+            this.special = dfa_50;
+            this.transition = dfa_51;
         }
         public String getDescription() {
             return "5037:1: ( rule__Expression__Group_1__0 )?";
@@ -40962,9 +40944,9 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         public static final BitSet FOLLOW_1 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_2 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x0000000000000040L});
-        public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x1000000000000402L});
+        public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x4000000000000402L});
         public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x0014000000000000L});
-        public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x01042000045203F0L});
+        public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x09042000045203F0L});
         public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0008000000000000L});
         public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0000000000000042L});
         public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x002003FF80000000L});
@@ -40974,7 +40956,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x00200C0000000000L});
         public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000000000000200L});
         public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0004000020000000L});
-        public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x01042000045A03F0L});
+        public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x09042000045A03F0L});
         public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0088000000000000L});
         public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0080000000000002L});
         public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0100000000000000L});
@@ -40993,7 +40975,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0000000000100000L});
         public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x0000000000200000L});
         public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x0000000000200002L});
-        public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x01042000044203F0L});
+        public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x09042000044203F0L});
         public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x0000000000400000L});
         public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x0000000000400002L});
         public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x0000000000800000L});
@@ -41010,14 +40992,15 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         public static final BitSet FOLLOW_49 = new BitSet(new long[]{0x0020000040000000L});
         public static final BitSet FOLLOW_50 = new BitSet(new long[]{0x0000000000000080L});
         public static final BitSet FOLLOW_51 = new BitSet(new long[]{0x0000000000180000L});
-        public static final BitSet FOLLOW_52 = new BitSet(new long[]{0x09042000045203F0L});
-        public static final BitSet FOLLOW_53 = new BitSet(new long[]{0x00000000004001F0L});
-        public static final BitSet FOLLOW_54 = new BitSet(new long[]{0x0000000000000070L});
-        public static final BitSet FOLLOW_55 = new BitSet(new long[]{0x0020000000000000L});
-        public static final BitSet FOLLOW_56 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_57 = new BitSet(new long[]{0x2000000040400000L});
-        public static final BitSet FOLLOW_58 = new BitSet(new long[]{0x0000000040400002L});
-        public static final BitSet FOLLOW_59 = new BitSet(new long[]{0x0000000000400080L});
+        public static final BitSet FOLLOW_52 = new BitSet(new long[]{0x29042000045203F0L});
+        public static final BitSet FOLLOW_53 = new BitSet(new long[]{0x1080000000000000L});
+        public static final BitSet FOLLOW_54 = new BitSet(new long[]{0x00000000004001F0L});
+        public static final BitSet FOLLOW_55 = new BitSet(new long[]{0x0000000000000070L});
+        public static final BitSet FOLLOW_56 = new BitSet(new long[]{0x0020000000000000L});
+        public static final BitSet FOLLOW_57 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_58 = new BitSet(new long[]{0x8000000040400000L});
+        public static final BitSet FOLLOW_59 = new BitSet(new long[]{0x0000000040400002L});
+        public static final BitSet FOLLOW_60 = new BitSet(new long[]{0x0000000000400080L});
     }
 
 

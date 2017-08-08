@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalKEffectsParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_HOSTCODE", "RULE_ID", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_STRING", "RULE_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_SL_COMMENT_ANNOTATION", "RULE_SL_COMMENT", "RULE_NUMBER", "RULE_WS", "RULE_ANY_OTHER", "'('", "')'", "'schedule'", "'['", "']'", "','", "'()'", "'extern'", "'<'", "'>'", "'print'", "'||'", "'&&'", "'|'", "'&'", "'+'", "'-'", "'*'", "'/'", "'%'", "'\\''", "'.'", "'!'", "'_'", "'@'", "'#'", "'='", "'+='", "'-='", "'*='", "'/='", "'%='", "'&='", "'|='", "'^='", "'min='", "'max='", "'++'", "'--'", "'=='", "'<='", "'>='", "'!='", "'pre'", "'val'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_HOSTCODE", "RULE_ID", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_STRING", "RULE_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_SL_COMMENT_ANNOTATION", "RULE_SL_COMMENT", "RULE_NUMBER", "RULE_WS", "RULE_ANY_OTHER", "'('", "')'", "'schedule'", "'['", "']'", "','", "'()'", "'extern'", "'<'", "'>'", "'print'", "'||'", "'&&'", "'|'", "'&'", "'+'", "'-'", "'*'", "'/'", "'%'", "'\\''", "'.'", "'!'", "'{'", "'}'", "'_'", "'@'", "'#'", "'='", "'+='", "'-='", "'*='", "'/='", "'%='", "'&='", "'|='", "'^='", "'min='", "'max='", "'++'", "'--'", "'=='", "'<='", "'>='", "'!='", "'pre'", "'val'"
     };
     public static final int T__50=50;
     public static final int RULE_BOOLEAN=8;
@@ -53,6 +53,8 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
     public static final int T__23=23;
     public static final int T__24=24;
     public static final int T__25=25;
+    public static final int T__62=62;
+    public static final int T__63=63;
     public static final int T__20=20;
     public static final int T__21=21;
     public static final int RULE_COMMENT_ANNOTATION=10;
@@ -479,7 +481,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                 int alt2=2;
                 int LA2_0 = input.LA(1);
 
-                if ( (LA2_0==RULE_COMMENT_ANNOTATION||LA2_0==41) ) {
+                if ( (LA2_0==RULE_COMMENT_ANNOTATION||LA2_0==43) ) {
                     alt2=1;
                 }
 
@@ -807,7 +809,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                 int alt6=2;
                 int LA6_0 = input.LA(1);
 
-                if ( (LA6_0==RULE_COMMENT_ANNOTATION||LA6_0==41) ) {
+                if ( (LA6_0==RULE_COMMENT_ANNOTATION||LA6_0==43) ) {
                     alt6=1;
                 }
 
@@ -1210,7 +1212,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                 int alt10=2;
                 int LA10_0 = input.LA(1);
 
-                if ( (LA10_0==RULE_COMMENT_ANNOTATION||LA10_0==41) ) {
+                if ( (LA10_0==RULE_COMMENT_ANNOTATION||LA10_0==43) ) {
                     alt10=1;
                 }
 
@@ -1570,7 +1572,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                 int alt14=2;
                 int LA14_0 = input.LA(1);
 
-                if ( (LA14_0==RULE_COMMENT_ANNOTATION||LA14_0==41) ) {
+                if ( (LA14_0==RULE_COMMENT_ANNOTATION||LA14_0==43) ) {
                     alt14=1;
                 }
 
@@ -1740,7 +1742,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                 int alt15=2;
                 int LA15_0 = input.LA(1);
 
-                if ( (LA15_0==RULE_COMMENT_ANNOTATION||LA15_0==41) ) {
+                if ( (LA15_0==RULE_COMMENT_ANNOTATION||LA15_0==43) ) {
                     alt15=1;
                 }
 
@@ -2084,7 +2086,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             int alt23=2;
             int LA23_0 = input.LA(1);
 
-            if ( (LA23_0==RULE_COMMENT_ANNOTATION||LA23_0==24||LA23_0==41) ) {
+            if ( (LA23_0==RULE_COMMENT_ANNOTATION||LA23_0==24||LA23_0==43) ) {
                 alt23=1;
             }
             else if ( (LA23_0==25) ) {
@@ -2110,7 +2112,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                         int alt18=2;
                         int LA18_0 = input.LA(1);
 
-                        if ( (LA18_0==RULE_COMMENT_ANNOTATION||LA18_0==41) ) {
+                        if ( (LA18_0==RULE_COMMENT_ANNOTATION||LA18_0==43) ) {
                             alt18=1;
                         }
 
@@ -2664,7 +2666,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                 int alt24=2;
                 int LA24_0 = input.LA(1);
 
-                if ( (LA24_0==RULE_COMMENT_ANNOTATION||LA24_0==41) ) {
+                if ( (LA24_0==RULE_COMMENT_ANNOTATION||LA24_0==43) ) {
                     alt24=1;
                 }
 
@@ -4374,7 +4376,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             int alt37=2;
             int LA37_0 = input.LA(1);
 
-            if ( ((LA37_0>=25 && LA37_0<=26)||(LA37_0>=56 && LA37_0<=59)) ) {
+            if ( ((LA37_0>=25 && LA37_0<=26)||(LA37_0>=58 && LA37_0<=61)) ) {
                 alt37=1;
             }
             switch (alt37) {
@@ -4698,7 +4700,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             if ( (LA39_0==39) ) {
                 alt39=1;
             }
-            else if ( ((LA39_0>=RULE_HOSTCODE && LA39_0<=RULE_ID)||LA39_0==RULE_BOOLEAN||LA39_0==17||(LA39_0>=24 && LA39_0<=25)||(LA39_0>=60 && LA39_0<=61)) ) {
+            else if ( ((LA39_0>=RULE_HOSTCODE && LA39_0<=RULE_ID)||LA39_0==RULE_BOOLEAN||LA39_0==17||(LA39_0>=24 && LA39_0<=25)||(LA39_0>=62 && LA39_0<=63)) ) {
                 alt39=2;
             }
             else {
@@ -6432,7 +6434,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             if ( (LA50_0==33) ) {
                 alt50=1;
             }
-            else if ( ((LA50_0>=RULE_HOSTCODE && LA50_0<=RULE_STRING)||LA50_0==17||(LA50_0>=24 && LA50_0<=25)||(LA50_0>=60 && LA50_0<=61)) ) {
+            else if ( ((LA50_0>=RULE_HOSTCODE && LA50_0<=RULE_STRING)||LA50_0==17||(LA50_0>=24 && LA50_0<=25)||LA50_0==40||(LA50_0>=62 && LA50_0<=63)) ) {
                 alt50=2;
             }
             else {
@@ -7202,7 +7204,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             int alt54=2;
             int LA54_0 = input.LA(1);
 
-            if ( ((LA54_0>=60 && LA54_0<=61)) ) {
+            if ( ((LA54_0>=62 && LA54_0<=63)) ) {
                 alt54=1;
             }
             else if ( (LA54_0==RULE_ID) ) {
@@ -7250,10 +7252,10 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                     int alt53=2;
                     int LA53_0 = input.LA(1);
 
-                    if ( (LA53_0==60) ) {
+                    if ( (LA53_0==62) ) {
                         alt53=1;
                     }
-                    else if ( (LA53_0==61) ) {
+                    else if ( (LA53_0==63) ) {
                         alt53=2;
                     }
                     else {
@@ -9517,7 +9519,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleVectorValue"
-    // InternalKEffects.g:3354:1: ruleVectorValue returns [EObject current=null] : (otherlv_0= '(' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= ')' ) ;
+    // InternalKEffects.g:3354:1: ruleVectorValue returns [EObject current=null] : (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' ) ;
     public final EObject ruleVectorValue() throws RecognitionException {
         EObject current = null;
 
@@ -9532,16 +9534,16 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalKEffects.g:3357:28: ( (otherlv_0= '(' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= ')' ) )
-            // InternalKEffects.g:3358:1: (otherlv_0= '(' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= ')' )
+            // InternalKEffects.g:3357:28: ( (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' ) )
+            // InternalKEffects.g:3358:1: (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' )
             {
-            // InternalKEffects.g:3358:1: (otherlv_0= '(' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= ')' )
-            // InternalKEffects.g:3358:3: otherlv_0= '(' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= ')'
+            // InternalKEffects.g:3358:1: (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' )
+            // InternalKEffects.g:3358:3: otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}'
             {
-            otherlv_0=(Token)match(input,17,FollowSets000.FOLLOW_38); if (state.failed) return current;
+            otherlv_0=(Token)match(input,40,FollowSets000.FOLLOW_38); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_0, grammarAccess.getVectorValueAccess().getLeftParenthesisKeyword_0());
+                  	newLeafNode(otherlv_0, grammarAccess.getVectorValueAccess().getLeftCurlyBracketKeyword_0());
                   
             }
             // InternalKEffects.g:3362:1: ( (lv_values_1_0= ruleVectorValueMember ) )
@@ -9555,7 +9557,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
               	        newCompositeNode(grammarAccess.getVectorValueAccess().getValuesVectorValueMemberParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FollowSets000.FOLLOW_16);
+            pushFollow(FollowSets000.FOLLOW_39);
             lv_values_1_0=ruleVectorValueMember();
 
             state._fsp--;
@@ -9611,7 +9613,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             	      	        newCompositeNode(grammarAccess.getVectorValueAccess().getValuesVectorValueMemberParserRuleCall_2_1_0()); 
             	      	    
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_16);
+            	    pushFollow(FollowSets000.FOLLOW_39);
             	    lv_values_3_0=ruleVectorValueMember();
 
             	    state._fsp--;
@@ -9644,10 +9646,10 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_4=(Token)match(input,18,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_4=(Token)match(input,41,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_4, grammarAccess.getVectorValueAccess().getRightParenthesisKeyword_3());
+                  	newLeafNode(otherlv_4, grammarAccess.getVectorValueAccess().getRightCurlyBracketKeyword_3());
                   
             }
 
@@ -9732,10 +9734,10 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             int alt68=2;
             int LA68_0 = input.LA(1);
 
-            if ( ((LA68_0>=RULE_HOSTCODE && LA68_0<=RULE_STRING)||LA68_0==17||(LA68_0>=24 && LA68_0<=25)||LA68_0==33||LA68_0==39||(LA68_0>=60 && LA68_0<=61)) ) {
+            if ( ((LA68_0>=RULE_HOSTCODE && LA68_0<=RULE_STRING)||LA68_0==17||(LA68_0>=24 && LA68_0<=25)||LA68_0==33||(LA68_0>=39 && LA68_0<=40)||(LA68_0>=62 && LA68_0<=63)) ) {
                 alt68=1;
             }
-            else if ( (LA68_0==40) ) {
+            else if ( (LA68_0==42) ) {
                 alt68=2;
             }
             else {
@@ -9896,7 +9898,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,40,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_1=(Token)match(input,42,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getIgnoreValueAccess().get_Keyword_1());
@@ -10472,7 +10474,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             // InternalKEffects.g:3702:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) )
             // InternalKEffects.g:3702:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) )
             {
-            otherlv_0=(Token)match(input,41,FollowSets000.FOLLOW_8); if (state.failed) return current;
+            otherlv_0=(Token)match(input,43,FollowSets000.FOLLOW_8); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getTagAnnotationAccess().getCommercialAtKeyword_0());
@@ -10593,7 +10595,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             // InternalKEffects.g:3745:1: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) )
             // InternalKEffects.g:3745:3: otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) )
             {
-            otherlv_0=(Token)match(input,42,FollowSets000.FOLLOW_8); if (state.failed) return current;
+            otherlv_0=(Token)match(input,44,FollowSets000.FOLLOW_8); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getPragmaTagAccess().getNumberSignKeyword_0());
@@ -10719,7 +10721,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             // InternalKEffects.g:3788:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
             // InternalKEffects.g:3788:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
             {
-            otherlv_0=(Token)match(input,41,FollowSets000.FOLLOW_8); if (state.failed) return current;
+            otherlv_0=(Token)match(input,43,FollowSets000.FOLLOW_8); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
@@ -10736,7 +10738,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
               	        newCompositeNode(grammarAccess.getKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FollowSets000.FOLLOW_39);
+            pushFollow(FollowSets000.FOLLOW_40);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -10810,7 +10812,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalKEffects.g:3828:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) )
             	    {
-            	    otherlv_3=(Token)match(input,22,FollowSets000.FOLLOW_39); if (state.failed) return current;
+            	    otherlv_3=(Token)match(input,22,FollowSets000.FOLLOW_40); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_3, grammarAccess.getKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
@@ -10945,7 +10947,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             // InternalKEffects.g:3871:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* )
             // InternalKEffects.g:3871:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )*
             {
-            otherlv_0=(Token)match(input,41,FollowSets000.FOLLOW_8); if (state.failed) return current;
+            otherlv_0=(Token)match(input,43,FollowSets000.FOLLOW_8); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
@@ -10962,7 +10964,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
               	        newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FollowSets000.FOLLOW_40);
+            pushFollow(FollowSets000.FOLLOW_41);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -11036,7 +11038,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalKEffects.g:3911:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) )
             	    {
-            	    otherlv_3=(Token)match(input,22,FollowSets000.FOLLOW_40); if (state.failed) return current;
+            	    otherlv_3=(Token)match(input,22,FollowSets000.FOLLOW_41); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_3, grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
@@ -11171,7 +11173,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             // InternalKEffects.g:3954:1: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
             // InternalKEffects.g:3954:3: otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
             {
-            otherlv_0=(Token)match(input,42,FollowSets000.FOLLOW_8); if (state.failed) return current;
+            otherlv_0=(Token)match(input,44,FollowSets000.FOLLOW_8); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getStringPragmaAccess().getNumberSignKeyword_0());
@@ -11188,7 +11190,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
               	        newCompositeNode(grammarAccess.getStringPragmaAccess().getNameExtendedIDParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FollowSets000.FOLLOW_39);
+            pushFollow(FollowSets000.FOLLOW_40);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -11262,7 +11264,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalKEffects.g:3994:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) )
             	    {
-            	    otherlv_3=(Token)match(input,22,FollowSets000.FOLLOW_39); if (state.failed) return current;
+            	    otherlv_3=(Token)match(input,22,FollowSets000.FOLLOW_40); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_3, grammarAccess.getStringPragmaAccess().getCommaKeyword_3_0());
@@ -11401,7 +11403,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             // InternalKEffects.g:4037:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* )
             // InternalKEffects.g:4037:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )*
             {
-            otherlv_0=(Token)match(input,41,FollowSets000.FOLLOW_8); if (state.failed) return current;
+            otherlv_0=(Token)match(input,43,FollowSets000.FOLLOW_8); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
@@ -11418,7 +11420,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
               	        newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FollowSets000.FOLLOW_41);
+            pushFollow(FollowSets000.FOLLOW_42);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -11483,7 +11485,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,21,FollowSets000.FOLLOW_39); if (state.failed) return current;
+            otherlv_4=(Token)match(input,21,FollowSets000.FOLLOW_40); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_4, grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
@@ -11539,7 +11541,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalKEffects.g:4103:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) )
             	    {
-            	    otherlv_6=(Token)match(input,22,FollowSets000.FOLLOW_39); if (state.failed) return current;
+            	    otherlv_6=(Token)match(input,22,FollowSets000.FOLLOW_40); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_6, grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
@@ -11678,7 +11680,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             // InternalKEffects.g:4146:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* )
             // InternalKEffects.g:4146:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )*
             {
-            otherlv_0=(Token)match(input,41,FollowSets000.FOLLOW_8); if (state.failed) return current;
+            otherlv_0=(Token)match(input,43,FollowSets000.FOLLOW_8); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
@@ -11695,7 +11697,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
               	        newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FollowSets000.FOLLOW_41);
+            pushFollow(FollowSets000.FOLLOW_42);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -11760,7 +11762,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,21,FollowSets000.FOLLOW_40); if (state.failed) return current;
+            otherlv_4=(Token)match(input,21,FollowSets000.FOLLOW_41); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_4, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
@@ -11816,7 +11818,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalKEffects.g:4212:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) )
             	    {
-            	    otherlv_6=(Token)match(input,22,FollowSets000.FOLLOW_40); if (state.failed) return current;
+            	    otherlv_6=(Token)match(input,22,FollowSets000.FOLLOW_41); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_6, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
@@ -11949,7 +11951,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             // InternalKEffects.g:4255:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* )
             // InternalKEffects.g:4255:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )*
             {
-            otherlv_0=(Token)match(input,41,FollowSets000.FOLLOW_8); if (state.failed) return current;
+            otherlv_0=(Token)match(input,43,FollowSets000.FOLLOW_8); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
@@ -11966,7 +11968,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
               	        newCompositeNode(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FollowSets000.FOLLOW_42);
+            pushFollow(FollowSets000.FOLLOW_43);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -12035,7 +12037,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalKEffects.g:4295:4: otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) )
             	    {
-            	    otherlv_3=(Token)match(input,22,FollowSets000.FOLLOW_42); if (state.failed) return current;
+            	    otherlv_3=(Token)match(input,22,FollowSets000.FOLLOW_43); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_3, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
@@ -12167,7 +12169,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             // InternalKEffects.g:4338:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* )
             // InternalKEffects.g:4338:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )*
             {
-            otherlv_0=(Token)match(input,41,FollowSets000.FOLLOW_8); if (state.failed) return current;
+            otherlv_0=(Token)match(input,43,FollowSets000.FOLLOW_8); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
@@ -12184,7 +12186,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
               	        newCompositeNode(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FollowSets000.FOLLOW_41);
+            pushFollow(FollowSets000.FOLLOW_42);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -12249,7 +12251,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,21,FollowSets000.FOLLOW_42); if (state.failed) return current;
+            otherlv_4=(Token)match(input,21,FollowSets000.FOLLOW_43); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_4, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
@@ -12300,7 +12302,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalKEffects.g:4404:4: otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) )
             	    {
-            	    otherlv_6=(Token)match(input,22,FollowSets000.FOLLOW_42); if (state.failed) return current;
+            	    otherlv_6=(Token)match(input,22,FollowSets000.FOLLOW_43); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_6, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
@@ -12841,7 +12843,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             // InternalKEffects.g:4569:1: (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? )
             // InternalKEffects.g:4569:6: this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )?
             {
-            this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_43); if (state.failed) return current;
+            this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_44); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               		current.merge(this_ID_0);
@@ -12923,7 +12925,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    this_ID_3=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_43); if (state.failed) return current;
+            	    this_ID_3=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_44); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      		current.merge(this_ID_3);
@@ -12947,14 +12949,14 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             int alt82=2;
             int LA82_0 = input.LA(1);
 
-            if ( (LA82_0==42) ) {
+            if ( (LA82_0==44) ) {
                 alt82=1;
             }
             switch (alt82) {
                 case 1 :
                     // InternalKEffects.g:4597:2: kw= '#' this_INT_5= RULE_INT
                     {
-                    kw=(Token)match(input,42,FollowSets000.FOLLOW_36); if (state.failed) return current;
+                    kw=(Token)match(input,44,FollowSets000.FOLLOW_36); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -13182,7 +13184,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalKEffects.g:4667:2: kw= '-'
                     {
-                    kw=(Token)match(input,33,FollowSets000.FOLLOW_44); if (state.failed) return current;
+                    kw=(Token)match(input,33,FollowSets000.FOLLOW_45); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -13253,57 +13255,57 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             // InternalKEffects.g:4690:1: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '+=' ) | (enumLiteral_2= '-=' ) | (enumLiteral_3= '*=' ) | (enumLiteral_4= '/=' ) | (enumLiteral_5= '%=' ) | (enumLiteral_6= '&=' ) | (enumLiteral_7= '|=' ) | (enumLiteral_8= '^=' ) | (enumLiteral_9= 'min=' ) | (enumLiteral_10= 'max=' ) )
             int alt85=11;
             switch ( input.LA(1) ) {
-            case 43:
+            case 45:
                 {
                 alt85=1;
                 }
                 break;
-            case 44:
+            case 46:
                 {
                 alt85=2;
                 }
                 break;
-            case 45:
+            case 47:
                 {
                 alt85=3;
                 }
                 break;
-            case 46:
+            case 48:
                 {
                 alt85=4;
                 }
                 break;
-            case 47:
+            case 49:
                 {
                 alt85=5;
                 }
                 break;
-            case 48:
+            case 50:
                 {
                 alt85=6;
                 }
                 break;
-            case 49:
+            case 51:
                 {
                 alt85=7;
                 }
                 break;
-            case 50:
+            case 52:
                 {
                 alt85=8;
                 }
                 break;
-            case 51:
+            case 53:
                 {
                 alt85=9;
                 }
                 break;
-            case 52:
+            case 54:
                 {
                 alt85=10;
                 }
                 break;
-            case 53:
+            case 55:
                 {
                 alt85=11;
                 }
@@ -13323,7 +13325,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                     // InternalKEffects.g:4690:2: (enumLiteral_0= '=' )
                     // InternalKEffects.g:4690:4: enumLiteral_0= '='
                     {
-                    enumLiteral_0=(Token)match(input,43,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,45,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getAssignOperatorAccess().getASSIGNEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -13342,7 +13344,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                     // InternalKEffects.g:4696:6: (enumLiteral_1= '+=' )
                     // InternalKEffects.g:4696:8: enumLiteral_1= '+='
                     {
-                    enumLiteral_1=(Token)match(input,44,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_1=(Token)match(input,46,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getAssignOperatorAccess().getASSIGNADDEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -13361,7 +13363,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                     // InternalKEffects.g:4702:6: (enumLiteral_2= '-=' )
                     // InternalKEffects.g:4702:8: enumLiteral_2= '-='
                     {
-                    enumLiteral_2=(Token)match(input,45,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_2=(Token)match(input,47,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getAssignOperatorAccess().getASSIGNSUBEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -13380,7 +13382,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                     // InternalKEffects.g:4708:6: (enumLiteral_3= '*=' )
                     // InternalKEffects.g:4708:8: enumLiteral_3= '*='
                     {
-                    enumLiteral_3=(Token)match(input,46,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_3=(Token)match(input,48,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getAssignOperatorAccess().getASSIGNMULEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -13399,7 +13401,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                     // InternalKEffects.g:4714:6: (enumLiteral_4= '/=' )
                     // InternalKEffects.g:4714:8: enumLiteral_4= '/='
                     {
-                    enumLiteral_4=(Token)match(input,47,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_4=(Token)match(input,49,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getAssignOperatorAccess().getASSIGNDIVEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -13418,7 +13420,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                     // InternalKEffects.g:4720:6: (enumLiteral_5= '%=' )
                     // InternalKEffects.g:4720:8: enumLiteral_5= '%='
                     {
-                    enumLiteral_5=(Token)match(input,48,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_5=(Token)match(input,50,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getAssignOperatorAccess().getASSIGNMODEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
@@ -13437,7 +13439,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                     // InternalKEffects.g:4726:6: (enumLiteral_6= '&=' )
                     // InternalKEffects.g:4726:8: enumLiteral_6= '&='
                     {
-                    enumLiteral_6=(Token)match(input,49,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_6=(Token)match(input,51,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getAssignOperatorAccess().getASSIGNANDEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
@@ -13456,7 +13458,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                     // InternalKEffects.g:4732:6: (enumLiteral_7= '|=' )
                     // InternalKEffects.g:4732:8: enumLiteral_7= '|='
                     {
-                    enumLiteral_7=(Token)match(input,50,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_7=(Token)match(input,52,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getAssignOperatorAccess().getASSIGNOREnumLiteralDeclaration_7().getEnumLiteral().getInstance();
@@ -13475,7 +13477,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                     // InternalKEffects.g:4738:6: (enumLiteral_8= '^=' )
                     // InternalKEffects.g:4738:8: enumLiteral_8= '^='
                     {
-                    enumLiteral_8=(Token)match(input,51,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_8=(Token)match(input,53,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getAssignOperatorAccess().getASSIGNXOREnumLiteralDeclaration_8().getEnumLiteral().getInstance();
@@ -13494,7 +13496,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                     // InternalKEffects.g:4744:6: (enumLiteral_9= 'min=' )
                     // InternalKEffects.g:4744:8: enumLiteral_9= 'min='
                     {
-                    enumLiteral_9=(Token)match(input,52,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_9=(Token)match(input,54,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getAssignOperatorAccess().getASSIGNMINEnumLiteralDeclaration_9().getEnumLiteral().getInstance();
@@ -13513,7 +13515,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                     // InternalKEffects.g:4750:6: (enumLiteral_10= 'max=' )
                     // InternalKEffects.g:4750:8: enumLiteral_10= 'max='
                     {
-                    enumLiteral_10=(Token)match(input,53,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_10=(Token)match(input,55,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getAssignOperatorAccess().getASSIGNMAXEnumLiteralDeclaration_10().getEnumLiteral().getInstance();
@@ -13565,10 +13567,10 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             int alt86=2;
             int LA86_0 = input.LA(1);
 
-            if ( (LA86_0==54) ) {
+            if ( (LA86_0==56) ) {
                 alt86=1;
             }
-            else if ( (LA86_0==55) ) {
+            else if ( (LA86_0==57) ) {
                 alt86=2;
             }
             else {
@@ -13585,7 +13587,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                     // InternalKEffects.g:4763:2: (enumLiteral_0= '++' )
                     // InternalKEffects.g:4763:4: enumLiteral_0= '++'
                     {
-                    enumLiteral_0=(Token)match(input,54,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,56,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getPostfixOperatorAccess().getPOSTFIXADDEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -13604,7 +13606,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                     // InternalKEffects.g:4769:6: (enumLiteral_1= '--' )
                     // InternalKEffects.g:4769:8: enumLiteral_1= '--'
                     {
-                    enumLiteral_1=(Token)match(input,55,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_1=(Token)match(input,57,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getPostfixOperatorAccess().getPOSTFIXSUBEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -13659,7 +13661,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             // InternalKEffects.g:4782:1: ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) )
             int alt87=6;
             switch ( input.LA(1) ) {
-            case 56:
+            case 58:
                 {
                 alt87=1;
                 }
@@ -13669,7 +13671,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                 alt87=2;
                 }
                 break;
-            case 57:
+            case 59:
                 {
                 alt87=3;
                 }
@@ -13679,12 +13681,12 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                 alt87=4;
                 }
                 break;
-            case 58:
+            case 60:
                 {
                 alt87=5;
                 }
                 break;
-            case 59:
+            case 61:
                 {
                 alt87=6;
                 }
@@ -13704,7 +13706,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                     // InternalKEffects.g:4782:2: (enumLiteral_0= '==' )
                     // InternalKEffects.g:4782:4: enumLiteral_0= '=='
                     {
-                    enumLiteral_0=(Token)match(input,56,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,58,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getEQEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -13742,7 +13744,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                     // InternalKEffects.g:4794:6: (enumLiteral_2= '<=' )
                     // InternalKEffects.g:4794:8: enumLiteral_2= '<='
                     {
-                    enumLiteral_2=(Token)match(input,57,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_2=(Token)match(input,59,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getLEQEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -13780,7 +13782,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                     // InternalKEffects.g:4806:6: (enumLiteral_4= '>=' )
                     // InternalKEffects.g:4806:8: enumLiteral_4= '>='
                     {
-                    enumLiteral_4=(Token)match(input,58,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_4=(Token)match(input,60,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getGEQEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -13799,7 +13801,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                     // InternalKEffects.g:4812:6: (enumLiteral_5= '!=' )
                     // InternalKEffects.g:4812:8: enumLiteral_5= '!='
                     {
-                    enumLiteral_5=(Token)match(input,59,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_5=(Token)match(input,61,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getNEEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
@@ -13849,7 +13851,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             // InternalKEffects.g:4825:1: (enumLiteral_0= 'pre' )
             // InternalKEffects.g:4825:3: enumLiteral_0= 'pre'
             {
-            enumLiteral_0=(Token)match(input,60,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            enumLiteral_0=(Token)match(input,62,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current = grammarAccess.getPreOperatorAccess().getPREEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -14245,7 +14247,7 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             // InternalKEffects.g:4942:1: (enumLiteral_0= 'val' )
             // InternalKEffects.g:4942:3: enumLiteral_0= 'val'
             {
-            enumLiteral_0=(Token)match(input,61,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            enumLiteral_0=(Token)match(input,63,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current = grammarAccess.getValOperatorAccess().getVALEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -14606,29 +14608,6 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
     }
     // $ANTLR end synpred43_InternalKEffects
 
-    // $ANTLR start synpred64_InternalKEffects
-    public final void synpred64_InternalKEffects_fragment() throws RecognitionException {   
-        EObject this_VectorValue_3 = null;
-
-
-        // InternalKEffects.g:2477:2: (this_VectorValue_3= ruleVectorValue )
-        // InternalKEffects.g:2477:2: this_VectorValue_3= ruleVectorValue
-        {
-        if ( state.backtracking==0 ) {
-           
-          	  /* */ 
-          	
-        }
-        pushFollow(FollowSets000.FOLLOW_2);
-        this_VectorValue_3=ruleVectorValue();
-
-        state._fsp--;
-        if (state.failed) return ;
-
-        }
-    }
-    // $ANTLR end synpred64_InternalKEffects
-
     // $ANTLR start synpred65_InternalKEffects
     public final void synpred65_InternalKEffects_fragment() throws RecognitionException {   
         Token otherlv_4=null;
@@ -14771,20 +14750,6 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
         state.failed=false;
         return success;
     }
-    public final boolean synpred64_InternalKEffects() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred64_InternalKEffects_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
     public final boolean synpred5_InternalKEffects() {
         state.backtracking++;
         int start = input.mark();
@@ -14825,11 +14790,11 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
     protected DFA70 dfa70 = new DFA70(this);
     static final String dfa_1s = "\14\uffff";
     static final String dfa_2s = "\1\4\3\0\10\uffff";
-    static final String dfa_3s = "\1\51\3\0\10\uffff";
+    static final String dfa_3s = "\1\53\3\0\10\uffff";
     static final String dfa_4s = "\4\uffff\1\4\1\6\1\uffff\1\7\1\1\1\2\1\3\1\5";
     static final String dfa_5s = "\1\uffff\1\0\1\1\1\2\10\uffff}>";
     static final String[] dfa_6s = {
-            "\1\4\1\3\4\uffff\1\1\15\uffff\2\5\1\uffff\1\7\15\uffff\1\2",
+            "\1\4\1\3\4\uffff\1\1\15\uffff\2\5\1\uffff\1\7\17\uffff\1\2",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -14947,13 +14912,14 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_7s = "\17\uffff";
-    static final String dfa_8s = "\1\4\14\0\2\uffff";
-    static final String dfa_9s = "\1\75\14\0\2\uffff";
-    static final String dfa_10s = "\15\uffff\1\1\1\2";
-    static final String dfa_11s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\2\uffff}>";
+    static final String dfa_7s = "\20\uffff";
+    static final String dfa_8s = "\1\4\15\0\2\uffff";
+    static final String dfa_9s = "\1\77\15\0\2\uffff";
+    static final String dfa_10s = "\16\uffff\1\1\1\2";
+    static final String dfa_11s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\2\uffff}>";
     static final String[] dfa_12s = {
-            "\1\14\1\11\1\2\1\3\1\6\1\4\7\uffff\1\5\6\uffff\1\12\1\13\7\uffff\1\1\5\uffff\1\15\24\uffff\1\7\1\10",
+            "\1\15\1\12\1\2\1\3\1\7\1\4\7\uffff\1\6\6\uffff\1\13\1\14\7\uffff\1\1\5\uffff\1\16\1\5\25\uffff\1\10\1\11",
+            "\1\uffff",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -15004,9 +14970,9 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                         int index26_1 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred31_InternalKEffects()) ) {s = 13;}
+                        if ( (synpred31_InternalKEffects()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index26_1);
@@ -15019,9 +14985,9 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                         int index26_2 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred31_InternalKEffects()) ) {s = 13;}
+                        if ( (synpred31_InternalKEffects()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index26_2);
@@ -15034,9 +15000,9 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                         int index26_3 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred31_InternalKEffects()) ) {s = 13;}
+                        if ( (synpred31_InternalKEffects()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index26_3);
@@ -15049,9 +15015,9 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                         int index26_4 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred31_InternalKEffects()) ) {s = 13;}
+                        if ( (synpred31_InternalKEffects()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index26_4);
@@ -15064,9 +15030,9 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                         int index26_5 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred31_InternalKEffects()) ) {s = 13;}
+                        if ( (synpred31_InternalKEffects()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index26_5);
@@ -15079,9 +15045,9 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                         int index26_6 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred31_InternalKEffects()) ) {s = 13;}
+                        if ( (synpred31_InternalKEffects()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index26_6);
@@ -15094,9 +15060,9 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                         int index26_7 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred31_InternalKEffects()) ) {s = 13;}
+                        if ( (synpred31_InternalKEffects()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index26_7);
@@ -15109,9 +15075,9 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                         int index26_8 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred31_InternalKEffects()) ) {s = 13;}
+                        if ( (synpred31_InternalKEffects()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index26_8);
@@ -15124,9 +15090,9 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                         int index26_9 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred31_InternalKEffects()) ) {s = 13;}
+                        if ( (synpred31_InternalKEffects()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index26_9);
@@ -15139,9 +15105,9 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                         int index26_10 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred31_InternalKEffects()) ) {s = 13;}
+                        if ( (synpred31_InternalKEffects()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index26_10);
@@ -15154,9 +15120,9 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                         int index26_11 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred31_InternalKEffects()) ) {s = 13;}
+                        if ( (synpred31_InternalKEffects()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index26_11);
@@ -15169,12 +15135,27 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                         int index26_12 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred31_InternalKEffects()) ) {s = 13;}
+                        if ( (synpred31_InternalKEffects()) ) {s = 14;}
 
-                        else if ( (true) ) {s = 14;}
+                        else if ( (true) ) {s = 15;}
 
                          
                         input.seek(index26_12);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 12 : 
+                        int LA26_13 = input.LA(1);
+
+                         
+                        int index26_13 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred31_InternalKEffects()) ) {s = 14;}
+
+                        else if ( (true) ) {s = 15;}
+
+                         
+                        input.seek(index26_13);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -15188,11 +15169,11 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
     static final String dfa_13s = "\7\uffff";
     static final String dfa_14s = "\1\2\6\uffff";
     static final String dfa_15s = "\1\22\1\5\1\uffff\2\6\1\0\1\uffff";
-    static final String dfa_16s = "\1\26\1\5\1\uffff\2\45\1\0\1\uffff";
+    static final String dfa_16s = "\1\51\1\5\1\uffff\2\45\1\0\1\uffff";
     static final String dfa_17s = "\2\uffff\1\2\3\uffff\1\1";
     static final String dfa_18s = "\5\uffff\1\0\1\uffff}>";
     static final String[] dfa_19s = {
-            "\1\2\1\1\1\uffff\2\2",
+            "\1\2\1\1\1\uffff\2\2\22\uffff\1\2",
             "\1\3",
             "",
             "\1\5\36\uffff\1\4",
@@ -15252,13 +15233,14 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_20s = "\16\uffff";
-    static final String dfa_21s = "\1\4\4\uffff\10\0\1\uffff";
-    static final String dfa_22s = "\1\75\4\uffff\10\0\1\uffff";
-    static final String dfa_23s = "\1\uffff\1\1\13\uffff\1\2";
-    static final String dfa_24s = "\5\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\uffff}>";
+    static final String dfa_20s = "\17\uffff";
+    static final String dfa_21s = "\1\4\5\uffff\10\0\1\uffff";
+    static final String dfa_22s = "\1\77\5\uffff\10\0\1\uffff";
+    static final String dfa_23s = "\1\uffff\1\1\14\uffff\1\2";
+    static final String dfa_24s = "\6\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\uffff}>";
     static final String[] dfa_25s = {
-            "\1\14\1\11\2\1\1\6\1\1\7\uffff\1\5\6\uffff\1\12\1\13\7\uffff\1\1\5\uffff\1\15\24\uffff\1\7\1\10",
+            "\1\15\1\12\2\1\1\7\1\1\7\uffff\1\6\6\uffff\1\13\1\14\7\uffff\1\1\5\uffff\1\16\1\1\25\uffff\1\10\1\11",
+            "",
             "",
             "",
             "",
@@ -15302,21 +15284,6 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA38_5 = input.LA(1);
-
-                         
-                        int index38_5 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred43_InternalKEffects()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 13;}
-
-                         
-                        input.seek(index38_5);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 1 : 
                         int LA38_6 = input.LA(1);
 
                          
@@ -15325,13 +15292,13 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred43_InternalKEffects()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index38_6);
                         if ( s>=0 ) return s;
                         break;
-                    case 2 : 
+                    case 1 : 
                         int LA38_7 = input.LA(1);
 
                          
@@ -15340,13 +15307,13 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred43_InternalKEffects()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index38_7);
                         if ( s>=0 ) return s;
                         break;
-                    case 3 : 
+                    case 2 : 
                         int LA38_8 = input.LA(1);
 
                          
@@ -15355,13 +15322,13 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred43_InternalKEffects()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index38_8);
                         if ( s>=0 ) return s;
                         break;
-                    case 4 : 
+                    case 3 : 
                         int LA38_9 = input.LA(1);
 
                          
@@ -15370,13 +15337,13 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred43_InternalKEffects()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index38_9);
                         if ( s>=0 ) return s;
                         break;
-                    case 5 : 
+                    case 4 : 
                         int LA38_10 = input.LA(1);
 
                          
@@ -15385,13 +15352,13 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred43_InternalKEffects()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index38_10);
                         if ( s>=0 ) return s;
                         break;
-                    case 6 : 
+                    case 5 : 
                         int LA38_11 = input.LA(1);
 
                          
@@ -15400,13 +15367,13 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred43_InternalKEffects()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index38_11);
                         if ( s>=0 ) return s;
                         break;
-                    case 7 : 
+                    case 6 : 
                         int LA38_12 = input.LA(1);
 
                          
@@ -15415,10 +15382,25 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred43_InternalKEffects()) ) {s = 1;}
 
-                        else if ( (true) ) {s = 13;}
+                        else if ( (true) ) {s = 14;}
 
                          
                         input.seek(index38_12);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 7 : 
+                        int LA38_13 = input.LA(1);
+
+                         
+                        int index38_13 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred43_InternalKEffects()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 14;}
+
+                         
+                        input.seek(index38_13);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -15432,18 +15414,18 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
     static final String dfa_26s = "\11\uffff";
     static final String dfa_27s = "\3\uffff\1\2\3\uffff\1\2\1\uffff";
     static final String dfa_28s = "\1\4\2\uffff\1\21\3\uffff\1\21\1\uffff";
-    static final String dfa_29s = "\1\75\2\uffff\1\73\3\uffff\1\73\1\uffff";
+    static final String dfa_29s = "\1\77\2\uffff\1\75\3\uffff\1\75\1\uffff";
     static final String dfa_30s = "\1\uffff\1\1\1\2\1\uffff\1\3\1\5\1\6\1\uffff\1\4";
     static final String dfa_31s = "\11\uffff}>";
     static final String[] dfa_32s = {
-            "\1\6\1\3\2\uffff\1\1\10\uffff\1\4\6\uffff\2\5\42\uffff\2\2",
+            "\1\6\1\3\2\uffff\1\1\10\uffff\1\4\6\uffff\2\5\44\uffff\2\2",
             "",
             "",
-            "\1\10\5\2\1\10\1\uffff\2\2\1\uffff\11\2\1\7\1\2\21\uffff\4\2",
+            "\1\10\5\2\1\10\1\uffff\2\2\1\uffff\11\2\1\7\1\2\2\uffff\1\2\20\uffff\4\2",
             "",
             "",
             "",
-            "\1\10\5\2\1\10\1\uffff\2\2\1\uffff\11\2\1\7\1\2\21\uffff\4\2",
+            "\1\10\5\2\1\10\1\uffff\2\2\1\uffff\11\2\1\7\1\2\2\uffff\1\2\20\uffff\4\2",
             ""
     };
 
@@ -15472,12 +15454,14 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             return "2331:1: (this_BoolValue_0= ruleBoolValue | this_ValuedObjectTestExpression_1= ruleValuedObjectTestExpression | (otherlv_2= '(' this_BoolExpression_3= ruleBoolExpression otherlv_4= ')' ) | this_ReferenceCall_5= ruleReferenceCall | this_FunctionCall_6= ruleFunctionCall | this_TextExpression_7= ruleTextExpression )";
         }
     }
-    static final String dfa_33s = "\1\4\3\uffff\1\0\11\uffff";
-    static final String dfa_34s = "\1\75\3\uffff\1\0\11\uffff";
-    static final String dfa_35s = "\1\uffff\1\1\1\2\1\3\1\uffff\1\6\6\uffff\1\4\1\5";
-    static final String dfa_36s = "\4\uffff\1\0\11\uffff}>";
-    static final String[] dfa_37s = {
-            "\2\5\1\1\1\2\1\5\1\3\7\uffff\1\4\6\uffff\2\5\42\uffff\2\5",
+    static final String dfa_33s = "\16\uffff";
+    static final String dfa_34s = "\1\4\4\uffff\1\0\10\uffff";
+    static final String dfa_35s = "\1\77\4\uffff\1\0\10\uffff";
+    static final String dfa_36s = "\1\uffff\1\1\1\2\1\3\1\4\1\uffff\1\6\6\uffff\1\5";
+    static final String dfa_37s = "\5\uffff\1\0\10\uffff}>";
+    static final String[] dfa_38s = {
+            "\2\6\1\1\1\2\1\6\1\3\7\uffff\1\5\6\uffff\2\6\16\uffff\1\4\25\uffff\2\6",
+            "",
             "",
             "",
             "",
@@ -15489,27 +15473,28 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             "",
             "",
             "",
-            "",
             ""
     };
-    static final char[] dfa_33 = DFA.unpackEncodedStringToUnsignedChars(dfa_33s);
+
+    static final short[] dfa_33 = DFA.unpackEncodedString(dfa_33s);
     static final char[] dfa_34 = DFA.unpackEncodedStringToUnsignedChars(dfa_34s);
-    static final short[] dfa_35 = DFA.unpackEncodedString(dfa_35s);
+    static final char[] dfa_35 = DFA.unpackEncodedStringToUnsignedChars(dfa_35s);
     static final short[] dfa_36 = DFA.unpackEncodedString(dfa_36s);
-    static final short[][] dfa_37 = unpackEncodedStringArray(dfa_37s);
+    static final short[] dfa_37 = DFA.unpackEncodedString(dfa_37s);
+    static final short[][] dfa_38 = unpackEncodedStringArray(dfa_38s);
 
     class DFA52 extends DFA {
 
         public DFA52(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 52;
-            this.eot = dfa_20;
-            this.eof = dfa_20;
-            this.min = dfa_33;
-            this.max = dfa_34;
-            this.accept = dfa_35;
-            this.special = dfa_36;
-            this.transition = dfa_37;
+            this.eot = dfa_33;
+            this.eof = dfa_33;
+            this.min = dfa_34;
+            this.max = dfa_35;
+            this.accept = dfa_36;
+            this.special = dfa_37;
+            this.transition = dfa_38;
         }
         public String getDescription() {
             return "2437:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | this_VectorValue_3= ruleVectorValue | (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' ) | this_AtomicExpression_7= ruleAtomicExpression )";
@@ -15519,20 +15504,18 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA52_4 = input.LA(1);
+                        int LA52_5 = input.LA(1);
 
                          
-                        int index52_4 = input.index();
+                        int index52_5 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred64_InternalKEffects()) ) {s = 12;}
+                        if ( (synpred65_InternalKEffects()) ) {s = 13;}
 
-                        else if ( (synpred65_InternalKEffects()) ) {s = 13;}
-
-                        else if ( (true) ) {s = 5;}
+                        else if ( (true) ) {s = 6;}
 
                          
-                        input.seek(index52_4);
+                        input.seek(index52_5);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -15543,78 +15526,78 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_38s = "\15\uffff";
-    static final String dfa_39s = "\3\uffff\1\11\4\uffff\1\7\2\uffff\2\11";
-    static final String dfa_40s = "\1\12\1\uffff\1\5\1\4\2\5\1\6\1\uffff\1\4\2\uffff\2\4";
-    static final String dfa_41s = "\1\51\1\uffff\1\5\1\52\1\5\1\7\1\6\1\uffff\1\67\2\uffff\1\52\1\51";
-    static final String dfa_42s = "\1\uffff\1\1\5\uffff\1\2\1\uffff\1\4\1\3\2\uffff";
-    static final String dfa_43s = "\15\uffff}>";
-    static final String[] dfa_44s = {
-            "\1\1\36\uffff\1\2",
+    static final String dfa_39s = "\15\uffff";
+    static final String dfa_40s = "\3\uffff\1\11\4\uffff\1\7\2\uffff\2\11";
+    static final String dfa_41s = "\1\12\1\uffff\1\5\1\4\2\5\1\6\1\uffff\1\4\2\uffff\2\4";
+    static final String dfa_42s = "\1\53\1\uffff\1\5\1\54\1\5\1\7\1\6\1\uffff\1\71\2\uffff\1\54\1\53";
+    static final String dfa_43s = "\1\uffff\1\1\5\uffff\1\2\1\uffff\1\4\1\3\2\uffff";
+    static final String dfa_44s = "\15\uffff}>";
+    static final String[] dfa_45s = {
+            "\1\1\40\uffff\1\2",
             "",
             "\1\3",
-            "\1\11\1\10\4\7\1\11\11\uffff\1\12\3\uffff\1\11\2\uffff\1\11\5\uffff\1\5\4\uffff\1\4\2\uffff\1\11\1\6",
+            "\1\11\1\10\4\7\1\11\11\uffff\1\12\3\uffff\1\11\2\uffff\1\11\5\uffff\1\5\4\uffff\1\4\4\uffff\1\11\1\6",
             "\1\13",
             "\1\13\2\7",
             "\1\14",
             "",
-            "\2\7\4\uffff\1\7\6\uffff\1\11\2\uffff\1\11\1\uffff\1\7\1\11\1\7\2\uffff\1\7\5\uffff\1\7\3\uffff\1\11\1\7\2\uffff\2\7\15\11",
+            "\2\7\4\uffff\1\7\6\uffff\1\11\2\uffff\1\11\1\uffff\1\7\1\11\1\7\2\uffff\1\7\5\uffff\1\7\3\uffff\1\11\1\7\4\uffff\2\7\15\11",
             "",
             "",
-            "\1\11\1\10\4\7\1\11\11\uffff\1\12\3\uffff\1\11\2\uffff\1\11\5\uffff\1\5\4\uffff\1\4\2\uffff\1\11\1\6",
-            "\1\11\1\10\4\7\1\11\11\uffff\1\12\3\uffff\1\11\2\uffff\1\11\5\uffff\1\7\7\uffff\1\11"
+            "\1\11\1\10\4\7\1\11\11\uffff\1\12\3\uffff\1\11\2\uffff\1\11\5\uffff\1\5\4\uffff\1\4\4\uffff\1\11\1\6",
+            "\1\11\1\10\4\7\1\11\11\uffff\1\12\3\uffff\1\11\2\uffff\1\11\5\uffff\1\7\11\uffff\1\11"
     };
 
-    static final short[] dfa_38 = DFA.unpackEncodedString(dfa_38s);
     static final short[] dfa_39 = DFA.unpackEncodedString(dfa_39s);
-    static final char[] dfa_40 = DFA.unpackEncodedStringToUnsignedChars(dfa_40s);
+    static final short[] dfa_40 = DFA.unpackEncodedString(dfa_40s);
     static final char[] dfa_41 = DFA.unpackEncodedStringToUnsignedChars(dfa_41s);
-    static final short[] dfa_42 = DFA.unpackEncodedString(dfa_42s);
+    static final char[] dfa_42 = DFA.unpackEncodedStringToUnsignedChars(dfa_42s);
     static final short[] dfa_43 = DFA.unpackEncodedString(dfa_43s);
-    static final short[][] dfa_44 = unpackEncodedStringArray(dfa_44s);
+    static final short[] dfa_44 = DFA.unpackEncodedString(dfa_44s);
+    static final short[][] dfa_45 = unpackEncodedStringArray(dfa_45s);
 
     class DFA69 extends DFA {
 
         public DFA69(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 69;
-            this.eot = dfa_38;
-            this.eof = dfa_39;
-            this.min = dfa_40;
-            this.max = dfa_41;
-            this.accept = dfa_42;
-            this.special = dfa_43;
-            this.transition = dfa_44;
+            this.eot = dfa_39;
+            this.eof = dfa_40;
+            this.min = dfa_41;
+            this.max = dfa_42;
+            this.accept = dfa_43;
+            this.special = dfa_44;
+            this.transition = dfa_45;
         }
         public String getDescription() {
             return "3511:1: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )";
         }
     }
-    static final String dfa_45s = "\3\uffff\1\11\6\uffff\2\11";
-    static final String dfa_46s = "\1\12\1\uffff\4\5\1\6\3\uffff\2\5";
-    static final String dfa_47s = "\1\51\1\uffff\1\5\1\52\2\5\1\6\3\uffff\1\52\1\51";
-    static final String dfa_48s = "\1\uffff\1\1\5\uffff\1\2\1\3\1\4\2\uffff";
-    static final String dfa_49s = "\14\uffff}>";
-    static final String[] dfa_50s = {
-            "\1\1\36\uffff\1\2",
+    static final String dfa_46s = "\3\uffff\1\11\6\uffff\2\11";
+    static final String dfa_47s = "\1\12\1\uffff\4\5\1\6\3\uffff\2\5";
+    static final String dfa_48s = "\1\53\1\uffff\1\5\1\54\2\5\1\6\3\uffff\1\54\1\53";
+    static final String dfa_49s = "\1\uffff\1\1\5\uffff\1\2\1\3\1\4\2\uffff";
+    static final String dfa_50s = "\14\uffff}>";
+    static final String[] dfa_51s = {
+            "\1\1\40\uffff\1\2",
             "",
             "\1\3",
-            "\1\11\3\uffff\1\7\1\11\11\uffff\1\10\14\uffff\1\5\4\uffff\1\4\2\uffff\1\11\1\6",
+            "\1\11\3\uffff\1\7\1\11\11\uffff\1\10\14\uffff\1\5\4\uffff\1\4\4\uffff\1\11\1\6",
             "\1\12",
             "\1\12",
             "\1\13",
             "",
             "",
             "",
-            "\1\11\3\uffff\1\7\1\11\11\uffff\1\10\14\uffff\1\5\4\uffff\1\4\2\uffff\1\11\1\6",
-            "\1\11\3\uffff\1\7\1\11\11\uffff\1\10\24\uffff\1\11"
+            "\1\11\3\uffff\1\7\1\11\11\uffff\1\10\14\uffff\1\5\4\uffff\1\4\4\uffff\1\11\1\6",
+            "\1\11\3\uffff\1\7\1\11\11\uffff\1\10\26\uffff\1\11"
     };
-    static final short[] dfa_45 = DFA.unpackEncodedString(dfa_45s);
-    static final char[] dfa_46 = DFA.unpackEncodedStringToUnsignedChars(dfa_46s);
+    static final short[] dfa_46 = DFA.unpackEncodedString(dfa_46s);
     static final char[] dfa_47 = DFA.unpackEncodedStringToUnsignedChars(dfa_47s);
-    static final short[] dfa_48 = DFA.unpackEncodedString(dfa_48s);
+    static final char[] dfa_48 = DFA.unpackEncodedStringToUnsignedChars(dfa_48s);
     static final short[] dfa_49 = DFA.unpackEncodedString(dfa_49s);
-    static final short[][] dfa_50 = unpackEncodedStringArray(dfa_50s);
+    static final short[] dfa_50 = DFA.unpackEncodedString(dfa_50s);
+    static final short[][] dfa_51 = unpackEncodedStringArray(dfa_51s);
 
     class DFA70 extends DFA {
 
@@ -15622,12 +15605,12 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
             this.recognizer = recognizer;
             this.decisionNumber = 70;
             this.eot = dfa_1;
-            this.eof = dfa_45;
-            this.min = dfa_46;
-            this.max = dfa_47;
-            this.accept = dfa_48;
-            this.special = dfa_49;
-            this.transition = dfa_50;
+            this.eof = dfa_46;
+            this.min = dfa_47;
+            this.max = dfa_48;
+            this.accept = dfa_49;
+            this.special = dfa_50;
+            this.transition = dfa_51;
         }
         public String getDescription() {
             return "3589:1: (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )";
@@ -15639,48 +15622,49 @@ public class InternalKEffectsParser extends AbstractInternalAntlrParser {
     private static class FollowSets000 {
         public static final BitSet FOLLOW_1 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_2 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x0000020000000420L});
+        public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x0000080000000420L});
         public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x00000000000A0002L});
-        public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x30000082030203F0L});
+        public static final BitSet FOLLOW_5 = new BitSet(new long[]{0xC0000182030203F0L});
         public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x0000000000040000L});
         public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0000000000080002L});
         public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0000000000000020L});
         public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x0000000000000022L});
-        public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x003FF80000100000L});
+        public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x00FFE00000100000L});
         public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000000000200000L});
-        public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x00C0000000100000L});
-        public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0000020000000430L});
+        public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0300000000100000L});
+        public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0000080000000430L});
         public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000000000820000L});
-        public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x30000082830203F0L});
+        public static final BitSet FOLLOW_15 = new BitSet(new long[]{0xC0000182830203F0L});
         public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x0000000000440000L});
-        public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000020001000420L});
+        public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000080001000420L});
         public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0000000004000000L});
-        public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0000020008000420L});
+        public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0000080008000420L});
         public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0000000000400002L});
         public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0000000010000002L});
         public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x0000000020000002L});
         public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0000000040000002L});
         public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0000000080000002L});
-        public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x0F00000006000002L});
+        public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x3C00000006000002L});
         public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x0000000100000002L});
-        public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x30000002030203F0L});
+        public static final BitSet FOLLOW_27 = new BitSet(new long[]{0xC0000102030203F0L});
         public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x0000000200000002L});
         public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x0000000400000002L});
         public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x0000000800000002L});
         public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x0000001000000002L});
         public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0000000000020000L});
-        public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x3000000000000020L});
+        public static final BitSet FOLLOW_33 = new BitSet(new long[]{0xC000000000000020L});
         public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x0000002000000002L});
         public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x0000004000100002L});
         public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x0000000000000040L});
         public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x0000000080000000L});
-        public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x30000182030203F0L});
-        public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x00000002000003E0L});
-        public static final BitSet FOLLOW_40 = new BitSet(new long[]{0x0000000000000320L});
-        public static final BitSet FOLLOW_41 = new BitSet(new long[]{0x0000000000100000L});
-        public static final BitSet FOLLOW_42 = new BitSet(new long[]{0x0000000000000200L});
-        public static final BitSet FOLLOW_43 = new BitSet(new long[]{0x0000044200000002L});
-        public static final BitSet FOLLOW_44 = new BitSet(new long[]{0x0000000000000080L});
+        public static final BitSet FOLLOW_38 = new BitSet(new long[]{0xC0000582030203F0L});
+        public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x0000020000400000L});
+        public static final BitSet FOLLOW_40 = new BitSet(new long[]{0x00000002000003E0L});
+        public static final BitSet FOLLOW_41 = new BitSet(new long[]{0x0000000000000320L});
+        public static final BitSet FOLLOW_42 = new BitSet(new long[]{0x0000000000100000L});
+        public static final BitSet FOLLOW_43 = new BitSet(new long[]{0x0000000000000200L});
+        public static final BitSet FOLLOW_44 = new BitSet(new long[]{0x0000104200000002L});
+        public static final BitSet FOLLOW_45 = new BitSet(new long[]{0x0000000000000080L});
     }
 
 

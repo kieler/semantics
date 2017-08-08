@@ -1539,24 +1539,24 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	public class VectorValueElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.VectorValue");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cLeftParenthesisKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cValuesAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cValuesVectorValueMemberParserRuleCall_1_0 = (RuleCall)cValuesAssignment_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
 		private final Keyword cCommaKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cValuesAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cValuesVectorValueMemberParserRuleCall_2_1_0 = (RuleCall)cValuesAssignment_2_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Keyword cRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//VectorValue:
-		//	'(' values+=VectorValueMember (',' values+=VectorValueMember)* ')';
+		//	'{' values+=VectorValueMember (',' values+=VectorValueMember)* '}';
 		@Override public ParserRule getRule() { return rule; }
 
-		//'(' values+=VectorValueMember (',' values+=VectorValueMember)* ')'
+		//'{' values+=VectorValueMember (',' values+=VectorValueMember)* '}'
 		public Group getGroup() { return cGroup; }
 
-		//'('
-		public Keyword getLeftParenthesisKeyword_0() { return cLeftParenthesisKeyword_0; }
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_0() { return cLeftCurlyBracketKeyword_0; }
 
 		//values+=VectorValueMember
 		public Assignment getValuesAssignment_1() { return cValuesAssignment_1; }
@@ -1576,8 +1576,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//VectorValueMember
 		public RuleCall getValuesVectorValueMemberParserRuleCall_2_1_0() { return cValuesVectorValueMemberParserRuleCall_2_1_0; }
 
-		//')'
-		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_3() { return cRightCurlyBracketKeyword_3; }
 	}
 
 	public class VectorValueMemberElements extends AbstractParserRuleElementFinder {
@@ -2751,7 +2751,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//VectorValue:
-	//	'(' values+=VectorValueMember (',' values+=VectorValueMember)* ')';
+	//	'{' values+=VectorValueMember (',' values+=VectorValueMember)* '}';
 	public VectorValueElements getVectorValueAccess() {
 		return pVectorValue;
 	}
