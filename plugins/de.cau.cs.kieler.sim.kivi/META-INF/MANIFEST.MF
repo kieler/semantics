@@ -12,7 +12,7 @@ Require-Bundle: org.eclipse.elk.graph,
  de.cau.cs.kieler.klighd.ui.view,
  org.eclipse.ui,
  org.eclipse.ui.ide,
- de.cau.cs.kieler.kicool.ui.klighd,
+ de.cau.cs.kieler.kicool.ui,
  de.cau.cs.kieler.kico,
  de.cau.cs.kieler.klighd.krendering.extensions
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

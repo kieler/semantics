@@ -23,7 +23,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.emf.ecore.xmi,
  de.cau.cs.kieler.scg,
  de.cau.cs.kieler.circuit,
- de.cau.cs.kieler.kicool.ui.klighd
+ de.cau.cs.kieler.kicool.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sccharts.sim.c

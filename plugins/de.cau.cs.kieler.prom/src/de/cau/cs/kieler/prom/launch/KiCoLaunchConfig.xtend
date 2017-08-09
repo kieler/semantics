@@ -22,7 +22,7 @@ import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.KielerCompilerException
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
-import de.cau.cs.kieler.prom.build.KiCoBuilder
+import de.cau.cs.kieler.prom.build.KielerModelingBuilder
 import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.prom.data.FileData
 import de.cau.cs.kieler.prom.data.KiCoLaunchData
@@ -324,7 +324,7 @@ class KiCoLaunchConfig extends PromLaunchConfig {
             // TODO: SIMULATIONVISUALIZATION throws an exception when used (28.10.2015), so we explicitly disable it.
             // TODO: ABORTWTO often makes trouble and is not deterministicly choosen, so we explicitly disable it.
             var String compileChain = "!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION, !T_ABORTWTO"
-            if(KiCoBuilder.isCompileChain(launchData.targetLanguage)) {
+            if(KielerModelingBuilder.isCompileChain(launchData.targetLanguage)) {
                 compileChain += ", " + launchData.targetLanguage
             } else {
                 // If it is not a complete compile chain, it is assumed to be a transformation, which has to be prefixed with T_
