@@ -21,8 +21,8 @@ import java.net.URI
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.CoreException
 import de.cau.cs.kieler.railsl.ui.natures.RailSLNature
-import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.core.resources.IFolder
 
 /**
  * @author stu121235
@@ -35,6 +35,8 @@ class NewRailSLProjectWizard extends Wizard implements INewWizard {
     private val WINDOW_TITLE = "RailSL Project Wizard" 
     private val PAGE_TITLE = "New RailSL Project"
     private val PAGE_DESCRIPTION = "Create a new RailSL project with everything you need."
+    
+    private static val FOLDERS = #{"kieler-gen", "assets"}
     
     public new() {
         setWindowTitle(WINDOW_TITLE);
@@ -64,13 +66,14 @@ class NewRailSLProjectWizard extends Wizard implements INewWizard {
         addPage(page);
     }
     
-    def IProject createProject(String projectName, URI location) {
+    static def IProject createProject(String projectName, URI location) {
         var IProject project = createBaseProject(projectName, location)
         
         try {
             addNature(project)
             
-            // TODO add files and folders here 
+            addToProjectStructure(project, FOLDERS)
+            
             
         } catch (CoreException e) {
             e.printStackTrace
@@ -78,6 +81,23 @@ class NewRailSLProjectWizard extends Wizard implements INewWizard {
         }
         
         return project
+    }
+    
+    static def void createFolder(IFolder folder) throws CoreException {
+        val parent = folder.parent
+        if (parent instanceof IFolder) {
+            createFolder(parent as IFolder)
+        }
+        if (!folder.exists) {
+            folder.create(false, true, null)
+        }
+    }
+    
+    static def void addToProjectStructure(IProject project, String[] paths) throws CoreException {
+        for (path : paths) {
+            val folder = project.getFolder(path)
+            folder.createFolder
+        }
     }
     
     static def IProject createBaseProject(String projectName, URI location) {
@@ -103,7 +123,7 @@ class NewRailSLProjectWizard extends Wizard implements INewWizard {
         newProject
     }
     
-    def void addNature(IProject project) {
+    static def void addNature(IProject project) {
         if (!project.hasNature(RailSLNature::NATURE_ID)) {
             val description = project.description
             val prevNatures = description.natureIds
@@ -115,9 +135,7 @@ class NewRailSLProjectWizard extends Wizard implements INewWizard {
             newNatures.set(numOfNatures, RailSLNature::NATURE_ID)
             description.natureIds = newNatures
             
-            var IProgressMonitor monitor = null;
-            
-            project.setDescription(description, monitor)
+            project.setDescription(description, null)
         }
     }
     
