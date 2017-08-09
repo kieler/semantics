@@ -5,7 +5,7 @@
          point="org.eclipse.ui.newWizards">
       <wizard
             canFinishEarly="false"
-            category="de.cau.cs.kieler.esterel"
+            category="de.cau.cs.kieler.prom.ui.kielerModelingWizards"
             class="de.cau.cs.kieler.esterel.prom.EsterelFileWizard"
             finalPerspective="de.cau.cs.kieler.Modeling"
             hasPages="true"
@@ -18,7 +18,7 @@
          </description>
       </wizard>
       <wizard
-            category="de.cau.cs.kieler.esterel"
+            category="de.cau.cs.kieler.prom.ui.kielerModelingWizards"
             class="de.cau.cs.kieler.esterel.prom.EsterelProjectWizard"
             finalPerspective="de.cau.cs.kieler.Modeling"
             hasPages="true"

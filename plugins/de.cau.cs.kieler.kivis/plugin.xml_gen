@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http://www.cau.de/cs/kieler/kivis/KiVis" 
+       class = "de.cau.cs.kieler.kivis.kivis.KivisPackage"
+       genModel = "model/generated/KiVis.genmodel" /> 
+	
+  </extension>
+
+
+
+</plugin>

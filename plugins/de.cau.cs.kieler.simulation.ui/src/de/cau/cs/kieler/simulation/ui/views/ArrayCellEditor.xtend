@@ -25,6 +25,8 @@ import org.eclipse.jface.viewers.TableViewerColumn
 import org.eclipse.swt.SWT
 import org.eclipse.swt.events.FocusAdapter
 import org.eclipse.swt.events.FocusEvent
+import org.eclipse.swt.events.KeyAdapter
+import org.eclipse.swt.events.KeyEvent
 import org.eclipse.swt.graphics.Image
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Table
@@ -233,6 +235,23 @@ class ArrayCellEditor extends CellEditor {
         // Make cells editable
         userValueColumn.editingSupport = new ValueColumnEditingSupport(viewer)
         
+        // Delegate key listener
+        val arrayCellEditor = this
+        viewer.control.addKeyListener(new KeyAdapter() {
+            
+            override keyReleased(KeyEvent e) {
+                // Cancel with Escape key, apply values with Enter key
+                arrayCellEditor.delegateKeyRelease(e)
+            }
+        })
+        
         return viewer
+    }
+    
+    /**
+     * Delegate the key release event to the super implementation.
+     */
+    public def void delegateKeyRelease(KeyEvent e) {
+        keyReleaseOccured(e)
     }
 }

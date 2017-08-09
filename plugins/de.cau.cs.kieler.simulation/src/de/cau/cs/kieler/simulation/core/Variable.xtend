@@ -148,22 +148,12 @@ class Variable implements Cloneable {
     }
     
     public def void setUserValue(Object value) {
-        var boolean eq = true
-        if(value !== userValue) {
-            eq = false
-        } else if(value != null) {
-            eq = value.equals(userValue) 
-        } else if(userValue != null) {
-            eq = userValue.equals(value)
-        }
-        if(!eq) {
-            // Mark the modification in the model
-            model.setModifiedVariable
-            // Set the user value
-            userValue = value
-            // Notify simulation listeners that value changed
-            SimulationManager.instance?.fireEvent(SimulationEventType.VARIABLE_CHANGE, this) 
-        }
+        // Mark the modification in the model
+        model.setModifiedVariable
+        // Set the user value
+        userValue = value
+        // Notify simulation listeners that value changed
+        SimulationManager.instance?.fireEvent(SimulationEventType.VARIABLE_CHANGE, this) 
     }
     
     /**

@@ -173,7 +173,7 @@ class DataPoolView extends ViewPart {
         val mgr = getViewSite().getActionBars().getToolBarManager()
         tickInfo = new LabelContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.tickInfo",
                                          "Tick #0000 (-000)",
-                                         "Last fully executed macro tick")
+                                         "Last executed macro tick")
         mgr.add(tickInfo)
         mgr.add(new Separator())
         mgr.add(new SearchFieldContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.searchField"))
@@ -484,7 +484,9 @@ class DataPoolView extends ViewPart {
                         dataPoolView.setStatusLineText(e.message)    
                     ]
                 }else if(e.type == SimulationEventType.VARIABLE_CHANGE) {
-                    dataPoolView.viewer.update(e.variable, null)
+                    PromUIPlugin.asyncExecInUI[
+                        dataPoolView.viewer.update(e.variable, null)    
+                    ]
                 } else if(e.type == SimulationEventType.TRACE) {
                     if(e instanceof TraceMismatchEvent) {
                         dataPoolView.registerTraceMismatch(e.variable, e)
