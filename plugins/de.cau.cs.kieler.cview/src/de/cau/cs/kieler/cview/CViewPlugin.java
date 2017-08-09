@@ -66,15 +66,16 @@ public class CViewPlugin implements BundleActivator {
     static ArrayList<IExportHook> exportHooks = null;
 
     static HashMap<String, char[]> cacheFileRaw = new HashMap<String, char[]>();
-    static HashMap<String, IASTTranslationUnit> cacheFileAST = new HashMap<String, IASTTranslationUnit>();
-    
+    static HashMap<String, IASTTranslationUnit> cacheFileAST =
+            new HashMap<String, IASTTranslationUnit>();
+
     // -------------------------------------------------------------------------
-    
+
     private static void cacheReset() {
         cacheFileRaw.clear();
         cacheFileAST.clear();
     }
-    
+
     private static char[] cacheGetFileRaw(String fileLocation) {
         if (cacheFileRaw.containsKey(fileLocation)) {
             return cacheFileRaw.get(fileLocation);
@@ -88,7 +89,7 @@ public class CViewPlugin implements BundleActivator {
         }
         return null;
     }
-    
+
     private static void cachePutFileRaw(String fileLocation, char[] fileRaw) {
         cacheFileRaw.put(fileLocation, fileRaw);
     }
@@ -96,50 +97,52 @@ public class CViewPlugin implements BundleActivator {
     private static void cachePutFileAST(String fileLocation, IASTTranslationUnit fileAST) {
         cacheFileAST.put(fileLocation, fileAST);
     }
-    
-    
+
     public static IASTTranslationUnit getFileAST(String fileLocation) {
         IASTTranslationUnit returnValue = null;
         if (modified(fileLocation)) {
-            returnValue = cacheGetFileAST(fileLocation);
-            if (returnValue == null) {
+            cachePutFileAST(fileLocation, null);
+        }
+        returnValue = cacheGetFileAST(fileLocation);
+        if (returnValue == null) {
+            try {
+                char[] content = getFileRaw(fileLocation);
                 try {
-                    char[] content = getFileRaw(fileLocation);
-                    try {
-                        returnValue =  CFileParser.parse(content);
-                        cachePutFileAST(fileLocation, returnValue);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    returnValue = CFileParser.parse(content);
+                    cachePutFileAST(fileLocation, returnValue);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         return returnValue;
     }
-    
-    
+
     public static char[] getFileRaw(String fileLocation) {
         char[] returnValue = null;
         if (modified(fileLocation)) {
-            returnValue = cacheGetFileRaw(fileLocation);
-            if (returnValue == null) {
-                try {
-                    returnValue = readFile(fileLocation);
-                    cachePutFileRaw(fileLocation, returnValue);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            cachePutFileRaw(fileLocation, null);
+        }
+        returnValue = cacheGetFileRaw(fileLocation);
+        if (returnValue == null) {
+            try {
+                returnValue = readFile(fileLocation);
+                cachePutFileRaw(fileLocation, returnValue);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
         return returnValue;
     }
 
     static HashMap<String, Long> cacheLastModified = new HashMap<String, Long>();
+
     static boolean modified(String filePath) {
         return modified(filePath, true);
     }
+
     static boolean modified(String filePath, boolean update) {
         File file = new File(filePath);
         Long lastModified = file.lastModified();
@@ -180,7 +183,6 @@ public class CViewPlugin implements BundleActivator {
 
     // -------------------------------------------------------------------------
 
-    
     @Override
     public void start(BundleContext context) throws Exception {
     }
