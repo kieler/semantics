@@ -41,8 +41,9 @@ class WalkPathAnimation extends AnimationHandler {
     
     public val wrapAround = new ConfigurableAttribute("wrapAround", false)
     
-    var String initialTransform
-    var SVGPoint lastPoint
+    private var String initialTransform
+    private var SVGPoint lastPoint
+    private var double lastScaledPosition
     
     new() {
     }
@@ -85,7 +86,7 @@ class WalkPathAnimation extends AnimationHandler {
         val value = if(position.value == null)
                         variableValue.doubleValue
                     else
-                        position.intValue.doubleValue
+                        position.floatValue.doubleValue
                         
         var wrappedValue = value
         if(wrapAround.value != null && wrapAround.boolValue) {
@@ -115,9 +116,14 @@ class WalkPathAnimation extends AnimationHandler {
         if (autoOrientation.boolValue && scaledValue <= (totalPathLength - delta)) {
             // Calculate slope ("Steigung" bzw. "Ableitung") on path on current position
             val pointOnPathPlusDelta = path.getPointAtLength(scaledValue.floatValue + delta)
+            // Add offset
             angleValue.value = computeAngle(pointOnPath, pointOnPathPlusDelta)
             if(angleOffset.floatValue != 0) {
                 angleValue.value = angleValue.floatValue + angleOffset.floatValue
+            }
+            // Turn around when moving "backwards"
+            if(lastScaledPosition > scaledValue) {
+                angleValue.value = angleValue.floatValue + 180
             }
         } else if(autoOrientation.boolValue && lastPoint != null){
             // Calculate rotation based on last position
@@ -127,6 +133,7 @@ class WalkPathAnimation extends AnimationHandler {
             }
         }
         lastPoint = currentPoint
+        lastScaledPosition = scaledValue 
         
         if(elem instanceof SVGLocatable) {
             if(appendTransform.boolValue) {

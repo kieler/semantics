@@ -565,12 +565,18 @@ class KiVisView extends ViewPart {
                 interaction.apply(pool)
             }
             
-            // Update svg with data from pool
-            // Make all changes to the svg in the update manager.
-            // Otherwise the svg canvas is not updated properly.
-            if(pool != lastPool
-                || force) {
+            // Only update the view with the state of the pool, when the pool changed
+            // and the data pool contains valid data, i.e., all variables have been initialized in the first macro tick
+            var poolChanged = (pool != lastPool)
+            var afterInitialization = (SimulationManager.instance != null
+                                       && SimulationManager.instance.currentMacroTickNumber > 0)
+            if(force
+               || poolChanged && afterInitialization) {
                 lastPool = pool
+                
+                // Update svg with data from pool
+                // Make all changes to the svg in the update manager.
+                // Otherwise the svg canvas is not updated properly.
                 val runnable = new Runnable() {
                     override run() {
                         if(!initialized) {
@@ -656,7 +662,8 @@ class KiVisView extends ViewPart {
                     if(e.type == SimulationEventType.VARIABLE_CHANGE
                         && !kiVisView.ignoreVariableEvents) {
                         PromUIPlugin.asyncExecInUI[kiVisView.update(e.variable)]
-                    } else if(e.type != SimulationEventType.TRACE) {
+                    } else if(e.type != SimulationEventType.TRACE
+                           && e.type != SimulationEventType.INITIALIZED) {
                         // Update the view in the UI thread
                         PromUIPlugin.asyncExecInUI[kiVisView.update(SimulationManager.instance?.currentPool, false)]
                     }
