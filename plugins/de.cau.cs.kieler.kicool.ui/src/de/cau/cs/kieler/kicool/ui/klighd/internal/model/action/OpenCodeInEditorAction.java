@@ -34,7 +34,7 @@ public class OpenCodeInEditorAction implements IAction {
 
     /** The action ID. */
     public static final String ID =
-            "de.cau.cs.kieler.kico.klighd.internal.model.action.OpenCodeInEditorAction";
+            "de.cau.cs.kieler.kicool.ui.klighd.internal.model.action.OpenCodeInEditorAction";
 
     /**
      * {@inheritDoc}

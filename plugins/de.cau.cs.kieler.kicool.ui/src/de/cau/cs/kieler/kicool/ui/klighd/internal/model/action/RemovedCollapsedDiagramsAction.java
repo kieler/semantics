@@ -37,7 +37,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions;
 public class RemovedCollapsedDiagramsAction implements IAction {
 
 	/** The action ID. */
-	public static final String ID = "de.cau.cs.kieler.kico.klighd.internal.model.action.RemovedCollapsedDiagramsAction";
+	public static final String ID = "de.cau.cs.kieler.kicool.ui.klighd.internal.model.action.RemovedCollapsedDiagramsAction";
 
 	private static final KRenderingExtensions rendering = Guice.createInjector()
 			.getInstance(KRenderingExtensions.class);
