@@ -383,7 +383,7 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
         for (value : expression.values) {
             s = s + value.serializeHR + ", "
         }
-        return s.substring(0, s.length - 2) + ")}"
+        return s.substring(0, s.length - 2) + "}"
     }    
     
     def dispatch CharSequence serializeHR(IgnoreValue expression) {
