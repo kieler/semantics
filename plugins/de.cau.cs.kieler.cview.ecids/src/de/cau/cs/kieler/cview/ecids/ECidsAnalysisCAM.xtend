@@ -86,10 +86,8 @@ class ECidsAnalysisCAM extends AbstractAnalysisHook implements IAnalysisHook {
         "tla_inner__cam_outer_ref"
         ]
         
-        
         for (check : checks) {
             val valid = model.isValidType(check)
-            
             if (valid == CViewAnalysisExtensions.TYPE_VALID_SURE) {
                 CViewPlugin.printlnConsole("check '" + check + "' VALID")
             } else if (valid == CViewAnalysisExtensions.TYPE_VALID_UNSURE) {

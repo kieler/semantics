@@ -43,6 +43,8 @@ import java.util.HashMap
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPTypedef
 import org.eclipse.cdt.core.dom.ast.ASTNodeProperty
 import de.cau.cs.kieler.cview.extensions.CViewAnalysisExtensions
+import java.util.zip.Checksum
+import java.util.zip.Adler32
 
 /**
  * @author cmot
@@ -215,13 +217,28 @@ class KLighDController extends AbstractKLighDController {
         }
 
         println("fillFileWithFunctions '" + filePath + "'")
-        val content = readFile(filePath)
+        var content = CViewPlugin.cacheGetFileRaw(filePath)
+        // TODO: if file renewed, set cache to NULL again!
+        if (filePath.modified) {
+            CViewPlugin.cachePutFileRaw(filePath, null)
+            CViewPlugin.cachePutFileAST(filePath, null)
+        }
+        if (content == null) {
+            content = readFile(filePath)
+            CViewPlugin.cachePutFileRaw(filePath, content)
+        }
+        
         fileComponent.rawdata = String.valueOf(content)
         val tooltip = extractTooltip(fileComponent.rawdata)
         fileComponent.tooltip = tooltip
 
         if (parse) {
-            val ast = CFileParser.parse(content)
+            var astTmp = CViewPlugin.cacheGetFileAST(filePath)
+            if (astTmp == null) {
+                astTmp = CFileParser.parse(content)
+                CViewPlugin.cachePutFileAST(filePath, astTmp)
+            }
+            val ast = astTmp
 
             val visitor = new ASTVisitor() {
 
@@ -424,6 +441,27 @@ class KLighDController extends AbstractKLighDController {
         }
 
         return model;
+    }
+    
+    
+    HashMap<String, Long> cacheLastModified = new HashMap
+    def boolean modified(String filePath) {
+        return filePath.modified(true)
+    }
+    def boolean modified(String filePath, boolean update) {
+        val File file = new File(filePath);
+        val Long lastModified = file.lastModified
+        var Long lastModifiedCached = 0l
+        if (cacheLastModified.containsKey(filePath)) {
+            lastModifiedCached = cacheLastModified.get(filePath)
+        }
+        if (lastModifiedCached != lastModified) {
+            if (update) {
+                cacheLastModified.put(filePath, lastModified)
+            }
+            return true
+        }
+        return false
     }
 
 }

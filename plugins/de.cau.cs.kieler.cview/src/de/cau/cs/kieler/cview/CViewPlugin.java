@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
@@ -56,8 +57,41 @@ public class CViewPlugin implements BundleActivator {
     static ArrayList<IAnalysisHook> analysisHooks = null;
     static ArrayList<IExportHook> exportHooks = null;
 
+    static HashMap<String, char[]> cacheFileRaw = new HashMap<String, char[]>();
+    static HashMap<String, IASTTranslationUnit> cacheFileAST = new HashMap<String, IASTTranslationUnit>();
+    
+    // -------------------------------------------------------------------------
+    
+    public static void cacheReset() {
+        cacheFileRaw.clear();
+        cacheFileAST.clear();
+    }
+    
+    public static char[] cacheGetFileRaw(String fileLocation) {
+        if (cacheFileRaw.containsKey(fileLocation)) {
+            return cacheFileRaw.get(fileLocation);
+        }
+        return null;
+    }
+
+    public static IASTTranslationUnit cacheGetFileAST(String fileLocation) {
+        if (cacheFileAST.containsKey(fileLocation)) {
+            return cacheFileAST.get(fileLocation);
+        }
+        return null;
+    }
+    
+    public static void cachePutFileRaw(String fileLocation, char[] fileRaw) {
+        cacheFileRaw.put(fileLocation, fileRaw);
+    }
+
+    public static void cachePutFileAST(String fileLocation, IASTTranslationUnit fileAST) {
+        cacheFileAST.put(fileLocation, fileAST);
+    }
+
     // -------------------------------------------------------------------------
 
+    
     @Override
     public void start(BundleContext context) throws Exception {
     }
