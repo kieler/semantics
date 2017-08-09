@@ -170,6 +170,24 @@ public interface KExpressionsFactory extends EFactory {
     StringValue createStringValue();
 
     /**
+     * Returns a new object of class '<em>Vector Value</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Vector Value</em>'.
+     * @generated
+     */
+    VectorValue createVectorValue();
+
+    /**
+     * Returns a new object of class '<em>Ignore Value</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Ignore Value</em>'.
+     * @generated
+     */
+    IgnoreValue createIgnoreValue();
+
+    /**
      * Returns a new object of class '<em>Reference Call</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

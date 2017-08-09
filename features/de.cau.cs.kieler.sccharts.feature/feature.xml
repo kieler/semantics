@@ -282,9 +282,9 @@ litigation.
    
    <plugin id="de.cau.cs.kieler.klighd.server.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
-   <plugin id="de.cau.cs.kieler.kvis" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="de.cau.cs.kieler.kivis" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
-   <plugin id="de.cau.cs.kieler.kvis.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="de.cau.cs.kieler.kivis.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="de.cau.cs.kieler.prom" download-size="0" install-size="0" version="0.0.0"/>
    

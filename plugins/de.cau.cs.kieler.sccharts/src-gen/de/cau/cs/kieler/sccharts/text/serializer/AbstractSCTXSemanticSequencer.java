@@ -14,6 +14,7 @@ import de.cau.cs.kieler.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.kexpressions.BoolValue;
 import de.cau.cs.kieler.kexpressions.FloatValue;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
+import de.cau.cs.kieler.kexpressions.IgnoreValue;
 import de.cau.cs.kieler.kexpressions.IntValue;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.OperatorExpression;
@@ -27,6 +28,7 @@ import de.cau.cs.kieler.kexpressions.TextExpression;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
+import de.cau.cs.kieler.kexpressions.VectorValue;
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.kexpressions.keffects.Emission;
 import de.cau.cs.kieler.kexpressions.keffects.FunctionCallEffect;
@@ -215,14 +217,16 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 					return; 
 				}
 				else if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()) {
+						|| rule == grammarAccess.getExpressionRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_BoolValue_Expression(context, (BoolValue) semanticObject); 
 					return; 
 				}
 				else break;
 			case KExpressionsPackage.FLOAT_VALUE:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()) {
+						|| rule == grammarAccess.getExpressionRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_Expression_FloatValue(context, (FloatValue) semanticObject); 
 					return; 
 				}
@@ -261,7 +265,8 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 				else break;
 			case KExpressionsPackage.FUNCTION_CALL:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()) {
+						|| rule == grammarAccess.getExpressionRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_Expression_FunctionCall(context, (FunctionCall) semanticObject); 
 					return; 
 				}
@@ -297,9 +302,13 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.IGNORE_VALUE:
+				sequence_IgnoreValue(context, (IgnoreValue) semanticObject); 
+				return; 
 			case KExpressionsPackage.INT_VALUE:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()) {
+						|| rule == grammarAccess.getExpressionRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_Expression_IntValue(context, (IntValue) semanticObject); 
 					return; 
 				}
@@ -339,7 +348,8 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 				else break;
 			case KExpressionsPackage.OPERATOR_EXPRESSION:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()) {
+						|| rule == grammarAccess.getExpressionRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_AddExpression_BitwiseAndExpression_BitwiseOrExpression_CompareOperation_DivExpression_Expression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
@@ -383,7 +393,8 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 				return; 
 			case KExpressionsPackage.REFERENCE_CALL:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()) {
+						|| rule == grammarAccess.getExpressionRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_Expression_ReferenceCall(context, (ReferenceCall) semanticObject); 
 					return; 
 				}
@@ -451,7 +462,8 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 				return; 
 			case KExpressionsPackage.STRING_VALUE:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()) {
+						|| rule == grammarAccess.getExpressionRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_Expression_StringValue(context, (StringValue) semanticObject); 
 					return; 
 				}
@@ -490,7 +502,8 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 				else break;
 			case KExpressionsPackage.TEXT_EXPRESSION:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()) {
+						|| rule == grammarAccess.getExpressionRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_Expression_TextExpression(context, (TextExpression) semanticObject); 
 					return; 
 				}
@@ -538,7 +551,8 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 				else break;
 			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()) {
+						|| rule == grammarAccess.getExpressionRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_Expression_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
 					return; 
 				}
@@ -585,6 +599,45 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 				else if (rule == grammarAccess.getDeclarationRule()
 						|| rule == grammarAccess.getVariableDeclarationRule()) {
 					sequence_VariableDeclaration(context, (VariableDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.VECTOR_VALUE:
+				if (rule == grammarAccess.getRootRule()
+						|| rule == grammarAccess.getExpressionRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
+					sequence_Expression_VectorValue(context, (VectorValue) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getBoolExpressionRule()
+						|| rule == grammarAccess.getLogicalOrExpressionRule()
+						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getLogicalAndExpressionRule()
+						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseOrExpressionRule()
+						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseAndExpressionRule()
+						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getCompareOperationRule()
+						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getNotExpressionRule()
+						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getAddExpressionRule()
+						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSubExpressionRule()
+						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getMultExpressionRule()
+						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getDivExpressionRule()
+						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getModExpressionRule()
+						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getAtomicExpressionRule()
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
+						|| rule == grammarAccess.getVectorValueRule()) {
+					sequence_VectorValue(context, (VectorValue) semanticObject); 
 					return; 
 				}
 				else break;

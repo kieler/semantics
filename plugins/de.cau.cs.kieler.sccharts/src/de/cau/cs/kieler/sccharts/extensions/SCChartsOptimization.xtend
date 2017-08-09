@@ -62,7 +62,8 @@ class SCChartsOptimization {
                     targetState.setName(state.name)
                     targetState.setLabel(state.label)
                     targetState.trace(state) //KITT: Redirect tracing relations before removing
-                    targetState.parentRegion.states.remove(state)
+                    if (targetState !== state)
+                        targetState.parentRegion.states.remove(state)
                 }
             }
         }

@@ -74,7 +74,8 @@ class Reference extends SCChartsProcessor {
             for (state : statesWithReferences.toList) {
                 state.expandReferencedState(new Replacements)
             }
-            rootState.validate
+            if (!rootState.validate) 
+                throw new IllegalStateException("References objects are not contained in the resource!")
         }
         
     }   
@@ -286,7 +287,8 @@ class Reference extends SCChartsProcessor {
     }
     
 
-    protected def void validate(State state) {
+    protected def boolean validate(State state) {
+        var success = true
         val valuedObjects = <ValuedObject> newHashSet
         
         for (vo : state.eAllContents.filter(ValuedObject).toList) {
@@ -302,10 +304,11 @@ class Reference extends SCChartsProcessor {
                 
                 environment.errors.add("The valued object reference points to a valued object that is not contained in the model!", vor, true)
                 System.err.println("The valued object reference points to a valued object that is not contained in the model! " + 
-                    vor.valuedObject.name + " " + vor + " " + (container as State).name
-                )
+                    vor.valuedObject.name + " " + vor + " " + (container as State).name)
+                success = false
             }
         }
+        success
     }
 
 }

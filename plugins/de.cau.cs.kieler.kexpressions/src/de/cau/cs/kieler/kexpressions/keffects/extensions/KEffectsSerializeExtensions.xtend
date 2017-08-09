@@ -22,6 +22,7 @@ import de.cau.cs.kieler.kexpressions.keffects.Effect
 import de.cau.cs.kieler.kexpressions.keffects.Emission
 import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect
+import de.cau.cs.kieler.kexpressions.PrintCall
 
 /**
  * Serialization of KEffects.
@@ -134,6 +135,13 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
         var paramStr = printCallEffect.parameters.serializeParameters.toString
         
         return "print " + paramStr.substring(1, paramStr.length - 1)
-    }        
+    }   
+    
+    def dispatch CharSequence serialize(PrintCall printCall) {
+        var paramStr = printCall.parameters.serializeParameters.toString
+        
+        return "print " + paramStr.substring(1, paramStr.length - 1)
+    }  
+
 
 }

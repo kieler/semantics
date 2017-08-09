@@ -228,6 +228,7 @@ AtomicValuedExpression returns Expression:
     IntValue
     | FloatValue 
     | StringValue
+    | VectorValue
     | '(' ValuedExpression ')'
     | AtomicExpression;
 
@@ -274,12 +275,12 @@ FunctionCall returns FunctionCall:
             (',' parameters += Parameter)* ')'
         ) | '()')
     )
-    |
-    ('<' functionName = ID 
-        (('(' parameters += Parameter 
-            (',' parameters += Parameter)* ')'
-        ) | '()')
-    '>')
+//    |
+//    ('<' functionName = ID 
+//        (('(' parameters += Parameter 
+//            (',' parameters += Parameter)* ')'
+//        ) | '()')
+//    '>')
     ;    
 
 // Parameter Rule
@@ -311,6 +312,15 @@ BoolValue returns BoolValue:
 // String Value Rule	
 StringValue returns StringValue:
     value=STRING;
+    
+VectorValue returns VectorValue:
+    '{' values+=VectorValueMember (',' values+=VectorValueMember)* '}';
+    
+VectorValueMember returns Expression:
+    Expression | IgnoreValue;
+    
+IgnoreValue returns IgnoreValue:
+    {IgnoreValue} '_';
 
 // Any Type Rule
 // Data type rule allowing any kind of value to be accepted,

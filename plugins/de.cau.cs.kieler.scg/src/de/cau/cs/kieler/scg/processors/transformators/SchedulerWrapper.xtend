@@ -33,7 +33,7 @@ class SchedulerWrapper extends Processor<SCGraphs, SCGraphs> {
     @Inject Injector injector
     
     override getId() {
-        "de.cau.cs.kieler.scg.processors.transformators.scheduler"
+        "de.cau.cs.kieler.scg.processors.transformators.scheduler.wrapper"
     }
     
     override getName() {

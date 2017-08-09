@@ -483,7 +483,8 @@ public class KiSimGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AttributeMapping:
-	//	name=ID (':' value=Literal | ':' values+=Literal (',' values+=Literal)+ | ':'? '{' attributes+=AttributeMapping+ '}');
+	//	name=ID (':' value=Literal | ':' values+=Literal (',' values+=Literal)+ | ':'? '{' attributes+=AttributeMapping+
+	//	'}');
 	public KiBuildGrammarAccess.AttributeMappingElements getAttributeMappingAccess() {
 		return gaKiBuild.getAttributeMappingAccess();
 	}
@@ -777,8 +778,8 @@ public class KiSimGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression) ('*'
-	//	subExpressions+=DivExpression)*)?
+	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)
+	//	('*' subExpressions+=DivExpression)*)?
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}
@@ -857,6 +858,7 @@ public class KiSimGrammarAccess extends AbstractGrammarElementFinder {
 	//	IntValue
 	//	| FloatValue
 	//	| StringValue
+	//	| VectorValue
 	//	| '(' ValuedExpression ')'
 	//	| AtomicExpression
 	public KExpressionsGrammarAccess.AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
@@ -934,9 +936,7 @@ public class KiSimGrammarAccess extends AbstractGrammarElementFinder {
 	//// Deprecated?
 	//FunctionCall:
 	//	'extern' functionName=super::ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
-	//	| '()') | '<' functionName=super::ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
-	//	| '()')
-	//	'>';
+	//	| '()');
 	public KExpressionsGrammarAccess.FunctionCallElements getFunctionCallAccess() {
 		return gaKExpressions.getFunctionCallAccess();
 	}
@@ -1015,6 +1015,36 @@ public class KiSimGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getStringValueRule() {
 		return getStringValueAccess().getRule();
+	}
+
+	//VectorValue:
+	//	'{' values+=VectorValueMember (',' values+=VectorValueMember)* '}';
+	public KExpressionsGrammarAccess.VectorValueElements getVectorValueAccess() {
+		return gaKExpressions.getVectorValueAccess();
+	}
+	
+	public ParserRule getVectorValueRule() {
+		return getVectorValueAccess().getRule();
+	}
+
+	//VectorValueMember Expression:
+	//	Expression | IgnoreValue
+	public KExpressionsGrammarAccess.VectorValueMemberElements getVectorValueMemberAccess() {
+		return gaKExpressions.getVectorValueMemberAccess();
+	}
+	
+	public ParserRule getVectorValueMemberRule() {
+		return getVectorValueMemberAccess().getRule();
+	}
+
+	//IgnoreValue:
+	//	{IgnoreValue} '_';
+	public KExpressionsGrammarAccess.IgnoreValueElements getIgnoreValueAccess() {
+		return gaKExpressions.getIgnoreValueAccess();
+	}
+	
+	public ParserRule getIgnoreValueRule() {
+		return getIgnoreValueAccess().getRule();
 	}
 
 	//// Any Type Rule

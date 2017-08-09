@@ -50,7 +50,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     
     // Minimal requirements for compilation
     @Accessors System system
-    @Accessors Object originalModel
+    @Accessors(PUBLIC_GETTER) Object originalModel
     @Accessors Map<ProcessorReference, Processor<?,?>> processorMap
     @Accessors List<Processor<?,?>> processorInstancesSequence 
     @Accessors Map<ProcessorSystem, CompilationContext> subContexts
@@ -64,10 +64,10 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         subContexts = new HashMap<ProcessorSystem, CompilationContext>()
         
         startEnvironment = new Environment
-        startEnvironment.setProperty(ORIGINAL_MODEL, originalModel)
         startEnvironment.setProperty(COMPILATION_CONTEXT, this)
         startEnvironment.setProperty(INPLACE, false)        
         startEnvironment.setProperty(ONGOING_WORKING_COPY, false)
+        startEnvironment.setProperty(ORIGINAL_MODEL, null)
         
         result = null
     }
@@ -84,6 +84,11 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         processorInstancesSequence.head
     }
     
+    def setOriginalModel(Object originalModel) {
+        this.originalModel = originalModel
+        startEnvironment.setProperty(ORIGINAL_MODEL, originalModel)
+    }
+    
     public def notify(Object arg) {
         setChanged
         notifyObservers(arg)
@@ -98,6 +103,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         
         if (startEnvironment.getProperty(ONGOING_WORKING_COPY) && originalModel instanceof EObject) {
             val modelCopy = EnvironmentPropertyHolder.tracingCopy((originalModel as EObject), startEnvironment)
+            
             startEnvironment.setProperty(MODEL, modelCopy)
         } else {
             startEnvironment.setProperty(MODEL, originalModel)

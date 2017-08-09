@@ -507,7 +507,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
         guard.setDefaultTrace
         val basicBlock = schedulingBlock.basicBlock
 
-        val relevantPredecessors = <Predecessor>newHashSet
+        val relevantPredecessors = <Predecessor>newLinkedList
 // FIXME: Verify removal of schizophrenic flag        
 //        if (guard.schizophrenic) {
 //            relevantPredecessors += basicBlock.predecessors.filter[!it.basicBlock.entryBlock]

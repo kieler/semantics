@@ -33,6 +33,7 @@ import de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorSystem
 import de.cau.cs.kieler.kicool.classes.IColorSystem
 import de.cau.cs.kieler.kicool.environments.MessageObjectLink
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
+import de.cau.cs.kieler.kicool.environments.MessageObjectList
 
 /**
  * @author ssm
@@ -47,7 +48,7 @@ class MessageObjectReferencesManager {
     @Inject extension KRenderingExtensions  
     @Inject extension KContainerRenderingExtensions
         
-    def annotateModelNodes(MessageObjectReferences references, KNode node) {
+    def annotateModelNodes(MessageObjectList references, KNode node) {
         val trackingAdapter = new SourceModelTrackingAdapter
         node.eAdapters.add(trackingAdapter)
         
@@ -114,11 +115,11 @@ class MessageObjectReferencesManager {
     }
     
     
-    static def fillUndefinedColors(MessageObjectReferences references, ColorSystem colorSystem) {
-        val newReferences = new MessageObjectReferences
-        for(reference : references) {
-            val IColorSystem cs = if (reference.colorSystem != null) reference.colorSystem else colorSystem
-            newReferences.add(new MessageObjectLink(reference.message, reference.object, reference.annotate, cs, null))
+    static def fillUndefinedColors(MessageObjectList mol, ColorSystem colorSystem) {
+        val newReferences = new MessageObjectList
+        for(ml : mol) {
+            val IColorSystem cs = if (ml.colorSystem != null) ml.colorSystem else colorSystem
+            newReferences.add(new MessageObjectLink(ml.message, ml.object, ml.annotate, cs, null))
         }
         newReferences
     }     

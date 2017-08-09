@@ -75,7 +75,16 @@ class For extends SCChartsProcessor {
             }
             ValuedObjectReference: {
                 val firstValue = 0
-                val secondValue = ((region.forStart as ValuedObjectReference).valuedObject.cardinalities.head as IntValue).value - 1
+                val card = (region.forStart as ValuedObjectReference).valuedObject.cardinalities.head
+                var secondValue = -1
+                if (card instanceof IntValue) {
+                    secondValue = (card as IntValue).value - 1
+                } else if (card instanceof ValuedObjectReference) {
+                    val initialValue = card.valuedObject.initialValue
+                    if (initialValue instanceof IntValue) {
+                        secondValue = initialValue.value - 1
+                    }
+                }
                 return new Pair<Integer, Integer>(firstValue, secondValue)
             }
         }
