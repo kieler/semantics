@@ -1,6 +1,14 @@
 package de.cau.cs.kieler.cview;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.lang.reflect.Method;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -62,31 +70,112 @@ public class CViewPlugin implements BundleActivator {
     
     // -------------------------------------------------------------------------
     
-    public static void cacheReset() {
+    private static void cacheReset() {
         cacheFileRaw.clear();
         cacheFileAST.clear();
     }
     
-    public static char[] cacheGetFileRaw(String fileLocation) {
+    private static char[] cacheGetFileRaw(String fileLocation) {
         if (cacheFileRaw.containsKey(fileLocation)) {
             return cacheFileRaw.get(fileLocation);
         }
         return null;
     }
 
-    public static IASTTranslationUnit cacheGetFileAST(String fileLocation) {
+    private static IASTTranslationUnit cacheGetFileAST(String fileLocation) {
         if (cacheFileAST.containsKey(fileLocation)) {
             return cacheFileAST.get(fileLocation);
         }
         return null;
     }
     
-    public static void cachePutFileRaw(String fileLocation, char[] fileRaw) {
+    private static void cachePutFileRaw(String fileLocation, char[] fileRaw) {
         cacheFileRaw.put(fileLocation, fileRaw);
     }
 
-    public static void cachePutFileAST(String fileLocation, IASTTranslationUnit fileAST) {
+    private static void cachePutFileAST(String fileLocation, IASTTranslationUnit fileAST) {
         cacheFileAST.put(fileLocation, fileAST);
+    }
+    
+    
+    public static IASTTranslationUnit getFileAST(String fileLocation) {
+        IASTTranslationUnit returnValue = null;
+        if (modified(fileLocation)) {
+            returnValue = cacheGetFileAST(fileLocation);
+            if (returnValue == null) {
+                try {
+                    char[] content = getFileRaw(fileLocation);
+                    try {
+                        returnValue =  CFileParser.parse(content);
+                        cachePutFileAST(fileLocation, returnValue);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return returnValue;
+    }
+    
+    
+    public static char[] getFileRaw(String fileLocation) {
+        char[] returnValue = null;
+        if (modified(fileLocation)) {
+            returnValue = cacheGetFileRaw(fileLocation);
+            if (returnValue == null) {
+                try {
+                    returnValue = readFile(fileLocation);
+                    cachePutFileRaw(fileLocation, returnValue);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return returnValue;
+    }
+
+    static HashMap<String, Long> cacheLastModified = new HashMap<String, Long>();
+    static boolean modified(String filePath) {
+        return modified(filePath, true);
+    }
+    static boolean modified(String filePath, boolean update) {
+        File file = new File(filePath);
+        Long lastModified = file.lastModified();
+        Long lastModifiedCached = 0l;
+        if (cacheLastModified.containsKey(filePath)) {
+            lastModifiedCached = cacheLastModified.get(filePath);
+        }
+        if (lastModifiedCached != lastModified) {
+            if (update) {
+                cacheLastModified.put(filePath, lastModified);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public static Charset getEncoding() {
+        Charset encoding = Charset.defaultCharset();
+        return encoding;
+    }
+
+    static char[] readFile(String filePath) throws IOException {
+        Charset encoding = getEncoding();
+        StringBuilder stringBuilder = new StringBuilder();
+        try (InputStream in = new FileInputStream(filePath);
+                Reader reader = new InputStreamReader(in, encoding);
+                Reader buffer = new BufferedReader(reader)) {
+            int r;
+            while ((r = reader.read()) != -1) {
+                char ch = (char) r;
+                stringBuilder.append(ch);
+                // System.out.print(ch);
+            }
+        }
+        // Byte[] bytes = readBytes.toArray(new Byte[readBytes.size()]);;
+        return stringBuilder.toString().toCharArray();
     }
 
     // -------------------------------------------------------------------------

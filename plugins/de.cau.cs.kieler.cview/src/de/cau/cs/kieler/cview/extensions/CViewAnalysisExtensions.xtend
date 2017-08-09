@@ -27,6 +27,7 @@ import de.cau.cs.kieler.cview.CViewPlugin
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import com.google.common.collect.ImmutableList
+import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
 
 /**
  * Basic commonly usable analysis functionality, e.g., (struct) type dependencies.
@@ -54,8 +55,14 @@ class CViewAnalysisExtensions {
     }
 
     // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+    def IASTTranslationUnit getAST(Component component) {
+        return CViewPlugin.getFileAST(component.location)
+    }
 
     //------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     def String removeCommentsAll(String text) {
         return text.removeCommentsComplex.removeCommentsSimple

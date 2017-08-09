@@ -306,29 +306,29 @@ public abstract class AbstractKLighDController {
 
     // -------------------------------------------------------------------------
 
-    public static Charset getEncoding() {
-        Charset encoding = Charset.defaultCharset();
-        return encoding;
-    }
+//    public static Charset getEncoding() {
+//        Charset encoding = Charset.defaultCharset();
+//        return encoding;
+//    }
 
     // -------------------------------------------------------------------------
 
-    static char[] readFile(String filePath) throws IOException {
-        Charset encoding = getEncoding();
-        StringBuilder stringBuilder = new StringBuilder();
-        try (InputStream in = new FileInputStream(filePath);
-                Reader reader = new InputStreamReader(in, encoding);
-                Reader buffer = new BufferedReader(reader)) {
-            int r;
-            while ((r = reader.read()) != -1) {
-                char ch = (char) r;
-                stringBuilder.append(ch);
-                // System.out.print(ch);
-            }
-        }
-        // Byte[] bytes = readBytes.toArray(new Byte[readBytes.size()]);;
-        return stringBuilder.toString().toCharArray();
-    }
+//    static char[] readFile(String filePath) throws IOException {
+//        Charset encoding = getEncoding();
+//        StringBuilder stringBuilder = new StringBuilder();
+//        try (InputStream in = new FileInputStream(filePath);
+//                Reader reader = new InputStreamReader(in, encoding);
+//                Reader buffer = new BufferedReader(reader)) {
+//            int r;
+//            while ((r = reader.read()) != -1) {
+//                char ch = (char) r;
+//                stringBuilder.append(ch);
+//                // System.out.print(ch);
+//            }
+//        }
+//        // Byte[] bytes = readBytes.toArray(new Byte[readBytes.size()]);;
+//        return stringBuilder.toString().toCharArray();
+//    }
 
     // -------------------------------------------------------------------------
 
