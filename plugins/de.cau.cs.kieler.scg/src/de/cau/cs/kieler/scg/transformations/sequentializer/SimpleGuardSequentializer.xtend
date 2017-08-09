@@ -138,6 +138,7 @@ class SimpleGuardSequentializer extends AbstractProductionTransformation impleme
         
         for(entry : entryNodes) {
             val entryNode = ScgFactory.eINSTANCE.createEntry => [ newSCG.nodes += it name = entry.name ]
+            val exitNode = ScgFactory.eINSTANCE.createExit => [ newSCG.nodes += it name = entry.name + "_exit" ]
             val scheduledNodes = entry.getSchedule
             
             val AAMap = <Node, Node> newHashMap => [ put(entry, entryNode)]
@@ -179,7 +180,8 @@ class SimpleGuardSequentializer extends AbstractProductionTransformation impleme
             for(schedule : scheduleDependencies) {
                 val originalAssignment = schedule.eContainer as Node
             	val sourceAssignment = AAMap.get(originalAssignment)
-                val targetAssignment = AAMap.get(schedule.target) 
+                var targetAssignment = AAMap.get(schedule.target)
+                if (targetAssignment == null) targetAssignment = exitNode 
             	
             	// Check for guarded assignments
             	val guardDependencies = originalAssignment.dependencies.filter(GuardDependency)
@@ -227,6 +229,9 @@ class SimpleGuardSequentializer extends AbstractProductionTransformation impleme
                    	}
                	} 
             }
+            
+            
+            
         }
         
         newSCG

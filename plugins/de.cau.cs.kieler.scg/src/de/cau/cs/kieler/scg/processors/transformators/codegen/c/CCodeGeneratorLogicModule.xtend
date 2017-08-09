@@ -183,6 +183,13 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     }
     
     protected def dispatch void generate(Exit exit, List<Node> nodes) {
+        if (!conditionalStack.empty) {
+            while(conditionalStack.size > 0) {
+                indent(conditionalStack.size)
+                code.append("}\n")
+                conditionalStack.pop
+            }
+        }
     }
     
     protected def void addPreVariable(OperatorExpression operatorExpression) {
