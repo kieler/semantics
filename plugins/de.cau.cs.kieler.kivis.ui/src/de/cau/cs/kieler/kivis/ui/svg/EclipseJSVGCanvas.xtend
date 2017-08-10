@@ -78,14 +78,13 @@ final class EclipseJSVGCanvas extends JSVGCanvas {
         // The scheme to change an interactor is as follows: remove old, create new, add new 
         
         // Image Zoom Interactor
-        // Binding: Right Mouse Button as well as Middle Mouse Button, but no modifier
+        // Binding: Right Mouse Button, but no modifier
         interactors.remove(imageZoomInteractor)
         imageZoomInteractor = new AbstractImageZoomInteractor() {
             override startInteraction(InputEvent ie) {
                 val mods = ie.modifiers
                 return ie.ID == MouseEvent.MOUSE_PRESSED
-                    && (mods.hasBit(InputEvent.BUTTON3_MASK)
-                        || mods.hasBit(InputEvent.BUTTON2_MASK))
+                    && mods.hasBit(InputEvent.BUTTON3_MASK)
                     && !mods.hasBit(InputEvent.SHIFT_MASK)
                     && !mods.hasBit(InputEvent.CTRL_MASK)
             }
@@ -93,13 +92,14 @@ final class EclipseJSVGCanvas extends JSVGCanvas {
         interactors.add(imageZoomInteractor)
         
         // Move Image Interactor
-        // Binding: Left Mouse Button, but no modifier
+        // Binding: Left Mouse Button or Middle Mouse Button, but no modifier
+        // (In Inkscape one can move the image using the Middle Mouse Button, thus this is more consistent)
         interactors.remove(panInteractor)
         panInteractor = new AbstractPanInteractor() {
             override startInteraction(InputEvent ie) {
                 val mods = ie.modifiers
                 return ie.ID == MouseEvent.MOUSE_PRESSED
-                    && mods.hasBit(InputEvent.BUTTON1_MASK)
+                    && (mods.hasBit(InputEvent.BUTTON1_MASK) || mods.hasBit(InputEvent.BUTTON2_MASK))
                     && !mods.hasBit(InputEvent.SHIFT_MASK)
                     && !mods.hasBit(InputEvent.CTRL_MASK)
             }

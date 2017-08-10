@@ -216,6 +216,9 @@ class KiVisExtensions {
             val toHigh = mapping.attributeDomain.range.to.primitiveValue.doubleValue
             // Vector calculation v = pos + percent*length
             val mappedValue = scale(doubleValue, fromLow, fromHigh, toLow, toHigh)
+            // Try to use Integer instead Double if possible
+            if(mappedValue == mappedValue.intValue)
+                return mappedValue.intValue
             return mappedValue
         }
         return null
