@@ -140,7 +140,8 @@ class WalkPathAnimation extends AnimationHandler {
                     point1 = path.getPointAtLength(scaledValue.floatValue - delta)
                     point2 = pointOnPath
                 }
-                if(point1 != null && point2 != null) {
+                if(point1 != null && point2 != null
+                    && (point1.x != point2.x || point1.y != point2.y)) {
                     // Compute angle
                     angleValue.value = computeAngle(point1, point2)
                     // Add offset
