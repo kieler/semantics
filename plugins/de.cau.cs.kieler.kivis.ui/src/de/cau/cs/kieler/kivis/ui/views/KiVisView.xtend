@@ -521,13 +521,18 @@ class KiVisView extends ViewPart {
         mgr.add(new KiVisViewToolbarAction("Show Controls", "help.png") {
             override run() {
                 val title = "Controls for the Simulation Visualization View"
-                val message = "Shift + Mouse Drag : Move\n"
-                             + "Shift + Right Mouse Button : Zoom\n"
+                val message = "Left Mouse Button : Move\n"
+                             + "Right Mouse Button : Zoom\n"
+                             + "\n"
                              + "Ctrl + Left Mouse Button : Zoom to rectangle\n"
-                             + "Ctrl + Shift + Right Mouse Button : Reset perspective\n"
-                             + "Mouse Wheel : Zoom in / out\n"
-                             + "Arrow Keys : Scroll\n"
+                             + "Ctrl + Right Mouse Button : Reset perspective\n"
+                             + "\n"
+                             + "Ctrl + Arrow Keys : Scroll\n"
                              + "Shift + Arrow Keys : Fast scroll\n"
+                             + "\n"
+                             + "Escape : Reset perspective\n"
+                             + "\n"
+                             + "Right Arrow : Step simulation\n"
                 val dialog = new MessageDialog(canvas.shell, title, null, message, 0, #["OK"], 0)
                 dialog.open
             }
