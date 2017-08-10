@@ -36,7 +36,7 @@ class GuardsWrapper extends Processor<SCGraphs, SCGraphs> {
     @Inject Injector injector
     
     override getId() {
-        "de.cau.cs.kieler.scg.processors.transformators.guards"
+        "de.cau.cs.kieler.scg.processors.transformators.guards.wrapper"
     }
     
     override getName() {
