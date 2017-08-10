@@ -512,6 +512,18 @@ class SCTXValidator extends AbstractSCTXValidator {
     }
     
     @Check
+    def void checkReferencingStateFinalState(de.cau.cs.kieler.sccharts.State state) {
+        if (state.reference.scope == null) return;
+        if (state.terminationTransitions.empty) return;
+            
+        if (!state.reference.scope.asState.mayTerminate) {
+            warning("The referenced SCCharts does not terminate, but you are using a termination to proceed.",
+                state.reference,
+                SCChartsPackage.eINSTANCE.scopeCall_Scope);
+        }            
+    }
+    
+    @Check
     def void checkActionTriggerEffectsWithLabel(Action action) {
         if (!action.label.nullOrEmpty) {
             if (action.trigger != null) {
