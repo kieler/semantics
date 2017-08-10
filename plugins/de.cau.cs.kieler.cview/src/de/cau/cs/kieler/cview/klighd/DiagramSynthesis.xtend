@@ -68,6 +68,7 @@ import de.cau.cs.kieler.cview.CViewPlugin
 import org.eclipse.swt.widgets.Display
 import org.eclipse.elk.alg.layered.properties.GreedySwitchType
 import de.cau.cs.kieler.cview.AbstractKLighDController
+import de.cau.cs.kieler.cview.extensions.CViewAnalysisExtensions
 
 /* Package and import statements... */
 class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
@@ -80,6 +81,9 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     @Inject extension KContainerRenderingExtensions
     @Inject extension KPolylineExtensions
     @Inject extension KColorExtensions
+
+    @Inject extension CViewAnalysisExtensions
+    
     @Inject extension CViewModelExtensions
 
     public static String CONNECTION_TYPE_REFERENCE_FUNC = "CONNECTION_TYPE_REFERENCE_FUNC"
@@ -189,6 +193,15 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 allowed = !matching
             }
         }
+        // if consider connected
+        if (allowed && FilterDialog.valueCheckConnected) {
+            val connectedComponents = component.getConnectedComponents(false, FilterDialog.valueCheckChilds, FilterDialog.valueCheckNegative, null)
+            // => allow also all connected
+            for (connectedComponent : connectedComponents) {
+                allowedByFilterCache.put(connectedComponent, true)
+            }
+        }
+
         if (!allowed && FilterDialog.valueCheckChilds) {
             // Check if any child is allowed => allow this parent
             if (component.allowedByFilterAnyChild) {
@@ -261,6 +274,14 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             } else {
                 // matching items are filtered away (negate options): matching ==> false (not allowed)
                 allowed = !matching
+            }
+        }
+        // if consider connected
+        if (allowed && FilterDialog.valueCheckConnected) {
+            val connectedComponents = connection.src.getConnectedComponents(false, FilterDialog.valueCheckChilds, FilterDialog.valueCheckNegative, null)
+            // => allow also all connected
+            for (connectedComponent : connectedComponents) {
+                allowedByFilterCache.put(connectedComponent, true)
             }
         }
         allowedByFilterCache.put(connection, allowed)

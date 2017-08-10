@@ -79,6 +79,7 @@ public class FilterDialog extends Dialog {
     public static boolean valueCheckRegExp = false;
     public static boolean valueCheckCaseSensitive = false;
     public static boolean valueCheckChilds = true;
+    public static boolean valueCheckConnected = true;
     public static boolean valueCheckNegative = false;
     public static boolean valueCheckTransitions = false;
     public static int valueLayerStart = 0;
@@ -89,6 +90,7 @@ public class FilterDialog extends Dialog {
     Button btnCheckRegExp;
     Button btnCheckCaseSensitive;
     Button btnCheckChilds;
+    Button btnCheckConnected;
     Button btnCheckNegative;
     Button btnCheckTransitions;
     Spinner spinnerStart;
@@ -130,6 +132,7 @@ public class FilterDialog extends Dialog {
             btnCheckRegExp.setSelection(valueCheckRegExp);
             btnCheckCaseSensitive.setSelection(valueCheckCaseSensitive);
             btnCheckChilds.setSelection(valueCheckChilds);
+            btnCheckConnected.setSelection(valueCheckConnected);
             btnCheckNegative.setSelection(valueCheckNegative);
             btnCheckTransitions.setSelection(valueCheckTransitions);
             textFilter.setText(valueTextFilter);
@@ -151,6 +154,7 @@ public class FilterDialog extends Dialog {
                 valueCheckRegExp = btnCheckRegExp.getSelection();
                 valueCheckCaseSensitive = btnCheckCaseSensitive.getSelection();
                 valueCheckChilds = btnCheckChilds.getSelection();
+                valueCheckConnected = btnCheckConnected.getSelection();
                 valueCheckNegative = btnCheckNegative.getSelection();
                 valueCheckTransitions = btnCheckTransitions.getSelection();
                 valueTextFilter = textFilter.getText();
@@ -166,6 +170,7 @@ public class FilterDialog extends Dialog {
         valueCheckRegExp = CViewPlugin.getPrefBool("btnCheckRegExp", false);
         valueCheckCaseSensitive = CViewPlugin.getPrefBool("btnCheckCaseSensitive", true);
         valueCheckChilds = CViewPlugin.getPrefBool("btnCheckChilds", true);
+        valueCheckConnected = CViewPlugin.getPrefBool("btnCheckConnected", false);
         valueCheckNegative = CViewPlugin.getPrefBool("btnCheckNegative", false);
         valueCheckTransitions = CViewPlugin.getPrefBool("btnCheckTransitions", false);
         valueTextFilter = CViewPlugin.getPrefString("textFilter", "");
@@ -181,6 +186,7 @@ public class FilterDialog extends Dialog {
         CViewPlugin.setPrefBool("btnCheckRegExp", valueCheckRegExp);
         CViewPlugin.setPrefBool("btnCheckCaseSensitive", valueCheckCaseSensitive);
         CViewPlugin.setPrefBool("btnCheckChilds", valueCheckChilds);
+        CViewPlugin.setPrefBool("btnCheckConnected", valueCheckConnected);
         CViewPlugin.setPrefBool("btnCheckNegative", valueCheckNegative);
         CViewPlugin.setPrefBool("btnCheckTransitions", valueCheckTransitions);
         CViewPlugin.setPrefString("textFilter", valueTextFilter);
@@ -213,7 +219,7 @@ public class FilterDialog extends Dialog {
         labelFilter.setText(updateText);
 
         // btnCheckCaseSensitive.setEnabled(!valueCheckRegExp);
-        btnCheckChilds.setEnabled(!valueCheckTransitions);
+        //btnCheckChilds.setEnabled(!valueCheckTransitions);
     }
 
     // -------------------------------------------------------------------------
@@ -327,12 +333,18 @@ public class FilterDialog extends Dialog {
         btnCheckChilds = new Button(compositeInnerChecks, SWT.CHECK);
         btnCheckChilds.setText("Consider childs");
         btnCheckChilds
-                .setToolTipText("If any child applies not to the filter, then also show parent.");
+                .setToolTipText("If any child is allowed by the filter, then also show parent.");
 
         btnCheckNegative = new Button(compositeInnerChecks, SWT.CHECK);
         btnCheckNegative.setText("Inverse filter    ");
         btnCheckNegative.setToolTipText(
                 "Hide/filter matching items. Without selecting this option, non-matching items are hidden/filtered.");
+
+        btnCheckConnected = new Button(compositeInnerChecks, SWT.CHECK);
+        btnCheckConnected.setText("Consider connected");
+        btnCheckConnected
+                .setToolTipText("If any component is allowed by the filter, then also show connected.");
+
 
         btnCheckTransitions = new Button(compositeInnerChecks, SWT.CHECK);
         btnCheckTransitions.setText("Apply to transitions");
@@ -352,6 +364,7 @@ public class FilterDialog extends Dialog {
         };
         btnCheckRegExp.addSelectionListener(btnListener);
         btnCheckChilds.addSelectionListener(btnListener);
+        btnCheckConnected.addSelectionListener(btnListener);
         btnCheckNegative.addSelectionListener(btnListener);
         btnCheckTransitions.addSelectionListener(btnListener);
 

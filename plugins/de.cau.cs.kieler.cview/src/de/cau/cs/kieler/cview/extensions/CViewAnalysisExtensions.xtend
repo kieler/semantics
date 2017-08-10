@@ -369,11 +369,19 @@ class CViewAnalysisExtensions {
         Component component,
         boolean considerParent,
         boolean considerChildren,
-        String[] filterConnectionTypes,
-        HashSet<Component> ConnectedComponents
+        boolean reverseSearch,
+        String[] filterConnectionTypes
     ) {
         val HashSet<Component> result = new HashSet
-        return result.getConnectedComponents(component, considerParent, considerChildren, filterConnectionTypes)
+        result.getConnectedComponents(component, considerParent, considerChildren, reverseSearch, filterConnectionTypes)
+        CViewPlugin.printlnConsole("#######################################")
+        CViewPlugin.printlnConsole("# getConnectedComponents(" + component.name + ")")
+        CViewPlugin.printlnConsole("############")
+        for (resultItem : result) { 
+                CViewPlugin.printlnConsole(" - " + resultItem.name)
+        }
+        CViewPlugin.printlnConsole("############")
+        return result 
     }
 
     def Set<Component> getConnectedComponents(
@@ -381,6 +389,7 @@ class CViewAnalysisExtensions {
         Component component,
         boolean considerParent,
         boolean considerChildren,
+        boolean reverseSearch,
         String[] filterConnectionTypes
     ) {
 
@@ -395,7 +404,7 @@ class CViewAnalysisExtensions {
         // Add parent 
         if (considerParent) {
             result.addAll(
-                result.getConnectedComponents(component.parent, considerParent, considerChildren, filterConnectionTypes))
+                result.getConnectedComponents(component.parent, considerParent, considerChildren, reverseSearch, filterConnectionTypes))
         }
         // Add children
         if (considerChildren) {
@@ -404,12 +413,19 @@ class CViewAnalysisExtensions {
                     child,
                     considerParent,
                     considerChildren,
+                    reverseSearch,
                     filterConnectionTypes
                 ))
             }
         }
         // Add connected components (thru outgoing connections)
-        for (connection : component.outgoingConnections) {
+        var List<Connection> furtherConnections = null
+        if (!reverseSearch) {
+            furtherConnections = component.outgoingConnections
+        } else {
+            furtherConnections = component.incomingConnections
+        }
+        for (connection : furtherConnections) {
             if (!filterConnectionTypes.nullOrEmpty) {
                 // Additionally filter
                 var allowedByFilter  = false
@@ -420,16 +436,18 @@ class CViewAnalysisExtensions {
                 }
                 if (allowedByFilter) {
                     result.addAll(
-                        result.getConnectedComponents(connection.dst, considerParent, considerChildren, filterConnectionTypes)
+                        result.getConnectedComponents(connection.dst, considerParent, considerChildren, reverseSearch, filterConnectionTypes)
                     )
                 }
             } else {
                 result.addAll(
-                    result.getConnectedComponents(connection.dst, considerParent, considerChildren, filterConnectionTypes)
+                    result.getConnectedComponents(connection.dst, considerParent, considerChildren, reverseSearch, filterConnectionTypes)
                 )
             }
         }
         return result
     }
+
+    // -------------------------------------------------------------------------
 
 }
