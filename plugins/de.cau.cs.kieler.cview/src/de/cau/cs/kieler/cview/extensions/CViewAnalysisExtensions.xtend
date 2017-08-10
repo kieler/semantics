@@ -28,6 +28,7 @@ import de.cau.cs.kieler.cview.CViewPlugin
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import com.google.common.collect.ImmutableList
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
+import java.util.HashSet
 
 /**
  * Basic commonly usable analysis functionality, e.g., (struct) type dependencies.
@@ -36,14 +37,12 @@ import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
  * 
  */
 class CViewAnalysisExtensions {
-    
-    //static final String  
 
+    // static final String  
     @Inject
-    extension CViewModelExtensions 
+    extension CViewModelExtensions
 
     // -------------------------------------------------------------------------
-    
     // Print to C view console    
     def printConsole(String text) {
         CViewPlugin.printConsole(text)
@@ -56,14 +55,12 @@ class CViewAnalysisExtensions {
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-
     def IASTTranslationUnit getAST(Component component) {
         return CViewPlugin.getFileAST(component.location)
     }
 
-    //------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-
     def String removeCommentsAll(String text) {
         return text.removeCommentsComplex.removeCommentsSimple
     }
@@ -74,7 +71,7 @@ class CViewAnalysisExtensions {
         }
         var returnString = ""
         var found = true
-        var comment = false  // indicates an active comment
+        var comment = false // indicates an active comment
         var startIndex = 0
         while (found) {
             found = false
@@ -89,22 +86,21 @@ class CViewAnalysisExtensions {
                 found = true
                 comment = false
                 startIndex = endIndexComment + 1
-            }
-            else {
+            } else {
                 // Append the rest
                 returnString += text.substring(startIndex)
             }
-        } 
-        return returnString 
+        }
+        return returnString
     }
-    
+
     def String removeCommentsComplex(String text) {
         if (text == null) {
             return null
         }
         var returnString = ""
         var found = true
-        var comment = false  // indicates an active comment
+        var comment = false // indicates an active comment
         var startIndex = 0
         while (found) {
             found = false
@@ -119,25 +115,23 @@ class CViewAnalysisExtensions {
                 found = true
                 comment = false
                 startIndex = endIndexComment + 2
-            }
-            else {
+            } else {
                 // Append the rest
                 returnString += text.substring(startIndex)
             }
-        } 
-        return returnString 
+        }
+        return returnString
     }
 
-    //------------------------------------------------------------------------
-
+    // ------------------------------------------------------------------------
     def List<String> parseByKey(String text, String keyStart, String keyEnd, String[] filterChars, boolean trim) {
         val ArrayList<String> returnList = new ArrayList
         if (text == null) {
             return returnList
         }
-        
+
         val items = text.split(keyStart);
-        
+
         if (!items.nullOrEmpty) {
             for (item : items) {
                 val endIndex = item.indexOf(keyEnd);
@@ -155,12 +149,11 @@ class CViewAnalysisExtensions {
                 }
             }
         }
-        
+
         return returnList
-    } 
+    }
 
-    //------------------------------------------------------------------------
-
+    // ------------------------------------------------------------------------
     def Set<Component> findByName(CViewModel model, String searchString) {
         return model.findName(searchString, true, false, false)
     }
@@ -209,7 +202,6 @@ class CViewAnalysisExtensions {
     }
 
     // -------------------------------------------------------------------------
-
     // Get the containing struct iff a declaration inside a struct, or null otherwise
     def Component getContainingStruct(Component declComponent) {
         if (declComponent.isDecl) {
@@ -217,7 +209,7 @@ class CViewAnalysisExtensions {
         }
         return null
     }
-    
+
     // Get the type of a delaration iff this is a typdef or null otherwise (e.g., if base type or not a declaration)
     def Component getTypedef(Component declComponent) {
         if (declComponent.isDecl) {
@@ -229,7 +221,7 @@ class CViewAnalysisExtensions {
         }
         return null
     }
-    
+
     // Get the struct of a typedef iff any, or null otherwise (e.g., if not a typedef)
     def Component getStruct(Component typedefComponent) {
         if (typedefComponent.isTypedef) {
@@ -241,7 +233,7 @@ class CViewAnalysisExtensions {
         }
         return null
     }
-    
+
     // Get a list of declarations inside a struct, return an empty list if not a struct or no declarations
     def List<Component> getDeclarations(Component structComponent) {
         if (structComponent.isStruct) {
@@ -254,22 +246,20 @@ class CViewAnalysisExtensions {
                 }
                 return returnList
             }
-        } 
+        }
         return new ArrayList<Component>
     }
-    
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-    
-    def List<String> copyList (List<String> list) {
+    def List<String> copyList(List<String> list) {
         val ArrayList<String> returnList = new ArrayList
         for (element : list) {
             returnList.add(element)
         }
         return returnList
     }
-    
+
     def boolean foundSegmentPath(Component component, List<String> remainingSegments) {
         if (remainingSegments.nullOrEmpty) {
             // End of recursion here
@@ -278,27 +268,27 @@ class CViewAnalysisExtensions {
         // Otherwise, a next segment exists => Check it!        
         var nextRemainingSegments = remainingSegments.copyList;
         var nextSegment = nextRemainingSegments.remove(0)
-        
+
         if (nextSegment.equals(component.name)) {
             // Remove this and continue
             nextSegment = nextRemainingSegments.remove(0)
         }
-        
+
         var currentComponent = component
         // Check all possible
         if (currentComponent.isDecl) {
             val typedef = currentComponent.getTypedef
             if (typedef == null) {
-                    // We are SURE that it does not match
-                    return false
+                // We are SURE that it does not match
+                return false
             }
-           // yes, this is not a pure value but a typedef, find its struct
-           val struct = typedef.getStruct
-          if (struct == null) {
-               // We are SURE that it does not match
-               return false
-           }
-           currentComponent = struct
+            // yes, this is not a pure value but a typedef, find its struct
+            val struct = typedef.getStruct
+            if (struct == null) {
+                // We are SURE that it does not match
+                return false
+            }
+            currentComponent = struct
 //           // check if struct matches nextSegment
 //           if (!struct.name.equals(nextSegment)) {
 //                // We are SURE that it does not match
@@ -306,8 +296,8 @@ class CViewAnalysisExtensions {
 //             }
 //            // Here we know that the struct maches, so continue recusion
 //                return struct.foundSegmentPath(nextRemainingSegments)
-        } 
-        
+        }
+
         if (currentComponent.isStruct) {
             // Check all possible children
 //            val struct = currentComponent.getStruct
@@ -319,15 +309,14 @@ class CViewAnalysisExtensions {
             var foundValidDeclaration = false
             for (decl : currentComponent.declarations) {
                 if (decl.name.equals(nextSegment)) {
-                    foundValidDeclaration = decl.foundSegmentPath(nextRemainingSegments) 
+                    foundValidDeclaration = decl.foundSegmentPath(nextRemainingSegments)
                 }
             }
             return foundValidDeclaration;
         }
         return false
     }
-    
-    
+
     public static final val int TYPE_VALID_SURE = 1
     public static final val int TYPE_VALID_UNSURE = -1
     public static final val int TYPE_VALID_NOT = 0
@@ -338,39 +327,109 @@ class CViewAnalysisExtensions {
     }
 
     def int isValidType(CViewModel model, String typePath) {
-       var typePathUnified = typePath.replace("->", ".")
-       if (!typePathUnified.contains(".")) {
-           typePathUnified = typePathUnified + '''.'''
-       }
-       val typePathSegments = typePathUnified.split("\\.")
-       if (!typePathSegments.nullOrEmpty) {
-           val firstSegment = typePathSegments.get(0)
-           val firstSegmentComponents = model.findByName(firstSegment)
-           if (typePathSegments.size > 1) {
-               // Can be sure or not valid
-                   var foundvalidSegment = false
-                   for (segmentComponent : firstSegmentComponents) {
-                       if (!foundvalidSegment && segmentComponent.foundSegmentPath(typePathSegments)) {
-                           foundvalidSegment = true
-                       }
-                   }
-                   if (foundvalidSegment) {
-                       return TYPE_VALID_SURE
-                   } 
-                   return TYPE_VALID_NOT
-           } else {
-               // Can only be unsure or not valid
-               if (!firstSegmentComponents.nullOrEmpty) {
-                   return TYPE_VALID_UNSURE
-               } else {
-                   return TYPE_VALID_NOT
-               }
-           }
-       }
-       return TYPE_VALID_NOT    
+        var typePathUnified = typePath.replace("->", ".")
+        if (!typePathUnified.contains(".")) {
+            typePathUnified = typePathUnified + '''.'''
+        }
+        val typePathSegments = typePathUnified.split("\\.")
+        if (!typePathSegments.nullOrEmpty) {
+            val firstSegment = typePathSegments.get(0)
+            val firstSegmentComponents = model.findByName(firstSegment)
+            if (typePathSegments.size > 1) {
+                // Can be sure or not valid
+                var foundvalidSegment = false
+                for (segmentComponent : firstSegmentComponents) {
+                    if (!foundvalidSegment && segmentComponent.foundSegmentPath(typePathSegments)) {
+                        foundvalidSegment = true
+                    }
+                }
+                if (foundvalidSegment) {
+                    return TYPE_VALID_SURE
+                }
+                return TYPE_VALID_NOT
+            } else {
+                // Can only be unsure or not valid
+                if (!firstSegmentComponents.nullOrEmpty) {
+                    return TYPE_VALID_UNSURE
+                } else {
+                    return TYPE_VALID_NOT
+                }
+            }
+        }
+        return TYPE_VALID_NOT
     }
-    
-    
+
     // -------------------------------------------------------------------------
     
+    /**
+     * Get all connection components of a component as an unordered set of components. Consider
+     * parents, children, and an optional filter of connection types.
+     */
+    def Set<Component> getConnectedComponents(
+        Component component,
+        boolean considerParent,
+        boolean considerChildren,
+        String[] filterConnectionTypes,
+        HashSet<Component> ConnectedComponents
+    ) {
+        val HashSet<Component> result = new HashSet
+        return result.getConnectedComponents(component, considerParent, considerChildren, filterConnectionTypes)
+    }
+
+    def Set<Component> getConnectedComponents(
+        HashSet<Component> result,
+        Component component,
+        boolean considerParent,
+        boolean considerChildren,
+        String[] filterConnectionTypes
+    ) {
+
+        if (result.contains(component)) {
+            // Recursion end - we have visited this node before, return an empty list
+            // to be more efficient
+            val HashSet<Component> emptyHashSet = new HashSet
+            return emptyHashSet
+        }
+        // Component is not already added, so add it now
+        result.add(component)
+        // Add parent 
+        if (considerParent) {
+            result.addAll(
+                result.getConnectedComponents(component.parent, considerParent, considerChildren, filterConnectionTypes))
+        }
+        // Add children
+        if (considerChildren) {
+            for (child : component.children) {
+                result.addAll(result.getConnectedComponents(
+                    child,
+                    considerParent,
+                    considerChildren,
+                    filterConnectionTypes
+                ))
+            }
+        }
+        // Add connected components (thru outgoing connections)
+        for (connection : component.outgoingConnections) {
+            if (!filterConnectionTypes.nullOrEmpty) {
+                // Additionally filter
+                var allowedByFilter  = false
+                for (filter : filterConnectionTypes) {
+                    if (!allowedByFilter && filter.equals(connection.type)) {
+                        allowedByFilter = true
+                    }
+                }
+                if (allowedByFilter) {
+                    result.addAll(
+                        result.getConnectedComponents(connection.dst, considerParent, considerChildren, filterConnectionTypes)
+                    )
+                }
+            } else {
+                result.addAll(
+                    result.getConnectedComponents(connection.dst, considerParent, considerChildren, filterConnectionTypes)
+                )
+            }
+        }
+        return result
+    }
+
 }

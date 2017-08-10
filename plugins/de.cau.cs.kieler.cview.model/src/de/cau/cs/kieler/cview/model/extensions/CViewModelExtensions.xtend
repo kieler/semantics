@@ -21,6 +21,8 @@ import java.util.List
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModel
 import java.util.Set
 import java.util.ArrayList
+import java.util.HashSet
+import java.util.HashMap
 
 /**
  * @author cmot
@@ -86,6 +88,10 @@ class CViewModelExtensions {
             return rootComponent(component.parent)
         }
         return component
+    }
+    
+    def CViewModel model(Component component) {
+        return component.cViewModel
     }
 
     def CViewModel cViewModel(Component component) {
@@ -217,6 +223,33 @@ class CViewModelExtensions {
     def Component setDecl(Component component) {
         component.type = ComponentType::DECL
         return component
+    }
+
+// -------------------------------------------------------------------------
+
+    val HashMap<Component, List<Connection>> cacheOutgoingConnections = new HashMap
+    val HashMap<Component, List<Connection>> cacheIncomingConnections = new HashMap
+    
+    def void cacheResetOutgoingIncomingConnections() {
+        cacheOutgoingConnections.clear
+    }
+
+    def List<Connection> getOutgoingConnections(Component component) {
+       val cachedOutgoingConnections = cacheOutgoingConnections.get(component)
+       if (cachedOutgoingConnections == null) {
+           val outgoingConnections = component.model.connections.filter[e | e.src == component].toList
+           cacheOutgoingConnections.put(component, outgoingConnections)
+       }
+       return cacheOutgoingConnections.get(component)      
+    }
+
+    def List<Connection> getIncomingConnections(Component component) {
+       val cachedOutgoingConnections = cacheIncomingConnections.get(component)
+       if (cachedOutgoingConnections == null) {
+           val outgoingConnections = component.model.connections.filter[e | e.dst == component].toList
+           cacheIncomingConnections.put(component, outgoingConnections)
+       }
+       return cacheIncomingConnections.get(component)      
     }
 
 // -------------------------------------------------------------------------
