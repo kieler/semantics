@@ -92,7 +92,6 @@ class ExecutableSimulator extends DefaultSimulator {
         // Create new listener
         exeResourceListener = new SimulationCompilerListener() {
             override preDelete(IFile oldExecutable) {
-                println("file going to be deleted")
                 if(executableFile.fullPath == oldExecutable.fullPath) {
                     // Stop simulation
                     SimulationManager.instance.stop
