@@ -54,7 +54,6 @@ class TemplateManager {
      */
     private static var List<ModelAnalyzer> modelAnalyzers
 
-
     /**
      * A template variable which is replaced with the name of the last analyzed model.
      */
@@ -176,7 +175,7 @@ class TemplateManager {
             val map = <String, Object> newHashMap
             
             // Add name of model 
-            if(!map.containsKey(MODEL_NAME_VARIABLE)) {
+            if(!map.containsKey(MODEL_NAME_VARIABLE) && !annotationDatas.isEmpty) {
                 val modelName = annotationDatas.get(0).modelName
                 map.put(MODEL_NAME_VARIABLE, modelName)
                 map.put(MODEL_NAMES_VARIABLE, #[modelName])
