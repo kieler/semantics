@@ -33,9 +33,14 @@ import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.Separator
 import org.eclipse.jface.dialogs.MessageDialog
 import org.eclipse.jface.viewers.ArrayContentProvider
+import org.eclipse.jface.viewers.ColumnViewerEditor
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport
+import org.eclipse.jface.viewers.FocusCellOwnerDrawHighlighter
 import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.jface.viewers.TableViewerColumn
+import org.eclipse.jface.viewers.TableViewerEditor
+import org.eclipse.jface.viewers.TableViewerFocusCellManager
 import org.eclipse.swt.SWT
 import org.eclipse.swt.events.KeyAdapter
 import org.eclipse.swt.events.KeyEvent
@@ -43,9 +48,7 @@ import org.eclipse.swt.graphics.Image
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Table
 import org.eclipse.ui.IWorkbenchPart
-import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.part.ViewPart
-import org.eclipse.ui.services.IEvaluationService
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
@@ -407,6 +410,15 @@ class DataPoolView extends ViewPart {
         // Make cells editable
         userValueColumn.editingSupport = new ValueColumnEditingSupport(viewer)
         
+        // Use TAB to go to next row neighbor and activate cell editor
+        val focusCellManager = new TableViewerFocusCellManager(viewer, new FocusCellOwnerDrawHighlighter(viewer));
+        val activationSupport = new ColumnViewerEditorActivationStrategy(viewer)
+        activationSupport.enableEditorActivationWithKeyboard = true
+        TableViewerEditor.create(viewer, focusCellManager, activationSupport, ColumnViewerEditor.TABBING_HORIZONTAL.bitwiseOr(
+            ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR).bitwiseOr(
+            ColumnViewerEditor.TABBING_VERTICAL).bitwiseOr(
+            ColumnViewerEditor.KEYBOARD_ACTIVATION))
+            
         return viewer
     }
     
