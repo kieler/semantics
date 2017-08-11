@@ -39,7 +39,7 @@ class ECidsExportHook extends AbstractExportHook implements IExportHook {
 
     
     override getName() {
-        return "eCIDS OAL Message Export";
+        return "eCIDS Export (Connections)";
     }
 
     override getId() {

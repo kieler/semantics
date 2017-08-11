@@ -46,32 +46,11 @@ class ECidsExportHook2 extends AbstractExportHook implements IExportHook {
     }
 
     override export(CViewModel model) {
-//        var returnValue = ""
-//        for (component : model.components) {
-//            if (component.isDir) {
-//                returnValue += component.location + "\n"
-//            }
-//        }
-//        return returnValue
-'''START { 
-    «
-    FOR component: model.components»
-    «IF component.isPhilipp(component.location)»
-       DIR: "«component.location»" 
-    «ENDIF»
-    «ENDFOR»
-} END'''
-
-
+            return model.components.size + ''''''
     }
 
     override getFileExtension() {
         return "txt"
-    }
-    
-    def isPhilipp(Component c, String string) {
-        
-        (c.dir && string.length > 5)
     }
     
 
