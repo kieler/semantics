@@ -802,6 +802,10 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         }
 
         def KNode transformItemStruct(Component item, int depth) {
+            if (!SHOW_TYPES.booleanValue) { 
+                return null
+            }
+            
             val childNodeOuter = item.createNode().associateWith(item);
 
             val rectCol = childNodeOuter.addRoundedRectangle(4, 4, 2);
