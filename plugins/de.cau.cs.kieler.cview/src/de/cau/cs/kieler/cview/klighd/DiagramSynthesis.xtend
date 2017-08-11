@@ -313,6 +313,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             return null;
         }
 
+        try {
         val toBeRemovedAllFunc = model.connections.filter[e|e.type.equals(CONNECTION_TYPE_REFERENCE_FUNC)]
         if (!toBeRemovedAllFunc.nullOrEmpty) {
             val toBeRemovedAllFuncList = toBeRemovedAllFunc.toList
@@ -325,6 +326,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 }
             }
         }
+        } catch(Exception e){}
+        try {
         val toBeRemovedAllType = model.connections.filter[e|e.type.equals(CONNECTION_TYPE_REFERENCE_TYPE)]
         if (!toBeRemovedAllType.nullOrEmpty) {
             val toBeRemovedAllTypeList = toBeRemovedAllType.toList
@@ -337,6 +340,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 }
             }
         }
+        } catch(Exception e){}
         if (SHOW_REFERENCES_FUNC.booleanValue) {
             // Add more (default-)connections that represent the references here
             for (component : model.components.filter[e|e.reference != null]) {

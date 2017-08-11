@@ -41,7 +41,8 @@ class ExampleAnalysis extends AbstractAnalysisHook implements IAnalysisHook {
             for (otherComponent : model.findByName(".c", false, true)) {
                     val connection = component.connectTo(otherComponent)
                     
-                    connection.setColor2("blue")            
+                    connection.setColor2("blue")    
+                    returnList.add(connection)        
                     
             }
         }
