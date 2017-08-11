@@ -156,6 +156,11 @@ public class CommandHandler implements IHandler {
                 }
 
                 CViewPlugin.clearSelectionAnalysisHooks();
+
+                if (ok) {
+                    // Apply filter
+                    CViewPlugin.rebuildModelAndrefreshCView(true);
+                }
             }
 
             return null;
