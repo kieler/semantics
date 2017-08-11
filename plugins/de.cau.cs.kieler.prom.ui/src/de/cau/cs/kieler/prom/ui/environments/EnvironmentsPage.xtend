@@ -415,13 +415,16 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                     return ""
             }
         }
-        
+
         // Selection event
         combo.addSelectionChangedListener(new ISelectionChangedListener {
 
             override selectionChanged(SelectionChangedEvent event) {
                 if(currentData != null){
-                    currentData.associatedProjectWizardClass = getSelectedClassNameInCombobox(associatedProjectWizard)
+                    val className = getSelectedClassNameInCombobox(associatedProjectWizard)
+                    currentData.associatedProjectWizardClass = className
+                    associatedProjectWizard.combo.toolTipText = "Project wizard to run when creating a new project\n"
+                                                              + className
                     checkConsistency()
                }
             }

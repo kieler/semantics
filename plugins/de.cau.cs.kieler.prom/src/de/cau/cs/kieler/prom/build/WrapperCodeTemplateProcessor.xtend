@@ -32,6 +32,7 @@ class WrapperCodeTemplateProcessor extends TemplateProcessor {
         if(monitor != null) {
             monitor.subTask("Processing wrapper code template '"+template.stringValue+"'")
         }
+        val result = new FileGenerationResult
 
         val templateFile = project.getFile(template.stringValue)
         val targetFile = project.getFile(target.stringValue)
@@ -39,7 +40,12 @@ class WrapperCodeTemplateProcessor extends TemplateProcessor {
         // Get annotations in model
         val annotationDatas = newArrayList()
         val model = ModelImporter.load(modelFile)
-        TemplateManager.getMacroCallData(model, annotationDatas)
+        if(model == null) {
+            val problem = BuildProblem.createError(modelFile.project, "Model file '"+modelFile.projectRelativePath+"' "
+                                                                    + "could not be loaded.")
+            result.addProblem(problem)
+        }
+        TemplateManager.getAnnotationInterface(model, annotationDatas)
         
         // Create wrapper code
         val name = Files.getNameWithoutExtension(templateFile.name)
@@ -48,7 +54,6 @@ class WrapperCodeTemplateProcessor extends TemplateProcessor {
             #{TemplateManager.MODEL_NAME_VARIABLE -> name} )
         
         // Save output
-        val result = new FileGenerationResult
         PromPlugin.createResource(targetFile, wrapperCode, true)
         result.addCreatedFile(targetFile)
         return result

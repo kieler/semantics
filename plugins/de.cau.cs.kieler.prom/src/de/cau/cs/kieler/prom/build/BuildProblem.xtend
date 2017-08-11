@@ -15,6 +15,7 @@ package de.cau.cs.kieler.prom.build
 import org.eclipse.core.resources.IMarker
 import org.eclipse.core.resources.IFile
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.core.resources.IResource
 
 /**
  * @author aas
@@ -22,7 +23,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 class BuildProblem {
     @Accessors(PUBLIC_GETTER)
-    private var IFile file
+    private var IResource res
     @Accessors
     private var int line = -1
     @Accessors(PUBLIC_GETTER)
@@ -31,37 +32,37 @@ class BuildProblem {
     private var String message = ""
     private var int severity = IMarker.SEVERITY_WARNING
     
-    static def BuildProblem createWarning(IFile file, String message) {
-        return createWarning(file, message, null)
+    static def BuildProblem createWarning(IResource res, String message) {
+        return createWarning(res, message, null)
     }
     
-    static def BuildProblem createWarning(IFile file, Exception cause) {
-        return createWarning(file, cause.message, cause)
+    static def BuildProblem createWarning(IResource res, Exception cause) {
+        return createWarning(res, cause.message, cause)
     }
     
-    static def BuildProblem createWarning(IFile file, String message, Exception cause) {
-        return new BuildProblem(IMarker.SEVERITY_WARNING, file, message, cause)
+    static def BuildProblem createWarning(IResource res, String message, Exception cause) {
+        return new BuildProblem(IMarker.SEVERITY_WARNING, res, message, cause)
     }
     
-    static def BuildProblem createError(IFile file, String message) {
-        return createError(file, message, null)
+    static def BuildProblem createError(IResource res, String message) {
+        return createError(res, message, null)
     }
     
-    static def BuildProblem createError(IFile file, Exception cause) {
-        return createError(file, cause.message, cause)
+    static def BuildProblem createError(IResource res, Exception cause) {
+        return createError(res, cause.message, cause)
     }
     
-    static def BuildProblem createError(IFile file, String message, Exception cause) {
-        return new BuildProblem(IMarker.SEVERITY_ERROR, file, message, cause)
+    static def BuildProblem createError(IResource res, String message, Exception cause) {
+        return new BuildProblem(IMarker.SEVERITY_ERROR, res, message, cause)
     }
     
-    private new(int severity, IFile file, String message) {
-        this(severity, file, message, null)
+    private new(int severity, IResource res, String message) {
+        this(severity, res, message, null)
     }
     
-    private new(int severity, IFile file, String message, Exception cause) {
+    private new(int severity, IResource res, String message, Exception cause) {
         this.severity = severity
-        this.file = file
+        this.res = res
         this.message = message
         this.cause = cause
     }

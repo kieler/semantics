@@ -452,7 +452,7 @@ class KiCoLaunchConfig extends PromLaunchConfig {
             } else {
                 // Create wrapper code
                 val modelName = Files.getNameWithoutExtension(data.name)
-                val annotationDatas = TemplateManager.getMacroCallData(project, data)
+                val annotationDatas = TemplateManager.getAnnotationInterface(project, data)
                 val generator = new TemplateManager(project)
                 val mappings = #{TemplateManager.KICO_GENERATED_CODE_VARIABLE -> result.string,
                                  TemplateManager.MODEL_NAME_VARIABLE -> modelName,

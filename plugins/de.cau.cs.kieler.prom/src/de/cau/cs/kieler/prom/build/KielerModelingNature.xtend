@@ -46,11 +46,11 @@ class KielerModelingNature implements IProjectNature {
     
         // Create a new build command
         val ICommand[] newCommands = newArrayOfSize(commands.length + 1);
-        System.arraycopy(commands, 0, newCommands, 0, commands.length);
+        System.arraycopy(commands, 0, newCommands, 1, commands.length);
         val command = desc.newCommand();
-        // Add builder for this nature
+        // Add builder for this nature as very first builder that is run
         command.setBuilderName(KielerModelingBuilder.BUILDER_ID); 
-        newCommands.set(newCommands.length - 1, command);
+        newCommands.set(0, command);
         desc.setBuildSpec(newCommands);
         // write to .project file
         project.setDescription(desc, null);
