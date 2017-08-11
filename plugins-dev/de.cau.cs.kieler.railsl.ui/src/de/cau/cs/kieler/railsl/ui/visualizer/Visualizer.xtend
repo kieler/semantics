@@ -191,8 +191,8 @@ class Visualizer {
             model.addVariable(new Variable(constant, 0))
             model.addVariable(new Variable("S0_" + constant, 4))
             model.addVariable(new Variable("S1_" + constant, 4))
-            model.addVariable(new Variable(constant + "_C_0", "off"))
-            model.addVariable(new Variable(constant + "_C_1", "off"))
+            model.addVariable(new Variable("c0_" + constant, 0))
+            model.addVariable(new Variable("c1_" + constant, 0))
         }
 
         // Add points as straight
@@ -257,7 +257,7 @@ class Visualizer {
                     }
 
                 })
-                registeredEditor?.document.addDocumentListener(listener)
+                registeredEditor?.document?.addDocumentListener(listener)
                 Visualizer.instance.listener = listener
 
             }
@@ -450,8 +450,10 @@ class Visualizer {
      */
     def addContactValue(Model model, ContactWaitStatement statement) {
         try {
-            val variable = new Variable(statement.segName + "_C_" + statement.parseContactIndex, "on")
+            System.out.println("stuff");
+            val variable = new Variable("c" + statement.parseContactIndex + "_" + statement.segName, 1)
             model.addVariable(variable)
+            System.out.println("Setting c" + statement.parseContactIndex + "_" + statement.segName + "to 1.");
         } catch (NullPointerException e) {
             System.out.println("Parsed illegal statement.")
             return

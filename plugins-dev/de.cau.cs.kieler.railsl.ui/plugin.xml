@@ -437,85 +437,24 @@
     </wizard>
  </extension>
  <extension
-       point="org.eclipse.ui.views">
-    <view
-          class="org.eclipse.ui.navigator.CommonNavigator"
-          icon="icons/sample.png"
-          id="de.cau.cs.kieler.railsl.ui.navigator"
-          name="RailSLNavigator">
-    </view>
- </extension>
- <extension
-       point="org.eclipse.ui.navigator.viewer">
-    <viewerActionBinding
-          viewerId="de.cau.cs.kieler.railsl.ui.navigator">
-       <includes>
-          <actionExtension
-                pattern="org.eclipse.ui.navigator.resources.*">
-          </actionExtension>
-       </includes>
-    </viewerActionBinding>
-    <viewerContentBinding
-          viewerId="de.cau.cs.kieler.railsl.ui.navigator">
-       <includes>
-          <contentExtension
-                pattern="org.eclipse.ui.navigator.resourceContent">
-          </contentExtension>
-          <contentExtension
-                pattern="org.eclipse.ui.navigator.resources.filters.*">
-          </contentExtension>
-          <contentExtension
-                pattern="org.eclipse.ui.navigator.resources.linkHelper">
-          </contentExtension>
-          <contentExtension
-                pattern="org.eclipse.ui.navigator.resources.workingSets">
-          </contentExtension>
-       </includes>
-    </viewerContentBinding>
-    <viewerActionBinding
-          viewerId="de.cau.cs.kieler.railsl.ui.navigator">
-       <includes>
-          <actionExtension
-                pattern="org.eclipse.ui.navigator.resources.*">
-          </actionExtension>
-       </includes>
-    </viewerActionBinding>
-    <viewerContentBinding
-          viewerId="de.cau.cs.kieler.railsl.ui.navigator">
-       <includes>
-          <contentExtension
-                pattern="org.eclipse.ui.navigator.resourceContent">
-          </contentExtension>
-          <contentExtension
-                pattern="org.eclipse.ui.navigator.resources.filters.*">
-          </contentExtension>
-          <contentExtension
-                pattern="org.eclipse.ui.navigator.resources.linkHelper">
-          </contentExtension>
-          <contentExtension
-                pattern="org.eclipse.ui.navigator.resources.workingSets">
-          </contentExtension>
-       </includes>
-    </viewerContentBinding>
- </extension>
- <extension
        point="org.eclipse.ui.perspectives">
     <perspective
           class="de.cau.cs.kieler.railsl.ui.perspectives.RailSLPerspective"
           id="de.cau.cs.kieler.railsl.ui.RailSLPerspective"
-          name="RailSL Perspective">
+          name="RailSL">
     </perspective>
  </extension>
  <extension
        point="org.eclipse.ui.perspectiveExtensions">
     <perspectiveExtension
-          targetID="de.cau.cs.kieler.railsl.ui.RailSLPerspective">
+          targetID="de.cau.cs.kieler.kvis.ui.kvisView">
        <view
-             id="de.cau.cs.kieler.railsl.ui.navigator"
+             id="de.cau.cs.kieler.kvis.ui.kvisView"
              minimized="false"
              ratio="0.25"
-             relationship="left"
-             relative="org.eclipse.ui.editorss">
+             relationship="right"
+             relative="org.eclipse.ui.editorss"
+             visible="true">
        </view>
     </perspectiveExtension>
  </extension>
