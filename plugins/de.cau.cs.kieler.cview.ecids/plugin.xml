@@ -12,6 +12,9 @@
       <connectionHook
             class="de.cau.cs.kieler.cview.ecids.ECidsAnalysisCAM_old">
       </connectionHook>
+      <analysisHook
+            class="de.cau.cs.kieler.cview.ecids.ExampleAnalysis">
+      </analysisHook>
    </extension>
    <extension
          point="de.cau.cs.kieler.cview.export">

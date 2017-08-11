@@ -195,7 +195,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         }
         // if consider connected
         if (allowed && FilterDialog.valueCheckConnected) {
-            val connectedComponents = component.getConnectedComponents(false, FilterDialog.valueCheckChilds, FilterDialog.valueCheckNegative, null)
+            val connectedComponents = component.getConnectedComponents(false, FilterDialog.valueCheckChilds, false, null)
+            connectedComponents.addAll(component.getConnectedComponents(false, FilterDialog.valueCheckChilds, true, null))
             // => allow also all connected
             for (connectedComponent : connectedComponents) {
                 allowedByFilterCache.put(connectedComponent, true)
@@ -278,7 +279,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         }
         // if consider connected
         if (allowed && FilterDialog.valueCheckConnected) {
-            val connectedComponents = connection.src.getConnectedComponents(false, FilterDialog.valueCheckChilds, FilterDialog.valueCheckNegative, null)
+            val connectedComponents = connection.src.getConnectedComponents(false, FilterDialog.valueCheckChilds, true, null)
+            connectedComponents.addAll(connection.src.getConnectedComponents(false, FilterDialog.valueCheckChilds, false, null))
             // => allow also all connected
             for (connectedComponent : connectedComponents) {
                 allowedByFilterCache.put(connectedComponent, true)
