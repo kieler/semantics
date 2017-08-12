@@ -370,6 +370,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 if (component.isFunc) {
                     // Func Ref
                     connection.color = FUNCTIONCOLORTRANS
+                    connection.tooltip = component.reference.name + " in " + component.reference.parent.name
                     model.connections.add(connection)
                 }
             }
@@ -382,7 +383,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 if (!component.isFunc) {
                     // Struct, Decl, Typedef
                     connection.color = "#FFD236"
-                    connection.tooltip = component.reference.name
+                    connection.tooltip = component.reference.name +  " in " + component.reference.parent.name
                     model.connections.add(connection)
                 }
             }
