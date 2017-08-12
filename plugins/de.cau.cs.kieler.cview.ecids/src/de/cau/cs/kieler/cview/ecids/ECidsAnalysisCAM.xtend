@@ -14,7 +14,6 @@ package de.cau.cs.kieler.cview.ecids
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.cview.CViewPlugin
-import de.cau.cs.kieler.cview.hooks.AbstractAnalysisHook
 import de.cau.cs.kieler.cview.hooks.IAnalysisHook
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModel
 import de.cau.cs.kieler.cview.model.cViewModel.Component
@@ -29,7 +28,7 @@ import de.cau.cs.kieler.cview.extensions.CViewAnalysisExtensions
  * @author cmot
  * 
  */
-class ECidsAnalysisCAM extends AbstractAnalysisHook implements IAnalysisHook {
+class ECidsAnalysisCAM  implements IAnalysisHook {
 
     @Inject extension CViewModelExtensions
 

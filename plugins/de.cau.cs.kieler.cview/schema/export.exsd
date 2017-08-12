@@ -36,7 +36,7 @@
                   The implementation of the concrete hook defining the export.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.cview.hooks.AbstractExportHook:de.cau.cs.kieler.cview.hooks.IExportHook"/>
+                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.cview.hooks.IExportHook"/>
                </appInfo>
             </annotation>
          </attribute>

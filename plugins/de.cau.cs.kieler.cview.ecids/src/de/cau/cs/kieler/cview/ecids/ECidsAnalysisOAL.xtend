@@ -25,14 +25,13 @@ import java.util.Set
 import java.util.ArrayList
 import java.util.HashSet
 import de.cau.cs.kieler.cview.hooks.IAnalysisHook
-import de.cau.cs.kieler.cview.hooks.AbstractAnalysisHook
 import de.cau.cs.kieler.cview.extensions.CViewAnalysisExtensions
 
 /**
  * @author cmot
  * 
  */
-class ECidsAnalysisOAL extends AbstractAnalysisHook implements IAnalysisHook {
+class ECidsAnalysisOAL implements IAnalysisHook {
 
     @Inject extension CViewModelExtensions
 

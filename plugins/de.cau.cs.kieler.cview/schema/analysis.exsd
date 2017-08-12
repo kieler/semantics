@@ -36,7 +36,7 @@
                   The implementation of the concrete hook defining the connections.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.cview.hooks.AbstractAnalysisHook:de.cau.cs.kieler.cview.hooks.IAnalysisHook"/>
+                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.cview.hooks.IAnalysisHook"/>
                </appInfo>
             </annotation>
          </attribute>

@@ -26,14 +26,12 @@ import java.util.ArrayList
 import java.util.HashSet
 import de.cau.cs.kieler.cview.hooks.IAnalysisHook
 import de.cau.cs.kieler.cview.hooks.IExportHook
-import de.cau.cs.kieler.cview.hooks.AbstractExportHook
-import de.cau.cs.kieler.cview.hooks.AbstractAnalysisHook
 
 /**
  * @author cmot
  * 
  */
-class ECidsExportHook2 extends AbstractExportHook implements IExportHook {
+class ECidsExportHook2  implements IExportHook {
 
     @Inject extension CViewModelExtensions
 

@@ -26,14 +26,12 @@ import java.util.ArrayList
 import java.util.HashSet
 import de.cau.cs.kieler.cview.hooks.IAnalysisHook
 import de.cau.cs.kieler.cview.hooks.IExportHook
-import de.cau.cs.kieler.cview.hooks.AbstractExportHook
-import de.cau.cs.kieler.cview.hooks.AbstractAnalysisHook
 
 /**
  * @author cmot
  * 
  */
-class ECidsExportHook extends AbstractExportHook implements IExportHook {
+class ECidsExportHook implements IExportHook {
 
     @Inject extension CViewModelExtensions
 
@@ -51,7 +49,7 @@ class ECidsExportHook extends AbstractExportHook implements IExportHook {
             return null
         }
         
-        var returnString = 
+        val returnString = 
         '''«FOR connection : model.connections»
         «connection.src.name» --> «connection.dst.name»
         «ENDFOR»'''

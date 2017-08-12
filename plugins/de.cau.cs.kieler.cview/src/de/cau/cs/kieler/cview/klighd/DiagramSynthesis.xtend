@@ -69,6 +69,7 @@ import org.eclipse.swt.widgets.Display
 import org.eclipse.elk.alg.layered.properties.GreedySwitchType
 import de.cau.cs.kieler.cview.AbstractKLighDController
 import de.cau.cs.kieler.cview.extensions.CViewAnalysisExtensions
+import org.eclipse.elk.core.options.HierarchyHandling
 
 /* Package and import statements... */
 class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
@@ -132,6 +133,12 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     public static final SynthesisOption HIDE_UNCONNECTED = SynthesisOption.createCheckOption("Hide Unconnected", false);
 
     public static final SynthesisOption ANONYMIZE = SynthesisOption.createCheckOption("Anonymize", false);
+    
+    public static final String FOLDERCOLOR0 = "#F4F59C"
+    public static final String FOLDERCOLOR1 = "#FBFC97"
+    public static final String FOLDERCOLOR2 = "#E7E853"
+    public static final int FOLDERCOLORANGLE = 30
+    
 
     // public static final SynthesisOption FILTER_FILES = SynthesisOption.create RangeOption("Expanded Layers", MIN_EXPANDED_VALUE, MAX_EXPANDED_VALUE+1, DEFAULT_EXPANDED_VALUE);
     override getDisplayedSynthesisOptions() {
@@ -408,7 +415,12 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             }
         }
 
+
         val root = model.createNode().associateWith(model);
+        //root.addLayoutParam(CoreOptions::HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN)
+        
+
+        
         val depth = 1;
 
         for (item : model.components) {
@@ -684,23 +696,12 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 // Add the connection
                 var portId = connection.hashCode.toString
 
-//                if (!freeSide) {
-//                   portId = (srcNode.hashCode + dstNode.hashCode).toString
-//                }
-                // val portId = (connection.hashCode + srcNode.hashCode).toString
-//                var KPort srcPort
-//                var KPort dstPort
-//                if (freeSide) {
                 val KPort srcPort = srcNode.addPort(connection, portId, 0, 0, 8, PortSide::EAST, color)
                 var KPort dstPort = dstNode.addPort(connection, portId, 0, 0, 8, PortSide::WEST, color)
-                // If not level-crossing (eg to parent, or from parent) then
-                // let the layouter choose the side. Otherwise fix it from EAST to WEST
-                // srcNode.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
-                // dstNode.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
-//                } else {
-//                    srcPort = srcNode.addPort(connection, portId, 0, 0, 8, PortSide::EAST, color)
-//                    dstPort = dstNode.addPort(connection, portId, 0, 0, 8, PortSide::WEST, color)
-//                }
+
+        //srcNode.parent.addLayoutParam(CoreOptions::HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN)
+        //dstNode.parent.addLayoutParam(CoreOptions::HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN)
+
                 edge.sourcePort = srcPort
                 edge.targetPort = dstPort
                 edge.line.setSelectionForeground(SELECTION_CONNECTION_COLOR.color)
@@ -779,25 +780,27 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 label.firstText.selectionBackground = "#C8DFFF".color;
             }
             childRect.addDoubleClickAction(OpenEditorAction.ID);
+            childRect.addSingleClickAction(OpenEditorAction.ID, false, true, false)
             label.getFirstText.addDoubleClickAction(OpenEditorAction.ID);
+            label.getFirstText.addSingleClickAction(OpenEditorAction.ID, false, true, false)
 
             return childNode
         }
 
-        static final String COLLOR_STRUCT_NOREF = "#FFD236"
-        static final String COLLOR_STRUCT = "#FFF0BD"
-        static final String COLLOR_TYPEDEF = "#FCFF00"
-        static final String COLLOR_DECL = "#FEFFC1"
+        static final String COLOR_STRUCT_NOREF = "#FFD236"
+        static final String COLOR_STRUCT = "#FFF0BD"
+        static final String COLOR_TYPEDEF = "#FCFF00"
+        static final String COLOR_DECL = "#FEFFC1"
 
         def KColor getStructTypedefColor(Component item) {
             if (item.isTypedef) {
-                return COLLOR_TYPEDEF.color
+                return COLOR_TYPEDEF.color
             } else if (item.isDecl) {
-                return COLLOR_DECL.color
+                return COLOR_DECL.color
             } else if (item.reference == null) {
-                return COLLOR_STRUCT_NOREF.color
+                return COLOR_STRUCT_NOREF.color
             } else {
-                return COLLOR_STRUCT.color
+                return COLOR_STRUCT.color
             }
         }
 
@@ -813,13 +816,11 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             rectCol.selectionBackground = item.structTypedefColor
             rectCol.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
             rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-            // rectCol.addDoubleClickAction(OpenEditorAction.ID);
             val rectExp = childNodeOuter.addRoundedRectangle(4, 4, 2);
             rectExp.background = item.structTypedefColor
             rectExp.selectionBackground = item.structTypedefColor
             rectExp.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
             rectExp.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-            // rectExp.addDoubleClickAction(OpenEditorAction.ID);
             childNodeOuter.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
                 EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
 
@@ -840,7 +841,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 // Hierarchical case
                 label.firstText.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
                 label.firstText.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-                // label.firstText.addDoubleClickAction(OpenEditorAction.ID);
                 val childArea = item.children.createNode().associateWith(item)
                 val childAreaRect = childArea.addRoundedRectangle(1, 1, 1)
                 childAreaRect.background = "WHITE".color;
@@ -870,38 +870,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             return childNodeOuter
         }
 
-//        def KNode transformItemStruct(Component item, int depth, boolean isTypedef) {
-//            if (!SHOW_TYPES.booleanValue) {
-//                return null
-//            }
-//            if (!isTypedef && item.isReference && !SHOW_REFERENCES_TYPE.booleanValue) {
-//                return null
-//            }
-//            val childNode = item.createNode().associateWith(item);
-//            val childRect = childNode.addRoundedRectangle(4, 4, 2);
-//            val label = childNode.addInsideCenteredNodeLabel(item.name, KlighdConstants.DEFAULT_FONT_SIZE,
-//                KlighdConstants.DEFAULT_FONT_NAME);
-//            childNode.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
-//                EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
-//            if (item.reference == null) {
-//                childRect.background = "#FFD236".color;
-//                childRect.selectionBackground = "#FFD236".color;
-//                label.firstText.selectionBackground = "#FFD236".color;
-//            } else {
-//                childRect.background = "#FFF0BD".color;
-//                childRect.selectionBackground = "#FFF0BD".color;
-//                label.firstText.selectionBackground = "#FFF0BD".color;
-//            }
-//            if (isTypedef) {
-//                childRect.background = "#FCFF00".color;
-//                childRect.selectionBackground = "#FCFF00".color;
-//                label.firstText.selectionBackground = "#FCFF00".color;
-//            }
-//            childRect.addDoubleClickAction(OpenEditorAction.ID);
-//            label.getFirstText.addDoubleClickAction(OpenEditorAction.ID);
-//
-//            return childNode
-//        }
         def KNode transformItemFile(Component item, int depth) {
             val childNode = item.createNode().associateWith(item);
             val childRect = childNode.addRoundedRectangle(4, 4, 2);
@@ -912,7 +880,9 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             childRect.background = item.getFileColor
             childRect.selectionBackground = item.getFileColor
             childRect.addDoubleClickAction(OpenEditorAction.ID);
+            childRect.addSingleClickAction(OpenEditorAction.ID, false, true, false)
             label.getFirstText.addDoubleClickAction(OpenEditorAction.ID);
+            label.getFirstText.addSingleClickAction(OpenEditorAction.ID, false, true, false)
             label.firstText.selectionBackground = item.getFileColor
 
             if (item.tooltip != null) {
@@ -939,16 +909,15 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             rectCol.background = item.getFileColor
             rectCol.selectionBackground = item.getFileColor
             rectCol.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
-            // rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
             rectCol.addDoubleClickAction(OpenEditorAction.ID);
+            rectCol.addSingleClickAction(OpenEditorAction.ID, false, true, false)
             val rectExp = childNodeOuter.addRoundedRectangle(4, 4, 2);
             rectExp.background = item.getFileColor
             rectExp.selectionBackground = item.getFileColor
-            // rectExp.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
             rectExp.addSingleClickAction(CollapseExpandNoDragAction.ID)
 
-            // rectExp.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
             rectExp.addDoubleClickAction(OpenEditorAction.ID);
+            rectExp.addSingleClickAction(OpenEditorAction.ID, false, true, false)
             childNodeOuter.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
                 EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
 
@@ -965,11 +934,11 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             }
 
             label.firstText.addDoubleClickAction(OpenEditorAction.ID);
+            label.firstText.addSingleClickAction(OpenEditorAction.ID, false, true, false)
 
             if (item.hieararchical) {
                 // Hierarchical case
                 label.firstText.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
-                // label.firstText.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                 label.firstText.selectionBackground = item.getFileColor
             }
 
@@ -1007,17 +976,15 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             val childNodeOuter = item.createNode().associateWith(item);
 
             val rectCol = childNodeOuter.addRoundedRectangle(4, 4, 2);
-            rectCol.background = "YELLOW".color;
-            rectCol.selectionBackground = "YELLOW".color;
+            rectCol.setBackgroundGradient(FOLDERCOLOR1.color, FOLDERCOLOR2.color, FOLDERCOLORANGLE);
+            //rectCol.selectionBackground = FOLDERCOLOR.color;
             rectCol.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
             rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-            // rectCol.addDoubleClickAction(OpenEditorAction.ID);
             val rectExp = childNodeOuter.addRoundedRectangle(4, 4, 2);
-            rectExp.background = "YELLOW".color;
-            rectExp.selectionBackground = "YELLOW".color;
+            rectExp.setBackgroundGradient(FOLDERCOLOR1.color, FOLDERCOLOR2.color, FOLDERCOLORANGLE);
+            rectExp.selectionBackground = FOLDERCOLOR1.color;
             rectExp.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
             rectExp.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-            // rectExp.addDoubleClickAction(OpenEditorAction.ID);
             childNodeOuter.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
                 EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
 
@@ -1025,13 +992,12 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             val label = childNodeOuter.addInsideTopCenteredNodeLabel(itemLabel, KlighdConstants.DEFAULT_FONT_SIZE,
                 KlighdConstants.DEFAULT_FONT_NAME);
             label.associateWith(item)
-            label.firstText.selectionBackground = "YELLOW".color;
+            label.firstText.selectionBackground = FOLDERCOLOR1.color;
 
             if (item.hieararchical && !FLATTEN_HIERARCHY.booleanValue) {
                 // Hierarchical case
                 label.firstText.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
                 label.firstText.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-                // label.firstText.addDoubleClickAction(OpenEditorAction.ID);
                 val childArea = item.children.createNode().associateWith(item)
                 val childAreaRect = childArea.addRoundedRectangle(1, 1, 1)
                 childAreaRect.background = "WHITE".color;
