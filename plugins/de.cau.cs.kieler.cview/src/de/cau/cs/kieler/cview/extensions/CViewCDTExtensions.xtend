@@ -50,13 +50,21 @@ class CViewCDTExtensions {
     // -------------------------------------------------------------------------
 
     def int lineStart(IASTName definitionName) {
+        var returnLine = 0
         val IASTFileLocation loc = definitionName.getFileLocation();
-        return loc.startingLineNumber
+        if (definitionName != null && loc != null) {
+            returnLine = loc.startingLineNumber
+        }
+        return returnLine
     }
 
     def int lineEnd(IASTName definitionName) {
+        var returnLine = 0
         val IASTFileLocation loc = definitionName.getFileLocation();
-        return loc.endingLineNumber
+        if (definitionName != null && loc != null) {
+            returnLine = loc.endingLineNumber
+        }
+        return returnLine
     }
 
 // -------------------------------------------------------------------------
