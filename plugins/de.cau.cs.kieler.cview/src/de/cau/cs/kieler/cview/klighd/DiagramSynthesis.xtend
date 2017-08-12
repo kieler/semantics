@@ -809,12 +809,17 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             rectCol.background = item.structTypedefColor
             rectCol.selectionBackground = item.structTypedefColor
             rectCol.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
-            rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+            //rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+            rectCol.addDoubleClickAction(OpenEditorAction.ID);
+            rectCol.addSingleClickAction(OpenEditorAction.ID, false, true, false)
+            
             val rectExp = childNodeOuter.addRoundedRectangle(4, 4, 2);
             rectExp.background = item.structTypedefColor
             rectExp.selectionBackground = item.structTypedefColor
             rectExp.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
-            rectExp.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+            //rectExp.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+            rectExp.addDoubleClickAction(OpenEditorAction.ID);
+            rectExp.addSingleClickAction(OpenEditorAction.ID, false, true, false)
             childNodeOuter.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
                 EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
 
@@ -830,11 +835,13 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 rectExp.setProperty(KlighdProperties::TOOLTIP, toolTypType);
                 label.firstText.setProperty(KlighdProperties::TOOLTIP, toolTypType);
             }
+            label.firstText.addDoubleClickAction(OpenEditorAction.ID);
+            label.firstText.addSingleClickAction(OpenEditorAction.ID, false, true, false)
 
             if (item.hieararchical && !FLATTEN_HIERARCHY.booleanValue) {
                 // Hierarchical case
                 label.firstText.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
-                label.firstText.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                //label.firstText.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                 val childArea = item.children.createNode().associateWith(item)
                 val childAreaRect = childArea.addRoundedRectangle(1, 1, 1)
                 childAreaRect.background = "WHITE".color;

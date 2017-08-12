@@ -45,6 +45,7 @@ import org.eclipse.cdt.core.dom.ast.ASTNodeProperty
 import de.cau.cs.kieler.cview.extensions.CViewAnalysisExtensions
 import java.util.zip.Checksum
 import java.util.zip.Adler32
+import de.cau.cs.kieler.cview.extensions.CViewCDTExtensions
 
 /**
  * @author cmot
@@ -54,6 +55,7 @@ class KLighDController extends AbstractKLighDController {
 
     @Inject extension CViewModelExtensions
     @Inject extension CViewAnalysisExtensions
+    @Inject extension CViewCDTExtensions
 
     public static CViewModelExtensions cViewModelExtensions = new CViewModelExtensions();
 
@@ -260,6 +262,7 @@ class KLighDController extends AbstractKLighDController {
                                 val typeTypedefComponent = createTypedef
                                 model.components.add(typeTypedefComponent)
                                 typeTypedefComponent.name = name.toString
+                                typeTypedefComponent.referenceLine = name.lineStart
                                 typeTypedefComponent.referenceUnresolved = binding.type.toString
                                 fileComponent.children.add(typeTypedefComponent)
                                 typeTypedefComponent.parent = fileComponent
@@ -274,6 +277,7 @@ class KLighDController extends AbstractKLighDController {
                                     val structComponent = createStruct
                                     model.components.add(structComponent)
                                     structComponent.name = typeSpec.name.toString
+                                    structComponent.referenceLine = name.lineStart
                                     fileComponent.children.add(structComponent)
                                     structComponent.parent = fileComponent
 
@@ -287,6 +291,7 @@ class KLighDController extends AbstractKLighDController {
                                                 val declComponent = createDecl
                                                 model.components.add(declComponent)
                                                 declComponent.name = declarator.name.toString
+                                                declComponent.referenceLine = name.lineStart
                                                 declComponent.referenceUnresolved = declType.toString
                                                 structComponent.children.add(declComponent)
                                                 declComponent.parent = structComponent
@@ -308,13 +313,7 @@ class KLighDController extends AbstractKLighDController {
                                 // model.addToModel(functionComponent, monitor, fileComponent)
                                 model.components.add(functionComponent)
                                 functionComponent.name = name.toString()
-//                                val ITranslationUnit tu = name.originalNode.translationUnit.originatingTranslationUnit;
-//                                if (tu != null) {
-//                                        val IASTFileLocation loc = name.getFileLocation();
-//                                        functionComponent.referenceLine = loc.startingLineNumber
-//                                }
-                                val IASTFileLocation loc = name.getFileLocation();
-                                functionComponent.referenceLine = loc.startingLineNumber
+                                functionComponent.referenceLine = name.lineStart
                                 functionComponent.rawdata = "";
                                 functionComponent.location = fileComponent.location
                                 fileComponent.children.add(functionComponent)
@@ -322,6 +321,7 @@ class KLighDController extends AbstractKLighDController {
                             // System.out.println("- D " + name.toString() + " ")
                             } else if (name.reference) {
                                 val functionRefComponent = cViewModelExtensions.createFunc
+                                functionRefComponent.referenceLine = name.lineStart
                                 // model.addToModel(functionComponent, monitor, fileComponent)
                                 model.components.add(functionRefComponent)
                                 functionRefComponent.name = "" + name.toString() + "()"
@@ -381,7 +381,7 @@ class KLighDController extends AbstractKLighDController {
                     referenceType = "STRUCT"
                 }
                 val String referenceId = referenceType + "__@#$__" + component.referenceUnresolved
-                if (referenceMapping.containsKey(referenceId)) {
+                if ((!component.referenceUnresolved.nullOrEmpty) && referenceMapping.containsKey(referenceId)) {
                     val Component otherComponent = referenceMapping.get(referenceId)
                     // Here we set the reference if we have found it
                     component.reference = otherComponent
