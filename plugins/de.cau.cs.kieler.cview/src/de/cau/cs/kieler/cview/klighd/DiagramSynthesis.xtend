@@ -84,7 +84,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     @Inject extension KColorExtensions
 
     @Inject extension CViewAnalysisExtensions
-    
+
     @Inject extension CViewModelExtensions
 
     public static String CONNECTION_TYPE_REFERENCE_FUNC = "CONNECTION_TYPE_REFERENCE_FUNC"
@@ -133,12 +133,11 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     public static final SynthesisOption HIDE_UNCONNECTED = SynthesisOption.createCheckOption("Hide Unconnected", false);
 
     public static final SynthesisOption ANONYMIZE = SynthesisOption.createCheckOption("Anonymize", false);
-    
+
     public static final String FOLDERCOLOR0 = "#F4F59C"
     public static final String FOLDERCOLOR1 = "#FBFC97"
     public static final String FOLDERCOLOR2 = "#E7E853"
     public static final int FOLDERCOLORANGLE = 30
-    
 
     // public static final SynthesisOption FILTER_FILES = SynthesisOption.create RangeOption("Expanded Layers", MIN_EXPANDED_VALUE, MAX_EXPANDED_VALUE+1, DEFAULT_EXPANDED_VALUE);
     override getDisplayedSynthesisOptions() {
@@ -202,8 +201,10 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         }
         // if consider connected
         if (allowed && FilterDialog.valueCheckConnected) {
-            val connectedComponents = component.getConnectedComponents(false, FilterDialog.valueCheckChilds, false, null)
-            connectedComponents.addAll(component.getConnectedComponents(false, FilterDialog.valueCheckChilds, true, null))
+            val connectedComponents = component.getConnectedComponents(false, FilterDialog.valueCheckChilds, false,
+                null)
+            connectedComponents.addAll(
+                component.getConnectedComponents(false, FilterDialog.valueCheckChilds, true, null))
             // => allow also all connected
             for (connectedComponent : connectedComponents) {
                 allowedByFilterCache.put(connectedComponent, true)
@@ -286,8 +287,10 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         }
         // if consider connected
         if (allowed && FilterDialog.valueCheckConnected) {
-            val connectedComponents = connection.src.getConnectedComponents(false, FilterDialog.valueCheckChilds, true, null)
-            connectedComponents.addAll(connection.src.getConnectedComponents(false, FilterDialog.valueCheckChilds, false, null))
+            val connectedComponents = connection.src.getConnectedComponents(false, FilterDialog.valueCheckChilds, true,
+                null)
+            connectedComponents.addAll(
+                connection.src.getConnectedComponents(false, FilterDialog.valueCheckChilds, false, null))
             // => allow also all connected
             for (connectedComponent : connectedComponents) {
                 allowedByFilterCache.put(connectedComponent, true)
@@ -321,33 +324,35 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         }
 
         try {
-        val toBeRemovedAllFunc = model.connections.filter[e|e.type.equals(CONNECTION_TYPE_REFERENCE_FUNC)]
-        if (!toBeRemovedAllFunc.nullOrEmpty) {
-            val toBeRemovedAllFuncList = toBeRemovedAllFunc.toList
-            if (!toBeRemovedAllFuncList.nullOrEmpty) {
-                val toBeRemovedAllFuncListCopy = toBeRemovedAllFuncList.immutableCopy
-                if (!toBeRemovedAllFuncListCopy.nullOrEmpty) {
-                    for (toBeRemoved : toBeRemovedAllFuncListCopy) {
-                        toBeRemoved.remove
+            val toBeRemovedAllFunc = model.connections.filter[e|e.type.equals(CONNECTION_TYPE_REFERENCE_FUNC)]
+            if (!toBeRemovedAllFunc.nullOrEmpty) {
+                val toBeRemovedAllFuncList = toBeRemovedAllFunc.toList
+                if (!toBeRemovedAllFuncList.nullOrEmpty) {
+                    val toBeRemovedAllFuncListCopy = toBeRemovedAllFuncList.immutableCopy
+                    if (!toBeRemovedAllFuncListCopy.nullOrEmpty) {
+                        for (toBeRemoved : toBeRemovedAllFuncListCopy) {
+                            toBeRemoved.remove
+                        }
                     }
                 }
             }
+        } catch (Exception e) {
         }
-        } catch(Exception e){}
         try {
-        val toBeRemovedAllType = model.connections.filter[e|e.type.equals(CONNECTION_TYPE_REFERENCE_TYPE)]
-        if (!toBeRemovedAllType.nullOrEmpty) {
-            val toBeRemovedAllTypeList = toBeRemovedAllType.toList
-            if (!toBeRemovedAllTypeList.nullOrEmpty) {
-                val toBeRemovedAllTypeListCopy = toBeRemovedAllTypeList.immutableCopy
-                if (!toBeRemovedAllTypeListCopy.nullOrEmpty) {
-                    for (toBeRemoved : toBeRemovedAllTypeListCopy) {
-                        toBeRemoved.remove
+            val toBeRemovedAllType = model.connections.filter[e|e.type.equals(CONNECTION_TYPE_REFERENCE_TYPE)]
+            if (!toBeRemovedAllType.nullOrEmpty) {
+                val toBeRemovedAllTypeList = toBeRemovedAllType.toList
+                if (!toBeRemovedAllTypeList.nullOrEmpty) {
+                    val toBeRemovedAllTypeListCopy = toBeRemovedAllTypeList.immutableCopy
+                    if (!toBeRemovedAllTypeListCopy.nullOrEmpty) {
+                        for (toBeRemoved : toBeRemovedAllTypeListCopy) {
+                            toBeRemoved.remove
+                        }
                     }
                 }
             }
+        } catch (Exception e) {
         }
-        } catch(Exception e){}
         if (SHOW_REFERENCES_FUNC.booleanValue) {
             // Add more (default-)connections that represent the references here
             for (component : model.components.filter[e|e.reference != null]) {
@@ -368,6 +373,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 if (!component.isFunc) {
                     // Struct, Decl, Typedef
                     connection.color = "#FFD236"
+                    connection.tooltip = component.reference.name
                     model.connections.add(connection)
                 }
             }
@@ -415,12 +421,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             }
         }
 
-
         val root = model.createNode().associateWith(model);
-        //root.addLayoutParam(CoreOptions::HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN)
-        
-
-        
+        // root.addLayoutParam(CoreOptions::HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN)
         val depth = 1;
 
         for (item : model.components) {
@@ -646,18 +648,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         def void addSimpleConnection(Connection connection, KNode srcNode, KNode dstNode, boolean usePorts,
             KColor color, boolean addLabel) {
 
-            // val freeSide = (srcNode.parent == dstNode.parent)
-//                if (connection.src.name.equals("cam_outer_t")) {
-//                    println("cam_outer_t")
-//                }
-//                if (connection.src.name.equals("outer_s")) {
-//                    println("cam_outer_t")
-//                }
-//            val dbglabel = connection.src.name + "[" + connection.src.parent.name + "] ---> " + connection.dst.name  + "[" + connection.dst.parent.name + "]";
-//            if (dbglabel.startsWith("tla_inner__cam_outer_ref")) { //[tla_inner] ---> cam_outer_t[CAM.h]") {
-//                println(dbglabel)    
-//            }
-//            println(dbglabel)    
             connectedComponents.add(connection.src)
             connectedComponents.add(connection.dst)
             connection.src.addConnectedParents
@@ -699,9 +689,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 val KPort srcPort = srcNode.addPort(connection, portId, 0, 0, 8, PortSide::EAST, color)
                 var KPort dstPort = dstNode.addPort(connection, portId, 0, 0, 8, PortSide::WEST, color)
 
-        //srcNode.parent.addLayoutParam(CoreOptions::HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN)
-        //dstNode.parent.addLayoutParam(CoreOptions::HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN)
-
+                // srcNode.parent.addLayoutParam(CoreOptions::HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN)
+                // dstNode.parent.addLayoutParam(CoreOptions::HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN)
                 edge.sourcePort = srcPort
                 edge.targetPort = dstPort
                 edge.line.setSelectionForeground(SELECTION_CONNECTION_COLOR.color)
@@ -805,10 +794,10 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         }
 
         def KNode transformItemStruct(Component item, int depth) {
-            if (!SHOW_TYPES.booleanValue) { 
+            if (!SHOW_TYPES.booleanValue) {
                 return null
             }
-            
+
             val childNodeOuter = item.createNode().associateWith(item);
 
             val rectCol = childNodeOuter.addRoundedRectangle(4, 4, 2);
@@ -977,7 +966,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
             val rectCol = childNodeOuter.addRoundedRectangle(4, 4, 2);
             rectCol.setBackgroundGradient(FOLDERCOLOR1.color, FOLDERCOLOR2.color, FOLDERCOLORANGLE);
-            //rectCol.selectionBackground = FOLDERCOLOR.color;
+            // rectCol.selectionBackground = FOLDERCOLOR.color;
             rectCol.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
             rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
             val rectExp = childNodeOuter.addRoundedRectangle(4, 4, 2);
