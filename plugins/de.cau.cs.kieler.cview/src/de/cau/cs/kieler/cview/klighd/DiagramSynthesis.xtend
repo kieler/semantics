@@ -139,6 +139,15 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     public static final String FOLDERCOLOR2 = "#E7E853"
     public static final int FOLDERCOLORANGLE = 30
 
+    public static final String FUNCTIONCOLORREF = "#D5EAFD"
+    public static final String FUNCTIONCOLOR = "#82B5E3"
+    public static final String FUNCTIONCOLORTRANS = "#286296"
+
+    static final String COLOR_STRUCT_NOREF = "#FFD236"
+    static final String COLOR_STRUCT = "#FFF0BD"
+    static final String COLOR_TYPEDEF = "#FCFF00"
+    static final String COLOR_DECL = "#FEFFC1"
+
     // public static final SynthesisOption FILTER_FILES = SynthesisOption.create RangeOption("Expanded Layers", MIN_EXPANDED_VALUE, MAX_EXPANDED_VALUE+1, DEFAULT_EXPANDED_VALUE);
     override getDisplayedSynthesisOptions() {
         val options = new LinkedHashSet();
@@ -360,7 +369,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 connection.type = CONNECTION_TYPE_REFERENCE_FUNC
                 if (component.isFunc) {
                     // Func Ref
-                    connection.color = "#378CFF"
+                    connection.color = FUNCTIONCOLORTRANS
                     model.connections.add(connection)
                 }
             }
@@ -759,14 +768,14 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 KlighdConstants.DEFAULT_FONT_NAME);
             childNode.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
                 EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
-            if (item.reference == null) {
-                childRect.background = "#378CFF".color;
-                childRect.selectionBackground = "#378CFF".color;
-                label.firstText.selectionBackground = "#378CFF".color;
+            if (item.reference != null) {
+                childRect.background = FUNCTIONCOLORREF.color;
+                childRect.selectionBackground = FUNCTIONCOLORREF.color;
+                label.firstText.selectionBackground = FUNCTIONCOLORREF.color;
             } else {
-                childRect.background = "#C8DFFF".color;
-                childRect.selectionBackground = "#C8DFFF".color;
-                label.firstText.selectionBackground = "#C8DFFF".color;
+                childRect.background = FUNCTIONCOLOR.color;
+                childRect.selectionBackground = FUNCTIONCOLOR.color;
+                label.firstText.selectionBackground = FUNCTIONCOLOR.color;
             }
             childRect.addDoubleClickAction(OpenEditorAction.ID);
             childRect.addSingleClickAction(OpenEditorAction.ID, false, true, false)
@@ -775,11 +784,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
             return childNode
         }
-
-        static final String COLOR_STRUCT_NOREF = "#FFD236"
-        static final String COLOR_STRUCT = "#FFF0BD"
-        static final String COLOR_TYPEDEF = "#FCFF00"
-        static final String COLOR_DECL = "#FEFFC1"
 
         def KColor getStructTypedefColor(Component item) {
             if (item.isTypedef) {
