@@ -60,7 +60,16 @@ public class OpenEditorAction implements IAction {
         Object inputModel = context.getViewContext().getInputModel();
         Object domainElement = context.getDomainElement(context.getKNode());
         
-        String pathString = ((Component)domainElement).getLocation();
+        Component component = (Component)domainElement;
+        String pathString = component.getLocation();
+        if (pathString == null && component.getParent() != null) {
+            // The struct or typedef case
+            pathString = component.getParent().getLocation();
+            if (pathString == null && component.getParent().getParent() != null) {
+                // The declaration in struct case
+                pathString = component.getParent().getParent().getLocation();
+            }
+        }
         Path path = new Path(pathString);
         IFile file = null;
         boolean done = false;
@@ -92,9 +101,8 @@ public class OpenEditorAction implements IAction {
         try {
             IEditorPart editorPart = page.openEditor(new FileEditorInput(file), desc.getId());
             if (domainElement instanceof Component) {
-                Component component = (Component) domainElement;
                 int line = component.getReferenceLine();
-                if (component.getType() == ComponentType.FUNC) {
+                if (component.getType() != ComponentType.DIR) {
                     goToLine(editorPart, line);
                 } else {
                     //goToLine(editorPart, 1);
