@@ -370,7 +370,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 if (component.isFunc) {
                     // Func Ref
                     connection.color = FUNCTIONCOLORTRANS
-                    connection.tooltip = component.reference.name + " in " + component.reference.parent.name
+                    connection.tooltip = component.reference.name + "  from  " + component.reference.parent.name
                     model.connections.add(connection)
                 }
             }
@@ -383,7 +383,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 if (!component.isFunc) {
                     // Struct, Decl, Typedef
                     connection.color = "#FFD236"
-                    connection.tooltip = component.reference.name +  " in " + component.reference.parent.name
+                    connection.tooltip = component.reference.name +  "  from  " + component.reference.parent.name
                     model.connections.add(connection)
                 }
             }
@@ -970,11 +970,13 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             val childNodeOuter = item.createNode().associateWith(item);
 
             val rectCol = childNodeOuter.addRoundedRectangle(4, 4, 2);
+            rectCol.selectionBackground = FOLDERCOLOR1.color;
             rectCol.setBackgroundGradient(FOLDERCOLOR1.color, FOLDERCOLOR2.color, FOLDERCOLORANGLE);
-            // rectCol.selectionBackground = FOLDERCOLOR.color;
+            rectCol.background = FOLDERCOLOR1.color;
             rectCol.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
             rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
             val rectExp = childNodeOuter.addRoundedRectangle(4, 4, 2);
+            rectExp.background = FOLDERCOLOR1.color;
             rectExp.setBackgroundGradient(FOLDERCOLOR1.color, FOLDERCOLOR2.color, FOLDERCOLORANGLE);
             rectExp.selectionBackground = FOLDERCOLOR1.color;
             rectExp.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
