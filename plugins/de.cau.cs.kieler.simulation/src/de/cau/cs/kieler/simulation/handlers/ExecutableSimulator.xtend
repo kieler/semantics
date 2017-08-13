@@ -16,8 +16,12 @@ import com.google.common.io.Files
 import com.google.common.util.concurrent.SimpleTimeLimiter
 import com.google.common.util.concurrent.UncheckedTimeoutException
 import de.cau.cs.kieler.prom.build.ConfigurableAttribute
+import de.cau.cs.kieler.prom.build.SimulationCompiler
+import de.cau.cs.kieler.prom.build.SimulationCompilerListener
+import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
+import de.cau.cs.kieler.simulation.core.SimulationManager
 import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
@@ -49,6 +53,8 @@ class ExecutableSimulator extends DefaultSimulator {
     private var PrintStream processWriter
     private val timeLimiter = new SimpleTimeLimiter()
     
+    private var SimulationCompilerListener exeResourceListener
+    
     /**
      * Create new process and read it's first JSON object with variables to fill the data pool.
      */
@@ -75,6 +81,34 @@ class ExecutableSimulator extends DefaultSimulator {
         modelName = getUniqueModelName(pool, Files.getNameWithoutExtension(executableFile.name))
         val model = Model.createFromJson(modelName, line)
         pool.addModel(model)
+        
+        // Stop simulation when the executable is deleted
+        registerResourceChangeListener(executable)
+    }
+    
+    private def void registerResourceChangeListener(IFile... files) {
+        // Remove old listener
+        removeResourceChangeListener()
+        // Create new listener
+        exeResourceListener = new SimulationCompilerListener() {
+            override preDelete(IFile oldExecutable) {
+                println("file going to be deleted")
+                if(executableFile.fullPath == oldExecutable.fullPath) {
+                    // Stop simulation
+                    SimulationManager.instance.stop
+                    // Notify user why simulation stopped
+                    PromConsole.print("Stopped simulation because the executable '"+executableFile.fullPath+"' changed")
+                }
+            }
+        }
+        // Add new listener
+        SimulationCompiler.addListener(exeResourceListener)
+    }
+    
+    private def void removeResourceChangeListener() {
+        if(exeResourceListener != null) {
+            SimulationCompiler.removeListener(exeResourceListener)    
+        }
     }
     
     /**
@@ -102,6 +136,7 @@ class ExecutableSimulator extends DefaultSimulator {
      * Terminate the process.
      */
     override stop() {
+        removeResourceChangeListener
         if(process != null) {
             process.destroy()
             process = null

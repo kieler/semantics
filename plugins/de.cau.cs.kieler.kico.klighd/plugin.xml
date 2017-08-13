@@ -1,15 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension
-         point="de.cau.cs.kieler.klighd.extensions">
-      <action
-            class="de.cau.cs.kieler.kicool.ui.klighd.internal.model.action.OpenCodeInEditorAction"
-            id="de.cau.cs.kieler.kicool.ui.klighd.internal.model.action.OpenCodeInEditorAction">
-      </action>
-      <action
-            class="de.cau.cs.kieler.kicool.ui.klighd.internal.model.action.RemovedCollapsedDiagramsAction"
-            id="de.cau.cs.kieler.kicool.ui.klighd.internal.model.action.RemovedCollapsedDiagramsAction">
-      </action>
-   </extension>
 </plugin>

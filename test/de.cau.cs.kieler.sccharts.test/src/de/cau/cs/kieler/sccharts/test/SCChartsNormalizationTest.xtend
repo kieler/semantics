@@ -91,7 +91,7 @@ class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<SCChart
 
             // Check compiler errors
             if (!iResult.environment.errors.empty) {
-                fail("Intermediate result of transformation " + iResult.id + " has compilation error(s): \n- " + iResult.environment.errors.map[ err |
+                fail("Intermediate result of transformation " + iResult.id + " has compilation error(s): \n- " + iResult.environment.errors.get(Environment.REPORT_ROOT).map[ err |
                      if (err.exception != null) {
                          ((new StringWriter) => [err.exception.printStackTrace(new PrintWriter(it))]).toString()
                      } else {

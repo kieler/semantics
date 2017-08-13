@@ -22,6 +22,8 @@ import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.ScgFactory
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+
 
 /**
  * It would be nice to use generics here, but this is not possible, because the old transform methods are invoked by
@@ -50,6 +52,11 @@ class SCGTransformationWrapper extends Processor<SCCharts, SCGraphs> {
         val scgs = ScgFactory.eINSTANCE.createSCGraphs => [
             creationalTransformation(model, it) // Tell KITT that this is not an in-place transformation from here on
             it.trace(model)
+            
+            for (pragma : model.pragmas) {
+                it.pragmas += pragma.copy
+            }
+            
             scgs += wrappedTransformation.transform(model, null) 
         ]
         setModel(scgs)

@@ -91,6 +91,8 @@ class Environment extends EnvironmentPropertyHolder {
         
     public static val IProperty<Boolean> CANCEL_COMPILATION = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.cancelCompilation", false)
+        
+    public static val REPORT_ROOT = MessageObjectReferences.ROOT
              
     new() {
     }

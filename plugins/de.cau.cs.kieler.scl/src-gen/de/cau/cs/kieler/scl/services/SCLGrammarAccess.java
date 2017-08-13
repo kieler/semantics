@@ -1658,6 +1658,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//	IntValue
 	//	| FloatValue
 	//	| StringValue
+	//	| VectorValue
 	//	| '(' ValuedExpression ')'
 	//	| AtomicExpression
 	public KExpressionsGrammarAccess.AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
@@ -1735,9 +1736,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//// Deprecated?
 	//FunctionCall:
 	//	'extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
-	//	| '()') | '<' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
-	//	| '()')
-	//	'>';
+	//	| '()');
 	public KExpressionsGrammarAccess.FunctionCallElements getFunctionCallAccess() {
 		return gaKExpressions.getFunctionCallAccess();
 	}
@@ -1816,6 +1815,36 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getStringValueRule() {
 		return getStringValueAccess().getRule();
+	}
+
+	//VectorValue:
+	//	'{' values+=VectorValueMember (',' values+=VectorValueMember)* '}';
+	public KExpressionsGrammarAccess.VectorValueElements getVectorValueAccess() {
+		return gaKExpressions.getVectorValueAccess();
+	}
+	
+	public ParserRule getVectorValueRule() {
+		return getVectorValueAccess().getRule();
+	}
+
+	//VectorValueMember Expression:
+	//	Expression | IgnoreValue
+	public KExpressionsGrammarAccess.VectorValueMemberElements getVectorValueMemberAccess() {
+		return gaKExpressions.getVectorValueMemberAccess();
+	}
+	
+	public ParserRule getVectorValueMemberRule() {
+		return getVectorValueMemberAccess().getRule();
+	}
+
+	//IgnoreValue:
+	//	{IgnoreValue} '_';
+	public KExpressionsGrammarAccess.IgnoreValueElements getIgnoreValueAccess() {
+		return gaKExpressions.getIgnoreValueAccess();
+	}
+	
+	public ParserRule getIgnoreValueRule() {
+		return getIgnoreValueAccess().getRule();
 	}
 
 	//// Any Type Rule
@@ -2363,9 +2392,9 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//terminal ID:
-	//	'^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
+	//	'^'? (('_'? 'a'..'z' | '_'? 'A'..'Z') | '_' '0'..'9' | '__') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
 	public TerminalRule getIDRule() {
-		return gaTerminals.getIDRule();
+		return gaAnnotations.getIDRule();
 	} 
 
 	//terminal WS:

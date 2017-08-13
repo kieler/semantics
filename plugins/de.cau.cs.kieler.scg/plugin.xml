@@ -138,6 +138,9 @@
       <Processor
             class="de.cau.cs.kieler.scg.processors.transformators.SimpleGuardScheduler">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.SimpleGuardTransformation">
+      </Processor>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.system">

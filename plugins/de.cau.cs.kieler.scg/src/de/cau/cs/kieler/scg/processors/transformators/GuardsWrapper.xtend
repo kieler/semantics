@@ -20,6 +20,8 @@ import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.transformations.guards.SimpleGuardTransformation
 import de.cau.cs.kieler.scg.ScgFactory
 
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+
 /**
  * It would be nice to use generics here, but this is not possible, because the old transform methods are invoked by
  * reflection. Hence, {@code extends AbstractExpansionTransformation} as generic super class is unfortunately useless here.
@@ -34,7 +36,7 @@ class GuardsWrapper extends Processor<SCGraphs, SCGraphs> {
     @Inject Injector injector
     
     override getId() {
-        "de.cau.cs.kieler.scg.processors.transformators.guards"
+        "de.cau.cs.kieler.scg.processors.transformators.guards.wrapper"
     }
     
     override getName() {
@@ -42,9 +44,14 @@ class GuardsWrapper extends Processor<SCGraphs, SCGraphs> {
     }
     
     override process() {
+        val model = getModel
         val wrappedTransformation = injector.getInstance(SimpleGuardTransformation)
-        val SCGGraphs = ScgFactory.eINSTANCE.createSCGraphs
-        for (scg : getModel.scgs) {
+        val SCGGraphs = ScgFactory.eINSTANCE.createSCGraphs => [
+            for (pragma : model.pragmas) {
+                it.pragmas += pragma.copy
+            }              
+        ] 
+        for (scg : model.scgs) {
            SCGGraphs.scgs += wrappedTransformation.transform(scg, null)    
         }        
         setModel(SCGGraphs)

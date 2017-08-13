@@ -78,6 +78,10 @@ import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect
+import de.cau.cs.kieler.kexpressions.PrintCall
+import de.cau.cs.kieler.kexpressions.VectorValue
+import de.cau.cs.kieler.kexpressions.IgnoreValue
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -600,6 +604,8 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
                 assignment.setExpression((effect as HostcodeEffect).convertToSCGExpression.trace(transition, effect))
             } else if (effect instanceof FunctionCallEffect) {
                 assignment.setExpression((effect as FunctionCallEffect).convertToSCGExpression.trace(transition, effect))
+            } else if (effect instanceof PrintCallEffect) {
+                assignment.setExpression((effect as PrintCallEffect).convertToSCGExpression.trace(transition, effect))
             }
         } else if (stateTypeCache.get(state).contains(PatternType::CONDITIONAL)) {
             val conditional = sCGraph.addConditional
@@ -805,6 +811,18 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
     def dispatch Expression convertToSCGExpression(StringValue expression) {
         createStringValue(expression.value).trace(expression)
     }
+    
+    def dispatch Expression convertToSCGExpression(VectorValue expression) {
+        createVectorValue.trace(expression) => [
+            for (value : expression.values) {
+                it.values += value.convertToSCGExpression
+            }
+        ]
+    }
+    
+    def dispatch Expression convertToSCGExpression(IgnoreValue expression) {
+        createIgnoreValue.trace(expression)
+    }
 
     // Apply conversion to textual host code 
     def dispatch Expression convertToSCGExpression(TextExpression expression) {
@@ -826,6 +844,12 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
             expression = parameter.expression.convertToSCGExpression
         ]
     }
-
+    
+    def dispatch Expression convertToSCGExpression(PrintCall printCall) {
+        createPrintCall.trace(printCall) => [ pc |
+            printCall.parameters.forEach[ pc.parameters += it.convertToSCGParameter ]
+        ]
+    }
+    
 // -------------------------------------------------------------------------   
 }

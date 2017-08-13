@@ -218,7 +218,7 @@
          point="org.eclipse.ui.newWizards">
       <wizard
             canFinishEarly="false"
-            category="de.cau.cs.kieler.sccharts"
+            category="de.cau.cs.kieler.prom.ui.kielerModelingWizards"
             class="de.cau.cs.kieler.simulation.ui.wizards.KiSimFileWizard"
             finalPerspective="de.cau.cs.kieler.simulation"
             id="de.cau.cs.kieler.simulation.ui.wizards.kisimFile"
