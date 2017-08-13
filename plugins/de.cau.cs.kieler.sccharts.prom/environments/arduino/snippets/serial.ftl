@@ -23,24 +23,24 @@
 <#macro Serial bufferSize autoReset=true autoFree=false>
     <@input>
         // Read serial if available
-        if(!${varname}) {
-            ${varname} = new char[${bufferSize}];
-            ${varname}[0] = 0;
+        if(!tickData.${varname}) {
+            tickData.${varname} = new char[${bufferSize}];
+            tickData.${varname}[0] = 0;
         }
         if(Serial.available()) {
-            int length = Serial.readBytes(${varname}, ${bufferSize});
-            ${varname}[length] = 0; // Make string null terminated
+            int length = Serial.readBytes(tickData.${varname}, ${bufferSize});
+            tickData.${varname}[length] = 0; // Make string null terminated
         }
     </@>
     <@output>
         // Print to serial
-        if(${varname}) {
-            Serial.println(${varname});
+        if(tickData.${varname}) {
+            Serial.println(tickData.${varname});
             <#if autoReset>
-            ${varname}[0] = 0;
+            tickData.${varname}[0] = 0;
             </#if>
             <#if autoFree>
-            free(${varname});
+            free(tickData.${varname});
             </#if>
         }
     </@>

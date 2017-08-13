@@ -9,7 +9,7 @@
         pinMode(${port}, OUTPUT);
     </@>
     <@output>
-        if(${varname}) {
+        if(tickData.${varname}) {
             digitalWrite(${port}, HIGH);
         } else {
             digitalWrite(${port}, LOW);
@@ -37,11 +37,13 @@
     </@>
     <@input>
         <#if (ports?size > 1)>
+        <#assign index = 0>
         <#list ports as port>
-        ${varname}[${port?index}] = digitalRead(${port}) ? HIGH : LOW;
+        tickData.${varname}[${index}] = digitalRead(${port}) ? HIGH : LOW;
+        <#assign index = index+1>
         </#list>
         <#else>
-        ${varname} = digitalRead(${ports[0]}) ? HIGH : LOW;
+        tickData.${varname} = digitalRead(${ports[0]}) ? HIGH : LOW;
         </#if>
     </@>
 </#macro>
@@ -58,7 +60,7 @@
         pinMode(${port}, INPUT);
     </@>
     <@input>
-        ${varname} = analogRead(${port});
+        tickData.${varname} = analogRead(${port});
     </@>
 </#macro>
 
@@ -74,6 +76,6 @@
         pinMode(${port}, OUTPUT);
     </@>
     <@output>
-        analogWrite(${port}, ${varname});
+        analogWrite(${port}, tickData.${varname});
     </@>
 </#macro>

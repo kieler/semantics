@@ -29,6 +29,10 @@
            class="de.cau.cs.kieler.simulation.handlers.SimulationOutputFileHandler"
            name="simout">
      </dataHandler>
+     <dataHandler
+           class="de.cau.cs.kieler.simulation.handlers.Trace"
+           name="trace">
+     </dataHandler>
   </extension>
   <extension
         point="org.eclipse.debug.core.launchConfigurationTypes">

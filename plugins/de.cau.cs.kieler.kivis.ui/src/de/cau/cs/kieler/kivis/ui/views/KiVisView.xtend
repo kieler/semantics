@@ -521,13 +521,18 @@ class KiVisView extends ViewPart {
         mgr.add(new KiVisViewToolbarAction("Show Controls", "help.png") {
             override run() {
                 val title = "Controls for the Simulation Visualization View"
-                val message = "Shift + Mouse Drag : Move\n"
-                             + "Shift + Right Mouse Button : Zoom\n"
+                val message = "Left Mouse Button : Move\n"
+                             + "Right Mouse Button : Zoom\n"
+                             + "\n"
                              + "Ctrl + Left Mouse Button : Zoom to rectangle\n"
-                             + "Ctrl + Shift + Right Mouse Button : Reset perspective\n"
-                             + "Mouse Wheel : Zoom in / out\n"
-                             + "Arrow Keys : Scroll\n"
+                             + "Ctrl + Right Mouse Button : Reset perspective\n"
+                             + "\n"
+                             + "Ctrl + Arrow Keys : Scroll\n"
                              + "Shift + Arrow Keys : Fast scroll\n"
+                             + "\n"
+                             + "Escape : Reset perspective\n"
+                             + "\n"
+                             + "Right Arrow : Step simulation\n"
                 val dialog = new MessageDialog(canvas.shell, title, null, message, 0, #["OK"], 0)
                 dialog.open
             }
@@ -565,12 +570,18 @@ class KiVisView extends ViewPart {
                 interaction.apply(pool)
             }
             
-            // Update svg with data from pool
-            // Make all changes to the svg in the update manager.
-            // Otherwise the svg canvas is not updated properly.
-            if(pool != lastPool
-                || force) {
+            // Only update the view with the state of the pool, when the pool changed
+            // and the data pool contains valid data, i.e., all variables have been initialized in the first macro tick
+            var poolChanged = (pool != lastPool)
+            var afterInitialization = (SimulationManager.instance != null
+                                       && SimulationManager.instance.currentMacroTickNumber > 0)
+            if(force
+               || poolChanged && afterInitialization) {
                 lastPool = pool
+                
+                // Update svg with data from pool
+                // Make all changes to the svg in the update manager.
+                // Otherwise the svg canvas is not updated properly.
                 val runnable = new Runnable() {
                     override run() {
                         if(!initialized) {
@@ -656,7 +667,8 @@ class KiVisView extends ViewPart {
                     if(e.type == SimulationEventType.VARIABLE_CHANGE
                         && !kiVisView.ignoreVariableEvents) {
                         PromUIPlugin.asyncExecInUI[kiVisView.update(e.variable)]
-                    } else if(e.type != SimulationEventType.TRACE) {
+                    } else if(e.type != SimulationEventType.TRACE
+                           && e.type != SimulationEventType.INITIALIZED) {
                         // Update the view in the UI thread
                         PromUIPlugin.asyncExecInUI[kiVisView.update(SimulationManager.instance?.currentPool, false)]
                     }

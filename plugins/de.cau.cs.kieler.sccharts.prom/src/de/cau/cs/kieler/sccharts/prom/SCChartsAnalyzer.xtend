@@ -77,6 +77,7 @@ class SCChartsAnalyzer implements ModelAnalyzer{
             } else {
                 // Print warning if explicit wrapper code annotation on variable
                 // that is neither input nor output
+                // TODO: Make validator for this
                 for (annotation : decl.annotations) {
                      if(annotation.name == EXPLICIT_WRAPPER_CODE_ANNOTATION_NAME) {
                          PromConsole.print('''Warning: Variable '«getVariableName(decl)»' is neither input nor output but has an explicit wrapper code annotation.''');

@@ -16,17 +16,25 @@ import de.cau.cs.kieler.simulation.core.NDimensionalArray
 import de.cau.cs.kieler.simulation.core.NDimensionalArrayElement
 import de.cau.cs.kieler.simulation.core.Variable
 import java.util.Collections
+import java.util.EventObject
 import java.util.List
 import org.eclipse.core.runtime.Assert
 import org.eclipse.jface.viewers.ArrayContentProvider
 import org.eclipse.jface.viewers.CellEditor
+import org.eclipse.jface.viewers.ColumnViewerEditor
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy
+import org.eclipse.jface.viewers.FocusCellOwnerDrawHighlighter
 import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.jface.viewers.TableViewerColumn
+import org.eclipse.jface.viewers.TableViewerEditor
+import org.eclipse.jface.viewers.TableViewerFocusCellManager
 import org.eclipse.swt.SWT
 import org.eclipse.swt.events.FocusAdapter
 import org.eclipse.swt.events.FocusEvent
 import org.eclipse.swt.events.KeyAdapter
 import org.eclipse.swt.events.KeyEvent
+import org.eclipse.swt.events.MouseEvent
 import org.eclipse.swt.graphics.Image
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Table
@@ -244,6 +252,15 @@ class ArrayCellEditor extends CellEditor {
                 arrayCellEditor.delegateKeyRelease(e)
             }
         })
+        
+        // Use TAB to go to next row neighbor and activate cell editor
+        val focusCellManager = new TableViewerFocusCellManager(viewer, new FocusCellOwnerDrawHighlighter(viewer));
+        val activationSupport = new ColumnViewerEditorActivationStrategy(viewer)
+        activationSupport.enableEditorActivationWithKeyboard = true
+        TableViewerEditor.create(viewer, focusCellManager, activationSupport, ColumnViewerEditor.TABBING_HORIZONTAL.bitwiseOr(
+            ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR).bitwiseOr(
+            ColumnViewerEditor.TABBING_VERTICAL).bitwiseOr(
+            ColumnViewerEditor.KEYBOARD_ACTIVATION))
         
         return viewer
     }

@@ -266,8 +266,34 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
             // Build the changed models
             buildModels(changedModels)
             // Process templates
+            changedTemplates.addAll(getTemplatesThatNeedRebuild(changedModels))
             processTemplates(changedTemplates)            
         }
+    }
+    
+    /**
+     * Iterates over the template processors and returns their templates,
+     * if it needs to be rebuild because the given model files have changed.
+     */
+    private def List<IFile> getTemplatesThatNeedRebuild(List<IFile> modelFiles) {
+        val templateFiles = <IFile> newArrayList
+        for(processor : templateProcessors) {
+            var String modelPath
+            if(processor instanceof SimulationTemplateProcessor) {
+                modelPath = processor.modelPath.stringValue
+            } else if(processor instanceof WrapperCodeTemplateProcessor) {
+                modelPath = processor.modelPath.stringValue
+            }
+            if(modelPath != null) {
+                val modelFile = project.getFile(modelPath)
+                if(modelFiles.contains(modelFile)) {
+                    val templatePath = processor.template.stringValue
+                    val templateFile = project.getFile(templatePath)
+                    templateFiles.add(templateFile)                    
+                }
+            }
+        }
+        return templateFiles
     }
     
     private def void processAllTemplates() {
@@ -475,12 +501,12 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
     
     public static def void showBuildProblems(List<BuildProblem> problems) {
         for(problem : problems) {
-            if(problem.file != null) {
+            if(problem.res != null) {
                 var IMarker marker
                 if(problem.isWarning) {
-                    marker = createWarningMarker(problem.file, problem.message)
+                    marker = createWarningMarker(problem.res, problem.message)
                 } else {
-                    marker = createErrorMarker(problem.file, problem.message)
+                    marker = createErrorMarker(problem.res, problem.message)
                 }
                 if(marker != null && problem.line > 0) {
                     marker.setAttribute(IMarker.LINE_NUMBER, problem.line)

@@ -41,8 +41,10 @@ class WalkPathAnimation extends AnimationHandler {
     
     public val wrapAround = new ConfigurableAttribute("wrapAround", false)
     
-    var String initialTransform
-    var SVGPoint lastPoint
+    private var String initialTransform
+    private var SVGPoint lastPoint
+    private var double lastScaledPosition
+    private var int travelDirection
     
     new() {
     }
@@ -85,7 +87,7 @@ class WalkPathAnimation extends AnimationHandler {
         val value = if(position.value == null)
                         variableValue.doubleValue
                     else
-                        position.intValue.doubleValue
+                        position.floatValue.doubleValue
                         
         var wrappedValue = value
         if(wrapAround.value != null && wrapAround.boolValue) {
@@ -110,23 +112,52 @@ class WalkPathAnimation extends AnimationHandler {
         if(currentPoint == null) {
             throw new IllegalArgumentException(name+" animation could not determine position on path "+path)
         }
+        // Determine if travel direction is in with or against path direction
+        if(scaledValue > lastScaledPosition) {
+            travelDirection = 1
+        } else if(scaledValue < lastScaledPosition) {
+            travelDirection = -1
+        }
         // Compute angle
-        val delta = 1
-        if (autoOrientation.boolValue && scaledValue <= (totalPathLength - delta)) {
-            // Calculate slope ("Steigung" bzw. "Ableitung") on path on current position
-            val pointOnPathPlusDelta = path.getPointAtLength(scaledValue.floatValue + delta)
-            angleValue.value = computeAngle(pointOnPath, pointOnPathPlusDelta)
-            if(angleOffset.floatValue != 0) {
-                angleValue.value = angleValue.floatValue + angleOffset.floatValue
-            }
-        } else if(autoOrientation.boolValue && lastPoint != null){
-            // Calculate rotation based on last position
-            angleValue.value = computeAngle(lastPoint, currentPoint)
-            if(angleOffset.floatValue != 0) {
-                angleValue.value = angleValue.floatValue angleOffset.floatValue
+        if (autoOrientation.boolValue) {
+            if(lastPoint != null && (lastPoint.x != currentPoint.x || lastPoint.y != currentPoint.y)){
+                // Calculate rotation based on last position
+                angleValue.value = computeAngle(lastPoint, currentPoint)
+                if(angleOffset.floatValue != 0) {
+                    angleValue.value = angleValue.floatValue angleOffset.floatValue
+                }
+            } else {
+                // Calculate slope ("Steigung" bzw. "Ableitung") on path on current position
+                val delta = 1
+                var SVGPoint point1
+                var SVGPoint point2
+                if(scaledValue <= (totalPathLength - delta)) {
+                    // Positive delta
+                    point1 = pointOnPath
+                    point2 = path.getPointAtLength(scaledValue.floatValue + delta)
+                } else if(scaledValue >= delta) {
+                    // Negative delta
+                    point1 = path.getPointAtLength(scaledValue.floatValue - delta)
+                    point2 = pointOnPath
+                }
+                if(point1 != null && point2 != null
+                    && (point1.x != point2.x || point1.y != point2.y)) {
+                    // Compute angle
+                    angleValue.value = computeAngle(point1, point2)
+                    // Add offset
+                    if(angleOffset.floatValue != 0) {
+                        angleValue.value = angleValue.floatValue + angleOffset.floatValue
+                    }
+                    // Turn around when moving "backwards"
+                    if(travelDirection == -1) {
+                        angleValue.value = angleValue.floatValue + 180 * travelDirection
+                    }
+                }
             }
         }
+        // Remember positions of this iteration
         lastPoint = currentPoint
+        lastScaledPosition = scaledValue
         
         if(elem instanceof SVGLocatable) {
             if(appendTransform.boolValue) {

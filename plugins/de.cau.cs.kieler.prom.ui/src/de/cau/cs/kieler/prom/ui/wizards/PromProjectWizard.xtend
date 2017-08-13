@@ -258,8 +258,16 @@ class PromProjectWizard extends Wizard implements INewWizard {
                     val isFile = (path.fileExtension != null)
                     
                     if(isFile) {
+                        // Setup placeholders
+                        // Load path of model file
+                        val modelFilePath = getModelFilePath()
+                        val modelFilePathWithoutExtension = new Path(modelFilePath).removeFileExtension
+                        val modelFileNameWithoutExtension = modelFilePathWithoutExtension.lastSegment
+                        val placeholderReplacements = #{"${project_name}" -> newlyCreatedProject.name,
+                                                        "${model_name}" -> modelFileNameWithoutExtension}
                         // Create file
-                        PromPlugin.initializeFile(newlyCreatedProject, resolvedProjectRelativePath, data.origin)
+                        PromPlugin.initializeFile(newlyCreatedProject, resolvedProjectRelativePath,
+                                                  data.origin, placeholderReplacements)
                         
                         // Remember kibuild file in project preferences
                         if(Files.getFileExtension(resolvedProjectRelativePath) == "kibuild") {
