@@ -326,8 +326,8 @@
             id="de.cau.cs.kieler.kicool.ui.synthesis.GenericStringSynthesis">
       </diagramSynthesis>
       <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.synthesis.MessageObjectReferencesSynthesis"
-            id="de.cau.cs.kieler.kicool.ui.synthesis.MessageObjectReferencesSynthesis">
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.synthesis.MessageObjectListSynthesis"
+            id="de.cau.cs.kieler.kicool.ui.synthesis.MessageObjectListSynthesis">
       </diagramSynthesis>
       <diagramSynthesis
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.kitt.synthesis.TracingTreeDiagramSynthesis"
@@ -370,6 +370,14 @@
                 class="de.cau.cs.kieler.kicool.ui.kitt.update.TracingVisualizationUpdateStrategy"
                 id="de.cau.cs.kieler.kicool.ui.kitt.update.TracingVisualizationUpdateStrategy">
           </updateStrategy>
+          <action
+                class="de.cau.cs.kieler.kicool.ui.klighd.internal.model.action.OpenCodeInEditorAction"
+                id="de.cau.cs.kieler.kicool.ui.klighd.internal.model.action.OpenCodeInEditorAction">
+          </action>
+          <action
+                class="de.cau.cs.kieler.kicool.ui.klighd.internal.model.action.RemovedCollapsedDiagramsAction"
+                id="de.cau.cs.kieler.kicool.ui.klighd.internal.model.action.RemovedCollapsedDiagramsAction">
+          </action>
        </extension>
        <extension
              point="de.cau.cs.kieler.klighd.ui.view.controller">

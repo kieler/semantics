@@ -12,8 +12,6 @@
  */
 package de.cau.cs.kieler.kicool.ui.synthesis.updates
 
-import com.google.inject.Inject
-import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import java.util.Map
 import de.cau.cs.kieler.kicool.compilation.RuntimeSystems
 import de.cau.cs.kieler.klighd.krendering.KForeground
@@ -54,7 +52,6 @@ import de.cau.cs.kieler.kicool.ui.synthesis.feedback.PostUpdateDoubleCollector
 import org.eclipse.elk.core.options.CoreOptions
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.ToggleProcessorOnOffAction
-import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.getSystem
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.IntermediateData
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.ToggleOnOffData
 import static extension de.cau.cs.kieler.kicool.compilation.Metric.METRIC
@@ -67,11 +64,9 @@ import com.google.inject.Injector
 import de.cau.cs.kieler.kicool.KiCoolStandaloneSetup
 import de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis
 import de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorSystem
-import de.cau.cs.kieler.core.model.Pair
-import de.cau.cs.kieler.kicool.environments.MessageObjectReferences
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.MessageObjectReferencesManager.fillUndefinedColors
-import de.cau.cs.kieler.kicool.ui.synthesis.MessageObjectReferencePair
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.OnOffToggle
+import de.cau.cs.kieler.kicool.ui.synthesis.MessageObjectListPair
 
 /**
  * The data manager handles all synthesis updates.
@@ -263,7 +258,7 @@ class ProcessorDataManager {
             
             val model = processorInstance.getModel
             if (model instanceof EObject) {
-                val morModel = new MessageObjectReferencePair(infos.fillUndefinedColors(INFO), model)
+                val morModel = new MessageObjectListPair(infos.get(null).fillUndefinedColors(INFO), model)
                 infoNode.setProperty(INTERMEDIATE_DATA, 
                     new IntermediateData(processorInstance, processorNotification.compilationContext, morModel, view))
             } else {
@@ -284,7 +279,7 @@ class ProcessorDataManager {
             
             val model = processorInstance.getModel
             if (model instanceof EObject) {
-                val morModel = new MessageObjectReferencePair(warnings.fillUndefinedColors(WARNING), model)
+                val morModel = new MessageObjectListPair(warnings.get(null).fillUndefinedColors(WARNING), model)
                 warningNode.setProperty(INTERMEDIATE_DATA, 
                     new IntermediateData(processorInstance, processorNotification.compilationContext, morModel, view))
             } else {
@@ -298,23 +293,26 @@ class ProcessorDataManager {
         
         val errors = processorInstance.environment.getProperty(ERRORS)
         if (errors.size > 0) {
-            val errorNode = intermediateKGT.copy
-            errorNode.xpos = intermediatePosX
-            errorNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
-            intermediateRootNode.children += errorNode 
-            
-            val model = processorInstance.getModel
-            if (model instanceof EObject) {
-                val morModel = new MessageObjectReferencePair(errors.fillUndefinedColors(ERROR), model)
-                errorNode.setProperty(INTERMEDIATE_DATA, 
-                    new IntermediateData(processorInstance, processorNotification.compilationContext, morModel, view))
-            } else {
-                errorNode.setProperty(INTERMEDIATE_DATA, 
-                    new IntermediateData(processorInstance, processorNotification.compilationContext, warnings, view))
-            }
-                
-            errorNode.container.setFBColor(ERROR)
-            intermediatePosX += 3.5f
+                for (errorKey : errors.keySet) {
+                    val errorNode = intermediateKGT.copy
+                    errorNode.xpos = intermediatePosX
+                    errorNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
+                    intermediateRootNode.children += errorNode 
+                    
+                    val model = processorInstance.getModel
+                    if (model instanceof EObject) {
+                        val morModel = new MessageObjectListPair(errors.get(errorKey).fillUndefinedColors(ERROR), 
+                            if (errorKey === null) model else errorKey)
+                        errorNode.setProperty(INTERMEDIATE_DATA, 
+                            new IntermediateData(processorInstance, processorNotification.compilationContext, morModel, view))
+                    } else {
+                        errorNode.setProperty(INTERMEDIATE_DATA, 
+                            new IntermediateData(processorInstance, processorNotification.compilationContext, errors, view))
+                    }
+                        
+                    errorNode.container.setFBColor(ERROR)
+                    intermediatePosX += 3.5f
+                }
         }               
         
         if (processorNotification instanceof ProcessorProgress) {

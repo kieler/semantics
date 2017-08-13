@@ -35,6 +35,7 @@ import de.cau.cs.kieler.sccharts.Action
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.annotations.StringPragma
+import de.cau.cs.kieler.sccharts.processors.transformators.For
 
 //import org.eclipse.xtext.validation.Check
 
@@ -511,6 +512,18 @@ class SCTXValidator extends AbstractSCTXValidator {
     }
     
     @Check
+    def void checkReferencingStateFinalState(de.cau.cs.kieler.sccharts.State state) {
+        if (state.reference.scope == null) return;
+        if (state.terminationTransitions.empty) return;
+            
+        if (!state.reference.scope.asState.mayTerminate) {
+            warning("The referenced SCCharts does not terminate, but you are using a termination to proceed.",
+                state.reference,
+                SCChartsPackage.eINSTANCE.scopeCall_Scope);
+        }            
+    }
+    
+    @Check
     def void checkActionTriggerEffectsWithLabel(Action action) {
         if (!action.label.nullOrEmpty) {
             if (action.trigger != null) {
@@ -524,6 +537,18 @@ class SCTXValidator extends AbstractSCTXValidator {
                     info("The effects of this action are hidden by the label.", 
                         action, 
                         SCChartsPackage.eINSTANCE.action_Effects)
+            }
+        }
+    }
+    
+    @Check
+    def void checkForRegion(ControlflowRegion region) {
+        if (region.forStart != null && region.forStart instanceof ValuedObjectReference) {
+            val forRange = For.getForRegionRange(region)
+            if (forRange.second == -1) {
+                error("The range of the counter variable of the for region is not determinable. The array cardinalities of you array must be an int or a const int.",
+                    region, SCChartsPackage.eINSTANCE.state_Regions
+                )
             }
         }
     }

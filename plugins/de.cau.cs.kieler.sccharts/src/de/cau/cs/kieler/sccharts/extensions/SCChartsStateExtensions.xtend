@@ -144,5 +144,12 @@ class SCChartsStateExtensions {
         ]
         newState
     }
+    
+    def boolean mayTerminate(State state) {
+        for (cfr : state.controlflowRegions) {
+            if (cfr.allFinalStates.empty) return false
+        }
+        return true
+    }
          
 }

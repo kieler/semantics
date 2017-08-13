@@ -68,7 +68,7 @@
 </#macro>
 
 <#macro array_elem indices>
-tickData.${varname}<#list indices as s>[i${index}]</#list><#t>
+tickData.${varname}<#assign index = 0><#list indices as s>[i${index}]<#assign index = index+1></#list><#t>
 </#macro>
 
 <#macro cJSON_value var>

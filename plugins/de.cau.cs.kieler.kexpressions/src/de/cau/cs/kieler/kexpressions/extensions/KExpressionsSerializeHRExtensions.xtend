@@ -11,6 +11,8 @@ import java.util.List
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.VectorValue
+import de.cau.cs.kieler.kexpressions.IgnoreValue
 
 /**
  * Serialization of KExpressions in human readable form.
@@ -374,10 +376,21 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
         }  
             
         return result
-    }   
-    	
-	
-
+    }  
+    
+    def dispatch CharSequence serializeHR(VectorValue expression) {
+        var s = "{" 
+        for (value : expression.values) {
+            s = s + value.serializeHR + ", "
+        }
+        return s.substring(0, s.length - 2) + "}"
+    }    
+    
+    def dispatch CharSequence serializeHR(IgnoreValue expression) {
+        "_"
+    }
+        
+    
     dispatch def CharSequence serializeHR(Expression expression) {
         expression.serialize.humanReadable
     }
