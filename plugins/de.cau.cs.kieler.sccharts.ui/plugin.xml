@@ -44,6 +44,10 @@
             class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.ExpandAllRegionsAction"
             id="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.ExpandAllRegionsAction">
       </action>
+      <action
+            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.InducedDataflowHook"
+            id="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.InducedDataflowHook">
+      </action>
    </extension>
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
@@ -97,6 +101,9 @@
       </hook>
       <hook
             class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ColorAnnotationHook">
+      </hook>
+      <hook
+            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.InducedDataflowHook">
       </hook>
    </extension>
    <extension
