@@ -978,13 +978,13 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
             val rectCol = childNodeOuter.addRoundedRectangle(4, 4, 2);
             rectCol.selectionBackground = FOLDERCOLOR1.color;
-            rectCol.setBackgroundGradient(FOLDERCOLOR1.color, FOLDERCOLOR2.color, FOLDERCOLORANGLE);
             rectCol.background = FOLDERCOLOR1.color;
+            //rectCol.setBackgroundGradient(FOLDERCOLOR1.color, FOLDERCOLOR2.color, FOLDERCOLORANGLE);
             rectCol.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
             rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
             val rectExp = childNodeOuter.addRoundedRectangle(4, 4, 2);
             rectExp.background = FOLDERCOLOR1.color;
-            rectExp.setBackgroundGradient(FOLDERCOLOR1.color, FOLDERCOLOR2.color, FOLDERCOLORANGLE);
+            //rectExp.setBackgroundGradient(FOLDERCOLOR1.color, FOLDERCOLOR2.color, FOLDERCOLORANGLE);
             rectExp.selectionBackground = FOLDERCOLOR1.color;
             rectExp.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
             rectExp.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);

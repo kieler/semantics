@@ -210,7 +210,7 @@ class CViewAnalysisExtensions {
         return null
     }
 
-    // Get the type of a delaration iff this is a typdef or null otherwise (e.g., if base type or not a declaration)
+    // Get the type of a declaration iff this is a typdef or null otherwise (e.g., if base type or not a declaration)
     def Component getTypedef(Component declComponent) {
         if (declComponent.isDecl) {
             if (declComponent.reference != null) {
@@ -248,6 +248,75 @@ class CViewAnalysisExtensions {
             }
         }
         return new ArrayList<Component>
+    }
+
+
+    // Check if a component is connected to any other component
+    def boolean isConnectedTo(
+        Component componentSrc,
+        Component componentDest,
+        boolean considerChildren,
+        boolean considerReferences,
+        boolean considerConnections
+    ) {
+        if (componentSrc == componentDest) {
+            // A component is defined to be always "connected" to itself 
+            return true
+        }
+        if (considerChildren) {
+            if (componentSrc.children.contains(componentDest)) {
+                return true
+            } else {
+                for (child : componentSrc.children) {
+                    if (child.isConnectedTo(componentDest, considerChildren, considerReferences, considerConnections)) {
+                        return true
+                    }
+                }
+            }
+        }
+        if (considerReferences) {
+            if (componentSrc.reference != null) {
+                if (componentSrc.reference == componentDest) {
+                    return true
+                }
+                if (componentSrc.reference.isConnectedTo(componentDest, considerChildren, considerReferences,
+                    considerConnections)) {
+                    return true
+                }
+            }
+        }
+        if (considerConnections) {
+            if (!componentSrc.outgoingConnections.nullOrEmpty) {
+                for (connection : componentSrc.outgoingConnections) {
+                    if (connection.dst.isConnectedTo(componentDest, considerChildren, considerReferences,
+                        considerConnections)) {
+                        return true
+                    }
+                }
+            }
+        }
+        return false
+    }
+
+    // Return a list of all connected components
+    def List<Component> getAllConnectedComponents(
+        CViewModel model,
+        Component camComponent,
+        boolean considerChildren,
+        boolean considerReferences,
+        boolean considerConnections
+    ) {
+        return model.components.filter [e|
+            e.isConnectedTo(camComponent, considerChildren, considerReferences, considerConnections)
+        ].toList
+    }
+
+    def List<Component> getTypedefUsedBy(Component structComponent) {
+        return structComponent.model.components.filter[e|e.reference == structComponent].toList
+    }
+
+    def List<Component> getDeclUsedBy(Component typedefComponent) {
+        return typedefComponent.model.components.filter[e|e.reference == typedefComponent].toList
     }
 
     // -------------------------------------------------------------------------
@@ -360,7 +429,6 @@ class CViewAnalysisExtensions {
     }
 
     // -------------------------------------------------------------------------
-    
     /**
      * Get all connection components of a component as an unordered set of components. Consider
      * parents, children, and an optional filter of connection types.
@@ -377,11 +445,11 @@ class CViewAnalysisExtensions {
         CViewPlugin.printlnConsole("#######################################")
         CViewPlugin.printlnConsole("# getConnectedComponents(" + component.name + ")")
         CViewPlugin.printlnConsole("############")
-        for (resultItem : result) { 
-                CViewPlugin.printlnConsole(" - " + resultItem.name)
+        for (resultItem : result) {
+            CViewPlugin.printlnConsole(" - " + resultItem.name)
         }
         CViewPlugin.printlnConsole("############")
-        return result 
+        return result
     }
 
     def Set<Component> getConnectedComponents(
@@ -404,7 +472,8 @@ class CViewAnalysisExtensions {
         // Add parent 
         if (considerParent) {
             result.addAll(
-                result.getConnectedComponents(component.parent, considerParent, considerChildren, reverseSearch, filterConnectionTypes))
+                result.getConnectedComponents(component.parent, considerParent, considerChildren, reverseSearch,
+                    filterConnectionTypes))
         }
         // Add children
         if (considerChildren) {
@@ -428,7 +497,7 @@ class CViewAnalysisExtensions {
         for (connection : furtherConnections) {
             if (!filterConnectionTypes.nullOrEmpty) {
                 // Additionally filter
-                var allowedByFilter  = false
+                var allowedByFilter = false
                 for (filter : filterConnectionTypes) {
                     if (!allowedByFilter && filter.equals(connection.type)) {
                         allowedByFilter = true
@@ -436,18 +505,19 @@ class CViewAnalysisExtensions {
                 }
                 if (allowedByFilter) {
                     result.addAll(
-                        result.getConnectedComponents(connection.dst, considerParent, considerChildren, reverseSearch, filterConnectionTypes)
+                        result.getConnectedComponents(connection.dst, considerParent, considerChildren, reverseSearch,
+                            filterConnectionTypes)
                     )
                 }
             } else {
                 result.addAll(
-                    result.getConnectedComponents(connection.dst, considerParent, considerChildren, reverseSearch, filterConnectionTypes)
+                    result.getConnectedComponents(connection.dst, considerParent, considerChildren, reverseSearch,
+                        filterConnectionTypes)
                 )
             }
         }
         return result
     }
 
-    // -------------------------------------------------------------------------
-
+// -------------------------------------------------------------------------
 }
