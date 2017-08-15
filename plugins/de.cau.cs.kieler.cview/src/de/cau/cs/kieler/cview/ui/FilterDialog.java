@@ -321,7 +321,7 @@ public class FilterDialog extends Dialog {
         labelSpace.setText(".");
 
         btnCheckRegExp = new Button(compositeInnerChecks, SWT.CHECK);
-        btnCheckRegExp.setText("Regular Expression");
+        btnCheckRegExp.setText("Regular expression");
         btnCheckRegExp.setToolTipText(
                 "Apply a regular expression filter instead of a simple 'contains' filter.");
 
@@ -331,7 +331,7 @@ public class FilterDialog extends Dialog {
                 .setToolTipText("Apply the filter by considering the case of each character.");
 
         btnCheckChilds = new Button(compositeInnerChecks, SWT.CHECK);
-        btnCheckChilds.setText("Consider childs");
+        btnCheckChilds.setText("Consider children");
         btnCheckChilds
                 .setToolTipText("If any child is allowed by the filter, then also show parent.");
 
