@@ -49,7 +49,6 @@
     <module>de.cau.cs.kieler.kex.ui</module>
     <module>de.cau.cs.kieler.kex</module>
     <module>de.cau.cs.kieler.kico</module>
-    <module>de.cau.cs.kieler.kico.klighd</module>
     <module>de.cau.cs.kieler.kico.ui</module>
     <module>de.cau.cs.kieler.kicool</module>
     <module>de.cau.cs.kieler.kicool.ui</module>
