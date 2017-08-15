@@ -69,6 +69,7 @@ class ECidsAnalysisOAL implements IAnalysisHook {
     }
 
     override initialize(CViewModel model) {
+        taskNames2Component.clear
         for (component : model.components) {
             if (component.isFile) {
                 val rawDataWithoutComments = component.rawdata.removeCommentsAll
