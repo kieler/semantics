@@ -31,17 +31,17 @@ import de.cau.cs.kieler.cview.hooks.IExportHook
  * @author cmot
  * 
  */
-class ECidsExportHook implements IExportHook {
+class ECidsExportHookConnectionsTXT implements IExportHook {
 
     @Inject extension CViewModelExtensions
 
     
     override getName() {
-        return "eCIDS Export (Connections)";
+        return "eCIDS Export Connections - TXT";
     }
 
     override getId() {
-        return "de.cau.cs.kieler.cview.ecids";
+        return "de.cau.cs.kieler.cview.ecids.connections";
     }
     
     override export(CViewModel model) {
@@ -58,7 +58,7 @@ class ECidsExportHook implements IExportHook {
     }
     
     override getFileExtension() {
-        return null
+        return "txt"
     }
     
 }

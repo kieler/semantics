@@ -7,10 +7,10 @@
             class="de.cau.cs.kieler.cview.ecids.ECidsAnalysisOAL">
       </connectionHook>
       <connectionHook
-            class="de.cau.cs.kieler.cview.ecids.ECidsAnalysisCAM">
+            class="DISABLED de.cau.cs.kieler.cview.ecids.ECidsAnalysisCAM">
       </connectionHook>
       <connectionHook
-            class="de.cau.cs.kieler.cview.ecids.ECidsAnalysisCAM_old">
+            class="DISABLED de.cau.cs.kieler.cview.ecids.ECidsAnalysisCAM_old">
       </connectionHook>
       <analysisHook
             class="de.cau.cs.kieler.cview.ecids.ExampleAnalysis">
@@ -19,13 +19,13 @@
    <extension
          point="de.cau.cs.kieler.cview.export">
       <exportHook
-            class="de.cau.cs.kieler.cview.ecids.ECidsExportHook">
+            class="de.cau.cs.kieler.cview.ecids.ECidsExportHookCountCSV">
       </exportHook>
    </extension>
    <extension
          point="de.cau.cs.kieler.cview.export">
       <exportHook
-            class="de.cau.cs.kieler.cview.ecids.ECidsExportHook2">
+            class="de.cau.cs.kieler.cview.ecids.ECidsExportHookConnectionsTXT">
       </exportHook>
    </extension>
 

@@ -20,6 +20,7 @@ import de.cau.cs.kieler.cview.model.cViewModel.Component
 import de.cau.cs.kieler.cview.model.cViewModel.Connection
 import de.cau.cs.kieler.cview.model.extensions.CViewModelExtensions
 import java.util.List
+import java.util.HashMap
 
 /**
  * @author cmot
@@ -28,18 +29,24 @@ import java.util.List
 class ExampleAnalysis implements IAnalysisHook {
 
     @Inject extension CViewModelExtensions
-
     @Inject extension CViewAnalysisExtensions
+    
+    override getName() {
+        return "ExampleAnalysis";
+    }
 
+    override getId() {
+        return "de.cau.cs.kieler.cview.ecids.ExampleAnalysis";
+    }
+    
     override List<Connection> createConnections(Component component, CViewModel model) {
         val List<Connection> returnList = newArrayList()
-        if (component.isFile) {
-            for (otherComponent : model.findByName(".c", false, true)) {
-                    val connection = component.connectTo(otherComponent)
-                    
-                    connection.setColor2("blue")   
-                    returnList.add(connection)        
-                    
+        
+        if (component.isDir && component.name.equals("Include")) {
+            val otherComponents = model.findByName("SYC").filter[e | e.isDir]
+            for (otherComponent : otherComponents) {
+                val connection = component.connectTo(otherComponent)
+                returnList.add(connection)
             }
         }
         return returnList
@@ -50,14 +57,4 @@ class ExampleAnalysis implements IAnalysisHook {
 
     override wrapup(CViewModel model) {
     }
-
-    override getName() {
-        return "ExampleAnalysis";
-    }
-
-    override getId() {
-        return "de.cau.cs.kieler.cview.ecids.ExampleAnalysis";
-    }
 }
-
-

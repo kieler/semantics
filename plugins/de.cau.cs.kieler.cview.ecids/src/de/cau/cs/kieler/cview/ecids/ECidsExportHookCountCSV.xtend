@@ -31,12 +31,12 @@ import de.cau.cs.kieler.cview.hooks.IExportHook
  * @author cmot
  * 
  */
-class ECidsExportHook2  implements IExportHook {
+class ECidsExportHookCountCSV implements IExportHook {
 
     @Inject extension CViewModelExtensions
 
     override getName() {
-        return "eCIDS OAL Message Count"
+        return "eCIDS Component Count Connections - CSV"
     }
 
     override getId() {
@@ -44,12 +44,20 @@ class ECidsExportHook2  implements IExportHook {
     }
 
     override export(CViewModel model) {
-            return model.components.size + ''''''
+        var returnString = ''''''
+        for (component : model.components) {
+            if (component.outgoingConnections.size > 0) {
+                if (returnString.length > 0) {
+                    returnString += " \n"
+                }
+                returnString += component.name + ";" + component.outgoingConnections.size
+            }
+        }
+        return returnString
     }
 
     override getFileExtension() {
-        return "txt"
+        return "csv"
     }
-    
 
 }
