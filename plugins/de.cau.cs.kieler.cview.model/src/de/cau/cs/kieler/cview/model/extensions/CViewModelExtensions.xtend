@@ -106,8 +106,16 @@ class CViewModelExtensions {
 
 
     // -------------------------------------------------------------------------
-    def boolean hieararchical(Component item) {
-        return !item.children.nullOrEmpty;
+
+    def boolean hieararchical(Component item, boolean functions, boolean types) {
+        if (functions && types) {
+            return !item.children.nullOrEmpty;
+        } else if (functions) {
+            return !item.children.filter[e | e.isFile || e.isDir || e.isFunc].nullOrEmpty;
+        } else if (types) {
+            return !item.children.filter[e | e.isFile || e.isDir || e.isTypedef || e.isDecl || e.isStruct].nullOrEmpty;
+        }
+        return !item.children.filter[e | e.isFile || e.isDir].nullOrEmpty;
     }
 
     def int getDepth(Component item) {

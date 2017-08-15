@@ -842,7 +842,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             label.firstText.addDoubleClickAction(OpenEditorAction.ID);
             label.firstText.addSingleClickAction(OpenEditorAction.ID, false, true, false)
 
-            if (item.hieararchical && !FLATTEN_HIERARCHY.booleanValue) {
+            if (item.hieararchical(SHOW_FUNCTIONS.booleanValue, SHOW_TYPES.booleanValue) && !FLATTEN_HIERARCHY.booleanValue) {
                 // Hierarchical case
                 label.firstText.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
                 //label.firstText.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
@@ -900,7 +900,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         }
 
         def KColor getFileColor(Component item) {
-            if (item.hieararchical) {
+            if (item.hieararchical(SHOW_FUNCTIONS.booleanValue, SHOW_TYPES.booleanValue)) {
                 return "WHITE".color;
             } else {
                 return "LIGHTGRAY".color;
@@ -941,13 +941,13 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             label.firstText.addDoubleClickAction(OpenEditorAction.ID);
             label.firstText.addSingleClickAction(OpenEditorAction.ID, false, true, false)
 
-            if (item.hieararchical) {
+            if (item.hieararchical(SHOW_FUNCTIONS.booleanValue, SHOW_TYPES.booleanValue)) {
                 // Hierarchical case
                 label.firstText.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
                 label.firstText.selectionBackground = item.getFileColor
             }
 
-            if (item.hieararchical && !FLATTEN_HIERARCHY.booleanValue) {
+            if (item.hieararchical(SHOW_FUNCTIONS.booleanValue, SHOW_TYPES.booleanValue) && !FLATTEN_HIERARCHY.booleanValue) {
                 val childArea = item.children.createNode().associateWith(item)
                 val childAreaRect = childArea.addRoundedRectangle(1, 1, 1)
                 childAreaRect.background = "WHITE".color;
@@ -1003,7 +1003,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             label.associateWith(item)
             label.firstText.selectionBackground = FOLDERCOLOR1.color;
 
-            if (item.hieararchical && !FLATTEN_HIERARCHY.booleanValue) {
+            if (item.hieararchical(SHOW_FUNCTIONS.booleanValue, SHOW_TYPES.booleanValue) && !FLATTEN_HIERARCHY.booleanValue) {
                 // Hierarchical case
                 label.firstText.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
                 label.firstText.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);

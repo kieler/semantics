@@ -12,23 +12,17 @@
  */
 package de.cau.cs.kieler.cview.extensions
 
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.cview.model.cViewModel.Component
-import de.cau.cs.kieler.cview.model.cViewModel.ComponentType
-import de.cau.cs.kieler.cview.model.cViewModel.CViewModelFactory
-import de.cau.cs.kieler.cview.model.cViewModel.Connection
-import java.util.List
-import de.cau.cs.kieler.cview.model.cViewModel.CViewModel
-import java.util.Set
-import java.util.ArrayList
-import de.cau.cs.kieler.cview.model.extensions.CViewModelExtensions
 import com.google.inject.Inject
 import de.cau.cs.kieler.cview.CViewPlugin
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import com.google.common.collect.ImmutableList
-import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
+import de.cau.cs.kieler.cview.model.cViewModel.CViewModel
+import de.cau.cs.kieler.cview.model.cViewModel.Component
+import de.cau.cs.kieler.cview.model.cViewModel.Connection
+import de.cau.cs.kieler.cview.model.extensions.CViewModelExtensions
+import java.util.ArrayList
 import java.util.HashSet
+import java.util.List
+import java.util.Set
+import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
 
 /**
  * Basic commonly usable analysis functionality, e.g., (struct) type dependencies.
@@ -204,17 +198,17 @@ class CViewAnalysisExtensions {
     // -------------------------------------------------------------------------
     // Get the containing struct iff a declaration inside a struct, or null otherwise
     def Component getContainingStruct(Component declComponent) {
-        if (declComponent.isDecl) {
+        if (declComponent.decl) {
             return declComponent.parent
         }
         return null
     }
 
     // Get the type of a declaration iff this is a typdef or null otherwise (e.g., if base type or not a declaration)
-    def Component getTypedef(Component declComponent) {
-        if (declComponent.isDecl) {
+    def Component getTypedefFromDecl(Component declComponent) {
+        if (declComponent.decl) {
             if (declComponent.reference != null) {
-                if (declComponent.reference.isTypedef) {
+                if (declComponent.reference.typedef) {
                     return declComponent.reference
                 }
             }
@@ -223,10 +217,10 @@ class CViewAnalysisExtensions {
     }
 
     // Get the struct of a typedef iff any, or null otherwise (e.g., if not a typedef)
-    def Component getStruct(Component typedefComponent) {
-        if (typedefComponent.isTypedef) {
+    def Component getStructFromTypedef(Component typedefComponent) {
+        if (typedefComponent.typedef) {
             if (typedefComponent.reference != null) {
-                if (typedefComponent.reference.isStruct) {
+                if (typedefComponent.reference.struct) {
                     return typedefComponent.reference
                 }
             }
@@ -235,12 +229,12 @@ class CViewAnalysisExtensions {
     }
 
     // Get a list of declarations inside a struct, return an empty list if not a struct or no declarations
-    def List<Component> getDeclarations(Component structComponent) {
-        if (structComponent.isStruct) {
+    def List<Component> getDeclsFromStruct(Component structComponent) {
+        if (structComponent.struct) {
             if (!structComponent.children.nullOrEmpty) {
                 val ArrayList<Component> returnList = new ArrayList
                 for (child : structComponent.children) {
-                    if (child.isDecl) {
+                    if (child.decl) {
                         returnList.add(child)
                     }
                 }
@@ -346,13 +340,13 @@ class CViewAnalysisExtensions {
         var currentComponent = component
         // Check all possible
         if (currentComponent.isDecl) {
-            val typedef = currentComponent.getTypedef
+            val typedef = currentComponent.typedefFromDecl
             if (typedef == null) {
                 // We are SURE that it does not match
                 return false
             }
             // yes, this is not a pure value but a typedef, find its struct
-            val struct = typedef.getStruct
+            val struct = typedef.structFromTypedef
             if (struct == null) {
                 // We are SURE that it does not match
                 return false
@@ -376,7 +370,7 @@ class CViewAnalysisExtensions {
 //            }
             // Any of the declarations must match
             var foundValidDeclaration = false
-            for (decl : currentComponent.declarations) {
+            for (decl : currentComponent.declsFromStruct) {
                 if (decl.name.equals(nextSegment)) {
                     foundValidDeclaration = decl.foundSegmentPath(nextRemainingSegments)
                 }

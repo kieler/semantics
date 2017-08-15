@@ -325,6 +325,8 @@ class KLighDController extends AbstractKLighDController {
                                 // model.addToModel(functionComponent, monitor, fileComponent)
                                 model.components.add(functionRefComponent)
                                 functionRefComponent.name = "" + name.toString() + "()"
+                                fileComponent.children.add(functionRefComponent)
+                                functionRefComponent.parent = fileComponent
 
                                 // Only put the name of the referenced function as
                                 // this may not resolvable yet, resolve later
