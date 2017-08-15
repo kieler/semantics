@@ -388,7 +388,7 @@ class KLighDController extends AbstractKLighDController {
                     CViewPlugin.printlnConsole("INFO: Resolved '" + referenceId + "'")
                 } else {
                     // Claim that we have not found
-                    CViewPlugin.printlnConsole("ERRROR: Could not resolve '" + referenceId + "'")
+                    CViewPlugin.printlnConsole("ERROR: Could not resolve '" + referenceId + "'")
                 }
             }
         }
