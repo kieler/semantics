@@ -12,20 +12,10 @@
  */
 package de.cau.cs.kieler.cview.ecids
 
-import de.cau.cs.kieler.cview.model.cViewModel.Component
-import de.cau.cs.kieler.cview.model.cViewModel.CViewModel
-import de.cau.cs.kieler.cview.model.cViewModel.Connection
-import java.util.List
-import de.cau.cs.kieler.cview.model.extensions.CViewModelExtensions
 import com.google.inject.Inject
-import de.cau.cs.kieler.cview.model.cViewModel.ComponentType
-import java.util.HashMap
-import org.eclipse.emf.ecore.EObject
-import java.util.Set
-import java.util.ArrayList
-import java.util.HashSet
-import de.cau.cs.kieler.cview.hooks.IAnalysisHook
 import de.cau.cs.kieler.cview.hooks.IExportHook
+import de.cau.cs.kieler.cview.model.cViewModel.CViewModel
+import de.cau.cs.kieler.cview.model.extensions.CViewModelExtensions
 
 /**
  * @author cmot
@@ -43,6 +33,10 @@ class ECidsExportHookCountCSV implements IExportHook {
         return "de.cau.cs.kieler.cview.ecids.count"
     }
 
+    override getFileExtension() {
+        return "csv"
+    }
+
     override export(CViewModel model) {
         var returnString = ''''''
         for (component : model.components) {
@@ -54,10 +48,6 @@ class ECidsExportHookCountCSV implements IExportHook {
             }
         }
         return returnString
-    }
-
-    override getFileExtension() {
-        return "csv"
     }
 
 }

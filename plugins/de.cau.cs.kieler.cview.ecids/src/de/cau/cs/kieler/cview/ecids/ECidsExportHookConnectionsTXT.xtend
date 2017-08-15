@@ -33,15 +33,16 @@ import de.cau.cs.kieler.cview.hooks.IExportHook
  */
 class ECidsExportHookConnectionsTXT implements IExportHook {
 
-    @Inject extension CViewModelExtensions
-
-    
     override getName() {
         return "eCIDS Export Connections - TXT";
     }
 
     override getId() {
         return "de.cau.cs.kieler.cview.ecids.connections";
+    }
+    
+    override getFileExtension() {
+        return "txt"
     }
     
     override export(CViewModel model) {
@@ -55,10 +56,6 @@ class ECidsExportHookConnectionsTXT implements IExportHook {
         «ENDFOR»'''
         
         return returnString
-    }
-    
-    override getFileExtension() {
-        return "txt"
     }
     
 }
