@@ -13,9 +13,9 @@
       The plug-ins and features included in this feature originate from different projects.
    </copyright>
 
-   <!-- <includes
+   <includes
          id="org.lejos.nxt.ldt.feature"
-         version="0.0.0"/> -->
+         version="0.0.0"/>
 
    <includes
          id="org.eclipse.epp.mpc"
