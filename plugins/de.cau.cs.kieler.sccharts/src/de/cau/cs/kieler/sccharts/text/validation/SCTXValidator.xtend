@@ -513,6 +513,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     
     @Check
     def void checkReferencingStateFinalState(de.cau.cs.kieler.sccharts.State state) {
+        if (state.reference == null) return;
         if (state.reference.scope == null) return;
         if (state.terminationTransitions.empty) return;
             
