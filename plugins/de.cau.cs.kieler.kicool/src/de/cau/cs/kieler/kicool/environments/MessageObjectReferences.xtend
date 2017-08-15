@@ -35,30 +35,34 @@ class MessageObjectReferences extends HashMap<Object, MessageObjectList> impleme
     }    
     
     def void add(String msg) {
-        add(null, msg, null, false, null, null)                
+        add(null, msg, null, false, null, null, null)                
     }
     
     def void add(String msg, Object object) {
-        add(null, msg, object, object !== null, null, null)
+        add(null, msg, object, object !== null, null, null, null)
     }
     
     def void add(String msg, Object object, boolean annotate) {
-        add(null, msg, object, annotate, null, null)
+        add(null, msg, object, annotate, null, null, null)
     }
     
     def void add(String msg, Object object, boolean annotate, IColorSystem colorSystem) {
-        add(null, msg, object, annotate, colorSystem, null)
+        add(null, msg, object, annotate, colorSystem, null, null)
     }
 
     def void add(Exception exception) {
-        add(null, null, null, false, null, exception)
+        add(null, null, null, false, null, exception, null)
     }
     
     def void add(Object sourceModelReference, String msg, Object object) {
-        add(sourceModelReference, msg, object, object !== null, null, null)
+        add(sourceModelReference, msg, object, object !== null, null, null, null)
     }
     
-    def void  add(Object sourceModelReference, String msg, Object object, boolean annotate, IColorSystem colorSystem, Exception exception) {
+    def void add(Object sourceModelReference, String msg, Object object, Object payload) {
+        add(sourceModelReference, msg, object, object !== null, null, null, payload)
+    }
+    
+    def void  add(Object sourceModelReference, String msg, Object object, boolean annotate, IColorSystem colorSystem, Exception exception, Object payload) {
         var mol = get(sourceModelReference)
         if (mol === null) {
             put(sourceModelReference, new MessageObjectList())
@@ -67,7 +71,7 @@ class MessageObjectReferences extends HashMap<Object, MessageObjectList> impleme
         if (exception !== null) {
             mol.add(exception)
         } else {
-            mol.add(msg, object, annotate, colorSystem)
+            mol.add(msg, object, annotate, colorSystem, payload)
         }
     }
     

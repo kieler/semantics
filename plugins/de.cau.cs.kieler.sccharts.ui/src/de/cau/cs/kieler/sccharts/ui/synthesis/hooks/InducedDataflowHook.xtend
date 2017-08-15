@@ -53,6 +53,8 @@ import org.eclipse.elk.core.options.PortConstraints
 import org.eclipse.elk.core.options.SizeConstraint
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
+import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.kicool.ui.synthesis.updates.MessageObjectReferencesManager
 
 /**
  * Visualizes the dataflow between SCChart regions.
@@ -257,6 +259,7 @@ class InducedDataflowHook extends SynthesisActionHook {
                             ];
                         ]
                         
+                        edge.setProperty(MessageObjectReferencesManager.MESSAGE_OBJECT_REFERENCE, writtenObject.name)
                         createdEdges.add(edge);
 
                         // Set layout on the parent state
