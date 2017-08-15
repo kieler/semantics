@@ -45,6 +45,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.scg.common.ValuedObjectNodeContainer
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -140,33 +141,25 @@ class DependencyTransformation extends Processor<SCGraphs, SCGraphs> {
 	
     protected def void createNodeCaches(Map<Node, List<Entry>> nodeMapping, 
     	Set<Assignment> assignments, Set<Conditional> conditionals, 
-    	Multimap<ValuedObjectContainer, Assignment> writer, Set<Assignment> relativeWriter, 
-    	Multimap<ValuedObjectContainer, Node> reader
+    	Multimap<ValuedObject, ValuedObjectNodeContainer> writer, Set<Assignment> relativeWriter, 
+    	Multimap<ValuedObject, ValuedObjectNodeContainer> reader
 	) {
 		for(node : nodeMapping.keySet.filter[ it instanceof Assignment || it instanceof Conditional ]) {
 			if (node instanceof Assignment) {
 				if (node.valuedObject != null) {
 					assignments += node
-//<<<<<<< HEAD
-//					writer.put(node.valuedObject, node)
-//					writerObjectCache.put(node, node.valuedObject)
-//					node.expression.getAllReferences.forEach[
-//						reader.put(it.valuedObject, node)
-//						if (it.valuedObject.equals(node.valuedObject)) {
-//=======
 					
-					val VOC = injector.getInstance(ValuedObjectContainer) => [ set(node) ]
-					writer.put(VOC, node)
+					val VOC = injector.getInstance(ValuedObjectNodeContainer) => [ it.set(node, node) ]
+					writer.put(VOC.valuedObject, VOC)
 					
 					val allReferences = node.expression.allReferences
 					node.indices.forEach[ allReferences += it.allReferences ]
 					
 					allReferences.forEach[ vor |
-					    val expVOC =  injector.getInstance(ValuedObjectContainer) => [ set(vor) ]
-						reader.put(expVOC, node)
+					    val expVOC =  injector.getInstance(ValuedObjectNodeContainer) => [ it.set(vor, node) ]
+						reader.put(expVOC.valuedObject, expVOC)
 						
 						if (expVOC.equals(VOC)) {
-//>>>>>>> master
 							relativeWriter += node
 						}
 					]
@@ -186,12 +179,12 @@ class DependencyTransformation extends Processor<SCGraphs, SCGraphs> {
 				                val vo = pex.valuedObject
 				                val refVODeclaration = refList.get(i).declaration
 				                if (refVODeclaration instanceof VariableDeclaration) {
-				                    val VOC =  injector.getInstance(ValuedObjectContainer) => [ set(vo) ]
+				                    val VOC =  injector.getInstance(ValuedObjectNodeContainer) => [ set(vo, node) ]
 				                    if (refVODeclaration.input) {
-				                        reader.put(VOC, node)
+				                        reader.put(VOC.valuedObject, VOC)
 				                        readerObjectCache.put(node, vo)
 				                    } else {
-				                        writer.put(VOC, node)
+				                        writer.put(VOC.valuedObject, VOC)
                                         writerObjectCache.put(node, vo)
 				                    }
 				                }
@@ -201,27 +194,24 @@ class DependencyTransformation extends Processor<SCGraphs, SCGraphs> {
 				}
 			} else if (node instanceof Conditional) {
 				conditionals += node
-//<<<<<<< HEAD
-//				node.condition.getAllReferences.forEach[
-//					reader.put(it.valuedObject, node)
-//					readerObjectCache.put(node, it.valuedObject)
-//=======
 				node.condition.getAllReferences.forEach[ vor |
-                    val expVOC =  injector.getInstance(ValuedObjectContainer) => [ set(vor) ]
-                    reader.put(expVOC, node)
-//>>>>>>> master
+                    val expVOC =  injector.getInstance(ValuedObjectNodeContainer) => [ set(vor, node) ]
+                    reader.put(expVOC.valuedObject, expVOC)
 				]
 			}
 		}
     }   
     
-    protected def createDependencies(Assignment assignment, Multimap<ValuedObjectContainer, Assignment> writer,
-    	Set<Assignment> relativeWriter, Multimap<ValuedObjectContainer, Node> reader, Map<Node, List<Entry>> nodeMapping
+    protected def createDependencies(Assignment assignment, Multimap<ValuedObject, ValuedObjectNodeContainer> writer,
+    	Set<Assignment> relativeWriter, Multimap<ValuedObject, ValuedObjectNodeContainer> reader, Map<Node, List<Entry>> nodeMapping
     ) {
-        val VOC = injector.getInstance(ValuedObjectContainer) => [ set(assignment) ]
+        val VOC = injector.getInstance(ValuedObjectNodeContainer) => [ set(assignment, assignment) ]
         VOC.potentiallyEqual = true
         if (!relativeWriter.contains(assignment)) { 
-        	for(VOWriter : writer.get(VOC).filter[ !equals(assignment) ]
+            val vOCWriter = writer.get(VOC.valuedObject)
+        	for(VOWriter : vOCWriter.filter[ 
+        	    equals(VOC)
+        	].map[ node ].filter[ !equals(assignment) ]
         	) {
         		val dependency = assignment.createDataDependency(VOWriter, 
         			if (relativeWriter.contains(VOWriter)) DataDependencyType.WRITE_RELATIVEWRITE else DataDependencyType.WRITE_WRITE
@@ -232,7 +222,10 @@ class DependencyTransformation extends Processor<SCGraphs, SCGraphs> {
         		dependency.trace(assignment)
         	}	
     	}
-    	for(VOReader : reader.get(VOC).filter[ !it.equals(assignment) ]) {
+    	val vOCReader = reader.get(VOC.valuedObject) 
+    	for(VOReader : vOCReader.filter[ 
+    	    equals(VOC)
+    	].map[ node ].filter[ !equals(assignment) ]) {
     	    
     		val dependency = assignment.createDataDependency(VOReader, DataDependencyType.WRITE_READ)
     		dependency.checkAndSetConfluence
