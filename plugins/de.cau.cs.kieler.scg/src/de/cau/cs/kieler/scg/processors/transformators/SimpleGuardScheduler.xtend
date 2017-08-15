@@ -171,8 +171,8 @@ class SimpleGuardScheduler extends Processor<SCGraphs, SCGraphs> {
     	        for (assignment : actions.map[ effects ].flatten.filter(Assignment)) {
     	            if (assignment.heuristicallyTheSameTo(guardedNodes)) {
     	                environment.errors.add(originalModel, 
-    	                   "This state may be part of a causal loop!", 
-    	                   state)
+    	                   "Causal loop!", 
+    	                   assignment.eContainer)
     	            }
     	        }
     	    } 
