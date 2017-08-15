@@ -15,22 +15,22 @@ package de.cau.cs.kieler.sccharts.ui.synthesis.srtg
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.model.Log
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.ui.synthesis.AbstractSCChartsSynthesis
 import de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsDiagramProperties
 import java.util.LinkedHashSet
-
-import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
+import org.eclipse.elk.alg.layered.properties.FixedAlignment
+import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.EdgeRouting
-import org.eclipse.elk.alg.layered.properties.LayeredOptions
-import org.eclipse.elk.alg.layered.properties.FixedAlignment
-import de.cau.cs.kieler.klighd.kgraph.KNode
+
+import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -40,7 +40,7 @@ import de.cau.cs.kieler.klighd.kgraph.KNode
  * @kieler.rating 2017-01-18 proposed 
  */
 @ViewSynthesisShared
-class SRTGSynthesis extends AbstractSCChartsSynthesis<Scope> {
+class SRTGSynthesis extends AbstractDiagramSynthesis<Scope> {
 
     @Inject 
     extension KNodeExtensions
