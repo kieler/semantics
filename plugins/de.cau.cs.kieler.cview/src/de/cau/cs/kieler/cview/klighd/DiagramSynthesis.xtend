@@ -133,6 +133,10 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     public static final SynthesisOption HIDE_UNCONNECTED = SynthesisOption.createCheckOption("Hide Unconnected", false);
 
     public static final SynthesisOption ANONYMIZE = SynthesisOption.createCheckOption("Anonymize", false);
+    
+    public static final float LINEWIDTH = 1.8f
+    public static final float ROUNDRECT1 = 4
+    public static final float ROUNDRECT2 = 4
 
     public static final String FOLDERCOLOR0 = "#F4F59C"
     public static final String FOLDERCOLOR1 = "#FBFC97"
@@ -764,7 +768,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 return null
             }
             val childNode = item.createNode().associateWith(item);
-            val childRect = childNode.addRoundedRectangle(4, 4, 2);
+            val childRect = childNode.addRoundedRectangle(ROUNDRECT1, ROUNDRECT2, LINEWIDTH);
             val label = childNode.addInsideCenteredNodeLabel(item.name, KlighdConstants.DEFAULT_FONT_SIZE,
                 KlighdConstants.DEFAULT_FONT_NAME);
             childNode.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
@@ -805,7 +809,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
             val childNodeOuter = item.createNode().associateWith(item);
 
-            val rectCol = childNodeOuter.addRoundedRectangle(4, 4, 2);
+            val rectCol = childNodeOuter.addRoundedRectangle(ROUNDRECT1, ROUNDRECT2, LINEWIDTH);
             rectCol.background = item.structTypedefColor
             rectCol.selectionBackground = item.structTypedefColor
             rectCol.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
@@ -813,7 +817,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             rectCol.addDoubleClickAction(OpenEditorAction.ID);
             rectCol.addSingleClickAction(OpenEditorAction.ID, false, true, false)
             
-            val rectExp = childNodeOuter.addRoundedRectangle(4, 4, 2);
+            val rectExp = childNodeOuter.addRoundedRectangle(ROUNDRECT1, ROUNDRECT2, LINEWIDTH);
             rectExp.background = item.structTypedefColor
             rectExp.selectionBackground = item.structTypedefColor
             rectExp.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
@@ -873,7 +877,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
         def KNode transformItemFile(Component item, int depth) {
             val childNode = item.createNode().associateWith(item);
-            val childRect = childNode.addRoundedRectangle(4, 4, 2);
+            val childRect = childNode.addRoundedRectangle(ROUNDRECT1, ROUNDRECT2, LINEWIDTH);
             val label = childNode.addInsideCenteredNodeLabel(item.name, KlighdConstants.DEFAULT_FONT_SIZE,
                 KlighdConstants.DEFAULT_FONT_NAME);
             childNode.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
@@ -906,13 +910,13 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         def KNode transformItemFileWithFunctions(Component item, int depth) {
             val childNodeOuter = item.createNode().associateWith(item);
 
-            val rectCol = childNodeOuter.addRoundedRectangle(4, 4, 2);
+            val rectCol = childNodeOuter.addRoundedRectangle(ROUNDRECT1, ROUNDRECT2, LINEWIDTH);
             rectCol.background = item.getFileColor
             rectCol.selectionBackground = item.getFileColor
             rectCol.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
             rectCol.addDoubleClickAction(OpenEditorAction.ID);
             rectCol.addSingleClickAction(OpenEditorAction.ID, false, true, false)
-            val rectExp = childNodeOuter.addRoundedRectangle(4, 4, 2);
+            val rectExp = childNodeOuter.addRoundedRectangle(ROUNDRECT1, ROUNDRECT2, LINEWIDTH);
             rectExp.background = item.getFileColor
             rectExp.selectionBackground = item.getFileColor
             rectExp.addSingleClickAction(CollapseExpandNoDragAction.ID)
@@ -976,14 +980,14 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         def KNode transformItemDir(Component item, int depth) {
             val childNodeOuter = item.createNode().associateWith(item);
 
-            val rectCol = childNodeOuter.addRoundedRectangle(4, 4, 2);
+            val rectCol = childNodeOuter.addRoundedRectangle(3, 3, LINEWIDTH);
             rectCol.selectionBackground = FOLDERCOLOR1.color;
             rectCol.selectionForeground = "black".color;
             rectCol.background = FOLDERCOLOR1.color;
             rectCol.setBackgroundGradient(FOLDERCOLOR1.color, FOLDERCOLOR2.color, FOLDERCOLORANGLE);
             rectCol.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
             rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-            val rectExp = childNodeOuter.addRoundedRectangle(4, 4, 2);
+            val rectExp = childNodeOuter.addRoundedRectangle(3, 3, LINEWIDTH);
             rectExp.background = FOLDERCOLOR1.color;
             rectExp.setBackgroundGradient(FOLDERCOLOR1.color, FOLDERCOLOR2.color, FOLDERCOLORANGLE);
             rectExp.selectionBackground = FOLDERCOLOR1.color;
