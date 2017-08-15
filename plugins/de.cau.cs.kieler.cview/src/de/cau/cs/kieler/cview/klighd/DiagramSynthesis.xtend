@@ -151,6 +151,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     static final String COLOR_STRUCT = "#FFF0BD"
     static final String COLOR_TYPEDEF = "#FCFF00"
     static final String COLOR_DECL = "#FEFFC1"
+    
+    static final String COLOR_GRAYEDOUT = "#E0E0E0"
 
     // public static final SynthesisOption FILTER_FILES = SynthesisOption.create RangeOption("Expanded Layers", MIN_EXPANDED_VALUE, MAX_EXPANDED_VALUE+1, DEFAULT_EXPANDED_VALUE);
     override getDisplayedSynthesisOptions() {
@@ -833,8 +835,11 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             label.associateWith(item)
             label.firstText.selectionBackground = item.structTypedefColor
 
-            var String toolTypType = item.type.literal.toString
+            var String toolTypType = item.type.literal.toString  
             if (toolTypType != null) {
+                if (item.decl) {
+                    toolTypType = toolTypType + "  [" + item.getTypeNameFromDecl + "]";
+                }
                 rectCol.setProperty(KlighdProperties::TOOLTIP, toolTypType);
                 rectExp.setProperty(KlighdProperties::TOOLTIP, toolTypType);
                 label.firstText.setProperty(KlighdProperties::TOOLTIP, toolTypType);
@@ -903,7 +908,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             if (item.hieararchical(SHOW_FUNCTIONS.booleanValue, SHOW_TYPES.booleanValue)) {
                 return "WHITE".color;
             } else {
-                return "LIGHTGRAY".color;
+                return COLOR_GRAYEDOUT.color;
             }
         }
 

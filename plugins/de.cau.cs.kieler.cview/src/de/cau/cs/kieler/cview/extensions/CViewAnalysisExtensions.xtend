@@ -203,6 +203,17 @@ class CViewAnalysisExtensions {
         }
         return null
     }
+    
+    
+    def String getTypeNameFromDecl(Component declComponent) {
+        val typeDef = declComponent.typedefFromDecl
+        if (typeDef == null) {
+            return "PRIMITIVE"
+        } else {
+            return typeDef.name
+        }
+    }
+    
 
     // Get the type of a declaration iff this is a typdef or null otherwise (e.g., if base type or not a declaration)
     def Component getTypedefFromDecl(Component declComponent) {
