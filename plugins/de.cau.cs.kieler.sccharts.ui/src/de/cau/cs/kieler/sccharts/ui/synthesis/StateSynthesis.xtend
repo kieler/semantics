@@ -77,10 +77,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             node.data.add(KGraphFactory::eINSTANCE.createKIdentifier => [it.id = state.name])
         }
         
-        node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.box");
-        node.setLayoutOption(CoreOptions::EXPAND_NODES, true);
-        node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0));
-        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 1.0);
+        configureLayout(node);
 
         //pre-evaluate type
         val isConnector = state.isConnector
@@ -127,7 +124,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                     case state.isReferencedState:
                         node.addMacroStateLabel(
                             state.serializeHR + " @ "
-                            + (if (state.reference.scope != null) (state.reference.scope as State).serializeHR else "UnresolvedReference")
+                            + (if (state.reference.scope !== null) (state.reference.scope as State).serializeHR else "UnresolvedReference")
                             + (if (SHOW_BINDINGS.booleanValue) state.reference.parameters.serializeHRParameters else "")
                             ).associateWith(state)
                     case state.isMacroState:
@@ -198,6 +195,14 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         }                       
 
         return returnNodes
+    }
+    
+    /** Configures the default layout of children (regions in the state) */
+    def static void configureLayout(KNode node) {
+        node.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.box");
+        node.setLayoutOption(CoreOptions::EXPAND_NODES, true);
+        node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0));
+        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 1.0)
     }
 
     /** Checks if given state should be visualized as macro state */
