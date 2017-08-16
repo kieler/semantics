@@ -22,6 +22,7 @@ import static extension org.eclipse.xtext.EcoreUtil2.*
 import static extension de.cau.cs.kieler.kicool.environments.Environment.*
 import java.lang.reflect.ParameterizedType
 import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.annotations.NamedObject
 
 /**
  * The abstract class of a processor. Every invokable unit in kico is a processor.
@@ -198,6 +199,15 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
      */
     synchronized def cancelCompilation() {
         environment.setProperty(CANCEL_COMPILATION, true)
+    }    
+    
+    /**
+     * Convenient getter for unique names.
+     */
+    def <T extends NamedObject> T uniqueName(T namedObject) {
+        val nameCache = environment.getProperty(UNIQUE_NAME_CACHE)
+        namedObject.name = nameCache.getNewUniqueName(namedObject.name)
+        return namedObject
     }        
     
     
