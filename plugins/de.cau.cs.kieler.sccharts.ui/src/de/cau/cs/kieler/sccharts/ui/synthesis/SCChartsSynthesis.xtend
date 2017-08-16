@@ -20,6 +20,7 @@ import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
@@ -38,7 +39,7 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
  * @kieler.rating 2012-10-08 proposed yellow
  */
 @ViewSynthesisShared
-class SCChartsSynthesis extends AbstractSCChartsSynthesis<SCCharts> {
+class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
 
     @Inject extension KNodeExtensions
     @Inject extension KRenderingExtensions
