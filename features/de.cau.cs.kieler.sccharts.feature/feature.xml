@@ -214,16 +214,17 @@ litigation.
    </url>
 
    <requires>
+      <import feature="de.cau.cs.kieler.kgraph.feature"/>
+      <import feature="de.cau.cs.kieler.klighd.feature"/>
+      <import feature="de.cau.cs.kieler.klighd.freehep.feature"/>
+      <import feature="de.cau.cs.kieler.klighd.view.feature"/>
+      <import feature="org.eclipse.elk.feature"/>
+      <import feature="org.eclipse.elk.graphviz.feature"/>
+      <import feature="org.eclipse.elk.ui.feature"/>
+      <import feature="org.eclipse.elk.sdk.feature"/>
       <import feature="org.eclipse.emf" version="2.6.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.xtext.runtime" version="2.4.2" match="greaterOrEqual"/>
       <import feature="org.eclipse.xtext.ui" version="2.4.2" match="greaterOrEqual"/>
-      <import feature="de.cau.cs.kieler.klighd.feature" version="0.2.0" match="greaterOrEqual"/>
-      <import feature="de.cau.cs.kieler.klighd.freehep.feature" version="0.1.0" match="greaterOrEqual"/>
-      <import plugin="com.google.guava" version="10.0.0" match="greaterOrEqual"/>
-      <import feature="org.eclipse.elk.feature" version="0.1.0.201607121925"/>
-      <import feature="org.eclipse.elk.ui.feature" version="0.1.0.201607121925"/>
-      <import feature="org.eclipse.elk.graphviz.feature" version="0.1.0.201607121925"/>
-      <import feature="de.cau.cs.kieler.klighd.view.feature" version="0.3.1.201610170203"/>
    </requires>
 
    <plugin id="de.cau.cs.kieler.annotations" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
@@ -391,8 +392,5 @@ litigation.
    <plugin id="de.cau.cs.kieler.sj" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="de.cau.cs.kieler.sjl" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-   
-   <plugin id="org.json" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-   
 
 </feature>
