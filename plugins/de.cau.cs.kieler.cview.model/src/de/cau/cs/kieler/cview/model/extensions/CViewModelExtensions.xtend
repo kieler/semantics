@@ -151,6 +151,26 @@ class CViewModelExtensions {
         return connection
     }
 
+    def Connection setType2(Connection connection, String type) {
+        connection.type = type
+        return connection
+    }
+
+    def Connection setDst2(Connection connection, Component dst) {
+        connection.dst = dst
+        return connection
+    }
+
+    def Connection setSrc2(Connection connection, Component src) {
+        connection.src = src
+        return connection
+    }
+
+    def Connection setTooltop2(Connection connection, String tooltip) {
+        connection.tooltip = tooltip
+        return connection
+    }
+
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
     def Component createFile() {

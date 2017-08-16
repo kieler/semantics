@@ -163,18 +163,20 @@ class CViewAnalysisExtensions {
     def Set<Component> findName(CViewModel model, String searchString, boolean caseSensitive, boolean startsWith,
         boolean endsWith) {
         val Set<Component> returnList = newHashSet
-//        if (caseSensitive) {
-//            returnList.addAll(model.components.filter[name.equals(searchString)].toList)
-//        } else {
-//            returnList.addAll(model.components.filter[name.toUpperCase.equals(searchString.toUpperCase)].toList)
-//        }
         if (!startsWith && !endsWith) {
             if (caseSensitive) {
                 returnList.addAll(model.components.filter[name.contains(searchString)].toList)
             } else {
                 returnList.addAll(model.components.filter[name.toUpperCase.contains(searchString.toUpperCase)].toList)
             }
+        } else if (startsWith && endsWith) {
+            if (caseSensitive) {
+                returnList.addAll(model.components.filter[name.equals(searchString)].toList)
+            } else {
+                returnList.addAll(model.components.filter[name.toUpperCase.equals(searchString.toUpperCase)].toList)
+            }
         } else {
+
             if (startsWith) {
                 if (caseSensitive) {
                     returnList.addAll(model.components.filter[name.startsWith(searchString)].toList)
@@ -203,8 +205,7 @@ class CViewAnalysisExtensions {
         }
         return null
     }
-    
-    
+
     def String getTypeNameFromDecl(Component declComponent) {
         val typeDef = declComponent.typedefFromDecl
         if (typeDef == null) {
@@ -213,7 +214,6 @@ class CViewAnalysisExtensions {
             return typeDef.name
         }
     }
-    
 
     // Get the type of a declaration iff this is a typdef or null otherwise (e.g., if base type or not a declaration)
     def Component getTypedefFromDecl(Component declComponent) {
@@ -254,7 +254,6 @@ class CViewAnalysisExtensions {
         }
         return new ArrayList<Component>
     }
-
 
     // Check if a component is connected to any other component
     def boolean isConnectedTo(
@@ -311,7 +310,7 @@ class CViewAnalysisExtensions {
         boolean considerReferences,
         boolean considerConnections
     ) {
-        return model.components.filter [e|
+        return model.components.filter [ e |
             e.isConnectedTo(camComponent, considerChildren, considerReferences, considerConnections)
         ].toList
     }
