@@ -126,6 +126,7 @@ class SJTransformation extends AbstractProductionTransformation {
         val program = new StringBuilder
         val sb = new StringBuilder
         var programName = ""
+        currentIndentation = ""
         states.clear
         visited.clear
         previousNode.clear
@@ -704,9 +705,10 @@ class SJTransformation extends AbstractProductionTransformation {
             sb.appendInd("break;\n\n")
             sb.addCase(newLabel)
         }
-        
-        if(prio > (sur.threadEntry.getAnnotation("exitPrio") as IntAnnotation).value) {
-            threadPriorities.get(sur.threadEntry).add(prio)
+        if(sur.threadEntry.hasAnnotation("exitPrio")) {
+            if(prio > (sur.threadEntry.getAnnotation("exitPrio") as IntAnnotation).value) {
+                threadPriorities.get(sur.threadEntry).add(prio)
+            }            
         }
         
         val newLabel = "_L_" + labelNr++

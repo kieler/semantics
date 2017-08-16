@@ -80,9 +80,9 @@ class SCChartsPriorityBasedCompilationBenchmark extends AbstractXTextModelBenchm
     /** Warm up flag */
     private static var warmUp = false
     
-    private final val NUMBER_OF_RUNS = 10
+    private final val NUMBER_OF_RUNS = 100
     
-    private final val N_BEST = 5
+    private final val N_BEST = 80
     
     //-----------------------------------------------------------------------------------------------------------------
 
@@ -97,8 +97,8 @@ class SCChartsPriorityBasedCompilationBenchmark extends AbstractXTextModelBenchm
      * {@inheritDoc}
      */
     override filter(TestModelData modelData) {
-        return modelData.modelProperties.contains("benchmark") && !modelData.modelProperties.contains("must-fail") && false
-                && !modelData.modelProperties.contains("known-to-fail") && !modelData.modelProperties.contains("not-siasc") && modelData.modelProperties.contains("test")
+        return modelData.modelProperties.contains("benchmark") && !modelData.modelProperties.contains("must-fail")
+                && !modelData.modelProperties.contains("known-to-fail") && !modelData.modelProperties.contains("not-siasc")
     }
     
     /**
@@ -138,7 +138,7 @@ class SCChartsPriorityBasedCompilationBenchmark extends AbstractXTextModelBenchm
         
         var averageTickDuration = 0
         var tickDurations = <Integer> newLinkedList
-        val compilationResult = SimulationUtil.compileAndSimulateModel(model)
+        val compilationResult = SimulationUtil.compileAndSimulateModel(model, "T_scg.dependency, T_scg.scgPrio, T_sclp.sclpTrans")
         for(var i = 0; i < NUMBER_OF_RUNS; i++) {
             SimulationUtil.startSimulationCompilationResult(compilationResult)
             val simMan = SimulationManager.instance
