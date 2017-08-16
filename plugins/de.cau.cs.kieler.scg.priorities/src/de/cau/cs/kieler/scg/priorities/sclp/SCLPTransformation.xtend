@@ -404,6 +404,44 @@ class SCLPTransformation extends AbstractProductionTransformation{
         currentIndentation = currentIndentation.substring(0, currentIndentation.length - 2)
         sb.appendInd("}\n")
         
+        // For Review:
+//        if(cond.then.target instanceof Exit) {
+//            if(cond.^else.target instanceof Exit) {
+//                
+//            } else {
+//                sb.appendInd("if(!(" + cond.condition.serializeHR + ")){\n")
+//                currentIndentation += DEFAULT_INDENTATION
+//                
+//                sb.transformNode(cond.^else.target)
+//                
+//                currentIndentation = currentIndentation.substring(0, currentIndentation.length - 2)
+//                sb.appendInd("}\n")
+//                
+//                sb.transformNode(cond.then.target)
+//            }
+//        } else {
+//            // IF-Case
+//            sb.appendInd("if(" + cond.condition.serializeHR + "){\n")
+//            currentIndentation += DEFAULT_INDENTATION
+//            
+//            sb.transformNode(cond.then.target)
+//            
+//            currentIndentation = currentIndentation.substring(0, currentIndentation.length - 2)
+//            sb.appendInd("} ")
+//            
+//            // ELSE-Case
+//            if(!(cond.^else.target instanceof Exit)) {
+//                sb.append("else {\n")
+//                currentIndentation += DEFAULT_INDENTATION
+//                sb.transformNode(cond.^else.target)
+//                
+//                currentIndentation = currentIndentation.substring(0, currentIndentation.length - 2)
+//                sb.appendInd("}\n")                            
+//            } else {
+//                sb.appendInd("\n")
+//            }
+//        }
+        
     }
     
     

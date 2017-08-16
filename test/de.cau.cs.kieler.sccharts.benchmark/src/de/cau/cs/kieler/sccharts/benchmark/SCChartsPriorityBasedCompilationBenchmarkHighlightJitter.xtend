@@ -125,51 +125,53 @@ class SCChartsPriorityBasedCompilationBenchmarkHighlightJitter extends AbstractX
         if (model === null) return null
         
         
-        var tmpProject = SimulationUtil.getTemporarySimulationProject
-        tmpProject.delete(true, null)
-        tmpProject = SimulationUtil.getTemporarySimulationProject
-
-        val sclLibFolder = tmpProject.getFolder(new Path("kieler-gen/sim/scl_lib"))
-        if(!sclLibFolder.exists) {
-            PromPlugin.initializeFolder(tmpProject, sclLibFolder.projectRelativePath.toOSString, "platform:/plugin/de.cau.cs.kieler.sc/scl")
-        }
-        
-        
+        var couldNotSimulate = false
         var averageTickDuration = 0
-        var tickDurations = <Integer> newLinkedList
-        var x = false
-        val compilationResult = SimulationUtil.compileAndSimulateModel(model, "T_scg.dependency, T_scg.scgPrio, T_sclp.sclpTrans")
-        for(var i = 0; i < NUMBER_OF_RUNS; i++) {
-            SimulationUtil.startSimulationCompilationResult(compilationResult)
-            val simMan = SimulationManager.instance
-            simMan.currentPool.getVariable("x").value = x
-            x = !x
-            
-            simMan.stepMacroTick
-
-            val tickTime = simMan.currentPool.getVariable("tickTime").value as Integer
-            simMan.stop
-            
-
-            averageTickDuration += tickTime/NUMBER_OF_RUNS
-            tickDurations.add(tickTime)
-        }
-        tmpProject.refreshLocal(IResource.DEPTH_INFINITE, null)
-        
-        
-        val ys = tickDurations.take((N_BEST + 1) / 2)
-        ys.toList.addAll(tickDurations.reverse.take(N_BEST / 2))
         var nBestTickTimes = 0
-        for(y : ys) {
-            nBestTickTimes += y/(ys.size)
-        }
-
-        val maxJitter = tickDurations.max - tickDurations.min
+        var maxJitter = 0
         var avgJitter = 0
-        for(t : tickDurations) {
-            avgJitter += Math.abs(averageTickDuration - t)/NUMBER_OF_RUNS
-        }
         
+        try {
+            var tmpProject = SimulationUtil.getTemporarySimulationProject
+            tmpProject.delete(true, null)
+            tmpProject = SimulationUtil.getTemporarySimulationProject
+    
+            val sclLibFolder = tmpProject.getFolder(new Path("kieler-gen/sim/scl_lib"))
+            if(!sclLibFolder.exists) {
+                PromPlugin.initializeFolder(tmpProject, sclLibFolder.projectRelativePath.toOSString, "platform:/plugin/de.cau.cs.kieler.sc/scl")
+            }
+            
+            
+            var tickDurations = <Integer> newLinkedList
+            val compilationResult = SimulationUtil.compileAndSimulateModel(model, "T_scg.dependency, T_scg.scgPrio, T_sclp.sclpTrans")
+            for(var i = 0; i < NUMBER_OF_RUNS; i++) {
+                SimulationUtil.startSimulationCompilationResult(compilationResult)
+                val simMan = SimulationManager.instance
+                simMan.stepMacroTick
+    
+                val tickTime = simMan.currentPool.getVariable("tickTime").value as Integer
+                simMan.stop
+    
+                averageTickDuration += tickTime/NUMBER_OF_RUNS
+                tickDurations.add(tickTime)
+            }
+            tmpProject.refreshLocal(IResource.DEPTH_INFINITE, null)
+            
+            
+            val ys = tickDurations.take((N_BEST + 1) / 2)
+            ys.toList.addAll(tickDurations.reverse.take(N_BEST / 2))
+            for(y : ys) {
+                nBestTickTimes += y/(ys.size)
+            }
+    
+            maxJitter = tickDurations.max - tickDurations.min
+            for(t : tickDurations) {
+                avgJitter += Math.abs(averageTickDuration - t)/NUMBER_OF_RUNS
+            }
+            
+        } catch (Exception e) {
+            couldNotSimulate = true
+        }
         
         val data = new Document
         val compileChain = transformations.join("!T_SIMULATIONVISUALIZATION, !T_ABORTWTO, T_", ", T_", "")[it]
@@ -202,10 +204,14 @@ class SCChartsPriorityBasedCompilationBenchmarkHighlightJitter extends AbstractX
             data.put("unit", "ns")
             data.put("threads", scg.nodes.filter[it instanceof Entry].size)
             data.put("dependencies", numberOfDependencies)
-            data.put("executionTime", nBestTickTimes)
-            data.put("averageExecutionTime", averageTickDuration)
-            data.put("maxJitter", maxJitter)
-            data.put("avgJitter", avgJitter)
+            if(!couldNotSimulate) {
+                data.put("executionTime", nBestTickTimes)
+                data.put("averageExecutionTime", averageTickDuration)
+                data.put("maxJitter", maxJitter)
+                data.put("avgJitter", avgJitter)
+            } else {
+                data.put("simulatable", false)
+            }
         } else {
             data.put("schedulable", "false")
         }
