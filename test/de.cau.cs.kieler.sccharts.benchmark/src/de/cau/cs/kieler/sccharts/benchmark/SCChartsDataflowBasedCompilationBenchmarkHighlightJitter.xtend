@@ -143,10 +143,13 @@ class SCChartsDataflowBasedCompilationBenchmarkHighlightJitter extends AbstractX
         
         var averageTickDuration = 0
         var tickDurations = <Integer> newLinkedList
+        var x = false
         val compilationResult = SimulationUtil.compileAndSimulateModel(model, "s.c")
         for(var i = 0; i < NUMBER_OF_RUNS; i++) {
             SimulationUtil.startSimulationCompilationResult(compilationResult)
             val simMan = SimulationManager.instance
+            simMan.currentPool.getVariable("x").value = x
+            x = !x
             
             simMan.stepMacroTick
 
