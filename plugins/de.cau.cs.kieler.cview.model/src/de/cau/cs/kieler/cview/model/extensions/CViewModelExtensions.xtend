@@ -166,7 +166,7 @@ class CViewModelExtensions {
         return connection
     }
 
-    def Connection setTooltop2(Connection connection, String tooltip) {
+    def Connection setTooltip2(Connection connection, String tooltip) {
         connection.tooltip = tooltip
         return connection
     }
