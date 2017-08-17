@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="ktrace" nsURI="http://kieler.cs.cau.de/simulation/ktrace" nsPrefix="ktrace">
+  <eClassifiers xsi:type="ecore:EClass" name="TraceFile" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Pragmatable">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="traces" upperBound="-1"
+        eType="#//Trace" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="aggregatedValuedObjects"
+        upperBound="-1" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObject"
+        transient="true" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Trace" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Pragmatable">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ticks" upperBound="-1"
+        eType="#//Tick" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Tick" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inputs" upperBound="-1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Effect"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outputs" upperBound="-1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Effect"
+        containment="true"/>
+  </eClassifiers>
+</ecore:EPackage>

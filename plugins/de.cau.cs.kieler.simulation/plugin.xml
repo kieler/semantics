@@ -48,4 +48,12 @@
 
 
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated KTrace -->
+      <package
+            uri="http://kieler.cs.cau.de/simulation/ktrace"
+            class="de.cau.cs.kieler.simulation.trace.ktrace.KTracePackage"
+            genModel="model/ktrace.genmodel"/>
+   </extension>
+
 </plugin>

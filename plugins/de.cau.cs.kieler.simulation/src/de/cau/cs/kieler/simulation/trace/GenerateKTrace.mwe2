@@ -1,0 +1,105 @@
+module de.cau.cs.kieler.simulation.trace.GenerateKTrace
+
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.xtext.generator.*
+import org.eclipse.xtext.ui.generator.*
+
+var grammarURI = "classpath:/de/cau/cs/kieler/simulation/trace/KTrace.xtext"
+var file.extensions = "ktrace,eso"
+var projectName = "de.cau.cs.kieler.simulation"
+var runtimeProject = "../${projectName}"
+
+Workflow {
+    bean = StandaloneSetup {
+        scanClassPath = true
+        platformUri = "${runtimeProject}/.."
+        registerGeneratedEPackage = "de.cau.cs.kieler.annotations.AnnotationsPackage"       
+        registerGeneratedEPackage = "de.cau.cs.kieler.kexpressions.KExpressionsPackage"     
+        registerGeneratedEPackage = "de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage"
+        registerGeneratedEPackage = "de.cau.cs.kieler.kexpressions.kext.KExtPackage"
+        registerGeneratedEPackage = "de.cau.cs.kieler.simulation.trace.ktrace.KTracePackage"
+        registerGenModelFile = "platform:/resource/de.cau.cs.kieler.annotations/model/annotations.genmodel"
+        registerGenModelFile = "platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel"
+        registerGenModelFile = "platform:/resource/de.cau.cs.kieler.kexpressions/model/keffects.genmodel"
+        registerGenModelFile = "platform:/resource/de.cau.cs.kieler.kexpressions/model/kext.genmodel"
+        registerGenModelFile = "platform:/resource/de.cau.cs.kieler.simulation/model/ktrace.genmodel"
+    }
+ 
+// DO NOT CLEAN because this will delete the generated KiSim code  
+//    component = DirectoryCleaner {
+//        directory = "${runtimeProject}/src-gen"
+//    }
+//    
+//    component = DirectoryCleaner {
+//        directory = "${runtimeProject}.ui/src-gen"
+//    }
+    
+    component = Generator {
+        pathRtProject = runtimeProject
+        pathUiProject = "${runtimeProject}.ui"
+        projectNameRt = projectName
+        projectNameUi = "${projectName}.ui"
+        naming = GeneratorNaming {}
+        
+        language = {
+            uri = grammarURI
+            fileExtensions = file.extensions
+            
+            // Java API to access grammar elements (required by several other fragments)
+            fragment = grammarAccess.GrammarAccessFragment {}
+            
+            // generates Java API for the generated EPackages
+            fragment = ecore.EMFGeneratorFragment {}
+            
+            // the serialization component
+            fragment = serializer.SerializerFragment {
+                generateXtendStub = true
+            }
+            
+            // a custom ResourceFactory for use with EMF 
+            fragment = resourceFactory.ResourceFactoryFragment {
+                fileExtensions = file.extensions
+            }
+                
+            // the Antlr parser
+            fragment = org.eclipse.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment {
+                options = {
+                    classSplitting = true
+                    backtrack = true
+                }
+            }
+            
+            // scoping and exporting API
+            fragment = scoping.ImportNamespacesScopingFragment {
+                generateXtendStub = true
+            }
+
+            // java-based API for validation 
+            fragment = validation.ValidatorFragment {}
+            
+            // formatter API 
+            fragment = formatting2.Formatter2Fragment auto-inject {}
+
+            // labeling API 
+            fragment = labeling.LabelProviderFragment {}
+
+            // outline API 
+            fragment = outline.OutlineTreeProviderFragment {}
+            fragment = outline.QuickOutlineFragment {}
+
+            // java-based API for content assistance 
+            fragment = contentAssist.ContentAssistFragment {}
+            
+            // antlr parser generator tailored for content assist 
+            fragment = org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment { 
+                options = {
+                    classSplitting = true
+                    backtrack = true
+                }
+            }
+            
+            // quickfix API 
+            fragment = quickfix.QuickfixProviderFragment {}
+        }
+    }
+}
