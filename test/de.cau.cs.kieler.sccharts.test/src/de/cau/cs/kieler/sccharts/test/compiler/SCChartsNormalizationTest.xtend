@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.test
+package de.cau.cs.kieler.sccharts.test.compiler
 
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
@@ -164,3 +164,4 @@ class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<SCChart
     }
       
 }
+														
