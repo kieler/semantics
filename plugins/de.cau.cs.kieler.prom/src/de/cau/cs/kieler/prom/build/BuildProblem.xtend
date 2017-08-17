@@ -13,9 +13,8 @@
 package de.cau.cs.kieler.prom.build
 
 import org.eclipse.core.resources.IMarker
-import org.eclipse.core.resources.IFile
-import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.core.resources.IResource
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author aas
@@ -73,5 +72,27 @@ class BuildProblem {
     
     public def boolean isError() {
         return severity == IMarker.SEVERITY_ERROR
+    }
+    
+    override toString() {
+        val sb = new StringBuilder()
+        
+        sb.append(if (isError) "Error" else "Waring")
+        if (res !== null) sb.append(" in ").append(res.toString)
+        if (line != -1) sb.append(" in line ").append(line)
+        sb.append(": ")
+        if (message.nullOrEmpty) {
+            if (cause !== null ) sb.append(cause.message)
+        } else {
+            sb.append(message)
+        }
+        if (cause !== null) {
+            sb.append("\n ").append(cause.class.name).append(": ").append(cause.message)
+            for (StackTraceElement element : cause.getStackTrace()) {
+                sb.append(element.toString()).append("\n")
+            }
+        }
+        
+        return sb.toString
     }
 }
