@@ -96,7 +96,7 @@ class SCChartsDataflowBasedCompilationBenchmarkHighlightJitter extends AbstractX
      * {@inheritDoc}
      */
     override getID() {
-        return "sccharts-priority-based-compilation-jitter"
+        return "sccharts-dataflow-based-compilation-jitter"
     }
     
     /**
