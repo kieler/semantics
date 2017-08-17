@@ -291,6 +291,15 @@ public interface SclPackage extends EPackage {
     int ASSIGNMENT__ANNOTATIONS = KEffectsPackage.ASSIGNMENT__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT__SCHEDULE = KEffectsPackage.ASSIGNMENT__SCHEDULE;
+
+    /**
      * The feature id for the '<em><b>Valued Object</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

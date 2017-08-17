@@ -422,6 +422,9 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         addEEnumLiteral(assignOperatorEEnum, AssignOperator.POSTFIXSUB);
         addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNMIN);
         addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNMAX);
+        addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNSHIFTLEFT);
+        addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNSHIFTRIGHT);
+        addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNSHIFTRIGHTUNSIGNED);
 
         // Create resource
         createResource(eNS_URI);

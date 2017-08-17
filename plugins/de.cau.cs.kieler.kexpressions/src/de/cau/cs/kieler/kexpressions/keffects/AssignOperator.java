@@ -146,7 +146,31 @@ public enum AssignOperator implements Enumerator {
      * @generated
      * @ordered
      */
-    ASSIGNMAX(12, "ASSIGNMAX", "");
+    ASSIGNMAX(12, "ASSIGNMAX", ""), /**
+     * The '<em><b>ASSIGNSHIFTLEFT</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #ASSIGNSHIFTLEFT_VALUE
+     * @generated
+     * @ordered
+     */
+    ASSIGNSHIFTLEFT(13, "ASSIGNSHIFTLEFT", "ASSIGNSHIFTLEFT"), /**
+     * The '<em><b>ASSIGNSHIFTRIGHT</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #ASSIGNSHIFTRIGHT_VALUE
+     * @generated
+     * @ordered
+     */
+    ASSIGNSHIFTRIGHT(14, "ASSIGNSHIFTRIGHT", "ASSIGNSHIFTRIGHT"), /**
+     * The '<em><b>ASSIGNSHIFTRIGHTUNSIGNED</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #ASSIGNSHIFTRIGHTUNSIGNED_VALUE
+     * @generated
+     * @ordered
+     */
+    ASSIGNSHIFTRIGHTUNSIGNED(15, "ASSIGNSHIFTRIGHTUNSIGNED", "ASSIGNSHIFTRIGHTUNSIGNED");
 
     /**
      * The '<em><b>ASSIGN</b></em>' literal value.
@@ -344,6 +368,51 @@ public enum AssignOperator implements Enumerator {
     public static final int ASSIGNMAX_VALUE = 12;
 
     /**
+     * The '<em><b>ASSIGNSHIFTLEFT</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>ASSIGNSHIFTLEFT</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #ASSIGNSHIFTLEFT
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int ASSIGNSHIFTLEFT_VALUE = 13;
+
+    /**
+     * The '<em><b>ASSIGNSHIFTRIGHT</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>ASSIGNSHIFTRIGHT</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #ASSIGNSHIFTRIGHT
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int ASSIGNSHIFTRIGHT_VALUE = 14;
+
+    /**
+     * The '<em><b>ASSIGNSHIFTRIGHTUNSIGNED</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>ASSIGNSHIFTRIGHTUNSIGNED</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #ASSIGNSHIFTRIGHTUNSIGNED
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int ASSIGNSHIFTRIGHTUNSIGNED_VALUE = 15;
+
+    /**
      * An array of all the '<em><b>Assign Operator</b></em>' enumerators.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -364,6 +433,9 @@ public enum AssignOperator implements Enumerator {
             POSTFIXSUB,
             ASSIGNMIN,
             ASSIGNMAX,
+            ASSIGNSHIFTLEFT,
+            ASSIGNSHIFTRIGHT,
+            ASSIGNSHIFTRIGHTUNSIGNED,
         };
 
     /**
@@ -433,6 +505,9 @@ public enum AssignOperator implements Enumerator {
             case POSTFIXSUB_VALUE: return POSTFIXSUB;
             case ASSIGNMIN_VALUE: return ASSIGNMIN;
             case ASSIGNMAX_VALUE: return ASSIGNMAX;
+            case ASSIGNSHIFTLEFT_VALUE: return ASSIGNSHIFTLEFT;
+            case ASSIGNSHIFTRIGHT_VALUE: return ASSIGNSHIFTRIGHT;
+            case ASSIGNSHIFTRIGHTUNSIGNED_VALUE: return ASSIGNSHIFTRIGHTUNSIGNED;
         }
         return null;
     }
