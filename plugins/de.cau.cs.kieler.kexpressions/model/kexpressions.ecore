@@ -145,8 +145,8 @@
     <eLiterals name="SHIFT_RIGHT" value="21"/>
     <eLiterals name="SHIFT_RIGHT_UNSIGNED" value="22" literal="SHIFT_RIGHT_UNSIGNED"/>
     <eLiterals name="BITWISE_XOR" value="23"/>
+    <eLiterals name="BITWISE_NOT" value="25"/>
     <eLiterals name="CONDITIONAL" value="24" literal="CONDITIONAL"/>
-    <eLiterals name="BITWISE_NEG" value="25"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ValuedObject" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//NamedObject ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable #//Referenceable">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

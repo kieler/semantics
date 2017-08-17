@@ -264,42 +264,42 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	public class BitwiseOrExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.BitwiseOrExpression");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cBitwiseAndExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final RuleCall cBitwiseXOrExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
 		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
 		private final Assignment cOperatorAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
 		private final RuleCall cOperatorBitwiseOrOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
-		private final RuleCall cSubExpressionsBitwiseAndExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
+		private final RuleCall cSubExpressionsBitwiseXOrExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
 		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
 		private final Keyword cVerticalLineKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
-		private final RuleCall cSubExpressionsBitwiseAndExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
+		private final RuleCall cSubExpressionsBitwiseXOrExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
 		
 		//// Bitwiese Or Expression Rule
 		//// Directs to the 'bitwise and' rule and may create an operator expression for 'bitwise or' operations
 		//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 		//BitwiseOrExpression Expression:
-		//	BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator
-		//	subExpressions+=BitwiseAndExpression) ('|' subExpressions+=BitwiseAndExpression)*)?
+		//	BitwiseXOrExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator
+		//	subExpressions+=BitwiseXOrExpression) ('|' subExpressions+=BitwiseXOrExpression)*)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator
-		//subExpressions+=BitwiseAndExpression) ('|' subExpressions+=BitwiseAndExpression)*)?
+		//BitwiseXOrExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator
+		//subExpressions+=BitwiseXOrExpression) ('|' subExpressions+=BitwiseXOrExpression)*)?
 		public Group getGroup() { return cGroup; }
 
-		//BitwiseAndExpression
-		public RuleCall getBitwiseAndExpressionParserRuleCall_0() { return cBitwiseAndExpressionParserRuleCall_0; }
+		//BitwiseXOrExpression
+		public RuleCall getBitwiseXOrExpressionParserRuleCall_0() { return cBitwiseXOrExpressionParserRuleCall_0; }
 
-		//({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator subExpressions+=BitwiseAndExpression) ('|'
-		//subExpressions+=BitwiseAndExpression)*)?
+		//({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator subExpressions+=BitwiseXOrExpression) ('|'
+		//subExpressions+=BitwiseXOrExpression)*)?
 		public Group getGroup_1() { return cGroup_1; }
 
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
-		//(operator=BitwiseOrOperator subExpressions+=BitwiseAndExpression)
+		//(operator=BitwiseOrOperator subExpressions+=BitwiseXOrExpression)
 		public Group getGroup_1_1() { return cGroup_1_1; }
 
 		//operator=BitwiseOrOperator
@@ -308,17 +308,80 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//BitwiseOrOperator
 		public RuleCall getOperatorBitwiseOrOperatorEnumRuleCall_1_1_0_0() { return cOperatorBitwiseOrOperatorEnumRuleCall_1_1_0_0; }
 
+		//subExpressions+=BitwiseXOrExpression
+		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
+
+		//BitwiseXOrExpression
+		public RuleCall getSubExpressionsBitwiseXOrExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsBitwiseXOrExpressionParserRuleCall_1_1_1_0; }
+
+		//('|' subExpressions+=BitwiseXOrExpression)*
+		public Group getGroup_1_2() { return cGroup_1_2; }
+
+		//'|'
+		public Keyword getVerticalLineKeyword_1_2_0() { return cVerticalLineKeyword_1_2_0; }
+
+		//subExpressions+=BitwiseXOrExpression
+		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
+
+		//BitwiseXOrExpression
+		public RuleCall getSubExpressionsBitwiseXOrExpressionParserRuleCall_1_2_1_0() { return cSubExpressionsBitwiseXOrExpressionParserRuleCall_1_2_1_0; }
+	}
+
+	public class BitwiseXOrExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.BitwiseXOrExpression");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cBitwiseAndExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
+		private final Assignment cOperatorAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
+		private final RuleCall cOperatorBitwiseXOrOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cSubExpressionsBitwiseAndExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
+		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
+		private final Keyword cCircumflexAccentKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
+		private final RuleCall cSubExpressionsBitwiseAndExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
+		
+		//BitwiseXOrExpression Expression:
+		//	BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseXOrOperator
+		//	subExpressions+=BitwiseAndExpression) ('^' subExpressions+=BitwiseAndExpression)*)?
+		@Override public ParserRule getRule() { return rule; }
+
+		//BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseXOrOperator
+		//subExpressions+=BitwiseAndExpression) ('^' subExpressions+=BitwiseAndExpression)*)?
+		public Group getGroup() { return cGroup; }
+
+		//BitwiseAndExpression
+		public RuleCall getBitwiseAndExpressionParserRuleCall_0() { return cBitwiseAndExpressionParserRuleCall_0; }
+
+		//({OperatorExpression.subExpressions+=current} (operator=BitwiseXOrOperator subExpressions+=BitwiseAndExpression) ('^'
+		//subExpressions+=BitwiseAndExpression)*)?
+		public Group getGroup_1() { return cGroup_1; }
+
+		//{OperatorExpression.subExpressions+=current}
+		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
+
+		//(operator=BitwiseXOrOperator subExpressions+=BitwiseAndExpression)
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
+		//operator=BitwiseXOrOperator
+		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
+
+		//BitwiseXOrOperator
+		public RuleCall getOperatorBitwiseXOrOperatorEnumRuleCall_1_1_0_0() { return cOperatorBitwiseXOrOperatorEnumRuleCall_1_1_0_0; }
+
 		//subExpressions+=BitwiseAndExpression
 		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
 
 		//BitwiseAndExpression
 		public RuleCall getSubExpressionsBitwiseAndExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsBitwiseAndExpressionParserRuleCall_1_1_1_0; }
 
-		//('|' subExpressions+=BitwiseAndExpression)*
+		//('^' subExpressions+=BitwiseAndExpression)*
 		public Group getGroup_1_2() { return cGroup_1_2; }
 
-		//'|'
-		public Keyword getVerticalLineKeyword_1_2_0() { return cVerticalLineKeyword_1_2_0; }
+		//'^'
+		public Keyword getCircumflexAccentKeyword_1_2_0() { return cCircumflexAccentKeyword_1_2_0; }
 
 		//subExpressions+=BitwiseAndExpression
 		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
@@ -330,42 +393,42 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	public class BitwiseAndExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.BitwiseAndExpression");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cCompareOperationParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final RuleCall cBitwiseNotOrCompareOperationParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
 		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
 		private final Assignment cOperatorAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
 		private final RuleCall cOperatorBitwiseAndOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
-		private final RuleCall cSubExpressionsCompareOperationParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
+		private final RuleCall cSubExpressionsBitwiseNotOrCompareOperationParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
 		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
 		private final Keyword cAmpersandKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
-		private final RuleCall cSubExpressionsCompareOperationParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
+		private final RuleCall cSubExpressionsBitwiseNotOrCompareOperationParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
 		
 		//// Bitwise And Expression Rule
 		//// Directs to the compare rule and may create an operator expression for 'bitwise and' operations
 		//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 		//BitwiseAndExpression Expression:
-		//	CompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
-		//	subExpressions+=CompareOperation) ('&' subExpressions+=CompareOperation)*)?
+		//	BitwiseNotOrCompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
+		//	subExpressions+=BitwiseNotOrCompareOperation) ('&' subExpressions+=BitwiseNotOrCompareOperation)*)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//CompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
-		//subExpressions+=CompareOperation) ('&' subExpressions+=CompareOperation)*)?
+		//BitwiseNotOrCompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
+		//subExpressions+=BitwiseNotOrCompareOperation) ('&' subExpressions+=BitwiseNotOrCompareOperation)*)?
 		public Group getGroup() { return cGroup; }
 
-		//CompareOperation
-		public RuleCall getCompareOperationParserRuleCall_0() { return cCompareOperationParserRuleCall_0; }
+		//BitwiseNotOrCompareOperation
+		public RuleCall getBitwiseNotOrCompareOperationParserRuleCall_0() { return cBitwiseNotOrCompareOperationParserRuleCall_0; }
 
-		//({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator subExpressions+=CompareOperation) ('&'
-		//subExpressions+=CompareOperation)*)?
+		//({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator subExpressions+=BitwiseNotOrCompareOperation)
+		//('&' subExpressions+=BitwiseNotOrCompareOperation)*)?
 		public Group getGroup_1() { return cGroup_1; }
 
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
-		//(operator=BitwiseAndOperator subExpressions+=CompareOperation)
+		//(operator=BitwiseAndOperator subExpressions+=BitwiseNotOrCompareOperation)
 		public Group getGroup_1_1() { return cGroup_1_1; }
 
 		//operator=BitwiseAndOperator
@@ -374,23 +437,84 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//BitwiseAndOperator
 		public RuleCall getOperatorBitwiseAndOperatorEnumRuleCall_1_1_0_0() { return cOperatorBitwiseAndOperatorEnumRuleCall_1_1_0_0; }
 
-		//subExpressions+=CompareOperation
+		//subExpressions+=BitwiseNotOrCompareOperation
 		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
 
-		//CompareOperation
-		public RuleCall getSubExpressionsCompareOperationParserRuleCall_1_1_1_0() { return cSubExpressionsCompareOperationParserRuleCall_1_1_1_0; }
+		//BitwiseNotOrCompareOperation
+		public RuleCall getSubExpressionsBitwiseNotOrCompareOperationParserRuleCall_1_1_1_0() { return cSubExpressionsBitwiseNotOrCompareOperationParserRuleCall_1_1_1_0; }
 
-		//('&' subExpressions+=CompareOperation)*
+		//('&' subExpressions+=BitwiseNotOrCompareOperation)*
 		public Group getGroup_1_2() { return cGroup_1_2; }
 
 		//'&'
 		public Keyword getAmpersandKeyword_1_2_0() { return cAmpersandKeyword_1_2_0; }
 
-		//subExpressions+=CompareOperation
+		//subExpressions+=BitwiseNotOrCompareOperation
 		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
 
+		//BitwiseNotOrCompareOperation
+		public RuleCall getSubExpressionsBitwiseNotOrCompareOperationParserRuleCall_1_2_1_0() { return cSubExpressionsBitwiseNotOrCompareOperationParserRuleCall_1_2_1_0; }
+	}
+
+	public class BitwiseNotOrCompareOperationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.BitwiseNotOrCompareOperation");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cCompareOperationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cBitwiseNotExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//BitwiseNotOrCompareOperation Expression:
+		//	CompareOperation
+		//	| BitwiseNotExpression
+		@Override public ParserRule getRule() { return rule; }
+
+		//CompareOperation | BitwiseNotExpression
+		public Alternatives getAlternatives() { return cAlternatives; }
+
 		//CompareOperation
-		public RuleCall getSubExpressionsCompareOperationParserRuleCall_1_2_1_0() { return cSubExpressionsCompareOperationParserRuleCall_1_2_1_0; }
+		public RuleCall getCompareOperationParserRuleCall_0() { return cCompareOperationParserRuleCall_0; }
+
+		//BitwiseNotExpression
+		public RuleCall getBitwiseNotExpressionParserRuleCall_1() { return cBitwiseNotExpressionParserRuleCall_1; }
+	}
+
+	public class BitwiseNotExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.BitwiseNotExpression");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Action cOperatorExpressionAction_0_0 = (Action)cGroup_0.eContents().get(0);
+		private final Assignment cOperatorAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final RuleCall cOperatorBitwiseNotOperatorEnumRuleCall_0_1_0 = (RuleCall)cOperatorAssignment_0_1.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
+		private final RuleCall cSubExpressionsBitwiseNotExpressionParserRuleCall_0_2_0 = (RuleCall)cSubExpressionsAssignment_0_2.eContents().get(0);
+		private final RuleCall cAtomicExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//BitwiseNotExpression Expression:
+		//	{OperatorExpression} operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression | AtomicExpression
+		@Override public ParserRule getRule() { return rule; }
+
+		//{OperatorExpression} operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression | AtomicExpression
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//{OperatorExpression} operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression
+		public Group getGroup_0() { return cGroup_0; }
+
+		//{OperatorExpression}
+		public Action getOperatorExpressionAction_0_0() { return cOperatorExpressionAction_0_0; }
+
+		//operator=BitwiseNotOperator
+		public Assignment getOperatorAssignment_0_1() { return cOperatorAssignment_0_1; }
+
+		//BitwiseNotOperator
+		public RuleCall getOperatorBitwiseNotOperatorEnumRuleCall_0_1_0() { return cOperatorBitwiseNotOperatorEnumRuleCall_0_1_0; }
+
+		//subExpressions+=BitwiseNotExpression
+		public Assignment getSubExpressionsAssignment_0_2() { return cSubExpressionsAssignment_0_2; }
+
+		//BitwiseNotExpression
+		public RuleCall getSubExpressionsBitwiseNotExpressionParserRuleCall_0_2_0() { return cSubExpressionsBitwiseNotExpressionParserRuleCall_0_2_0; }
+
+		//AtomicExpression
+		public RuleCall getAtomicExpressionParserRuleCall_1() { return cAtomicExpressionParserRuleCall_1; }
 	}
 
 	public class CompareOperationElements extends AbstractParserRuleElementFinder {
@@ -507,17 +631,206 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class ValuedExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ValuedExpression");
-		private final RuleCall cAddExpressionParserRuleCall = (RuleCall)rule.eContents().get(1);
+		private final RuleCall cShiftLeftExpressionParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
 		//// Valued Expression Rule    
 		//// Everything that evaluates to a primitive number value.
 		//// Similar to the boolean rule this rule is there for overview reasons.
 		//ValuedExpression Expression:
-		//	AddExpression
+		//	ShiftLeftExpression
 		@Override public ParserRule getRule() { return rule; }
 
+		//ShiftLeftExpression
+		public RuleCall getShiftLeftExpressionParserRuleCall() { return cShiftLeftExpressionParserRuleCall; }
+	}
+
+	public class ShiftLeftExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ShiftLeftExpression");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cShiftRightExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
+		private final Assignment cOperatorAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
+		private final RuleCall cOperatorShiftLeftOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cSubExpressionsShiftRightExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
+		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
+		private final Keyword cLessThanSignLessThanSignKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
+		private final RuleCall cSubExpressionsShiftRightExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
+		
+		//ShiftLeftExpression Expression:
+		//	ShiftRightExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
+		//	subExpressions+=ShiftRightExpression) ('<<' subExpressions+=ShiftRightExpression)*)?
+		@Override public ParserRule getRule() { return rule; }
+
+		//ShiftRightExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
+		//subExpressions+=ShiftRightExpression) ('<<' subExpressions+=ShiftRightExpression)*)?
+		public Group getGroup() { return cGroup; }
+
+		//ShiftRightExpression
+		public RuleCall getShiftRightExpressionParserRuleCall_0() { return cShiftRightExpressionParserRuleCall_0; }
+
+		//({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator subExpressions+=ShiftRightExpression) ('<<'
+		//subExpressions+=ShiftRightExpression)*)?
+		public Group getGroup_1() { return cGroup_1; }
+
+		//{OperatorExpression.subExpressions+=current}
+		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
+
+		//(operator=ShiftLeftOperator subExpressions+=ShiftRightExpression)
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
+		//operator=ShiftLeftOperator
+		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
+
+		//ShiftLeftOperator
+		public RuleCall getOperatorShiftLeftOperatorEnumRuleCall_1_1_0_0() { return cOperatorShiftLeftOperatorEnumRuleCall_1_1_0_0; }
+
+		//subExpressions+=ShiftRightExpression
+		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
+
+		//ShiftRightExpression
+		public RuleCall getSubExpressionsShiftRightExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsShiftRightExpressionParserRuleCall_1_1_1_0; }
+
+		//('<<' subExpressions+=ShiftRightExpression)*
+		public Group getGroup_1_2() { return cGroup_1_2; }
+
+		//'<<'
+		public Keyword getLessThanSignLessThanSignKeyword_1_2_0() { return cLessThanSignLessThanSignKeyword_1_2_0; }
+
+		//subExpressions+=ShiftRightExpression
+		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
+
+		//ShiftRightExpression
+		public RuleCall getSubExpressionsShiftRightExpressionParserRuleCall_1_2_1_0() { return cSubExpressionsShiftRightExpressionParserRuleCall_1_2_1_0; }
+	}
+
+	public class ShiftRightExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ShiftRightExpression");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cShiftRightUnsignedExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
+		private final Assignment cOperatorAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
+		private final RuleCall cOperatorShiftRightOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cSubExpressionsShiftRightUnsignedExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
+		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
+		private final Keyword cGreaterThanSignGreaterThanSignKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
+		private final RuleCall cSubExpressionsShiftRightUnsignedExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
+		
+		//ShiftRightExpression Expression:
+		//	ShiftRightUnsignedExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
+		//	subExpressions+=ShiftRightUnsignedExpression) ('>>' subExpressions+=ShiftRightUnsignedExpression)*)?
+		@Override public ParserRule getRule() { return rule; }
+
+		//ShiftRightUnsignedExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
+		//subExpressions+=ShiftRightUnsignedExpression) ('>>' subExpressions+=ShiftRightUnsignedExpression)*)?
+		public Group getGroup() { return cGroup; }
+
+		//ShiftRightUnsignedExpression
+		public RuleCall getShiftRightUnsignedExpressionParserRuleCall_0() { return cShiftRightUnsignedExpressionParserRuleCall_0; }
+
+		//({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator subExpressions+=ShiftRightUnsignedExpression)
+		//('>>' subExpressions+=ShiftRightUnsignedExpression)*)?
+		public Group getGroup_1() { return cGroup_1; }
+
+		//{OperatorExpression.subExpressions+=current}
+		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
+
+		//(operator=ShiftRightOperator subExpressions+=ShiftRightUnsignedExpression)
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
+		//operator=ShiftRightOperator
+		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
+
+		//ShiftRightOperator
+		public RuleCall getOperatorShiftRightOperatorEnumRuleCall_1_1_0_0() { return cOperatorShiftRightOperatorEnumRuleCall_1_1_0_0; }
+
+		//subExpressions+=ShiftRightUnsignedExpression
+		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
+
+		//ShiftRightUnsignedExpression
+		public RuleCall getSubExpressionsShiftRightUnsignedExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsShiftRightUnsignedExpressionParserRuleCall_1_1_1_0; }
+
+		//('>>' subExpressions+=ShiftRightUnsignedExpression)*
+		public Group getGroup_1_2() { return cGroup_1_2; }
+
+		//'>>'
+		public Keyword getGreaterThanSignGreaterThanSignKeyword_1_2_0() { return cGreaterThanSignGreaterThanSignKeyword_1_2_0; }
+
+		//subExpressions+=ShiftRightUnsignedExpression
+		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
+
+		//ShiftRightUnsignedExpression
+		public RuleCall getSubExpressionsShiftRightUnsignedExpressionParserRuleCall_1_2_1_0() { return cSubExpressionsShiftRightUnsignedExpressionParserRuleCall_1_2_1_0; }
+	}
+
+	public class ShiftRightUnsignedExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ShiftRightUnsignedExpression");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cAddExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
+		private final Assignment cOperatorAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
+		private final RuleCall cOperatorShiftRightOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cSubExpressionsAddExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
+		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
+		private final Keyword cGreaterThanSignGreaterThanSignGreaterThanSignKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
+		private final RuleCall cSubExpressionsAddExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
+		
+		//ShiftRightUnsignedExpression Expression:
+		//	AddExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
+		//	subExpressions+=AddExpression) ('>>>' subExpressions+=AddExpression)*)?
+		@Override public ParserRule getRule() { return rule; }
+
+		//AddExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator subExpressions+=AddExpression)
+		//('>>>' subExpressions+=AddExpression)*)?
+		public Group getGroup() { return cGroup; }
+
 		//AddExpression
-		public RuleCall getAddExpressionParserRuleCall() { return cAddExpressionParserRuleCall; }
+		public RuleCall getAddExpressionParserRuleCall_0() { return cAddExpressionParserRuleCall_0; }
+
+		//({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator subExpressions+=AddExpression) ('>>>'
+		//subExpressions+=AddExpression)*)?
+		public Group getGroup_1() { return cGroup_1; }
+
+		//{OperatorExpression.subExpressions+=current}
+		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
+
+		//(operator=ShiftRightOperator subExpressions+=AddExpression)
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
+		//operator=ShiftRightOperator
+		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
+
+		//ShiftRightOperator
+		public RuleCall getOperatorShiftRightOperatorEnumRuleCall_1_1_0_0() { return cOperatorShiftRightOperatorEnumRuleCall_1_1_0_0; }
+
+		//subExpressions+=AddExpression
+		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
+
+		//AddExpression
+		public RuleCall getSubExpressionsAddExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsAddExpressionParserRuleCall_1_1_1_0; }
+
+		//('>>>' subExpressions+=AddExpression)*
+		public Group getGroup_1_2() { return cGroup_1_2; }
+
+		//'>>>'
+		public Keyword getGreaterThanSignGreaterThanSignGreaterThanSignKeyword_1_2_0() { return cGreaterThanSignGreaterThanSignGreaterThanSignKeyword_1_2_0; }
+
+		//subExpressions+=AddExpression
+		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
+
+		//AddExpression
+		public RuleCall getSubExpressionsAddExpressionParserRuleCall_1_2_1_0() { return cSubExpressionsAddExpressionParserRuleCall_1_2_1_0; }
 	}
 
 	public class AddExpressionElements extends AbstractParserRuleElementFinder {
@@ -864,16 +1177,16 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOperatorSubOperatorEnumRuleCall_0_1_0 = (RuleCall)cOperatorAssignment_0_1.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
 		private final RuleCall cSubExpressionsNegExpressionParserRuleCall_0_2_0 = (RuleCall)cSubExpressionsAssignment_0_2.eContents().get(0);
-		private final RuleCall cAtomicValuedExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cTernaryOperationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//// Neg Expression Rule
 		//// The rule negates the actual instance or directs the atomic value expression rule if necessary. 
 		//// Example: -i, -2
 		//NegExpression Expression:
-		//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | AtomicValuedExpression
+		//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | TernaryOperation
 		@Override public ParserRule getRule() { return rule; }
 
-		//{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | AtomicValuedExpression
+		//{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | TernaryOperation
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//{OperatorExpression} operator=SubOperator subExpressions+=NegExpression
@@ -893,6 +1206,70 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//NegExpression
 		public RuleCall getSubExpressionsNegExpressionParserRuleCall_0_2_0() { return cSubExpressionsNegExpressionParserRuleCall_0_2_0; }
+
+		//TernaryOperation
+		public RuleCall getTernaryOperationParserRuleCall_1() { return cTernaryOperationParserRuleCall_1; }
+	}
+
+	public class TernaryOperationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.TernaryOperation");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Action cOperatorExpressionAction_0_0 = (Action)cGroup_0.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0 = (RuleCall)cSubExpressionsAssignment_0_1.eContents().get(0);
+		private final Assignment cOperatorAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
+		private final RuleCall cOperatorConditionalOperatorEnumRuleCall_0_2_0 = (RuleCall)cOperatorAssignment_0_2.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
+		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0 = (RuleCall)cSubExpressionsAssignment_0_3.eContents().get(0);
+		private final Keyword cColonKeyword_0_4 = (Keyword)cGroup_0.eContents().get(4);
+		private final Assignment cSubExpressionsAssignment_0_5 = (Assignment)cGroup_0.eContents().get(5);
+		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_0_5_0 = (RuleCall)cSubExpressionsAssignment_0_5.eContents().get(0);
+		private final RuleCall cAtomicValuedExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//TernaryOperation Expression:
+		//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
+		//	subExpressions+=AtomicValuedExpression ':' subExpressions+=AtomicValuedExpression
+		//	| AtomicValuedExpression
+		@Override public ParserRule getRule() { return rule; }
+
+		//{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
+		//subExpressions+=AtomicValuedExpression ':' subExpressions+=AtomicValuedExpression | AtomicValuedExpression
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
+		//subExpressions+=AtomicValuedExpression ':' subExpressions+=AtomicValuedExpression
+		public Group getGroup_0() { return cGroup_0; }
+
+		//{OperatorExpression}
+		public Action getOperatorExpressionAction_0_0() { return cOperatorExpressionAction_0_0; }
+
+		//subExpressions+=AtomicValuedExpression
+		public Assignment getSubExpressionsAssignment_0_1() { return cSubExpressionsAssignment_0_1; }
+
+		//AtomicValuedExpression
+		public RuleCall getSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0() { return cSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0; }
+
+		//operator=ConditionalOperator
+		public Assignment getOperatorAssignment_0_2() { return cOperatorAssignment_0_2; }
+
+		//ConditionalOperator
+		public RuleCall getOperatorConditionalOperatorEnumRuleCall_0_2_0() { return cOperatorConditionalOperatorEnumRuleCall_0_2_0; }
+
+		//subExpressions+=AtomicValuedExpression
+		public Assignment getSubExpressionsAssignment_0_3() { return cSubExpressionsAssignment_0_3; }
+
+		//AtomicValuedExpression
+		public RuleCall getSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0() { return cSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0; }
+
+		//':'
+		public Keyword getColonKeyword_0_4() { return cColonKeyword_0_4; }
+
+		//subExpressions+=AtomicValuedExpression
+		public Assignment getSubExpressionsAssignment_0_5() { return cSubExpressionsAssignment_0_5; }
+
+		//AtomicValuedExpression
+		public RuleCall getSubExpressionsAtomicValuedExpressionParserRuleCall_0_5_0() { return cSubExpressionsAtomicValuedExpressionParserRuleCall_0_5_0; }
 
 		//AtomicValuedExpression
 		public RuleCall getAtomicValuedExpressionParserRuleCall_1() { return cAtomicValuedExpressionParserRuleCall_1; }
@@ -1402,7 +1779,6 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cValueINTTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
 		
-		//// Int Value Rule
 		//IntValue:
 		//	value=INT;
 		@Override public ParserRule getRule() { return rule; }
@@ -1419,7 +1795,6 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cValueFLOATTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
 		
-		//// Float Value Rule
 		//FloatValue:
 		//	value=FLOAT;
 		@Override public ParserRule getRule() { return rule; }
@@ -1436,7 +1811,6 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cValueBOOLEANTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
 		
-		//// Bool Value Rule
 		//BoolValue:
 		//	value=BOOLEAN;
 		@Override public ParserRule getRule() { return rule; }
@@ -1453,7 +1827,6 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cValueSTRINGTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
 		
-		//// String Value Rule	
 		//StringValue:
 		//	value=STRING;
 		@Override public ParserRule getRule() { return rule; }
@@ -1689,6 +2062,38 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getPREPreKeyword_0() { return cPREPreKeyword_0; }
 	}
 
+	public class BitwiseNotOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.BitwiseNotOperator");
+		private final EnumLiteralDeclaration cBITWISE_NOTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cBITWISE_NOTTildeKeyword_0 = (Keyword)cBITWISE_NOTEnumLiteralDeclaration.eContents().get(0);
+		
+		//enum BitwiseNotOperator returns OperatorType:
+		//	BITWISE_NOT="~";
+		public EnumRule getRule() { return rule; }
+
+		//BITWISE_NOT="~"
+		public EnumLiteralDeclaration getBITWISE_NOTEnumLiteralDeclaration() { return cBITWISE_NOTEnumLiteralDeclaration; }
+
+		//"~"
+		public Keyword getBITWISE_NOTTildeKeyword_0() { return cBITWISE_NOTTildeKeyword_0; }
+	}
+
+	public class BitwiseXOrOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.BitwiseXOrOperator");
+		private final EnumLiteralDeclaration cBITWISE_XOREnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cBITWISE_XORCircumflexAccentKeyword_0 = (Keyword)cBITWISE_XOREnumLiteralDeclaration.eContents().get(0);
+		
+		//enum BitwiseXOrOperator returns OperatorType:
+		//	BITWISE_XOR="^";
+		public EnumRule getRule() { return rule; }
+
+		//BITWISE_XOR="^"
+		public EnumLiteralDeclaration getBITWISE_XOREnumLiteralDeclaration() { return cBITWISE_XOREnumLiteralDeclaration; }
+
+		//"^"
+		public Keyword getBITWISE_XORCircumflexAccentKeyword_0() { return cBITWISE_XORCircumflexAccentKeyword_0; }
+	}
+
 	public class BitwiseOrOperatorElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.BitwiseOrOperator");
 		private final EnumLiteralDeclaration cBITWISE_OREnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
@@ -1865,6 +2270,54 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getLOGICAL_ANDAmpersandAmpersandKeyword_0() { return cLOGICAL_ANDAmpersandAmpersandKeyword_0; }
 	}
 
+	public class ShiftLeftOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ShiftLeftOperator");
+		private final EnumLiteralDeclaration cSHIFT_LEFTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cSHIFT_LEFTLessThanSignLessThanSignKeyword_0 = (Keyword)cSHIFT_LEFTEnumLiteralDeclaration.eContents().get(0);
+		
+		//enum ShiftLeftOperator returns OperatorType:
+		//	SHIFT_LEFT="<<";
+		public EnumRule getRule() { return rule; }
+
+		//SHIFT_LEFT="<<"
+		public EnumLiteralDeclaration getSHIFT_LEFTEnumLiteralDeclaration() { return cSHIFT_LEFTEnumLiteralDeclaration; }
+
+		//"<<"
+		public Keyword getSHIFT_LEFTLessThanSignLessThanSignKeyword_0() { return cSHIFT_LEFTLessThanSignLessThanSignKeyword_0; }
+	}
+
+	public class ShiftRightOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ShiftRightOperator");
+		private final EnumLiteralDeclaration cSHIFT_RIGHTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cSHIFT_RIGHTGreaterThanSignGreaterThanSignKeyword_0 = (Keyword)cSHIFT_RIGHTEnumLiteralDeclaration.eContents().get(0);
+		
+		//enum ShiftRightOperator returns OperatorType:
+		//	SHIFT_RIGHT=">>";
+		public EnumRule getRule() { return rule; }
+
+		//SHIFT_RIGHT=">>"
+		public EnumLiteralDeclaration getSHIFT_RIGHTEnumLiteralDeclaration() { return cSHIFT_RIGHTEnumLiteralDeclaration; }
+
+		//">>"
+		public Keyword getSHIFT_RIGHTGreaterThanSignGreaterThanSignKeyword_0() { return cSHIFT_RIGHTGreaterThanSignGreaterThanSignKeyword_0; }
+	}
+
+	public class ShiftRightUnsignedOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ShiftRightUnsignedOperator");
+		private final EnumLiteralDeclaration cSHIFT_RIGHTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cSHIFT_RIGHTGreaterThanSignGreaterThanSignGreaterThanSignKeyword_0 = (Keyword)cSHIFT_RIGHTEnumLiteralDeclaration.eContents().get(0);
+		
+		//enum ShiftRightUnsignedOperator returns OperatorType:
+		//	SHIFT_RIGHT=">>>";
+		public EnumRule getRule() { return rule; }
+
+		//SHIFT_RIGHT=">>>"
+		public EnumLiteralDeclaration getSHIFT_RIGHTEnumLiteralDeclaration() { return cSHIFT_RIGHTEnumLiteralDeclaration; }
+
+		//">>>"
+		public Keyword getSHIFT_RIGHTGreaterThanSignGreaterThanSignGreaterThanSignKeyword_0() { return cSHIFT_RIGHTGreaterThanSignGreaterThanSignGreaterThanSignKeyword_0; }
+	}
+
 	public class PostfixAddElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.PostfixAdd");
 		private final EnumLiteralDeclaration cPOSTFIX_ADDEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
@@ -1895,6 +2348,22 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//"--"
 		public Keyword getPOSTFIX_SUBHyphenMinusHyphenMinusKeyword_0() { return cPOSTFIX_SUBHyphenMinusHyphenMinusKeyword_0; }
+	}
+
+	public class ConditionalOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ConditionalOperator");
+		private final EnumLiteralDeclaration cCONDITIONALEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cCONDITIONALQuestionMarkKeyword_0 = (Keyword)cCONDITIONALEnumLiteralDeclaration.eContents().get(0);
+		
+		//enum ConditionalOperator returns OperatorType:
+		//	CONDITIONAL="?";
+		public EnumRule getRule() { return rule; }
+
+		//CONDITIONAL="?"
+		public EnumLiteralDeclaration getCONDITIONALEnumLiteralDeclaration() { return cCONDITIONALEnumLiteralDeclaration; }
+
+		//"?"
+		public Keyword getCONDITIONALQuestionMarkKeyword_0() { return cCONDITIONALQuestionMarkKeyword_0; }
 	}
 
 	public class ValueTypeElements extends AbstractEnumRuleElementFinder {
@@ -2066,17 +2535,24 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final LogicalOrExpressionElements pLogicalOrExpression;
 	private final LogicalAndExpressionElements pLogicalAndExpression;
 	private final BitwiseOrExpressionElements pBitwiseOrExpression;
+	private final BitwiseXOrExpressionElements pBitwiseXOrExpression;
 	private final BitwiseAndExpressionElements pBitwiseAndExpression;
+	private final BitwiseNotOrCompareOperationElements pBitwiseNotOrCompareOperation;
+	private final BitwiseNotExpressionElements pBitwiseNotExpression;
 	private final CompareOperationElements pCompareOperation;
 	private final NotOrValuedExpressionElements pNotOrValuedExpression;
 	private final NotExpressionElements pNotExpression;
 	private final ValuedExpressionElements pValuedExpression;
+	private final ShiftLeftExpressionElements pShiftLeftExpression;
+	private final ShiftRightExpressionElements pShiftRightExpression;
+	private final ShiftRightUnsignedExpressionElements pShiftRightUnsignedExpression;
 	private final AddExpressionElements pAddExpression;
 	private final SubExpressionElements pSubExpression;
 	private final MultExpressionElements pMultExpression;
 	private final DivExpressionElements pDivExpression;
 	private final ModExpressionElements pModExpression;
 	private final NegExpressionElements pNegExpression;
+	private final TernaryOperationElements pTernaryOperation;
 	private final AtomicExpressionElements pAtomicExpression;
 	private final AtomicValuedExpressionElements pAtomicValuedExpression;
 	private final ValuedObjectTestExpressionElements pValuedObjectTestExpression;
@@ -2098,6 +2574,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final AnyValueElements pAnyValue;
 	private final CompareOperatorElements eCompareOperator;
 	private final PreOperatorElements ePreOperator;
+	private final BitwiseNotOperatorElements eBitwiseNotOperator;
+	private final BitwiseXOrOperatorElements eBitwiseXOrOperator;
 	private final BitwiseOrOperatorElements eBitwiseOrOperator;
 	private final BitwiseAndOperatorElements eBitwiseAndOperator;
 	private final NotOperatorElements eNotOperator;
@@ -2109,8 +2587,12 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final ValOperatorElements eValOperator;
 	private final LogicalOrOperatorElements eLogicalOrOperator;
 	private final LogicalAndOperatorElements eLogicalAndOperator;
+	private final ShiftLeftOperatorElements eShiftLeftOperator;
+	private final ShiftRightOperatorElements eShiftRightOperator;
+	private final ShiftRightUnsignedOperatorElements eShiftRightUnsignedOperator;
 	private final PostfixAddElements ePostfixAdd;
 	private final PostfixSubElements ePostfixSub;
+	private final ConditionalOperatorElements eConditionalOperator;
 	private final ValueTypeElements eValueType;
 	private final HostTypeElements eHostType;
 	private final CombineOperatorElements eCombineOperator;
@@ -2135,17 +2617,24 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pLogicalOrExpression = new LogicalOrExpressionElements();
 		this.pLogicalAndExpression = new LogicalAndExpressionElements();
 		this.pBitwiseOrExpression = new BitwiseOrExpressionElements();
+		this.pBitwiseXOrExpression = new BitwiseXOrExpressionElements();
 		this.pBitwiseAndExpression = new BitwiseAndExpressionElements();
+		this.pBitwiseNotOrCompareOperation = new BitwiseNotOrCompareOperationElements();
+		this.pBitwiseNotExpression = new BitwiseNotExpressionElements();
 		this.pCompareOperation = new CompareOperationElements();
 		this.pNotOrValuedExpression = new NotOrValuedExpressionElements();
 		this.pNotExpression = new NotExpressionElements();
 		this.pValuedExpression = new ValuedExpressionElements();
+		this.pShiftLeftExpression = new ShiftLeftExpressionElements();
+		this.pShiftRightExpression = new ShiftRightExpressionElements();
+		this.pShiftRightUnsignedExpression = new ShiftRightUnsignedExpressionElements();
 		this.pAddExpression = new AddExpressionElements();
 		this.pSubExpression = new SubExpressionElements();
 		this.pMultExpression = new MultExpressionElements();
 		this.pDivExpression = new DivExpressionElements();
 		this.pModExpression = new ModExpressionElements();
 		this.pNegExpression = new NegExpressionElements();
+		this.pTernaryOperation = new TernaryOperationElements();
 		this.pAtomicExpression = new AtomicExpressionElements();
 		this.pAtomicValuedExpression = new AtomicValuedExpressionElements();
 		this.pValuedObjectTestExpression = new ValuedObjectTestExpressionElements();
@@ -2167,6 +2656,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pAnyValue = new AnyValueElements();
 		this.eCompareOperator = new CompareOperatorElements();
 		this.ePreOperator = new PreOperatorElements();
+		this.eBitwiseNotOperator = new BitwiseNotOperatorElements();
+		this.eBitwiseXOrOperator = new BitwiseXOrOperatorElements();
 		this.eBitwiseOrOperator = new BitwiseOrOperatorElements();
 		this.eBitwiseAndOperator = new BitwiseAndOperatorElements();
 		this.eNotOperator = new NotOperatorElements();
@@ -2178,8 +2669,12 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.eValOperator = new ValOperatorElements();
 		this.eLogicalOrOperator = new LogicalOrOperatorElements();
 		this.eLogicalAndOperator = new LogicalAndOperatorElements();
+		this.eShiftLeftOperator = new ShiftLeftOperatorElements();
+		this.eShiftRightOperator = new ShiftRightOperatorElements();
+		this.eShiftRightUnsignedOperator = new ShiftRightUnsignedOperatorElements();
 		this.ePostfixAdd = new PostfixAddElements();
 		this.ePostfixSub = new PostfixSubElements();
+		this.eConditionalOperator = new ConditionalOperatorElements();
 		this.eValueType = new ValueTypeElements();
 		this.eHostType = new HostTypeElements();
 		this.eCombineOperator = new CombineOperatorElements();
@@ -2325,8 +2820,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Directs to the 'bitwise and' rule and may create an operator expression for 'bitwise or' operations
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//BitwiseOrExpression Expression:
-	//	BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator
-	//	subExpressions+=BitwiseAndExpression) ('|' subExpressions+=BitwiseAndExpression)*)?
+	//	BitwiseXOrExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator
+	//	subExpressions+=BitwiseXOrExpression) ('|' subExpressions+=BitwiseXOrExpression)*)?
 	public BitwiseOrExpressionElements getBitwiseOrExpressionAccess() {
 		return pBitwiseOrExpression;
 	}
@@ -2335,18 +2830,50 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getBitwiseOrExpressionAccess().getRule();
 	}
 
+	//BitwiseXOrExpression Expression:
+	//	BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseXOrOperator
+	//	subExpressions+=BitwiseAndExpression) ('^' subExpressions+=BitwiseAndExpression)*)?
+	public BitwiseXOrExpressionElements getBitwiseXOrExpressionAccess() {
+		return pBitwiseXOrExpression;
+	}
+	
+	public ParserRule getBitwiseXOrExpressionRule() {
+		return getBitwiseXOrExpressionAccess().getRule();
+	}
+
 	//// Bitwise And Expression Rule
 	//// Directs to the compare rule and may create an operator expression for 'bitwise and' operations
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//BitwiseAndExpression Expression:
-	//	CompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
-	//	subExpressions+=CompareOperation) ('&' subExpressions+=CompareOperation)*)?
+	//	BitwiseNotOrCompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
+	//	subExpressions+=BitwiseNotOrCompareOperation) ('&' subExpressions+=BitwiseNotOrCompareOperation)*)?
 	public BitwiseAndExpressionElements getBitwiseAndExpressionAccess() {
 		return pBitwiseAndExpression;
 	}
 	
 	public ParserRule getBitwiseAndExpressionRule() {
 		return getBitwiseAndExpressionAccess().getRule();
+	}
+
+	//BitwiseNotOrCompareOperation Expression:
+	//	CompareOperation
+	//	| BitwiseNotExpression
+	public BitwiseNotOrCompareOperationElements getBitwiseNotOrCompareOperationAccess() {
+		return pBitwiseNotOrCompareOperation;
+	}
+	
+	public ParserRule getBitwiseNotOrCompareOperationRule() {
+		return getBitwiseNotOrCompareOperationAccess().getRule();
+	}
+
+	//BitwiseNotExpression Expression:
+	//	{OperatorExpression} operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression | AtomicExpression
+	public BitwiseNotExpressionElements getBitwiseNotExpressionAccess() {
+		return pBitwiseNotExpression;
+	}
+	
+	public ParserRule getBitwiseNotExpressionRule() {
+		return getBitwiseNotExpressionAccess().getRule();
 	}
 
 	//// Compare Operation Rule
@@ -2394,13 +2921,46 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Everything that evaluates to a primitive number value.
 	//// Similar to the boolean rule this rule is there for overview reasons.
 	//ValuedExpression Expression:
-	//	AddExpression
+	//	ShiftLeftExpression
 	public ValuedExpressionElements getValuedExpressionAccess() {
 		return pValuedExpression;
 	}
 	
 	public ParserRule getValuedExpressionRule() {
 		return getValuedExpressionAccess().getRule();
+	}
+
+	//ShiftLeftExpression Expression:
+	//	ShiftRightExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
+	//	subExpressions+=ShiftRightExpression) ('<<' subExpressions+=ShiftRightExpression)*)?
+	public ShiftLeftExpressionElements getShiftLeftExpressionAccess() {
+		return pShiftLeftExpression;
+	}
+	
+	public ParserRule getShiftLeftExpressionRule() {
+		return getShiftLeftExpressionAccess().getRule();
+	}
+
+	//ShiftRightExpression Expression:
+	//	ShiftRightUnsignedExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
+	//	subExpressions+=ShiftRightUnsignedExpression) ('>>' subExpressions+=ShiftRightUnsignedExpression)*)?
+	public ShiftRightExpressionElements getShiftRightExpressionAccess() {
+		return pShiftRightExpression;
+	}
+	
+	public ParserRule getShiftRightExpressionRule() {
+		return getShiftRightExpressionAccess().getRule();
+	}
+
+	//ShiftRightUnsignedExpression Expression:
+	//	AddExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
+	//	subExpressions+=AddExpression) ('>>>' subExpressions+=AddExpression)*)?
+	public ShiftRightUnsignedExpressionElements getShiftRightUnsignedExpressionAccess() {
+		return pShiftRightUnsignedExpression;
+	}
+	
+	public ParserRule getShiftRightUnsignedExpressionRule() {
+		return getShiftRightUnsignedExpressionAccess().getRule();
 	}
 
 	//// Add Expression Rule
@@ -2482,13 +3042,25 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// The rule negates the actual instance or directs the atomic value expression rule if necessary. 
 	//// Example: -i, -2
 	//NegExpression Expression:
-	//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | AtomicValuedExpression
+	//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | TernaryOperation
 	public NegExpressionElements getNegExpressionAccess() {
 		return pNegExpression;
 	}
 	
 	public ParserRule getNegExpressionRule() {
 		return getNegExpressionAccess().getRule();
+	}
+
+	//TernaryOperation Expression:
+	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
+	//	subExpressions+=AtomicValuedExpression ':' subExpressions+=AtomicValuedExpression
+	//	| AtomicValuedExpression
+	public TernaryOperationElements getTernaryOperationAccess() {
+		return pTernaryOperation;
+	}
+	
+	public ParserRule getTernaryOperationRule() {
+		return getTernaryOperationAccess().getRule();
 	}
 
 	//// Atomic Expression Rule
@@ -2633,7 +3205,6 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getTextExpressionAccess().getRule();
 	}
 
-	//// Int Value Rule
 	//IntValue:
 	//	value=INT;
 	public IntValueElements getIntValueAccess() {
@@ -2644,7 +3215,6 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getIntValueAccess().getRule();
 	}
 
-	//// Float Value Rule
 	//FloatValue:
 	//	value=FLOAT;
 	public FloatValueElements getFloatValueAccess() {
@@ -2655,7 +3225,6 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getFloatValueAccess().getRule();
 	}
 
-	//// Bool Value Rule
 	//BoolValue:
 	//	value=BOOLEAN;
 	public BoolValueElements getBoolValueAccess() {
@@ -2666,7 +3235,6 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getBoolValueAccess().getRule();
 	}
 
-	//// String Value Rule	
 	//StringValue:
 	//	value=STRING;
 	public StringValueElements getStringValueAccess() {
@@ -2748,6 +3316,26 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getPreOperatorRule() {
 		return getPreOperatorAccess().getRule();
+	}
+
+	//enum BitwiseNotOperator returns OperatorType:
+	//	BITWISE_NOT="~";
+	public BitwiseNotOperatorElements getBitwiseNotOperatorAccess() {
+		return eBitwiseNotOperator;
+	}
+	
+	public EnumRule getBitwiseNotOperatorRule() {
+		return getBitwiseNotOperatorAccess().getRule();
+	}
+
+	//enum BitwiseXOrOperator returns OperatorType:
+	//	BITWISE_XOR="^";
+	public BitwiseXOrOperatorElements getBitwiseXOrOperatorAccess() {
+		return eBitwiseXOrOperator;
+	}
+	
+	public EnumRule getBitwiseXOrOperatorRule() {
+		return getBitwiseXOrOperatorAccess().getRule();
 	}
 
 	//enum BitwiseOrOperator returns OperatorType:
@@ -2860,6 +3448,36 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getLogicalAndOperatorAccess().getRule();
 	}
 
+	//enum ShiftLeftOperator returns OperatorType:
+	//	SHIFT_LEFT="<<";
+	public ShiftLeftOperatorElements getShiftLeftOperatorAccess() {
+		return eShiftLeftOperator;
+	}
+	
+	public EnumRule getShiftLeftOperatorRule() {
+		return getShiftLeftOperatorAccess().getRule();
+	}
+
+	//enum ShiftRightOperator returns OperatorType:
+	//	SHIFT_RIGHT=">>";
+	public ShiftRightOperatorElements getShiftRightOperatorAccess() {
+		return eShiftRightOperator;
+	}
+	
+	public EnumRule getShiftRightOperatorRule() {
+		return getShiftRightOperatorAccess().getRule();
+	}
+
+	//enum ShiftRightUnsignedOperator returns OperatorType:
+	//	SHIFT_RIGHT=">>>";
+	public ShiftRightUnsignedOperatorElements getShiftRightUnsignedOperatorAccess() {
+		return eShiftRightUnsignedOperator;
+	}
+	
+	public EnumRule getShiftRightUnsignedOperatorRule() {
+		return getShiftRightUnsignedOperatorAccess().getRule();
+	}
+
 	//enum PostfixAdd returns OperatorType:
 	//	POSTFIX_ADD="++";
 	public PostfixAddElements getPostfixAddAccess() {
@@ -2878,6 +3496,16 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getPostfixSubRule() {
 		return getPostfixSubAccess().getRule();
+	}
+
+	//enum ConditionalOperator returns OperatorType:
+	//	CONDITIONAL="?";
+	public ConditionalOperatorElements getConditionalOperatorAccess() {
+		return eConditionalOperator;
+	}
+	
+	public EnumRule getConditionalOperatorRule() {
+		return getConditionalOperatorAccess().getRule();
 	}
 
 	//enum ValueType:

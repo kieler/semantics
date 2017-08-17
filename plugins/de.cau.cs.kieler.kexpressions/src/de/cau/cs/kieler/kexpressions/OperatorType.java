@@ -232,6 +232,14 @@ public enum OperatorType implements Enumerator {
      * @ordered
      */
     BITWISE_XOR(23, "BITWISE_XOR", "BITWISE_XOR"), /**
+     * The '<em><b>BITWISE NOT</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #BITWISE_NOT_VALUE
+     * @generated
+     * @ordered
+     */
+    BITWISE_NOT(25, "BITWISE_NOT", "BITWISE_NOT"), /**
      * The '<em><b>CONDITIONAL</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -239,15 +247,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    CONDITIONAL(24, "CONDITIONAL", "CONDITIONAL"), /**
-     * The '<em><b>BITWISE NEG</b></em>' literal object.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #BITWISE_NEG_VALUE
-     * @generated
-     * @ordered
-     */
-    BITWISE_NEG(25, "BITWISE_NEG", "BITWISE_NEG");
+    CONDITIONAL(24, "CONDITIONAL", "CONDITIONAL");
     /**
      * The '<em><b>NOT</b></em>' literal value.
      * <!-- begin-user-doc -->
@@ -595,6 +595,21 @@ public enum OperatorType implements Enumerator {
     public static final int BITWISE_XOR_VALUE = 23;
 
     /**
+     * The '<em><b>BITWISE NOT</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>BITWISE NOT</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #BITWISE_NOT
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int BITWISE_NOT_VALUE = 25;
+
+    /**
      * The '<em><b>CONDITIONAL</b></em>' literal value.
      * <!-- begin-user-doc -->
      * <p>
@@ -608,21 +623,6 @@ public enum OperatorType implements Enumerator {
      * @ordered
      */
     public static final int CONDITIONAL_VALUE = 24;
-
-    /**
-     * The '<em><b>BITWISE NEG</b></em>' literal value.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>BITWISE NEG</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @see #BITWISE_NEG
-     * @model
-     * @generated
-     * @ordered
-     */
-    public static final int BITWISE_NEG_VALUE = 25;
 
     /**
      * An array of all the '<em><b>Operator Type</b></em>' enumerators.
@@ -656,8 +656,8 @@ public enum OperatorType implements Enumerator {
             SHIFT_RIGHT,
             SHIFT_RIGHT_UNSIGNED,
             BITWISE_XOR,
+            BITWISE_NOT,
             CONDITIONAL,
-            BITWISE_NEG,
         };
 
     /**
@@ -738,8 +738,8 @@ public enum OperatorType implements Enumerator {
             case SHIFT_RIGHT_VALUE: return SHIFT_RIGHT;
             case SHIFT_RIGHT_UNSIGNED_VALUE: return SHIFT_RIGHT_UNSIGNED;
             case BITWISE_XOR_VALUE: return BITWISE_XOR;
+            case BITWISE_NOT_VALUE: return BITWISE_NOT;
             case CONDITIONAL_VALUE: return CONDITIONAL;
-            case BITWISE_NEG_VALUE: return BITWISE_NEG;
         }
         return null;
     }

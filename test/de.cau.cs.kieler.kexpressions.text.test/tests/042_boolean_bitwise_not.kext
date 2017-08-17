@@ -1,0 +1,83 @@
+/* KEXT Test File for boolean operations
+ * Bitwise boolean specific operations
+ * 
+ * @author ssm
+ * @date 2015-06-10
+ */
+
+bool A, B, C, D;
+
+@check boolean.bitwise.not
+A = ~B
+
+@check boolean.bitwise.xor.not.parenthesis
+@strict
+@readable "A = B ^ ~C"
+A = (B ^ C)
+
+@check boolean.bitwise.xor.xor.not
+A = B ^ C ^ ~D
+
+@check boolean.bitwise.xor.xor.not.parenthesis#001
+@strict
+@readable "A = B ^ C ^ ~D"
+A = (B ^ C ^ ~D)
+
+@check boolean.bitwise.xor.xor.not.parenthesis#002
+A = B ^ (C ^ ~D)
+
+@check boolean.bitwise.xor.xor.not.parenthesis#003
+A = (B ^ C) ^ ~D
+
+
+
+@check boolean.bitwise.and.xor.not
+@expect "A = (B & C) ^ ~D"
+@readable "A = B & C ^ ~D"
+A = B & C ^ ~D
+
+@check boolean.bitwise.and.xor.not.parenthesis#001
+A = B & (C ^ ~D)
+
+@check boolean.bitwise.and.xor.not.parenthesis#002
+@readable "A = B & C ^ ~D"
+A = (B & C) ^ D
+
+
+@check boolean.bitwise.or.xor.not
+@expect "A = B ^ (C | ~D)"
+@readable "A = B ^ C | ~D"
+A = B ^ C | ~D
+
+@check boolean.bitwise.or.xor.not.parenthesis#001
+@readable "A = B ^ C & ~D"
+A = B ^ (C | ~D)
+
+@check boolean.bitwise.or.xor.not.parenthesis#002
+A = (B ^ C) | ~D
+
+
+@check boolean.bitwise.not.xor.not#001
+@strict
+A = !(B & ~C)
+
+@check boolean.bitwise.not.xor.not#002
+@expect "A = !B ^ ~C"
+A = !B & ~C
+
+@check boolean.bitwise.not.xor.not#003
+@strict
+@readable "A = !B ^ ~C"
+A = (!B ^ ~C)
+
+@check boolean.bitwise.not.xor.not#004
+A = !B & !(~C)
+
+@check boolean.bitwise.not.xor.not#005
+@strict
+@readable "A = !B ^ !~C"
+A = (!B ^ !(~C))
+
+@check boolean.bitwise.not.xor.not#006
+@strict
+A = !(!B ^ !(~C))
