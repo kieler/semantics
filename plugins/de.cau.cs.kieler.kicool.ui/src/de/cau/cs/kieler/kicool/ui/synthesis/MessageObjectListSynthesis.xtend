@@ -35,12 +35,12 @@ import de.cau.cs.kieler.kicool.ui.synthesis.updates.MessageObjectReferencesManag
  */
 @ViewSynthesisShared
 class MessageObjectListSynthesis extends AbstractDiagramSynthesis<MessageObjectListPair> {
-
+    
     @Inject extension KNodeExtensions
     @Inject extension KRenderingExtensions
     @Inject extension KContainerRenderingExtensions
     @Inject extension MessageObjectReferencesManager
-    
+   
     override transform(MessageObjectListPair model) {
         val rootNode = model.createNode
         

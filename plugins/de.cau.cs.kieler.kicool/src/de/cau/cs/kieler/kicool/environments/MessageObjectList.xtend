@@ -40,23 +40,27 @@ class MessageObjectList extends LinkedList<MessageObjectLink> implements IKiCool
     }    
     
     def add(String msg) {
-        add(new MessageObjectLink(msg, null, true, null, null))
+        add(new MessageObjectLink(msg, null, true, null, null, null))
     }
     
     def add(String msg, Object object) {
-        add(new MessageObjectLink(msg, object, true, null, null))
+        add(new MessageObjectLink(msg, object, true, null, null, null))
     }
     
     def add(String msg, Object object, boolean annotate) {
-        add(new MessageObjectLink(msg, object, annotate, null, null))
+        add(new MessageObjectLink(msg, object, annotate, null, null, null))
     }
     
     def add(String msg, Object object, boolean annotate, IColorSystem colorSystem) {
-        add(new MessageObjectLink(msg, object, annotate, colorSystem, null))
+        add(new MessageObjectLink(msg, object, annotate, colorSystem, null, null))
+    }
+    
+    def add(String msg, Object object, boolean annotate, IColorSystem colorSystem, Object payload) {
+        add(new MessageObjectLink(msg, object, annotate, colorSystem, null, payload))
     }
 
     def add(Exception exception) {
-        add(new MessageObjectLink(exception.toString, null, true, null, exception))
+        add(new MessageObjectLink(exception.toString, null, true, null, exception, null))
     }
 
 }

@@ -19,6 +19,7 @@ import de.cau.cs.kieler.kicool.ProcessorReference
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorStatus
+import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 
 /**
  * Class for a processor environment, which is basically a key value map with some convenient methods.
@@ -56,6 +57,12 @@ class Environment extends EnvironmentPropertyHolder {
     public static val IProperty<Processor<?,?>> PROCESSOR_INSTANCE = 
         new Property<Processor<?,?>>("de.cau.cs.kieler.kicool.processorInstance")
         
+    public static val IProperty<Boolean> ENABLED = 
+        new Property<Boolean>("de.cau.cs.kieler.kicool.enabled", true)
+        
+    public static val IProperty<Boolean> CANCEL_COMPILATION = 
+        new Property<Boolean>("de.cau.cs.kieler.kicool.cancelCompilation", false)
+        
     public static val IProperty<Errors> ERRORS = 
         new Property<Errors>("de.cau.cs.kieler.kicool.errors", new Errors)
 
@@ -73,7 +80,7 @@ class Environment extends EnvironmentPropertyHolder {
 
     public static val IProperty<Long> OVERALL_TIMESTAMP = 
         new Property<Long>("de.cau.cs.kieler.kicool.overallTimestamp", new Long(0))
-
+        
     public static val IProperty<Long> PTIME = 
         new Property<Long>("de.cau.cs.kieler.kicool.pTime", new Long(0))
 
@@ -86,11 +93,11 @@ class Environment extends EnvironmentPropertyHolder {
     public static val IProperty<Boolean> SNAPSHOTS_ENABLED = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.snapshotsEnabled", true)
         
-    public static val IProperty<Boolean> ENABLED = 
-        new Property<Boolean>("de.cau.cs.kieler.kicool.enabled", true)
-        
-    public static val IProperty<Boolean> CANCEL_COMPILATION = 
-        new Property<Boolean>("de.cau.cs.kieler.kicool.cancelCompilation", false)
+    public static val IProperty<UniqueClonableNameCache> UNIQUE_NAME_CACHE = 
+        new Property<UniqueClonableNameCache>("de.cau.cs.kieler.kicool.uniqueNameCache", new UniqueClonableNameCache) 
+
+    public static val IProperty<Boolean> UNIQUE_NAME_CACHE_ENABLED = 
+        new Property<Boolean>("de.cau.cs.kieler.kicool.uniqueNameCacheEnabled", true)
         
     public static val REPORT_ROOT = MessageObjectReferences.ROOT
              

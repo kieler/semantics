@@ -21,6 +21,7 @@ import de.cau.cs.kieler.scg.transformations.sequentializer.SimpleGuardSequential
 import de.cau.cs.kieler.scg.ScgFactory
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 
 /**
  * It would be nice to use generics here, but this is not possible, because the old transform methods are invoked by
@@ -33,6 +34,7 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
  */
 class SequentializerWrapper extends Processor<SCGraphs, SCGraphs> {
     
+    @Inject extension AnnotationsExtensions
     @Inject Injector injector
     
     override getId() {
@@ -47,9 +49,7 @@ class SequentializerWrapper extends Processor<SCGraphs, SCGraphs> {
         val model = getModel
         val wrappedTransformation = injector.getInstance(SimpleGuardSequentializer)
         val SCGGraphs = ScgFactory.eINSTANCE.createSCGraphs => [
-            for (pragma : model.pragmas) {
-                it.pragmas += pragma.copy
-            }            
+            model.copyPragmas(it)
         ]
         for (scg : model.scgs) {
             SCGGraphs.scgs += wrappedTransformation.transform(scg, null)                               

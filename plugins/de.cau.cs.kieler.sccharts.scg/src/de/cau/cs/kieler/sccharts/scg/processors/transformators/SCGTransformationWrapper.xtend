@@ -23,7 +23,7 @@ import de.cau.cs.kieler.scg.ScgFactory
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 
 /**
  * It would be nice to use generics here, but this is not possible, because the old transform methods are invoked by
@@ -37,6 +37,7 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 class SCGTransformationWrapper extends Processor<SCCharts, SCGraphs> {
     
     @Inject Injector injector
+    @Inject extension AnnotationsExtensions
     
     override getId() {
         "de.cau.cs.kieler.sccharts.scg.processors.transformators.SCG"
@@ -53,9 +54,7 @@ class SCGTransformationWrapper extends Processor<SCCharts, SCGraphs> {
             creationalTransformation(model, it) // Tell KITT that this is not an in-place transformation from here on
             it.trace(model)
             
-            for (pragma : model.pragmas) {
-                it.pragmas += pragma.copy
-            }
+            model.copyPragmas(it)
             
             scgs += wrappedTransformation.transform(model, null) 
         ]

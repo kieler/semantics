@@ -67,6 +67,7 @@ import de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorSystem
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.MessageObjectReferencesManager.fillUndefinedColors
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.OnOffToggle
 import de.cau.cs.kieler.kicool.ui.synthesis.MessageObjectListPair
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 
 /**
  * The data manager handles all synthesis updates.
@@ -79,6 +80,8 @@ class ProcessorDataManager {
     
     private static Injector injector =
             new KiCoolStandaloneSetup().createInjectorAndDoEMFRegistration();    
+            
+    private static KRenderingExtensions kRenderingExtensions = new KRenderingExtensions
     
     static val NODE_PROCESSOR = "processor"
     static val NODE_PROCESSOR_BODY = "processorbody"
@@ -383,6 +386,10 @@ class ProcessorDataManager {
     static def void setFBColor(KContainerRendering container, ColorSystem colorSystem) {
         container.setFBColors(colorSystem.foreground.color, colorSystem.background.color, colorSystem.backgroundTarget.color)
     }
+    
+    static def void setFBColorViaExtension(KContainerRendering container, ColorSystem colorSystem) {
+        container.setFBColorsViaExtension(colorSystem.foreground.color, colorSystem.background.color, colorSystem.backgroundTarget.color)
+    }
 
     static def void setFBAColor(KContainerRendering container, ColorSystem colorSystem, int alpha) {
         container.setFBAColors(colorSystem.foreground.color, colorSystem.background.color, colorSystem.backgroundTarget.color, alpha)
@@ -411,7 +418,12 @@ class ProcessorDataManager {
             }
         ]
     }
-
+    
+    private static def void setFBColorsViaExtension(KContainerRendering container, KColor foreground, KColor background, KColor backgroundTarget) {
+        kRenderingExtensions.setForeground(container, foreground)
+        kRenderingExtensions.setBackgroundGradient(container, background, backgroundTarget, 0)
+    }
+    
     private static def void setFBAColors(KContainerRendering container, KColor foreground, KColor background, KColor backgroundTarget, int alpha) {
         container.styles.filter(KColoring).forEach[ c |
             if (c instanceof KForeground) c.color = foreground

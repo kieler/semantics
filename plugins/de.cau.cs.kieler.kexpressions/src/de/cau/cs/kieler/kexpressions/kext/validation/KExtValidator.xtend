@@ -123,4 +123,12 @@ class KExtValidator extends AbstractKExtValidator {
            }
        }
     }
+    
+    @Check
+    def void checkPureSignal(VariableDeclaration declaration) {
+        if (declaration.type == ValueType.PURE && (!declaration.signal)) {
+            error("Pure types are only allowed if used in combination with signals.",
+                declaration, null, -1)
+        }
+    }
 }

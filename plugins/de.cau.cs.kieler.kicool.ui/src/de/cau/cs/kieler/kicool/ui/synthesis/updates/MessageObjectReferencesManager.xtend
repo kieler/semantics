@@ -36,6 +36,11 @@ import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.kicool.environments.MessageObjectList
 import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.klighd.kgraph.KLabel
+import org.eclipse.elk.graph.properties.IProperty
+import org.eclipse.elk.graph.properties.Property
+import org.eclipse.elk.graph.properties.IPropertyHolder
+
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.*
 
 /**
  * @author ssm
@@ -44,6 +49,9 @@ import de.cau.cs.kieler.klighd.kgraph.KLabel
  *
  */
 class MessageObjectReferencesManager {
+    
+    public static val IProperty<Object> MESSAGE_OBJECT_REFERENCE = 
+        new Property<Object>("de.cau.cs.kieler.kicool.ui.updates.messageObjectReference", null)    
     
     @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions 
@@ -56,6 +64,8 @@ class MessageObjectReferencesManager {
         node.eAdapters.add(trackingAdapter)
         
         val reverseLabelList = <KEdge> newLinkedList
+
+        val morElements = node.eAllContents.filter(IPropertyHolder).filter[ getProperty(MESSAGE_OBJECT_REFERENCE) !== null ].toList
         
         for(reference : references) {
             if (reference.object != null) {
@@ -72,6 +82,17 @@ class MessageObjectReferencesManager {
                         } else if (n instanceof KEdge) {
                             reference.createCommentLabel(reference.message, n, reference.colorSystem as ColorSystem)
                             reverseLabelList += n
+
+                            for (obj : morElements) {
+                                val mor = obj.getProperty(MESSAGE_OBJECT_REFERENCE)
+                                if (mor.equals(reference.payload)) {
+                                    if (obj instanceof KEdge) {
+                                        obj.container.setFBColorViaExtension(reference.colorSystem as ColorSystem)
+                                        obj.container.lineWidth = 2.0f
+                                        obj.container.styles.forEach[ propagateToChildren = true ]
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -86,10 +107,11 @@ class MessageObjectReferencesManager {
             edge.labels.clear
             edge.labels += labels.reverse
         }
+                
     } 
     
     private def KLabel createCommentLabel(Object association, String text, KEdge edge, ColorSystem colorSystem) {
-        val label = edge.createLabel
+        val label = edge.createLabel()
         label.configureCenterEdgeLabel(text) // Add text
         label.getKRendering => [ // Configure text
             fontSize = 7;
@@ -146,7 +168,7 @@ class MessageObjectReferencesManager {
         val newReferences = new MessageObjectList
         for(ml : mol) {
             val IColorSystem cs = if (ml.colorSystem != null) ml.colorSystem else colorSystem
-            newReferences.add(new MessageObjectLink(ml.message, ml.object, ml.annotate, cs, null))
+            newReferences.add(new MessageObjectLink(ml.message, ml.object, ml.annotate, cs, null, ml.payload))
         }
         newReferences
     }     

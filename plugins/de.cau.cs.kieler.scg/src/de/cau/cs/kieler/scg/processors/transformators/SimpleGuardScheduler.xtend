@@ -172,7 +172,7 @@ class SimpleGuardScheduler extends Processor<SCGraphs, SCGraphs> {
     	            if (assignment.heuristicallyTheSameTo(guardedNodes)) {
     	                environment.errors.add(originalModel, 
     	                   "Causal loop!", 
-    	                   assignment.eContainer)
+    	                   assignment.eContainer, assignment.valuedObject.name)
     	            }
     	        }
     	    } 
