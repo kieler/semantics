@@ -297,19 +297,15 @@ Parameter returns Parameter:
 TextExpression returns TextExpression:
 	text=HOSTCODE;
 
-// Int Value Rule
 IntValue returns IntValue:
 	value=INT;
 
-// Float Value Rule
 FloatValue returns FloatValue:
 	value=FLOAT;
 
-// Bool Value Rule
 BoolValue returns BoolValue:
 	value=BOOLEAN;
 	
-// String Value Rule	
 StringValue returns StringValue:
     value=STRING;
     
@@ -335,77 +331,77 @@ AnyValue returns Value:
 //  KExpressions Enums  // 
 // -------------------- //
 
-// Compare Operator Enum 
 enum CompareOperator returns OperatorType:
 	EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="!=";
 
-// Pre Operator Enum
 enum PreOperator returns OperatorType:
     PRE="pre";
 
-// Bitewise Or Operator Enum
+enum BitwiseNegOperator returns OperatorType:
+    BITWISE_NEG="~";
+    
+enum BitwiseXOrOperator returns OperatorType:
+    BITWISE_XOR="^";
+    
 enum BitwiseOrOperator returns OperatorType:
 	BITWISE_OR="|";
 
-// Bitwise And Operator Enum
 enum BitwiseAndOperator returns OperatorType:
 	BITWISE_AND="&";
 
-// Not Operator Enum
 enum NotOperator returns OperatorType:
 	NOT="!";
 
-// Add Operator Enum
 enum AddOperator returns OperatorType:
 	ADD="+";
 	
-// Sub Operator Enum
 enum SubOperator returns OperatorType:
 	SUB="-";
 	
-// Mult Operator Enum
 enum MultOperator returns OperatorType:	
 	MULT="*";
 
-// Mod Operator Enum
 enum ModOperator returns OperatorType:	
 	MOD="%";
 
-// Div Operator Enum
 enum DivOperator returns OperatorType:	
 	DIV="/";
 
-// Val Operator Enum
 enum ValOperator returns OperatorType:
 	VAL="val";
 
-// Logical Or Operator Enum
 enum LogicalOrOperator returns OperatorType:
 	LOGICAL_OR="||";
 
-// Logical And Operator Enum
 enum LogicalAndOperator returns OperatorType:
 	LOGICAL_AND="&&";
 	
-// Postfix Operator Enum
+enum ShiftLeft returns OperatorType:
+    SHIFT_LEFT="<<";
+
+enum ShiftRight returns OperatorType:
+    SHIFT_RIGHT=">>";
+    
+enum ShiftRightUnsigned returns OperatorType:
+    SHIFT_RIGHT=">>>";
+	
 enum PostfixAdd returns OperatorType:
     POSTFIX_ADD="++";
 
-// Postfix Operator Enum
 enum PostfixSub returns OperatorType:
     POSTFIX_SUB="--";
+    
+enum ConditionalType returns OperatorType:
+    CONDITIONAL;        
 
-// Value Type Enum
 enum ValueType returns ValueType:
 	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned"	| 
 	INT="int" | FLOAT="float" |
 	STRING="string" | HOST="host";
 	
-// Host Type Enum
 enum HostType returns ValueType:
     HOST="host";
 
-// Combine Operator Enum
 enum CombineOperator returns CombineOperator:
 	NONE="none" | ADD="+" | MULT="*" | MAX="max" |
 	MIN="min" | OR="|" | AND="&" | HOST="host";

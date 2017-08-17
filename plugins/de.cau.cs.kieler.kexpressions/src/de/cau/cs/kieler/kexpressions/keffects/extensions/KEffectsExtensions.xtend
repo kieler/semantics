@@ -55,6 +55,14 @@ class KEffectsExtensions {
         ]
     }
     
+    def Assignment createAssignment(ValuedObject valuedObject, Expression expression, AssignOperator operator) {
+        KEffectsFactory.eINSTANCE.createAssignment => [
+            it.valuedObject = valuedObject
+            it.expression = expression
+            it.operator = operator
+        ]
+    }
+    
    // Convert a String into a host code effect
    def HostcodeEffect asHostcodeEffect(String hostCode) {
        val effect = KEffectsFactory::eINSTANCE.createHostcodeEffect()
@@ -78,13 +86,13 @@ class KEffectsExtensions {
 
     // was assignRelative
     def Assignment createRelativeAssignmentWithOr(ValuedObject valuedObject, Expression newValue) {
-        valuedObject.createAssignment(valuedObject.reference.or(newValue))
+        valuedObject.createAssignment(newValue, AssignOperator.ASSIGNOR)
     }
     
     
     // was assignRelativeAnd
     def Assignment createRelativeAssignmentWithAnd(ValuedObject valuedObject, Expression newValue) {
-        valuedObject.createAssignment(valuedObject.reference.and(newValue))
+        valuedObject.createAssignment(newValue, AssignOperator.ASSIGNAND)
     }    
     
     // was assingCombined

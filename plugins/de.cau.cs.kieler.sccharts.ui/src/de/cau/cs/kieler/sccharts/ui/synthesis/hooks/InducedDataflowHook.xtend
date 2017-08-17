@@ -60,6 +60,7 @@ import org.eclipse.elk.core.options.PortSide
 import org.eclipse.elk.core.options.SizeConstraint
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
+import de.cau.cs.kieler.kicool.ui.synthesis.updates.MessageObjectReferencesManager
 
 /**
  * Visualizes the dataflow between SCChart regions.
@@ -286,6 +287,10 @@ class InducedDataflowHook extends SynthesisActionHook {
                 readPorts.filter[readPort|!readPort.node.equals(writePort.node)].forEach[readPort |
                     val KEdge edge = createDataflowEdge(writePort, readPort, 5)
                     createdElements.add(edge);
+
+                    // This leaves a mark on the edge, so that succeeding processors find it.
+                    // TODO Implement better mechanism than name matching.
+                    edge.setProperty(MessageObjectReferencesManager.MESSAGE_OBJECT_REFERENCE, vo.name)
                     
                     // Configure source and target layout constraints
                     configurePortLayout(writePort.node)
@@ -308,7 +313,7 @@ class InducedDataflowHook extends SynthesisActionHook {
                     }
                     val KEdge edge = createDataflowEdge(writePort, preNodeReadPort, 0)
                     createdElements.add(edge)
-
+                    
                     configurePortLayout(writePort.node)
                 }
             }

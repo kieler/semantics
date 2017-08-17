@@ -35,11 +35,12 @@ import java.util.ArrayList
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration
+import com.google.inject.Inject
+import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration.isTracingActive
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration.addTracingProperty
-import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
+import static extension de.cau.cs.kieler.kicool.compilation.internal.UniqueNameCachePopulation.populateNameCache
 
 /**
  * @author ssm
@@ -68,6 +69,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         startEnvironment.setProperty(INPLACE, false)        
         startEnvironment.setProperty(ONGOING_WORKING_COPY, false)
         startEnvironment.setProperty(ORIGINAL_MODEL, null)
+        startEnvironment.setProperty(UNIQUE_NAME_CACHE_ENABLED, true)
         
         result = null
     }
@@ -107,6 +109,10 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
             startEnvironment.setProperty(MODEL, modelCopy)
         } else {
             startEnvironment.setProperty(MODEL, originalModel)
+        }
+        
+        if (startEnvironment.getProperty(UNIQUE_NAME_CACHE_ENABLED) == true) {
+            originalModel.populateNameCache(startEnvironment.getProperty(UNIQUE_NAME_CACHE))
         }
         
         for(intermediateProcessor : getIntermediateProcessors) {

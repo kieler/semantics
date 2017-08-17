@@ -277,7 +277,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
 
 //        creationalTransformation(rootState, sCGraph) // Tell KITT that this is not an in-place transformation from here on
         sCGraph.trace(rootState)
-
+        
         // Handle declarations
         // for (valuedObject : state.valuedObjects) {
         // val valuedObjectSCG = sCGraph.createValuedObject(valuedObject.name)
