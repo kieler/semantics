@@ -15,10 +15,13 @@ package de.cau.cs.kieler.kicool.compilation
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.compilation.internal.AsynchronousCompilation
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
+import java.util.List
 
 import static com.google.common.base.Preconditions.*
-
 import static extension de.cau.cs.kieler.kicool.compilation.internal.ContextPopulation.*
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kicool.KiCoolFactory
+import de.cau.cs.kieler.kicool.ProcessorGroup
 
 /**
  * Class for preparing compilations programmatically through creating compilation contexts. 
@@ -50,6 +53,24 @@ class Compile {
      */
     static def CompilationContext createCompilationContext(String systemID, Object sourceModel) {
         createCompilationContext(KiCoolRegistration.getSystemById(systemID), sourceModel)
+    }
+
+    /**
+     * Create a compilation context from a system id and a source model and additional processors
+     */
+    static def CompilationContext createCompilationContext(String systemID, Object sourceModel, List<String> additionalProcessors) {
+        val system = KiCoolRegistration.getSystemById(systemID).copy => [
+            for (processorId : additionalProcessors) {
+                val entry = KiCoolFactory.eINSTANCE.createProcessorReference => [
+                    it.id = processorId
+                ]
+                switch(processors) {
+                    ProcessorGroup: (processors as ProcessorGroup).processors += entry
+                }
+                
+            }
+        ]
+        createCompilationContext(system, sourceModel)
     }
     
     /**
