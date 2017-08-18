@@ -184,13 +184,13 @@ class SCTXValidator extends AbstractSCTXValidator {
      * @param state the State
      */
     @Check
-    def void checkNoBooleanEmissions(de.cau.cs.kieler.sccharts.State state) {
+    def void checkDuplicateRegionNames(de.cau.cs.kieler.sccharts.State state) {
         val names = <String> newHashSet
         for(r : state.regions) {
             val name = r.name
             if(!name.isNullOrEmpty) {
                 if(names.contains(name)) {
-                    error(DUPLICATE_REGION+" '"+name+"'", r, null, -1)
+                    warning(DUPLICATE_REGION+" '"+name+"'", r, null, -1)
                 } else {
                     names.add(name)
                 }    
