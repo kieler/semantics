@@ -144,6 +144,9 @@
       <Processor
             class="de.cau.cs.kieler.scg.processors.transformators.DependencyTransformation">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.dependencies.DependencyTransformationV2">
+      </Processor>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.system">

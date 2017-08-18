@@ -77,7 +77,7 @@ class DependencyTransformation extends Processor<SCGraphs, SCGraphs> {
     @Inject Injector injector
     
     override getId() {
-        "de.cau.cs.kieler.scg.processors.transformators.dependency"
+        "de.cau.cs.kieler.scg.processors.transformators.dependency.v1"
     }
     
     override getName() {
