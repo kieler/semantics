@@ -78,7 +78,7 @@ ${varname}<#assign index = 0><#list indices as s>[i${index}]<#assign index = ind
 <#macro value_of_item item>
 <#if vartype == "int" || vartype == "float">
 ${item}->valuedouble;
-<#elseif vartype == "bool">
+<#elseif vartype == "bool" || vartype == "pure">
 ${item}->valueint;
 <#elseif vartype == "string">
 ${item}->valuestring;
@@ -88,7 +88,7 @@ ${item}->valuestring;
 <#macro cJSON_value_method>
 <#if vartype == "int" || vartype == "float">
 cJSON_CreateNumber<#t>
-<#elseif vartype == "bool">
+<#elseif vartype == "bool" || vartype == "pure">
 cJSON_CreateBool<#t>
 <#elseif vartype == "string">
 cJSON_CreateString<#t>
