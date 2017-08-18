@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.annotations.StringPragma
 import de.cau.cs.kieler.sccharts.processors.transformators.For
+import de.cau.cs.kieler.sccharts.SCCharts
 
 //import org.eclipse.xtext.validation.Check
 
@@ -64,6 +65,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     static val String REGION_NO_FINAL_STATE = "Every region should have a final state whenever its parent state has a termination transition";
     static val String STATE_NOT_REACHABLE = "The state is not reachable";
     static val String NO_REGION = "A state with a termination transition must have inner behaviour";
+    static val String DUPLICATE_REGION = "There are multiple regions with the same name";
     
     static val String NON_SIGNAL_EMISSION = "Non-signals sould be used in an emission";
     static val String NON_VARIABLE_ASSIGNMENT = "Non-variables cannot be used in an assignment";
@@ -174,6 +176,26 @@ class SCTXValidator extends AbstractSCTXValidator {
                 warning(NON_SIGNAL_EMISSION, emission, null, -1);
             }
         } 
+    }
+    
+    /**
+     * Region names must be unique
+     *
+     * @param state the State
+     */
+    @Check
+    def void checkDuplicateRegionNames(de.cau.cs.kieler.sccharts.State state) {
+        val names = <String> newHashSet
+        for(r : state.regions) {
+            val name = r.name
+            if(!name.isNullOrEmpty) {
+                if(names.contains(name)) {
+                    warning(DUPLICATE_REGION+" '"+name+"'", r, null, -1)
+                } else {
+                    names.add(name)
+                }    
+            }
+        }
     }
 
     // -------------------------------------------------------------------------    
