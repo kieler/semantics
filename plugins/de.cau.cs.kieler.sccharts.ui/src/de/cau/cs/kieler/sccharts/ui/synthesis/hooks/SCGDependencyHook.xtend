@@ -131,21 +131,25 @@ class SCGDependencyHook extends SynthesisActionHook {
 	public static final String JOB_NAME = "Calculating SCG Dependencies";
 	/** The related synthesis option */
 	public static final SynthesisOption SHOW_SCG_DEPENDENCIES = SynthesisOption.createCheckOption(
-		"Show SCG Dependencies", false).setCategory(GeneralSynthesisOptions::DEBUGGING)
+		"Show SCG Dependencies", false)
+		.setCategory(GeneralSynthesisOptions::DEBUGGING)
 		.setUpdateStrategy(SimpleUpdateStrategy.ID)
 		// Deactivated to force Simple Update Strategy
 		//.setUpdateAction(SCGDependencyHook.ID); // Add this action as updater
 	/** The related synthesis option for regions */
     public static final SynthesisOption SCG_DEPENDENCY_TYPES = SynthesisOption.createChoiceOption("Dependency Types",
         newArrayList(DepType.Elements, DepType.Regions, DepType.DataflowOneEdge, DepType.DataflowHyperedge),
-        DepType.Elements).setCategory(GeneralSynthesisOptions::DEBUGGING).setUpdateStrategy(SimpleUpdateStrategy.ID)
+        DepType.Elements).setCategory(GeneralSynthesisOptions::DEBUGGING)
+        .setUpdateStrategy(SimpleUpdateStrategy.ID)
         // Deactivated to force Simple Update Strategy
         //.setUpdateAction(SCGDependencyHook.ID); // Add this action as updater
     /** Option to show only dependencies of selected elements */
 	public static final SynthesisOption SHOW_SELECTED_DEPENDENCIES = SynthesisOption.createCheckOption(
 		"Show only Dependencies of selected Elements", false)
 		.setCategory(GeneralSynthesisOptions::DEBUGGING)
-        .setUpdateAction(SCGDependencyHook.ID); // Add this action as updater
+		.setUpdateStrategy(SimpleUpdateStrategy.ID)
+        // Deactivated to force Simple Update Strategy
+        //.setUpdateAction(SCGDependencyHook.ID); // Add this action as updater
 	/** Property to store analysis results */
 	private static final IProperty<HashMultimap<DepType, KEdge>> DEPENDENCY_EDGES = new Property<HashMultimap<DepType, KEdge>>(
 		"de.cau.cs.kieler.sccharts.ui.synthesis.hooks.dependency.edges", null);
@@ -199,7 +203,7 @@ class SCGDependencyHook extends SynthesisActionHook {
 
 	override finish(Scope model, KNode rootNode) {
 		if (SHOW_SCG_DEPENDENCIES.booleanValue) {
-			rootNode.showDependencies(model);
+			rootNode.showDependencies(model as State);
 			val contextViewer = usedContext.getViewer()?.getContextViewer();
 			if (SHOW_SELECTED_DEPENDENCIES.booleanValue) {
 				rootNode.hideDependencies
@@ -214,30 +218,31 @@ class SCGDependencyHook extends SynthesisActionHook {
 	}
 
 	override executeAction(KNode rootNode) {
-	    var boolean relayout = false
-		if (SHOW_SCG_DEPENDENCIES.booleanValue) {
-			relayout = rootNode.showDependencies(usedContext.inputModel);
-		} else {
-			rootNode.hideDependencies;
-		}
-		val contextViewer = usedContext.getViewer().getContextViewer();
-		if (SHOW_SELECTED_DEPENDENCIES.booleanValue) {
-			rootNode.hideDependencies
-			contextViewer.addSelectionChangedListener(selectionListener);
-        } else {
-            contextViewer.removeSelectionChangedListener(selectionListener);
-		}
-		return ActionResult.createResult(relayout);
+//	    var boolean relayout = false
+//		if (SHOW_SCG_DEPENDENCIES.booleanValue) {
+//			relayout = rootNode.showDependencies(usedContext.inputModel);
+//		} else {
+//			rootNode.hideDependencies;
+//		}
+//		val contextViewer = usedContext.getViewer().getContextViewer();
+//		if (SHOW_SELECTED_DEPENDENCIES.booleanValue) {
+//			rootNode.hideDependencies
+//			contextViewer.addSelectionChangedListener(selectionListener);
+//        } else {
+//            contextViewer.removeSelectionChangedListener(selectionListener);
+//		}
+//		return ActionResult.createResult(relayout);
+      return ActionResult.createResult(false);
 	}
 
 	/** 
 	 * If necessary create the dependency edges and show them.
 	 */
-	private def boolean showDependencies(KNode rootNode, Object model) {
-		if (!(model instanceof State)) {
+	private def boolean showDependencies(KNode rootNode, State rootState) {
+		if (!(rootState instanceof State)) {
 			throw new IllegalArgumentException("Cannot perform SCG analysis on models other than states");
 		}
-		val scc = model as State;
+		val scc = rootState as State;
 		val context = usedContext;
 		val edges = rootNode.getProperty(DEPENDENCY_EDGES);
 		// If not already created
@@ -319,10 +324,17 @@ class SCGDependencyHook extends SynthesisActionHook {
      */
     private def CompilationContext compileDependencies(State state) {
         val model = state.eContainer as SCCharts
-        val cc = Compile.createCompilationContext("de.cau.cs.kieler.scg.dependency", model)
+        val cc = Compile.createCompilationContext("de.cau.cs.kieler.sccharts.netlist", model)
         
         cc.startEnvironment.setProperty(Environment.INPLACE, true)
         cc.startEnvironment.setProperty(Tracing.ACTIVE_TRACING, true)
+        
+        val dependecyAnalysis = cc.processorMap.entrySet.findFirst[
+            key.id.equals("de.cau.cs.kieler.scg.processors.transformators.dependency")
+        ]?.value
+        if (dependecyAnalysis == null) throw new NullPointerException("Can not find dependency transformation in compilation system")
+        // Stop after the dependency analysis
+        dependecyAnalysis.environment.setProperty(Environment.CANCEL_COMPILATION, true) 
         
         cc.compile
 
@@ -361,11 +373,11 @@ class SCGDependencyHook extends SynthesisActionHook {
 		val HashMap<Pair<EObject, EObject>, KEdge> elementEdges = newHashMap;
 		val HashMap<Pair<EObject, EObject>, KEdge> regionEdges = newHashMap;
         
-		if (compiledModel instanceof SCGraph) {
-			val scg = compiledModel as SCGraph;
+		if (compiledModel instanceof SCGraphs) {
+			val scgRoot = (compiledModel as SCGraphs)
+			val scg = scgRoot.scgs.head;
 
-//			val mapping = result.getAuxiliaryData(Tracing).head?.getMapping(scg, scc);
-            val mapping = context.startEnvironment.getProperty(Tracing.TRACING_DATA).getMapping(scg, scc)      
+            val mapping = context.startEnvironment.getProperty(Tracing.TRACING_DATA).getMapping(scgRoot, scc.eContainer as SCCharts)      
 			if (mapping !== null) {
 				val filterDiagramPredicate = KLabel.instanceOf.or([
 					return it instanceof KRectangle && !(it as KRectangle).getProperty(StateStyles.IS_LAYOUT_ELEMENT)
