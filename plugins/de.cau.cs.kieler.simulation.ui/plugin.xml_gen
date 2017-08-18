@@ -9,7 +9,7 @@
             class="de.cau.cs.kieler.simulation.ui.trace.KTraceExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
             contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
             default="true"
-            extensions="ktrace,eso"
+            extensions="ktrace,eso,esi"
             id="de.cau.cs.kieler.simulation.trace.KTrace"
             name="KTrace Editor">
         </editor>
@@ -234,6 +234,20 @@
         <resourceServiceProvider
             class="de.cau.cs.kieler.simulation.ui.trace.KTraceExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
             uriExtension="eso">
+        </resourceServiceProvider>
+    </extension>
+
+	<extension
+		point="org.eclipse.emf.ecore.extension_parser">
+		<parser
+			class="de.cau.cs.kieler.simulation.ui.trace.KTraceExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+			type="esi">
+		</parser>
+	</extension>
+	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
+        <resourceServiceProvider
+            class="de.cau.cs.kieler.simulation.ui.trace.KTraceExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+            uriExtension="esi">
         </resourceServiceProvider>
     </extension>
 

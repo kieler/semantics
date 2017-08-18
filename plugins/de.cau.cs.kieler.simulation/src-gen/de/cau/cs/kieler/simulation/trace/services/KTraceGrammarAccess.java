@@ -346,80 +346,43 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.simulation.trace.KTrace.KTick");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cTickAction_0 = (Action)cGroup.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Assignment cInputsAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
-		private final RuleCall cInputsAssignmentParserRuleCall_1_0_0 = (RuleCall)cInputsAssignment_1_0.eContents().get(0);
-		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
-		private final Keyword cCommaKeyword_1_1_0 = (Keyword)cGroup_1_1.eContents().get(0);
-		private final Assignment cInputsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
-		private final RuleCall cInputsAssignmentParserRuleCall_1_1_1_0 = (RuleCall)cInputsAssignment_1_1_1.eContents().get(0);
+		private final Assignment cInputsAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cInputsAssignmentParserRuleCall_1_0 = (RuleCall)cInputsAssignment_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
 		private final Keyword cSolidusKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cOutputsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cOutputsAssignmentParserRuleCall_2_1_0 = (RuleCall)cOutputsAssignment_2_1.eContents().get(0);
-		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
-		private final Keyword cCommaKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
-		private final Assignment cOutputsAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
-		private final RuleCall cOutputsAssignmentParserRuleCall_2_2_1_0 = (RuleCall)cOutputsAssignment_2_2_1.eContents().get(0);
 		private final Keyword cPauseKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//KTick ktrace::Tick:
-		//	{ktrace::Tick} (inputs+=Assignment (',' inputs+=Assignment)*)? ('/' outputs+=Assignment (',' outputs+=Assignment)*)?
+		//	{ktrace::Tick} inputs+=Assignment* ('/' outputs+=Assignment*)?
 		//	'pause'? ';'
 		@Override public ParserRule getRule() { return rule; }
 
-		//{ktrace::Tick} (inputs+=Assignment (',' inputs+=Assignment)*)? ('/' outputs+=Assignment (',' outputs+=Assignment)*)?
-		//'pause'? ';'
+		//{ktrace::Tick} inputs+=Assignment* ('/' outputs+=Assignment*)? 'pause'? ';'
 		public Group getGroup() { return cGroup; }
 
 		//{ktrace::Tick}
 		public Action getTickAction_0() { return cTickAction_0; }
 
-		//(inputs+=Assignment (',' inputs+=Assignment)*)?
-		public Group getGroup_1() { return cGroup_1; }
-
-		//inputs+=Assignment
-		public Assignment getInputsAssignment_1_0() { return cInputsAssignment_1_0; }
+		//inputs+=Assignment*
+		public Assignment getInputsAssignment_1() { return cInputsAssignment_1; }
 
 		//Assignment
-		public RuleCall getInputsAssignmentParserRuleCall_1_0_0() { return cInputsAssignmentParserRuleCall_1_0_0; }
+		public RuleCall getInputsAssignmentParserRuleCall_1_0() { return cInputsAssignmentParserRuleCall_1_0; }
 
-		//(',' inputs+=Assignment)*
-		public Group getGroup_1_1() { return cGroup_1_1; }
-
-		//','
-		public Keyword getCommaKeyword_1_1_0() { return cCommaKeyword_1_1_0; }
-
-		//inputs+=Assignment
-		public Assignment getInputsAssignment_1_1_1() { return cInputsAssignment_1_1_1; }
-
-		//Assignment
-		public RuleCall getInputsAssignmentParserRuleCall_1_1_1_0() { return cInputsAssignmentParserRuleCall_1_1_1_0; }
-
-		//('/' outputs+=Assignment (',' outputs+=Assignment)*)?
+		//('/' outputs+=Assignment*)?
 		public Group getGroup_2() { return cGroup_2; }
 
 		//'/'
 		public Keyword getSolidusKeyword_2_0() { return cSolidusKeyword_2_0; }
 
-		//outputs+=Assignment
+		//outputs+=Assignment*
 		public Assignment getOutputsAssignment_2_1() { return cOutputsAssignment_2_1; }
 
 		//Assignment
 		public RuleCall getOutputsAssignmentParserRuleCall_2_1_0() { return cOutputsAssignmentParserRuleCall_2_1_0; }
-
-		//(',' outputs+=Assignment)*
-		public Group getGroup_2_2() { return cGroup_2_2; }
-
-		//','
-		public Keyword getCommaKeyword_2_2_0() { return cCommaKeyword_2_2_0; }
-
-		//outputs+=Assignment
-		public Assignment getOutputsAssignment_2_2_1() { return cOutputsAssignment_2_2_1; }
-
-		//Assignment
-		public RuleCall getOutputsAssignmentParserRuleCall_2_2_1_0() { return cOutputsAssignmentParserRuleCall_2_2_1_0; }
 
 		//'pause'?
 		public Keyword getPauseKeyword_3() { return cPauseKeyword_3; }
@@ -594,7 +557,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//KTick ktrace::Tick:
-	//	{ktrace::Tick} (inputs+=Assignment (',' inputs+=Assignment)*)? ('/' outputs+=Assignment (',' outputs+=Assignment)*)?
+	//	{ktrace::Tick} inputs+=Assignment* ('/' outputs+=Assignment*)?
 	//	'pause'? ';'
 	public KTickElements getKTickAccess() {
 		return pKTick;

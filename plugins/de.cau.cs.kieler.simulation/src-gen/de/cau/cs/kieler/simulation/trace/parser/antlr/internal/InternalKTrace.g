@@ -590,10 +590,10 @@ ruleKTick returns [EObject current=null]
             grammarAccess.getKTickAccess().getTickAction_0(),
             $current);
     }
-)((
+)(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getKTickAccess().getInputsAssignmentParserRuleCall_1_0_0()); 
+	        newCompositeNode(grammarAccess.getKTickAccess().getInputsAssignmentParserRuleCall_1_0()); 
 	    }
 		lv_inputs_1_0=ruleAssignment		{
 	        if ($current==null) {
@@ -608,79 +608,35 @@ ruleKTick returns [EObject current=null]
 	    }
 
 )
-)(	otherlv_2=',' 
+)*(	otherlv_2='/' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getKTickAccess().getCommaKeyword_1_1_0());
-    }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getKTickAccess().getInputsAssignmentParserRuleCall_1_1_1_0()); 
-	    }
-		lv_inputs_3_0=ruleAssignment		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getKTickRule());
-	        }
-       		add(
-       			$current, 
-       			"inputs",
-        		lv_inputs_3_0, 
-        		"de.cau.cs.kieler.kexpressions.keffects.KEffects.Assignment");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-))*)?(	otherlv_4='/' 
-    {
-    	newLeafNode(otherlv_4, grammarAccess.getKTickAccess().getSolidusKeyword_2_0());
+    	newLeafNode(otherlv_2, grammarAccess.getKTickAccess().getSolidusKeyword_2_0());
     }
 (
 (
 		{ 
 	        newCompositeNode(grammarAccess.getKTickAccess().getOutputsAssignmentParserRuleCall_2_1_0()); 
 	    }
-		lv_outputs_5_0=ruleAssignment		{
+		lv_outputs_3_0=ruleAssignment		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getKTickRule());
 	        }
        		add(
        			$current, 
        			"outputs",
-        		lv_outputs_5_0, 
+        		lv_outputs_3_0, 
         		"de.cau.cs.kieler.kexpressions.keffects.KEffects.Assignment");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)(	otherlv_6=',' 
+)*)?(	otherlv_4='pause' 
     {
-    	newLeafNode(otherlv_6, grammarAccess.getKTickAccess().getCommaKeyword_2_2_0());
+    	newLeafNode(otherlv_4, grammarAccess.getKTickAccess().getPauseKeyword_3());
     }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getKTickAccess().getOutputsAssignmentParserRuleCall_2_2_1_0()); 
-	    }
-		lv_outputs_7_0=ruleAssignment		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getKTickRule());
-	        }
-       		add(
-       			$current, 
-       			"outputs",
-        		lv_outputs_7_0, 
-        		"de.cau.cs.kieler.kexpressions.keffects.KEffects.Assignment");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-))*)?(	otherlv_8='pause' 
+)?	otherlv_5=';' 
     {
-    	newLeafNode(otherlv_8, grammarAccess.getKTickAccess().getPauseKeyword_3());
-    }
-)?	otherlv_9=';' 
-    {
-    	newLeafNode(otherlv_9, grammarAccess.getKTickAccess().getSemicolonKeyword_4());
+    	newLeafNode(otherlv_5, grammarAccess.getKTickAccess().getSemicolonKeyword_4());
     }
 )
 ;

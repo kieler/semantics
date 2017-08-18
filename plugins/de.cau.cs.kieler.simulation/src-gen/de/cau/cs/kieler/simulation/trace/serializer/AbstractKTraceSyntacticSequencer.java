@@ -34,6 +34,7 @@ public abstract class AbstractKTraceSyntacticSequencer extends AbstractSyntactic
 	protected AbstractElementAlias match_EsoTick___PercentSignKeyword_2_0___OutputKeyword_2_1_0_or___OutputKeyword_2_1_1_0_ColonKeyword_2_1_1_1______q;
 	protected AbstractElementAlias match_EsoTick___PercentSignPercentSignKeyword_4_0___OutputKeyword_4_1_0_or___OutputKeyword_4_1_1_0_ColonKeyword_4_1_1_1______q;
 	protected AbstractElementAlias match_KTick_PauseKeyword_3_q;
+	protected AbstractElementAlias match_KTick_SolidusKeyword_2_0_q;
 	protected AbstractElementAlias match_KTraces___ResetKeyword_1_0_SemicolonKeyword_1_1__q;
 	protected AbstractElementAlias match_KTraces___ResetKeyword_4_0_SemicolonKeyword_4_1__q;
 	
@@ -52,6 +53,7 @@ public abstract class AbstractKTraceSyntacticSequencer extends AbstractSyntactic
 		match_EsoTick___PercentSignKeyword_2_0___OutputKeyword_2_1_0_or___OutputKeyword_2_1_1_0_ColonKeyword_2_1_1_1______q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getEsoTickAccess().getPercentSignKeyword_2_0()), new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getEsoTickAccess().getOutputKeyword_2_1_1_0()), new TokenAlias(false, false, grammarAccess.getEsoTickAccess().getColonKeyword_2_1_1_1())), new TokenAlias(false, false, grammarAccess.getEsoTickAccess().getOutputKeyword_2_1_0())));
 		match_EsoTick___PercentSignPercentSignKeyword_4_0___OutputKeyword_4_1_0_or___OutputKeyword_4_1_1_0_ColonKeyword_4_1_1_1______q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getEsoTickAccess().getPercentSignPercentSignKeyword_4_0()), new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getEsoTickAccess().getOutputKeyword_4_1_1_0()), new TokenAlias(false, false, grammarAccess.getEsoTickAccess().getColonKeyword_4_1_1_1())), new TokenAlias(false, false, grammarAccess.getEsoTickAccess().getOutputKeyword_4_1_0())));
 		match_KTick_PauseKeyword_3_q = new TokenAlias(false, true, grammarAccess.getKTickAccess().getPauseKeyword_3());
+		match_KTick_SolidusKeyword_2_0_q = new TokenAlias(false, true, grammarAccess.getKTickAccess().getSolidusKeyword_2_0());
 		match_KTraces___ResetKeyword_1_0_SemicolonKeyword_1_1__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getKTracesAccess().getResetKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getKTracesAccess().getSemicolonKeyword_1_1()));
 		match_KTraces___ResetKeyword_4_0_SemicolonKeyword_4_1__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getKTracesAccess().getResetKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getKTracesAccess().getSemicolonKeyword_4_1()));
 	}
@@ -92,6 +94,8 @@ public abstract class AbstractKTraceSyntacticSequencer extends AbstractSyntactic
 				emit_EsoTick___PercentSignPercentSignKeyword_4_0___OutputKeyword_4_1_0_or___OutputKeyword_4_1_1_0_ColonKeyword_4_1_1_1______q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_KTick_PauseKeyword_3_q.equals(syntax))
 				emit_KTick_PauseKeyword_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_KTick_SolidusKeyword_2_0_q.equals(syntax))
+				emit_KTick_SolidusKeyword_2_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_KTraces___ResetKeyword_1_0_SemicolonKeyword_1_1__q.equals(syntax))
 				emit_KTraces___ResetKeyword_1_0_SemicolonKeyword_1_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_KTraces___ResetKeyword_4_0_SemicolonKeyword_4_1__q.equals(syntax))
@@ -264,11 +268,23 @@ public abstract class AbstractKTraceSyntacticSequencer extends AbstractSyntactic
 	 *     'pause'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) ';' (rule start)
-	 *     inputs+=Assignment (ambiguity) ';' (rule end)
+	 *     (rule start) '/'? (ambiguity) ';' (rule start)
+	 *     inputs+=Assignment '/'? (ambiguity) ';' (rule end)
 	 *     outputs+=Assignment (ambiguity) ';' (rule end)
 	 */
 	protected void emit_KTick_PauseKeyword_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     '/'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) 'pause'? ';' (rule start)
+	 *     inputs+=Assignment (ambiguity) 'pause'? ';' (rule end)
+	 */
+	protected void emit_KTick_SolidusKeyword_2_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

@@ -5160,9 +5160,9 @@ rule__KTick__Group__1__Impl
     }
 :
 (
-{ before(grammarAccess.getKTickAccess().getGroup_1()); }
-(rule__KTick__Group_1__0)?
-{ after(grammarAccess.getKTickAccess().getGroup_1()); }
+{ before(grammarAccess.getKTickAccess().getInputsAssignment_1()); }
+(rule__KTick__InputsAssignment_1)*
+{ after(grammarAccess.getKTickAccess().getInputsAssignment_1()); }
 )
 
 ;
@@ -5271,130 +5271,6 @@ finally {
 
 
 
-rule__KTick__Group_1__0
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__KTick__Group_1__0__Impl
-	rule__KTick__Group_1__1
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__KTick__Group_1__0__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getKTickAccess().getInputsAssignment_1_0()); }
-(rule__KTick__InputsAssignment_1_0)
-{ after(grammarAccess.getKTickAccess().getInputsAssignment_1_0()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-rule__KTick__Group_1__1
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__KTick__Group_1__1__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__KTick__Group_1__1__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getKTickAccess().getGroup_1_1()); }
-(rule__KTick__Group_1_1__0)*
-{ after(grammarAccess.getKTickAccess().getGroup_1_1()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-
-
-
-
-rule__KTick__Group_1_1__0
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__KTick__Group_1_1__0__Impl
-	rule__KTick__Group_1_1__1
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__KTick__Group_1_1__0__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getKTickAccess().getCommaKeyword_1_1_0()); }
-
-	',' 
-
-{ after(grammarAccess.getKTickAccess().getCommaKeyword_1_1_0()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-rule__KTick__Group_1_1__1
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__KTick__Group_1_1__1__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__KTick__Group_1_1__1__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getKTickAccess().getInputsAssignment_1_1_1()); }
-(rule__KTick__InputsAssignment_1_1_1)
-{ after(grammarAccess.getKTickAccess().getInputsAssignment_1_1_1()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-
-
-
-
 rule__KTick__Group_2__0
     @init {
 		int stackSize = keepStackSize();
@@ -5432,7 +5308,6 @@ rule__KTick__Group_2__1
     }
 :
 	rule__KTick__Group_2__1__Impl
-	rule__KTick__Group_2__2
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -5445,101 +5320,8 @@ rule__KTick__Group_2__1__Impl
 :
 (
 { before(grammarAccess.getKTickAccess().getOutputsAssignment_2_1()); }
-(rule__KTick__OutputsAssignment_2_1)
+(rule__KTick__OutputsAssignment_2_1)*
 { after(grammarAccess.getKTickAccess().getOutputsAssignment_2_1()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-rule__KTick__Group_2__2
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__KTick__Group_2__2__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__KTick__Group_2__2__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getKTickAccess().getGroup_2_2()); }
-(rule__KTick__Group_2_2__0)*
-{ after(grammarAccess.getKTickAccess().getGroup_2_2()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-
-
-
-
-
-
-rule__KTick__Group_2_2__0
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__KTick__Group_2_2__0__Impl
-	rule__KTick__Group_2_2__1
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__KTick__Group_2_2__0__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getKTickAccess().getCommaKeyword_2_2_0()); }
-
-	',' 
-
-{ after(grammarAccess.getKTickAccess().getCommaKeyword_2_2_0()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-rule__KTick__Group_2_2__1
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__KTick__Group_2_2__1__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__KTick__Group_2_2__1__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getKTickAccess().getOutputsAssignment_2_2_1()); }
-(rule__KTick__OutputsAssignment_2_2_1)
-{ after(grammarAccess.getKTickAccess().getOutputsAssignment_2_2_1()); }
 )
 
 ;
@@ -17980,29 +17762,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__KTick__InputsAssignment_1_0
+rule__KTick__InputsAssignment_1
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getKTickAccess().getInputsAssignmentParserRuleCall_1_0_0()); }
-	ruleAssignment{ after(grammarAccess.getKTickAccess().getInputsAssignmentParserRuleCall_1_0_0()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__KTick__InputsAssignment_1_1_1
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getKTickAccess().getInputsAssignmentParserRuleCall_1_1_1_0()); }
-	ruleAssignment{ after(grammarAccess.getKTickAccess().getInputsAssignmentParserRuleCall_1_1_1_0()); }
+{ before(grammarAccess.getKTickAccess().getInputsAssignmentParserRuleCall_1_0()); }
+	ruleAssignment{ after(grammarAccess.getKTickAccess().getInputsAssignmentParserRuleCall_1_0()); }
 )
 
 ;
@@ -18018,21 +17785,6 @@ rule__KTick__OutputsAssignment_2_1
 (
 { before(grammarAccess.getKTickAccess().getOutputsAssignmentParserRuleCall_2_1_0()); }
 	ruleAssignment{ after(grammarAccess.getKTickAccess().getOutputsAssignmentParserRuleCall_2_1_0()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__KTick__OutputsAssignment_2_2_1
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getKTickAccess().getOutputsAssignmentParserRuleCall_2_2_1_0()); }
-	ruleAssignment{ after(grammarAccess.getKTickAccess().getOutputsAssignmentParserRuleCall_2_2_1_0()); }
 )
 
 ;

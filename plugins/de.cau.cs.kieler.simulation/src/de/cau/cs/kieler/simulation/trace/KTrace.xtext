@@ -49,7 +49,7 @@ KTrace returns ktrace::Trace:
 
 KTick returns ktrace::Tick:
     {ktrace::Tick}
-    (inputs+=Assignment (',' inputs+=Assignment)*)?
-    ('/' outputs+=Assignment (',' outputs+=Assignment)*)?
+    (inputs+=Assignment)*
+    ('/' (outputs+=Assignment)*)?
     'pause'? ';'
 ;    
