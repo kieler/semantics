@@ -12,20 +12,17 @@
  */
 package de.cau.cs.kieler.simulation.handlers
 
-import com.google.common.base.Charsets
-import com.google.common.io.Files
 import de.cau.cs.kieler.prom.build.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.Variable
-import java.io.File
-import java.util.List
-import org.eclipse.core.resources.IFile
+import de.cau.cs.kieler.simulation.trace.ktrace.TraceFile
 import org.eclipse.core.runtime.IPath
 import org.eclipse.core.runtime.Path
-import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
+
+import static de.cau.cs.kieler.simulation.FileExtensions.*
 
 /**
  * @author aas
@@ -44,13 +41,9 @@ class Trace extends DefaultDataHandler {
      * This can be used programatically instead of a path to a file that contains a trace model.
      */
     @Accessors
-    private EObject traceModel
-    
-    private int traceCount = 0
-    private IFile traceFileHandle
-    private List<DataPool> currentTrace
-    
-    private var EsoUtil esoUtil;
+    private TraceFile externalTraceModel
+        
+    private var TraceDataProvider traceDataProvider;
     
     override read(DataPool pool) {
         initialize
@@ -59,7 +52,7 @@ class Trace extends DefaultDataHandler {
             return;
         }
         // Compare variables in pool with output of this tick
-        val tracePool = currentTrace.get(currentTickNumber.intValue)
+        val tracePool = traceDataProvider.getDataPool(currentTickNumber.intValue)
         for(model : pool.models) {
             for(variable : model.variables) {
                 if(variable.isOutput) {
@@ -110,7 +103,7 @@ class Trace extends DefaultDataHandler {
             return;
         }
         // Set inputs of variables in the pool to inputs of the trace.
-        val tracePool = currentTrace.get(currentTickNumber.intValue)
+        val tracePool = traceDataProvider.getDataPool(currentTickNumber.intValue)
         for(model : pool.models) {
             for(variable : model.variables) {
                 if(variable.isInput) {
@@ -146,14 +139,14 @@ class Trace extends DefaultDataHandler {
     }
     
     private def void initialize() {
-        if(currentTrace == null) {
-            if(traceModel != null) {
-                loadEsoTrace(traceModel)
+        if(traceDataProvider == null) {
+            if(externalTraceModel != null) {
+                loadTrace(externalTraceModel)
             } else {
                 val path = new Path(tracePath.stringValue)
                 switch(path.fileExtension.toLowerCase) {
-                    case "eso": loadEsoTrace(path)
-                    case "sim": loadDataPoolHistory(path)
+                    case TRACES.contains(path.fileExtension.toLowerCase): loadTrace(path)
+//                    case SIM_HISTORY: loadDataPoolHistory(path)
                     default:
                         throw new Exception("The file '"+path.toOSString+"' is not a supported trace format.")
                 }
@@ -161,52 +154,47 @@ class Trace extends DefaultDataHandler {
         }
     }
     
-    private def void loadEsoTrace(IPath path) {
-        traceFileHandle = getFile(path)
+    private def void loadTrace(IPath path) {
+        val traceFileHandle = getFile(path)
         if(traceFileHandle != null && traceFileHandle.exists) {
-            esoUtil = new EsoUtil(traceFileHandle)
-            traceCount = esoUtil.traceCount
-            currentTrace = esoUtil.getTraceAsDataPools(currentTraceNumber.intValue)
+            traceDataProvider = new TraceDataProvider(traceFileHandle, currentTraceNumber.intValue)
         } else {
             throw new Exception("Could not load trace '"+path.toOSString+"'")
         }
     }
     
-    private def void loadEsoTrace(EObject trace) {
-        esoUtil = new EsoUtil(trace)
-        traceCount = esoUtil.traceCount
-        currentTrace = esoUtil.getTraceAsDataPools(currentTraceNumber.intValue)
+    private def void loadTrace(TraceFile trace) {
+        traceDataProvider = new TraceDataProvider(trace, currentTraceNumber.intValue)
     }
     
-    private def void loadDataPoolHistory(IPath path) {
-        traceFileHandle = getFile(path)
-        currentTrace = newArrayList
-        if(traceFileHandle != null && traceFileHandle.exists) {
-            val lines = Files.readLines(new File(traceFileHandle.location.toOSString), Charsets.UTF_8)
-            var DataPool lastPool
-            for(line : lines) {
-                val modelName = "Model"
-                val model = Model.createFromJson(modelName, line)
-                if(model != null) {
-                    val pool = new DataPool()
-                    pool.addModel(model)
-                    if(lastPool != null) {
-                        pool.previousPool = lastPool
-                    }
-                    lastPool = pool
-                    currentTrace.add(pool)
-                }
-            }
-        } else {
-            throw new Exception("Could not load trace '"+path.toOSString+"'")
-        }
-    }
+//    private def void loadDataPoolHistory(IPath path) {
+//        val traceFileHandle = getFile(path)
+//        if(traceFileHandle != null && traceFileHandle.exists) {
+//            val lines = Files.readLines(new File(traceFileHandle.location.toOSString), Charsets.UTF_8)
+//            var DataPool lastPool
+//            for(line : lines) {
+//                val modelName = "Model"
+//                val model = Model.createFromJson(modelName, line)
+//                if(model != null) {
+//                    val pool = new DataPool()
+//                    pool.addModel(model)
+//                    if(lastPool != null) {
+//                        pool.previousPool = lastPool
+//                    }
+//                    lastPool = pool
+//                    currentTraceTick.add(pool)
+//                }
+//            }
+//        } else {
+//            throw new Exception("Could not load trace '"+path.toOSString+"'")
+//        }
+//    }
     
     private def TraceEvent createTraceFinishedEvent() {
         val event = new TraceFinishedEvent()
         event.tickNumber = currentTickNumber.intValue
         event.traceNumber = currentTraceNumber.intValue
-        event.traceFile = traceFileHandle
+        event.traceFile = traceDataProvider.sourceFile
         return event
     }
     
@@ -214,7 +202,7 @@ class Trace extends DefaultDataHandler {
         val event = new TraceMismatchEvent()
         event.tickNumber = currentTickNumber.intValue
         event.traceNumber = currentTraceNumber.intValue
-        event.traceFile = traceFileHandle
+        event.traceFile = traceDataProvider.sourceFile
         event.variable = variable
         event.expectedValue = expectedValue
         // The trace number and tick number starts with zero in the data handler.
@@ -223,21 +211,21 @@ class Trace extends DefaultDataHandler {
         event.message = "Mismatch of variable '"+variable.name+"' "
                       + "after tick "+(event.tickNumber+1)+" "
                       + "of trace "+(event.traceNumber+1)+" "
-                      + "from '"+traceFileHandle.projectRelativePath.toOSString+"'\n"
+                      + "from '"+traceDataProvider.filePath+"'\n"
                       + "(trace value: "+expectedValue+", simulation value: "+variable.value+")"
         return event
     }
     
     private def void loadNextTick() {
         currentTickNumber.value = currentTickNumber.intValue+1
-        if(currentTickNumber.intValue >= currentTrace.size) {
+        if(currentTickNumber.intValue >= traceDataProvider.traceLength) {
             val event = createTraceFinishedEvent
             SimulationManager.instance.fireEvent(event)
         }
     }
     
     private def boolean isFinished() {
-        return currentTickNumber.intValue >= currentTrace.size
+        return currentTickNumber.intValue >= traceDataProvider.traceLength
     }   
     
     override getName() {
