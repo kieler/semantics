@@ -368,7 +368,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         parseFiles = reparsingRequired
         if (newParseFilesHash != reparseFilesHash || model == null) {
             reparseFilesHash = newParseFilesHash
-            CViewPlugin.rebuildModelAndrefreshCView(true)
+            //CViewPlugin.refreshCView(true)
+            CViewPlugin.rebuildModelAndrefreshCView(false)
             return null;
         }
 
