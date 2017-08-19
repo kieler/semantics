@@ -1,0 +1,25 @@
+Extension point
+
+ called when traversing 
+ 
+ FILES
+ 
+ PROJECTS
+ 
+ FOLDERS
+ 
+ 
+ ...
+ 
+ -- can create new component types
+ -- as children of files, projects, folders
+
+ 
+ Second Extension point for defining SUBTYPE
+ - color of subtypes
+ - ID of subtypes
+ - visible filter in sidebar with default ON or OFF
+ 
+ Third Extension point for META DATA
+ - like AST
+ - Java reflection

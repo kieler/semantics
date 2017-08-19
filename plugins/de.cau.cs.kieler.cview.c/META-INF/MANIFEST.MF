@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: CView Extension for C Language
+Bundle-SymbolicName: de.cau.cs.kieler.cview.c;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.cview.c.CViewCPlugin
+Bundle-Vendor: Kiel University
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.xtend,
+ de.cau.cs.kieler.cview,
+ de.cau.cs.kieler.cview.model,
+ de.cau.cs.kieler.klighd,
+ org.eclipse.cdt.core;resolution:=optional;visibility:=reexport
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
