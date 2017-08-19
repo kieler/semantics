@@ -9,10 +9,7 @@
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="CViewModel.ecore#//ComponentType">
       <genEnumLiterals ecoreEnumLiteral="CViewModel.ecore#//ComponentType/DIR"/>
       <genEnumLiterals ecoreEnumLiteral="CViewModel.ecore#//ComponentType/FILE"/>
-      <genEnumLiterals ecoreEnumLiteral="CViewModel.ecore#//ComponentType/FUNC"/>
-      <genEnumLiterals ecoreEnumLiteral="CViewModel.ecore#//ComponentType/TYPEDEF"/>
-      <genEnumLiterals ecoreEnumLiteral="CViewModel.ecore#//ComponentType/STRUCT"/>
-      <genEnumLiterals ecoreEnumLiteral="CViewModel.ecore#//ComponentType/DECL"/>
+      <genEnumLiterals ecoreEnumLiteral="CViewModel.ecore#//ComponentType/CUSTOM"/>
     </genEnums>
     <genClasses ecoreClass="CViewModel.ecore#//CViewModel">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CViewModel.ecore#//CViewModel/components"/>
@@ -22,6 +19,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Component/name"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CViewModel.ecore#//Component/parent"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Component/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Component/customTypeID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Component/languageID"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CViewModel.ecore#//Component/reference"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Component/referenceUnresolved"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Component/location"/>
@@ -29,6 +28,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CViewModel.ecore#//Component/children"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Component/tooltip"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Component/rawdata"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Component/filtered"/>
     </genClasses>
     <genClasses ecoreClass="CViewModel.ecore#//Connection">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CViewModel.ecore#//Connection/src"/>

@@ -210,13 +210,65 @@ ruleComponent returns [EObject current=null]
 				}
 			)
 		)
-		otherlv_8='reference'
+		otherlv_8='customTypeID'
 		{
-			newLeafNode(otherlv_8, grammarAccess.getComponentAccess().getReferenceKeyword_6());
+			newLeafNode(otherlv_8, grammarAccess.getComponentAccess().getCustomTypeIDKeyword_6());
 		}
 		otherlv_9='='
 		{
 			newLeafNode(otherlv_9, grammarAccess.getComponentAccess().getEqualsSignKeyword_7());
+		}
+		(
+			(
+				lv_customTypeID_10_0=RULE_STRING
+				{
+					newLeafNode(lv_customTypeID_10_0, grammarAccess.getComponentAccess().getCustomTypeIDSTRINGTerminalRuleCall_8_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getComponentRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"customTypeID",
+						lv_customTypeID_10_0,
+						"org.eclipse.xtext.common.Terminals.STRING");
+				}
+			)
+		)
+		otherlv_11='languageID'
+		{
+			newLeafNode(otherlv_11, grammarAccess.getComponentAccess().getLanguageIDKeyword_9());
+		}
+		otherlv_12='='
+		{
+			newLeafNode(otherlv_12, grammarAccess.getComponentAccess().getEqualsSignKeyword_10());
+		}
+		(
+			(
+				lv_languageID_13_0=RULE_STRING
+				{
+					newLeafNode(lv_languageID_13_0, grammarAccess.getComponentAccess().getLanguageIDSTRINGTerminalRuleCall_11_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getComponentRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"languageID",
+						lv_languageID_13_0,
+						"org.eclipse.xtext.common.Terminals.STRING");
+				}
+			)
+		)
+		otherlv_14='reference'
+		{
+			newLeafNode(otherlv_14, grammarAccess.getComponentAccess().getReferenceKeyword_12());
+		}
+		otherlv_15='='
+		{
+			newLeafNode(otherlv_15, grammarAccess.getComponentAccess().getEqualsSignKeyword_13());
 		}
 		(
 			(
@@ -225,25 +277,25 @@ ruleComponent returns [EObject current=null]
 						$current = createModelElement(grammarAccess.getComponentRule());
 					}
 				}
-				otherlv_10=RULE_ID
+				otherlv_16=RULE_ID
 				{
-					newLeafNode(otherlv_10, grammarAccess.getComponentAccess().getReferenceComponentCrossReference_8_0());
+					newLeafNode(otherlv_16, grammarAccess.getComponentAccess().getReferenceComponentCrossReference_14_0());
 				}
 			)
 		)
-		otherlv_11='referenceUnresolved'
+		otherlv_17='referenceUnresolved'
 		{
-			newLeafNode(otherlv_11, grammarAccess.getComponentAccess().getReferenceUnresolvedKeyword_9());
+			newLeafNode(otherlv_17, grammarAccess.getComponentAccess().getReferenceUnresolvedKeyword_15());
 		}
-		otherlv_12='='
+		otherlv_18='='
 		{
-			newLeafNode(otherlv_12, grammarAccess.getComponentAccess().getEqualsSignKeyword_10());
+			newLeafNode(otherlv_18, grammarAccess.getComponentAccess().getEqualsSignKeyword_16());
 		}
 		(
 			(
-				lv_referenceUnresolved_13_0=RULE_STRING
+				lv_referenceUnresolved_19_0=RULE_STRING
 				{
-					newLeafNode(lv_referenceUnresolved_13_0, grammarAccess.getComponentAccess().getReferenceUnresolvedSTRINGTerminalRuleCall_11_0());
+					newLeafNode(lv_referenceUnresolved_19_0, grammarAccess.getComponentAccess().getReferenceUnresolvedSTRINGTerminalRuleCall_17_0());
 				}
 				{
 					if ($current==null) {
@@ -252,24 +304,24 @@ ruleComponent returns [EObject current=null]
 					setWithLastConsumed(
 						$current,
 						"referenceUnresolved",
-						lv_referenceUnresolved_13_0,
+						lv_referenceUnresolved_19_0,
 						"org.eclipse.xtext.common.Terminals.STRING");
 				}
 			)
 		)
-		otherlv_14='location'
+		otherlv_20='location'
 		{
-			newLeafNode(otherlv_14, grammarAccess.getComponentAccess().getLocationKeyword_12());
+			newLeafNode(otherlv_20, grammarAccess.getComponentAccess().getLocationKeyword_18());
 		}
-		otherlv_15='='
+		otherlv_21='='
 		{
-			newLeafNode(otherlv_15, grammarAccess.getComponentAccess().getEqualsSignKeyword_13());
+			newLeafNode(otherlv_21, grammarAccess.getComponentAccess().getEqualsSignKeyword_19());
 		}
 		(
 			(
-				lv_location_16_0=RULE_STRING
+				lv_location_22_0=RULE_STRING
 				{
-					newLeafNode(lv_location_16_0, grammarAccess.getComponentAccess().getLocationSTRINGTerminalRuleCall_14_0());
+					newLeafNode(lv_location_22_0, grammarAccess.getComponentAccess().getLocationSTRINGTerminalRuleCall_20_0());
 				}
 				{
 					if ($current==null) {
@@ -278,25 +330,25 @@ ruleComponent returns [EObject current=null]
 					setWithLastConsumed(
 						$current,
 						"location",
-						lv_location_16_0,
+						lv_location_22_0,
 						"org.eclipse.xtext.common.Terminals.STRING");
 				}
 			)
 		)
 		(
-			otherlv_17='referenceLine'
+			otherlv_23='referenceLine'
 			{
-				newLeafNode(otherlv_17, grammarAccess.getComponentAccess().getReferenceLineKeyword_15_0());
+				newLeafNode(otherlv_23, grammarAccess.getComponentAccess().getReferenceLineKeyword_21_0());
 			}
-			otherlv_18='='
+			otherlv_24='='
 			{
-				newLeafNode(otherlv_18, grammarAccess.getComponentAccess().getEqualsSignKeyword_15_1());
+				newLeafNode(otherlv_24, grammarAccess.getComponentAccess().getEqualsSignKeyword_21_1());
 			}
 			(
 				(
-					lv_referenceLine_19_0=RULE_INT
+					lv_referenceLine_25_0=RULE_INT
 					{
-						newLeafNode(lv_referenceLine_19_0, grammarAccess.getComponentAccess().getReferenceLineINTTerminalRuleCall_15_2_0());
+						newLeafNode(lv_referenceLine_25_0, grammarAccess.getComponentAccess().getReferenceLineINTTerminalRuleCall_21_2_0());
 					}
 					{
 						if ($current==null) {
@@ -305,20 +357,20 @@ ruleComponent returns [EObject current=null]
 						setWithLastConsumed(
 							$current,
 							"referenceLine",
-							lv_referenceLine_19_0,
+							lv_referenceLine_25_0,
 							"org.eclipse.xtext.common.Terminals.INT");
 					}
 				)
 			)
 		)?
 		(
-			otherlv_20='children'
+			otherlv_26='children'
 			{
-				newLeafNode(otherlv_20, grammarAccess.getComponentAccess().getChildrenKeyword_16_0());
+				newLeafNode(otherlv_26, grammarAccess.getComponentAccess().getChildrenKeyword_22_0());
 			}
-			otherlv_21='='
+			otherlv_27='='
 			{
-				newLeafNode(otherlv_21, grammarAccess.getComponentAccess().getEqualsSignKeyword_16_1());
+				newLeafNode(otherlv_27, grammarAccess.getComponentAccess().getEqualsSignKeyword_22_1());
 			}
 			(
 				(
@@ -327,22 +379,22 @@ ruleComponent returns [EObject current=null]
 							$current = createModelElement(grammarAccess.getComponentRule());
 						}
 					}
-					otherlv_22=RULE_ID
+					otherlv_28=RULE_ID
 					{
-						newLeafNode(otherlv_22, grammarAccess.getComponentAccess().getChildrenComponentCrossReference_16_2_0());
+						newLeafNode(otherlv_28, grammarAccess.getComponentAccess().getChildrenComponentCrossReference_22_2_0());
 					}
 				)
 			)*
 		)?
-		otherlv_23='tooltip'
+		otherlv_29='tooltip'
 		{
-			newLeafNode(otherlv_23, grammarAccess.getComponentAccess().getTooltipKeyword_17());
+			newLeafNode(otherlv_29, grammarAccess.getComponentAccess().getTooltipKeyword_23());
 		}
 		(
 			(
-				lv_tooltip_24_0=RULE_STRING
+				lv_tooltip_30_0=RULE_STRING
 				{
-					newLeafNode(lv_tooltip_24_0, grammarAccess.getComponentAccess().getTooltipSTRINGTerminalRuleCall_18_0());
+					newLeafNode(lv_tooltip_30_0, grammarAccess.getComponentAccess().getTooltipSTRINGTerminalRuleCall_24_0());
 				}
 				{
 					if ($current==null) {
@@ -351,20 +403,20 @@ ruleComponent returns [EObject current=null]
 					setWithLastConsumed(
 						$current,
 						"tooltip",
-						lv_tooltip_24_0,
+						lv_tooltip_30_0,
 						"org.eclipse.xtext.common.Terminals.STRING");
 				}
 			)
 		)
-		otherlv_25='rawdata'
+		otherlv_31='rawdata'
 		{
-			newLeafNode(otherlv_25, grammarAccess.getComponentAccess().getRawdataKeyword_19());
+			newLeafNode(otherlv_31, grammarAccess.getComponentAccess().getRawdataKeyword_25());
 		}
 		(
 			(
-				lv_rawdata_26_0=RULE_STRING
+				lv_rawdata_32_0=RULE_STRING
 				{
-					newLeafNode(lv_rawdata_26_0, grammarAccess.getComponentAccess().getRawdataSTRINGTerminalRuleCall_20_0());
+					newLeafNode(lv_rawdata_32_0, grammarAccess.getComponentAccess().getRawdataSTRINGTerminalRuleCall_26_0());
 				}
 				{
 					if ($current==null) {
@@ -373,11 +425,25 @@ ruleComponent returns [EObject current=null]
 					setWithLastConsumed(
 						$current,
 						"rawdata",
-						lv_rawdata_26_0,
+						lv_rawdata_32_0,
 						"org.eclipse.xtext.common.Terminals.STRING");
 				}
 			)
 		)
+		(
+			(
+				lv_filtered_33_0='filtered'
+				{
+					newLeafNode(lv_filtered_33_0, grammarAccess.getComponentAccess().getFilteredFilteredKeyword_27_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getComponentRule());
+					}
+					setWithLastConsumed($current, "filtered", true, "filtered");
+				}
+			)
+		)?
 	)
 ;
 
@@ -453,9 +519,9 @@ ruleConnection returns [EObject current=null]
 				}
 			)
 		)
-		otherlv_6='type'
+		otherlv_6='typeID'
 		{
-			newLeafNode(otherlv_6, grammarAccess.getConnectionAccess().getTypeKeyword_6());
+			newLeafNode(otherlv_6, grammarAccess.getConnectionAccess().getTypeIDKeyword_6());
 		}
 		(
 			(
@@ -548,34 +614,10 @@ ruleComponentType returns [Enumerator current=null]
 		)
 		    |
 		(
-			enumLiteral_2='FUNC'
+			enumLiteral_2='CUSTOM'
 			{
-				$current = grammarAccess.getComponentTypeAccess().getFUNCEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_2, grammarAccess.getComponentTypeAccess().getFUNCEnumLiteralDeclaration_2());
-			}
-		)
-		    |
-		(
-			enumLiteral_3='TYPEDEF'
-			{
-				$current = grammarAccess.getComponentTypeAccess().getTYPEDEFEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_3, grammarAccess.getComponentTypeAccess().getTYPEDEFEnumLiteralDeclaration_3());
-			}
-		)
-		    |
-		(
-			enumLiteral_4='STRUCT'
-			{
-				$current = grammarAccess.getComponentTypeAccess().getSTRUCTEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_4, grammarAccess.getComponentTypeAccess().getSTRUCTEnumLiteralDeclaration_4());
-			}
-		)
-		    |
-		(
-			enumLiteral_5='DECL'
-			{
-				$current = grammarAccess.getComponentTypeAccess().getDECLEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_5, grammarAccess.getComponentTypeAccess().getDECLEnumLiteralDeclaration_5());
+				$current = grammarAccess.getComponentTypeAccess().getCUSTOMEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_2, grammarAccess.getComponentTypeAccess().getCUSTOMEnumLiteralDeclaration_2());
 			}
 		)
 	)

@@ -14,6 +14,8 @@ Component:
     'Component' name=ID 
            ('parent' '=' parent=[Component])?
            'type' '=' type=ComponentType
+           'customTypeID' '=' customTypeID=STRING
+           'languageID' '=' languageID=STRING
            'reference' '=' reference=[Component]
            'referenceUnresolved' '=' referenceUnresolved=STRING
 //           ('referenceFile' '=' referenceFile=[File])?
@@ -22,21 +24,25 @@ Component:
            ('children' '=' children+=([Component])*)?
            'tooltip' tooltip=STRING
            'rawdata' rawdata=STRING
+           (filtered?='filtered')?
 ;
 	
 Connection:
     'src' src=[Component]
     'dst' dst=[Component]
     'label' label=STRING
-    'type' type=STRING
+    'typeID' type=STRING
     'color' color=STRING
     'tooltip' tooltip=STRING
 ;	
 	
 	
 enum ComponentType:
-    DIR="DIR" | FILE="FILE" | FUNC="FUNC" | TYPEDEF = "TYPEDEF" | STRUCT = "STRUCT" | DECL="DECL"  
+    DIR="DIR" | FILE="FILE" | CUSTOM="CUSTOM" 
+    // FUNC="FUNC" | TYPE="TYPE"  | INCLUDE="INCLUDE" | TYPEDEF = "TYPEDEF" | STRUCT = "STRUCT" | DECL="DECL"  
 ;	
+
+
 	
 	
 	

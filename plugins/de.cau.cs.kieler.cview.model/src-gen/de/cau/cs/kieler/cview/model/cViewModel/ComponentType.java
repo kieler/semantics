@@ -41,44 +41,14 @@ public enum ComponentType implements Enumerator
   FILE(1, "FILE", "FILE"),
 
   /**
-   * The '<em><b>FUNC</b></em>' literal object.
+   * The '<em><b>CUSTOM</b></em>' literal object.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #FUNC_VALUE
+   * @see #CUSTOM_VALUE
    * @generated
    * @ordered
    */
-  FUNC(2, "FUNC", "FUNC"),
-
-  /**
-   * The '<em><b>TYPEDEF</b></em>' literal object.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #TYPEDEF_VALUE
-   * @generated
-   * @ordered
-   */
-  TYPEDEF(3, "TYPEDEF", "TYPEDEF"),
-
-  /**
-   * The '<em><b>STRUCT</b></em>' literal object.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #STRUCT_VALUE
-   * @generated
-   * @ordered
-   */
-  STRUCT(4, "STRUCT", "STRUCT"),
-
-  /**
-   * The '<em><b>DECL</b></em>' literal object.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #DECL_VALUE
-   * @generated
-   * @ordered
-   */
-  DECL(5, "DECL", "DECL");
+  CUSTOM(2, "CUSTOM", "CUSTOM");
 
   /**
    * The '<em><b>DIR</b></em>' literal value.
@@ -111,64 +81,19 @@ public enum ComponentType implements Enumerator
   public static final int FILE_VALUE = 1;
 
   /**
-   * The '<em><b>FUNC</b></em>' literal value.
+   * The '<em><b>CUSTOM</b></em>' literal value.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of '<em><b>FUNC</b></em>' literal object isn't clear,
+   * If the meaning of '<em><b>CUSTOM</b></em>' literal object isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @see #FUNC
+   * @see #CUSTOM
    * @model
    * @generated
    * @ordered
    */
-  public static final int FUNC_VALUE = 2;
-
-  /**
-   * The '<em><b>TYPEDEF</b></em>' literal value.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>TYPEDEF</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @see #TYPEDEF
-   * @model
-   * @generated
-   * @ordered
-   */
-  public static final int TYPEDEF_VALUE = 3;
-
-  /**
-   * The '<em><b>STRUCT</b></em>' literal value.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>STRUCT</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @see #STRUCT
-   * @model
-   * @generated
-   * @ordered
-   */
-  public static final int STRUCT_VALUE = 4;
-
-  /**
-   * The '<em><b>DECL</b></em>' literal value.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>DECL</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @see #DECL
-   * @model
-   * @generated
-   * @ordered
-   */
-  public static final int DECL_VALUE = 5;
+  public static final int CUSTOM_VALUE = 2;
 
   /**
    * An array of all the '<em><b>Component Type</b></em>' enumerators.
@@ -181,10 +106,7 @@ public enum ComponentType implements Enumerator
     {
       DIR,
       FILE,
-      FUNC,
-      TYPEDEF,
-      STRUCT,
-      DECL,
+      CUSTOM,
     };
 
   /**
@@ -251,10 +173,7 @@ public enum ComponentType implements Enumerator
     {
       case DIR_VALUE: return DIR;
       case FILE_VALUE: return FILE;
-      case FUNC_VALUE: return FUNC;
-      case TYPEDEF_VALUE: return TYPEDEF;
-      case STRUCT_VALUE: return STRUCT;
-      case DECL_VALUE: return DECL;
+      case CUSTOM_VALUE: return CUSTOM;
     }
     return null;
   }

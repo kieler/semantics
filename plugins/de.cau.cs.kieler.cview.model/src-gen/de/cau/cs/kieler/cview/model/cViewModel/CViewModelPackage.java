@@ -133,13 +133,31 @@ public interface CViewModelPackage extends EPackage
   int COMPONENT__TYPE = 2;
 
   /**
+   * The feature id for the '<em><b>Custom Type ID</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPONENT__CUSTOM_TYPE_ID = 3;
+
+  /**
+   * The feature id for the '<em><b>Language ID</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPONENT__LANGUAGE_ID = 4;
+
+  /**
    * The feature id for the '<em><b>Reference</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int COMPONENT__REFERENCE = 3;
+  int COMPONENT__REFERENCE = 5;
 
   /**
    * The feature id for the '<em><b>Reference Unresolved</b></em>' attribute.
@@ -148,7 +166,7 @@ public interface CViewModelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMPONENT__REFERENCE_UNRESOLVED = 4;
+  int COMPONENT__REFERENCE_UNRESOLVED = 6;
 
   /**
    * The feature id for the '<em><b>Location</b></em>' attribute.
@@ -157,7 +175,7 @@ public interface CViewModelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMPONENT__LOCATION = 5;
+  int COMPONENT__LOCATION = 7;
 
   /**
    * The feature id for the '<em><b>Reference Line</b></em>' attribute.
@@ -166,7 +184,7 @@ public interface CViewModelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMPONENT__REFERENCE_LINE = 6;
+  int COMPONENT__REFERENCE_LINE = 8;
 
   /**
    * The feature id for the '<em><b>Children</b></em>' reference list.
@@ -175,7 +193,7 @@ public interface CViewModelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMPONENT__CHILDREN = 7;
+  int COMPONENT__CHILDREN = 9;
 
   /**
    * The feature id for the '<em><b>Tooltip</b></em>' attribute.
@@ -184,7 +202,7 @@ public interface CViewModelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMPONENT__TOOLTIP = 8;
+  int COMPONENT__TOOLTIP = 10;
 
   /**
    * The feature id for the '<em><b>Rawdata</b></em>' attribute.
@@ -193,7 +211,16 @@ public interface CViewModelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMPONENT__RAWDATA = 9;
+  int COMPONENT__RAWDATA = 11;
+
+  /**
+   * The feature id for the '<em><b>Filtered</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPONENT__FILTERED = 12;
 
   /**
    * The number of structural features of the '<em>Component</em>' class.
@@ -202,7 +229,7 @@ public interface CViewModelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMPONENT_FEATURE_COUNT = 10;
+  int COMPONENT_FEATURE_COUNT = 13;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl <em>Connection</em>}' class.
@@ -364,6 +391,28 @@ public interface CViewModelPackage extends EPackage
   EAttribute getComponent_Type();
 
   /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getCustomTypeID <em>Custom Type ID</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Custom Type ID</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Component#getCustomTypeID()
+   * @see #getComponent()
+   * @generated
+   */
+  EAttribute getComponent_CustomTypeID();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getLanguageID <em>Language ID</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Language ID</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Component#getLanguageID()
+   * @see #getComponent()
+   * @generated
+   */
+  EAttribute getComponent_LanguageID();
+
+  /**
    * Returns the meta object for the reference '{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getReference <em>Reference</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -439,6 +488,17 @@ public interface CViewModelPackage extends EPackage
    * @generated
    */
   EAttribute getComponent_Rawdata();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.Component#isFiltered <em>Filtered</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Filtered</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Component#isFiltered()
+   * @see #getComponent()
+   * @generated
+   */
+  EAttribute getComponent_Filtered();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.cview.model.cViewModel.Connection <em>Connection</em>}'.
@@ -610,6 +670,22 @@ public interface CViewModelPackage extends EPackage
     EAttribute COMPONENT__TYPE = eINSTANCE.getComponent_Type();
 
     /**
+     * The meta object literal for the '<em><b>Custom Type ID</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute COMPONENT__CUSTOM_TYPE_ID = eINSTANCE.getComponent_CustomTypeID();
+
+    /**
+     * The meta object literal for the '<em><b>Language ID</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute COMPONENT__LANGUAGE_ID = eINSTANCE.getComponent_LanguageID();
+
+    /**
      * The meta object literal for the '<em><b>Reference</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -664,6 +740,14 @@ public interface CViewModelPackage extends EPackage
      * @generated
      */
     EAttribute COMPONENT__RAWDATA = eINSTANCE.getComponent_Rawdata();
+
+    /**
+     * The meta object literal for the '<em><b>Filtered</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute COMPONENT__FILTERED = eINSTANCE.getComponent_Filtered();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl <em>Connection</em>}' class.

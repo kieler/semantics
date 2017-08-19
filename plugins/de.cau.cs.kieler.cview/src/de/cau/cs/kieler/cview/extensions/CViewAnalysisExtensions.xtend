@@ -49,8 +49,15 @@ class CViewAnalysisExtensions {
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-    def IASTTranslationUnit getAST(Component component) {
-        return CViewPlugin.getFileAST(component.location)
+
+    // Get the file raw    
+    def fileRaw(Component fileComponent) {
+        return CViewPlugin.getFileRaw(fileComponent.location)
+    }
+
+    // Get the file raw    
+    def fileParsed(Component fileComponent) {
+        return CViewPlugin.getFileParsed(fileComponent.location)
     }
 
     // ------------------------------------------------------------------------
@@ -197,63 +204,6 @@ class CViewAnalysisExtensions {
         return returnList
     }
 
-    // -------------------------------------------------------------------------
-    // Get the containing struct iff a declaration inside a struct, or null otherwise
-    def Component getContainingStruct(Component declComponent) {
-        if (declComponent.decl) {
-            return declComponent.parent
-        }
-        return null
-    }
-
-    def String getTypeNameFromDecl(Component declComponent) {
-        val typeDef = declComponent.typedefFromDecl
-        if (typeDef == null) {
-            return "PRIMITIVE"
-        } else {
-            return typeDef.name
-        }
-    }
-
-    // Get the type of a declaration iff this is a typdef or null otherwise (e.g., if base type or not a declaration)
-    def Component getTypedefFromDecl(Component declComponent) {
-        if (declComponent.decl) {
-            if (declComponent.reference != null) {
-                if (declComponent.reference.typedef) {
-                    return declComponent.reference
-                }
-            }
-        }
-        return null
-    }
-
-    // Get the struct of a typedef iff any, or null otherwise (e.g., if not a typedef)
-    def Component getStructFromTypedef(Component typedefComponent) {
-        if (typedefComponent.typedef) {
-            if (typedefComponent.reference != null) {
-                if (typedefComponent.reference.struct) {
-                    return typedefComponent.reference
-                }
-            }
-        }
-        return null
-    }
-
-    // Get a list of declarations inside a struct, return an empty list if not a struct or no declarations
-    def List<Component> getDeclsFromStruct(Component structComponent) {
-        if (structComponent.struct) {
-            if (!structComponent.children.nullOrEmpty) {
-                val ArrayList<Component> returnList = new ArrayList
-                for (child : structComponent.children) {
-                    if (child.decl) {
-                        returnList.add(child)
-                    }
-                }
-                return returnList
-            }
-        }
-        return new ArrayList<Component>
-    }
 
     // Check if a component is connected to any other component
     def boolean isConnectedTo(
@@ -325,112 +275,6 @@ class CViewAnalysisExtensions {
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-    def List<String> copyList(List<String> list) {
-        val ArrayList<String> returnList = new ArrayList
-        for (element : list) {
-            returnList.add(element)
-        }
-        return returnList
-    }
-
-    def boolean foundSegmentPath(Component component, List<String> remainingSegments) {
-        if (remainingSegments.nullOrEmpty) {
-            // End of recursion here
-            return true
-        }
-        // Otherwise, a next segment exists => Check it!        
-        var nextRemainingSegments = remainingSegments.copyList;
-        var nextSegment = nextRemainingSegments.remove(0)
-
-        if (nextSegment.equals(component.name)) {
-            // Remove this and continue
-            nextSegment = nextRemainingSegments.remove(0)
-        }
-
-        var currentComponent = component
-        // Check all possible
-        if (currentComponent.isDecl) {
-            val typedef = currentComponent.typedefFromDecl
-            if (typedef == null) {
-                // We are SURE that it does not match
-                return false
-            }
-            // yes, this is not a pure value but a typedef, find its struct
-            val struct = typedef.structFromTypedef
-            if (struct == null) {
-                // We are SURE that it does not match
-                return false
-            }
-            currentComponent = struct
-//           // check if struct matches nextSegment
-//           if (!struct.name.equals(nextSegment)) {
-//                // We are SURE that it does not match
-//                 return false
-//             }
-//            // Here we know that the struct maches, so continue recusion
-//                return struct.foundSegmentPath(nextRemainingSegments)
-        }
-
-        if (currentComponent.isStruct) {
-            // Check all possible children
-//            val struct = currentComponent.getStruct
-//            if (struct == null) {
-//               // We are SURE that it does not match
-//               return false
-//            }
-            // Any of the declarations must match
-            var foundValidDeclaration = false
-            for (decl : currentComponent.declsFromStruct) {
-                if (decl.name.equals(nextSegment)) {
-                    foundValidDeclaration = decl.foundSegmentPath(nextRemainingSegments)
-                }
-            }
-            return foundValidDeclaration;
-        }
-        return false
-    }
-
-    public static final val int TYPE_VALID_SURE = 1
-    public static final val int TYPE_VALID_UNSURE = -1
-    public static final val int TYPE_VALID_NOT = 0
-
-    def int isValidType(Component anyComponent, String typePath) {
-        val model = anyComponent.cViewModel
-        return model.isValidType(typePath)
-    }
-
-    def int isValidType(CViewModel model, String typePath) {
-        var typePathUnified = typePath.replace("->", ".")
-        if (!typePathUnified.contains(".")) {
-            typePathUnified = typePathUnified + '''.'''
-        }
-        val typePathSegments = typePathUnified.split("\\.")
-        if (!typePathSegments.nullOrEmpty) {
-            val firstSegment = typePathSegments.get(0)
-            val firstSegmentComponents = model.findByName(firstSegment)
-            if (typePathSegments.size > 1) {
-                // Can be sure or not valid
-                var foundvalidSegment = false
-                for (segmentComponent : firstSegmentComponents) {
-                    if (!foundvalidSegment && segmentComponent.foundSegmentPath(typePathSegments)) {
-                        foundvalidSegment = true
-                    }
-                }
-                if (foundvalidSegment) {
-                    return TYPE_VALID_SURE
-                }
-                return TYPE_VALID_NOT
-            } else {
-                // Can only be unsure or not valid
-                if (!firstSegmentComponents.nullOrEmpty) {
-                    return TYPE_VALID_UNSURE
-                } else {
-                    return TYPE_VALID_NOT
-                }
-            }
-        }
-        return TYPE_VALID_NOT
-    }
 
     // -------------------------------------------------------------------------
     /**

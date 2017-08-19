@@ -62,7 +62,7 @@ public class FilterDialog extends Dialog {
     private static final int FORM_WIDTH = 400;
 
     /** The Constant FORM_HEIGHT. */
-    private static final int FORM_HEIGHT = 260;
+    private static final int FORM_HEIGHT = 300;
 
     /** The Constant DIALOG_TITLE. */
     private static final String DIALOG_TITLE = "Filter View Model";
@@ -76,6 +76,7 @@ public class FilterDialog extends Dialog {
     // -------------------------------------------------------------------------
 
     public static String valueTextFilter = "";
+    public static boolean valueCheckDisabled = false;
     public static boolean valueCheckRegExp = false;
     public static boolean valueCheckCaseSensitive = false;
     public static boolean valueCheckChilds = true;
@@ -87,6 +88,7 @@ public class FilterDialog extends Dialog {
 
     Label labelFilter;
     Text textFilter;
+    Button btnCheckDisabled;
     Button btnCheckRegExp;
     Button btnCheckCaseSensitive;
     Button btnCheckChilds;
@@ -95,6 +97,8 @@ public class FilterDialog extends Dialog {
     Button btnCheckTransitions;
     Spinner spinnerStart;
     Spinner spinnerEnd;
+    Label labelSpinnerStart;
+    Label labelSpinnerEnd;
 
     // -------------------------------------------------------------------------
 
@@ -129,6 +133,7 @@ public class FilterDialog extends Dialog {
     public void load() {
         loadValues();
         try {
+            btnCheckDisabled.setSelection(valueCheckDisabled);
             btnCheckRegExp.setSelection(valueCheckRegExp);
             btnCheckCaseSensitive.setSelection(valueCheckCaseSensitive);
             btnCheckChilds.setSelection(valueCheckChilds);
@@ -151,6 +156,7 @@ public class FilterDialog extends Dialog {
     public void updateValues() {
         PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
             public void run() {
+                valueCheckDisabled = btnCheckDisabled.getSelection();
                 valueCheckRegExp = btnCheckRegExp.getSelection();
                 valueCheckCaseSensitive = btnCheckCaseSensitive.getSelection();
                 valueCheckChilds = btnCheckChilds.getSelection();
@@ -167,6 +173,7 @@ public class FilterDialog extends Dialog {
     // -------------------------------------------------------------------------
 
     public static void loadValues() {
+        valueCheckDisabled = CViewPlugin.getPrefBool("btnCheckDisabled", false);
         valueCheckRegExp = CViewPlugin.getPrefBool("btnCheckRegExp", false);
         valueCheckCaseSensitive = CViewPlugin.getPrefBool("btnCheckCaseSensitive", true);
         valueCheckChilds = CViewPlugin.getPrefBool("btnCheckChilds", true);
@@ -183,6 +190,7 @@ public class FilterDialog extends Dialog {
 
     public void save() {
         updateValues();
+        CViewPlugin.setPrefBool("btnCheckDisabled", valueCheckDisabled);
         CViewPlugin.setPrefBool("btnCheckRegExp", valueCheckRegExp);
         CViewPlugin.setPrefBool("btnCheckCaseSensitive", valueCheckCaseSensitive);
         CViewPlugin.setPrefBool("btnCheckChilds", valueCheckChilds);
@@ -217,6 +225,20 @@ public class FilterDialog extends Dialog {
         updateText += ":";
 
         labelFilter.setText(updateText);
+
+        boolean disabled = btnCheckDisabled.getSelection();
+        labelFilter.setEnabled(!disabled);
+        textFilter.setEnabled(!disabled);
+        btnCheckRegExp.setEnabled(!disabled);
+        btnCheckCaseSensitive.setEnabled(!disabled);
+        btnCheckChilds.setEnabled(!disabled);
+        btnCheckConnected.setEnabled(!disabled);
+        btnCheckNegative.setEnabled(!disabled);
+        btnCheckTransitions.setEnabled(!disabled);
+        spinnerStart.setEnabled(!disabled);
+        spinnerEnd.setEnabled(!disabled);
+        labelSpinnerStart.setEnabled(!disabled);
+        labelSpinnerEnd.setEnabled(!disabled);
 
         // btnCheckCaseSensitive.setEnabled(!valueCheckRegExp);
         //btnCheckChilds.setEnabled(!valueCheckTransitions);
@@ -280,6 +302,14 @@ public class FilterDialog extends Dialog {
         gridDataText.horizontalAlignment = GridData.FILL;
         // gridDataText.verticalAlignment = GridData.FILL;
 
+        btnCheckDisabled = new Button(composite, SWT.CHECK);
+        btnCheckDisabled.setText("Disabled");
+        btnCheckDisabled.setToolTipText(
+                "Disable the filter");
+        Label labelSpaceDisabled = new Label(composite, SWT.LEFT);
+        labelSpaceDisabled.setText(" ");
+        
+        
         labelFilter = new Label(composite, SWT.LEFT);
         labelFilter.setLayoutData(gridDataText);
         textFilter = new Text(composite, SWT.LEFT);
@@ -294,7 +324,7 @@ public class FilterDialog extends Dialog {
         Composite compositeInner = new Composite(composite, SWT.NONE);
         compositeInner.setLayout(innerLayout);
 
-        Label labelSpinnerStart = new Label(compositeInner, SWT.LEFT);
+        labelSpinnerStart = new Label(compositeInner, SWT.LEFT);
         labelSpinnerStart.setText("Apply filter between hierarchy layers ");
         spinnerStart = new Spinner(compositeInner, SWT.WRAP);
         spinnerStart.setBounds(0, 0, 30, 10);
@@ -305,7 +335,7 @@ public class FilterDialog extends Dialog {
         spinnerStart
                 .setToolTipText("Do not filter any elements on a lower layer than specified here.");
 
-        Label labelSpinnerEnd = new Label(compositeInner, SWT.LEFT);
+        labelSpinnerEnd = new Label(compositeInner, SWT.LEFT);
         labelSpinnerEnd.setText(" and ");
         spinnerEnd = new Spinner(compositeInner, SWT.WRAP);
         spinnerEnd.setBounds(0, 0, 30, 10);
@@ -318,7 +348,7 @@ public class FilterDialog extends Dialog {
         // sponnerEnd.setLayout
 
         Label labelSpace = new Label(compositeInner, SWT.LEFT);
-        labelSpace.setText(".");
+        labelSpace.setText(" ");
 
         btnCheckRegExp = new Button(compositeInnerChecks, SWT.CHECK);
         btnCheckRegExp.setText("Regular expression");
@@ -367,9 +397,12 @@ public class FilterDialog extends Dialog {
         btnCheckConnected.addSelectionListener(btnListener);
         btnCheckNegative.addSelectionListener(btnListener);
         btnCheckTransitions.addSelectionListener(btnListener);
+        btnCheckDisabled.addSelectionListener(btnListener);
 
         load();
         updateLabelTitle();
+
+        
         return composite;
     }
 

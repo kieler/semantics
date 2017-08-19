@@ -192,9 +192,9 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getComponent_Reference()
+  public EAttribute getComponent_CustomTypeID()
   {
-    return (EReference)componentEClass.getEStructuralFeatures().get(3);
+    return (EAttribute)componentEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -202,7 +202,7 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getComponent_ReferenceUnresolved()
+  public EAttribute getComponent_LanguageID()
   {
     return (EAttribute)componentEClass.getEStructuralFeatures().get(4);
   }
@@ -212,9 +212,9 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getComponent_Location()
+  public EReference getComponent_Reference()
   {
-    return (EAttribute)componentEClass.getEStructuralFeatures().get(5);
+    return (EReference)componentEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -222,7 +222,7 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getComponent_ReferenceLine()
+  public EAttribute getComponent_ReferenceUnresolved()
   {
     return (EAttribute)componentEClass.getEStructuralFeatures().get(6);
   }
@@ -232,9 +232,9 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getComponent_Children()
+  public EAttribute getComponent_Location()
   {
-    return (EReference)componentEClass.getEStructuralFeatures().get(7);
+    return (EAttribute)componentEClass.getEStructuralFeatures().get(7);
   }
 
   /**
@@ -242,7 +242,7 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getComponent_Tooltip()
+  public EAttribute getComponent_ReferenceLine()
   {
     return (EAttribute)componentEClass.getEStructuralFeatures().get(8);
   }
@@ -252,9 +252,39 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getComponent_Children()
+  {
+    return (EReference)componentEClass.getEStructuralFeatures().get(9);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getComponent_Tooltip()
+  {
+    return (EAttribute)componentEClass.getEStructuralFeatures().get(10);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EAttribute getComponent_Rawdata()
   {
-    return (EAttribute)componentEClass.getEStructuralFeatures().get(9);
+    return (EAttribute)componentEClass.getEStructuralFeatures().get(11);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getComponent_Filtered()
+  {
+    return (EAttribute)componentEClass.getEStructuralFeatures().get(12);
   }
 
   /**
@@ -375,6 +405,8 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
     createEAttribute(componentEClass, COMPONENT__NAME);
     createEReference(componentEClass, COMPONENT__PARENT);
     createEAttribute(componentEClass, COMPONENT__TYPE);
+    createEAttribute(componentEClass, COMPONENT__CUSTOM_TYPE_ID);
+    createEAttribute(componentEClass, COMPONENT__LANGUAGE_ID);
     createEReference(componentEClass, COMPONENT__REFERENCE);
     createEAttribute(componentEClass, COMPONENT__REFERENCE_UNRESOLVED);
     createEAttribute(componentEClass, COMPONENT__LOCATION);
@@ -382,6 +414,7 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
     createEReference(componentEClass, COMPONENT__CHILDREN);
     createEAttribute(componentEClass, COMPONENT__TOOLTIP);
     createEAttribute(componentEClass, COMPONENT__RAWDATA);
+    createEAttribute(componentEClass, COMPONENT__FILTERED);
 
     connectionEClass = createEClass(CONNECTION);
     createEReference(connectionEClass, CONNECTION__SRC);
@@ -434,6 +467,8 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
     initEAttribute(getComponent_Name(), ecorePackage.getEString(), "name", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getComponent_Parent(), this.getComponent(), null, "parent", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getComponent_Type(), this.getComponentType(), "type", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getComponent_CustomTypeID(), ecorePackage.getEString(), "customTypeID", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getComponent_LanguageID(), ecorePackage.getEString(), "languageID", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getComponent_Reference(), this.getComponent(), null, "reference", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getComponent_ReferenceUnresolved(), ecorePackage.getEString(), "referenceUnresolved", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getComponent_Location(), ecorePackage.getEString(), "location", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -441,6 +476,7 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
     initEReference(getComponent_Children(), this.getComponent(), null, "children", null, 0, -1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getComponent_Tooltip(), ecorePackage.getEString(), "tooltip", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getComponent_Rawdata(), ecorePackage.getEString(), "rawdata", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getComponent_Filtered(), ecorePackage.getEBoolean(), "filtered", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(connectionEClass, Connection.class, "Connection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getConnection_Src(), this.getComponent(), null, "src", null, 0, 1, Connection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -454,10 +490,7 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
     initEEnum(componentTypeEEnum, ComponentType.class, "ComponentType");
     addEEnumLiteral(componentTypeEEnum, ComponentType.DIR);
     addEEnumLiteral(componentTypeEEnum, ComponentType.FILE);
-    addEEnumLiteral(componentTypeEEnum, ComponentType.FUNC);
-    addEEnumLiteral(componentTypeEEnum, ComponentType.TYPEDEF);
-    addEEnumLiteral(componentTypeEEnum, ComponentType.STRUCT);
-    addEEnumLiteral(componentTypeEEnum, ComponentType.DECL);
+    addEEnumLiteral(componentTypeEEnum, ComponentType.CUSTOM);
 
     // Create resource
     createResource(eNS_URI);

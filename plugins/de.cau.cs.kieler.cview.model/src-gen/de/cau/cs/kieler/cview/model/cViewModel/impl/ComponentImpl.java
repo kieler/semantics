@@ -32,6 +32,8 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getParent <em>Parent</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getCustomTypeID <em>Custom Type ID</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getLanguageID <em>Language ID</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getReference <em>Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getReferenceUnresolved <em>Reference Unresolved</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getLocation <em>Location</em>}</li>
@@ -39,6 +41,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getChildren <em>Children</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getTooltip <em>Tooltip</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getRawdata <em>Rawdata</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#isFiltered <em>Filtered</em>}</li>
  * </ul>
  *
  * @generated
@@ -94,6 +97,46 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
    * @ordered
    */
   protected ComponentType type = TYPE_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getCustomTypeID() <em>Custom Type ID</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getCustomTypeID()
+   * @generated
+   * @ordered
+   */
+  protected static final String CUSTOM_TYPE_ID_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getCustomTypeID() <em>Custom Type ID</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getCustomTypeID()
+   * @generated
+   * @ordered
+   */
+  protected String customTypeID = CUSTOM_TYPE_ID_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getLanguageID() <em>Language ID</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getLanguageID()
+   * @generated
+   * @ordered
+   */
+  protected static final String LANGUAGE_ID_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getLanguageID() <em>Language ID</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getLanguageID()
+   * @generated
+   * @ordered
+   */
+  protected String languageID = LANGUAGE_ID_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getReference() <em>Reference</em>}' reference.
@@ -216,6 +259,26 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
   protected String rawdata = RAWDATA_EDEFAULT;
 
   /**
+   * The default value of the '{@link #isFiltered() <em>Filtered</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isFiltered()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean FILTERED_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isFiltered() <em>Filtered</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isFiltered()
+   * @generated
+   * @ordered
+   */
+  protected boolean filtered = FILTERED_EDEFAULT;
+
+  /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -323,6 +386,52 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
     type = newType == null ? TYPE_EDEFAULT : newType;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, CViewModelPackage.COMPONENT__TYPE, oldType, type));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getCustomTypeID()
+  {
+    return customTypeID;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setCustomTypeID(String newCustomTypeID)
+  {
+    String oldCustomTypeID = customTypeID;
+    customTypeID = newCustomTypeID;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CViewModelPackage.COMPONENT__CUSTOM_TYPE_ID, oldCustomTypeID, customTypeID));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getLanguageID()
+  {
+    return languageID;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setLanguageID(String newLanguageID)
+  {
+    String oldLanguageID = languageID;
+    languageID = newLanguageID;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CViewModelPackage.COMPONENT__LANGUAGE_ID, oldLanguageID, languageID));
   }
 
   /**
@@ -502,6 +611,29 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
    * <!-- end-user-doc -->
    * @generated
    */
+  public boolean isFiltered()
+  {
+    return filtered;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setFiltered(boolean newFiltered)
+  {
+    boolean oldFiltered = filtered;
+    filtered = newFiltered;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CViewModelPackage.COMPONENT__FILTERED, oldFiltered, filtered));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -514,6 +646,10 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
         return basicGetParent();
       case CViewModelPackage.COMPONENT__TYPE:
         return getType();
+      case CViewModelPackage.COMPONENT__CUSTOM_TYPE_ID:
+        return getCustomTypeID();
+      case CViewModelPackage.COMPONENT__LANGUAGE_ID:
+        return getLanguageID();
       case CViewModelPackage.COMPONENT__REFERENCE:
         if (resolve) return getReference();
         return basicGetReference();
@@ -529,6 +665,8 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
         return getTooltip();
       case CViewModelPackage.COMPONENT__RAWDATA:
         return getRawdata();
+      case CViewModelPackage.COMPONENT__FILTERED:
+        return isFiltered();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -553,6 +691,12 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
       case CViewModelPackage.COMPONENT__TYPE:
         setType((ComponentType)newValue);
         return;
+      case CViewModelPackage.COMPONENT__CUSTOM_TYPE_ID:
+        setCustomTypeID((String)newValue);
+        return;
+      case CViewModelPackage.COMPONENT__LANGUAGE_ID:
+        setLanguageID((String)newValue);
+        return;
       case CViewModelPackage.COMPONENT__REFERENCE:
         setReference((Component)newValue);
         return;
@@ -574,6 +718,9 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
         return;
       case CViewModelPackage.COMPONENT__RAWDATA:
         setRawdata((String)newValue);
+        return;
+      case CViewModelPackage.COMPONENT__FILTERED:
+        setFiltered((Boolean)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -598,6 +745,12 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
       case CViewModelPackage.COMPONENT__TYPE:
         setType(TYPE_EDEFAULT);
         return;
+      case CViewModelPackage.COMPONENT__CUSTOM_TYPE_ID:
+        setCustomTypeID(CUSTOM_TYPE_ID_EDEFAULT);
+        return;
+      case CViewModelPackage.COMPONENT__LANGUAGE_ID:
+        setLanguageID(LANGUAGE_ID_EDEFAULT);
+        return;
       case CViewModelPackage.COMPONENT__REFERENCE:
         setReference((Component)null);
         return;
@@ -619,6 +772,9 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
       case CViewModelPackage.COMPONENT__RAWDATA:
         setRawdata(RAWDATA_EDEFAULT);
         return;
+      case CViewModelPackage.COMPONENT__FILTERED:
+        setFiltered(FILTERED_EDEFAULT);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -639,6 +795,10 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
         return parent != null;
       case CViewModelPackage.COMPONENT__TYPE:
         return type != TYPE_EDEFAULT;
+      case CViewModelPackage.COMPONENT__CUSTOM_TYPE_ID:
+        return CUSTOM_TYPE_ID_EDEFAULT == null ? customTypeID != null : !CUSTOM_TYPE_ID_EDEFAULT.equals(customTypeID);
+      case CViewModelPackage.COMPONENT__LANGUAGE_ID:
+        return LANGUAGE_ID_EDEFAULT == null ? languageID != null : !LANGUAGE_ID_EDEFAULT.equals(languageID);
       case CViewModelPackage.COMPONENT__REFERENCE:
         return reference != null;
       case CViewModelPackage.COMPONENT__REFERENCE_UNRESOLVED:
@@ -653,6 +813,8 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
         return TOOLTIP_EDEFAULT == null ? tooltip != null : !TOOLTIP_EDEFAULT.equals(tooltip);
       case CViewModelPackage.COMPONENT__RAWDATA:
         return RAWDATA_EDEFAULT == null ? rawdata != null : !RAWDATA_EDEFAULT.equals(rawdata);
+      case CViewModelPackage.COMPONENT__FILTERED:
+        return filtered != FILTERED_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -672,6 +834,10 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
     result.append(name);
     result.append(", type: ");
     result.append(type);
+    result.append(", customTypeID: ");
+    result.append(customTypeID);
+    result.append(", languageID: ");
+    result.append(languageID);
     result.append(", referenceUnresolved: ");
     result.append(referenceUnresolved);
     result.append(", location: ");
@@ -682,6 +848,8 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
     result.append(tooltip);
     result.append(", rawdata: ");
     result.append(rawdata);
+    result.append(", filtered: ");
+    result.append(filtered);
     result.append(')');
     return result.toString();
   }

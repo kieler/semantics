@@ -12,37 +12,44 @@
  */
 package de.cau.cs.kieler.cview.model.extensions
 
-import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.cview.model.cViewModel.CViewModel
+import de.cau.cs.kieler.cview.model.cViewModel.CViewModelFactory
 import de.cau.cs.kieler.cview.model.cViewModel.Component
 import de.cau.cs.kieler.cview.model.cViewModel.ComponentType
-import de.cau.cs.kieler.cview.model.cViewModel.CViewModelFactory
 import de.cau.cs.kieler.cview.model.cViewModel.Connection
-import java.util.List
-import de.cau.cs.kieler.cview.model.cViewModel.CViewModel
-import java.util.Set
-import java.util.ArrayList
-import java.util.HashSet
 import java.util.HashMap
+import java.util.List
+import java.util.ArrayList
 
 /**
+ * CView Model extensions define general and language independent extensions
+ * that extend the CView meta model.
+ * 
  * @author cmot
  * 
  */
 class CViewModelExtensions {
 
-    EObject getParent;
-    
-    //------------------------------------------------------------------------
-    
+    // ------------------------------------------------------------------------
+
+    def List<String> copyList(List<String> list) {
+        val ArrayList<String> returnList = new ArrayList
+        for (element : list) {
+            returnList.add(element)
+        }
+        return returnList
+    }
+
+    // ------------------------------------------------------------------------
+
     def boolean isResolved(Component component) {
         return (component.isReference && component.reference != null)
     }
-    
+
     def boolean isReference(Component component) {
-        return (component.referenceUnresolved != null)    
+        return (component.referenceUnresolved != null)
     }
-    
-    
+
     def boolean hasParentContains(Component component, String parentNamePart) {
         if (component.parent == null) {
             return false
@@ -89,33 +96,48 @@ class CViewModelExtensions {
         }
         return component
     }
-    
+
     def CViewModel model(Component component) {
         return component.cViewModel
     }
 
     def CViewModel cViewModel(Component component) {
-        val container = component.eContainer 
+        val container = component.eContainer
         if (container instanceof CViewModel) {
-            return container 
+            return container
         }
         return null
     }
 
-    //------------------------------------------------------------------------
-
+    // ------------------------------------------------------------------------
+    
+    /**
+     * Check whether this is a custom type.
+     */
+    def boolean isCustomType(Component component) {
+        return (component.type == ComponentType::CUSTOM)
+    }
+    
+    // ------------------------------------------------------------------------
+    
+//    /**
+//     *  Check whether any concrete custom type applies to this component.
+//     */
+//    def boolean isCustomType(Component component, String[] customTypeIDs) {
+//        if (!customTypeIDs.nullOrEmpty) {
+//            for (String customTypeID : customTypeIDs) {
+//                if (component.isCustomType(customTypeID)) {
+//                    return true
+//                }
+//            }
+//        }
+//        return false
+//    }
 
     // -------------------------------------------------------------------------
-
-    def boolean hieararchical(Component item, boolean functions, boolean types) {
-        if (functions && types) {
-            return !item.children.nullOrEmpty;
-        } else if (functions) {
-            return !item.children.filter[e | e.isFile || e.isDir || e.isFunc].nullOrEmpty;
-        } else if (types) {
-            return !item.children.filter[e | e.isFile || e.isDir || e.isTypedef || e.isDecl || e.isStruct].nullOrEmpty;
-        }
-        return !item.children.filter[e | e.isFile || e.isDir].nullOrEmpty;
+    def boolean hieararchical(Component item) {
+            //return !item.children.filter[e|e.isFile || e.isDir || e.language ].nullOrEmpty;
+        return !item.children.nullOrEmpty; 
     }
 
     def int getDepth(Component item) {
@@ -181,20 +203,8 @@ class CViewModelExtensions {
         return (CViewModelFactory.eINSTANCE.createComponent.setDir)
     }
 
-    def Component createFunc() {
-        return (CViewModelFactory.eINSTANCE.createComponent.setFunc)
-    }
-
-    def Component createStruct() {
-        return (CViewModelFactory.eINSTANCE.createComponent.setStruct)
-    }
-
-    def Component createTypedef() {
-        return (CViewModelFactory.eINSTANCE.createComponent.setTypedef)
-    }
-
-    def Component createDecl() {
-        return (CViewModelFactory.eINSTANCE.createComponent.setDecl)
+    def Component createCustomType(String customTypeID) {
+        return (CViewModelFactory.eINSTANCE.createComponent.setCustomType(customTypeID))
     }
 
     // -------------------------------------------------------------------------
@@ -206,20 +216,8 @@ class CViewModelExtensions {
         return (component.type == ComponentType::DIR)
     }
 
-    def boolean isFunc(Component component) {
-        return (component.type == ComponentType::FUNC)
-    }
-
-    def boolean isStruct(Component component) {
-        return (component.type == ComponentType::STRUCT)
-    }
-
-    def boolean isTypedef(Component component) {
-        return (component.type == ComponentType::TYPEDEF)
-    }
-
-    def boolean isDecl(Component component) {
-        return (component.type == ComponentType::DECL)
+    def boolean isCustomType(Component component, String customTypeID) {
+        return (component.type == ComponentType::CUSTOM) && (component.customTypeID.equals(customTypeID))
     }
 
     // -------------------------------------------------------------------------
@@ -233,51 +231,36 @@ class CViewModelExtensions {
         return component
     }
 
-    def Component setFunc(Component component) {
-        component.type = ComponentType::FUNC
-        return component
-    }
-
-    def Component setStruct(Component component) {
-        component.type = ComponentType::STRUCT
-        return component
-    }
-
-    def Component setTypedef(Component component) {
-        component.type = ComponentType::TYPEDEF
-        return component
-    }
-
-    def Component setDecl(Component component) {
-        component.type = ComponentType::DECL
+    def Component setCustomType(Component component, String customTypeID) {
+        component.type = ComponentType::CUSTOM
+        component.customTypeID = customTypeID
         return component
     }
 
 // -------------------------------------------------------------------------
-
     val HashMap<Component, List<Connection>> cacheOutgoingConnections = new HashMap
     val HashMap<Component, List<Connection>> cacheIncomingConnections = new HashMap
-    
+
     def void cacheResetOutgoingIncomingConnections() {
         cacheOutgoingConnections.clear
     }
 
     def List<Connection> getOutgoingConnections(Component component) {
-       val cachedOutgoingConnections = cacheOutgoingConnections.get(component)
-       if (cachedOutgoingConnections == null) {
-           val outgoingConnections = component.model.connections.filter[e | e.src == component].toList
-           cacheOutgoingConnections.put(component, outgoingConnections)
-       }
-       return cacheOutgoingConnections.get(component)      
+        val cachedOutgoingConnections = cacheOutgoingConnections.get(component)
+        if (cachedOutgoingConnections == null) {
+            val outgoingConnections = component.model.connections.filter[e|e.src == component].toList
+            cacheOutgoingConnections.put(component, outgoingConnections)
+        }
+        return cacheOutgoingConnections.get(component)
     }
 
     def List<Connection> getIncomingConnections(Component component) {
-       val cachedOutgoingConnections = cacheIncomingConnections.get(component)
-       if (cachedOutgoingConnections == null) {
-           val outgoingConnections = component.model.connections.filter[e | e.dst == component].toList
-           cacheIncomingConnections.put(component, outgoingConnections)
-       }
-       return cacheIncomingConnections.get(component)      
+        val cachedOutgoingConnections = cacheIncomingConnections.get(component)
+        if (cachedOutgoingConnections == null) {
+            val outgoingConnections = component.model.connections.filter[e|e.dst == component].toList
+            cacheIncomingConnections.put(component, outgoingConnections)
+        }
+        return cacheIncomingConnections.get(component)
     }
 
 // -------------------------------------------------------------------------

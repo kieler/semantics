@@ -69,13 +69,16 @@ public class CViewModelSemanticSequencer extends AbstractDelegatingSemanticSeque
 	 *         name=ID 
 	 *         parent=[Component|ID]? 
 	 *         type=ComponentType 
+	 *         customTypeID=STRING 
+	 *         languageID=STRING 
 	 *         reference=[Component|ID] 
 	 *         referenceUnresolved=STRING 
 	 *         location=STRING 
 	 *         referenceLine=INT? 
 	 *         children+=[Component|ID]* 
 	 *         tooltip=STRING 
-	 *         rawdata=STRING
+	 *         rawdata=STRING 
+	 *         filtered?='filtered'?
 	 *     )
 	 */
 	protected void sequence_Component(ISerializationContext context, Component semanticObject) {

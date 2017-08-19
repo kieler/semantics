@@ -70,6 +70,8 @@ import org.eclipse.elk.alg.layered.properties.GreedySwitchType
 import de.cau.cs.kieler.cview.AbstractKLighDController
 import de.cau.cs.kieler.cview.extensions.CViewAnalysisExtensions
 import org.eclipse.elk.core.options.HierarchyHandling
+import de.cau.cs.kieler.cview.hooks.ICViewLanguage
+import de.cau.cs.kieler.cview.extensions.CViewLanguageExtensions
 
 /* Package and import statements... */
 class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
@@ -87,8 +89,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
     @Inject extension CViewModelExtensions
 
-    public static String CONNECTION_TYPE_REFERENCE_FUNC = "CONNECTION_TYPE_REFERENCE_FUNC"
-    public static String CONNECTION_TYPE_REFERENCE_TYPE = "CONNECTION_TYPE_REFERENCE_TYPE"
+    @Inject extension CViewLanguageExtensions
+
 
     public static boolean parseFiles = false;
     public static boolean skipFileContent = false;
@@ -118,13 +120,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     public static final SynthesisOption SKIP_FILE_CONTENT = SynthesisOption.createCheckOption("Skip File Content",
         false);
 
-    public static final SynthesisOption SHOW_FUNCTIONS = SynthesisOption.createCheckOption("Show Functions", false);
-    public static final SynthesisOption SHOW_REFERENCES_FUNC = SynthesisOption.createCheckOption(
-        "Show Function References", false);
-    public static final SynthesisOption SHOW_TYPES = SynthesisOption.createCheckOption("Show Types", false);
-    public static final SynthesisOption SHOW_REFERENCES_TYPE = SynthesisOption.createCheckOption("Show Type References",
-        false);
-
     public static final SynthesisOption INTERLEVEL_CONNECTIONS = SynthesisOption.createCheckOption(
         "Interlevel Connections", false);
 
@@ -133,7 +128,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     public static final SynthesisOption HIDE_UNCONNECTED = SynthesisOption.createCheckOption("Hide Unconnected", false);
 
     public static final SynthesisOption ANONYMIZE = SynthesisOption.createCheckOption("Anonymize", false);
-    
+
     public static final float LINEWIDTH = 1.8f
     public static final float ROUNDRECT1 = 4
     public static final float ROUNDRECT2 = 4
@@ -143,15 +138,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     public static final String FOLDERCOLOR2 = "#E7E853"
     public static final int FOLDERCOLORANGLE = 30
 
-    public static final String FUNCTIONCOLORREF = "#D5EAFD"
-    public static final String FUNCTIONCOLOR = "#82B5E3"
-    public static final String FUNCTIONCOLORTRANS = "#286296"
-
-    static final String COLOR_STRUCT_NOREF = "#FFD236"
-    static final String COLOR_STRUCT = "#FFF0BD"
-    static final String COLOR_TYPEDEF = "#FCFF00"
-    static final String COLOR_DECL = "#FEFFC1"
-    
     static final String COLOR_GRAYEDOUT = "#E0E0E0"
 
     // public static final SynthesisOption FILTER_FILES = SynthesisOption.create RangeOption("Expanded Layers", MIN_EXPANDED_VALUE, MAX_EXPANDED_VALUE+1, DEFAULT_EXPANDED_VALUE);
@@ -162,22 +148,40 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         options.addAll(FLATTEN_HIERARCHY);
         options.addAll(INTERLEVEL_CONNECTIONS);
         options.addAll(SKIP_FILE_CONTENT);
-        options.addAll(SHOW_FUNCTIONS);
-        options.addAll(SHOW_REFERENCES_FUNC);
-        options.addAll(SHOW_TYPES);
-        options.addAll(SHOW_REFERENCES_TYPE);
         options.addAll(HIDE_CONNECTIONS);
         options.addAll(HIDE_UNCONNECTED);
         options.addAll(ANONYMIZE);
+
+        // Add custom additional options here        
+        for (language : CViewPlugin.getRegisteredLanguageHooks(false)) {
+            val additionalOptions = language.diagramSynthesisOptions
+            if (!additionalOptions.nullOrEmpty) {
+                options.addAll(additionalOptions)
+            }
+        }
+
         return options.toList;
     }
 
     val HashSet<Component> connectedComponents = new HashSet
     val HashSet<Component> connectedComponentsAdditional = new HashSet // thru hierarchy
+    
+    
+    // =================================  FILTERING  =================================
+    
+    def void applyFilter(CViewModel model) {
+        for (component : model.components) {
+            component.filtered = !component.allowedByFilterComponent
+        }
+    }
+    
     // val HashMap<Component, KNode> knodes = new HashMap
     val HashMap<EObject, Boolean> allowedByFilterCache = new HashMap
 
     def boolean allowedByFilterComponent(Component component) {
+        if (FilterDialog.valueCheckDisabled) {
+            return true
+        }
         if (FilterDialog.valueCheckTransitions || FilterDialog.valueTextFilter.nullOrEmpty) {
             // If connection-filter, then return here, allow all components
             return true
@@ -258,6 +262,9 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     }
 
     def boolean allowedByFilterConnection(Connection connection) {
+        if (FilterDialog.valueCheckDisabled) {
+            return true
+        }
         if (!FilterDialog.valueCheckTransitions || FilterDialog.valueTextFilter.nullOrEmpty) {
             // If component-filter, then return here, allow all connections
             return true;
@@ -314,7 +321,9 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         allowedByFilterCache.put(connection, allowed)
         return allowed;
     }
-
+    
+        // ==================================================================
+    
     def addConnectedParents(Component component) {
         if (component.parent != null) {
             connectedComponentsAdditional.add(component.parent)
@@ -322,10 +331,22 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         }
     }
 
-    override KNode transform(CViewModel model) {
+    // General look-up if some laguage wants/requires reparsing
+    def boolean reparsingRequired() {
+        for (language : CViewPlugin.getRegisteredLanguageHooks(false)) {
+            if (language.reparsingRequired(this)) {
+                return true
+            }
+        }
+        return false
+    }
 
-        val newParseFiles = SHOW_FUNCTIONS.booleanValue || SHOW_TYPES.booleanValue ||
-            SHOW_REFERENCES_FUNC.booleanValue || SHOW_REFERENCES_TYPE.booleanValue
+    // Entry method for diagram synthesis
+    override KNode transform(CViewModel model) {
+        
+        printlnConsole("INFO: Started diagram synthesis")
+
+        val newParseFiles = reparsingRequired
         if (parseFiles != newParseFiles) {
             parseFiles = newParseFiles
             CViewPlugin.rebuildModelAndrefreshCView(true)
@@ -338,62 +359,16 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             return null;
         }
 
-        try {
-            val toBeRemovedAllFunc = model.connections.filter[e|e.type.equals(CONNECTION_TYPE_REFERENCE_FUNC)]
-            if (!toBeRemovedAllFunc.nullOrEmpty) {
-                val toBeRemovedAllFuncList = toBeRemovedAllFunc.toList
-                if (!toBeRemovedAllFuncList.nullOrEmpty) {
-                    val toBeRemovedAllFuncListCopy = toBeRemovedAllFuncList.immutableCopy
-                    if (!toBeRemovedAllFuncListCopy.nullOrEmpty) {
-                        for (toBeRemoved : toBeRemovedAllFuncListCopy) {
-                            toBeRemoved.remove
-                        }
-                    }
-                }
-            }
-        } catch (Exception e) {
-        }
-        try {
-            val toBeRemovedAllType = model.connections.filter[e|e.type.equals(CONNECTION_TYPE_REFERENCE_TYPE)]
-            if (!toBeRemovedAllType.nullOrEmpty) {
-                val toBeRemovedAllTypeList = toBeRemovedAllType.toList
-                if (!toBeRemovedAllTypeList.nullOrEmpty) {
-                    val toBeRemovedAllTypeListCopy = toBeRemovedAllTypeList.immutableCopy
-                    if (!toBeRemovedAllTypeListCopy.nullOrEmpty) {
-                        for (toBeRemoved : toBeRemovedAllTypeListCopy) {
-                            toBeRemoved.remove
-                        }
-                    }
-                }
-            }
-        } catch (Exception e) {
-        }
-        if (SHOW_REFERENCES_FUNC.booleanValue) {
-            // Add more (default-)connections that represent the references here
-            for (component : model.components.filter[e|e.reference != null]) {
-                val connection = component.connectTo(component.reference)
-                connection.type = CONNECTION_TYPE_REFERENCE_FUNC
-                if (component.isFunc) {
-                    // Func Ref
-                    connection.color = FUNCTIONCOLORTRANS
-                    connection.tooltip = component.reference.name + "  from  " + component.reference.parent.name
-                    model.connections.add(connection)
-                }
+        printlnConsole("INFO: - Build-in connections")
+
+        // Add language build-in connections
+        for (language : CViewPlugin.getRegisteredLanguageHooks(false)) {
+            val connections = language.diagramConnections(model, this)
+            if (!connections.nullOrEmpty) {
+                    model.connections.addAll(connections)
             }
         }
-        if (SHOW_REFERENCES_TYPE.booleanValue) {
-            // Add more (default-)connections that represent the references here
-            for (component : model.components.filter[e|e.reference != null]) {
-                val connection = component.connectTo(component.reference)
-                connection.type = CONNECTION_TYPE_REFERENCE_TYPE
-                if (!component.isFunc) {
-                    // Struct, Decl, Typedef
-                    connection.color = "#FFD236"
-                    connection.tooltip = component.reference.name +  "  from  " + component.reference.parent.name
-                    model.connections.add(connection)
-                }
-            }
-        }
+
 
         instance = this
         connectedComponents.clear
@@ -404,6 +379,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         allowedByFilterCache.clear
 
         if (ANONYMIZE.booleanValue) {
+            printlnConsole("INFO: - Anonymization")
             // anonymize the model
             for (component : model.components) {
                 component.name = component.name.possiblyAnonymize(true)
@@ -441,6 +417,17 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         // root.addLayoutParam(CoreOptions::HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN)
         val depth = 1;
 
+        printlnConsole("INFO: - Apply filter")
+        if (FilterDialog.valueTextFilter.nullOrEmpty || FilterDialog.valueCheckDisabled) {
+            CViewPlugin.setTitle(AbstractKLighDController.CVIEW_KLIGHD_TITLE)
+        } else {
+            CViewPlugin.setTitle(AbstractKLighDController.CVIEW_KLIGHD_TITLE_FILTERED)
+        }
+        // Apply the filter here
+        model.applyFilter
+
+        printlnConsole("INFO: - Drawing components")
+
         for (item : model.components) {
             if (item.parent == null || FLATTEN_HIERARCHY.booleanValue) {
                 var skip = false;
@@ -450,7 +437,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                     }
                 }
                 if (!skip) {
-                    if (item.allowedByFilterComponent) {
+                    if (!item.filtered) {
                         val additionalItem = item.transformItem(depth)
                         if (additionalItem != null) {
                             root.children.add(additionalItem)
@@ -460,10 +447,12 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             }
         }
 
+
         // Create connections (added by extensions)
         if (!HIDE_CONNECTIONS.booleanValue) {
+            printlnConsole("INFO: - Drawing connections")
             for (connection : model.connections) {
-                if (connection.allowedByFilterConnection) {
+                if (!(connection.src.filtered || connection.dst.filtered)) {
                     var connectionColor = "Black".color
                     if (connection.color != null) {
                         connectionColor = connection.color.color
@@ -474,6 +463,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         }
 
         if (HIDE_UNCONNECTED.booleanValue) {
+            printlnConsole("INFO: - Removing unconnected")
             if (!INTERLEVEL_CONNECTIONS.booleanValue || !FLATTEN_HIERARCHY.booleanValue) {
                 // Consider connected and their parents
                 for (item : model.components) {
@@ -491,11 +481,18 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             }
         }
 
-        if (FilterDialog.valueTextFilter.nullOrEmpty) {
-            CViewPlugin.setTitle(AbstractKLighDController.CVIEW_KLIGHD_TITLE)
-        } else {
-            CViewPlugin.setTitle(AbstractKLighDController.CVIEW_KLIGHD_TITLE_FILTERED)
+        printlnConsole("INFO: Done diagram synthesis")
+        
+        if (root.children.size < 1) {
+            if (model.components.size > 0) {
+                root.children.add(transformInfoMessage("Everything Filtered Away"))
+                printlnConsole("INFO: Everything filtered away")
+            } else {
+                root.children.add(transformInfoMessage("No Components"))
+                printlnConsole("INFO: No components")
+            }
         }
+        
 
         return root;
     }
@@ -744,190 +741,91 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
         def KNode transformItem(Component item, int depth) {
             if (item.isFile) {
-                if (SHOW_FUNCTIONS.booleanValue || SHOW_TYPES.booleanValue) {
-                    return item.transformItemFileWithFunctions(depth)
-                } else {
-                    return item.transformItemFile(depth)
-                }
+                return item.transformItemFile(depth)
             } else if (item.isDir) {
                 return item.transformItemDir(depth)
-            } else if (item.isFunc) {
-                return item.transformItemFunc(depth)
-            } else if (item.isStruct) {
-                return item.transformItemStruct(depth)
-            } else if (item.isTypedef) {
-                return item.transformItemStruct(depth)
-            } else if (item.isDecl) {
-                return item.transformItemStruct(depth)
+            } else if (item.isCustomType) {
+                return item.transformItemCustom(depth)
             }
         }
 
-        def KNode transformItemFunc(Component item, int depth) {
-            if (!SHOW_FUNCTIONS.booleanValue) {
-                return null
-            }
-            if (item.isReference && !SHOW_REFERENCES_FUNC.booleanValue) {
-                return null
-            }
-            val childNode = item.createNode().associateWith(item);
-            val childRect = childNode.addRoundedRectangle(ROUNDRECT1, ROUNDRECT2, LINEWIDTH);
-            val label = childNode.addInsideCenteredNodeLabel(item.name, KlighdConstants.DEFAULT_FONT_SIZE,
-                KlighdConstants.DEFAULT_FONT_NAME);
+
+        def KNode transformInfoMessage(String messageText) {
+            val childNode = messageText.createNode()
+            val childRect = childNode.addRoundedRectangle(ROUNDRECT1, ROUNDRECT2, LINEWIDTH)
+            val label = childNode.addInsideCenteredNodeLabel(messageText, KlighdConstants.DEFAULT_FONT_SIZE,
+                KlighdConstants.DEFAULT_FONT_NAME)
             childNode.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
                 EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
-            if (item.reference != null) {
-                childRect.background = FUNCTIONCOLORREF.color;
-                childRect.selectionBackground = FUNCTIONCOLORREF.color;
-                label.firstText.selectionBackground = FUNCTIONCOLORREF.color;
-            } else {
-                childRect.background = FUNCTIONCOLOR.color;
-                childRect.selectionBackground = FUNCTIONCOLOR.color;
-                label.firstText.selectionBackground = FUNCTIONCOLOR.color;
-            }
-            childRect.addDoubleClickAction(OpenEditorAction.ID);
-            childRect.addSingleClickAction(OpenEditorAction.ID, false, true, false)
-            label.getFirstText.addDoubleClickAction(OpenEditorAction.ID);
-            label.getFirstText.addSingleClickAction(OpenEditorAction.ID, false, true, false)
-
+            childRect.background = "WHITE".color
+            childRect.selectionBackground = "WHITE".color
+            childRect.foreground = "GRAY".color
+            label.firstText.selectionBackground = "WHITE".color
+            label.firstText.foreground = "GRAY".color
             return childNode
-        }
-
-        def KColor getStructTypedefColor(Component item) {
-            if (item.isTypedef) {
-                return COLOR_TYPEDEF.color
-            } else if (item.isDecl) {
-                return COLOR_DECL.color
-            } else if (item.reference == null) {
-                return COLOR_STRUCT_NOREF.color
-            } else {
-                return COLOR_STRUCT.color
-            }
-        }
-
-        def KNode transformItemStruct(Component item, int depth) {
-            if (!SHOW_TYPES.booleanValue) {
-                return null
-            }
-
-            val childNodeOuter = item.createNode().associateWith(item);
-
-            val rectCol = childNodeOuter.addRoundedRectangle(ROUNDRECT1, ROUNDRECT2, LINEWIDTH);
-            rectCol.background = item.structTypedefColor
-            rectCol.selectionBackground = item.structTypedefColor
-            rectCol.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
-            //rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-            rectCol.addDoubleClickAction(OpenEditorAction.ID);
-            rectCol.addSingleClickAction(OpenEditorAction.ID, false, true, false)
-            
-            val rectExp = childNodeOuter.addRoundedRectangle(ROUNDRECT1, ROUNDRECT2, LINEWIDTH);
-            rectExp.background = item.structTypedefColor
-            rectExp.selectionBackground = item.structTypedefColor
-            rectExp.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
-            //rectExp.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-            rectExp.addDoubleClickAction(OpenEditorAction.ID);
-            rectExp.addSingleClickAction(OpenEditorAction.ID, false, true, false)
-            childNodeOuter.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
-                EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
-
-            val itemLabel = item.name
-            val label = childNodeOuter.addInsideTopCenteredNodeLabel(itemLabel, KlighdConstants.DEFAULT_FONT_SIZE,
-                KlighdConstants.DEFAULT_FONT_NAME);
-            label.associateWith(item)
-            label.firstText.selectionBackground = item.structTypedefColor
-
-            var String toolTypType = item.type.literal.toString  
-            if (toolTypType != null) {
-                if (item.decl) {
-                    toolTypType = toolTypType + "  [" + item.getTypeNameFromDecl + "]";
-                }
-                rectCol.setProperty(KlighdProperties::TOOLTIP, toolTypType);
-                rectExp.setProperty(KlighdProperties::TOOLTIP, toolTypType);
-                label.firstText.setProperty(KlighdProperties::TOOLTIP, toolTypType);
-            }
-            label.firstText.addDoubleClickAction(OpenEditorAction.ID);
-            label.firstText.addSingleClickAction(OpenEditorAction.ID, false, true, false)
-
-            if (item.hieararchical(SHOW_FUNCTIONS.booleanValue, SHOW_TYPES.booleanValue) && !FLATTEN_HIERARCHY.booleanValue) {
-                // Hierarchical case
-                label.firstText.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
-                //label.firstText.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-                val childArea = item.children.createNode().associateWith(item)
-                val childAreaRect = childArea.addRoundedRectangle(1, 1, 1)
-                childAreaRect.background = "WHITE".color;
-                childAreaRect.selectionBackground = "WHITE".color;
-                childAreaRect.foreground = "GRAY".color;
-                label.firstText.setAreaPlacementData().from(LEFT, -2, 0, TOP, -4, 0).to(RIGHT, -2, 0, BOTTOM, -2, 0);
-                childNodeOuter.children.add(childArea)
-                childArea.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
-                    EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
-
-                val shouldExpand = (EXPANDED_SLIDER.intValue > MAX_EXPANDED_VALUE || EXPANDED_SLIDER.intValue > depth)
-
-                childNodeOuter.setProperty(KlighdProperties.EXPAND, shouldExpand);
-
-                if (!FLATTEN_HIERARCHY.booleanValue) {
-                    for (child : item.children) {
-                        if (child.allowedByFilterComponent) {
-                            val additionalItem = child.transformItem(depth + 1);
-                            if (additionalItem != null) {
-                                childArea.children += additionalItem
-                            }
-                        }
-                    }
-                }
-            }
-
-            return childNodeOuter
         }
 
         def KNode transformItemFile(Component item, int depth) {
-            val childNode = item.createNode().associateWith(item);
-            val childRect = childNode.addRoundedRectangle(ROUNDRECT1, ROUNDRECT2, LINEWIDTH);
-            val label = childNode.addInsideCenteredNodeLabel(item.name, KlighdConstants.DEFAULT_FONT_SIZE,
-                KlighdConstants.DEFAULT_FONT_NAME);
-            childNode.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
-                EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
-            childRect.background = item.getFileColor
-            childRect.selectionBackground = item.getFileColor
-            childRect.addDoubleClickAction(OpenEditorAction.ID);
-            childRect.addSingleClickAction(OpenEditorAction.ID, false, true, false)
-            label.getFirstText.addDoubleClickAction(OpenEditorAction.ID);
-            label.getFirstText.addSingleClickAction(OpenEditorAction.ID, false, true, false)
-            label.firstText.selectionBackground = item.getFileColor
-
-            if (item.tooltip != null) {
-                val tooltipText = item.tooltip
-                childRect.setProperty(KlighdProperties::TOOLTIP, tooltipText);
-                label.firstText.setProperty(KlighdProperties::TOOLTIP, tooltipText);
+            var itemColor = "WHITE"
+            val opensInEditor = true
+            val hierarchical = item.hieararchicalView(this)
+            if (!hierarchical) {
+                itemColor = COLOR_GRAYEDOUT
             }
+            val toolTip = item.tooltip
 
-            return childNode
+            return item.transformItemGeneral(depth, itemColor, opensInEditor, hierarchical, toolTip)
         }
 
-        def KColor getFileColor(Component item) {
-            if (item.hieararchical(SHOW_FUNCTIONS.booleanValue, SHOW_TYPES.booleanValue)) {
-                return "WHITE".color;
-            } else {
-                return COLOR_GRAYEDOUT.color;
+        def KNode transformItemCustom(Component item, int depth) {
+            if (!item.language.diagramIsVisible(item, this)) {
+                return null;
             }
+
+            val itemColor = item.language.diagramColor(item)
+            val opensInEditor = item.language.diagramOpensInEditor(item)
+            val hierarchical = item.language.diagramIsHierarchical(item)
+            val toolTip = item.language.diagramToolTip(item)
+
+            return item.transformItemGeneral(depth, itemColor, opensInEditor, hierarchical, toolTip)
         }
 
-        def KNode transformItemFileWithFunctions(Component item, int depth) {
+        def KNode transformItemGeneral(
+            Component item,
+            int depth,
+            String itemColor,
+            boolean opensInEditor,
+            boolean hierarchical,
+            String toolTip
+        ) {
             val childNodeOuter = item.createNode().associateWith(item);
 
             val rectCol = childNodeOuter.addRoundedRectangle(ROUNDRECT1, ROUNDRECT2, LINEWIDTH);
-            rectCol.background = item.getFileColor
-            rectCol.selectionBackground = item.getFileColor
+            rectCol.background = itemColor.color
+            rectCol.selectionBackground = itemColor.color
             rectCol.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
-            rectCol.addDoubleClickAction(OpenEditorAction.ID);
-            rectCol.addSingleClickAction(OpenEditorAction.ID, false, true, false)
-            val rectExp = childNodeOuter.addRoundedRectangle(ROUNDRECT1, ROUNDRECT2, LINEWIDTH);
-            rectExp.background = item.getFileColor
-            rectExp.selectionBackground = item.getFileColor
-            rectExp.addSingleClickAction(CollapseExpandNoDragAction.ID)
+            if (opensInEditor) {
+                rectCol.addDoubleClickAction(OpenEditorAction.ID);
+                rectCol.addSingleClickAction(OpenEditorAction.ID, false, true, false)
+            } else {
+                if (hierarchical) {
+                    rectCol.addDoubleClickAction(CollapseExpandNoDragAction.ID);
+                }
+            }
 
-            rectExp.addDoubleClickAction(OpenEditorAction.ID);
-            rectExp.addSingleClickAction(OpenEditorAction.ID, false, true, false)
+            val rectExp = childNodeOuter.addRoundedRectangle(ROUNDRECT1, ROUNDRECT2, LINEWIDTH);
+            rectExp.background = itemColor.color
+            rectExp.selectionBackground = itemColor.color
+            rectExp.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
+            if (opensInEditor) {
+                rectExp.addDoubleClickAction(OpenEditorAction.ID);
+                rectExp.addSingleClickAction(OpenEditorAction.ID, false, true, false)
+            } else {
+                if (hierarchical) {
+                    rectExp.addDoubleClickAction(CollapseExpandNoDragAction.ID);
+                }
+            }
+
             childNodeOuter.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
                 EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
 
@@ -935,24 +833,21 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             val label = childNodeOuter.addInsideTopCenteredNodeLabel(itemLabel, KlighdConstants.DEFAULT_FONT_SIZE,
                 KlighdConstants.DEFAULT_FONT_NAME);
             label.associateWith(item)
+            label.firstText.selectionBackground = itemColor.color
 
-            if (item.tooltip != null) {
-                val tooltipText = item.tooltip
-                rectCol.setProperty(KlighdProperties::TOOLTIP, tooltipText);
-                rectExp.setProperty(KlighdProperties::TOOLTIP, tooltipText);
-                label.firstText.setProperty(KlighdProperties::TOOLTIP, tooltipText);
+            if (toolTip != null) {
+                rectCol.setProperty(KlighdProperties::TOOLTIP, toolTip);
+                rectExp.setProperty(KlighdProperties::TOOLTIP, toolTip);
+                label.firstText.setProperty(KlighdProperties::TOOLTIP, toolTip);
+            }
+            if (opensInEditor) {
+                label.firstText.addDoubleClickAction(OpenEditorAction.ID);
+                label.firstText.addSingleClickAction(OpenEditorAction.ID, false, true, false)
             }
 
-            label.firstText.addDoubleClickAction(OpenEditorAction.ID);
-            label.firstText.addSingleClickAction(OpenEditorAction.ID, false, true, false)
-
-            if (item.hieararchical(SHOW_FUNCTIONS.booleanValue, SHOW_TYPES.booleanValue)) {
+            if (hierarchical && !FLATTEN_HIERARCHY.booleanValue) {
                 // Hierarchical case
                 label.firstText.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
-                label.firstText.selectionBackground = item.getFileColor
-            }
-
-            if (item.hieararchical(SHOW_FUNCTIONS.booleanValue, SHOW_TYPES.booleanValue) && !FLATTEN_HIERARCHY.booleanValue) {
                 val childArea = item.children.createNode().associateWith(item)
                 val childAreaRect = childArea.addRoundedRectangle(1, 1, 1)
                 childAreaRect.background = "WHITE".color;
@@ -969,7 +864,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
                 if (!FLATTEN_HIERARCHY.booleanValue) {
                     for (child : item.children) {
-                        if (child.allowedByFilterComponent) {
+                        if (!child.filtered) {
                             val additionalItem = child.transformItem(depth + 1);
                             if (additionalItem != null) {
                                 childArea.children += additionalItem
@@ -1008,7 +903,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             label.associateWith(item)
             label.firstText.selectionBackground = FOLDERCOLOR1.color;
 
-            if (item.hieararchical(SHOW_FUNCTIONS.booleanValue, SHOW_TYPES.booleanValue) && !FLATTEN_HIERARCHY.booleanValue) {
+            if (item.hieararchical && !FLATTEN_HIERARCHY.booleanValue) {
                 // Hierarchical case
                 label.firstText.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
                 label.firstText.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
@@ -1028,7 +923,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
                 if (!FLATTEN_HIERARCHY.booleanValue) {
                     for (child : item.children) {
-                        if (child.allowedByFilterComponent) {
+                        if (!child.filtered) {
                             val additionalItem = child.transformItem(depth + 1);
                             if (additionalItem != null) {
                                 childArea.children += additionalItem

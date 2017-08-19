@@ -12,6 +12,8 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+import java.util.logging.ErrorManager;
 
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
 import org.eclipse.core.runtime.CoreException;
@@ -20,7 +22,9 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.osgi.util.TextProcessor;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
@@ -39,8 +43,11 @@ import org.osgi.service.prefs.Preferences;
 
 import com.google.inject.Guice;
 
-import de.cau.cs.kieler.cview.hooks.IAnalysisHook;
-import de.cau.cs.kieler.cview.hooks.IExportHook;
+import de.cau.cs.kieler.cview.extensions.CViewLanguageExtensions;
+import de.cau.cs.kieler.cview.hooks.ICViewAnalysis;
+import de.cau.cs.kieler.cview.hooks.ICViewExport;
+import de.cau.cs.kieler.cview.hooks.ICViewLanguage;
+import de.cau.cs.kieler.cview.model.cViewModel.Component;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
 
@@ -59,21 +66,25 @@ public class CViewPlugin implements BundleActivator {
     /** The Constant EXTENSION_POINT_ID. */
     public static final String EXPORT_HOOK_EXTENSION_POINT_ID = "de.cau.cs.kieler.cview.export";
 
+    /** The Constant EXTENSION_POINT_ID. */
+    public static final String LANGUAGE_HOOK_EXTENSION_POINT_ID = "de.cau.cs.kieler.cview.language";
+
     // The plug-in ID
     public static final String PLUGIN_ID = "de.cau.cs.kieler.cview"; //$NON-NLS-1$
 
-    static ArrayList<IAnalysisHook> analysisHooks = null;
-    static ArrayList<IExportHook> exportHooks = null;
+    static ArrayList<ICViewAnalysis> analysisHooks = null;
+    static ArrayList<ICViewExport> exportHooks = null;
+    static ArrayList<ICViewLanguage> languageHooks = null;
 
     static HashMap<String, char[]> cacheFileRaw = new HashMap<String, char[]>();
-    static HashMap<String, IASTTranslationUnit> cacheFileAST =
-            new HashMap<String, IASTTranslationUnit>();
+    static HashMap<String, Object> cacheFileParsed =
+            new HashMap<String, Object>();
 
     // -------------------------------------------------------------------------
 
     private static void cacheReset() {
         cacheFileRaw.clear();
-        cacheFileAST.clear();
+        cacheFileParsed.clear();
     }
 
     private static char[] cacheGetFileRaw(String fileLocation) {
@@ -83,9 +94,9 @@ public class CViewPlugin implements BundleActivator {
         return null;
     }
 
-    private static IASTTranslationUnit cacheGetFileAST(String fileLocation) {
-        if (cacheFileAST.containsKey(fileLocation)) {
-            return cacheFileAST.get(fileLocation);
+    private static Object cacheGetFileParsed(String fileLocation) {
+        if (cacheFileParsed.containsKey(fileLocation)) {
+            return cacheFileParsed.get(fileLocation);
         }
         return null;
     }
@@ -94,22 +105,23 @@ public class CViewPlugin implements BundleActivator {
         cacheFileRaw.put(fileLocation, fileRaw);
     }
 
-    private static void cachePutFileAST(String fileLocation, IASTTranslationUnit fileAST) {
-        cacheFileAST.put(fileLocation, fileAST);
+    private static void cachePutFileParsed(String fileLocation, Object fileParsed) {
+        cacheFileParsed.put(fileLocation, fileParsed);
     }
-
-    public static IASTTranslationUnit getFileAST(String fileLocation) {
-        IASTTranslationUnit returnValue = null;
+    
+    public static Object getFileParsed(String fileLocation) {
+        Object returnValue = null;
         if (modified(fileLocation)) {
-            cachePutFileAST(fileLocation, null);
+            cachePutFileParsed(fileLocation, null);
         }
-        returnValue = cacheGetFileAST(fileLocation);
+        returnValue = cacheGetFileParsed(fileLocation);
         if (returnValue == null) {
             try {
                 char[] content = getFileRaw(fileLocation);
                 try {
-                    returnValue = CFileParser.parse(content);
-                    cachePutFileAST(fileLocation, returnValue);
+                    ICViewLanguage language = CViewLanguageExtensions.getLanguage(fileLocation);
+                    returnValue = language.parseFile(content);
+                    cachePutFileParsed(fileLocation, returnValue);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -318,6 +330,7 @@ public class CViewPlugin implements BundleActivator {
     // }
     // }
 
+    
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
@@ -325,12 +338,12 @@ public class CViewPlugin implements BundleActivator {
         exportHooks = null;
     }
 
-    public static List<IExportHook> getRegisteredExportHooks(boolean forceReload) {
+    public static List<ICViewExport> getRegisteredExportHooks(boolean forceReload) {
         if (exportHooks != null && !forceReload) {
             return exportHooks;
         }
         if (exportHooks == null || forceReload) {
-            exportHooks = new ArrayList<IExportHook>();
+            exportHooks = new ArrayList<ICViewExport>();
         }
         // Otherwise inspect the extensions
         IConfigurationElement[] extensions = Platform.getExtensionRegistry()
@@ -338,9 +351,9 @@ public class CViewPlugin implements BundleActivator {
         // Walk thru every extension and instantiate the declared class, then put it into the cache
         for (IConfigurationElement extension : extensions) {
             try {
-                IExportHook instance = (IExportHook) extension.createExecutableExtension("class");
+                ICViewExport instance = (ICViewExport) extension.createExecutableExtension("class");
                 // Handle the case that wee need Google Guice for instantiation
-                instance = (IExportHook) getGuiceInstance(instance);
+                instance = (ICViewExport) getGuiceInstance(instance);
                 exportHooks.add(instance);
             } catch (CoreException e) {
                 e.printStackTrace();
@@ -353,8 +366,8 @@ public class CViewPlugin implements BundleActivator {
 
     public static List<String> getAllRegisteredExportHookIds() {
         ArrayList<String> returnList = new ArrayList<String>();
-        List<IExportHook> hooks = getRegisteredExportHooks(true);
-        for (IExportHook hook : hooks) {
+        List<ICViewExport> hooks = getRegisteredExportHooks(true);
+        for (ICViewExport hook : hooks) {
             returnList.add(hook.getName() + " (" + hook.getId() + ")");
         }
         return returnList;
@@ -384,8 +397,8 @@ public class CViewPlugin implements BundleActivator {
 
     public static List<String> filterSelectedRegisteredAnalysisHookIds(List<String> inputList) {
         ArrayList<String> returnList = new ArrayList<String>();
-        List<IAnalysisHook> hooks = getRegisteredAnalysisHooks(true);
-        for (IAnalysisHook hook : hooks) {
+        List<ICViewAnalysis> hooks = getRegisteredAnalysisHooks(true);
+        for (ICViewAnalysis hook : hooks) {
             for (String item : inputList) {
                 String hookId = extractId(item);
                 if (hookId.equals(hook.getId())) {
@@ -402,8 +415,8 @@ public class CViewPlugin implements BundleActivator {
 
     public static List<String> getAllRegisteredAnalysisHookIds() {
         ArrayList<String> returnList = new ArrayList<String>();
-        List<IAnalysisHook> hooks = getRegisteredAnalysisHooks(true);
-        for (IAnalysisHook hook : hooks) {
+        List<ICViewAnalysis> hooks = getRegisteredAnalysisHooks(true);
+        for (ICViewAnalysis hook : hooks) {
             returnList.add(hook.getName() + " (" + hook.getId() + ")");
         }
         return returnList;
@@ -411,12 +424,12 @@ public class CViewPlugin implements BundleActivator {
 
     // -------------------------------------------------------------------------
 
-    public static List<IAnalysisHook> getRegisteredAnalysisHooks(boolean forceReload) {
+    public static List<ICViewAnalysis> getRegisteredAnalysisHooks(boolean forceReload) {
         if (analysisHooks != null && !forceReload) {
             return analysisHooks;
         }
         if (analysisHooks == null || forceReload) {
-            analysisHooks = new ArrayList<IAnalysisHook>();
+            analysisHooks = new ArrayList<ICViewAnalysis>();
         }
         // Otherwise inspect the extensions
         IConfigurationElement[] extensions = Platform.getExtensionRegistry()
@@ -424,11 +437,20 @@ public class CViewPlugin implements BundleActivator {
         // Walk thru every extension and instantiate the declared class, then put it into the cache
         for (IConfigurationElement extension : extensions) {
             try {
-                IAnalysisHook instance =
-                        (IAnalysisHook) extension.createExecutableExtension("class");
+                ICViewAnalysis instance =
+                        (ICViewAnalysis) extension.createExecutableExtension("class");
                 // Handle the case that wee need Google Guice for instantiation
-                instance = (IAnalysisHook) getGuiceInstance(instance);
-                analysisHooks.add(instance);
+                instance = (ICViewAnalysis) getGuiceInstance(instance);
+                int prio = instance.priority();
+                int putIndex = 0;
+                //TODO: Verify
+                for (ICViewAnalysis otherAnalysisHook: analysisHooks) {
+                    if (otherAnalysisHook.priority() > prio) {
+                        break;
+                    }
+                    putIndex++;
+                }
+                analysisHooks.add(putIndex, instance);
             } catch (CoreException e) {
                 e.printStackTrace();
             }
@@ -526,6 +548,94 @@ public class CViewPlugin implements BundleActivator {
                 }
             }
         });
+    }
+
+    // -------------------------------------------------------------------------
+
+    public static void openMessageDialog(String title, String text, boolean error, boolean warning) {
+        int type = SWT.ICON_INFORMATION;
+        if (warning) {
+            type = SWT.ICON_WARNING;
+        }
+        if (error) {
+            type = SWT.ICON_ERROR;
+        }
+        final int type2 = type;
+
+        Display.getDefault().syncExec(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    MessageBox dialog = new MessageBox(Display.getCurrent().getShells()[0], type2 | SWT.OK);
+                    dialog.setText(title);
+                    dialog.setMessage(text);
+                    dialog.open();
+                } catch (Exception e) {
+                    // ignore if we cannot bring it to front
+                }
+            }
+        });
+        
+        
+    }
+
+    // -------------------------------------------------------------------------
+
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    
+    static HashMap<String, ICViewLanguage> languageHookChache = null;
+    static ICViewLanguage defaultLanguage = new DefaultLanguage();
+    
+    public static ICViewLanguage getLanguageHook(Component component) {
+        if (languageHookChache == null) {
+            languageHookChache = new HashMap<String, ICViewLanguage>(); 
+            for (ICViewLanguage language : getRegisteredLanguageHooks(false)) {
+                Set<String> handledTypes = language.diagramHandleComponentCustomTypes();
+                if (handledTypes != null) {
+                    for (String handledType : handledTypes) {
+                        if (languageHookChache.containsKey(handledType)) {
+                            ICViewLanguage otherLanguage = languageHookChache.get(handledType);
+                            // Error, already a language
+                            printlnConsole("ERROR: Already a language (" + otherLanguage.getId() + ") that handles the following component custom ID: " + handledType + ". Ignoring " + language.getId());
+                        } else {
+                            // Put this hook here
+                            languageHookChache.put(handledType, language);
+                        }
+                    }
+                }
+            }
+        }
+        String customTypeID = component.getCustomTypeID();
+        if (languageHookChache.containsKey(customTypeID)) {
+            return languageHookChache.get(customTypeID);
+        } else {
+            return defaultLanguage;
+        }
+    }
+
+    public static List<ICViewLanguage> getRegisteredLanguageHooks(boolean forceReload) {
+        if (languageHooks != null && !forceReload) {
+            return languageHooks;
+        }
+        if (languageHooks == null || forceReload) {
+            languageHooks = new ArrayList<ICViewLanguage>();
+        }
+        // Otherwise inspect the extensions
+        IConfigurationElement[] extensions = Platform.getExtensionRegistry()
+                .getConfigurationElementsFor(LANGUAGE_HOOK_EXTENSION_POINT_ID);
+        // Walk thru every extension and instantiate the declared class, then put it into the cache
+        for (IConfigurationElement extension : extensions) {
+            try {
+                ICViewLanguage instance = (ICViewLanguage) extension.createExecutableExtension("class");
+                // Handle the case that wee need Google Guice for instantiation
+                instance = (ICViewLanguage) getGuiceInstance(instance);
+                languageHooks.add(instance);
+            } catch (CoreException e) {
+                e.printStackTrace();
+            }
+        }
+        return languageHooks;
     }
 
     // -------------------------------------------------------------------------

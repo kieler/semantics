@@ -19,6 +19,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getParent <em>Parent</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getCustomTypeID <em>Custom Type ID</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getLanguageID <em>Language ID</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getReference <em>Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getReferenceUnresolved <em>Reference Unresolved</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getLocation <em>Location</em>}</li>
@@ -26,6 +28,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getChildren <em>Children</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getTooltip <em>Tooltip</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getRawdata <em>Rawdata</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#isFiltered <em>Filtered</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getComponent()
@@ -114,6 +117,58 @@ public interface Component extends EObject
    * @generated
    */
   void setType(ComponentType value);
+
+  /**
+   * Returns the value of the '<em><b>Custom Type ID</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Custom Type ID</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Custom Type ID</em>' attribute.
+   * @see #setCustomTypeID(String)
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getComponent_CustomTypeID()
+   * @model
+   * @generated
+   */
+  String getCustomTypeID();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getCustomTypeID <em>Custom Type ID</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Custom Type ID</em>' attribute.
+   * @see #getCustomTypeID()
+   * @generated
+   */
+  void setCustomTypeID(String value);
+
+  /**
+   * Returns the value of the '<em><b>Language ID</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Language ID</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Language ID</em>' attribute.
+   * @see #setLanguageID(String)
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getComponent_LanguageID()
+   * @model
+   * @generated
+   */
+  String getLanguageID();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getLanguageID <em>Language ID</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Language ID</em>' attribute.
+   * @see #getLanguageID()
+   * @generated
+   */
+  void setLanguageID(String value);
 
   /**
    * Returns the value of the '<em><b>Reference</b></em>' reference.
@@ -286,5 +341,31 @@ public interface Component extends EObject
    * @generated
    */
   void setRawdata(String value);
+
+  /**
+   * Returns the value of the '<em><b>Filtered</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Filtered</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Filtered</em>' attribute.
+   * @see #setFiltered(boolean)
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getComponent_Filtered()
+   * @model
+   * @generated
+   */
+  boolean isFiltered();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.cview.model.cViewModel.Component#isFiltered <em>Filtered</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Filtered</em>' attribute.
+   * @see #isFiltered()
+   * @generated
+   */
+  void setFiltered(boolean value);
 
 } // Component

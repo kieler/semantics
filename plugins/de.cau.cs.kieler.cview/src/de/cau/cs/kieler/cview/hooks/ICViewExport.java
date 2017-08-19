@@ -14,6 +14,8 @@ package de.cau.cs.kieler.cview.hooks;
 
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModel;
 import de.cau.cs.kieler.cview.model.cViewModel.Component;
 import de.cau.cs.kieler.cview.model.cViewModel.Connection;
@@ -22,7 +24,7 @@ import de.cau.cs.kieler.cview.model.cViewModel.Connection;
  * @author cmot
  *
  */
-public interface IExportHook {
+public interface ICViewExport {
 
     /**
      * Define the name for this export hook.
@@ -50,6 +52,6 @@ public interface IExportHook {
      * 
      * @param model
      */
-    String export(CViewModel model);
+    String export(CViewModel model, IProgressMonitor monitor);
 
 }

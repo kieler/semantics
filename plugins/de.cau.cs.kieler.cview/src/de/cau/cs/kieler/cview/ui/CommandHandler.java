@@ -18,7 +18,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import de.cau.cs.kieler.cview.CViewPlugin;
 import de.cau.cs.kieler.cview.klighd.DiagramSynthesis;
 import de.cau.cs.kieler.cview.KLighDController;
-import de.cau.cs.kieler.cview.hooks.IExportHook;
+import de.cau.cs.kieler.cview.hooks.ICViewExport;
 
 public class CommandHandler implements IHandler {
 
@@ -54,7 +54,7 @@ public class CommandHandler implements IHandler {
             if (KLighDController.getModel() == null) {
                 // No model, so build one
                 if (KLighDController.getAllSelections() == null) {
-                    openMessageDialog("Warning", "Nothing selected. Cannot build model.", false, true);
+                    CViewPlugin.openMessageDialog("Warning", "Nothing selected. Cannot build model.", false, true);
                     return null;
                 } else {
                     // CMD_REFRESH_ID will refresh at the bottom of this method...
@@ -70,8 +70,8 @@ public class CommandHandler implements IHandler {
             boolean ok = SelectExportDialog.showDialog();
 
             if (ok) {
-                IExportHook selectedHook = null;
-                for (IExportHook hook : CViewPlugin.getRegisteredExportHooks(false)) {
+                ICViewExport selectedHook = null;
+                for (ICViewExport hook : CViewPlugin.getRegisteredExportHooks(false)) {
                     if (hook.getId()
                             .equals(CViewPlugin.extractId(SelectExportDialog.itemSelected))) {
                         selectedHook = hook;
@@ -95,31 +95,9 @@ public class CommandHandler implements IHandler {
                         fileToWrite += "." + ext;
                     }
                     System.out.println("Exporting to " + fileToWrite);
-                    PrintWriter out;
-                    try {
-                        out = new PrintWriter(fileToWrite);
-                        String exported = selectedHook.export(KLighDController.getModel());
-                        if (exported == null || exported.equals("")) {
-                            openMessageDialog("Export Analysis", "Nothing to export.", false, false);
-                            success = true;
-                        } else {
-                            out.append(exported);
-                            out.close();
-                            success = true;
-                            openMessageDialog("Export Analysis",
-                                    "Export completed.\n\nFile written to '" + fileToWrite + "'.",
-                                    false, false);
-                        }
-                    } catch (FileNotFoundException e) {
-                        openMessageDialog("Error",
-                                "An error occurred while exporting to '" + fileToWrite + "'.",
-                                true, false);
-                        e.printStackTrace();
-                    }
-                    if (!success) {
-                        openMessageDialog("Error", "Could not export to '" + fileToWrite + "'.",
-                                true, false);
-                    }
+                    
+                    // After selecting the file name call the external export model method
+                    ExportHandler.exportModel(fileToWrite, selectedHook);
                 }
             }
 
@@ -200,22 +178,6 @@ public class CommandHandler implements IHandler {
 
     @Override
     public void removeHandlerListener(IHandlerListener handlerListener) {
-    }
-
-    // -------------------------------------------------------------------------
-
-    public void openMessageDialog(String title, String text, boolean error, boolean warning) {
-        int type = SWT.ICON_INFORMATION;
-        if (warning) {
-            type = SWT.ICON_WARNING;
-        }
-        if (error) {
-            type = SWT.ICON_ERROR;
-        }
-        MessageBox dialog = new MessageBox(Display.getCurrent().getShells()[0], type | SWT.OK);
-        dialog.setText(title);
-        dialog.setMessage(text);
-        dialog.open();
     }
 
     // -------------------------------------------------------------------------
