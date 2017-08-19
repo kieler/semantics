@@ -19,6 +19,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.cview.model.extensions.CViewModelExtensions
 import de.cau.cs.kieler.cview.hooks.ICViewLanguage
 import de.cau.cs.kieler.cview.CViewPlugin
+import java.util.Set
 
 /**
  * General language extensions.
@@ -33,6 +34,19 @@ class CViewLanguageExtensions {
     // Retrieve the language handling this component type or the default language
     def ICViewLanguage getLanguage(Component component) {
         return CViewPlugin.getLanguageHook(component)
+    }
+
+    // Returns true if the file is handled
+    def boolean isFileHandled(Component component, Set<String> fileExtensions) {
+        val filePath = component.location
+        if (filePath != null) {
+            for (fileExtension : fileExtensions) {
+                if (filePath.endsWith("." + fileExtension)) {
+                    return true
+                }
+            }
+        }
+        return false
     }
 
     // Retrieve the language handling this file type based on the declared file extensions

@@ -38,6 +38,10 @@ import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTSimpleDeclaration
 import org.eclipse.cdt.core.dom.ast.IFunction
 import java.util.HashSet
 import de.cau.cs.kieler.cview.model.cViewModel.Connection
+import org.eclipse.cdt.core.dom.ast.IASTPreprocessorIncludeStatement
+import java.util.Set
+import java.util.List
+import java.util.LinkedList
 
 /**
  * @author cmot
@@ -67,6 +71,8 @@ class CLanguage implements ICViewLanguage {
     public static String CONNECTION_TYPE_REFERENCE_FUNC = "de.cau.cs.kieler.cview.c.connectiontype.func"
     public static String CONNECTION_TYPE_REFERENCE_TYPE = "de.cau.cs.kieler.cview.c.connectiontype.type"
 
+    public static String CONNECTION_TYPE_INCLUSION = "de.cau.cs.kieler.cview.c.connectiontype.inclusion"
+
     static final String COLOR_STRUCT_NOREF = "#FFD236"
     static final String COLOR_STRUCT = "#FFF0BD"
     static final String COLOR_TYPEDEF = "#FCFF00"
@@ -83,11 +89,13 @@ class CLanguage implements ICViewLanguage {
     public static final SynthesisOption SHOW_REFERENCES_TYPE = SynthesisOption.createCheckOption("Show Type References",
         false);
 
+    public static final SynthesisOption SHOW_INCLUSION = SynthesisOption.createCheckOption("Show Include", false);
+
     override diagramColor(Component component) {
         if (component.isFunction) {
             return FUNCTIONCOLOR
         } else if (component.isFunctionRef) {
-                return FUNCTIONCOLORREF
+            return FUNCTIONCOLORREF
         } else if (component.isTypedef) {
             return COLOR_TYPEDEF
         } else if (component.isDecl) {
@@ -132,7 +140,7 @@ class CLanguage implements ICViewLanguage {
     }
 
     override diagramSynthesisOptions() {
-        return #[SHOW_FUNCTIONS, SHOW_REFERENCES_FUNC, SHOW_TYPES, SHOW_REFERENCES_TYPE]
+        return #[SHOW_FUNCTIONS, SHOW_REFERENCES_FUNC, SHOW_TYPES, SHOW_REFERENCES_TYPE, SHOW_INCLUSION]
     }
 
     override reparsingRequired(AbstractDiagramSynthesis<?> synthesis) {
@@ -335,8 +343,70 @@ class CLanguage implements ICViewLanguage {
                 }
             }
         }
+        if (SHOW_INCLUSION.getBooleanValue(synthesis)) {
+
+            for (component : model.components) {
+                if (component.isFile && component.isFileHandled(fileExtensions())) {
+                    val ast = component.AST
+                    if (ast != null) {
+                        for (include : ast.translationUnit.includeDirectives) {
+                            val includedComponents = model.getComponentByIncludePath(include.name.toString)
+                            for (includedComponent : includedComponents) {
+                                val connection = includedComponent.connectTo(component)
+                                connection.color = "#00D200"
+                                connection.tooltip = include.name.toString
+                                returnSet.add(connection)
+                            }
+                            printlnConsole("INFO: Inclusion '" + include.name + "'")
+                        }
+                    }
+                }
+            }
+        }
+
         return returnSet
 
     }
 
+    // -------------------------------------------------------------------------
+    def boolean matchesInclusionPath(Component component, String path) {
+        var path2 = path.replace("..", "")
+        path2 = path2.replace("\\", "/")
+        val segments = path.split("/")
+        val List<String> segments2 = new LinkedList(segments);
+        if (!segments.nullOrEmpty) {
+            return component.matchesInclusionPath(segments2.toList)
+        }
+        return false
+    }
+
+    def boolean matchesInclusionPath(Component component, List<String> pathSegments) {
+        if (pathSegments == null || pathSegments.last == ".." || pathSegments.last == ".") {
+            return true
+        }
+        if (!pathSegments.last.matches(component.name)) {
+            return false
+        }
+        if (component.parent == null && pathSegments.size > 1) {
+            return false
+        }
+        
+        pathSegments.remove(pathSegments.size-1)
+        if (pathSegments.size == 0) {
+            return true
+        }
+        return component.parent.matchesInclusionPath(pathSegments)
+    }
+
+    def Set<Component> getComponentByIncludePath(CViewModel model, String path) {
+        val Set<Component> returnSet = new HashSet
+        for (component : model.components) {
+            if (component.matchesInclusionPath(path)) {
+                returnSet.add(component)
+            }
+        }
+        return returnSet
+    }
+
+// -------------------------------------------------------------------------
 }

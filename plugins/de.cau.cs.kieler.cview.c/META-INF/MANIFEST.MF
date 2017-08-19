@@ -14,3 +14,4 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.cdt.core;resolution:=optional;visibility:=reexport
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
+Export-Package: de.cau.cs.kieler.cview.c.extensions
