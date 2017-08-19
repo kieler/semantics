@@ -93,7 +93,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     @Inject extension CViewLanguageExtensions
 
     public static boolean parseFiles = false;
-    public static int reparseFilesHash = 0;
+    public static boolean parseFilesOld = false;
+    public static int reparsingHashOld = 0;
     public static boolean skipFileContent = false;
 
     public static DiagramSynthesis instance = null;
@@ -364,13 +365,21 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         }
         
 
-        val newParseFilesHash = reparsingHash
-        parseFiles = reparsingRequired
-        if (newParseFilesHash != reparseFilesHash || model == null) {
-            reparseFilesHash = newParseFilesHash
-            //CViewPlugin.refreshCView(true)
-            CViewPlugin.rebuildModelAndrefreshCView(false)
-            return null;
+        val reparsingHashNew = reparsingHash
+        var reparsingHashChanged = false
+        if (reparsingHashOld != reparsingHashNew) {
+            reparsingHashOld = reparsingHashNew
+            reparsingHashChanged = true
+        }
+            parseFiles = reparsingRequired
+        if (parseFiles != parseFilesOld || reparsingHashChanged) {
+            parseFilesOld = parseFiles
+            if (CViewPlugin.monitorCanceled || reparsingHashChanged) {
+                CViewPlugin.rebuildModelAndrefreshCView(CViewPlugin.monitorCanceled)
+                return null;
+            } else {
+                CViewPlugin.refreshCView(false)
+            }
         }
 
         if (skipFileContent != SKIP_FILE_CONTENT.booleanValue) {

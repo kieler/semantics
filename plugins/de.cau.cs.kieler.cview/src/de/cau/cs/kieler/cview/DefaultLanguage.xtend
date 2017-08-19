@@ -17,6 +17,7 @@ import de.cau.cs.kieler.cview.hooks.ICViewLanguage
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModel
 import de.cau.cs.kieler.cview.hooks.AbstractCViewLanguage
+import org.eclipse.core.runtime.IProgressMonitor
 
 /**
  * The default language implementation if no language can be found for a custom component type.
@@ -81,7 +82,7 @@ class DefaultLanguage extends AbstractCViewLanguage implements ICViewLanguage {
         return null
     }
     
-    override provideConnections(CViewModel model) {
+    override provideConnections(CViewModel model, IProgressMonitor monitor) {
         return null
     }
 

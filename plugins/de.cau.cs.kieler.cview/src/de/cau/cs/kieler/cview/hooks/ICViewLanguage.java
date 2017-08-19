@@ -142,6 +142,6 @@ public interface ICViewLanguage {
      * @param model
      * @return
      */
-    Set<Connection> provideConnections(CViewModel model);
+    Set<Connection> provideConnections(CViewModel model, IProgressMonitor monitor);
 
 }

@@ -80,6 +80,9 @@ public class CViewPlugin implements BundleActivator {
     static HashMap<String, Object> cacheFileParsed =
             new HashMap<String, Object>();
 
+    // True if monitor was canceled, enforces complete rebuild
+    static public boolean monitorCanceled = false;
+    
     // -------------------------------------------------------------------------
 
     private static void cacheReset() {
@@ -320,17 +323,6 @@ public class CViewPlugin implements BundleActivator {
     }
 
     // -------------------------------------------------------------------------
-
-    // public static void showModelView() {
-    // try {
-    // PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-    // .showView(KLIGHD_MODEL_VIEW);
-    // } catch (PartInitException e) {
-    // e.printStackTrace();
-    // }
-    // }
-
-    
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 

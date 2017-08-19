@@ -132,7 +132,7 @@ class KLighDController extends AbstractKLighDController {
                 // TODO: Check
                 val languageHook = CViewLanguageExtensions.getLanguage(filePath)
                 if (languageHook != null) {
-                     languageHook.modelCreateFileSubComponents(model, file, DiagramSynthesis.parseFiles)
+                    languageHook.modelCreateFileSubComponents(model, file, DiagramSynthesis.parseFiles)
                 }
             }
 
@@ -191,6 +191,7 @@ class KLighDController extends AbstractKLighDController {
         // Build list of mappings
         for (component : model.components) {
             if (monitor.canceled) {
+                CViewPlugin.monitorCanceled = true
                 return model
             }
             val String referenceType = component.type.literal
@@ -202,6 +203,7 @@ class KLighDController extends AbstractKLighDController {
         CViewPlugin.printlnConsole("-------- RESOLVING START ------------")
         for (component : model.components) {
             if (monitor.canceled) {
+                CViewPlugin.monitorCanceled = true
                 return model
             }
             if (component.isReference && !component.resolved) {
@@ -226,24 +228,28 @@ class KLighDController extends AbstractKLighDController {
         }
         CViewPlugin.printlnConsole("-------- RESOLVING END ------------")
 
-
         printlnConsole("INFO: - Build-in connections")
 
         // Add language build-in connections
         if (model.connections.size == 0) {
             for (language : CViewPlugin.getRegisteredLanguageHooks(false)) {
-                val connections = language.provideConnections(model)
+                val connections = language.provideConnections(model, monitor)
                 if (!connections.nullOrEmpty) {
                     model.connections.addAll(connections)
                 }
             }
         }
 
+        if (monitor.canceled) {
+            CViewPlugin.monitorCanceled = true
+            return model
+        }
 
         val connectionHooks = CViewPlugin.getRegisteredAnalysisHooks(false)
         // Initialize
         for (connectionHook : connectionHooks) {
             if (monitor.canceled) {
+                CViewPlugin.monitorCanceled = true
                 return model
             }
             if (CViewPlugin.isEnabled(connectionHook.id)) {
@@ -257,6 +263,7 @@ class KLighDController extends AbstractKLighDController {
             // println("COMPONENT:" + component.type.getName().toString());
             for (connectionHook : connectionHooks) {
                 if (monitor.canceled) {
+                    CViewPlugin.monitorCanceled = true
                     return model
                 }
                 if (CViewPlugin.isEnabled(connectionHook.id)) {
@@ -271,12 +278,17 @@ class KLighDController extends AbstractKLighDController {
         // Wrapup
         for (connectionHook : connectionHooks) {
             if (monitor.canceled) {
+                CViewPlugin.monitorCanceled = true
                 return model
             }
             if (CViewPlugin.isEnabled(connectionHook.id)) {
                 connectionHook.wrapup(model, monitor);
             }
         }
+        
+        
+        // Build ok
+        CViewPlugin.monitorCanceled = false
 
         return model;
     }

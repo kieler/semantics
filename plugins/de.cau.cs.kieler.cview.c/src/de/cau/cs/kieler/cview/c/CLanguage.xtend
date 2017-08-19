@@ -43,6 +43,7 @@ import java.util.Set
 import java.util.List
 import java.util.LinkedList
 import de.cau.cs.kieler.cview.hooks.AbstractCViewLanguage
+import org.eclipse.core.runtime.IProgressMonitor
 
 /**
  * @author cmot
@@ -317,11 +318,14 @@ class CLanguage extends AbstractCViewLanguage implements ICViewLanguage {
         return #{"c", "h"}
     }
 
-    override provideConnections(CViewModel model) {
+    override provideConnections(CViewModel model, IProgressMonitor monitor) {
         val HashSet<Connection> returnSet = new HashSet
         if (SHOW_REFERENCES_FUNC.getBooleanValue) {
             // Add more (default-)connections that represent the references here
             for (component : model.components.filter[e|e.isFunctionRef && e.reference != null]) {
+                if (monitor.canceled) {
+                    return returnSet
+                }
                 val connection = component.connectTo(component.reference)
                 connection.type = CONNECTION_TYPE_REFERENCE_FUNC
                 // Func Ref
@@ -333,6 +337,9 @@ class CLanguage extends AbstractCViewLanguage implements ICViewLanguage {
         if (SHOW_REFERENCES_TYPE.getBooleanValue) {
             // Add more (default-)connections that represent the references here
             for (component : model.components.filter[e|e.reference != null]) {
+                if (monitor.canceled) {
+                    return returnSet
+                }
                 val connection = component.connectTo(component.reference)
                 connection.type = CONNECTION_TYPE_REFERENCE_TYPE
                 if (component.isDecl || component.isStruct || component.isTypedef) {
@@ -344,7 +351,6 @@ class CLanguage extends AbstractCViewLanguage implements ICViewLanguage {
             }
         }
         if (SHOW_INCLUSION.getBooleanValue) {
-
             for (component : model.components) {
                 if (component.isFile && component.isFileHandled(fileExtensions())) {
                     val ast = component.AST
@@ -352,6 +358,9 @@ class CLanguage extends AbstractCViewLanguage implements ICViewLanguage {
                         for (include : ast.translationUnit.includeDirectives) {
                             val includedComponents = model.getComponentByIncludePath(include.name.toString)
                             for (includedComponent : includedComponents) {
+                                if (monitor.canceled) {
+                                    return returnSet
+                                }
                                 val connection = component.connectTo(includedComponent)
                                 connection.color = "#00D200"
                                 connection.tooltip = include.name.toString
