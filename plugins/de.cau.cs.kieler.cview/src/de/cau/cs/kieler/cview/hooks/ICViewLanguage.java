@@ -93,11 +93,11 @@ public interface ICViewLanguage {
     List<SynthesisOption> diagramSynthesisOptions();
 
     /**
-     * Return true to force a parsing of the files
+     * Return synthesis options that if changes requires a complete re-parsing of all files
      * 
      * @return
      */
-    boolean reparsingRequired(AbstractDiagramSynthesis<?> synthesis);
+    Set<SynthesisOption> reparsingRequired();
 
     /**
      * Define generally whether a component is visible. Note that even if a component is visible it
@@ -106,7 +106,7 @@ public interface ICViewLanguage {
      * @param component
      * @return
      */
-    boolean diagramIsVisible(Component component, AbstractDiagramSynthesis<?> synthesis);
+    boolean diagramIsVisible(Component component);
 
     /**
      * Used to create any file subcomponents, e.g., functions, declarations, types, ... If
@@ -142,6 +142,6 @@ public interface ICViewLanguage {
      * @param model
      * @return
      */
-    Set<Connection> diagramConnections(CViewModel model, AbstractDiagramSynthesis<?> synthesis);
+    Set<Connection> provideConnections(CViewModel model);
 
 }

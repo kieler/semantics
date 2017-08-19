@@ -226,6 +226,20 @@ class KLighDController extends AbstractKLighDController {
         }
         CViewPlugin.printlnConsole("-------- RESOLVING END ------------")
 
+
+        printlnConsole("INFO: - Build-in connections")
+
+        // Add language build-in connections
+        if (model.connections.size == 0) {
+            for (language : CViewPlugin.getRegisteredLanguageHooks(false)) {
+                val connections = language.provideConnections(model)
+                if (!connections.nullOrEmpty) {
+                    model.connections.addAll(connections)
+                }
+            }
+        }
+
+
         val connectionHooks = CViewPlugin.getRegisteredAnalysisHooks(false)
         // Initialize
         for (connectionHook : connectionHooks) {

@@ -16,6 +16,7 @@ import de.cau.cs.kieler.cview.model.cViewModel.Component
 import de.cau.cs.kieler.cview.hooks.ICViewLanguage
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModel
+import de.cau.cs.kieler.cview.hooks.AbstractCViewLanguage
 
 /**
  * The default language implementation if no language can be found for a custom component type.
@@ -23,12 +24,12 @@ import de.cau.cs.kieler.cview.model.cViewModel.CViewModel
  * @author cmot
  * 
  */
-class DefaultLanguage implements ICViewLanguage {
+class DefaultLanguage extends AbstractCViewLanguage implements ICViewLanguage {
 
     public static String LANGUAGE_ID = "de.cau.cs.kieler.cview.default.language"
 
     override diagramColor(Component component) {
-       return "black"
+       return "red"
     }
 
     override diagramIsHierarchical(Component component) {
@@ -52,16 +53,16 @@ class DefaultLanguage implements ICViewLanguage {
     }
 
     
-    override diagramIsVisible(Component component, AbstractDiagramSynthesis<?> synthesis) {
-        return false
+    override diagramIsVisible(Component component) {
+        return true
     }
     
     override diagramSynthesisOptions() {
         return null
     }
     
-    override reparsingRequired(AbstractDiagramSynthesis<?> synthesis) {
-       return false
+    override reparsingRequired() {
+       return null
     }
     
     override diagramHandleComponentCustomTypes() {
@@ -80,7 +81,7 @@ class DefaultLanguage implements ICViewLanguage {
         return null
     }
     
-    override diagramConnections(CViewModel model, AbstractDiagramSynthesis<?> synthesis) {
+    override provideConnections(CViewModel model) {
         return null
     }
 

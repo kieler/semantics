@@ -66,26 +66,10 @@ class CViewLanguageExtensions {
     // True if any VISIBLE children
     def boolean hieararchicalView(Component component, AbstractDiagramSynthesis<?> synthesis) {
         if (component.hieararchical) {
-            return !component.children.filter[e|!e.filtered && e.language.diagramIsVisible(e, synthesis)].nullOrEmpty;
+            return !component.children.filter[e|!e.filtered && e.language.diagramIsVisible(e)].nullOrEmpty;
         }
         return false
     }
 
-    def boolean getBooleanValue(SynthesisOption option, AbstractDiagramSynthesis<?> synthesis) {
-        val result = synthesis.getUsedContext().getOptionValue(option);
-        if (result == null) {
-            return false;
 
-        } else if (result instanceof Boolean) {
-            return result;
-
-        } else {
-            throw new IllegalArgumentException(
-                "KLighD transformation option handling: " + "The transformation " + this +
-                    " attempted to evaluate the non-Boolean valued transformation option " + option.getName() +
-                    " expecting a Boolean value.");
-                }
-            }
-
-        }
-        
+}

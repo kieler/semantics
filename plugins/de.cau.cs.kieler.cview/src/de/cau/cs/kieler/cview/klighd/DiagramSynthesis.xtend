@@ -72,6 +72,7 @@ import de.cau.cs.kieler.cview.extensions.CViewAnalysisExtensions
 import org.eclipse.elk.core.options.HierarchyHandling
 import de.cau.cs.kieler.cview.hooks.ICViewLanguage
 import de.cau.cs.kieler.cview.extensions.CViewLanguageExtensions
+import de.cau.cs.kieler.cview.hooks.AbstractCViewLanguage
 
 /* Package and import statements... */
 class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
@@ -91,8 +92,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
     @Inject extension CViewLanguageExtensions
 
-
     public static boolean parseFiles = false;
+    public static int reparseFilesHash = 0;
     public static boolean skipFileContent = false;
 
     public static DiagramSynthesis instance = null;
@@ -165,16 +166,14 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
     val HashSet<Component> connectedComponents = new HashSet
     val HashSet<Component> connectedComponentsAdditional = new HashSet // thru hierarchy
-    
-    
+
     // =================================  FILTERING  =================================
-    
     def void applyFilter(CViewModel model) {
         for (component : model.components) {
             component.filtered = !component.allowedByFilterComponent
         }
     }
-    
+
     // val HashMap<Component, KNode> knodes = new HashMap
     val HashMap<EObject, Boolean> allowedByFilterCache = new HashMap
 
@@ -321,9 +320,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         allowedByFilterCache.put(connection, allowed)
         return allowed;
     }
-    
-        // ==================================================================
-    
+
+    // ==================================================================
     def addConnectedParents(Component component) {
         if (component.parent != null) {
             connectedComponentsAdditional.add(component.parent)
@@ -331,11 +329,24 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         }
     }
 
+
+    def int reparsingHash() {
+        var returnHash = 0
+        for (language : CViewPlugin.getRegisteredLanguageHooks(false)) {
+            for (option : language.reparsingRequired()) {
+                returnHash = returnHash + option.booleanValue.hashCode 
+            }
+        }
+        return returnHash
+    }
+
     // General look-up if some laguage wants/requires reparsing
     def boolean reparsingRequired() {
         for (language : CViewPlugin.getRegisteredLanguageHooks(false)) {
-            if (language.reparsingRequired(this)) {
-                return true
+            for (option : language.reparsingRequired()) {
+                if (option.booleanValue) {
+                    return true
+                }
             }
         }
         return false
@@ -343,12 +354,20 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
     // Entry method for diagram synthesis
     override KNode transform(CViewModel model) {
-        
         printlnConsole("INFO: Started diagram synthesis")
+        
+        // Update synthesis
+        for (language : CViewPlugin.getRegisteredLanguageHooks(false)) {
+            if (language instanceof AbstractCViewLanguage) {
+                language.setLastViewContext(this.getUsedContext())
+            }
+        }
+        
 
-        val newParseFiles = reparsingRequired
-        if (parseFiles != newParseFiles) {
-            parseFiles = newParseFiles
+        val newParseFilesHash = reparsingHash
+        parseFiles = reparsingRequired
+        if (newParseFilesHash != reparseFilesHash || model == null) {
+            reparseFilesHash = newParseFilesHash
             CViewPlugin.rebuildModelAndrefreshCView(true)
             return null;
         }
@@ -359,18 +378,29 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             return null;
         }
 
-        printlnConsole("INFO: - Build-in connections")
+        instance = this
 
-        // Add language build-in connections
-        for (language : CViewPlugin.getRegisteredLanguageHooks(false)) {
-            val connections = language.diagramConnections(model, this)
-            if (!connections.nullOrEmpty) {
-                    model.connections.addAll(connections)
+        if (selectedExpandLevel != EXPANDED_SLIDER.intValue) {
+            selectedExpandLevel = EXPANDED_SLIDER.intValue
+            if (!FLATTEN_HIERARCHY.booleanValue) {
+                Display.getDefault().asyncExec(new Runnable() {
+                    override run() {
+                        lastThread++
+                        val threadId = lastThread
+                        Thread.sleep(150);
+                        if (threadId == lastThread) {
+                            // If this is still the last thread, then do
+                            // refresh again. Otherwise the last thread will
+                            // do this
+                            CViewPlugin.refreshCView(true)
+                        }
+                    }
+                });
+            // return null;            
             }
         }
 
 
-        instance = this
         connectedComponents.clear
 
         // Ensure filter values are set
@@ -390,26 +420,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             for (connection : model.connections) {
                 connection.label = connection.label.possiblyAnonymize(true)
                 connection.tooltip = connection.tooltip.possiblyAnonymize(false)
-            }
-        }
-
-        if (selectedExpandLevel != EXPANDED_SLIDER.intValue) {
-            selectedExpandLevel = EXPANDED_SLIDER.intValue
-            if (!FLATTEN_HIERARCHY.booleanValue) {
-                Display.getDefault().asyncExec(new Runnable() {
-                    override run() {
-                        lastThread++
-                        val threadId = lastThread
-                        Thread.sleep(150);
-                        if (threadId == lastThread) {
-                            // If this is still the last thread, then do
-                            // refresh again. Otherwise the last thread will
-                            // do this
-                            CViewPlugin.refreshCView(true)
-                        }
-                    }
-                });
-            // return null;            
             }
         }
 
@@ -447,7 +457,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             }
         }
 
-
         // Create connections (added by extensions)
         if (!HIDE_CONNECTIONS.booleanValue) {
             printlnConsole("INFO: - Drawing connections")
@@ -482,7 +491,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         }
 
         printlnConsole("INFO: Done diagram synthesis")
-        
+
         if (root.children.size < 1) {
             if (model.components.size > 0) {
                 root.children.add(transformInfoMessage("Everything Filtered Away"))
@@ -492,7 +501,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 printlnConsole("INFO: No components")
             }
         }
-        
 
         return root;
     }
@@ -749,7 +757,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             }
         }
 
-
         def KNode transformInfoMessage(String messageText) {
             val childNode = messageText.createNode()
             val childRect = childNode.addRoundedRectangle(ROUNDRECT1, ROUNDRECT2, LINEWIDTH)
@@ -778,7 +785,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         }
 
         def KNode transformItemCustom(Component item, int depth) {
-            if (!item.language.diagramIsVisible(item, this)) {
+            if (!item.language.diagramIsVisible(item)) {
                 return null;
             }
 

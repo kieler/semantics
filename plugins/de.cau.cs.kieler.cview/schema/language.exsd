@@ -2,9 +2,9 @@
 <!-- Schema file written by PDE -->
 <schema targetNamespace="de.cau.cs.kieler.cview" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
-      <appInfo>
+      <appinfo>
          <meta.schema plugin="de.cau.cs.kieler.cview" id="language" name="Define Language Extension"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          Define a language extension.
       </documentation>
@@ -12,9 +12,9 @@
 
    <element name="extension">
       <annotation>
-         <appInfo>
+         <appinfo>
             <meta.element />
-         </appInfo>
+         </appinfo>
       </annotation>
       <complexType>
          <sequence minOccurs="1" maxOccurs="unbounded">
@@ -35,45 +35,45 @@
                <documentation>
                   The implementation of the concrete hook defining the language extension.
                </documentation>
-               <appInfo>
-                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.cview.hooks.ICViewLanguage"/>
-               </appInfo>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.cview.hooks.AbstractCViewLanguage:de.cau.cs.kieler.cview.hooks.ICViewLanguage"/>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>
    </element>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="since"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          [Enter the first release in which this extension point appears.]
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="examples"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          [Enter extension point usage example here.]
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="apiinfo"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          [Enter API information here.]
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="implementation"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          [Enter information about supplied implementation of this extension point.]
       </documentation>

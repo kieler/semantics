@@ -42,12 +42,13 @@ import org.eclipse.cdt.core.dom.ast.IASTPreprocessorIncludeStatement
 import java.util.Set
 import java.util.List
 import java.util.LinkedList
+import de.cau.cs.kieler.cview.hooks.AbstractCViewLanguage
 
 /**
  * @author cmot
  * 
  */
-class CLanguage implements ICViewLanguage {
+class CLanguage extends AbstractCViewLanguage implements ICViewLanguage {
 
     @Inject extension CViewCExtensions
 
@@ -133,19 +134,18 @@ class CLanguage implements ICViewLanguage {
         return LANGUAGE_ID
     }
 
-    override diagramIsVisible(Component component, AbstractDiagramSynthesis<?> synthesis) {
+    override diagramIsVisible(Component component) {
         return (((component.isTypedef || component.isDecl || component.isStruct) &&
-            SHOW_TYPES.getBooleanValue(synthesis)) ||
-            ((component.isFunction || component.isFunctionRef) && SHOW_FUNCTIONS.getBooleanValue(synthesis)))
+            SHOW_TYPES.booleanValue) ||
+            ((component.isFunction || component.isFunctionRef) && SHOW_FUNCTIONS.booleanValue))
     }
 
     override diagramSynthesisOptions() {
         return #[SHOW_FUNCTIONS, SHOW_REFERENCES_FUNC, SHOW_TYPES, SHOW_REFERENCES_TYPE, SHOW_INCLUSION]
     }
 
-    override reparsingRequired(AbstractDiagramSynthesis<?> synthesis) {
-        return (SHOW_FUNCTIONS.getBooleanValue(synthesis) || SHOW_REFERENCES_FUNC.getBooleanValue(synthesis) ||
-            SHOW_TYPES.getBooleanValue(synthesis) || SHOW_REFERENCES_TYPE.getBooleanValue(synthesis))
+    override reparsingRequired() {
+        return #{SHOW_FUNCTIONS,  SHOW_REFERENCES_FUNC,   SHOW_TYPES, SHOW_REFERENCES_TYPE, SHOW_INCLUSION}
     }
 
     override diagramHandleComponentCustomTypes() {
@@ -317,9 +317,9 @@ class CLanguage implements ICViewLanguage {
         return #{"c", "h"}
     }
 
-    override diagramConnections(CViewModel model, AbstractDiagramSynthesis<?> synthesis) {
+    override provideConnections(CViewModel model) {
         val HashSet<Connection> returnSet = new HashSet
-        if (SHOW_REFERENCES_FUNC.getBooleanValue(synthesis)) {
+        if (SHOW_REFERENCES_FUNC.getBooleanValue) {
             // Add more (default-)connections that represent the references here
             for (component : model.components.filter[e|e.isFunctionRef && e.reference != null]) {
                 val connection = component.connectTo(component.reference)
@@ -330,7 +330,7 @@ class CLanguage implements ICViewLanguage {
                 returnSet.add(connection)
             }
         }
-        if (SHOW_REFERENCES_TYPE.getBooleanValue(synthesis)) {
+        if (SHOW_REFERENCES_TYPE.getBooleanValue) {
             // Add more (default-)connections that represent the references here
             for (component : model.components.filter[e|e.reference != null]) {
                 val connection = component.connectTo(component.reference)
@@ -343,7 +343,7 @@ class CLanguage implements ICViewLanguage {
                 }
             }
         }
-        if (SHOW_INCLUSION.getBooleanValue(synthesis)) {
+        if (SHOW_INCLUSION.getBooleanValue) {
 
             for (component : model.components) {
                 if (component.isFile && component.isFileHandled(fileExtensions())) {
@@ -352,7 +352,7 @@ class CLanguage implements ICViewLanguage {
                         for (include : ast.translationUnit.includeDirectives) {
                             val includedComponents = model.getComponentByIncludePath(include.name.toString)
                             for (includedComponent : includedComponents) {
-                                val connection = includedComponent.connectTo(component)
+                                val connection = component.connectTo(includedComponent)
                                 connection.color = "#00D200"
                                 connection.tooltip = include.name.toString
                                 returnSet.add(connection)
