@@ -182,7 +182,7 @@ class SCChartsActionExtensions {
         valuedObject.createAssignment(newValue) => [ action.addAssignment(it) ]
     }      
     
-        def Emission createEmission(Action action, ValuedObject valuedObject) {
+    def Emission createEmission(Action action, ValuedObject valuedObject) {
         val emission = valuedObject.emit
         action.addEmission(emission)
         emission

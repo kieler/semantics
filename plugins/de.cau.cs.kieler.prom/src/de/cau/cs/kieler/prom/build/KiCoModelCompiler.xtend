@@ -45,6 +45,7 @@ import org.eclipse.xtext.util.StringInputStream
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
 import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.kicool.compilation.observer.AbstractProcessorNotification
+import de.cau.cs.kieler.sccharts.processors.transformators.TakenTransitionSignaling
 
 /**
  * @author aas
@@ -76,7 +77,13 @@ class KiCoModelCompiler extends ModelCompiler {
             // Check all intermediate results for errors and warnings
             var boolean noIssues = true
             var Processor<?,?> lastResult
+            var takenTransitionArraySize = 0
             for (iResult : context.processorInstancesSequence) {
+                // In case the taken transition signaling was used, the created array has to be part of the simulation interface
+                if(takenTransitionArraySize <= 0) {
+                    takenTransitionArraySize = iResult.environment.getProperty(TakenTransitionSignaling.ARRAY_SIZE)
+                }
+                
                 lastResult = iResult
                 val errors = iResult.environment.errors
                 val warnings = iResult.environment.warnings
@@ -120,14 +127,21 @@ class KiCoModelCompiler extends ModelCompiler {
                 
                 // Create simulation code
                 if(simulationProcessor != null) {
+                    // Create additional variables for the simulation code generation
+                    val additionalVariables = newHashMap
+                    // Add the taken transition array to the simulation interface
+                    if(takenTransitionArraySize > 0) {
+                        additionalVariables.put("debug", "_taken_transitions["+takenTransitionArraySize+"]")
+                    }
                     // Get all variables that make up the current state of the model
                     // to add them to the simulation data pool.
-                    // These are the variables in the model, as well as the PRE_XXX variables 
+                    // These are the variables in the model, as well as the PRE_XXX variables
                     val interfaceTypes = (simulationProcessor.interfaceTypes.value as List)
                     if(!interfaceTypes.isNullOrEmpty && interfaceTypes.contains("other")) {
                         val registerVariables = context.getRegisterVariables
-                        simulationProcessor.additionalVariables.value = #{"other" -> registerVariables.map[it.name]}
+                        additionalVariables.put("other", registerVariables.map[it.name])
                     }
+                    simulationProcessor.additionalVariables.value = additionalVariables
                     
                     // Compute output file of simulation generation
                     var IPath simulationTargetFolder = new Path("")

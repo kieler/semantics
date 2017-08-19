@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.prom.data.MacroCallData
 import de.cau.cs.kieler.prom.templates.TemplateManager
+import java.util.regex.Pattern
 
 /**
  * @author aas
@@ -64,7 +65,7 @@ class SimulationTemplateProcessor extends TemplateProcessor {
             TemplateManager.getSimulationInterfaceData(model, annotationDatas)
         }
         // Get additional annotations from configuration
-        if(additionalVariables.value != null) {
+        if(additionalVariables.value != null && additionalVariables.value instanceof Map) {
             val variablesMap = additionalVariables.value as Map<String, Object>
             for(entry : variablesMap.entrySet) {
                 val datas = createDataFromVariablesMapping(entry)
@@ -132,6 +133,20 @@ class SimulationTemplateProcessor extends TemplateProcessor {
         data.name = "Simulate"
         data.varType = varType
         data.varName = varName
+        
+        // Add (optional) array sizes.
+        // The format would be VAR_NAME[SIZE_0][SIZE_1]...[SIZE_N]
+        val index = varName.indexOf("[")
+        if(index >= 0) {
+            data.varName = varName.substring(0,index)
+            val arrayIndexPart = varName.substring(index+1) 
+            val numberPattern = Pattern.compile("\\d+")
+            val matcher = numberPattern.matcher(arrayIndexPart)
+            while (matcher.find()) {
+                data.arguments.add(matcher.group())
+            }
+        }
+        
         return data
     }
     

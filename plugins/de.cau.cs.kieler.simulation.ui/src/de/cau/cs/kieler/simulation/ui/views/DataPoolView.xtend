@@ -13,11 +13,25 @@
 package de.cau.cs.kieler.simulation.ui.views
 
 import com.google.common.base.Strings
+import com.google.common.collect.Iterables
+import de.cau.cs.kieler.klighd.ViewContext
+import de.cau.cs.kieler.klighd.kgraph.KLabeledGraphElement
+import de.cau.cs.kieler.klighd.krendering.Colors
+import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import de.cau.cs.kieler.klighd.krendering.KForeground
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
+import de.cau.cs.kieler.klighd.krendering.KStyle
+import de.cau.cs.kieler.klighd.krendering.KText
+import de.cau.cs.kieler.klighd.ui.view.DiagramView
 import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.prom.ui.PromUIPlugin
 import de.cau.cs.kieler.prom.ui.views.LabelContribution
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.processors.transformators.TakenTransitionSignaling
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
+import de.cau.cs.kieler.simulation.core.NDimensionalArray
 import de.cau.cs.kieler.simulation.core.SimulationEvent
 import de.cau.cs.kieler.simulation.core.SimulationEventType
 import de.cau.cs.kieler.simulation.core.SimulationListener
@@ -29,6 +43,9 @@ import de.cau.cs.kieler.simulation.ui.toolbar.SubTicksEnabledPropertyTester
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
+import org.eclipse.elk.graph.properties.Property
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.Separator
 import org.eclipse.jface.dialogs.MessageDialog
@@ -50,6 +67,10 @@ import org.eclipse.swt.widgets.Table
 import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.State
+import java.util.Iterator
+import de.cau.cs.kieler.sccharts.iterators.StateIterator
 
 /**
  * @author aas
@@ -80,6 +101,15 @@ class DataPoolView extends ViewPart {
     private var DataPoolFilter filter
     
     private var Map<String, TraceMismatchEvent> traceMismatches = newHashMap
+    
+    // Diagram highlighting
+    private val HIGHLIGHTING_MARKER = new Property<Object>("highlighting");
+    private var ViewContext diagramViewContext
+    private var List<KLabeledGraphElement> lastHighlighting = newArrayList
+    
+    private var List<Transition> traversedTransitions = <Transition> newArrayList
+    private var List<State> traversedStates = <State> newArrayList
+    private var List<State> currentStates = <State> newArrayList
     
     /**
      * @see IWorkbenchPart#createPartControl(Composite)
@@ -150,12 +180,20 @@ class DataPoolView extends ViewPart {
         val mgr = getViewSite().getActionBars().getMenuManager();
         mgr.add(new ToggleColumnVisibleAction(historyColumn));
         mgr.add(new ToggleColumnVisibleAction(inputOutputColumn));
+        mgr.add(new Action("Show Internal Variables") {
+            override run() {
+                filter.internalVariables = !filter.internalVariables
+                viewer.refresh
+            }
+        });
+        mgr.add(new Separator())
         mgr.add(new Action("Clear Trace Mismatches") {
             override run() {
                 traceMismatches = newHashMap
                 viewer.refresh
             }
         });
+        mgr.add(new Separator())
         mgr.add(new Action("Enable Sub Ticks") {
             override run() {
                 subTicksEnabled = !subTicksEnabled
@@ -505,26 +543,241 @@ class DataPoolView extends ViewPart {
                         dataPoolView.viewer.update(e.variable, null)
                     }
                 } else {
+                    
                     // Execute in UI thread
                     PromUIPlugin.asyncExecInUI[
-                            // Update tick info
-                            dataPoolView.updateTickInfo(e)
-                            // Set pool data
-                            dataPoolView.setDataPool(SimulationManager.instance?.currentPool)
-                        ]
-                        
-//                    dataPoolView.highlightDiagram
+                        val pool = SimulationManager.instance?.currentPool
+                        // Update tick info
+                        dataPoolView.updateTickInfo(e)
+                        // Set pool data
+                        dataPoolView.setDataPool(pool)
+                    
+                        // Highlight the simulation control flow in the diagram
+                        dataPoolView.unhighlightDiagram
+                        if(e.type != SimulationEventType.STOP) {
+                            if(e.type == SimulationEventType.INITIALIZED) {
+                                dataPoolView.currentStates = null
+                            } else {
+                                dataPoolView.highlightDiagram(pool)    
+                            }    
+                        }
+                    ]
                 }
             }
         }
         return listener
     }
     
-//    private def void highlightDiagram() {
-//        val diagramViews = DiagramView.getAllDiagramViews
-//        if (!diagramViews.isNullOrEmpty) {
-//            val diagramView = diagramViews.get(0);
-//            val viewContext = diagramView.
-//        }
-//    }
+    private def void calculateSimulationControlFlow(DataPool pool) {
+        traversedTransitions.clear
+        traversedStates.clear
+        if(pool == null) {
+            return
+        }
+        val transitionArrayVariable = pool.getVariable(TakenTransitionSignaling.transitionArrayName)
+        if(transitionArrayVariable == null || !(transitionArrayVariable.value instanceof NDimensionalArray)) {
+            return
+        }
+        val transitionArray = transitionArrayVariable.value as NDimensionalArray
+        
+        // Calculate traversed transitions
+        var State rootState
+        val currentDiagramModel = diagramViewContext.inputModel
+        if(currentDiagramModel instanceof SCCharts) {
+            if(!currentDiagramModel.rootStates.isEmpty) {
+                rootState = currentDiagramModel.rootStates.get(0)
+            }            
+        }
+        if(rootState == null) {
+            return
+        }
+        
+        val transitions = TakenTransitionSignaling.getTransitions(rootState)
+        // For an emitted transition in the transition array,
+        // look for the transition in the model with the corresponding index.
+        var index = 0
+        for(transitionArrayElement : transitionArray.elements) {
+            // The array contains the number of times that the transition has been taken in this tick
+            val value = transitionArrayElement.value
+            if(value instanceof Integer) {
+                if(value > 0) {
+                    // The transition has been taken at least once
+                    val traversedTransition = transitions.get(index)
+                    traversedTransitions.add(traversedTransition)
+                }
+            } else {
+                throw new Exception("The 'taken transition array' has a incompatible type for diagram highlighting")
+            }
+            index++
+        }
+        
+        // Calculate traversed states
+        for(traversedTransition : traversedTransitions) {
+            traversedStates.add(traversedTransition.sourceState)
+        }
+        
+        // Calculate current states
+        if(currentStates == null) {
+            currentStates = getInitialStates(rootState)    
+        } else {
+            currentStates = calculateNewCurrentStates(currentStates, traversedTransitions)
+        }
+    }
+    
+    private def List<State> calculateNewCurrentStates(List<State> oldCurrentStates, List<Transition> takenTransitions) {
+        val newCurrentStates = <State> newArrayList
+        
+        // Preprocessing for better performance of lookup
+        val seenStates = <State> newHashSet
+        val followingState = <State, State> newHashMap
+        for(trans : takenTransitions) {
+            followingState.put(trans.sourceState, trans.targetState)
+        }
+        
+        // Follow path of transitions from current states to the ending state, which is the new current state.
+        // NOTE: This only works if there are no loops in the taken transitions
+        val states = oldCurrentStates
+        while(!states.isNullOrEmpty) {
+            val state = states.get(0)
+            seenStates.add(state)
+            val next = followingState.getOrDefault(state, null)
+            if(next != null) {
+                if(seenStates.contains(next)) {
+                    // Loop detected. This algorithm does not work in this case.
+                    System.err.println("Loop in transitions for this tick. Diagram highlighting of current state will not work.")
+                    return newCurrentStates
+                }
+                
+                // Leave state
+                states.remove(state)
+                // Also leave all child states
+                val children = StateIterator.sccAllContainedStates(state)
+                states.removeAll(children.toList)
+                
+                // Enter next state
+                states.add(next)
+                // Also enter all initial child states
+                val nextInitialStates = getInitialStates(next)
+                states.addAll(nextInitialStates)
+            } else {
+                // No outgoing transitions, thus this must be a current state
+                newCurrentStates.add(state)
+                
+                // This state is done
+                states.remove(state)
+            }
+        }
+        
+        return newCurrentStates
+    }
+    
+    private def ViewContext getDiagramViewContext() {
+        val diagramViews = DiagramView.getAllDiagramViews
+        if (!diagramViews.isNullOrEmpty) {
+            val DiagramView viewPart = diagramViews.get(0);
+            val viewer = viewPart.getViewer() 
+            return viewer.getViewContext();
+        }
+    }
+    
+    private def void unhighlightDiagram() {
+        if(!lastHighlighting.isNullOrEmpty) {
+            for (graphElement : lastHighlighting) {
+                unhighlightElement(graphElement)
+            }
+        }
+    }
+    
+    private def void highlightDiagram(DataPool pool) {
+        if(diagramViewContext == null) {
+            diagramViewContext = getDiagramViewContext    
+        }
+        
+        calculateSimulationControlFlow(pool)
+        
+        if(traversedTransitions.isNullOrEmpty && traversedStates.isNullOrEmpty && currentStates.isNullOrEmpty) {
+            return
+        }
+        
+        // Find the graph elements in the diagram for the EObjects that should be highlighted
+        val traversedGraphElements = getGraphElements(traversedTransitions + traversedStates)
+        val currentGraphElements = if(currentStates.isNullOrEmpty)
+                                       newArrayList
+                                   else
+                                       getGraphElements(#[] + currentStates)
+        lastHighlighting = (traversedGraphElements + currentGraphElements).toList
+
+        // Add new highlighting
+        val traversedStyle = KRenderingFactory.eINSTANCE.createKForeground()
+        traversedStyle.setColor(Colors.DODGER_BLUE)
+        traversedStyle.setPropagateToChildren(true)
+        
+        val currentStyle = KRenderingFactory.eINSTANCE.createKForeground()
+        currentStyle.setColor(Colors.RED)
+        currentStyle.setPropagateToChildren(true)
+        
+        // Highlight traversed elements
+        for (graphElement : traversedGraphElements) {
+            highlightElement(graphElement, traversedStyle)
+        }
+        // Highlight current elements
+        for (graphElement : currentGraphElements) {
+            highlightElement(graphElement, currentStyle)
+        }
+    }
+    
+    private def void highlightElement(KLabeledGraphElement elem, KForeground style) {
+        // Remember that this style is to highlight the diagram.
+        // This is used to filter for highlighting styles when they should be removed.
+        style.setProperty(HIGHLIGHTING_MARKER, DataPoolView.this)
+        // Highlight container of this element
+        val ren = elem.getData(typeof(KContainerRendering))
+        ren.styles.add(EcoreUtil.copy(style))
+        // Highlight label of this element
+        if (!elem.labels.isNullOrEmpty) {
+            val label = elem.labels.get(0)
+            val ren2 = label.getData(typeof(KText))
+            ren2.styles.add(EcoreUtil.copy(style))
+        }
+    }
+    
+    private def void unhighlightElement(KLabeledGraphElement elem) {
+        // Remove highlighting from container of this element
+        val ren = elem.getData(typeof(KContainerRendering));
+        Iterables.removeIf(ren.styles, [it.isHighlighting]);
+        // Remove highlighting from label of this element
+        if (!elem.labels.isNullOrEmpty) {
+            val label = elem.labels.get(0)
+            val ren2 = label.getData(typeof(KText));
+            Iterables.removeIf(ren2.styles, [it.isHighlighting]);
+        }
+    }
+    
+    private def boolean isHighlighting(KStyle style) {
+        return style.getProperty(HIGHLIGHTING_MARKER) == DataPoolView.this
+    }
+    
+    private def List<KLabeledGraphElement> getGraphElements(Iterable<EObject> eObjects) {
+        val elements = <KLabeledGraphElement> newArrayList
+        for (eObject : eObjects) {
+            val element = diagramViewContext.getTargetElement(eObject, typeof(KLabeledGraphElement));
+            if (element != null) {
+                elements.add(element);
+            }
+        }
+        return elements
+    }
+    
+    private def List<State> getInitialStates(State rootState) {
+        val initialStates = <State> newArrayList
+        for(region : rootState.regions) {
+            if(region instanceof ControlflowRegion) {
+                val initState = region.states.findFirst[it.isInitial]
+                if(initState != null) {
+                    initialStates.add(initState)
+                }
+            }
+        }
+        return initialStates
+    }
 }

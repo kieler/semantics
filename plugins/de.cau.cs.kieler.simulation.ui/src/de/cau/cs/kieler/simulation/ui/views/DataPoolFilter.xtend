@@ -28,6 +28,9 @@ class DataPoolFilter extends ViewerFilter {
     @Accessors
     private var String searchString = ""
 
+    @Accessors
+    private var boolean internalVariables = false
+    
     /**
      * Determines if an element should be visible in the data pool view.
      * Per default, visible elements are only inputs and outputs.
@@ -36,7 +39,12 @@ class DataPoolFilter extends ViewerFilter {
      */
     override boolean select(Viewer viewer, Object parentElement, Object element) {
         if(element instanceof Variable) {
-            var boolean visible = true // (element.isInput || element.isOutput)
+            var boolean visible = true
+            // Show only inputs and outputs
+            if(!internalVariables) {
+                visible = (element.isInput || element.isOutput)
+            }
+            // Filter with (regex) search term
             if(!searchString.isNullOrEmpty) {
                 visible = visible && element.name.matches(".*("+searchString+").*")
             }
