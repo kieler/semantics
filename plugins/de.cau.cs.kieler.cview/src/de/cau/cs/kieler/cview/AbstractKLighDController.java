@@ -183,14 +183,13 @@ public abstract class AbstractKLighDController {
     public void openAndRefreshKLighDView(CViewModel updateModel, boolean updateIfExists) {
         DiagramViewPart view = DiagramViewManager.getView(CVIEW_KLIGHD_ID);
         if (view == null) {
-            if (updateModel != null) {
-                DiagramViewManager.createView(CVIEW_KLIGHD_ID, CVIEW_KLIGHD_TITLE, updateModel,
-                        KlighdSynthesisProperties.create());
-            } else {
+            KlighdSynthesisProperties properties = new KlighdSynthesisProperties();
+//            properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY,
+//                    "de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy");
+ //                 "de.cau.cs.kieler.klighd.incremental.IncrementalUpdateStrategy");
                 CViewModel nullModel = CViewModelFactory.eINSTANCE.createCViewModel();
                 DiagramViewManager.createView(CVIEW_KLIGHD_ID, CVIEW_KLIGHD_TITLE, nullModel,
-                        KlighdSynthesisProperties.create());
-            }
+                        properties);
         } else {
             if (updateIfExists) {
                 if (updateModel != null) {
