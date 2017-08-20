@@ -72,9 +72,10 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 import de.cau.cs.kieler.klighd.util.RenderingContextData;
 
 /**
- * Controller for de.cau.cs.kieler.cview
+ * Abstract controller for general behavior used for updating the model and initiating the CView
+ * graphical diagram.
  * 
- * @author delphino
+ * @author cmot
  *
  */
 public abstract class AbstractKLighDController {
@@ -84,9 +85,7 @@ public abstract class AbstractKLighDController {
     public static String CVIEW_KLIGHD_TITLE_FILTERED = "C View  (FILTERED)";
 
     static CViewModel model = null;
-
     static AbstractKLighDController controller = null;
-
     static Object[] allSelections;
 
     // -------------------------------------------------------------------------
@@ -153,27 +152,39 @@ public abstract class AbstractKLighDController {
 
     // -------------------------------------------------------------------------
 
+
+    public void openAndRefreshKLighDView(CViewModel updateModel, boolean updateIfExists) {
+        DiagramViewPart view = DiagramViewManager.getView(CVIEW_KLIGHD_ID);
+        if (view == null) {
+            if (updateModel != null) {
+                DiagramViewManager.createView(CVIEW_KLIGHD_ID, CVIEW_KLIGHD_TITLE, updateModel,
+                        KlighdSynthesisProperties.create());
+            } else {
+                CViewModel nullModel = CViewModelFactory.eINSTANCE.createCViewModel();
+                DiagramViewManager.createView(CVIEW_KLIGHD_ID, CVIEW_KLIGHD_TITLE, nullModel,
+                        KlighdSynthesisProperties.create());
+            }
+        } else {
+            if (updateIfExists) {
+                if (updateModel != null) {
+                    DiagramViewManager.updateView(view.getViewContext(), updateModel);
+                } else {
+                    CViewModel nullModel = CViewModelFactory.eINSTANCE.createCViewModel();
+                    DiagramViewManager.updateView(view.getViewContext(), nullModel);
+                }
+            }
+        }
+    }
+
     public void refreshCView(boolean forceRebuild) {
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
                 if (forceRebuild) {
                     CViewModel nullModel = CViewModelFactory.eINSTANCE.createCViewModel();
-                    DiagramViewPart view = DiagramViewManager.getView(CVIEW_KLIGHD_ID);
-                    if (view == null) {
-                        DiagramViewManager.createView(CVIEW_KLIGHD_ID, CVIEW_KLIGHD_TITLE,
-                                nullModel, KlighdSynthesisProperties.create());
-                    } else {
-                        DiagramViewManager.updateView(view.getViewContext(), nullModel);
-                    }
+                    openAndRefreshKLighDView(null, true);
                 }
                 if (controller != null && model != null) {
-                    DiagramViewPart view = DiagramViewManager.getView(CVIEW_KLIGHD_ID);
-                    if (view == null) {
-                        DiagramViewManager.createView(CVIEW_KLIGHD_ID, CVIEW_KLIGHD_TITLE, model,
-                                KlighdSynthesisProperties.create());
-                    } else {
-                        DiagramViewManager.updateView(view.getViewContext(), model);
-                    }
+                    openAndRefreshKLighDView(model, true);
                 }
             }
         });
@@ -265,7 +276,7 @@ public abstract class AbstractKLighDController {
         if (object instanceof IProject) {
             IProject project = ((IProject) object);
             path = project.getLocation();
-            //path = project.getWorkspace().getRoot().getFullPath();
+            // path = project.getWorkspace().getRoot().getFullPath();
             String workspacePath = path.toString();
             return workspacePath;
         } else {
@@ -273,8 +284,8 @@ public abstract class AbstractKLighDController {
                 // The PROJECT type
                 PlatformObject po = (org.eclipse.core.runtime.PlatformObject) object;
                 Class fieldType = po.getClass();
-                path =
-                        (IPath) fieldType.getMethod("getWorkingLocation", String.class).invoke(po, ".");
+                path = (IPath) fieldType.getMethod("getWorkingLocation", String.class).invoke(po,
+                        ".");
                 String workspacePath = path.toString().substring(0, path.toString().indexOf("/."))
                         + po.toString().substring(1);
                 String fullPath = workspacePath;
@@ -283,7 +294,6 @@ public abstract class AbstractKLighDController {
             } catch (Exception eee) {
             }
         }
-        
 
         return null;
     }
@@ -303,32 +313,6 @@ public abstract class AbstractKLighDController {
         }
         return null;
     }
-
-    // -------------------------------------------------------------------------
-
-//    public static Charset getEncoding() {
-//        Charset encoding = Charset.defaultCharset();
-//        return encoding;
-//    }
-
-    // -------------------------------------------------------------------------
-
-//    static char[] readFile(String filePath) throws IOException {
-//        Charset encoding = getEncoding();
-//        StringBuilder stringBuilder = new StringBuilder();
-//        try (InputStream in = new FileInputStream(filePath);
-//                Reader reader = new InputStreamReader(in, encoding);
-//                Reader buffer = new BufferedReader(reader)) {
-//            int r;
-//            while ((r = reader.read()) != -1) {
-//                char ch = (char) r;
-//                stringBuilder.append(ch);
-//                // System.out.print(ch);
-//            }
-//        }
-//        // Byte[] bytes = readBytes.toArray(new Byte[readBytes.size()]);;
-//        return stringBuilder.toString().toCharArray();
-//    }
 
     // -------------------------------------------------------------------------
 
@@ -357,15 +341,6 @@ public abstract class AbstractKLighDController {
         ViewContext returnContext = null;
         if (view != null) {
             returnContext = view.getViewContext();
-            // Get Selection
-            // returnContext.getViewer().getDiagramSelection();
-//            etControl().addMouseMoveListener(new MouseMoveListener() {
-//                @Override
-//                public void mouseMove(MouseEvent e) {
-//                    System.out.println("!!! MOUSE MOVED !!! (" + c++ +")");
-//                    
-//                }
-//            });
         }
         return returnContext;
     }

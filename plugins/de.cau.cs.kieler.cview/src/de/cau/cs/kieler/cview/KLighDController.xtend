@@ -25,6 +25,9 @@ import org.eclipse.core.runtime.IProgressMonitor
 import de.cau.cs.kieler.cview.extensions.CViewLanguageExtensions
 
 /**
+ * The concrete KLighDController building the CViewModel and updating
+ * the diagram view.
+ * 
  * @author cmot
  * 
  */
@@ -33,10 +36,14 @@ class KLighDController extends AbstractKLighDController {
     @Inject extension CViewModelExtensions
     @Inject extension CViewAnalysisExtensions
     @Inject extension CViewLanguageExtensions
-
+    
+    // ------------------------------------------------------------------------
+    
     public static CViewModelExtensions cViewModelExtensions = new CViewModelExtensions();
 
     public HashMap<String, Component> referenceMapping = new HashMap
+
+    // ------------------------------------------------------------------------
 
     def int countModel(CViewModel model, Object element) {
         var i = 1;
@@ -66,9 +73,13 @@ class KLighDController extends AbstractKLighDController {
         return i;
     }
 
+    // ------------------------------------------------------------------------
+
     def Component addToModel(CViewModel model, Object element, IProgressMonitor monitor) {
         return model.addToModel(element, monitor, null)
     }
+
+    // ------------------------------------------------------------------------
 
     def Component addToModel(CViewModel model, Object element, IProgressMonitor monitor, Component parent) {
         var filePath = getFilePath(element);
@@ -145,6 +156,8 @@ class KLighDController extends AbstractKLighDController {
 
     }
 
+    // ------------------------------------------------------------------------
+
     def componentName(String componentPath) {
         var i = componentPath.lastIndexOf("\\");
         var j = componentPath.lastIndexOf("/");
@@ -167,6 +180,8 @@ class KLighDController extends AbstractKLighDController {
             return componentPath;
         }
     }
+    
+    // ------------------------------------------------------------------------
 
     override preCalculateModel(Object[] allselections) {
         var i = 0;
@@ -175,6 +190,8 @@ class KLighDController extends AbstractKLighDController {
         }
         return i;
     }
+
+    // ------------------------------------------------------------------------
 
     /**
      *  MAIN ENTRY: CALCULATE THE MODEL
