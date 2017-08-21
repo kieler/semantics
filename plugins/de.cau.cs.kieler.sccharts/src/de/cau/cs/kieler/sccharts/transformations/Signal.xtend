@@ -157,12 +157,10 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
         for (ValuedObject signal : allSignals) {
             signal.setDefaultTrace;
 
-            val isValuedSignal = !signal.pureSignal
-
             val presentVariable = signal
 
             // If this is a valued signal we need a second signal for the value
-            if (isValuedSignal) {
+            if (!signal.pureSignal) {
                 val valueDecl = createVariableDeclaration(signal.type)
                 val valueVariable = state.createValuedObject(signal.name + variableValueExtension, valueDecl)
                 val currentValueVariable = state.createValuedObject(signal.name + variableCurrentValueExtension, createVariableDeclaration(signal.type))
@@ -224,10 +222,13 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
             } // ValuedObject
 
             // Change signal to variable
+            val newDecl = createBoolDeclaration
+            newDecl.setInput(presentVariable.isInput)
+            newDecl.setOutput(presentVariable.isOutput)
             val declarationScope = presentVariable.declarationScope
             presentVariable.removeFromContainmentAndCleanup
-            declarationScope.addValuedObject(presentVariable, createBoolDeclaration)
-
+            declarationScope.addValuedObject(presentVariable, newDecl)
+                
             // Reset initial value and combine operator because we want to reset
             // the signal manually in every
             presentVariable.setInitialValue(null)
