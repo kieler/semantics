@@ -66,7 +66,12 @@ class PromUIPlugin extends KiBuildActivator {
     public static def void asyncExecInUI( ()=>void procedure ) {
         Display.getDefault().asyncExec(new Runnable() {
             override void run() {
-                procedure.apply
+                try {
+                    procedure.apply
+                } catch(Exception e) {
+                    // Show all uncaught exceptions to the user
+                    showError(e)
+                }
             }
         });
     } 
@@ -104,6 +109,13 @@ class PromUIPlugin extends KiBuildActivator {
      */
     static def void showError(String msg, Exception e) {
         showMessage(Status.ERROR, msg, e)
+    }
+    
+    /**
+     * Show an exception to the user.
+     */
+    static def void showError(Exception e) {
+        showMessage(Status.ERROR, e.message, e)
     }
     
     /**

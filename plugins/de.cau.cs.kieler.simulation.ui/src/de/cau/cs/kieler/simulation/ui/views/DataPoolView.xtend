@@ -569,24 +569,20 @@ class DataPoolView extends ViewPart {
                 } else {
                     // Execute in UI thread
                     PromUIPlugin.asyncExecInUI[
-                        try {
-                            val pool = SimulationManager.instance?.currentPool
-                            // Update tick info
-                            dataPoolView.updateTickInfo(e)
-                            // Set pool data
-                            dataPoolView.setDataPool(pool)
-                            
-                            // Highlight the simulation control flow in the diagram
-                            dataPoolView.unhighlightDiagram
-                            if(e.type != SimulationEventType.STOP) {
-                                if(e.type == SimulationEventType.INITIALIZED) {
-                                    dataPoolView.currentStates = null
-                                } else {
-                                    dataPoolView.highlightDiagram(pool)    
-                                }    
-                            }
-                        } catch (Exception ex) {
-                            PromUIPlugin.showError("An error occured when synchronizing the data pool view with the simulation", ex)
+                        val pool = SimulationManager.instance?.currentPool
+                        // Update tick info
+                        dataPoolView.updateTickInfo(e)
+                        // Set pool data
+                        dataPoolView.setDataPool(pool)
+                        
+                        // Highlight the simulation control flow in the diagram
+                        dataPoolView.unhighlightDiagram
+                        if(e.type != SimulationEventType.STOP) {
+                            if(e.type == SimulationEventType.INITIALIZED) {
+                                dataPoolView.currentStates = null
+                            } else {
+                                dataPoolView.highlightDiagram(pool)    
+                            }    
                         }
                     ]
                 }
