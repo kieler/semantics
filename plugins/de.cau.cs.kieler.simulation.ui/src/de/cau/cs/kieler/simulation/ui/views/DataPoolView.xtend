@@ -682,16 +682,10 @@ class DataPoolView extends ViewPart {
                 val next = transition.targetState
                 
                 // Leave state
-                states.remove(state)
-                // Also leave all child states
-                val children = StateIterator.sccAllContainedStates(state)
-                states.removeAll(children.toList)
+                states.leaveState(state)
                 
                 // Enter next state
-                states.add(next)
-                // Also enter all initial child states
-                val nextInitialStates = getInitialStates(next)
-                states.addAll(nextInitialStates)
+                states.enterState(next)
                 
                 // This transition is done
                 outgoingTransitions.remove(transition)
@@ -703,6 +697,30 @@ class DataPoolView extends ViewPart {
         }
         
         return newCurrentStates
+    }
+    
+    private def void leaveState(List<State> states, State state) {
+        states.remove(state)
+        // Also leave all child states
+        val children = StateIterator.sccAllContainedStates(state)
+        states.removeAll(children.toList)
+    }
+    
+    private def void enterState(List<State> states, State state) {
+        states.add(state)
+        // Also enter all initial child states, and their initial child states recursively
+        val statesToCheck = <State> newArrayList
+        statesToCheck.add(state)
+        while(!statesToCheck.isNullOrEmpty) {
+            // Pop top of list
+            val s = statesToCheck.get(0)
+            statesToCheck.remove(0)
+            // Get and add initial states
+            val initialStates = getInitialStates(s)
+            states.addAll(initialStates)
+            // Also add the initial states of these initial states recursively
+            statesToCheck.addAll(initialStates)
+        }
     }
     
     private def ViewContext getDiagramViewContext() {
