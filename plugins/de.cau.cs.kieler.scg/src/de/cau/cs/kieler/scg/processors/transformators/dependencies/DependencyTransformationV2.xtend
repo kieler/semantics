@@ -25,6 +25,11 @@ import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
+import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Fork
+import de.cau.cs.kieler.scg.Node
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -47,6 +52,7 @@ import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 
 class DependencyTransformationV2 extends Processor<SCGraphs, SCGraphs> {
     
+    
     @Inject extension SCGCoreExtensions
     @Inject extension SCGThreadExtensions
     @Inject extension SCGDependencyExtensions
@@ -54,6 +60,9 @@ class DependencyTransformationV2 extends Processor<SCGraphs, SCGraphs> {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension AnnotationsExtensions    
     @Inject Injector injector
+    
+    public static val IProperty<Boolean> ONLY_CONFLICTING_DEPENDENCIES = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.transformators.dependency.onlyConflictingDependencies", false)
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.transformators.dependency"
@@ -69,12 +78,23 @@ class DependencyTransformationV2 extends Processor<SCGraphs, SCGraphs> {
     
     override process() {
         for (scg : getModel.scgs) {
-            scg.addDependencies                               
+            scg.processDependencies                               
         }        
     }
        
 
-    protected def addDependencies(SCGraph scg) {
+    protected def processDependencies(SCGraph scg) {
         
+        if (!(scg.nodes.head instanceof Entry)) 
+            throw new UnsupportedOperationException("The first node of an SCG should be an entry node.")
+        
+        val entry = scg.nodes.head as Entry
+        val forkStack = <Fork> newLinkedList
+        
+        val nodes = <Node> newLinkedList(entry.next.target)
+        while(!nodes.empty && nodes.peek != null) {
+            
+        }        
     }
+    
 }
