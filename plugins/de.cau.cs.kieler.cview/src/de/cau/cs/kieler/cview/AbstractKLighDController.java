@@ -87,8 +87,9 @@ import de.cau.cs.kieler.klighd.util.RenderingContextData;
  */
 public abstract class AbstractKLighDController {
 
-    public static String CVIEW_KLIGHD_ID = "de.cau.cs.kieler.cview.klighd"; //de.cau.cs.kieler.cview.klighd
-    public static String CVIEW_KLIGHD_PRIMARY_ID = "de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart";
+    public static String CVIEW_KLIGHD_ID = "de.cau.cs.kieler.cview.klighd"; // de.cau.cs.kieler.cview.klighd
+    public static String CVIEW_KLIGHD_PRIMARY_ID =
+            "de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart";
     public static String CVIEW_KLIGHD_TITLE = "C View";
     public static String CVIEW_KLIGHD_TITLE_FILTERED = "C View  (FILTERED)";
 
@@ -160,25 +161,25 @@ public abstract class AbstractKLighDController {
 
     // -------------------------------------------------------------------------
 
-//    public void findAndCloseOldViews() {
-//        IWorkbench workBench = PlatformUI.getWorkbench();
-//        final IWorkbenchWindow window = workBench.getActiveWorkbenchWindow();
-//        
-//        for (IWorkbenchPage page : window.getPages()) {
-//            for (IViewReference viewReference : page.getViewReferences()) {
-//                IViewPart part = viewReference.getView(false);
-//                String id = viewReference.getId();
-//                if (id.equals(CVIEW_KLIGHD_PRIMARY_ID)) {
-//                    if (viewReference.getSecondaryId().equals(CVIEW_KLIGHD_ID)) {
-//                        page.hideView(part);
-//                        System.out.println(">>> " + id);
-//                    }
-//                }
-//                
-//            }
-//        }
-//
-//    }
+    // public void findAndCloseOldViews() {
+    // IWorkbench workBench = PlatformUI.getWorkbench();
+    // final IWorkbenchWindow window = workBench.getActiveWorkbenchWindow();
+    //
+    // for (IWorkbenchPage page : window.getPages()) {
+    // for (IViewReference viewReference : page.getViewReferences()) {
+    // IViewPart part = viewReference.getView(false);
+    // String id = viewReference.getId();
+    // if (id.equals(CVIEW_KLIGHD_PRIMARY_ID)) {
+    // if (viewReference.getSecondaryId().equals(CVIEW_KLIGHD_ID)) {
+    // page.hideView(part);
+    // System.out.println(">>> " + id);
+    // }
+    // }
+    //
+    // }
+    // }
+    //
+    // }
 
     public void openAndRefreshKLighDView(CViewModel updateModel, boolean updateIfExists) {
         DiagramViewPart view = DiagramViewManager.getView(CVIEW_KLIGHD_ID);
@@ -187,18 +188,26 @@ public abstract class AbstractKLighDController {
 //            properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY,
 //                    "de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy");
  //                 "de.cau.cs.kieler.klighd.incremental.IncrementalUpdateStrategy");
-                CViewModel nullModel = CViewModelFactory.eINSTANCE.createCViewModel();
-                DiagramViewManager.createView(CVIEW_KLIGHD_ID, CVIEW_KLIGHD_TITLE, nullModel,
-                        properties);
+            if (updateIfExists) {
+                if (updateModel != null) {
+                    DiagramViewManager.createView(CVIEW_KLIGHD_ID, CVIEW_KLIGHD_TITLE, updateModel,
+                            properties); 
+                } 
+                else {
+                    CViewModel nullModel = CViewModelFactory.eINSTANCE.createCViewModel();
+                    DiagramViewManager.createView(CVIEW_KLIGHD_ID, CVIEW_KLIGHD_TITLE, nullModel,
+                            properties); 
+                }
+            }
         } else {
             if (updateIfExists) {
                 if (updateModel != null) {
-                    view.initialize(updateModel, CVIEW_KLIGHD_TITLE, null);
-//                    DiagramViewManager.updateView(view.getViewContext(), updateModel);
+//                    view.initialize(updateModel, CVIEW_KLIGHD_TITLE, null);
+                    DiagramViewManager.updateView(view.getViewContext(), updateModel);
                 } else {
                     CViewModel nullModel = CViewModelFactory.eINSTANCE.createCViewModel();
-                    view.initialize(nullModel, CVIEW_KLIGHD_TITLE, null);
-//                    DiagramViewManager.updateView(view.getViewContext(), nullModel);
+//                    view.initialize(nullModel, CVIEW_KLIGHD_TITLE, null);
+                    DiagramViewManager.updateView(view.getViewContext(), nullModel);
                 }
             }
         }
