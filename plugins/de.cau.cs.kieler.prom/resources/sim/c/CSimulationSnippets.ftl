@@ -76,7 +76,7 @@ tickData.${varname}<#assign index = 0><#list indices as s>[i${index}]<#assign in
 </#macro>
 
 <#macro value_of_item item>
-<#if vartype == "bool" || vartype == "pure">
+<#if vartype == "bool" || vartype == "pure" || vartype == "int">
 ${item}->valueint;
 <#elseif vartype == "double" || vartype == "float">
 ${item}->valuedouble;
@@ -86,7 +86,7 @@ ${item}->valuestring;
 </#macro>
 
 <#macro cJSON_value_method>
-<#if vartype == "int" || vartype == "float">
+<#if vartype == "int" || vartype == "float" || vartype == "double">
 cJSON_CreateNumber<#t>
 <#elseif vartype == "bool" || vartype == "pure">
 cJSON_CreateBool<#t>
