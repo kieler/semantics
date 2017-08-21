@@ -296,6 +296,8 @@ class DataPoolView extends ViewPart {
             override run() {
                 val title = "Controls for the Data Pool View"
                 val message = "Right Arrow : Step simulation macro tick\n"
+                            + "Ctrl + Right Arrow: Step in simulation history forward\n"
+                            + "Ctrl + Left Arrow: Step in simulation history back\n"
                 val dialog = new MessageDialog(viewer.control.shell, title, null, message, 0, #["OK"], 0)
                 dialog.open
             }
@@ -307,14 +309,36 @@ class DataPoolView extends ViewPart {
         viewer.control.addKeyListener(new KeyAdapter() {
             override keyPressed(KeyEvent e) {
                 val manager = SimulationManager.instance
-                if(e.keyCode == SWT.ARROW_RIGHT) {
-                    if(manager != null) {
-                        PromConsole.print("Step macro tick")
-                        manager.stepMacroTick()
+                val mod = e.stateMask
+                // CTRL + RIGHT: step history forward
+                // CTRL + LEFT: step history back
+                if(mod.hasBit(SWT.CTRL)) {
+                    if(e.keyCode == SWT.ARROW_RIGHT) {
+                        if(manager != null) {
+                            PromConsole.print("Step History Forward")
+                            manager.stepHistoryForward()
+                        }
+                    } else if(e.keyCode == SWT.ARROW_LEFT) {
+                        if(manager != null) {
+                            PromConsole.print("Step History Back")
+                            manager.stepHistoryBack()
+                        }
+                    }
+                } else {
+                    // No CTRL + RIGHT: Step Macro Tick
+                    if(e.keyCode == SWT.ARROW_RIGHT) {
+                        if(manager != null) {
+                            PromConsole.print("Step Macro Tick")
+                            manager.stepMacroTick()
+                        }
                     }
                 }
             }
         })
+    }
+    
+    private def boolean hasBit(int bitMask, int bit) {
+        return bitMask.bitwiseAnd(bit) != 0
     }
     
     private def TableViewer createTable(Composite parent) {
@@ -545,20 +569,24 @@ class DataPoolView extends ViewPart {
                 } else {
                     // Execute in UI thread
                     PromUIPlugin.asyncExecInUI[
-                        val pool = SimulationManager.instance?.currentPool
-                        // Update tick info
-                        dataPoolView.updateTickInfo(e)
-                        // Set pool data
-                        dataPoolView.setDataPool(pool)
-                        
-                        // Highlight the simulation control flow in the diagram
-                        dataPoolView.unhighlightDiagram
-                        if(e.type != SimulationEventType.STOP) {
-                            if(e.type == SimulationEventType.INITIALIZED) {
-                                dataPoolView.currentStates = null
-                            } else {
-                                dataPoolView.highlightDiagram(pool)    
-                            }    
+                        try {
+                            val pool = SimulationManager.instance?.currentPool
+                            // Update tick info
+                            dataPoolView.updateTickInfo(e)
+                            // Set pool data
+                            dataPoolView.setDataPool(pool)
+                            
+                            // Highlight the simulation control flow in the diagram
+                            dataPoolView.unhighlightDiagram
+                            if(e.type != SimulationEventType.STOP) {
+                                if(e.type == SimulationEventType.INITIALIZED) {
+                                    dataPoolView.currentStates = null
+                                } else {
+                                    dataPoolView.highlightDiagram(pool)    
+                                }    
+                            }
+                        } catch (Exception ex) {
+                            PromUIPlugin.showError("An error occured when synchronizing the data pool view with the simulation", ex)
                         }
                     ]
                 }
@@ -605,7 +633,7 @@ class DataPoolView extends ViewPart {
                         val traversedTransition = transitions.get(index)
                         traversedTransitions.add(traversedTransition)
                     } catch(IndexOutOfBoundsException e) {
-                        throw new Exception("IndexOutOfBoundsException in the diagram visualization. Please check that the shown diagram is for the simulated model?")
+                        throw new Exception("Could not acccess the 'taken transition array'. Please check that the shown diagram is for the simulated model.", e)
                     }
                 }
             } else {

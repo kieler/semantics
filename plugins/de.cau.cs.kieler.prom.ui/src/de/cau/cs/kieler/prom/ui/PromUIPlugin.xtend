@@ -93,13 +93,20 @@ class PromUIPlugin extends KiBuildActivator {
     }
     
     /**
-     * Show an exception to the user an also log that message to the console.
+     * Show a message to the user and also log that message to the console.
      */
-    static def void showError(int severity, String msg, Exception e) {
+    static def void showMessage(int severity, String msg, Exception e) {
         log(severity, msg, e, StatusManager.LOG.bitwiseOr(StatusManager.SHOW))
     }
     
-    /** 
+    /**
+     * Show an exception to the user.
+     */
+    static def void showError(String msg, Exception e) {
+        showMessage(Status.ERROR, msg, e)
+    }
+    
+    /**
      * Send a Status with the severity, message and exception
      * to the status manager and which will handle it using the given style.
      * 
