@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.test.compiler
+package de.cau.cs.kieler.sccharts.test.b.compiler
 
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
@@ -31,7 +31,7 @@ import org.junit.runner.RunWith
  * @kieler.rating proposed yellow
  */
 @RunWith(ModelsRepositoryTestRunner)
-class BasicSCGTransformationTest extends AbstractXTextModelRepositoryTest<SCCharts> {
+class SCGTransformationTest extends AbstractXTextModelRepositoryTest<SCCharts> {
     
     /** Compiler configuration */
     private val compilationSystemID = "de.cau.cs.kieler.sccharts.extended.simple"
@@ -52,7 +52,7 @@ class BasicSCGTransformationTest extends AbstractXTextModelRepositoryTest<SCChar
      * {@inheritDoc}
      */
     override filter(TestModelData modelData) {
-        return modelData.modelProperties.contains("scchartsX")
+        return modelData.modelProperties.contains("sccharts")
     }
     
     @Test(timeout=60000)

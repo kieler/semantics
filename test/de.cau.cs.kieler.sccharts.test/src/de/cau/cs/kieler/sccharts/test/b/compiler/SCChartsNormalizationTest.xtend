@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.test.compiler
+package de.cau.cs.kieler.sccharts.test.b.compiler
 
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
@@ -68,7 +68,7 @@ class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<SCChart
      * {@inheritDoc}
      */
     override filter(TestModelData modelData) {
-        return modelData.modelProperties.contains("scchartsX")
+        return modelData.modelProperties.contains("sccharts")
         && !modelData.additionalProperties.containsKey("testSerializability")
         && !modelData.modelProperties.contains("must-fail")
     }

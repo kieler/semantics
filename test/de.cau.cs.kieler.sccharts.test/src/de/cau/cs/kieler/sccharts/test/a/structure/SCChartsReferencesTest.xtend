@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.test.structure
+package de.cau.cs.kieler.sccharts.test.a.structure
 
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
@@ -54,7 +54,7 @@ class SCChartsReferencesTest extends AbstractXTextModelRepositoryTest<SCCharts> 
      * {@inheritDoc}
      */
     override filter(TestModelData modelData) {
-        return modelData.modelProperties.contains("scchartsX") && !modelData.resourceSetID.nullOrEmpty
+        return modelData.modelProperties.contains("sccharts") && !modelData.resourceSetID.nullOrEmpty
     }
     
     @Test
