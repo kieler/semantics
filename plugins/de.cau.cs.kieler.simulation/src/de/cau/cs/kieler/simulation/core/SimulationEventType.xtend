@@ -22,7 +22,7 @@ enum SimulationEventType {
     VARIABLE_CHANGE,
     
     SUB_STEP,
-    STEP_BACK,
+    STEP_HISTORY,
     STOP,
     PLAY,
     PAUSE,

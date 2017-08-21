@@ -20,13 +20,13 @@ import org.eclipse.core.commands.ExecutionException
  * @author aas
  *
  */
-class StepSimulationBack extends SimulationToolbarButton {
+class StepSimulationHistoryBack extends SimulationToolbarButton {
     
     override execute(ExecutionEvent event) throws ExecutionException {
         super.execute(event)
         if(simulation != null && !justRestarted) {
-            PromConsole.print("Step Back")
-            simulation.stepBack()
+            PromConsole.print("Step History Back")
+            simulation.stepHistoryBack()
         }
         return null
     }

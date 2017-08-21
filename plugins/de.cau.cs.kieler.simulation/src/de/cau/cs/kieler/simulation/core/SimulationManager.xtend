@@ -398,7 +398,27 @@ class SimulationManager extends Configurable {
     /**
      * Go back to the previous state of the simulation.
      */
-    public def void stepBack() {
+    public def void stepHistoryForward() {
+        if(isStopped) {
+            return
+        } else if(isPlaying) {
+            pause()
+        }
+        
+        // Load state from history
+        positionInHistory--;
+        if(positionInHistory < 0) {
+            positionInHistory = history.size;
+        }
+        loadStateFromHistory
+        
+        fireEvent(SimulationEventType.STEP_HISTORY)
+    }
+    
+    /**
+     * Go back to the previous state of the simulation.
+     */
+    public def void stepHistoryBack() {
         if(isStopped) {
             return
         } else if(isPlaying) {
@@ -410,6 +430,12 @@ class SimulationManager extends Configurable {
         if(positionInHistory > history.size) {
             positionInHistory = 0;
         }
+        loadStateFromHistory
+        
+        fireEvent(SimulationEventType.STEP_HISTORY)
+    }
+
+    private def void loadStateFromHistory() {
         if(positionInHistory > 0) {
             val oldState = history.get(history.size - positionInHistory)
             if(oldState != null) {
@@ -432,8 +458,6 @@ class SimulationManager extends Configurable {
                 v.userValue = null
             }
         }
-        
-        fireEvent(SimulationEventType.STEP_BACK)
     }
 
     /**
