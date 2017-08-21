@@ -543,7 +543,6 @@ class DataPoolView extends ViewPart {
                         dataPoolView.viewer.update(e.variable, null)
                     }
                 } else {
-                    
                     // Execute in UI thread
                     PromUIPlugin.asyncExecInUI[
                         val pool = SimulationManager.instance?.currentPool
@@ -551,7 +550,7 @@ class DataPoolView extends ViewPart {
                         dataPoolView.updateTickInfo(e)
                         // Set pool data
                         dataPoolView.setDataPool(pool)
-                    
+                        
                         // Highlight the simulation control flow in the diagram
                         dataPoolView.unhighlightDiagram
                         if(e.type != SimulationEventType.STOP) {
@@ -602,8 +601,12 @@ class DataPoolView extends ViewPart {
             if(value instanceof Integer) {
                 if(value > 0) {
                     // The transition has been taken at least once
-                    val traversedTransition = transitions.get(index)
-                    traversedTransitions.add(traversedTransition)
+                    try {
+                        val traversedTransition = transitions.get(index)
+                        traversedTransitions.add(traversedTransition)
+                    } catch(IndexOutOfBoundsException e) {
+                        throw new Exception("IndexOutOfBoundsException in the diagram visualization. Please check that the shown diagram is for the simulated model?")
+                    }
                 }
             } else {
                 throw new Exception("The 'taken transition array' has a incompatible type for diagram highlighting")
@@ -619,9 +622,8 @@ class DataPoolView extends ViewPart {
         // Calculate current states
         if(currentStates == null) {
             currentStates = getInitialStates(rootState)    
-        } else {
-            currentStates = calculateNewCurrentStates(currentStates, traversedTransitions)
         }
+        currentStates = calculateNewCurrentStates(currentStates, traversedTransitions)
     }
     
     private def List<State> calculateNewCurrentStates(List<State> oldCurrentStates, List<Transition> takenTransitions) {
@@ -629,24 +631,31 @@ class DataPoolView extends ViewPart {
         
         // Preprocessing for better performance of lookup
         val seenStates = <State> newHashSet
-        val followingState = <State, State> newHashMap
+        val outgoingTransitionsForState = <State, List<Transition>> newHashMap
         for(trans : takenTransitions) {
-            followingState.put(trans.sourceState, trans.targetState)
+            val source = trans.sourceState
+            val outgoingTransitionsOfSource = outgoingTransitionsForState.getOrDefault(source, newArrayList)
+            outgoingTransitionsOfSource.add(trans)
+            outgoingTransitionsForState.put(trans.sourceState, outgoingTransitionsOfSource)
         }
         
         // Follow path of transitions from current states to the ending state, which is the new current state.
-        // NOTE: This only works if there are no loops in the taken transitions
+        // NOTE: This only works if the used transition for a state is unambiguous, i.e.,
+        // there is at most one outgoing transition per state in this tick. 
         val states = oldCurrentStates
         while(!states.isNullOrEmpty) {
             val state = states.get(0)
             seenStates.add(state)
-            val next = followingState.getOrDefault(state, null)
-            if(next != null) {
-                if(seenStates.contains(next)) {
-                    // Loop detected. This algorithm does not work in this case.
-                    System.err.println("Loop in transitions for this tick. Diagram highlighting of current state will not work.")
-                    return newCurrentStates
-                }
+            val outgoingTransitions = outgoingTransitionsForState.getOrDefault(state, newArrayList)
+            if(outgoingTransitions.size == 0) {
+                // No outgoing transitions, thus the control flow stays here
+                newCurrentStates.add(state)
+                // This state is done
+                states.remove(state)
+            } else if(outgoingTransitions.size == 1) {
+                // Exactly one outgoing transition, thus the next state is unambiguous
+                val transition = outgoingTransitions.get(0)
+                val next = transition.targetState
                 
                 // Leave state
                 states.remove(state)
@@ -659,12 +668,13 @@ class DataPoolView extends ViewPart {
                 // Also enter all initial child states
                 val nextInitialStates = getInitialStates(next)
                 states.addAll(nextInitialStates)
-            } else {
-                // No outgoing transitions, thus this must be a current state
-                newCurrentStates.add(state)
                 
-                // This state is done
-                states.remove(state)
+                // This transition is done
+                outgoingTransitions.remove(transition)
+            } else {
+                // More than one outgoing state. It is not clear which path has been taken.
+                System.err.println("The used control flow cannot be clearly determined for this tick. Diagram highlighting of current state will not work.")
+                return newCurrentStates
             }
         }
         
