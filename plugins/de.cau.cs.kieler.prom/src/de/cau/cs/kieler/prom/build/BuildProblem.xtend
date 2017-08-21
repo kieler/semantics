@@ -88,6 +88,9 @@ class BuildProblem {
         }
         if (cause !== null) {
             sb.append("\n ").append(cause.class.name).append(": ").append(cause.message)
+            if (cause.cause !== null) {
+                sb.append("\n caused by ").append(cause.cause.class.name).append(": ").append(cause.cause.message)
+            }
             for (StackTraceElement element : cause.getStackTrace()) {
                 sb.append(element.toString()).append("\n")
             }
