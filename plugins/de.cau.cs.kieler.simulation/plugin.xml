@@ -30,7 +30,7 @@
            name="simout">
      </dataHandler>
      <dataHandler
-           class="de.cau.cs.kieler.simulation.handlers.Trace"
+           class="de.cau.cs.kieler.simulation.handlers.TraceHandler"
            name="trace">
      </dataHandler>
   </extension>

@@ -28,12 +28,12 @@ import static de.cau.cs.kieler.simulation.FileExtensions.*
  * @author aas
  *
  */
-class Trace extends DefaultDataHandler {
+class TraceHandler extends DefaultDataHandler {
     
     public val tracePath = new ConfigurableAttribute("file")
     public val modelName = new ConfigurableAttribute("modelName")
-    public val currentTraceNumber = new ConfigurableAttribute("traceNumber", 0)
-    public val currentTickNumber = new ConfigurableAttribute("tickNumber", 0)
+    public val traceNumber = new ConfigurableAttribute("traceNumber", 0)
+    public val tickNumber = new ConfigurableAttribute("tickNumber", 0)
     public val checkOutputs = new ConfigurableAttribute("checkOutputs", true)
     
     /**
@@ -52,7 +52,7 @@ class Trace extends DefaultDataHandler {
             return;
         }
         // Compare variables in pool with output of this tick
-        val tracePool = traceDataProvider.getDataPool(currentTickNumber.intValue)
+        val tracePool = traceDataProvider.getDataPool(tickNumber.intValue)
         for(model : pool.models) {
             for(variable : model.variables) {
                 if(variable.isOutput) {
@@ -103,7 +103,7 @@ class Trace extends DefaultDataHandler {
             return;
         }
         // Set inputs of variables in the pool to inputs of the trace.
-        val tracePool = traceDataProvider.getDataPool(currentTickNumber.intValue)
+        val tracePool = traceDataProvider.getDataPool(tickNumber.intValue)
         for(model : pool.models) {
             for(variable : model.variables) {
                 if(variable.isInput) {
@@ -156,15 +156,15 @@ class Trace extends DefaultDataHandler {
     
     private def void loadTrace(IPath path) {
         val traceFileHandle = getFile(path)
-        if(traceFileHandle != null && traceFileHandle.exists) {
-            traceDataProvider = new TraceDataProvider(traceFileHandle, currentTraceNumber.intValue)
+        if(traceFileHandle !== null && traceFileHandle.exists) {
+            traceDataProvider = new TraceDataProvider(traceFileHandle, traceNumber.intValue)
         } else {
             throw new Exception("Could not load trace '"+path.toOSString+"'")
         }
     }
     
     private def void loadTrace(TraceFile trace) {
-        traceDataProvider = new TraceDataProvider(trace, currentTraceNumber.intValue)
+        traceDataProvider = new TraceDataProvider(trace, traceNumber.intValue)
     }
     
 //    private def void loadDataPoolHistory(IPath path) {
@@ -192,16 +192,16 @@ class Trace extends DefaultDataHandler {
     
     private def TraceEvent createTraceFinishedEvent() {
         val event = new TraceFinishedEvent()
-        event.tickNumber = currentTickNumber.intValue
-        event.traceNumber = currentTraceNumber.intValue
+        event.tickNumber = tickNumber.intValue
+        event.traceNumber = traceNumber.intValue
         event.traceFile = traceDataProvider.sourceFile
         return event
     }
     
     private def TraceMismatchEvent createTraceMismatchEvent(Variable variable, Object expectedValue) {
         val event = new TraceMismatchEvent()
-        event.tickNumber = currentTickNumber.intValue
-        event.traceNumber = currentTraceNumber.intValue
+        event.tickNumber = tickNumber.intValue
+        event.traceNumber = traceNumber.intValue
         event.traceFile = traceDataProvider.sourceFile
         event.variable = variable
         event.expectedValue = expectedValue
@@ -217,15 +217,15 @@ class Trace extends DefaultDataHandler {
     }
     
     private def void loadNextTick() {
-        currentTickNumber.value = currentTickNumber.intValue+1
-        if(currentTickNumber.intValue >= traceDataProvider.traceLength) {
+        tickNumber.value = tickNumber.intValue+1
+        if(tickNumber.intValue >= traceDataProvider.traceLength) {
             val event = createTraceFinishedEvent
             SimulationManager.instance.fireEvent(event)
         }
     }
     
     private def boolean isFinished() {
-        return currentTickNumber.intValue >= traceDataProvider.traceLength
+        return tickNumber.intValue >= traceDataProvider.traceLength
     }   
     
     override getName() {

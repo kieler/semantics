@@ -12,12 +12,26 @@
  */
 package de.cau.cs.kieler.simulation.handlers
 
+import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.DoubleValue
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.FloatValue
+import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.StringValue
+import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Effect
+import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
+import de.cau.cs.kieler.simulation.core.Variable
 import de.cau.cs.kieler.simulation.trace.KTraceStandaloneSetup
 import de.cau.cs.kieler.simulation.trace.ktrace.Tick
+import de.cau.cs.kieler.simulation.trace.ktrace.Trace
 import de.cau.cs.kieler.simulation.trace.ktrace.TraceFile
+import java.util.ArrayList
 import java.util.List
 import org.eclipse.core.resources.IFile
 import org.eclipse.emf.common.util.URI
@@ -25,18 +39,6 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.resource.XtextResourceSet
 
 import static com.google.common.base.Preconditions.*
-import de.cau.cs.kieler.simulation.core.Variable
-import de.cau.cs.kieler.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.kexpressions.keffects.Emission
-import de.cau.cs.kieler.kexpressions.Value
-import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.OperatorType
-import de.cau.cs.kieler.kexpressions.IntValue
-import de.cau.cs.kieler.kexpressions.FloatValue
-import de.cau.cs.kieler.kexpressions.DoubleValue
-import de.cau.cs.kieler.kexpressions.BoolValue
-import de.cau.cs.kieler.kexpressions.StringValue
 
 /**
  * @author als
@@ -51,13 +53,10 @@ class TraceDataProvider {
     new(IFile file, int traceNumber) {
         this.sourceFile = file
 
-        val resourceSet = KTraceStandaloneSetup.doSetup.getInstance(XtextResourceSet)
-        val uri = URI.createFileURI(file.fullPath.toOSString)
-        val resource = resourceSet.getResource(uri, true)
-        val traceFile = resource.getContents().head as TraceFile
+        val traceFile = file.loadTraceFile
         checkArgument(traceNumber >= 0 && traceNumber < traceFile.traces.size)
         val trace = traceFile.traces.get(traceNumber)
-        this.tracePool = newArrayOfSize(trace.ticks.size)
+        this.tracePool = new ArrayList(trace.ticks.size)
         trace.fillTracePool
     }
 
@@ -66,11 +65,18 @@ class TraceDataProvider {
 
         checkArgument(traceNumber >= 0 && traceNumber < traceFile.traces.size)
         val trace = traceFile.traces.get(traceNumber)
-        this.tracePool = newArrayOfSize(trace.ticks.size)
+        this.tracePool = new ArrayList(trace.ticks.size)
         trace.fillTracePool
     }
+    
+    static def loadTraceFile(IFile file) {
+        val resourceSet = KTraceStandaloneSetup.doSetup.getInstance(XtextResourceSet)
+        val uri = URI.createPlatformResourceURI(file.fullPath.toOSString, true)
+        val resource = resourceSet.getResource(uri, true)
+        return resource.getContents().head as TraceFile
+    }
 
-    private def fillTracePool(de.cau.cs.kieler.simulation.trace.ktrace.Trace trace) {
+    private def fillTracePool(Trace trace) {
         for (Tick t : trace.ticks) {
             val pool = new DataPool()
             val model = new Model("Model")
