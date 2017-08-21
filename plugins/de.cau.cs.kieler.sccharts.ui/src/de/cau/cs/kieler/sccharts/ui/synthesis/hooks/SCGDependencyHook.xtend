@@ -14,18 +14,14 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis.hooks
 
 import com.google.common.collect.HashMultimap
-import com.google.common.collect.Iterators
-import com.google.common.collect.Maps
-import com.google.common.collect.Multimap
-import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kico.CompilationResult
-import de.cau.cs.kieler.kico.KielerCompiler
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kicool.ui.kitt.tracing.internal.TracingEdgeNode
+import de.cau.cs.kieler.kicool.compilation.CompilationContext
+import de.cau.cs.kieler.kicool.compilation.Compile
+import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingMapping
+import de.cau.cs.kieler.kicool.ui.kitt.tracing.internal.TracingEdgeNode
 import de.cau.cs.kieler.klighd.IKlighdSelection
 import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
 import de.cau.cs.kieler.klighd.SynthesisOption
@@ -34,7 +30,6 @@ import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KLabel
 import de.cau.cs.kieler.klighd.kgraph.KLayoutData
 import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.klighd.kgraph.KPort
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KCustomRendering
 import de.cau.cs.kieler.klighd.krendering.KDecoratorPlacementData
@@ -46,38 +41,27 @@ import de.cau.cs.kieler.klighd.krendering.LineStyle
 import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
-import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsDiagramProperties
-import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisActionHook
 import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
-import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SCGDependencyHook.DepType
+import de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsDiagramProperties
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.DataDependencyType
 import de.cau.cs.kieler.scg.Dependency
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.features.SCGFeatures
-import java.util.Collection
+import de.cau.cs.kieler.scg.SCGraphs
 import java.util.HashMap
-import java.util.List
-import java.util.Map
-import java.util.Set
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.core.options.Direction
-import org.eclipse.elk.core.options.PortConstraints
-import org.eclipse.elk.core.options.SizeConstraint
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 import org.eclipse.emf.ecore.EObject
@@ -87,11 +71,6 @@ import org.eclipse.ui.progress.UIJob
 
 import static extension com.google.common.base.Predicates.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.kicool.compilation.Compile
-import de.cau.cs.kieler.kicool.environments.Environment
-import de.cau.cs.kieler.kicool.compilation.CompilationContext
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.scg.SCGraphs
 
 /**
  * Adds the SCG dependencies into the SCChart.
@@ -109,12 +88,6 @@ class SCGDependencyHook extends SynthesisActionHook {
 
     @Inject
     extension KEdgeExtensions
-
-    @Inject
-    extension KPortExtensions
-
-    @Inject
-    extension KLabelExtensions
 
 	@Inject
 	extension KRenderingExtensions
@@ -138,7 +111,7 @@ class SCGDependencyHook extends SynthesisActionHook {
 		//.setUpdateAction(SCGDependencyHook.ID); // Add this action as updater
 	/** The related synthesis option for regions */
     public static final SynthesisOption SCG_DEPENDENCY_TYPES = SynthesisOption.createChoiceOption("Dependency Types",
-        newArrayList(DepType.Elements, DepType.Regions, DepType.DataflowOneEdge, DepType.DataflowHyperedge),
+        newArrayList(DepType.Elements, DepType.Regions),
         DepType.Elements).setCategory(GeneralSynthesisOptions::DEBUGGING)
         .setUpdateStrategy(SimpleUpdateStrategy.ID)
         // Deactivated to force Simple Update Strategy
@@ -194,7 +167,7 @@ class SCGDependencyHook extends SynthesisActionHook {
     
 	/** The different type of dependency filter */
 	private enum DepType {
-		Elements, Regions, DataflowOneEdge, DataflowHyperedge;
+		Elements, Regions;
 	}
 	
 	override getDisplayedSynthesisOptions() {
@@ -291,11 +264,6 @@ class SCGDependencyHook extends SynthesisActionHook {
     
     			}.schedule;
     			return false;
-            } else if (type == DepType.DataflowOneEdge || type == DepType.DataflowHyperedge) {
-                // Show the dependencies as dataflow edges between concurrent regions
-                // This is not done asynchronously because it needs a true layout run in the end.
-                addDataflowDependencyEdges(rootNode, scc, tracker);
-                return true;
             } else {
                 return false;
             }
@@ -332,7 +300,7 @@ class SCGDependencyHook extends SynthesisActionHook {
         val dependecyAnalysis = cc.processorMap.entrySet.findFirst[
             key.id.equals("de.cau.cs.kieler.scg.processors.transformators.dependency")
         ]?.value
-        if (dependecyAnalysis == null) throw new NullPointerException("Can not find dependency transformation in compilation system")
+        if (dependecyAnalysis === null) throw new NullPointerException("Can not find dependency transformation in compilation system")
         // Stop after the dependency analysis
         dependecyAnalysis.environment.setProperty(Environment.CANCEL_COMPILATION, true) 
         
@@ -494,299 +462,5 @@ class SCGDependencyHook extends SynthesisActionHook {
                 it.setYOffset(-5f);
             ];
         }
-    }
-
-    /**
-     * Calculate and show the data dependencies between parallel regions as dataflow edges in the diagram. 
-     */
-    private def addDataflowDependencyEdges(KNode rootNode, State scc, SourceModelTrackingAdapter tracking) {
-        // PHASE 1: Yodeling Yeti (Preparation)
-        // Compile the SCChart with Tracing up until dependency analysis
-        val context = compileDependencies(scc)
-        val compiledModel = context.result.getModel
-
-        // Ensure that the compilation returned an SCG
-        if (!(compiledModel instanceof SCGraphs)) {
-            return
-        }
-
-        // Take the compiled model as SCG
-        val scg = (compiledModel as SCGraphs).scgs.head
-
-        // Get the tracing mapping from the dependency scg to the source model
-//        val mapping = result.getAuxiliaryData(Tracing).head?.getMapping(scg, scc);
-        val sccContainer = scc.eContainer
-        val scgContainer = scg.eContainer
-        val tracing = context.startEnvironment.getProperty(Tracing.TRACING_DATA)
-        val mapping = tracing.getMapping(scgContainer, sccContainer)      
-        if (mapping === null) {
-            return;
-        }
-
-        // Calculate equivalence classes for diagram elements
-        val equivalenceClasses = new TracingMapping(null);
-        for (EObject obj : scc.eAllContents.toIterable) {
-            var elements = tracking.getTargetElements(obj);
-            // If no diagram element is associated with the given model element its container 
-            // is used to find an appropriate representation
-            if (elements.empty) {
-                var next = obj;
-                while (elements.empty && next !== null) {
-                    next = next.eContainer;
-                    elements = tracking.getTargetElements(next);
-                }
-                equivalenceClasses.putAll(obj, elements);
-            }
-        };
-
-        // PHASE 2: Happy Hippogryph (Gathering dependencies)
-        // I want all data dependencies gathered in one room, as soon as possible!!
-        val List<DataDependency> dependencies = newLinkedList();
-        // Grab all the assignments from the SCG
-        val assingments = scg.nodes.filter(Assignment);
-        for (Assignment asgn : assingments) {
-            dependencies.addAll(
-                asgn.dependencies.filter(DataDependency).filter([!isConfluent && isConcurrent])
-            )
-        }
-
-        // PHASE 3: Eager Eagle (Mapping dependencies to incoming/outgoing signals of regions)
-        val HashMultimap<Region, ValuedObject> outgoingRegionDependencies = HashMultimap.create
-        val HashMultimap<Region, ValuedObject> incomingRegionDependencies = HashMultimap.create
-
-        for (DataDependency dependency : dependencies) {
-            // The source of the dependency is always an assignment in the SCG
-            val scgSource = dependency.eContainer as Assignment;
-            // The assingment might map to multiple SCChart objects. For us only Actions or ValuedObjects are relevant.
-            val scChartSources = mapping.get(scgSource).filter(EObject).filter(
-                or(Action.instanceOf, ValuedObject.instanceOf));
-            val scChartTargets = mapping.get(dependency.getTarget).filter(EObject).filter(
-                or(Action.instanceOf, ValuedObject.instanceOf));
-
-            // For source and target we need the containing region to map the dataflow between these.
-            // Traverse the containment upwards until we either find a region (good case) 
-            // or reach the root object (bad case)
-            var Region scChartSourceRegion = findContainingRegion(scChartSources);
-            var Region scChartTargetRegion = findContainingRegion(scChartTargets);
-
-            // We should now have a proper regions for this, add the Valued Object of the dependency to outgoing 
-            // and incoming dependencies of the regions
-            if (scChartSourceRegion !== null) {
-                outgoingRegionDependencies.put(scChartSourceRegion, scgSource.valuedObject);
-            }
-            if (scChartTargetRegion !== null) {
-                incomingRegionDependencies.put(scChartTargetRegion, scgSource.valuedObject);
-            }
-        }
-
-        // PHASE 4: Pretty Platypus (Escalate production and consumption upwards)
-        // To show all the dataflow we propagate the produced and consumed signals upwards to the parent regions.
-        propagateDependencies(incomingRegionDependencies);
-        propagateDependencies(outgoingRegionDependencies);
-
-        // PHASE 5: Dancing Dromedar (Add dependency edges for adjacient regions)
-        // Finally we create the edges in the diagram
-
-        val depType = getUsedContext().getOptionValue(SCG_DEPENDENCY_TYPES) as DepType;
-        if (depType == DepType.DataflowOneEdge) {
-            // PHASE 5a: Drunk Dancing Dromedar (Draw one edge for each pair of regions)
-            // If we want to create one edge for each pair of relevant regions,
-            // we can just iterate through all outgoing dependencies and store which edge has already been created.
-            createPairwiseDataflowEdges(outgoingRegionDependencies, incomingRegionDependencies, tracking, mapping);   
-        } else if (depType == DepType.DataflowHyperedge) {
-            // PHASE 5b: Delirious Dancing Dromedar (Draw a hyperedge for each flowing signal)
-            // If we want to create a hyperedge we need to create ports for each region for each flowing signal and 
-            // create an from the port to all the other involved regions.
-            createDataflowHyperedges(scc, outgoingRegionDependencies, incomingRegionDependencies, tracking, mapping);
-        }
-    }
-    
-    /**
-     * Create a dataflow hyperedge for each signal flowing between concurrent regions. All the "producing" and the 
-     * "consuming" regions are attached to that hyperedge. 
-     */
-    def createDataflowHyperedges(State scc, HashMultimap<Region, ValuedObject> outgoingRegionDependencies,
-        HashMultimap<Region, ValuedObject> incomingRegionDependencies, SourceModelTrackingAdapter tracking,
-        Multimap<Object, Object> mapping) {
-        // We need to assemble all the relevant valued objects in one region. 
-        // Relevant valued objects are these that are incoming in one region 
-        // and outgoing in another concurrent region.
-        // Find all states that have more than one region
-        val concurrencyStates = Iterators.concat(Iterators.singletonIterator(scc), scc.eAllContents)
-            .filter(State).filter[regions.size > 1].toIterable;
-        for (State state : concurrencyStates) {
-            // Assemble all the signals used in this region and divide the usages for 
-            // incoming and outgoing dependencies
-            val Map<ValuedObject, Pair<Set<Region>,Set<Region>>> regionSignals = Maps.newHashMap;
-            state.regions.forEach[ region |
-                outgoingRegionDependencies.get(region).forEach[ vo |
-                    if (!regionSignals.containsKey(vo)) {
-                        regionSignals.put(vo, new Pair(Sets.newHashSet, Sets.newHashSet));
-                    }
-                    regionSignals.get(vo).key.add(region);
-                ]
-                incomingRegionDependencies.get(region).forEach[ vo |
-                    if (!regionSignals.containsKey(vo)) {
-                        regionSignals.put(vo, new Pair(Sets.newHashSet, Sets.newHashSet));
-                    }
-                    regionSignals.get(vo).value.add(region);
-                ]
-            ]
-
-            // Filter the Map for all elements that are incoming as well as outgoing in this state
-            regionSignals.filter[ vo, pair | 
-                !pair.key.empty && !pair.value.empty &&
-                !Sets.difference(pair.key, pair.value).empty
-            ].forEach [ vo, regions |
-                // Store the target points for reuse with more sources
-                val Map<Region, KPort> targetPorts = Maps.newHashMap;
-                regions.key.forEach [ outregion |
-                    // Create a source port that is reused for every edge from here
-                    val KPort sourcePort = createPort => [
-                        node = tracking.getTargetElements(outregion).filter(KNode).head;
-                    ]
-                    
-                    // Add a port label to the source port instead of every edge
-                    sourcePort.addOutsidePortLabel(
-                        // Trace objects back to their source object to show proper names
-                        mapping.get(vo).filter(ValuedObject).head.name
-                    );                    
-                    
-                    regions.value.forEach[ inregion |
-                        // Create a target port if needed and store it for other sources
-                        if (!targetPorts.containsKey(inregion)) {
-                            targetPorts.put(inregion, createPort => [
-                                node = tracking.getTargetElements(inregion).filter(KNode).head;
-                            ])
-                        }
-                        // Create an edge for this dependency
-                        val KEdge edge = createEdge => [
-                            it.sourcePort = sourcePort;
-                            it.source = sourcePort.node;
-                            it.targetPort = targetPorts.get(inregion);
-                            it.target = it.targetPort.node;
-                            it.addPolyline => [
-                                it.lineWidth = 2
-                                it.lineStyle = LineStyle::DOT
-                                // Default arrow head
-                                it.addHeadArrowDecorator
-                                // Junction points because of hyperedges
-                                it.addJunctionPointDecorator
-                            ];                            
-                        ]
-                        // Set layout on the parent state
-                        val parentNode = edge.source.parent;
-                        parentNode.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
-                        parentNode.setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FREE)
-                        if (edge.source.getProperty(CoreOptions::DIRECTION) == Direction.DOWN) {
-                            parentNode.setLayoutOption(CoreOptions::DIRECTION, Direction.LEFT)
-                        } else {
-                            parentNode.setLayoutOption(CoreOptions::DIRECTION, Direction.DOWN)
-                        }
-                        // Configure source and target layout constraints
-                        edge.source.setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FREE)
-                        edge.target.setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FREE)                        
-                        edge.source.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
-                        edge.target.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
-                    ]
-                ]
-            ]
-        }
-    }
-
-    /**
-     * Create a dataflow edge between two concurrent regions when there is at least one signal
-     * flowing from the first region to the second. If there are also signals flowing in the
-     * other direction, a second edge is created.
-     */
-    def createPairwiseDataflowEdges(HashMultimap<Region, ValuedObject> outgoingRegionDependencies,
-        HashMultimap<Region, ValuedObject> incomingRegionDependencies, SourceModelTrackingAdapter tracking,
-        Multimap<Object, Object> mapping) {
-        for (Region region : outgoingRegionDependencies.keySet) {
-            // Grab regions next to this one by fetching the regions of the parent state
-            val adjacientRegions = (region.eContainer as State).regions.filter[!it.equals(region)];
-            val outgoingDependencies = outgoingRegionDependencies.get(region);
-            for (Region otherRegion : adjacientRegions) {
-                // We now have two regions, so intersect the two sets of ValuedObjects and add these to the edge. 
-                val incomingDependencies = incomingRegionDependencies.get(otherRegion);
-                val commonDependencies = Sets.intersection(outgoingDependencies, incomingDependencies);
-                // Ensure that we have some signals before creating the edge
-                if (!commonDependencies.empty) {
-                    val KEdge edge = createEdge => [
-                        it.source = tracking.getTargetElements(region).filter(KNode).head;
-                        it.target = tracking.getTargetElements(otherRegion).filter(KNode).head;
-                        it.addPolyline => [
-                            it.lineWidth = 2
-                            it.lineStyle = LineStyle::DOT
-                            // Default arrow head
-                            it.addHeadArrowDecorator
-                        ];
-                    ];
-                    edge.addCenterEdgeLabel(commonDependencies.join("\n", [
-                        // Trace objects back to their source object to show proper names
-                        mapping.get(it).filter(ValuedObject).head.name
-                    ]));
-                    // Set layout on the parent state
-                    val parentNode = edge.source.parent;
-                    parentNode.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
-                    parentNode.setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FREE)
-                    if (edge.source.getProperty(CoreOptions::DIRECTION) == Direction.DOWN) {
-                        parentNode.setLayoutOption(CoreOptions::DIRECTION, Direction.LEFT)
-                    } else {
-                        parentNode.setLayoutOption(CoreOptions::DIRECTION, Direction.DOWN)
-                    }
-                    edge.source.setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FREE)
-                    edge.target.setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FREE)
-                }
-            }
-        }
-    }
-
-    /**
-     * Find the common containing region of a group of SCChart objects. Common in this case means that 
-     * we want all objects to be contained in the same region.
-     */
-    private def Region findContainingRegion(Iterable<EObject> objects) {
-        var Region result;
-        for (EObject source : objects) {
-            var EObject obj = source;
-            while (obj !== null && !(obj instanceof Region)) {
-                obj = obj.eContainer;
-            }
-            if (obj !== null) {
-                // See if the region is consistent for all mapped actions.
-                // Usually this is not required because there should only be one Action or Valued Object
-                // mapped to the Assignment. If for some unknown reason there are multiple sources of the
-                // assignment, we at least want them to be in the same region.
-                // Turns out this breaks with strong aborts which sometimes lead to an assignment being traced to
-                // the the real assignment in the SCChart as well as the abort action on the surrounding state. 
-                if (result !== null) {
-                    if (!result.equals(obj)) {
-                        // System.err.println("Different parent regions found for dependency")
-                    }
-                } else {
-                    result = obj as Region;
-                }
-            }
-        }
-        return result;
-    }
-
-    /**
-     * For each given dependency ensure that all parent regions also contain the same dependency.
-     */    
-    def propagateDependencies(HashMultimap<Region, ValuedObject> dependencies) {
-        // Iterate over immutableCopy of the original set to separate iterator and modification
-        for (Region region : dependencies.keySet?.immutableCopy) {
-            val Collection<ValuedObject> deps = dependencies.get(region)
-            var EObject obj = region;
-            // Traverse the complete containing hierarchy 
-            while (obj !== null) {
-                if (obj instanceof Region) {
-                    dependencies.putAll(obj as Region, deps);
-                }
-                obj = obj.eContainer;
-            }
-        }    
     }
 }
