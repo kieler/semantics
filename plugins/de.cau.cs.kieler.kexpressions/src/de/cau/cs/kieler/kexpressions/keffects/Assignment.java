@@ -8,7 +8,6 @@ import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
-import java.util.List;
 
 /**
  * <!-- begin-user-doc -->

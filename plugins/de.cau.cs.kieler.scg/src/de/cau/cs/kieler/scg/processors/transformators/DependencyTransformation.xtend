@@ -159,6 +159,7 @@ class DependencyTransformation extends Processor<SCGraphs, SCGraphs> {
 					    val expVOC =  injector.getInstance(ValuedObjectNodeContainer) => [ it.set(vor, node) ]
 						reader.put(expVOC.valuedObject, expVOC)
 						
+						expVOC.strictEqual = false
 						if (expVOC.equals(VOC)) {
 							relativeWriter += node
 						}

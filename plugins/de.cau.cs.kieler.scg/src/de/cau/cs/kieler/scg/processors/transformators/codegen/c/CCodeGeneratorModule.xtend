@@ -24,6 +24,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.annotations.StringPragma
+import de.cau.cs.kieler.kicool.environments.Environment
 
 /**
  * Root C Code Generator Module
@@ -100,6 +101,10 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
         sb.append(
             "/*\n" + " * Automatically generated C code by\n" + " * KIELER SCCharts - The Key to Efficient Modeling\n" +
                 " *\n" + " * http://rtsys.informatik.uni-kiel.de/kieler\n" + " */\n\n")
+                
+        if (processorInstance.environment.getProperty(CCodeGenerator.DEBUG_COMMENTS)) {
+            sb.addDebugComments
+        }
     }  
     
     protected def void hostcodeAdditions(StringBuilder sb) {
@@ -116,5 +121,16 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
             sb.append("\n")
         }
     }  
+    
+    protected def void addDebugComments(StringBuilder sb) {
+        sb.append("/*\n" + " * Debug Comments\n *\n")
+        
+        val compilationContext = processorInstance.environment.getProperty(Environment.COMPILATION_CONTEXT)
+        for(processor : compilationContext.processorInstancesSequence) {
+            sb.append(" * " + processor.id + "\n")
+        }
+        
+        sb.append(" */\n\n")
+    }
     
 }

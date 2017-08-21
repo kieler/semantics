@@ -57,6 +57,11 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="OperatorTypes are used for OperatorExpressions. &#xA;The types may reference any corresponding&#xA;operator or function that may make use of&#xA;an arbitrary number of subExpressions. Hence it&#xA;contains unary and binary operators."/>
     </eAnnotations>
+    <eLiterals name="NOT" literal="!">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Logical Negation operator (unary)"/>
+      </eAnnotations>
+    </eLiterals>
     <eLiterals name="EQ" value="1" literal="==">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Equals operator"/>
@@ -70,36 +75,6 @@
     <eLiterals name="LEQ" value="3" literal="&lt;=">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Less or Equal operator. (Not commutative!)"/>
-      </eAnnotations>
-    </eLiterals>
-    <eLiterals name="GT" value="12" literal=">">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="Greater than operator. (Not commutative!)"/>
-      </eAnnotations>
-    </eLiterals>
-    <eLiterals name="GEQ" value="10" literal=">=">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="Greater or Equal operator. (Not commutative!)"/>
-      </eAnnotations>
-    </eLiterals>
-    <eLiterals name="NOT" literal="!">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="Logical Negation operator (unary)"/>
-      </eAnnotations>
-    </eLiterals>
-    <eLiterals name="VAL" value="15" literal="val">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="Value operator. Returns the value of a Signal referenced by a SignalReference."/>
-      </eAnnotations>
-    </eLiterals>
-    <eLiterals name="PRE" value="11" literal="pre">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="Pre operator, returns the previous state of a Signal referenced by a SignalReference."/>
-      </eAnnotations>
-    </eLiterals>
-    <eLiterals name="NE" value="14" literal="!=">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="Not Equal operator.&#xA;"/>
       </eAnnotations>
     </eLiterals>
     <eLiterals name="LOGICAL_AND" value="4" literal="&amp;&amp;">
@@ -132,15 +107,46 @@
         <details key="documentation" value="Aithmetic division operator. (Not commutative!)"/>
       </eAnnotations>
     </eLiterals>
+    <eLiterals name="GEQ" value="10" literal=">=">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Greater or Equal operator. (Not commutative!)"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="PRE" value="11" literal="pre">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Pre operator, returns the previous state of a Signal referenced by a SignalReference."/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="GT" value="12" literal=">">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Greater than operator. (Not commutative!)"/>
+      </eAnnotations>
+    </eLiterals>
     <eLiterals name="MOD" value="13" literal="%">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Arithmetic modulo operation. (Not commutative!)"/>
       </eAnnotations>
     </eLiterals>
-    <eLiterals name="BITWISE_OR" value="17" literal="|"/>
+    <eLiterals name="NE" value="14" literal="!=">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Not Equal operator.&#xA;"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="VAL" value="15" literal="val">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Value operator. Returns the value of a Signal referenced by a SignalReference."/>
+      </eAnnotations>
+    </eLiterals>
     <eLiterals name="BITWISE_AND" value="16" literal="&amp;"/>
+    <eLiterals name="BITWISE_OR" value="17" literal="|"/>
     <eLiterals name="POSTFIX_ADD" value="18"/>
     <eLiterals name="POSTFIX_SUB" value="19"/>
+    <eLiterals name="SHIFT_LEFT" value="20" literal="SHIFT_LEFT"/>
+    <eLiterals name="SHIFT_RIGHT" value="21"/>
+    <eLiterals name="SHIFT_RIGHT_UNSIGNED" value="22" literal="SHIFT_RIGHT_UNSIGNED"/>
+    <eLiterals name="BITWISE_XOR" value="23"/>
+    <eLiterals name="CONDITIONAL" value="24" literal="CONDITIONAL"/>
+    <eLiterals name="BITWISE_NEG" value="25"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ValuedObject" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//NamedObject ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable #//Referenceable">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

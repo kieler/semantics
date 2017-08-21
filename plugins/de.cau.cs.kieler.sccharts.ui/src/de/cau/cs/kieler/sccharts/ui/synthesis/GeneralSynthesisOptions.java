@@ -38,7 +38,7 @@ public final class GeneralSynthesisOptions {
     /** The appearance category */
     public static final SynthesisOption APPEARANCE = SynthesisOption.createCategory("Appearance");
     /** The debugging category */
-    public static final SynthesisOption DEBUGGING = SynthesisOption.createCategory("Debugging", false);
+    public static final SynthesisOption DEBUGGING = SynthesisOption.createCategory("Analysis / Debugging", false);
     /** The layout category */
     public static final SynthesisOption LAYOUT = SynthesisOption.createCategory("Layout", false);
     /** Dataflow category */

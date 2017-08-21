@@ -23,18 +23,21 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 
 class MessageObjectLink {
+    
     @Accessors String message
     @Accessors Object object
     @Accessors boolean annotate
     @Accessors IColorSystem colorSystem
     @Accessors Exception exception
+    @Accessors Object payload
     
-    new(String message, Object object, boolean annotate, IColorSystem colorSystem, Exception exception) {
+    new(String message, Object object, boolean annotate, IColorSystem colorSystem, Exception exception, Object payload) {
         this.message = message
         this.object = object
         this.annotate = annotate
         this.colorSystem = colorSystem
         this.exception = exception
+        this.payload = payload
     }
     
 }

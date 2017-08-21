@@ -30,6 +30,14 @@ import org.eclipse.emf.common.util.Enumerator;
  */
 public enum OperatorType implements Enumerator {
     /**
+     * The '<em><b>NOT</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #NOT_VALUE
+     * @generated
+     * @ordered
+     */
+    NOT(0, "NOT", "!"), /**
      * The '<em><b>EQ</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -37,9 +45,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    EQ(1, "EQ", "=="),
-
-    /**
+    EQ(1, "EQ", "=="), /**
      * The '<em><b>LT</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -47,9 +53,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    LT(2, "LT", "<"),
-
-    /**
+    LT(2, "LT", "<"), /**
      * The '<em><b>LEQ</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -58,66 +62,6 @@ public enum OperatorType implements Enumerator {
      * @ordered
      */
     LEQ(3, "LEQ", "<="),
-
-    /**
-     * The '<em><b>GT</b></em>' literal object.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #GT_VALUE
-     * @generated
-     * @ordered
-     */
-    GT(12, "GT", ">"),
-
-    /**
-     * The '<em><b>GEQ</b></em>' literal object.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #GEQ_VALUE
-     * @generated
-     * @ordered
-     */
-    GEQ(10, "GEQ", ">="),
-
-    /**
-     * The '<em><b>NOT</b></em>' literal object.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #NOT_VALUE
-     * @generated
-     * @ordered
-     */
-    NOT(0, "NOT", "!"),
-
-    /**
-     * The '<em><b>VAL</b></em>' literal object.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #VAL_VALUE
-     * @generated
-     * @ordered
-     */
-    VAL(15, "VAL", "val"),
-
-    /**
-     * The '<em><b>PRE</b></em>' literal object.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #PRE_VALUE
-     * @generated
-     * @ordered
-     */
-    PRE(11, "PRE", "pre"),
-
-    /**
-     * The '<em><b>NE</b></em>' literal object.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #NE_VALUE
-     * @generated
-     * @ordered
-     */
-    NE(14, "NE", "!="),
 
     /**
      * The '<em><b>LOGICAL AND</b></em>' literal object.
@@ -173,7 +117,31 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    DIV(9, "DIV", "/"),
+    DIV(9, "DIV", "/"), /**
+     * The '<em><b>GEQ</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #GEQ_VALUE
+     * @generated
+     * @ordered
+     */
+    GEQ(10, "GEQ", ">="), /**
+     * The '<em><b>PRE</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #PRE_VALUE
+     * @generated
+     * @ordered
+     */
+    PRE(11, "PRE", "pre"), /**
+     * The '<em><b>GT</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #GT_VALUE
+     * @generated
+     * @ordered
+     */
+    GT(12, "GT", ">"),
 
     /**
      * The '<em><b>MOD</b></em>' literal object.
@@ -184,14 +152,22 @@ public enum OperatorType implements Enumerator {
      * @ordered
      */
     MOD(13, "MOD", "%"), /**
-     * The '<em><b>BITWISE OR</b></em>' literal object.
+     * The '<em><b>NE</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #BITWISE_OR_VALUE
+     * @see #NE_VALUE
      * @generated
      * @ordered
      */
-    BITWISE_OR(17, "BITWISE_OR", "|"), /**
+    NE(14, "NE", "!="), /**
+     * The '<em><b>VAL</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #VAL_VALUE
+     * @generated
+     * @ordered
+     */
+    VAL(15, "VAL", "val"), /**
      * The '<em><b>BITWISE AND</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -200,6 +176,14 @@ public enum OperatorType implements Enumerator {
      * @ordered
      */
     BITWISE_AND(16, "BITWISE_AND", "&"), /**
+     * The '<em><b>BITWISE OR</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #BITWISE_OR_VALUE
+     * @generated
+     * @ordered
+     */
+    BITWISE_OR(17, "BITWISE_OR", "|"), /**
      * The '<em><b>POSTFIX ADD</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -215,7 +199,69 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    POSTFIX_SUB(19, "POSTFIX_SUB", "POSTFIX_SUB");
+    POSTFIX_SUB(19, "POSTFIX_SUB", "POSTFIX_SUB"), /**
+     * The '<em><b>SHIFT LEFT</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #SHIFT_LEFT_VALUE
+     * @generated
+     * @ordered
+     */
+    SHIFT_LEFT(20, "SHIFT_LEFT", "SHIFT_LEFT"), /**
+     * The '<em><b>SHIFT RIGHT</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #SHIFT_RIGHT_VALUE
+     * @generated
+     * @ordered
+     */
+    SHIFT_RIGHT(21, "SHIFT_RIGHT", "SHIFT_RIGHT"), /**
+     * The '<em><b>SHIFT RIGHT UNSIGNED</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #SHIFT_RIGHT_UNSIGNED_VALUE
+     * @generated
+     * @ordered
+     */
+    SHIFT_RIGHT_UNSIGNED(22, "SHIFT_RIGHT_UNSIGNED", "SHIFT_RIGHT_UNSIGNED"), /**
+     * The '<em><b>BITWISE XOR</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #BITWISE_XOR_VALUE
+     * @generated
+     * @ordered
+     */
+    BITWISE_XOR(23, "BITWISE_XOR", "BITWISE_XOR"), /**
+     * The '<em><b>CONDITIONAL</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #CONDITIONAL_VALUE
+     * @generated
+     * @ordered
+     */
+    CONDITIONAL(24, "CONDITIONAL", "CONDITIONAL"), /**
+     * The '<em><b>BITWISE NEG</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #BITWISE_NEG_VALUE
+     * @generated
+     * @ordered
+     */
+    BITWISE_NEG(25, "BITWISE_NEG", "BITWISE_NEG");
+    /**
+     * The '<em><b>NOT</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Logical Negation operator (unary)
+     * <!-- end-model-doc -->
+     * @see #NOT
+     * @model literal="!"
+     * @generated
+     * @ordered
+     */
+    public static final int NOT_VALUE = 0;
+
     /**
      * The '<em><b>EQ</b></em>' literal value.
      * <!-- begin-user-doc -->
@@ -257,91 +303,6 @@ public enum OperatorType implements Enumerator {
      * @ordered
      */
     public static final int LEQ_VALUE = 3;
-
-    /**
-     * The '<em><b>GT</b></em>' literal value.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Greater than operator. (Not commutative!)
-     * <!-- end-model-doc -->
-     * @see #GT
-     * @model literal=">"
-     * @generated
-     * @ordered
-     */
-    public static final int GT_VALUE = 12;
-
-    /**
-     * The '<em><b>GEQ</b></em>' literal value.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Greater or Equal operator. (Not commutative!)
-     * <!-- end-model-doc -->
-     * @see #GEQ
-     * @model literal=">="
-     * @generated
-     * @ordered
-     */
-    public static final int GEQ_VALUE = 10;
-
-    /**
-     * The '<em><b>NOT</b></em>' literal value.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Logical Negation operator (unary)
-     * <!-- end-model-doc -->
-     * @see #NOT
-     * @model literal="!"
-     * @generated
-     * @ordered
-     */
-    public static final int NOT_VALUE = 0;
-
-    /**
-     * The '<em><b>VAL</b></em>' literal value.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Value operator. Returns the value of a Signal referenced by a SignalReference.
-     * <!-- end-model-doc -->
-     * @see #VAL
-     * @model literal="val"
-     * @generated
-     * @ordered
-     */
-    public static final int VAL_VALUE = 15;
-
-    /**
-     * The '<em><b>PRE</b></em>' literal value.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Pre operator, returns the previous state of a Signal referenced by a SignalReference.
-     * <!-- end-model-doc -->
-     * @see #PRE
-     * @model literal="pre"
-     * @generated
-     * @ordered
-     */
-    public static final int PRE_VALUE = 11;
-
-    /**
-     * The '<em><b>NE</b></em>' literal value.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Not Equal operator.
-     * 
-     * <!-- end-model-doc -->
-     * @see #NE
-     * @model literal="!="
-     * @generated
-     * @ordered
-     */
-    public static final int NE_VALUE = 14;
 
     /**
      * The '<em><b>LOGICAL AND</b></em>' literal value.
@@ -429,6 +390,48 @@ public enum OperatorType implements Enumerator {
     public static final int DIV_VALUE = 9;
 
     /**
+     * The '<em><b>GEQ</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Greater or Equal operator. (Not commutative!)
+     * <!-- end-model-doc -->
+     * @see #GEQ
+     * @model literal=">="
+     * @generated
+     * @ordered
+     */
+    public static final int GEQ_VALUE = 10;
+
+    /**
+     * The '<em><b>PRE</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Pre operator, returns the previous state of a Signal referenced by a SignalReference.
+     * <!-- end-model-doc -->
+     * @see #PRE
+     * @model literal="pre"
+     * @generated
+     * @ordered
+     */
+    public static final int PRE_VALUE = 11;
+
+    /**
+     * The '<em><b>GT</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Greater than operator. (Not commutative!)
+     * <!-- end-model-doc -->
+     * @see #GT
+     * @model literal=">"
+     * @generated
+     * @ordered
+     */
+    public static final int GT_VALUE = 12;
+
+    /**
      * The '<em><b>MOD</b></em>' literal value.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -443,19 +446,33 @@ public enum OperatorType implements Enumerator {
     public static final int MOD_VALUE = 13;
 
     /**
-     * The '<em><b>BITWISE OR</b></em>' literal value.
+     * The '<em><b>NE</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>BITWISE OR</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
-     * @see #BITWISE_OR
-     * @model literal="|"
+     * <!-- begin-model-doc -->
+     * Not Equal operator.
+     * 
+     * <!-- end-model-doc -->
+     * @see #NE
+     * @model literal="!="
      * @generated
      * @ordered
      */
-    public static final int BITWISE_OR_VALUE = 17;
+    public static final int NE_VALUE = 14;
+
+    /**
+     * The '<em><b>VAL</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Value operator. Returns the value of a Signal referenced by a SignalReference.
+     * <!-- end-model-doc -->
+     * @see #VAL
+     * @model literal="val"
+     * @generated
+     * @ordered
+     */
+    public static final int VAL_VALUE = 15;
 
     /**
      * The '<em><b>BITWISE AND</b></em>' literal value.
@@ -471,6 +488,21 @@ public enum OperatorType implements Enumerator {
      * @ordered
      */
     public static final int BITWISE_AND_VALUE = 16;
+
+    /**
+     * The '<em><b>BITWISE OR</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>BITWISE OR</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #BITWISE_OR
+     * @model literal="|"
+     * @generated
+     * @ordered
+     */
+    public static final int BITWISE_OR_VALUE = 17;
 
     /**
      * The '<em><b>POSTFIX ADD</b></em>' literal value.
@@ -503,6 +535,96 @@ public enum OperatorType implements Enumerator {
     public static final int POSTFIX_SUB_VALUE = 19;
 
     /**
+     * The '<em><b>SHIFT LEFT</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>SHIFT LEFT</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #SHIFT_LEFT
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int SHIFT_LEFT_VALUE = 20;
+
+    /**
+     * The '<em><b>SHIFT RIGHT</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>SHIFT RIGHT</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #SHIFT_RIGHT
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int SHIFT_RIGHT_VALUE = 21;
+
+    /**
+     * The '<em><b>SHIFT RIGHT UNSIGNED</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>SHIFT RIGHT UNSIGNED</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #SHIFT_RIGHT_UNSIGNED
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int SHIFT_RIGHT_UNSIGNED_VALUE = 22;
+
+    /**
+     * The '<em><b>BITWISE XOR</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>BITWISE XOR</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #BITWISE_XOR
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int BITWISE_XOR_VALUE = 23;
+
+    /**
+     * The '<em><b>CONDITIONAL</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>CONDITIONAL</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #CONDITIONAL
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int CONDITIONAL_VALUE = 24;
+
+    /**
+     * The '<em><b>BITWISE NEG</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>BITWISE NEG</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #BITWISE_NEG
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int BITWISE_NEG_VALUE = 25;
+
+    /**
      * An array of all the '<em><b>Operator Type</b></em>' enumerators.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -510,26 +632,32 @@ public enum OperatorType implements Enumerator {
      */
     private static final OperatorType[] VALUES_ARRAY =
         new OperatorType[] {
+            NOT,
             EQ,
             LT,
             LEQ,
-            GT,
-            GEQ,
-            NOT,
-            VAL,
-            PRE,
-            NE,
             LOGICAL_AND,
             LOGICAL_OR,
             ADD,
             SUB,
             MULT,
             DIV,
+            GEQ,
+            PRE,
+            GT,
             MOD,
-            BITWISE_OR,
+            NE,
+            VAL,
             BITWISE_AND,
+            BITWISE_OR,
             POSTFIX_ADD,
             POSTFIX_SUB,
+            SHIFT_LEFT,
+            SHIFT_RIGHT,
+            SHIFT_RIGHT_UNSIGNED,
+            BITWISE_XOR,
+            CONDITIONAL,
+            BITWISE_NEG,
         };
 
     /**
@@ -586,26 +714,32 @@ public enum OperatorType implements Enumerator {
      */
     public static OperatorType get(int value) {
         switch (value) {
+            case NOT_VALUE: return NOT;
             case EQ_VALUE: return EQ;
             case LT_VALUE: return LT;
             case LEQ_VALUE: return LEQ;
-            case GT_VALUE: return GT;
-            case GEQ_VALUE: return GEQ;
-            case NOT_VALUE: return NOT;
-            case VAL_VALUE: return VAL;
-            case PRE_VALUE: return PRE;
-            case NE_VALUE: return NE;
             case LOGICAL_AND_VALUE: return LOGICAL_AND;
             case LOGICAL_OR_VALUE: return LOGICAL_OR;
             case ADD_VALUE: return ADD;
             case SUB_VALUE: return SUB;
             case MULT_VALUE: return MULT;
             case DIV_VALUE: return DIV;
+            case GEQ_VALUE: return GEQ;
+            case PRE_VALUE: return PRE;
+            case GT_VALUE: return GT;
             case MOD_VALUE: return MOD;
-            case BITWISE_OR_VALUE: return BITWISE_OR;
+            case NE_VALUE: return NE;
+            case VAL_VALUE: return VAL;
             case BITWISE_AND_VALUE: return BITWISE_AND;
+            case BITWISE_OR_VALUE: return BITWISE_OR;
             case POSTFIX_ADD_VALUE: return POSTFIX_ADD;
             case POSTFIX_SUB_VALUE: return POSTFIX_SUB;
+            case SHIFT_LEFT_VALUE: return SHIFT_LEFT;
+            case SHIFT_RIGHT_VALUE: return SHIFT_RIGHT;
+            case SHIFT_RIGHT_UNSIGNED_VALUE: return SHIFT_RIGHT_UNSIGNED;
+            case BITWISE_XOR_VALUE: return BITWISE_XOR;
+            case CONDITIONAL_VALUE: return CONDITIONAL;
+            case BITWISE_NEG_VALUE: return BITWISE_NEG;
         }
         return null;
     }
