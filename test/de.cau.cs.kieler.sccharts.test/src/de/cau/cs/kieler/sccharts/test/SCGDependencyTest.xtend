@@ -64,7 +64,7 @@ class SCGDependencyTest extends AbstractXTextModelRepositoryTest<SCCharts> {
         && !modelData.modelProperties.contains("must-fail")
     }
     
-    @Test//(timeout=10000)
+    @Test(timeout=10000)
     def void testDependendcy(SCCharts scc, TestModelData modelData) {
         val result = scc.compile
         
@@ -79,7 +79,7 @@ class SCGDependencyTest extends AbstractXTextModelRepositoryTest<SCCharts> {
             val v2Dependencies = v2SCG.nodes.fold(0)[ a, b | a + b.dependencies.filter(DataDependency).filter[ concurrent && !confluent ].size ]
             
             if (v2Dependencies < v1Dependencies) {
-                fail("The V2 dependency analysis found fewer concurrent, non-confluent dependencies than the V1 dependencies." + 
+                fail("The V2 dependency analysis found fewer concurrent, non-confluent dependencies than the V1 dependency analysis." + 
                     " [ " + v2Dependencies + " < " + v1Dependencies + " ]")                
             }
         }

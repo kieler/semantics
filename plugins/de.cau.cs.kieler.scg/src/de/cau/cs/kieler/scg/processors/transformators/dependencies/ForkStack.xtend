@@ -12,13 +12,16 @@
  */
 package de.cau.cs.kieler.scg.processors.transformators.dependencies
 
-import java.util.LinkedList
-import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Node
+import java.util.LinkedList
 
 /**
+ * The ForkStack keeps track of the fork and corresponding entry nodes. 
+ * It is a simple LinkedList and exposes the standard and the copy constructor.
+ * 
  * @author ssm
- *
+ * @kieler.design 2017-08-21 proposed 
+ * @kieler.rating 2017-08-21 proposed yellow
  */
 class ForkStack extends LinkedList<Node> {
     

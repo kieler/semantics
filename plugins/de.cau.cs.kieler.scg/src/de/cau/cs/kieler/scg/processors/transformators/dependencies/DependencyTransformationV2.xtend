@@ -65,14 +65,14 @@ import java.util.Deque
 
 class DependencyTransformationV2 extends Processor<SCGraphs, SCGraphs> {
     
-    
     @Inject extension SCGCoreExtensions
     @Inject extension SCGDependencyExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsValueExtensions
     
-    public static val IProperty<Boolean> ONLY_CONFLICTING_DEPENDENCIES = 
-        new Property<Boolean>("de.cau.cs.kieler.scg.processors.transformators.dependency.onlyConflictingDependencies", false)
+    /** Only save conflicting dependencies in the model. */
+    public static val IProperty<Boolean> SAVE_ONLY_CONFLICTING_DEPENDENCIES = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.transformators.dependency.saveOnlyConflictingDependencies", false)
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.transformators.dependency"
@@ -93,8 +93,13 @@ class DependencyTransformationV2 extends Processor<SCGraphs, SCGraphs> {
             scg.addDependencies(valuedObjectAccessors)                     
         }        
     }
-       
 
+    /** 
+     * searchDependencies traverses the SCG (dfs). It visits all reachable nodes once and stores all accesses to 
+     * valued objects. While doing so, a fork stack keeps track of the threads for the concurrency test.
+     * To avoid recursive calls, the search is done iteratively with a node stack. New nodes are pushed onto the stack
+     * and are resolved first.
+     */
     protected def searchDependencies(SCGraph scg, ValuedObjectAccessors valuedObjectAccessors) {
         
         if (!(scg.nodes.head instanceof Entry)) 
@@ -102,12 +107,11 @@ class DependencyTransformationV2 extends Processor<SCGraphs, SCGraphs> {
         
         val entry = scg.nodes.head as Entry
         val forkStack = new ForkStack
-        
         val nodes = <Node> newLinkedList(entry.next.target)
         val visited = <Node> newHashSet
+        
         while(!nodes.empty && nodes.peek != null) {
             val node = nodes.pop
-            visited += node
             switch(node) {
                 Assignment: {
                     node.processAssignment(forkStack, valuedObjectAccessors)
@@ -128,6 +132,7 @@ class DependencyTransformationV2 extends Processor<SCGraphs, SCGraphs> {
                 }
                 Join: {
                     var fork = forkStack.pop
+                    // Cleanup entry nodes.
                     while (fork instanceof Entry) {
                         fork = forkStack.pop
                     }
@@ -200,16 +205,15 @@ class DependencyTransformationV2 extends Processor<SCGraphs, SCGraphs> {
     
     protected def void addDependencies(SCGraph scg, ValuedObjectAccessors valuedObjectAccessors) {
         val valuedObjects = valuedObjectAccessors.map.keySet
-
         val HashMultimap<ValuedObjectIdentifier, ValuedObjectAccess> additionalAccesses = HashMultimap.create
-        
+
+        // First, process the specific accesses, because they must also be checked against the generic accesses of 
+        // the same valued object. The ValuedObjectIdentifier can retrieve the corresponding generic identifier.        
         for (valuedObjectIdentifier : valuedObjects.filter[ isSpecificIdentifier ]) {
             val accesses = valuedObjectAccessors.map.get(valuedObjectIdentifier)
             valuedObjectIdentifier.processDependencies(accesses)
              
-            if (valuedObjectIdentifier.isSpecificIdentifier) {
-                additionalAccesses.putAll(valuedObjectIdentifier.genericIdentifier, accesses);
-            }
+            additionalAccesses.putAll(valuedObjectIdentifier.genericIdentifier, accesses);
         }      
         
         for (valuedObjectIdentifier : valuedObjects.filter[ !isSpecificIdentifier ]) {
@@ -286,7 +290,7 @@ class DependencyTransformationV2 extends Processor<SCGraphs, SCGraphs> {
     private def getOwnThreadEntry(ForkStack forkStack, Fork fork) {
         val forkIndex = forkStack.indexOf(fork)
         if (forkIndex == 0) {
-            println("");
+            throw new IllegalArgumentException("The given fork stack is corrupt. The Fork node must no be the head element of the stack.")
         }
         var Entry entry = null
         // It is possible that a fork-thread has more than one entry node on the stack

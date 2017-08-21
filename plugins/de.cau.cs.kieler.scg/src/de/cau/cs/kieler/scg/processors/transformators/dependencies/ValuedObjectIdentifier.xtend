@@ -22,8 +22,14 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
 
 /**
+ * The ValuedObjectIdentifier is used to distinguish accesses to a valued object that are decidable at compile time from
+ * accesses that are dynamic. Therefore, the identifier stores the valued object in question and its indices list, 
+ * if it is an array. An array access is only decidable iff all indices are statically decidable.
+ * Accesses that result in equal identifier will return equal hash codes and true in the equal test.
+ * 
  * @author ssm
- *
+ * @kieler.design 2017-08-21 proposed 
+ * @kieler.rating 2017-08-21 proposed yellow
  */
 class ValuedObjectIdentifier {
     
@@ -31,8 +37,6 @@ class ValuedObjectIdentifier {
     @Accessors List<Expression> indices
     
     static val KExpressionsCompareExtensions compare = new KExpressionsCompareExtensions
-    
-    protected new() {}
     
     new(Assignment assignment) {
         this.valuedObject = assignment.valuedObject
@@ -43,6 +47,8 @@ class ValuedObjectIdentifier {
         this.valuedObject = valuedObjectReference.valuedObject
         this.indices = valuedObjectReference.indices.removeDynamicIndices
     }
+    
+    protected new() {}
     
     def getGenericIdentifier() {
         new ValuedObjectIdentifier => [
@@ -55,6 +61,10 @@ class ValuedObjectIdentifier {
         indices != null
     }
     
+    /**
+     * removeDynamicIndices basically turns the identifier into a generic identifier due to the null list, 
+     * iff one index is not determinable at compile time.
+     */
     protected def List<Expression> removeDynamicIndices(List<Expression> indices) {
         if (indices == null || indices.size == 0) return null
         val indexList = <Expression> newArrayList

@@ -17,6 +17,8 @@ import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.scg.Node
 
 /**
+ * ValuedObjectAccessors stores all accesses to a corresponding valued object identifier in a multi map.
+ * 
  * @author ssm
  * @kieler.design 2017-08-21 proposed 
  * @kieler.rating 2017-08-21 proposed yellow
