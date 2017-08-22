@@ -1957,6 +1957,24 @@ finally {
 
 
 
+// Rule ShiftRightUnsignedOperator
+ruleShiftRightUnsignedOperator
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getShiftRightUnsignedOperatorAccess().getSHIFT_RIGHT_UNSIGNEDEnumLiteralDeclaration()); }
+(	'>>>' 
+)
+{ after(grammarAccess.getShiftRightUnsignedOperatorAccess().getSHIFT_RIGHT_UNSIGNEDEnumLiteralDeclaration()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
 
 
 
@@ -11012,8 +11030,8 @@ rule__ShiftRightUnsignedExpression__OperatorAssignment_1_1_0
     }
 :
 (
-{ before(grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorShiftRightOperatorEnumRuleCall_1_1_0_0()); }
-	ruleShiftRightOperator{ after(grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorShiftRightOperatorEnumRuleCall_1_1_0_0()); }
+{ before(grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorShiftRightUnsignedOperatorEnumRuleCall_1_1_0_0()); }
+	ruleShiftRightUnsignedOperator{ after(grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorShiftRightUnsignedOperatorEnumRuleCall_1_1_0_0()); }
 )
 
 ;

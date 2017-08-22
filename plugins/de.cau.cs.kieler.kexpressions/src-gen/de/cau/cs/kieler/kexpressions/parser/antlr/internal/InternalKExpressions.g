@@ -1257,9 +1257,9 @@ ruleShiftRightUnsignedExpression returns [EObject current=null]
 )((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorShiftRightOperatorEnumRuleCall_1_1_0_0()); 
+	        newCompositeNode(grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorShiftRightUnsignedOperatorEnumRuleCall_1_1_0_0()); 
 	    }
-		lv_operator_2_0=ruleShiftRightOperator		{
+		lv_operator_2_0=ruleShiftRightUnsignedOperator		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getShiftRightUnsignedExpressionRule());
 	        }
@@ -1267,7 +1267,7 @@ ruleShiftRightUnsignedExpression returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_2_0, 
-        		"de.cau.cs.kieler.kexpressions.KExpressions.ShiftRightOperator");
+        		"de.cau.cs.kieler.kexpressions.KExpressions.ShiftRightUnsignedOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4416,6 +4416,17 @@ ruleShiftRightOperator returns [Enumerator current=null]
 );
 
 
+
+// Rule ShiftRightUnsignedOperator
+ruleShiftRightUnsignedOperator returns [Enumerator current=null] 
+    @init { enterRule(); }
+    @after { leaveRule(); }:
+(	enumLiteral_0='>>>' 
+	{
+        $current = grammarAccess.getShiftRightUnsignedOperatorAccess().getSHIFT_RIGHT_UNSIGNEDEnumLiteralDeclaration().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_0, grammarAccess.getShiftRightUnsignedOperatorAccess().getSHIFT_RIGHT_UNSIGNEDEnumLiteralDeclaration()); 
+    }
+);
 
 
 

@@ -770,19 +770,27 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cASSIGNORVerticalLineEqualsSignKeyword_7_0 = (Keyword)cASSIGNOREnumLiteralDeclaration_7.eContents().get(0);
 		private final EnumLiteralDeclaration cASSIGNXOREnumLiteralDeclaration_8 = (EnumLiteralDeclaration)cAlternatives.eContents().get(8);
 		private final Keyword cASSIGNXORCircumflexAccentEqualsSignKeyword_8_0 = (Keyword)cASSIGNXOREnumLiteralDeclaration_8.eContents().get(0);
-		private final EnumLiteralDeclaration cASSIGNMINEnumLiteralDeclaration_9 = (EnumLiteralDeclaration)cAlternatives.eContents().get(9);
-		private final Keyword cASSIGNMINMinKeyword_9_0 = (Keyword)cASSIGNMINEnumLiteralDeclaration_9.eContents().get(0);
-		private final EnumLiteralDeclaration cASSIGNMAXEnumLiteralDeclaration_10 = (EnumLiteralDeclaration)cAlternatives.eContents().get(10);
-		private final Keyword cASSIGNMAXMaxKeyword_10_0 = (Keyword)cASSIGNMAXEnumLiteralDeclaration_10.eContents().get(0);
+		private final EnumLiteralDeclaration cASSIGNSHIFTLEFTEnumLiteralDeclaration_9 = (EnumLiteralDeclaration)cAlternatives.eContents().get(9);
+		private final Keyword cASSIGNSHIFTLEFTLessThanSignLessThanSignEqualsSignKeyword_9_0 = (Keyword)cASSIGNSHIFTLEFTEnumLiteralDeclaration_9.eContents().get(0);
+		private final EnumLiteralDeclaration cASSIGNSHIFTRIGHTEnumLiteralDeclaration_10 = (EnumLiteralDeclaration)cAlternatives.eContents().get(10);
+		private final Keyword cASSIGNSHIFTRIGHTGreaterThanSignGreaterThanSignEqualsSignKeyword_10_0 = (Keyword)cASSIGNSHIFTRIGHTEnumLiteralDeclaration_10.eContents().get(0);
+		private final EnumLiteralDeclaration cASSIGNSHIFTRIGHTUNSIGNEDEnumLiteralDeclaration_11 = (EnumLiteralDeclaration)cAlternatives.eContents().get(11);
+		private final Keyword cASSIGNSHIFTRIGHTUNSIGNEDGreaterThanSignGreaterThanSignGreaterThanSignEqualsSignKeyword_11_0 = (Keyword)cASSIGNSHIFTRIGHTUNSIGNEDEnumLiteralDeclaration_11.eContents().get(0);
+		private final EnumLiteralDeclaration cASSIGNMINEnumLiteralDeclaration_12 = (EnumLiteralDeclaration)cAlternatives.eContents().get(12);
+		private final Keyword cASSIGNMINMinKeyword_12_0 = (Keyword)cASSIGNMINEnumLiteralDeclaration_12.eContents().get(0);
+		private final EnumLiteralDeclaration cASSIGNMAXEnumLiteralDeclaration_13 = (EnumLiteralDeclaration)cAlternatives.eContents().get(13);
+		private final Keyword cASSIGNMAXMaxKeyword_13_0 = (Keyword)cASSIGNMAXEnumLiteralDeclaration_13.eContents().get(0);
 		
 		//enum AssignOperator returns keffects::AssignOperator:
 		//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" |
 		//	ASSIGNMOD="%=" | ASSIGNAND="&=" | ASSIGNOR="|=" | ASSIGNXOR="^=" |
+		//	ASSIGNSHIFTLEFT="<<=" | ASSIGNSHIFTRIGHT=">>=" | ASSIGNSHIFTRIGHTUNSIGNED=">>>=" |
 		//	ASSIGNMIN="min=" | ASSIGNMAX="max=";
 		public EnumRule getRule() { return rule; }
 
 		//ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" | ASSIGNMOD="%=" | ASSIGNAND="&=" |
-		//ASSIGNOR="|=" | ASSIGNXOR="^=" | ASSIGNMIN="min=" | ASSIGNMAX="max="
+		//ASSIGNOR="|=" | ASSIGNXOR="^=" | ASSIGNSHIFTLEFT="<<=" | ASSIGNSHIFTRIGHT=">>=" | ASSIGNSHIFTRIGHTUNSIGNED=">>>=" |
+		//ASSIGNMIN="min=" | ASSIGNMAX="max="
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//ASSIGN="="
@@ -839,17 +847,35 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//"^="
 		public Keyword getASSIGNXORCircumflexAccentEqualsSignKeyword_8_0() { return cASSIGNXORCircumflexAccentEqualsSignKeyword_8_0; }
 
+		//ASSIGNSHIFTLEFT="<<="
+		public EnumLiteralDeclaration getASSIGNSHIFTLEFTEnumLiteralDeclaration_9() { return cASSIGNSHIFTLEFTEnumLiteralDeclaration_9; }
+
+		//"<<="
+		public Keyword getASSIGNSHIFTLEFTLessThanSignLessThanSignEqualsSignKeyword_9_0() { return cASSIGNSHIFTLEFTLessThanSignLessThanSignEqualsSignKeyword_9_0; }
+
+		//ASSIGNSHIFTRIGHT=">>="
+		public EnumLiteralDeclaration getASSIGNSHIFTRIGHTEnumLiteralDeclaration_10() { return cASSIGNSHIFTRIGHTEnumLiteralDeclaration_10; }
+
+		//">>="
+		public Keyword getASSIGNSHIFTRIGHTGreaterThanSignGreaterThanSignEqualsSignKeyword_10_0() { return cASSIGNSHIFTRIGHTGreaterThanSignGreaterThanSignEqualsSignKeyword_10_0; }
+
+		//ASSIGNSHIFTRIGHTUNSIGNED=">>>="
+		public EnumLiteralDeclaration getASSIGNSHIFTRIGHTUNSIGNEDEnumLiteralDeclaration_11() { return cASSIGNSHIFTRIGHTUNSIGNEDEnumLiteralDeclaration_11; }
+
+		//">>>="
+		public Keyword getASSIGNSHIFTRIGHTUNSIGNEDGreaterThanSignGreaterThanSignGreaterThanSignEqualsSignKeyword_11_0() { return cASSIGNSHIFTRIGHTUNSIGNEDGreaterThanSignGreaterThanSignGreaterThanSignEqualsSignKeyword_11_0; }
+
 		//ASSIGNMIN="min="
-		public EnumLiteralDeclaration getASSIGNMINEnumLiteralDeclaration_9() { return cASSIGNMINEnumLiteralDeclaration_9; }
+		public EnumLiteralDeclaration getASSIGNMINEnumLiteralDeclaration_12() { return cASSIGNMINEnumLiteralDeclaration_12; }
 
 		//"min="
-		public Keyword getASSIGNMINMinKeyword_9_0() { return cASSIGNMINMinKeyword_9_0; }
+		public Keyword getASSIGNMINMinKeyword_12_0() { return cASSIGNMINMinKeyword_12_0; }
 
 		//ASSIGNMAX="max="
-		public EnumLiteralDeclaration getASSIGNMAXEnumLiteralDeclaration_10() { return cASSIGNMAXEnumLiteralDeclaration_10; }
+		public EnumLiteralDeclaration getASSIGNMAXEnumLiteralDeclaration_13() { return cASSIGNMAXEnumLiteralDeclaration_13; }
 
 		//"max="
-		public Keyword getASSIGNMAXMaxKeyword_10_0() { return cASSIGNMAXMaxKeyword_10_0; }
+		public Keyword getASSIGNMAXMaxKeyword_13_0() { return cASSIGNMAXMaxKeyword_13_0; }
 	}
 
 	public class PostfixOperatorElements extends AbstractEnumRuleElementFinder {
@@ -1103,6 +1129,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//enum AssignOperator returns keffects::AssignOperator:
 	//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" |
 	//	ASSIGNMOD="%=" | ASSIGNAND="&=" | ASSIGNOR="|=" | ASSIGNXOR="^=" |
+	//	ASSIGNSHIFTLEFT="<<=" | ASSIGNSHIFTRIGHT=">>=" | ASSIGNSHIFTRIGHTUNSIGNED=">>>=" |
 	//	ASSIGNMIN="min=" | ASSIGNMAX="max=";
 	public AssignOperatorElements getAssignOperatorAccess() {
 		return eAssignOperator;
@@ -1352,7 +1379,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ShiftRightUnsignedExpression Expression:
-	//	AddExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
+	//	AddExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
 	//	subExpressions+=AddExpression) ('>>>' subExpressions+=AddExpression)*)?
 	public KExpressionsGrammarAccess.ShiftRightUnsignedExpressionElements getShiftRightUnsignedExpressionAccess() {
 		return gaKExpressions.getShiftRightUnsignedExpressionAccess();
@@ -1868,7 +1895,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum ShiftRightUnsignedOperator returns OperatorType:
-	//	SHIFT_RIGHT=">>>";
+	//	SHIFT_RIGHT_UNSIGNED=">>>";
 	public KExpressionsGrammarAccess.ShiftRightUnsignedOperatorElements getShiftRightUnsignedOperatorAccess() {
 		return gaKExpressions.getShiftRightUnsignedOperatorAccess();
 	}

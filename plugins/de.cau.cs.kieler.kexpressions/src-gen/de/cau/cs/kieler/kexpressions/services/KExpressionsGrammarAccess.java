@@ -757,7 +757,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
 		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
 		private final Assignment cOperatorAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
-		private final RuleCall cOperatorShiftRightOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
+		private final RuleCall cOperatorShiftRightUnsignedOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
 		private final RuleCall cSubExpressionsAddExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
 		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
@@ -766,32 +766,32 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSubExpressionsAddExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
 		
 		//ShiftRightUnsignedExpression Expression:
-		//	AddExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
+		//	AddExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
 		//	subExpressions+=AddExpression) ('>>>' subExpressions+=AddExpression)*)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//AddExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator subExpressions+=AddExpression)
-		//('>>>' subExpressions+=AddExpression)*)?
+		//AddExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
+		//subExpressions+=AddExpression) ('>>>' subExpressions+=AddExpression)*)?
 		public Group getGroup() { return cGroup; }
 
 		//AddExpression
 		public RuleCall getAddExpressionParserRuleCall_0() { return cAddExpressionParserRuleCall_0; }
 
-		//({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator subExpressions+=AddExpression) ('>>>'
+		//({OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator subExpressions+=AddExpression) ('>>>'
 		//subExpressions+=AddExpression)*)?
 		public Group getGroup_1() { return cGroup_1; }
 
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
-		//(operator=ShiftRightOperator subExpressions+=AddExpression)
+		//(operator=ShiftRightUnsignedOperator subExpressions+=AddExpression)
 		public Group getGroup_1_1() { return cGroup_1_1; }
 
-		//operator=ShiftRightOperator
+		//operator=ShiftRightUnsignedOperator
 		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
 
-		//ShiftRightOperator
-		public RuleCall getOperatorShiftRightOperatorEnumRuleCall_1_1_0_0() { return cOperatorShiftRightOperatorEnumRuleCall_1_1_0_0; }
+		//ShiftRightUnsignedOperator
+		public RuleCall getOperatorShiftRightUnsignedOperatorEnumRuleCall_1_1_0_0() { return cOperatorShiftRightUnsignedOperatorEnumRuleCall_1_1_0_0; }
 
 		//subExpressions+=AddExpression
 		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
@@ -2283,18 +2283,18 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class ShiftRightUnsignedOperatorElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ShiftRightUnsignedOperator");
-		private final EnumLiteralDeclaration cSHIFT_RIGHTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
-		private final Keyword cSHIFT_RIGHTGreaterThanSignGreaterThanSignGreaterThanSignKeyword_0 = (Keyword)cSHIFT_RIGHTEnumLiteralDeclaration.eContents().get(0);
+		private final EnumLiteralDeclaration cSHIFT_RIGHT_UNSIGNEDEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cSHIFT_RIGHT_UNSIGNEDGreaterThanSignGreaterThanSignGreaterThanSignKeyword_0 = (Keyword)cSHIFT_RIGHT_UNSIGNEDEnumLiteralDeclaration.eContents().get(0);
 		
 		//enum ShiftRightUnsignedOperator returns OperatorType:
-		//	SHIFT_RIGHT=">>>";
+		//	SHIFT_RIGHT_UNSIGNED=">>>";
 		public EnumRule getRule() { return rule; }
 
-		//SHIFT_RIGHT=">>>"
-		public EnumLiteralDeclaration getSHIFT_RIGHTEnumLiteralDeclaration() { return cSHIFT_RIGHTEnumLiteralDeclaration; }
+		//SHIFT_RIGHT_UNSIGNED=">>>"
+		public EnumLiteralDeclaration getSHIFT_RIGHT_UNSIGNEDEnumLiteralDeclaration() { return cSHIFT_RIGHT_UNSIGNEDEnumLiteralDeclaration; }
 
 		//">>>"
-		public Keyword getSHIFT_RIGHTGreaterThanSignGreaterThanSignGreaterThanSignKeyword_0() { return cSHIFT_RIGHTGreaterThanSignGreaterThanSignGreaterThanSignKeyword_0; }
+		public Keyword getSHIFT_RIGHT_UNSIGNEDGreaterThanSignGreaterThanSignGreaterThanSignKeyword_0() { return cSHIFT_RIGHT_UNSIGNEDGreaterThanSignGreaterThanSignGreaterThanSignKeyword_0; }
 	}
 
 	public class PostfixAddElements extends AbstractEnumRuleElementFinder {
@@ -2919,7 +2919,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ShiftRightUnsignedExpression Expression:
-	//	AddExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
+	//	AddExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
 	//	subExpressions+=AddExpression) ('>>>' subExpressions+=AddExpression)*)?
 	public ShiftRightUnsignedExpressionElements getShiftRightUnsignedExpressionAccess() {
 		return pShiftRightUnsignedExpression;
@@ -3435,7 +3435,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum ShiftRightUnsignedOperator returns OperatorType:
-	//	SHIFT_RIGHT=">>>";
+	//	SHIFT_RIGHT_UNSIGNED=">>>";
 	public ShiftRightUnsignedOperatorElements getShiftRightUnsignedOperatorAccess() {
 		return eShiftRightUnsignedOperator;
 	}

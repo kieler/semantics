@@ -129,6 +129,9 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
 		if (operatorType == OperatorType::MOD) return 3;
 		if (operatorType == OperatorType::ADD) return 4;
 		if (operatorType == OperatorType::SUB) return 4;
+        if (operatorType == OperatorType::SHIFT_LEFT) return 5;
+        if (operatorType == OperatorType::SHIFT_RIGHT) return 5;
+        if (operatorType == OperatorType::SHIFT_RIGHT_UNSIGNED) return 5;
 		if (operatorType == OperatorType::LT) return 6;
 		if (operatorType == OperatorType::LEQ) return 6;
 		if (operatorType == OperatorType::GT) return 6;
@@ -286,6 +289,12 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
             result = expression.serializeHROperatorExpressionBitwiseOr
         } else if (expression.operator == OperatorType::BITWISE_XOR) {
             result = expression.serializeHROperatorExpressionBitwiseXOr
+        } else if (expression.operator == OperatorType::SHIFT_LEFT) {
+            result = expression.serializeOperatorExpressionShiftLeft
+        } else if (expression.operator == OperatorType::SHIFT_RIGHT) {
+            result = expression.serializeOperatorExpressionShiftRight
+        } else if (expression.operator == OperatorType::SHIFT_RIGHT_UNSIGNED) {
+            result = expression.serializeOperatorExpressionShiftRightUnsigned
         } else if (expression.operator == OperatorType::ADD) {
             result = expression.serializeHROperatorExpressionAdd
         } else if (expression.operator == OperatorType::SUB) {

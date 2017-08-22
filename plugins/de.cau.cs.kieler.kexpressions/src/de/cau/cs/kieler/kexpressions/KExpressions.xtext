@@ -174,7 +174,7 @@ ShiftRightExpression returns Expression:
 ShiftRightUnsignedExpression returns Expression:
     AddExpression
     ({OperatorExpression.subExpressions+=current} 
-        (operator=ShiftRightOperator subExpressions+=AddExpression)
+        (operator=ShiftRightUnsignedOperator subExpressions+=AddExpression)
         ('>>>' subExpressions+=AddExpression)*
     )?;
 	
@@ -422,7 +422,7 @@ enum ShiftRightOperator returns OperatorType:
     SHIFT_RIGHT=">>";
     
 enum ShiftRightUnsignedOperator returns OperatorType:
-    SHIFT_RIGHT=">>>";
+    SHIFT_RIGHT_UNSIGNED=">>>";
 	
 enum PostfixAdd returns OperatorType:
     POSTFIX_ADD="++";

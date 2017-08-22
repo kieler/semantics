@@ -198,7 +198,7 @@ public enum CombineOperator implements Enumerator {
      * Logical and for boolean valued signals.
      * <!-- end-model-doc -->
      * @see #AND
-     * @model literal="&"
+     * @model literal="&amp;"
      * @generated
      * @ordered
      */

@@ -191,7 +191,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    POSTFIX_ADD(18, "POSTFIX_ADD", "POSTFIX_ADD"), /**
+    POSTFIX_ADD(18, "POSTFIX_ADD", "++"), /**
      * The '<em><b>POSTFIX SUB</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -199,7 +199,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    POSTFIX_SUB(19, "POSTFIX_SUB", "POSTFIX_SUB"), /**
+    POSTFIX_SUB(19, "POSTFIX_SUB", "--"), /**
      * The '<em><b>SHIFT LEFT</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -207,7 +207,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    SHIFT_LEFT(20, "SHIFT_LEFT", "SHIFT_LEFT"), /**
+    SHIFT_LEFT(20, "SHIFT_LEFT", "<<"), /**
      * The '<em><b>SHIFT RIGHT</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -215,7 +215,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    SHIFT_RIGHT(21, "SHIFT_RIGHT", "SHIFT_RIGHT"), /**
+    SHIFT_RIGHT(21, "SHIFT_RIGHT", ">>"), /**
      * The '<em><b>SHIFT RIGHT UNSIGNED</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -223,7 +223,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    SHIFT_RIGHT_UNSIGNED(22, "SHIFT_RIGHT_UNSIGNED", "SHIFT_RIGHT_UNSIGNED"), /**
+    SHIFT_RIGHT_UNSIGNED(22, "SHIFT_RIGHT_UNSIGNED", ">>>"), /**
      * The '<em><b>BITWISE XOR</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -231,7 +231,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    BITWISE_XOR(23, "BITWISE_XOR", "BITWISE_XOR"), /**
+    BITWISE_XOR(23, "BITWISE_XOR", "^"), /**
      * The '<em><b>BITWISE NOT</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -239,7 +239,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    BITWISE_NOT(25, "BITWISE_NOT", "BITWISE_NOT"), /**
+    BITWISE_NOT(25, "BITWISE_NOT", "~"), /**
      * The '<em><b>CONDITIONAL</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -247,7 +247,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    CONDITIONAL(24, "CONDITIONAL", "CONDITIONAL");
+    CONDITIONAL(24, "CONDITIONAL", "? :");
     /**
      * The '<em><b>NOT</b></em>' literal value.
      * <!-- begin-user-doc -->
@@ -284,7 +284,7 @@ public enum OperatorType implements Enumerator {
      * Less than operator. (Not commutative!)
      * <!-- end-model-doc -->
      * @see #LT
-     * @model literal="<"
+     * @model literal="&lt;"
      * @generated
      * @ordered
      */
@@ -298,7 +298,7 @@ public enum OperatorType implements Enumerator {
      * Less or Equal operator. (Not commutative!)
      * <!-- end-model-doc -->
      * @see #LEQ
-     * @model literal="<="
+     * @model literal="&lt;="
      * @generated
      * @ordered
      */
@@ -313,7 +313,7 @@ public enum OperatorType implements Enumerator {
      * 
      * <!-- end-model-doc -->
      * @see #LOGICAL_AND
-     * @model literal="&&"
+     * @model literal="&amp;&amp;"
      * @generated
      * @ordered
      */
@@ -397,7 +397,7 @@ public enum OperatorType implements Enumerator {
      * Greater or Equal operator. (Not commutative!)
      * <!-- end-model-doc -->
      * @see #GEQ
-     * @model literal=">="
+     * @model literal="&gt;="
      * @generated
      * @ordered
      */
@@ -425,7 +425,7 @@ public enum OperatorType implements Enumerator {
      * Greater than operator. (Not commutative!)
      * <!-- end-model-doc -->
      * @see #GT
-     * @model literal=">"
+     * @model literal="&gt;"
      * @generated
      * @ordered
      */
@@ -483,7 +483,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #BITWISE_AND
-     * @model literal="&"
+     * @model literal="&amp;"
      * @generated
      * @ordered
      */
@@ -513,7 +513,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #POSTFIX_ADD
-     * @model
+     * @model literal="++"
      * @generated
      * @ordered
      */
@@ -528,7 +528,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #POSTFIX_SUB
-     * @model
+     * @model literal="--"
      * @generated
      * @ordered
      */
@@ -543,7 +543,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #SHIFT_LEFT
-     * @model
+     * @model literal="&lt;&lt;"
      * @generated
      * @ordered
      */
@@ -558,7 +558,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #SHIFT_RIGHT
-     * @model
+     * @model literal="&gt;&gt;"
      * @generated
      * @ordered
      */
@@ -573,7 +573,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #SHIFT_RIGHT_UNSIGNED
-     * @model
+     * @model literal="&gt;&gt;&gt;"
      * @generated
      * @ordered
      */
@@ -588,7 +588,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #BITWISE_XOR
-     * @model
+     * @model literal="^"
      * @generated
      * @ordered
      */
@@ -603,7 +603,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #BITWISE_NOT
-     * @model
+     * @model literal="~"
      * @generated
      * @ordered
      */
@@ -618,7 +618,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #CONDITIONAL
-     * @model
+     * @model literal="? :"
      * @generated
      * @ordered
      */

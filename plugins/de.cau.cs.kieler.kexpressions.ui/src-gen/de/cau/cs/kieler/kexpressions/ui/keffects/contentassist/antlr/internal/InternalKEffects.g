@@ -2247,6 +2247,24 @@ finally {
 
 
 
+// Rule ShiftRightUnsignedOperator
+ruleShiftRightUnsignedOperator
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getShiftRightUnsignedOperatorAccess().getSHIFT_RIGHT_UNSIGNEDEnumLiteralDeclaration()); }
+(	'>>>' 
+)
+{ after(grammarAccess.getShiftRightUnsignedOperatorAccess().getSHIFT_RIGHT_UNSIGNEDEnumLiteralDeclaration()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
 
 
 
@@ -3000,17 +3018,38 @@ rule__AssignOperator__Alternatives
 )
 
     |(
-{ before(grammarAccess.getAssignOperatorAccess().getASSIGNMINEnumLiteralDeclaration_9()); }
-(	'min=' 
+{ before(grammarAccess.getAssignOperatorAccess().getASSIGNSHIFTLEFTEnumLiteralDeclaration_9()); }
+(	'<<=' 
 )
-{ after(grammarAccess.getAssignOperatorAccess().getASSIGNMINEnumLiteralDeclaration_9()); }
+{ after(grammarAccess.getAssignOperatorAccess().getASSIGNSHIFTLEFTEnumLiteralDeclaration_9()); }
 )
 
     |(
-{ before(grammarAccess.getAssignOperatorAccess().getASSIGNMAXEnumLiteralDeclaration_10()); }
+{ before(grammarAccess.getAssignOperatorAccess().getASSIGNSHIFTRIGHTEnumLiteralDeclaration_10()); }
+(	'>>=' 
+)
+{ after(grammarAccess.getAssignOperatorAccess().getASSIGNSHIFTRIGHTEnumLiteralDeclaration_10()); }
+)
+
+    |(
+{ before(grammarAccess.getAssignOperatorAccess().getASSIGNSHIFTRIGHTUNSIGNEDEnumLiteralDeclaration_11()); }
+(	'>>>=' 
+)
+{ after(grammarAccess.getAssignOperatorAccess().getASSIGNSHIFTRIGHTUNSIGNEDEnumLiteralDeclaration_11()); }
+)
+
+    |(
+{ before(grammarAccess.getAssignOperatorAccess().getASSIGNMINEnumLiteralDeclaration_12()); }
+(	'min=' 
+)
+{ after(grammarAccess.getAssignOperatorAccess().getASSIGNMINEnumLiteralDeclaration_12()); }
+)
+
+    |(
+{ before(grammarAccess.getAssignOperatorAccess().getASSIGNMAXEnumLiteralDeclaration_13()); }
 (	'max=' 
 )
-{ after(grammarAccess.getAssignOperatorAccess().getASSIGNMAXEnumLiteralDeclaration_10()); }
+{ after(grammarAccess.getAssignOperatorAccess().getASSIGNMAXEnumLiteralDeclaration_13()); }
 )
 
 ;
@@ -14270,8 +14309,8 @@ rule__ShiftRightUnsignedExpression__OperatorAssignment_1_1_0
     }
 :
 (
-{ before(grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorShiftRightOperatorEnumRuleCall_1_1_0_0()); }
-	ruleShiftRightOperator{ after(grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorShiftRightOperatorEnumRuleCall_1_1_0_0()); }
+{ before(grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorShiftRightUnsignedOperatorEnumRuleCall_1_1_0_0()); }
+	ruleShiftRightUnsignedOperator{ after(grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorShiftRightUnsignedOperatorEnumRuleCall_1_1_0_0()); }
 )
 
 ;

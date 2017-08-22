@@ -680,7 +680,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *             ) | 
 	 *             (
 	 *                 subExpressions+=ShiftRightUnsignedExpression_OperatorExpression_1_0 
-	 *                 operator=ShiftRightOperator 
+	 *                 operator=ShiftRightUnsignedOperator 
 	 *                 subExpressions+=AddExpression 
 	 *                 subExpressions+=AddExpression*
 	 *             ) | 
@@ -800,7 +800,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *         ) | 
 	 *         (
 	 *             subExpressions+=ShiftRightUnsignedExpression_OperatorExpression_1_0 
-	 *             operator=ShiftRightOperator 
+	 *             operator=ShiftRightUnsignedOperator 
 	 *             subExpressions+=AddExpression 
 	 *             subExpressions+=AddExpression*
 	 *         ) | 
