@@ -167,12 +167,14 @@ class KExpressionsValuedObjectExtensions {
     }
     
     def List<ValuedObjectReference> getAllReferences(Expression expression) {
-        <ValuedObjectReference> newArrayList => [
+        <ValuedObjectReference> newArrayList => [ l |
         	if (expression == null) {
         	} else if (expression instanceof ValuedObjectReference) { 
-        		it += expression
+        		l += expression
         	} else { 
-        		it += expression.eAllContents.filter(ValuedObjectReference).toList
+        		expression.eAllContents.filter(ValuedObjectReference).forEach[
+        		    l += it   
+        		]
         	}
         ]  
     }    

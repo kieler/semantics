@@ -123,6 +123,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="GuardDependency" eSuperTypes="#//Dependency"/>
   <eClassifiers xsi:type="ecore:EClass" name="ScheduleDependency" eSuperTypes="#//Dependency"/>
   <eClassifiers xsi:type="ecore:EEnum" name="DataDependencyType">
+    <eLiterals name="IGNORE" value="-2"/>
+    <eLiterals name="UNKNOWN" value="-1"/>
     <eLiterals name="WRITE_WRITE"/>
     <eLiterals name="WRITE_RELATIVEWRITE" value="1"/>
     <eLiterals name="WRITE_READ" value="2"/>
