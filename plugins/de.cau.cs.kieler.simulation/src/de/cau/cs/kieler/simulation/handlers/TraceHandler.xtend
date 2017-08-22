@@ -17,6 +17,7 @@ import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.Variable
+import de.cau.cs.kieler.simulation.trace.TraceDataProvider
 import de.cau.cs.kieler.simulation.trace.ktrace.TraceFile
 import org.eclipse.core.runtime.IPath
 import org.eclipse.core.runtime.Path

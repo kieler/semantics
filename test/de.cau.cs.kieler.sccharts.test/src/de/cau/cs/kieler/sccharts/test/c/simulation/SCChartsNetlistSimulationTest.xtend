@@ -20,10 +20,10 @@ import de.cau.cs.kieler.simulation.core.SimulationListener
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.StepAction
 import de.cau.cs.kieler.simulation.handlers.ExecutableSimulator
-import de.cau.cs.kieler.simulation.handlers.TraceDataProvider
 import de.cau.cs.kieler.simulation.handlers.TraceFinishedEvent
 import de.cau.cs.kieler.simulation.handlers.TraceHandler
 import de.cau.cs.kieler.simulation.handlers.TraceMismatchEvent
+import de.cau.cs.kieler.simulation.trace.TraceDataProvider
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.TestModelData
