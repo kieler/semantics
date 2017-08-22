@@ -569,20 +569,22 @@ class DataPoolView extends ViewPart {
                 } else {
                     // Execute in UI thread
                     PromUIPlugin.asyncExecInUI[
-                        val pool = SimulationManager.instance?.currentPool
-                        // Update tick info
-                        dataPoolView.updateTickInfo(e)
-                        // Set pool data
-                        dataPoolView.setDataPool(pool)
-                        
+                        val pool = e.pool
+                        // Update data pool view
+                        if(pool == SimulationManager.instance?.currentPool) {
+	                        // Update tick info
+	                        dataPoolView.updateTickInfo(e)
+	                        // Set pool data
+	                        dataPoolView.setDataPool(pool)
+                        }
                         // Highlight the simulation control flow in the diagram
                         dataPoolView.unhighlightDiagram
                         if(e.type != SimulationEventType.STOP) {
                             if(e.type == SimulationEventType.INITIALIZED) {
                                 dataPoolView.currentStates = null
                             } else {
-                                dataPoolView.highlightDiagram(pool)    
-                            }    
+                                dataPoolView.highlightDiagram(pool)
+                            }
                         }
                     ]
                 }
