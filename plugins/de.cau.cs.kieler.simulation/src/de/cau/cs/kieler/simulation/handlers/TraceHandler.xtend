@@ -35,6 +35,7 @@ class TraceHandler extends DefaultDataHandler {
     public val traceNumber = new ConfigurableAttribute("traceNumber", 0)
     public val tickNumber = new ConfigurableAttribute("tickNumber", 0)
     public val checkOutputs = new ConfigurableAttribute("checkOutputs", true)
+    public val checkInterface = new ConfigurableAttribute("checkInterface", true)
     
     /**
      * The trace model that should be used to load the trace data.
@@ -53,6 +54,7 @@ class TraceHandler extends DefaultDataHandler {
         }
         // Compare variables in pool with output of this tick
         val tracePool = traceDataProvider.getDataPool(tickNumber.intValue)
+        
         for(model : pool.models) {
             for(variable : model.variables) {
                 if(variable.isOutput) {
@@ -92,6 +94,19 @@ class TraceHandler extends DefaultDataHandler {
                 }   
             }    
         }
+        
+        if (checkInterface.boolValue) {
+            for(model : tracePool.models) {
+                for(variable : model.variables) {
+                    if(variable.isOutput) {
+                        if(getCorrespondingVariable(pool, model, variable) == null) {
+                            SimulationManager.instance?.fireEvent(createTraceInterfaceMismatchEvent(variable))
+                        }
+                    }
+                }
+            }
+        }
+        
         // Get next tick
         loadNextTick
     }
@@ -213,6 +228,23 @@ class TraceHandler extends DefaultDataHandler {
                       + "of trace "+(event.traceNumber+1)+" "
                       + "from '"+traceDataProvider.filePath+"'\n"
                       + "(trace value: "+expectedValue+", simulation value: "+variable.value+")"
+        return event
+    }
+    
+    private def TraceMismatchEvent createTraceInterfaceMismatchEvent(Variable variable) {
+        val event = new TraceMismatchEvent()
+        event.tickNumber = tickNumber.intValue
+        event.traceNumber = traceNumber.intValue
+        event.traceFile = traceDataProvider.sourceFile
+        event.variable = variable
+        // The trace number and tick number starts with zero in the data handler.
+        // Thus to match the displayed value in the data pool view,
+        // it needs to be increased by one
+        event.message = "Interface mismatch of variable '"+variable.name+"' "
+                      + "after tick "+(event.tickNumber+1)+" "
+                      + "of trace "+(event.traceNumber+1)+" "
+                      + "from '"+traceDataProvider.filePath+"'\n"
+                      + "The trace expects this output variable"
         return event
     }
     
