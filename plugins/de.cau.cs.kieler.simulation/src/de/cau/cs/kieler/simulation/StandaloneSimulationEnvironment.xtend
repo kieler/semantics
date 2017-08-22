@@ -28,6 +28,7 @@ import static com.google.common.base.Preconditions.*
 import de.cau.cs.kieler.prom.ModelImporter
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl
 import org.eclipse.core.resources.IFolder
+import de.cau.cs.kieler.prom.KiBuildStandaloneSetup
 
 /**
  * A standalone simulation environment.
@@ -124,7 +125,8 @@ class StandaloneSimulationEnvironment {
     }
 
     def setBuildConfig(URI buildDefinitionFile) {
-        val resource = (new XtextResourceSet).getResource(buildDefinitionFile, true)
+        val resourceSet = KiBuildStandaloneSetup.doSetup.getInstance(XtextResourceSet)
+        val resource = resourceSet.getResource(buildDefinitionFile, true)
         setBuildConfig(resource.contents.get(0) as BuildConfiguration)
     }
 
