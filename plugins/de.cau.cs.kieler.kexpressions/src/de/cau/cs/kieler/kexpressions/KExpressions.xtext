@@ -118,21 +118,12 @@ BitwiseXOrExpression returns Expression:
 // Directs to the compare rule and may create an operator expression for 'bitwise and' operations
 // if necessary. The warning can be ignored since the operator will only override itself in this loop.
 BitwiseAndExpression returns Expression:
-	BitwiseNotOrCompareOperation 
+	CompareOperation 
 	({OperatorExpression.subExpressions+=current} 
-	    (operator=BitwiseAndOperator subExpressions+=BitwiseNotOrCompareOperation)
-	    ('&' subExpressions+=BitwiseNotOrCompareOperation)*
+	    (operator=BitwiseAndOperator subExpressions+=CompareOperation)
+	    ('&' subExpressions+=CompareOperation)*
 	)?;
 
-BitwiseNotOrCompareOperation returns Expression:
-    CompareOperation 
-    | BitwiseNotExpression 
-;
-	
-BitwiseNotExpression returns Expression:
-    {OperatorExpression} operator=BitwiseNotOperator subExpressions+=(BitwiseNotExpression)
-    | AtomicExpression;
-	
 // Compare Operation Rule
 // Directs to the 'not or valued expression' rule and may create an operator expression for compares. 
 // Example: 42 <= val(A)
@@ -148,13 +139,17 @@ NotOrValuedExpression returns Expression:
 	ValuedExpression
 	| NotExpression;
 
+BitwiseNotExpression returns Expression:
+    {OperatorExpression} operator=BitwiseNotOperator subExpressions+=(BitwiseNotExpression)
+    | AtomicExpression;
+    
 // Not Expression Rule
 // Example: !A, !false, !(A or B)
 // At the latter we need the parents to indicate the right binding.
 // A 'not expression' can also redirect to an 'atomic expression' to maintain the rule chain.
 NotExpression returns Expression:
 	{OperatorExpression} operator=NotOperator subExpressions+=(NotExpression)
-    | AtomicExpression;
+    | BitwiseNotExpression;
   
 // Valued Expression Rule    
 // Everything that evaluates to a primitive number value.

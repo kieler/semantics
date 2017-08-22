@@ -45,25 +45,26 @@ A = (B & C) ^ D
 
 
 @check boolean.bitwise.or.xor
-@expect "A = B ^ (C | D)"
+@expect "A = (B ^ C) | D"
 @readable "A = B ^ C | D"
 A = B ^ C | D
 
 @check boolean.bitwise.or.xor.parenthesis#001
-@readable "A = B ^ C & D"
+@readable "A = B ^ (C | D)"
 A = B ^ (C | D)
 
 @check boolean.bitwise.or.xor.parenthesis#002
+@readable "A = B ^ C | D"
 A = (B ^ C) | D
 
 
 @check boolean.bitwise.not.xor#001
 @strict
-A = !(B & C)
+A = !(B ^ C)
 
 @check boolean.bitwise.not.xor#002
-@expect "A = !B ^C"
-A = !B & C
+@expect "A = !B ^ C"
+A = !B ^ C
 
 @check boolean.bitwise.not.xor#003
 @strict
@@ -71,7 +72,7 @@ A = !B & C
 A = (!B ^ C)
 
 @check boolean.bitwise.not.xor#004
-A = !B & !C
+A = !B ^ !C
 
 @check boolean.bitwise.not.xor#005
 @strict

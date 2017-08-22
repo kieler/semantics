@@ -1756,35 +1756,14 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	//// Directs to the compare rule and may create an operator expression for 'bitwise and' operations
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//BitwiseAndExpression Expression:
-	//	BitwiseNotOrCompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
-	//	subExpressions+=BitwiseNotOrCompareOperation) ('&' subExpressions+=BitwiseNotOrCompareOperation)*)?
+	//	CompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
+	//	subExpressions+=CompareOperation) ('&' subExpressions+=CompareOperation)*)?
 	public KExpressionsGrammarAccess.BitwiseAndExpressionElements getBitwiseAndExpressionAccess() {
 		return gaKExpressions.getBitwiseAndExpressionAccess();
 	}
 	
 	public ParserRule getBitwiseAndExpressionRule() {
 		return getBitwiseAndExpressionAccess().getRule();
-	}
-
-	//BitwiseNotOrCompareOperation Expression:
-	//	CompareOperation
-	//	| BitwiseNotExpression
-	public KExpressionsGrammarAccess.BitwiseNotOrCompareOperationElements getBitwiseNotOrCompareOperationAccess() {
-		return gaKExpressions.getBitwiseNotOrCompareOperationAccess();
-	}
-	
-	public ParserRule getBitwiseNotOrCompareOperationRule() {
-		return getBitwiseNotOrCompareOperationAccess().getRule();
-	}
-
-	//BitwiseNotExpression Expression:
-	//	{OperatorExpression} operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression | AtomicExpression
-	public KExpressionsGrammarAccess.BitwiseNotExpressionElements getBitwiseNotExpressionAccess() {
-		return gaKExpressions.getBitwiseNotExpressionAccess();
-	}
-	
-	public ParserRule getBitwiseNotExpressionRule() {
-		return getBitwiseNotExpressionAccess().getRule();
 	}
 
 	//// Compare Operation Rule
@@ -1814,12 +1793,22 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		return getNotOrValuedExpressionAccess().getRule();
 	}
 
+	//BitwiseNotExpression Expression:
+	//	{OperatorExpression} operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression | AtomicExpression
+	public KExpressionsGrammarAccess.BitwiseNotExpressionElements getBitwiseNotExpressionAccess() {
+		return gaKExpressions.getBitwiseNotExpressionAccess();
+	}
+	
+	public ParserRule getBitwiseNotExpressionRule() {
+		return getBitwiseNotExpressionAccess().getRule();
+	}
+
 	//// Not Expression Rule
 	//// Example: !A, !false, !(A or B)
 	//// At the latter we need the parents to indicate the right binding.
 	//// A 'not expression' can also redirect to an 'atomic expression' to maintain the rule chain.
 	//NotExpression Expression:
-	//	{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | AtomicExpression
+	//	{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | BitwiseNotExpression
 	public KExpressionsGrammarAccess.NotExpressionElements getNotExpressionAccess() {
 		return gaKExpressions.getNotExpressionAccess();
 	}

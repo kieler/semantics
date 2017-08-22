@@ -1711,11 +1711,11 @@ public class InternalKExtLexer extends Lexer {
         try {
             int _type = RULE_HOSTCODE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExt.g:20742:15: ( '`' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )* '`' )
-            // InternalKExt.g:20742:17: '`' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )* '`'
+            // InternalKExt.g:20692:15: ( '`' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )* '`' )
+            // InternalKExt.g:20692:17: '`' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )* '`'
             {
             match('`'); 
-            // InternalKExt.g:20742:21: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )*
+            // InternalKExt.g:20692:21: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )*
             loop1:
             do {
                 int alt1=3;
@@ -1731,7 +1731,7 @@ public class InternalKExtLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // InternalKExt.g:20742:22: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+            	    // InternalKExt.g:20692:22: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
             	    {
             	    match('\\'); 
             	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -1747,7 +1747,7 @@ public class InternalKExtLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // InternalKExt.g:20742:63: ~ ( ( '\\\\' | '`' ) )
+            	    // InternalKExt.g:20692:63: ~ ( ( '\\\\' | '`' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='_')||(input.LA(1)>='a' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1784,12 +1784,12 @@ public class InternalKExtLexer extends Lexer {
         try {
             int _type = RULE_COMMENT_ANNOTATION;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExt.g:20744:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
-            // InternalKExt.g:20744:27: '/**' ( options {greedy=false; } : . )* '*/'
+            // InternalKExt.g:20694:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
+            // InternalKExt.g:20694:27: '/**' ( options {greedy=false; } : . )* '*/'
             {
             match("/**"); 
 
-            // InternalKExt.g:20744:33: ( options {greedy=false; } : . )*
+            // InternalKExt.g:20694:33: ( options {greedy=false; } : . )*
             loop2:
             do {
                 int alt2=2;
@@ -1814,7 +1814,7 @@ public class InternalKExtLexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // InternalKExt.g:20744:61: .
+            	    // InternalKExt.g:20694:61: .
             	    {
             	    matchAny(); 
 
@@ -1844,8 +1844,8 @@ public class InternalKExtLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExt.g:20746:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
-            // InternalKExt.g:20746:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
+            // InternalKExt.g:20696:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
+            // InternalKExt.g:20696:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
@@ -1858,7 +1858,7 @@ public class InternalKExtLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // InternalKExt.g:20746:31: ( options {greedy=false; } : . )*
+            // InternalKExt.g:20696:31: ( options {greedy=false; } : . )*
             loop3:
             do {
                 int alt3=2;
@@ -1883,7 +1883,7 @@ public class InternalKExtLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // InternalKExt.g:20746:59: .
+            	    // InternalKExt.g:20696:59: .
             	    {
             	    matchAny(); 
 
@@ -1913,12 +1913,12 @@ public class InternalKExtLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT_ANNOTATION;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExt.g:20748:28: ( '//*' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // InternalKExt.g:20748:30: '//*' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // InternalKExt.g:20698:28: ( '//*' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // InternalKExt.g:20698:30: '//*' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//*"); 
 
-            // InternalKExt.g:20748:36: (~ ( ( '\\n' | '\\r' ) ) )*
+            // InternalKExt.g:20698:36: (~ ( ( '\\n' | '\\r' ) ) )*
             loop4:
             do {
                 int alt4=2;
@@ -1931,7 +1931,7 @@ public class InternalKExtLexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // InternalKExt.g:20748:36: ~ ( ( '\\n' | '\\r' ) )
+            	    // InternalKExt.g:20698:36: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1951,7 +1951,7 @@ public class InternalKExtLexer extends Lexer {
                 }
             } while (true);
 
-            // InternalKExt.g:20748:52: ( ( '\\r' )? '\\n' )?
+            // InternalKExt.g:20698:52: ( ( '\\r' )? '\\n' )?
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -1960,9 +1960,9 @@ public class InternalKExtLexer extends Lexer {
             }
             switch (alt6) {
                 case 1 :
-                    // InternalKExt.g:20748:53: ( '\\r' )? '\\n'
+                    // InternalKExt.g:20698:53: ( '\\r' )? '\\n'
                     {
-                    // InternalKExt.g:20748:53: ( '\\r' )?
+                    // InternalKExt.g:20698:53: ( '\\r' )?
                     int alt5=2;
                     int LA5_0 = input.LA(1);
 
@@ -1971,7 +1971,7 @@ public class InternalKExtLexer extends Lexer {
                     }
                     switch (alt5) {
                         case 1 :
-                            // InternalKExt.g:20748:53: '\\r'
+                            // InternalKExt.g:20698:53: '\\r'
                             {
                             match('\r'); 
 
@@ -2003,8 +2003,8 @@ public class InternalKExtLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExt.g:20750:17: ( '//' ~ ( '*' ) (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // InternalKExt.g:20750:19: '//' ~ ( '*' ) (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // InternalKExt.g:20700:17: ( '//' ~ ( '*' ) (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // InternalKExt.g:20700:19: '//' ~ ( '*' ) (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
@@ -2017,7 +2017,7 @@ public class InternalKExtLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // InternalKExt.g:20750:31: (~ ( ( '\\n' | '\\r' ) ) )*
+            // InternalKExt.g:20700:31: (~ ( ( '\\n' | '\\r' ) ) )*
             loop7:
             do {
                 int alt7=2;
@@ -2030,7 +2030,7 @@ public class InternalKExtLexer extends Lexer {
 
                 switch (alt7) {
             	case 1 :
-            	    // InternalKExt.g:20750:31: ~ ( ( '\\n' | '\\r' ) )
+            	    // InternalKExt.g:20700:31: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2050,7 +2050,7 @@ public class InternalKExtLexer extends Lexer {
                 }
             } while (true);
 
-            // InternalKExt.g:20750:47: ( ( '\\r' )? '\\n' )?
+            // InternalKExt.g:20700:47: ( ( '\\r' )? '\\n' )?
             int alt9=2;
             int LA9_0 = input.LA(1);
 
@@ -2059,9 +2059,9 @@ public class InternalKExtLexer extends Lexer {
             }
             switch (alt9) {
                 case 1 :
-                    // InternalKExt.g:20750:48: ( '\\r' )? '\\n'
+                    // InternalKExt.g:20700:48: ( '\\r' )? '\\n'
                     {
-                    // InternalKExt.g:20750:48: ( '\\r' )?
+                    // InternalKExt.g:20700:48: ( '\\r' )?
                     int alt8=2;
                     int LA8_0 = input.LA(1);
 
@@ -2070,7 +2070,7 @@ public class InternalKExtLexer extends Lexer {
                     }
                     switch (alt8) {
                         case 1 :
-                            // InternalKExt.g:20750:48: '\\r'
+                            // InternalKExt.g:20700:48: '\\r'
                             {
                             match('\r'); 
 
@@ -2100,8 +2100,8 @@ public class InternalKExtLexer extends Lexer {
     // $ANTLR start "RULE_NUMBER"
     public final void mRULE_NUMBER() throws RecognitionException {
         try {
-            // InternalKExt.g:20752:22: ( '0' .. '9' )
-            // InternalKExt.g:20752:24: '0' .. '9'
+            // InternalKExt.g:20702:22: ( '0' .. '9' )
+            // InternalKExt.g:20702:24: '0' .. '9'
             {
             matchRange('0','9'); 
 
@@ -2118,10 +2118,10 @@ public class InternalKExtLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExt.g:20754:10: ( ( RULE_NUMBER )+ )
-            // InternalKExt.g:20754:12: ( RULE_NUMBER )+
+            // InternalKExt.g:20704:10: ( ( RULE_NUMBER )+ )
+            // InternalKExt.g:20704:12: ( RULE_NUMBER )+
             {
-            // InternalKExt.g:20754:12: ( RULE_NUMBER )+
+            // InternalKExt.g:20704:12: ( RULE_NUMBER )+
             int cnt10=0;
             loop10:
             do {
@@ -2135,7 +2135,7 @@ public class InternalKExtLexer extends Lexer {
 
                 switch (alt10) {
             	case 1 :
-            	    // InternalKExt.g:20754:12: RULE_NUMBER
+            	    // InternalKExt.g:20704:12: RULE_NUMBER
             	    {
             	    mRULE_NUMBER(); 
 
@@ -2167,17 +2167,17 @@ public class InternalKExtLexer extends Lexer {
         try {
             int _type = RULE_FLOAT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExt.g:20756:12: ( ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' ) )
-            // InternalKExt.g:20756:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
+            // InternalKExt.g:20706:12: ( ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' ) )
+            // InternalKExt.g:20706:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
             {
-            // InternalKExt.g:20756:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
+            // InternalKExt.g:20706:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
             int alt18=2;
             alt18 = dfa18.predict(input);
             switch (alt18) {
                 case 1 :
-                    // InternalKExt.g:20756:15: ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )?
+                    // InternalKExt.g:20706:15: ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )?
                     {
-                    // InternalKExt.g:20756:15: ( RULE_NUMBER )+
+                    // InternalKExt.g:20706:15: ( RULE_NUMBER )+
                     int cnt11=0;
                     loop11:
                     do {
@@ -2191,7 +2191,7 @@ public class InternalKExtLexer extends Lexer {
 
                         switch (alt11) {
                     	case 1 :
-                    	    // InternalKExt.g:20756:15: RULE_NUMBER
+                    	    // InternalKExt.g:20706:15: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -2208,7 +2208,7 @@ public class InternalKExtLexer extends Lexer {
                     } while (true);
 
                     match('.'); 
-                    // InternalKExt.g:20756:32: ( RULE_NUMBER )*
+                    // InternalKExt.g:20706:32: ( RULE_NUMBER )*
                     loop12:
                     do {
                         int alt12=2;
@@ -2221,7 +2221,7 @@ public class InternalKExtLexer extends Lexer {
 
                         switch (alt12) {
                     	case 1 :
-                    	    // InternalKExt.g:20756:32: RULE_NUMBER
+                    	    // InternalKExt.g:20706:32: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -2233,7 +2233,7 @@ public class InternalKExtLexer extends Lexer {
                         }
                     } while (true);
 
-                    // InternalKExt.g:20756:45: ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )?
+                    // InternalKExt.g:20706:45: ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )?
                     int alt15=2;
                     int LA15_0 = input.LA(1);
 
@@ -2242,7 +2242,7 @@ public class InternalKExtLexer extends Lexer {
                     }
                     switch (alt15) {
                         case 1 :
-                            // InternalKExt.g:20756:46: ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+
+                            // InternalKExt.g:20706:46: ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+
                             {
                             if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                                 input.consume();
@@ -2253,7 +2253,7 @@ public class InternalKExtLexer extends Lexer {
                                 recover(mse);
                                 throw mse;}
 
-                            // InternalKExt.g:20756:56: ( '+' | '-' )?
+                            // InternalKExt.g:20706:56: ( '+' | '-' )?
                             int alt13=2;
                             int LA13_0 = input.LA(1);
 
@@ -2279,7 +2279,7 @@ public class InternalKExtLexer extends Lexer {
 
                             }
 
-                            // InternalKExt.g:20756:67: ( RULE_NUMBER )+
+                            // InternalKExt.g:20706:67: ( RULE_NUMBER )+
                             int cnt14=0;
                             loop14:
                             do {
@@ -2293,7 +2293,7 @@ public class InternalKExtLexer extends Lexer {
 
                                 switch (alt14) {
                             	case 1 :
-                            	    // InternalKExt.g:20756:67: RULE_NUMBER
+                            	    // InternalKExt.g:20706:67: RULE_NUMBER
                             	    {
                             	    mRULE_NUMBER(); 
 
@@ -2315,7 +2315,7 @@ public class InternalKExtLexer extends Lexer {
 
                     }
 
-                    // InternalKExt.g:20756:82: ( 'f' )?
+                    // InternalKExt.g:20706:82: ( 'f' )?
                     int alt16=2;
                     int LA16_0 = input.LA(1);
 
@@ -2324,7 +2324,7 @@ public class InternalKExtLexer extends Lexer {
                     }
                     switch (alt16) {
                         case 1 :
-                            // InternalKExt.g:20756:82: 'f'
+                            // InternalKExt.g:20706:82: 'f'
                             {
                             match('f'); 
 
@@ -2337,9 +2337,9 @@ public class InternalKExtLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalKExt.g:20756:87: ( RULE_NUMBER )+ 'f'
+                    // InternalKExt.g:20706:87: ( RULE_NUMBER )+ 'f'
                     {
-                    // InternalKExt.g:20756:87: ( RULE_NUMBER )+
+                    // InternalKExt.g:20706:87: ( RULE_NUMBER )+
                     int cnt17=0;
                     loop17:
                     do {
@@ -2353,7 +2353,7 @@ public class InternalKExtLexer extends Lexer {
 
                         switch (alt17) {
                     	case 1 :
-                    	    // InternalKExt.g:20756:87: RULE_NUMBER
+                    	    // InternalKExt.g:20706:87: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -2392,10 +2392,10 @@ public class InternalKExtLexer extends Lexer {
         try {
             int _type = RULE_BOOLEAN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExt.g:20758:14: ( ( 'true' | 'false' ) )
-            // InternalKExt.g:20758:16: ( 'true' | 'false' )
+            // InternalKExt.g:20708:14: ( ( 'true' | 'false' ) )
+            // InternalKExt.g:20708:16: ( 'true' | 'false' )
             {
-            // InternalKExt.g:20758:16: ( 'true' | 'false' )
+            // InternalKExt.g:20708:16: ( 'true' | 'false' )
             int alt19=2;
             int LA19_0 = input.LA(1);
 
@@ -2413,7 +2413,7 @@ public class InternalKExtLexer extends Lexer {
             }
             switch (alt19) {
                 case 1 :
-                    // InternalKExt.g:20758:17: 'true'
+                    // InternalKExt.g:20708:17: 'true'
                     {
                     match("true"); 
 
@@ -2421,7 +2421,7 @@ public class InternalKExtLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalKExt.g:20758:24: 'false'
+                    // InternalKExt.g:20708:24: 'false'
                     {
                     match("false"); 
 
@@ -2447,11 +2447,11 @@ public class InternalKExtLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExt.g:20760:13: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
-            // InternalKExt.g:20760:15: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+            // InternalKExt.g:20710:13: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
+            // InternalKExt.g:20710:15: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
             {
             match('\"'); 
-            // InternalKExt.g:20760:19: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
+            // InternalKExt.g:20710:19: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
             loop20:
             do {
                 int alt20=3;
@@ -2467,7 +2467,7 @@ public class InternalKExtLexer extends Lexer {
 
                 switch (alt20) {
             	case 1 :
-            	    // InternalKExt.g:20760:20: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+            	    // InternalKExt.g:20710:20: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
             	    {
             	    match('\\'); 
             	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -2483,7 +2483,7 @@ public class InternalKExtLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // InternalKExt.g:20760:61: ~ ( ( '\\\\' | '\"' ) )
+            	    // InternalKExt.g:20710:61: ~ ( ( '\\\\' | '\"' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2520,10 +2520,10 @@ public class InternalKExtLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExt.g:20762:9: ( ( '^' )? ( ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' ) | '_' '0' .. '9' | '__' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // InternalKExt.g:20762:11: ( '^' )? ( ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' ) | '_' '0' .. '9' | '__' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // InternalKExt.g:20712:9: ( ( '^' )? ( ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' ) | '_' '0' .. '9' | '__' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // InternalKExt.g:20712:11: ( '^' )? ( ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' ) | '_' '0' .. '9' | '__' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
-            // InternalKExt.g:20762:11: ( '^' )?
+            // InternalKExt.g:20712:11: ( '^' )?
             int alt21=2;
             int LA21_0 = input.LA(1);
 
@@ -2532,7 +2532,7 @@ public class InternalKExtLexer extends Lexer {
             }
             switch (alt21) {
                 case 1 :
-                    // InternalKExt.g:20762:11: '^'
+                    // InternalKExt.g:20712:11: '^'
                     {
                     match('^'); 
 
@@ -2541,7 +2541,7 @@ public class InternalKExtLexer extends Lexer {
 
             }
 
-            // InternalKExt.g:20762:16: ( ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' ) | '_' '0' .. '9' | '__' )
+            // InternalKExt.g:20712:16: ( ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' ) | '_' '0' .. '9' | '__' )
             int alt25=3;
             int LA25_0 = input.LA(1);
 
@@ -2641,9 +2641,9 @@ public class InternalKExtLexer extends Lexer {
             }
             switch (alt25) {
                 case 1 :
-                    // InternalKExt.g:20762:17: ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' )
+                    // InternalKExt.g:20712:17: ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' )
                     {
-                    // InternalKExt.g:20762:17: ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' )
+                    // InternalKExt.g:20712:17: ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' )
                     int alt24=2;
                     switch ( input.LA(1) ) {
                     case '_':
@@ -2733,9 +2733,9 @@ public class InternalKExtLexer extends Lexer {
 
                     switch (alt24) {
                         case 1 :
-                            // InternalKExt.g:20762:18: ( '_' )? 'a' .. 'z'
+                            // InternalKExt.g:20712:18: ( '_' )? 'a' .. 'z'
                             {
-                            // InternalKExt.g:20762:18: ( '_' )?
+                            // InternalKExt.g:20712:18: ( '_' )?
                             int alt22=2;
                             int LA22_0 = input.LA(1);
 
@@ -2744,7 +2744,7 @@ public class InternalKExtLexer extends Lexer {
                             }
                             switch (alt22) {
                                 case 1 :
-                                    // InternalKExt.g:20762:18: '_'
+                                    // InternalKExt.g:20712:18: '_'
                                     {
                                     match('_'); 
 
@@ -2758,9 +2758,9 @@ public class InternalKExtLexer extends Lexer {
                             }
                             break;
                         case 2 :
-                            // InternalKExt.g:20762:32: ( '_' )? 'A' .. 'Z'
+                            // InternalKExt.g:20712:32: ( '_' )? 'A' .. 'Z'
                             {
-                            // InternalKExt.g:20762:32: ( '_' )?
+                            // InternalKExt.g:20712:32: ( '_' )?
                             int alt23=2;
                             int LA23_0 = input.LA(1);
 
@@ -2769,7 +2769,7 @@ public class InternalKExtLexer extends Lexer {
                             }
                             switch (alt23) {
                                 case 1 :
-                                    // InternalKExt.g:20762:32: '_'
+                                    // InternalKExt.g:20712:32: '_'
                                     {
                                     match('_'); 
 
@@ -2789,7 +2789,7 @@ public class InternalKExtLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalKExt.g:20762:47: '_' '0' .. '9'
+                    // InternalKExt.g:20712:47: '_' '0' .. '9'
                     {
                     match('_'); 
                     matchRange('0','9'); 
@@ -2797,7 +2797,7 @@ public class InternalKExtLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // InternalKExt.g:20762:60: '__'
+                    // InternalKExt.g:20712:60: '__'
                     {
                     match("__"); 
 
@@ -2807,7 +2807,7 @@ public class InternalKExtLexer extends Lexer {
 
             }
 
-            // InternalKExt.g:20762:66: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // InternalKExt.g:20712:66: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop26:
             do {
                 int alt26=2;
@@ -2856,10 +2856,10 @@ public class InternalKExtLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExt.g:20764:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // InternalKExt.g:20764:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalKExt.g:20714:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // InternalKExt.g:20714:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // InternalKExt.g:20764:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalKExt.g:20714:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt27=0;
             loop27:
             do {
@@ -2913,8 +2913,8 @@ public class InternalKExtLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExt.g:20766:16: ( . )
-            // InternalKExt.g:20766:18: .
+            // InternalKExt.g:20716:16: ( . )
+            // InternalKExt.g:20716:18: .
             {
             matchAny(); 
 
@@ -3613,7 +3613,7 @@ public class InternalKExtLexer extends Lexer {
             this.transition = DFA18_transition;
         }
         public String getDescription() {
-            return "20756:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )";
+            return "20706:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )";
         }
     }
     static final String DFA28_eotS =

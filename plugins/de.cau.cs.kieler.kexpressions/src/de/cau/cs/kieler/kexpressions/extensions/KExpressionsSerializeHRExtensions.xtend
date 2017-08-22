@@ -73,7 +73,7 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
     }    
 
     def dispatch CharSequence serializeHR(FunctionCall functionCall) {
-        return "<" + functionCall.functionName + functionCall.parameters.serializeHRParameters + ">"
+        return "extern " + functionCall.functionName + functionCall.parameters.serializeHRParameters 
     }
     
     def public CharSequence serializeHRParameters(List<Parameter> parameters) {
@@ -98,65 +98,6 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
         return sb.toString      
     }    
 
-
-//    protected def CharSequence serializeHROperatorExpressionVAL(OperatorExpression expression) {
-//    	"val(" + expression.subExpressions.head.serializeHR + ")"
-//    }
-//    
-//    protected def CharSequence serializeHROperatorExpressionPRE(OperatorExpression expression) {
-//    	"pre(" + expression.subExpressions.head.serializeHR + ")"
-//    }   
-//    
-//    protected def CharSequence serializeHROperatorExpressionNot(OperatorExpression expression) {
-//    	"!" + expression.subExpressions.head.serializeHR
-//    }
-//
-//    // Expand a complex expression.
-//    protected def CharSequence serializeHROperatorExpression(OperatorExpression expression) {
-//        var CharSequence result = ""
-//        
-//        if (expression.operator == OperatorType::EQ) {
-//            result = expression.serializeOperatorExpressionEQ
-//        } else if (expression.operator == OperatorType::LT) {
-//            result = expression.serializeOperatorExpressionLT
-//        } else if (expression.operator == OperatorType::LEQ) {
-//            result = expression.serializeOperatorExpressionLEQ
-//        } else if (expression.operator == OperatorType::GT) {
-//            result = expression.serializeOperatorExpressionGT
-//        } else if (expression.operator == OperatorType::GEQ) {
-//            result = expression.serializeOperatorExpressionGEQ
-//        } else if (expression.operator == OperatorType::NOT) {
-//            return expression.serializeHROperatorExpressionNot
-//        } else if (expression.operator == OperatorType::VAL) {
-//            return expression.serializeHROperatorExpressionVAL
-//        } else if (expression.operator == OperatorType::PRE) {
-//            return expression.serializeHROperatorExpressionPRE
-//        } else 
-//        if (expression.operator == OperatorType::NE) {
-//            result = expression.serializeOperatorExpressionNE
-//        } else if (expression.operator == OperatorType::LOGICAL_AND) {
-//            result = expression.serializeOperatorExpressionLogicalAnd
-//        } else if (expression.operator == OperatorType::LOGICAL_OR) {
-//            result = expression.serializeOperatorExpressionLogicalOr
-//        } else if (expression.operator == OperatorType::BITWISE_AND) {
-//            result = expression.serializeOperatorExpressionBitwiseAnd
-//        } else if (expression.operator == OperatorType::BITWISE_OR) {
-//            result = expression.serializeOperatorExpressionBitwiseOr
-//        } else if (expression.operator == OperatorType::ADD) {
-//            result = expression.serializeOperatorExpressionAdd
-//        } else if (expression.operator == OperatorType::SUB) {
-//            result = expression.serializeOperatorExpressionSub
-//        } else if (expression.operator == OperatorType::MULT) {
-//            result = expression.serializeOperatorExpressionMul
-//        } else if (expression.operator == OperatorType::DIV) {
-//            result = expression.serializeOperatorExpressionDiv
-//        } else if (expression.operator == OperatorType::MOD) {
-//            result = expression.serializeOperatorExpressionMod
-//        }  
-//            
-//        return result
-//    }
-    
     dispatch def CharSequence serializeHR(OperatorExpression expression) {
 		val result = serializeHROperatorExpression(expression)
 		if ((expression.operator == OperatorType::NOT) || 
@@ -182,6 +123,7 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
 		if (operatorType == OperatorType::POSTFIX_ADD) return 1;
 		if (operatorType == OperatorType::POSTFIX_SUB) return 1;
 		if (operatorType == OperatorType::NOT) return 2;
+		if (operatorType == OperatorType::BITWISE_NOT) return 2;
 		if (operatorType == OperatorType::MULT) return 3;
 		if (operatorType == OperatorType::DIV) return 3;
 		if (operatorType == OperatorType::MOD) return 3;
@@ -194,6 +136,7 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
 		if (operatorType == OperatorType::EQ) return 7;
 		if (operatorType == OperatorType::NE) return 7;
 		if (operatorType == OperatorType::BITWISE_AND) return 8;
+		if (operatorType == OperatorType::BITWISE_XOR) return 9;
 		if (operatorType == OperatorType::BITWISE_OR) return 10;
 		if (operatorType == OperatorType::LOGICAL_AND) return 11;
 		if (operatorType == OperatorType::LOGICAL_OR) return 12;
@@ -257,12 +200,20 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
     	combineOperatorsHR(expression.subExpressions.iterator, " || ")
     }
     
+    protected def CharSequence serializeHROperatorExpressionBitwiseNot(OperatorExpression expression) {
+        "~" + expression.subExpressions.head.serializeHR
+    }
+    
     protected def CharSequence serializeHROperatorExpressionBitwiseAnd(OperatorExpression expression) {
     	combineOperatorsHR(expression.subExpressions.iterator, " & ")
     }    
     
     protected def CharSequence serializeHROperatorExpressionBitwiseOr(OperatorExpression expression) {
     	combineOperatorsHR(expression.subExpressions.iterator, " | ")
+    }
+    
+    protected def CharSequence serializeHROperatorExpressionBitwiseXOr(OperatorExpression expression) {
+        combineOperatorsHR(expression.subExpressions.iterator, " ^ ")
     }
 
     protected def CharSequence serializeHROperatorExpressionAdd(OperatorExpression expression) {
@@ -315,10 +266,14 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
             result = expression.serializeHROperatorExpressionLogicalAnd
         } else if (expression.operator == OperatorType::LOGICAL_OR) {
             result = expression.serializeHROperatorExpressionLogicalOr
+        } else if (expression.operator == OperatorType::BITWISE_NOT) {
+            return expression.serializeHROperatorExpressionBitwiseNot
         } else if (expression.operator == OperatorType::BITWISE_AND) {
             result = expression.serializeHROperatorExpressionBitwiseAnd
         } else if (expression.operator == OperatorType::BITWISE_OR) {
             result = expression.serializeHROperatorExpressionBitwiseOr
+        } else if (expression.operator == OperatorType::BITWISE_XOR) {
+            result = expression.serializeHROperatorExpressionBitwiseXOr
         } else if (expression.operator == OperatorType::ADD) {
             result = expression.serializeHROperatorExpressionAdd
         } else if (expression.operator == OperatorType::SUB) {
@@ -359,10 +314,14 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
             result = "&&"
         } else if (operator == OperatorType::LOGICAL_OR) {
             result = "||"
+        } else if (operator == OperatorType::BITWISE_NOT) {
+            return "~"
         } else if (operator == OperatorType::BITWISE_AND) {
             result = "&"
         } else if (operator == OperatorType::BITWISE_OR) {
             result = "|"
+        } else if (operator == OperatorType::BITWISE_XOR) {
+            result = "^"
         } else if (operator == OperatorType::ADD) {
             result = "+"
         } else if (operator == OperatorType::SUB) {

@@ -38,9 +38,8 @@ public class KExpressionsParser extends AbstractContentAssistParser {
 				private static final long serialVersionUID = 1L;
 				{
 					put(grammarAccess.getExpressionAccess().getAlternatives_0(), "rule__Expression__Alternatives_0");
-					put(grammarAccess.getBitwiseNotOrCompareOperationAccess().getAlternatives(), "rule__BitwiseNotOrCompareOperation__Alternatives");
-					put(grammarAccess.getBitwiseNotExpressionAccess().getAlternatives(), "rule__BitwiseNotExpression__Alternatives");
 					put(grammarAccess.getNotOrValuedExpressionAccess().getAlternatives(), "rule__NotOrValuedExpression__Alternatives");
+					put(grammarAccess.getBitwiseNotExpressionAccess().getAlternatives(), "rule__BitwiseNotExpression__Alternatives");
 					put(grammarAccess.getNotExpressionAccess().getAlternatives(), "rule__NotExpression__Alternatives");
 					put(grammarAccess.getNegExpressionAccess().getAlternatives(), "rule__NegExpression__Alternatives");
 					put(grammarAccess.getTernaryOperationAccess().getAlternatives(), "rule__TernaryOperation__Alternatives");
@@ -87,9 +86,9 @@ public class KExpressionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getBitwiseAndExpressionAccess().getGroup_1(), "rule__BitwiseAndExpression__Group_1__0");
 					put(grammarAccess.getBitwiseAndExpressionAccess().getGroup_1_1(), "rule__BitwiseAndExpression__Group_1_1__0");
 					put(grammarAccess.getBitwiseAndExpressionAccess().getGroup_1_2(), "rule__BitwiseAndExpression__Group_1_2__0");
-					put(grammarAccess.getBitwiseNotExpressionAccess().getGroup_0(), "rule__BitwiseNotExpression__Group_0__0");
 					put(grammarAccess.getCompareOperationAccess().getGroup(), "rule__CompareOperation__Group__0");
 					put(grammarAccess.getCompareOperationAccess().getGroup_1(), "rule__CompareOperation__Group_1__0");
+					put(grammarAccess.getBitwiseNotExpressionAccess().getGroup_0(), "rule__BitwiseNotExpression__Group_0__0");
 					put(grammarAccess.getNotExpressionAccess().getGroup_0(), "rule__NotExpression__Group_0__0");
 					put(grammarAccess.getShiftLeftExpressionAccess().getGroup(), "rule__ShiftLeftExpression__Group__0");
 					put(grammarAccess.getShiftLeftExpressionAccess().getGroup_1(), "rule__ShiftLeftExpression__Group_1__0");
@@ -183,10 +182,10 @@ public class KExpressionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getBitwiseAndExpressionAccess().getOperatorAssignment_1_1_0(), "rule__BitwiseAndExpression__OperatorAssignment_1_1_0");
 					put(grammarAccess.getBitwiseAndExpressionAccess().getSubExpressionsAssignment_1_1_1(), "rule__BitwiseAndExpression__SubExpressionsAssignment_1_1_1");
 					put(grammarAccess.getBitwiseAndExpressionAccess().getSubExpressionsAssignment_1_2_1(), "rule__BitwiseAndExpression__SubExpressionsAssignment_1_2_1");
-					put(grammarAccess.getBitwiseNotExpressionAccess().getOperatorAssignment_0_1(), "rule__BitwiseNotExpression__OperatorAssignment_0_1");
-					put(grammarAccess.getBitwiseNotExpressionAccess().getSubExpressionsAssignment_0_2(), "rule__BitwiseNotExpression__SubExpressionsAssignment_0_2");
 					put(grammarAccess.getCompareOperationAccess().getOperatorAssignment_1_1(), "rule__CompareOperation__OperatorAssignment_1_1");
 					put(grammarAccess.getCompareOperationAccess().getSubExpressionsAssignment_1_2(), "rule__CompareOperation__SubExpressionsAssignment_1_2");
+					put(grammarAccess.getBitwiseNotExpressionAccess().getOperatorAssignment_0_1(), "rule__BitwiseNotExpression__OperatorAssignment_0_1");
+					put(grammarAccess.getBitwiseNotExpressionAccess().getSubExpressionsAssignment_0_2(), "rule__BitwiseNotExpression__SubExpressionsAssignment_0_2");
 					put(grammarAccess.getNotExpressionAccess().getOperatorAssignment_0_1(), "rule__NotExpression__OperatorAssignment_0_1");
 					put(grammarAccess.getNotExpressionAccess().getSubExpressionsAssignment_0_2(), "rule__NotExpression__SubExpressionsAssignment_0_2");
 					put(grammarAccess.getShiftLeftExpressionAccess().getOperatorAssignment_1_1_0(), "rule__ShiftLeftExpression__OperatorAssignment_1_1_0");

@@ -903,62 +903,6 @@ finally {
 
 
 
-// Entry rule entryRuleBitwiseNotOrCompareOperation
-entryRuleBitwiseNotOrCompareOperation 
-:
-{ before(grammarAccess.getBitwiseNotOrCompareOperationRule()); }
-	 ruleBitwiseNotOrCompareOperation
-{ after(grammarAccess.getBitwiseNotOrCompareOperationRule()); } 
-	 EOF 
-;
-
-// Rule BitwiseNotOrCompareOperation
-ruleBitwiseNotOrCompareOperation
-    @init {
-		int stackSize = keepStackSize();
-    }
-	:
-(
-{ before(grammarAccess.getBitwiseNotOrCompareOperationAccess().getAlternatives()); }
-(rule__BitwiseNotOrCompareOperation__Alternatives)
-{ after(grammarAccess.getBitwiseNotOrCompareOperationAccess().getAlternatives()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-
-// Entry rule entryRuleBitwiseNotExpression
-entryRuleBitwiseNotExpression 
-:
-{ before(grammarAccess.getBitwiseNotExpressionRule()); }
-	 ruleBitwiseNotExpression
-{ after(grammarAccess.getBitwiseNotExpressionRule()); } 
-	 EOF 
-;
-
-// Rule BitwiseNotExpression
-ruleBitwiseNotExpression
-    @init {
-		int stackSize = keepStackSize();
-    }
-	:
-(
-{ before(grammarAccess.getBitwiseNotExpressionAccess().getAlternatives()); }
-(rule__BitwiseNotExpression__Alternatives)
-{ after(grammarAccess.getBitwiseNotExpressionAccess().getAlternatives()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-
 // Entry rule entryRuleCompareOperation
 entryRuleCompareOperation 
 :
@@ -1006,6 +950,34 @@ ruleNotOrValuedExpression
 { before(grammarAccess.getNotOrValuedExpressionAccess().getAlternatives()); }
 (rule__NotOrValuedExpression__Alternatives)
 { after(grammarAccess.getNotOrValuedExpressionAccess().getAlternatives()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+
+// Entry rule entryRuleBitwiseNotExpression
+entryRuleBitwiseNotExpression 
+:
+{ before(grammarAccess.getBitwiseNotExpressionRule()); }
+	 ruleBitwiseNotExpression
+{ after(grammarAccess.getBitwiseNotExpressionRule()); } 
+	 EOF 
+;
+
+// Rule BitwiseNotExpression
+ruleBitwiseNotExpression
+    @init {
+		int stackSize = keepStackSize();
+    }
+	:
+(
+{ before(grammarAccess.getBitwiseNotExpressionAccess().getAlternatives()); }
+(rule__BitwiseNotExpression__Alternatives)
+{ after(grammarAccess.getBitwiseNotExpressionAccess().getAlternatives()); }
 )
 
 ;
@@ -3115,21 +3087,21 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__BitwiseNotOrCompareOperation__Alternatives
+rule__NotOrValuedExpression__Alternatives
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getBitwiseNotOrCompareOperationAccess().getCompareOperationParserRuleCall_0()); }
-	ruleCompareOperation
-{ after(grammarAccess.getBitwiseNotOrCompareOperationAccess().getCompareOperationParserRuleCall_0()); }
+{ before(grammarAccess.getNotOrValuedExpressionAccess().getValuedExpressionParserRuleCall_0()); }
+	ruleValuedExpression
+{ after(grammarAccess.getNotOrValuedExpressionAccess().getValuedExpressionParserRuleCall_0()); }
 )
 
     |(
-{ before(grammarAccess.getBitwiseNotOrCompareOperationAccess().getBitwiseNotExpressionParserRuleCall_1()); }
-	ruleBitwiseNotExpression
-{ after(grammarAccess.getBitwiseNotOrCompareOperationAccess().getBitwiseNotExpressionParserRuleCall_1()); }
+{ before(grammarAccess.getNotOrValuedExpressionAccess().getNotExpressionParserRuleCall_1()); }
+	ruleNotExpression
+{ after(grammarAccess.getNotOrValuedExpressionAccess().getNotExpressionParserRuleCall_1()); }
 )
 
 ;
@@ -3159,28 +3131,6 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__NotOrValuedExpression__Alternatives
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getNotOrValuedExpressionAccess().getValuedExpressionParserRuleCall_0()); }
-	ruleValuedExpression
-{ after(grammarAccess.getNotOrValuedExpressionAccess().getValuedExpressionParserRuleCall_0()); }
-)
-
-    |(
-{ before(grammarAccess.getNotOrValuedExpressionAccess().getNotExpressionParserRuleCall_1()); }
-	ruleNotExpression
-{ after(grammarAccess.getNotOrValuedExpressionAccess().getNotExpressionParserRuleCall_1()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
 rule__NotExpression__Alternatives
     @init {
 		int stackSize = keepStackSize();
@@ -3193,9 +3143,9 @@ rule__NotExpression__Alternatives
 )
 
     |(
-{ before(grammarAccess.getNotExpressionAccess().getAtomicExpressionParserRuleCall_1()); }
-	ruleAtomicExpression
-{ after(grammarAccess.getNotExpressionAccess().getAtomicExpressionParserRuleCall_1()); }
+{ before(grammarAccess.getNotExpressionAccess().getBitwiseNotExpressionParserRuleCall_1()); }
+	ruleBitwiseNotExpression
+{ after(grammarAccess.getNotExpressionAccess().getBitwiseNotExpressionParserRuleCall_1()); }
 )
 
 ;
@@ -10731,9 +10681,9 @@ rule__BitwiseAndExpression__Group__0__Impl
     }
 :
 (
-{ before(grammarAccess.getBitwiseAndExpressionAccess().getBitwiseNotOrCompareOperationParserRuleCall_0()); }
-	ruleBitwiseNotOrCompareOperation
-{ after(grammarAccess.getBitwiseAndExpressionAccess().getBitwiseNotOrCompareOperationParserRuleCall_0()); }
+{ before(grammarAccess.getBitwiseAndExpressionAccess().getCompareOperationParserRuleCall_0()); }
+	ruleCompareOperation
+{ after(grammarAccess.getBitwiseAndExpressionAccess().getCompareOperationParserRuleCall_0()); }
 )
 
 ;
@@ -10992,100 +10942,6 @@ finally {
 
 
 
-rule__BitwiseNotExpression__Group_0__0
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__BitwiseNotExpression__Group_0__0__Impl
-	rule__BitwiseNotExpression__Group_0__1
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__BitwiseNotExpression__Group_0__0__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getBitwiseNotExpressionAccess().getOperatorExpressionAction_0_0()); }
-(
-
-)
-{ after(grammarAccess.getBitwiseNotExpressionAccess().getOperatorExpressionAction_0_0()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-rule__BitwiseNotExpression__Group_0__1
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__BitwiseNotExpression__Group_0__1__Impl
-	rule__BitwiseNotExpression__Group_0__2
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__BitwiseNotExpression__Group_0__1__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getBitwiseNotExpressionAccess().getOperatorAssignment_0_1()); }
-(rule__BitwiseNotExpression__OperatorAssignment_0_1)
-{ after(grammarAccess.getBitwiseNotExpressionAccess().getOperatorAssignment_0_1()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-rule__BitwiseNotExpression__Group_0__2
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__BitwiseNotExpression__Group_0__2__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__BitwiseNotExpression__Group_0__2__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getBitwiseNotExpressionAccess().getSubExpressionsAssignment_0_2()); }
-(rule__BitwiseNotExpression__SubExpressionsAssignment_0_2)
-{ after(grammarAccess.getBitwiseNotExpressionAccess().getSubExpressionsAssignment_0_2()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-
-
-
-
-
-
 rule__CompareOperation__Group__0
     @init {
 		int stackSize = keepStackSize();
@@ -11227,6 +11083,100 @@ rule__CompareOperation__Group_1__2__Impl
 { before(grammarAccess.getCompareOperationAccess().getSubExpressionsAssignment_1_2()); }
 (rule__CompareOperation__SubExpressionsAssignment_1_2)
 { after(grammarAccess.getCompareOperationAccess().getSubExpressionsAssignment_1_2()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+
+
+
+
+
+
+rule__BitwiseNotExpression__Group_0__0
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__BitwiseNotExpression__Group_0__0__Impl
+	rule__BitwiseNotExpression__Group_0__1
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__BitwiseNotExpression__Group_0__0__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getBitwiseNotExpressionAccess().getOperatorExpressionAction_0_0()); }
+(
+
+)
+{ after(grammarAccess.getBitwiseNotExpressionAccess().getOperatorExpressionAction_0_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+rule__BitwiseNotExpression__Group_0__1
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__BitwiseNotExpression__Group_0__1__Impl
+	rule__BitwiseNotExpression__Group_0__2
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__BitwiseNotExpression__Group_0__1__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getBitwiseNotExpressionAccess().getOperatorAssignment_0_1()); }
+(rule__BitwiseNotExpression__OperatorAssignment_0_1)
+{ after(grammarAccess.getBitwiseNotExpressionAccess().getOperatorAssignment_0_1()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+rule__BitwiseNotExpression__Group_0__2
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__BitwiseNotExpression__Group_0__2__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__BitwiseNotExpression__Group_0__2__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getBitwiseNotExpressionAccess().getSubExpressionsAssignment_0_2()); }
+(rule__BitwiseNotExpression__SubExpressionsAssignment_0_2)
+{ after(grammarAccess.getBitwiseNotExpressionAccess().getSubExpressionsAssignment_0_2()); }
 )
 
 ;
@@ -19380,8 +19330,8 @@ rule__BitwiseAndExpression__SubExpressionsAssignment_1_1_1
     }
 :
 (
-{ before(grammarAccess.getBitwiseAndExpressionAccess().getSubExpressionsBitwiseNotOrCompareOperationParserRuleCall_1_1_1_0()); }
-	ruleBitwiseNotOrCompareOperation{ after(grammarAccess.getBitwiseAndExpressionAccess().getSubExpressionsBitwiseNotOrCompareOperationParserRuleCall_1_1_1_0()); }
+{ before(grammarAccess.getBitwiseAndExpressionAccess().getSubExpressionsCompareOperationParserRuleCall_1_1_1_0()); }
+	ruleCompareOperation{ after(grammarAccess.getBitwiseAndExpressionAccess().getSubExpressionsCompareOperationParserRuleCall_1_1_1_0()); }
 )
 
 ;
@@ -19395,38 +19345,8 @@ rule__BitwiseAndExpression__SubExpressionsAssignment_1_2_1
     }
 :
 (
-{ before(grammarAccess.getBitwiseAndExpressionAccess().getSubExpressionsBitwiseNotOrCompareOperationParserRuleCall_1_2_1_0()); }
-	ruleBitwiseNotOrCompareOperation{ after(grammarAccess.getBitwiseAndExpressionAccess().getSubExpressionsBitwiseNotOrCompareOperationParserRuleCall_1_2_1_0()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__BitwiseNotExpression__OperatorAssignment_0_1
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getBitwiseNotExpressionAccess().getOperatorBitwiseNotOperatorEnumRuleCall_0_1_0()); }
-	ruleBitwiseNotOperator{ after(grammarAccess.getBitwiseNotExpressionAccess().getOperatorBitwiseNotOperatorEnumRuleCall_0_1_0()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__BitwiseNotExpression__SubExpressionsAssignment_0_2
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getBitwiseNotExpressionAccess().getSubExpressionsBitwiseNotExpressionParserRuleCall_0_2_0()); }
-	ruleBitwiseNotExpression{ after(grammarAccess.getBitwiseNotExpressionAccess().getSubExpressionsBitwiseNotExpressionParserRuleCall_0_2_0()); }
+{ before(grammarAccess.getBitwiseAndExpressionAccess().getSubExpressionsCompareOperationParserRuleCall_1_2_1_0()); }
+	ruleCompareOperation{ after(grammarAccess.getBitwiseAndExpressionAccess().getSubExpressionsCompareOperationParserRuleCall_1_2_1_0()); }
 )
 
 ;
@@ -19457,6 +19377,36 @@ rule__CompareOperation__SubExpressionsAssignment_1_2
 (
 { before(grammarAccess.getCompareOperationAccess().getSubExpressionsNotOrValuedExpressionParserRuleCall_1_2_0()); }
 	ruleNotOrValuedExpression{ after(grammarAccess.getCompareOperationAccess().getSubExpressionsNotOrValuedExpressionParserRuleCall_1_2_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__BitwiseNotExpression__OperatorAssignment_0_1
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getBitwiseNotExpressionAccess().getOperatorBitwiseNotOperatorEnumRuleCall_0_1_0()); }
+	ruleBitwiseNotOperator{ after(grammarAccess.getBitwiseNotExpressionAccess().getOperatorBitwiseNotOperatorEnumRuleCall_0_1_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__BitwiseNotExpression__SubExpressionsAssignment_0_2
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getBitwiseNotExpressionAccess().getSubExpressionsBitwiseNotExpressionParserRuleCall_0_2_0()); }
+	ruleBitwiseNotExpression{ after(grammarAccess.getBitwiseNotExpressionAccess().getSubExpressionsBitwiseNotExpressionParserRuleCall_0_2_0()); }
 )
 
 ;

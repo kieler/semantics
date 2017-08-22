@@ -393,42 +393,42 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	public class BitwiseAndExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.BitwiseAndExpression");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cBitwiseNotOrCompareOperationParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final RuleCall cCompareOperationParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
 		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
 		private final Assignment cOperatorAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
 		private final RuleCall cOperatorBitwiseAndOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
-		private final RuleCall cSubExpressionsBitwiseNotOrCompareOperationParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
+		private final RuleCall cSubExpressionsCompareOperationParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
 		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
 		private final Keyword cAmpersandKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
-		private final RuleCall cSubExpressionsBitwiseNotOrCompareOperationParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
+		private final RuleCall cSubExpressionsCompareOperationParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
 		
 		//// Bitwise And Expression Rule
 		//// Directs to the compare rule and may create an operator expression for 'bitwise and' operations
 		//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 		//BitwiseAndExpression Expression:
-		//	BitwiseNotOrCompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
-		//	subExpressions+=BitwiseNotOrCompareOperation) ('&' subExpressions+=BitwiseNotOrCompareOperation)*)?
+		//	CompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
+		//	subExpressions+=CompareOperation) ('&' subExpressions+=CompareOperation)*)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//BitwiseNotOrCompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
-		//subExpressions+=BitwiseNotOrCompareOperation) ('&' subExpressions+=BitwiseNotOrCompareOperation)*)?
+		//CompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
+		//subExpressions+=CompareOperation) ('&' subExpressions+=CompareOperation)*)?
 		public Group getGroup() { return cGroup; }
 
-		//BitwiseNotOrCompareOperation
-		public RuleCall getBitwiseNotOrCompareOperationParserRuleCall_0() { return cBitwiseNotOrCompareOperationParserRuleCall_0; }
+		//CompareOperation
+		public RuleCall getCompareOperationParserRuleCall_0() { return cCompareOperationParserRuleCall_0; }
 
-		//({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator subExpressions+=BitwiseNotOrCompareOperation)
-		//('&' subExpressions+=BitwiseNotOrCompareOperation)*)?
+		//({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator subExpressions+=CompareOperation) ('&'
+		//subExpressions+=CompareOperation)*)?
 		public Group getGroup_1() { return cGroup_1; }
 
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
-		//(operator=BitwiseAndOperator subExpressions+=BitwiseNotOrCompareOperation)
+		//(operator=BitwiseAndOperator subExpressions+=CompareOperation)
 		public Group getGroup_1_1() { return cGroup_1_1; }
 
 		//operator=BitwiseAndOperator
@@ -437,84 +437,23 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//BitwiseAndOperator
 		public RuleCall getOperatorBitwiseAndOperatorEnumRuleCall_1_1_0_0() { return cOperatorBitwiseAndOperatorEnumRuleCall_1_1_0_0; }
 
-		//subExpressions+=BitwiseNotOrCompareOperation
+		//subExpressions+=CompareOperation
 		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
 
-		//BitwiseNotOrCompareOperation
-		public RuleCall getSubExpressionsBitwiseNotOrCompareOperationParserRuleCall_1_1_1_0() { return cSubExpressionsBitwiseNotOrCompareOperationParserRuleCall_1_1_1_0; }
+		//CompareOperation
+		public RuleCall getSubExpressionsCompareOperationParserRuleCall_1_1_1_0() { return cSubExpressionsCompareOperationParserRuleCall_1_1_1_0; }
 
-		//('&' subExpressions+=BitwiseNotOrCompareOperation)*
+		//('&' subExpressions+=CompareOperation)*
 		public Group getGroup_1_2() { return cGroup_1_2; }
 
 		//'&'
 		public Keyword getAmpersandKeyword_1_2_0() { return cAmpersandKeyword_1_2_0; }
 
-		//subExpressions+=BitwiseNotOrCompareOperation
+		//subExpressions+=CompareOperation
 		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
 
-		//BitwiseNotOrCompareOperation
-		public RuleCall getSubExpressionsBitwiseNotOrCompareOperationParserRuleCall_1_2_1_0() { return cSubExpressionsBitwiseNotOrCompareOperationParserRuleCall_1_2_1_0; }
-	}
-
-	public class BitwiseNotOrCompareOperationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.BitwiseNotOrCompareOperation");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cCompareOperationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cBitwiseNotExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		
-		//BitwiseNotOrCompareOperation Expression:
-		//	CompareOperation
-		//	| BitwiseNotExpression
-		@Override public ParserRule getRule() { return rule; }
-
-		//CompareOperation | BitwiseNotExpression
-		public Alternatives getAlternatives() { return cAlternatives; }
-
 		//CompareOperation
-		public RuleCall getCompareOperationParserRuleCall_0() { return cCompareOperationParserRuleCall_0; }
-
-		//BitwiseNotExpression
-		public RuleCall getBitwiseNotExpressionParserRuleCall_1() { return cBitwiseNotExpressionParserRuleCall_1; }
-	}
-
-	public class BitwiseNotExpressionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.BitwiseNotExpression");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final Action cOperatorExpressionAction_0_0 = (Action)cGroup_0.eContents().get(0);
-		private final Assignment cOperatorAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
-		private final RuleCall cOperatorBitwiseNotOperatorEnumRuleCall_0_1_0 = (RuleCall)cOperatorAssignment_0_1.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
-		private final RuleCall cSubExpressionsBitwiseNotExpressionParserRuleCall_0_2_0 = (RuleCall)cSubExpressionsAssignment_0_2.eContents().get(0);
-		private final RuleCall cAtomicExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		
-		//BitwiseNotExpression Expression:
-		//	{OperatorExpression} operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression | AtomicExpression
-		@Override public ParserRule getRule() { return rule; }
-
-		//{OperatorExpression} operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression | AtomicExpression
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//{OperatorExpression} operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression
-		public Group getGroup_0() { return cGroup_0; }
-
-		//{OperatorExpression}
-		public Action getOperatorExpressionAction_0_0() { return cOperatorExpressionAction_0_0; }
-
-		//operator=BitwiseNotOperator
-		public Assignment getOperatorAssignment_0_1() { return cOperatorAssignment_0_1; }
-
-		//BitwiseNotOperator
-		public RuleCall getOperatorBitwiseNotOperatorEnumRuleCall_0_1_0() { return cOperatorBitwiseNotOperatorEnumRuleCall_0_1_0; }
-
-		//subExpressions+=BitwiseNotExpression
-		public Assignment getSubExpressionsAssignment_0_2() { return cSubExpressionsAssignment_0_2; }
-
-		//BitwiseNotExpression
-		public RuleCall getSubExpressionsBitwiseNotExpressionParserRuleCall_0_2_0() { return cSubExpressionsBitwiseNotExpressionParserRuleCall_0_2_0; }
-
-		//AtomicExpression
-		public RuleCall getAtomicExpressionParserRuleCall_1() { return cAtomicExpressionParserRuleCall_1; }
+		public RuleCall getSubExpressionsCompareOperationParserRuleCall_1_2_1_0() { return cSubExpressionsCompareOperationParserRuleCall_1_2_1_0; }
 	}
 
 	public class CompareOperationElements extends AbstractParserRuleElementFinder {
@@ -585,6 +524,46 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getNotExpressionParserRuleCall_1() { return cNotExpressionParserRuleCall_1; }
 	}
 
+	public class BitwiseNotExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.BitwiseNotExpression");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Action cOperatorExpressionAction_0_0 = (Action)cGroup_0.eContents().get(0);
+		private final Assignment cOperatorAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final RuleCall cOperatorBitwiseNotOperatorEnumRuleCall_0_1_0 = (RuleCall)cOperatorAssignment_0_1.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
+		private final RuleCall cSubExpressionsBitwiseNotExpressionParserRuleCall_0_2_0 = (RuleCall)cSubExpressionsAssignment_0_2.eContents().get(0);
+		private final RuleCall cAtomicExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//BitwiseNotExpression Expression:
+		//	{OperatorExpression} operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression | AtomicExpression
+		@Override public ParserRule getRule() { return rule; }
+
+		//{OperatorExpression} operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression | AtomicExpression
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//{OperatorExpression} operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression
+		public Group getGroup_0() { return cGroup_0; }
+
+		//{OperatorExpression}
+		public Action getOperatorExpressionAction_0_0() { return cOperatorExpressionAction_0_0; }
+
+		//operator=BitwiseNotOperator
+		public Assignment getOperatorAssignment_0_1() { return cOperatorAssignment_0_1; }
+
+		//BitwiseNotOperator
+		public RuleCall getOperatorBitwiseNotOperatorEnumRuleCall_0_1_0() { return cOperatorBitwiseNotOperatorEnumRuleCall_0_1_0; }
+
+		//subExpressions+=BitwiseNotExpression
+		public Assignment getSubExpressionsAssignment_0_2() { return cSubExpressionsAssignment_0_2; }
+
+		//BitwiseNotExpression
+		public RuleCall getSubExpressionsBitwiseNotExpressionParserRuleCall_0_2_0() { return cSubExpressionsBitwiseNotExpressionParserRuleCall_0_2_0; }
+
+		//AtomicExpression
+		public RuleCall getAtomicExpressionParserRuleCall_1() { return cAtomicExpressionParserRuleCall_1; }
+	}
+
 	public class NotExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.NotExpression");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -594,17 +573,17 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOperatorNotOperatorEnumRuleCall_0_1_0 = (RuleCall)cOperatorAssignment_0_1.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
 		private final RuleCall cSubExpressionsNotExpressionParserRuleCall_0_2_0 = (RuleCall)cSubExpressionsAssignment_0_2.eContents().get(0);
-		private final RuleCall cAtomicExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cBitwiseNotExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//// Not Expression Rule
 		//// Example: !A, !false, !(A or B)
 		//// At the latter we need the parents to indicate the right binding.
 		//// A 'not expression' can also redirect to an 'atomic expression' to maintain the rule chain.
 		//NotExpression Expression:
-		//	{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | AtomicExpression
+		//	{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | BitwiseNotExpression
 		@Override public ParserRule getRule() { return rule; }
 
-		//{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | AtomicExpression
+		//{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | BitwiseNotExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//{OperatorExpression} operator=NotOperator subExpressions+=NotExpression
@@ -625,8 +604,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//NotExpression
 		public RuleCall getSubExpressionsNotExpressionParserRuleCall_0_2_0() { return cSubExpressionsNotExpressionParserRuleCall_0_2_0; }
 
-		//AtomicExpression
-		public RuleCall getAtomicExpressionParserRuleCall_1() { return cAtomicExpressionParserRuleCall_1; }
+		//BitwiseNotExpression
+		public RuleCall getBitwiseNotExpressionParserRuleCall_1() { return cBitwiseNotExpressionParserRuleCall_1; }
 	}
 
 	public class ValuedExpressionElements extends AbstractParserRuleElementFinder {
@@ -2537,10 +2516,9 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final BitwiseOrExpressionElements pBitwiseOrExpression;
 	private final BitwiseXOrExpressionElements pBitwiseXOrExpression;
 	private final BitwiseAndExpressionElements pBitwiseAndExpression;
-	private final BitwiseNotOrCompareOperationElements pBitwiseNotOrCompareOperation;
-	private final BitwiseNotExpressionElements pBitwiseNotExpression;
 	private final CompareOperationElements pCompareOperation;
 	private final NotOrValuedExpressionElements pNotOrValuedExpression;
+	private final BitwiseNotExpressionElements pBitwiseNotExpression;
 	private final NotExpressionElements pNotExpression;
 	private final ValuedExpressionElements pValuedExpression;
 	private final ShiftLeftExpressionElements pShiftLeftExpression;
@@ -2619,10 +2597,9 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pBitwiseOrExpression = new BitwiseOrExpressionElements();
 		this.pBitwiseXOrExpression = new BitwiseXOrExpressionElements();
 		this.pBitwiseAndExpression = new BitwiseAndExpressionElements();
-		this.pBitwiseNotOrCompareOperation = new BitwiseNotOrCompareOperationElements();
-		this.pBitwiseNotExpression = new BitwiseNotExpressionElements();
 		this.pCompareOperation = new CompareOperationElements();
 		this.pNotOrValuedExpression = new NotOrValuedExpressionElements();
+		this.pBitwiseNotExpression = new BitwiseNotExpressionElements();
 		this.pNotExpression = new NotExpressionElements();
 		this.pValuedExpression = new ValuedExpressionElements();
 		this.pShiftLeftExpression = new ShiftLeftExpressionElements();
@@ -2845,35 +2822,14 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Directs to the compare rule and may create an operator expression for 'bitwise and' operations
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//BitwiseAndExpression Expression:
-	//	BitwiseNotOrCompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
-	//	subExpressions+=BitwiseNotOrCompareOperation) ('&' subExpressions+=BitwiseNotOrCompareOperation)*)?
+	//	CompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
+	//	subExpressions+=CompareOperation) ('&' subExpressions+=CompareOperation)*)?
 	public BitwiseAndExpressionElements getBitwiseAndExpressionAccess() {
 		return pBitwiseAndExpression;
 	}
 	
 	public ParserRule getBitwiseAndExpressionRule() {
 		return getBitwiseAndExpressionAccess().getRule();
-	}
-
-	//BitwiseNotOrCompareOperation Expression:
-	//	CompareOperation
-	//	| BitwiseNotExpression
-	public BitwiseNotOrCompareOperationElements getBitwiseNotOrCompareOperationAccess() {
-		return pBitwiseNotOrCompareOperation;
-	}
-	
-	public ParserRule getBitwiseNotOrCompareOperationRule() {
-		return getBitwiseNotOrCompareOperationAccess().getRule();
-	}
-
-	//BitwiseNotExpression Expression:
-	//	{OperatorExpression} operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression | AtomicExpression
-	public BitwiseNotExpressionElements getBitwiseNotExpressionAccess() {
-		return pBitwiseNotExpression;
-	}
-	
-	public ParserRule getBitwiseNotExpressionRule() {
-		return getBitwiseNotExpressionAccess().getRule();
 	}
 
 	//// Compare Operation Rule
@@ -2903,12 +2859,22 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getNotOrValuedExpressionAccess().getRule();
 	}
 
+	//BitwiseNotExpression Expression:
+	//	{OperatorExpression} operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression | AtomicExpression
+	public BitwiseNotExpressionElements getBitwiseNotExpressionAccess() {
+		return pBitwiseNotExpression;
+	}
+	
+	public ParserRule getBitwiseNotExpressionRule() {
+		return getBitwiseNotExpressionAccess().getRule();
+	}
+
 	//// Not Expression Rule
 	//// Example: !A, !false, !(A or B)
 	//// At the latter we need the parents to indicate the right binding.
 	//// A 'not expression' can also redirect to an 'atomic expression' to maintain the rule chain.
 	//NotExpression Expression:
-	//	{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | AtomicExpression
+	//	{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | BitwiseNotExpression
 	public NotExpressionElements getNotExpressionAccess() {
 		return pNotExpression;
 	}

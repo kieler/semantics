@@ -53,50 +53,6 @@ class KExpressionsSerializeExtensions {
         "`" + hostCodeString.text + "`"
     }
     
-//      ssm: old c code serialization, remove these lines after creating specific serialization for the 
-//      c code generation backend.
-//
-    // Combine operator
-//    def dispatch CharSequence serialize(CombineOperator combineOperator) {
-//        if (combineOperator.equals(CombineOperator::ADD)) {
-//            return 'COMBINE_ADD'
-//        } else if (combineOperator.equals(CombineOperator::MULT)) {
-//            return 'COMBINE_MULT'
-//        } else if (combineOperator.equals(CombineOperator::MAX)) {
-//            return 'COMBINE_MAX'
-//        } else if (combineOperator.equals(CombineOperator::MIN)) {
-//            return 'COMBINE_MIN'
-//        } else if (combineOperator.equals(CombineOperator::OR)) {
-//            return 'COMBINE_OR'
-//        } else if (combineOperator.equals(CombineOperator::AND)) {
-//            return 'OMBINE_AND'
-//        }
-//        // default case combine with +
-//        return 'COMBINE_ADD';
-//    }
-
-//      ssm: old c code serialization, remove these lines after creating specific serialization for the 
-//      c code generation backend.
-//
-//    def initialValue(CombineOperator combineOperator) {
-//        if (combineOperator.equals(CombineOperator::ADD)) {
-//            return '''0'''
-//        } else if (combineOperator.equals(CombineOperator::MULT)) {
-//            return '''1'''
-//        } else if (combineOperator.equals(CombineOperator::MAX)) {
-//            return '''-999999'''
-//        } else if (combineOperator.equals(CombineOperator::MIN)) {
-//            return '''999999'''
-//        } else if (combineOperator.equals(CombineOperator::OR)) {
-//            return '''0'''
-//        } else if (combineOperator.equals(CombineOperator::AND)) {
-//            return '''1'''
-//        }
-//        // default case combine with +
-//        return '''0''';
-//    }
-
-    // -------------------------------------------------------------------------
     protected def String combineOperators(Iterator<Expression> expressions, String separator) {
         var s = ""
         if (!expressions.hasNext) {
@@ -154,12 +110,20 @@ class KExpressionsSerializeExtensions {
     	combineOperators(expression.subExpressions.iterator, " || ")
     }
     
+    protected def CharSequence serializeOperatorExpressionBitwiseNot(OperatorExpression expression) {
+        "~" + expression.subExpressions.head.serialize
+    }
+    
     protected def CharSequence serializeOperatorExpressionBitwiseAnd(OperatorExpression expression) {
     	combineOperators(expression.subExpressions.iterator, " & ")
     }    
     
     protected def CharSequence serializeOperatorExpressionBitwiseOr(OperatorExpression expression) {
     	combineOperators(expression.subExpressions.iterator, " | ")
+    }
+    
+    protected def CharSequence serializeOperatorExpressionBitwiseXOr(OperatorExpression expression) {
+        combineOperators(expression.subExpressions.iterator, " ^ ")
     }
 
     protected def CharSequence serializeOperatorExpressionAdd(OperatorExpression expression) {
@@ -206,27 +170,20 @@ class KExpressionsSerializeExtensions {
             return expression.serializeOperatorExpressionVAL
         } else if (expression.operator == OperatorType::PRE) {
             return expression.serializeOperatorExpressionPRE
-        } else 
-
-//      ssm: old c code serialization, remove these lines after creating specific serialization for the 
-//      c code generation backend.
-//
-//        if (expression.operator == OperatorType::VAL)
-//            return "VAL_SCC(" + expression.subExpressions.head.serialize + ")"
-//
-//        if (expression.operator == OperatorType::PRE)
-//            return "(PRE_" + expression.subExpressions.head.serialize + ")"
-
-        if (expression.operator == OperatorType::NE) {
+        } else if (expression.operator == OperatorType::NE) {
             result = expression.serializeOperatorExpressionNE
         } else if (expression.operator == OperatorType::LOGICAL_AND) {
             result = expression.serializeOperatorExpressionLogicalAnd
         } else if (expression.operator == OperatorType::LOGICAL_OR) {
             result = expression.serializeOperatorExpressionLogicalOr
+        } else if (expression.operator == OperatorType::BITWISE_NOT) {
+            return expression.serializeOperatorExpressionBitwiseNot
         } else if (expression.operator == OperatorType::BITWISE_AND) {
             result = expression.serializeOperatorExpressionBitwiseAnd
         } else if (expression.operator == OperatorType::BITWISE_OR) {
             result = expression.serializeOperatorExpressionBitwiseOr
+        } else if (expression.operator == OperatorType::BITWISE_XOR) {
+            result = expression.serializeOperatorExpressionBitwiseXOr
         } else if (expression.operator == OperatorType::ADD) {
             result = expression.serializeOperatorExpressionAdd
         } else if (expression.operator == OperatorType::SUB) {
@@ -261,7 +218,8 @@ class KExpressionsSerializeExtensions {
     def dispatch CharSequence serialize(OperatorExpression expression) {
 		val result = serializeOperatorExpression(expression)
 		
-		if ((expression.operator == OperatorType::NOT) || 
+		if ((expression.operator == OperatorType::NOT) ||
+		    (expression.operator == OperatorType::BITWISE_NOT) || 
 			(expression.operator == OperatorType::VAL) ||
 			(expression.operator == OperatorType::PRE)) {
 			return result
@@ -324,7 +282,7 @@ class KExpressionsSerializeExtensions {
     }
 
     def dispatch CharSequence serialize(FunctionCall functionCall) {
-        return "<" + functionCall.functionName + functionCall.parameters.serializeParameters + ">"
+        return "extern " + functionCall.functionName + functionCall.parameters.serializeParameters
     }
     
     def protected CharSequence serializeParameters(List<Parameter> parameters) {

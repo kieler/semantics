@@ -124,11 +124,10 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getBitwiseNotOrCompareOperationRule()
-						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
 						|| rule == grammarAccess.getShiftLeftExpressionRule()
@@ -181,11 +180,10 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getBitwiseNotOrCompareOperationRule()
-						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
 						|| rule == grammarAccess.getShiftLeftExpressionRule()
@@ -232,11 +230,10 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getBitwiseNotOrCompareOperationRule()
-						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
 						|| rule == grammarAccess.getShiftLeftExpressionRule()
@@ -285,11 +282,10 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getBitwiseNotOrCompareOperationRule()
-						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
 						|| rule == grammarAccess.getShiftLeftExpressionRule()
@@ -336,11 +332,10 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getBitwiseNotOrCompareOperationRule()
-						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
 						|| rule == grammarAccess.getShiftLeftExpressionRule()
@@ -392,11 +387,10 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getBitwiseNotOrCompareOperationRule()
-						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
 						|| rule == grammarAccess.getShiftLeftExpressionRule()
@@ -445,11 +439,10 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getBitwiseNotOrCompareOperationRule()
-						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
 						|| rule == grammarAccess.getShiftLeftExpressionRule()
@@ -496,11 +489,10 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getBitwiseNotOrCompareOperationRule()
-						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
 						|| rule == grammarAccess.getShiftLeftExpressionRule()
@@ -546,11 +538,10 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getBitwiseNotOrCompareOperationRule()
-						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
 						|| rule == grammarAccess.getShiftLeftExpressionRule()
@@ -597,11 +588,10 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getBitwiseNotOrCompareOperationRule()
-						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
 						|| rule == grammarAccess.getShiftLeftExpressionRule()
@@ -670,11 +660,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *             (
 	 *                 subExpressions+=BitwiseAndExpression_OperatorExpression_1_0 
 	 *                 operator=BitwiseAndOperator 
-	 *                 subExpressions+=BitwiseNotOrCompareOperation 
-	 *                 subExpressions+=BitwiseNotOrCompareOperation*
+	 *                 subExpressions+=CompareOperation 
+	 *                 subExpressions+=CompareOperation*
 	 *             ) | 
-	 *             (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
 	 *             (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *             (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
 	 *             (operator=NotOperator subExpressions+=NotExpression) | 
 	 *             (
 	 *                 subExpressions+=ShiftLeftExpression_OperatorExpression_1_0 
@@ -734,11 +724,10 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     BitwiseAndExpression returns OperatorExpression
 	 *     BitwiseAndExpression.OperatorExpression_1_0 returns OperatorExpression
-	 *     BitwiseNotOrCompareOperation returns OperatorExpression
-	 *     BitwiseNotExpression returns OperatorExpression
 	 *     CompareOperation returns OperatorExpression
 	 *     CompareOperation.OperatorExpression_1_0 returns OperatorExpression
 	 *     NotOrValuedExpression returns OperatorExpression
+	 *     BitwiseNotExpression returns OperatorExpression
 	 *     NotExpression returns OperatorExpression
 	 *     ValuedExpression returns OperatorExpression
 	 *     ShiftLeftExpression returns OperatorExpression
@@ -791,11 +780,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *         (
 	 *             subExpressions+=BitwiseAndExpression_OperatorExpression_1_0 
 	 *             operator=BitwiseAndOperator 
-	 *             subExpressions+=BitwiseNotOrCompareOperation 
-	 *             subExpressions+=BitwiseNotOrCompareOperation*
+	 *             subExpressions+=CompareOperation 
+	 *             subExpressions+=CompareOperation*
 	 *         ) | 
-	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
 	 *         (
 	 *             subExpressions+=ShiftLeftExpression_OperatorExpression_1_0 
@@ -853,11 +842,10 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns BoolValue
 	 *     BitwiseAndExpression returns BoolValue
 	 *     BitwiseAndExpression.OperatorExpression_1_0 returns BoolValue
-	 *     BitwiseNotOrCompareOperation returns BoolValue
-	 *     BitwiseNotExpression returns BoolValue
 	 *     CompareOperation returns BoolValue
 	 *     CompareOperation.OperatorExpression_1_0 returns BoolValue
 	 *     NotOrValuedExpression returns BoolValue
+	 *     BitwiseNotExpression returns BoolValue
 	 *     NotExpression returns BoolValue
 	 *     ValuedExpression returns BoolValue
 	 *     ShiftLeftExpression returns BoolValue
@@ -1036,11 +1024,10 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns FloatValue
 	 *     BitwiseAndExpression returns FloatValue
 	 *     BitwiseAndExpression.OperatorExpression_1_0 returns FloatValue
-	 *     BitwiseNotOrCompareOperation returns FloatValue
-	 *     BitwiseNotExpression returns FloatValue
 	 *     CompareOperation returns FloatValue
 	 *     CompareOperation.OperatorExpression_1_0 returns FloatValue
 	 *     NotOrValuedExpression returns FloatValue
+	 *     BitwiseNotExpression returns FloatValue
 	 *     NotExpression returns FloatValue
 	 *     ValuedExpression returns FloatValue
 	 *     ShiftLeftExpression returns FloatValue
@@ -1093,11 +1080,10 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns FunctionCall
 	 *     BitwiseAndExpression returns FunctionCall
 	 *     BitwiseAndExpression.OperatorExpression_1_0 returns FunctionCall
-	 *     BitwiseNotOrCompareOperation returns FunctionCall
-	 *     BitwiseNotExpression returns FunctionCall
 	 *     CompareOperation returns FunctionCall
 	 *     CompareOperation.OperatorExpression_1_0 returns FunctionCall
 	 *     NotOrValuedExpression returns FunctionCall
+	 *     BitwiseNotExpression returns FunctionCall
 	 *     NotExpression returns FunctionCall
 	 *     ValuedExpression returns FunctionCall
 	 *     ShiftLeftExpression returns FunctionCall
@@ -1156,11 +1142,10 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns IntValue
 	 *     BitwiseAndExpression returns IntValue
 	 *     BitwiseAndExpression.OperatorExpression_1_0 returns IntValue
-	 *     BitwiseNotOrCompareOperation returns IntValue
-	 *     BitwiseNotExpression returns IntValue
 	 *     CompareOperation returns IntValue
 	 *     CompareOperation.OperatorExpression_1_0 returns IntValue
 	 *     NotOrValuedExpression returns IntValue
+	 *     BitwiseNotExpression returns IntValue
 	 *     NotExpression returns IntValue
 	 *     ValuedExpression returns IntValue
 	 *     ShiftLeftExpression returns IntValue
@@ -1225,11 +1210,10 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns ReferenceCall
 	 *     BitwiseAndExpression returns ReferenceCall
 	 *     BitwiseAndExpression.OperatorExpression_1_0 returns ReferenceCall
-	 *     BitwiseNotOrCompareOperation returns ReferenceCall
-	 *     BitwiseNotExpression returns ReferenceCall
 	 *     CompareOperation returns ReferenceCall
 	 *     CompareOperation.OperatorExpression_1_0 returns ReferenceCall
 	 *     NotOrValuedExpression returns ReferenceCall
+	 *     BitwiseNotExpression returns ReferenceCall
 	 *     NotExpression returns ReferenceCall
 	 *     ValuedExpression returns ReferenceCall
 	 *     ShiftLeftExpression returns ReferenceCall
@@ -1296,11 +1280,10 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns StringValue
 	 *     BitwiseAndExpression returns StringValue
 	 *     BitwiseAndExpression.OperatorExpression_1_0 returns StringValue
-	 *     BitwiseNotOrCompareOperation returns StringValue
-	 *     BitwiseNotExpression returns StringValue
 	 *     CompareOperation returns StringValue
 	 *     CompareOperation.OperatorExpression_1_0 returns StringValue
 	 *     NotOrValuedExpression returns StringValue
+	 *     BitwiseNotExpression returns StringValue
 	 *     NotExpression returns StringValue
 	 *     ValuedExpression returns StringValue
 	 *     ShiftLeftExpression returns StringValue
@@ -1353,11 +1336,10 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns TextExpression
 	 *     BitwiseAndExpression returns TextExpression
 	 *     BitwiseAndExpression.OperatorExpression_1_0 returns TextExpression
-	 *     BitwiseNotOrCompareOperation returns TextExpression
-	 *     BitwiseNotExpression returns TextExpression
 	 *     CompareOperation returns TextExpression
 	 *     CompareOperation.OperatorExpression_1_0 returns TextExpression
 	 *     NotOrValuedExpression returns TextExpression
+	 *     BitwiseNotExpression returns TextExpression
 	 *     NotExpression returns TextExpression
 	 *     ValuedExpression returns TextExpression
 	 *     ShiftLeftExpression returns TextExpression
@@ -1409,11 +1391,10 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns ValuedObjectReference
 	 *     BitwiseAndExpression returns ValuedObjectReference
 	 *     BitwiseAndExpression.OperatorExpression_1_0 returns ValuedObjectReference
-	 *     BitwiseNotOrCompareOperation returns ValuedObjectReference
-	 *     BitwiseNotExpression returns ValuedObjectReference
 	 *     CompareOperation returns ValuedObjectReference
 	 *     CompareOperation.OperatorExpression_1_0 returns ValuedObjectReference
 	 *     NotOrValuedExpression returns ValuedObjectReference
+	 *     BitwiseNotExpression returns ValuedObjectReference
 	 *     NotExpression returns ValuedObjectReference
 	 *     ValuedExpression returns ValuedObjectReference
 	 *     ShiftLeftExpression returns ValuedObjectReference
@@ -1472,11 +1453,10 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns VectorValue
 	 *     BitwiseAndExpression returns VectorValue
 	 *     BitwiseAndExpression.OperatorExpression_1_0 returns VectorValue
-	 *     BitwiseNotOrCompareOperation returns VectorValue
-	 *     BitwiseNotExpression returns VectorValue
 	 *     CompareOperation returns VectorValue
 	 *     CompareOperation.OperatorExpression_1_0 returns VectorValue
 	 *     NotOrValuedExpression returns VectorValue
+	 *     BitwiseNotExpression returns VectorValue
 	 *     NotExpression returns VectorValue
 	 *     ValuedExpression returns VectorValue
 	 *     ShiftLeftExpression returns VectorValue

@@ -3190,11 +3190,11 @@ ruleBitwiseAndExpression returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getBitwiseAndExpressionAccess().getBitwiseNotOrCompareOperationParserRuleCall_0()); 
+        newCompositeNode(grammarAccess.getBitwiseAndExpressionAccess().getCompareOperationParserRuleCall_0()); 
     }
-    this_BitwiseNotOrCompareOperation_0=ruleBitwiseNotOrCompareOperation
+    this_CompareOperation_0=ruleCompareOperation
     { 
-        $current = $this_BitwiseNotOrCompareOperation_0.current; 
+        $current = $this_CompareOperation_0.current; 
         afterParserOrEnumRuleCall();
     }
 ((
@@ -3227,9 +3227,9 @@ ruleBitwiseAndExpression returns [EObject current=null]
 )(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getBitwiseAndExpressionAccess().getSubExpressionsBitwiseNotOrCompareOperationParserRuleCall_1_1_1_0()); 
+	        newCompositeNode(grammarAccess.getBitwiseAndExpressionAccess().getSubExpressionsCompareOperationParserRuleCall_1_1_1_0()); 
 	    }
-		lv_subExpressions_3_0=ruleBitwiseNotOrCompareOperation		{
+		lv_subExpressions_3_0=ruleCompareOperation		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getBitwiseAndExpressionRule());
 	        }
@@ -3237,7 +3237,7 @@ ruleBitwiseAndExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_3_0, 
-        		"de.cau.cs.kieler.kexpressions.KExpressions.BitwiseNotOrCompareOperation");
+        		"de.cau.cs.kieler.kexpressions.KExpressions.CompareOperation");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3249,9 +3249,9 @@ ruleBitwiseAndExpression returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getBitwiseAndExpressionAccess().getSubExpressionsBitwiseNotOrCompareOperationParserRuleCall_1_2_1_0()); 
+	        newCompositeNode(grammarAccess.getBitwiseAndExpressionAccess().getSubExpressionsCompareOperationParserRuleCall_1_2_1_0()); 
 	    }
-		lv_subExpressions_5_0=ruleBitwiseNotOrCompareOperation		{
+		lv_subExpressions_5_0=ruleCompareOperation		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getBitwiseAndExpressionRule());
 	        }
@@ -3259,137 +3259,12 @@ ruleBitwiseAndExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_5_0, 
-        		"de.cau.cs.kieler.kexpressions.KExpressions.BitwiseNotOrCompareOperation");
+        		"de.cau.cs.kieler.kexpressions.KExpressions.CompareOperation");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
 ))*)?)
-;
-
-
-
-
-
-// Entry rule entryRuleBitwiseNotOrCompareOperation
-entryRuleBitwiseNotOrCompareOperation returns [EObject current=null] 
-	:
-	{ newCompositeNode(grammarAccess.getBitwiseNotOrCompareOperationRule()); }
-	 iv_ruleBitwiseNotOrCompareOperation=ruleBitwiseNotOrCompareOperation 
-	 { $current=$iv_ruleBitwiseNotOrCompareOperation.current; } 
-	 EOF 
-;
-
-// Rule BitwiseNotOrCompareOperation
-ruleBitwiseNotOrCompareOperation returns [EObject current=null] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-(
-	{ 
-	  /* */ 
-	}
-    { 
-        newCompositeNode(grammarAccess.getBitwiseNotOrCompareOperationAccess().getCompareOperationParserRuleCall_0()); 
-    }
-    this_CompareOperation_0=ruleCompareOperation
-    { 
-        $current = $this_CompareOperation_0.current; 
-        afterParserOrEnumRuleCall();
-    }
-
-    |
-	{ 
-	  /* */ 
-	}
-    { 
-        newCompositeNode(grammarAccess.getBitwiseNotOrCompareOperationAccess().getBitwiseNotExpressionParserRuleCall_1()); 
-    }
-    this_BitwiseNotExpression_1=ruleBitwiseNotExpression
-    { 
-        $current = $this_BitwiseNotExpression_1.current; 
-        afterParserOrEnumRuleCall();
-    }
-)
-;
-
-
-
-
-
-// Entry rule entryRuleBitwiseNotExpression
-entryRuleBitwiseNotExpression returns [EObject current=null] 
-	:
-	{ newCompositeNode(grammarAccess.getBitwiseNotExpressionRule()); }
-	 iv_ruleBitwiseNotExpression=ruleBitwiseNotExpression 
-	 { $current=$iv_ruleBitwiseNotExpression.current; } 
-	 EOF 
-;
-
-// Rule BitwiseNotExpression
-ruleBitwiseNotExpression returns [EObject current=null] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-(((
-	{ 
-	  /* */ 
-	}
-    {
-        $current = forceCreateModelElement(
-            grammarAccess.getBitwiseNotExpressionAccess().getOperatorExpressionAction_0_0(),
-            $current);
-    }
-)(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getBitwiseNotExpressionAccess().getOperatorBitwiseNotOperatorEnumRuleCall_0_1_0()); 
-	    }
-		lv_operator_1_0=ruleBitwiseNotOperator		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getBitwiseNotExpressionRule());
-	        }
-       		set(
-       			$current, 
-       			"operator",
-        		lv_operator_1_0, 
-        		"de.cau.cs.kieler.kexpressions.KExpressions.BitwiseNotOperator");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getBitwiseNotExpressionAccess().getSubExpressionsBitwiseNotExpressionParserRuleCall_0_2_0()); 
-	    }
-		lv_subExpressions_2_0=ruleBitwiseNotExpression		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getBitwiseNotExpressionRule());
-	        }
-       		add(
-       			$current, 
-       			"subExpressions",
-        		lv_subExpressions_2_0, 
-        		"de.cau.cs.kieler.kexpressions.KExpressions.BitwiseNotExpression");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-))
-    |
-	{ 
-	  /* */ 
-	}
-    { 
-        newCompositeNode(grammarAccess.getBitwiseNotExpressionAccess().getAtomicExpressionParserRuleCall_1()); 
-    }
-    this_AtomicExpression_3=ruleAtomicExpression
-    { 
-        $current = $this_AtomicExpression_3.current; 
-        afterParserOrEnumRuleCall();
-    }
-)
 ;
 
 
@@ -3520,6 +3395,85 @@ ruleNotOrValuedExpression returns [EObject current=null]
 
 
 
+// Entry rule entryRuleBitwiseNotExpression
+entryRuleBitwiseNotExpression returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getBitwiseNotExpressionRule()); }
+	 iv_ruleBitwiseNotExpression=ruleBitwiseNotExpression 
+	 { $current=$iv_ruleBitwiseNotExpression.current; } 
+	 EOF 
+;
+
+// Rule BitwiseNotExpression
+ruleBitwiseNotExpression returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(((
+	{ 
+	  /* */ 
+	}
+    {
+        $current = forceCreateModelElement(
+            grammarAccess.getBitwiseNotExpressionAccess().getOperatorExpressionAction_0_0(),
+            $current);
+    }
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getBitwiseNotExpressionAccess().getOperatorBitwiseNotOperatorEnumRuleCall_0_1_0()); 
+	    }
+		lv_operator_1_0=ruleBitwiseNotOperator		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getBitwiseNotExpressionRule());
+	        }
+       		set(
+       			$current, 
+       			"operator",
+        		lv_operator_1_0, 
+        		"de.cau.cs.kieler.kexpressions.KExpressions.BitwiseNotOperator");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getBitwiseNotExpressionAccess().getSubExpressionsBitwiseNotExpressionParserRuleCall_0_2_0()); 
+	    }
+		lv_subExpressions_2_0=ruleBitwiseNotExpression		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getBitwiseNotExpressionRule());
+	        }
+       		add(
+       			$current, 
+       			"subExpressions",
+        		lv_subExpressions_2_0, 
+        		"de.cau.cs.kieler.kexpressions.KExpressions.BitwiseNotExpression");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getBitwiseNotExpressionAccess().getAtomicExpressionParserRuleCall_1()); 
+    }
+    this_AtomicExpression_3=ruleAtomicExpression
+    { 
+        $current = $this_AtomicExpression_3.current; 
+        afterParserOrEnumRuleCall();
+    }
+)
+;
+
+
+
+
+
 // Entry rule entryRuleNotExpression
 entryRuleNotExpression returns [EObject current=null] 
 	:
@@ -3585,11 +3539,11 @@ ruleNotExpression returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getNotExpressionAccess().getAtomicExpressionParserRuleCall_1()); 
+        newCompositeNode(grammarAccess.getNotExpressionAccess().getBitwiseNotExpressionParserRuleCall_1()); 
     }
-    this_AtomicExpression_3=ruleAtomicExpression
+    this_BitwiseNotExpression_3=ruleBitwiseNotExpression
     { 
-        $current = $this_AtomicExpression_3.current; 
+        $current = $this_BitwiseNotExpression_3.current; 
         afterParserOrEnumRuleCall();
     }
 )
