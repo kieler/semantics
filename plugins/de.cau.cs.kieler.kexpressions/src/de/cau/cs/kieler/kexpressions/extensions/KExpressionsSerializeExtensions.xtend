@@ -126,6 +126,18 @@ class KExpressionsSerializeExtensions {
         combineOperators(expression.subExpressions.iterator, " ^ ")
     }
 
+    protected def CharSequence serializeOperatorExpressionShiftLeft(OperatorExpression expression) {
+        combineOperators(expression.subExpressions.iterator, " << ")
+    }
+    
+    protected def CharSequence serializeOperatorExpressionShiftRight(OperatorExpression expression) {
+        combineOperators(expression.subExpressions.iterator, " >> ")
+    }
+    
+    protected def CharSequence serializeOperatorExpressionShiftRightUnsigned(OperatorExpression expression) {
+        combineOperators(expression.subExpressions.iterator, " >>> ")
+    }
+    
     protected def CharSequence serializeOperatorExpressionAdd(OperatorExpression expression) {
     	combineOperators(expression.subExpressions.iterator, " + ")
     }
@@ -184,6 +196,12 @@ class KExpressionsSerializeExtensions {
             result = expression.serializeOperatorExpressionBitwiseOr
         } else if (expression.operator == OperatorType::BITWISE_XOR) {
             result = expression.serializeOperatorExpressionBitwiseXOr
+        } else if (expression.operator == OperatorType::SHIFT_LEFT) {
+            result = expression.serializeOperatorExpressionShiftLeft
+        } else if (expression.operator == OperatorType::SHIFT_RIGHT) {
+            result = expression.serializeOperatorExpressionShiftRight
+        } else if (expression.operator == OperatorType::SHIFT_RIGHT_UNSIGNED) {
+            result = expression.serializeOperatorExpressionShiftRightUnsigned
         } else if (expression.operator == OperatorType::ADD) {
             result = expression.serializeOperatorExpressionAdd
         } else if (expression.operator == OperatorType::SUB) {

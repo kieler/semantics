@@ -216,6 +216,18 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
         combineOperatorsHR(expression.subExpressions.iterator, " ^ ")
     }
 
+    protected def CharSequence serializeHROperatorExpressionShiftLeft(OperatorExpression expression) {
+        combineOperators(expression.subExpressions.iterator, " << ")
+    }
+    
+    protected def CharSequence serializeHROperatorExpressionShiftRight(OperatorExpression expression) {
+        combineOperators(expression.subExpressions.iterator, " >> ")
+    }
+    
+    protected def CharSequence serializeHROperatorExpressionShiftRightUnsigned(OperatorExpression expression) {
+        combineOperators(expression.subExpressions.iterator, " >>> ")
+    }
+
     protected def CharSequence serializeHROperatorExpressionAdd(OperatorExpression expression) {
     	combineOperatorsHR(expression.subExpressions.iterator, " + ")
     }
