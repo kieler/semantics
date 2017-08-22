@@ -99,6 +99,7 @@ public abstract class AbstractKiSimSyntacticSequencer extends AbstractSyntacticS
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) '{' values+=VectorValueMember
 	 *     (rule start) (ambiguity) operator=SubOperator
+	 *     (rule start) (ambiguity) subExpressions+=AtomicValuedExpression
 	 *     (rule start) (ambiguity) value=FLOAT
 	 *     (rule start) (ambiguity) value=INT
 	 *     (rule start) (ambiguity) value=STRING
@@ -113,6 +114,7 @@ public abstract class AbstractKiSimSyntacticSequencer extends AbstractSyntacticS
 	 *     ('(' ('('* '(')*)?
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) operator=BitwiseNotOperator
 	 *     (rule start) (ambiguity) operator=NotOperator
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
@@ -129,6 +131,7 @@ public abstract class AbstractKiSimSyntacticSequencer extends AbstractSyntacticS
 	 *     (rule start) (ambiguity) operator=PreOperator
 	 *     (rule start) (ambiguity) operator=SubOperator
 	 *     (rule start) (ambiguity) operator=ValOperator
+	 *     (rule start) (ambiguity) subExpressions+=AtomicValuedExpression
 	 *     (rule start) (ambiguity) text=HOSTCODE
 	 *     (rule start) (ambiguity) value=BOOLEAN
 	 *     (rule start) (ambiguity) value=FLOAT
@@ -147,6 +150,7 @@ public abstract class AbstractKiSimSyntacticSequencer extends AbstractSyntacticS
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) operator=SubOperator
+	 *     (rule start) (ambiguity) subExpressions+=AtomicValuedExpression
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_4_0__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
@@ -158,8 +162,10 @@ public abstract class AbstractKiSimSyntacticSequencer extends AbstractSyntacticS
 	 *     ('('* '(')*
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     (rule start) '(' (ambiguity) operator=BitwiseNotOperator
 	 *     (rule start) '(' (ambiguity) operator=NotOperator
 	 *     (rule start) '(' (ambiguity) {OperatorExpression.subExpressions+=}
+	 *     (rule start) (ambiguity) operator=BitwiseNotOperator
 	 *     (rule start) (ambiguity) operator=NotOperator
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
@@ -172,6 +178,7 @@ public abstract class AbstractKiSimSyntacticSequencer extends AbstractSyntacticS
 	 *     ('('* '(')+
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) operator=BitwiseNotOperator
 	 *     (rule start) (ambiguity) operator=NotOperator
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
