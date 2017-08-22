@@ -12,8 +12,6 @@
  */
 package de.cau.cs.kieler.sccharts.test.c.simulation
 
-import de.cau.cs.kieler.kicool.compilation.Compile
-import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
 import de.cau.cs.kieler.simulation.core.SimulationEvent
@@ -22,22 +20,19 @@ import de.cau.cs.kieler.simulation.core.SimulationListener
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.StepAction
 import de.cau.cs.kieler.simulation.handlers.ExecutableSimulator
+import de.cau.cs.kieler.simulation.handlers.TraceDataProvider
 import de.cau.cs.kieler.simulation.handlers.TraceFinishedEvent
+import de.cau.cs.kieler.simulation.handlers.TraceHandler
 import de.cau.cs.kieler.simulation.handlers.TraceMismatchEvent
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.TestModelData
-import java.io.ByteArrayInputStream
-import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.core.resources.IResource
 import org.junit.Test
 import org.junit.runner.RunWith
 
-import static org.junit.Assert.*
 import static de.cau.cs.kieler.simulation.StandaloneSimulationEnvironment.*
-import de.cau.cs.kieler.simulation.SimulationUtil
-import org.eclipse.core.resources.IResource
-import de.cau.cs.kieler.simulation.handlers.TraceDataProvider
-import de.cau.cs.kieler.simulation.handlers.TraceHandler
+import static org.junit.Assert.*
 
 /**
  * Tests all SCCharts compiled to C executables with their eso files.
@@ -74,9 +69,9 @@ class SCChartsNetlistSimulationTest extends AbstractXTextModelRepositoryTest<SCC
         && modelData.tracePaths.exists[fileName.toString.endsWith("eso") || fileName.toString.endsWith("ktrace")]
         && modelData.modelProperties.contains("sccharts")
         && !modelData.modelProperties.contains("must-fail")
-        && modelData.modelProperties.contains("known-to-fail") // TODO Test them anyway
-        //&& !modelData.modelProperties.contains("not-asc")
-        //&& !modelData.modelProperties.contains("not-sasc")
+        && !modelData.modelProperties.contains("known-to-fail") // TODO Test them anyway?
+        && !modelData.modelProperties.contains("not-asc")
+        && !modelData.modelProperties.contains("not-sasc")
         && !modelData.modelProperties.contains("simulation-fails")
         && !modelData.additionalProperties.containsKey("c-simulation") // case: c-simulation = false
     }
@@ -103,7 +98,7 @@ class SCChartsNetlistSimulationTest extends AbstractXTextModelRepositoryTest<SCC
             // Register for events    
             SimulationManager.addListener(this)
             
-            for (traceFilePath : modelData.tracePaths.filter[fileName.toString.endsWith("eso")]) {
+            for (traceFilePath : modelData.tracePaths.filter[fileName.toString.endsWith("eso") || fileName.toString.endsWith("ktrace")]) {
                 val traceFile = standaloneSim.project.getFile(traceFilePath.fileName.toString)
                 traceFile.createLink(modelData.repositoryPath.resolve(traceFilePath).toUri, IResource.ALLOW_MISSING_LOCAL, null)
                 assertTrue("Could not link to trace file", traceFile.exists)
