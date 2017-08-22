@@ -143,6 +143,7 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
 		if (operatorType == OperatorType::BITWISE_OR) return 10;
 		if (operatorType == OperatorType::LOGICAL_AND) return 11;
 		if (operatorType == OperatorType::LOGICAL_OR) return 12;
+		if (operatorType == OperatorType::CONDITIONAL) return 13;
 		return 99
 	}
 	
@@ -254,7 +255,18 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
     protected def CharSequence serializeHROperatorExpressionMod(OperatorExpression expression) {
     	combineOperatorsHR(expression.subExpressions.iterator, " % ")
     }        
-        
+    
+    protected def CharSequence serializeHROperatorExpressionConditional(OperatorExpression expression) {
+        if (expression.subExpressions.size == 3) {
+            return expression.subExpressions.head.serializeHR + " ? " +
+                expression.subExpressions.get(1).serializeHR + " : " + 
+                expression.subExpressions.get(2).serializeHR  
+        } else {
+            throw new IllegalArgumentException("An OperatorExpression with a ternary conditional has " + 
+                expression.subExpressions.size + " arguments.")
+        }
+    } 
+            
     // Expand a complex expression.
     protected def CharSequence serializeHROperatorExpression(OperatorExpression expression) {
         var CharSequence result = ""
@@ -305,6 +317,8 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
             result = expression.serializeHROperatorExpressionDiv
         } else if (expression.operator == OperatorType::MOD) {
             result = expression.serializeHROperatorExpressionMod
+        } else if (expression.operator == OperatorType::CONDITIONAL) {
+            result = expression.serializeHROperatorExpressionConditional
         }  
             
         return result

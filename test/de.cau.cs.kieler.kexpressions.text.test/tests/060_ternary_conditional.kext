@@ -1,0 +1,54 @@
+/* KEXT Test File for atomic operations
+ * 
+ * @author ssm
+ * @date 2015-06-09
+ */
+bool A;
+signal int SI;
+int I, I2, I3;
+
+@check "ternary.conditional.literal.literal"
+I = A ? 0 : 1
+
+@check "ternary.conditional.reference.literal"
+I = A ? I2 : 1
+
+@check "ternary.conditional.literal.reference"
+I = A ? 0 : I2
+
+@check "ternary.conditional.reference.reference"
+I = A ? I2 : I3
+
+
+@check "ternary.conditional.expression.literal"
+@readable "I = A ? 0 * 1 : 1"
+I = A ? (0 * 1) : 1
+
+@check "ternary.conditional.expression.literal#002"
+@readable "I = A ? I2 + 1 : 1"
+I = A ? (I2 + 1) : 1
+
+@check "ternary.conditional.expression.reference"
+@readable "I = A ? 0 * 1 : I3"
+I = A ? (0 * 1) : I3
+
+@check "ternary.conditional.expression.reference#002"
+@readable "I = A ? I2 * 1 : 1"
+I = A ? (I2 * 1) : 1
+
+
+@check "ternary.conditional.expression.expression"
+@readable "I = A ? 0 * 1 : 0 + 1"
+I = A ? (0 * 1) : (0 + 1)
+
+@check "ternary.conditional.expression.expression#002"
+@readable "I = A ? I2 * 1 : 0 + 1"
+I = A ? (I2 * 1) : (0 + 1)
+
+@check "ternary.conditional.expression.expression#003"
+@readable "I = A ? 0 * 1 : I3 + 1"
+I = A ? (0 * 1) : (I3 + 1)
+
+@check "ternary.conditional.expression.expression#004"
+@readable "I = A ? I2 * 1 : I3 + 1"
+I = A ? (I2 * 1) : (I3 + 1)

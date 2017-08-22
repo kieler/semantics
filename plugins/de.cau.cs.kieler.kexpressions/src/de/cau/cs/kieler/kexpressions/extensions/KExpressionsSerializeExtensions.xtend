@@ -160,7 +160,19 @@ class KExpressionsSerializeExtensions {
 
     protected def CharSequence serializeOperatorExpressionMod(OperatorExpression expression) {
     	combineOperators(expression.subExpressions.iterator, " % ")
+    }
+    
+    protected def CharSequence serializeOperatorExpressionConditional(OperatorExpression expression) {
+        if (expression.subExpressions.size == 3) {
+            return expression.subExpressions.head.serialize + " ? " +
+                expression.subExpressions.get(1).serialize + " : " + 
+                expression.subExpressions.get(2).serialize  
+        } else {
+            throw new IllegalArgumentException("An OperatorExpression with a ternary conditional has " + 
+                expression.subExpressions.size + " arguments.")
+        }
     }        
+            
         
     // Expand a complex expression.
     protected def CharSequence serializeOperatorExpression(OperatorExpression expression) {
@@ -212,6 +224,8 @@ class KExpressionsSerializeExtensions {
             result = expression.serializeOperatorExpressionDiv
         } else if (expression.operator == OperatorType::MOD) {
             result = expression.serializeOperatorExpressionMod
+        } else if (expression.operator == OperatorType::CONDITIONAL) {
+            result = expression.serializeOperatorExpressionConditional
         }  
             
         return result
