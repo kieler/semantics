@@ -507,12 +507,14 @@ class DataPoolView extends ViewPart {
                 } else {
                     // Execute in UI thread
                     PromUIPlugin.asyncExecInUI[
+                        val pool = e.pool
+                        if(pool == SimulationManager.instance?.currentPool) {
                             // Update tick info
                             dataPoolView.updateTickInfo(e)
                             // Set pool data
-                            dataPoolView.setDataPool(SimulationManager.instance?.currentPool)
-                        ]
-                        
+                            dataPoolView.setDataPool(pool)
+                        }
+                    ]
 //                    dataPoolView.highlightDiagram
                 }
             }

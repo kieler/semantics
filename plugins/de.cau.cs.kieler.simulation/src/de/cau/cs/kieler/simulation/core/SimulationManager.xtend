@@ -501,7 +501,7 @@ class SimulationManager extends Configurable {
                             event.type = SimulationEventType.ERROR
                             event.message = "Tick needed longer than desired. "
                                           + "(needed: "+(currentTime-timeBeforeTick)+" ms, "
-                                          + "desired: "+(timeBeforeTick-nextTickTime)+ " ms)"
+                                          + "desired: "+(nextTickTime-timeBeforeTick)+ " ms)"
                             System.err.println(event.message)
                             fireEvent(event)
                         }
