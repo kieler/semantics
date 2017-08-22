@@ -119,7 +119,6 @@ class SCGDependencyExtensions {
                 if (sourceNode.operator == AssignOperator.ASSIGN && targetNode.operator == AssignOperator.ASSIGN) {
                     val sourceExpression = sourceNode.expression
                     val targetExpression = targetNode.expression
-                    //TODO als: @ssm is this really the correct dependency analysis? x /= 5 confluent to x += 5
                     if (sourceExpression.isSameValue(targetExpression)) {
                         dependency.confluent = true
                     } else {
@@ -134,7 +133,7 @@ class SCGDependencyExtensions {
         dependency
     }
     
-    private def boolean areOldConfluentSetter(Assignment sourceAssignment, Assignment targetAssignment) {
+    def boolean areOldConfluentSetter(Assignment sourceAssignment, Assignment targetAssignment) {
         val sourceExpression = sourceAssignment.expression
         val targetExpression = targetAssignment.expression
         if (sourceExpression instanceof OperatorExpression) {

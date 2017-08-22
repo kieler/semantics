@@ -353,9 +353,11 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
             // But only if this is not a full build because in a full build this is done in the initialization.
             if(kind != FULL_BUILD) {
                 for(f : files) {
-                    monitor.subTask("Loading resource "+f.name)
-                    val res = ModelImporter.getResource(f, resourceSet)
-                    ModelImporter.reload(res, resourceSet)
+                    if(!monitor.isCanceled) {
+                        monitor.subTask("Loading resource "+f.name)
+                        val res = ModelImporter.getResource(f, resourceSet)
+                        ModelImporter.reload(res, resourceSet)
+                    }
                 }
                 // Re-link all models 
                 relink(resourceSet)
@@ -608,9 +610,11 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      */
     private def void relink(ResourceSet resourceSet) {
         for(res : resourceSet.resources) {
-            if(res instanceof XtextResource) {
-                monitor.subTask("Linking resource "+res.URI.lastSegment)
-                res.relink()
+            if(!monitor.isCanceled) {
+                if(res instanceof XtextResource) {
+                    monitor.subTask("Linking resource "+res.URI.lastSegment)
+                    res.relink()
+                }
             }
         }
     }

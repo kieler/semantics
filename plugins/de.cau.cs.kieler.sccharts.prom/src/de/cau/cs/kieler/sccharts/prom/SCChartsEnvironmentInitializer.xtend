@@ -29,15 +29,16 @@ import java.util.List
 class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
     
     override getDefaultEnvironments() {
-        val List<EnvironmentData> datas = newArrayList()
+        val List<EnvironmentData> datas = newArrayList
         // Mindstorms NXT
-        datas += getMindstormsNXTDefaultEnvironment()
+        datas += getMindstormsNXTDefaultEnvironment
         // Mindstorms NXT MAC
-        datas += getMindstormsNXTMacDefaultEnvironment()
+        datas += getMindstormsNXTMacDefaultEnvironment
         // Mindstorms EV3
-        datas += getMindstormsEV3DefaultEnvironment()
+        datas += getMindstormsEV3DefaultEnvironment
         // Arduino
-        datas += getArduinoDefaultEnvironment()
+        datas += getArduinoCDTDefaultEnvironment
+        datas += getArduinoGenericDefaultEnvironment
         return datas
     }
     
@@ -135,22 +136,44 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
      * Creates the default environment for Arduino development.
      * @return  The default environment for Arduino development.
      */
-    private static def EnvironmentData getArduinoDefaultEnvironment(){
+    private static def EnvironmentData getArduinoGenericDefaultEnvironment(){
         var launchData = new KiCoLaunchData()
         
         val simTemplateFile = new FileData("assets/CSimulation.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/CSimulation.ftl") 
         val simTemplateSnippet = new FileData("assets/CSimulationSnippets.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/CSimulationSnippets.ftl")
-        val buildConfigFile = new FileData("assets/BuildConfig.kibuild", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/arduino/ArduinoBuildConfig.kibuild")
+        val buildConfigFile = new FileData("assets/BuildConfig.kibuild", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/arduino/ArduinoGenericBuildConfig.kibuild")
         val mainTemplateFile = new FileData("assets/main.ftl", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/arduino/main.ftl")
         val snippetsFolder = new FileData("assets", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/arduino/snippets")
         val initialResources = #[simTemplateFile, simTemplateSnippet, buildConfigFile, mainTemplateFile, snippetsFolder] 
         
-        val env = new EnvironmentData("Arduino")
+        val env = new EnvironmentData("Arduino (Generic)")
         env.launchData = launchData
         env.initialResources = initialResources
         env.modelFile = "${project_name}Model"
         // Eclipse Arduino V4 project wizard
-        env.associatedProjectWizardClass = "io.sloeber.ui.wizard.newsketch.NewSketchWizard"
+        env.associatedProjectWizardClass = "org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard"
+        return env
+    }
+    
+    /**
+     * Creates the default environment for Arduino development.
+     * @return  The default environment for Arduino development.
+     */
+    private static def EnvironmentData getArduinoCDTDefaultEnvironment(){
+        var launchData = new KiCoLaunchData()
+        
+        val simTemplateFile = new FileData("assets/CSimulation.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/CSimulation.ftl") 
+        val simTemplateSnippet = new FileData("assets/CSimulationSnippets.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/CSimulationSnippets.ftl")
+        val buildConfigFile = new FileData("assets/BuildConfig.kibuild", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/arduino/ArduinoC++BuildConfig.kibuild")
+        val mainTemplateFile = new FileData("assets/main.ftl", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/arduino/main.ftl")
+        val snippetsFolder = new FileData("assets", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/arduino/snippets")
+        val initialResources = #[simTemplateFile, simTemplateSnippet, buildConfigFile, mainTemplateFile, snippetsFolder] 
+        
+        val env = new EnvironmentData("Arduino (CDT)")
+        env.launchData = launchData
+        env.initialResources = initialResources
+        env.modelFile = "${project_name}Model"
+        env.associatedProjectWizardClass = "org.eclipse.cdt.arduino.ui.internal.project.NewArduinoProjectWizard"
         return env
     }
 }

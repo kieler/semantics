@@ -84,7 +84,7 @@ class InducedDataflowHook extends SynthesisActionHook {
 
     /** The related synthesis option */
     public static final SynthesisOption SHOW_DATAFLOW = SynthesisOption.createCheckOption("Show Induced Dataflow",
-        false).setCategory(GeneralSynthesisOptions::APPEARANCE).setUpdateAction(InducedDataflowHook.ID);
+        false).setCategory(GeneralSynthesisOptions::DEBUGGING).setUpdateAction(InducedDataflowHook.ID);
 
     /** Property to store analysis results */
     private static final IProperty<Set<KGraphElement>> DATAFLOW_ELEMENTS = new Property<Set<KGraphElement>>(

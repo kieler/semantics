@@ -152,6 +152,15 @@
                   label="Step Back"
                   style="push"
                   tooltip="Step Back">
+               <visibleWhen
+                     checkEnabled="false">
+                  <with
+                        variable="activeWorkbenchWindow.activePerspective">
+                     <equals
+                           value="de.cau.cs.kieler.simulation">
+                     </equals>
+                  </with>
+               </visibleWhen>
             </command>
          </toolbar>
       </menuContribution>

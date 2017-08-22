@@ -83,7 +83,11 @@ class KiCoModelCompiler extends ModelCompiler {
                 // Add build problems to result
                 if(!errors.get(Environment.REPORT_ROOT).isNullOrEmpty) {
                     noIssues = false
-                    val errorMessage = "Error in '"+iResult.id+"':"+errors.messages
+                    var thrownError = errors.messages
+                    if(thrownError.contains("The SCG is NOT asc-schedulable!")) {
+                        thrownError = "The SCG is NOT asc-schedulable!"
+                    } 
+                    val errorMessage = "Error in '"+iResult.id+"':\n"+thrownError
                     result.addProblem(BuildProblem.createError(file, errorMessage))
                 }
                 if(!warnings.get(Environment.REPORT_ROOT).isNullOrEmpty) {
@@ -179,9 +183,17 @@ class KiCoModelCompiler extends ModelCompiler {
     }
     
     private def String getMessages(MessageObjectReferences messageObjectReferences) {
+        return messageObjectReferences.getMessages(false)
+    }
+    
+    private def String getMessages(MessageObjectReferences messageObjectReferences, boolean includeStackTrace) {
         return messageObjectReferences.get(Environment.REPORT_ROOT).map[messageObject |
                      if (messageObject.exception != null) {
-                         ((new StringWriter) => [messageObject.exception.printStackTrace(new PrintWriter(it))]).toString()
+                         if(includeStackTrace) {
+                             ((new StringWriter) => [messageObject.exception.printStackTrace(new PrintWriter(it))]).toString()
+                         } else {
+                            messageObject.exception.toString    
+                         }
                      } else {
                         messageObject.message
                      }

@@ -217,8 +217,10 @@ public class Tracing implements IKiCoolCloneable {
         Preconditions.checkNotNull(sourceModel);
         Preconditions.checkNotNull(targetModel);
         Preconditions.checkNotNull(tracingMapping);
-        Preconditions.checkArgument(sourceModel == targetModel ^ !tracingMapping.isInPlace(),
-                "Source and Target model are the same object but mapping is in place");
+        Preconditions.checkArgument((sourceModel == targetModel && tracingMapping.isInPlace()) || sourceModel != targetModel,
+                "Source and Target model are the same object but mapping is not in place");
+        Preconditions.checkArgument((sourceModel != targetModel && !tracingMapping.isInPlace()) || sourceModel == targetModel,
+                "Source and Target model are not the same object but mapping is in place");
 
         if (!tracingMapping.isInPlace()) {
             if (chain == null) {// create new chain if no one exists
