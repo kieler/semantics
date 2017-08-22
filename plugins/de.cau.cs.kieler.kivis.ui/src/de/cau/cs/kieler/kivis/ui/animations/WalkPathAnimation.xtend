@@ -43,7 +43,7 @@ class WalkPathAnimation extends AnimationHandler {
     
     private var String initialTransform
     private var SVGPoint lastPoint
-    private var double lastScaledPosition
+    private var double lastScaledPosition = -1
     private var int travelDirection
     
     new() {
@@ -56,6 +56,15 @@ class WalkPathAnimation extends AnimationHandler {
     
     override getName() {
         return "walkPath"
+    }
+    
+    public override apply(DataPool pool) {
+        super.apply(pool)
+        // Reset data about the last position if this animation is not used anymore.
+        if(!isActive(pool)) {
+            lastPoint = null
+            lastScaledPosition = -1
+        }
     }
     
     override doApply(DataPool pool, Element elem) {
@@ -112,11 +121,13 @@ class WalkPathAnimation extends AnimationHandler {
         if(currentPoint == null) {
             throw new IllegalArgumentException(name+" animation could not determine position on path "+path)
         }
-        // Determine if travel direction is in with or against path direction
-        if(scaledValue > lastScaledPosition) {
-            travelDirection = 1
-        } else if(scaledValue < lastScaledPosition) {
-            travelDirection = -1
+        // Determine if travel direction is in or against path direction
+        if(lastScaledPosition > -1) {
+            if(scaledValue > lastScaledPosition) {
+                travelDirection = 1
+            } else if(scaledValue < lastScaledPosition) {
+                travelDirection = -1
+            }
         }
         // Compute angle
         if (autoOrientation.boolValue) {
@@ -150,7 +161,7 @@ class WalkPathAnimation extends AnimationHandler {
                     }
                     // Turn around when moving "backwards"
                     if(travelDirection == -1) {
-                        angleValue.value = angleValue.floatValue + 180 * travelDirection
+                        angleValue.value = angleValue.floatValue + 180
                     }
                 }
             }
