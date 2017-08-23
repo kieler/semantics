@@ -219,6 +219,9 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
 //                        action.setTrigger(action.trigger.trim)
 //                    }
                 }
+                
+                currentValueVariable.combineOperator = null
+                valueVariable.combineOperator = null
             } // ValuedObject
 
             // Change signal to variable
