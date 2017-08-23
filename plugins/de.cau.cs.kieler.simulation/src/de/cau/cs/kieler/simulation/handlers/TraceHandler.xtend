@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.Path
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.simulation.FileExtensions.*
+import de.cau.cs.kieler.simulation.core.VariableType
 
 /**
  * @author aas
@@ -64,33 +65,41 @@ class TraceHandler extends DefaultDataHandler {
                     // No variable in currentPool => this variable is absent in the trace
                     var boolean shouldBePresent = true
                     val correspondingVariable = getCorrespondingVariable(tracePool, model, variable)
-                    if(correspondingVariable == null) {
-                        // Variable is absent in the trace
-                        shouldBePresent = false
-                    } else {
-                        var boolean match
-                        // The present state is still OK
-                        // if a boolean is true and an integer is not equal to 0
-                        // if or a boolean is false and an integer is equal to 0
-                        if(variable.value instanceof Boolean
-                            && correspondingVariable.value instanceof Integer) {
-                            match = (variable.value == (correspondingVariable.value != 0))
-                        } else if (variable.value instanceof Integer
-                            && correspondingVariable.value instanceof Boolean){
-                             match = ((variable.value != 0) == correspondingVariable.value)
+                    
+                    // Check if it is an valued signal
+                    val isVSSignal = model.variables.exists[name.startsWith(variable.name) && name.equals(variable.name + "_val")]
+                    val isVSValue = variable.name.endsWith("_val") 
+                                    && model.variables.exists[name.equals(variable.name.substring(0, variable.name.length - 4))]
+                    
+                    if (!isVSValue && correspondingVariable === null) {
+                        if(correspondingVariable === null) {
+                            // Variable is absent in the trace
+                            shouldBePresent = false
+                        } else if (isVSSignal) {
+                            val valVar = model.variables.findFirst[name.equals(variable.name + "_val")]
+                            val valVarCorrespondingVariable = getCorrespondingVariable(tracePool, model, valVar)
+                            if (valVarCorrespondingVariable === null) {
+                                if(!valVar.match(correspondingVariable)) {
+                                    event = createTraceMismatchEvent(variable, correspondingVariable.value)
+                                }
+                            } else {
+                                if(!variable.match(correspondingVariable)) {
+                                    event = createTraceMismatchEvent(variable, correspondingVariable.value)
+                                }
+                                shouldBePresent = correspondingVariable.isPresent
+                            }
                         } else {
-                             match = (variable.value == correspondingVariable.value)
+                            if(!variable.match(correspondingVariable)) {
+                                event = createTraceMismatchEvent(variable, correspondingVariable.value)
+                            }
+                            shouldBePresent = correspondingVariable.isPresent
                         }
-                        if(!match) {
-                            event = createTraceMismatchEvent(variable, correspondingVariable.value)
+                        if(isPresent != shouldBePresent) {
+                            event = createTraceMismatchEvent(variable, variable.toggledPresentState)
                         }
-                        shouldBePresent = correspondingVariable.isPresent
-                    }
-                    if(isPresent != shouldBePresent) {
-                        event = createTraceMismatchEvent(variable, variable.toggledPresentState)
-                    }
-                    if(event != null) {
-                        SimulationManager.instance?.fireEvent(event)
+                        if(event != null) {
+                            SimulationManager.instance?.fireEvent(event)
+                        }
                     }
                 }   
             }    
@@ -110,6 +119,16 @@ class TraceHandler extends DefaultDataHandler {
         
         // Get next tick
         loadNextTick
+    }
+    
+    def match(Variable a, Variable b) {
+        if (a.value instanceof Boolean && b.value instanceof Integer) {
+            return (a.value == (b.value != 0))
+        } else if (a.value instanceof Integer && b.value instanceof Boolean) {
+            return ((a.value != 0) == b.value)
+        } else {
+            return (a.value == b.value)
+        }
     }
     
     override write(DataPool pool) {
