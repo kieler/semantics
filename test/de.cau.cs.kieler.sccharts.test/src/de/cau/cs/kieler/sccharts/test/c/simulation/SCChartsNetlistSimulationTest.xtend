@@ -28,6 +28,7 @@ import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.TestModelData
 import org.eclipse.core.resources.IResource
+import org.eclipse.core.runtime.Platform
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -46,7 +47,6 @@ class SCChartsNetlistSimulationTest extends AbstractXTextModelRepositoryTest<SCC
     
     /** Sct Parser Injector */
     static val resourceSetInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
-    
     /** Error in simulation */
     var TraceMismatchEvent traceError = null
     /** stop flag for simulation */
@@ -79,6 +79,9 @@ class SCChartsNetlistSimulationTest extends AbstractXTextModelRepositoryTest<SCC
     @Test
     def void testSimulation(SCCharts scc, TestModelData modelData) {
         traceError = null
+        
+        // Assert that sccharts prom is loaded. Only then the SCChartsAnalyser is registered and the executable provides an interface
+        assertTrue("Plugin 'de.cau.cs.kieler.sccharts.prom' is not loaded but required for SCCharts simulation", Platform.getBundle("de.cau.cs.kieler.sccharts.prom") !== null)
         
         // Setup simulation project
         val standaloneSim = createCSimulationEnvironment

@@ -18,7 +18,8 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.scg,
  de.cau.cs.kieler.sccharts.scg,
  de.cau.cs.kieler.kicool,
- de.cau.cs.kieler.simulation
+ de.cau.cs.kieler.simulation,
+ de.cau.cs.kieler.sccharts.prom
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 
