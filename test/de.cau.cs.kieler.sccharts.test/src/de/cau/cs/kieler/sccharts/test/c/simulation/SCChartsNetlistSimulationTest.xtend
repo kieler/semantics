@@ -98,7 +98,7 @@ class SCChartsNetlistSimulationTest extends AbstractXTextModelRepositoryTest<SCC
             }
             assertTrue("Build failed to create executable", !standaloneSim.buildResult.createdFiles.isNullOrEmpty)
 
-            // Register for events    
+            // Register for events
             SimulationManager.addListener(this)
             
             for (traceFilePath : modelData.tracePaths.filter[fileName.toString.endsWith("eso") || fileName.toString.endsWith("ktrace")]) {

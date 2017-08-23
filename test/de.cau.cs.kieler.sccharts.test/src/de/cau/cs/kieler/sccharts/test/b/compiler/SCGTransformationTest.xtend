@@ -53,6 +53,7 @@ class SCGTransformationTest extends AbstractXTextModelRepositoryTest<SCCharts> {
      */
     override filter(TestModelData modelData) {
         return modelData.modelProperties.contains("sccharts")
+        && !modelData.modelProperties.contains("must-fail")
     }
     
     @Test(timeout=60000)
