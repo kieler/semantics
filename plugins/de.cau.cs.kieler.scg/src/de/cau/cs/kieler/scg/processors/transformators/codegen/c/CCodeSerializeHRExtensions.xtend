@@ -156,7 +156,11 @@ class CCodeSerializeHRExtensions extends SCGSerializeHRExtensions {
             modifications.put(INCLUDES, "<stdio.h>")
         
         return "printf(" + paramStr.substring(1, paramStr.length - 1) + ")"
-    }   
+    }
+    
+    override dispatch CharSequence serialize(TextExpression textExp) {
+        return textExp.text
+    }  
     
     
 }
