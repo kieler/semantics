@@ -104,7 +104,7 @@ class KEffectsExtensions {
             case MIN: AssignOperator.ASSIGNMIN
             case MULT: AssignOperator.ASSIGNMUL
             case OR: AssignOperator.ASSIGNOR
-            default: throw new IllegalArgumentException("Unsupported combine operator: " + valuedObject.combineOperator)
+            default: AssignOperator.ASSIGN
         }
         return valuedObject.createAssignment(newValue, op)
     }
