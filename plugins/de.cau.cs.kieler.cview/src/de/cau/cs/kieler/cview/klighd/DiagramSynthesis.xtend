@@ -47,6 +47,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.swt.widgets.Display
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import org.eclipse.elk.core.options.HierarchyHandling
 
 /* Package and import statements... */
 class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
@@ -90,6 +91,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
     public static final SynthesisOption FLATTEN_HIERARCHY = SynthesisOption.createCheckOption(
         "Flatten Hierarchy", false);
+
+    public static final SynthesisOption HIERARCHY_HANDLING = SynthesisOption.createCheckOption("Hierarchy Routing", false);
 
     public static final SynthesisOption SKIP_FILE_CONTENT = SynthesisOption.createCheckOption("Skip File Content",
         false);
@@ -199,7 +202,10 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         }
 
         val root = model.createNode().associateWith(model);
-        // root.addLayoutParam(CoreOptions::HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN)
+        if (HIERARCHY_HANDLING.booleanValue) {
+            root.addLayoutParam(CoreOptions::HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN)
+            //root.addLayoutParam(CoreOptions::HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN)
+        }
         val depth = 1;
 
         printlnConsole("INFO: - Apply filter")
@@ -935,6 +941,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             options.addAll(EXPANDED_SLIDER);
             options.addAll(FLATTEN_HIERARCHY);
             options.addAll(INTERLEVEL_CONNECTIONS);
+            options.addAll(HIERARCHY_HANDLING)
             options.addAll(SKIP_FILE_CONTENT);
             options.addAll(HIDE_CONNECTIONS);
             options.addAll(HIDE_UNCONNECTED);

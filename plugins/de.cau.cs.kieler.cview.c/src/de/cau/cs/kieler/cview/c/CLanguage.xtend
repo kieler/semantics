@@ -3,7 +3,7 @@
  * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -12,37 +12,34 @@
  */
 package de.cau.cs.kieler.cview.c
 
-import de.cau.cs.kieler.cview.model.cViewModel.Component
-import de.cau.cs.kieler.cview.c.extensions.CViewCExtensions
-import de.cau.cs.kieler.cview.hooks.ICViewLanguage
 import com.google.inject.Inject
-import de.cau.cs.kieler.klighd.SynthesisOption
-import de.cau.cs.kieler.cview.extensions.CViewLanguageExtensions
-import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import de.cau.cs.kieler.cview.model.cViewModel.CViewModel
-import de.cau.cs.kieler.cview.c.CFileParser
-import org.eclipse.cdt.core.dom.ast.IASTDeclaration
-import org.eclipse.cdt.core.dom.ast.ASTVisitor
-import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration
 import de.cau.cs.kieler.cview.CViewPlugin
-import org.eclipse.cdt.core.dom.ast.IASTNode
-import org.eclipse.cdt.core.dom.ast.IASTName
-import org.eclipse.cdt.core.dom.ast.ITypedef
 import de.cau.cs.kieler.cview.c.extensions.CViewCDTExtensions
+import de.cau.cs.kieler.cview.c.extensions.CViewCExtensions
 import de.cau.cs.kieler.cview.extensions.CViewAnalysisExtensions
+import de.cau.cs.kieler.cview.extensions.CViewLanguageExtensions
+import de.cau.cs.kieler.cview.hooks.AbstractCViewLanguage
+import de.cau.cs.kieler.cview.hooks.ICViewLanguage
+import de.cau.cs.kieler.cview.model.cViewModel.CViewModel
+import de.cau.cs.kieler.cview.model.cViewModel.Component
+import de.cau.cs.kieler.cview.model.cViewModel.Connection
 import de.cau.cs.kieler.cview.model.extensions.CViewModelExtensions
+import de.cau.cs.kieler.klighd.SynthesisOption
+import java.util.HashSet
+import java.util.LinkedList
+import java.util.List
+import java.util.Set
 import org.eclipse.cdt.core.dom.ast.ASTNodeProperty
-import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPClassType
+import org.eclipse.cdt.core.dom.ast.ASTVisitor
+import org.eclipse.cdt.core.dom.ast.IASTDeclaration
+import org.eclipse.cdt.core.dom.ast.IASTName
+import org.eclipse.cdt.core.dom.ast.IASTNode
+import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration
+import org.eclipse.cdt.core.dom.ast.IFunction
+import org.eclipse.cdt.core.dom.ast.ITypedef
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompositeTypeSpecifier
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTSimpleDeclaration
-import org.eclipse.cdt.core.dom.ast.IFunction
-import java.util.HashSet
-import de.cau.cs.kieler.cview.model.cViewModel.Connection
-import org.eclipse.cdt.core.dom.ast.IASTPreprocessorIncludeStatement
-import java.util.Set
-import java.util.List
-import java.util.LinkedList
-import de.cau.cs.kieler.cview.hooks.AbstractCViewLanguage
+import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPClassType
 import org.eclipse.core.runtime.IProgressMonitor
 
 /**
@@ -51,48 +48,44 @@ import org.eclipse.core.runtime.IProgressMonitor
  */
 class CLanguage extends AbstractCViewLanguage implements ICViewLanguage {
 
+    // Extensions
     @Inject extension CViewCExtensions
-
     @Inject extension CViewCDTExtensions
-
     @Inject extension CViewLanguageExtensions
-
     @Inject extension CViewModelExtensions
-
     @Inject extension CViewAnalysisExtensions
 
+    // IDs
     public static String LANGUAGE_ID = "de.cau.cs.kieler.cview.c.language"
-
     public static String CUSTOMTYPE_TYPEDEF = "de.cau.cs.kieler.cview.c.customtype.typedef"
     public static String CUSTOMTYPE_DECLARATION = "de.cau.cs.kieler.cview.c.customtype.declaration"
     public static String CUSTOMTYPE_STRUCT = "de.cau.cs.kieler.cview.c.customtype.struct"
-
     public static String CUSTOMTYPE_FUNCTION = "de.cau.cs.kieler.cview.c.customtype.function"
     public static String CUSTOMTYPE_FUNCTIONREF = "de.cau.cs.kieler.cview.c.customtype.functionref"
-
     public static String CONNECTION_TYPE_REFERENCE_FUNC = "de.cau.cs.kieler.cview.c.connectiontype.func"
     public static String CONNECTION_TYPE_REFERENCE_TYPE = "de.cau.cs.kieler.cview.c.connectiontype.type"
-
     public static String CONNECTION_TYPE_INCLUSION = "de.cau.cs.kieler.cview.c.connectiontype.inclusion"
 
-    static final String COLOR_STRUCT_NOREF = "#FFD236"
-    static final String COLOR_STRUCT = "#FFF0BD"
-    static final String COLOR_TYPEDEF = "#FCFF00"
-    static final String COLOR_DECL = "#FEFFC1"
-
+    // Colors
+    public static final String COLOR_STRUCT_NOREF = "#FFD236"
+    public static final String COLOR_STRUCT = "#FFF0BD"
+    public static final String COLOR_TYPEDEF = "#FCFF00"
+    public static final String COLOR_DECL = "#FEFFC1"
     public static final String FUNCTIONCOLORREF = "#D5EAFD"
     public static final String FUNCTIONCOLOR = "#82B5E3"
     public static final String FUNCTIONCOLORTRANS = "#286296"
-
+    
+    // Synthesis options
     public static final SynthesisOption SHOW_FUNCTIONS = SynthesisOption.createCheckOption("Show Functions", false);
     public static final SynthesisOption SHOW_REFERENCES_FUNC = SynthesisOption.createCheckOption(
         "Show Function References", false);
     public static final SynthesisOption SHOW_TYPES = SynthesisOption.createCheckOption("Show Types", false);
     public static final SynthesisOption SHOW_REFERENCES_TYPE = SynthesisOption.createCheckOption("Show Type References",
         false);
-
     public static final SynthesisOption SHOW_INCLUSION = SynthesisOption.createCheckOption("Show Include", false);
 
+    //-------------------------------------------------------------------------
+    
     override diagramColor(Component component) {
         if (component.isFunction) {
             return FUNCTIONCOLOR
