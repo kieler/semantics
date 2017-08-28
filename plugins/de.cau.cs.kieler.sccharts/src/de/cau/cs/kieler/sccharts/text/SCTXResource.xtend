@@ -1,18 +1,20 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
- *
+ * 
  * Copyright 2010 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
- *
+ * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
 package de.cau.cs.kieler.sccharts.text;
 
+import com.google.common.collect.HashMultimap
+import com.google.common.collect.Multimaps
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.StringPragma
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
@@ -21,45 +23,62 @@ import de.cau.cs.kieler.sccharts.SCCharts
 import java.io.File
 import java.io.IOException
 import java.io.OutputStream
+import java.lang.ref.WeakReference
+import java.util.Collection
 import java.util.HashMap
 import java.util.Map
-import org.eclipse.core.runtime.Path
 import org.eclipse.emf.common.CommonPlugin
+import org.eclipse.emf.common.util.URI
+import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.linking.lazy.LazyLinkingResource
 import org.eclipse.xtext.parser.IParseResult
 import org.eclipse.xtext.resource.SaveOptions
 import org.eclipse.xtext.resource.XtextResource
+import org.eclipse.xtext.resource.XtextResourceSet
 
 import static org.eclipse.emf.common.util.URI.*
-import org.eclipse.emf.ecore.util.EcoreUtil
-import java.io.InputStream
+
+import static extension com.google.common.collect.Sets.*
+import static extension de.cau.cs.kieler.core.model.util.URIUtils.*
 
 /**
  * A customized {@link LazyLinkingResource}. Modifies the parsed model and fixes some runtime bugs.
- *
+ * It also handles imports of other SCCharts.
+ * 
  * @author chsch
  * @author als
  * @author ssm
  */
-
 public class SCTXResource extends LazyLinkingResource {
 
     @Inject extension AnnotationsExtensions
-    
-    static val PRAGMA_IMPORT_LEVEL = PragmaRegistry.register("import-level", StringPragma, 
-        "Top-level SCCharts can be annotation with \"root\" to clear the resource set.")
-    static val PRAGMA_IMPORT = PragmaRegistry.register("import", StringPragma,
-        "Add resources via import to the resource set.")  
 
-    private var importPragmaHash = 0
+    public static val FILE_EXTENSION = "sctx"
+    private static val FILE_EXTENSION_INTERN = "." + FILE_EXTENSION
 
-    /**
-     * Starts model consolidation before {@link LazyLinkingResource#doLinking()}.
-     */
-    override void doLinking() {
-//        if (importsHaveChanged) 
-        updateResourceSet
-        super.doLinking();
+    public static val PRAGMA_IMPORT = PragmaRegistry.register("import", StringPragma,
+        "Add resources via import to the resource set.")
+
+    /** All resources that were imported */
+    static val IMPORTED_RESOURCES = Multimaps.synchronizedSetMultimap(
+        HashMultimap.<File, WeakReference<SCTXResource>>create)
+
+    /** List of current imports */
+    @Accessors(PUBLIC_GETTER)
+    private val currentImports = HashMultimap.<String, File>create
+
+    /** The file this resource was imported for */
+    @Accessors(PUBLIC_GETTER)
+    private var File underlyingFile = null
+
+    override setURI(URI uri) {
+        super.uri = uri
+
+        try {
+            underlyingFile = uri.javaFile
+        } catch (Exception e) {
+            // ignore
+        }
     }
 
     /**
@@ -76,16 +95,16 @@ public class SCTXResource extends LazyLinkingResource {
         super.doSave(outputStream, myOptions);
     }
 
-    /**
-     * Eliminates an ugly bug within the calling method
-     * {@link XtextResource#update(int, int, String)}:<br>
-     * If a parsing round fails entirely, the last previously successfully deducted EObject will
-     * remain in contents though the parseResult is empty! After the next successful parser run the
-     * new EObject will be added to contents regardless the non-emptiness of contents.
-     */
     override void updateInternalState(IParseResult parseResult) {
-        if (parseResult.getRootASTElement() != null && getContents().size() != 0
-                && !getContents().get(0).equals(parseResult.getRootASTElement())) {
+        /**
+         * Eliminates an ugly bug within the calling method
+         * {@link XtextResource#update(int, int, String)}:<br>
+         * If a parsing round fails entirely, the last previously successfully deducted EObject will
+         * remain in contents though the parseResult is empty! After the next successful parser run the
+         * new EObject will be added to contents regardless the non-emptiness of contents.
+         */
+        if (parseResult.getRootASTElement() != null && getContents().size() != 0 &&
+            !getContents().get(0).equals(parseResult.getRootASTElement())) {
             unload(getContents().get(0));
             getContents().remove(0);
             while (!getContents().isEmpty()) {
@@ -93,91 +112,142 @@ public class SCTXResource extends LazyLinkingResource {
             }
         }
         this.getContents().clear();
+
+        // Handle imports
+        if (parseResult.rootASTElement !== null) {
+            try {
+                updateImports(parseResult.rootASTElement as SCCharts)
+            } catch (Exception e) {
+                // fail silent
+            }
+        }
+
         super.updateInternalState(parseResult);
     }
 
     // ---------------------------------------------------------------------------------------
-
-    protected def void updateResourceSet() {
-        val contents = getContents
-        if (contents !== null && (contents.size == 0 || !(contents.head instanceof SCCharts))) return;
-        
-        val scc = contents.head as SCCharts
-        val ownR = scc.eResource
-        val segments = ownR.URI.segments
-        val base = ownR.URI.scheme + ":/" + String.join("/", segments.subList(0, segments.length - 1)) + "/"
-        
-        val rSet = this.getResourceSet
-        
-        val importlevels = scc.getPragmas(PRAGMA_IMPORT_LEVEL)
-        if (!importlevels.empty) {
-            if ((importlevels.head as StringPragma).values.head.equals("root")) {
-                rSet.resources.removeIf[ it != ownR ]
-            }
+    protected def void updateImports(SCCharts scc) {
+        // Assure resource set
+        if (this.resourceSet === null) {
+            SCTXStandaloneSetup.doSetup.getInstance(XtextResourceSet).resources.add(this)
         }
-       
-        val importPragmas = scc.getPragmas(PRAGMA_IMPORT).filter(StringPragma)
-        for (importPragma : importPragmas) {
+
+        // Import pragma delta
+        val importPragmas = scc.getPragmas(PRAGMA_IMPORT).filter(StringPragma).map[values].flatten.toSet
+        val addedImports = importPragmas.difference(currentImports.keySet)
+        val removedImports = currentImports.keySet.difference(importPragmas)
+
+        val base = uri.segmentsList.take(uri.segmentCount - 1).join(uri.scheme + ":/", "/", "/", [it])
+
+        // Update folder imports
+        // This might be slow!
+        var folderImportChanged = false
+        for (folderImport : importPragmas.filter [
+            it.endsWith("*") && !addedImports.contains(it) && !removedImports.contains(it)
+        ]) {
             try {
-                for(importName : importPragma.values) {
-                
-                    if (importName.endsWith("*")) {
-                        val ownRLocationURI = createFileURI(CommonPlugin.resolve(ownR.URI).toFileString)
-                        
-                        val importNameBase = importName.substring(0, importName.length - 1)
-                        val baseURI = createURI(base + importNameBase)
-                        val resolvedFile = CommonPlugin.resolve(baseURI);
-                        val path = new Path(resolvedFile.toFileString())
-                        val folder = new File(path.toString)
-                        for (file : folder.listFiles.filter[ toString.endsWith(".sctx") ]) {
-                            val importURI = createFileURI(file.toString)
-                            if (!importURI.equals(ownRLocationURI) && !rSet.resources.exists[ it.URI.equals(importURI) ])
-                                rSet.getResource(importURI, true)
-                        }
-                    } else {
-                        val importURI = createURI(base + importName + ".sctx") 
-                        rSet.getResource(importURI, true)
+                val importNameBase = folderImport.substring(0, folderImport.length - 1) // skip *
+                val baseURI = createURI(base + importNameBase)
+                val folderURI = CommonPlugin.resolve(baseURI)
+                val folder = new File(folderURI.toFileString)
+
+                if (!folder.listFiles.filter[path.endsWith(FILE_EXTENSION_INTERN) && !it.equals(underlyingFile)].toSet.
+                    symmetricDifference((currentImports.get(folderImport) ?: emptySet).toSet).empty) {
+                    // Remove current one
+                    currentImports.removeAll(folderImport)
+                    // Add new to resource set
+                    for (file : folder.listFiles.filter[path.endsWith(FILE_EXTENSION_INTERN)]) {
+                        createFileURI(file.toString).importResource(folderImport)
                     }
+                    folderImportChanged = true
                 }
             } catch (Exception e) {
-                System.err.println("Resource " + importPragma.values.head + " not found!")
+                // fail silent
             }
         }
-        
-//  EXPERIMENTAL RELOAD of parents
-//  TODO this maybe only necessary at save if necessary at all.         
-//        val lastSegment = ownR.URI.lastSegment
-//        val ownName = lastSegment.substring(0, lastSegment.length - 5)
-//        for (r : rSet.resources.filter[ it !== this ].map[ getContents.head ].filter(SCCharts)) {
-//            val rImports = scc.getPragmas(PRAGMA_IMPORT).filter(StringPragma).map[ values.head ]
-//            if (rImports.exists[ it.endsWith(ownName) ]) {
-//                if (r.eResource instanceof SCTXResource) {
-//                    (r.eResource as SCTXResource).doLinking
-//                }
-//            }
-//        }
-        
-    }
-    
-    protected def boolean importsHaveChanged() {
-        val rootObject = getContents
-        if (rootObject.empty || !(rootObject.get(0) instanceof SCCharts)) return false
-        
-        val scc = rootObject.get(0) as SCCharts
-        
-        var pragmaHash = 0
-        
-        val importlevels = scc.getPragmas(PRAGMA_IMPORT_LEVEL).filter(StringPragma)
-        val imports = scc.getPragmas(PRAGMA_IMPORT).filter(StringPragma)
-        
-        if (!importlevels.empty) pragmaHash += importlevels.head.values.head.hashCode
-        for (import : imports.map[values].flatten) pragmaHash += import.hashCode 
-                
-        if (importPragmaHash != pragmaHash) {
-            importPragmaHash = pragmaHash
-            return true
+
+        // Add to resource set
+        for (import : addedImports) {
+            try {
+                if (import.endsWith("*")) {
+                    val importNameBase = import.substring(0, import.length - 1) // skip *
+                    val baseURI = createURI(base + importNameBase)
+                    val folderURI = CommonPlugin.resolve(baseURI)
+                    val folder = new File(folderURI.toFileString)
+
+                    // Add them to resource set
+                    for (file : folder.listFiles.filter[toString.endsWith(FILE_EXTENSION_INTERN)]) {
+                        createFileURI(file.toString).importResource(import)
+                    }
+                } else {
+                    val importURI = createURI(base + import +
+                        if(import.endsWith(FILE_EXTENSION_INTERN)) "" else FILE_EXTENSION_INTERN)
+                    importURI.importResource(import)
+                }
+            } catch (Exception e) {
+                // Not necessary since there is a check in the validator
+            }
         }
-        return false
+
+        // Remove from resource set
+        if (!removedImports.empty || folderImportChanged) {
+            removedImports.unimportResources
+        }
+    }
+
+    protected def importResource(URI importUri, String importName) {
+        val file = importUri.javaFile
+
+        // Do not self import
+        if(this.uri.javaFile.equals(file)) return;
+
+        // Import if not already imported (prevent double import)
+        if (!resourceSet.resources.filter(SCTXResource).exists[file.equals(it.underlyingFile)]) {
+            val res = resourceSet.getResource(importUri, true) as SCTXResource
+            IMPORTED_RESOURCES.put(file, new WeakReference(res))
+        }
+
+        // Register import association
+        currentImports.put(importName, file)
+    }
+
+    protected def unimportResources(Collection<String> imports) {
+        // Remove import association
+        currentImports.keySet.removeAll(imports)
+
+        // Remove resource if no import is importing the file
+        val resources = resourceSet.resources.filter(SCTXResource).toMap[it.underlyingFile]
+        val checkedImport = newHashMap
+        val checkImportQueue = newLinkedList(this)
+
+        while (!checkImportQueue.empty) {
+            val r = checkImportQueue.pop
+            checkedImport.put(r.underlyingFile, r)
+            // Add all resources which are imported but not yet checked to check queue
+            checkImportQueue.addAll(r.currentImports.values.filter[!checkedImport.containsKey(it)].map [
+                resources.get(it)
+            ].filterNull.toSet)
+        }
+        // Remove all resources that are no longer imported
+        resourceSet.resources.removeIf[!checkedImport.containsValue(it)]
+    }
+
+    def updateImporters() {
+        try {
+            // Clear empty references 
+            IMPORTED_RESOURCES.get(underlyingFile)?.removeIf[get === null]
+
+            // Update others
+            for (other : (IMPORTED_RESOURCES.get(underlyingFile) ?: emptyList).filter[it.get !== this]) {
+                val r = other.get
+                if (r !== null && r.resourceSet !== null) {
+                    r.unload
+                    r.load(r.resourceSet.loadOptions)
+                }
+            }
+        } catch (Exception e) {
+            // fail silent
+        }
     }
 
 }
