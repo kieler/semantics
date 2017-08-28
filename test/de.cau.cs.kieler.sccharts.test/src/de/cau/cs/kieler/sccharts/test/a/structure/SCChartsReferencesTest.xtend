@@ -54,7 +54,8 @@ class SCChartsReferencesTest extends AbstractXTextModelRepositoryTest<SCCharts> 
      * {@inheritDoc}
      */
     override filter(TestModelData modelData) {
-        return modelData.modelProperties.contains("sccharts") && !modelData.resourceSetID.nullOrEmpty
+        return modelData.modelProperties.contains("sccharts")
+            && !modelData.modelProperties.contains("must-fail")
     }
     
     @Test
@@ -63,8 +64,7 @@ class SCChartsReferencesTest extends AbstractXTextModelRepositoryTest<SCCharts> 
         for (res : scc.eResource.resourceSet.resources.filter(XtextResource)) {
             val parserNodes = res.parseResult.rootNode
             parserNodes.asTreeIterable.filter[
-                semanticElement instanceof SCCharts 
-                && grammarElement.eClass.equals(keyword.eClass)
+                grammarElement.eClass.equals(keyword.eClass)
                 && (grammarElement as Keyword).value == keyword.value
             ].forEach[
                 assertTrue("Referenced state " + (semanticElement as State).name + " in " + res.getURI.segment(res.getURI.segmentCount - 1) + " cannot be resolved",
