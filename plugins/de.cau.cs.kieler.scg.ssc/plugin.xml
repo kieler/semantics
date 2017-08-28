@@ -22,9 +22,6 @@
    <extension
          point="de.cau.cs.kieler.kico.transformation">
       <productionTransformationClass
-            class="de.cau.cs.kieler.scg.ssc.ssa.SCSSATransformation">
-      </productionTransformationClass>
-      <productionTransformationClass
             class="de.cau.cs.kieler.scg.ssc.strl.SSAWeakUnemitEsterelReconstruction">
       </productionTransformationClass>
       <productionTransformationClass

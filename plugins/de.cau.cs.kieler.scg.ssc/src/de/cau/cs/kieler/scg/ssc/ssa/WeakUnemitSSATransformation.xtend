@@ -152,7 +152,7 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
         // Removes assignments to signals which are never read
         scg.removePhiWritesWithoutRead
         // DONT ACTIVATE: trap-par-example wrong semantics for B
-        // scg.propagatePhi(PHI)
+//         scg.propagatePhi(PHI)
         
         // Removes the introduced implicit writers
         scg.removeImplicitEvironmentAssignments
@@ -161,6 +161,8 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
         // 3. Remove unused ssa versions
         // ---------------
         
+        // Removes conditional with constant conditions
+        scg.removeDeadCodeStupidly
         // Removes all ssa versions which are not read
         scg.removeUnusedSSAVersions
         // Merges ssa version which are always used together (in OR expressions)
@@ -174,6 +176,25 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
         scg.updateSSAVersions
         
         return scg
+    }
+    
+    def removeDeadCodeStupidly(SCGraph scg) {
+         for (c : scg.nodes.filter(Conditional).toList) {
+            val cond = c.condition
+            if (cond instanceof BoolValue) {
+                var kill = if (cond.value) c.then else c.^else
+                while (kill.target.incoming.filter(ControlFlow).size == 1) {
+                    val t = kill.target
+                    scg.nodes.remove(t)
+                    kill.target = null
+                    kill = (t as Assignment).allNext.head
+                }
+                val keep = if (!cond.value) c.then else c.^else
+                c.incoming.toList.forEach[target = keep.target]
+                keep.target = null
+                scg.nodes.remove(c)
+            }
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -449,6 +470,7 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
         }
     }
     
+    // TODO doas not work with signal reinc example
     private def mergeIneffectiveSSAVersions(SCGraph scg) {
         val uses = scg.uses
         val defs = scg.allDefs

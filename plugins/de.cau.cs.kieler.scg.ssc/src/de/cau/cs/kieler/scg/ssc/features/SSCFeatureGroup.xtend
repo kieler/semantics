@@ -26,7 +26,7 @@ class SSCFeatureGroup extends FeatureGroup {
     }
 
     override getName() {
-        "Strict Sequential Constructiveness"
+        "SC Circuits"
     }
 
     override getFeatureIds() {
