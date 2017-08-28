@@ -48,6 +48,10 @@ import org.eclipse.swt.widgets.Display
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import org.eclipse.elk.core.options.HierarchyHandling
+import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.alg.layered.properties.GreedySwitchType
+import org.eclipse.elk.alg.layered.properties.LayeredMetaDataProvider
+import org.eclipse.elk.alg.layered.p3order.CrossingMinimizationStrategy
 
 /* Package and import statements... */
 class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
@@ -204,6 +208,10 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         val root = model.createNode().associateWith(model);
         if (HIERARCHY_HANDLING.booleanValue) {
             root.addLayoutParam(CoreOptions::HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN)
+            //root.addLayoutParam(LayeredOptions::CROSSING_MINIMIZATION_STRATEGY, LayeredMetaDataProvider.CROSSING_MINIMIZATION_HIERARCHICAL_SWEEPINESS)
+            //root.addLayoutParam(LayeredOptions.CROSSING_MINIMIZATION_STRATEGY, CrossingMinimizationStrategy.INTERACTIVE);
+            root.addLayoutParam(LayeredOptions.CROSSING_MINIMIZATION_GREEDY_SWITCH_TYPE, GreedySwitchType.OFF);
+            
             //root.addLayoutParam(CoreOptions::HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN)
         }
         val depth = 1;
@@ -211,11 +219,14 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         printlnConsole("INFO: - Apply filter")
         if (FilterDialog.valueTextFilter.nullOrEmpty || FilterDialog.valueCheckDisabled) {
             CViewPlugin.setTitle(AbstractKLighDController.CVIEW_KLIGHD_TITLE)
+            // Apply the filter here
+            if (!ANONYMIZE.booleanValue) {
+                // Only apply filter iff not anonymized
+                model.applyFilter
+            }
         } else {
             CViewPlugin.setTitle(AbstractKLighDController.CVIEW_KLIGHD_TITLE_FILTERED)
         }
-        // Apply the filter here
-        model.applyFilter
 
         // FLATTEN HIERARCHY: 
         // Add components's KNodes to the root KNode as children
