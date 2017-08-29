@@ -14,27 +14,24 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class TrapSignalImpl extends ISignalImpl implements TrapSignal
-{
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected TrapSignalImpl()
-  {
-    super();
-  }
+public class TrapSignalImpl extends ISignalImpl implements TrapSignal {
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected TrapSignalImpl() {
+        super();
+    }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  protected EClass eStaticClass()
-  {
-    return EsterelPackage.Literals.TRAP_SIGNAL;
-  }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return EsterelPackage.Literals.TRAP_SIGNAL;
+    }
 
 } //TrapSignalImpl

@@ -14,27 +14,24 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class OutputImpl extends InterfaceSignalDeclImpl implements Output
-{
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected OutputImpl()
-  {
-    super();
-  }
+public class OutputImpl extends InterfaceSignalDeclImpl implements Output {
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected OutputImpl() {
+        super();
+    }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  protected EClass eStaticClass()
-  {
-    return EsterelPackage.Literals.OUTPUT;
-  }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return EsterelPackage.Literals.OUTPUT;
+    }
 
 } //OutputImpl

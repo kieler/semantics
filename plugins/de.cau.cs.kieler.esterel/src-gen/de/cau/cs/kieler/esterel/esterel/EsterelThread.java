@@ -14,6 +14,5 @@ import de.cau.cs.kieler.scl.StatementContainer;
  * @model
  * @generated
  */
-public interface EsterelThread extends StatementContainer
-{
+public interface EsterelThread extends StatementContainer {
 } // EsterelThread

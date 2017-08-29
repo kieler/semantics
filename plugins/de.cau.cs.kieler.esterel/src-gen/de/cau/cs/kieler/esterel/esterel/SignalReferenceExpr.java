@@ -14,6 +14,5 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
  * @model
  * @generated
  */
-public interface SignalReferenceExpr extends ValuedObjectReference
-{
+public interface SignalReferenceExpr extends ValuedObjectReference {
 } // SignalReferenceExpr

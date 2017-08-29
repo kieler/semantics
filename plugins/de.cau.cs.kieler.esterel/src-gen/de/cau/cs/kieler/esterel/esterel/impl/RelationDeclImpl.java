@@ -16,27 +16,24 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public class RelationDeclImpl extends MinimalEObjectImpl.Container implements RelationDecl
-{
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected RelationDeclImpl()
-  {
-    super();
-  }
+public class RelationDeclImpl extends MinimalEObjectImpl.Container implements RelationDecl {
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected RelationDeclImpl() {
+        super();
+    }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  protected EClass eStaticClass()
-  {
-    return EsterelPackage.Literals.RELATION_DECL;
-  }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return EsterelPackage.Literals.RELATION_DECL;
+    }
 
 } //RelationDeclImpl

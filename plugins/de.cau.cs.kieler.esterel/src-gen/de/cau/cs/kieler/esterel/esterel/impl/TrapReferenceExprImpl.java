@@ -16,27 +16,24 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class TrapReferenceExprImpl extends ValuedObjectReferenceImpl implements TrapReferenceExpr
-{
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected TrapReferenceExprImpl()
-  {
-    super();
-  }
+public class TrapReferenceExprImpl extends ValuedObjectReferenceImpl implements TrapReferenceExpr {
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected TrapReferenceExprImpl() {
+        super();
+    }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  protected EClass eStaticClass()
-  {
-    return EsterelPackage.Literals.TRAP_REFERENCE_EXPR;
-  }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return EsterelPackage.Literals.TRAP_REFERENCE_EXPR;
+    }
 
 } //TrapReferenceExprImpl

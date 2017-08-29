@@ -36,172 +36,155 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class TaskDeclImpl extends MinimalEObjectImpl.Container implements TaskDecl
-{
-  /**
-   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getAnnotations()
-   * @generated
-   * @ordered
-   */
-  protected EList<Annotation> annotations;
+public class TaskDeclImpl extends MinimalEObjectImpl.Container implements TaskDecl {
+    /**
+     * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getAnnotations()
+     * @generated
+     * @ordered
+     */
+    protected EList<Annotation> annotations;
 
-  /**
-   * The cached value of the '{@link #getTasks() <em>Tasks</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getTasks()
-   * @generated
-   * @ordered
-   */
-  protected EList<Task> tasks;
+    /**
+     * The cached value of the '{@link #getTasks() <em>Tasks</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getTasks()
+     * @generated
+     * @ordered
+     */
+    protected EList<Task> tasks;
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected TaskDeclImpl()
-  {
-    super();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  protected EClass eStaticClass()
-  {
-    return EsterelPackage.Literals.TASK_DECL;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<Annotation> getAnnotations()
-  {
-    if (annotations == null)
-    {
-      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.TASK_DECL__ANNOTATIONS);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected TaskDeclImpl() {
+        super();
     }
-    return annotations;
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<Task> getTasks()
-  {
-    if (tasks == null)
-    {
-      tasks = new EObjectContainmentEList<Task>(Task.class, this, EsterelPackage.TASK_DECL__TASKS);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return EsterelPackage.Literals.TASK_DECL;
     }
-    return tasks;
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.TASK_DECL__ANNOTATIONS:
-        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
-      case EsterelPackage.TASK_DECL__TASKS:
-        return ((InternalEList<?>)getTasks()).basicRemove(otherEnd, msgs);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Annotation> getAnnotations() {
+        if (annotations == null) {
+            annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.TASK_DECL__ANNOTATIONS);
+        }
+        return annotations;
     }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Object eGet(int featureID, boolean resolve, boolean coreType)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.TASK_DECL__ANNOTATIONS:
-        return getAnnotations();
-      case EsterelPackage.TASK_DECL__TASKS:
-        return getTasks();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Task> getTasks() {
+        if (tasks == null) {
+            tasks = new EObjectContainmentEList<Task>(Task.class, this, EsterelPackage.TASK_DECL__TASKS);
+        }
+        return tasks;
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @SuppressWarnings("unchecked")
-  @Override
-  public void eSet(int featureID, Object newValue)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.TASK_DECL__ANNOTATIONS:
-        getAnnotations().clear();
-        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
-        return;
-      case EsterelPackage.TASK_DECL__TASKS:
-        getTasks().clear();
-        getTasks().addAll((Collection<? extends Task>)newValue);
-        return;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case EsterelPackage.TASK_DECL__ANNOTATIONS:
+                return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
+            case EsterelPackage.TASK_DECL__TASKS:
+                return ((InternalEList<?>)getTasks()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
-    super.eSet(featureID, newValue);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void eUnset(int featureID)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.TASK_DECL__ANNOTATIONS:
-        getAnnotations().clear();
-        return;
-      case EsterelPackage.TASK_DECL__TASKS:
-        getTasks().clear();
-        return;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
+            case EsterelPackage.TASK_DECL__ANNOTATIONS:
+                return getAnnotations();
+            case EsterelPackage.TASK_DECL__TASKS:
+                return getTasks();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    super.eUnset(featureID);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public boolean eIsSet(int featureID)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.TASK_DECL__ANNOTATIONS:
-        return annotations != null && !annotations.isEmpty();
-      case EsterelPackage.TASK_DECL__TASKS:
-        return tasks != null && !tasks.isEmpty();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
+            case EsterelPackage.TASK_DECL__ANNOTATIONS:
+                getAnnotations().clear();
+                getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+                return;
+            case EsterelPackage.TASK_DECL__TASKS:
+                getTasks().clear();
+                getTasks().addAll((Collection<? extends Task>)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
     }
-    return super.eIsSet(featureID);
-  }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void eUnset(int featureID) {
+        switch (featureID) {
+            case EsterelPackage.TASK_DECL__ANNOTATIONS:
+                getAnnotations().clear();
+                return;
+            case EsterelPackage.TASK_DECL__TASKS:
+                getTasks().clear();
+                return;
+        }
+        super.eUnset(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
+            case EsterelPackage.TASK_DECL__ANNOTATIONS:
+                return annotations != null && !annotations.isEmpty();
+            case EsterelPackage.TASK_DECL__TASKS:
+                return tasks != null && !tasks.isEmpty();
+        }
+        return super.eIsSet(featureID);
+    }
 
 } //TaskDeclImpl

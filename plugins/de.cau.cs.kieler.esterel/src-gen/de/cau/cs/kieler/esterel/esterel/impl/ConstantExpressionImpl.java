@@ -39,269 +39,246 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class ConstantExpressionImpl extends MinimalEObjectImpl.Container implements ConstantExpression
-{
-  /**
-   * The cached value of the '{@link #getSchedule() <em>Schedule</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getSchedule()
-   * @generated
-   * @ordered
-   */
-  protected EList<ScheduleObjectReference> schedule;
+public class ConstantExpressionImpl extends MinimalEObjectImpl.Container implements ConstantExpression {
+    /**
+     * The cached value of the '{@link #getSchedule() <em>Schedule</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getSchedule()
+     * @generated
+     * @ordered
+     */
+    protected EList<ScheduleObjectReference> schedule;
 
-  /**
-   * The cached value of the '{@link #getConstant() <em>Constant</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getConstant()
-   * @generated
-   * @ordered
-   */
-  protected Constant constant;
+    /**
+     * The cached value of the '{@link #getConstant() <em>Constant</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getConstant()
+     * @generated
+     * @ordered
+     */
+    protected Constant constant;
 
-  /**
-   * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getValue()
-   * @generated
-   * @ordered
-   */
-  protected static final String VALUE_EDEFAULT = null;
+    /**
+     * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getValue()
+     * @generated
+     * @ordered
+     */
+    protected static final String VALUE_EDEFAULT = null;
 
-  /**
-   * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getValue()
-   * @generated
-   * @ordered
-   */
-  protected String value = VALUE_EDEFAULT;
+    /**
+     * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getValue()
+     * @generated
+     * @ordered
+     */
+    protected String value = VALUE_EDEFAULT;
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected ConstantExpressionImpl()
-  {
-    super();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  protected EClass eStaticClass()
-  {
-    return EsterelPackage.Literals.CONSTANT_EXPRESSION;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<ScheduleObjectReference> getSchedule()
-  {
-    if (schedule == null)
-    {
-      schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, EsterelPackage.CONSTANT_EXPRESSION__SCHEDULE);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected ConstantExpressionImpl() {
+        super();
     }
-    return schedule;
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Constant getConstant()
-  {
-    if (constant != null && constant.eIsProxy())
-    {
-      InternalEObject oldConstant = (InternalEObject)constant;
-      constant = (Constant)eResolveProxy(oldConstant);
-      if (constant != oldConstant)
-      {
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return EsterelPackage.Literals.CONSTANT_EXPRESSION;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<ScheduleObjectReference> getSchedule() {
+        if (schedule == null) {
+            schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, EsterelPackage.CONSTANT_EXPRESSION__SCHEDULE);
+        }
+        return schedule;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Constant getConstant() {
+        if (constant != null && constant.eIsProxy()) {
+            InternalEObject oldConstant = (InternalEObject)constant;
+            constant = (Constant)eResolveProxy(oldConstant);
+            if (constant != oldConstant) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.CONSTANT_EXPRESSION__CONSTANT, oldConstant, constant));
+            }
+        }
+        return constant;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Constant basicGetConstant() {
+        return constant;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setConstant(Constant newConstant) {
+        Constant oldConstant = constant;
+        constant = newConstant;
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.CONSTANT_EXPRESSION__CONSTANT, oldConstant, constant));
-      }
+            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.CONSTANT_EXPRESSION__CONSTANT, oldConstant, constant));
     }
-    return constant;
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Constant basicGetConstant()
-  {
-    return constant;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setConstant(Constant newConstant)
-  {
-    Constant oldConstant = constant;
-    constant = newConstant;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.CONSTANT_EXPRESSION__CONSTANT, oldConstant, constant));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String getValue()
-  {
-    return value;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setValue(String newValue)
-  {
-    String oldValue = value;
-    value = newValue;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.CONSTANT_EXPRESSION__VALUE, oldValue, value));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.CONSTANT_EXPRESSION__SCHEDULE:
-        return ((InternalEList<?>)getSchedule()).basicRemove(otherEnd, msgs);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getValue() {
+        return value;
     }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Object eGet(int featureID, boolean resolve, boolean coreType)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.CONSTANT_EXPRESSION__SCHEDULE:
-        return getSchedule();
-      case EsterelPackage.CONSTANT_EXPRESSION__CONSTANT:
-        if (resolve) return getConstant();
-        return basicGetConstant();
-      case EsterelPackage.CONSTANT_EXPRESSION__VALUE:
-        return getValue();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setValue(String newValue) {
+        String oldValue = value;
+        value = newValue;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.CONSTANT_EXPRESSION__VALUE, oldValue, value));
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @SuppressWarnings("unchecked")
-  @Override
-  public void eSet(int featureID, Object newValue)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.CONSTANT_EXPRESSION__SCHEDULE:
-        getSchedule().clear();
-        getSchedule().addAll((Collection<? extends ScheduleObjectReference>)newValue);
-        return;
-      case EsterelPackage.CONSTANT_EXPRESSION__CONSTANT:
-        setConstant((Constant)newValue);
-        return;
-      case EsterelPackage.CONSTANT_EXPRESSION__VALUE:
-        setValue((String)newValue);
-        return;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case EsterelPackage.CONSTANT_EXPRESSION__SCHEDULE:
+                return ((InternalEList<?>)getSchedule()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
-    super.eSet(featureID, newValue);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void eUnset(int featureID)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.CONSTANT_EXPRESSION__SCHEDULE:
-        getSchedule().clear();
-        return;
-      case EsterelPackage.CONSTANT_EXPRESSION__CONSTANT:
-        setConstant((Constant)null);
-        return;
-      case EsterelPackage.CONSTANT_EXPRESSION__VALUE:
-        setValue(VALUE_EDEFAULT);
-        return;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
+            case EsterelPackage.CONSTANT_EXPRESSION__SCHEDULE:
+                return getSchedule();
+            case EsterelPackage.CONSTANT_EXPRESSION__CONSTANT:
+                if (resolve) return getConstant();
+                return basicGetConstant();
+            case EsterelPackage.CONSTANT_EXPRESSION__VALUE:
+                return getValue();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    super.eUnset(featureID);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public boolean eIsSet(int featureID)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.CONSTANT_EXPRESSION__SCHEDULE:
-        return schedule != null && !schedule.isEmpty();
-      case EsterelPackage.CONSTANT_EXPRESSION__CONSTANT:
-        return constant != null;
-      case EsterelPackage.CONSTANT_EXPRESSION__VALUE:
-        return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
+            case EsterelPackage.CONSTANT_EXPRESSION__SCHEDULE:
+                getSchedule().clear();
+                getSchedule().addAll((Collection<? extends ScheduleObjectReference>)newValue);
+                return;
+            case EsterelPackage.CONSTANT_EXPRESSION__CONSTANT:
+                setConstant((Constant)newValue);
+                return;
+            case EsterelPackage.CONSTANT_EXPRESSION__VALUE:
+                setValue((String)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
     }
-    return super.eIsSet(featureID);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void eUnset(int featureID) {
+        switch (featureID) {
+            case EsterelPackage.CONSTANT_EXPRESSION__SCHEDULE:
+                getSchedule().clear();
+                return;
+            case EsterelPackage.CONSTANT_EXPRESSION__CONSTANT:
+                setConstant((Constant)null);
+                return;
+            case EsterelPackage.CONSTANT_EXPRESSION__VALUE:
+                setValue(VALUE_EDEFAULT);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (value: ");
-    result.append(value);
-    result.append(')');
-    return result.toString();
-  }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
+            case EsterelPackage.CONSTANT_EXPRESSION__SCHEDULE:
+                return schedule != null && !schedule.isEmpty();
+            case EsterelPackage.CONSTANT_EXPRESSION__CONSTANT:
+                return constant != null;
+            case EsterelPackage.CONSTANT_EXPRESSION__VALUE:
+                return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
+        }
+        return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (value: ");
+        result.append(value);
+        result.append(')');
+        return result.toString();
+    }
 
 } //ConstantExpressionImpl

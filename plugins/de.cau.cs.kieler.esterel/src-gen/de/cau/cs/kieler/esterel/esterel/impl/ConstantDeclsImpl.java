@@ -36,172 +36,155 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class ConstantDeclsImpl extends MinimalEObjectImpl.Container implements ConstantDecls
-{
-  /**
-   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getAnnotations()
-   * @generated
-   * @ordered
-   */
-  protected EList<Annotation> annotations;
+public class ConstantDeclsImpl extends MinimalEObjectImpl.Container implements ConstantDecls {
+    /**
+     * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getAnnotations()
+     * @generated
+     * @ordered
+     */
+    protected EList<Annotation> annotations;
 
-  /**
-   * The cached value of the '{@link #getConstants() <em>Constants</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getConstants()
-   * @generated
-   * @ordered
-   */
-  protected EList<OneTypeConstantDecls> constants;
+    /**
+     * The cached value of the '{@link #getConstants() <em>Constants</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getConstants()
+     * @generated
+     * @ordered
+     */
+    protected EList<OneTypeConstantDecls> constants;
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected ConstantDeclsImpl()
-  {
-    super();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  protected EClass eStaticClass()
-  {
-    return EsterelPackage.Literals.CONSTANT_DECLS;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<Annotation> getAnnotations()
-  {
-    if (annotations == null)
-    {
-      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.CONSTANT_DECLS__ANNOTATIONS);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected ConstantDeclsImpl() {
+        super();
     }
-    return annotations;
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<OneTypeConstantDecls> getConstants()
-  {
-    if (constants == null)
-    {
-      constants = new EObjectContainmentEList<OneTypeConstantDecls>(OneTypeConstantDecls.class, this, EsterelPackage.CONSTANT_DECLS__CONSTANTS);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return EsterelPackage.Literals.CONSTANT_DECLS;
     }
-    return constants;
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.CONSTANT_DECLS__ANNOTATIONS:
-        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
-      case EsterelPackage.CONSTANT_DECLS__CONSTANTS:
-        return ((InternalEList<?>)getConstants()).basicRemove(otherEnd, msgs);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Annotation> getAnnotations() {
+        if (annotations == null) {
+            annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.CONSTANT_DECLS__ANNOTATIONS);
+        }
+        return annotations;
     }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Object eGet(int featureID, boolean resolve, boolean coreType)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.CONSTANT_DECLS__ANNOTATIONS:
-        return getAnnotations();
-      case EsterelPackage.CONSTANT_DECLS__CONSTANTS:
-        return getConstants();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<OneTypeConstantDecls> getConstants() {
+        if (constants == null) {
+            constants = new EObjectContainmentEList<OneTypeConstantDecls>(OneTypeConstantDecls.class, this, EsterelPackage.CONSTANT_DECLS__CONSTANTS);
+        }
+        return constants;
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @SuppressWarnings("unchecked")
-  @Override
-  public void eSet(int featureID, Object newValue)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.CONSTANT_DECLS__ANNOTATIONS:
-        getAnnotations().clear();
-        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
-        return;
-      case EsterelPackage.CONSTANT_DECLS__CONSTANTS:
-        getConstants().clear();
-        getConstants().addAll((Collection<? extends OneTypeConstantDecls>)newValue);
-        return;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case EsterelPackage.CONSTANT_DECLS__ANNOTATIONS:
+                return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
+            case EsterelPackage.CONSTANT_DECLS__CONSTANTS:
+                return ((InternalEList<?>)getConstants()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
-    super.eSet(featureID, newValue);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void eUnset(int featureID)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.CONSTANT_DECLS__ANNOTATIONS:
-        getAnnotations().clear();
-        return;
-      case EsterelPackage.CONSTANT_DECLS__CONSTANTS:
-        getConstants().clear();
-        return;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
+            case EsterelPackage.CONSTANT_DECLS__ANNOTATIONS:
+                return getAnnotations();
+            case EsterelPackage.CONSTANT_DECLS__CONSTANTS:
+                return getConstants();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    super.eUnset(featureID);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public boolean eIsSet(int featureID)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.CONSTANT_DECLS__ANNOTATIONS:
-        return annotations != null && !annotations.isEmpty();
-      case EsterelPackage.CONSTANT_DECLS__CONSTANTS:
-        return constants != null && !constants.isEmpty();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
+            case EsterelPackage.CONSTANT_DECLS__ANNOTATIONS:
+                getAnnotations().clear();
+                getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+                return;
+            case EsterelPackage.CONSTANT_DECLS__CONSTANTS:
+                getConstants().clear();
+                getConstants().addAll((Collection<? extends OneTypeConstantDecls>)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
     }
-    return super.eIsSet(featureID);
-  }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void eUnset(int featureID) {
+        switch (featureID) {
+            case EsterelPackage.CONSTANT_DECLS__ANNOTATIONS:
+                getAnnotations().clear();
+                return;
+            case EsterelPackage.CONSTANT_DECLS__CONSTANTS:
+                getConstants().clear();
+                return;
+        }
+        super.eUnset(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
+            case EsterelPackage.CONSTANT_DECLS__ANNOTATIONS:
+                return annotations != null && !annotations.isEmpty();
+            case EsterelPackage.CONSTANT_DECLS__CONSTANTS:
+                return constants != null && !constants.isEmpty();
+        }
+        return super.eIsSet(featureID);
+    }
 
 } //ConstantDeclsImpl

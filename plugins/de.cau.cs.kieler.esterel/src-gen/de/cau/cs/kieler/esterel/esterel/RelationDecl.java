@@ -14,6 +14,5 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface RelationDecl extends EObject
-{
+public interface RelationDecl extends EObject {
 } // RelationDecl

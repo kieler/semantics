@@ -38,199 +38,179 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class TrapExpressionImpl extends MinimalEObjectImpl.Container implements TrapExpression
-{
-  /**
-   * The cached value of the '{@link #getSchedule() <em>Schedule</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getSchedule()
-   * @generated
-   * @ordered
-   */
-  protected EList<ScheduleObjectReference> schedule;
+public class TrapExpressionImpl extends MinimalEObjectImpl.Container implements TrapExpression {
+    /**
+     * The cached value of the '{@link #getSchedule() <em>Schedule</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getSchedule()
+     * @generated
+     * @ordered
+     */
+    protected EList<ScheduleObjectReference> schedule;
 
-  /**
-   * The cached value of the '{@link #getTrap() <em>Trap</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getTrap()
-   * @generated
-   * @ordered
-   */
-  protected ISignal trap;
+    /**
+     * The cached value of the '{@link #getTrap() <em>Trap</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getTrap()
+     * @generated
+     * @ordered
+     */
+    protected ISignal trap;
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected TrapExpressionImpl()
-  {
-    super();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  protected EClass eStaticClass()
-  {
-    return EsterelPackage.Literals.TRAP_EXPRESSION;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<ScheduleObjectReference> getSchedule()
-  {
-    if (schedule == null)
-    {
-      schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, EsterelPackage.TRAP_EXPRESSION__SCHEDULE);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected TrapExpressionImpl() {
+        super();
     }
-    return schedule;
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public ISignal getTrap()
-  {
-    if (trap != null && trap.eIsProxy())
-    {
-      InternalEObject oldTrap = (InternalEObject)trap;
-      trap = (ISignal)eResolveProxy(oldTrap);
-      if (trap != oldTrap)
-      {
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return EsterelPackage.Literals.TRAP_EXPRESSION;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<ScheduleObjectReference> getSchedule() {
+        if (schedule == null) {
+            schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, EsterelPackage.TRAP_EXPRESSION__SCHEDULE);
+        }
+        return schedule;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ISignal getTrap() {
+        if (trap != null && trap.eIsProxy()) {
+            InternalEObject oldTrap = (InternalEObject)trap;
+            trap = (ISignal)eResolveProxy(oldTrap);
+            if (trap != oldTrap) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.TRAP_EXPRESSION__TRAP, oldTrap, trap));
+            }
+        }
+        return trap;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ISignal basicGetTrap() {
+        return trap;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setTrap(ISignal newTrap) {
+        ISignal oldTrap = trap;
+        trap = newTrap;
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.TRAP_EXPRESSION__TRAP, oldTrap, trap));
-      }
+            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.TRAP_EXPRESSION__TRAP, oldTrap, trap));
     }
-    return trap;
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public ISignal basicGetTrap()
-  {
-    return trap;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setTrap(ISignal newTrap)
-  {
-    ISignal oldTrap = trap;
-    trap = newTrap;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.TRAP_EXPRESSION__TRAP, oldTrap, trap));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.TRAP_EXPRESSION__SCHEDULE:
-        return ((InternalEList<?>)getSchedule()).basicRemove(otherEnd, msgs);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case EsterelPackage.TRAP_EXPRESSION__SCHEDULE:
+                return ((InternalEList<?>)getSchedule()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Object eGet(int featureID, boolean resolve, boolean coreType)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.TRAP_EXPRESSION__SCHEDULE:
-        return getSchedule();
-      case EsterelPackage.TRAP_EXPRESSION__TRAP:
-        if (resolve) return getTrap();
-        return basicGetTrap();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
+            case EsterelPackage.TRAP_EXPRESSION__SCHEDULE:
+                return getSchedule();
+            case EsterelPackage.TRAP_EXPRESSION__TRAP:
+                if (resolve) return getTrap();
+                return basicGetTrap();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @SuppressWarnings("unchecked")
-  @Override
-  public void eSet(int featureID, Object newValue)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.TRAP_EXPRESSION__SCHEDULE:
-        getSchedule().clear();
-        getSchedule().addAll((Collection<? extends ScheduleObjectReference>)newValue);
-        return;
-      case EsterelPackage.TRAP_EXPRESSION__TRAP:
-        setTrap((ISignal)newValue);
-        return;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
+            case EsterelPackage.TRAP_EXPRESSION__SCHEDULE:
+                getSchedule().clear();
+                getSchedule().addAll((Collection<? extends ScheduleObjectReference>)newValue);
+                return;
+            case EsterelPackage.TRAP_EXPRESSION__TRAP:
+                setTrap((ISignal)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
     }
-    super.eSet(featureID, newValue);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void eUnset(int featureID)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.TRAP_EXPRESSION__SCHEDULE:
-        getSchedule().clear();
-        return;
-      case EsterelPackage.TRAP_EXPRESSION__TRAP:
-        setTrap((ISignal)null);
-        return;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void eUnset(int featureID) {
+        switch (featureID) {
+            case EsterelPackage.TRAP_EXPRESSION__SCHEDULE:
+                getSchedule().clear();
+                return;
+            case EsterelPackage.TRAP_EXPRESSION__TRAP:
+                setTrap((ISignal)null);
+                return;
+        }
+        super.eUnset(featureID);
     }
-    super.eUnset(featureID);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public boolean eIsSet(int featureID)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.TRAP_EXPRESSION__SCHEDULE:
-        return schedule != null && !schedule.isEmpty();
-      case EsterelPackage.TRAP_EXPRESSION__TRAP:
-        return trap != null;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
+            case EsterelPackage.TRAP_EXPRESSION__SCHEDULE:
+                return schedule != null && !schedule.isEmpty();
+            case EsterelPackage.TRAP_EXPRESSION__TRAP:
+                return trap != null;
+        }
+        return super.eIsSet(featureID);
     }
-    return super.eIsSet(featureID);
-  }
 
 } //TrapExpressionImpl

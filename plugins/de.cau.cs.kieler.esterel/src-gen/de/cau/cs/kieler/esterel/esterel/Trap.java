@@ -24,38 +24,37 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface Trap extends StatementContainer, Statement
-{
-  /**
-   * Returns the value of the '<em><b>Trap Signals</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.ISignal}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Trap Signals</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Trap Signals</em>' containment reference list.
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getTrap_TrapSignals()
-   * @model containment="true"
-   * @generated
-   */
-  EList<ISignal> getTrapSignals();
+public interface Trap extends StatementContainer, Statement {
+    /**
+     * Returns the value of the '<em><b>Trap Signals</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.ISignal}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Trap Signals</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Trap Signals</em>' containment reference list.
+     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getTrap_TrapSignals()
+     * @model containment="true"
+     * @generated
+     */
+    EList<ISignal> getTrapSignals();
 
-  /**
-   * Returns the value of the '<em><b>Trap Handler</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.TrapHandler}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Trap Handler</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Trap Handler</em>' containment reference list.
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getTrap_TrapHandler()
-   * @model containment="true"
-   * @generated
-   */
-  EList<TrapHandler> getTrapHandler();
+    /**
+     * Returns the value of the '<em><b>Trap Handler</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.TrapHandler}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Trap Handler</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Trap Handler</em>' containment reference list.
+     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getTrap_TrapHandler()
+     * @model containment="true"
+     * @generated
+     */
+    EList<TrapHandler> getTrapHandler();
 
 } // Trap

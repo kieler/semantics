@@ -38,205 +38,185 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class AwaitImpl extends StatementContainerImpl implements Await
-{
-  /**
-   * The cached value of the '{@link #getDelay() <em>Delay</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getDelay()
-   * @generated
-   * @ordered
-   */
-  protected DelayExpr delay;
+public class AwaitImpl extends StatementContainerImpl implements Await {
+    /**
+     * The cached value of the '{@link #getDelay() <em>Delay</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getDelay()
+     * @generated
+     * @ordered
+     */
+    protected DelayExpr delay;
 
-  /**
-   * The cached value of the '{@link #getCases() <em>Cases</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getCases()
-   * @generated
-   * @ordered
-   */
-  protected EList<Case> cases;
+    /**
+     * The cached value of the '{@link #getCases() <em>Cases</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getCases()
+     * @generated
+     * @ordered
+     */
+    protected EList<Case> cases;
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected AwaitImpl()
-  {
-    super();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  protected EClass eStaticClass()
-  {
-    return EsterelPackage.Literals.AWAIT;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public DelayExpr getDelay()
-  {
-    return delay;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetDelay(DelayExpr newDelay, NotificationChain msgs)
-  {
-    DelayExpr oldDelay = delay;
-    delay = newDelay;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.AWAIT__DELAY, oldDelay, newDelay);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected AwaitImpl() {
+        super();
     }
-    return msgs;
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setDelay(DelayExpr newDelay)
-  {
-    if (newDelay != delay)
-    {
-      NotificationChain msgs = null;
-      if (delay != null)
-        msgs = ((InternalEObject)delay).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.AWAIT__DELAY, null, msgs);
-      if (newDelay != null)
-        msgs = ((InternalEObject)newDelay).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.AWAIT__DELAY, null, msgs);
-      msgs = basicSetDelay(newDelay, msgs);
-      if (msgs != null) msgs.dispatch();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return EsterelPackage.Literals.AWAIT;
     }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.AWAIT__DELAY, newDelay, newDelay));
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<Case> getCases()
-  {
-    if (cases == null)
-    {
-      cases = new EObjectContainmentEList<Case>(Case.class, this, EsterelPackage.AWAIT__CASES);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public DelayExpr getDelay() {
+        return delay;
     }
-    return cases;
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.AWAIT__DELAY:
-        return basicSetDelay(null, msgs);
-      case EsterelPackage.AWAIT__CASES:
-        return ((InternalEList<?>)getCases()).basicRemove(otherEnd, msgs);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetDelay(DelayExpr newDelay, NotificationChain msgs) {
+        DelayExpr oldDelay = delay;
+        delay = newDelay;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.AWAIT__DELAY, oldDelay, newDelay);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
     }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Object eGet(int featureID, boolean resolve, boolean coreType)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.AWAIT__DELAY:
-        return getDelay();
-      case EsterelPackage.AWAIT__CASES:
-        return getCases();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setDelay(DelayExpr newDelay) {
+        if (newDelay != delay) {
+            NotificationChain msgs = null;
+            if (delay != null)
+                msgs = ((InternalEObject)delay).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.AWAIT__DELAY, null, msgs);
+            if (newDelay != null)
+                msgs = ((InternalEObject)newDelay).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.AWAIT__DELAY, null, msgs);
+            msgs = basicSetDelay(newDelay, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.AWAIT__DELAY, newDelay, newDelay));
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @SuppressWarnings("unchecked")
-  @Override
-  public void eSet(int featureID, Object newValue)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.AWAIT__DELAY:
-        setDelay((DelayExpr)newValue);
-        return;
-      case EsterelPackage.AWAIT__CASES:
-        getCases().clear();
-        getCases().addAll((Collection<? extends Case>)newValue);
-        return;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Case> getCases() {
+        if (cases == null) {
+            cases = new EObjectContainmentEList<Case>(Case.class, this, EsterelPackage.AWAIT__CASES);
+        }
+        return cases;
     }
-    super.eSet(featureID, newValue);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void eUnset(int featureID)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.AWAIT__DELAY:
-        setDelay((DelayExpr)null);
-        return;
-      case EsterelPackage.AWAIT__CASES:
-        getCases().clear();
-        return;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case EsterelPackage.AWAIT__DELAY:
+                return basicSetDelay(null, msgs);
+            case EsterelPackage.AWAIT__CASES:
+                return ((InternalEList<?>)getCases()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
-    super.eUnset(featureID);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public boolean eIsSet(int featureID)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.AWAIT__DELAY:
-        return delay != null;
-      case EsterelPackage.AWAIT__CASES:
-        return cases != null && !cases.isEmpty();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
+            case EsterelPackage.AWAIT__DELAY:
+                return getDelay();
+            case EsterelPackage.AWAIT__CASES:
+                return getCases();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    return super.eIsSet(featureID);
-  }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
+            case EsterelPackage.AWAIT__DELAY:
+                setDelay((DelayExpr)newValue);
+                return;
+            case EsterelPackage.AWAIT__CASES:
+                getCases().clear();
+                getCases().addAll((Collection<? extends Case>)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void eUnset(int featureID) {
+        switch (featureID) {
+            case EsterelPackage.AWAIT__DELAY:
+                setDelay((DelayExpr)null);
+                return;
+            case EsterelPackage.AWAIT__CASES:
+                getCases().clear();
+                return;
+        }
+        super.eUnset(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
+            case EsterelPackage.AWAIT__DELAY:
+                return delay != null;
+            case EsterelPackage.AWAIT__CASES:
+                return cases != null && !cases.isEmpty();
+        }
+        return super.eIsSet(featureID);
+    }
 
 } //AwaitImpl

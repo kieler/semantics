@@ -14,6 +14,5 @@ import de.cau.cs.kieler.scl.Statement;
  * @model
  * @generated
  */
-public interface Nothing extends Statement
-{
+public interface Nothing extends Statement {
 } // Nothing

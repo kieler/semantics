@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.kico.feature">
+      <featureClass
+            class="de.cau.cs.kieler.scg.ssc.features.SSAFeature">
+      </featureClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.ssc.features.SSASCLFeature">
+      </featureClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.ssc.features.SSAEstFeature">
+      </featureClass>
+      <featureGroupClass
+            class="de.cau.cs.kieler.scg.ssc.features.SSCFeatureGroup">
+      </featureGroupClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.ssc.features.DualRailFeature">
+      </featureClass>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.transformation">
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.ssc.strl.SSAWeakUnemitEsterelReconstruction">
+      </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.ssc.ssa.WeakUnemitSSATransformation">
+      </productionTransformationClass>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.klighd.diagramSyntheses">
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scg.ssc.ssa.domtree.DominatorTreeSynthesis"
+            id="de.cau.cs.kieler.scg.ssc.domtree">
+      </diagramSynthesis>
+   </extension>
+
+</plugin>

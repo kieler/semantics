@@ -47,353 +47,325 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class PresentImpl extends StatementImpl implements Present
-{
-  /**
-   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getExpression()
-   * @generated
-   * @ordered
-   */
-  protected Expression expression;
+public class PresentImpl extends StatementImpl implements Present {
+    /**
+     * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getExpression()
+     * @generated
+     * @ordered
+     */
+    protected Expression expression;
 
-  /**
-   * The cached value of the '{@link #getThenAnnotations() <em>Then Annotations</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getThenAnnotations()
-   * @generated
-   * @ordered
-   */
-  protected EList<Annotation> thenAnnotations;
+    /**
+     * The cached value of the '{@link #getThenAnnotations() <em>Then Annotations</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getThenAnnotations()
+     * @generated
+     * @ordered
+     */
+    protected EList<Annotation> thenAnnotations;
 
-  /**
-   * The cached value of the '{@link #getThenStatements() <em>Then Statements</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getThenStatements()
-   * @generated
-   * @ordered
-   */
-  protected EList<Statement> thenStatements;
+    /**
+     * The cached value of the '{@link #getThenStatements() <em>Then Statements</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getThenStatements()
+     * @generated
+     * @ordered
+     */
+    protected EList<Statement> thenStatements;
 
-  /**
-   * The cached value of the '{@link #getCases() <em>Cases</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getCases()
-   * @generated
-   * @ordered
-   */
-  protected EList<PresentCase> cases;
+    /**
+     * The cached value of the '{@link #getCases() <em>Cases</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getCases()
+     * @generated
+     * @ordered
+     */
+    protected EList<PresentCase> cases;
 
-  /**
-   * The cached value of the '{@link #getElseAnnotations() <em>Else Annotations</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getElseAnnotations()
-   * @generated
-   * @ordered
-   */
-  protected EList<Annotation> elseAnnotations;
+    /**
+     * The cached value of the '{@link #getElseAnnotations() <em>Else Annotations</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getElseAnnotations()
+     * @generated
+     * @ordered
+     */
+    protected EList<Annotation> elseAnnotations;
 
-  /**
-   * The cached value of the '{@link #getElseStatements() <em>Else Statements</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getElseStatements()
-   * @generated
-   * @ordered
-   */
-  protected EList<Statement> elseStatements;
+    /**
+     * The cached value of the '{@link #getElseStatements() <em>Else Statements</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getElseStatements()
+     * @generated
+     * @ordered
+     */
+    protected EList<Statement> elseStatements;
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected PresentImpl()
-  {
-    super();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  protected EClass eStaticClass()
-  {
-    return EsterelPackage.Literals.PRESENT;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Expression getExpression()
-  {
-    return expression;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs)
-  {
-    Expression oldExpression = expression;
-    expression = newExpression;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT__EXPRESSION, oldExpression, newExpression);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected PresentImpl() {
+        super();
     }
-    return msgs;
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setExpression(Expression newExpression)
-  {
-    if (newExpression != expression)
-    {
-      NotificationChain msgs = null;
-      if (expression != null)
-        msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT__EXPRESSION, null, msgs);
-      if (newExpression != null)
-        msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT__EXPRESSION, null, msgs);
-      msgs = basicSetExpression(newExpression, msgs);
-      if (msgs != null) msgs.dispatch();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return EsterelPackage.Literals.PRESENT;
     }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT__EXPRESSION, newExpression, newExpression));
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<Annotation> getThenAnnotations()
-  {
-    if (thenAnnotations == null)
-    {
-      thenAnnotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.PRESENT__THEN_ANNOTATIONS);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Expression getExpression() {
+        return expression;
     }
-    return thenAnnotations;
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<Statement> getThenStatements()
-  {
-    if (thenStatements == null)
-    {
-      thenStatements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.PRESENT__THEN_STATEMENTS);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs) {
+        Expression oldExpression = expression;
+        expression = newExpression;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT__EXPRESSION, oldExpression, newExpression);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
     }
-    return thenStatements;
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<PresentCase> getCases()
-  {
-    if (cases == null)
-    {
-      cases = new EObjectContainmentEList<PresentCase>(PresentCase.class, this, EsterelPackage.PRESENT__CASES);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setExpression(Expression newExpression) {
+        if (newExpression != expression) {
+            NotificationChain msgs = null;
+            if (expression != null)
+                msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT__EXPRESSION, null, msgs);
+            if (newExpression != null)
+                msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT__EXPRESSION, null, msgs);
+            msgs = basicSetExpression(newExpression, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT__EXPRESSION, newExpression, newExpression));
     }
-    return cases;
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<Annotation> getElseAnnotations()
-  {
-    if (elseAnnotations == null)
-    {
-      elseAnnotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.PRESENT__ELSE_ANNOTATIONS);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Annotation> getThenAnnotations() {
+        if (thenAnnotations == null) {
+            thenAnnotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.PRESENT__THEN_ANNOTATIONS);
+        }
+        return thenAnnotations;
     }
-    return elseAnnotations;
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<Statement> getElseStatements()
-  {
-    if (elseStatements == null)
-    {
-      elseStatements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.PRESENT__ELSE_STATEMENTS);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Statement> getThenStatements() {
+        if (thenStatements == null) {
+            thenStatements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.PRESENT__THEN_STATEMENTS);
+        }
+        return thenStatements;
     }
-    return elseStatements;
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.PRESENT__EXPRESSION:
-        return basicSetExpression(null, msgs);
-      case EsterelPackage.PRESENT__THEN_ANNOTATIONS:
-        return ((InternalEList<?>)getThenAnnotations()).basicRemove(otherEnd, msgs);
-      case EsterelPackage.PRESENT__THEN_STATEMENTS:
-        return ((InternalEList<?>)getThenStatements()).basicRemove(otherEnd, msgs);
-      case EsterelPackage.PRESENT__CASES:
-        return ((InternalEList<?>)getCases()).basicRemove(otherEnd, msgs);
-      case EsterelPackage.PRESENT__ELSE_ANNOTATIONS:
-        return ((InternalEList<?>)getElseAnnotations()).basicRemove(otherEnd, msgs);
-      case EsterelPackage.PRESENT__ELSE_STATEMENTS:
-        return ((InternalEList<?>)getElseStatements()).basicRemove(otherEnd, msgs);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<PresentCase> getCases() {
+        if (cases == null) {
+            cases = new EObjectContainmentEList<PresentCase>(PresentCase.class, this, EsterelPackage.PRESENT__CASES);
+        }
+        return cases;
     }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Object eGet(int featureID, boolean resolve, boolean coreType)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.PRESENT__EXPRESSION:
-        return getExpression();
-      case EsterelPackage.PRESENT__THEN_ANNOTATIONS:
-        return getThenAnnotations();
-      case EsterelPackage.PRESENT__THEN_STATEMENTS:
-        return getThenStatements();
-      case EsterelPackage.PRESENT__CASES:
-        return getCases();
-      case EsterelPackage.PRESENT__ELSE_ANNOTATIONS:
-        return getElseAnnotations();
-      case EsterelPackage.PRESENT__ELSE_STATEMENTS:
-        return getElseStatements();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Annotation> getElseAnnotations() {
+        if (elseAnnotations == null) {
+            elseAnnotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.PRESENT__ELSE_ANNOTATIONS);
+        }
+        return elseAnnotations;
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @SuppressWarnings("unchecked")
-  @Override
-  public void eSet(int featureID, Object newValue)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.PRESENT__EXPRESSION:
-        setExpression((Expression)newValue);
-        return;
-      case EsterelPackage.PRESENT__THEN_ANNOTATIONS:
-        getThenAnnotations().clear();
-        getThenAnnotations().addAll((Collection<? extends Annotation>)newValue);
-        return;
-      case EsterelPackage.PRESENT__THEN_STATEMENTS:
-        getThenStatements().clear();
-        getThenStatements().addAll((Collection<? extends Statement>)newValue);
-        return;
-      case EsterelPackage.PRESENT__CASES:
-        getCases().clear();
-        getCases().addAll((Collection<? extends PresentCase>)newValue);
-        return;
-      case EsterelPackage.PRESENT__ELSE_ANNOTATIONS:
-        getElseAnnotations().clear();
-        getElseAnnotations().addAll((Collection<? extends Annotation>)newValue);
-        return;
-      case EsterelPackage.PRESENT__ELSE_STATEMENTS:
-        getElseStatements().clear();
-        getElseStatements().addAll((Collection<? extends Statement>)newValue);
-        return;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Statement> getElseStatements() {
+        if (elseStatements == null) {
+            elseStatements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.PRESENT__ELSE_STATEMENTS);
+        }
+        return elseStatements;
     }
-    super.eSet(featureID, newValue);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void eUnset(int featureID)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.PRESENT__EXPRESSION:
-        setExpression((Expression)null);
-        return;
-      case EsterelPackage.PRESENT__THEN_ANNOTATIONS:
-        getThenAnnotations().clear();
-        return;
-      case EsterelPackage.PRESENT__THEN_STATEMENTS:
-        getThenStatements().clear();
-        return;
-      case EsterelPackage.PRESENT__CASES:
-        getCases().clear();
-        return;
-      case EsterelPackage.PRESENT__ELSE_ANNOTATIONS:
-        getElseAnnotations().clear();
-        return;
-      case EsterelPackage.PRESENT__ELSE_STATEMENTS:
-        getElseStatements().clear();
-        return;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case EsterelPackage.PRESENT__EXPRESSION:
+                return basicSetExpression(null, msgs);
+            case EsterelPackage.PRESENT__THEN_ANNOTATIONS:
+                return ((InternalEList<?>)getThenAnnotations()).basicRemove(otherEnd, msgs);
+            case EsterelPackage.PRESENT__THEN_STATEMENTS:
+                return ((InternalEList<?>)getThenStatements()).basicRemove(otherEnd, msgs);
+            case EsterelPackage.PRESENT__CASES:
+                return ((InternalEList<?>)getCases()).basicRemove(otherEnd, msgs);
+            case EsterelPackage.PRESENT__ELSE_ANNOTATIONS:
+                return ((InternalEList<?>)getElseAnnotations()).basicRemove(otherEnd, msgs);
+            case EsterelPackage.PRESENT__ELSE_STATEMENTS:
+                return ((InternalEList<?>)getElseStatements()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
-    super.eUnset(featureID);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public boolean eIsSet(int featureID)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.PRESENT__EXPRESSION:
-        return expression != null;
-      case EsterelPackage.PRESENT__THEN_ANNOTATIONS:
-        return thenAnnotations != null && !thenAnnotations.isEmpty();
-      case EsterelPackage.PRESENT__THEN_STATEMENTS:
-        return thenStatements != null && !thenStatements.isEmpty();
-      case EsterelPackage.PRESENT__CASES:
-        return cases != null && !cases.isEmpty();
-      case EsterelPackage.PRESENT__ELSE_ANNOTATIONS:
-        return elseAnnotations != null && !elseAnnotations.isEmpty();
-      case EsterelPackage.PRESENT__ELSE_STATEMENTS:
-        return elseStatements != null && !elseStatements.isEmpty();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
+            case EsterelPackage.PRESENT__EXPRESSION:
+                return getExpression();
+            case EsterelPackage.PRESENT__THEN_ANNOTATIONS:
+                return getThenAnnotations();
+            case EsterelPackage.PRESENT__THEN_STATEMENTS:
+                return getThenStatements();
+            case EsterelPackage.PRESENT__CASES:
+                return getCases();
+            case EsterelPackage.PRESENT__ELSE_ANNOTATIONS:
+                return getElseAnnotations();
+            case EsterelPackage.PRESENT__ELSE_STATEMENTS:
+                return getElseStatements();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    return super.eIsSet(featureID);
-  }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
+            case EsterelPackage.PRESENT__EXPRESSION:
+                setExpression((Expression)newValue);
+                return;
+            case EsterelPackage.PRESENT__THEN_ANNOTATIONS:
+                getThenAnnotations().clear();
+                getThenAnnotations().addAll((Collection<? extends Annotation>)newValue);
+                return;
+            case EsterelPackage.PRESENT__THEN_STATEMENTS:
+                getThenStatements().clear();
+                getThenStatements().addAll((Collection<? extends Statement>)newValue);
+                return;
+            case EsterelPackage.PRESENT__CASES:
+                getCases().clear();
+                getCases().addAll((Collection<? extends PresentCase>)newValue);
+                return;
+            case EsterelPackage.PRESENT__ELSE_ANNOTATIONS:
+                getElseAnnotations().clear();
+                getElseAnnotations().addAll((Collection<? extends Annotation>)newValue);
+                return;
+            case EsterelPackage.PRESENT__ELSE_STATEMENTS:
+                getElseStatements().clear();
+                getElseStatements().addAll((Collection<? extends Statement>)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void eUnset(int featureID) {
+        switch (featureID) {
+            case EsterelPackage.PRESENT__EXPRESSION:
+                setExpression((Expression)null);
+                return;
+            case EsterelPackage.PRESENT__THEN_ANNOTATIONS:
+                getThenAnnotations().clear();
+                return;
+            case EsterelPackage.PRESENT__THEN_STATEMENTS:
+                getThenStatements().clear();
+                return;
+            case EsterelPackage.PRESENT__CASES:
+                getCases().clear();
+                return;
+            case EsterelPackage.PRESENT__ELSE_ANNOTATIONS:
+                getElseAnnotations().clear();
+                return;
+            case EsterelPackage.PRESENT__ELSE_STATEMENTS:
+                getElseStatements().clear();
+                return;
+        }
+        super.eUnset(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
+            case EsterelPackage.PRESENT__EXPRESSION:
+                return expression != null;
+            case EsterelPackage.PRESENT__THEN_ANNOTATIONS:
+                return thenAnnotations != null && !thenAnnotations.isEmpty();
+            case EsterelPackage.PRESENT__THEN_STATEMENTS:
+                return thenStatements != null && !thenStatements.isEmpty();
+            case EsterelPackage.PRESENT__CASES:
+                return cases != null && !cases.isEmpty();
+            case EsterelPackage.PRESENT__ELSE_ANNOTATIONS:
+                return elseAnnotations != null && !elseAnnotations.isEmpty();
+            case EsterelPackage.PRESENT__ELSE_STATEMENTS:
+                return elseStatements != null && !elseStatements.isEmpty();
+        }
+        return super.eIsSet(featureID);
+    }
 
 } //PresentImpl

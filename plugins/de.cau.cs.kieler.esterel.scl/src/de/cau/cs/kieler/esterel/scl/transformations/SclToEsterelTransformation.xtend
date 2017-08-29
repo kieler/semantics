@@ -22,7 +22,6 @@ import de.cau.cs.kieler.esterel.esterel.Module
 import de.cau.cs.kieler.esterel.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.esterel.kexpressions.ValueType
 import de.cau.cs.kieler.scl.scl.Statement
-import de.cau.cs.kieler.scl.scl.InstructionStatement
 import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.scl.scl.Parallel
 import de.cau.cs.kieler.esterel.esterel.Sequence
@@ -37,22 +36,19 @@ import de.cau.cs.kieler.esterel.kexpressions.OperatorType
 import de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.Goto
-import de.cau.cs.kieler.scl.scl.StatementSequence
-import de.cau.cs.kieler.scl.scl.EmptyStatement
+import de.cau.cs.kieler.scl.scl.Scope
 import org.eclipse.emf.ecore.util.EcoreUtil
 import com.google.inject.Inject
 import de.cau.cs.kieler.scl.scl.SclFactory
 import de.cau.cs.kieler.esterel.esterel.TrapDecl
 import org.eclipse.emf.ecore.util.EObjectEList
 import de.cau.cs.kieler.scl.extensions.SCLExtensions
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import java.util.List
 
 /**
  * @author krat
  *
  */
+// NOT ADAPTED TO NEW SCL METAMODEL
 class SclToEsterelTransformation {
 
     @Inject
@@ -60,9 +56,11 @@ class SclToEsterelTransformation {
 
     @Inject
     extension EsterelToSclExtensions
-    
+
     @Inject
     extension KExpressionsDeclarationExtensions
+    
+    extension EsterelFactory = EsterelFactory.eINSTANCE
 
     var LinkedList<ISignal> allSignals
     var LinkedList<TrapDecl> allTraps

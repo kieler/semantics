@@ -14,6 +14,5 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
  * @model
  * @generated
  */
-public interface TrapReferenceExpr extends ValuedObjectReference
-{
+public interface TrapReferenceExpr extends ValuedObjectReference {
 } // TrapReferenceExpr

@@ -15,6 +15,5 @@ import de.cau.cs.kieler.scl.StatementContainer;
  * @model
  * @generated
  */
-public interface Block extends StatementContainer, Statement
-{
+public interface Block extends StatementContainer, Statement {
 } // Block

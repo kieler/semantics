@@ -33,135 +33,120 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class EsterelParallelImpl extends StatementImpl implements EsterelParallel
-{
-  /**
-   * The cached value of the '{@link #getThreads() <em>Threads</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getThreads()
-   * @generated
-   * @ordered
-   */
-  protected EList<EsterelThread> threads;
+public class EsterelParallelImpl extends StatementImpl implements EsterelParallel {
+    /**
+     * The cached value of the '{@link #getThreads() <em>Threads</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getThreads()
+     * @generated
+     * @ordered
+     */
+    protected EList<EsterelThread> threads;
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected EsterelParallelImpl()
-  {
-    super();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  protected EClass eStaticClass()
-  {
-    return EsterelPackage.Literals.ESTEREL_PARALLEL;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<EsterelThread> getThreads()
-  {
-    if (threads == null)
-    {
-      threads = new EObjectContainmentEList<EsterelThread>(EsterelThread.class, this, EsterelPackage.ESTEREL_PARALLEL__THREADS);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected EsterelParallelImpl() {
+        super();
     }
-    return threads;
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.ESTEREL_PARALLEL__THREADS:
-        return ((InternalEList<?>)getThreads()).basicRemove(otherEnd, msgs);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return EsterelPackage.Literals.ESTEREL_PARALLEL;
     }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Object eGet(int featureID, boolean resolve, boolean coreType)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.ESTEREL_PARALLEL__THREADS:
-        return getThreads();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<EsterelThread> getThreads() {
+        if (threads == null) {
+            threads = new EObjectContainmentEList<EsterelThread>(EsterelThread.class, this, EsterelPackage.ESTEREL_PARALLEL__THREADS);
+        }
+        return threads;
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @SuppressWarnings("unchecked")
-  @Override
-  public void eSet(int featureID, Object newValue)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.ESTEREL_PARALLEL__THREADS:
-        getThreads().clear();
-        getThreads().addAll((Collection<? extends EsterelThread>)newValue);
-        return;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case EsterelPackage.ESTEREL_PARALLEL__THREADS:
+                return ((InternalEList<?>)getThreads()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
-    super.eSet(featureID, newValue);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void eUnset(int featureID)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.ESTEREL_PARALLEL__THREADS:
-        getThreads().clear();
-        return;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
+            case EsterelPackage.ESTEREL_PARALLEL__THREADS:
+                return getThreads();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    super.eUnset(featureID);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public boolean eIsSet(int featureID)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.ESTEREL_PARALLEL__THREADS:
-        return threads != null && !threads.isEmpty();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
+            case EsterelPackage.ESTEREL_PARALLEL__THREADS:
+                getThreads().clear();
+                getThreads().addAll((Collection<? extends EsterelThread>)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
     }
-    return super.eIsSet(featureID);
-  }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void eUnset(int featureID) {
+        switch (featureID) {
+            case EsterelPackage.ESTEREL_PARALLEL__THREADS:
+                getThreads().clear();
+                return;
+        }
+        super.eUnset(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
+            case EsterelPackage.ESTEREL_PARALLEL__THREADS:
+                return threads != null && !threads.isEmpty();
+        }
+        return super.eIsSet(featureID);
+    }
 
 } //EsterelParallelImpl

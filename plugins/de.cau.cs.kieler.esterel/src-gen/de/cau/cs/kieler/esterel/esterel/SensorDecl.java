@@ -25,38 +25,37 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface SensorDecl extends EObject
-{
-  /**
-   * Returns the value of the '<em><b>Annotations</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.annotations.Annotation}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Annotations</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Annotations</em>' containment reference list.
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getSensorDecl_Annotations()
-   * @model containment="true"
-   * @generated
-   */
-  EList<Annotation> getAnnotations();
+public interface SensorDecl extends EObject {
+    /**
+     * Returns the value of the '<em><b>Annotations</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.annotations.Annotation}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Annotations</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Annotations</em>' containment reference list.
+     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getSensorDecl_Annotations()
+     * @model containment="true"
+     * @generated
+     */
+    EList<Annotation> getAnnotations();
 
-  /**
-   * Returns the value of the '<em><b>Sensors</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.SensorWithType}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Sensors</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Sensors</em>' containment reference list.
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getSensorDecl_Sensors()
-   * @model containment="true"
-   * @generated
-   */
-  EList<SensorWithType> getSensors();
+    /**
+     * Returns the value of the '<em><b>Sensors</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.SensorWithType}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Sensors</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Sensors</em>' containment reference list.
+     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getSensorDecl_Sensors()
+     * @model containment="true"
+     * @generated
+     */
+    EList<SensorWithType> getSensors();
 
 } // SensorDecl

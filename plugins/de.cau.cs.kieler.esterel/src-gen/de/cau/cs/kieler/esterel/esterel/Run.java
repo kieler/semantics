@@ -23,48 +23,47 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface Run extends Statement
-{
-  /**
-   * Returns the value of the '<em><b>Module</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Module</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Module</em>' containment reference.
-   * @see #setModule(ModuleRenaming)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getRun_Module()
-   * @model containment="true"
-   * @generated
-   */
-  ModuleRenaming getModule();
+public interface Run extends Statement {
+    /**
+     * Returns the value of the '<em><b>Module</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Module</em>' containment reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Module</em>' containment reference.
+     * @see #setModule(ModuleRenaming)
+     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getRun_Module()
+     * @model containment="true"
+     * @generated
+     */
+    ModuleRenaming getModule();
 
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Run#getModule <em>Module</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Module</em>' containment reference.
-   * @see #getModule()
-   * @generated
-   */
-  void setModule(ModuleRenaming value);
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Run#getModule <em>Module</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Module</em>' containment reference.
+     * @see #getModule()
+     * @generated
+     */
+    void setModule(ModuleRenaming value);
 
-  /**
-   * Returns the value of the '<em><b>List</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.Renaming}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>List</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>List</em>' containment reference list.
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getRun_List()
-   * @model containment="true"
-   * @generated
-   */
-  EList<Renaming> getList();
+    /**
+     * Returns the value of the '<em><b>List</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.Renaming}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>List</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>List</em>' containment reference list.
+     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getRun_List()
+     * @model containment="true"
+     * @generated
+     */
+    EList<Renaming> getList();
 
 } // Run

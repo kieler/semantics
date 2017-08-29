@@ -13,6 +13,5 @@ package de.cau.cs.kieler.esterel.esterel;
  * @model
  * @generated
  */
-public interface TrapSignal extends ISignal
-{
+public interface TrapSignal extends ISignal {
 } // TrapSignal

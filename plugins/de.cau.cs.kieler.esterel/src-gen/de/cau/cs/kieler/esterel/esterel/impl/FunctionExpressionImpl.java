@@ -40,236 +40,214 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class FunctionExpressionImpl extends MinimalEObjectImpl.Container implements FunctionExpression
-{
-  /**
-   * The cached value of the '{@link #getSchedule() <em>Schedule</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getSchedule()
-   * @generated
-   * @ordered
-   */
-  protected EList<ScheduleObjectReference> schedule;
+public class FunctionExpressionImpl extends MinimalEObjectImpl.Container implements FunctionExpression {
+    /**
+     * The cached value of the '{@link #getSchedule() <em>Schedule</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getSchedule()
+     * @generated
+     * @ordered
+     */
+    protected EList<ScheduleObjectReference> schedule;
 
-  /**
-   * The cached value of the '{@link #getFunction() <em>Function</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getFunction()
-   * @generated
-   * @ordered
-   */
-  protected Function function;
+    /**
+     * The cached value of the '{@link #getFunction() <em>Function</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getFunction()
+     * @generated
+     * @ordered
+     */
+    protected Function function;
 
-  /**
-   * The cached value of the '{@link #getKexpressions() <em>Kexpressions</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getKexpressions()
-   * @generated
-   * @ordered
-   */
-  protected EList<Expression> kexpressions;
+    /**
+     * The cached value of the '{@link #getKexpressions() <em>Kexpressions</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getKexpressions()
+     * @generated
+     * @ordered
+     */
+    protected EList<Expression> kexpressions;
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected FunctionExpressionImpl()
-  {
-    super();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  protected EClass eStaticClass()
-  {
-    return EsterelPackage.Literals.FUNCTION_EXPRESSION;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<ScheduleObjectReference> getSchedule()
-  {
-    if (schedule == null)
-    {
-      schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, EsterelPackage.FUNCTION_EXPRESSION__SCHEDULE);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected FunctionExpressionImpl() {
+        super();
     }
-    return schedule;
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Function getFunction()
-  {
-    if (function != null && function.eIsProxy())
-    {
-      InternalEObject oldFunction = (InternalEObject)function;
-      function = (Function)eResolveProxy(oldFunction);
-      if (function != oldFunction)
-      {
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return EsterelPackage.Literals.FUNCTION_EXPRESSION;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<ScheduleObjectReference> getSchedule() {
+        if (schedule == null) {
+            schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, EsterelPackage.FUNCTION_EXPRESSION__SCHEDULE);
+        }
+        return schedule;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Function getFunction() {
+        if (function != null && function.eIsProxy()) {
+            InternalEObject oldFunction = (InternalEObject)function;
+            function = (Function)eResolveProxy(oldFunction);
+            if (function != oldFunction) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.FUNCTION_EXPRESSION__FUNCTION, oldFunction, function));
+            }
+        }
+        return function;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Function basicGetFunction() {
+        return function;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setFunction(Function newFunction) {
+        Function oldFunction = function;
+        function = newFunction;
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.FUNCTION_EXPRESSION__FUNCTION, oldFunction, function));
-      }
+            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.FUNCTION_EXPRESSION__FUNCTION, oldFunction, function));
     }
-    return function;
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Function basicGetFunction()
-  {
-    return function;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setFunction(Function newFunction)
-  {
-    Function oldFunction = function;
-    function = newFunction;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.FUNCTION_EXPRESSION__FUNCTION, oldFunction, function));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<Expression> getKexpressions()
-  {
-    if (kexpressions == null)
-    {
-      kexpressions = new EObjectContainmentEList<Expression>(Expression.class, this, EsterelPackage.FUNCTION_EXPRESSION__KEXPRESSIONS);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Expression> getKexpressions() {
+        if (kexpressions == null) {
+            kexpressions = new EObjectContainmentEList<Expression>(Expression.class, this, EsterelPackage.FUNCTION_EXPRESSION__KEXPRESSIONS);
+        }
+        return kexpressions;
     }
-    return kexpressions;
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.FUNCTION_EXPRESSION__SCHEDULE:
-        return ((InternalEList<?>)getSchedule()).basicRemove(otherEnd, msgs);
-      case EsterelPackage.FUNCTION_EXPRESSION__KEXPRESSIONS:
-        return ((InternalEList<?>)getKexpressions()).basicRemove(otherEnd, msgs);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case EsterelPackage.FUNCTION_EXPRESSION__SCHEDULE:
+                return ((InternalEList<?>)getSchedule()).basicRemove(otherEnd, msgs);
+            case EsterelPackage.FUNCTION_EXPRESSION__KEXPRESSIONS:
+                return ((InternalEList<?>)getKexpressions()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Object eGet(int featureID, boolean resolve, boolean coreType)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.FUNCTION_EXPRESSION__SCHEDULE:
-        return getSchedule();
-      case EsterelPackage.FUNCTION_EXPRESSION__FUNCTION:
-        if (resolve) return getFunction();
-        return basicGetFunction();
-      case EsterelPackage.FUNCTION_EXPRESSION__KEXPRESSIONS:
-        return getKexpressions();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
+            case EsterelPackage.FUNCTION_EXPRESSION__SCHEDULE:
+                return getSchedule();
+            case EsterelPackage.FUNCTION_EXPRESSION__FUNCTION:
+                if (resolve) return getFunction();
+                return basicGetFunction();
+            case EsterelPackage.FUNCTION_EXPRESSION__KEXPRESSIONS:
+                return getKexpressions();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @SuppressWarnings("unchecked")
-  @Override
-  public void eSet(int featureID, Object newValue)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.FUNCTION_EXPRESSION__SCHEDULE:
-        getSchedule().clear();
-        getSchedule().addAll((Collection<? extends ScheduleObjectReference>)newValue);
-        return;
-      case EsterelPackage.FUNCTION_EXPRESSION__FUNCTION:
-        setFunction((Function)newValue);
-        return;
-      case EsterelPackage.FUNCTION_EXPRESSION__KEXPRESSIONS:
-        getKexpressions().clear();
-        getKexpressions().addAll((Collection<? extends Expression>)newValue);
-        return;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
+            case EsterelPackage.FUNCTION_EXPRESSION__SCHEDULE:
+                getSchedule().clear();
+                getSchedule().addAll((Collection<? extends ScheduleObjectReference>)newValue);
+                return;
+            case EsterelPackage.FUNCTION_EXPRESSION__FUNCTION:
+                setFunction((Function)newValue);
+                return;
+            case EsterelPackage.FUNCTION_EXPRESSION__KEXPRESSIONS:
+                getKexpressions().clear();
+                getKexpressions().addAll((Collection<? extends Expression>)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
     }
-    super.eSet(featureID, newValue);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void eUnset(int featureID)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.FUNCTION_EXPRESSION__SCHEDULE:
-        getSchedule().clear();
-        return;
-      case EsterelPackage.FUNCTION_EXPRESSION__FUNCTION:
-        setFunction((Function)null);
-        return;
-      case EsterelPackage.FUNCTION_EXPRESSION__KEXPRESSIONS:
-        getKexpressions().clear();
-        return;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void eUnset(int featureID) {
+        switch (featureID) {
+            case EsterelPackage.FUNCTION_EXPRESSION__SCHEDULE:
+                getSchedule().clear();
+                return;
+            case EsterelPackage.FUNCTION_EXPRESSION__FUNCTION:
+                setFunction((Function)null);
+                return;
+            case EsterelPackage.FUNCTION_EXPRESSION__KEXPRESSIONS:
+                getKexpressions().clear();
+                return;
+        }
+        super.eUnset(featureID);
     }
-    super.eUnset(featureID);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public boolean eIsSet(int featureID)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.FUNCTION_EXPRESSION__SCHEDULE:
-        return schedule != null && !schedule.isEmpty();
-      case EsterelPackage.FUNCTION_EXPRESSION__FUNCTION:
-        return function != null;
-      case EsterelPackage.FUNCTION_EXPRESSION__KEXPRESSIONS:
-        return kexpressions != null && !kexpressions.isEmpty();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
+            case EsterelPackage.FUNCTION_EXPRESSION__SCHEDULE:
+                return schedule != null && !schedule.isEmpty();
+            case EsterelPackage.FUNCTION_EXPRESSION__FUNCTION:
+                return function != null;
+            case EsterelPackage.FUNCTION_EXPRESSION__KEXPRESSIONS:
+                return kexpressions != null && !kexpressions.isEmpty();
+        }
+        return super.eIsSet(featureID);
     }
-    return super.eIsSet(featureID);
-  }
 
 } //FunctionExpressionImpl

@@ -16,27 +16,24 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class SignalReferenceExprImpl extends ValuedObjectReferenceImpl implements SignalReferenceExpr
-{
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected SignalReferenceExprImpl()
-  {
-    super();
-  }
+public class SignalReferenceExprImpl extends ValuedObjectReferenceImpl implements SignalReferenceExpr {
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected SignalReferenceExprImpl() {
+        super();
+    }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  protected EClass eStaticClass()
-  {
-    return EsterelPackage.Literals.SIGNAL_REFERENCE_EXPR;
-  }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return EsterelPackage.Literals.SIGNAL_REFERENCE_EXPR;
+    }
 
 } //SignalReferenceExprImpl

@@ -33,135 +33,120 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class LocalVariableImpl extends StatementContainerImpl implements LocalVariable
-{
-  /**
-   * The cached value of the '{@link #getVarDecls() <em>Var Decls</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getVarDecls()
-   * @generated
-   * @ordered
-   */
-  protected EList<VariableDecl> varDecls;
+public class LocalVariableImpl extends StatementContainerImpl implements LocalVariable {
+    /**
+     * The cached value of the '{@link #getVarDecls() <em>Var Decls</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getVarDecls()
+     * @generated
+     * @ordered
+     */
+    protected EList<VariableDecl> varDecls;
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected LocalVariableImpl()
-  {
-    super();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  protected EClass eStaticClass()
-  {
-    return EsterelPackage.Literals.LOCAL_VARIABLE;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<VariableDecl> getVarDecls()
-  {
-    if (varDecls == null)
-    {
-      varDecls = new EObjectContainmentEList<VariableDecl>(VariableDecl.class, this, EsterelPackage.LOCAL_VARIABLE__VAR_DECLS);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected LocalVariableImpl() {
+        super();
     }
-    return varDecls;
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.LOCAL_VARIABLE__VAR_DECLS:
-        return ((InternalEList<?>)getVarDecls()).basicRemove(otherEnd, msgs);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return EsterelPackage.Literals.LOCAL_VARIABLE;
     }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Object eGet(int featureID, boolean resolve, boolean coreType)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.LOCAL_VARIABLE__VAR_DECLS:
-        return getVarDecls();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<VariableDecl> getVarDecls() {
+        if (varDecls == null) {
+            varDecls = new EObjectContainmentEList<VariableDecl>(VariableDecl.class, this, EsterelPackage.LOCAL_VARIABLE__VAR_DECLS);
+        }
+        return varDecls;
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @SuppressWarnings("unchecked")
-  @Override
-  public void eSet(int featureID, Object newValue)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.LOCAL_VARIABLE__VAR_DECLS:
-        getVarDecls().clear();
-        getVarDecls().addAll((Collection<? extends VariableDecl>)newValue);
-        return;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case EsterelPackage.LOCAL_VARIABLE__VAR_DECLS:
+                return ((InternalEList<?>)getVarDecls()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
-    super.eSet(featureID, newValue);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void eUnset(int featureID)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.LOCAL_VARIABLE__VAR_DECLS:
-        getVarDecls().clear();
-        return;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
+            case EsterelPackage.LOCAL_VARIABLE__VAR_DECLS:
+                return getVarDecls();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    super.eUnset(featureID);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public boolean eIsSet(int featureID)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.LOCAL_VARIABLE__VAR_DECLS:
-        return varDecls != null && !varDecls.isEmpty();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
+            case EsterelPackage.LOCAL_VARIABLE__VAR_DECLS:
+                getVarDecls().clear();
+                getVarDecls().addAll((Collection<? extends VariableDecl>)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
     }
-    return super.eIsSet(featureID);
-  }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void eUnset(int featureID) {
+        switch (featureID) {
+            case EsterelPackage.LOCAL_VARIABLE__VAR_DECLS:
+                getVarDecls().clear();
+                return;
+        }
+        super.eUnset(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
+            case EsterelPackage.LOCAL_VARIABLE__VAR_DECLS:
+                return varDecls != null && !varDecls.isEmpty();
+        }
+        return super.eIsSet(featureID);
+    }
 
 } //LocalVariableImpl

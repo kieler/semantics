@@ -14,6 +14,5 @@ import de.cau.cs.kieler.scl.Statement;
  * @model
  * @generated
  */
-public interface Halt extends Statement
-{
+public interface Halt extends Statement {
 } // Halt

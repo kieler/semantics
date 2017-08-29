@@ -13,6 +13,5 @@ package de.cau.cs.kieler.esterel.esterel;
  * @model
  * @generated
  */
-public interface Input extends InterfaceSignalDecl
-{
+public interface Input extends InterfaceSignalDecl {
 } // Input

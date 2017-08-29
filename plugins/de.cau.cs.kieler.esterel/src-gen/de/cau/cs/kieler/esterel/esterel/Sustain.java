@@ -23,58 +23,57 @@ import de.cau.cs.kieler.scl.Statement;
  * @model
  * @generated
  */
-public interface Sustain extends Statement
-{
-  /**
-   * Returns the value of the '<em><b>Signal</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Signal</em>' reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Signal</em>' reference.
-   * @see #setSignal(ISignal)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getSustain_Signal()
-   * @model
-   * @generated
-   */
-  ISignal getSignal();
+public interface Sustain extends Statement {
+    /**
+     * Returns the value of the '<em><b>Signal</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Signal</em>' reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Signal</em>' reference.
+     * @see #setSignal(ISignal)
+     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getSustain_Signal()
+     * @model
+     * @generated
+     */
+    ISignal getSignal();
 
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Sustain#getSignal <em>Signal</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Signal</em>' reference.
-   * @see #getSignal()
-   * @generated
-   */
-  void setSignal(ISignal value);
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Sustain#getSignal <em>Signal</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Signal</em>' reference.
+     * @see #getSignal()
+     * @generated
+     */
+    void setSignal(ISignal value);
 
-  /**
-   * Returns the value of the '<em><b>Expression</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Expression</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Expression</em>' containment reference.
-   * @see #setExpression(Expression)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getSustain_Expression()
-   * @model containment="true"
-   * @generated
-   */
-  Expression getExpression();
+    /**
+     * Returns the value of the '<em><b>Expression</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Expression</em>' containment reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Expression</em>' containment reference.
+     * @see #setExpression(Expression)
+     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getSustain_Expression()
+     * @model containment="true"
+     * @generated
+     */
+    Expression getExpression();
 
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Sustain#getExpression <em>Expression</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Expression</em>' containment reference.
-   * @see #getExpression()
-   * @generated
-   */
-  void setExpression(Expression value);
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Sustain#getExpression <em>Expression</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Expression</em>' containment reference.
+     * @see #getExpression()
+     * @generated
+     */
+    void setExpression(Expression value);
 
 } // Sustain
