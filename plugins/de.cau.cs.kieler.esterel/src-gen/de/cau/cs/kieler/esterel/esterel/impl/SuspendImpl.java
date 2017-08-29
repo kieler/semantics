@@ -6,6 +6,8 @@ import de.cau.cs.kieler.esterel.esterel.DelayExpr;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.Suspend;
 
+import de.cau.cs.kieler.scl.impl.StatementContainerImpl;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -22,6 +24,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.SuspendImpl#isWeak <em>Weak</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.SuspendImpl#getDelay <em>Delay</em>}</li>
  * </ul>
  *
@@ -29,6 +32,26 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  */
 public class SuspendImpl extends StatementContainerImpl implements Suspend
 {
+  /**
+   * The default value of the '{@link #isWeak() <em>Weak</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isWeak()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean WEAK_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isWeak() <em>Weak</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isWeak()
+   * @generated
+   * @ordered
+   */
+  protected boolean weak = WEAK_EDEFAULT;
+
   /**
    * The cached value of the '{@link #getDelay() <em>Delay</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -58,6 +81,29 @@ public class SuspendImpl extends StatementContainerImpl implements Suspend
   protected EClass eStaticClass()
   {
     return EsterelPackage.Literals.SUSPEND;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isWeak()
+  {
+    return weak;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setWeak(boolean newWeak)
+  {
+    boolean oldWeak = weak;
+    weak = newWeak;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.SUSPEND__WEAK, oldWeak, weak));
   }
 
   /**
@@ -134,6 +180,8 @@ public class SuspendImpl extends StatementContainerImpl implements Suspend
   {
     switch (featureID)
     {
+      case EsterelPackage.SUSPEND__WEAK:
+        return isWeak();
       case EsterelPackage.SUSPEND__DELAY:
         return getDelay();
     }
@@ -150,6 +198,9 @@ public class SuspendImpl extends StatementContainerImpl implements Suspend
   {
     switch (featureID)
     {
+      case EsterelPackage.SUSPEND__WEAK:
+        setWeak((Boolean)newValue);
+        return;
       case EsterelPackage.SUSPEND__DELAY:
         setDelay((DelayExpr)newValue);
         return;
@@ -167,6 +218,9 @@ public class SuspendImpl extends StatementContainerImpl implements Suspend
   {
     switch (featureID)
     {
+      case EsterelPackage.SUSPEND__WEAK:
+        setWeak(WEAK_EDEFAULT);
+        return;
       case EsterelPackage.SUSPEND__DELAY:
         setDelay((DelayExpr)null);
         return;
@@ -184,10 +238,29 @@ public class SuspendImpl extends StatementContainerImpl implements Suspend
   {
     switch (featureID)
     {
+      case EsterelPackage.SUSPEND__WEAK:
+        return weak != WEAK_EDEFAULT;
       case EsterelPackage.SUSPEND__DELAY:
         return delay != null;
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (weak: ");
+    result.append(weak);
+    result.append(')');
+    return result.toString();
   }
 
 } //SuspendImpl

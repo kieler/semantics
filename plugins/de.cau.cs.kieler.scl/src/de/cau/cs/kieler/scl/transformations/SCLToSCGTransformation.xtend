@@ -13,11 +13,18 @@
  */
 package de.cau.cs.kieler.scl.transformations
 
+import com.google.common.collect.Sets
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.AnnotationsFactory
+import de.cau.cs.kieler.annotations.StringAnnotation
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -31,34 +38,26 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
+import de.cau.cs.kieler.scl.Goto
+import de.cau.cs.kieler.scl.Label
+import de.cau.cs.kieler.scl.Parallel
+import de.cau.cs.kieler.scl.Pause
+import de.cau.cs.kieler.scl.SCLProgram
+import de.cau.cs.kieler.scl.Scope
+import de.cau.cs.kieler.scl.Statement
 import de.cau.cs.kieler.scl.extensions.SCLExtensions
-import de.cau.cs.kieler.scl.scl.Goto
-import de.cau.cs.kieler.scl.scl.Parallel
-import de.cau.cs.kieler.scl.scl.Pause
-import de.cau.cs.kieler.scl.scl.SCLProgram
-import de.cau.cs.kieler.scl.scl.SclFactory
-import de.cau.cs.kieler.scl.scl.Statement
+import de.cau.cs.kieler.scl.features.SCLFeatures
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
-import org.eclipse.emf.ecore.EObject
-
-import de.cau.cs.kieler.scl.features.SCLFeatures
 import java.util.Set
-import com.google.common.collect.Sets
-import de.cau.cs.kieler.annotations.StringAnnotation
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.scl.scl.Label
-import de.cau.cs.kieler.scl.scl.Scope
-import de.cau.cs.kieler.kitt.tracing.Traceable
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.annotations.AnnotationsFactory
+import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.scl.SCLFactory
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 
 /** 
  * SCL to SCG Transformation 
@@ -137,13 +136,15 @@ class SCLToSCGTransformation extends AbstractProductionTransformation implements
         program.removeDoubleJumps
         program.removeLocalDeclarations
         program.removeRedundantForks
+        program.optimizeLabels
+        program.removeUnreachableCode
 
         // Variable initialization
         program.declarations.forEach [
             for (valObj : valuedObjects) {
                 if (valObj.initialValue != null) {
                     program.statements.add(0,
-                        SclFactory::eINSTANCE.createAssignment => [
+                        SCLFactory::eINSTANCE.createAssignment => [
                             it.trace(valObj)
                             valuedObject = valObj
                             expression = valObj.initialValue
@@ -268,23 +269,23 @@ class SCLToSCGTransformation extends AbstractProductionTransformation implements
         ]
     }
 
-    private dispatch def SCLContinuation transform(de.cau.cs.kieler.scl.scl.Assignment assignment, SCGraph scg,
+    private dispatch def SCLContinuation transform(de.cau.cs.kieler.scl.Assignment assignment, SCGraph scg,
         List<ControlFlow> incoming) {
-        if (assignment.hasAnnotation("IS_JOIN")) {
-            new SCLContinuation => [ cont |
-                val join = createJoin.trace(assignment).createNodeList(assignment) as Join => [
-                    scg.nodes += it
-                    it.controlFlowTarget(incoming)
-                    it.incoming.forEach[
-                        annotations += createAnnotation => [
-                            name = SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION
-                        ]
-                    ]
-                ]
-                cont.node = join
-                cont.controlFlows += join.createControlFlow
-            ]    
-        } else {
+//        if (assignment.hasAnnotation("IS_JOIN")) {
+//            new SCLContinuation => [ cont |
+//                val join = createJoin.trace(assignment).createNodeList(assignment) as Join => [
+//                    scg.nodes += it
+//                    it.controlFlowTarget(incoming)
+//                    it.incoming.forEach[
+//                        annotations += createAnnotation => [
+//                            name = SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION
+//                        ]
+//                    ]
+//                ]
+//                cont.node = join
+//                cont.controlFlows += join.createControlFlow
+//            ]    
+//        } else {
             new SCLContinuation => [
                 node = createAssignment.trace(assignment).createNodeList(assignment) as Assignment => [
                     scg.nodes += it
@@ -297,10 +298,10 @@ class SCLToSCGTransformation extends AbstractProductionTransformation implements
                 ]
                 controlFlows += node.createControlFlow
             ]
-        }
+//        }
     }
 
-    private dispatch def SCLContinuation transform(de.cau.cs.kieler.scl.scl.Conditional conditional, SCGraph scg,
+    private dispatch def SCLContinuation transform(de.cau.cs.kieler.scl.Conditional conditional, SCGraph scg,
         List<ControlFlow> incoming) {
         new SCLContinuation => [ continue |
             continue.node = createConditional.trace(conditional).createNodeList(conditional) as Conditional => [
@@ -309,7 +310,7 @@ class SCLToSCGTransformation extends AbstractProductionTransformation implements
                 it.controlFlowTarget(incoming)
                 conditional.statements.transform(scg, it.createControlFlow.toList) =>
                     [continue.controlFlows += it.controlFlows]
-                (conditional.^else?:SclFactory::eINSTANCE.createScopeStatement).transform(scg, it.createControlFlow.toList) =>
+                (conditional.^else?:SCLFactory::eINSTANCE.createScopeStatement).transform(scg, it.createControlFlow.toList) =>
                     [continue.controlFlows += it.controlFlows]
                 for(annotation : conditional.annotations) {
                     it.annotations += annotation.copy

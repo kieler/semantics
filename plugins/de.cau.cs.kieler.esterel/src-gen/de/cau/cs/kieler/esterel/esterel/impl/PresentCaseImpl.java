@@ -4,7 +4,10 @@ package de.cau.cs.kieler.esterel.esterel.impl;
 
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.PresentCase;
-import de.cau.cs.kieler.esterel.esterel.PresentEvent;
+
+import de.cau.cs.kieler.kexpressions.Expression;
+
+import de.cau.cs.kieler.scl.impl.StatementContainerImpl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -22,7 +25,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentCaseImpl#getEvent <em>Event</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentCaseImpl#getExpression <em>Expression</em>}</li>
  * </ul>
  *
  * @generated
@@ -30,14 +33,14 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class PresentCaseImpl extends StatementContainerImpl implements PresentCase
 {
   /**
-   * The cached value of the '{@link #getEvent() <em>Event</em>}' containment reference.
+   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getEvent()
+   * @see #getExpression()
    * @generated
    * @ordered
    */
-  protected PresentEvent event;
+  protected Expression expression;
 
   /**
    * <!-- begin-user-doc -->
@@ -65,9 +68,9 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
    * <!-- end-user-doc -->
    * @generated
    */
-  public PresentEvent getEvent()
+  public Expression getExpression()
   {
-    return event;
+    return expression;
   }
 
   /**
@@ -75,13 +78,13 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetEvent(PresentEvent newEvent, NotificationChain msgs)
+  public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs)
   {
-    PresentEvent oldEvent = event;
-    event = newEvent;
+    Expression oldExpression = expression;
+    expression = newExpression;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT_CASE__EVENT, oldEvent, newEvent);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT_CASE__EXPRESSION, oldExpression, newExpression);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -92,20 +95,20 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setEvent(PresentEvent newEvent)
+  public void setExpression(Expression newExpression)
   {
-    if (newEvent != event)
+    if (newExpression != expression)
     {
       NotificationChain msgs = null;
-      if (event != null)
-        msgs = ((InternalEObject)event).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT_CASE__EVENT, null, msgs);
-      if (newEvent != null)
-        msgs = ((InternalEObject)newEvent).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT_CASE__EVENT, null, msgs);
-      msgs = basicSetEvent(newEvent, msgs);
+      if (expression != null)
+        msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT_CASE__EXPRESSION, null, msgs);
+      if (newExpression != null)
+        msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT_CASE__EXPRESSION, null, msgs);
+      msgs = basicSetExpression(newExpression, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT_CASE__EVENT, newEvent, newEvent));
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT_CASE__EXPRESSION, newExpression, newExpression));
   }
 
   /**
@@ -118,8 +121,8 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
   {
     switch (featureID)
     {
-      case EsterelPackage.PRESENT_CASE__EVENT:
-        return basicSetEvent(null, msgs);
+      case EsterelPackage.PRESENT_CASE__EXPRESSION:
+        return basicSetExpression(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -134,8 +137,8 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
   {
     switch (featureID)
     {
-      case EsterelPackage.PRESENT_CASE__EVENT:
-        return getEvent();
+      case EsterelPackage.PRESENT_CASE__EXPRESSION:
+        return getExpression();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -150,8 +153,8 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
   {
     switch (featureID)
     {
-      case EsterelPackage.PRESENT_CASE__EVENT:
-        setEvent((PresentEvent)newValue);
+      case EsterelPackage.PRESENT_CASE__EXPRESSION:
+        setExpression((Expression)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -167,8 +170,8 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
   {
     switch (featureID)
     {
-      case EsterelPackage.PRESENT_CASE__EVENT:
-        setEvent((PresentEvent)null);
+      case EsterelPackage.PRESENT_CASE__EXPRESSION:
+        setExpression((Expression)null);
         return;
     }
     super.eUnset(featureID);
@@ -184,8 +187,8 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
   {
     switch (featureID)
     {
-      case EsterelPackage.PRESENT_CASE__EVENT:
-        return event != null;
+      case EsterelPackage.PRESENT_CASE__EXPRESSION:
+        return expression != null;
     }
     return super.eIsSet(featureID);
   }

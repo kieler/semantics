@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
-import de.cau.cs.kieler.esterel.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.Expression;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -15,9 +15,9 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getExpr <em>Expr</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getEvent <em>Event</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#isIsImmediate <em>Is Immediate</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getSignalExpr <em>Signal Expr</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDelayExpr()
@@ -27,56 +27,30 @@ import org.eclipse.emf.ecore.EObject;
 public interface DelayExpr extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Expr</b></em>' containment reference.
+   * Returns the value of the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Expr</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Expression</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Expr</em>' containment reference.
-   * @see #setExpr(Expression)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDelayExpr_Expr()
+   * @return the value of the '<em>Expression</em>' containment reference.
+   * @see #setExpression(Expression)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDelayExpr_Expression()
    * @model containment="true"
    * @generated
    */
-  Expression getExpr();
+  Expression getExpression();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getExpr <em>Expr</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getExpression <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Expr</em>' containment reference.
-   * @see #getExpr()
+   * @param value the new value of the '<em>Expression</em>' containment reference.
+   * @see #getExpression()
    * @generated
    */
-  void setExpr(Expression value);
-
-  /**
-   * Returns the value of the '<em><b>Event</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Event</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Event</em>' containment reference.
-   * @see #setEvent(DelayEvent)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDelayExpr_Event()
-   * @model containment="true"
-   * @generated
-   */
-  DelayEvent getEvent();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getEvent <em>Event</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Event</em>' containment reference.
-   * @see #getEvent()
-   * @generated
-   */
-  void setEvent(DelayEvent value);
+  void setExpression(Expression value);
 
   /**
    * Returns the value of the '<em><b>Is Immediate</b></em>' attribute.
@@ -103,5 +77,31 @@ public interface DelayExpr extends EObject
    * @generated
    */
   void setIsImmediate(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>Signal Expr</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Signal Expr</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Signal Expr</em>' containment reference.
+   * @see #setSignalExpr(Expression)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDelayExpr_SignalExpr()
+   * @model containment="true"
+   * @generated
+   */
+  Expression getSignalExpr();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getSignalExpr <em>Signal Expr</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Signal Expr</em>' containment reference.
+   * @see #getSignalExpr()
+   * @generated
+   */
+  void setSignalExpr(Expression value);
 
 } // DelayExpr

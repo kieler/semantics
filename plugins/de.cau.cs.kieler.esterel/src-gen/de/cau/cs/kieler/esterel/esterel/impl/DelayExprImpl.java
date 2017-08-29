@@ -2,11 +2,10 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.esterel.esterel.DelayEvent;
 import de.cau.cs.kieler.esterel.esterel.DelayExpr;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 
-import de.cau.cs.kieler.esterel.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.Expression;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -25,9 +24,9 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DelayExprImpl#getExpr <em>Expr</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DelayExprImpl#getEvent <em>Event</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DelayExprImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DelayExprImpl#isIsImmediate <em>Is Immediate</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DelayExprImpl#getSignalExpr <em>Signal Expr</em>}</li>
  * </ul>
  *
  * @generated
@@ -35,24 +34,14 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class DelayExprImpl extends MinimalEObjectImpl.Container implements DelayExpr
 {
   /**
-   * The cached value of the '{@link #getExpr() <em>Expr</em>}' containment reference.
+   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getExpr()
+   * @see #getExpression()
    * @generated
    * @ordered
    */
-  protected Expression expr;
-
-  /**
-   * The cached value of the '{@link #getEvent() <em>Event</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getEvent()
-   * @generated
-   * @ordered
-   */
-  protected DelayEvent event;
+  protected Expression expression;
 
   /**
    * The default value of the '{@link #isIsImmediate() <em>Is Immediate</em>}' attribute.
@@ -73,6 +62,16 @@ public class DelayExprImpl extends MinimalEObjectImpl.Container implements Delay
    * @ordered
    */
   protected boolean isImmediate = IS_IMMEDIATE_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getSignalExpr() <em>Signal Expr</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSignalExpr()
+   * @generated
+   * @ordered
+   */
+  protected Expression signalExpr;
 
   /**
    * <!-- begin-user-doc -->
@@ -100,9 +99,9 @@ public class DelayExprImpl extends MinimalEObjectImpl.Container implements Delay
    * <!-- end-user-doc -->
    * @generated
    */
-  public Expression getExpr()
+  public Expression getExpression()
   {
-    return expr;
+    return expression;
   }
 
   /**
@@ -110,13 +109,13 @@ public class DelayExprImpl extends MinimalEObjectImpl.Container implements Delay
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetExpr(Expression newExpr, NotificationChain msgs)
+  public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs)
   {
-    Expression oldExpr = expr;
-    expr = newExpr;
+    Expression oldExpression = expression;
+    expression = newExpression;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.DELAY_EXPR__EXPR, oldExpr, newExpr);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.DELAY_EXPR__EXPRESSION, oldExpression, newExpression);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -127,68 +126,20 @@ public class DelayExprImpl extends MinimalEObjectImpl.Container implements Delay
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setExpr(Expression newExpr)
+  public void setExpression(Expression newExpression)
   {
-    if (newExpr != expr)
+    if (newExpression != expression)
     {
       NotificationChain msgs = null;
-      if (expr != null)
-        msgs = ((InternalEObject)expr).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DELAY_EXPR__EXPR, null, msgs);
-      if (newExpr != null)
-        msgs = ((InternalEObject)newExpr).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DELAY_EXPR__EXPR, null, msgs);
-      msgs = basicSetExpr(newExpr, msgs);
+      if (expression != null)
+        msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DELAY_EXPR__EXPRESSION, null, msgs);
+      if (newExpression != null)
+        msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DELAY_EXPR__EXPRESSION, null, msgs);
+      msgs = basicSetExpression(newExpression, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.DELAY_EXPR__EXPR, newExpr, newExpr));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public DelayEvent getEvent()
-  {
-    return event;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetEvent(DelayEvent newEvent, NotificationChain msgs)
-  {
-    DelayEvent oldEvent = event;
-    event = newEvent;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.DELAY_EXPR__EVENT, oldEvent, newEvent);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setEvent(DelayEvent newEvent)
-  {
-    if (newEvent != event)
-    {
-      NotificationChain msgs = null;
-      if (event != null)
-        msgs = ((InternalEObject)event).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DELAY_EXPR__EVENT, null, msgs);
-      if (newEvent != null)
-        msgs = ((InternalEObject)newEvent).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DELAY_EXPR__EVENT, null, msgs);
-      msgs = basicSetEvent(newEvent, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.DELAY_EXPR__EVENT, newEvent, newEvent));
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.DELAY_EXPR__EXPRESSION, newExpression, newExpression));
   }
 
   /**
@@ -219,15 +170,63 @@ public class DelayExprImpl extends MinimalEObjectImpl.Container implements Delay
    * <!-- end-user-doc -->
    * @generated
    */
+  public Expression getSignalExpr()
+  {
+    return signalExpr;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetSignalExpr(Expression newSignalExpr, NotificationChain msgs)
+  {
+    Expression oldSignalExpr = signalExpr;
+    signalExpr = newSignalExpr;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.DELAY_EXPR__SIGNAL_EXPR, oldSignalExpr, newSignalExpr);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setSignalExpr(Expression newSignalExpr)
+  {
+    if (newSignalExpr != signalExpr)
+    {
+      NotificationChain msgs = null;
+      if (signalExpr != null)
+        msgs = ((InternalEObject)signalExpr).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DELAY_EXPR__SIGNAL_EXPR, null, msgs);
+      if (newSignalExpr != null)
+        msgs = ((InternalEObject)newSignalExpr).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DELAY_EXPR__SIGNAL_EXPR, null, msgs);
+      msgs = basicSetSignalExpr(newSignalExpr, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.DELAY_EXPR__SIGNAL_EXPR, newSignalExpr, newSignalExpr));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
-      case EsterelPackage.DELAY_EXPR__EXPR:
-        return basicSetExpr(null, msgs);
-      case EsterelPackage.DELAY_EXPR__EVENT:
-        return basicSetEvent(null, msgs);
+      case EsterelPackage.DELAY_EXPR__EXPRESSION:
+        return basicSetExpression(null, msgs);
+      case EsterelPackage.DELAY_EXPR__SIGNAL_EXPR:
+        return basicSetSignalExpr(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -242,12 +241,12 @@ public class DelayExprImpl extends MinimalEObjectImpl.Container implements Delay
   {
     switch (featureID)
     {
-      case EsterelPackage.DELAY_EXPR__EXPR:
-        return getExpr();
-      case EsterelPackage.DELAY_EXPR__EVENT:
-        return getEvent();
+      case EsterelPackage.DELAY_EXPR__EXPRESSION:
+        return getExpression();
       case EsterelPackage.DELAY_EXPR__IS_IMMEDIATE:
         return isIsImmediate();
+      case EsterelPackage.DELAY_EXPR__SIGNAL_EXPR:
+        return getSignalExpr();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -262,14 +261,14 @@ public class DelayExprImpl extends MinimalEObjectImpl.Container implements Delay
   {
     switch (featureID)
     {
-      case EsterelPackage.DELAY_EXPR__EXPR:
-        setExpr((Expression)newValue);
-        return;
-      case EsterelPackage.DELAY_EXPR__EVENT:
-        setEvent((DelayEvent)newValue);
+      case EsterelPackage.DELAY_EXPR__EXPRESSION:
+        setExpression((Expression)newValue);
         return;
       case EsterelPackage.DELAY_EXPR__IS_IMMEDIATE:
         setIsImmediate((Boolean)newValue);
+        return;
+      case EsterelPackage.DELAY_EXPR__SIGNAL_EXPR:
+        setSignalExpr((Expression)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -285,14 +284,14 @@ public class DelayExprImpl extends MinimalEObjectImpl.Container implements Delay
   {
     switch (featureID)
     {
-      case EsterelPackage.DELAY_EXPR__EXPR:
-        setExpr((Expression)null);
-        return;
-      case EsterelPackage.DELAY_EXPR__EVENT:
-        setEvent((DelayEvent)null);
+      case EsterelPackage.DELAY_EXPR__EXPRESSION:
+        setExpression((Expression)null);
         return;
       case EsterelPackage.DELAY_EXPR__IS_IMMEDIATE:
         setIsImmediate(IS_IMMEDIATE_EDEFAULT);
+        return;
+      case EsterelPackage.DELAY_EXPR__SIGNAL_EXPR:
+        setSignalExpr((Expression)null);
         return;
     }
     super.eUnset(featureID);
@@ -308,12 +307,12 @@ public class DelayExprImpl extends MinimalEObjectImpl.Container implements Delay
   {
     switch (featureID)
     {
-      case EsterelPackage.DELAY_EXPR__EXPR:
-        return expr != null;
-      case EsterelPackage.DELAY_EXPR__EVENT:
-        return event != null;
+      case EsterelPackage.DELAY_EXPR__EXPRESSION:
+        return expression != null;
       case EsterelPackage.DELAY_EXPR__IS_IMMEDIATE:
         return isImmediate != IS_IMMEDIATE_EDEFAULT;
+      case EsterelPackage.DELAY_EXPR__SIGNAL_EXPR:
+        return signalExpr != null;
     }
     return super.eIsSet(featureID);
   }

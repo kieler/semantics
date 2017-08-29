@@ -2,17 +2,30 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
+import de.cau.cs.kieler.annotations.Annotation;
+
+import de.cau.cs.kieler.esterel.esterel.DelayExpr;
 import de.cau.cs.kieler.esterel.esterel.Do;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
+
+import de.cau.cs.kieler.scl.Statement;
+
+import de.cau.cs.kieler.scl.impl.StatementContainerImpl;
+
+import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -22,7 +35,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DoImpl#getEnd <em>End</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DoImpl#getEndingAnnotations <em>Ending Annotations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DoImpl#getExpression <em>Expression</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DoImpl#getDelay <em>Delay</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DoImpl#getWatchingStatements <em>Watching Statements</em>}</li>
  * </ul>
  *
  * @generated
@@ -30,14 +46,44 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class DoImpl extends StatementContainerImpl implements Do
 {
   /**
-   * The cached value of the '{@link #getEnd() <em>End</em>}' containment reference.
+   * The cached value of the '{@link #getEndingAnnotations() <em>Ending Annotations</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getEnd()
+   * @see #getEndingAnnotations()
    * @generated
    * @ordered
    */
-  protected EObject end;
+  protected EList<Annotation> endingAnnotations;
+
+  /**
+   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getExpression()
+   * @generated
+   * @ordered
+   */
+  protected DelayExpr expression;
+
+  /**
+   * The cached value of the '{@link #getDelay() <em>Delay</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDelay()
+   * @generated
+   * @ordered
+   */
+  protected DelayExpr delay;
+
+  /**
+   * The cached value of the '{@link #getWatchingStatements() <em>Watching Statements</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getWatchingStatements()
+   * @generated
+   * @ordered
+   */
+  protected EList<Statement> watchingStatements;
 
   /**
    * <!-- begin-user-doc -->
@@ -65,9 +111,13 @@ public class DoImpl extends StatementContainerImpl implements Do
    * <!-- end-user-doc -->
    * @generated
    */
-  public EObject getEnd()
+  public EList<Annotation> getEndingAnnotations()
   {
-    return end;
+    if (endingAnnotations == null)
+    {
+      endingAnnotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.DO__ENDING_ANNOTATIONS);
+    }
+    return endingAnnotations;
   }
 
   /**
@@ -75,13 +125,23 @@ public class DoImpl extends StatementContainerImpl implements Do
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetEnd(EObject newEnd, NotificationChain msgs)
+  public DelayExpr getExpression()
   {
-    EObject oldEnd = end;
-    end = newEnd;
+    return expression;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetExpression(DelayExpr newExpression, NotificationChain msgs)
+  {
+    DelayExpr oldExpression = expression;
+    expression = newExpression;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.DO__END, oldEnd, newEnd);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.DO__EXPRESSION, oldExpression, newExpression);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -92,20 +152,82 @@ public class DoImpl extends StatementContainerImpl implements Do
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setEnd(EObject newEnd)
+  public void setExpression(DelayExpr newExpression)
   {
-    if (newEnd != end)
+    if (newExpression != expression)
     {
       NotificationChain msgs = null;
-      if (end != null)
-        msgs = ((InternalEObject)end).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DO__END, null, msgs);
-      if (newEnd != null)
-        msgs = ((InternalEObject)newEnd).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DO__END, null, msgs);
-      msgs = basicSetEnd(newEnd, msgs);
+      if (expression != null)
+        msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DO__EXPRESSION, null, msgs);
+      if (newExpression != null)
+        msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DO__EXPRESSION, null, msgs);
+      msgs = basicSetExpression(newExpression, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.DO__END, newEnd, newEnd));
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.DO__EXPRESSION, newExpression, newExpression));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public DelayExpr getDelay()
+  {
+    return delay;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetDelay(DelayExpr newDelay, NotificationChain msgs)
+  {
+    DelayExpr oldDelay = delay;
+    delay = newDelay;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.DO__DELAY, oldDelay, newDelay);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setDelay(DelayExpr newDelay)
+  {
+    if (newDelay != delay)
+    {
+      NotificationChain msgs = null;
+      if (delay != null)
+        msgs = ((InternalEObject)delay).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DO__DELAY, null, msgs);
+      if (newDelay != null)
+        msgs = ((InternalEObject)newDelay).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DO__DELAY, null, msgs);
+      msgs = basicSetDelay(newDelay, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.DO__DELAY, newDelay, newDelay));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Statement> getWatchingStatements()
+  {
+    if (watchingStatements == null)
+    {
+      watchingStatements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.DO__WATCHING_STATEMENTS);
+    }
+    return watchingStatements;
   }
 
   /**
@@ -118,8 +240,14 @@ public class DoImpl extends StatementContainerImpl implements Do
   {
     switch (featureID)
     {
-      case EsterelPackage.DO__END:
-        return basicSetEnd(null, msgs);
+      case EsterelPackage.DO__ENDING_ANNOTATIONS:
+        return ((InternalEList<?>)getEndingAnnotations()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.DO__EXPRESSION:
+        return basicSetExpression(null, msgs);
+      case EsterelPackage.DO__DELAY:
+        return basicSetDelay(null, msgs);
+      case EsterelPackage.DO__WATCHING_STATEMENTS:
+        return ((InternalEList<?>)getWatchingStatements()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -134,8 +262,14 @@ public class DoImpl extends StatementContainerImpl implements Do
   {
     switch (featureID)
     {
-      case EsterelPackage.DO__END:
-        return getEnd();
+      case EsterelPackage.DO__ENDING_ANNOTATIONS:
+        return getEndingAnnotations();
+      case EsterelPackage.DO__EXPRESSION:
+        return getExpression();
+      case EsterelPackage.DO__DELAY:
+        return getDelay();
+      case EsterelPackage.DO__WATCHING_STATEMENTS:
+        return getWatchingStatements();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -145,13 +279,25 @@ public class DoImpl extends StatementContainerImpl implements Do
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case EsterelPackage.DO__END:
-        setEnd((EObject)newValue);
+      case EsterelPackage.DO__ENDING_ANNOTATIONS:
+        getEndingAnnotations().clear();
+        getEndingAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
+      case EsterelPackage.DO__EXPRESSION:
+        setExpression((DelayExpr)newValue);
+        return;
+      case EsterelPackage.DO__DELAY:
+        setDelay((DelayExpr)newValue);
+        return;
+      case EsterelPackage.DO__WATCHING_STATEMENTS:
+        getWatchingStatements().clear();
+        getWatchingStatements().addAll((Collection<? extends Statement>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -167,8 +313,17 @@ public class DoImpl extends StatementContainerImpl implements Do
   {
     switch (featureID)
     {
-      case EsterelPackage.DO__END:
-        setEnd((EObject)null);
+      case EsterelPackage.DO__ENDING_ANNOTATIONS:
+        getEndingAnnotations().clear();
+        return;
+      case EsterelPackage.DO__EXPRESSION:
+        setExpression((DelayExpr)null);
+        return;
+      case EsterelPackage.DO__DELAY:
+        setDelay((DelayExpr)null);
+        return;
+      case EsterelPackage.DO__WATCHING_STATEMENTS:
+        getWatchingStatements().clear();
         return;
     }
     super.eUnset(featureID);
@@ -184,8 +339,14 @@ public class DoImpl extends StatementContainerImpl implements Do
   {
     switch (featureID)
     {
-      case EsterelPackage.DO__END:
-        return end != null;
+      case EsterelPackage.DO__ENDING_ANNOTATIONS:
+        return endingAnnotations != null && !endingAnnotations.isEmpty();
+      case EsterelPackage.DO__EXPRESSION:
+        return expression != null;
+      case EsterelPackage.DO__DELAY:
+        return delay != null;
+      case EsterelPackage.DO__WATCHING_STATEMENTS:
+        return watchingStatements != null && !watchingStatements.isEmpty();
     }
     return super.eIsSet(featureID);
   }

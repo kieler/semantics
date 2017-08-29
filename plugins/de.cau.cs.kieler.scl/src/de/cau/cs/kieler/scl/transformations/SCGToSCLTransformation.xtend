@@ -17,6 +17,8 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -28,18 +30,18 @@ import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.scl.Label
+import de.cau.cs.kieler.scl.SCLFactory
+import de.cau.cs.kieler.scl.SCLProgram
+import de.cau.cs.kieler.scl.Scope
+import de.cau.cs.kieler.scl.Statement
 import de.cau.cs.kieler.scl.extensions.SCLExtensions
-import de.cau.cs.kieler.scl.scl.SclFactory
-import de.cau.cs.kieler.scl.scl.Statement
-import de.cau.cs.kieler.scl.scl.Scope
 import java.util.HashMap
 import java.util.List
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import de.cau.cs.kieler.scl.scl.SCLProgram
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensionsimport de.cau.cs.kieler.scl.scl.Label
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /** 
  * SCG to SCL Transformation 
@@ -61,7 +63,7 @@ class SCGToSCLTransformation {
     @Inject 
     extension SCLExtensions
     
-    extension SclFactory = SclFactory::eINSTANCE
+    extension SCLFactory = SCLFactory::eINSTANCE
     
 
     @Inject

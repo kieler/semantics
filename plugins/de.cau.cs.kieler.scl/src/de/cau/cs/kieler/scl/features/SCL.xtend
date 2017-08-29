@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.scl.features
 
 import de.cau.cs.kieler.kico.features.Feature
-import de.cau.cs.kieler.scl.scl.SCLProgram
+import de.cau.cs.kieler.scl.SCLProgram
 
 /**
  * SCL Feature.

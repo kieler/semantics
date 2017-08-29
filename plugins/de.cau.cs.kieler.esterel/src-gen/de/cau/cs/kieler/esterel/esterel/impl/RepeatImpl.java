@@ -5,7 +5,9 @@ package de.cau.cs.kieler.esterel.esterel.impl;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.Repeat;
 
-import de.cau.cs.kieler.esterel.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.Expression;
+
+import de.cau.cs.kieler.scl.impl.StatementContainerImpl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -25,7 +27,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.RepeatImpl#isPositive <em>Positive</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.RepeatImpl#getExpression <em>Expression</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.RepeatImpl#getOptEnd <em>Opt End</em>}</li>
  * </ul>
  *
  * @generated
@@ -61,26 +62,6 @@ public class RepeatImpl extends StatementContainerImpl implements Repeat
    * @ordered
    */
   protected Expression expression;
-
-  /**
-   * The default value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getOptEnd()
-   * @generated
-   * @ordered
-   */
-  protected static final String OPT_END_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getOptEnd()
-   * @generated
-   * @ordered
-   */
-  protected String optEnd = OPT_END_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -179,29 +160,6 @@ public class RepeatImpl extends StatementContainerImpl implements Repeat
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getOptEnd()
-  {
-    return optEnd;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setOptEnd(String newOptEnd)
-  {
-    String oldOptEnd = optEnd;
-    optEnd = newOptEnd;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.REPEAT__OPT_END, oldOptEnd, optEnd));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -227,8 +185,6 @@ public class RepeatImpl extends StatementContainerImpl implements Repeat
         return isPositive();
       case EsterelPackage.REPEAT__EXPRESSION:
         return getExpression();
-      case EsterelPackage.REPEAT__OPT_END:
-        return getOptEnd();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -248,9 +204,6 @@ public class RepeatImpl extends StatementContainerImpl implements Repeat
         return;
       case EsterelPackage.REPEAT__EXPRESSION:
         setExpression((Expression)newValue);
-        return;
-      case EsterelPackage.REPEAT__OPT_END:
-        setOptEnd((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -272,9 +225,6 @@ public class RepeatImpl extends StatementContainerImpl implements Repeat
       case EsterelPackage.REPEAT__EXPRESSION:
         setExpression((Expression)null);
         return;
-      case EsterelPackage.REPEAT__OPT_END:
-        setOptEnd(OPT_END_EDEFAULT);
-        return;
     }
     super.eUnset(featureID);
   }
@@ -293,8 +243,6 @@ public class RepeatImpl extends StatementContainerImpl implements Repeat
         return positive != POSITIVE_EDEFAULT;
       case EsterelPackage.REPEAT__EXPRESSION:
         return expression != null;
-      case EsterelPackage.REPEAT__OPT_END:
-        return OPT_END_EDEFAULT == null ? optEnd != null : !OPT_END_EDEFAULT.equals(optEnd);
     }
     return super.eIsSet(featureID);
   }
@@ -312,8 +260,6 @@ public class RepeatImpl extends StatementContainerImpl implements Repeat
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (positive: ");
     result.append(positive);
-    result.append(", optEnd: ");
-    result.append(optEnd);
     result.append(')');
     return result.toString();
   }

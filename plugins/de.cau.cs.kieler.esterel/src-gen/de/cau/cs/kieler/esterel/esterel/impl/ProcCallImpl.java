@@ -3,11 +3,13 @@
 package de.cau.cs.kieler.esterel.esterel.impl;
 
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
+import de.cau.cs.kieler.esterel.esterel.IVariable;
 import de.cau.cs.kieler.esterel.esterel.ProcCall;
 import de.cau.cs.kieler.esterel.esterel.Procedure;
 
-import de.cau.cs.kieler.esterel.kexpressions.Expression;
-import de.cau.cs.kieler.esterel.kexpressions.IVariable;
+import de.cau.cs.kieler.kexpressions.Expression;
+
+import de.cau.cs.kieler.scl.impl.StatementImpl;
 
 import java.util.Collection;
 

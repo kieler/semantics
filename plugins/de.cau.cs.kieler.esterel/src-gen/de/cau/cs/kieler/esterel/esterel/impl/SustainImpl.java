@@ -3,10 +3,12 @@
 package de.cau.cs.kieler.esterel.esterel.impl;
 
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
+import de.cau.cs.kieler.esterel.esterel.ISignal;
 import de.cau.cs.kieler.esterel.esterel.Sustain;
 
-import de.cau.cs.kieler.esterel.kexpressions.Expression;
-import de.cau.cs.kieler.esterel.kexpressions.ISignal;
+import de.cau.cs.kieler.kexpressions.Expression;
+
+import de.cau.cs.kieler.scl.impl.StatementImpl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;

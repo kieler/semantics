@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
+import de.cau.cs.kieler.annotations.Annotation;
+
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.Type;
 import de.cau.cs.kieler.esterel.esterel.TypeDecl;
@@ -28,6 +30,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.TypeDeclImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.TypeDeclImpl#getTypes <em>Types</em>}</li>
  * </ul>
  *
@@ -35,6 +38,16 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class TypeDeclImpl extends MinimalEObjectImpl.Container implements TypeDecl
 {
+  /**
+   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAnnotations()
+   * @generated
+   * @ordered
+   */
+  protected EList<Annotation> annotations;
+
   /**
    * The cached value of the '{@link #getTypes() <em>Types</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -71,6 +84,20 @@ public class TypeDeclImpl extends MinimalEObjectImpl.Container implements TypeDe
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Annotation> getAnnotations()
+  {
+    if (annotations == null)
+    {
+      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.TYPE_DECL__ANNOTATIONS);
+    }
+    return annotations;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EList<Type> getTypes()
   {
     if (types == null)
@@ -90,6 +117,8 @@ public class TypeDeclImpl extends MinimalEObjectImpl.Container implements TypeDe
   {
     switch (featureID)
     {
+      case EsterelPackage.TYPE_DECL__ANNOTATIONS:
+        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
       case EsterelPackage.TYPE_DECL__TYPES:
         return ((InternalEList<?>)getTypes()).basicRemove(otherEnd, msgs);
     }
@@ -106,6 +135,8 @@ public class TypeDeclImpl extends MinimalEObjectImpl.Container implements TypeDe
   {
     switch (featureID)
     {
+      case EsterelPackage.TYPE_DECL__ANNOTATIONS:
+        return getAnnotations();
       case EsterelPackage.TYPE_DECL__TYPES:
         return getTypes();
     }
@@ -123,6 +154,10 @@ public class TypeDeclImpl extends MinimalEObjectImpl.Container implements TypeDe
   {
     switch (featureID)
     {
+      case EsterelPackage.TYPE_DECL__ANNOTATIONS:
+        getAnnotations().clear();
+        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
       case EsterelPackage.TYPE_DECL__TYPES:
         getTypes().clear();
         getTypes().addAll((Collection<? extends Type>)newValue);
@@ -141,6 +176,9 @@ public class TypeDeclImpl extends MinimalEObjectImpl.Container implements TypeDe
   {
     switch (featureID)
     {
+      case EsterelPackage.TYPE_DECL__ANNOTATIONS:
+        getAnnotations().clear();
+        return;
       case EsterelPackage.TYPE_DECL__TYPES:
         getTypes().clear();
         return;
@@ -158,6 +196,8 @@ public class TypeDeclImpl extends MinimalEObjectImpl.Container implements TypeDe
   {
     switch (featureID)
     {
+      case EsterelPackage.TYPE_DECL__ANNOTATIONS:
+        return annotations != null && !annotations.isEmpty();
       case EsterelPackage.TYPE_DECL__TYPES:
         return types != null && !types.isEmpty();
     }

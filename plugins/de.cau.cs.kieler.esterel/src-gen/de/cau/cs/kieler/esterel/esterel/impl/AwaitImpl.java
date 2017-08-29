@@ -3,16 +3,26 @@
 package de.cau.cs.kieler.esterel.esterel.impl;
 
 import de.cau.cs.kieler.esterel.esterel.Await;
-import de.cau.cs.kieler.esterel.esterel.AwaitBody;
+import de.cau.cs.kieler.esterel.esterel.Case;
+import de.cau.cs.kieler.esterel.esterel.DelayExpr;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
+
+import de.cau.cs.kieler.scl.impl.StatementContainerImpl;
+
+import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -22,22 +32,33 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.AwaitImpl#getBody <em>Body</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.AwaitImpl#getDelay <em>Delay</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.AwaitImpl#getCases <em>Cases</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class AwaitImpl extends StatementImpl implements Await
+public class AwaitImpl extends StatementContainerImpl implements Await
 {
   /**
-   * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference.
+   * The cached value of the '{@link #getDelay() <em>Delay</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getBody()
+   * @see #getDelay()
    * @generated
    * @ordered
    */
-  protected AwaitBody body;
+  protected DelayExpr delay;
+
+  /**
+   * The cached value of the '{@link #getCases() <em>Cases</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getCases()
+   * @generated
+   * @ordered
+   */
+  protected EList<Case> cases;
 
   /**
    * <!-- begin-user-doc -->
@@ -65,9 +86,9 @@ public class AwaitImpl extends StatementImpl implements Await
    * <!-- end-user-doc -->
    * @generated
    */
-  public AwaitBody getBody()
+  public DelayExpr getDelay()
   {
-    return body;
+    return delay;
   }
 
   /**
@@ -75,13 +96,13 @@ public class AwaitImpl extends StatementImpl implements Await
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetBody(AwaitBody newBody, NotificationChain msgs)
+  public NotificationChain basicSetDelay(DelayExpr newDelay, NotificationChain msgs)
   {
-    AwaitBody oldBody = body;
-    body = newBody;
+    DelayExpr oldDelay = delay;
+    delay = newDelay;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.AWAIT__BODY, oldBody, newBody);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.AWAIT__DELAY, oldDelay, newDelay);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -92,20 +113,34 @@ public class AwaitImpl extends StatementImpl implements Await
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setBody(AwaitBody newBody)
+  public void setDelay(DelayExpr newDelay)
   {
-    if (newBody != body)
+    if (newDelay != delay)
     {
       NotificationChain msgs = null;
-      if (body != null)
-        msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.AWAIT__BODY, null, msgs);
-      if (newBody != null)
-        msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.AWAIT__BODY, null, msgs);
-      msgs = basicSetBody(newBody, msgs);
+      if (delay != null)
+        msgs = ((InternalEObject)delay).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.AWAIT__DELAY, null, msgs);
+      if (newDelay != null)
+        msgs = ((InternalEObject)newDelay).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.AWAIT__DELAY, null, msgs);
+      msgs = basicSetDelay(newDelay, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.AWAIT__BODY, newBody, newBody));
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.AWAIT__DELAY, newDelay, newDelay));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Case> getCases()
+  {
+    if (cases == null)
+    {
+      cases = new EObjectContainmentEList<Case>(Case.class, this, EsterelPackage.AWAIT__CASES);
+    }
+    return cases;
   }
 
   /**
@@ -118,8 +153,10 @@ public class AwaitImpl extends StatementImpl implements Await
   {
     switch (featureID)
     {
-      case EsterelPackage.AWAIT__BODY:
-        return basicSetBody(null, msgs);
+      case EsterelPackage.AWAIT__DELAY:
+        return basicSetDelay(null, msgs);
+      case EsterelPackage.AWAIT__CASES:
+        return ((InternalEList<?>)getCases()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -134,8 +171,10 @@ public class AwaitImpl extends StatementImpl implements Await
   {
     switch (featureID)
     {
-      case EsterelPackage.AWAIT__BODY:
-        return getBody();
+      case EsterelPackage.AWAIT__DELAY:
+        return getDelay();
+      case EsterelPackage.AWAIT__CASES:
+        return getCases();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -145,13 +184,18 @@ public class AwaitImpl extends StatementImpl implements Await
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case EsterelPackage.AWAIT__BODY:
-        setBody((AwaitBody)newValue);
+      case EsterelPackage.AWAIT__DELAY:
+        setDelay((DelayExpr)newValue);
+        return;
+      case EsterelPackage.AWAIT__CASES:
+        getCases().clear();
+        getCases().addAll((Collection<? extends Case>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -167,8 +211,11 @@ public class AwaitImpl extends StatementImpl implements Await
   {
     switch (featureID)
     {
-      case EsterelPackage.AWAIT__BODY:
-        setBody((AwaitBody)null);
+      case EsterelPackage.AWAIT__DELAY:
+        setDelay((DelayExpr)null);
+        return;
+      case EsterelPackage.AWAIT__CASES:
+        getCases().clear();
         return;
     }
     super.eUnset(featureID);
@@ -184,8 +231,10 @@ public class AwaitImpl extends StatementImpl implements Await
   {
     switch (featureID)
     {
-      case EsterelPackage.AWAIT__BODY:
-        return body != null;
+      case EsterelPackage.AWAIT__DELAY:
+        return delay != null;
+      case EsterelPackage.AWAIT__CASES:
+        return cases != null && !cases.isEmpty();
     }
     return super.eIsSet(featureID);
   }

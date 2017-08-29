@@ -93,9 +93,9 @@ public abstract class AbstractEsterelRuntimeModule extends org.eclipse.xtext.ser
 		return org.eclipse.xtext.parser.antlr.AntlrTokenDefProvider.class;
 	}
 
-	// contributed by org.eclipse.xtext.generator.validation.JavaValidatorFragment
-	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.esterel.validation.EsterelJavaValidator> bindEsterelJavaValidator() {
-		return de.cau.cs.kieler.esterel.validation.EsterelJavaValidator.class;
+	// contributed by org.eclipse.xtext.generator.validation.ValidatorFragment
+	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.esterel.validation.EsterelValidator> bindEsterelValidator() {
+		return de.cau.cs.kieler.esterel.validation.EsterelValidator.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.scoping.AbstractScopingFragment

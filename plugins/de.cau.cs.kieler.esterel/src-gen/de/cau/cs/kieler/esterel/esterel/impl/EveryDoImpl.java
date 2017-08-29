@@ -6,6 +6,8 @@ import de.cau.cs.kieler.esterel.esterel.DelayExpr;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.EveryDo;
 
+import de.cau.cs.kieler.scl.impl.StatementContainerImpl;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -23,7 +25,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.EveryDoImpl#getDelay <em>Delay</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.EveryDoImpl#getOptEnd <em>Opt End</em>}</li>
  * </ul>
  *
  * @generated
@@ -39,26 +40,6 @@ public class EveryDoImpl extends StatementContainerImpl implements EveryDo
    * @ordered
    */
   protected DelayExpr delay;
-
-  /**
-   * The default value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getOptEnd()
-   * @generated
-   * @ordered
-   */
-  protected static final String OPT_END_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getOptEnd()
-   * @generated
-   * @ordered
-   */
-  protected String optEnd = OPT_END_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -134,29 +115,6 @@ public class EveryDoImpl extends StatementContainerImpl implements EveryDo
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getOptEnd()
-  {
-    return optEnd;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setOptEnd(String newOptEnd)
-  {
-    String oldOptEnd = optEnd;
-    optEnd = newOptEnd;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.EVERY_DO__OPT_END, oldOptEnd, optEnd));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -180,8 +138,6 @@ public class EveryDoImpl extends StatementContainerImpl implements EveryDo
     {
       case EsterelPackage.EVERY_DO__DELAY:
         return getDelay();
-      case EsterelPackage.EVERY_DO__OPT_END:
-        return getOptEnd();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -198,9 +154,6 @@ public class EveryDoImpl extends StatementContainerImpl implements EveryDo
     {
       case EsterelPackage.EVERY_DO__DELAY:
         setDelay((DelayExpr)newValue);
-        return;
-      case EsterelPackage.EVERY_DO__OPT_END:
-        setOptEnd((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -219,9 +172,6 @@ public class EveryDoImpl extends StatementContainerImpl implements EveryDo
       case EsterelPackage.EVERY_DO__DELAY:
         setDelay((DelayExpr)null);
         return;
-      case EsterelPackage.EVERY_DO__OPT_END:
-        setOptEnd(OPT_END_EDEFAULT);
-        return;
     }
     super.eUnset(featureID);
   }
@@ -238,27 +188,8 @@ public class EveryDoImpl extends StatementContainerImpl implements EveryDo
     {
       case EsterelPackage.EVERY_DO__DELAY:
         return delay != null;
-      case EsterelPackage.EVERY_DO__OPT_END:
-        return OPT_END_EDEFAULT == null ? optEnd != null : !OPT_END_EDEFAULT.equals(optEnd);
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (optEnd: ");
-    result.append(optEnd);
-    result.append(')');
-    return result.toString();
   }
 
 } //EveryDoImpl

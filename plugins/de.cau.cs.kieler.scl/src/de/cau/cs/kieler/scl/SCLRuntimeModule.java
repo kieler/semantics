@@ -3,8 +3,6 @@
  */
 package de.cau.cs.kieler.scl;
 
-import de.cau.cs.kieler.scl.validation.SCLValidator;
-
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
@@ -13,9 +11,5 @@ public class SCLRuntimeModule extends de.cau.cs.kieler.scl.AbstractSCLRuntimeMod
     public Class<? extends org.eclipse.xtext.conversion.IValueConverterService> bindIValueConverterService() {
         return de.cau.cs.kieler.scl.formatting.SCLValueConverter.class;
     }   
-    
-    @org.eclipse.xtext.service.SingletonBinding(eager=true) public Class<? extends de.cau.cs.kieler.scl.validation.SCLJavaValidator> bindSCLJavaValidator() {
-        return SCLValidator.class;
-    }
     
 }

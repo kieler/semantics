@@ -13,13 +13,11 @@
  */ 
 package de.cau.cs.kieler.esterel.xtend
 
-import de.cau.cs.kieler.esterel.kexpressions.ISignal
-import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl
-import de.cau.cs.kieler.esterel.kexpressions.ValueType
-import de.cau.cs.kieler.esterel.esterel.ConstantExpression
+import de.cau.cs.kieler.esterel.esterel.ISignal
+import de.cau.cs.kieler.esterel.esterel.InterfaceSignalDecl
 import de.cau.cs.kieler.esterel.esterel.Program
+import de.cau.cs.kieler.kexpressions.ValueType
 
-import static extension org.eclipse.xtext.xbase.lib.IteratorExtensions.*
 //WAS import static extension org.eclipse.xtext.xtend2.lib.EObjectExtensions.*
 
 // Transformation of Esterel code into Esterel code that fixes inconsistencies
@@ -47,22 +45,22 @@ class InterfaceDeclarationFix {
 			var signalList = interfaceSignalDecl.signals;
 			
 			for (ISignal signal : signalList) {
-				if (signal.channelDescr != null) {
-					switch (signal.channelDescr.type.type.toString) {
-						case "int": signal.setType(ValueType::INT)
-						case "bool": signal.setType(ValueType::BOOL)
-						case "double": signal.setType(ValueType::DOUBLE)
-						case "float": signal.setType(ValueType::FLOAT)
-						case "host": signal.setType(ValueType::HOST)
-						case "string": signal.setType(ValueType::STRING)
-						case "unsigned": signal.setType(ValueType::UNSIGNED)
-					}
-					var expression = signal.channelDescr.expression; 
-					if (expression instanceof ConstantExpression) {
-						var constantExpression = expression as ConstantExpression;
-						signal.setInitialValue(constantExpression.value.toString);
-					}
+				
+				switch (signal.type.toString) {
+					case "int": signal.setType(ValueType::INT)
+					case "bool": signal.setType(ValueType::BOOL)
+					case "double": signal.setType(ValueType::DOUBLE)
+					case "float": signal.setType(ValueType::FLOAT)
+					case "host": signal.setType(ValueType::HOST)
+					case "string": signal.setType(ValueType::STRING)
+					case "unsigned": signal.setType(ValueType::UNSIGNED)
 				}
+//				var expression = signal.expression; 
+//				if (expression instanceof ConstantExpression) {
+//					var constantExpression = expression as ConstantExpression;
+//					signal.setInitialValue(constantExpression.value.toString);
+//				}
+				
 			}
 			
 		}
@@ -72,8 +70,6 @@ class InterfaceDeclarationFix {
 	
 
 }
-
-
 
 
 

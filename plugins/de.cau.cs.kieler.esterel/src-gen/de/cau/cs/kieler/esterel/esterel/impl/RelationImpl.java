@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
+import de.cau.cs.kieler.annotations.Annotation;
+
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.Relation;
 import de.cau.cs.kieler.esterel.esterel.RelationType;
@@ -26,6 +28,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.RelationImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.RelationImpl#getRelations <em>Relations</em>}</li>
  * </ul>
  *
@@ -33,6 +36,16 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class RelationImpl extends RelationDeclImpl implements Relation
 {
+  /**
+   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAnnotations()
+   * @generated
+   * @ordered
+   */
+  protected EList<Annotation> annotations;
+
   /**
    * The cached value of the '{@link #getRelations() <em>Relations</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -69,6 +82,20 @@ public class RelationImpl extends RelationDeclImpl implements Relation
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Annotation> getAnnotations()
+  {
+    if (annotations == null)
+    {
+      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.RELATION__ANNOTATIONS);
+    }
+    return annotations;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EList<RelationType> getRelations()
   {
     if (relations == null)
@@ -88,6 +115,8 @@ public class RelationImpl extends RelationDeclImpl implements Relation
   {
     switch (featureID)
     {
+      case EsterelPackage.RELATION__ANNOTATIONS:
+        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
       case EsterelPackage.RELATION__RELATIONS:
         return ((InternalEList<?>)getRelations()).basicRemove(otherEnd, msgs);
     }
@@ -104,6 +133,8 @@ public class RelationImpl extends RelationDeclImpl implements Relation
   {
     switch (featureID)
     {
+      case EsterelPackage.RELATION__ANNOTATIONS:
+        return getAnnotations();
       case EsterelPackage.RELATION__RELATIONS:
         return getRelations();
     }
@@ -121,6 +152,10 @@ public class RelationImpl extends RelationDeclImpl implements Relation
   {
     switch (featureID)
     {
+      case EsterelPackage.RELATION__ANNOTATIONS:
+        getAnnotations().clear();
+        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
       case EsterelPackage.RELATION__RELATIONS:
         getRelations().clear();
         getRelations().addAll((Collection<? extends RelationType>)newValue);
@@ -139,6 +174,9 @@ public class RelationImpl extends RelationDeclImpl implements Relation
   {
     switch (featureID)
     {
+      case EsterelPackage.RELATION__ANNOTATIONS:
+        getAnnotations().clear();
+        return;
       case EsterelPackage.RELATION__RELATIONS:
         getRelations().clear();
         return;
@@ -156,6 +194,8 @@ public class RelationImpl extends RelationDeclImpl implements Relation
   {
     switch (featureID)
     {
+      case EsterelPackage.RELATION__ANNOTATIONS:
+        return annotations != null && !annotations.isEmpty();
       case EsterelPackage.RELATION__RELATIONS:
         return relations != null && !relations.isEmpty();
     }

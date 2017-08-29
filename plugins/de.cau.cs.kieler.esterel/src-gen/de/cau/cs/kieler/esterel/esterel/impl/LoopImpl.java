@@ -2,11 +2,11 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.esterel.esterel.EndLoop;
+import de.cau.cs.kieler.esterel.esterel.DelayExpr;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.Loop;
-import de.cau.cs.kieler.esterel.esterel.LoopBody;
-import de.cau.cs.kieler.esterel.esterel.LoopEach;
+
+import de.cau.cs.kieler.scl.impl.StatementContainerImpl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -24,44 +24,22 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.LoopImpl#getBody <em>Body</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.LoopImpl#getEnd1 <em>End1</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.LoopImpl#getEnd <em>End</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.LoopImpl#getDelay <em>Delay</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class LoopImpl extends StatementImpl implements Loop
+public class LoopImpl extends StatementContainerImpl implements Loop
 {
   /**
-   * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference.
+   * The cached value of the '{@link #getDelay() <em>Delay</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getBody()
+   * @see #getDelay()
    * @generated
    * @ordered
    */
-  protected LoopBody body;
-
-  /**
-   * The cached value of the '{@link #getEnd1() <em>End1</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getEnd1()
-   * @generated
-   * @ordered
-   */
-  protected EndLoop end1;
-
-  /**
-   * The cached value of the '{@link #getEnd() <em>End</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getEnd()
-   * @generated
-   * @ordered
-   */
-  protected LoopEach end;
+  protected DelayExpr delay;
 
   /**
    * <!-- begin-user-doc -->
@@ -89,9 +67,9 @@ public class LoopImpl extends StatementImpl implements Loop
    * <!-- end-user-doc -->
    * @generated
    */
-  public LoopBody getBody()
+  public DelayExpr getDelay()
   {
-    return body;
+    return delay;
   }
 
   /**
@@ -99,13 +77,13 @@ public class LoopImpl extends StatementImpl implements Loop
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetBody(LoopBody newBody, NotificationChain msgs)
+  public NotificationChain basicSetDelay(DelayExpr newDelay, NotificationChain msgs)
   {
-    LoopBody oldBody = body;
-    body = newBody;
+    DelayExpr oldDelay = delay;
+    delay = newDelay;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.LOOP__BODY, oldBody, newBody);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.LOOP__DELAY, oldDelay, newDelay);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -116,116 +94,20 @@ public class LoopImpl extends StatementImpl implements Loop
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setBody(LoopBody newBody)
+  public void setDelay(DelayExpr newDelay)
   {
-    if (newBody != body)
+    if (newDelay != delay)
     {
       NotificationChain msgs = null;
-      if (body != null)
-        msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.LOOP__BODY, null, msgs);
-      if (newBody != null)
-        msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.LOOP__BODY, null, msgs);
-      msgs = basicSetBody(newBody, msgs);
+      if (delay != null)
+        msgs = ((InternalEObject)delay).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.LOOP__DELAY, null, msgs);
+      if (newDelay != null)
+        msgs = ((InternalEObject)newDelay).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.LOOP__DELAY, null, msgs);
+      msgs = basicSetDelay(newDelay, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.LOOP__BODY, newBody, newBody));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EndLoop getEnd1()
-  {
-    return end1;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetEnd1(EndLoop newEnd1, NotificationChain msgs)
-  {
-    EndLoop oldEnd1 = end1;
-    end1 = newEnd1;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.LOOP__END1, oldEnd1, newEnd1);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setEnd1(EndLoop newEnd1)
-  {
-    if (newEnd1 != end1)
-    {
-      NotificationChain msgs = null;
-      if (end1 != null)
-        msgs = ((InternalEObject)end1).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.LOOP__END1, null, msgs);
-      if (newEnd1 != null)
-        msgs = ((InternalEObject)newEnd1).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.LOOP__END1, null, msgs);
-      msgs = basicSetEnd1(newEnd1, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.LOOP__END1, newEnd1, newEnd1));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public LoopEach getEnd()
-  {
-    return end;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetEnd(LoopEach newEnd, NotificationChain msgs)
-  {
-    LoopEach oldEnd = end;
-    end = newEnd;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.LOOP__END, oldEnd, newEnd);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setEnd(LoopEach newEnd)
-  {
-    if (newEnd != end)
-    {
-      NotificationChain msgs = null;
-      if (end != null)
-        msgs = ((InternalEObject)end).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.LOOP__END, null, msgs);
-      if (newEnd != null)
-        msgs = ((InternalEObject)newEnd).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.LOOP__END, null, msgs);
-      msgs = basicSetEnd(newEnd, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.LOOP__END, newEnd, newEnd));
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.LOOP__DELAY, newDelay, newDelay));
   }
 
   /**
@@ -238,12 +120,8 @@ public class LoopImpl extends StatementImpl implements Loop
   {
     switch (featureID)
     {
-      case EsterelPackage.LOOP__BODY:
-        return basicSetBody(null, msgs);
-      case EsterelPackage.LOOP__END1:
-        return basicSetEnd1(null, msgs);
-      case EsterelPackage.LOOP__END:
-        return basicSetEnd(null, msgs);
+      case EsterelPackage.LOOP__DELAY:
+        return basicSetDelay(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -258,12 +136,8 @@ public class LoopImpl extends StatementImpl implements Loop
   {
     switch (featureID)
     {
-      case EsterelPackage.LOOP__BODY:
-        return getBody();
-      case EsterelPackage.LOOP__END1:
-        return getEnd1();
-      case EsterelPackage.LOOP__END:
-        return getEnd();
+      case EsterelPackage.LOOP__DELAY:
+        return getDelay();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -278,14 +152,8 @@ public class LoopImpl extends StatementImpl implements Loop
   {
     switch (featureID)
     {
-      case EsterelPackage.LOOP__BODY:
-        setBody((LoopBody)newValue);
-        return;
-      case EsterelPackage.LOOP__END1:
-        setEnd1((EndLoop)newValue);
-        return;
-      case EsterelPackage.LOOP__END:
-        setEnd((LoopEach)newValue);
+      case EsterelPackage.LOOP__DELAY:
+        setDelay((DelayExpr)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -301,14 +169,8 @@ public class LoopImpl extends StatementImpl implements Loop
   {
     switch (featureID)
     {
-      case EsterelPackage.LOOP__BODY:
-        setBody((LoopBody)null);
-        return;
-      case EsterelPackage.LOOP__END1:
-        setEnd1((EndLoop)null);
-        return;
-      case EsterelPackage.LOOP__END:
-        setEnd((LoopEach)null);
+      case EsterelPackage.LOOP__DELAY:
+        setDelay((DelayExpr)null);
         return;
     }
     super.eUnset(featureID);
@@ -324,12 +186,8 @@ public class LoopImpl extends StatementImpl implements Loop
   {
     switch (featureID)
     {
-      case EsterelPackage.LOOP__BODY:
-        return body != null;
-      case EsterelPackage.LOOP__END1:
-        return end1 != null;
-      case EsterelPackage.LOOP__END:
-        return end != null;
+      case EsterelPackage.LOOP__DELAY:
+        return delay != null;
     }
     return super.eIsSet(featureID);
   }

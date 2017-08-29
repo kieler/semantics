@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package de.cau.cs.kieler.esterel.kexpressions;
 
@@ -412,22 +408,13 @@ public interface KExpressionsPackage extends EPackage {
     int VALUED_OBJECT_REFERENCE__VALUED_OBJECT = COMPLEX_EXPRESSION_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Tick</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int VALUED_OBJECT_REFERENCE__TICK = COMPLEX_EXPRESSION_FEATURE_COUNT + 1;
-
-    /**
      * The number of structural features of the '<em>Valued Object Reference</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT_REFERENCE_FEATURE_COUNT = COMPLEX_EXPRESSION_FEATURE_COUNT + 2;
+    int VALUED_OBJECT_REFERENCE_FEATURE_COUNT = COMPLEX_EXPRESSION_FEATURE_COUNT + 1;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.esterel.kexpressions.impl.ValueImpl <em>Value</em>}' class.
@@ -1358,17 +1345,6 @@ public interface KExpressionsPackage extends EPackage {
     EReference getValuedObjectReference_ValuedObject();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference#isTick <em>Tick</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Tick</em>'.
-     * @see de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference#isTick()
-     * @see #getValuedObjectReference()
-     * @generated
-     */
-    EAttribute getValuedObjectReference_Tick();
-
-    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.kexpressions.Value <em>Value</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1938,14 +1914,6 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EReference VALUED_OBJECT_REFERENCE__VALUED_OBJECT = eINSTANCE.getValuedObjectReference_ValuedObject();
-
-        /**
-         * The meta object literal for the '<em><b>Tick</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute VALUED_OBJECT_REFERENCE__TICK = eINSTANCE.getValuedObjectReference_Tick();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.esterel.kexpressions.impl.ValueImpl <em>Value</em>}' class.

@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
-import de.cau.cs.kieler.esterel.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.Expression;
 
 /**
  * <!-- begin-user-doc -->

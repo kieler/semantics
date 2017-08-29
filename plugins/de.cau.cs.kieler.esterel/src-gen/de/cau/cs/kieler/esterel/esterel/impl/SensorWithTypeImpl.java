@@ -3,10 +3,9 @@
 package de.cau.cs.kieler.esterel.esterel.impl;
 
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
+import de.cau.cs.kieler.esterel.esterel.ISignal;
 import de.cau.cs.kieler.esterel.esterel.SensorWithType;
 import de.cau.cs.kieler.esterel.esterel.TypeIdentifier;
-
-import de.cau.cs.kieler.esterel.kexpressions.ISignal;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;

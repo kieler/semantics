@@ -18,7 +18,7 @@ public class EsterelStandaloneSetupGenerated implements ISetup {
 
 	@Override
 	public Injector createInjectorAndDoEMFRegistration() {
-		de.cau.cs.kieler.esterel.kexpressions.KExpressionsStandaloneSetup.doSetup();
+		de.cau.cs.kieler.scl.SCLStandaloneSetup.doSetup();
 
 		Injector injector = createInjector();
 		register(injector);
@@ -39,7 +39,6 @@ public class EsterelStandaloneSetupGenerated implements ISetup {
 		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("strl", resourceFactory);
 		org.eclipse.xtext.resource.IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().put("strl", serviceProvider);
 		
-
 
 
 	}

@@ -4,16 +4,21 @@ package de.cau.cs.kieler.esterel.esterel.impl;
 
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.LocalVariable;
+import de.cau.cs.kieler.esterel.esterel.VariableDecl;
 
-import de.cau.cs.kieler.esterel.kexpressions.InterfaceVariableDecl;
+import de.cau.cs.kieler.scl.impl.StatementContainerImpl;
 
-import org.eclipse.emf.common.notify.Notification;
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,8 +28,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.LocalVariableImpl#getVar <em>Var</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.LocalVariableImpl#getOptEnd <em>Opt End</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.LocalVariableImpl#getVarDecls <em>Var Decls</em>}</li>
  * </ul>
  *
  * @generated
@@ -32,34 +36,14 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class LocalVariableImpl extends StatementContainerImpl implements LocalVariable
 {
   /**
-   * The cached value of the '{@link #getVar() <em>Var</em>}' containment reference.
+   * The cached value of the '{@link #getVarDecls() <em>Var Decls</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getVar()
+   * @see #getVarDecls()
    * @generated
    * @ordered
    */
-  protected InterfaceVariableDecl var;
-
-  /**
-   * The default value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getOptEnd()
-   * @generated
-   * @ordered
-   */
-  protected static final String OPT_END_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getOptEnd()
-   * @generated
-   * @ordered
-   */
-  protected String optEnd = OPT_END_EDEFAULT;
+  protected EList<VariableDecl> varDecls;
 
   /**
    * <!-- begin-user-doc -->
@@ -87,70 +71,13 @@ public class LocalVariableImpl extends StatementContainerImpl implements LocalVa
    * <!-- end-user-doc -->
    * @generated
    */
-  public InterfaceVariableDecl getVar()
+  public EList<VariableDecl> getVarDecls()
   {
-    return var;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetVar(InterfaceVariableDecl newVar, NotificationChain msgs)
-  {
-    InterfaceVariableDecl oldVar = var;
-    var = newVar;
-    if (eNotificationRequired())
+    if (varDecls == null)
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.LOCAL_VARIABLE__VAR, oldVar, newVar);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+      varDecls = new EObjectContainmentEList<VariableDecl>(VariableDecl.class, this, EsterelPackage.LOCAL_VARIABLE__VAR_DECLS);
     }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setVar(InterfaceVariableDecl newVar)
-  {
-    if (newVar != var)
-    {
-      NotificationChain msgs = null;
-      if (var != null)
-        msgs = ((InternalEObject)var).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.LOCAL_VARIABLE__VAR, null, msgs);
-      if (newVar != null)
-        msgs = ((InternalEObject)newVar).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.LOCAL_VARIABLE__VAR, null, msgs);
-      msgs = basicSetVar(newVar, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.LOCAL_VARIABLE__VAR, newVar, newVar));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String getOptEnd()
-  {
-    return optEnd;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setOptEnd(String newOptEnd)
-  {
-    String oldOptEnd = optEnd;
-    optEnd = newOptEnd;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.LOCAL_VARIABLE__OPT_END, oldOptEnd, optEnd));
+    return varDecls;
   }
 
   /**
@@ -163,8 +90,8 @@ public class LocalVariableImpl extends StatementContainerImpl implements LocalVa
   {
     switch (featureID)
     {
-      case EsterelPackage.LOCAL_VARIABLE__VAR:
-        return basicSetVar(null, msgs);
+      case EsterelPackage.LOCAL_VARIABLE__VAR_DECLS:
+        return ((InternalEList<?>)getVarDecls()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -179,10 +106,8 @@ public class LocalVariableImpl extends StatementContainerImpl implements LocalVa
   {
     switch (featureID)
     {
-      case EsterelPackage.LOCAL_VARIABLE__VAR:
-        return getVar();
-      case EsterelPackage.LOCAL_VARIABLE__OPT_END:
-        return getOptEnd();
+      case EsterelPackage.LOCAL_VARIABLE__VAR_DECLS:
+        return getVarDecls();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -192,16 +117,15 @@ public class LocalVariableImpl extends StatementContainerImpl implements LocalVa
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case EsterelPackage.LOCAL_VARIABLE__VAR:
-        setVar((InterfaceVariableDecl)newValue);
-        return;
-      case EsterelPackage.LOCAL_VARIABLE__OPT_END:
-        setOptEnd((String)newValue);
+      case EsterelPackage.LOCAL_VARIABLE__VAR_DECLS:
+        getVarDecls().clear();
+        getVarDecls().addAll((Collection<? extends VariableDecl>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -217,11 +141,8 @@ public class LocalVariableImpl extends StatementContainerImpl implements LocalVa
   {
     switch (featureID)
     {
-      case EsterelPackage.LOCAL_VARIABLE__VAR:
-        setVar((InterfaceVariableDecl)null);
-        return;
-      case EsterelPackage.LOCAL_VARIABLE__OPT_END:
-        setOptEnd(OPT_END_EDEFAULT);
+      case EsterelPackage.LOCAL_VARIABLE__VAR_DECLS:
+        getVarDecls().clear();
         return;
     }
     super.eUnset(featureID);
@@ -237,29 +158,10 @@ public class LocalVariableImpl extends StatementContainerImpl implements LocalVa
   {
     switch (featureID)
     {
-      case EsterelPackage.LOCAL_VARIABLE__VAR:
-        return var != null;
-      case EsterelPackage.LOCAL_VARIABLE__OPT_END:
-        return OPT_END_EDEFAULT == null ? optEnd != null : !OPT_END_EDEFAULT.equals(optEnd);
+      case EsterelPackage.LOCAL_VARIABLE__VAR_DECLS:
+        return varDecls != null && !varDecls.isEmpty();
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (optEnd: ");
-    result.append(optEnd);
-    result.append(')');
-    return result.toString();
   }
 
 } //LocalVariableImpl

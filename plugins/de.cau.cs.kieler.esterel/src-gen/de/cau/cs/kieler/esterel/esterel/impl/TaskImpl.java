@@ -31,8 +31,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.TaskImpl#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.TaskImpl#getIdList1 <em>Id List1</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.TaskImpl#getIdList2 <em>Id List2</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.TaskImpl#getVariables <em>Variables</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.TaskImpl#getExpressions <em>Expressions</em>}</li>
  * </ul>
  *
  * @generated
@@ -60,24 +60,24 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getIdList1() <em>Id List1</em>}' containment reference list.
+   * The cached value of the '{@link #getVariables() <em>Variables</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getIdList1()
+   * @see #getVariables()
    * @generated
    * @ordered
    */
-  protected EList<TypeIdentifier> idList1;
+  protected EList<TypeIdentifier> variables;
 
   /**
-   * The cached value of the '{@link #getIdList2() <em>Id List2</em>}' containment reference list.
+   * The cached value of the '{@link #getExpressions() <em>Expressions</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getIdList2()
+   * @see #getExpressions()
    * @generated
    * @ordered
    */
-  protected EList<TypeIdentifier> idList2;
+  protected EList<TypeIdentifier> expressions;
 
   /**
    * <!-- begin-user-doc -->
@@ -128,13 +128,13 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<TypeIdentifier> getIdList1()
+  public EList<TypeIdentifier> getVariables()
   {
-    if (idList1 == null)
+    if (variables == null)
     {
-      idList1 = new EObjectContainmentEList<TypeIdentifier>(TypeIdentifier.class, this, EsterelPackage.TASK__ID_LIST1);
+      variables = new EObjectContainmentEList<TypeIdentifier>(TypeIdentifier.class, this, EsterelPackage.TASK__VARIABLES);
     }
-    return idList1;
+    return variables;
   }
 
   /**
@@ -142,13 +142,13 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<TypeIdentifier> getIdList2()
+  public EList<TypeIdentifier> getExpressions()
   {
-    if (idList2 == null)
+    if (expressions == null)
     {
-      idList2 = new EObjectContainmentEList<TypeIdentifier>(TypeIdentifier.class, this, EsterelPackage.TASK__ID_LIST2);
+      expressions = new EObjectContainmentEList<TypeIdentifier>(TypeIdentifier.class, this, EsterelPackage.TASK__EXPRESSIONS);
     }
-    return idList2;
+    return expressions;
   }
 
   /**
@@ -161,10 +161,10 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task
   {
     switch (featureID)
     {
-      case EsterelPackage.TASK__ID_LIST1:
-        return ((InternalEList<?>)getIdList1()).basicRemove(otherEnd, msgs);
-      case EsterelPackage.TASK__ID_LIST2:
-        return ((InternalEList<?>)getIdList2()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.TASK__VARIABLES:
+        return ((InternalEList<?>)getVariables()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.TASK__EXPRESSIONS:
+        return ((InternalEList<?>)getExpressions()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -181,10 +181,10 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task
     {
       case EsterelPackage.TASK__NAME:
         return getName();
-      case EsterelPackage.TASK__ID_LIST1:
-        return getIdList1();
-      case EsterelPackage.TASK__ID_LIST2:
-        return getIdList2();
+      case EsterelPackage.TASK__VARIABLES:
+        return getVariables();
+      case EsterelPackage.TASK__EXPRESSIONS:
+        return getExpressions();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -203,13 +203,13 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task
       case EsterelPackage.TASK__NAME:
         setName((String)newValue);
         return;
-      case EsterelPackage.TASK__ID_LIST1:
-        getIdList1().clear();
-        getIdList1().addAll((Collection<? extends TypeIdentifier>)newValue);
+      case EsterelPackage.TASK__VARIABLES:
+        getVariables().clear();
+        getVariables().addAll((Collection<? extends TypeIdentifier>)newValue);
         return;
-      case EsterelPackage.TASK__ID_LIST2:
-        getIdList2().clear();
-        getIdList2().addAll((Collection<? extends TypeIdentifier>)newValue);
+      case EsterelPackage.TASK__EXPRESSIONS:
+        getExpressions().clear();
+        getExpressions().addAll((Collection<? extends TypeIdentifier>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -228,11 +228,11 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task
       case EsterelPackage.TASK__NAME:
         setName(NAME_EDEFAULT);
         return;
-      case EsterelPackage.TASK__ID_LIST1:
-        getIdList1().clear();
+      case EsterelPackage.TASK__VARIABLES:
+        getVariables().clear();
         return;
-      case EsterelPackage.TASK__ID_LIST2:
-        getIdList2().clear();
+      case EsterelPackage.TASK__EXPRESSIONS:
+        getExpressions().clear();
         return;
     }
     super.eUnset(featureID);
@@ -250,10 +250,10 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task
     {
       case EsterelPackage.TASK__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case EsterelPackage.TASK__ID_LIST1:
-        return idList1 != null && !idList1.isEmpty();
-      case EsterelPackage.TASK__ID_LIST2:
-        return idList2 != null && !idList2.isEmpty();
+      case EsterelPackage.TASK__VARIABLES:
+        return variables != null && !variables.isEmpty();
+      case EsterelPackage.TASK__EXPRESSIONS:
+        return expressions != null && !expressions.isEmpty();
     }
     return super.eIsSet(featureID);
   }

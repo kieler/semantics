@@ -2,8 +2,9 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
-import de.cau.cs.kieler.esterel.kexpressions.Expression;
-import de.cau.cs.kieler.esterel.kexpressions.IVariable;
+import de.cau.cs.kieler.kexpressions.Expression;
+
+import de.cau.cs.kieler.scl.Statement;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -55,7 +56,7 @@ public interface ProcCall extends Statement
 
   /**
    * Returns the value of the '<em><b>Var List</b></em>' reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.esterel.kexpressions.IVariable}.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.IVariable}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Var List</em>' reference list isn't clear,
@@ -71,7 +72,7 @@ public interface ProcCall extends Statement
 
   /**
    * Returns the value of the '<em><b>Kexpressions</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.esterel.kexpressions.Expression}.
+   * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Expression}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Kexpressions</em>' containment reference list isn't clear,

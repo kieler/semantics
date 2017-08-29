@@ -31,7 +31,6 @@ package de.cau.cs.kieler.esterel.kexpressions;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference#getValuedObject <em>Valued Object</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference#isTick <em>Tick</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.esterel.kexpressions.KExpressionsPackage#getValuedObjectReference()
@@ -50,7 +49,7 @@ public interface ValuedObjectReference extends ComplexExpression {
      * @return the value of the '<em>Valued Object</em>' reference.
      * @see #setValuedObject(ValuedObject)
      * @see de.cau.cs.kieler.esterel.kexpressions.KExpressionsPackage#getValuedObjectReference_ValuedObject()
-     * @model
+     * @model required="true"
      * @generated
      */
     ValuedObject getValuedObject();
@@ -64,31 +63,5 @@ public interface ValuedObjectReference extends ComplexExpression {
      * @generated
      */
     void setValuedObject(ValuedObject value);
-
-    /**
-     * Returns the value of the '<em><b>Tick</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Tick</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Tick</em>' attribute.
-     * @see #setTick(boolean)
-     * @see de.cau.cs.kieler.esterel.kexpressions.KExpressionsPackage#getValuedObjectReference_Tick()
-     * @model
-     * @generated
-     */
-    boolean isTick();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference#isTick <em>Tick</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Tick</em>' attribute.
-     * @see #isTick()
-     * @generated
-     */
-    void setTick(boolean value);
 
 } // ValuedObjectReference

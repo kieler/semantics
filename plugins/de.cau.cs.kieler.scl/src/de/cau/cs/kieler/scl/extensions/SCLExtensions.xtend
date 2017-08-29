@@ -15,22 +15,23 @@ package de.cau.cs.kieler.scl.extensions
 
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.scl.scl.Conditional
-import de.cau.cs.kieler.scl.scl.Goto
-import de.cau.cs.kieler.scl.scl.Label
-import de.cau.cs.kieler.scl.scl.Parallel
-import de.cau.cs.kieler.scl.scl.SCLProgram
-import de.cau.cs.kieler.scl.scl.SclFactory
-import de.cau.cs.kieler.scl.scl.Scope
-import de.cau.cs.kieler.scl.scl.ScopeStatement
-import de.cau.cs.kieler.scl.scl.Statement
+import de.cau.cs.kieler.scl.Conditional
+import de.cau.cs.kieler.scl.ElseScope
+import de.cau.cs.kieler.scl.Goto
+import de.cau.cs.kieler.scl.Label
+import de.cau.cs.kieler.scl.Parallel
+import de.cau.cs.kieler.scl.SCLFactory
+import de.cau.cs.kieler.scl.SCLProgram
+import de.cau.cs.kieler.scl.Scope
+import de.cau.cs.kieler.scl.ScopeStatement
+import de.cau.cs.kieler.scl.Statement
 import java.util.LinkedList
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.util.EcoreUtil
 
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 /**
  * @author ssm, krat
  * @kieler.design 2013-10-31 proposed 
@@ -40,7 +41,7 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
  */
 class SCLExtensions {
     
-    extension SclFactory = SclFactory.eINSTANCE
+    extension SCLFactory = SCLFactory.eINSTANCE
     
     /**
      * Removes all goto instructions, that target a label, that follows that goto.
@@ -127,13 +128,10 @@ class SCLExtensions {
      */
     def Scope removeUnreachableCode(Scope scope) {
         val toDelete = <Statement>newLinkedList
-        for (goto : scope.eAllContents.toList.filter(typeof(Goto))) {
-            var statement = goto.eContainer
-            var parent = if (statement.eContainer instanceof Scope) {
-                statement.eContainer as Scope
-            } else {
-                statement.eContainer.eContainer as Scope
-            }
+        var gotos = scope.eAllContents.toList.filter(typeof(Goto))
+        for (goto : gotos) {
+            var statement = goto
+            var parent = statement.eContainer as Scope
             var index = parent.statements.indexOf(statement)
             var noLabel = true
             while (parent.statements.size > index + 1 && noLabel) {
@@ -205,15 +203,10 @@ class SCLExtensions {
             var EList<Statement> stmList
             var parent = label.eContainer as Scope
 
-            // Continue if in conditional
+            // Continue until Thread or SCLProgram
             var continue = true
 
-            // Check whether label is in conditional and in which branch
-            if ((parent instanceof Conditional) && (parent as Conditional).^else != null && (parent as Conditional).^else.statements.contains(label)) {
-                stmList = (parent as Conditional).^else.statements
-            } else {
-                stmList = parent.statements
-            }
+            stmList = parent.statements
             var index = stmList.indexOf(label) + 1
             var Statement curStm = label
             while (continue) {
@@ -224,20 +217,18 @@ class SCLExtensions {
                         replaceBy += label -> goto.target
                     }
                     continue = false;
-
-                // Check whether at end of conditonal branch or StatementScope and "look outside"
-                } else if (parent instanceof Conditional) {
+                } else if (parent instanceof Thread) {
+                    continue = false
+                } else if (parent instanceof SCLProgram) {
+                    continue = false
+                } else if (parent instanceof ElseScope) {
                     curStm = parent.eContainer as Statement
                     parent = parent.eContainer.eContainer as Scope
-                    if ((parent instanceof Conditional) && (parent as Conditional).^else.statements.contains(curStm)) {
-                        stmList = (parent as Conditional).^else.statements
-                    } else {
-                        stmList = parent.statements
-                    }
+                    stmList = parent.statements
                     index = stmList.indexOf(curStm) + 1
                 } else if (parent instanceof Scope) {
-                    curStm = parent.eContainer as Statement
-                    parent = parent.eContainer.eContainer as Scope
+                    curStm = parent as Statement
+                    parent = parent.eContainer as Scope
                     stmList = parent.statements
                     index = stmList.indexOf(curStm) + 1
                 } else {
@@ -386,7 +377,7 @@ class SCLExtensions {
          for (parallel : scope.eAllContents.toList.filter(Parallel)) {
              if (parallel.threads.length <= 1) {
                  val parent = parallel.eContainer as Scope
-                 val indexOfParallel = parent.statements.indexOf(parallel.eContainer)
+                 val indexOfParallel = parent.statements.indexOf(parallel)
                  parent.statements.remove(indexOfParallel)
                  if (parallel.threads.length == 1) {
                      parent.statements.addAll(indexOfParallel, parallel.threads.head.statements)

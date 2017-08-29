@@ -2,6 +2,9 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
+import de.cau.cs.kieler.kexpressions.Expression;
+
+import de.cau.cs.kieler.scl.StatementContainer;
 
 /**
  * <!-- begin-user-doc -->
@@ -12,7 +15,7 @@ package de.cau.cs.kieler.esterel.esterel;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.PresentCase#getEvent <em>Event</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.PresentCase#getExpression <em>Expression</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresentCase()
@@ -22,29 +25,29 @@ package de.cau.cs.kieler.esterel.esterel;
 public interface PresentCase extends StatementContainer
 {
   /**
-   * Returns the value of the '<em><b>Event</b></em>' containment reference.
+   * Returns the value of the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Event</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Expression</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Event</em>' containment reference.
-   * @see #setEvent(PresentEvent)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresentCase_Event()
+   * @return the value of the '<em>Expression</em>' containment reference.
+   * @see #setExpression(Expression)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresentCase_Expression()
    * @model containment="true"
    * @generated
    */
-  PresentEvent getEvent();
+  Expression getExpression();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.PresentCase#getEvent <em>Event</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.PresentCase#getExpression <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Event</em>' containment reference.
-   * @see #getEvent()
+   * @param value the new value of the '<em>Expression</em>' containment reference.
+   * @see #getExpression()
    * @generated
    */
-  void setEvent(PresentEvent value);
+  void setExpression(Expression value);
 
 } // PresentCase

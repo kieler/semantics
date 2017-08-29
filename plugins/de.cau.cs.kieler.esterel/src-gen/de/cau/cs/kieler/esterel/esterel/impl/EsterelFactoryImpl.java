@@ -66,77 +66,57 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
     {
       case EsterelPackage.PROGRAM: return createProgram();
       case EsterelPackage.MODULE: return createModule();
-      case EsterelPackage.MODULE_BODY: return createModuleBody();
-      case EsterelPackage.MODULE_INTERFACE: return createModuleInterface();
-      case EsterelPackage.CHANNEL_DESCRIPTION: return createChannelDescription();
       case EsterelPackage.TYPE_IDENTIFIER: return createTypeIdentifier();
-      case EsterelPackage.LOCAL_SIGNAL_DECL: return createLocalSignalDecl();
-      case EsterelPackage.LOCAL_SIGNAL_LIST: return createLocalSignalList();
-      case EsterelPackage.SENSOR_DECL: return createSensorDecl();
-      case EsterelPackage.SENSOR_WITH_TYPE: return createSensorWithType();
-      case EsterelPackage.RELATION_DECL: return createRelationDecl();
-      case EsterelPackage.RELATION_TYPE: return createRelationType();
-      case EsterelPackage.RELATION_IMPLICATION: return createRelationImplication();
-      case EsterelPackage.RELATION_INCOMPATIBILITY: return createRelationIncompatibility();
       case EsterelPackage.TYPE_DECL: return createTypeDecl();
       case EsterelPackage.TYPE: return createType();
       case EsterelPackage.CONSTANT_DECLS: return createConstantDecls();
       case EsterelPackage.ONE_TYPE_CONSTANT_DECLS: return createOneTypeConstantDecls();
-      case EsterelPackage.CONSTANT_WITH_VALUE: return createConstantWithValue();
+      case EsterelPackage.CONSTANT: return createConstant();
       case EsterelPackage.FUNCTION_DECL: return createFunctionDecl();
       case EsterelPackage.FUNCTION: return createFunction();
       case EsterelPackage.PROCEDURE_DECL: return createProcedureDecl();
       case EsterelPackage.PROCEDURE: return createProcedure();
       case EsterelPackage.TASK_DECL: return createTaskDecl();
       case EsterelPackage.TASK: return createTask();
-      case EsterelPackage.STATEMENT_CONTAINER: return createStatementContainer();
-      case EsterelPackage.STATEMENT: return createStatement();
-      case EsterelPackage.BLOCK: return createBlock();
-      case EsterelPackage.ASSIGNMENT: return createAssignment();
-      case EsterelPackage.ABORT: return createAbort();
-      case EsterelPackage.ABORT_BODY: return createAbortBody();
-      case EsterelPackage.ABORT_INSTANCE: return createAbortInstance();
-      case EsterelPackage.ABORT_CASE: return createAbortCase();
-      case EsterelPackage.ABORT_CASE_SINGLE: return createAbortCaseSingle();
-      case EsterelPackage.WEAK_ABORT_BODY: return createWeakAbortBody();
-      case EsterelPackage.WEAK_ABORT_END: return createWeakAbortEnd();
-      case EsterelPackage.WEAK_ABORT_END_ALT: return createWeakAbortEndAlt();
-      case EsterelPackage.AWAIT: return createAwait();
-      case EsterelPackage.AWAIT_BODY: return createAwaitBody();
-      case EsterelPackage.AWAIT_INSTANCE: return createAwaitInstance();
-      case EsterelPackage.AWAIT_CASE: return createAwaitCase();
-      case EsterelPackage.PROC_CALL: return createProcCall();
-      case EsterelPackage.DO: return createDo();
-      case EsterelPackage.DO_UPTO: return createDoUpto();
-      case EsterelPackage.DO_WATCHING: return createDoWatching();
-      case EsterelPackage.DO_WATCHING_END: return createDoWatchingEnd();
-      case EsterelPackage.EMIT: return createEmit();
-      case EsterelPackage.UN_EMIT: return createUnEmit();
-      case EsterelPackage.RESET: return createReset();
-      case EsterelPackage.EVERY_DO: return createEveryDo();
-      case EsterelPackage.EXIT: return createExit();
+      case EsterelPackage.INTERFACE_SIGNAL_DECL: return createInterfaceSignalDecl();
+      case EsterelPackage.ISIGNAL: return createISignal();
+      case EsterelPackage.SENSOR_DECL: return createSensorDecl();
+      case EsterelPackage.SENSOR_WITH_TYPE: return createSensorWithType();
+      case EsterelPackage.RELATION_DECL: return createRelationDecl();
+      case EsterelPackage.RELATION_TYPE: return createRelationType();
+      case EsterelPackage.RELATION_IMPLICATION: return createRelationImplication();
+      case EsterelPackage.RELATION_INCOMPATIBILITY: return createRelationIncompatibility();
+      case EsterelPackage.ESTEREL_PARALLEL: return createEsterelParallel();
+      case EsterelPackage.ESTEREL_THREAD: return createEsterelThread();
+      case EsterelPackage.NOTHING: return createNothing();
       case EsterelPackage.HALT: return createHalt();
+      case EsterelPackage.BLOCK: return createBlock();
+      case EsterelPackage.EMIT: return createEmit();
+      case EsterelPackage.SUSTAIN: return createSustain();
+      case EsterelPackage.ESTEREL_ASSIGNMENT: return createEsterelAssignment();
+      case EsterelPackage.PROC_CALL: return createProcCall();
+      case EsterelPackage.PRESENT: return createPresent();
+      case EsterelPackage.PRESENT_CASE: return createPresentCase();
       case EsterelPackage.IF_TEST: return createIfTest();
       case EsterelPackage.ELS_IF: return createElsIf();
-      case EsterelPackage.THEN_PART: return createThenPart();
-      case EsterelPackage.ELSE_PART: return createElsePart();
       case EsterelPackage.LOOP: return createLoop();
-      case EsterelPackage.END_LOOP: return createEndLoop();
-      case EsterelPackage.LOOP_EACH: return createLoopEach();
-      case EsterelPackage.LOOP_DELAY: return createLoopDelay();
-      case EsterelPackage.LOOP_BODY: return createLoopBody();
-      case EsterelPackage.NOTHING: return createNothing();
-      case EsterelPackage.PAUSE: return createPause();
-      case EsterelPackage.PRESENT: return createPresent();
-      case EsterelPackage.PRESENT_BODY: return createPresentBody();
-      case EsterelPackage.PRESENT_EVENT_BODY: return createPresentEventBody();
-      case EsterelPackage.PRESENT_CASE_LIST: return createPresentCaseList();
-      case EsterelPackage.PRESENT_CASE: return createPresentCase();
-      case EsterelPackage.PRESENT_EVENT: return createPresentEvent();
       case EsterelPackage.REPEAT: return createRepeat();
+      case EsterelPackage.ABORT: return createAbort();
+      case EsterelPackage.CASE: return createCase();
+      case EsterelPackage.AWAIT: return createAwait();
+      case EsterelPackage.EVERY_DO: return createEveryDo();
+      case EsterelPackage.SUSPEND: return createSuspend();
+      case EsterelPackage.TRAP: return createTrap();
+      case EsterelPackage.TRAP_HANDLER: return createTrapHandler();
+      case EsterelPackage.EXIT: return createExit();
+      case EsterelPackage.EXEC: return createExec();
+      case EsterelPackage.EXEC_CASE: return createExecCase();
+      case EsterelPackage.LOCAL_SIGNAL_DECL: return createLocalSignalDecl();
+      case EsterelPackage.LOCAL_VARIABLE: return createLocalVariable();
+      case EsterelPackage.VARIABLE_DECL: return createVariableDecl();
+      case EsterelPackage.IVARIABLE: return createIVariable();
       case EsterelPackage.RUN: return createRun();
       case EsterelPackage.MODULE_RENAMING: return createModuleRenaming();
-      case EsterelPackage.RENAMING_LIST: return createRenamingList();
       case EsterelPackage.RENAMING: return createRenaming();
       case EsterelPackage.TYPE_RENAMING: return createTypeRenaming();
       case EsterelPackage.CONSTANT_RENAMING: return createConstantRenaming();
@@ -144,35 +124,19 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
       case EsterelPackage.PROCEDURE_RENAMING: return createProcedureRenaming();
       case EsterelPackage.TASK_RENAMING: return createTaskRenaming();
       case EsterelPackage.SIGNAL_RENAMING: return createSignalRenaming();
-      case EsterelPackage.SUSPEND: return createSuspend();
-      case EsterelPackage.WEAK_SUSPEND: return createWeakSuspend();
-      case EsterelPackage.SUSTAIN: return createSustain();
-      case EsterelPackage.TRAP: return createTrap();
-      case EsterelPackage.TRAP_DECL_LIST: return createTrapDeclList();
-      case EsterelPackage.TRAP_HANDLER: return createTrapHandler();
-      case EsterelPackage.LOCAL_VARIABLE: return createLocalVariable();
-      case EsterelPackage.GOTO: return createGoto();
-      case EsterelPackage.LABEL: return createLabel();
+      case EsterelPackage.DO: return createDo();
       case EsterelPackage.DELAY_EXPR: return createDelayExpr();
-      case EsterelPackage.DELAY_EVENT: return createDelayEvent();
-      case EsterelPackage.EXEC: return createExec();
-      case EsterelPackage.EXEC_BODY: return createExecBody();
-      case EsterelPackage.EXEC_CASE: return createExecCase();
-      case EsterelPackage.ESTEREL_TYPE_IDENTIFIER: return createEsterelTypeIdentifier();
-      case EsterelPackage.ESTEREL_TYPE: return createEsterelType();
-      case EsterelPackage.LOCAL_SIGNAL: return createLocalSignal();
+      case EsterelPackage.INPUT: return createInput();
+      case EsterelPackage.OUTPUT: return createOutput();
+      case EsterelPackage.INPUT_OUTPUT: return createInputOutput();
+      case EsterelPackage.RETURN: return createReturn();
       case EsterelPackage.RELATION: return createRelation();
-      case EsterelPackage.CONSTANT: return createConstant();
-      case EsterelPackage.PARALLEL: return createParallel();
-      case EsterelPackage.SEQUENCE: return createSequence();
-      case EsterelPackage.WEAK_ABORT: return createWeakAbort();
-      case EsterelPackage.WEAK_ABORT_INSTANCE: return createWeakAbortInstance();
-      case EsterelPackage.WEAK_ABORT_CASE: return createWeakAbortCase();
-      case EsterelPackage.TRAP_DECL: return createTrapDecl();
+      case EsterelPackage.TRAP_SIGNAL: return createTrapSignal();
       case EsterelPackage.TRAP_EXPRESSION: return createTrapExpression();
       case EsterelPackage.FUNCTION_EXPRESSION: return createFunctionExpression();
       case EsterelPackage.CONSTANT_EXPRESSION: return createConstantExpression();
       case EsterelPackage.TRAP_REFERENCE_EXPR: return createTrapReferenceExpr();
+      case EsterelPackage.SIGNAL_REFERENCE_EXPR: return createSignalReferenceExpr();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -205,131 +169,10 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public ModuleBody createModuleBody()
-  {
-    ModuleBodyImpl moduleBody = new ModuleBodyImpl();
-    return moduleBody;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public ModuleInterface createModuleInterface()
-  {
-    ModuleInterfaceImpl moduleInterface = new ModuleInterfaceImpl();
-    return moduleInterface;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public ChannelDescription createChannelDescription()
-  {
-    ChannelDescriptionImpl channelDescription = new ChannelDescriptionImpl();
-    return channelDescription;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public TypeIdentifier createTypeIdentifier()
   {
     TypeIdentifierImpl typeIdentifier = new TypeIdentifierImpl();
     return typeIdentifier;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public LocalSignalDecl createLocalSignalDecl()
-  {
-    LocalSignalDeclImpl localSignalDecl = new LocalSignalDeclImpl();
-    return localSignalDecl;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public LocalSignalList createLocalSignalList()
-  {
-    LocalSignalListImpl localSignalList = new LocalSignalListImpl();
-    return localSignalList;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public SensorDecl createSensorDecl()
-  {
-    SensorDeclImpl sensorDecl = new SensorDeclImpl();
-    return sensorDecl;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public SensorWithType createSensorWithType()
-  {
-    SensorWithTypeImpl sensorWithType = new SensorWithTypeImpl();
-    return sensorWithType;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public RelationDecl createRelationDecl()
-  {
-    RelationDeclImpl relationDecl = new RelationDeclImpl();
-    return relationDecl;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public RelationType createRelationType()
-  {
-    RelationTypeImpl relationType = new RelationTypeImpl();
-    return relationType;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public RelationImplication createRelationImplication()
-  {
-    RelationImplicationImpl relationImplication = new RelationImplicationImpl();
-    return relationImplication;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public RelationIncompatibility createRelationIncompatibility()
-  {
-    RelationIncompatibilityImpl relationIncompatibility = new RelationIncompatibilityImpl();
-    return relationIncompatibility;
   }
 
   /**
@@ -381,10 +224,10 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public ConstantWithValue createConstantWithValue()
+  public Constant createConstant()
   {
-    ConstantWithValueImpl constantWithValue = new ConstantWithValueImpl();
-    return constantWithValue;
+    ConstantImpl constant = new ConstantImpl();
+    return constant;
   }
 
   /**
@@ -458,10 +301,10 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public StatementContainer createStatementContainer()
+  public InterfaceSignalDecl createInterfaceSignalDecl()
   {
-    StatementContainerImpl statementContainer = new StatementContainerImpl();
-    return statementContainer;
+    InterfaceSignalDeclImpl interfaceSignalDecl = new InterfaceSignalDeclImpl();
+    return interfaceSignalDecl;
   }
 
   /**
@@ -469,10 +312,120 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Statement createStatement()
+  public ISignal createISignal()
   {
-    StatementImpl statement = new StatementImpl();
-    return statement;
+    ISignalImpl iSignal = new ISignalImpl();
+    return iSignal;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SensorDecl createSensorDecl()
+  {
+    SensorDeclImpl sensorDecl = new SensorDeclImpl();
+    return sensorDecl;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SensorWithType createSensorWithType()
+  {
+    SensorWithTypeImpl sensorWithType = new SensorWithTypeImpl();
+    return sensorWithType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public RelationDecl createRelationDecl()
+  {
+    RelationDeclImpl relationDecl = new RelationDeclImpl();
+    return relationDecl;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public RelationType createRelationType()
+  {
+    RelationTypeImpl relationType = new RelationTypeImpl();
+    return relationType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public RelationImplication createRelationImplication()
+  {
+    RelationImplicationImpl relationImplication = new RelationImplicationImpl();
+    return relationImplication;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public RelationIncompatibility createRelationIncompatibility()
+  {
+    RelationIncompatibilityImpl relationIncompatibility = new RelationIncompatibilityImpl();
+    return relationIncompatibility;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EsterelParallel createEsterelParallel()
+  {
+    EsterelParallelImpl esterelParallel = new EsterelParallelImpl();
+    return esterelParallel;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EsterelThread createEsterelThread()
+  {
+    EsterelThreadImpl esterelThread = new EsterelThreadImpl();
+    return esterelThread;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Nothing createNothing()
+  {
+    NothingImpl nothing = new NothingImpl();
+    return nothing;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Halt createHalt()
+  {
+    HaltImpl halt = new HaltImpl();
+    return halt;
   }
 
   /**
@@ -491,10 +444,10 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Assignment createAssignment()
+  public Emit createEmit()
   {
-    AssignmentImpl assignment = new AssignmentImpl();
-    return assignment;
+    EmitImpl emit = new EmitImpl();
+    return emit;
   }
 
   /**
@@ -502,10 +455,10 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Abort createAbort()
+  public Sustain createSustain()
   {
-    AbortImpl abort = new AbortImpl();
-    return abort;
+    SustainImpl sustain = new SustainImpl();
+    return sustain;
   }
 
   /**
@@ -513,120 +466,10 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public AbortBody createAbortBody()
+  public EsterelAssignment createEsterelAssignment()
   {
-    AbortBodyImpl abortBody = new AbortBodyImpl();
-    return abortBody;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public AbortInstance createAbortInstance()
-  {
-    AbortInstanceImpl abortInstance = new AbortInstanceImpl();
-    return abortInstance;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public AbortCase createAbortCase()
-  {
-    AbortCaseImpl abortCase = new AbortCaseImpl();
-    return abortCase;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public AbortCaseSingle createAbortCaseSingle()
-  {
-    AbortCaseSingleImpl abortCaseSingle = new AbortCaseSingleImpl();
-    return abortCaseSingle;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public WeakAbortBody createWeakAbortBody()
-  {
-    WeakAbortBodyImpl weakAbortBody = new WeakAbortBodyImpl();
-    return weakAbortBody;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public WeakAbortEnd createWeakAbortEnd()
-  {
-    WeakAbortEndImpl weakAbortEnd = new WeakAbortEndImpl();
-    return weakAbortEnd;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public WeakAbortEndAlt createWeakAbortEndAlt()
-  {
-    WeakAbortEndAltImpl weakAbortEndAlt = new WeakAbortEndAltImpl();
-    return weakAbortEndAlt;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Await createAwait()
-  {
-    AwaitImpl await = new AwaitImpl();
-    return await;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public AwaitBody createAwaitBody()
-  {
-    AwaitBodyImpl awaitBody = new AwaitBodyImpl();
-    return awaitBody;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public AwaitInstance createAwaitInstance()
-  {
-    AwaitInstanceImpl awaitInstance = new AwaitInstanceImpl();
-    return awaitInstance;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public AwaitCase createAwaitCase()
-  {
-    AwaitCaseImpl awaitCase = new AwaitCaseImpl();
-    return awaitCase;
+    EsterelAssignmentImpl esterelAssignment = new EsterelAssignmentImpl();
+    return esterelAssignment;
   }
 
   /**
@@ -645,10 +488,10 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Do createDo()
+  public Present createPresent()
   {
-    DoImpl do_ = new DoImpl();
-    return do_;
+    PresentImpl present = new PresentImpl();
+    return present;
   }
 
   /**
@@ -656,98 +499,10 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public DoUpto createDoUpto()
+  public PresentCase createPresentCase()
   {
-    DoUptoImpl doUpto = new DoUptoImpl();
-    return doUpto;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public DoWatching createDoWatching()
-  {
-    DoWatchingImpl doWatching = new DoWatchingImpl();
-    return doWatching;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public DoWatchingEnd createDoWatchingEnd()
-  {
-    DoWatchingEndImpl doWatchingEnd = new DoWatchingEndImpl();
-    return doWatchingEnd;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Emit createEmit()
-  {
-    EmitImpl emit = new EmitImpl();
-    return emit;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public UnEmit createUnEmit()
-  {
-    UnEmitImpl unEmit = new UnEmitImpl();
-    return unEmit;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Reset createReset()
-  {
-    ResetImpl reset = new ResetImpl();
-    return reset;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EveryDo createEveryDo()
-  {
-    EveryDoImpl everyDo = new EveryDoImpl();
-    return everyDo;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Exit createExit()
-  {
-    ExitImpl exit = new ExitImpl();
-    return exit;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Halt createHalt()
-  {
-    HaltImpl halt = new HaltImpl();
-    return halt;
+    PresentCaseImpl presentCase = new PresentCaseImpl();
+    return presentCase;
   }
 
   /**
@@ -777,28 +532,6 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public ThenPart createThenPart()
-  {
-    ThenPartImpl thenPart = new ThenPartImpl();
-    return thenPart;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public ElsePart createElsePart()
-  {
-    ElsePartImpl elsePart = new ElsePartImpl();
-    return elsePart;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public Loop createLoop()
   {
     LoopImpl loop = new LoopImpl();
@@ -810,142 +543,164 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public EndLoop createEndLoop()
-  {
-    EndLoopImpl endLoop = new EndLoopImpl();
-    return endLoop;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public LoopEach createLoopEach()
-  {
-    LoopEachImpl loopEach = new LoopEachImpl();
-    return loopEach;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public LoopDelay createLoopDelay()
-  {
-    LoopDelayImpl loopDelay = new LoopDelayImpl();
-    return loopDelay;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public LoopBody createLoopBody()
-  {
-    LoopBodyImpl loopBody = new LoopBodyImpl();
-    return loopBody;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Nothing createNothing()
-  {
-    NothingImpl nothing = new NothingImpl();
-    return nothing;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Pause createPause()
-  {
-    PauseImpl pause = new PauseImpl();
-    return pause;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Present createPresent()
-  {
-    PresentImpl present = new PresentImpl();
-    return present;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public PresentBody createPresentBody()
-  {
-    PresentBodyImpl presentBody = new PresentBodyImpl();
-    return presentBody;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public PresentEventBody createPresentEventBody()
-  {
-    PresentEventBodyImpl presentEventBody = new PresentEventBodyImpl();
-    return presentEventBody;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public PresentCaseList createPresentCaseList()
-  {
-    PresentCaseListImpl presentCaseList = new PresentCaseListImpl();
-    return presentCaseList;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public PresentCase createPresentCase()
-  {
-    PresentCaseImpl presentCase = new PresentCaseImpl();
-    return presentCase;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public PresentEvent createPresentEvent()
-  {
-    PresentEventImpl presentEvent = new PresentEventImpl();
-    return presentEvent;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public Repeat createRepeat()
   {
     RepeatImpl repeat = new RepeatImpl();
     return repeat;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Abort createAbort()
+  {
+    AbortImpl abort = new AbortImpl();
+    return abort;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Case createCase()
+  {
+    CaseImpl case_ = new CaseImpl();
+    return case_;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Await createAwait()
+  {
+    AwaitImpl await = new AwaitImpl();
+    return await;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EveryDo createEveryDo()
+  {
+    EveryDoImpl everyDo = new EveryDoImpl();
+    return everyDo;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Suspend createSuspend()
+  {
+    SuspendImpl suspend = new SuspendImpl();
+    return suspend;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Trap createTrap()
+  {
+    TrapImpl trap = new TrapImpl();
+    return trap;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TrapHandler createTrapHandler()
+  {
+    TrapHandlerImpl trapHandler = new TrapHandlerImpl();
+    return trapHandler;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Exit createExit()
+  {
+    ExitImpl exit = new ExitImpl();
+    return exit;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Exec createExec()
+  {
+    ExecImpl exec = new ExecImpl();
+    return exec;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ExecCase createExecCase()
+  {
+    ExecCaseImpl execCase = new ExecCaseImpl();
+    return execCase;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public LocalSignalDecl createLocalSignalDecl()
+  {
+    LocalSignalDeclImpl localSignalDecl = new LocalSignalDeclImpl();
+    return localSignalDecl;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public LocalVariable createLocalVariable()
+  {
+    LocalVariableImpl localVariable = new LocalVariableImpl();
+    return localVariable;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public VariableDecl createVariableDecl()
+  {
+    VariableDeclImpl variableDecl = new VariableDeclImpl();
+    return variableDecl;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public IVariable createIVariable()
+  {
+    IVariableImpl iVariable = new IVariableImpl();
+    return iVariable;
   }
 
   /**
@@ -968,17 +723,6 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
   {
     ModuleRenamingImpl moduleRenaming = new ModuleRenamingImpl();
     return moduleRenaming;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public RenamingList createRenamingList()
-  {
-    RenamingListImpl renamingList = new RenamingListImpl();
-    return renamingList;
   }
 
   /**
@@ -1063,98 +807,10 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Suspend createSuspend()
+  public Do createDo()
   {
-    SuspendImpl suspend = new SuspendImpl();
-    return suspend;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public WeakSuspend createWeakSuspend()
-  {
-    WeakSuspendImpl weakSuspend = new WeakSuspendImpl();
-    return weakSuspend;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Sustain createSustain()
-  {
-    SustainImpl sustain = new SustainImpl();
-    return sustain;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Trap createTrap()
-  {
-    TrapImpl trap = new TrapImpl();
-    return trap;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public TrapDeclList createTrapDeclList()
-  {
-    TrapDeclListImpl trapDeclList = new TrapDeclListImpl();
-    return trapDeclList;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public TrapHandler createTrapHandler()
-  {
-    TrapHandlerImpl trapHandler = new TrapHandlerImpl();
-    return trapHandler;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public LocalVariable createLocalVariable()
-  {
-    LocalVariableImpl localVariable = new LocalVariableImpl();
-    return localVariable;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Goto createGoto()
-  {
-    GotoImpl goto_ = new GotoImpl();
-    return goto_;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Label createLabel()
-  {
-    LabelImpl label = new LabelImpl();
-    return label;
+    DoImpl do_ = new DoImpl();
+    return do_;
   }
 
   /**
@@ -1173,10 +829,10 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public DelayEvent createDelayEvent()
+  public Input createInput()
   {
-    DelayEventImpl delayEvent = new DelayEventImpl();
-    return delayEvent;
+    InputImpl input = new InputImpl();
+    return input;
   }
 
   /**
@@ -1184,10 +840,10 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Exec createExec()
+  public Output createOutput()
   {
-    ExecImpl exec = new ExecImpl();
-    return exec;
+    OutputImpl output = new OutputImpl();
+    return output;
   }
 
   /**
@@ -1195,10 +851,10 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public ExecBody createExecBody()
+  public InputOutput createInputOutput()
   {
-    ExecBodyImpl execBody = new ExecBodyImpl();
-    return execBody;
+    InputOutputImpl inputOutput = new InputOutputImpl();
+    return inputOutput;
   }
 
   /**
@@ -1206,43 +862,10 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public ExecCase createExecCase()
+  public Return createReturn()
   {
-    ExecCaseImpl execCase = new ExecCaseImpl();
-    return execCase;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EsterelTypeIdentifier createEsterelTypeIdentifier()
-  {
-    EsterelTypeIdentifierImpl esterelTypeIdentifier = new EsterelTypeIdentifierImpl();
-    return esterelTypeIdentifier;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EsterelType createEsterelType()
-  {
-    EsterelTypeImpl esterelType = new EsterelTypeImpl();
-    return esterelType;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public LocalSignal createLocalSignal()
-  {
-    LocalSignalImpl localSignal = new LocalSignalImpl();
-    return localSignal;
+    ReturnImpl return_ = new ReturnImpl();
+    return return_;
   }
 
   /**
@@ -1261,76 +884,10 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Constant createConstant()
+  public TrapSignal createTrapSignal()
   {
-    ConstantImpl constant = new ConstantImpl();
-    return constant;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Parallel createParallel()
-  {
-    ParallelImpl parallel = new ParallelImpl();
-    return parallel;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Sequence createSequence()
-  {
-    SequenceImpl sequence = new SequenceImpl();
-    return sequence;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public WeakAbort createWeakAbort()
-  {
-    WeakAbortImpl weakAbort = new WeakAbortImpl();
-    return weakAbort;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public WeakAbortInstance createWeakAbortInstance()
-  {
-    WeakAbortInstanceImpl weakAbortInstance = new WeakAbortInstanceImpl();
-    return weakAbortInstance;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public WeakAbortCase createWeakAbortCase()
-  {
-    WeakAbortCaseImpl weakAbortCase = new WeakAbortCaseImpl();
-    return weakAbortCase;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public TrapDecl createTrapDecl()
-  {
-    TrapDeclImpl trapDecl = new TrapDeclImpl();
-    return trapDecl;
+    TrapSignalImpl trapSignal = new TrapSignalImpl();
+    return trapSignal;
   }
 
   /**
@@ -1375,6 +932,17 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
   {
     TrapReferenceExprImpl trapReferenceExpr = new TrapReferenceExprImpl();
     return trapReferenceExpr;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SignalReferenceExpr createSignalReferenceExpr()
+  {
+    SignalReferenceExprImpl signalReferenceExpr = new SignalReferenceExprImpl();
+    return signalReferenceExpr;
   }
 
   /**

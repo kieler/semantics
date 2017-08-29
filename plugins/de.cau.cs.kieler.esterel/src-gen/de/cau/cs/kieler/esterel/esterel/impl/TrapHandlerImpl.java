@@ -5,7 +5,9 @@ package de.cau.cs.kieler.esterel.esterel.impl;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.TrapHandler;
 
-import de.cau.cs.kieler.esterel.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.Expression;
+
+import de.cau.cs.kieler.scl.impl.StatementContainerImpl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
