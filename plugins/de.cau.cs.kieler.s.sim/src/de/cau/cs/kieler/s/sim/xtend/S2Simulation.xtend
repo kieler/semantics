@@ -120,7 +120,7 @@ class S2Simulation {
             val auxiliarySignal = KExpressionsFactory::eINSTANCE.createValuedObject() => [
                 name = UID
             ]
-            createDeclaration(ValueType::PURE) => [
+            createVariableDeclaration(ValueType::PURE) => [
                 signal = true
                 input = false
                 output = true

@@ -33,6 +33,8 @@ import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
 import java.util.Set
+import de.cau.cs.kieler.scg.SCGPlugin
+import java.util.logging.Level
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -64,23 +66,7 @@ import java.util.Set
  */
 
 class DepthJoinSynchronizer extends SurfaceSynchronizer {
-    
-    static final boolean DEBUG = false;
-
-    def static void debug(String debugText) {
-        debug(debugText, true);
-    }
-
-    def static void debug(String debugText, boolean lineBreak) {
-        if (DEBUG) {
-            if (lineBreak) {
-                System.out.println(debugText);
-            } else {
-                System.out.print(debugText);
-            }
-        }
-    }
-    
+     
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
@@ -154,7 +140,7 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
             newGuard.expression = emptyExp.expression
             scg.guards += newGuard
             
-            debug("Generated NEW guard " + newGuard.valuedObject.name + " with expression " + newGuard.expression.serialize)
+            SCGPlugin.log("Generated NEW guard " + newGuard.valuedObject.name + " with expression " + newGuard.expression.serialize, Level.FINE)
 		}        
     }    
     
@@ -185,7 +171,7 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
                         vor.valuedObject = newGuard.valuedObject 
                     
                         newGuards += newGuard
-                        debug("Generated NEW _SCHIZOPHRENIC_ guard " + newGuard.valuedObject.name)
+                        SCGPlugin.log("Generated NEW _SCHIZOPHRENIC_ guard " + newGuard.valuedObject.name, Level.FINE)
                     
                     } else {
                         vor.valuedObject = guardExists.head.valuedObject

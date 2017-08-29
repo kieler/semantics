@@ -321,41 +321,6 @@ public class AnnotationsProposalProvider extends AbstractAnnotationsProposalProv
         nameProposal(context, acceptor);
     }
 
-    @Override
-    public void completeKeyBooleanValueAnnotation_Name(final EObject model,
-            final Assignment assignment, final ContentAssistContext context,
-            final ICompletionProposalAcceptor acceptor) {
-
-        /* call implementation of superclass */
-        super.completeTagAnnotation_Name(model, assignment, context, acceptor);
-
-        /* call modified completion */
-        nameProposal(context, acceptor);
-    }
-
-    @Override
-    public void completeKeyIntValueAnnotation_Name(final EObject model,
-            final Assignment assignment, final ContentAssistContext context,
-            final ICompletionProposalAcceptor acceptor) {
-
-        /* call implementation of superclass */
-        super.completeKeyIntValueAnnotation_Name(model, assignment, context, acceptor);
-
-        /* call modified completion */
-        nameProposal(context, acceptor);
-    }
-
-    @Override
-    public void completeKeyFloatValueAnnotation_Name(final EObject model,
-            final Assignment assignment, final ContentAssistContext context,
-            final ICompletionProposalAcceptor acceptor) {
-
-        /* call implementation of superclass */
-        super.completeKeyFloatValueAnnotation_Name(model, assignment, context, acceptor);
-
-        /* call modified completion */
-        nameProposal(context, acceptor);
-    }
 
     @Override
     public void completeCommentAnnotation_Values(final EObject model, final Assignment assignment,
@@ -387,42 +352,6 @@ public class AnnotationsProposalProvider extends AbstractAnnotationsProposalProv
 
         /* call implementation of superclass */
         super.completeTypedKeyStringValueAnnotation_Values(model, assignment, context, acceptor);
-
-        /* call modified completion */
-        valueProposal(context, acceptor);
-    }
-
-    @Override
-    public void completeKeyBooleanValueAnnotation_Value(final EObject model,
-            final Assignment assignment, final ContentAssistContext context,
-            final ICompletionProposalAcceptor acceptor) {
-
-        /* call implementation of superclass */
-        super.completeKeyBooleanValueAnnotation_Value(model, assignment, context, acceptor);
-
-        /* call modified completion */
-        valueProposal(context, acceptor);
-    }
-
-    @Override
-    public void completeKeyIntValueAnnotation_Value(final EObject model,
-            final Assignment assignment, final ContentAssistContext context,
-            final ICompletionProposalAcceptor acceptor) {
-
-        /* call implementation of superclass */
-        super.completeKeyIntValueAnnotation_Value(model, assignment, context, acceptor);
-
-        /* call modified completion */
-        valueProposal(context, acceptor);
-    }
-
-    @Override
-    public void completeKeyFloatValueAnnotation_Value(final EObject model,
-            final Assignment assignment, final ContentAssistContext context,
-            final ICompletionProposalAcceptor acceptor) {
-
-        /* call implementation of superclass */
-        super.completeKeyFloatValueAnnotation_Value(model, assignment, context, acceptor);
 
         /* call modified completion */
         valueProposal(context, acceptor);

@@ -377,8 +377,8 @@ public class SCEstFormatter extends AbstractDeclarativeFormatter {
          
       // ==> Declaration <==
          c.setLinewrap().before(f.getDeclarationRule());
-         c.setNoLinewrap().before(f.getDeclarationAccess().getCommaKeyword_9_0());
-         c.setNoLinewrap().before(f.getDeclarationAccess().getSemicolonKeyword_10());
+//         c.setNoLinewrap().before(f.getDeclarationAccess().getCommaKeyword_9_0());
+//         c.setNoLinewrap().before(f.getDeclarationAccess().getSemicolonKeyword_10());
       
       // ==> Annotation <==
          c.setLinewrap().before(f.getAnnotationAccess().getRule());

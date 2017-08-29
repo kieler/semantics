@@ -20,6 +20,8 @@ import de.cau.cs.kieler.kexpressions.StringValue
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.DoubleValue
 import de.cau.cs.kieler.kexpressions.FloatValue
+import java.util.List
+import de.cau.cs.kieler.kexpressions.VectorValue
 
 /**
  * @author ssm
@@ -34,13 +36,7 @@ class KExpressionsValueExtensions {
 	}
 	
 	def boolean isSameValueType(Expression expression1, Expression expression2) {
-		expression1.isValue && expression2.isValue && (
-			expression1 instanceof IntValue == expression2 instanceof IntValue ||
-			expression1 instanceof StringValue == expression2 instanceof StringValue ||
-			expression1 instanceof BoolValue == expression2 instanceof BoolValue ||
-			expression1 instanceof DoubleValue == expression2 instanceof DoubleValue ||
-			expression1 instanceof FloatValue == expression2 instanceof FloatValue
-		)	
+		expression1.isValue && expression2.isValue && expression1.eClass.equals(expression2.eClass)
 	}
 
 	def boolean isSameValue(Expression expression1, Expression expression2) {
@@ -50,6 +46,13 @@ class KExpressionsValueExtensions {
 		if (expression1 instanceof StringValue) return expression1.value == expression2.asStringValue.value
 		if (expression1 instanceof DoubleValue) return expression1.value == expression2.asDoubleValue.value
 		if (expression1 instanceof FloatValue) return expression1.value == expression2.asFloatValue.value
+		if (expression1 instanceof VectorValue) {
+		    for (subValue : expression1.values.indexed) {
+		        val companion = expression2.asVectorValue.values.get(subValue.key)
+		        if (!subValue.value.isSameValue(companion)) return false
+		    }
+		    return true
+		}
 		return false;
 	}
 	
@@ -73,7 +76,22 @@ class KExpressionsValueExtensions {
 		expression as FloatValue
 	}
 	
+	def VectorValue asVectorValue(Expression expression) {
+	    expression as VectorValue
+	}
+	
 	def getIntValue(Expression expression) {
 	    expression.asIntValue.value 
 	}
+	
+    def List<Value> getAllValues(Expression expression) {
+        <Value> newArrayList => [
+            if (expression == null) {
+            } else if (expression instanceof Value) { 
+                it += expression
+            } else { 
+                it += expression.eAllContents.filter(Value).toList
+            }
+        ]  
+    }  	
 }

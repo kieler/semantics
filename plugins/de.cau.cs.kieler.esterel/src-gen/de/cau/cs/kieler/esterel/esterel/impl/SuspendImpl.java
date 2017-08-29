@@ -6,7 +6,7 @@ import de.cau.cs.kieler.esterel.esterel.DelayExpr;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.Suspend;
 
-import de.cau.cs.kieler.scl.scl.impl.StatementContainerImpl;
+import de.cau.cs.kieler.scl.impl.StatementContainerImpl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;

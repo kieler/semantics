@@ -93,9 +93,9 @@ public abstract class AbstractSRuntimeModule extends org.eclipse.xtext.service.D
 		return org.eclipse.xtext.parser.antlr.AntlrTokenDefProvider.class;
 	}
 
-	// contributed by org.eclipse.xtext.generator.validation.JavaValidatorFragment
-	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.s.validation.SJavaValidator> bindSJavaValidator() {
-		return de.cau.cs.kieler.s.validation.SJavaValidator.class;
+	// contributed by org.eclipse.xtext.generator.validation.ValidatorFragment
+	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.s.validation.SValidator> bindSValidator() {
+		return de.cau.cs.kieler.s.validation.SValidator.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.scoping.AbstractScopingFragment

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="kibuild" nsURI="http://www.cau.de/cs/kieler/prom/KiBuild" nsPrefix="kibuild">
+  <eClassifiers xsi:type="ecore:EClass" name="BuildConfiguration">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" upperBound="-1"
+        eType="#//AttributeMapping" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="modelCompilers" upperBound="-1"
+        eType="#//ModelCompiler" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="simulationCompilers" upperBound="-1"
+        eType="#//SimulationCompiler" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="templateProcessors" upperBound="-1"
+        eType="#//TemplateProcessor" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ModelCompiler">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" upperBound="-1"
+        eType="#//AttributeMapping" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="simulationProcessor" eType="#//TemplateProcessor"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SimulationCompiler">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" upperBound="-1"
+        eType="#//AttributeMapping" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TemplateProcessor">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" upperBound="-1"
+        eType="#//AttributeMapping" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AttributeMapping">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//Literal"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="values" upperBound="-1"
+        eType="#//Literal" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" upperBound="-1"
+        eType="#//AttributeMapping" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Literal">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Sign">
+    <eLiterals name="POSITIVE" literal="+"/>
+    <eLiterals name="NEGATIVE" value="1" literal="-"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SignedFloat">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sign" eType="#//Sign"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloatObject"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SignedInt">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sign" eType="#//Sign"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TextValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NormalTemplateProcessor" eSuperTypes="#//TemplateProcessor"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SimulationTemplateProcessor" eSuperTypes="#//TemplateProcessor"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WrapperCodeTemplateProcessor" eSuperTypes="#//TemplateProcessor"/>
+</ecore:EPackage>

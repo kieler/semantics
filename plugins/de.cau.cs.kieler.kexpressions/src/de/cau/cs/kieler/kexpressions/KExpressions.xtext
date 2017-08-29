@@ -68,8 +68,8 @@ Root returns ecore::EObject:
 // Expression Rule
 // An expression is either a boolean expression or a valued expression.
 Expression returns Expression:
-     BoolExpression  
-     | ValuedExpression;
+     (BoolExpression | ValuedExpression)
+     ('schedule' schedule+=ScheduleObjectReference+)?;
 
 // Boolean Expression Rule
 // Boolean expression directs to logical or expression and kept for overview (and legacy) reason. 
@@ -83,7 +83,8 @@ BoolExpression returns Expression:
 LogicalOrExpression returns Expression:
     LogicalAndExpression 
     ({OperatorExpression.subExpressions+=current} 
-        (operator=LogicalOrOperator subExpressions+=LogicalAndExpression)+
+        (operator=LogicalOrOperator subExpressions+=LogicalAndExpression)
+        ('||' subExpressions+=LogicalAndExpression)*
     )?;
 
 // Logical And Expression Rule
@@ -92,7 +93,8 @@ LogicalOrExpression returns Expression:
 LogicalAndExpression returns Expression:
     BitwiseOrExpression 
     ({OperatorExpression.subExpressions+=current} 
-        (operator=LogicalAndOperator subExpressions+=BitwiseOrExpression)+
+        (operator=LogicalAndOperator subExpressions+=BitwiseOrExpression)
+        ('&&' subExpressions+=BitwiseOrExpression)*
     )?;
 
 // Bitwiese Or Expression Rule
@@ -101,7 +103,8 @@ LogicalAndExpression returns Expression:
 BitwiseOrExpression returns Expression:
 	BitwiseAndExpression 
 	({OperatorExpression.subExpressions+=current} 
-	    (operator=BitwiseOrOperator subExpressions+=BitwiseAndExpression)+
+	    (operator=BitwiseOrOperator subExpressions+=BitwiseAndExpression)
+	    ('|' subExpressions+=BitwiseAndExpression)*
 	)?;
 
 // Bitwise And Expression Rule
@@ -110,7 +113,8 @@ BitwiseOrExpression returns Expression:
 BitwiseAndExpression returns Expression:
 	CompareOperation 
 	({OperatorExpression.subExpressions+=current} 
-	    (operator=BitwiseAndOperator subExpressions+=CompareOperation)+
+	    (operator=BitwiseAndOperator subExpressions+=CompareOperation)
+	    ('&' subExpressions+=CompareOperation)*
 	)?;
 
 // Compare Operation Rule
@@ -149,7 +153,8 @@ ValuedExpression returns Expression:
 AddExpression returns Expression:
 	SubExpression 
 	({OperatorExpression.subExpressions+=current} 
-	    (operator=AddOperator subExpressions+=SubExpression)+
+	    (operator=AddOperator subExpressions+=SubExpression)
+	    ('+' subExpressions+=SubExpression)*
 	)?;
 
 // Sub Expression Rule
@@ -159,7 +164,8 @@ AddExpression returns Expression:
 SubExpression returns Expression:
 	MultExpression 
 	({OperatorExpression.subExpressions+=current} 
-	    (operator=SubOperator subExpressions+=MultExpression)+
+	    (operator=SubOperator subExpressions+=MultExpression)
+	    ('-' subExpressions+=MultExpression)*
 	)?;
 
 // Mult Expression Rule
@@ -169,7 +175,8 @@ SubExpression returns Expression:
 MultExpression returns Expression:
 	DivExpression 
 	({OperatorExpression.subExpressions+=current} 
-	    (operator=MultOperator subExpressions+=DivExpression)+
+	    (operator=MultOperator subExpressions+=DivExpression)
+	    ('*' subExpressions+=DivExpression)*
 	)?;
 
 // Div Expression Rule
@@ -179,7 +186,8 @@ MultExpression returns Expression:
 DivExpression returns Expression:
 	ModExpression 
 	({OperatorExpression.subExpressions+=current} 
-	    (operator=DivOperator subExpressions+=ModExpression)+
+	    (operator=DivOperator subExpressions+=ModExpression)
+	    ('/' subExpressions+=ModExpression)*
 	)?;
 	
 // Mod Expression Rule
@@ -189,7 +197,8 @@ DivExpression returns Expression:
 ModExpression returns Expression:
 	NegExpression 
 	({OperatorExpression.subExpressions+=current} 
-	    (operator=ModOperator subExpressions+=AtomicValuedExpression)+
+	    (operator=ModOperator subExpressions+=AtomicValuedExpression)
+	    ('%' subExpressions+=AtomicValuedExpression)*
 	)?;
 
 // Neg Expression Rule
@@ -207,6 +216,7 @@ AtomicExpression returns Expression:
     BoolValue
     | ValuedObjectTestExpression 
     | '(' BoolExpression ')'
+    | ReferenceCall
     | FunctionCall
     | TextExpression;
 
@@ -218,8 +228,9 @@ AtomicValuedExpression returns Expression:
     IntValue
     | FloatValue 
     | StringValue
+    | VectorValue
     | '(' ValuedExpression ')'
-    | AtomicExpression ;
+    | AtomicExpression;
 
 // Valued Object Test Expression Rule
 // This rules creates an operator expression for pre or val tests. Alternatively, it directs to a
@@ -229,18 +240,48 @@ ValuedObjectTestExpression returns Expression:
 	{OperatorExpression} operator=(PreOperator|ValOperator)  '('subExpressions+=ValuedObjectTestExpression')'
 	| ValuedObjectReference;
 
+// ID with primes
+PrimeID returns ecore::EString:
+  ID ("'")*;
+
 // Valued Object Reference Rule
 // References a valued object with arbitrary (including none) indices part.
 // Example: A, B
 ValuedObjectReference returns ValuedObjectReference:
-	valuedObject=[ValuedObject|ID] ('[' indices+=Expression ']')*;
+	valuedObject=[ValuedObject|PrimeID]
+	('[' indices+=Expression ']')*
+	('.' subReference=ValuedObjectReference)?; 
+	
+ScheduleObjectReference returns ScheduleObjectReference:
+    valuedObject=[ValuedObject|PrimeID]
+    priority=INT;	
 
+// Reference Call Rule
+// Calls to references. They may include a parameter list. 
+ReferenceCall returns ReferenceCall:
+    valuedObject=[ValuedObject|PrimeID] 
+    (
+        ('(' parameters += Parameter 
+            (',' parameters += Parameter)* ')'
+        ) | '()'
+    );
+    
 // Function Call Rule
 // Calls to functions are indicated by angle brackets. They may include a parameter list. 
+// Deprecated?
 FunctionCall returns FunctionCall:
-    '<' functionName=ExtendedID 
-        (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')? 
-    '>';
+    ('extern' functionName = ID 
+        (('(' parameters += Parameter 
+            (',' parameters += Parameter)* ')'
+        ) | '()')
+    )
+//    |
+//    ('<' functionName = ID 
+//        (('(' parameters += Parameter 
+//            (',' parameters += Parameter)* ')'
+//        ) | '()')
+//    '>')
+    ;    
 
 // Parameter Rule
 // The parameter rule is used by the function call rule. Every expression may be a paramter.
@@ -256,21 +297,26 @@ Parameter returns Parameter:
 TextExpression returns TextExpression:
 	text=HOSTCODE;
 
-// Int Value Rule
 IntValue returns IntValue:
 	value=INT;
 
-// Float Value Rule
 FloatValue returns FloatValue:
 	value=FLOAT;
 
-// Bool Value Rule
 BoolValue returns BoolValue:
 	value=BOOLEAN;
 	
-// String Value Rule	
 StringValue returns StringValue:
     value=STRING;
+    
+VectorValue returns VectorValue:
+    '{' values+=VectorValueMember (',' values+=VectorValueMember)* '}';
+    
+VectorValueMember returns Expression:
+    Expression | IgnoreValue;
+    
+IgnoreValue returns IgnoreValue:
+    {IgnoreValue} '_';
 
 // Any Type Rule
 // Data type rule allowing any kind of value to be accepted,
@@ -285,77 +331,77 @@ AnyValue returns Value:
 //  KExpressions Enums  // 
 // -------------------- //
 
-// Compare Operator Enum 
 enum CompareOperator returns OperatorType:
 	EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="!=";
 
-// Pre Operator Enum
 enum PreOperator returns OperatorType:
     PRE="pre";
 
-// Bitewise Or Operator Enum
+enum BitwiseNegOperator returns OperatorType:
+    BITWISE_NEG="~";
+    
+enum BitwiseXOrOperator returns OperatorType:
+    BITWISE_XOR="^";
+    
 enum BitwiseOrOperator returns OperatorType:
 	BITWISE_OR="|";
 
-// Bitwise And Operator Enum
 enum BitwiseAndOperator returns OperatorType:
 	BITWISE_AND="&";
 
-// Not Operator Enum
 enum NotOperator returns OperatorType:
 	NOT="!";
 
-// Add Operator Enum
 enum AddOperator returns OperatorType:
 	ADD="+";
 	
-// Sub Operator Enum
 enum SubOperator returns OperatorType:
 	SUB="-";
 	
-// Mult Operator Enum
 enum MultOperator returns OperatorType:	
 	MULT="*";
 
-// Mod Operator Enum
 enum ModOperator returns OperatorType:	
 	MOD="%";
 
-// Div Operator Enum
 enum DivOperator returns OperatorType:	
 	DIV="/";
 
-// Val Operator Enum
 enum ValOperator returns OperatorType:
 	VAL="val";
 
-// Logical Or Operator Enum
 enum LogicalOrOperator returns OperatorType:
 	LOGICAL_OR="||";
 
-// Logical And Operator Enum
 enum LogicalAndOperator returns OperatorType:
 	LOGICAL_AND="&&";
 	
-// Postfix Operator Enum
+enum ShiftLeft returns OperatorType:
+    SHIFT_LEFT="<<";
+
+enum ShiftRight returns OperatorType:
+    SHIFT_RIGHT=">>";
+    
+enum ShiftRightUnsigned returns OperatorType:
+    SHIFT_RIGHT=">>>";
+	
 enum PostfixAdd returns OperatorType:
     POSTFIX_ADD="++";
 
-// Postfix Operator Enum
 enum PostfixSub returns OperatorType:
     POSTFIX_SUB="--";
+    
+enum ConditionalType returns OperatorType:
+    CONDITIONAL;        
 
-// Value Type Enum
 enum ValueType returns ValueType:
 	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned"	| 
 	INT="int" | FLOAT="float" |
 	STRING="string" | HOST="host";
 	
-// Host Type Enum
 enum HostType returns ValueType:
     HOST="host";
 
-// Combine Operator Enum
 enum CombineOperator returns CombineOperator:
 	NONE="none" | ADD="+" | MULT="*" | MAX="max" |
 	MIN="min" | OR="|" | AND="&" | HOST="host";
@@ -367,4 +413,4 @@ enum CombineOperator returns CombineOperator:
 // Hostcode Terminals
 // Custom terminal rule allowing to save transition label string as they are
 terminal HOSTCODE returns ecore::EString: 
-	"'" ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|"'") )* "'";
+	"`" ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|"`") )* "`";

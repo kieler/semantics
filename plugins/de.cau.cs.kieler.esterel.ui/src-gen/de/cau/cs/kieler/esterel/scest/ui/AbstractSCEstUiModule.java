@@ -67,7 +67,7 @@ public abstract class AbstractSCEstUiModule extends org.eclipse.xtext.ui.Default
 		return de.cau.cs.kieler.esterel.scest.ui.outline.SCEstOutlineTreeProvider.class;
 	}
 
-	// contributed by org.eclipse.xtext.ui.generator.contentAssist.JavaBasedContentAssistFragment
+	// contributed by org.eclipse.xtext.ui.generator.contentAssist.ContentAssistFragment
 	public Class<? extends org.eclipse.xtext.ui.editor.contentassist.IContentProposalProvider> bindIContentProposalProvider() {
 		return de.cau.cs.kieler.esterel.scest.ui.contentassist.SCEstProposalProvider.class;
 	}

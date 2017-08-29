@@ -15,7 +15,7 @@ package de.cau.cs.kieler.esterel.scest.transformations
 import de.cau.cs.kieler.esterel.scest.features.SCEstFeature
 import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
-import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram
 import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram
 import com.google.common.collect.Sets

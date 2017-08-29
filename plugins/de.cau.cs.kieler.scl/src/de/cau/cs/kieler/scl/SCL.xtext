@@ -10,7 +10,7 @@ import "http://kieler.cs.cau.de/scl/0.2.0"
 SCLProgram returns SCLProgram:
     (annotations += Annotation)*
     'module' name = ID ':'?
-    (declarations+=Declaration)*
+    (declarations+=DeclarationWOSemicolon)*
     ((statements += InstructionStatement';')|(statements += MetaStatement))* (statements += Statement)? 
 ;
 
@@ -51,10 +51,10 @@ Assignment returns Assignment:
 
 Conditional returns Conditional: 
     (annotations += Annotation)*
-    'if' expression = Expression
+    'if' expression = BoolExpression
     (
         'then'? '{'
-        (declarations+=Declaration)*
+        (declarations+=DeclarationWOSemicolon)*
         ((statements += InstructionStatement';')|(statements += MetaStatement))* (statements += Statement)?
         '}'
     )
@@ -65,7 +65,7 @@ ElseScope returns ElseScope:
     {ElseScope}
     (annotations += Annotation)*
     'else' '{'
-    (declarations+=Declaration)*
+    (declarations+=DeclarationWOSemicolon)*
     ((statements += InstructionStatement';')|(statements += MetaStatement))* (statements += Statement)?        
     '}'
 ;
@@ -76,7 +76,7 @@ Thread returns Thread:
         (
             (annotations += Annotation)*
             '{'
-            (declarations+=Declaration)*
+            (declarations+=DeclarationWOSemicolon)*
             ((statements += InstructionStatement';')|(statements += MetaStatement))* (statements += Statement)?
             '}'
         ) | (
@@ -101,7 +101,7 @@ ScopeStatement returns ScopeStatement:
     {ScopeStatement}
     (annotations += Annotation)*
     '{'
-        (declarations+=Declaration)*
+        (declarations+=DeclarationWOSemicolon)*
         ((statements += InstructionStatement';')|(statements += MetaStatement))* (statements += Statement)?
     '}'    
 ;

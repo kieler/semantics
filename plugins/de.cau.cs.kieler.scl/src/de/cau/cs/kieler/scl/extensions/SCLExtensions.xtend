@@ -15,25 +15,22 @@ package de.cau.cs.kieler.scl.extensions
 
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.scl.scl.Conditional
-import de.cau.cs.kieler.scl.scl.Goto
-import de.cau.cs.kieler.scl.scl.Label
-import de.cau.cs.kieler.scl.scl.Parallel
-import de.cau.cs.kieler.scl.scl.SCLProgram
-import de.cau.cs.kieler.scl.scl.SclFactory
-import de.cau.cs.kieler.scl.scl.Scope
-import de.cau.cs.kieler.scl.scl.ScopeStatement
-import de.cau.cs.kieler.scl.scl.Statement
-import de.cau.cs.kieler.scl.scl.Thread
+import de.cau.cs.kieler.scl.Conditional
+import de.cau.cs.kieler.scl.ElseScope
+import de.cau.cs.kieler.scl.Goto
+import de.cau.cs.kieler.scl.Label
+import de.cau.cs.kieler.scl.Parallel
+import de.cau.cs.kieler.scl.SCLFactory
+import de.cau.cs.kieler.scl.SCLProgram
+import de.cau.cs.kieler.scl.Scope
+import de.cau.cs.kieler.scl.ScopeStatement
+import de.cau.cs.kieler.scl.Statement
 import java.util.LinkedList
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.util.EcoreUtil
 
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.scl.scl.StatementContainer
-import de.cau.cs.kieler.scl.scl.ElseScope
 
 /**
  * @author ssm, krat
@@ -44,7 +41,7 @@ import de.cau.cs.kieler.scl.scl.ElseScope
  */
 class SCLExtensions {
     
-    extension SclFactory = SclFactory.eINSTANCE
+    extension SCLFactory = SCLFactory.eINSTANCE
     
     /**
      * Removes all goto instructions, that target a label, that follows that goto.

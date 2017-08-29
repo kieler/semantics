@@ -44,7 +44,6 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataCompon
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.s.SCCharts2STransformation;
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension;
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSimulation;
 
 /**

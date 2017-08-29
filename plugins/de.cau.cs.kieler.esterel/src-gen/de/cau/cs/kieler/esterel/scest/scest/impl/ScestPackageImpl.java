@@ -13,7 +13,7 @@ import de.cau.cs.kieler.esterel.scest.scest.UnEmit;
 
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 
-import de.cau.cs.kieler.scl.scl.SclPackage;
+import de.cau.cs.kieler.scl.SCLPackage;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -273,7 +273,7 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
     // Obtain other dependent packages
     EsterelPackage theEsterelPackage = (EsterelPackage)EPackage.Registry.INSTANCE.getEPackage(EsterelPackage.eNS_URI);
     KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
-    SclPackage theSclPackage = (SclPackage)EPackage.Registry.INSTANCE.getEPackage(SclPackage.eNS_URI);
+    SCLPackage theSCLPackage = (SCLPackage)EPackage.Registry.INSTANCE.getEPackage(SCLPackage.eNS_URI);
 
     // Create type parameters
 
@@ -282,8 +282,8 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
     // Add supertypes to classes
     scEstProgramEClass.getESuperTypes().add(theEsterelPackage.getProgram());
     scEstModuleEClass.getESuperTypes().add(theEsterelPackage.getModule());
-    unEmitEClass.getESuperTypes().add(theSclPackage.getStatement());
-    setEClass.getESuperTypes().add(theSclPackage.getStatement());
+    unEmitEClass.getESuperTypes().add(theSCLPackage.getStatement());
+    setEClass.getESuperTypes().add(theSCLPackage.getStatement());
 
     // Initialize classes and features; add operations and parameters
     initEClass(scEstProgramEClass, SCEstProgram.class, "SCEstProgram", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

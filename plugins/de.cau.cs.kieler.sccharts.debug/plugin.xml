@@ -6,7 +6,7 @@
       <menuContribution
             locationURI="popup:#TextRulerContext">
          <command
-               commandId="de.cau.cs.kieler.sccharts.text.ui.toggleBreakpointCommand"
+               commandId="de.cau.cs.kieler.sccharts.ui.text.toggleBreakpointCommand"
                icon="platform:/plugin/de.cau.cs.kieler.sccharts.debug/icons/brkp_obj.png"
                label="Toggle Breakpoint"
                style="toggle">
@@ -24,7 +24,7 @@
       <command
             defaultHandler="de.cau.cs.kieler.sccharts.debug.TextRulerHandler"
             description="Toggle Breakpoint in specified Line."
-            id="de.cau.cs.kieler.sccharts.text.ui.toggleBreakpointCommand"
+            id="de.cau.cs.kieler.sccharts.ui.text.toggleBreakpointCommand"
             name="Toggle Breakpoint Command">
       </command>
    </extension>
@@ -123,7 +123,7 @@
       </perspectiveExtension>
     </extension>
     <extension
-          point="de.cau.cs.kieler.sccharts.klighd.hooks">
+          point="de.cau.cs.kieler.sccharts.ui.synthesis.hooks">
        <hook
              class="de.cau.cs.kieler.sccharts.debug.ui.BreakpointVisualizationHook">
        </hook>

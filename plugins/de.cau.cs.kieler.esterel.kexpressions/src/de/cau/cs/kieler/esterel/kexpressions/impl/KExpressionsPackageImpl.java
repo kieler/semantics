@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package de.cau.cs.kieler.esterel.kexpressions.impl;
 
@@ -297,7 +293,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         isInited = true;
 
         // Initialize simple dependencies
-        de.cau.cs.kieler.annotations.AnnotationsPackage.eINSTANCE.eClass();
+        AnnotationsPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
         theKExpressionsPackage.createPackageContents();
@@ -954,7 +950,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         setNsURI(eNS_URI);
 
         // Obtain other dependent packages
-        de.cau.cs.kieler.annotations.AnnotationsPackage theAnnotationsPackage = (de.cau.cs.kieler.annotations.AnnotationsPackage)EPackage.Registry.INSTANCE.getEPackage(de.cau.cs.kieler.annotations.AnnotationsPackage.eNS_URI);
+        AnnotationsPackage theAnnotationsPackage = (AnnotationsPackage)EPackage.Registry.INSTANCE.getEPackage(AnnotationsPackage.eNS_URI);
 
         // Create type parameters
 

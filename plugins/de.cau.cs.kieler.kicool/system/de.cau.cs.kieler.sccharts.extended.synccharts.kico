@@ -1,0 +1,8 @@
+system de.cau.cs.kieler.sccharts.extended.synccharts
+	version 1 
+	label "SyncCharts"
+	
+de.cau.cs.kieler.sccharts.extended.synccharts.signal
+de.cau.cs.kieler.sccharts.extended.synccharts.pre
+de.cau.cs.kieler.sccharts.extended.synccharts.suspend
+de.cau.cs.kieler.sccharts.extended.synccharts.countDelay

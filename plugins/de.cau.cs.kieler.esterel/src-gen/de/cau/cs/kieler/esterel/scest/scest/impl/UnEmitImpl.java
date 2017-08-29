@@ -7,7 +7,7 @@ import de.cau.cs.kieler.esterel.esterel.ISignal;
 import de.cau.cs.kieler.esterel.scest.scest.ScestPackage;
 import de.cau.cs.kieler.esterel.scest.scest.UnEmit;
 
-import de.cau.cs.kieler.scl.scl.impl.StatementImpl;
+import de.cau.cs.kieler.scl.impl.StatementImpl;
 
 import org.eclipse.emf.common.notify.Notification;
 

@@ -1,0 +1,8 @@
+system de.cau.cs.kieler.sccharts.extended.scadeQuartzEsterelV7
+	version 1 
+	label "Scade / Quartz / Esterel V7"
+	
+de.cau.cs.kieler.sccharts.extended.synccharts.weakSuspend
+de.cau.cs.kieler.sccharts.extended.synccharts.history
+de.cau.cs.kieler.sccharts.extended.synccharts.deferred
+de.cau.cs.kieler.sccharts.extended.synccharts.static

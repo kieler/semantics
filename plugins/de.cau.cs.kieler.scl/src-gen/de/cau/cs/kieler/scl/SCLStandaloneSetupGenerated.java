@@ -38,6 +38,5 @@ public class SCLStandaloneSetupGenerated implements ISetup {
 		
 
 
-
 	}
 }

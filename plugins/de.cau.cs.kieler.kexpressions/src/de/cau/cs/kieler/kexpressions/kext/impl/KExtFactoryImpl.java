@@ -57,6 +57,7 @@ public class KExtFactoryImpl extends EFactoryImpl implements KExtFactory {
     public EObject create(EClass eClass) {
         switch (eClass.getClassifierID()) {
             case KExtPackage.KEXT: return createKext();
+            case KExtPackage.KEXT_SCOPE: return createKExtScope();
             case KExtPackage.TEST_ENTITY: return createTestEntity();
             case KExtPackage.ANNOTATED_EXPRESSION: return createAnnotatedExpression();
             default:
@@ -72,6 +73,16 @@ public class KExtFactoryImpl extends EFactoryImpl implements KExtFactory {
     public Kext createKext() {
         KextImpl kext = new KextImpl();
         return kext;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public KExtScope createKExtScope() {
+        KExtScopeImpl kExtScope = new KExtScopeImpl();
+        return kExtScope;
     }
 
     /**

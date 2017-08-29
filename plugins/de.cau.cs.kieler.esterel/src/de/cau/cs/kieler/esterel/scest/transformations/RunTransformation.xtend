@@ -15,7 +15,7 @@ package de.cau.cs.kieler.esterel.scest.transformations
 import de.cau.cs.kieler.esterel.scest.features.SCEstFeature
 import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
-import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.esterel.scest.extensions.SCEstExtension
@@ -50,17 +50,17 @@ import de.cau.cs.kieler.esterel.esterel.TypeRenaming
 import de.cau.cs.kieler.esterel.esterel.TaskRenaming
 import de.cau.cs.kieler.esterel.esterel.FunctionExpression
 import org.eclipse.emf.common.util.EList
-import de.cau.cs.kieler.scl.scl.Statement
-import de.cau.cs.kieler.scl.scl.StatementContainer
+import de.cau.cs.kieler.scl.Statement
+import de.cau.cs.kieler.scl.StatementContainer
 import de.cau.cs.kieler.esterel.esterel.Trap
 import de.cau.cs.kieler.esterel.esterel.Abort
 import de.cau.cs.kieler.esterel.esterel.Await
 import de.cau.cs.kieler.esterel.esterel.Do
-import de.cau.cs.kieler.scl.scl.Conditional
+import de.cau.cs.kieler.scl.Conditional
 import de.cau.cs.kieler.esterel.esterel.Present
 import de.cau.cs.kieler.esterel.esterel.IfTest
 import de.cau.cs.kieler.esterel.esterel.EsterelParallel
-import de.cau.cs.kieler.scl.scl.Parallel
+import de.cau.cs.kieler.scl.Parallel
 import de.cau.cs.kieler.esterel.esterel.RelationImplication
 import de.cau.cs.kieler.esterel.esterel.RelationIncompatibility
 

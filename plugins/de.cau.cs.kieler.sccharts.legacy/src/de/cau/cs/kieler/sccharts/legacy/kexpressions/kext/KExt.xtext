@@ -1,0 +1,88 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2015 by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
+grammar de.cau.cs.kieler.sccharts.legacy.kexpressions.kext.KExt with de.cau.cs.kieler.sccharts.legacy.kexpressions.keffects.KEffects 
+ 
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://kieler.cs.cau.de/sccharts/legacy/annotations" as annotations
+import "http://kieler.cs.cau.de/sccharts/legacy/kexpressions" as kexpressions
+import "http://kieler.cs.cau.de/sccharts/legacy/keffects" as keffects
+import "http://kieler.cs.cau.de/sccharts/legacy/kext" as kext
+
+/**
+ * @author ssm
+ * @kieler.design 2015-08-23 proposed 
+ * @kieler.rating 2015-08-23 proposed yellow
+ */
+
+/*
+ * KEXT (KText) provides a general stub for subsequent grammars that will use kexpressions, keffects
+ * and need some kind of declaration mechanism. It is also used to generate the textual KEXT language 
+ * that is used for testing kexpressions and keffects.  
+ */
+
+// ------------ //
+//  KEXT Rules  // 
+// ------------ //
+
+// KEXT Rule
+// The KEXT lagnuages starts with an optional declaration part. Then, an arbitrary number of 
+// test entities may follow.
+Kext returns kext::Kext:
+    (declarations += Declaration)*
+    (entities += TestEntity)*;
+
+// Test Entity Rule
+// A test entity is either an annotation expression or an effect.
+TestEntity returns kext::TestEntity:
+    (expression = AnnotatedExpression) |
+    (effect = Effect);
+
+// Annotated Expression Rule
+// An annotated expression is declared with the keyword "expression". It may be preceded by a list
+// of annotations. The expression itself follows the keyword.
+AnnotatedExpression  returns kext::AnnotatedExpression:
+    (annotations+=Annotation)*
+    'expression'
+    (expression = Expression);
+
+// Declaration Rule
+// A declaration follows the general KIELER pattern for variable declaration. More specific:
+// this centralized declaration rule should replace any other declaration in drived grammars.
+// It may start with arbitrary many declarations followed by keywords affecting the type of the
+// valued objects that follow.
+// Examples: const float pi = 3.14, input signal I, output bool z  
+Declaration returns kexpressions::Declaration:
+    (annotations+=Annotation)*
+	(const?='const')?
+	(extern?='extern')?
+	(volatile?='volatile')?
+    (input?='input')? 
+    (output?='output')?
+    (static?='static')?
+    (((signal?='signal')? type = ValueType) | (signal?='signal')) 
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';';
+
+// Valued Object Rule
+// A valued object is identified by its name. Then, a part for its cardinalities and an initial 
+// expression may follow. Additionally, the declaration of the object may be finished by a combine part. 
+// Examples: array[10], initial = false, z = 0 combine max
+ValuedObject returns kexpressions::ValuedObject:
+    name=ID
+    ('[' (cardinalities+=Expression) ']')* 
+    ('=' initialValue=Expression)?
+    ( 'combine'
+      (combineOperator = CombineOperator)
+    )?;
+    
+    

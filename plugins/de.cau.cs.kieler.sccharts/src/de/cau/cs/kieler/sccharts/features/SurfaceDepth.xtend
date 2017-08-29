@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sccharts.features
 
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts SurfaceDepth Feature.
@@ -42,6 +43,10 @@ class SurfaceDepth extends Feature {
     def isContained(State model) {
         // Typically we always want to apply this transformation
         return true;
+    }
+    
+    def isContained(SCCharts sccharts) {
+        return true
     }
 
 }

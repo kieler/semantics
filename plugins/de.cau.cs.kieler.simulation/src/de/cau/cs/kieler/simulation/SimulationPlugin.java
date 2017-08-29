@@ -5,6 +5,8 @@ import org.osgi.framework.BundleContext;
 
 public class SimulationPlugin implements BundleActivator {
 
+    public static final String PLUGIN_ID = "de.cau.cs.kieler.simulation.ui";
+    
 	private static BundleContext context;
 
 	static BundleContext getContext() {

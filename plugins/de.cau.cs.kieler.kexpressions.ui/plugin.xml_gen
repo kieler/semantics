@@ -6,7 +6,7 @@
     <extension
             point="org.eclipse.ui.editors">
         <editor
-            class="de.cau.cs.kieler.kexpressions.kext.ui.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
+            class="de.cau.cs.kieler.kexpressions.ui.kext.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
             contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
             default="true"
             extensions="kext"
@@ -17,7 +17,7 @@
     <extension
         point="org.eclipse.ui.handlers">
         <handler
-            class="de.cau.cs.kieler.kexpressions.kext.ui.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
+            class="de.cau.cs.kieler.kexpressions.ui.kext.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
             commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
             <activeWhen>
                 <reference
@@ -26,7 +26,7 @@
             </activeWhen>
         </handler>
         <handler
-            class="de.cau.cs.kieler.kexpressions.kext.ui.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
+            class="de.cau.cs.kieler.kexpressions.ui.kext.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
             commandId="de.cau.cs.kieler.kexpressions.kext.KExt.validate">
          <activeWhen>
             <reference
@@ -36,14 +36,14 @@
       	</handler>
       	<!-- copy qualified name -->
         <handler
-            class="de.cau.cs.kieler.kexpressions.kext.ui.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
+            class="de.cau.cs.kieler.kexpressions.ui.kext.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
             commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName">
             <activeWhen>
 				<reference definitionId="de.cau.cs.kieler.kexpressions.kext.KExt.Editor.opened" />
             </activeWhen>
         </handler>
         <handler
-            class="de.cau.cs.kieler.kexpressions.kext.ui.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
+            class="de.cau.cs.kieler.kexpressions.ui.kext.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
             commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedName">
             <activeWhen>
             	<and>
@@ -80,21 +80,21 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            class="de.cau.cs.kieler.kexpressions.kext.ui.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            class="de.cau.cs.kieler.kexpressions.ui.kext.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
             id="de.cau.cs.kieler.kexpressions.kext.KExt"
             name="KExt">
             <keywordReference id="de.cau.cs.kieler.kexpressions.kext.ui.keyword_KExt"/>
         </page>
         <page
             category="de.cau.cs.kieler.kexpressions.kext.KExt"
-            class="de.cau.cs.kieler.kexpressions.kext.ui.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+            class="de.cau.cs.kieler.kexpressions.ui.kext.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
             id="de.cau.cs.kieler.kexpressions.kext.KExt.coloring"
             name="Syntax Coloring">
             <keywordReference id="de.cau.cs.kieler.kexpressions.kext.ui.keyword_KExt"/>
         </page>
         <page
             category="de.cau.cs.kieler.kexpressions.kext.KExt"
-            class="de.cau.cs.kieler.kexpressions.kext.ui.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
+            class="de.cau.cs.kieler.kexpressions.ui.kext.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
             id="de.cau.cs.kieler.kexpressions.kext.KExt.templates"
             name="Templates">
             <keywordReference id="de.cau.cs.kieler.kexpressions.kext.ui.keyword_KExt"/>
@@ -103,7 +103,7 @@
     <extension
             point="org.eclipse.ui.propertyPages">
         <page
-            class="de.cau.cs.kieler.kexpressions.kext.ui.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            class="de.cau.cs.kieler.kexpressions.ui.kext.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
             id="de.cau.cs.kieler.kexpressions.kext.KExt"
             name="KExt">
             <keywordReference id="de.cau.cs.kieler.kexpressions.kext.ui.keyword_KExt"/>
@@ -197,7 +197,7 @@
 	</extension>
 	<extension point="org.eclipse.ui.handlers">
 	    <handler
-            class="de.cau.cs.kieler.kexpressions.kext.ui.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
+            class="de.cau.cs.kieler.kexpressions.ui.kext.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
             commandId="org.eclipse.xtext.ui.editor.FindReferences">
             <activeWhen>
                 <reference
@@ -212,46 +212,46 @@
 	<extension
 		point="org.eclipse.emf.ecore.extension_parser">
 		<parser
-			class="de.cau.cs.kieler.kexpressions.kext.ui.KExtExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+			class="de.cau.cs.kieler.kexpressions.ui.kext.KExtExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
 			type="kext">
 		</parser>
 	</extension>
 	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
         <resourceServiceProvider
-            class="de.cau.cs.kieler.kexpressions.kext.ui.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+            class="de.cau.cs.kieler.kexpressions.ui.kext.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
             uriExtension="kext">
         </resourceServiceProvider>
     </extension>
 
 
-    <!-- marker definitions for de.cau.cs.kieler.kexpressions.kext.KExt -->
-    <extension
-            id="kext.check.fast"
-            name="KExt Problem"
-            point="org.eclipse.core.resources.markers">
-        <super type="org.eclipse.xtext.ui.check.fast"/>
-        <persistent value="true"/>
-    </extension>
-    <extension
-            id="kext.check.normal"
-            name="KExt Problem"
-            point="org.eclipse.core.resources.markers">
-        <super type="org.eclipse.xtext.ui.check.normal"/>
-        <persistent value="true"/>
-    </extension>
-    <extension
-            id="kext.check.expensive"
-            name="KExt Problem"
-            point="org.eclipse.core.resources.markers">
-        <super type="org.eclipse.xtext.ui.check.expensive"/>
-        <persistent value="true"/>
-    </extension>
+	<!-- marker definitions for de.cau.cs.kieler.kexpressions.kext.KExt -->
+	<extension
+	        id="kext.check.fast"
+	        name="KExt Problem"
+	        point="org.eclipse.core.resources.markers">
+	    <super type="org.eclipse.xtext.ui.check.fast"/>
+	    <persistent value="true"/>
+	</extension>
+	<extension
+	        id="kext.check.normal"
+	        name="KExt Problem"
+	        point="org.eclipse.core.resources.markers">
+	    <super type="org.eclipse.xtext.ui.check.normal"/>
+	    <persistent value="true"/>
+	</extension>
+	<extension
+	        id="kext.check.expensive"
+	        name="KExt Problem"
+	        point="org.eclipse.core.resources.markers">
+	    <super type="org.eclipse.xtext.ui.check.expensive"/>
+	    <persistent value="true"/>
+	</extension>
 
 	<!-- Quick Outline -->
 	<extension
 		point="org.eclipse.ui.handlers">
 		<handler 
-			class="de.cau.cs.kieler.kexpressions.kext.ui.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
+			class="de.cau.cs.kieler.kexpressions.ui.kext.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
 			commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline">
 			<activeWhen>
 				<reference
@@ -284,24 +284,24 @@
     <extension
             point="org.eclipse.ui.ide.markerResolution">
         <markerResolutionGenerator
-            class="de.cau.cs.kieler.kexpressions.kext.ui.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="de.cau.cs.kieler.kexpressions.kext.ui.kext.check.fast">
+            class="de.cau.cs.kieler.kexpressions.ui.kext.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="de.cau.cs.kieler.kexpressions.ui.kext.kext.check.fast">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
             </attribute>
         </markerResolutionGenerator>
         <markerResolutionGenerator
-            class="de.cau.cs.kieler.kexpressions.kext.ui.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="de.cau.cs.kieler.kexpressions.kext.ui.kext.check.normal">
+            class="de.cau.cs.kieler.kexpressions.ui.kext.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="de.cau.cs.kieler.kexpressions.ui.kext.kext.check.normal">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
             </attribute>
         </markerResolutionGenerator>
         <markerResolutionGenerator
-            class="de.cau.cs.kieler.kexpressions.kext.ui.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="de.cau.cs.kieler.kexpressions.kext.ui.kext.check.expensive">
+            class="de.cau.cs.kieler.kexpressions.ui.kext.KExtExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="de.cau.cs.kieler.kexpressions.ui.kext.kext.check.expensive">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">

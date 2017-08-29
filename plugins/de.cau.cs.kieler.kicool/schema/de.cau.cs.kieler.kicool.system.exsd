@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="de.cau.cs.kieler.kicool" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="de.cau.cs.kieler.kicool" id="de.cau.cs.kieler.kicool.system" name="KIELER Compiler Transformation System"/>
+      </appInfo>
+      <documentation>
+         &lt;BR&gt;&lt;BR&gt;
+&lt;B&gt;
+FOR AN UPDATED VERSION OF THIS DESCRIPTION AND ADDITIONAL INFORMATION PLEASE SEE:
+&lt;a href=&quot;http://www.informatik.uni-kiel.de/rtsys/kieler/&quot;&gt;http://www.informatik.uni-kiel.de/rtsys/kieler/&lt;/a&gt;
+&lt;/B&gt;
+&lt;BR&gt;&lt;BR&gt;
+
+This extension point allowes the contribution of a compiler transformation to the KIELER project.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appInfo>
+            <meta.element />
+         </appInfo>
+      </annotation>
+      <complexType>
+         <sequence minOccurs="0" maxOccurs="unbounded">
+            <element ref="TransformationSystem" minOccurs="0" maxOccurs="unbounded"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="TransformationSystem">
+      <complexType>
+         <attribute name="system" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="resource"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         0.9.0
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         No examples yet.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="apiinfo"/>
+      </appInfo>
+      <documentation>
+         See KIELER website (Description).
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         n/a
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="copyright"/>
+      </appInfo>
+      <documentation>
+         &lt;BR&gt;
+ KIELER - Kiel Integrated Environment for Layout Eclipse RichClient&lt;BR&gt;
+&lt;BR&gt;
+ http://www.informatik.uni-kiel.de/rtsys/kieler/&lt;BR&gt;
+&lt;BR&gt; 
+ Copyright 2014 by&lt;BR&gt;
+ + Kiel University&lt;BR&gt;
+   + Department of Computer Science&lt;BR&gt;
+     + Real-Time and Embedded Systems Group&lt;BR&gt;
+&lt;BR&gt; 
+This code is provided under the terms of the Eclipse Public License (EPL).&lt;BR&gt;
+See the file epl-v10.html for the license text.&lt;BR&gt;
+&lt;BR&gt;
+&lt;BR&gt;
+      </documentation>
+   </annotation>
+
+</schema>

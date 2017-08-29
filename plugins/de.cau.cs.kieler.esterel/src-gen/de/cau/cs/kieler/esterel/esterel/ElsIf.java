@@ -6,7 +6,7 @@ import de.cau.cs.kieler.annotations.Annotation;
 
 import de.cau.cs.kieler.kexpressions.Expression;
 
-import de.cau.cs.kieler.scl.scl.Statement;
+import de.cau.cs.kieler.scl.Statement;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -76,7 +76,7 @@ public interface ElsIf extends EObject
 
   /**
    * Returns the value of the '<em><b>Then Statements</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.scl.scl.Statement}.
+   * The list contents are of type {@link de.cau.cs.kieler.scl.Statement}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Then Statements</em>' containment reference list isn't clear,

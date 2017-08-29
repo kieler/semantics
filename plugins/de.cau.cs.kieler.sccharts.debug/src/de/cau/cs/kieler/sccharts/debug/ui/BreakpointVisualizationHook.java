@@ -61,7 +61,7 @@ import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.debug.SCChartsDebugPlugin;
-import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook;
+import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHook;
 
 /**
  * This class handles the highlighting. The methods that handle highlighting are implemented here

@@ -8,7 +8,7 @@ import de.cau.cs.kieler.esterel.esterel.IVariable;
 
 import de.cau.cs.kieler.kexpressions.Expression;
 
-import de.cau.cs.kieler.scl.scl.impl.StatementImpl;
+import de.cau.cs.kieler.scl.impl.StatementImpl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;

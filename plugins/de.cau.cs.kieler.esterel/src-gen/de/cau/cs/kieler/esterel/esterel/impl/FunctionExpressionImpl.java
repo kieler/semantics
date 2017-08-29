@@ -7,8 +7,7 @@ import de.cau.cs.kieler.esterel.esterel.Function;
 import de.cau.cs.kieler.esterel.esterel.FunctionExpression;
 
 import de.cau.cs.kieler.kexpressions.Expression;
-
-import de.cau.cs.kieler.kexpressions.impl.ExpressionImpl;
+import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 
 import java.util.Collection;
 
@@ -21,6 +20,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -33,14 +33,25 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.FunctionExpressionImpl#getSchedule <em>Schedule</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.FunctionExpressionImpl#getFunction <em>Function</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.FunctionExpressionImpl#getKexpressions <em>Kexpressions</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class FunctionExpressionImpl extends ExpressionImpl implements FunctionExpression
+public class FunctionExpressionImpl extends MinimalEObjectImpl.Container implements FunctionExpression
 {
+  /**
+   * The cached value of the '{@link #getSchedule() <em>Schedule</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSchedule()
+   * @generated
+   * @ordered
+   */
+  protected EList<ScheduleObjectReference> schedule;
+
   /**
    * The cached value of the '{@link #getFunction() <em>Function</em>}' reference.
    * <!-- begin-user-doc -->
@@ -80,6 +91,20 @@ public class FunctionExpressionImpl extends ExpressionImpl implements FunctionEx
   protected EClass eStaticClass()
   {
     return EsterelPackage.Literals.FUNCTION_EXPRESSION;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<ScheduleObjectReference> getSchedule()
+  {
+    if (schedule == null)
+    {
+      schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, EsterelPackage.FUNCTION_EXPRESSION__SCHEDULE);
+    }
+    return schedule;
   }
 
   /**
@@ -149,6 +174,8 @@ public class FunctionExpressionImpl extends ExpressionImpl implements FunctionEx
   {
     switch (featureID)
     {
+      case EsterelPackage.FUNCTION_EXPRESSION__SCHEDULE:
+        return ((InternalEList<?>)getSchedule()).basicRemove(otherEnd, msgs);
       case EsterelPackage.FUNCTION_EXPRESSION__KEXPRESSIONS:
         return ((InternalEList<?>)getKexpressions()).basicRemove(otherEnd, msgs);
     }
@@ -165,6 +192,8 @@ public class FunctionExpressionImpl extends ExpressionImpl implements FunctionEx
   {
     switch (featureID)
     {
+      case EsterelPackage.FUNCTION_EXPRESSION__SCHEDULE:
+        return getSchedule();
       case EsterelPackage.FUNCTION_EXPRESSION__FUNCTION:
         if (resolve) return getFunction();
         return basicGetFunction();
@@ -185,6 +214,10 @@ public class FunctionExpressionImpl extends ExpressionImpl implements FunctionEx
   {
     switch (featureID)
     {
+      case EsterelPackage.FUNCTION_EXPRESSION__SCHEDULE:
+        getSchedule().clear();
+        getSchedule().addAll((Collection<? extends ScheduleObjectReference>)newValue);
+        return;
       case EsterelPackage.FUNCTION_EXPRESSION__FUNCTION:
         setFunction((Function)newValue);
         return;
@@ -206,6 +239,9 @@ public class FunctionExpressionImpl extends ExpressionImpl implements FunctionEx
   {
     switch (featureID)
     {
+      case EsterelPackage.FUNCTION_EXPRESSION__SCHEDULE:
+        getSchedule().clear();
+        return;
       case EsterelPackage.FUNCTION_EXPRESSION__FUNCTION:
         setFunction((Function)null);
         return;
@@ -226,6 +262,8 @@ public class FunctionExpressionImpl extends ExpressionImpl implements FunctionEx
   {
     switch (featureID)
     {
+      case EsterelPackage.FUNCTION_EXPRESSION__SCHEDULE:
+        return schedule != null && !schedule.isEmpty();
       case EsterelPackage.FUNCTION_EXPRESSION__FUNCTION:
         return function != null;
       case EsterelPackage.FUNCTION_EXPRESSION__KEXPRESSIONS:

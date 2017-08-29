@@ -30,6 +30,22 @@ import org.eclipse.emf.common.util.Enumerator;
  */
 public enum DataDependencyType implements Enumerator {
 	/**
+     * The '<em><b>IGNORE</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #IGNORE_VALUE
+     * @generated
+     * @ordered
+     */
+    IGNORE(-2, "IGNORE", "IGNORE"), /**
+     * The '<em><b>UNKNOWN</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #UNKNOWN_VALUE
+     * @generated
+     * @ordered
+     */
+    UNKNOWN(-1, "UNKNOWN", "UNKNOWN"), /**
      * The '<em><b>WRITE WRITE</b></em>' literal object.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -60,6 +76,36 @@ public enum DataDependencyType implements Enumerator {
 	WRITE_READ(2, "WRITE_READ", "WRITE_READ");
 
 	/**
+     * The '<em><b>IGNORE</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>IGNORE</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #IGNORE
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int IGNORE_VALUE = -2;
+
+    /**
+     * The '<em><b>UNKNOWN</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>UNKNOWN</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #UNKNOWN
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int UNKNOWN_VALUE = -1;
+
+    /**
      * The '<em><b>WRITE WRITE</b></em>' literal value.
      * <!-- begin-user-doc -->
 	 * <p>
@@ -112,6 +158,8 @@ public enum DataDependencyType implements Enumerator {
      */
 	private static final DataDependencyType[] VALUES_ARRAY =
 		new DataDependencyType[] {
+            IGNORE,
+            UNKNOWN,
             WRITE_WRITE,
             WRITE_RELATIVEWRITE,
             WRITE_READ,
@@ -171,6 +219,8 @@ public enum DataDependencyType implements Enumerator {
      */
 	public static DataDependencyType get(int value) {
         switch (value) {
+            case IGNORE_VALUE: return IGNORE;
+            case UNKNOWN_VALUE: return UNKNOWN;
             case WRITE_WRITE_VALUE: return WRITE_WRITE;
             case WRITE_RELATIVEWRITE_VALUE: return WRITE_RELATIVEWRITE;
             case WRITE_READ_VALUE: return WRITE_READ;

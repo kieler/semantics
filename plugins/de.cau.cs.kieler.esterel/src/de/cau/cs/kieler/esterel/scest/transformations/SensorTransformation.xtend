@@ -17,15 +17,15 @@ import de.cau.cs.kieler.esterel.scest.extensions.SCEstExtension
 import de.cau.cs.kieler.esterel.scest.features.SCEstFeature
 import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
-import de.cau.cs.kieler.kitt.tracing.Traceable
-import de.cau.cs.kieler.scl.scl.Statement
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
+import de.cau.cs.kieler.scl.Statement
 import com.google.common.collect.Sets
 import java.util.HashMap
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import java.util.Map
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.scl.scl.ScopeStatement
+import de.cau.cs.kieler.scl.ScopeStatement
 import de.cau.cs.kieler.esterel.esterel.ISignal
 import de.cau.cs.kieler.esterel.esterel.Module
 

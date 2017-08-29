@@ -24,12 +24,11 @@ import de.cau.cs.kieler.kico.KiCoProperties
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.KielerCompilerException
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
-import de.cau.cs.kieler.kitt.tracing.Tracing
+import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 import de.cau.cs.kieler.klighd.util.ModelingUtil
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.timing.TimingUtil
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
@@ -50,6 +49,7 @@ import java.util.List
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 
 /**
  * Transform a sequentialized SCG to a sequentialized SCG with timing program points.
@@ -91,7 +91,7 @@ class TPPTransformation extends AbstractProductionTransformation
     extension AnnotationsExtensions
 
     @Inject
-    extension SCChartsExtension
+    extension SCChartsControlflowRegionExtensions
 
     /**
      * Transform add TPPs to the sequentialized SCG.
@@ -113,7 +113,8 @@ class TPPTransformation extends AbstractProductionTransformation
 
         // get mapping
         compilationResult = context.compilationResult
-        tracings = compilationResult.getAuxiliaryData(Tracing)
+        // TODO: adapt to kicool
+//        tracings = compilationResult.getAuxiliaryData(Tracing)
         if (!tracings.isEmpty())
         {
             tracing = tracings.get(0)
@@ -149,7 +150,7 @@ class TPPTransformation extends AbstractProductionTransformation
                             {
                                 var EObject targetElement = targetObj as EObject;
                                 if (!(targetElement instanceof State &&
-                                    ((targetElement as State).hasInnerStatesOrControlflowRegions)) ||
+                                    ((targetElement as State).controlflowRegionsContainStates)) ||
                                         targetElements.size() == 1)
                                     {
                                         var regionFound = false
@@ -186,8 +187,8 @@ class TPPTransformation extends AbstractProductionTransformation
                         }
 
                         var HashMap<String, Region> tppRegionMap = new HashMap<String, Region>();
-                        val Region scchartDummyRegion = SCChartsFactory.eINSTANCE.createRegion();
-                        scchartDummyRegion.setId("SCChartDummyRegion");
+                        val Region scchartDummyRegion = SCChartsFactory.eINSTANCE.createControlflowRegion();
+                        scchartDummyRegion.setName("SCChartDummyRegion");
                         scchartDummyRegion.label = "SCChartDummyRegion";
 
                         // insert timing program points

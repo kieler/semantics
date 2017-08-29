@@ -13,7 +13,7 @@ import de.cau.cs.kieler.esterel.esterel.SensorDecl;
 import de.cau.cs.kieler.esterel.esterel.TaskDecl;
 import de.cau.cs.kieler.esterel.esterel.TypeDecl;
 
-import de.cau.cs.kieler.scl.scl.impl.StatementContainerImpl;
+import de.cau.cs.kieler.scl.impl.StatementContainerImpl;
 
 import java.util.Collection;
 

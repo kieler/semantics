@@ -19,21 +19,23 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.Value
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /**
  * Container class für ValuedObjects
  * 
  * @author ssm
- * @kieler.design 2013-10-23 proposed 
- * @kieler.rating 2013-10-23 proposed yellow
+ * @kieler.design 2017-05-31 proposed 
+ * @kieler.rating 2017-05-31 proposed yellow
  */
 class ValuedObjectContainer {
     
     @Inject extension KExpressionsCompareExtensions
     
-    private var valuedObject = null
+    @Accessors(PUBLIC_GETTER) var ValuedObject valuedObject = null
     private var indices = <Expression> newArrayList
-    @Accessors var boolean potentiallyEqual = false
+    @Accessors(PUBLIC_GETTER) var boolean potentiallyEqual = false
+    @Accessors var boolean strictEqual = true
 
     def set(Assignment assignment) {
         valuedObject = assignment.valuedObject
@@ -44,6 +46,9 @@ class ValuedObjectContainer {
     }
     
     def set(ValuedObjectReference valuedObjectReference) {
+        if (valuedObjectReference.valuedObject == null) {
+            throw new IllegalArgumentException("The valued object of reference " + valuedObjectReference + " is null!")
+        }
         valuedObject = valuedObjectReference.valuedObject
         indices.clear
         for(e : valuedObjectReference.indices) {
@@ -51,13 +56,29 @@ class ValuedObjectContainer {
         }
     }
     
+    def set(ValuedObject valuedObject) {
+        this.valuedObject = valuedObject
+        indices.clear
+    }    
     
-    override equals(Object object) {
-        if (potentiallyEquals) return potentiallyEquals(object)
-            else strictEquals(object)
+    def setPotentiallyEqual(boolean pe) {
+        potentiallyEqual = pe
+        if (strictEqual && pe) strictEqual = false
     }
     
-    def strictEquals(Object object) {
+    override equals(Object object) {
+        if (object instanceof ValuedObjectContainer) {
+            val localStrict = strictEqual && object.strictEqual
+            if (!localStrict) {
+                if (potentiallyEquals || object.potentiallyEquals) return potentiallyEquals(object)
+                return semanticEquals(object)
+            }
+            return super.equals(object)
+        }
+        return false
+    }
+    
+    def semanticEquals(Object object) {
         if (object instanceof ValuedObjectContainer) {
             if (!valuedObject.equals(object.valuedObject)) return false
             if (indices.size != object.indices.size) return false
@@ -89,7 +110,7 @@ class ValuedObjectContainer {
     }
     
     def potentiallyEquals(Object object) {
-        return strictEquals(object) || cannotDetermineEquality(object)
+        return semanticEquals(object) || cannotDetermineEquality(object)
     }
     
     override hashCode() {

@@ -93,7 +93,7 @@ void readInputs() {
 
     object = cJSON_Parse(buffer);
     
-    «FOR valuedObject : scchart.getValuedObjects().filter[ isInput ]» 
+    «FOR valuedObject : scchart.getValuedObjectsFromEObject().filter[ isInput ]» 
     child = cJSON_GetObjectItem(object, "«valuedObject.name»");
     if (child != NULL) {
             present = cJSON_GetObjectItem(child, "present");
@@ -119,7 +119,7 @@ void readInputs() {
    	'''
 void writeOutputs() {
     cJSON* value;;
-	«FOR output : scchart.getValuedObjects().filter[ isOutput ]»
+	«FOR output : scchart.getValuedObjectsFromEObject().filter[ isOutput ]»
 	value = cJSON_CreateObject();
 	«IF output.type != ValueType::STRING»
         cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(«output.name»));

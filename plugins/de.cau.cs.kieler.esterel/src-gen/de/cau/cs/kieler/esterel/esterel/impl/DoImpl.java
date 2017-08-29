@@ -8,9 +8,9 @@ import de.cau.cs.kieler.esterel.esterel.DelayExpr;
 import de.cau.cs.kieler.esterel.esterel.Do;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 
-import de.cau.cs.kieler.scl.scl.Statement;
+import de.cau.cs.kieler.scl.Statement;
 
-import de.cau.cs.kieler.scl.scl.impl.StatementContainerImpl;
+import de.cau.cs.kieler.scl.impl.StatementContainerImpl;
 
 import java.util.Collection;
 

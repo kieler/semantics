@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="de.cau.cs.kieler.benchmark.common.benchmark" name="Benchmark" schema="schema/benchmark.exsd"/>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="de.cau.cs.kieler.benchmark.common.BenchmarkStartup">
+      </startup>
+   </extension>
+
+</plugin>

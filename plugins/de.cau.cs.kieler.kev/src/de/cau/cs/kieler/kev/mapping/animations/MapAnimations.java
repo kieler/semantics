@@ -14,6 +14,7 @@ package de.cau.cs.kieler.kev.mapping.animations;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -840,13 +841,12 @@ public final class MapAnimations {
      */
     public ArrayList<String> parser(final String input) {
         ArrayList<String> valueList = new ArrayList<String>();
-
-        // [input.replaceAll("\\s", "")] -> Deletes all whitespace characters from String!
-        Scanner sc = new Scanner(input.replaceAll("\\s", "")).useDelimiter(";");
-        while (sc.hasNext()) {
-            valueList.add(sc.next());
+        // Deletes all whitespace characters
+        String inputWithoutWhitespace = input.replaceAll("\\s", "");
+        String[] values = inputWithoutWhitespace.split(",");
+        for(String v : values) {
+            valueList.add(v);
         }
-        // System.out.println(valueList);
         return valueList;
     }
 

@@ -16,7 +16,6 @@
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.CombineOperator
-import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.FunctionCall
@@ -28,7 +27,6 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.s.extensions.SExtension
 import de.cau.cs.kieler.s.s.Abort
 import de.cau.cs.kieler.s.s.Assignment
 import de.cau.cs.kieler.s.s.Await
@@ -49,6 +47,8 @@ import de.cau.cs.kieler.s.s.Trans
 import java.util.HashMap
 import java.util.List
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.kexpressions.StringValue
@@ -80,8 +80,8 @@ class S2C {
     extension KExpressionsValueExtensions    
 
     @Inject
-    extension SExtension
-    
+    extension KExpressionsDeclarationExtensions       
+
     val preCache = <ValuedObject> newArrayList     
     
     // General method to create the c simulation interface.
@@ -172,7 +172,7 @@ class S2C {
 
    // Generate variables.
    def sVariables(Program program) {
-       '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+       '''«FOR declaration : program.variableDeclarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR signal : declaration.valuedObjects»
             «signal.type.expand»«signal.declaration.expand» «signal.name»«IF signal.isArray»«FOR card : signal.cardinalities»[«card.expand»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
               «IF signal.isArray»
@@ -193,7 +193,7 @@ class S2C {
 
    // Generate PRE variables setter.
    def setPreVariables(Program program) {
-       '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+       '''«FOR declaration : program.variableDeclarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR signal : declaration.valuedObjects»
        «IF program.usesPre(signal) 
  			» PRE_«signal.name» = «signal.name»;«
@@ -201,9 +201,8 @@ class S2C {
    }
 
    def resetVariables(Program program) {
-       '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+       '''«FOR declaration : program.variableDeclarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR signal : declaration.valuedObjects»
-       
         «IF signal.isArray»
                 «FOR card : signal.cardinalities»{int _i«signal.cardinalities.indexOf(card)» = 0; for(_i«signal.cardinalities.indexOf(card)»=0; _i«signal.cardinalities.indexOf(card)» < «card.intValue»; _i«signal.cardinalities.indexOf(card)»++) {«ENDFOR»
                 «signal.name»«FOR card : signal.cardinalities»[_i«signal.cardinalities.indexOf(card)»]«ENDFOR» = 0;
@@ -232,7 +231,7 @@ class S2C {
        }
    }
    
-   def dispatch CharSequence expand(Declaration declaration) {
+   def dispatch CharSequence expand(VariableDeclaration declaration) {
        if (declaration.type != ValueType.HOST) {
            return null
        } else {
@@ -330,7 +329,7 @@ class S2C {
        return ''' ='''
    }
 
-    // Expand a ASSIGNMENT instruction.
+    // Expand an ASSIGNMENT instruction.
     def dispatch CharSequence expand(Assignment assignment) {
         if (assignment.expression instanceof FunctionCall) {
             var returnValue = '''«assignment.expression.expand»;'''
@@ -345,12 +344,19 @@ class S2C {
                     returnValue = returnValue + '''[«index.expand»]'''
                 }
             }
-            returnValue = returnValue + assignment.expandOperator
-            if ((assignment.operator != AssignOperator.POSTFIXADD) && 
-                (assignment.operator != AssignOperator.POSTFIXSUB)) {
-                returnValue = returnValue + ''' «assignment.expression.expand»;'''
+            
+            if (assignment.operator == AssignOperator.ASSIGNMIN) {
+                returnValue = returnValue + ''' = «assignment.expression.expand» < «returnValue» ? «assignment.expression.expand» : «returnValue»;'''
+            } else if (assignment.operator == AssignOperator.ASSIGNMAX) {
+                returnValue = returnValue + ''' = «assignment.expression.expand» > «returnValue» ? «assignment.expression.expand» : «returnValue»;'''
             } else {
-                returnValue = returnValue + ''';'''
+                returnValue = returnValue + assignment.expandOperator
+                if ((assignment.operator != AssignOperator.POSTFIXADD) && 
+                    (assignment.operator != AssignOperator.POSTFIXSUB)) {
+                    returnValue = returnValue + ''' «assignment.expression.expand»;'''
+                } else {
+                    returnValue = returnValue + ''';'''
+                }
             }
             return returnValue
         }

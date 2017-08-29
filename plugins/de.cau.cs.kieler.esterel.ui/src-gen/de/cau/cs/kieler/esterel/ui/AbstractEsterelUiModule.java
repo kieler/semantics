@@ -67,7 +67,7 @@ public abstract class AbstractEsterelUiModule extends org.eclipse.xtext.ui.Defau
 		return de.cau.cs.kieler.esterel.ui.outline.EsterelOutlineTreeProvider.class;
 	}
 
-	// contributed by org.eclipse.xtext.ui.generator.contentAssist.JavaBasedContentAssistFragment
+	// contributed by org.eclipse.xtext.ui.generator.contentAssist.ContentAssistFragment
 	public Class<? extends org.eclipse.xtext.ui.editor.contentassist.IContentProposalProvider> bindIContentProposalProvider() {
 		return de.cau.cs.kieler.esterel.ui.contentassist.EsterelProposalProvider.class;
 	}

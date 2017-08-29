@@ -7,7 +7,12 @@ import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.FunctionCall
 import java.util.Iterator
+import java.util.List
+import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.VectorValue
+import de.cau.cs.kieler.kexpressions.IgnoreValue
 
 /**
  * Serialization of KExpressions in human readable form.
@@ -21,9 +26,6 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions {	
 
     protected def CharSequence humanReadable(String s) {
-//        if (s == null) {
-//            return null
-//        }
         if (s.startsWith("(") && s.endsWith(")")) {
             var counter = 1
             for(var i=1; i<s.length()-1; i++) {
@@ -65,27 +67,36 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
         }
         vo
     }
+    
+    def dispatch CharSequence serializeHR(ReferenceCall referenceCall) {
+        return referenceCall.valuedObject.serializeHR.toString + referenceCall.parameters.serializeHRParameters
+    }    
 
     def dispatch CharSequence serializeHR(FunctionCall functionCall) {
-        var funcCall = functionCall.functionName + "("
-
+        return "<" + functionCall.functionName + functionCall.parameters.serializeHRParameters + ">"
+    }
+    
+    def public CharSequence serializeHRParameters(List<Parameter> parameters) {
+        val sb = new StringBuilder
+        sb.append("(")
         var cnt = 0
-        for (par : functionCall.parameters) {
+        for (par : parameters) {
             if (cnt > 0) {
-                funcCall = funcCall + ", "
+                sb.append(", ")
             }
             if (par.pureOutput) {
-                funcCall = funcCall + "!"
+                sb.append("!")
             }
             if (par.callByReference) {
-                funcCall = funcCall + "&"
+                sb.append("&")
             }
-            funcCall = funcCall + par.expression.serializeHR
+            if (par.expression == null) sb.append("NULL!!!") else 
+            sb.append(par.expression.serializeHR)
             cnt = cnt + 1
         }
-        funcCall = funcCall + ")"
-        return "<" + funcCall + ">"
-    }
+        sb.append(")") 
+        return sb.toString      
+    }    
 
 
 //    protected def CharSequence serializeHROperatorExpressionVAL(OperatorExpression expression) {
@@ -191,6 +202,10 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
 	
     protected def String combineOperatorsHR(Iterator<Expression> expressions, String separator) {
         var s = ""
+        if (!expressions.hasNext) {
+            System.err.println("Serialization: An operator expression without sub-expressions occurred! " + 
+                "This should not happen! Check your transformation!")
+        }
         while (expressions.hasNext) {
             s = s + expressions.next.serializeHR
             if(expressions.hasNext) s = s + separator;
@@ -317,9 +332,65 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
         }  
             
         return result
-    }	
-	
-
+    }
+    
+    dispatch def CharSequence serializeHR(OperatorType operator) {
+        var CharSequence result = ""
+        
+        if (operator == OperatorType::EQ) {
+            result = "=="
+        } else if (operator == OperatorType::LT) {
+            result = "<"
+        } else if (operator == OperatorType::LEQ) {
+            result = "<="
+        } else if (operator == OperatorType::GT) {
+            result = ">"
+        } else if (operator == OperatorType::GEQ) {
+            result = ">="
+        } else if (operator == OperatorType::NOT) {
+            return "!"
+        } else if (operator == OperatorType::VAL) {
+            return "val"
+        } else if (operator == OperatorType::PRE) {
+            return "pre"
+        } else if (operator == OperatorType::NE) {
+            result = "~"
+        } else if (operator == OperatorType::LOGICAL_AND) {
+            result = "&&"
+        } else if (operator == OperatorType::LOGICAL_OR) {
+            result = "||"
+        } else if (operator == OperatorType::BITWISE_AND) {
+            result = "&"
+        } else if (operator == OperatorType::BITWISE_OR) {
+            result = "|"
+        } else if (operator == OperatorType::ADD) {
+            result = "+"
+        } else if (operator == OperatorType::SUB) {
+            result = "-"
+        } else if (operator == OperatorType::MULT) {
+            result = "*"
+        } else if (operator == OperatorType::DIV) {
+            result = "/"
+        } else if (operator == OperatorType::MOD) {
+            result = "%"
+        }  
+            
+        return result
+    }  
+    
+    def dispatch CharSequence serializeHR(VectorValue expression) {
+        var s = "{" 
+        for (value : expression.values) {
+            s = s + value.serializeHR + ", "
+        }
+        return s.substring(0, s.length - 2) + "}"
+    }    
+    
+    def dispatch CharSequence serializeHR(IgnoreValue expression) {
+        "_"
+    }
+        
+    
     dispatch def CharSequence serializeHR(Expression expression) {
         expression.serialize.humanReadable
     }

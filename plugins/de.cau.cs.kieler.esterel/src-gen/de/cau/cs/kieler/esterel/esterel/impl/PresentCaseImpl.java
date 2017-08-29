@@ -7,7 +7,7 @@ import de.cau.cs.kieler.esterel.esterel.PresentCase;
 
 import de.cau.cs.kieler.kexpressions.Expression;
 
-import de.cau.cs.kieler.scl.scl.impl.StatementContainerImpl;
+import de.cau.cs.kieler.scl.impl.StatementContainerImpl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;

@@ -7,7 +7,7 @@ import de.cau.cs.kieler.esterel.esterel.ISignal;
 import de.cau.cs.kieler.esterel.esterel.Trap;
 import de.cau.cs.kieler.esterel.esterel.TrapHandler;
 
-import de.cau.cs.kieler.scl.scl.impl.StatementContainerImpl;
+import de.cau.cs.kieler.scl.impl.StatementContainerImpl;
 
 import java.util.Collection;
 

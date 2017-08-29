@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -12,14 +12,14 @@
  */
 package de.cau.cs.kieler.simulation.ui.views
 
+import de.cau.cs.kieler.prom.console.PromConsole
+import de.cau.cs.kieler.simulation.core.NDimensionalArray
+import de.cau.cs.kieler.simulation.core.NDimensionalArrayElement
 import de.cau.cs.kieler.simulation.core.Variable
 import org.eclipse.jface.viewers.CheckboxCellEditor
 import org.eclipse.jface.viewers.EditingSupport
 import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.jface.viewers.TextCellEditor
-import de.cau.cs.kieler.simulation.core.NDimensionalArrayElement
-import de.cau.cs.kieler.simulation.core.NDimensionalArray
-import java.util.List
 
 /**
  * @author aas
@@ -67,7 +67,7 @@ class ValueColumnEditingSupport extends EditingSupport {
         if(element instanceof Variable) {
             value = if(element.isDirty) element.userValue else element.value
         } else if(element instanceof NDimensionalArrayElement) {
-            value = element.value
+            value = if(element.isDirty) element.userValue else element.value
         }
         
         if(value != null) {
@@ -87,32 +87,46 @@ class ValueColumnEditingSupport extends EditingSupport {
     }
     
     override protected setValue(Object element, Object value) {
+        // Don't set null or empty value
+        if(value == null || value instanceof String && "".equals(value)) {
+            return ;
+        }
+        // Try to set value
         try {
             if(element instanceof Variable){
-                if(element.value instanceof Float) {
-                    element.userValue = Float.valueOf(value.toString)    
-                } else if(element.value instanceof Double) {
-                    element.userValue = Double.valueOf(value.toString)    
-                } else if(element.value instanceof Integer) {
-                    element.userValue = Integer.valueOf(value.toString)
+                if(element.value instanceof Float
+                    || element.value instanceof Double
+                    || element.value instanceof Integer) {
+                    val doubleValue = Double.valueOf(value.toString)
+                    val intValue = doubleValue.intValue
+                    if(doubleValue == intValue) {
+                        element.userValue = intValue
+                    } else {
+                        element.userValue = doubleValue
+                    }
                 } else {
                     element.userValue = value
                 }
             } else if(element instanceof NDimensionalArrayElement) {
-                if(element.value instanceof Float) {
-                    element.value = Float.valueOf(value.toString)    
-                } else if(element.value instanceof Double) {
-                    element.value = Double.valueOf(value.toString)
-                } else if(element.value instanceof Integer) {
-                    element.value = Integer.valueOf(value.toString)
+                if(element.value instanceof Float
+                    || element.value instanceof Double
+                    || element.value instanceof Integer) {
+                    val doubleValue = Double.valueOf(value.toString)
+                    val intValue = doubleValue.intValue
+                    if(doubleValue == intValue) {
+                        element.userValue = intValue
+                    } else {
+                        element.userValue = doubleValue
+                    }
                 } else {
-                    element.value = value
+                    element.userValue = value
                 }
             }
 //            println("New value:"+element.value)
         } catch (NumberFormatException e) {
-            throw new Exception("Can't set value of "+element+ " to "+value, e)
+            PromConsole.print("Can't set value of " + element + " to "+value)
         }
-        viewer.update(element, null);
+        // Update this element
+        viewer.refresh(element)
     }
 }

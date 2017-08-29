@@ -6,7 +6,7 @@ import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.LocalVariable;
 import de.cau.cs.kieler.esterel.esterel.VariableDecl;
 
-import de.cau.cs.kieler.scl.scl.impl.StatementContainerImpl;
+import de.cau.cs.kieler.scl.impl.StatementContainerImpl;
 
 import java.util.Collection;
 

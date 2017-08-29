@@ -9,12 +9,12 @@ import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 
 /**
- * Represents a generated, default implementation of superclass {@link de.cau.cs.kieler.kexpressions.kext.ui.contentassist.KExtProposalProvider}.
+ * Represents a generated, default implementation of superclass {@link de.cau.cs.kieler.kexpressions.ui.kext.contentassist.KExtProposalProvider}.
  * Methods are dynamically dispatched on the first parameter, i.e., you can override them 
  * with a more concrete subtype. 
  */
 @SuppressWarnings("all")
-public class AbstractSCLProposalProvider extends de.cau.cs.kieler.kexpressions.kext.ui.contentassist.KExtProposalProvider {
+public class AbstractSCLProposalProvider extends de.cau.cs.kieler.kexpressions.ui.kext.contentassist.KExtProposalProvider {
 		
 	public void completeSCLProgram_Annotations(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);

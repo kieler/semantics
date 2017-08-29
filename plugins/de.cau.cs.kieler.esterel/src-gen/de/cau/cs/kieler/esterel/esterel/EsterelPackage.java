@@ -4,7 +4,7 @@ package de.cau.cs.kieler.esterel.esterel;
 
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 
-import de.cau.cs.kieler.scl.scl.SclPackage;
+import de.cau.cs.kieler.scl.SCLPackage;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -105,7 +105,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODULE__ANNOTATIONS = SclPackage.STATEMENT_CONTAINER__ANNOTATIONS;
+  int MODULE__ANNOTATIONS = SCLPackage.STATEMENT_CONTAINER__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -114,7 +114,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODULE__STATEMENTS = SclPackage.STATEMENT_CONTAINER__STATEMENTS;
+  int MODULE__STATEMENTS = SCLPackage.STATEMENT_CONTAINER__STATEMENTS;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -123,7 +123,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODULE__NAME = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
+  int MODULE__NAME = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Int Signal Decls</b></em>' containment reference list.
@@ -132,7 +132,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODULE__INT_SIGNAL_DECLS = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
+  int MODULE__INT_SIGNAL_DECLS = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Int Type Decls</b></em>' containment reference list.
@@ -141,7 +141,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODULE__INT_TYPE_DECLS = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 2;
+  int MODULE__INT_TYPE_DECLS = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Int Sensor Decls</b></em>' containment reference list.
@@ -150,7 +150,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODULE__INT_SENSOR_DECLS = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 3;
+  int MODULE__INT_SENSOR_DECLS = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Int Constant Decls</b></em>' containment reference list.
@@ -159,7 +159,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODULE__INT_CONSTANT_DECLS = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 4;
+  int MODULE__INT_CONSTANT_DECLS = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 4;
 
   /**
    * The feature id for the '<em><b>Int Relation Decls</b></em>' containment reference list.
@@ -168,7 +168,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODULE__INT_RELATION_DECLS = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 5;
+  int MODULE__INT_RELATION_DECLS = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 5;
 
   /**
    * The feature id for the '<em><b>Int Task Decls</b></em>' containment reference list.
@@ -177,7 +177,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODULE__INT_TASK_DECLS = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 6;
+  int MODULE__INT_TASK_DECLS = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 6;
 
   /**
    * The feature id for the '<em><b>Int Function Decls</b></em>' containment reference list.
@@ -186,7 +186,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODULE__INT_FUNCTION_DECLS = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 7;
+  int MODULE__INT_FUNCTION_DECLS = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 7;
 
   /**
    * The feature id for the '<em><b>Int Procedure Decls</b></em>' containment reference list.
@@ -195,7 +195,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODULE__INT_PROCEDURE_DECLS = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 8;
+  int MODULE__INT_PROCEDURE_DECLS = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 8;
 
   /**
    * The number of structural features of the '<em>Module</em>' class.
@@ -204,7 +204,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODULE_FEATURE_COUNT = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 9;
+  int MODULE_FEATURE_COUNT = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 9;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.TypeIdentifierImpl <em>Type Identifier</em>}' class.
@@ -411,15 +411,6 @@ public interface EsterelPackage extends EPackage
   int CONSTANT = 7;
 
   /**
-   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONSTANT__ANNOTATIONS = KExpressionsPackage.VALUED_OBJECT__ANNOTATIONS;
-
-  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -427,6 +418,15 @@ public interface EsterelPackage extends EPackage
    * @ordered
    */
   int CONSTANT__NAME = KExpressionsPackage.VALUED_OBJECT__NAME;
+
+  /**
+   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONSTANT__ANNOTATIONS = KExpressionsPackage.VALUED_OBJECT__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Combine Operator</b></em>' attribute.
@@ -770,15 +770,6 @@ public interface EsterelPackage extends EPackage
   int ISIGNAL = 15;
 
   /**
-   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ISIGNAL__ANNOTATIONS = KExpressionsPackage.VALUED_OBJECT__ANNOTATIONS;
-
-  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -786,6 +777,15 @@ public interface EsterelPackage extends EPackage
    * @ordered
    */
   int ISIGNAL__NAME = KExpressionsPackage.VALUED_OBJECT__NAME;
+
+  /**
+   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ISIGNAL__ANNOTATIONS = KExpressionsPackage.VALUED_OBJECT__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Combine Operator</b></em>' attribute.
@@ -1080,7 +1080,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ESTEREL_PARALLEL__ANNOTATIONS = SclPackage.STATEMENT__ANNOTATIONS;
+  int ESTEREL_PARALLEL__ANNOTATIONS = SCLPackage.STATEMENT__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Threads</b></em>' containment reference list.
@@ -1089,7 +1089,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ESTEREL_PARALLEL__THREADS = SclPackage.STATEMENT_FEATURE_COUNT + 0;
+  int ESTEREL_PARALLEL__THREADS = SCLPackage.STATEMENT_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Parallel</em>' class.
@@ -1098,7 +1098,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ESTEREL_PARALLEL_FEATURE_COUNT = SclPackage.STATEMENT_FEATURE_COUNT + 1;
+  int ESTEREL_PARALLEL_FEATURE_COUNT = SCLPackage.STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.EsterelThreadImpl <em>Thread</em>}' class.
@@ -1117,7 +1117,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ESTEREL_THREAD__ANNOTATIONS = SclPackage.STATEMENT_CONTAINER__ANNOTATIONS;
+  int ESTEREL_THREAD__ANNOTATIONS = SCLPackage.STATEMENT_CONTAINER__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -1126,7 +1126,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ESTEREL_THREAD__STATEMENTS = SclPackage.STATEMENT_CONTAINER__STATEMENTS;
+  int ESTEREL_THREAD__STATEMENTS = SCLPackage.STATEMENT_CONTAINER__STATEMENTS;
 
   /**
    * The number of structural features of the '<em>Thread</em>' class.
@@ -1135,7 +1135,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ESTEREL_THREAD_FEATURE_COUNT = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
+  int ESTEREL_THREAD_FEATURE_COUNT = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.NothingImpl <em>Nothing</em>}' class.
@@ -1154,7 +1154,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int NOTHING__ANNOTATIONS = SclPackage.STATEMENT__ANNOTATIONS;
+  int NOTHING__ANNOTATIONS = SCLPackage.STATEMENT__ANNOTATIONS;
 
   /**
    * The number of structural features of the '<em>Nothing</em>' class.
@@ -1163,7 +1163,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int NOTHING_FEATURE_COUNT = SclPackage.STATEMENT_FEATURE_COUNT + 0;
+  int NOTHING_FEATURE_COUNT = SCLPackage.STATEMENT_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.HaltImpl <em>Halt</em>}' class.
@@ -1182,7 +1182,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HALT__ANNOTATIONS = SclPackage.STATEMENT__ANNOTATIONS;
+  int HALT__ANNOTATIONS = SCLPackage.STATEMENT__ANNOTATIONS;
 
   /**
    * The number of structural features of the '<em>Halt</em>' class.
@@ -1191,7 +1191,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HALT_FEATURE_COUNT = SclPackage.STATEMENT_FEATURE_COUNT + 0;
+  int HALT_FEATURE_COUNT = SCLPackage.STATEMENT_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.BlockImpl <em>Block</em>}' class.
@@ -1210,7 +1210,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int BLOCK__ANNOTATIONS = SclPackage.STATEMENT_CONTAINER__ANNOTATIONS;
+  int BLOCK__ANNOTATIONS = SCLPackage.STATEMENT_CONTAINER__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -1219,7 +1219,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int BLOCK__STATEMENTS = SclPackage.STATEMENT_CONTAINER__STATEMENTS;
+  int BLOCK__STATEMENTS = SCLPackage.STATEMENT_CONTAINER__STATEMENTS;
 
   /**
    * The number of structural features of the '<em>Block</em>' class.
@@ -1228,7 +1228,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int BLOCK_FEATURE_COUNT = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
+  int BLOCK_FEATURE_COUNT = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.EmitImpl <em>Emit</em>}' class.
@@ -1247,7 +1247,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EMIT__ANNOTATIONS = SclPackage.STATEMENT__ANNOTATIONS;
+  int EMIT__ANNOTATIONS = SCLPackage.STATEMENT__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Signal</b></em>' reference.
@@ -1256,7 +1256,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EMIT__SIGNAL = SclPackage.STATEMENT_FEATURE_COUNT + 0;
+  int EMIT__SIGNAL = SCLPackage.STATEMENT_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -1265,7 +1265,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EMIT__EXPRESSION = SclPackage.STATEMENT_FEATURE_COUNT + 1;
+  int EMIT__EXPRESSION = SCLPackage.STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Emit</em>' class.
@@ -1274,7 +1274,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EMIT_FEATURE_COUNT = SclPackage.STATEMENT_FEATURE_COUNT + 2;
+  int EMIT_FEATURE_COUNT = SCLPackage.STATEMENT_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.SustainImpl <em>Sustain</em>}' class.
@@ -1293,7 +1293,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SUSTAIN__ANNOTATIONS = SclPackage.STATEMENT__ANNOTATIONS;
+  int SUSTAIN__ANNOTATIONS = SCLPackage.STATEMENT__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Signal</b></em>' reference.
@@ -1302,7 +1302,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SUSTAIN__SIGNAL = SclPackage.STATEMENT_FEATURE_COUNT + 0;
+  int SUSTAIN__SIGNAL = SCLPackage.STATEMENT_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -1311,7 +1311,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SUSTAIN__EXPRESSION = SclPackage.STATEMENT_FEATURE_COUNT + 1;
+  int SUSTAIN__EXPRESSION = SCLPackage.STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Sustain</em>' class.
@@ -1320,7 +1320,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SUSTAIN_FEATURE_COUNT = SclPackage.STATEMENT_FEATURE_COUNT + 2;
+  int SUSTAIN_FEATURE_COUNT = SCLPackage.STATEMENT_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.EsterelAssignmentImpl <em>Assignment</em>}' class.
@@ -1339,7 +1339,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ESTEREL_ASSIGNMENT__ANNOTATIONS = SclPackage.STATEMENT__ANNOTATIONS;
+  int ESTEREL_ASSIGNMENT__ANNOTATIONS = SCLPackage.STATEMENT__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Var</b></em>' reference.
@@ -1348,7 +1348,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ESTEREL_ASSIGNMENT__VAR = SclPackage.STATEMENT_FEATURE_COUNT + 0;
+  int ESTEREL_ASSIGNMENT__VAR = SCLPackage.STATEMENT_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -1357,7 +1357,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ESTEREL_ASSIGNMENT__EXPRESSION = SclPackage.STATEMENT_FEATURE_COUNT + 1;
+  int ESTEREL_ASSIGNMENT__EXPRESSION = SCLPackage.STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Assignment</em>' class.
@@ -1366,7 +1366,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ESTEREL_ASSIGNMENT_FEATURE_COUNT = SclPackage.STATEMENT_FEATURE_COUNT + 2;
+  int ESTEREL_ASSIGNMENT_FEATURE_COUNT = SCLPackage.STATEMENT_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.ProcCallImpl <em>Proc Call</em>}' class.
@@ -1385,7 +1385,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PROC_CALL__ANNOTATIONS = SclPackage.STATEMENT__ANNOTATIONS;
+  int PROC_CALL__ANNOTATIONS = SCLPackage.STATEMENT__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Proc</b></em>' reference.
@@ -1394,7 +1394,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PROC_CALL__PROC = SclPackage.STATEMENT_FEATURE_COUNT + 0;
+  int PROC_CALL__PROC = SCLPackage.STATEMENT_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Var List</b></em>' reference list.
@@ -1403,7 +1403,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PROC_CALL__VAR_LIST = SclPackage.STATEMENT_FEATURE_COUNT + 1;
+  int PROC_CALL__VAR_LIST = SCLPackage.STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Kexpressions</b></em>' containment reference list.
@@ -1412,7 +1412,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PROC_CALL__KEXPRESSIONS = SclPackage.STATEMENT_FEATURE_COUNT + 2;
+  int PROC_CALL__KEXPRESSIONS = SCLPackage.STATEMENT_FEATURE_COUNT + 2;
 
   /**
    * The number of structural features of the '<em>Proc Call</em>' class.
@@ -1421,7 +1421,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PROC_CALL_FEATURE_COUNT = SclPackage.STATEMENT_FEATURE_COUNT + 3;
+  int PROC_CALL_FEATURE_COUNT = SCLPackage.STATEMENT_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.PresentImpl <em>Present</em>}' class.
@@ -1440,7 +1440,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRESENT__ANNOTATIONS = SclPackage.STATEMENT__ANNOTATIONS;
+  int PRESENT__ANNOTATIONS = SCLPackage.STATEMENT__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -1449,7 +1449,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRESENT__EXPRESSION = SclPackage.STATEMENT_FEATURE_COUNT + 0;
+  int PRESENT__EXPRESSION = SCLPackage.STATEMENT_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Then Annotations</b></em>' containment reference list.
@@ -1458,7 +1458,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRESENT__THEN_ANNOTATIONS = SclPackage.STATEMENT_FEATURE_COUNT + 1;
+  int PRESENT__THEN_ANNOTATIONS = SCLPackage.STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Then Statements</b></em>' containment reference list.
@@ -1467,7 +1467,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRESENT__THEN_STATEMENTS = SclPackage.STATEMENT_FEATURE_COUNT + 2;
+  int PRESENT__THEN_STATEMENTS = SCLPackage.STATEMENT_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Cases</b></em>' containment reference list.
@@ -1476,7 +1476,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRESENT__CASES = SclPackage.STATEMENT_FEATURE_COUNT + 3;
+  int PRESENT__CASES = SCLPackage.STATEMENT_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Else Annotations</b></em>' containment reference list.
@@ -1485,7 +1485,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRESENT__ELSE_ANNOTATIONS = SclPackage.STATEMENT_FEATURE_COUNT + 4;
+  int PRESENT__ELSE_ANNOTATIONS = SCLPackage.STATEMENT_FEATURE_COUNT + 4;
 
   /**
    * The feature id for the '<em><b>Else Statements</b></em>' containment reference list.
@@ -1494,7 +1494,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRESENT__ELSE_STATEMENTS = SclPackage.STATEMENT_FEATURE_COUNT + 5;
+  int PRESENT__ELSE_STATEMENTS = SCLPackage.STATEMENT_FEATURE_COUNT + 5;
 
   /**
    * The number of structural features of the '<em>Present</em>' class.
@@ -1503,7 +1503,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRESENT_FEATURE_COUNT = SclPackage.STATEMENT_FEATURE_COUNT + 6;
+  int PRESENT_FEATURE_COUNT = SCLPackage.STATEMENT_FEATURE_COUNT + 6;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.PresentCaseImpl <em>Present Case</em>}' class.
@@ -1522,7 +1522,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRESENT_CASE__ANNOTATIONS = SclPackage.STATEMENT_CONTAINER__ANNOTATIONS;
+  int PRESENT_CASE__ANNOTATIONS = SCLPackage.STATEMENT_CONTAINER__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -1531,7 +1531,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRESENT_CASE__STATEMENTS = SclPackage.STATEMENT_CONTAINER__STATEMENTS;
+  int PRESENT_CASE__STATEMENTS = SCLPackage.STATEMENT_CONTAINER__STATEMENTS;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -1540,7 +1540,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRESENT_CASE__EXPRESSION = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
+  int PRESENT_CASE__EXPRESSION = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Present Case</em>' class.
@@ -1549,7 +1549,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRESENT_CASE_FEATURE_COUNT = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
+  int PRESENT_CASE_FEATURE_COUNT = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.IfTestImpl <em>If Test</em>}' class.
@@ -1568,7 +1568,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int IF_TEST__ANNOTATIONS = SclPackage.STATEMENT__ANNOTATIONS;
+  int IF_TEST__ANNOTATIONS = SCLPackage.STATEMENT__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -1577,7 +1577,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int IF_TEST__EXPRESSION = SclPackage.STATEMENT_FEATURE_COUNT + 0;
+  int IF_TEST__EXPRESSION = SCLPackage.STATEMENT_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Then Annotations</b></em>' containment reference list.
@@ -1586,7 +1586,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int IF_TEST__THEN_ANNOTATIONS = SclPackage.STATEMENT_FEATURE_COUNT + 1;
+  int IF_TEST__THEN_ANNOTATIONS = SCLPackage.STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Then Statements</b></em>' containment reference list.
@@ -1595,7 +1595,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int IF_TEST__THEN_STATEMENTS = SclPackage.STATEMENT_FEATURE_COUNT + 2;
+  int IF_TEST__THEN_STATEMENTS = SCLPackage.STATEMENT_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Elseif</b></em>' containment reference list.
@@ -1604,7 +1604,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int IF_TEST__ELSEIF = SclPackage.STATEMENT_FEATURE_COUNT + 3;
+  int IF_TEST__ELSEIF = SCLPackage.STATEMENT_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Else Annotations</b></em>' containment reference list.
@@ -1613,7 +1613,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int IF_TEST__ELSE_ANNOTATIONS = SclPackage.STATEMENT_FEATURE_COUNT + 4;
+  int IF_TEST__ELSE_ANNOTATIONS = SCLPackage.STATEMENT_FEATURE_COUNT + 4;
 
   /**
    * The feature id for the '<em><b>Else Statements</b></em>' containment reference list.
@@ -1622,7 +1622,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int IF_TEST__ELSE_STATEMENTS = SclPackage.STATEMENT_FEATURE_COUNT + 5;
+  int IF_TEST__ELSE_STATEMENTS = SCLPackage.STATEMENT_FEATURE_COUNT + 5;
 
   /**
    * The number of structural features of the '<em>If Test</em>' class.
@@ -1631,7 +1631,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int IF_TEST_FEATURE_COUNT = SclPackage.STATEMENT_FEATURE_COUNT + 6;
+  int IF_TEST_FEATURE_COUNT = SCLPackage.STATEMENT_FEATURE_COUNT + 6;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.ElsIfImpl <em>Els If</em>}' class.
@@ -1696,7 +1696,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LOOP__ANNOTATIONS = SclPackage.STATEMENT_CONTAINER__ANNOTATIONS;
+  int LOOP__ANNOTATIONS = SCLPackage.STATEMENT_CONTAINER__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -1705,7 +1705,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LOOP__STATEMENTS = SclPackage.STATEMENT_CONTAINER__STATEMENTS;
+  int LOOP__STATEMENTS = SCLPackage.STATEMENT_CONTAINER__STATEMENTS;
 
   /**
    * The feature id for the '<em><b>Delay</b></em>' containment reference.
@@ -1714,7 +1714,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LOOP__DELAY = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
+  int LOOP__DELAY = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Loop</em>' class.
@@ -1723,7 +1723,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LOOP_FEATURE_COUNT = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
+  int LOOP_FEATURE_COUNT = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.RepeatImpl <em>Repeat</em>}' class.
@@ -1742,7 +1742,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REPEAT__ANNOTATIONS = SclPackage.STATEMENT_CONTAINER__ANNOTATIONS;
+  int REPEAT__ANNOTATIONS = SCLPackage.STATEMENT_CONTAINER__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -1751,7 +1751,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REPEAT__STATEMENTS = SclPackage.STATEMENT_CONTAINER__STATEMENTS;
+  int REPEAT__STATEMENTS = SCLPackage.STATEMENT_CONTAINER__STATEMENTS;
 
   /**
    * The feature id for the '<em><b>Positive</b></em>' attribute.
@@ -1760,7 +1760,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REPEAT__POSITIVE = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
+  int REPEAT__POSITIVE = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -1769,7 +1769,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REPEAT__EXPRESSION = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
+  int REPEAT__EXPRESSION = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Repeat</em>' class.
@@ -1778,7 +1778,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REPEAT_FEATURE_COUNT = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 2;
+  int REPEAT_FEATURE_COUNT = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.AbortImpl <em>Abort</em>}' class.
@@ -1797,7 +1797,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ABORT__ANNOTATIONS = SclPackage.STATEMENT_CONTAINER__ANNOTATIONS;
+  int ABORT__ANNOTATIONS = SCLPackage.STATEMENT_CONTAINER__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -1806,7 +1806,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ABORT__STATEMENTS = SclPackage.STATEMENT_CONTAINER__STATEMENTS;
+  int ABORT__STATEMENTS = SCLPackage.STATEMENT_CONTAINER__STATEMENTS;
 
   /**
    * The feature id for the '<em><b>Weak</b></em>' attribute.
@@ -1815,7 +1815,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ABORT__WEAK = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
+  int ABORT__WEAK = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Delay</b></em>' containment reference.
@@ -1824,7 +1824,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ABORT__DELAY = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
+  int ABORT__DELAY = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Do Statements</b></em>' containment reference list.
@@ -1833,7 +1833,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ABORT__DO_STATEMENTS = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 2;
+  int ABORT__DO_STATEMENTS = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Cases</b></em>' containment reference list.
@@ -1842,7 +1842,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ABORT__CASES = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 3;
+  int ABORT__CASES = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 3;
 
   /**
    * The number of structural features of the '<em>Abort</em>' class.
@@ -1851,7 +1851,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ABORT_FEATURE_COUNT = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 4;
+  int ABORT_FEATURE_COUNT = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 4;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.CaseImpl <em>Case</em>}' class.
@@ -1870,7 +1870,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CASE__ANNOTATIONS = SclPackage.STATEMENT_CONTAINER__ANNOTATIONS;
+  int CASE__ANNOTATIONS = SCLPackage.STATEMENT_CONTAINER__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -1879,7 +1879,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CASE__STATEMENTS = SclPackage.STATEMENT_CONTAINER__STATEMENTS;
+  int CASE__STATEMENTS = SCLPackage.STATEMENT_CONTAINER__STATEMENTS;
 
   /**
    * The feature id for the '<em><b>Delay</b></em>' containment reference.
@@ -1888,7 +1888,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CASE__DELAY = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
+  int CASE__DELAY = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Case</em>' class.
@@ -1897,7 +1897,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CASE_FEATURE_COUNT = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
+  int CASE_FEATURE_COUNT = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.AwaitImpl <em>Await</em>}' class.
@@ -1916,7 +1916,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int AWAIT__ANNOTATIONS = SclPackage.STATEMENT_CONTAINER__ANNOTATIONS;
+  int AWAIT__ANNOTATIONS = SCLPackage.STATEMENT_CONTAINER__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -1925,7 +1925,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int AWAIT__STATEMENTS = SclPackage.STATEMENT_CONTAINER__STATEMENTS;
+  int AWAIT__STATEMENTS = SCLPackage.STATEMENT_CONTAINER__STATEMENTS;
 
   /**
    * The feature id for the '<em><b>Delay</b></em>' containment reference.
@@ -1934,7 +1934,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int AWAIT__DELAY = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
+  int AWAIT__DELAY = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Cases</b></em>' containment reference list.
@@ -1943,7 +1943,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int AWAIT__CASES = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
+  int AWAIT__CASES = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Await</em>' class.
@@ -1952,7 +1952,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int AWAIT_FEATURE_COUNT = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 2;
+  int AWAIT_FEATURE_COUNT = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.EveryDoImpl <em>Every Do</em>}' class.
@@ -1971,7 +1971,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EVERY_DO__ANNOTATIONS = SclPackage.STATEMENT_CONTAINER__ANNOTATIONS;
+  int EVERY_DO__ANNOTATIONS = SCLPackage.STATEMENT_CONTAINER__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -1980,7 +1980,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EVERY_DO__STATEMENTS = SclPackage.STATEMENT_CONTAINER__STATEMENTS;
+  int EVERY_DO__STATEMENTS = SCLPackage.STATEMENT_CONTAINER__STATEMENTS;
 
   /**
    * The feature id for the '<em><b>Delay</b></em>' containment reference.
@@ -1989,7 +1989,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EVERY_DO__DELAY = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
+  int EVERY_DO__DELAY = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Every Do</em>' class.
@@ -1998,7 +1998,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EVERY_DO_FEATURE_COUNT = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
+  int EVERY_DO_FEATURE_COUNT = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.SuspendImpl <em>Suspend</em>}' class.
@@ -2017,7 +2017,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SUSPEND__ANNOTATIONS = SclPackage.STATEMENT_CONTAINER__ANNOTATIONS;
+  int SUSPEND__ANNOTATIONS = SCLPackage.STATEMENT_CONTAINER__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -2026,7 +2026,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SUSPEND__STATEMENTS = SclPackage.STATEMENT_CONTAINER__STATEMENTS;
+  int SUSPEND__STATEMENTS = SCLPackage.STATEMENT_CONTAINER__STATEMENTS;
 
   /**
    * The feature id for the '<em><b>Weak</b></em>' attribute.
@@ -2035,7 +2035,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SUSPEND__WEAK = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
+  int SUSPEND__WEAK = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Delay</b></em>' containment reference.
@@ -2044,7 +2044,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SUSPEND__DELAY = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
+  int SUSPEND__DELAY = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Suspend</em>' class.
@@ -2053,7 +2053,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SUSPEND_FEATURE_COUNT = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 2;
+  int SUSPEND_FEATURE_COUNT = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.TrapImpl <em>Trap</em>}' class.
@@ -2072,7 +2072,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TRAP__ANNOTATIONS = SclPackage.STATEMENT_CONTAINER__ANNOTATIONS;
+  int TRAP__ANNOTATIONS = SCLPackage.STATEMENT_CONTAINER__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -2081,7 +2081,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TRAP__STATEMENTS = SclPackage.STATEMENT_CONTAINER__STATEMENTS;
+  int TRAP__STATEMENTS = SCLPackage.STATEMENT_CONTAINER__STATEMENTS;
 
   /**
    * The feature id for the '<em><b>Trap Signals</b></em>' containment reference list.
@@ -2090,7 +2090,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TRAP__TRAP_SIGNALS = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
+  int TRAP__TRAP_SIGNALS = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Trap Handler</b></em>' containment reference list.
@@ -2099,7 +2099,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TRAP__TRAP_HANDLER = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
+  int TRAP__TRAP_HANDLER = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Trap</em>' class.
@@ -2108,7 +2108,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TRAP_FEATURE_COUNT = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 2;
+  int TRAP_FEATURE_COUNT = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.TrapHandlerImpl <em>Trap Handler</em>}' class.
@@ -2127,7 +2127,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TRAP_HANDLER__ANNOTATIONS = SclPackage.STATEMENT_CONTAINER__ANNOTATIONS;
+  int TRAP_HANDLER__ANNOTATIONS = SCLPackage.STATEMENT_CONTAINER__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -2136,7 +2136,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TRAP_HANDLER__STATEMENTS = SclPackage.STATEMENT_CONTAINER__STATEMENTS;
+  int TRAP_HANDLER__STATEMENTS = SCLPackage.STATEMENT_CONTAINER__STATEMENTS;
 
   /**
    * The feature id for the '<em><b>Trap Expr</b></em>' containment reference.
@@ -2145,7 +2145,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TRAP_HANDLER__TRAP_EXPR = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
+  int TRAP_HANDLER__TRAP_EXPR = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Trap Handler</em>' class.
@@ -2154,7 +2154,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TRAP_HANDLER_FEATURE_COUNT = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
+  int TRAP_HANDLER_FEATURE_COUNT = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.ExitImpl <em>Exit</em>}' class.
@@ -2173,7 +2173,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXIT__ANNOTATIONS = SclPackage.STATEMENT__ANNOTATIONS;
+  int EXIT__ANNOTATIONS = SCLPackage.STATEMENT__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Trap</b></em>' reference.
@@ -2182,7 +2182,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXIT__TRAP = SclPackage.STATEMENT_FEATURE_COUNT + 0;
+  int EXIT__TRAP = SCLPackage.STATEMENT_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -2191,7 +2191,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXIT__EXPRESSION = SclPackage.STATEMENT_FEATURE_COUNT + 1;
+  int EXIT__EXPRESSION = SCLPackage.STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Exit</em>' class.
@@ -2200,7 +2200,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXIT_FEATURE_COUNT = SclPackage.STATEMENT_FEATURE_COUNT + 2;
+  int EXIT_FEATURE_COUNT = SCLPackage.STATEMENT_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.ExecImpl <em>Exec</em>}' class.
@@ -2219,7 +2219,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXEC__ANNOTATIONS = SclPackage.STATEMENT_CONTAINER__ANNOTATIONS;
+  int EXEC__ANNOTATIONS = SCLPackage.STATEMENT_CONTAINER__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -2228,7 +2228,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXEC__STATEMENTS = SclPackage.STATEMENT_CONTAINER__STATEMENTS;
+  int EXEC__STATEMENTS = SCLPackage.STATEMENT_CONTAINER__STATEMENTS;
 
   /**
    * The feature id for the '<em><b>Task</b></em>' reference.
@@ -2237,7 +2237,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXEC__TASK = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
+  int EXEC__TASK = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Vars</b></em>' reference list.
@@ -2246,7 +2246,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXEC__VARS = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
+  int EXEC__VARS = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Kexpressions</b></em>' containment reference list.
@@ -2255,7 +2255,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXEC__KEXPRESSIONS = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 2;
+  int EXEC__KEXPRESSIONS = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Ret Signal</b></em>' reference.
@@ -2264,7 +2264,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXEC__RET_SIGNAL = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 3;
+  int EXEC__RET_SIGNAL = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Exec Case List</b></em>' containment reference list.
@@ -2273,7 +2273,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXEC__EXEC_CASE_LIST = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 4;
+  int EXEC__EXEC_CASE_LIST = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 4;
 
   /**
    * The number of structural features of the '<em>Exec</em>' class.
@@ -2282,7 +2282,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXEC_FEATURE_COUNT = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 5;
+  int EXEC_FEATURE_COUNT = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 5;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.ExecCaseImpl <em>Exec Case</em>}' class.
@@ -2301,7 +2301,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXEC_CASE__ANNOTATIONS = SclPackage.STATEMENT_CONTAINER__ANNOTATIONS;
+  int EXEC_CASE__ANNOTATIONS = SCLPackage.STATEMENT_CONTAINER__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -2310,7 +2310,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXEC_CASE__STATEMENTS = SclPackage.STATEMENT_CONTAINER__STATEMENTS;
+  int EXEC_CASE__STATEMENTS = SCLPackage.STATEMENT_CONTAINER__STATEMENTS;
 
   /**
    * The feature id for the '<em><b>Task</b></em>' reference.
@@ -2319,7 +2319,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXEC_CASE__TASK = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
+  int EXEC_CASE__TASK = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Vars</b></em>' reference list.
@@ -2328,7 +2328,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXEC_CASE__VARS = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
+  int EXEC_CASE__VARS = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Kexpressions</b></em>' containment reference list.
@@ -2337,7 +2337,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXEC_CASE__KEXPRESSIONS = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 2;
+  int EXEC_CASE__KEXPRESSIONS = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Ret Signal</b></em>' reference.
@@ -2346,7 +2346,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXEC_CASE__RET_SIGNAL = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 3;
+  int EXEC_CASE__RET_SIGNAL = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 3;
 
   /**
    * The number of structural features of the '<em>Exec Case</em>' class.
@@ -2355,7 +2355,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXEC_CASE_FEATURE_COUNT = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 4;
+  int EXEC_CASE_FEATURE_COUNT = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 4;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.LocalSignalDeclImpl <em>Local Signal Decl</em>}' class.
@@ -2374,7 +2374,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LOCAL_SIGNAL_DECL__ANNOTATIONS = SclPackage.STATEMENT_CONTAINER__ANNOTATIONS;
+  int LOCAL_SIGNAL_DECL__ANNOTATIONS = SCLPackage.STATEMENT_CONTAINER__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -2383,7 +2383,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LOCAL_SIGNAL_DECL__STATEMENTS = SclPackage.STATEMENT_CONTAINER__STATEMENTS;
+  int LOCAL_SIGNAL_DECL__STATEMENTS = SCLPackage.STATEMENT_CONTAINER__STATEMENTS;
 
   /**
    * The feature id for the '<em><b>Signals</b></em>' containment reference list.
@@ -2392,7 +2392,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LOCAL_SIGNAL_DECL__SIGNALS = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
+  int LOCAL_SIGNAL_DECL__SIGNALS = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Local Signal Decl</em>' class.
@@ -2401,7 +2401,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LOCAL_SIGNAL_DECL_FEATURE_COUNT = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
+  int LOCAL_SIGNAL_DECL_FEATURE_COUNT = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.LocalVariableImpl <em>Local Variable</em>}' class.
@@ -2420,7 +2420,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LOCAL_VARIABLE__ANNOTATIONS = SclPackage.STATEMENT_CONTAINER__ANNOTATIONS;
+  int LOCAL_VARIABLE__ANNOTATIONS = SCLPackage.STATEMENT_CONTAINER__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -2429,7 +2429,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LOCAL_VARIABLE__STATEMENTS = SclPackage.STATEMENT_CONTAINER__STATEMENTS;
+  int LOCAL_VARIABLE__STATEMENTS = SCLPackage.STATEMENT_CONTAINER__STATEMENTS;
 
   /**
    * The feature id for the '<em><b>Var Decls</b></em>' containment reference list.
@@ -2438,7 +2438,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LOCAL_VARIABLE__VAR_DECLS = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
+  int LOCAL_VARIABLE__VAR_DECLS = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Local Variable</em>' class.
@@ -2447,7 +2447,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LOCAL_VARIABLE_FEATURE_COUNT = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
+  int LOCAL_VARIABLE_FEATURE_COUNT = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.VariableDeclImpl <em>Variable Decl</em>}' class.
@@ -2497,15 +2497,6 @@ public interface EsterelPackage extends EPackage
   int IVARIABLE = 50;
 
   /**
-   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int IVARIABLE__ANNOTATIONS = KExpressionsPackage.VALUED_OBJECT__ANNOTATIONS;
-
-  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2513,6 +2504,15 @@ public interface EsterelPackage extends EPackage
    * @ordered
    */
   int IVARIABLE__NAME = KExpressionsPackage.VALUED_OBJECT__NAME;
+
+  /**
+   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IVARIABLE__ANNOTATIONS = KExpressionsPackage.VALUED_OBJECT__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Combine Operator</b></em>' attribute.
@@ -2576,7 +2576,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int RUN__ANNOTATIONS = SclPackage.STATEMENT__ANNOTATIONS;
+  int RUN__ANNOTATIONS = SCLPackage.STATEMENT__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Module</b></em>' containment reference.
@@ -2585,7 +2585,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int RUN__MODULE = SclPackage.STATEMENT_FEATURE_COUNT + 0;
+  int RUN__MODULE = SCLPackage.STATEMENT_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>List</b></em>' containment reference list.
@@ -2594,7 +2594,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int RUN__LIST = SclPackage.STATEMENT_FEATURE_COUNT + 1;
+  int RUN__LIST = SCLPackage.STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Run</em>' class.
@@ -2603,7 +2603,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int RUN_FEATURE_COUNT = SclPackage.STATEMENT_FEATURE_COUNT + 2;
+  int RUN_FEATURE_COUNT = SCLPackage.STATEMENT_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleRenamingImpl <em>Module Renaming</em>}' class.
@@ -2945,7 +2945,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DO__ANNOTATIONS = SclPackage.STATEMENT_CONTAINER__ANNOTATIONS;
+  int DO__ANNOTATIONS = SCLPackage.STATEMENT_CONTAINER__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -2954,7 +2954,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DO__STATEMENTS = SclPackage.STATEMENT_CONTAINER__STATEMENTS;
+  int DO__STATEMENTS = SCLPackage.STATEMENT_CONTAINER__STATEMENTS;
 
   /**
    * The feature id for the '<em><b>Ending Annotations</b></em>' containment reference list.
@@ -2963,7 +2963,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DO__ENDING_ANNOTATIONS = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
+  int DO__ENDING_ANNOTATIONS = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -2972,7 +2972,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DO__EXPRESSION = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
+  int DO__EXPRESSION = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Delay</b></em>' containment reference.
@@ -2981,7 +2981,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DO__DELAY = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 2;
+  int DO__DELAY = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Watching Statements</b></em>' containment reference list.
@@ -2990,7 +2990,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DO__WATCHING_STATEMENTS = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 3;
+  int DO__WATCHING_STATEMENTS = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 3;
 
   /**
    * The number of structural features of the '<em>Do</em>' class.
@@ -2999,7 +2999,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DO_FEATURE_COUNT = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 4;
+  int DO_FEATURE_COUNT = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 4;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.DelayExprImpl <em>Delay Expr</em>}' class.
@@ -3243,15 +3243,6 @@ public interface EsterelPackage extends EPackage
   int TRAP_SIGNAL = 67;
 
   /**
-   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TRAP_SIGNAL__ANNOTATIONS = ISIGNAL__ANNOTATIONS;
-
-  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3259,6 +3250,15 @@ public interface EsterelPackage extends EPackage
    * @ordered
    */
   int TRAP_SIGNAL__NAME = ISIGNAL__NAME;
+
+  /**
+   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TRAP_SIGNAL__ANNOTATIONS = ISIGNAL__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Combine Operator</b></em>' attribute.
@@ -3343,6 +3343,15 @@ public interface EsterelPackage extends EPackage
   int TRAP_EXPRESSION = 68;
 
   /**
+   * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TRAP_EXPRESSION__SCHEDULE = KExpressionsPackage.EXPRESSION__SCHEDULE;
+
+  /**
    * The feature id for the '<em><b>Trap</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3369,6 +3378,15 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   int FUNCTION_EXPRESSION = 69;
+
+  /**
+   * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FUNCTION_EXPRESSION__SCHEDULE = KExpressionsPackage.EXPRESSION__SCHEDULE;
 
   /**
    * The feature id for the '<em><b>Function</b></em>' reference.
@@ -3408,6 +3426,15 @@ public interface EsterelPackage extends EPackage
   int CONSTANT_EXPRESSION = 70;
 
   /**
+   * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONSTANT_EXPRESSION__SCHEDULE = KExpressionsPackage.EXPRESSION__SCHEDULE;
+
+  /**
    * The feature id for the '<em><b>Constant</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3445,6 +3472,15 @@ public interface EsterelPackage extends EPackage
   int TRAP_REFERENCE_EXPR = 71;
 
   /**
+   * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TRAP_REFERENCE_EXPR__SCHEDULE = KExpressionsPackage.VALUED_OBJECT_REFERENCE__SCHEDULE;
+
+  /**
    * The feature id for the '<em><b>Valued Object</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3461,6 +3497,15 @@ public interface EsterelPackage extends EPackage
    * @ordered
    */
   int TRAP_REFERENCE_EXPR__INDICES = KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES;
+
+  /**
+   * The feature id for the '<em><b>Sub Reference</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TRAP_REFERENCE_EXPR__SUB_REFERENCE = KExpressionsPackage.VALUED_OBJECT_REFERENCE__SUB_REFERENCE;
 
   /**
    * The number of structural features of the '<em>Trap Reference Expr</em>' class.
@@ -3482,6 +3527,15 @@ public interface EsterelPackage extends EPackage
   int SIGNAL_REFERENCE_EXPR = 72;
 
   /**
+   * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIGNAL_REFERENCE_EXPR__SCHEDULE = KExpressionsPackage.VALUED_OBJECT_REFERENCE__SCHEDULE;
+
+  /**
    * The feature id for the '<em><b>Valued Object</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3498,6 +3552,15 @@ public interface EsterelPackage extends EPackage
    * @ordered
    */
   int SIGNAL_REFERENCE_EXPR__INDICES = KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES;
+
+  /**
+   * The feature id for the '<em><b>Sub Reference</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIGNAL_REFERENCE_EXPR__SUB_REFERENCE = KExpressionsPackage.VALUED_OBJECT_REFERENCE__SUB_REFERENCE;
 
   /**
    * The number of structural features of the '<em>Signal Reference Expr</em>' class.

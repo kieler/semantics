@@ -1,0 +1,15 @@
+system de.cau.cs.kieler.sccharts.extended.statecharts 
+	version 1 
+	label "Statecharts"
+	
+de.cau.cs.kieler.sccharts.extended.statecharts.duringAction
+de.cau.cs.kieler.sccharts.extended.statecharts.complexFinalState
+[ label "Abort"
+	de.cau.cs.kieler.sccharts.extended.statecharts.abort
+	|
+	de.cau.cs.kieler.sccharts.extended.statecharts.abortWTO	
+]
+de.cau.cs.kieler.sccharts.extended.statecharts.exitAction
+de.cau.cs.kieler.sccharts.extended.statecharts.initialization
+de.cau.cs.kieler.sccharts.extended.statecharts.entryAction
+de.cau.cs.kieler.sccharts.extended.statecharts.connector

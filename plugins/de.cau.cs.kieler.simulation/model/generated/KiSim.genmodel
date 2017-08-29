@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.simulation/src-gen" editDirectory="/de.cau.cs.kieler.simulation.edit/src"
+    editorDirectory="/de.cau.cs.kieler.simulation.editor/src" modelPluginID="de.cau.cs.kieler.simulation"
+    forceOverwrite="true" modelName="KiSim" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="6.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.simulation.edit"
+    editorPluginID="de.cau.cs.kieler.simulation.editor" runtimeVersion="2.12" usedGenPackages="platform:/resource/de.cau.cs.kieler.prom/model/generated/KiBuild.genmodel#//kibuild">
+  <genPackages prefix="Kisim" basePackage="de.cau.cs.kieler.simulation" disposableProviderFactory="true"
+      ecorePackage="KiSim.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="KiSim.ecore#//ActionOperation">
+      <genEnumLiterals ecoreEnumLiteral="KiSim.ecore#//ActionOperation/WRITE"/>
+      <genEnumLiterals ecoreEnumLiteral="KiSim.ecore#//ActionOperation/READ"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="KiSim.ecore#//Sign">
+      <genEnumLiterals ecoreEnumLiteral="KiSim.ecore#//Sign/POSITIVE"/>
+      <genEnumLiterals ecoreEnumLiteral="KiSim.ecore#//Sign/NEGATIVE"/>
+    </genEnums>
+    <genClasses ecoreClass="KiSim.ecore#//SimulationConfiguration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiSim.ecore#//SimulationConfiguration/attributes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiSim.ecore#//SimulationConfiguration/handlers"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiSim.ecore#//SimulationConfiguration/initialization"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiSim.ecore#//SimulationConfiguration/execution"/>
+    </genClasses>
+    <genClasses ecoreClass="KiSim.ecore#//DataHandlerConfiguration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiSim.ecore#//DataHandlerConfiguration/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiSim.ecore#//DataHandlerConfiguration/id"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiSim.ecore#//DataHandlerConfiguration/attributes"/>
+    </genClasses>
+    <genClasses ecoreClass="KiSim.ecore#//Initialization">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiSim.ecore#//Initialization/actions"/>
+    </genClasses>
+    <genClasses ecoreClass="KiSim.ecore#//Execution">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiSim.ecore#//Execution/actions"/>
+    </genClasses>
+    <genClasses ecoreClass="KiSim.ecore#//Action">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiSim.ecore#//Action/operation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiSim.ecore#//Action/handler"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiSim.ecore#//Action/id"/>
+    </genClasses>
+    <genClasses ecoreClass="KiSim.ecore#//AttributeMapping">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiSim.ecore#//AttributeMapping/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiSim.ecore#//AttributeMapping/value"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiSim.ecore#//AttributeMapping/values"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiSim.ecore#//AttributeMapping/attributes"/>
+    </genClasses>
+    <genClasses ecoreClass="KiSim.ecore#//Literal">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiSim.ecore#//Literal/value"/>
+    </genClasses>
+    <genClasses ecoreClass="KiSim.ecore#//SignedFloat">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiSim.ecore#//SignedFloat/sign"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiSim.ecore#//SignedFloat/value"/>
+    </genClasses>
+    <genClasses ecoreClass="KiSim.ecore#//SignedInt">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiSim.ecore#//SignedInt/sign"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiSim.ecore#//SignedInt/value"/>
+    </genClasses>
+    <genClasses ecoreClass="KiSim.ecore#//TextValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiSim.ecore#//TextValue/value"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

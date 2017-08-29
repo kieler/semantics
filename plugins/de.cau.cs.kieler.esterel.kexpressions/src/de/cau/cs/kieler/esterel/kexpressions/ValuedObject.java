@@ -35,7 +35,7 @@ import de.cau.cs.kieler.annotations.Annotatable;
  * @model
  * @generated
  */
-public interface ValuedObject extends de.cau.cs.kieler.annotations.Annotatable {
+public interface ValuedObject extends Annotatable {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->

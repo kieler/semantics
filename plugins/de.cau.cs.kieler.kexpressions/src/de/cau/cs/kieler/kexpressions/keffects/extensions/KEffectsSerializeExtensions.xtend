@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -13,14 +13,16 @@
  */
 package de.cau.cs.kieler.kexpressions.keffects.extensions
 
-import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsSerializeHRExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Effect
 import de.cau.cs.kieler.kexpressions.keffects.Emission
 import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect
+import de.cau.cs.kieler.kexpressions.PrintCall
 
 /**
  * Serialization of KEffects.
@@ -45,6 +47,24 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
         if (operator == AssignOperator::ASSIGNDIV) {
             return " /= " 
         } else 
+        if (operator == AssignOperator::ASSIGNMOD) {
+            return " %= " 
+        } else 
+        if (operator == AssignOperator::ASSIGNAND) {
+            return " &= " 
+        } else 
+        if (operator == AssignOperator::ASSIGNOR) {
+            return " |= " 
+        } else 
+        if (operator == AssignOperator::ASSIGNXOR) {
+            return " ^= "
+        } else 
+        if (operator == AssignOperator::ASSIGNMIN) {
+            return " min= " 
+        } else 
+        if (operator == AssignOperator::ASSIGNMAX) {
+            return " max= " 
+        } else 
         if (operator == AssignOperator::POSTFIXADD) {
             return "++"
         } else 
@@ -55,15 +75,26 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
         return " = "          
     }
     
-    public def CharSequence serializeAssignment(Assignment assignment, CharSequence expressionStr) {
-        var res = assignment.valuedObject.name
-        if (!assignment.indices.nullOrEmpty) {
-            for(index : assignment.indices) {
-                res = res + "[" + index.serialize + "]"
+    public def CharSequence serializeAssignmentRoot(Assignment assignment) {
+        var String res = ""
+        if (assignment.valuedObject != null) {
+            res = res + assignment.valuedObject.name
+            if (!assignment.indices.nullOrEmpty) {
+                for(index : assignment.indices) {
+                    res = res + "[" + index.serialize + "]"
+                }
             }
         }
+        return res        
+    }
+    
+    public def CharSequence serializeAssignment(Assignment assignment, CharSequence expressionStr) {
+        var res = assignment.serializeAssignmentRoot.toString
         
-        res = res + assignment.operator.serializeAssignOperator
+        if (!res.nullOrEmpty) {
+            res = res + assignment.operator.serializeAssignOperator
+        }
+        
         if (expressionStr != null) {
             res = res + expressionStr
         }
@@ -77,8 +108,8 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
     
     def dispatch CharSequence serialize(Emission emission) {
         val objectContainer = emission.valuedObject.eContainer
-        if (objectContainer instanceof Declaration) {
-            if ((objectContainer as Declaration).type != ValueType::PURE) {
+        if (objectContainer instanceof VariableDeclaration) {
+            if (objectContainer.type != ValueType::PURE) {
                 return (emission.valuedObject.name + "(" + emission.newValue.serialize + ")")             
             } else {
                 return emission.valuedObject.name
@@ -99,5 +130,18 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
         }
         return ""
     }
+    
+    def dispatch CharSequence serialize(PrintCallEffect printCallEffect) {
+        var paramStr = printCallEffect.parameters.serializeParameters.toString
+        
+        return "print " + paramStr.substring(1, paramStr.length - 1)
+    }   
+    
+    def dispatch CharSequence serialize(PrintCall printCall) {
+        var paramStr = printCall.parameters.serializeParameters.toString
+        
+        return "print " + paramStr.substring(1, paramStr.length - 1)
+    }  
+
 
 }

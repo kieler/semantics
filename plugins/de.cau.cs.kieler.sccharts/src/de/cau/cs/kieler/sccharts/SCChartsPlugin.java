@@ -16,6 +16,8 @@ package de.cau.cs.kieler.sccharts;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration;
+
 /**
  * The activator class controls the plug-in life cycle.
  * 

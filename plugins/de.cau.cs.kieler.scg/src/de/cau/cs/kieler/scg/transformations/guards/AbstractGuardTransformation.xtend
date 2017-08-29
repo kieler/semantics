@@ -14,6 +14,11 @@
 package de.cau.cs.kieler.scg.transformations.guards
 
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.scg.SCGraph
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /** 
  * 
@@ -24,13 +29,18 @@ import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 
 abstract class AbstractGuardTransformation extends AbstractProductionTransformation {
     
-    // -------------------------------------------------------------------------
-    // -- Constants 
-    // -------------------------------------------------------------------------
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions    
     
     
-    // -------------------------------------------------------------------------
-    // -- Guard Transformation 
-    // -------------------------------------------------------------------------            
+    /** Name of the term signal. */
+    public static val String TERM_GUARD_NAME = "_TERM"
+    
+
+    protected def ValuedObject createTERMSignal(SCGraph scg) {
+        createValuedObject(TERM_GUARD_NAME) => [
+            scg.declarations += createBoolDeclaration.attach(it)
+        ]        
+    }
 	
 }

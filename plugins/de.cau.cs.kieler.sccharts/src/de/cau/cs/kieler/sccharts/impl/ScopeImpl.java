@@ -13,15 +13,18 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
 import de.cau.cs.kieler.kexpressions.Declaration;
-import de.cau.cs.kieler.sccharts.Binding;
+import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
+import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.sccharts.LocalAction;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
 
+import de.cau.cs.kieler.sccharts.ScopeCall;
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -43,12 +46,11 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getId <em>Id</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getLabel <em>Label</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getLocalActions <em>Local Actions</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getReferencedScope <em>Referenced Scope</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getBindings <em>Bindings</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getDeclarations <em>Declarations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getLabel <em>Label</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getActions <em>Actions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getReference <em>Reference</em>}</li>
  * </ul>
  *
  * @generated
@@ -56,30 +58,40 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     /**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Kiel University\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
+	public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
-    /**
-     * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+				/**
+     * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getId()
+     * @see #getDeclarations()
      * @generated
      * @ordered
      */
-    protected static final String ID_EDEFAULT = null;
+    protected EList<Declaration> declarations;
 
     /**
-     * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+     * The default value of the '{@link #getName() <em>Name</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getId()
+     * @see #getName()
      * @generated
      * @ordered
      */
-    protected String id = ID_EDEFAULT;
+    protected static final String NAME_EDEFAULT = null;
+
+                /**
+     * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getName()
+     * @generated
+     * @ordered
+     */
+    protected String name = NAME_EDEFAULT;
 
     /**
      * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
@@ -102,44 +114,24 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     protected String label = LABEL_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #getLocalActions() <em>Local Actions</em>}' containment reference list.
+     * The cached value of the '{@link #getActions() <em>Actions</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getLocalActions()
+     * @see #getActions()
      * @generated
      * @ordered
      */
-    protected EList<LocalAction> localActions;
+    protected EList<LocalAction> actions;
 
     /**
-     * The cached value of the '{@link #getReferencedScope() <em>Referenced Scope</em>}' reference.
+     * The cached value of the '{@link #getReference() <em>Reference</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getReferencedScope()
+     * @see #getReference()
      * @generated
      * @ordered
      */
-    protected Scope referencedScope;
-
-    /**
-     * The cached value of the '{@link #getBindings() <em>Bindings</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getBindings()
-     * @generated
-     * @ordered
-     */
-    protected EList<Binding> bindings;
-
-    /**
-     * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getDeclarations()
-     * @generated
-     * @ordered
-     */
-    protected EList<Declaration> declarations;
+    protected ScopeCall reference;
 
     /**
      * <!-- begin-user-doc -->
@@ -163,31 +155,14 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setId(String newId) {
-        String oldId = id;
-        id = newId;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__ID, oldId, id));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
+     * edited by ssm to provide label/id service
      */
     public String getLabel() {
-        return label;
+        if (label != null) {
+            return label;
+        } else {
+            return name;
+        }
     }
 
     /**
@@ -207,11 +182,11 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<LocalAction> getLocalActions() {
-        if (localActions == null) {
-            localActions = new EObjectContainmentEList<LocalAction>(LocalAction.class, this, SCChartsPackage.SCOPE__LOCAL_ACTIONS);
+    public EList<LocalAction> getActions() {
+        if (actions == null) {
+            actions = new EObjectContainmentEList<LocalAction>(LocalAction.class, this, SCChartsPackage.SCOPE__ACTIONS);
         }
-        return localActions;
+        return actions;
     }
 
     /**
@@ -219,16 +194,23 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Scope getReferencedScope() {
-        if (referencedScope != null && referencedScope.eIsProxy()) {
-            InternalEObject oldReferencedScope = (InternalEObject)referencedScope;
-            referencedScope = (Scope)eResolveProxy(oldReferencedScope);
-            if (referencedScope != oldReferencedScope) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.SCOPE__REFERENCED_SCOPE, oldReferencedScope, referencedScope));
-            }
+    public ScopeCall getReference() {
+        return reference;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetReference(ScopeCall newReference, NotificationChain msgs) {
+        ScopeCall oldReference = reference;
+        reference = newReference;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__REFERENCE, oldReference, newReference);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
         }
-        return referencedScope;
+        return msgs;
     }
 
     /**
@@ -236,32 +218,18 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Scope basicGetReferencedScope() {
-        return referencedScope;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setReferencedScope(Scope newReferencedScope) {
-        Scope oldReferencedScope = referencedScope;
-        referencedScope = newReferencedScope;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__REFERENCED_SCOPE, oldReferencedScope, referencedScope));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EList<Binding> getBindings() {
-        if (bindings == null) {
-            bindings = new EObjectContainmentEList<Binding>(Binding.class, this, SCChartsPackage.SCOPE__BINDINGS);
+    public void setReference(ScopeCall newReference) {
+        if (newReference != reference) {
+            NotificationChain msgs = null;
+            if (reference != null)
+                msgs = ((InternalEObject)reference).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.SCOPE__REFERENCE, null, msgs);
+            if (newReference != null)
+                msgs = ((InternalEObject)newReference).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.SCOPE__REFERENCE, null, msgs);
+            msgs = basicSetReference(newReference, msgs);
+            if (msgs != null) msgs.dispatch();
         }
-        return bindings;
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__REFERENCE, newReference, newReference));
     }
 
     /**
@@ -281,15 +249,36 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setName(String newName) {
+        String oldName = name;
+        name = newName;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__NAME, oldName, name));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case SCChartsPackage.SCOPE__LOCAL_ACTIONS:
-                return ((InternalEList<?>)getLocalActions()).basicRemove(otherEnd, msgs);
-            case SCChartsPackage.SCOPE__BINDINGS:
-                return ((InternalEList<?>)getBindings()).basicRemove(otherEnd, msgs);
             case SCChartsPackage.SCOPE__DECLARATIONS:
                 return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
+            case SCChartsPackage.SCOPE__ACTIONS:
+                return ((InternalEList<?>)getActions()).basicRemove(otherEnd, msgs);
+            case SCChartsPackage.SCOPE__REFERENCE:
+                return basicSetReference(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -302,19 +291,16 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case SCChartsPackage.SCOPE__ID:
-                return getId();
-            case SCChartsPackage.SCOPE__LABEL:
-                return getLabel();
-            case SCChartsPackage.SCOPE__LOCAL_ACTIONS:
-                return getLocalActions();
-            case SCChartsPackage.SCOPE__REFERENCED_SCOPE:
-                if (resolve) return getReferencedScope();
-                return basicGetReferencedScope();
-            case SCChartsPackage.SCOPE__BINDINGS:
-                return getBindings();
             case SCChartsPackage.SCOPE__DECLARATIONS:
                 return getDeclarations();
+            case SCChartsPackage.SCOPE__NAME:
+                return getName();
+            case SCChartsPackage.SCOPE__LABEL:
+                return getLabel();
+            case SCChartsPackage.SCOPE__ACTIONS:
+                return getActions();
+            case SCChartsPackage.SCOPE__REFERENCE:
+                return getReference();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -328,26 +314,22 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case SCChartsPackage.SCOPE__ID:
-                setId((String)newValue);
+            case SCChartsPackage.SCOPE__DECLARATIONS:
+                getDeclarations().clear();
+                getDeclarations().addAll((Collection<? extends Declaration>)newValue);
+                return;
+            case SCChartsPackage.SCOPE__NAME:
+                setName((String)newValue);
                 return;
             case SCChartsPackage.SCOPE__LABEL:
                 setLabel((String)newValue);
                 return;
-            case SCChartsPackage.SCOPE__LOCAL_ACTIONS:
-                getLocalActions().clear();
-                getLocalActions().addAll((Collection<? extends LocalAction>)newValue);
+            case SCChartsPackage.SCOPE__ACTIONS:
+                getActions().clear();
+                getActions().addAll((Collection<? extends LocalAction>)newValue);
                 return;
-            case SCChartsPackage.SCOPE__REFERENCED_SCOPE:
-                setReferencedScope((Scope)newValue);
-                return;
-            case SCChartsPackage.SCOPE__BINDINGS:
-                getBindings().clear();
-                getBindings().addAll((Collection<? extends Binding>)newValue);
-                return;
-            case SCChartsPackage.SCOPE__DECLARATIONS:
-                getDeclarations().clear();
-                getDeclarations().addAll((Collection<? extends Declaration>)newValue);
+            case SCChartsPackage.SCOPE__REFERENCE:
+                setReference((ScopeCall)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -361,23 +343,20 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case SCChartsPackage.SCOPE__ID:
-                setId(ID_EDEFAULT);
+            case SCChartsPackage.SCOPE__DECLARATIONS:
+                getDeclarations().clear();
+                return;
+            case SCChartsPackage.SCOPE__NAME:
+                setName(NAME_EDEFAULT);
                 return;
             case SCChartsPackage.SCOPE__LABEL:
                 setLabel(LABEL_EDEFAULT);
                 return;
-            case SCChartsPackage.SCOPE__LOCAL_ACTIONS:
-                getLocalActions().clear();
+            case SCChartsPackage.SCOPE__ACTIONS:
+                getActions().clear();
                 return;
-            case SCChartsPackage.SCOPE__REFERENCED_SCOPE:
-                setReferencedScope((Scope)null);
-                return;
-            case SCChartsPackage.SCOPE__BINDINGS:
-                getBindings().clear();
-                return;
-            case SCChartsPackage.SCOPE__DECLARATIONS:
-                getDeclarations().clear();
+            case SCChartsPackage.SCOPE__REFERENCE:
+                setReference((ScopeCall)null);
                 return;
         }
         super.eUnset(featureID);
@@ -391,20 +370,62 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case SCChartsPackage.SCOPE__ID:
-                return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-            case SCChartsPackage.SCOPE__LABEL:
-                return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
-            case SCChartsPackage.SCOPE__LOCAL_ACTIONS:
-                return localActions != null && !localActions.isEmpty();
-            case SCChartsPackage.SCOPE__REFERENCED_SCOPE:
-                return referencedScope != null;
-            case SCChartsPackage.SCOPE__BINDINGS:
-                return bindings != null && !bindings.isEmpty();
             case SCChartsPackage.SCOPE__DECLARATIONS:
                 return declarations != null && !declarations.isEmpty();
+            case SCChartsPackage.SCOPE__NAME:
+                return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+            case SCChartsPackage.SCOPE__LABEL:
+                return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
+            case SCChartsPackage.SCOPE__ACTIONS:
+                return actions != null && !actions.isEmpty();
+            case SCChartsPackage.SCOPE__REFERENCE:
+                return reference != null;
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+        if (baseClass == DeclarationScope.class) {
+            switch (derivedFeatureID) {
+                case SCChartsPackage.SCOPE__DECLARATIONS: return KExtPackage.DECLARATION_SCOPE__DECLARATIONS;
+                default: return -1;
+            }
+        }
+        if (baseClass == NamedObject.class) {
+            switch (derivedFeatureID) {
+                case SCChartsPackage.SCOPE__NAME: return AnnotationsPackage.NAMED_OBJECT__NAME;
+                default: return -1;
+            }
+        }
+        return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+        if (baseClass == DeclarationScope.class) {
+            switch (baseFeatureID) {
+                case KExtPackage.DECLARATION_SCOPE__DECLARATIONS: return SCChartsPackage.SCOPE__DECLARATIONS;
+                default: return -1;
+            }
+        }
+        if (baseClass == NamedObject.class) {
+            switch (baseFeatureID) {
+                case AnnotationsPackage.NAMED_OBJECT__NAME: return SCChartsPackage.SCOPE__NAME;
+                default: return -1;
+            }
+        }
+        return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
     }
 
     /**
@@ -417,8 +438,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (id: ");
-        result.append(id);
+        result.append(" (name: ");
+        result.append(name);
         result.append(", label: ");
         result.append(label);
         result.append(')');

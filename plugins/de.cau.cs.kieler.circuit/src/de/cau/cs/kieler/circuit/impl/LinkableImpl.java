@@ -37,180 +37,180 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.circuit.impl.LinkableImpl#getIncomingLinks <em>Incoming Links</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.impl.LinkableImpl#getOutgoingLinks <em>Outgoing Links</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
 public abstract class LinkableImpl extends MinimalEObjectImpl.Container implements Linkable {
 	/**
-	 * The cached value of the '{@link #getIncomingLinks() <em>Incoming Links</em>}' reference list.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getIncomingLinks() <em>Incoming Links</em>}' reference list.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getIncomingLinks()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getIncomingLinks()
+     * @generated
+     * @ordered
+     */
 	protected EList<Link> incomingLinks;
 
 	/**
-	 * The cached value of the '{@link #getOutgoingLinks() <em>Outgoing Links</em>}' reference list.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getOutgoingLinks() <em>Outgoing Links</em>}' reference list.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getOutgoingLinks()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getOutgoingLinks()
+     * @generated
+     * @ordered
+     */
 	protected EList<Link> outgoingLinks;
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected LinkableImpl() {
-		super();
-	}
+        super();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected EClass eStaticClass() {
-		return CircuitPackage.Literals.LINKABLE;
-	}
+        return CircuitPackage.Literals.LINKABLE;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public EList<Link> getIncomingLinks() {
-		if (incomingLinks == null) {
-			incomingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, CircuitPackage.LINKABLE__INCOMING_LINKS, CircuitPackage.LINK__TARGET);
-		}
-		return incomingLinks;
-	}
+        if (incomingLinks == null) {
+            incomingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, CircuitPackage.LINKABLE__INCOMING_LINKS, CircuitPackage.LINK__TARGET);
+        }
+        return incomingLinks;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public EList<Link> getOutgoingLinks() {
-		if (outgoingLinks == null) {
-			outgoingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, CircuitPackage.LINKABLE__OUTGOING_LINKS, CircuitPackage.LINK__SOURCE);
-		}
-		return outgoingLinks;
-	}
+        if (outgoingLinks == null) {
+            outgoingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, CircuitPackage.LINKABLE__OUTGOING_LINKS, CircuitPackage.LINK__SOURCE);
+        }
+        return outgoingLinks;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case CircuitPackage.LINKABLE__INCOMING_LINKS:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getIncomingLinks()).basicAdd(otherEnd, msgs);
-			case CircuitPackage.LINKABLE__OUTGOING_LINKS:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOutgoingLinks()).basicAdd(otherEnd, msgs);
-		}
-		return super.eInverseAdd(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case CircuitPackage.LINKABLE__INCOMING_LINKS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getIncomingLinks()).basicAdd(otherEnd, msgs);
+            case CircuitPackage.LINKABLE__OUTGOING_LINKS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getOutgoingLinks()).basicAdd(otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case CircuitPackage.LINKABLE__INCOMING_LINKS:
-				return ((InternalEList<?>)getIncomingLinks()).basicRemove(otherEnd, msgs);
-			case CircuitPackage.LINKABLE__OUTGOING_LINKS:
-				return ((InternalEList<?>)getOutgoingLinks()).basicRemove(otherEnd, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case CircuitPackage.LINKABLE__INCOMING_LINKS:
+                return ((InternalEList<?>)getIncomingLinks()).basicRemove(otherEnd, msgs);
+            case CircuitPackage.LINKABLE__OUTGOING_LINKS:
+                return ((InternalEList<?>)getOutgoingLinks()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case CircuitPackage.LINKABLE__INCOMING_LINKS:
-				return getIncomingLinks();
-			case CircuitPackage.LINKABLE__OUTGOING_LINKS:
-				return getOutgoingLinks();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case CircuitPackage.LINKABLE__INCOMING_LINKS:
+                return getIncomingLinks();
+            case CircuitPackage.LINKABLE__OUTGOING_LINKS:
+                return getOutgoingLinks();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case CircuitPackage.LINKABLE__INCOMING_LINKS:
-				getIncomingLinks().clear();
-				getIncomingLinks().addAll((Collection<? extends Link>)newValue);
-				return;
-			case CircuitPackage.LINKABLE__OUTGOING_LINKS:
-				getOutgoingLinks().clear();
-				getOutgoingLinks().addAll((Collection<? extends Link>)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case CircuitPackage.LINKABLE__INCOMING_LINKS:
+                getIncomingLinks().clear();
+                getIncomingLinks().addAll((Collection<? extends Link>)newValue);
+                return;
+            case CircuitPackage.LINKABLE__OUTGOING_LINKS:
+                getOutgoingLinks().clear();
+                getOutgoingLinks().addAll((Collection<? extends Link>)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
-			case CircuitPackage.LINKABLE__INCOMING_LINKS:
-				getIncomingLinks().clear();
-				return;
-			case CircuitPackage.LINKABLE__OUTGOING_LINKS:
-				getOutgoingLinks().clear();
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case CircuitPackage.LINKABLE__INCOMING_LINKS:
+                getIncomingLinks().clear();
+                return;
+            case CircuitPackage.LINKABLE__OUTGOING_LINKS:
+                getOutgoingLinks().clear();
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case CircuitPackage.LINKABLE__INCOMING_LINKS:
-				return incomingLinks != null && !incomingLinks.isEmpty();
-			case CircuitPackage.LINKABLE__OUTGOING_LINKS:
-				return outgoingLinks != null && !outgoingLinks.isEmpty();
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case CircuitPackage.LINKABLE__INCOMING_LINKS:
+                return incomingLinks != null && !incomingLinks.isEmpty();
+            case CircuitPackage.LINKABLE__OUTGOING_LINKS:
+                return outgoingLinks != null && !outgoingLinks.isEmpty();
+        }
+        return super.eIsSet(featureID);
+    }
 
 } //LinkableImpl

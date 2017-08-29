@@ -13,10 +13,10 @@
  */
 package de.cau.cs.kieler.annotations.impl;
 
-import org.eclipse.emf.ecore.EClass;
-
 import de.cau.cs.kieler.annotations.Annotation;
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
+
+import org.eclipse.emf.ecore.EClass;
 
 /**
  * <!-- begin-user-doc -->

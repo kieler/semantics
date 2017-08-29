@@ -4622,7 +4622,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 
 	//java.lang.RuntimeException: No EObjectDescription could be found in Scope ParserRule.hiddenTokens for Grammar'de.cau.cs.kieler.esterel.scest.SCEst'.rules[37]->TerminalRule'SL_COMMENT'
 	//Semantic Object: Grammar'de.cau.cs.kieler.esterel.Esterel'.rules[0]->ParserRule'Program'
-	//URI: file:/home/mrb/kieler-semantics-master/git/semantics/plugins/de.cau.cs.kieler.esterel/bin/de/cau/cs/kieler/esterel/Esterel.xtext
+	//URI: file:/home/terra/eclipses/kieler-semantics-ssc/git/semantics/plugins/de.cau.cs.kieler.esterel/bin/de/cau/cs/kieler/esterel/Esterel.xtext
 	//EStructuralFeature: xtext::ParserRule.hiddenTokens
 	public EsterelGrammarAccess.ProgramElements getProgramAccess() {
 		return gaEsterel.getProgramAccess();
@@ -5749,7 +5749,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//SCLProgram:
 	//	annotations+=Annotation*
 	//	'module' name=ID ':'?
-	//	declarations+=Declaration* (statements+=InstructionStatement ';' | statements+=super::MetaStatement)*
+	//	declarations+=DeclarationWOSemicolon* (statements+=InstructionStatement ';' | statements+=super::MetaStatement)*
 	//	statements+=Statement?;
 	public SCLGrammarAccess.SCLProgramElements getSCLProgramAccess() {
 		return gaSCL.getSCLProgramAccess();
@@ -5838,14 +5838,36 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// The KEXT lagnuages starts with an optional declaration part. Then, an arbitrary number of 
 	//// test entities may follow.
 	//Kext kext::Kext:
-	//	declarations+=Declaration*
-	//	entities+=TestEntity*
+	//	scopes+=RootScope
 	public KExtGrammarAccess.KextElements getKextAccess() {
 		return gaKExt.getKextAccess();
 	}
 	
 	public ParserRule getKextRule() {
 		return getKextAccess().getRule();
+	}
+
+	//RootScope kext::KExtScope:
+	//	{kext::KExtScope} declarations+=Declaration*
+	//	entities+=TestEntity* ('scope' scopes+=Scope)*
+	public KExtGrammarAccess.RootScopeElements getRootScopeAccess() {
+		return gaKExt.getRootScopeAccess();
+	}
+	
+	public ParserRule getRootScopeRule() {
+		return getRootScopeAccess().getRule();
+	}
+
+	//Scope kext::KExtScope:
+	//	{kext::KExtScope} name=ID? '{'
+	//	declarations+=Declaration*
+	//	entities+=TestEntity* ('scope' scopes+=Scope)* '}'
+	public KExtGrammarAccess.ScopeElements getScopeAccess() {
+		return gaKExt.getScopeAccess();
+	}
+	
+	public ParserRule getScopeRule() {
+		return getScopeAccess().getRule();
 	}
 
 	//// Test Entity Rule
@@ -5882,14 +5904,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// valued objects that follow.
 	//// Examples: const float pi = 3.14, input signal I, output bool z  
 	//Declaration kexpressions::Declaration:
-	//	annotations+=Annotation*
-	//	const?='const'?
-	//	extern?='extern'?
-	//	volatile?='volatile'?
-	//	input?='input'?
-	//	output?='output'?
-	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal') valuedObjects+=ValuedObject (','
-	//	valuedObjects+=ValuedObject)* ';'
+	//	VariableDeclaration | ReferenceDeclaration | ScheduleDeclaration
 	public KExtGrammarAccess.DeclarationElements getDeclarationAccess() {
 		return gaKExt.getDeclarationAccess();
 	}
@@ -5898,12 +5913,161 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getDeclarationAccess().getRule();
 	}
 
+	//DeclarationWOSemicolon kexpressions::Declaration:
+	//	VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon | ScheduleDeclarationWOSemicolon
+	public KExtGrammarAccess.DeclarationWOSemicolonElements getDeclarationWOSemicolonAccess() {
+		return gaKExt.getDeclarationWOSemicolonAccess();
+	}
+	
+	public ParserRule getDeclarationWOSemicolonRule() {
+		return getDeclarationWOSemicolonAccess().getRule();
+	}
+
+	//VariableDeclaration kexpressions::VariableDeclaration:
+	//	annotations+=Annotation*
+	//	const?='const'?
+	//	input?='input'?
+	//	output?='output'?
+	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal') valuedObjects+=ValuedObject (','
+	//	valuedObjects+=ValuedObject)* ';'
+	//	annotations+=CommentAnnotatonSL?
+	public KExtGrammarAccess.VariableDeclarationElements getVariableDeclarationAccess() {
+		return gaKExt.getVariableDeclarationAccess();
+	}
+	
+	public ParserRule getVariableDeclarationRule() {
+		return getVariableDeclarationAccess().getRule();
+	}
+
+	//VariableDeclarationWOSemicolon kexpressions::VariableDeclaration:
+	//	annotations+=Annotation*
+	//	const?='const'?
+	//	input?='input'?
+	//	output?='output'?
+	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal') valuedObjects+=ValuedObject (','
+	//	valuedObjects+=ValuedObject)*
+	//	annotations+=CommentAnnotatonSL?
+	public KExtGrammarAccess.VariableDeclarationWOSemicolonElements getVariableDeclarationWOSemicolonAccess() {
+		return gaKExt.getVariableDeclarationWOSemicolonAccess();
+	}
+	
+	public ParserRule getVariableDeclarationWOSemicolonRule() {
+		return getVariableDeclarationWOSemicolonAccess().getRule();
+	}
+
+	//NamespaceID:
+	//	ID (':' PrimeID)*;
+	public KExtGrammarAccess.NamespaceIDElements getNamespaceIDAccess() {
+		return gaKExt.getNamespaceIDAccess();
+	}
+	
+	public ParserRule getNamespaceIDRule() {
+		return getNamespaceIDAccess().getRule();
+	}
+
+	//ReferenceDeclaration kexpressions::ReferenceDeclaration:
+	//	annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] |
+	//	'extern' extern=super::STRING) valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+	//	annotations+=CommentAnnotatonSL?
+	public KExtGrammarAccess.ReferenceDeclarationElements getReferenceDeclarationAccess() {
+		return gaKExt.getReferenceDeclarationAccess();
+	}
+	
+	public ParserRule getReferenceDeclarationRule() {
+		return getReferenceDeclarationAccess().getRule();
+	}
+
+	//ReferenceDeclarationWOSemicolon kexpressions::ReferenceDeclaration:
+	//	annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] |
+	//	'extern' extern=super::STRING) valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+	//	annotations+=CommentAnnotatonSL?
+	public KExtGrammarAccess.ReferenceDeclarationWOSemicolonElements getReferenceDeclarationWOSemicolonAccess() {
+		return gaKExt.getReferenceDeclarationWOSemicolonAccess();
+	}
+	
+	public ParserRule getReferenceDeclarationWOSemicolonRule() {
+		return getReferenceDeclarationWOSemicolonAccess().getRule();
+	}
+
+	//ScheduleDeclaration kexpressions::ScheduleDeclaration:
+	//	annotations+=Annotation*
+	//	'schedule' name=PrimeID
+	//	global=SchedulePriorityType?
+	//	priorities+=SchedulePriority*
+	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+	//	annotations+=CommentAnnotatonSL?
+	public KExtGrammarAccess.ScheduleDeclarationElements getScheduleDeclarationAccess() {
+		return gaKExt.getScheduleDeclarationAccess();
+	}
+	
+	public ParserRule getScheduleDeclarationRule() {
+		return getScheduleDeclarationAccess().getRule();
+	}
+
+	//ScheduleDeclarationWOSemicolon kexpressions::ScheduleDeclaration:
+	//	annotations+=Annotation*
+	//	'schedule' name=PrimeID
+	//	global=SchedulePriorityType?
+	//	priorities+=SchedulePriority*
+	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+	//	annotations+=CommentAnnotatonSL?
+	public KExtGrammarAccess.ScheduleDeclarationWOSemicolonElements getScheduleDeclarationWOSemicolonAccess() {
+		return gaKExt.getScheduleDeclarationWOSemicolonAccess();
+	}
+	
+	public ParserRule getScheduleDeclarationWOSemicolonRule() {
+		return getScheduleDeclarationWOSemicolonAccess().getRule();
+	}
+
+	//SchedulePriority kexpressions::SchedulePriority:
+	//	'prio' priority=INT type=SchedulePriorityType
+	public KExtGrammarAccess.SchedulePriorityElements getSchedulePriorityAccess() {
+		return gaKExt.getSchedulePriorityAccess();
+	}
+	
+	public ParserRule getSchedulePriorityRule() {
+		return getSchedulePriorityAccess().getRule();
+	}
+
+	//enum SchedulePriorityType returns kexpressions::SchedulePriorityType:
+	//	CONFLICT="conflict" | CONFLUENT="confluent";
+	public KExtGrammarAccess.SchedulePriorityTypeElements getSchedulePriorityTypeAccess() {
+		return gaKExt.getSchedulePriorityTypeAccess();
+	}
+	
+	public EnumRule getSchedulePriorityTypeRule() {
+		return getSchedulePriorityTypeAccess().getRule();
+	}
+
+	////ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
+	////    annotations+=Annotation*
+	////    (
+	////        'ref' reference = [kexpressions::Identifiable|NamespaceID]
+	////        valuedObjects+=ValuedObject (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?
+	////        (',' valuedObjects+=ValuedObject (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?)* 
+	////        ';'
+	////    ) | (
+	////        'extern' extern = STRING
+	////        valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+	////    );
+	////    
+	////ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
+	////    annotations+=Annotation*
+	////    (
+	////        'ref' reference = [kexpressions::Identifiable|NamespaceID]
+	////        valuedObjects+=ValuedObject (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?
+	////        (',' valuedObjects+=ValuedObject (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?)* 
+	////    ) | (
+	////        'extern' extern = STRING
+	////        valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+	////    );
 	//// Valued Object Rule
 	//// A valued object is identified by its name. Then, a part for its cardinalities and an initial 
 	//// expression may follow. Additionally, the declaration of the object may be finished by a combine part. 
 	//// Examples: array[10], initial = false, z = 0 combine max
 	//ValuedObject kexpressions::ValuedObject:
-	//	name=ID ('[' cardinalities+=super::Expression ']')* ('=' initialValue=super::Expression)? ('combine'
+	//	annotations+=QuotedStringAnnotation*
+	//	name=PrimeID ('[' cardinalities+=super::Expression ']')* ('=' initialValue=super::Expression)? ('combine'
 	//	combineOperator=CombineOperator)?
 	public KExtGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
 		return gaKExt.getValuedObjectAccess();
@@ -5928,7 +6092,8 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// An effect is either an assignment, a postfix effect, an emission, a hostcode effect or a 
 	//// function call effect.
 	//Effect keffects::Effect:
-	//	super::Assignment | PostfixEffect | Emission | HostcodeEffect | FunctionCallEffect
+	//	super::Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect |
+	//	PrintCallEffect
 	public KEffectsGrammarAccess.EffectElements getEffectAccess() {
 		return gaKEffects.getEffectAccess();
 	}
@@ -5945,8 +6110,9 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// Important: To help the parser and to avoid ambiguities, emissions may only allow restricted 
 	//// annotations defined in the annotations grammar.		
 	//Emission keffects::Emission:
-	//	annotations+=RestrictedAnnotation*
-	//	valuedObject=[kexpressions::ValuedObject] ("(" newValue=super::Expression ")")?
+	//	annotations+=QuotedStringAnnotation*
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ("(" newValue=super::Expression ")")? ('schedule'
+	//	schedule+=ScheduleObjectReference+)?
 	public KEffectsGrammarAccess.EmissionElements getEmissionAccess() {
 		return gaKEffects.getEmissionAccess();
 	}
@@ -5955,14 +6121,27 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getEmissionAccess().getRule();
 	}
 
+	//SubReferenceAssignment keffects::Assignment:
+	//	annotations+=Annotation*
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=super::Expression ']')* ('.'
+	//	subReference=ValuedObjectReference)?
+	//	operator=AssignOperator expression=super::Expression ('schedule' schedule+=ScheduleObjectReference+)?
+	public KEffectsGrammarAccess.SubReferenceAssignmentElements getSubReferenceAssignmentAccess() {
+		return gaKEffects.getSubReferenceAssignmentAccess();
+	}
+	
+	public ParserRule getSubReferenceAssignmentRule() {
+		return getSubReferenceAssignmentAccess().getRule();
+	}
+
 	//// Postfix Effect
 	//// A postfix effect is an assignment missing the part beyond the operator. In this case the operator type
 	//// must be a postfix operator.
 	//// Example: I++, I-- 
 	//PostfixEffect keffects::Assignment:
 	//	annotations+=Annotation*
-	//	valuedObject=[kexpressions::ValuedObject] ('[' indices+=super::Expression ']')*
-	//	operator=PostfixOperator
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=super::Expression ']')*
+	//	operator=PostfixOperator ('schedule' schedule+=ScheduleObjectReference+)?
 	public KEffectsGrammarAccess.PostfixEffectElements getPostfixEffectAccess() {
 		return gaKEffects.getPostfixEffectAccess();
 	}
@@ -5984,12 +6163,27 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getHostcodeEffectAccess().getRule();
 	}
 
+	//// Reference Call Effect Rule
+	//// A reference call effect works similar to the reference call expression. Additionally, it may be
+	//// preceded by a list of annotations.
+	//ReferenceCallEffect keffects::ReferenceCallEffect:
+	//	annotations+=Annotation*
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
+	public KEffectsGrammarAccess.ReferenceCallEffectElements getReferenceCallEffectAccess() {
+		return gaKEffects.getReferenceCallEffectAccess();
+	}
+	
+	public ParserRule getReferenceCallEffectRule() {
+		return getReferenceCallEffectAccess().getRule();
+	}
+
 	//// Function Call Effect Rule
 	//// A function call effect works similar to the function call expression. Additionally, it may be
 	//// preceded by a list of annotations.
 	//FunctionCallEffect keffects::FunctionCallEffect:
-	//	annotations+=Annotation*
-	//	'<' functionName=ExtendedID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')?
+	//	annotations+=Annotation* ('extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	| '()')) | '<' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	| '()')
 	//	'>'
 	public KEffectsGrammarAccess.FunctionCallEffectElements getFunctionCallEffectAccess() {
 		return gaKEffects.getFunctionCallEffectAccess();
@@ -5999,8 +6193,21 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getFunctionCallEffectAccess().getRule();
 	}
 
+	//PrintCallEffect keffects::PrintCallEffect:
+	//	annotations+=Annotation*
+	//	'print' parameters+=Parameter (',' parameters+=Parameter)*
+	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
+		return gaKEffects.getPrintCallEffectAccess();
+	}
+	
+	public ParserRule getPrintCallEffectRule() {
+		return getPrintCallEffectAccess().getRule();
+	}
+
 	//enum AssignOperator returns keffects::AssignOperator:
-	//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=";
+	//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" |
+	//	ASSIGNMOD="%=" | ASSIGNAND="&=" | ASSIGNOR="|=" | ASSIGNXOR="^=" |
+	//	ASSIGNMIN="min=" | ASSIGNMAX="max=";
 	public KEffectsGrammarAccess.AssignOperatorElements getAssignOperatorAccess() {
 		return gaKEffects.getAssignOperatorAccess();
 	}
@@ -6088,7 +6295,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//LogicalOrExpression Expression:
 	//	LogicalAndExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator
-	//	subExpressions+=LogicalAndExpression)+)?
+	//	subExpressions+=LogicalAndExpression) ('||' subExpressions+=LogicalAndExpression)*)?
 	public KExpressionsGrammarAccess.LogicalOrExpressionElements getLogicalOrExpressionAccess() {
 		return gaKExpressions.getLogicalOrExpressionAccess();
 	}
@@ -6102,7 +6309,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//LogicalAndExpression Expression:
 	//	BitwiseOrExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalAndOperator
-	//	subExpressions+=BitwiseOrExpression)+)?
+	//	subExpressions+=BitwiseOrExpression) ('&&' subExpressions+=BitwiseOrExpression)*)?
 	public KExpressionsGrammarAccess.LogicalAndExpressionElements getLogicalAndExpressionAccess() {
 		return gaKExpressions.getLogicalAndExpressionAccess();
 	}
@@ -6116,7 +6323,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//BitwiseOrExpression Expression:
 	//	BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator
-	//	subExpressions+=BitwiseAndExpression)+)?
+	//	subExpressions+=BitwiseAndExpression) ('|' subExpressions+=BitwiseAndExpression)*)?
 	public KExpressionsGrammarAccess.BitwiseOrExpressionElements getBitwiseOrExpressionAccess() {
 		return gaKExpressions.getBitwiseOrExpressionAccess();
 	}
@@ -6130,7 +6337,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//BitwiseAndExpression Expression:
 	//	super::CompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
-	//	subExpressions+=super::CompareOperation)+)?
+	//	subExpressions+=super::CompareOperation) ('&' subExpressions+=super::CompareOperation)*)?
 	public KExpressionsGrammarAccess.BitwiseAndExpressionElements getBitwiseAndExpressionAccess() {
 		return gaKExpressions.getBitwiseAndExpressionAccess();
 	}
@@ -6139,11 +6346,22 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getBitwiseAndExpressionAccess().getRule();
 	}
 
+	//// ID with primes
+	//PrimeID:
+	//	ID "'"*;
+	public KExpressionsGrammarAccess.PrimeIDElements getPrimeIDAccess() {
+		return gaKExpressions.getPrimeIDAccess();
+	}
+	
+	public ParserRule getPrimeIDRule() {
+		return getPrimeIDAccess().getRule();
+	}
+
 	//// Valued Object Reference Rule
 	//// References a valued object with arbitrary (including none) indices part.
 	//// Example: A, B
 	//ValuedObjectReference:
-	//	valuedObject=[ValuedObject] ('[' indices+=super::Expression ']')*;
+	//	valuedObject=[ValuedObject|PrimeID] ('[' indices+=super::Expression ']')* ('.' subReference=ValuedObjectReference)?;
 	public KExpressionsGrammarAccess.ValuedObjectReferenceElements getValuedObjectReferenceAccess() {
 		return gaKExpressions.getValuedObjectReferenceAccess();
 	}
@@ -6152,11 +6370,35 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedObjectReferenceAccess().getRule();
 	}
 
+	//ScheduleObjectReference:
+	//	valuedObject=[ValuedObject|PrimeID] priority=INT;
+	public KExpressionsGrammarAccess.ScheduleObjectReferenceElements getScheduleObjectReferenceAccess() {
+		return gaKExpressions.getScheduleObjectReferenceAccess();
+	}
+	
+	public ParserRule getScheduleObjectReferenceRule() {
+		return getScheduleObjectReferenceAccess().getRule();
+	}
+
+	//// Reference Call Rule
+	//// Calls to references. They may include a parameter list. 
+	//ReferenceCall:
+	//	valuedObject=[ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	| '()');
+	public KExpressionsGrammarAccess.ReferenceCallElements getReferenceCallAccess() {
+		return gaKExpressions.getReferenceCallAccess();
+	}
+	
+	public ParserRule getReferenceCallRule() {
+		return getReferenceCallAccess().getRule();
+	}
+
 	//// Function Call Rule
 	//// Calls to functions are indicated by angle brackets. They may include a parameter list. 
+	//// Deprecated?
 	//FunctionCall:
-	//	'<' functionName=ExtendedID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')?
-	//	'>';
+	//	'extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	| '()');
 	public KExpressionsGrammarAccess.FunctionCallElements getFunctionCallAccess() {
 		return gaKExpressions.getFunctionCallAccess();
 	}
@@ -6193,7 +6435,6 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getTextExpressionAccess().getRule();
 	}
 
-	//// Int Value Rule
 	//IntValue:
 	//	value=INT;
 	public KExpressionsGrammarAccess.IntValueElements getIntValueAccess() {
@@ -6204,7 +6445,6 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getIntValueAccess().getRule();
 	}
 
-	//// Float Value Rule
 	//FloatValue:
 	//	value=FLOAT;
 	public KExpressionsGrammarAccess.FloatValueElements getFloatValueAccess() {
@@ -6215,7 +6455,6 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getFloatValueAccess().getRule();
 	}
 
-	//// Bool Value Rule
 	//BoolValue:
 	//	value=BOOLEAN;
 	public KExpressionsGrammarAccess.BoolValueElements getBoolValueAccess() {
@@ -6226,7 +6465,6 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getBoolValueAccess().getRule();
 	}
 
-	//// String Value Rule	
 	//StringValue:
 	//	value=super::STRING;
 	public KExpressionsGrammarAccess.StringValueElements getStringValueAccess() {
@@ -6235,6 +6473,36 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getStringValueRule() {
 		return getStringValueAccess().getRule();
+	}
+
+	//VectorValue:
+	//	'{' values+=VectorValueMember (',' values+=VectorValueMember)* '}';
+	public KExpressionsGrammarAccess.VectorValueElements getVectorValueAccess() {
+		return gaKExpressions.getVectorValueAccess();
+	}
+	
+	public ParserRule getVectorValueRule() {
+		return getVectorValueAccess().getRule();
+	}
+
+	//VectorValueMember Expression:
+	//	super::Expression | IgnoreValue
+	public KExpressionsGrammarAccess.VectorValueMemberElements getVectorValueMemberAccess() {
+		return gaKExpressions.getVectorValueMemberAccess();
+	}
+	
+	public ParserRule getVectorValueMemberRule() {
+		return getVectorValueMemberAccess().getRule();
+	}
+
+	//IgnoreValue:
+	//	{IgnoreValue} '_';
+	public KExpressionsGrammarAccess.IgnoreValueElements getIgnoreValueAccess() {
+		return gaKExpressions.getIgnoreValueAccess();
+	}
+	
+	public ParserRule getIgnoreValueRule() {
+		return getIgnoreValueAccess().getRule();
 	}
 
 	//// Any Type Rule
@@ -6278,6 +6546,26 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getPreOperatorRule() {
 		return getPreOperatorAccess().getRule();
+	}
+
+	//enum BitwiseNegOperator returns OperatorType:
+	//	BITWISE_NEG="~";
+	public KExpressionsGrammarAccess.BitwiseNegOperatorElements getBitwiseNegOperatorAccess() {
+		return gaKExpressions.getBitwiseNegOperatorAccess();
+	}
+	
+	public EnumRule getBitwiseNegOperatorRule() {
+		return getBitwiseNegOperatorAccess().getRule();
+	}
+
+	//enum BitwiseXOrOperator returns OperatorType:
+	//	BITWISE_XOR="^";
+	public KExpressionsGrammarAccess.BitwiseXOrOperatorElements getBitwiseXOrOperatorAccess() {
+		return gaKExpressions.getBitwiseXOrOperatorAccess();
+	}
+	
+	public EnumRule getBitwiseXOrOperatorRule() {
+		return getBitwiseXOrOperatorAccess().getRule();
 	}
 
 	//enum BitwiseOrOperator returns OperatorType:
@@ -6390,6 +6678,36 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getLogicalAndOperatorAccess().getRule();
 	}
 
+	//enum ShiftLeft returns OperatorType:
+	//	SHIFT_LEFT="<<";
+	public KExpressionsGrammarAccess.ShiftLeftElements getShiftLeftAccess() {
+		return gaKExpressions.getShiftLeftAccess();
+	}
+	
+	public EnumRule getShiftLeftRule() {
+		return getShiftLeftAccess().getRule();
+	}
+
+	//enum ShiftRight returns OperatorType:
+	//	SHIFT_RIGHT=">>";
+	public KExpressionsGrammarAccess.ShiftRightElements getShiftRightAccess() {
+		return gaKExpressions.getShiftRightAccess();
+	}
+	
+	public EnumRule getShiftRightRule() {
+		return getShiftRightAccess().getRule();
+	}
+
+	//enum ShiftRightUnsigned returns OperatorType:
+	//	SHIFT_RIGHT=">>>";
+	public KExpressionsGrammarAccess.ShiftRightUnsignedElements getShiftRightUnsignedAccess() {
+		return gaKExpressions.getShiftRightUnsignedAccess();
+	}
+	
+	public EnumRule getShiftRightUnsignedRule() {
+		return getShiftRightUnsignedAccess().getRule();
+	}
+
 	//enum PostfixAdd returns OperatorType:
 	//	POSTFIX_ADD="++";
 	public KExpressionsGrammarAccess.PostfixAddElements getPostfixAddAccess() {
@@ -6408,6 +6726,16 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getPostfixSubRule() {
 		return getPostfixSubAccess().getRule();
+	}
+
+	//enum ConditionalType returns OperatorType:
+	//	CONDITIONAL;
+	public KExpressionsGrammarAccess.ConditionalTypeElements getConditionalTypeAccess() {
+		return gaKExpressions.getConditionalTypeAccess();
+	}
+	
+	public EnumRule getConditionalTypeRule() {
+		return getConditionalTypeAccess().getRule();
 	}
 
 	//enum ValueType:
@@ -6453,8 +6781,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// General rule for annotations
 	//// The different annotation sub rules are tested in order. Hence, order matters! 
 	//Annotation:
-	//	CommentAnnotation | KeyBooleanValueAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation |
-	//	KeyIntValueAnnotation | KeyFloatValueAnnotation | TagAnnotation;
+	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | TagAnnotation;
 	public AnnotationsGrammarAccess.AnnotationElements getAnnotationAccess() {
 		return gaAnnotations.getAnnotationAccess();
 	}
@@ -6463,13 +6790,24 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getAnnotationAccess().getRule();
 	}
 
+	//// General rule for pragmas
+	//// We only have string and tag pragmas.    
+	//Pragma:
+	//	StringPragma | PragmaTag;
+	public AnnotationsGrammarAccess.PragmaElements getPragmaAccess() {
+		return gaAnnotations.getPragmaAccess();
+	}
+	
+	public ParserRule getPragmaRule() {
+		return getPragmaAccess().getRule();
+	}
+
 	//// Valued Annotation Rule
 	//// Valued annotations must have a value. For instance, tag annotations are not allowed.
 	//// Derived grammars may use this rule if the general annotation rules compromises the grammar
 	//// due to ambiguities.
 	//ValuedAnnotation Annotation:
-	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
-	//	KeyIntValueAnnotation | KeyFloatValueAnnotation
+	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation
 	public AnnotationsGrammarAccess.ValuedAnnotationElements getValuedAnnotationAccess() {
 		return gaAnnotations.getValuedAnnotationAccess();
 	}
@@ -6478,20 +6816,32 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedAnnotationAccess().getRule();
 	}
 
-	//// Restiricted Annotation Rule
-	//// The restricted annotation rules uses quoted key string annotations. You can use this rule in 
+	//// Restricted Type Annotation Rule
+	//// The restricted type annotation rule does not allow typed string annotations. 
+	//// You can use this rule in derived grammars if you don't want to permit typed strings. 
+	//RestrictedTypeAnnotation Annotation:
+	//	CommentAnnotation | RestrictedKeyStringValueAnnotation | RestrictedTypedKeyStringValueAnnotation | TagAnnotation
+	public AnnotationsGrammarAccess.RestrictedTypeAnnotationElements getRestrictedTypeAnnotationAccess() {
+		return gaAnnotations.getRestrictedTypeAnnotationAccess();
+	}
+	
+	public ParserRule getRestrictedTypeAnnotationRule() {
+		return getRestrictedTypeAnnotationAccess().getRule();
+	}
+
+	//// Quoted String Annotation Rule
+	//// The quoted string annotation rules uses quoted key string annotations. You can use this rule in 
 	//// derived grammars if you don't want to permit unquoted strings. 
 	//// (If you are looking for an example, the keffects grammar uses this rule for their emission
 	//// rule and to avoid grammar ambiguities.)  
-	//RestrictedAnnotation Annotation:
-	//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
-	//	KeyIntValueAnnotation | KeyFloatValueAnnotation | TagAnnotation
-	public AnnotationsGrammarAccess.RestrictedAnnotationElements getRestrictedAnnotationAccess() {
-		return gaAnnotations.getRestrictedAnnotationAccess();
+	//QuotedStringAnnotation Annotation:
+	//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | TagAnnotation
+	public AnnotationsGrammarAccess.QuotedStringAnnotationElements getQuotedStringAnnotationAccess() {
+		return gaAnnotations.getQuotedStringAnnotationAccess();
 	}
 	
-	public ParserRule getRestrictedAnnotationRule() {
-		return getRestrictedAnnotationAccess().getRule();
+	public ParserRule getQuotedStringAnnotationRule() {
+		return getQuotedStringAnnotationAccess().getRule();
 	}
 
 	//// CommentAnnotation
@@ -6506,6 +6856,16 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getCommentAnnotationAccess().getRule();
 	}
 
+	//CommentAnnotatonSL CommentAnnotation:
+	//	values+=SL_COMMENT_ANNOTATION
+	public AnnotationsGrammarAccess.CommentAnnotatonSLElements getCommentAnnotatonSLAccess() {
+		return gaAnnotations.getCommentAnnotatonSLAccess();
+	}
+	
+	public ParserRule getCommentAnnotatonSLRule() {
+		return getCommentAnnotatonSLAccess().getRule();
+	}
+
 	//// TagAnnotation
 	//// e.g.: @HVlayout
 	//TagAnnotation Annotation:
@@ -6518,11 +6878,21 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getTagAnnotationAccess().getRule();
 	}
 
+	//PragmaTag Pragma:
+	//	'#' name=ExtendedID
+	public AnnotationsGrammarAccess.PragmaTagElements getPragmaTagAccess() {
+		return gaAnnotations.getPragmaTagAccess();
+	}
+	
+	public ParserRule getPragmaTagRule() {
+		return getPragmaTagAccess().getRule();
+	}
+
 	//// KeyStringValueAnnotation
 	//// e.g.: @layouter dot
 	//// You may separate different values via comma.   
 	//KeyStringValueAnnotation StringAnnotation:
-	//	'@' name=ExtendedID values+=EString (',' values+=EString)*
+	//	'@' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*
 	public AnnotationsGrammarAccess.KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getKeyStringValueAnnotationAccess();
 	}
@@ -6531,16 +6901,46 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getKeyStringValueAnnotationAccess().getRule();
 	}
 
+	//RestrictedKeyStringValueAnnotation StringAnnotation:
+	//	'@' name=ExtendedID values+=EStringBoolean (',' values+=EStringBoolean)*
+	public AnnotationsGrammarAccess.RestrictedKeyStringValueAnnotationElements getRestrictedKeyStringValueAnnotationAccess() {
+		return gaAnnotations.getRestrictedKeyStringValueAnnotationAccess();
+	}
+	
+	public ParserRule getRestrictedKeyStringValueAnnotationRule() {
+		return getRestrictedKeyStringValueAnnotationAccess().getRule();
+	}
+
+	//StringPragma:
+	//	'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*;
+	public AnnotationsGrammarAccess.StringPragmaElements getStringPragmaAccess() {
+		return gaAnnotations.getStringPragmaAccess();
+	}
+	
+	public ParserRule getStringPragmaRule() {
+		return getStringPragmaAccess().getRule();
+	}
+
 	//// TypedKeyStringValueAnnotation
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 	//TypedKeyStringValueAnnotation TypedStringAnnotation:
-	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*
+	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringAllTypes (',' values+=EStringAllTypes)*
 	public AnnotationsGrammarAccess.TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getTypedKeyStringValueAnnotationAccess();
 	}
 	
 	public ParserRule getTypedKeyStringValueAnnotationRule() {
 		return getTypedKeyStringValueAnnotationAccess().getRule();
+	}
+
+	//RestrictedTypedKeyStringValueAnnotation TypedStringAnnotation:
+	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*
+	public AnnotationsGrammarAccess.RestrictedTypedKeyStringValueAnnotationElements getRestrictedTypedKeyStringValueAnnotationAccess() {
+		return gaAnnotations.getRestrictedTypedKeyStringValueAnnotationAccess();
+	}
+	
+	public ParserRule getRestrictedTypedKeyStringValueAnnotationRule() {
+		return getRestrictedTypedKeyStringValueAnnotationAccess().getRule();
 	}
 
 	//// QuotedKeyStringValueAnnotation
@@ -6569,42 +6969,6 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getQuotedTypedKeyStringValueAnnotationAccess().getRule();
 	}
 
-	//// KeyBooleanValueAnnotation    
-	//// e.g.: @visible true;
-	//KeyBooleanValueAnnotation BooleanAnnotation:
-	//	'@' name=ExtendedID value=BOOLEAN
-	public AnnotationsGrammarAccess.KeyBooleanValueAnnotationElements getKeyBooleanValueAnnotationAccess() {
-		return gaAnnotations.getKeyBooleanValueAnnotationAccess();
-	}
-	
-	public ParserRule getKeyBooleanValueAnnotationRule() {
-		return getKeyBooleanValueAnnotationAccess().getRule();
-	}
-
-	//// KeyIntValueAnnotation
-	//// e.g.: @minSpace 10;    
-	//KeyIntValueAnnotation IntAnnotation:
-	//	'@' name=ExtendedID value=Integer
-	public AnnotationsGrammarAccess.KeyIntValueAnnotationElements getKeyIntValueAnnotationAccess() {
-		return gaAnnotations.getKeyIntValueAnnotationAccess();
-	}
-	
-	public ParserRule getKeyIntValueAnnotationRule() {
-		return getKeyIntValueAnnotationAccess().getRule();
-	}
-
-	//// KeyFloatValueAnnotation
-	//// e.g.: @minSpace 10.0;    
-	//KeyFloatValueAnnotation FloatAnnotation:
-	//	'@' name=ExtendedID value=Floateger
-	public AnnotationsGrammarAccess.KeyFloatValueAnnotationElements getKeyFloatValueAnnotationAccess() {
-		return gaAnnotations.getKeyFloatValueAnnotationAccess();
-	}
-	
-	public ParserRule getKeyFloatValueAnnotationRule() {
-		return getKeyFloatValueAnnotationAccess().getRule();
-	}
-
 	//// EString
 	//// Allow strings without quotes if they don't contain spaces.
 	//// For quoteless strings the ExtendedID rule is used.
@@ -6628,17 +6992,37 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getEStringBooleanAccess().getRule();
 	}
 
+	//EStringAllTypes:
+	//	super::STRING | ExtendedID | BOOLEAN | Integer | Floateger;
+	public AnnotationsGrammarAccess.EStringAllTypesElements getEStringAllTypesAccess() {
+		return gaAnnotations.getEStringAllTypesAccess();
+	}
+	
+	public ParserRule getEStringAllTypesRule() {
+		return getEStringAllTypesAccess().getRule();
+	}
+
 	//// ExtendedID
 	//// ExtendedID extends the ID rule provided by the terminals grammar.
 	//// An ID may have dot separated parts and may close with a number separated by a hash mark.
 	//ExtendedID:
-	//	ID ("." ID)* ("#" INT)?;
+	//	ID (('.' | '-') ID)* ("#" INT)?;
 	public AnnotationsGrammarAccess.ExtendedIDElements getExtendedIDAccess() {
 		return gaAnnotations.getExtendedIDAccess();
 	}
 	
 	public ParserRule getExtendedIDRule() {
 		return getExtendedIDAccess().getRule();
+	}
+
+	//QualifiedID:
+	//	ID ("." ID)*;
+	public AnnotationsGrammarAccess.QualifiedIDElements getQualifiedIDAccess() {
+		return gaAnnotations.getQualifiedIDAccess();
+	}
+	
+	public ParserRule getQualifiedIDRule() {
+		return getQualifiedIDAccess().getRule();
 	}
 
 	//// Integer
@@ -6671,6 +7055,12 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return gaAnnotations.getCOMMENT_ANNOTATIONRule();
 	} 
 
+	//terminal SL_COMMENT_ANNOTATION:
+	//	'// *' !('\n' | '\r')* ('\r'? '\n')?;
+	public TerminalRule getSL_COMMENT_ANNOTATIONRule() {
+		return gaAnnotations.getSL_COMMENT_ANNOTATIONRule();
+	} 
+
 	//terminal fragment NUMBER:
 	//	'0'..'9';
 	public TerminalRule getNUMBERRule() {
@@ -6696,9 +7086,9 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//terminal ID:
-	//	'^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
+	//	'^'? (('_'? 'a'..'z' | '_'? 'A'..'Z') | '_' '0'..'9' | '__') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
 	public TerminalRule getIDRule() {
-		return gaTerminals.getIDRule();
+		return gaAnnotations.getIDRule();
 	} 
 
 	//terminal WS:

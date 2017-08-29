@@ -38,6 +38,8 @@ import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.scg.transformations.sequentializer.EmptyExpression
 
 import static de.cau.cs.kieler.scg.SCGAnnotations.*
+import de.cau.cs.kieler.scg.SCGPlugin
+import java.util.logging.Level
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -70,22 +72,6 @@ import static de.cau.cs.kieler.scg.SCGAnnotations.*
 
 class DepthSynchronizer extends AbstractSynchronizer {
 
-    static final boolean DEBUG = true;
-
-    def static void debug(String debugText) {
-        debug(debugText, true);
-    }
-
-    def static void debug(String debugText, boolean lineBreak) {
-        if (DEBUG) {
-            if (lineBreak) {
-                System.out.println(debugText);
-            } else {
-                System.out.print(debugText);
-            }
-        }
-    }
-     
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
@@ -136,7 +122,7 @@ class DepthSynchronizer extends AbstractSynchronizer {
 	 * @return
 	 * 		Returns a {@code SynchronizerData} class including all mandatory data for the scheduler.
 	 */  
-    override protected build(Join join, Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
+    override build(Join join, Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
     	// Create a new SynchronizerData class which holds the data to return.
         var data = new SynchronizerData() => [ 
             setJoin(join)
@@ -174,7 +160,7 @@ class DepthSynchronizer extends AbstractSynchronizer {
             scg.guards += newGuard
             emptyDeclaration.valuedObjects += newGuard.valuedObject
             
-            debug("Generated NEW guard " + newGuard.valuedObject.name + " with expression " + newGuard.expression.serialize)
+            SCGPlugin.log("Generated NEW guard " + newGuard.valuedObject.name + " with expression " + newGuard.expression.serialize, Level.FINE)
 		}
     }
     

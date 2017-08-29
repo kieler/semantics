@@ -25,7 +25,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.BranchType
 import de.cau.cs.kieler.scg.Conditional
@@ -47,8 +47,8 @@ import java.util.List
 
 import static de.cau.cs.kieler.scg.SCGAnnotations.*
 
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.scg.SCGPlugin
 import java.util.logging.Level
 
@@ -159,9 +159,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
         val timestamp = System.currentTimeMillis
         compilerContext = context
 
-//        val PotentialInstantaneousLoopAnalyzer potentialInstantaneousLoopAnalyzer = Guice.createInjector().
-//            getInstance(typeof(PotentialInstantaneousLoopAnalyzer))
-//        context.compilationResult.addAuxiliaryData(potentialInstantaneousLoopAnalyzer.analyze(scg))
+//        PotentiallyInstantaneousLoopAnalyzer.createPotentiallyInstantaneousLoopData(scg, context)
 
         //        pilData = context.compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
         /**
@@ -214,7 +212,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
             val conditional = p.conditional
             if (conditional != null && !conditionalGuards.keySet.contains(conditional)) {
                 val newVO = KExpressionsFactory::eINSTANCE.createValuedObject
-                newVO.name = CONDITIONAL_EXPRESSION_PREFIX + p.basicBlock.schedulingBlocks.head.guards.head.valuedObject.name
+                newVO.name = CONDITIONAL_EXPRESSION_PREFIX + p.basicBlock.schedulingBlocks.head.guards.head.valuedObject.name.replaceFirst("^_", "")
 
                 val newGuard = ScgFactory::eINSTANCE.createGuard
                 newGuard.valuedObject = newVO
@@ -461,7 +459,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
     // --- CREATE GUARDS: GO BLOCK 
     protected def void createGoBlockGuardExpression(Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
         guard.setDefaultTrace
-        guard.expression = scg.findValuedObjectByName(GOGUARDNAME).reference
+        guard.expression = scg.findValuedObjectByName(GO_GUARD_NAME).reference
     }
 
     // --- CREATE GUARDS: DEPTH BLOCK 
@@ -509,7 +507,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
         guard.setDefaultTrace
         val basicBlock = schedulingBlock.basicBlock
 
-        val relevantPredecessors = <Predecessor>newHashSet
+        val relevantPredecessors = <Predecessor>newLinkedList
 // FIXME: Verify removal of schizophrenic flag        
 //        if (guard.schizophrenic) {
 //            relevantPredecessors += basicBlock.predecessors.filter[!it.basicBlock.entryBlock]
@@ -633,7 +631,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
 
     protected def SchedulingBlock getSchedulingBlockTwin(Predecessor predecessor, BranchType blockType, SCGraph scg) {
         val twin = predecessorTwinCache.get(predecessor)
-        predecessorSBCache.get(twin).head
+        predecessorSBCache.get(twin)?.head
     }
 
     private def cacheTwin(Predecessor predecessor, List<BasicBlock> basicBlocks) {

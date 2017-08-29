@@ -14,8 +14,13 @@
 package de.cau.cs.kieler.sccharts.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.NamedObject;
+import de.cau.cs.kieler.annotations.Pragmatable;
+import de.cau.cs.kieler.kexpressions.Call;
+import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.Schedulable;
+import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 import de.cau.cs.kieler.sccharts.*;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 
@@ -34,12 +39,11 @@ import org.eclipse.emf.ecore.EObject;
 public class SCChartsAdapterFactory extends AdapterFactoryImpl {
     /**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Kiel University\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
-
-    /**
+	public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
+				/**
      * The cached model package.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -87,8 +91,24 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
     protected SCChartsSwitch<Adapter> modelSwitch =
         new SCChartsSwitch<Adapter>() {
             @Override
+            public Adapter caseSCCharts(SCCharts object) {
+                return createSCChartsAdapter();
+            }
+            @Override
+            public Adapter caseScope(Scope object) {
+                return createScopeAdapter();
+            }
+            @Override
+            public Adapter caseScopeCall(ScopeCall object) {
+                return createScopeCallAdapter();
+            }
+            @Override
             public Adapter caseAction(Action object) {
                 return createActionAdapter();
+            }
+            @Override
+            public Adapter caseLocalAction(LocalAction object) {
+                return createLocalActionAdapter();
             }
             @Override
             public Adapter caseState(State object) {
@@ -107,40 +127,8 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createDataflowRegionAdapter();
             }
             @Override
-            public Adapter caseNode(Node object) {
-                return createNodeAdapter();
-            }
-            @Override
-            public Adapter caseReferenceNode(ReferenceNode object) {
-                return createReferenceNodeAdapter();
-            }
-            @Override
-            public Adapter caseCallNode(CallNode object) {
-                return createCallNodeAdapter();
-            }
-            @Override
-            public Adapter caseDefineNode(DefineNode object) {
-                return createDefineNodeAdapter();
-            }
-            @Override
-            public Adapter caseEquation(Equation object) {
-                return createEquationAdapter();
-            }
-            @Override
-            public Adapter caseBinding(Binding object) {
-                return createBindingAdapter();
-            }
-            @Override
             public Adapter caseTransition(Transition object) {
                 return createTransitionAdapter();
-            }
-            @Override
-            public Adapter caseScope(Scope object) {
-                return createScopeAdapter();
-            }
-            @Override
-            public Adapter caseLocalAction(LocalAction object) {
-                return createLocalActionAdapter();
             }
             @Override
             public Adapter caseEntryAction(EntryAction object) {
@@ -159,12 +147,40 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createSuspendActionAdapter();
             }
             @Override
-            public Adapter caseIterateAction(IterateAction object) {
-                return createIterateActionAdapter();
+            public Adapter casePrecedingAction(PrecedingAction object) {
+                return createPrecedingActionAdapter();
+            }
+            @Override
+            public Adapter caseSucceedingAction(SucceedingAction object) {
+                return createSucceedingActionAdapter();
+            }
+            @Override
+            public Adapter casePragmatable(Pragmatable object) {
+                return createPragmatableAdapter();
             }
             @Override
             public Adapter caseAnnotatable(Annotatable object) {
                 return createAnnotatableAdapter();
+            }
+            @Override
+            public Adapter caseDeclarationScope(DeclarationScope object) {
+                return createDeclarationScopeAdapter();
+            }
+            @Override
+            public Adapter caseNamedObject(NamedObject object) {
+                return createNamedObjectAdapter();
+            }
+            @Override
+            public Adapter caseSchedulable(Schedulable object) {
+                return createSchedulableAdapter();
+            }
+            @Override
+            public Adapter caseExpression(Expression object) {
+                return createExpressionAdapter();
+            }
+            @Override
+            public Adapter caseCall(Call object) {
+                return createCallAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -257,90 +273,6 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.Node <em>Node</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.sccharts.Node
-     * @generated
-     */
-    public Adapter createNodeAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.ReferenceNode <em>Reference Node</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.sccharts.ReferenceNode
-     * @generated
-     */
-    public Adapter createReferenceNodeAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.CallNode <em>Call Node</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.sccharts.CallNode
-     * @generated
-     */
-    public Adapter createCallNodeAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.DefineNode <em>Define Node</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.sccharts.DefineNode
-     * @generated
-     */
-    public Adapter createDefineNodeAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.Equation <em>Equation</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.sccharts.Equation
-     * @generated
-     */
-    public Adapter createEquationAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.Binding <em>Binding</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.sccharts.Binding
-     * @generated
-     */
-    public Adapter createBindingAdapter() {
-        return null;
-    }
-
-    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.Transition <em>Transition</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -365,6 +297,20 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createScopeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.ScopeCall <em>Scope Call</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.ScopeCall
+     * @generated
+     */
+    public Adapter createScopeCallAdapter() {
         return null;
     }
 
@@ -439,20 +385,62 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.IterateAction <em>Iterate Action</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.PrecedingAction <em>Preceding Action</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.sccharts.IterateAction
+     * @see de.cau.cs.kieler.sccharts.PrecedingAction
      * @generated
      */
-    public Adapter createIterateActionAdapter() {
+    public Adapter createPrecedingActionAdapter() {
         return null;
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.SucceedingAction <em>Succeeding Action</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.SucceedingAction
+     * @generated
+     */
+    public Adapter createSucceedingActionAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.Pragmatable <em>Pragmatable</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.annotations.Pragmatable
+     * @generated
+     */
+    public Adapter createPragmatableAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.SCCharts <em>SC Charts</em>}'.
+     * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.SCCharts
+     * @generated
+     */
+	public Adapter createSCChartsAdapter() {
+        return null;
+    }
+
+				/**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.Annotatable <em>Annotatable</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -463,6 +451,76 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createAnnotatableAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.kext.DeclarationScope <em>Declaration Scope</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.kext.DeclarationScope
+     * @generated
+     */
+    public Adapter createDeclarationScopeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.NamedObject <em>Named Object</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.annotations.NamedObject
+     * @generated
+     */
+    public Adapter createNamedObjectAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Schedulable <em>Schedulable</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.Schedulable
+     * @generated
+     */
+    public Adapter createSchedulableAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Expression <em>Expression</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.Expression
+     * @generated
+     */
+    public Adapter createExpressionAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Call <em>Call</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.Call
+     * @generated
+     */
+    public Adapter createCallAdapter() {
         return null;
     }
 

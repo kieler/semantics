@@ -22,23 +22,24 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalAnnotationsParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_BOOLEAN", "RULE_ID", "RULE_INT", "RULE_FLOAT", "RULE_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_NUMBER", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'@'", "','", "'['", "']'", "'.'", "'#'", "'-'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_BOOLEAN", "RULE_ID", "RULE_INT", "RULE_FLOAT", "RULE_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_SL_COMMENT_ANNOTATION", "RULE_SL_COMMENT", "RULE_NUMBER", "RULE_WS", "RULE_ANY_OTHER", "'.'", "'-'", "'@'", "'#'", "','", "'['", "']'"
     };
     public static final int RULE_COMMENT_ANNOTATION=9;
     public static final int RULE_BOOLEAN=5;
     public static final int RULE_STRING=4;
     public static final int RULE_SL_COMMENT=12;
     public static final int T__19=19;
-    public static final int T__15=15;
+    public static final int RULE_SL_COMMENT_ANNOTATION=11;
     public static final int T__16=16;
     public static final int T__17=17;
     public static final int T__18=18;
     public static final int EOF=-1;
     public static final int RULE_ID=6;
-    public static final int RULE_WS=13;
-    public static final int RULE_ANY_OTHER=14;
-    public static final int RULE_NUMBER=11;
+    public static final int RULE_WS=14;
+    public static final int RULE_ANY_OTHER=15;
+    public static final int RULE_NUMBER=13;
     public static final int RULE_INT=7;
+    public static final int T__22=22;
     public static final int RULE_ML_COMMENT=10;
     public static final int RULE_FLOAT=8;
     public static final int T__20=20;
@@ -159,11 +160,11 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "entryRuleCommentAnnotation"
-    // InternalAnnotations.g:92:1: entryRuleCommentAnnotation : ruleCommentAnnotation EOF ;
+    // InternalAnnotations.g:96:1: entryRuleCommentAnnotation : ruleCommentAnnotation EOF ;
     public final void entryRuleCommentAnnotation() throws RecognitionException {
         try {
-            // InternalAnnotations.g:93:1: ( ruleCommentAnnotation EOF )
-            // InternalAnnotations.g:94:1: ruleCommentAnnotation EOF
+            // InternalAnnotations.g:97:1: ( ruleCommentAnnotation EOF )
+            // InternalAnnotations.g:98:1: ruleCommentAnnotation EOF
             {
              before(grammarAccess.getCommentAnnotationRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
@@ -189,21 +190,21 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "ruleCommentAnnotation"
-    // InternalAnnotations.g:101:1: ruleCommentAnnotation : ( ( rule__CommentAnnotation__ValuesAssignment ) ) ;
+    // InternalAnnotations.g:105:1: ruleCommentAnnotation : ( ( rule__CommentAnnotation__ValuesAssignment ) ) ;
     public final void ruleCommentAnnotation() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:105:2: ( ( ( rule__CommentAnnotation__ValuesAssignment ) ) )
-            // InternalAnnotations.g:106:1: ( ( rule__CommentAnnotation__ValuesAssignment ) )
+            // InternalAnnotations.g:109:2: ( ( ( rule__CommentAnnotation__ValuesAssignment ) ) )
+            // InternalAnnotations.g:110:1: ( ( rule__CommentAnnotation__ValuesAssignment ) )
             {
-            // InternalAnnotations.g:106:1: ( ( rule__CommentAnnotation__ValuesAssignment ) )
-            // InternalAnnotations.g:107:1: ( rule__CommentAnnotation__ValuesAssignment )
+            // InternalAnnotations.g:110:1: ( ( rule__CommentAnnotation__ValuesAssignment ) )
+            // InternalAnnotations.g:111:1: ( rule__CommentAnnotation__ValuesAssignment )
             {
              before(grammarAccess.getCommentAnnotationAccess().getValuesAssignment()); 
-            // InternalAnnotations.g:108:1: ( rule__CommentAnnotation__ValuesAssignment )
-            // InternalAnnotations.g:108:2: rule__CommentAnnotation__ValuesAssignment
+            // InternalAnnotations.g:112:1: ( rule__CommentAnnotation__ValuesAssignment )
+            // InternalAnnotations.g:112:2: rule__CommentAnnotation__ValuesAssignment
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__CommentAnnotation__ValuesAssignment();
@@ -236,11 +237,11 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "entryRuleTagAnnotation"
-    // InternalAnnotations.g:120:1: entryRuleTagAnnotation : ruleTagAnnotation EOF ;
+    // InternalAnnotations.g:126:1: entryRuleTagAnnotation : ruleTagAnnotation EOF ;
     public final void entryRuleTagAnnotation() throws RecognitionException {
         try {
-            // InternalAnnotations.g:121:1: ( ruleTagAnnotation EOF )
-            // InternalAnnotations.g:122:1: ruleTagAnnotation EOF
+            // InternalAnnotations.g:127:1: ( ruleTagAnnotation EOF )
+            // InternalAnnotations.g:128:1: ruleTagAnnotation EOF
             {
              before(grammarAccess.getTagAnnotationRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
@@ -266,21 +267,21 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "ruleTagAnnotation"
-    // InternalAnnotations.g:129:1: ruleTagAnnotation : ( ( rule__TagAnnotation__Group__0 ) ) ;
+    // InternalAnnotations.g:135:1: ruleTagAnnotation : ( ( rule__TagAnnotation__Group__0 ) ) ;
     public final void ruleTagAnnotation() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:133:2: ( ( ( rule__TagAnnotation__Group__0 ) ) )
-            // InternalAnnotations.g:134:1: ( ( rule__TagAnnotation__Group__0 ) )
+            // InternalAnnotations.g:139:2: ( ( ( rule__TagAnnotation__Group__0 ) ) )
+            // InternalAnnotations.g:140:1: ( ( rule__TagAnnotation__Group__0 ) )
             {
-            // InternalAnnotations.g:134:1: ( ( rule__TagAnnotation__Group__0 ) )
-            // InternalAnnotations.g:135:1: ( rule__TagAnnotation__Group__0 )
+            // InternalAnnotations.g:140:1: ( ( rule__TagAnnotation__Group__0 ) )
+            // InternalAnnotations.g:141:1: ( rule__TagAnnotation__Group__0 )
             {
              before(grammarAccess.getTagAnnotationAccess().getGroup()); 
-            // InternalAnnotations.g:136:1: ( rule__TagAnnotation__Group__0 )
-            // InternalAnnotations.g:136:2: rule__TagAnnotation__Group__0
+            // InternalAnnotations.g:142:1: ( rule__TagAnnotation__Group__0 )
+            // InternalAnnotations.g:142:2: rule__TagAnnotation__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TagAnnotation__Group__0();
@@ -312,12 +313,89 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
     // $ANTLR end "ruleTagAnnotation"
 
 
+    // $ANTLR start "entryRulePragmaTag"
+    // InternalAnnotations.g:154:1: entryRulePragmaTag : rulePragmaTag EOF ;
+    public final void entryRulePragmaTag() throws RecognitionException {
+        try {
+            // InternalAnnotations.g:155:1: ( rulePragmaTag EOF )
+            // InternalAnnotations.g:156:1: rulePragmaTag EOF
+            {
+             before(grammarAccess.getPragmaTagRule()); 
+            pushFollow(FollowSets000.FOLLOW_1);
+            rulePragmaTag();
+
+            state._fsp--;
+
+             after(grammarAccess.getPragmaTagRule()); 
+            match(input,EOF,FollowSets000.FOLLOW_2); 
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+        }
+        return ;
+    }
+    // $ANTLR end "entryRulePragmaTag"
+
+
+    // $ANTLR start "rulePragmaTag"
+    // InternalAnnotations.g:163:1: rulePragmaTag : ( ( rule__PragmaTag__Group__0 ) ) ;
+    public final void rulePragmaTag() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:167:2: ( ( ( rule__PragmaTag__Group__0 ) ) )
+            // InternalAnnotations.g:168:1: ( ( rule__PragmaTag__Group__0 ) )
+            {
+            // InternalAnnotations.g:168:1: ( ( rule__PragmaTag__Group__0 ) )
+            // InternalAnnotations.g:169:1: ( rule__PragmaTag__Group__0 )
+            {
+             before(grammarAccess.getPragmaTagAccess().getGroup()); 
+            // InternalAnnotations.g:170:1: ( rule__PragmaTag__Group__0 )
+            // InternalAnnotations.g:170:2: rule__PragmaTag__Group__0
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__PragmaTag__Group__0();
+
+            state._fsp--;
+
+
+            }
+
+             after(grammarAccess.getPragmaTagAccess().getGroup()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rulePragmaTag"
+
+
     // $ANTLR start "entryRuleKeyStringValueAnnotation"
-    // InternalAnnotations.g:148:1: entryRuleKeyStringValueAnnotation : ruleKeyStringValueAnnotation EOF ;
+    // InternalAnnotations.g:182:1: entryRuleKeyStringValueAnnotation : ruleKeyStringValueAnnotation EOF ;
     public final void entryRuleKeyStringValueAnnotation() throws RecognitionException {
         try {
-            // InternalAnnotations.g:149:1: ( ruleKeyStringValueAnnotation EOF )
-            // InternalAnnotations.g:150:1: ruleKeyStringValueAnnotation EOF
+            // InternalAnnotations.g:183:1: ( ruleKeyStringValueAnnotation EOF )
+            // InternalAnnotations.g:184:1: ruleKeyStringValueAnnotation EOF
             {
              before(grammarAccess.getKeyStringValueAnnotationRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
@@ -343,21 +421,21 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "ruleKeyStringValueAnnotation"
-    // InternalAnnotations.g:157:1: ruleKeyStringValueAnnotation : ( ( rule__KeyStringValueAnnotation__Group__0 ) ) ;
+    // InternalAnnotations.g:191:1: ruleKeyStringValueAnnotation : ( ( rule__KeyStringValueAnnotation__Group__0 ) ) ;
     public final void ruleKeyStringValueAnnotation() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:161:2: ( ( ( rule__KeyStringValueAnnotation__Group__0 ) ) )
-            // InternalAnnotations.g:162:1: ( ( rule__KeyStringValueAnnotation__Group__0 ) )
+            // InternalAnnotations.g:195:2: ( ( ( rule__KeyStringValueAnnotation__Group__0 ) ) )
+            // InternalAnnotations.g:196:1: ( ( rule__KeyStringValueAnnotation__Group__0 ) )
             {
-            // InternalAnnotations.g:162:1: ( ( rule__KeyStringValueAnnotation__Group__0 ) )
-            // InternalAnnotations.g:163:1: ( rule__KeyStringValueAnnotation__Group__0 )
+            // InternalAnnotations.g:196:1: ( ( rule__KeyStringValueAnnotation__Group__0 ) )
+            // InternalAnnotations.g:197:1: ( rule__KeyStringValueAnnotation__Group__0 )
             {
              before(grammarAccess.getKeyStringValueAnnotationAccess().getGroup()); 
-            // InternalAnnotations.g:164:1: ( rule__KeyStringValueAnnotation__Group__0 )
-            // InternalAnnotations.g:164:2: rule__KeyStringValueAnnotation__Group__0
+            // InternalAnnotations.g:198:1: ( rule__KeyStringValueAnnotation__Group__0 )
+            // InternalAnnotations.g:198:2: rule__KeyStringValueAnnotation__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__KeyStringValueAnnotation__Group__0();
@@ -389,12 +467,166 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
     // $ANTLR end "ruleKeyStringValueAnnotation"
 
 
+    // $ANTLR start "entryRuleRestrictedKeyStringValueAnnotation"
+    // InternalAnnotations.g:210:1: entryRuleRestrictedKeyStringValueAnnotation : ruleRestrictedKeyStringValueAnnotation EOF ;
+    public final void entryRuleRestrictedKeyStringValueAnnotation() throws RecognitionException {
+        try {
+            // InternalAnnotations.g:211:1: ( ruleRestrictedKeyStringValueAnnotation EOF )
+            // InternalAnnotations.g:212:1: ruleRestrictedKeyStringValueAnnotation EOF
+            {
+             before(grammarAccess.getRestrictedKeyStringValueAnnotationRule()); 
+            pushFollow(FollowSets000.FOLLOW_1);
+            ruleRestrictedKeyStringValueAnnotation();
+
+            state._fsp--;
+
+             after(grammarAccess.getRestrictedKeyStringValueAnnotationRule()); 
+            match(input,EOF,FollowSets000.FOLLOW_2); 
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+        }
+        return ;
+    }
+    // $ANTLR end "entryRuleRestrictedKeyStringValueAnnotation"
+
+
+    // $ANTLR start "ruleRestrictedKeyStringValueAnnotation"
+    // InternalAnnotations.g:219:1: ruleRestrictedKeyStringValueAnnotation : ( ( rule__RestrictedKeyStringValueAnnotation__Group__0 ) ) ;
+    public final void ruleRestrictedKeyStringValueAnnotation() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:223:2: ( ( ( rule__RestrictedKeyStringValueAnnotation__Group__0 ) ) )
+            // InternalAnnotations.g:224:1: ( ( rule__RestrictedKeyStringValueAnnotation__Group__0 ) )
+            {
+            // InternalAnnotations.g:224:1: ( ( rule__RestrictedKeyStringValueAnnotation__Group__0 ) )
+            // InternalAnnotations.g:225:1: ( rule__RestrictedKeyStringValueAnnotation__Group__0 )
+            {
+             before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getGroup()); 
+            // InternalAnnotations.g:226:1: ( rule__RestrictedKeyStringValueAnnotation__Group__0 )
+            // InternalAnnotations.g:226:2: rule__RestrictedKeyStringValueAnnotation__Group__0
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__RestrictedKeyStringValueAnnotation__Group__0();
+
+            state._fsp--;
+
+
+            }
+
+             after(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getGroup()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "ruleRestrictedKeyStringValueAnnotation"
+
+
+    // $ANTLR start "entryRuleStringPragma"
+    // InternalAnnotations.g:238:1: entryRuleStringPragma : ruleStringPragma EOF ;
+    public final void entryRuleStringPragma() throws RecognitionException {
+        try {
+            // InternalAnnotations.g:239:1: ( ruleStringPragma EOF )
+            // InternalAnnotations.g:240:1: ruleStringPragma EOF
+            {
+             before(grammarAccess.getStringPragmaRule()); 
+            pushFollow(FollowSets000.FOLLOW_1);
+            ruleStringPragma();
+
+            state._fsp--;
+
+             after(grammarAccess.getStringPragmaRule()); 
+            match(input,EOF,FollowSets000.FOLLOW_2); 
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+        }
+        return ;
+    }
+    // $ANTLR end "entryRuleStringPragma"
+
+
+    // $ANTLR start "ruleStringPragma"
+    // InternalAnnotations.g:247:1: ruleStringPragma : ( ( rule__StringPragma__Group__0 ) ) ;
+    public final void ruleStringPragma() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:251:2: ( ( ( rule__StringPragma__Group__0 ) ) )
+            // InternalAnnotations.g:252:1: ( ( rule__StringPragma__Group__0 ) )
+            {
+            // InternalAnnotations.g:252:1: ( ( rule__StringPragma__Group__0 ) )
+            // InternalAnnotations.g:253:1: ( rule__StringPragma__Group__0 )
+            {
+             before(grammarAccess.getStringPragmaAccess().getGroup()); 
+            // InternalAnnotations.g:254:1: ( rule__StringPragma__Group__0 )
+            // InternalAnnotations.g:254:2: rule__StringPragma__Group__0
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__StringPragma__Group__0();
+
+            state._fsp--;
+
+
+            }
+
+             after(grammarAccess.getStringPragmaAccess().getGroup()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "ruleStringPragma"
+
+
     // $ANTLR start "entryRuleTypedKeyStringValueAnnotation"
-    // InternalAnnotations.g:176:1: entryRuleTypedKeyStringValueAnnotation : ruleTypedKeyStringValueAnnotation EOF ;
+    // InternalAnnotations.g:266:1: entryRuleTypedKeyStringValueAnnotation : ruleTypedKeyStringValueAnnotation EOF ;
     public final void entryRuleTypedKeyStringValueAnnotation() throws RecognitionException {
         try {
-            // InternalAnnotations.g:177:1: ( ruleTypedKeyStringValueAnnotation EOF )
-            // InternalAnnotations.g:178:1: ruleTypedKeyStringValueAnnotation EOF
+            // InternalAnnotations.g:267:1: ( ruleTypedKeyStringValueAnnotation EOF )
+            // InternalAnnotations.g:268:1: ruleTypedKeyStringValueAnnotation EOF
             {
              before(grammarAccess.getTypedKeyStringValueAnnotationRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
@@ -420,21 +652,21 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "ruleTypedKeyStringValueAnnotation"
-    // InternalAnnotations.g:185:1: ruleTypedKeyStringValueAnnotation : ( ( rule__TypedKeyStringValueAnnotation__Group__0 ) ) ;
+    // InternalAnnotations.g:275:1: ruleTypedKeyStringValueAnnotation : ( ( rule__TypedKeyStringValueAnnotation__Group__0 ) ) ;
     public final void ruleTypedKeyStringValueAnnotation() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:189:2: ( ( ( rule__TypedKeyStringValueAnnotation__Group__0 ) ) )
-            // InternalAnnotations.g:190:1: ( ( rule__TypedKeyStringValueAnnotation__Group__0 ) )
+            // InternalAnnotations.g:279:2: ( ( ( rule__TypedKeyStringValueAnnotation__Group__0 ) ) )
+            // InternalAnnotations.g:280:1: ( ( rule__TypedKeyStringValueAnnotation__Group__0 ) )
             {
-            // InternalAnnotations.g:190:1: ( ( rule__TypedKeyStringValueAnnotation__Group__0 ) )
-            // InternalAnnotations.g:191:1: ( rule__TypedKeyStringValueAnnotation__Group__0 )
+            // InternalAnnotations.g:280:1: ( ( rule__TypedKeyStringValueAnnotation__Group__0 ) )
+            // InternalAnnotations.g:281:1: ( rule__TypedKeyStringValueAnnotation__Group__0 )
             {
              before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getGroup()); 
-            // InternalAnnotations.g:192:1: ( rule__TypedKeyStringValueAnnotation__Group__0 )
-            // InternalAnnotations.g:192:2: rule__TypedKeyStringValueAnnotation__Group__0
+            // InternalAnnotations.g:282:1: ( rule__TypedKeyStringValueAnnotation__Group__0 )
+            // InternalAnnotations.g:282:2: rule__TypedKeyStringValueAnnotation__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TypedKeyStringValueAnnotation__Group__0();
@@ -466,12 +698,89 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
     // $ANTLR end "ruleTypedKeyStringValueAnnotation"
 
 
+    // $ANTLR start "entryRuleRestrictedTypedKeyStringValueAnnotation"
+    // InternalAnnotations.g:294:1: entryRuleRestrictedTypedKeyStringValueAnnotation : ruleRestrictedTypedKeyStringValueAnnotation EOF ;
+    public final void entryRuleRestrictedTypedKeyStringValueAnnotation() throws RecognitionException {
+        try {
+            // InternalAnnotations.g:295:1: ( ruleRestrictedTypedKeyStringValueAnnotation EOF )
+            // InternalAnnotations.g:296:1: ruleRestrictedTypedKeyStringValueAnnotation EOF
+            {
+             before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule()); 
+            pushFollow(FollowSets000.FOLLOW_1);
+            ruleRestrictedTypedKeyStringValueAnnotation();
+
+            state._fsp--;
+
+             after(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule()); 
+            match(input,EOF,FollowSets000.FOLLOW_2); 
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+        }
+        return ;
+    }
+    // $ANTLR end "entryRuleRestrictedTypedKeyStringValueAnnotation"
+
+
+    // $ANTLR start "ruleRestrictedTypedKeyStringValueAnnotation"
+    // InternalAnnotations.g:303:1: ruleRestrictedTypedKeyStringValueAnnotation : ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group__0 ) ) ;
+    public final void ruleRestrictedTypedKeyStringValueAnnotation() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:307:2: ( ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group__0 ) ) )
+            // InternalAnnotations.g:308:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group__0 ) )
+            {
+            // InternalAnnotations.g:308:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group__0 ) )
+            // InternalAnnotations.g:309:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__0 )
+            {
+             before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getGroup()); 
+            // InternalAnnotations.g:310:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__0 )
+            // InternalAnnotations.g:310:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__0
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__RestrictedTypedKeyStringValueAnnotation__Group__0();
+
+            state._fsp--;
+
+
+            }
+
+             after(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getGroup()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "ruleRestrictedTypedKeyStringValueAnnotation"
+
+
     // $ANTLR start "entryRuleQuotedKeyStringValueAnnotation"
-    // InternalAnnotations.g:204:1: entryRuleQuotedKeyStringValueAnnotation : ruleQuotedKeyStringValueAnnotation EOF ;
+    // InternalAnnotations.g:322:1: entryRuleQuotedKeyStringValueAnnotation : ruleQuotedKeyStringValueAnnotation EOF ;
     public final void entryRuleQuotedKeyStringValueAnnotation() throws RecognitionException {
         try {
-            // InternalAnnotations.g:205:1: ( ruleQuotedKeyStringValueAnnotation EOF )
-            // InternalAnnotations.g:206:1: ruleQuotedKeyStringValueAnnotation EOF
+            // InternalAnnotations.g:323:1: ( ruleQuotedKeyStringValueAnnotation EOF )
+            // InternalAnnotations.g:324:1: ruleQuotedKeyStringValueAnnotation EOF
             {
              before(grammarAccess.getQuotedKeyStringValueAnnotationRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
@@ -497,21 +806,21 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "ruleQuotedKeyStringValueAnnotation"
-    // InternalAnnotations.g:213:1: ruleQuotedKeyStringValueAnnotation : ( ( rule__QuotedKeyStringValueAnnotation__Group__0 ) ) ;
+    // InternalAnnotations.g:331:1: ruleQuotedKeyStringValueAnnotation : ( ( rule__QuotedKeyStringValueAnnotation__Group__0 ) ) ;
     public final void ruleQuotedKeyStringValueAnnotation() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:217:2: ( ( ( rule__QuotedKeyStringValueAnnotation__Group__0 ) ) )
-            // InternalAnnotations.g:218:1: ( ( rule__QuotedKeyStringValueAnnotation__Group__0 ) )
+            // InternalAnnotations.g:335:2: ( ( ( rule__QuotedKeyStringValueAnnotation__Group__0 ) ) )
+            // InternalAnnotations.g:336:1: ( ( rule__QuotedKeyStringValueAnnotation__Group__0 ) )
             {
-            // InternalAnnotations.g:218:1: ( ( rule__QuotedKeyStringValueAnnotation__Group__0 ) )
-            // InternalAnnotations.g:219:1: ( rule__QuotedKeyStringValueAnnotation__Group__0 )
+            // InternalAnnotations.g:336:1: ( ( rule__QuotedKeyStringValueAnnotation__Group__0 ) )
+            // InternalAnnotations.g:337:1: ( rule__QuotedKeyStringValueAnnotation__Group__0 )
             {
              before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getGroup()); 
-            // InternalAnnotations.g:220:1: ( rule__QuotedKeyStringValueAnnotation__Group__0 )
-            // InternalAnnotations.g:220:2: rule__QuotedKeyStringValueAnnotation__Group__0
+            // InternalAnnotations.g:338:1: ( rule__QuotedKeyStringValueAnnotation__Group__0 )
+            // InternalAnnotations.g:338:2: rule__QuotedKeyStringValueAnnotation__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedKeyStringValueAnnotation__Group__0();
@@ -544,11 +853,11 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "entryRuleQuotedTypedKeyStringValueAnnotation"
-    // InternalAnnotations.g:232:1: entryRuleQuotedTypedKeyStringValueAnnotation : ruleQuotedTypedKeyStringValueAnnotation EOF ;
+    // InternalAnnotations.g:350:1: entryRuleQuotedTypedKeyStringValueAnnotation : ruleQuotedTypedKeyStringValueAnnotation EOF ;
     public final void entryRuleQuotedTypedKeyStringValueAnnotation() throws RecognitionException {
         try {
-            // InternalAnnotations.g:233:1: ( ruleQuotedTypedKeyStringValueAnnotation EOF )
-            // InternalAnnotations.g:234:1: ruleQuotedTypedKeyStringValueAnnotation EOF
+            // InternalAnnotations.g:351:1: ( ruleQuotedTypedKeyStringValueAnnotation EOF )
+            // InternalAnnotations.g:352:1: ruleQuotedTypedKeyStringValueAnnotation EOF
             {
              before(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
@@ -574,21 +883,21 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "ruleQuotedTypedKeyStringValueAnnotation"
-    // InternalAnnotations.g:241:1: ruleQuotedTypedKeyStringValueAnnotation : ( ( rule__QuotedTypedKeyStringValueAnnotation__Group__0 ) ) ;
+    // InternalAnnotations.g:359:1: ruleQuotedTypedKeyStringValueAnnotation : ( ( rule__QuotedTypedKeyStringValueAnnotation__Group__0 ) ) ;
     public final void ruleQuotedTypedKeyStringValueAnnotation() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:245:2: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__Group__0 ) ) )
-            // InternalAnnotations.g:246:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__Group__0 ) )
+            // InternalAnnotations.g:363:2: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__Group__0 ) ) )
+            // InternalAnnotations.g:364:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__Group__0 ) )
             {
-            // InternalAnnotations.g:246:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__Group__0 ) )
-            // InternalAnnotations.g:247:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__0 )
+            // InternalAnnotations.g:364:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__Group__0 ) )
+            // InternalAnnotations.g:365:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__0 )
             {
              before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getGroup()); 
-            // InternalAnnotations.g:248:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__0 )
-            // InternalAnnotations.g:248:2: rule__QuotedTypedKeyStringValueAnnotation__Group__0
+            // InternalAnnotations.g:366:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__0 )
+            // InternalAnnotations.g:366:2: rule__QuotedTypedKeyStringValueAnnotation__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedTypedKeyStringValueAnnotation__Group__0();
@@ -620,320 +929,12 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
     // $ANTLR end "ruleQuotedTypedKeyStringValueAnnotation"
 
 
-    // $ANTLR start "entryRuleKeyBooleanValueAnnotation"
-    // InternalAnnotations.g:260:1: entryRuleKeyBooleanValueAnnotation : ruleKeyBooleanValueAnnotation EOF ;
-    public final void entryRuleKeyBooleanValueAnnotation() throws RecognitionException {
-        try {
-            // InternalAnnotations.g:261:1: ( ruleKeyBooleanValueAnnotation EOF )
-            // InternalAnnotations.g:262:1: ruleKeyBooleanValueAnnotation EOF
-            {
-             before(grammarAccess.getKeyBooleanValueAnnotationRule()); 
-            pushFollow(FollowSets000.FOLLOW_1);
-            ruleKeyBooleanValueAnnotation();
-
-            state._fsp--;
-
-             after(grammarAccess.getKeyBooleanValueAnnotationRule()); 
-            match(input,EOF,FollowSets000.FOLLOW_2); 
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-        }
-        return ;
-    }
-    // $ANTLR end "entryRuleKeyBooleanValueAnnotation"
-
-
-    // $ANTLR start "ruleKeyBooleanValueAnnotation"
-    // InternalAnnotations.g:269:1: ruleKeyBooleanValueAnnotation : ( ( rule__KeyBooleanValueAnnotation__Group__0 ) ) ;
-    public final void ruleKeyBooleanValueAnnotation() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:273:2: ( ( ( rule__KeyBooleanValueAnnotation__Group__0 ) ) )
-            // InternalAnnotations.g:274:1: ( ( rule__KeyBooleanValueAnnotation__Group__0 ) )
-            {
-            // InternalAnnotations.g:274:1: ( ( rule__KeyBooleanValueAnnotation__Group__0 ) )
-            // InternalAnnotations.g:275:1: ( rule__KeyBooleanValueAnnotation__Group__0 )
-            {
-             before(grammarAccess.getKeyBooleanValueAnnotationAccess().getGroup()); 
-            // InternalAnnotations.g:276:1: ( rule__KeyBooleanValueAnnotation__Group__0 )
-            // InternalAnnotations.g:276:2: rule__KeyBooleanValueAnnotation__Group__0
-            {
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__KeyBooleanValueAnnotation__Group__0();
-
-            state._fsp--;
-
-
-            }
-
-             after(grammarAccess.getKeyBooleanValueAnnotationAccess().getGroup()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "ruleKeyBooleanValueAnnotation"
-
-
-    // $ANTLR start "entryRuleKeyIntValueAnnotation"
-    // InternalAnnotations.g:288:1: entryRuleKeyIntValueAnnotation : ruleKeyIntValueAnnotation EOF ;
-    public final void entryRuleKeyIntValueAnnotation() throws RecognitionException {
-        try {
-            // InternalAnnotations.g:289:1: ( ruleKeyIntValueAnnotation EOF )
-            // InternalAnnotations.g:290:1: ruleKeyIntValueAnnotation EOF
-            {
-             before(grammarAccess.getKeyIntValueAnnotationRule()); 
-            pushFollow(FollowSets000.FOLLOW_1);
-            ruleKeyIntValueAnnotation();
-
-            state._fsp--;
-
-             after(grammarAccess.getKeyIntValueAnnotationRule()); 
-            match(input,EOF,FollowSets000.FOLLOW_2); 
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-        }
-        return ;
-    }
-    // $ANTLR end "entryRuleKeyIntValueAnnotation"
-
-
-    // $ANTLR start "ruleKeyIntValueAnnotation"
-    // InternalAnnotations.g:297:1: ruleKeyIntValueAnnotation : ( ( rule__KeyIntValueAnnotation__Group__0 ) ) ;
-    public final void ruleKeyIntValueAnnotation() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:301:2: ( ( ( rule__KeyIntValueAnnotation__Group__0 ) ) )
-            // InternalAnnotations.g:302:1: ( ( rule__KeyIntValueAnnotation__Group__0 ) )
-            {
-            // InternalAnnotations.g:302:1: ( ( rule__KeyIntValueAnnotation__Group__0 ) )
-            // InternalAnnotations.g:303:1: ( rule__KeyIntValueAnnotation__Group__0 )
-            {
-             before(grammarAccess.getKeyIntValueAnnotationAccess().getGroup()); 
-            // InternalAnnotations.g:304:1: ( rule__KeyIntValueAnnotation__Group__0 )
-            // InternalAnnotations.g:304:2: rule__KeyIntValueAnnotation__Group__0
-            {
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__KeyIntValueAnnotation__Group__0();
-
-            state._fsp--;
-
-
-            }
-
-             after(grammarAccess.getKeyIntValueAnnotationAccess().getGroup()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "ruleKeyIntValueAnnotation"
-
-
-    // $ANTLR start "entryRuleKeyFloatValueAnnotation"
-    // InternalAnnotations.g:316:1: entryRuleKeyFloatValueAnnotation : ruleKeyFloatValueAnnotation EOF ;
-    public final void entryRuleKeyFloatValueAnnotation() throws RecognitionException {
-        try {
-            // InternalAnnotations.g:317:1: ( ruleKeyFloatValueAnnotation EOF )
-            // InternalAnnotations.g:318:1: ruleKeyFloatValueAnnotation EOF
-            {
-             before(grammarAccess.getKeyFloatValueAnnotationRule()); 
-            pushFollow(FollowSets000.FOLLOW_1);
-            ruleKeyFloatValueAnnotation();
-
-            state._fsp--;
-
-             after(grammarAccess.getKeyFloatValueAnnotationRule()); 
-            match(input,EOF,FollowSets000.FOLLOW_2); 
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-        }
-        return ;
-    }
-    // $ANTLR end "entryRuleKeyFloatValueAnnotation"
-
-
-    // $ANTLR start "ruleKeyFloatValueAnnotation"
-    // InternalAnnotations.g:325:1: ruleKeyFloatValueAnnotation : ( ( rule__KeyFloatValueAnnotation__Group__0 ) ) ;
-    public final void ruleKeyFloatValueAnnotation() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:329:2: ( ( ( rule__KeyFloatValueAnnotation__Group__0 ) ) )
-            // InternalAnnotations.g:330:1: ( ( rule__KeyFloatValueAnnotation__Group__0 ) )
-            {
-            // InternalAnnotations.g:330:1: ( ( rule__KeyFloatValueAnnotation__Group__0 ) )
-            // InternalAnnotations.g:331:1: ( rule__KeyFloatValueAnnotation__Group__0 )
-            {
-             before(grammarAccess.getKeyFloatValueAnnotationAccess().getGroup()); 
-            // InternalAnnotations.g:332:1: ( rule__KeyFloatValueAnnotation__Group__0 )
-            // InternalAnnotations.g:332:2: rule__KeyFloatValueAnnotation__Group__0
-            {
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__KeyFloatValueAnnotation__Group__0();
-
-            state._fsp--;
-
-
-            }
-
-             after(grammarAccess.getKeyFloatValueAnnotationAccess().getGroup()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "ruleKeyFloatValueAnnotation"
-
-
-    // $ANTLR start "entryRuleEString"
-    // InternalAnnotations.g:344:1: entryRuleEString : ruleEString EOF ;
-    public final void entryRuleEString() throws RecognitionException {
-        try {
-            // InternalAnnotations.g:345:1: ( ruleEString EOF )
-            // InternalAnnotations.g:346:1: ruleEString EOF
-            {
-             before(grammarAccess.getEStringRule()); 
-            pushFollow(FollowSets000.FOLLOW_1);
-            ruleEString();
-
-            state._fsp--;
-
-             after(grammarAccess.getEStringRule()); 
-            match(input,EOF,FollowSets000.FOLLOW_2); 
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-        }
-        return ;
-    }
-    // $ANTLR end "entryRuleEString"
-
-
-    // $ANTLR start "ruleEString"
-    // InternalAnnotations.g:353:1: ruleEString : ( ( rule__EString__Alternatives ) ) ;
-    public final void ruleEString() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:357:2: ( ( ( rule__EString__Alternatives ) ) )
-            // InternalAnnotations.g:358:1: ( ( rule__EString__Alternatives ) )
-            {
-            // InternalAnnotations.g:358:1: ( ( rule__EString__Alternatives ) )
-            // InternalAnnotations.g:359:1: ( rule__EString__Alternatives )
-            {
-             before(grammarAccess.getEStringAccess().getAlternatives()); 
-            // InternalAnnotations.g:360:1: ( rule__EString__Alternatives )
-            // InternalAnnotations.g:360:2: rule__EString__Alternatives
-            {
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__EString__Alternatives();
-
-            state._fsp--;
-
-
-            }
-
-             after(grammarAccess.getEStringAccess().getAlternatives()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "ruleEString"
-
-
     // $ANTLR start "entryRuleEStringBoolean"
-    // InternalAnnotations.g:372:1: entryRuleEStringBoolean : ruleEStringBoolean EOF ;
+    // InternalAnnotations.g:380:1: entryRuleEStringBoolean : ruleEStringBoolean EOF ;
     public final void entryRuleEStringBoolean() throws RecognitionException {
         try {
-            // InternalAnnotations.g:373:1: ( ruleEStringBoolean EOF )
-            // InternalAnnotations.g:374:1: ruleEStringBoolean EOF
+            // InternalAnnotations.g:381:1: ( ruleEStringBoolean EOF )
+            // InternalAnnotations.g:382:1: ruleEStringBoolean EOF
             {
              before(grammarAccess.getEStringBooleanRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
@@ -959,21 +960,21 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "ruleEStringBoolean"
-    // InternalAnnotations.g:381:1: ruleEStringBoolean : ( ( rule__EStringBoolean__Alternatives ) ) ;
+    // InternalAnnotations.g:389:1: ruleEStringBoolean : ( ( rule__EStringBoolean__Alternatives ) ) ;
     public final void ruleEStringBoolean() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:385:2: ( ( ( rule__EStringBoolean__Alternatives ) ) )
-            // InternalAnnotations.g:386:1: ( ( rule__EStringBoolean__Alternatives ) )
+            // InternalAnnotations.g:393:2: ( ( ( rule__EStringBoolean__Alternatives ) ) )
+            // InternalAnnotations.g:394:1: ( ( rule__EStringBoolean__Alternatives ) )
             {
-            // InternalAnnotations.g:386:1: ( ( rule__EStringBoolean__Alternatives ) )
-            // InternalAnnotations.g:387:1: ( rule__EStringBoolean__Alternatives )
+            // InternalAnnotations.g:394:1: ( ( rule__EStringBoolean__Alternatives ) )
+            // InternalAnnotations.g:395:1: ( rule__EStringBoolean__Alternatives )
             {
              before(grammarAccess.getEStringBooleanAccess().getAlternatives()); 
-            // InternalAnnotations.g:388:1: ( rule__EStringBoolean__Alternatives )
-            // InternalAnnotations.g:388:2: rule__EStringBoolean__Alternatives
+            // InternalAnnotations.g:396:1: ( rule__EStringBoolean__Alternatives )
+            // InternalAnnotations.g:396:2: rule__EStringBoolean__Alternatives
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__EStringBoolean__Alternatives();
@@ -1005,12 +1006,89 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
     // $ANTLR end "ruleEStringBoolean"
 
 
+    // $ANTLR start "entryRuleEStringAllTypes"
+    // InternalAnnotations.g:408:1: entryRuleEStringAllTypes : ruleEStringAllTypes EOF ;
+    public final void entryRuleEStringAllTypes() throws RecognitionException {
+        try {
+            // InternalAnnotations.g:409:1: ( ruleEStringAllTypes EOF )
+            // InternalAnnotations.g:410:1: ruleEStringAllTypes EOF
+            {
+             before(grammarAccess.getEStringAllTypesRule()); 
+            pushFollow(FollowSets000.FOLLOW_1);
+            ruleEStringAllTypes();
+
+            state._fsp--;
+
+             after(grammarAccess.getEStringAllTypesRule()); 
+            match(input,EOF,FollowSets000.FOLLOW_2); 
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+        }
+        return ;
+    }
+    // $ANTLR end "entryRuleEStringAllTypes"
+
+
+    // $ANTLR start "ruleEStringAllTypes"
+    // InternalAnnotations.g:417:1: ruleEStringAllTypes : ( ( rule__EStringAllTypes__Alternatives ) ) ;
+    public final void ruleEStringAllTypes() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:421:2: ( ( ( rule__EStringAllTypes__Alternatives ) ) )
+            // InternalAnnotations.g:422:1: ( ( rule__EStringAllTypes__Alternatives ) )
+            {
+            // InternalAnnotations.g:422:1: ( ( rule__EStringAllTypes__Alternatives ) )
+            // InternalAnnotations.g:423:1: ( rule__EStringAllTypes__Alternatives )
+            {
+             before(grammarAccess.getEStringAllTypesAccess().getAlternatives()); 
+            // InternalAnnotations.g:424:1: ( rule__EStringAllTypes__Alternatives )
+            // InternalAnnotations.g:424:2: rule__EStringAllTypes__Alternatives
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__EStringAllTypes__Alternatives();
+
+            state._fsp--;
+
+
+            }
+
+             after(grammarAccess.getEStringAllTypesAccess().getAlternatives()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "ruleEStringAllTypes"
+
+
     // $ANTLR start "entryRuleExtendedID"
-    // InternalAnnotations.g:400:1: entryRuleExtendedID : ruleExtendedID EOF ;
+    // InternalAnnotations.g:436:1: entryRuleExtendedID : ruleExtendedID EOF ;
     public final void entryRuleExtendedID() throws RecognitionException {
         try {
-            // InternalAnnotations.g:401:1: ( ruleExtendedID EOF )
-            // InternalAnnotations.g:402:1: ruleExtendedID EOF
+            // InternalAnnotations.g:437:1: ( ruleExtendedID EOF )
+            // InternalAnnotations.g:438:1: ruleExtendedID EOF
             {
              before(grammarAccess.getExtendedIDRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
@@ -1036,21 +1114,21 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "ruleExtendedID"
-    // InternalAnnotations.g:409:1: ruleExtendedID : ( ( rule__ExtendedID__Group__0 ) ) ;
+    // InternalAnnotations.g:445:1: ruleExtendedID : ( ( rule__ExtendedID__Group__0 ) ) ;
     public final void ruleExtendedID() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:413:2: ( ( ( rule__ExtendedID__Group__0 ) ) )
-            // InternalAnnotations.g:414:1: ( ( rule__ExtendedID__Group__0 ) )
+            // InternalAnnotations.g:449:2: ( ( ( rule__ExtendedID__Group__0 ) ) )
+            // InternalAnnotations.g:450:1: ( ( rule__ExtendedID__Group__0 ) )
             {
-            // InternalAnnotations.g:414:1: ( ( rule__ExtendedID__Group__0 ) )
-            // InternalAnnotations.g:415:1: ( rule__ExtendedID__Group__0 )
+            // InternalAnnotations.g:450:1: ( ( rule__ExtendedID__Group__0 ) )
+            // InternalAnnotations.g:451:1: ( rule__ExtendedID__Group__0 )
             {
              before(grammarAccess.getExtendedIDAccess().getGroup()); 
-            // InternalAnnotations.g:416:1: ( rule__ExtendedID__Group__0 )
-            // InternalAnnotations.g:416:2: rule__ExtendedID__Group__0
+            // InternalAnnotations.g:452:1: ( rule__ExtendedID__Group__0 )
+            // InternalAnnotations.g:452:2: rule__ExtendedID__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ExtendedID__Group__0();
@@ -1083,11 +1161,11 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "entryRuleInteger"
-    // InternalAnnotations.g:428:1: entryRuleInteger : ruleInteger EOF ;
+    // InternalAnnotations.g:466:1: entryRuleInteger : ruleInteger EOF ;
     public final void entryRuleInteger() throws RecognitionException {
         try {
-            // InternalAnnotations.g:429:1: ( ruleInteger EOF )
-            // InternalAnnotations.g:430:1: ruleInteger EOF
+            // InternalAnnotations.g:467:1: ( ruleInteger EOF )
+            // InternalAnnotations.g:468:1: ruleInteger EOF
             {
              before(grammarAccess.getIntegerRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
@@ -1113,21 +1191,21 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "ruleInteger"
-    // InternalAnnotations.g:437:1: ruleInteger : ( ( rule__Integer__Group__0 ) ) ;
+    // InternalAnnotations.g:475:1: ruleInteger : ( ( rule__Integer__Group__0 ) ) ;
     public final void ruleInteger() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:441:2: ( ( ( rule__Integer__Group__0 ) ) )
-            // InternalAnnotations.g:442:1: ( ( rule__Integer__Group__0 ) )
+            // InternalAnnotations.g:479:2: ( ( ( rule__Integer__Group__0 ) ) )
+            // InternalAnnotations.g:480:1: ( ( rule__Integer__Group__0 ) )
             {
-            // InternalAnnotations.g:442:1: ( ( rule__Integer__Group__0 ) )
-            // InternalAnnotations.g:443:1: ( rule__Integer__Group__0 )
+            // InternalAnnotations.g:480:1: ( ( rule__Integer__Group__0 ) )
+            // InternalAnnotations.g:481:1: ( rule__Integer__Group__0 )
             {
              before(grammarAccess.getIntegerAccess().getGroup()); 
-            // InternalAnnotations.g:444:1: ( rule__Integer__Group__0 )
-            // InternalAnnotations.g:444:2: rule__Integer__Group__0
+            // InternalAnnotations.g:482:1: ( rule__Integer__Group__0 )
+            // InternalAnnotations.g:482:2: rule__Integer__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Integer__Group__0();
@@ -1160,11 +1238,11 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "entryRuleFloateger"
-    // InternalAnnotations.g:456:1: entryRuleFloateger : ruleFloateger EOF ;
+    // InternalAnnotations.g:494:1: entryRuleFloateger : ruleFloateger EOF ;
     public final void entryRuleFloateger() throws RecognitionException {
         try {
-            // InternalAnnotations.g:457:1: ( ruleFloateger EOF )
-            // InternalAnnotations.g:458:1: ruleFloateger EOF
+            // InternalAnnotations.g:495:1: ( ruleFloateger EOF )
+            // InternalAnnotations.g:496:1: ruleFloateger EOF
             {
              before(grammarAccess.getFloategerRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
@@ -1190,21 +1268,21 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "ruleFloateger"
-    // InternalAnnotations.g:465:1: ruleFloateger : ( ( rule__Floateger__Group__0 ) ) ;
+    // InternalAnnotations.g:503:1: ruleFloateger : ( ( rule__Floateger__Group__0 ) ) ;
     public final void ruleFloateger() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:469:2: ( ( ( rule__Floateger__Group__0 ) ) )
-            // InternalAnnotations.g:470:1: ( ( rule__Floateger__Group__0 ) )
+            // InternalAnnotations.g:507:2: ( ( ( rule__Floateger__Group__0 ) ) )
+            // InternalAnnotations.g:508:1: ( ( rule__Floateger__Group__0 ) )
             {
-            // InternalAnnotations.g:470:1: ( ( rule__Floateger__Group__0 ) )
-            // InternalAnnotations.g:471:1: ( rule__Floateger__Group__0 )
+            // InternalAnnotations.g:508:1: ( ( rule__Floateger__Group__0 ) )
+            // InternalAnnotations.g:509:1: ( rule__Floateger__Group__0 )
             {
              before(grammarAccess.getFloategerAccess().getGroup()); 
-            // InternalAnnotations.g:472:1: ( rule__Floateger__Group__0 )
-            // InternalAnnotations.g:472:2: rule__Floateger__Group__0
+            // InternalAnnotations.g:510:1: ( rule__Floateger__Group__0 )
+            // InternalAnnotations.g:510:2: rule__Floateger__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Floateger__Group__0();
@@ -1237,21 +1315,21 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Annotation__Alternatives"
-    // InternalAnnotations.g:484:1: rule__Annotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleKeyBooleanValueAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedKeyStringValueAnnotation ) | ( ruleKeyIntValueAnnotation ) | ( ruleKeyFloatValueAnnotation ) | ( ruleTagAnnotation ) );
+    // InternalAnnotations.g:522:1: rule__Annotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedKeyStringValueAnnotation ) | ( ruleTagAnnotation ) );
     public final void rule__Annotation__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:488:1: ( ( ruleCommentAnnotation ) | ( ruleKeyBooleanValueAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedKeyStringValueAnnotation ) | ( ruleKeyIntValueAnnotation ) | ( ruleKeyFloatValueAnnotation ) | ( ruleTagAnnotation ) )
-            int alt1=7;
+            // InternalAnnotations.g:526:1: ( ( ruleCommentAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedKeyStringValueAnnotation ) | ( ruleTagAnnotation ) )
+            int alt1=4;
             alt1 = dfa1.predict(input);
             switch (alt1) {
                 case 1 :
-                    // InternalAnnotations.g:489:1: ( ruleCommentAnnotation )
+                    // InternalAnnotations.g:527:1: ( ruleCommentAnnotation )
                     {
-                    // InternalAnnotations.g:489:1: ( ruleCommentAnnotation )
-                    // InternalAnnotations.g:490:1: ruleCommentAnnotation
+                    // InternalAnnotations.g:527:1: ( ruleCommentAnnotation )
+                    // InternalAnnotations.g:528:1: ruleCommentAnnotation
                     {
                      before(grammarAccess.getAnnotationAccess().getCommentAnnotationParserRuleCall_0()); 
                     pushFollow(FollowSets000.FOLLOW_2);
@@ -1267,18 +1345,18 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
                     }
                     break;
                 case 2 :
-                    // InternalAnnotations.g:495:6: ( ruleKeyBooleanValueAnnotation )
+                    // InternalAnnotations.g:533:6: ( ruleKeyStringValueAnnotation )
                     {
-                    // InternalAnnotations.g:495:6: ( ruleKeyBooleanValueAnnotation )
-                    // InternalAnnotations.g:496:1: ruleKeyBooleanValueAnnotation
+                    // InternalAnnotations.g:533:6: ( ruleKeyStringValueAnnotation )
+                    // InternalAnnotations.g:534:1: ruleKeyStringValueAnnotation
                     {
-                     before(grammarAccess.getAnnotationAccess().getKeyBooleanValueAnnotationParserRuleCall_1()); 
+                     before(grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_1()); 
                     pushFollow(FollowSets000.FOLLOW_2);
-                    ruleKeyBooleanValueAnnotation();
+                    ruleKeyStringValueAnnotation();
 
                     state._fsp--;
 
-                     after(grammarAccess.getAnnotationAccess().getKeyBooleanValueAnnotationParserRuleCall_1()); 
+                     after(grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_1()); 
 
                     }
 
@@ -1286,18 +1364,18 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
                     }
                     break;
                 case 3 :
-                    // InternalAnnotations.g:501:6: ( ruleKeyStringValueAnnotation )
+                    // InternalAnnotations.g:539:6: ( ruleTypedKeyStringValueAnnotation )
                     {
-                    // InternalAnnotations.g:501:6: ( ruleKeyStringValueAnnotation )
-                    // InternalAnnotations.g:502:1: ruleKeyStringValueAnnotation
+                    // InternalAnnotations.g:539:6: ( ruleTypedKeyStringValueAnnotation )
+                    // InternalAnnotations.g:540:1: ruleTypedKeyStringValueAnnotation
                     {
-                     before(grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_2()); 
+                     before(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_2()); 
                     pushFollow(FollowSets000.FOLLOW_2);
-                    ruleKeyStringValueAnnotation();
+                    ruleTypedKeyStringValueAnnotation();
 
                     state._fsp--;
 
-                     after(grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_2()); 
+                     after(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_2()); 
 
                     }
 
@@ -1305,75 +1383,18 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
                     }
                     break;
                 case 4 :
-                    // InternalAnnotations.g:507:6: ( ruleTypedKeyStringValueAnnotation )
+                    // InternalAnnotations.g:545:6: ( ruleTagAnnotation )
                     {
-                    // InternalAnnotations.g:507:6: ( ruleTypedKeyStringValueAnnotation )
-                    // InternalAnnotations.g:508:1: ruleTypedKeyStringValueAnnotation
+                    // InternalAnnotations.g:545:6: ( ruleTagAnnotation )
+                    // InternalAnnotations.g:546:1: ruleTagAnnotation
                     {
-                     before(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_3()); 
-                    pushFollow(FollowSets000.FOLLOW_2);
-                    ruleTypedKeyStringValueAnnotation();
-
-                    state._fsp--;
-
-                     after(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_3()); 
-
-                    }
-
-
-                    }
-                    break;
-                case 5 :
-                    // InternalAnnotations.g:513:6: ( ruleKeyIntValueAnnotation )
-                    {
-                    // InternalAnnotations.g:513:6: ( ruleKeyIntValueAnnotation )
-                    // InternalAnnotations.g:514:1: ruleKeyIntValueAnnotation
-                    {
-                     before(grammarAccess.getAnnotationAccess().getKeyIntValueAnnotationParserRuleCall_4()); 
-                    pushFollow(FollowSets000.FOLLOW_2);
-                    ruleKeyIntValueAnnotation();
-
-                    state._fsp--;
-
-                     after(grammarAccess.getAnnotationAccess().getKeyIntValueAnnotationParserRuleCall_4()); 
-
-                    }
-
-
-                    }
-                    break;
-                case 6 :
-                    // InternalAnnotations.g:519:6: ( ruleKeyFloatValueAnnotation )
-                    {
-                    // InternalAnnotations.g:519:6: ( ruleKeyFloatValueAnnotation )
-                    // InternalAnnotations.g:520:1: ruleKeyFloatValueAnnotation
-                    {
-                     before(grammarAccess.getAnnotationAccess().getKeyFloatValueAnnotationParserRuleCall_5()); 
-                    pushFollow(FollowSets000.FOLLOW_2);
-                    ruleKeyFloatValueAnnotation();
-
-                    state._fsp--;
-
-                     after(grammarAccess.getAnnotationAccess().getKeyFloatValueAnnotationParserRuleCall_5()); 
-
-                    }
-
-
-                    }
-                    break;
-                case 7 :
-                    // InternalAnnotations.g:525:6: ( ruleTagAnnotation )
-                    {
-                    // InternalAnnotations.g:525:6: ( ruleTagAnnotation )
-                    // InternalAnnotations.g:526:1: ruleTagAnnotation
-                    {
-                     before(grammarAccess.getAnnotationAccess().getTagAnnotationParserRuleCall_6()); 
+                     before(grammarAccess.getAnnotationAccess().getTagAnnotationParserRuleCall_3()); 
                     pushFollow(FollowSets000.FOLLOW_2);
                     ruleTagAnnotation();
 
                     state._fsp--;
 
-                     after(grammarAccess.getAnnotationAccess().getTagAnnotationParserRuleCall_6()); 
+                     after(grammarAccess.getAnnotationAccess().getTagAnnotationParserRuleCall_3()); 
 
                     }
 
@@ -1397,119 +1418,44 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
     // $ANTLR end "rule__Annotation__Alternatives"
 
 
-    // $ANTLR start "rule__EString__Alternatives"
-    // InternalAnnotations.g:538:1: rule__EString__Alternatives : ( ( RULE_STRING ) | ( ruleExtendedID ) );
-    public final void rule__EString__Alternatives() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:542:1: ( ( RULE_STRING ) | ( ruleExtendedID ) )
-            int alt2=2;
-            int LA2_0 = input.LA(1);
-
-            if ( (LA2_0==RULE_STRING) ) {
-                alt2=1;
-            }
-            else if ( (LA2_0==RULE_ID) ) {
-                alt2=2;
-            }
-            else {
-                NoViableAltException nvae =
-                    new NoViableAltException("", 2, 0, input);
-
-                throw nvae;
-            }
-            switch (alt2) {
-                case 1 :
-                    // InternalAnnotations.g:543:1: ( RULE_STRING )
-                    {
-                    // InternalAnnotations.g:543:1: ( RULE_STRING )
-                    // InternalAnnotations.g:544:1: RULE_STRING
-                    {
-                     before(grammarAccess.getEStringAccess().getSTRINGTerminalRuleCall_0()); 
-                    match(input,RULE_STRING,FollowSets000.FOLLOW_2); 
-                     after(grammarAccess.getEStringAccess().getSTRINGTerminalRuleCall_0()); 
-
-                    }
-
-
-                    }
-                    break;
-                case 2 :
-                    // InternalAnnotations.g:549:6: ( ruleExtendedID )
-                    {
-                    // InternalAnnotations.g:549:6: ( ruleExtendedID )
-                    // InternalAnnotations.g:550:1: ruleExtendedID
-                    {
-                     before(grammarAccess.getEStringAccess().getExtendedIDParserRuleCall_1()); 
-                    pushFollow(FollowSets000.FOLLOW_2);
-                    ruleExtendedID();
-
-                    state._fsp--;
-
-                     after(grammarAccess.getEStringAccess().getExtendedIDParserRuleCall_1()); 
-
-                    }
-
-
-                    }
-                    break;
-
-            }
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__EString__Alternatives"
-
-
     // $ANTLR start "rule__EStringBoolean__Alternatives"
-    // InternalAnnotations.g:560:1: rule__EStringBoolean__Alternatives : ( ( RULE_STRING ) | ( ruleExtendedID ) | ( RULE_BOOLEAN ) );
+    // InternalAnnotations.g:561:1: rule__EStringBoolean__Alternatives : ( ( RULE_STRING ) | ( ruleExtendedID ) | ( RULE_BOOLEAN ) );
     public final void rule__EStringBoolean__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:564:1: ( ( RULE_STRING ) | ( ruleExtendedID ) | ( RULE_BOOLEAN ) )
-            int alt3=3;
+            // InternalAnnotations.g:565:1: ( ( RULE_STRING ) | ( ruleExtendedID ) | ( RULE_BOOLEAN ) )
+            int alt2=3;
             switch ( input.LA(1) ) {
             case RULE_STRING:
                 {
-                alt3=1;
+                alt2=1;
                 }
                 break;
             case RULE_ID:
                 {
-                alt3=2;
+                alt2=2;
                 }
                 break;
             case RULE_BOOLEAN:
                 {
-                alt3=3;
+                alt2=3;
                 }
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("", 3, 0, input);
+                    new NoViableAltException("", 2, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt3) {
+            switch (alt2) {
                 case 1 :
-                    // InternalAnnotations.g:565:1: ( RULE_STRING )
+                    // InternalAnnotations.g:566:1: ( RULE_STRING )
                     {
-                    // InternalAnnotations.g:565:1: ( RULE_STRING )
-                    // InternalAnnotations.g:566:1: RULE_STRING
+                    // InternalAnnotations.g:566:1: ( RULE_STRING )
+                    // InternalAnnotations.g:567:1: RULE_STRING
                     {
                      before(grammarAccess.getEStringBooleanAccess().getSTRINGTerminalRuleCall_0()); 
                     match(input,RULE_STRING,FollowSets000.FOLLOW_2); 
@@ -1521,10 +1467,10 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
                     }
                     break;
                 case 2 :
-                    // InternalAnnotations.g:571:6: ( ruleExtendedID )
+                    // InternalAnnotations.g:572:6: ( ruleExtendedID )
                     {
-                    // InternalAnnotations.g:571:6: ( ruleExtendedID )
-                    // InternalAnnotations.g:572:1: ruleExtendedID
+                    // InternalAnnotations.g:572:6: ( ruleExtendedID )
+                    // InternalAnnotations.g:573:1: ruleExtendedID
                     {
                      before(grammarAccess.getEStringBooleanAccess().getExtendedIDParserRuleCall_1()); 
                     pushFollow(FollowSets000.FOLLOW_2);
@@ -1540,10 +1486,10 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
                     }
                     break;
                 case 3 :
-                    // InternalAnnotations.g:577:6: ( RULE_BOOLEAN )
+                    // InternalAnnotations.g:578:6: ( RULE_BOOLEAN )
                     {
-                    // InternalAnnotations.g:577:6: ( RULE_BOOLEAN )
-                    // InternalAnnotations.g:578:1: RULE_BOOLEAN
+                    // InternalAnnotations.g:578:6: ( RULE_BOOLEAN )
+                    // InternalAnnotations.g:579:1: RULE_BOOLEAN
                     {
                      before(grammarAccess.getEStringBooleanAccess().getBOOLEANTerminalRuleCall_2()); 
                     match(input,RULE_BOOLEAN,FollowSets000.FOLLOW_2); 
@@ -1571,15 +1517,251 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
     // $ANTLR end "rule__EStringBoolean__Alternatives"
 
 
+    // $ANTLR start "rule__EStringAllTypes__Alternatives"
+    // InternalAnnotations.g:589:1: rule__EStringAllTypes__Alternatives : ( ( RULE_STRING ) | ( ruleExtendedID ) | ( RULE_BOOLEAN ) | ( ruleInteger ) | ( ruleFloateger ) );
+    public final void rule__EStringAllTypes__Alternatives() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:593:1: ( ( RULE_STRING ) | ( ruleExtendedID ) | ( RULE_BOOLEAN ) | ( ruleInteger ) | ( ruleFloateger ) )
+            int alt3=5;
+            switch ( input.LA(1) ) {
+            case RULE_STRING:
+                {
+                alt3=1;
+                }
+                break;
+            case RULE_ID:
+                {
+                alt3=2;
+                }
+                break;
+            case RULE_BOOLEAN:
+                {
+                alt3=3;
+                }
+                break;
+            case 17:
+                {
+                int LA3_4 = input.LA(2);
+
+                if ( (LA3_4==RULE_INT) ) {
+                    alt3=4;
+                }
+                else if ( (LA3_4==RULE_FLOAT) ) {
+                    alt3=5;
+                }
+                else {
+                    NoViableAltException nvae =
+                        new NoViableAltException("", 3, 4, input);
+
+                    throw nvae;
+                }
+                }
+                break;
+            case RULE_INT:
+                {
+                alt3=4;
+                }
+                break;
+            case RULE_FLOAT:
+                {
+                alt3=5;
+                }
+                break;
+            default:
+                NoViableAltException nvae =
+                    new NoViableAltException("", 3, 0, input);
+
+                throw nvae;
+            }
+
+            switch (alt3) {
+                case 1 :
+                    // InternalAnnotations.g:594:1: ( RULE_STRING )
+                    {
+                    // InternalAnnotations.g:594:1: ( RULE_STRING )
+                    // InternalAnnotations.g:595:1: RULE_STRING
+                    {
+                     before(grammarAccess.getEStringAllTypesAccess().getSTRINGTerminalRuleCall_0()); 
+                    match(input,RULE_STRING,FollowSets000.FOLLOW_2); 
+                     after(grammarAccess.getEStringAllTypesAccess().getSTRINGTerminalRuleCall_0()); 
+
+                    }
+
+
+                    }
+                    break;
+                case 2 :
+                    // InternalAnnotations.g:600:6: ( ruleExtendedID )
+                    {
+                    // InternalAnnotations.g:600:6: ( ruleExtendedID )
+                    // InternalAnnotations.g:601:1: ruleExtendedID
+                    {
+                     before(grammarAccess.getEStringAllTypesAccess().getExtendedIDParserRuleCall_1()); 
+                    pushFollow(FollowSets000.FOLLOW_2);
+                    ruleExtendedID();
+
+                    state._fsp--;
+
+                     after(grammarAccess.getEStringAllTypesAccess().getExtendedIDParserRuleCall_1()); 
+
+                    }
+
+
+                    }
+                    break;
+                case 3 :
+                    // InternalAnnotations.g:606:6: ( RULE_BOOLEAN )
+                    {
+                    // InternalAnnotations.g:606:6: ( RULE_BOOLEAN )
+                    // InternalAnnotations.g:607:1: RULE_BOOLEAN
+                    {
+                     before(grammarAccess.getEStringAllTypesAccess().getBOOLEANTerminalRuleCall_2()); 
+                    match(input,RULE_BOOLEAN,FollowSets000.FOLLOW_2); 
+                     after(grammarAccess.getEStringAllTypesAccess().getBOOLEANTerminalRuleCall_2()); 
+
+                    }
+
+
+                    }
+                    break;
+                case 4 :
+                    // InternalAnnotations.g:612:6: ( ruleInteger )
+                    {
+                    // InternalAnnotations.g:612:6: ( ruleInteger )
+                    // InternalAnnotations.g:613:1: ruleInteger
+                    {
+                     before(grammarAccess.getEStringAllTypesAccess().getIntegerParserRuleCall_3()); 
+                    pushFollow(FollowSets000.FOLLOW_2);
+                    ruleInteger();
+
+                    state._fsp--;
+
+                     after(grammarAccess.getEStringAllTypesAccess().getIntegerParserRuleCall_3()); 
+
+                    }
+
+
+                    }
+                    break;
+                case 5 :
+                    // InternalAnnotations.g:618:6: ( ruleFloateger )
+                    {
+                    // InternalAnnotations.g:618:6: ( ruleFloateger )
+                    // InternalAnnotations.g:619:1: ruleFloateger
+                    {
+                     before(grammarAccess.getEStringAllTypesAccess().getFloategerParserRuleCall_4()); 
+                    pushFollow(FollowSets000.FOLLOW_2);
+                    ruleFloateger();
+
+                    state._fsp--;
+
+                     after(grammarAccess.getEStringAllTypesAccess().getFloategerParserRuleCall_4()); 
+
+                    }
+
+
+                    }
+                    break;
+
+            }
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__EStringAllTypes__Alternatives"
+
+
+    // $ANTLR start "rule__ExtendedID__Alternatives_1_0"
+    // InternalAnnotations.g:629:1: rule__ExtendedID__Alternatives_1_0 : ( ( '.' ) | ( '-' ) );
+    public final void rule__ExtendedID__Alternatives_1_0() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:633:1: ( ( '.' ) | ( '-' ) )
+            int alt4=2;
+            int LA4_0 = input.LA(1);
+
+            if ( (LA4_0==16) ) {
+                alt4=1;
+            }
+            else if ( (LA4_0==17) ) {
+                alt4=2;
+            }
+            else {
+                NoViableAltException nvae =
+                    new NoViableAltException("", 4, 0, input);
+
+                throw nvae;
+            }
+            switch (alt4) {
+                case 1 :
+                    // InternalAnnotations.g:634:1: ( '.' )
+                    {
+                    // InternalAnnotations.g:634:1: ( '.' )
+                    // InternalAnnotations.g:635:1: '.'
+                    {
+                     before(grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0_0()); 
+                    match(input,16,FollowSets000.FOLLOW_2); 
+                     after(grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0_0()); 
+
+                    }
+
+
+                    }
+                    break;
+                case 2 :
+                    // InternalAnnotations.g:642:6: ( '-' )
+                    {
+                    // InternalAnnotations.g:642:6: ( '-' )
+                    // InternalAnnotations.g:643:1: '-'
+                    {
+                     before(grammarAccess.getExtendedIDAccess().getHyphenMinusKeyword_1_0_1()); 
+                    match(input,17,FollowSets000.FOLLOW_2); 
+                     after(grammarAccess.getExtendedIDAccess().getHyphenMinusKeyword_1_0_1()); 
+
+                    }
+
+
+                    }
+                    break;
+
+            }
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__ExtendedID__Alternatives_1_0"
+
+
     // $ANTLR start "rule__TagAnnotation__Group__0"
-    // InternalAnnotations.g:590:1: rule__TagAnnotation__Group__0 : rule__TagAnnotation__Group__0__Impl rule__TagAnnotation__Group__1 ;
+    // InternalAnnotations.g:657:1: rule__TagAnnotation__Group__0 : rule__TagAnnotation__Group__0__Impl rule__TagAnnotation__Group__1 ;
     public final void rule__TagAnnotation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:594:1: ( rule__TagAnnotation__Group__0__Impl rule__TagAnnotation__Group__1 )
-            // InternalAnnotations.g:595:2: rule__TagAnnotation__Group__0__Impl rule__TagAnnotation__Group__1
+            // InternalAnnotations.g:661:1: ( rule__TagAnnotation__Group__0__Impl rule__TagAnnotation__Group__1 )
+            // InternalAnnotations.g:662:2: rule__TagAnnotation__Group__0__Impl rule__TagAnnotation__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_3);
             rule__TagAnnotation__Group__0__Impl();
@@ -1610,20 +1792,20 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TagAnnotation__Group__0__Impl"
-    // InternalAnnotations.g:602:1: rule__TagAnnotation__Group__0__Impl : ( '@' ) ;
+    // InternalAnnotations.g:669:1: rule__TagAnnotation__Group__0__Impl : ( '@' ) ;
     public final void rule__TagAnnotation__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:606:1: ( ( '@' ) )
-            // InternalAnnotations.g:607:1: ( '@' )
+            // InternalAnnotations.g:673:1: ( ( '@' ) )
+            // InternalAnnotations.g:674:1: ( '@' )
             {
-            // InternalAnnotations.g:607:1: ( '@' )
-            // InternalAnnotations.g:608:1: '@'
+            // InternalAnnotations.g:674:1: ( '@' )
+            // InternalAnnotations.g:675:1: '@'
             {
              before(grammarAccess.getTagAnnotationAccess().getCommercialAtKeyword_0()); 
-            match(input,15,FollowSets000.FOLLOW_2); 
+            match(input,18,FollowSets000.FOLLOW_2); 
              after(grammarAccess.getTagAnnotationAccess().getCommercialAtKeyword_0()); 
 
             }
@@ -1647,14 +1829,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TagAnnotation__Group__1"
-    // InternalAnnotations.g:621:1: rule__TagAnnotation__Group__1 : rule__TagAnnotation__Group__1__Impl ;
+    // InternalAnnotations.g:688:1: rule__TagAnnotation__Group__1 : rule__TagAnnotation__Group__1__Impl ;
     public final void rule__TagAnnotation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:625:1: ( rule__TagAnnotation__Group__1__Impl )
-            // InternalAnnotations.g:626:2: rule__TagAnnotation__Group__1__Impl
+            // InternalAnnotations.g:692:1: ( rule__TagAnnotation__Group__1__Impl )
+            // InternalAnnotations.g:693:2: rule__TagAnnotation__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TagAnnotation__Group__1__Impl();
@@ -1680,21 +1862,21 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TagAnnotation__Group__1__Impl"
-    // InternalAnnotations.g:632:1: rule__TagAnnotation__Group__1__Impl : ( ( rule__TagAnnotation__NameAssignment_1 ) ) ;
+    // InternalAnnotations.g:699:1: rule__TagAnnotation__Group__1__Impl : ( ( rule__TagAnnotation__NameAssignment_1 ) ) ;
     public final void rule__TagAnnotation__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:636:1: ( ( ( rule__TagAnnotation__NameAssignment_1 ) ) )
-            // InternalAnnotations.g:637:1: ( ( rule__TagAnnotation__NameAssignment_1 ) )
+            // InternalAnnotations.g:703:1: ( ( ( rule__TagAnnotation__NameAssignment_1 ) ) )
+            // InternalAnnotations.g:704:1: ( ( rule__TagAnnotation__NameAssignment_1 ) )
             {
-            // InternalAnnotations.g:637:1: ( ( rule__TagAnnotation__NameAssignment_1 ) )
-            // InternalAnnotations.g:638:1: ( rule__TagAnnotation__NameAssignment_1 )
+            // InternalAnnotations.g:704:1: ( ( rule__TagAnnotation__NameAssignment_1 ) )
+            // InternalAnnotations.g:705:1: ( rule__TagAnnotation__NameAssignment_1 )
             {
              before(grammarAccess.getTagAnnotationAccess().getNameAssignment_1()); 
-            // InternalAnnotations.g:639:1: ( rule__TagAnnotation__NameAssignment_1 )
-            // InternalAnnotations.g:639:2: rule__TagAnnotation__NameAssignment_1
+            // InternalAnnotations.g:706:1: ( rule__TagAnnotation__NameAssignment_1 )
+            // InternalAnnotations.g:706:2: rule__TagAnnotation__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TagAnnotation__NameAssignment_1();
@@ -1726,15 +1908,170 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
     // $ANTLR end "rule__TagAnnotation__Group__1__Impl"
 
 
+    // $ANTLR start "rule__PragmaTag__Group__0"
+    // InternalAnnotations.g:720:1: rule__PragmaTag__Group__0 : rule__PragmaTag__Group__0__Impl rule__PragmaTag__Group__1 ;
+    public final void rule__PragmaTag__Group__0() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:724:1: ( rule__PragmaTag__Group__0__Impl rule__PragmaTag__Group__1 )
+            // InternalAnnotations.g:725:2: rule__PragmaTag__Group__0__Impl rule__PragmaTag__Group__1
+            {
+            pushFollow(FollowSets000.FOLLOW_3);
+            rule__PragmaTag__Group__0__Impl();
+
+            state._fsp--;
+
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__PragmaTag__Group__1();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__PragmaTag__Group__0"
+
+
+    // $ANTLR start "rule__PragmaTag__Group__0__Impl"
+    // InternalAnnotations.g:732:1: rule__PragmaTag__Group__0__Impl : ( '#' ) ;
+    public final void rule__PragmaTag__Group__0__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:736:1: ( ( '#' ) )
+            // InternalAnnotations.g:737:1: ( '#' )
+            {
+            // InternalAnnotations.g:737:1: ( '#' )
+            // InternalAnnotations.g:738:1: '#'
+            {
+             before(grammarAccess.getPragmaTagAccess().getNumberSignKeyword_0()); 
+            match(input,19,FollowSets000.FOLLOW_2); 
+             after(grammarAccess.getPragmaTagAccess().getNumberSignKeyword_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__PragmaTag__Group__0__Impl"
+
+
+    // $ANTLR start "rule__PragmaTag__Group__1"
+    // InternalAnnotations.g:751:1: rule__PragmaTag__Group__1 : rule__PragmaTag__Group__1__Impl ;
+    public final void rule__PragmaTag__Group__1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:755:1: ( rule__PragmaTag__Group__1__Impl )
+            // InternalAnnotations.g:756:2: rule__PragmaTag__Group__1__Impl
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__PragmaTag__Group__1__Impl();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__PragmaTag__Group__1"
+
+
+    // $ANTLR start "rule__PragmaTag__Group__1__Impl"
+    // InternalAnnotations.g:762:1: rule__PragmaTag__Group__1__Impl : ( ( rule__PragmaTag__NameAssignment_1 ) ) ;
+    public final void rule__PragmaTag__Group__1__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:766:1: ( ( ( rule__PragmaTag__NameAssignment_1 ) ) )
+            // InternalAnnotations.g:767:1: ( ( rule__PragmaTag__NameAssignment_1 ) )
+            {
+            // InternalAnnotations.g:767:1: ( ( rule__PragmaTag__NameAssignment_1 ) )
+            // InternalAnnotations.g:768:1: ( rule__PragmaTag__NameAssignment_1 )
+            {
+             before(grammarAccess.getPragmaTagAccess().getNameAssignment_1()); 
+            // InternalAnnotations.g:769:1: ( rule__PragmaTag__NameAssignment_1 )
+            // InternalAnnotations.g:769:2: rule__PragmaTag__NameAssignment_1
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__PragmaTag__NameAssignment_1();
+
+            state._fsp--;
+
+
+            }
+
+             after(grammarAccess.getPragmaTagAccess().getNameAssignment_1()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__PragmaTag__Group__1__Impl"
+
+
     // $ANTLR start "rule__KeyStringValueAnnotation__Group__0"
-    // InternalAnnotations.g:653:1: rule__KeyStringValueAnnotation__Group__0 : rule__KeyStringValueAnnotation__Group__0__Impl rule__KeyStringValueAnnotation__Group__1 ;
+    // InternalAnnotations.g:783:1: rule__KeyStringValueAnnotation__Group__0 : rule__KeyStringValueAnnotation__Group__0__Impl rule__KeyStringValueAnnotation__Group__1 ;
     public final void rule__KeyStringValueAnnotation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:657:1: ( rule__KeyStringValueAnnotation__Group__0__Impl rule__KeyStringValueAnnotation__Group__1 )
-            // InternalAnnotations.g:658:2: rule__KeyStringValueAnnotation__Group__0__Impl rule__KeyStringValueAnnotation__Group__1
+            // InternalAnnotations.g:787:1: ( rule__KeyStringValueAnnotation__Group__0__Impl rule__KeyStringValueAnnotation__Group__1 )
+            // InternalAnnotations.g:788:2: rule__KeyStringValueAnnotation__Group__0__Impl rule__KeyStringValueAnnotation__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_3);
             rule__KeyStringValueAnnotation__Group__0__Impl();
@@ -1765,20 +2102,20 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group__0__Impl"
-    // InternalAnnotations.g:665:1: rule__KeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
+    // InternalAnnotations.g:795:1: rule__KeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
     public final void rule__KeyStringValueAnnotation__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:669:1: ( ( '@' ) )
-            // InternalAnnotations.g:670:1: ( '@' )
+            // InternalAnnotations.g:799:1: ( ( '@' ) )
+            // InternalAnnotations.g:800:1: ( '@' )
             {
-            // InternalAnnotations.g:670:1: ( '@' )
-            // InternalAnnotations.g:671:1: '@'
+            // InternalAnnotations.g:800:1: ( '@' )
+            // InternalAnnotations.g:801:1: '@'
             {
              before(grammarAccess.getKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
-            match(input,15,FollowSets000.FOLLOW_2); 
+            match(input,18,FollowSets000.FOLLOW_2); 
              after(grammarAccess.getKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
 
             }
@@ -1802,14 +2139,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group__1"
-    // InternalAnnotations.g:684:1: rule__KeyStringValueAnnotation__Group__1 : rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2 ;
+    // InternalAnnotations.g:814:1: rule__KeyStringValueAnnotation__Group__1 : rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2 ;
     public final void rule__KeyStringValueAnnotation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:688:1: ( rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2 )
-            // InternalAnnotations.g:689:2: rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2
+            // InternalAnnotations.g:818:1: ( rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2 )
+            // InternalAnnotations.g:819:2: rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_4);
             rule__KeyStringValueAnnotation__Group__1__Impl();
@@ -1840,21 +2177,21 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group__1__Impl"
-    // InternalAnnotations.g:696:1: rule__KeyStringValueAnnotation__Group__1__Impl : ( ( rule__KeyStringValueAnnotation__NameAssignment_1 ) ) ;
+    // InternalAnnotations.g:826:1: rule__KeyStringValueAnnotation__Group__1__Impl : ( ( rule__KeyStringValueAnnotation__NameAssignment_1 ) ) ;
     public final void rule__KeyStringValueAnnotation__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:700:1: ( ( ( rule__KeyStringValueAnnotation__NameAssignment_1 ) ) )
-            // InternalAnnotations.g:701:1: ( ( rule__KeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalAnnotations.g:830:1: ( ( ( rule__KeyStringValueAnnotation__NameAssignment_1 ) ) )
+            // InternalAnnotations.g:831:1: ( ( rule__KeyStringValueAnnotation__NameAssignment_1 ) )
             {
-            // InternalAnnotations.g:701:1: ( ( rule__KeyStringValueAnnotation__NameAssignment_1 ) )
-            // InternalAnnotations.g:702:1: ( rule__KeyStringValueAnnotation__NameAssignment_1 )
+            // InternalAnnotations.g:831:1: ( ( rule__KeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalAnnotations.g:832:1: ( rule__KeyStringValueAnnotation__NameAssignment_1 )
             {
              before(grammarAccess.getKeyStringValueAnnotationAccess().getNameAssignment_1()); 
-            // InternalAnnotations.g:703:1: ( rule__KeyStringValueAnnotation__NameAssignment_1 )
-            // InternalAnnotations.g:703:2: rule__KeyStringValueAnnotation__NameAssignment_1
+            // InternalAnnotations.g:833:1: ( rule__KeyStringValueAnnotation__NameAssignment_1 )
+            // InternalAnnotations.g:833:2: rule__KeyStringValueAnnotation__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__KeyStringValueAnnotation__NameAssignment_1();
@@ -1887,14 +2224,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group__2"
-    // InternalAnnotations.g:713:1: rule__KeyStringValueAnnotation__Group__2 : rule__KeyStringValueAnnotation__Group__2__Impl rule__KeyStringValueAnnotation__Group__3 ;
+    // InternalAnnotations.g:843:1: rule__KeyStringValueAnnotation__Group__2 : rule__KeyStringValueAnnotation__Group__2__Impl rule__KeyStringValueAnnotation__Group__3 ;
     public final void rule__KeyStringValueAnnotation__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:717:1: ( rule__KeyStringValueAnnotation__Group__2__Impl rule__KeyStringValueAnnotation__Group__3 )
-            // InternalAnnotations.g:718:2: rule__KeyStringValueAnnotation__Group__2__Impl rule__KeyStringValueAnnotation__Group__3
+            // InternalAnnotations.g:847:1: ( rule__KeyStringValueAnnotation__Group__2__Impl rule__KeyStringValueAnnotation__Group__3 )
+            // InternalAnnotations.g:848:2: rule__KeyStringValueAnnotation__Group__2__Impl rule__KeyStringValueAnnotation__Group__3
             {
             pushFollow(FollowSets000.FOLLOW_5);
             rule__KeyStringValueAnnotation__Group__2__Impl();
@@ -1925,21 +2262,21 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group__2__Impl"
-    // InternalAnnotations.g:725:1: rule__KeyStringValueAnnotation__Group__2__Impl : ( ( rule__KeyStringValueAnnotation__ValuesAssignment_2 ) ) ;
+    // InternalAnnotations.g:855:1: rule__KeyStringValueAnnotation__Group__2__Impl : ( ( rule__KeyStringValueAnnotation__ValuesAssignment_2 ) ) ;
     public final void rule__KeyStringValueAnnotation__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:729:1: ( ( ( rule__KeyStringValueAnnotation__ValuesAssignment_2 ) ) )
-            // InternalAnnotations.g:730:1: ( ( rule__KeyStringValueAnnotation__ValuesAssignment_2 ) )
+            // InternalAnnotations.g:859:1: ( ( ( rule__KeyStringValueAnnotation__ValuesAssignment_2 ) ) )
+            // InternalAnnotations.g:860:1: ( ( rule__KeyStringValueAnnotation__ValuesAssignment_2 ) )
             {
-            // InternalAnnotations.g:730:1: ( ( rule__KeyStringValueAnnotation__ValuesAssignment_2 ) )
-            // InternalAnnotations.g:731:1: ( rule__KeyStringValueAnnotation__ValuesAssignment_2 )
+            // InternalAnnotations.g:860:1: ( ( rule__KeyStringValueAnnotation__ValuesAssignment_2 ) )
+            // InternalAnnotations.g:861:1: ( rule__KeyStringValueAnnotation__ValuesAssignment_2 )
             {
              before(grammarAccess.getKeyStringValueAnnotationAccess().getValuesAssignment_2()); 
-            // InternalAnnotations.g:732:1: ( rule__KeyStringValueAnnotation__ValuesAssignment_2 )
-            // InternalAnnotations.g:732:2: rule__KeyStringValueAnnotation__ValuesAssignment_2
+            // InternalAnnotations.g:862:1: ( rule__KeyStringValueAnnotation__ValuesAssignment_2 )
+            // InternalAnnotations.g:862:2: rule__KeyStringValueAnnotation__ValuesAssignment_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__KeyStringValueAnnotation__ValuesAssignment_2();
@@ -1972,14 +2309,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group__3"
-    // InternalAnnotations.g:742:1: rule__KeyStringValueAnnotation__Group__3 : rule__KeyStringValueAnnotation__Group__3__Impl ;
+    // InternalAnnotations.g:872:1: rule__KeyStringValueAnnotation__Group__3 : rule__KeyStringValueAnnotation__Group__3__Impl ;
     public final void rule__KeyStringValueAnnotation__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:746:1: ( rule__KeyStringValueAnnotation__Group__3__Impl )
-            // InternalAnnotations.g:747:2: rule__KeyStringValueAnnotation__Group__3__Impl
+            // InternalAnnotations.g:876:1: ( rule__KeyStringValueAnnotation__Group__3__Impl )
+            // InternalAnnotations.g:877:2: rule__KeyStringValueAnnotation__Group__3__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__KeyStringValueAnnotation__Group__3__Impl();
@@ -2005,33 +2342,33 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group__3__Impl"
-    // InternalAnnotations.g:753:1: rule__KeyStringValueAnnotation__Group__3__Impl : ( ( rule__KeyStringValueAnnotation__Group_3__0 )* ) ;
+    // InternalAnnotations.g:883:1: rule__KeyStringValueAnnotation__Group__3__Impl : ( ( rule__KeyStringValueAnnotation__Group_3__0 )* ) ;
     public final void rule__KeyStringValueAnnotation__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:757:1: ( ( ( rule__KeyStringValueAnnotation__Group_3__0 )* ) )
-            // InternalAnnotations.g:758:1: ( ( rule__KeyStringValueAnnotation__Group_3__0 )* )
+            // InternalAnnotations.g:887:1: ( ( ( rule__KeyStringValueAnnotation__Group_3__0 )* ) )
+            // InternalAnnotations.g:888:1: ( ( rule__KeyStringValueAnnotation__Group_3__0 )* )
             {
-            // InternalAnnotations.g:758:1: ( ( rule__KeyStringValueAnnotation__Group_3__0 )* )
-            // InternalAnnotations.g:759:1: ( rule__KeyStringValueAnnotation__Group_3__0 )*
+            // InternalAnnotations.g:888:1: ( ( rule__KeyStringValueAnnotation__Group_3__0 )* )
+            // InternalAnnotations.g:889:1: ( rule__KeyStringValueAnnotation__Group_3__0 )*
             {
              before(grammarAccess.getKeyStringValueAnnotationAccess().getGroup_3()); 
-            // InternalAnnotations.g:760:1: ( rule__KeyStringValueAnnotation__Group_3__0 )*
-            loop4:
+            // InternalAnnotations.g:890:1: ( rule__KeyStringValueAnnotation__Group_3__0 )*
+            loop5:
             do {
-                int alt4=2;
-                int LA4_0 = input.LA(1);
+                int alt5=2;
+                int LA5_0 = input.LA(1);
 
-                if ( (LA4_0==16) ) {
-                    alt4=1;
+                if ( (LA5_0==20) ) {
+                    alt5=1;
                 }
 
 
-                switch (alt4) {
+                switch (alt5) {
             	case 1 :
-            	    // InternalAnnotations.g:760:2: rule__KeyStringValueAnnotation__Group_3__0
+            	    // InternalAnnotations.g:890:2: rule__KeyStringValueAnnotation__Group_3__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_6);
             	    rule__KeyStringValueAnnotation__Group_3__0();
@@ -2043,7 +2380,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             	    break;
 
             	default :
-            	    break loop4;
+            	    break loop5;
                 }
             } while (true);
 
@@ -2070,14 +2407,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group_3__0"
-    // InternalAnnotations.g:778:1: rule__KeyStringValueAnnotation__Group_3__0 : rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1 ;
+    // InternalAnnotations.g:908:1: rule__KeyStringValueAnnotation__Group_3__0 : rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1 ;
     public final void rule__KeyStringValueAnnotation__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:782:1: ( rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1 )
-            // InternalAnnotations.g:783:2: rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1
+            // InternalAnnotations.g:912:1: ( rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1 )
+            // InternalAnnotations.g:913:2: rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1
             {
             pushFollow(FollowSets000.FOLLOW_4);
             rule__KeyStringValueAnnotation__Group_3__0__Impl();
@@ -2108,20 +2445,20 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group_3__0__Impl"
-    // InternalAnnotations.g:790:1: rule__KeyStringValueAnnotation__Group_3__0__Impl : ( ',' ) ;
+    // InternalAnnotations.g:920:1: rule__KeyStringValueAnnotation__Group_3__0__Impl : ( ',' ) ;
     public final void rule__KeyStringValueAnnotation__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:794:1: ( ( ',' ) )
-            // InternalAnnotations.g:795:1: ( ',' )
+            // InternalAnnotations.g:924:1: ( ( ',' ) )
+            // InternalAnnotations.g:925:1: ( ',' )
             {
-            // InternalAnnotations.g:795:1: ( ',' )
-            // InternalAnnotations.g:796:1: ','
+            // InternalAnnotations.g:925:1: ( ',' )
+            // InternalAnnotations.g:926:1: ','
             {
              before(grammarAccess.getKeyStringValueAnnotationAccess().getCommaKeyword_3_0()); 
-            match(input,16,FollowSets000.FOLLOW_2); 
+            match(input,20,FollowSets000.FOLLOW_2); 
              after(grammarAccess.getKeyStringValueAnnotationAccess().getCommaKeyword_3_0()); 
 
             }
@@ -2145,14 +2482,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group_3__1"
-    // InternalAnnotations.g:809:1: rule__KeyStringValueAnnotation__Group_3__1 : rule__KeyStringValueAnnotation__Group_3__1__Impl ;
+    // InternalAnnotations.g:939:1: rule__KeyStringValueAnnotation__Group_3__1 : rule__KeyStringValueAnnotation__Group_3__1__Impl ;
     public final void rule__KeyStringValueAnnotation__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:813:1: ( rule__KeyStringValueAnnotation__Group_3__1__Impl )
-            // InternalAnnotations.g:814:2: rule__KeyStringValueAnnotation__Group_3__1__Impl
+            // InternalAnnotations.g:943:1: ( rule__KeyStringValueAnnotation__Group_3__1__Impl )
+            // InternalAnnotations.g:944:2: rule__KeyStringValueAnnotation__Group_3__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__KeyStringValueAnnotation__Group_3__1__Impl();
@@ -2178,21 +2515,21 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group_3__1__Impl"
-    // InternalAnnotations.g:820:1: rule__KeyStringValueAnnotation__Group_3__1__Impl : ( ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 ) ) ;
+    // InternalAnnotations.g:950:1: rule__KeyStringValueAnnotation__Group_3__1__Impl : ( ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 ) ) ;
     public final void rule__KeyStringValueAnnotation__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:824:1: ( ( ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 ) ) )
-            // InternalAnnotations.g:825:1: ( ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 ) )
+            // InternalAnnotations.g:954:1: ( ( ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 ) ) )
+            // InternalAnnotations.g:955:1: ( ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 ) )
             {
-            // InternalAnnotations.g:825:1: ( ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 ) )
-            // InternalAnnotations.g:826:1: ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 )
+            // InternalAnnotations.g:955:1: ( ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 ) )
+            // InternalAnnotations.g:956:1: ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 )
             {
              before(grammarAccess.getKeyStringValueAnnotationAccess().getValuesAssignment_3_1()); 
-            // InternalAnnotations.g:827:1: ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 )
-            // InternalAnnotations.g:827:2: rule__KeyStringValueAnnotation__ValuesAssignment_3_1
+            // InternalAnnotations.g:957:1: ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 )
+            // InternalAnnotations.g:957:2: rule__KeyStringValueAnnotation__ValuesAssignment_3_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__KeyStringValueAnnotation__ValuesAssignment_3_1();
@@ -2224,15 +2561,1011 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
     // $ANTLR end "rule__KeyStringValueAnnotation__Group_3__1__Impl"
 
 
+    // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group__0"
+    // InternalAnnotations.g:971:1: rule__RestrictedKeyStringValueAnnotation__Group__0 : rule__RestrictedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedKeyStringValueAnnotation__Group__1 ;
+    public final void rule__RestrictedKeyStringValueAnnotation__Group__0() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:975:1: ( rule__RestrictedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedKeyStringValueAnnotation__Group__1 )
+            // InternalAnnotations.g:976:2: rule__RestrictedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedKeyStringValueAnnotation__Group__1
+            {
+            pushFollow(FollowSets000.FOLLOW_3);
+            rule__RestrictedKeyStringValueAnnotation__Group__0__Impl();
+
+            state._fsp--;
+
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__RestrictedKeyStringValueAnnotation__Group__1();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedKeyStringValueAnnotation__Group__0"
+
+
+    // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group__0__Impl"
+    // InternalAnnotations.g:983:1: rule__RestrictedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
+    public final void rule__RestrictedKeyStringValueAnnotation__Group__0__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:987:1: ( ( '@' ) )
+            // InternalAnnotations.g:988:1: ( '@' )
+            {
+            // InternalAnnotations.g:988:1: ( '@' )
+            // InternalAnnotations.g:989:1: '@'
+            {
+             before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
+            match(input,18,FollowSets000.FOLLOW_2); 
+             after(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedKeyStringValueAnnotation__Group__0__Impl"
+
+
+    // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group__1"
+    // InternalAnnotations.g:1002:1: rule__RestrictedKeyStringValueAnnotation__Group__1 : rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2 ;
+    public final void rule__RestrictedKeyStringValueAnnotation__Group__1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1006:1: ( rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2 )
+            // InternalAnnotations.g:1007:2: rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2
+            {
+            pushFollow(FollowSets000.FOLLOW_7);
+            rule__RestrictedKeyStringValueAnnotation__Group__1__Impl();
+
+            state._fsp--;
+
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__RestrictedKeyStringValueAnnotation__Group__2();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedKeyStringValueAnnotation__Group__1"
+
+
+    // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group__1__Impl"
+    // InternalAnnotations.g:1014:1: rule__RestrictedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
+    public final void rule__RestrictedKeyStringValueAnnotation__Group__1__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1018:1: ( ( ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 ) ) )
+            // InternalAnnotations.g:1019:1: ( ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 ) )
+            {
+            // InternalAnnotations.g:1019:1: ( ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalAnnotations.g:1020:1: ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 )
+            {
+             before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getNameAssignment_1()); 
+            // InternalAnnotations.g:1021:1: ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalAnnotations.g:1021:2: rule__RestrictedKeyStringValueAnnotation__NameAssignment_1
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__RestrictedKeyStringValueAnnotation__NameAssignment_1();
+
+            state._fsp--;
+
+
+            }
+
+             after(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getNameAssignment_1()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedKeyStringValueAnnotation__Group__1__Impl"
+
+
+    // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group__2"
+    // InternalAnnotations.g:1031:1: rule__RestrictedKeyStringValueAnnotation__Group__2 : rule__RestrictedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedKeyStringValueAnnotation__Group__3 ;
+    public final void rule__RestrictedKeyStringValueAnnotation__Group__2() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1035:1: ( rule__RestrictedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedKeyStringValueAnnotation__Group__3 )
+            // InternalAnnotations.g:1036:2: rule__RestrictedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedKeyStringValueAnnotation__Group__3
+            {
+            pushFollow(FollowSets000.FOLLOW_5);
+            rule__RestrictedKeyStringValueAnnotation__Group__2__Impl();
+
+            state._fsp--;
+
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__RestrictedKeyStringValueAnnotation__Group__3();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedKeyStringValueAnnotation__Group__2"
+
+
+    // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group__2__Impl"
+    // InternalAnnotations.g:1043:1: rule__RestrictedKeyStringValueAnnotation__Group__2__Impl : ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 ) ) ;
+    public final void rule__RestrictedKeyStringValueAnnotation__Group__2__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1047:1: ( ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 ) ) )
+            // InternalAnnotations.g:1048:1: ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 ) )
+            {
+            // InternalAnnotations.g:1048:1: ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 ) )
+            // InternalAnnotations.g:1049:1: ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 )
+            {
+             before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesAssignment_2()); 
+            // InternalAnnotations.g:1050:1: ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 )
+            // InternalAnnotations.g:1050:2: rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2();
+
+            state._fsp--;
+
+
+            }
+
+             after(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesAssignment_2()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedKeyStringValueAnnotation__Group__2__Impl"
+
+
+    // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group__3"
+    // InternalAnnotations.g:1060:1: rule__RestrictedKeyStringValueAnnotation__Group__3 : rule__RestrictedKeyStringValueAnnotation__Group__3__Impl ;
+    public final void rule__RestrictedKeyStringValueAnnotation__Group__3() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1064:1: ( rule__RestrictedKeyStringValueAnnotation__Group__3__Impl )
+            // InternalAnnotations.g:1065:2: rule__RestrictedKeyStringValueAnnotation__Group__3__Impl
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__RestrictedKeyStringValueAnnotation__Group__3__Impl();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedKeyStringValueAnnotation__Group__3"
+
+
+    // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group__3__Impl"
+    // InternalAnnotations.g:1071:1: rule__RestrictedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )* ) ;
+    public final void rule__RestrictedKeyStringValueAnnotation__Group__3__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1075:1: ( ( ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )* ) )
+            // InternalAnnotations.g:1076:1: ( ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )* )
+            {
+            // InternalAnnotations.g:1076:1: ( ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )* )
+            // InternalAnnotations.g:1077:1: ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )*
+            {
+             before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getGroup_3()); 
+            // InternalAnnotations.g:1078:1: ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )*
+            loop6:
+            do {
+                int alt6=2;
+                int LA6_0 = input.LA(1);
+
+                if ( (LA6_0==20) ) {
+                    alt6=1;
+                }
+
+
+                switch (alt6) {
+            	case 1 :
+            	    // InternalAnnotations.g:1078:2: rule__RestrictedKeyStringValueAnnotation__Group_3__0
+            	    {
+            	    pushFollow(FollowSets000.FOLLOW_6);
+            	    rule__RestrictedKeyStringValueAnnotation__Group_3__0();
+
+            	    state._fsp--;
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop6;
+                }
+            } while (true);
+
+             after(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getGroup_3()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedKeyStringValueAnnotation__Group__3__Impl"
+
+
+    // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group_3__0"
+    // InternalAnnotations.g:1096:1: rule__RestrictedKeyStringValueAnnotation__Group_3__0 : rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1 ;
+    public final void rule__RestrictedKeyStringValueAnnotation__Group_3__0() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1100:1: ( rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1 )
+            // InternalAnnotations.g:1101:2: rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1
+            {
+            pushFollow(FollowSets000.FOLLOW_7);
+            rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl();
+
+            state._fsp--;
+
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__RestrictedKeyStringValueAnnotation__Group_3__1();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedKeyStringValueAnnotation__Group_3__0"
+
+
+    // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl"
+    // InternalAnnotations.g:1108:1: rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl : ( ',' ) ;
+    public final void rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1112:1: ( ( ',' ) )
+            // InternalAnnotations.g:1113:1: ( ',' )
+            {
+            // InternalAnnotations.g:1113:1: ( ',' )
+            // InternalAnnotations.g:1114:1: ','
+            {
+             before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommaKeyword_3_0()); 
+            match(input,20,FollowSets000.FOLLOW_2); 
+             after(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommaKeyword_3_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl"
+
+
+    // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group_3__1"
+    // InternalAnnotations.g:1127:1: rule__RestrictedKeyStringValueAnnotation__Group_3__1 : rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl ;
+    public final void rule__RestrictedKeyStringValueAnnotation__Group_3__1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1131:1: ( rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl )
+            // InternalAnnotations.g:1132:2: rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedKeyStringValueAnnotation__Group_3__1"
+
+
+    // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl"
+    // InternalAnnotations.g:1138:1: rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl : ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 ) ) ;
+    public final void rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1142:1: ( ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 ) ) )
+            // InternalAnnotations.g:1143:1: ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 ) )
+            {
+            // InternalAnnotations.g:1143:1: ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 ) )
+            // InternalAnnotations.g:1144:1: ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 )
+            {
+             before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesAssignment_3_1()); 
+            // InternalAnnotations.g:1145:1: ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 )
+            // InternalAnnotations.g:1145:2: rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1();
+
+            state._fsp--;
+
+
+            }
+
+             after(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesAssignment_3_1()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl"
+
+
+    // $ANTLR start "rule__StringPragma__Group__0"
+    // InternalAnnotations.g:1159:1: rule__StringPragma__Group__0 : rule__StringPragma__Group__0__Impl rule__StringPragma__Group__1 ;
+    public final void rule__StringPragma__Group__0() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1163:1: ( rule__StringPragma__Group__0__Impl rule__StringPragma__Group__1 )
+            // InternalAnnotations.g:1164:2: rule__StringPragma__Group__0__Impl rule__StringPragma__Group__1
+            {
+            pushFollow(FollowSets000.FOLLOW_3);
+            rule__StringPragma__Group__0__Impl();
+
+            state._fsp--;
+
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__StringPragma__Group__1();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__StringPragma__Group__0"
+
+
+    // $ANTLR start "rule__StringPragma__Group__0__Impl"
+    // InternalAnnotations.g:1171:1: rule__StringPragma__Group__0__Impl : ( '#' ) ;
+    public final void rule__StringPragma__Group__0__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1175:1: ( ( '#' ) )
+            // InternalAnnotations.g:1176:1: ( '#' )
+            {
+            // InternalAnnotations.g:1176:1: ( '#' )
+            // InternalAnnotations.g:1177:1: '#'
+            {
+             before(grammarAccess.getStringPragmaAccess().getNumberSignKeyword_0()); 
+            match(input,19,FollowSets000.FOLLOW_2); 
+             after(grammarAccess.getStringPragmaAccess().getNumberSignKeyword_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__StringPragma__Group__0__Impl"
+
+
+    // $ANTLR start "rule__StringPragma__Group__1"
+    // InternalAnnotations.g:1190:1: rule__StringPragma__Group__1 : rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2 ;
+    public final void rule__StringPragma__Group__1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1194:1: ( rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2 )
+            // InternalAnnotations.g:1195:2: rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2
+            {
+            pushFollow(FollowSets000.FOLLOW_4);
+            rule__StringPragma__Group__1__Impl();
+
+            state._fsp--;
+
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__StringPragma__Group__2();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__StringPragma__Group__1"
+
+
+    // $ANTLR start "rule__StringPragma__Group__1__Impl"
+    // InternalAnnotations.g:1202:1: rule__StringPragma__Group__1__Impl : ( ( rule__StringPragma__NameAssignment_1 ) ) ;
+    public final void rule__StringPragma__Group__1__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1206:1: ( ( ( rule__StringPragma__NameAssignment_1 ) ) )
+            // InternalAnnotations.g:1207:1: ( ( rule__StringPragma__NameAssignment_1 ) )
+            {
+            // InternalAnnotations.g:1207:1: ( ( rule__StringPragma__NameAssignment_1 ) )
+            // InternalAnnotations.g:1208:1: ( rule__StringPragma__NameAssignment_1 )
+            {
+             before(grammarAccess.getStringPragmaAccess().getNameAssignment_1()); 
+            // InternalAnnotations.g:1209:1: ( rule__StringPragma__NameAssignment_1 )
+            // InternalAnnotations.g:1209:2: rule__StringPragma__NameAssignment_1
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__StringPragma__NameAssignment_1();
+
+            state._fsp--;
+
+
+            }
+
+             after(grammarAccess.getStringPragmaAccess().getNameAssignment_1()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__StringPragma__Group__1__Impl"
+
+
+    // $ANTLR start "rule__StringPragma__Group__2"
+    // InternalAnnotations.g:1219:1: rule__StringPragma__Group__2 : rule__StringPragma__Group__2__Impl rule__StringPragma__Group__3 ;
+    public final void rule__StringPragma__Group__2() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1223:1: ( rule__StringPragma__Group__2__Impl rule__StringPragma__Group__3 )
+            // InternalAnnotations.g:1224:2: rule__StringPragma__Group__2__Impl rule__StringPragma__Group__3
+            {
+            pushFollow(FollowSets000.FOLLOW_5);
+            rule__StringPragma__Group__2__Impl();
+
+            state._fsp--;
+
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__StringPragma__Group__3();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__StringPragma__Group__2"
+
+
+    // $ANTLR start "rule__StringPragma__Group__2__Impl"
+    // InternalAnnotations.g:1231:1: rule__StringPragma__Group__2__Impl : ( ( rule__StringPragma__ValuesAssignment_2 ) ) ;
+    public final void rule__StringPragma__Group__2__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1235:1: ( ( ( rule__StringPragma__ValuesAssignment_2 ) ) )
+            // InternalAnnotations.g:1236:1: ( ( rule__StringPragma__ValuesAssignment_2 ) )
+            {
+            // InternalAnnotations.g:1236:1: ( ( rule__StringPragma__ValuesAssignment_2 ) )
+            // InternalAnnotations.g:1237:1: ( rule__StringPragma__ValuesAssignment_2 )
+            {
+             before(grammarAccess.getStringPragmaAccess().getValuesAssignment_2()); 
+            // InternalAnnotations.g:1238:1: ( rule__StringPragma__ValuesAssignment_2 )
+            // InternalAnnotations.g:1238:2: rule__StringPragma__ValuesAssignment_2
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__StringPragma__ValuesAssignment_2();
+
+            state._fsp--;
+
+
+            }
+
+             after(grammarAccess.getStringPragmaAccess().getValuesAssignment_2()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__StringPragma__Group__2__Impl"
+
+
+    // $ANTLR start "rule__StringPragma__Group__3"
+    // InternalAnnotations.g:1248:1: rule__StringPragma__Group__3 : rule__StringPragma__Group__3__Impl ;
+    public final void rule__StringPragma__Group__3() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1252:1: ( rule__StringPragma__Group__3__Impl )
+            // InternalAnnotations.g:1253:2: rule__StringPragma__Group__3__Impl
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__StringPragma__Group__3__Impl();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__StringPragma__Group__3"
+
+
+    // $ANTLR start "rule__StringPragma__Group__3__Impl"
+    // InternalAnnotations.g:1259:1: rule__StringPragma__Group__3__Impl : ( ( rule__StringPragma__Group_3__0 )* ) ;
+    public final void rule__StringPragma__Group__3__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1263:1: ( ( ( rule__StringPragma__Group_3__0 )* ) )
+            // InternalAnnotations.g:1264:1: ( ( rule__StringPragma__Group_3__0 )* )
+            {
+            // InternalAnnotations.g:1264:1: ( ( rule__StringPragma__Group_3__0 )* )
+            // InternalAnnotations.g:1265:1: ( rule__StringPragma__Group_3__0 )*
+            {
+             before(grammarAccess.getStringPragmaAccess().getGroup_3()); 
+            // InternalAnnotations.g:1266:1: ( rule__StringPragma__Group_3__0 )*
+            loop7:
+            do {
+                int alt7=2;
+                int LA7_0 = input.LA(1);
+
+                if ( (LA7_0==20) ) {
+                    alt7=1;
+                }
+
+
+                switch (alt7) {
+            	case 1 :
+            	    // InternalAnnotations.g:1266:2: rule__StringPragma__Group_3__0
+            	    {
+            	    pushFollow(FollowSets000.FOLLOW_6);
+            	    rule__StringPragma__Group_3__0();
+
+            	    state._fsp--;
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop7;
+                }
+            } while (true);
+
+             after(grammarAccess.getStringPragmaAccess().getGroup_3()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__StringPragma__Group__3__Impl"
+
+
+    // $ANTLR start "rule__StringPragma__Group_3__0"
+    // InternalAnnotations.g:1284:1: rule__StringPragma__Group_3__0 : rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1 ;
+    public final void rule__StringPragma__Group_3__0() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1288:1: ( rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1 )
+            // InternalAnnotations.g:1289:2: rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1
+            {
+            pushFollow(FollowSets000.FOLLOW_4);
+            rule__StringPragma__Group_3__0__Impl();
+
+            state._fsp--;
+
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__StringPragma__Group_3__1();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__StringPragma__Group_3__0"
+
+
+    // $ANTLR start "rule__StringPragma__Group_3__0__Impl"
+    // InternalAnnotations.g:1296:1: rule__StringPragma__Group_3__0__Impl : ( ',' ) ;
+    public final void rule__StringPragma__Group_3__0__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1300:1: ( ( ',' ) )
+            // InternalAnnotations.g:1301:1: ( ',' )
+            {
+            // InternalAnnotations.g:1301:1: ( ',' )
+            // InternalAnnotations.g:1302:1: ','
+            {
+             before(grammarAccess.getStringPragmaAccess().getCommaKeyword_3_0()); 
+            match(input,20,FollowSets000.FOLLOW_2); 
+             after(grammarAccess.getStringPragmaAccess().getCommaKeyword_3_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__StringPragma__Group_3__0__Impl"
+
+
+    // $ANTLR start "rule__StringPragma__Group_3__1"
+    // InternalAnnotations.g:1315:1: rule__StringPragma__Group_3__1 : rule__StringPragma__Group_3__1__Impl ;
+    public final void rule__StringPragma__Group_3__1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1319:1: ( rule__StringPragma__Group_3__1__Impl )
+            // InternalAnnotations.g:1320:2: rule__StringPragma__Group_3__1__Impl
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__StringPragma__Group_3__1__Impl();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__StringPragma__Group_3__1"
+
+
+    // $ANTLR start "rule__StringPragma__Group_3__1__Impl"
+    // InternalAnnotations.g:1326:1: rule__StringPragma__Group_3__1__Impl : ( ( rule__StringPragma__ValuesAssignment_3_1 ) ) ;
+    public final void rule__StringPragma__Group_3__1__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1330:1: ( ( ( rule__StringPragma__ValuesAssignment_3_1 ) ) )
+            // InternalAnnotations.g:1331:1: ( ( rule__StringPragma__ValuesAssignment_3_1 ) )
+            {
+            // InternalAnnotations.g:1331:1: ( ( rule__StringPragma__ValuesAssignment_3_1 ) )
+            // InternalAnnotations.g:1332:1: ( rule__StringPragma__ValuesAssignment_3_1 )
+            {
+             before(grammarAccess.getStringPragmaAccess().getValuesAssignment_3_1()); 
+            // InternalAnnotations.g:1333:1: ( rule__StringPragma__ValuesAssignment_3_1 )
+            // InternalAnnotations.g:1333:2: rule__StringPragma__ValuesAssignment_3_1
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__StringPragma__ValuesAssignment_3_1();
+
+            state._fsp--;
+
+
+            }
+
+             after(grammarAccess.getStringPragmaAccess().getValuesAssignment_3_1()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__StringPragma__Group_3__1__Impl"
+
+
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__0"
-    // InternalAnnotations.g:841:1: rule__TypedKeyStringValueAnnotation__Group__0 : rule__TypedKeyStringValueAnnotation__Group__0__Impl rule__TypedKeyStringValueAnnotation__Group__1 ;
+    // InternalAnnotations.g:1347:1: rule__TypedKeyStringValueAnnotation__Group__0 : rule__TypedKeyStringValueAnnotation__Group__0__Impl rule__TypedKeyStringValueAnnotation__Group__1 ;
     public final void rule__TypedKeyStringValueAnnotation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:845:1: ( rule__TypedKeyStringValueAnnotation__Group__0__Impl rule__TypedKeyStringValueAnnotation__Group__1 )
-            // InternalAnnotations.g:846:2: rule__TypedKeyStringValueAnnotation__Group__0__Impl rule__TypedKeyStringValueAnnotation__Group__1
+            // InternalAnnotations.g:1351:1: ( rule__TypedKeyStringValueAnnotation__Group__0__Impl rule__TypedKeyStringValueAnnotation__Group__1 )
+            // InternalAnnotations.g:1352:2: rule__TypedKeyStringValueAnnotation__Group__0__Impl rule__TypedKeyStringValueAnnotation__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_3);
             rule__TypedKeyStringValueAnnotation__Group__0__Impl();
@@ -2263,20 +3596,20 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__0__Impl"
-    // InternalAnnotations.g:853:1: rule__TypedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
+    // InternalAnnotations.g:1359:1: rule__TypedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
     public final void rule__TypedKeyStringValueAnnotation__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:857:1: ( ( '@' ) )
-            // InternalAnnotations.g:858:1: ( '@' )
+            // InternalAnnotations.g:1363:1: ( ( '@' ) )
+            // InternalAnnotations.g:1364:1: ( '@' )
             {
-            // InternalAnnotations.g:858:1: ( '@' )
-            // InternalAnnotations.g:859:1: '@'
+            // InternalAnnotations.g:1364:1: ( '@' )
+            // InternalAnnotations.g:1365:1: '@'
             {
              before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
-            match(input,15,FollowSets000.FOLLOW_2); 
+            match(input,18,FollowSets000.FOLLOW_2); 
              after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
 
             }
@@ -2300,16 +3633,16 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__1"
-    // InternalAnnotations.g:872:1: rule__TypedKeyStringValueAnnotation__Group__1 : rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2 ;
+    // InternalAnnotations.g:1378:1: rule__TypedKeyStringValueAnnotation__Group__1 : rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2 ;
     public final void rule__TypedKeyStringValueAnnotation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:876:1: ( rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2 )
-            // InternalAnnotations.g:877:2: rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2
+            // InternalAnnotations.g:1382:1: ( rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2 )
+            // InternalAnnotations.g:1383:2: rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_7);
+            pushFollow(FollowSets000.FOLLOW_8);
             rule__TypedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -2338,21 +3671,21 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__1__Impl"
-    // InternalAnnotations.g:884:1: rule__TypedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
+    // InternalAnnotations.g:1390:1: rule__TypedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
     public final void rule__TypedKeyStringValueAnnotation__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:888:1: ( ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) ) )
-            // InternalAnnotations.g:889:1: ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalAnnotations.g:1394:1: ( ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) ) )
+            // InternalAnnotations.g:1395:1: ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) )
             {
-            // InternalAnnotations.g:889:1: ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) )
-            // InternalAnnotations.g:890:1: ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalAnnotations.g:1395:1: ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalAnnotations.g:1396:1: ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 )
             {
              before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameAssignment_1()); 
-            // InternalAnnotations.g:891:1: ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 )
-            // InternalAnnotations.g:891:2: rule__TypedKeyStringValueAnnotation__NameAssignment_1
+            // InternalAnnotations.g:1397:1: ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalAnnotations.g:1397:2: rule__TypedKeyStringValueAnnotation__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TypedKeyStringValueAnnotation__NameAssignment_1();
@@ -2385,14 +3718,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__2"
-    // InternalAnnotations.g:901:1: rule__TypedKeyStringValueAnnotation__Group__2 : rule__TypedKeyStringValueAnnotation__Group__2__Impl rule__TypedKeyStringValueAnnotation__Group__3 ;
+    // InternalAnnotations.g:1407:1: rule__TypedKeyStringValueAnnotation__Group__2 : rule__TypedKeyStringValueAnnotation__Group__2__Impl rule__TypedKeyStringValueAnnotation__Group__3 ;
     public final void rule__TypedKeyStringValueAnnotation__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:905:1: ( rule__TypedKeyStringValueAnnotation__Group__2__Impl rule__TypedKeyStringValueAnnotation__Group__3 )
-            // InternalAnnotations.g:906:2: rule__TypedKeyStringValueAnnotation__Group__2__Impl rule__TypedKeyStringValueAnnotation__Group__3
+            // InternalAnnotations.g:1411:1: ( rule__TypedKeyStringValueAnnotation__Group__2__Impl rule__TypedKeyStringValueAnnotation__Group__3 )
+            // InternalAnnotations.g:1412:2: rule__TypedKeyStringValueAnnotation__Group__2__Impl rule__TypedKeyStringValueAnnotation__Group__3
             {
             pushFollow(FollowSets000.FOLLOW_3);
             rule__TypedKeyStringValueAnnotation__Group__2__Impl();
@@ -2423,20 +3756,20 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__2__Impl"
-    // InternalAnnotations.g:913:1: rule__TypedKeyStringValueAnnotation__Group__2__Impl : ( '[' ) ;
+    // InternalAnnotations.g:1419:1: rule__TypedKeyStringValueAnnotation__Group__2__Impl : ( '[' ) ;
     public final void rule__TypedKeyStringValueAnnotation__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:917:1: ( ( '[' ) )
-            // InternalAnnotations.g:918:1: ( '[' )
+            // InternalAnnotations.g:1423:1: ( ( '[' ) )
+            // InternalAnnotations.g:1424:1: ( '[' )
             {
-            // InternalAnnotations.g:918:1: ( '[' )
-            // InternalAnnotations.g:919:1: '['
+            // InternalAnnotations.g:1424:1: ( '[' )
+            // InternalAnnotations.g:1425:1: '['
             {
              before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2()); 
-            match(input,17,FollowSets000.FOLLOW_2); 
+            match(input,21,FollowSets000.FOLLOW_2); 
              after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2()); 
 
             }
@@ -2460,16 +3793,16 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__3"
-    // InternalAnnotations.g:932:1: rule__TypedKeyStringValueAnnotation__Group__3 : rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4 ;
+    // InternalAnnotations.g:1438:1: rule__TypedKeyStringValueAnnotation__Group__3 : rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4 ;
     public final void rule__TypedKeyStringValueAnnotation__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:936:1: ( rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4 )
-            // InternalAnnotations.g:937:2: rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4
+            // InternalAnnotations.g:1442:1: ( rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4 )
+            // InternalAnnotations.g:1443:2: rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_8);
+            pushFollow(FollowSets000.FOLLOW_9);
             rule__TypedKeyStringValueAnnotation__Group__3__Impl();
 
             state._fsp--;
@@ -2498,21 +3831,21 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__3__Impl"
-    // InternalAnnotations.g:944:1: rule__TypedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 ) ) ;
+    // InternalAnnotations.g:1450:1: rule__TypedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 ) ) ;
     public final void rule__TypedKeyStringValueAnnotation__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:948:1: ( ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 ) ) )
-            // InternalAnnotations.g:949:1: ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 ) )
+            // InternalAnnotations.g:1454:1: ( ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 ) ) )
+            // InternalAnnotations.g:1455:1: ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 ) )
             {
-            // InternalAnnotations.g:949:1: ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 ) )
-            // InternalAnnotations.g:950:1: ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 )
+            // InternalAnnotations.g:1455:1: ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 ) )
+            // InternalAnnotations.g:1456:1: ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 )
             {
              before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeAssignment_3()); 
-            // InternalAnnotations.g:951:1: ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 )
-            // InternalAnnotations.g:951:2: rule__TypedKeyStringValueAnnotation__TypeAssignment_3
+            // InternalAnnotations.g:1457:1: ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 )
+            // InternalAnnotations.g:1457:2: rule__TypedKeyStringValueAnnotation__TypeAssignment_3
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TypedKeyStringValueAnnotation__TypeAssignment_3();
@@ -2545,16 +3878,16 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__4"
-    // InternalAnnotations.g:961:1: rule__TypedKeyStringValueAnnotation__Group__4 : rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5 ;
+    // InternalAnnotations.g:1467:1: rule__TypedKeyStringValueAnnotation__Group__4 : rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5 ;
     public final void rule__TypedKeyStringValueAnnotation__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:965:1: ( rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5 )
-            // InternalAnnotations.g:966:2: rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5
+            // InternalAnnotations.g:1471:1: ( rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5 )
+            // InternalAnnotations.g:1472:2: rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_9);
+            pushFollow(FollowSets000.FOLLOW_4);
             rule__TypedKeyStringValueAnnotation__Group__4__Impl();
 
             state._fsp--;
@@ -2583,20 +3916,20 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__4__Impl"
-    // InternalAnnotations.g:973:1: rule__TypedKeyStringValueAnnotation__Group__4__Impl : ( ']' ) ;
+    // InternalAnnotations.g:1479:1: rule__TypedKeyStringValueAnnotation__Group__4__Impl : ( ']' ) ;
     public final void rule__TypedKeyStringValueAnnotation__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:977:1: ( ( ']' ) )
-            // InternalAnnotations.g:978:1: ( ']' )
+            // InternalAnnotations.g:1483:1: ( ( ']' ) )
+            // InternalAnnotations.g:1484:1: ( ']' )
             {
-            // InternalAnnotations.g:978:1: ( ']' )
-            // InternalAnnotations.g:979:1: ']'
+            // InternalAnnotations.g:1484:1: ( ']' )
+            // InternalAnnotations.g:1485:1: ']'
             {
              before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4()); 
-            match(input,18,FollowSets000.FOLLOW_2); 
+            match(input,22,FollowSets000.FOLLOW_2); 
              after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4()); 
 
             }
@@ -2620,14 +3953,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__5"
-    // InternalAnnotations.g:992:1: rule__TypedKeyStringValueAnnotation__Group__5 : rule__TypedKeyStringValueAnnotation__Group__5__Impl rule__TypedKeyStringValueAnnotation__Group__6 ;
+    // InternalAnnotations.g:1498:1: rule__TypedKeyStringValueAnnotation__Group__5 : rule__TypedKeyStringValueAnnotation__Group__5__Impl rule__TypedKeyStringValueAnnotation__Group__6 ;
     public final void rule__TypedKeyStringValueAnnotation__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:996:1: ( rule__TypedKeyStringValueAnnotation__Group__5__Impl rule__TypedKeyStringValueAnnotation__Group__6 )
-            // InternalAnnotations.g:997:2: rule__TypedKeyStringValueAnnotation__Group__5__Impl rule__TypedKeyStringValueAnnotation__Group__6
+            // InternalAnnotations.g:1502:1: ( rule__TypedKeyStringValueAnnotation__Group__5__Impl rule__TypedKeyStringValueAnnotation__Group__6 )
+            // InternalAnnotations.g:1503:2: rule__TypedKeyStringValueAnnotation__Group__5__Impl rule__TypedKeyStringValueAnnotation__Group__6
             {
             pushFollow(FollowSets000.FOLLOW_5);
             rule__TypedKeyStringValueAnnotation__Group__5__Impl();
@@ -2658,21 +3991,21 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__5__Impl"
-    // InternalAnnotations.g:1004:1: rule__TypedKeyStringValueAnnotation__Group__5__Impl : ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) ;
+    // InternalAnnotations.g:1510:1: rule__TypedKeyStringValueAnnotation__Group__5__Impl : ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) ;
     public final void rule__TypedKeyStringValueAnnotation__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1008:1: ( ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) )
-            // InternalAnnotations.g:1009:1: ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
+            // InternalAnnotations.g:1514:1: ( ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) )
+            // InternalAnnotations.g:1515:1: ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
             {
-            // InternalAnnotations.g:1009:1: ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
-            // InternalAnnotations.g:1010:1: ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 )
+            // InternalAnnotations.g:1515:1: ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
+            // InternalAnnotations.g:1516:1: ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 )
             {
              before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesAssignment_5()); 
-            // InternalAnnotations.g:1011:1: ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 )
-            // InternalAnnotations.g:1011:2: rule__TypedKeyStringValueAnnotation__ValuesAssignment_5
+            // InternalAnnotations.g:1517:1: ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 )
+            // InternalAnnotations.g:1517:2: rule__TypedKeyStringValueAnnotation__ValuesAssignment_5
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TypedKeyStringValueAnnotation__ValuesAssignment_5();
@@ -2705,14 +4038,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__6"
-    // InternalAnnotations.g:1021:1: rule__TypedKeyStringValueAnnotation__Group__6 : rule__TypedKeyStringValueAnnotation__Group__6__Impl ;
+    // InternalAnnotations.g:1527:1: rule__TypedKeyStringValueAnnotation__Group__6 : rule__TypedKeyStringValueAnnotation__Group__6__Impl ;
     public final void rule__TypedKeyStringValueAnnotation__Group__6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1025:1: ( rule__TypedKeyStringValueAnnotation__Group__6__Impl )
-            // InternalAnnotations.g:1026:2: rule__TypedKeyStringValueAnnotation__Group__6__Impl
+            // InternalAnnotations.g:1531:1: ( rule__TypedKeyStringValueAnnotation__Group__6__Impl )
+            // InternalAnnotations.g:1532:2: rule__TypedKeyStringValueAnnotation__Group__6__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TypedKeyStringValueAnnotation__Group__6__Impl();
@@ -2738,33 +4071,33 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__6__Impl"
-    // InternalAnnotations.g:1032:1: rule__TypedKeyStringValueAnnotation__Group__6__Impl : ( ( rule__TypedKeyStringValueAnnotation__Group_6__0 )* ) ;
+    // InternalAnnotations.g:1538:1: rule__TypedKeyStringValueAnnotation__Group__6__Impl : ( ( rule__TypedKeyStringValueAnnotation__Group_6__0 )* ) ;
     public final void rule__TypedKeyStringValueAnnotation__Group__6__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1036:1: ( ( ( rule__TypedKeyStringValueAnnotation__Group_6__0 )* ) )
-            // InternalAnnotations.g:1037:1: ( ( rule__TypedKeyStringValueAnnotation__Group_6__0 )* )
+            // InternalAnnotations.g:1542:1: ( ( ( rule__TypedKeyStringValueAnnotation__Group_6__0 )* ) )
+            // InternalAnnotations.g:1543:1: ( ( rule__TypedKeyStringValueAnnotation__Group_6__0 )* )
             {
-            // InternalAnnotations.g:1037:1: ( ( rule__TypedKeyStringValueAnnotation__Group_6__0 )* )
-            // InternalAnnotations.g:1038:1: ( rule__TypedKeyStringValueAnnotation__Group_6__0 )*
+            // InternalAnnotations.g:1543:1: ( ( rule__TypedKeyStringValueAnnotation__Group_6__0 )* )
+            // InternalAnnotations.g:1544:1: ( rule__TypedKeyStringValueAnnotation__Group_6__0 )*
             {
              before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getGroup_6()); 
-            // InternalAnnotations.g:1039:1: ( rule__TypedKeyStringValueAnnotation__Group_6__0 )*
-            loop5:
+            // InternalAnnotations.g:1545:1: ( rule__TypedKeyStringValueAnnotation__Group_6__0 )*
+            loop8:
             do {
-                int alt5=2;
-                int LA5_0 = input.LA(1);
+                int alt8=2;
+                int LA8_0 = input.LA(1);
 
-                if ( (LA5_0==16) ) {
-                    alt5=1;
+                if ( (LA8_0==20) ) {
+                    alt8=1;
                 }
 
 
-                switch (alt5) {
+                switch (alt8) {
             	case 1 :
-            	    // InternalAnnotations.g:1039:2: rule__TypedKeyStringValueAnnotation__Group_6__0
+            	    // InternalAnnotations.g:1545:2: rule__TypedKeyStringValueAnnotation__Group_6__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_6);
             	    rule__TypedKeyStringValueAnnotation__Group_6__0();
@@ -2776,7 +4109,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             	    break;
 
             	default :
-            	    break loop5;
+            	    break loop8;
                 }
             } while (true);
 
@@ -2803,16 +4136,16 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group_6__0"
-    // InternalAnnotations.g:1063:1: rule__TypedKeyStringValueAnnotation__Group_6__0 : rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1 ;
+    // InternalAnnotations.g:1569:1: rule__TypedKeyStringValueAnnotation__Group_6__0 : rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1 ;
     public final void rule__TypedKeyStringValueAnnotation__Group_6__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1067:1: ( rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1 )
-            // InternalAnnotations.g:1068:2: rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1
+            // InternalAnnotations.g:1573:1: ( rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1 )
+            // InternalAnnotations.g:1574:2: rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1
             {
-            pushFollow(FollowSets000.FOLLOW_9);
+            pushFollow(FollowSets000.FOLLOW_4);
             rule__TypedKeyStringValueAnnotation__Group_6__0__Impl();
 
             state._fsp--;
@@ -2841,20 +4174,20 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group_6__0__Impl"
-    // InternalAnnotations.g:1075:1: rule__TypedKeyStringValueAnnotation__Group_6__0__Impl : ( ',' ) ;
+    // InternalAnnotations.g:1581:1: rule__TypedKeyStringValueAnnotation__Group_6__0__Impl : ( ',' ) ;
     public final void rule__TypedKeyStringValueAnnotation__Group_6__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1079:1: ( ( ',' ) )
-            // InternalAnnotations.g:1080:1: ( ',' )
+            // InternalAnnotations.g:1585:1: ( ( ',' ) )
+            // InternalAnnotations.g:1586:1: ( ',' )
             {
-            // InternalAnnotations.g:1080:1: ( ',' )
-            // InternalAnnotations.g:1081:1: ','
+            // InternalAnnotations.g:1586:1: ( ',' )
+            // InternalAnnotations.g:1587:1: ','
             {
              before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0()); 
-            match(input,16,FollowSets000.FOLLOW_2); 
+            match(input,20,FollowSets000.FOLLOW_2); 
              after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0()); 
 
             }
@@ -2878,14 +4211,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group_6__1"
-    // InternalAnnotations.g:1094:1: rule__TypedKeyStringValueAnnotation__Group_6__1 : rule__TypedKeyStringValueAnnotation__Group_6__1__Impl ;
+    // InternalAnnotations.g:1600:1: rule__TypedKeyStringValueAnnotation__Group_6__1 : rule__TypedKeyStringValueAnnotation__Group_6__1__Impl ;
     public final void rule__TypedKeyStringValueAnnotation__Group_6__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1098:1: ( rule__TypedKeyStringValueAnnotation__Group_6__1__Impl )
-            // InternalAnnotations.g:1099:2: rule__TypedKeyStringValueAnnotation__Group_6__1__Impl
+            // InternalAnnotations.g:1604:1: ( rule__TypedKeyStringValueAnnotation__Group_6__1__Impl )
+            // InternalAnnotations.g:1605:2: rule__TypedKeyStringValueAnnotation__Group_6__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TypedKeyStringValueAnnotation__Group_6__1__Impl();
@@ -2911,21 +4244,21 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group_6__1__Impl"
-    // InternalAnnotations.g:1105:1: rule__TypedKeyStringValueAnnotation__Group_6__1__Impl : ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) ;
+    // InternalAnnotations.g:1611:1: rule__TypedKeyStringValueAnnotation__Group_6__1__Impl : ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) ;
     public final void rule__TypedKeyStringValueAnnotation__Group_6__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1109:1: ( ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) )
-            // InternalAnnotations.g:1110:1: ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
+            // InternalAnnotations.g:1615:1: ( ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) )
+            // InternalAnnotations.g:1616:1: ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
             {
-            // InternalAnnotations.g:1110:1: ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
-            // InternalAnnotations.g:1111:1: ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
+            // InternalAnnotations.g:1616:1: ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
+            // InternalAnnotations.g:1617:1: ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
             {
              before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesAssignment_6_1()); 
-            // InternalAnnotations.g:1112:1: ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
-            // InternalAnnotations.g:1112:2: rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1
+            // InternalAnnotations.g:1618:1: ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
+            // InternalAnnotations.g:1618:2: rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1();
@@ -2957,15 +4290,748 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
     // $ANTLR end "rule__TypedKeyStringValueAnnotation__Group_6__1__Impl"
 
 
+    // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__0"
+    // InternalAnnotations.g:1632:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__0 : rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__1 ;
+    public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__0() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1636:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__1 )
+            // InternalAnnotations.g:1637:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__1
+            {
+            pushFollow(FollowSets000.FOLLOW_3);
+            rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl();
+
+            state._fsp--;
+
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__RestrictedTypedKeyStringValueAnnotation__Group__1();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedTypedKeyStringValueAnnotation__Group__0"
+
+
+    // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl"
+    // InternalAnnotations.g:1644:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
+    public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1648:1: ( ( '@' ) )
+            // InternalAnnotations.g:1649:1: ( '@' )
+            {
+            // InternalAnnotations.g:1649:1: ( '@' )
+            // InternalAnnotations.g:1650:1: '@'
+            {
+             before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
+            match(input,18,FollowSets000.FOLLOW_2); 
+             after(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl"
+
+
+    // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__1"
+    // InternalAnnotations.g:1663:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__1 : rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__2 ;
+    public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1667:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__2 )
+            // InternalAnnotations.g:1668:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__2
+            {
+            pushFollow(FollowSets000.FOLLOW_8);
+            rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl();
+
+            state._fsp--;
+
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__RestrictedTypedKeyStringValueAnnotation__Group__2();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedTypedKeyStringValueAnnotation__Group__1"
+
+
+    // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl"
+    // InternalAnnotations.g:1675:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
+    public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1679:1: ( ( ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 ) ) )
+            // InternalAnnotations.g:1680:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 ) )
+            {
+            // InternalAnnotations.g:1680:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalAnnotations.g:1681:1: ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 )
+            {
+             before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getNameAssignment_1()); 
+            // InternalAnnotations.g:1682:1: ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalAnnotations.g:1682:2: rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1();
+
+            state._fsp--;
+
+
+            }
+
+             after(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getNameAssignment_1()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl"
+
+
+    // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__2"
+    // InternalAnnotations.g:1692:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__2 : rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__3 ;
+    public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__2() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1696:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__3 )
+            // InternalAnnotations.g:1697:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__3
+            {
+            pushFollow(FollowSets000.FOLLOW_3);
+            rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl();
+
+            state._fsp--;
+
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__RestrictedTypedKeyStringValueAnnotation__Group__3();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedTypedKeyStringValueAnnotation__Group__2"
+
+
+    // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl"
+    // InternalAnnotations.g:1704:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl : ( '[' ) ;
+    public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1708:1: ( ( '[' ) )
+            // InternalAnnotations.g:1709:1: ( '[' )
+            {
+            // InternalAnnotations.g:1709:1: ( '[' )
+            // InternalAnnotations.g:1710:1: '['
+            {
+             before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2()); 
+            match(input,21,FollowSets000.FOLLOW_2); 
+             after(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl"
+
+
+    // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__3"
+    // InternalAnnotations.g:1723:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__3 : rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__4 ;
+    public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__3() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1727:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__4 )
+            // InternalAnnotations.g:1728:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__4
+            {
+            pushFollow(FollowSets000.FOLLOW_9);
+            rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl();
+
+            state._fsp--;
+
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__RestrictedTypedKeyStringValueAnnotation__Group__4();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedTypedKeyStringValueAnnotation__Group__3"
+
+
+    // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl"
+    // InternalAnnotations.g:1735:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 ) ) ;
+    public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1739:1: ( ( ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 ) ) )
+            // InternalAnnotations.g:1740:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 ) )
+            {
+            // InternalAnnotations.g:1740:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 ) )
+            // InternalAnnotations.g:1741:1: ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 )
+            {
+             before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getTypeAssignment_3()); 
+            // InternalAnnotations.g:1742:1: ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 )
+            // InternalAnnotations.g:1742:2: rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3();
+
+            state._fsp--;
+
+
+            }
+
+             after(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getTypeAssignment_3()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl"
+
+
+    // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__4"
+    // InternalAnnotations.g:1752:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__4 : rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5 ;
+    public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__4() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1756:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5 )
+            // InternalAnnotations.g:1757:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5
+            {
+            pushFollow(FollowSets000.FOLLOW_7);
+            rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl();
+
+            state._fsp--;
+
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__RestrictedTypedKeyStringValueAnnotation__Group__5();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedTypedKeyStringValueAnnotation__Group__4"
+
+
+    // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl"
+    // InternalAnnotations.g:1764:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl : ( ']' ) ;
+    public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1768:1: ( ( ']' ) )
+            // InternalAnnotations.g:1769:1: ( ']' )
+            {
+            // InternalAnnotations.g:1769:1: ( ']' )
+            // InternalAnnotations.g:1770:1: ']'
+            {
+             before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4()); 
+            match(input,22,FollowSets000.FOLLOW_2); 
+             after(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl"
+
+
+    // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__5"
+    // InternalAnnotations.g:1783:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__5 : rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__6 ;
+    public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__5() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1787:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__6 )
+            // InternalAnnotations.g:1788:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__6
+            {
+            pushFollow(FollowSets000.FOLLOW_5);
+            rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl();
+
+            state._fsp--;
+
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__RestrictedTypedKeyStringValueAnnotation__Group__6();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedTypedKeyStringValueAnnotation__Group__5"
+
+
+    // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl"
+    // InternalAnnotations.g:1795:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl : ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) ;
+    public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1799:1: ( ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) )
+            // InternalAnnotations.g:1800:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
+            {
+            // InternalAnnotations.g:1800:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
+            // InternalAnnotations.g:1801:1: ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 )
+            {
+             before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesAssignment_5()); 
+            // InternalAnnotations.g:1802:1: ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 )
+            // InternalAnnotations.g:1802:2: rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5();
+
+            state._fsp--;
+
+
+            }
+
+             after(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesAssignment_5()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl"
+
+
+    // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__6"
+    // InternalAnnotations.g:1812:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__6 : rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl ;
+    public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__6() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1816:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl )
+            // InternalAnnotations.g:1817:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedTypedKeyStringValueAnnotation__Group__6"
+
+
+    // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl"
+    // InternalAnnotations.g:1823:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl : ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )* ) ;
+    public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1827:1: ( ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )* ) )
+            // InternalAnnotations.g:1828:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )* )
+            {
+            // InternalAnnotations.g:1828:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )* )
+            // InternalAnnotations.g:1829:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )*
+            {
+             before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getGroup_6()); 
+            // InternalAnnotations.g:1830:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )*
+            loop9:
+            do {
+                int alt9=2;
+                int LA9_0 = input.LA(1);
+
+                if ( (LA9_0==20) ) {
+                    alt9=1;
+                }
+
+
+                switch (alt9) {
+            	case 1 :
+            	    // InternalAnnotations.g:1830:2: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0
+            	    {
+            	    pushFollow(FollowSets000.FOLLOW_6);
+            	    rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0();
+
+            	    state._fsp--;
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop9;
+                }
+            } while (true);
+
+             after(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getGroup_6()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl"
+
+
+    // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0"
+    // InternalAnnotations.g:1854:1: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 : rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1 ;
+    public final void rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1858:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1 )
+            // InternalAnnotations.g:1859:2: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1
+            {
+            pushFollow(FollowSets000.FOLLOW_7);
+            rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl();
+
+            state._fsp--;
+
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0"
+
+
+    // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl"
+    // InternalAnnotations.g:1866:1: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl : ( ',' ) ;
+    public final void rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1870:1: ( ( ',' ) )
+            // InternalAnnotations.g:1871:1: ( ',' )
+            {
+            // InternalAnnotations.g:1871:1: ( ',' )
+            // InternalAnnotations.g:1872:1: ','
+            {
+             before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0()); 
+            match(input,20,FollowSets000.FOLLOW_2); 
+             after(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl"
+
+
+    // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1"
+    // InternalAnnotations.g:1885:1: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1 : rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl ;
+    public final void rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1889:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl )
+            // InternalAnnotations.g:1890:2: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1"
+
+
+    // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl"
+    // InternalAnnotations.g:1896:1: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl : ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) ;
+    public final void rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:1900:1: ( ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) )
+            // InternalAnnotations.g:1901:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
+            {
+            // InternalAnnotations.g:1901:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
+            // InternalAnnotations.g:1902:1: ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
+            {
+             before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesAssignment_6_1()); 
+            // InternalAnnotations.g:1903:1: ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
+            // InternalAnnotations.g:1903:2: rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1();
+
+            state._fsp--;
+
+
+            }
+
+             after(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesAssignment_6_1()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl"
+
+
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group__0"
-    // InternalAnnotations.g:1126:1: rule__QuotedKeyStringValueAnnotation__Group__0 : rule__QuotedKeyStringValueAnnotation__Group__0__Impl rule__QuotedKeyStringValueAnnotation__Group__1 ;
+    // InternalAnnotations.g:1917:1: rule__QuotedKeyStringValueAnnotation__Group__0 : rule__QuotedKeyStringValueAnnotation__Group__0__Impl rule__QuotedKeyStringValueAnnotation__Group__1 ;
     public final void rule__QuotedKeyStringValueAnnotation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1130:1: ( rule__QuotedKeyStringValueAnnotation__Group__0__Impl rule__QuotedKeyStringValueAnnotation__Group__1 )
-            // InternalAnnotations.g:1131:2: rule__QuotedKeyStringValueAnnotation__Group__0__Impl rule__QuotedKeyStringValueAnnotation__Group__1
+            // InternalAnnotations.g:1921:1: ( rule__QuotedKeyStringValueAnnotation__Group__0__Impl rule__QuotedKeyStringValueAnnotation__Group__1 )
+            // InternalAnnotations.g:1922:2: rule__QuotedKeyStringValueAnnotation__Group__0__Impl rule__QuotedKeyStringValueAnnotation__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_3);
             rule__QuotedKeyStringValueAnnotation__Group__0__Impl();
@@ -2996,20 +5062,20 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group__0__Impl"
-    // InternalAnnotations.g:1138:1: rule__QuotedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
+    // InternalAnnotations.g:1929:1: rule__QuotedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
     public final void rule__QuotedKeyStringValueAnnotation__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1142:1: ( ( '@' ) )
-            // InternalAnnotations.g:1143:1: ( '@' )
+            // InternalAnnotations.g:1933:1: ( ( '@' ) )
+            // InternalAnnotations.g:1934:1: ( '@' )
             {
-            // InternalAnnotations.g:1143:1: ( '@' )
-            // InternalAnnotations.g:1144:1: '@'
+            // InternalAnnotations.g:1934:1: ( '@' )
+            // InternalAnnotations.g:1935:1: '@'
             {
              before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
-            match(input,15,FollowSets000.FOLLOW_2); 
+            match(input,18,FollowSets000.FOLLOW_2); 
              after(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
 
             }
@@ -3033,14 +5099,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group__1"
-    // InternalAnnotations.g:1157:1: rule__QuotedKeyStringValueAnnotation__Group__1 : rule__QuotedKeyStringValueAnnotation__Group__1__Impl rule__QuotedKeyStringValueAnnotation__Group__2 ;
+    // InternalAnnotations.g:1948:1: rule__QuotedKeyStringValueAnnotation__Group__1 : rule__QuotedKeyStringValueAnnotation__Group__1__Impl rule__QuotedKeyStringValueAnnotation__Group__2 ;
     public final void rule__QuotedKeyStringValueAnnotation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1161:1: ( rule__QuotedKeyStringValueAnnotation__Group__1__Impl rule__QuotedKeyStringValueAnnotation__Group__2 )
-            // InternalAnnotations.g:1162:2: rule__QuotedKeyStringValueAnnotation__Group__1__Impl rule__QuotedKeyStringValueAnnotation__Group__2
+            // InternalAnnotations.g:1952:1: ( rule__QuotedKeyStringValueAnnotation__Group__1__Impl rule__QuotedKeyStringValueAnnotation__Group__2 )
+            // InternalAnnotations.g:1953:2: rule__QuotedKeyStringValueAnnotation__Group__1__Impl rule__QuotedKeyStringValueAnnotation__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_10);
             rule__QuotedKeyStringValueAnnotation__Group__1__Impl();
@@ -3071,21 +5137,21 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group__1__Impl"
-    // InternalAnnotations.g:1169:1: rule__QuotedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
+    // InternalAnnotations.g:1960:1: rule__QuotedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
     public final void rule__QuotedKeyStringValueAnnotation__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1173:1: ( ( ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 ) ) )
-            // InternalAnnotations.g:1174:1: ( ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalAnnotations.g:1964:1: ( ( ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 ) ) )
+            // InternalAnnotations.g:1965:1: ( ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 ) )
             {
-            // InternalAnnotations.g:1174:1: ( ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 ) )
-            // InternalAnnotations.g:1175:1: ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalAnnotations.g:1965:1: ( ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalAnnotations.g:1966:1: ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 )
             {
              before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getNameAssignment_1()); 
-            // InternalAnnotations.g:1176:1: ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 )
-            // InternalAnnotations.g:1176:2: rule__QuotedKeyStringValueAnnotation__NameAssignment_1
+            // InternalAnnotations.g:1967:1: ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalAnnotations.g:1967:2: rule__QuotedKeyStringValueAnnotation__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedKeyStringValueAnnotation__NameAssignment_1();
@@ -3118,14 +5184,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group__2"
-    // InternalAnnotations.g:1186:1: rule__QuotedKeyStringValueAnnotation__Group__2 : rule__QuotedKeyStringValueAnnotation__Group__2__Impl rule__QuotedKeyStringValueAnnotation__Group__3 ;
+    // InternalAnnotations.g:1977:1: rule__QuotedKeyStringValueAnnotation__Group__2 : rule__QuotedKeyStringValueAnnotation__Group__2__Impl rule__QuotedKeyStringValueAnnotation__Group__3 ;
     public final void rule__QuotedKeyStringValueAnnotation__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1190:1: ( rule__QuotedKeyStringValueAnnotation__Group__2__Impl rule__QuotedKeyStringValueAnnotation__Group__3 )
-            // InternalAnnotations.g:1191:2: rule__QuotedKeyStringValueAnnotation__Group__2__Impl rule__QuotedKeyStringValueAnnotation__Group__3
+            // InternalAnnotations.g:1981:1: ( rule__QuotedKeyStringValueAnnotation__Group__2__Impl rule__QuotedKeyStringValueAnnotation__Group__3 )
+            // InternalAnnotations.g:1982:2: rule__QuotedKeyStringValueAnnotation__Group__2__Impl rule__QuotedKeyStringValueAnnotation__Group__3
             {
             pushFollow(FollowSets000.FOLLOW_5);
             rule__QuotedKeyStringValueAnnotation__Group__2__Impl();
@@ -3156,21 +5222,21 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group__2__Impl"
-    // InternalAnnotations.g:1198:1: rule__QuotedKeyStringValueAnnotation__Group__2__Impl : ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 ) ) ;
+    // InternalAnnotations.g:1989:1: rule__QuotedKeyStringValueAnnotation__Group__2__Impl : ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 ) ) ;
     public final void rule__QuotedKeyStringValueAnnotation__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1202:1: ( ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 ) ) )
-            // InternalAnnotations.g:1203:1: ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 ) )
+            // InternalAnnotations.g:1993:1: ( ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 ) ) )
+            // InternalAnnotations.g:1994:1: ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 ) )
             {
-            // InternalAnnotations.g:1203:1: ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 ) )
-            // InternalAnnotations.g:1204:1: ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 )
+            // InternalAnnotations.g:1994:1: ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 ) )
+            // InternalAnnotations.g:1995:1: ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 )
             {
              before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesAssignment_2()); 
-            // InternalAnnotations.g:1205:1: ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 )
-            // InternalAnnotations.g:1205:2: rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2
+            // InternalAnnotations.g:1996:1: ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 )
+            // InternalAnnotations.g:1996:2: rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2();
@@ -3203,14 +5269,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group__3"
-    // InternalAnnotations.g:1215:1: rule__QuotedKeyStringValueAnnotation__Group__3 : rule__QuotedKeyStringValueAnnotation__Group__3__Impl ;
+    // InternalAnnotations.g:2006:1: rule__QuotedKeyStringValueAnnotation__Group__3 : rule__QuotedKeyStringValueAnnotation__Group__3__Impl ;
     public final void rule__QuotedKeyStringValueAnnotation__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1219:1: ( rule__QuotedKeyStringValueAnnotation__Group__3__Impl )
-            // InternalAnnotations.g:1220:2: rule__QuotedKeyStringValueAnnotation__Group__3__Impl
+            // InternalAnnotations.g:2010:1: ( rule__QuotedKeyStringValueAnnotation__Group__3__Impl )
+            // InternalAnnotations.g:2011:2: rule__QuotedKeyStringValueAnnotation__Group__3__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedKeyStringValueAnnotation__Group__3__Impl();
@@ -3236,33 +5302,33 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group__3__Impl"
-    // InternalAnnotations.g:1226:1: rule__QuotedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )* ) ;
+    // InternalAnnotations.g:2017:1: rule__QuotedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )* ) ;
     public final void rule__QuotedKeyStringValueAnnotation__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1230:1: ( ( ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )* ) )
-            // InternalAnnotations.g:1231:1: ( ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )* )
+            // InternalAnnotations.g:2021:1: ( ( ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )* ) )
+            // InternalAnnotations.g:2022:1: ( ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )* )
             {
-            // InternalAnnotations.g:1231:1: ( ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )* )
-            // InternalAnnotations.g:1232:1: ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )*
+            // InternalAnnotations.g:2022:1: ( ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )* )
+            // InternalAnnotations.g:2023:1: ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )*
             {
              before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getGroup_3()); 
-            // InternalAnnotations.g:1233:1: ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )*
-            loop6:
+            // InternalAnnotations.g:2024:1: ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )*
+            loop10:
             do {
-                int alt6=2;
-                int LA6_0 = input.LA(1);
+                int alt10=2;
+                int LA10_0 = input.LA(1);
 
-                if ( (LA6_0==16) ) {
-                    alt6=1;
+                if ( (LA10_0==20) ) {
+                    alt10=1;
                 }
 
 
-                switch (alt6) {
+                switch (alt10) {
             	case 1 :
-            	    // InternalAnnotations.g:1233:2: rule__QuotedKeyStringValueAnnotation__Group_3__0
+            	    // InternalAnnotations.g:2024:2: rule__QuotedKeyStringValueAnnotation__Group_3__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_6);
             	    rule__QuotedKeyStringValueAnnotation__Group_3__0();
@@ -3274,7 +5340,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             	    break;
 
             	default :
-            	    break loop6;
+            	    break loop10;
                 }
             } while (true);
 
@@ -3301,14 +5367,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group_3__0"
-    // InternalAnnotations.g:1251:1: rule__QuotedKeyStringValueAnnotation__Group_3__0 : rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl rule__QuotedKeyStringValueAnnotation__Group_3__1 ;
+    // InternalAnnotations.g:2042:1: rule__QuotedKeyStringValueAnnotation__Group_3__0 : rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl rule__QuotedKeyStringValueAnnotation__Group_3__1 ;
     public final void rule__QuotedKeyStringValueAnnotation__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1255:1: ( rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl rule__QuotedKeyStringValueAnnotation__Group_3__1 )
-            // InternalAnnotations.g:1256:2: rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl rule__QuotedKeyStringValueAnnotation__Group_3__1
+            // InternalAnnotations.g:2046:1: ( rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl rule__QuotedKeyStringValueAnnotation__Group_3__1 )
+            // InternalAnnotations.g:2047:2: rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl rule__QuotedKeyStringValueAnnotation__Group_3__1
             {
             pushFollow(FollowSets000.FOLLOW_10);
             rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl();
@@ -3339,20 +5405,20 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl"
-    // InternalAnnotations.g:1263:1: rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl : ( ',' ) ;
+    // InternalAnnotations.g:2054:1: rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl : ( ',' ) ;
     public final void rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1267:1: ( ( ',' ) )
-            // InternalAnnotations.g:1268:1: ( ',' )
+            // InternalAnnotations.g:2058:1: ( ( ',' ) )
+            // InternalAnnotations.g:2059:1: ( ',' )
             {
-            // InternalAnnotations.g:1268:1: ( ',' )
-            // InternalAnnotations.g:1269:1: ','
+            // InternalAnnotations.g:2059:1: ( ',' )
+            // InternalAnnotations.g:2060:1: ','
             {
              before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommaKeyword_3_0()); 
-            match(input,16,FollowSets000.FOLLOW_2); 
+            match(input,20,FollowSets000.FOLLOW_2); 
              after(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommaKeyword_3_0()); 
 
             }
@@ -3376,14 +5442,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group_3__1"
-    // InternalAnnotations.g:1282:1: rule__QuotedKeyStringValueAnnotation__Group_3__1 : rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl ;
+    // InternalAnnotations.g:2073:1: rule__QuotedKeyStringValueAnnotation__Group_3__1 : rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl ;
     public final void rule__QuotedKeyStringValueAnnotation__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1286:1: ( rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl )
-            // InternalAnnotations.g:1287:2: rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl
+            // InternalAnnotations.g:2077:1: ( rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl )
+            // InternalAnnotations.g:2078:2: rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl();
@@ -3409,21 +5475,21 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl"
-    // InternalAnnotations.g:1293:1: rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl : ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 ) ) ;
+    // InternalAnnotations.g:2084:1: rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl : ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 ) ) ;
     public final void rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1297:1: ( ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 ) ) )
-            // InternalAnnotations.g:1298:1: ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 ) )
+            // InternalAnnotations.g:2088:1: ( ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 ) ) )
+            // InternalAnnotations.g:2089:1: ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 ) )
             {
-            // InternalAnnotations.g:1298:1: ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 ) )
-            // InternalAnnotations.g:1299:1: ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 )
+            // InternalAnnotations.g:2089:1: ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 ) )
+            // InternalAnnotations.g:2090:1: ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 )
             {
              before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesAssignment_3_1()); 
-            // InternalAnnotations.g:1300:1: ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 )
-            // InternalAnnotations.g:1300:2: rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1
+            // InternalAnnotations.g:2091:1: ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 )
+            // InternalAnnotations.g:2091:2: rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1();
@@ -3456,14 +5522,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__0"
-    // InternalAnnotations.g:1314:1: rule__QuotedTypedKeyStringValueAnnotation__Group__0 : rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__1 ;
+    // InternalAnnotations.g:2105:1: rule__QuotedTypedKeyStringValueAnnotation__Group__0 : rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__1 ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1318:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__1 )
-            // InternalAnnotations.g:1319:2: rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__1
+            // InternalAnnotations.g:2109:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__1 )
+            // InternalAnnotations.g:2110:2: rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_3);
             rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl();
@@ -3494,20 +5560,20 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl"
-    // InternalAnnotations.g:1326:1: rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
+    // InternalAnnotations.g:2117:1: rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1330:1: ( ( '@' ) )
-            // InternalAnnotations.g:1331:1: ( '@' )
+            // InternalAnnotations.g:2121:1: ( ( '@' ) )
+            // InternalAnnotations.g:2122:1: ( '@' )
             {
-            // InternalAnnotations.g:1331:1: ( '@' )
-            // InternalAnnotations.g:1332:1: '@'
+            // InternalAnnotations.g:2122:1: ( '@' )
+            // InternalAnnotations.g:2123:1: '@'
             {
              before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
-            match(input,15,FollowSets000.FOLLOW_2); 
+            match(input,18,FollowSets000.FOLLOW_2); 
              after(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
 
             }
@@ -3531,16 +5597,16 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__1"
-    // InternalAnnotations.g:1345:1: rule__QuotedTypedKeyStringValueAnnotation__Group__1 : rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2 ;
+    // InternalAnnotations.g:2136:1: rule__QuotedTypedKeyStringValueAnnotation__Group__1 : rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2 ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1349:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2 )
-            // InternalAnnotations.g:1350:2: rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2
+            // InternalAnnotations.g:2140:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2 )
+            // InternalAnnotations.g:2141:2: rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_7);
+            pushFollow(FollowSets000.FOLLOW_8);
             rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -3569,21 +5635,21 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl"
-    // InternalAnnotations.g:1357:1: rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
+    // InternalAnnotations.g:2148:1: rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1361:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 ) ) )
-            // InternalAnnotations.g:1362:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalAnnotations.g:2152:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 ) ) )
+            // InternalAnnotations.g:2153:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 ) )
             {
-            // InternalAnnotations.g:1362:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 ) )
-            // InternalAnnotations.g:1363:1: ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalAnnotations.g:2153:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalAnnotations.g:2154:1: ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 )
             {
              before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getNameAssignment_1()); 
-            // InternalAnnotations.g:1364:1: ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 )
-            // InternalAnnotations.g:1364:2: rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1
+            // InternalAnnotations.g:2155:1: ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalAnnotations.g:2155:2: rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1();
@@ -3616,14 +5682,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__2"
-    // InternalAnnotations.g:1374:1: rule__QuotedTypedKeyStringValueAnnotation__Group__2 : rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__3 ;
+    // InternalAnnotations.g:2165:1: rule__QuotedTypedKeyStringValueAnnotation__Group__2 : rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__3 ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1378:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__3 )
-            // InternalAnnotations.g:1379:2: rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__3
+            // InternalAnnotations.g:2169:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__3 )
+            // InternalAnnotations.g:2170:2: rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__3
             {
             pushFollow(FollowSets000.FOLLOW_3);
             rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl();
@@ -3654,20 +5720,20 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl"
-    // InternalAnnotations.g:1386:1: rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl : ( '[' ) ;
+    // InternalAnnotations.g:2177:1: rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl : ( '[' ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1390:1: ( ( '[' ) )
-            // InternalAnnotations.g:1391:1: ( '[' )
+            // InternalAnnotations.g:2181:1: ( ( '[' ) )
+            // InternalAnnotations.g:2182:1: ( '[' )
             {
-            // InternalAnnotations.g:1391:1: ( '[' )
-            // InternalAnnotations.g:1392:1: '['
+            // InternalAnnotations.g:2182:1: ( '[' )
+            // InternalAnnotations.g:2183:1: '['
             {
              before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2()); 
-            match(input,17,FollowSets000.FOLLOW_2); 
+            match(input,21,FollowSets000.FOLLOW_2); 
              after(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2()); 
 
             }
@@ -3691,16 +5757,16 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__3"
-    // InternalAnnotations.g:1405:1: rule__QuotedTypedKeyStringValueAnnotation__Group__3 : rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__4 ;
+    // InternalAnnotations.g:2196:1: rule__QuotedTypedKeyStringValueAnnotation__Group__3 : rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__4 ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1409:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__4 )
-            // InternalAnnotations.g:1410:2: rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__4
+            // InternalAnnotations.g:2200:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__4 )
+            // InternalAnnotations.g:2201:2: rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_8);
+            pushFollow(FollowSets000.FOLLOW_9);
             rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl();
 
             state._fsp--;
@@ -3729,21 +5795,21 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl"
-    // InternalAnnotations.g:1417:1: rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 ) ) ;
+    // InternalAnnotations.g:2208:1: rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 ) ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1421:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 ) ) )
-            // InternalAnnotations.g:1422:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 ) )
+            // InternalAnnotations.g:2212:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 ) ) )
+            // InternalAnnotations.g:2213:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 ) )
             {
-            // InternalAnnotations.g:1422:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 ) )
-            // InternalAnnotations.g:1423:1: ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 )
+            // InternalAnnotations.g:2213:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 ) )
+            // InternalAnnotations.g:2214:1: ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 )
             {
              before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getTypeAssignment_3()); 
-            // InternalAnnotations.g:1424:1: ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 )
-            // InternalAnnotations.g:1424:2: rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3
+            // InternalAnnotations.g:2215:1: ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 )
+            // InternalAnnotations.g:2215:2: rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3();
@@ -3776,14 +5842,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__4"
-    // InternalAnnotations.g:1434:1: rule__QuotedTypedKeyStringValueAnnotation__Group__4 : rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__5 ;
+    // InternalAnnotations.g:2225:1: rule__QuotedTypedKeyStringValueAnnotation__Group__4 : rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__5 ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1438:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__5 )
-            // InternalAnnotations.g:1439:2: rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__5
+            // InternalAnnotations.g:2229:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__5 )
+            // InternalAnnotations.g:2230:2: rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__5
             {
             pushFollow(FollowSets000.FOLLOW_10);
             rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl();
@@ -3814,20 +5880,20 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl"
-    // InternalAnnotations.g:1446:1: rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl : ( ']' ) ;
+    // InternalAnnotations.g:2237:1: rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl : ( ']' ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1450:1: ( ( ']' ) )
-            // InternalAnnotations.g:1451:1: ( ']' )
+            // InternalAnnotations.g:2241:1: ( ( ']' ) )
+            // InternalAnnotations.g:2242:1: ( ']' )
             {
-            // InternalAnnotations.g:1451:1: ( ']' )
-            // InternalAnnotations.g:1452:1: ']'
+            // InternalAnnotations.g:2242:1: ( ']' )
+            // InternalAnnotations.g:2243:1: ']'
             {
              before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4()); 
-            match(input,18,FollowSets000.FOLLOW_2); 
+            match(input,22,FollowSets000.FOLLOW_2); 
              after(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4()); 
 
             }
@@ -3851,14 +5917,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__5"
-    // InternalAnnotations.g:1465:1: rule__QuotedTypedKeyStringValueAnnotation__Group__5 : rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__6 ;
+    // InternalAnnotations.g:2256:1: rule__QuotedTypedKeyStringValueAnnotation__Group__5 : rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__6 ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1469:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__6 )
-            // InternalAnnotations.g:1470:2: rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__6
+            // InternalAnnotations.g:2260:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__6 )
+            // InternalAnnotations.g:2261:2: rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__6
             {
             pushFollow(FollowSets000.FOLLOW_5);
             rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl();
@@ -3889,21 +5955,21 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl"
-    // InternalAnnotations.g:1477:1: rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) ;
+    // InternalAnnotations.g:2268:1: rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1481:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) )
-            // InternalAnnotations.g:1482:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
+            // InternalAnnotations.g:2272:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) )
+            // InternalAnnotations.g:2273:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
             {
-            // InternalAnnotations.g:1482:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
-            // InternalAnnotations.g:1483:1: ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 )
+            // InternalAnnotations.g:2273:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
+            // InternalAnnotations.g:2274:1: ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 )
             {
              before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesAssignment_5()); 
-            // InternalAnnotations.g:1484:1: ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 )
-            // InternalAnnotations.g:1484:2: rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5
+            // InternalAnnotations.g:2275:1: ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 )
+            // InternalAnnotations.g:2275:2: rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5();
@@ -3936,14 +6002,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__6"
-    // InternalAnnotations.g:1494:1: rule__QuotedTypedKeyStringValueAnnotation__Group__6 : rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl ;
+    // InternalAnnotations.g:2285:1: rule__QuotedTypedKeyStringValueAnnotation__Group__6 : rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1498:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl )
-            // InternalAnnotations.g:1499:2: rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl
+            // InternalAnnotations.g:2289:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl )
+            // InternalAnnotations.g:2290:2: rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl();
@@ -3969,33 +6035,33 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl"
-    // InternalAnnotations.g:1505:1: rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )* ) ;
+    // InternalAnnotations.g:2296:1: rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )* ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1509:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )* ) )
-            // InternalAnnotations.g:1510:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )* )
+            // InternalAnnotations.g:2300:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )* ) )
+            // InternalAnnotations.g:2301:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )* )
             {
-            // InternalAnnotations.g:1510:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )* )
-            // InternalAnnotations.g:1511:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )*
+            // InternalAnnotations.g:2301:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )* )
+            // InternalAnnotations.g:2302:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )*
             {
              before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getGroup_6()); 
-            // InternalAnnotations.g:1512:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )*
-            loop7:
+            // InternalAnnotations.g:2303:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )*
+            loop11:
             do {
-                int alt7=2;
-                int LA7_0 = input.LA(1);
+                int alt11=2;
+                int LA11_0 = input.LA(1);
 
-                if ( (LA7_0==16) ) {
-                    alt7=1;
+                if ( (LA11_0==20) ) {
+                    alt11=1;
                 }
 
 
-                switch (alt7) {
+                switch (alt11) {
             	case 1 :
-            	    // InternalAnnotations.g:1512:2: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0
+            	    // InternalAnnotations.g:2303:2: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_6);
             	    rule__QuotedTypedKeyStringValueAnnotation__Group_6__0();
@@ -4007,7 +6073,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             	    break;
 
             	default :
-            	    break loop7;
+            	    break loop11;
                 }
             } while (true);
 
@@ -4034,14 +6100,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group_6__0"
-    // InternalAnnotations.g:1536:1: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 : rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group_6__1 ;
+    // InternalAnnotations.g:2327:1: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 : rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group_6__1 ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group_6__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1540:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group_6__1 )
-            // InternalAnnotations.g:1541:2: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group_6__1
+            // InternalAnnotations.g:2331:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group_6__1 )
+            // InternalAnnotations.g:2332:2: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group_6__1
             {
             pushFollow(FollowSets000.FOLLOW_10);
             rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl();
@@ -4072,20 +6138,20 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl"
-    // InternalAnnotations.g:1548:1: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl : ( ',' ) ;
+    // InternalAnnotations.g:2339:1: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl : ( ',' ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1552:1: ( ( ',' ) )
-            // InternalAnnotations.g:1553:1: ( ',' )
+            // InternalAnnotations.g:2343:1: ( ( ',' ) )
+            // InternalAnnotations.g:2344:1: ( ',' )
             {
-            // InternalAnnotations.g:1553:1: ( ',' )
-            // InternalAnnotations.g:1554:1: ','
+            // InternalAnnotations.g:2344:1: ( ',' )
+            // InternalAnnotations.g:2345:1: ','
             {
              before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0()); 
-            match(input,16,FollowSets000.FOLLOW_2); 
+            match(input,20,FollowSets000.FOLLOW_2); 
              after(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0()); 
 
             }
@@ -4109,14 +6175,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group_6__1"
-    // InternalAnnotations.g:1567:1: rule__QuotedTypedKeyStringValueAnnotation__Group_6__1 : rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl ;
+    // InternalAnnotations.g:2358:1: rule__QuotedTypedKeyStringValueAnnotation__Group_6__1 : rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group_6__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1571:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl )
-            // InternalAnnotations.g:1572:2: rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl
+            // InternalAnnotations.g:2362:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl )
+            // InternalAnnotations.g:2363:2: rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl();
@@ -4142,21 +6208,21 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl"
-    // InternalAnnotations.g:1578:1: rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) ;
+    // InternalAnnotations.g:2369:1: rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1582:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) )
-            // InternalAnnotations.g:1583:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
+            // InternalAnnotations.g:2373:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) )
+            // InternalAnnotations.g:2374:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
             {
-            // InternalAnnotations.g:1583:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
-            // InternalAnnotations.g:1584:1: ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
+            // InternalAnnotations.g:2374:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
+            // InternalAnnotations.g:2375:1: ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
             {
              before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesAssignment_6_1()); 
-            // InternalAnnotations.g:1585:1: ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
-            // InternalAnnotations.g:1585:2: rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1
+            // InternalAnnotations.g:2376:1: ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
+            // InternalAnnotations.g:2376:2: rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1();
@@ -4188,737 +6254,17 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
     // $ANTLR end "rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl"
 
 
-    // $ANTLR start "rule__KeyBooleanValueAnnotation__Group__0"
-    // InternalAnnotations.g:1599:1: rule__KeyBooleanValueAnnotation__Group__0 : rule__KeyBooleanValueAnnotation__Group__0__Impl rule__KeyBooleanValueAnnotation__Group__1 ;
-    public final void rule__KeyBooleanValueAnnotation__Group__0() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:1603:1: ( rule__KeyBooleanValueAnnotation__Group__0__Impl rule__KeyBooleanValueAnnotation__Group__1 )
-            // InternalAnnotations.g:1604:2: rule__KeyBooleanValueAnnotation__Group__0__Impl rule__KeyBooleanValueAnnotation__Group__1
-            {
-            pushFollow(FollowSets000.FOLLOW_3);
-            rule__KeyBooleanValueAnnotation__Group__0__Impl();
-
-            state._fsp--;
-
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__KeyBooleanValueAnnotation__Group__1();
-
-            state._fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__KeyBooleanValueAnnotation__Group__0"
-
-
-    // $ANTLR start "rule__KeyBooleanValueAnnotation__Group__0__Impl"
-    // InternalAnnotations.g:1611:1: rule__KeyBooleanValueAnnotation__Group__0__Impl : ( '@' ) ;
-    public final void rule__KeyBooleanValueAnnotation__Group__0__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:1615:1: ( ( '@' ) )
-            // InternalAnnotations.g:1616:1: ( '@' )
-            {
-            // InternalAnnotations.g:1616:1: ( '@' )
-            // InternalAnnotations.g:1617:1: '@'
-            {
-             before(grammarAccess.getKeyBooleanValueAnnotationAccess().getCommercialAtKeyword_0()); 
-            match(input,15,FollowSets000.FOLLOW_2); 
-             after(grammarAccess.getKeyBooleanValueAnnotationAccess().getCommercialAtKeyword_0()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__KeyBooleanValueAnnotation__Group__0__Impl"
-
-
-    // $ANTLR start "rule__KeyBooleanValueAnnotation__Group__1"
-    // InternalAnnotations.g:1630:1: rule__KeyBooleanValueAnnotation__Group__1 : rule__KeyBooleanValueAnnotation__Group__1__Impl rule__KeyBooleanValueAnnotation__Group__2 ;
-    public final void rule__KeyBooleanValueAnnotation__Group__1() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:1634:1: ( rule__KeyBooleanValueAnnotation__Group__1__Impl rule__KeyBooleanValueAnnotation__Group__2 )
-            // InternalAnnotations.g:1635:2: rule__KeyBooleanValueAnnotation__Group__1__Impl rule__KeyBooleanValueAnnotation__Group__2
-            {
-            pushFollow(FollowSets000.FOLLOW_11);
-            rule__KeyBooleanValueAnnotation__Group__1__Impl();
-
-            state._fsp--;
-
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__KeyBooleanValueAnnotation__Group__2();
-
-            state._fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__KeyBooleanValueAnnotation__Group__1"
-
-
-    // $ANTLR start "rule__KeyBooleanValueAnnotation__Group__1__Impl"
-    // InternalAnnotations.g:1642:1: rule__KeyBooleanValueAnnotation__Group__1__Impl : ( ( rule__KeyBooleanValueAnnotation__NameAssignment_1 ) ) ;
-    public final void rule__KeyBooleanValueAnnotation__Group__1__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:1646:1: ( ( ( rule__KeyBooleanValueAnnotation__NameAssignment_1 ) ) )
-            // InternalAnnotations.g:1647:1: ( ( rule__KeyBooleanValueAnnotation__NameAssignment_1 ) )
-            {
-            // InternalAnnotations.g:1647:1: ( ( rule__KeyBooleanValueAnnotation__NameAssignment_1 ) )
-            // InternalAnnotations.g:1648:1: ( rule__KeyBooleanValueAnnotation__NameAssignment_1 )
-            {
-             before(grammarAccess.getKeyBooleanValueAnnotationAccess().getNameAssignment_1()); 
-            // InternalAnnotations.g:1649:1: ( rule__KeyBooleanValueAnnotation__NameAssignment_1 )
-            // InternalAnnotations.g:1649:2: rule__KeyBooleanValueAnnotation__NameAssignment_1
-            {
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__KeyBooleanValueAnnotation__NameAssignment_1();
-
-            state._fsp--;
-
-
-            }
-
-             after(grammarAccess.getKeyBooleanValueAnnotationAccess().getNameAssignment_1()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__KeyBooleanValueAnnotation__Group__1__Impl"
-
-
-    // $ANTLR start "rule__KeyBooleanValueAnnotation__Group__2"
-    // InternalAnnotations.g:1659:1: rule__KeyBooleanValueAnnotation__Group__2 : rule__KeyBooleanValueAnnotation__Group__2__Impl ;
-    public final void rule__KeyBooleanValueAnnotation__Group__2() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:1663:1: ( rule__KeyBooleanValueAnnotation__Group__2__Impl )
-            // InternalAnnotations.g:1664:2: rule__KeyBooleanValueAnnotation__Group__2__Impl
-            {
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__KeyBooleanValueAnnotation__Group__2__Impl();
-
-            state._fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__KeyBooleanValueAnnotation__Group__2"
-
-
-    // $ANTLR start "rule__KeyBooleanValueAnnotation__Group__2__Impl"
-    // InternalAnnotations.g:1670:1: rule__KeyBooleanValueAnnotation__Group__2__Impl : ( ( rule__KeyBooleanValueAnnotation__ValueAssignment_2 ) ) ;
-    public final void rule__KeyBooleanValueAnnotation__Group__2__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:1674:1: ( ( ( rule__KeyBooleanValueAnnotation__ValueAssignment_2 ) ) )
-            // InternalAnnotations.g:1675:1: ( ( rule__KeyBooleanValueAnnotation__ValueAssignment_2 ) )
-            {
-            // InternalAnnotations.g:1675:1: ( ( rule__KeyBooleanValueAnnotation__ValueAssignment_2 ) )
-            // InternalAnnotations.g:1676:1: ( rule__KeyBooleanValueAnnotation__ValueAssignment_2 )
-            {
-             before(grammarAccess.getKeyBooleanValueAnnotationAccess().getValueAssignment_2()); 
-            // InternalAnnotations.g:1677:1: ( rule__KeyBooleanValueAnnotation__ValueAssignment_2 )
-            // InternalAnnotations.g:1677:2: rule__KeyBooleanValueAnnotation__ValueAssignment_2
-            {
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__KeyBooleanValueAnnotation__ValueAssignment_2();
-
-            state._fsp--;
-
-
-            }
-
-             after(grammarAccess.getKeyBooleanValueAnnotationAccess().getValueAssignment_2()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__KeyBooleanValueAnnotation__Group__2__Impl"
-
-
-    // $ANTLR start "rule__KeyIntValueAnnotation__Group__0"
-    // InternalAnnotations.g:1693:1: rule__KeyIntValueAnnotation__Group__0 : rule__KeyIntValueAnnotation__Group__0__Impl rule__KeyIntValueAnnotation__Group__1 ;
-    public final void rule__KeyIntValueAnnotation__Group__0() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:1697:1: ( rule__KeyIntValueAnnotation__Group__0__Impl rule__KeyIntValueAnnotation__Group__1 )
-            // InternalAnnotations.g:1698:2: rule__KeyIntValueAnnotation__Group__0__Impl rule__KeyIntValueAnnotation__Group__1
-            {
-            pushFollow(FollowSets000.FOLLOW_3);
-            rule__KeyIntValueAnnotation__Group__0__Impl();
-
-            state._fsp--;
-
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__KeyIntValueAnnotation__Group__1();
-
-            state._fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__KeyIntValueAnnotation__Group__0"
-
-
-    // $ANTLR start "rule__KeyIntValueAnnotation__Group__0__Impl"
-    // InternalAnnotations.g:1705:1: rule__KeyIntValueAnnotation__Group__0__Impl : ( '@' ) ;
-    public final void rule__KeyIntValueAnnotation__Group__0__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:1709:1: ( ( '@' ) )
-            // InternalAnnotations.g:1710:1: ( '@' )
-            {
-            // InternalAnnotations.g:1710:1: ( '@' )
-            // InternalAnnotations.g:1711:1: '@'
-            {
-             before(grammarAccess.getKeyIntValueAnnotationAccess().getCommercialAtKeyword_0()); 
-            match(input,15,FollowSets000.FOLLOW_2); 
-             after(grammarAccess.getKeyIntValueAnnotationAccess().getCommercialAtKeyword_0()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__KeyIntValueAnnotation__Group__0__Impl"
-
-
-    // $ANTLR start "rule__KeyIntValueAnnotation__Group__1"
-    // InternalAnnotations.g:1724:1: rule__KeyIntValueAnnotation__Group__1 : rule__KeyIntValueAnnotation__Group__1__Impl rule__KeyIntValueAnnotation__Group__2 ;
-    public final void rule__KeyIntValueAnnotation__Group__1() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:1728:1: ( rule__KeyIntValueAnnotation__Group__1__Impl rule__KeyIntValueAnnotation__Group__2 )
-            // InternalAnnotations.g:1729:2: rule__KeyIntValueAnnotation__Group__1__Impl rule__KeyIntValueAnnotation__Group__2
-            {
-            pushFollow(FollowSets000.FOLLOW_12);
-            rule__KeyIntValueAnnotation__Group__1__Impl();
-
-            state._fsp--;
-
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__KeyIntValueAnnotation__Group__2();
-
-            state._fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__KeyIntValueAnnotation__Group__1"
-
-
-    // $ANTLR start "rule__KeyIntValueAnnotation__Group__1__Impl"
-    // InternalAnnotations.g:1736:1: rule__KeyIntValueAnnotation__Group__1__Impl : ( ( rule__KeyIntValueAnnotation__NameAssignment_1 ) ) ;
-    public final void rule__KeyIntValueAnnotation__Group__1__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:1740:1: ( ( ( rule__KeyIntValueAnnotation__NameAssignment_1 ) ) )
-            // InternalAnnotations.g:1741:1: ( ( rule__KeyIntValueAnnotation__NameAssignment_1 ) )
-            {
-            // InternalAnnotations.g:1741:1: ( ( rule__KeyIntValueAnnotation__NameAssignment_1 ) )
-            // InternalAnnotations.g:1742:1: ( rule__KeyIntValueAnnotation__NameAssignment_1 )
-            {
-             before(grammarAccess.getKeyIntValueAnnotationAccess().getNameAssignment_1()); 
-            // InternalAnnotations.g:1743:1: ( rule__KeyIntValueAnnotation__NameAssignment_1 )
-            // InternalAnnotations.g:1743:2: rule__KeyIntValueAnnotation__NameAssignment_1
-            {
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__KeyIntValueAnnotation__NameAssignment_1();
-
-            state._fsp--;
-
-
-            }
-
-             after(grammarAccess.getKeyIntValueAnnotationAccess().getNameAssignment_1()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__KeyIntValueAnnotation__Group__1__Impl"
-
-
-    // $ANTLR start "rule__KeyIntValueAnnotation__Group__2"
-    // InternalAnnotations.g:1753:1: rule__KeyIntValueAnnotation__Group__2 : rule__KeyIntValueAnnotation__Group__2__Impl ;
-    public final void rule__KeyIntValueAnnotation__Group__2() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:1757:1: ( rule__KeyIntValueAnnotation__Group__2__Impl )
-            // InternalAnnotations.g:1758:2: rule__KeyIntValueAnnotation__Group__2__Impl
-            {
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__KeyIntValueAnnotation__Group__2__Impl();
-
-            state._fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__KeyIntValueAnnotation__Group__2"
-
-
-    // $ANTLR start "rule__KeyIntValueAnnotation__Group__2__Impl"
-    // InternalAnnotations.g:1764:1: rule__KeyIntValueAnnotation__Group__2__Impl : ( ( rule__KeyIntValueAnnotation__ValueAssignment_2 ) ) ;
-    public final void rule__KeyIntValueAnnotation__Group__2__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:1768:1: ( ( ( rule__KeyIntValueAnnotation__ValueAssignment_2 ) ) )
-            // InternalAnnotations.g:1769:1: ( ( rule__KeyIntValueAnnotation__ValueAssignment_2 ) )
-            {
-            // InternalAnnotations.g:1769:1: ( ( rule__KeyIntValueAnnotation__ValueAssignment_2 ) )
-            // InternalAnnotations.g:1770:1: ( rule__KeyIntValueAnnotation__ValueAssignment_2 )
-            {
-             before(grammarAccess.getKeyIntValueAnnotationAccess().getValueAssignment_2()); 
-            // InternalAnnotations.g:1771:1: ( rule__KeyIntValueAnnotation__ValueAssignment_2 )
-            // InternalAnnotations.g:1771:2: rule__KeyIntValueAnnotation__ValueAssignment_2
-            {
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__KeyIntValueAnnotation__ValueAssignment_2();
-
-            state._fsp--;
-
-
-            }
-
-             after(grammarAccess.getKeyIntValueAnnotationAccess().getValueAssignment_2()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__KeyIntValueAnnotation__Group__2__Impl"
-
-
-    // $ANTLR start "rule__KeyFloatValueAnnotation__Group__0"
-    // InternalAnnotations.g:1787:1: rule__KeyFloatValueAnnotation__Group__0 : rule__KeyFloatValueAnnotation__Group__0__Impl rule__KeyFloatValueAnnotation__Group__1 ;
-    public final void rule__KeyFloatValueAnnotation__Group__0() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:1791:1: ( rule__KeyFloatValueAnnotation__Group__0__Impl rule__KeyFloatValueAnnotation__Group__1 )
-            // InternalAnnotations.g:1792:2: rule__KeyFloatValueAnnotation__Group__0__Impl rule__KeyFloatValueAnnotation__Group__1
-            {
-            pushFollow(FollowSets000.FOLLOW_3);
-            rule__KeyFloatValueAnnotation__Group__0__Impl();
-
-            state._fsp--;
-
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__KeyFloatValueAnnotation__Group__1();
-
-            state._fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__KeyFloatValueAnnotation__Group__0"
-
-
-    // $ANTLR start "rule__KeyFloatValueAnnotation__Group__0__Impl"
-    // InternalAnnotations.g:1799:1: rule__KeyFloatValueAnnotation__Group__0__Impl : ( '@' ) ;
-    public final void rule__KeyFloatValueAnnotation__Group__0__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:1803:1: ( ( '@' ) )
-            // InternalAnnotations.g:1804:1: ( '@' )
-            {
-            // InternalAnnotations.g:1804:1: ( '@' )
-            // InternalAnnotations.g:1805:1: '@'
-            {
-             before(grammarAccess.getKeyFloatValueAnnotationAccess().getCommercialAtKeyword_0()); 
-            match(input,15,FollowSets000.FOLLOW_2); 
-             after(grammarAccess.getKeyFloatValueAnnotationAccess().getCommercialAtKeyword_0()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__KeyFloatValueAnnotation__Group__0__Impl"
-
-
-    // $ANTLR start "rule__KeyFloatValueAnnotation__Group__1"
-    // InternalAnnotations.g:1818:1: rule__KeyFloatValueAnnotation__Group__1 : rule__KeyFloatValueAnnotation__Group__1__Impl rule__KeyFloatValueAnnotation__Group__2 ;
-    public final void rule__KeyFloatValueAnnotation__Group__1() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:1822:1: ( rule__KeyFloatValueAnnotation__Group__1__Impl rule__KeyFloatValueAnnotation__Group__2 )
-            // InternalAnnotations.g:1823:2: rule__KeyFloatValueAnnotation__Group__1__Impl rule__KeyFloatValueAnnotation__Group__2
-            {
-            pushFollow(FollowSets000.FOLLOW_13);
-            rule__KeyFloatValueAnnotation__Group__1__Impl();
-
-            state._fsp--;
-
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__KeyFloatValueAnnotation__Group__2();
-
-            state._fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__KeyFloatValueAnnotation__Group__1"
-
-
-    // $ANTLR start "rule__KeyFloatValueAnnotation__Group__1__Impl"
-    // InternalAnnotations.g:1830:1: rule__KeyFloatValueAnnotation__Group__1__Impl : ( ( rule__KeyFloatValueAnnotation__NameAssignment_1 ) ) ;
-    public final void rule__KeyFloatValueAnnotation__Group__1__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:1834:1: ( ( ( rule__KeyFloatValueAnnotation__NameAssignment_1 ) ) )
-            // InternalAnnotations.g:1835:1: ( ( rule__KeyFloatValueAnnotation__NameAssignment_1 ) )
-            {
-            // InternalAnnotations.g:1835:1: ( ( rule__KeyFloatValueAnnotation__NameAssignment_1 ) )
-            // InternalAnnotations.g:1836:1: ( rule__KeyFloatValueAnnotation__NameAssignment_1 )
-            {
-             before(grammarAccess.getKeyFloatValueAnnotationAccess().getNameAssignment_1()); 
-            // InternalAnnotations.g:1837:1: ( rule__KeyFloatValueAnnotation__NameAssignment_1 )
-            // InternalAnnotations.g:1837:2: rule__KeyFloatValueAnnotation__NameAssignment_1
-            {
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__KeyFloatValueAnnotation__NameAssignment_1();
-
-            state._fsp--;
-
-
-            }
-
-             after(grammarAccess.getKeyFloatValueAnnotationAccess().getNameAssignment_1()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__KeyFloatValueAnnotation__Group__1__Impl"
-
-
-    // $ANTLR start "rule__KeyFloatValueAnnotation__Group__2"
-    // InternalAnnotations.g:1847:1: rule__KeyFloatValueAnnotation__Group__2 : rule__KeyFloatValueAnnotation__Group__2__Impl ;
-    public final void rule__KeyFloatValueAnnotation__Group__2() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:1851:1: ( rule__KeyFloatValueAnnotation__Group__2__Impl )
-            // InternalAnnotations.g:1852:2: rule__KeyFloatValueAnnotation__Group__2__Impl
-            {
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__KeyFloatValueAnnotation__Group__2__Impl();
-
-            state._fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__KeyFloatValueAnnotation__Group__2"
-
-
-    // $ANTLR start "rule__KeyFloatValueAnnotation__Group__2__Impl"
-    // InternalAnnotations.g:1858:1: rule__KeyFloatValueAnnotation__Group__2__Impl : ( ( rule__KeyFloatValueAnnotation__ValueAssignment_2 ) ) ;
-    public final void rule__KeyFloatValueAnnotation__Group__2__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:1862:1: ( ( ( rule__KeyFloatValueAnnotation__ValueAssignment_2 ) ) )
-            // InternalAnnotations.g:1863:1: ( ( rule__KeyFloatValueAnnotation__ValueAssignment_2 ) )
-            {
-            // InternalAnnotations.g:1863:1: ( ( rule__KeyFloatValueAnnotation__ValueAssignment_2 ) )
-            // InternalAnnotations.g:1864:1: ( rule__KeyFloatValueAnnotation__ValueAssignment_2 )
-            {
-             before(grammarAccess.getKeyFloatValueAnnotationAccess().getValueAssignment_2()); 
-            // InternalAnnotations.g:1865:1: ( rule__KeyFloatValueAnnotation__ValueAssignment_2 )
-            // InternalAnnotations.g:1865:2: rule__KeyFloatValueAnnotation__ValueAssignment_2
-            {
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__KeyFloatValueAnnotation__ValueAssignment_2();
-
-            state._fsp--;
-
-
-            }
-
-             after(grammarAccess.getKeyFloatValueAnnotationAccess().getValueAssignment_2()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__KeyFloatValueAnnotation__Group__2__Impl"
-
-
     // $ANTLR start "rule__ExtendedID__Group__0"
-    // InternalAnnotations.g:1881:1: rule__ExtendedID__Group__0 : rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1 ;
+    // InternalAnnotations.g:2390:1: rule__ExtendedID__Group__0 : rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1 ;
     public final void rule__ExtendedID__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1885:1: ( rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1 )
-            // InternalAnnotations.g:1886:2: rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1
+            // InternalAnnotations.g:2394:1: ( rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1 )
+            // InternalAnnotations.g:2395:2: rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_14);
+            pushFollow(FollowSets000.FOLLOW_11);
             rule__ExtendedID__Group__0__Impl();
 
             state._fsp--;
@@ -4947,17 +6293,17 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExtendedID__Group__0__Impl"
-    // InternalAnnotations.g:1893:1: rule__ExtendedID__Group__0__Impl : ( RULE_ID ) ;
+    // InternalAnnotations.g:2402:1: rule__ExtendedID__Group__0__Impl : ( RULE_ID ) ;
     public final void rule__ExtendedID__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1897:1: ( ( RULE_ID ) )
-            // InternalAnnotations.g:1898:1: ( RULE_ID )
+            // InternalAnnotations.g:2406:1: ( ( RULE_ID ) )
+            // InternalAnnotations.g:2407:1: ( RULE_ID )
             {
-            // InternalAnnotations.g:1898:1: ( RULE_ID )
-            // InternalAnnotations.g:1899:1: RULE_ID
+            // InternalAnnotations.g:2407:1: ( RULE_ID )
+            // InternalAnnotations.g:2408:1: RULE_ID
             {
              before(grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_0()); 
             match(input,RULE_ID,FollowSets000.FOLLOW_2); 
@@ -4984,16 +6330,16 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExtendedID__Group__1"
-    // InternalAnnotations.g:1910:1: rule__ExtendedID__Group__1 : rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2 ;
+    // InternalAnnotations.g:2419:1: rule__ExtendedID__Group__1 : rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2 ;
     public final void rule__ExtendedID__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1914:1: ( rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2 )
-            // InternalAnnotations.g:1915:2: rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2
+            // InternalAnnotations.g:2423:1: ( rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2 )
+            // InternalAnnotations.g:2424:2: rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_14);
+            pushFollow(FollowSets000.FOLLOW_11);
             rule__ExtendedID__Group__1__Impl();
 
             state._fsp--;
@@ -5022,35 +6368,44 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExtendedID__Group__1__Impl"
-    // InternalAnnotations.g:1922:1: rule__ExtendedID__Group__1__Impl : ( ( rule__ExtendedID__Group_1__0 )* ) ;
+    // InternalAnnotations.g:2431:1: rule__ExtendedID__Group__1__Impl : ( ( rule__ExtendedID__Group_1__0 )* ) ;
     public final void rule__ExtendedID__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1926:1: ( ( ( rule__ExtendedID__Group_1__0 )* ) )
-            // InternalAnnotations.g:1927:1: ( ( rule__ExtendedID__Group_1__0 )* )
+            // InternalAnnotations.g:2435:1: ( ( ( rule__ExtendedID__Group_1__0 )* ) )
+            // InternalAnnotations.g:2436:1: ( ( rule__ExtendedID__Group_1__0 )* )
             {
-            // InternalAnnotations.g:1927:1: ( ( rule__ExtendedID__Group_1__0 )* )
-            // InternalAnnotations.g:1928:1: ( rule__ExtendedID__Group_1__0 )*
+            // InternalAnnotations.g:2436:1: ( ( rule__ExtendedID__Group_1__0 )* )
+            // InternalAnnotations.g:2437:1: ( rule__ExtendedID__Group_1__0 )*
             {
              before(grammarAccess.getExtendedIDAccess().getGroup_1()); 
-            // InternalAnnotations.g:1929:1: ( rule__ExtendedID__Group_1__0 )*
-            loop8:
+            // InternalAnnotations.g:2438:1: ( rule__ExtendedID__Group_1__0 )*
+            loop12:
             do {
-                int alt8=2;
-                int LA8_0 = input.LA(1);
+                int alt12=2;
+                int LA12_0 = input.LA(1);
 
-                if ( (LA8_0==19) ) {
-                    alt8=1;
+                if ( (LA12_0==17) ) {
+                    int LA12_2 = input.LA(2);
+
+                    if ( (LA12_2==RULE_ID) ) {
+                        alt12=1;
+                    }
+
+
+                }
+                else if ( (LA12_0==16) ) {
+                    alt12=1;
                 }
 
 
-                switch (alt8) {
+                switch (alt12) {
             	case 1 :
-            	    // InternalAnnotations.g:1929:2: rule__ExtendedID__Group_1__0
+            	    // InternalAnnotations.g:2438:2: rule__ExtendedID__Group_1__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_15);
+            	    pushFollow(FollowSets000.FOLLOW_12);
             	    rule__ExtendedID__Group_1__0();
 
             	    state._fsp--;
@@ -5060,7 +6415,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             	    break;
 
             	default :
-            	    break loop8;
+            	    break loop12;
                 }
             } while (true);
 
@@ -5087,14 +6442,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExtendedID__Group__2"
-    // InternalAnnotations.g:1939:1: rule__ExtendedID__Group__2 : rule__ExtendedID__Group__2__Impl ;
+    // InternalAnnotations.g:2448:1: rule__ExtendedID__Group__2 : rule__ExtendedID__Group__2__Impl ;
     public final void rule__ExtendedID__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1943:1: ( rule__ExtendedID__Group__2__Impl )
-            // InternalAnnotations.g:1944:2: rule__ExtendedID__Group__2__Impl
+            // InternalAnnotations.g:2452:1: ( rule__ExtendedID__Group__2__Impl )
+            // InternalAnnotations.g:2453:2: rule__ExtendedID__Group__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ExtendedID__Group__2__Impl();
@@ -5120,29 +6475,29 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExtendedID__Group__2__Impl"
-    // InternalAnnotations.g:1950:1: rule__ExtendedID__Group__2__Impl : ( ( rule__ExtendedID__Group_2__0 )? ) ;
+    // InternalAnnotations.g:2459:1: rule__ExtendedID__Group__2__Impl : ( ( rule__ExtendedID__Group_2__0 )? ) ;
     public final void rule__ExtendedID__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1954:1: ( ( ( rule__ExtendedID__Group_2__0 )? ) )
-            // InternalAnnotations.g:1955:1: ( ( rule__ExtendedID__Group_2__0 )? )
+            // InternalAnnotations.g:2463:1: ( ( ( rule__ExtendedID__Group_2__0 )? ) )
+            // InternalAnnotations.g:2464:1: ( ( rule__ExtendedID__Group_2__0 )? )
             {
-            // InternalAnnotations.g:1955:1: ( ( rule__ExtendedID__Group_2__0 )? )
-            // InternalAnnotations.g:1956:1: ( rule__ExtendedID__Group_2__0 )?
+            // InternalAnnotations.g:2464:1: ( ( rule__ExtendedID__Group_2__0 )? )
+            // InternalAnnotations.g:2465:1: ( rule__ExtendedID__Group_2__0 )?
             {
              before(grammarAccess.getExtendedIDAccess().getGroup_2()); 
-            // InternalAnnotations.g:1957:1: ( rule__ExtendedID__Group_2__0 )?
-            int alt9=2;
-            int LA9_0 = input.LA(1);
+            // InternalAnnotations.g:2466:1: ( rule__ExtendedID__Group_2__0 )?
+            int alt13=2;
+            int LA13_0 = input.LA(1);
 
-            if ( (LA9_0==20) ) {
-                alt9=1;
+            if ( (LA13_0==19) ) {
+                alt13=1;
             }
-            switch (alt9) {
+            switch (alt13) {
                 case 1 :
-                    // InternalAnnotations.g:1957:2: rule__ExtendedID__Group_2__0
+                    // InternalAnnotations.g:2466:2: rule__ExtendedID__Group_2__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__ExtendedID__Group_2__0();
@@ -5178,14 +6533,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExtendedID__Group_1__0"
-    // InternalAnnotations.g:1973:1: rule__ExtendedID__Group_1__0 : rule__ExtendedID__Group_1__0__Impl rule__ExtendedID__Group_1__1 ;
+    // InternalAnnotations.g:2482:1: rule__ExtendedID__Group_1__0 : rule__ExtendedID__Group_1__0__Impl rule__ExtendedID__Group_1__1 ;
     public final void rule__ExtendedID__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1977:1: ( rule__ExtendedID__Group_1__0__Impl rule__ExtendedID__Group_1__1 )
-            // InternalAnnotations.g:1978:2: rule__ExtendedID__Group_1__0__Impl rule__ExtendedID__Group_1__1
+            // InternalAnnotations.g:2486:1: ( rule__ExtendedID__Group_1__0__Impl rule__ExtendedID__Group_1__1 )
+            // InternalAnnotations.g:2487:2: rule__ExtendedID__Group_1__0__Impl rule__ExtendedID__Group_1__1
             {
             pushFollow(FollowSets000.FOLLOW_3);
             rule__ExtendedID__Group_1__0__Impl();
@@ -5216,21 +6571,31 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExtendedID__Group_1__0__Impl"
-    // InternalAnnotations.g:1985:1: rule__ExtendedID__Group_1__0__Impl : ( '.' ) ;
+    // InternalAnnotations.g:2494:1: rule__ExtendedID__Group_1__0__Impl : ( ( rule__ExtendedID__Alternatives_1_0 ) ) ;
     public final void rule__ExtendedID__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:1989:1: ( ( '.' ) )
-            // InternalAnnotations.g:1990:1: ( '.' )
+            // InternalAnnotations.g:2498:1: ( ( ( rule__ExtendedID__Alternatives_1_0 ) ) )
+            // InternalAnnotations.g:2499:1: ( ( rule__ExtendedID__Alternatives_1_0 ) )
             {
-            // InternalAnnotations.g:1990:1: ( '.' )
-            // InternalAnnotations.g:1991:1: '.'
+            // InternalAnnotations.g:2499:1: ( ( rule__ExtendedID__Alternatives_1_0 ) )
+            // InternalAnnotations.g:2500:1: ( rule__ExtendedID__Alternatives_1_0 )
             {
-             before(grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0()); 
-            match(input,19,FollowSets000.FOLLOW_2); 
-             after(grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0()); 
+             before(grammarAccess.getExtendedIDAccess().getAlternatives_1_0()); 
+            // InternalAnnotations.g:2501:1: ( rule__ExtendedID__Alternatives_1_0 )
+            // InternalAnnotations.g:2501:2: rule__ExtendedID__Alternatives_1_0
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__ExtendedID__Alternatives_1_0();
+
+            state._fsp--;
+
+
+            }
+
+             after(grammarAccess.getExtendedIDAccess().getAlternatives_1_0()); 
 
             }
 
@@ -5253,14 +6618,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExtendedID__Group_1__1"
-    // InternalAnnotations.g:2004:1: rule__ExtendedID__Group_1__1 : rule__ExtendedID__Group_1__1__Impl ;
+    // InternalAnnotations.g:2511:1: rule__ExtendedID__Group_1__1 : rule__ExtendedID__Group_1__1__Impl ;
     public final void rule__ExtendedID__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2008:1: ( rule__ExtendedID__Group_1__1__Impl )
-            // InternalAnnotations.g:2009:2: rule__ExtendedID__Group_1__1__Impl
+            // InternalAnnotations.g:2515:1: ( rule__ExtendedID__Group_1__1__Impl )
+            // InternalAnnotations.g:2516:2: rule__ExtendedID__Group_1__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ExtendedID__Group_1__1__Impl();
@@ -5286,17 +6651,17 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExtendedID__Group_1__1__Impl"
-    // InternalAnnotations.g:2015:1: rule__ExtendedID__Group_1__1__Impl : ( RULE_ID ) ;
+    // InternalAnnotations.g:2522:1: rule__ExtendedID__Group_1__1__Impl : ( RULE_ID ) ;
     public final void rule__ExtendedID__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2019:1: ( ( RULE_ID ) )
-            // InternalAnnotations.g:2020:1: ( RULE_ID )
+            // InternalAnnotations.g:2526:1: ( ( RULE_ID ) )
+            // InternalAnnotations.g:2527:1: ( RULE_ID )
             {
-            // InternalAnnotations.g:2020:1: ( RULE_ID )
-            // InternalAnnotations.g:2021:1: RULE_ID
+            // InternalAnnotations.g:2527:1: ( RULE_ID )
+            // InternalAnnotations.g:2528:1: RULE_ID
             {
              before(grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_1_1()); 
             match(input,RULE_ID,FollowSets000.FOLLOW_2); 
@@ -5323,16 +6688,16 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExtendedID__Group_2__0"
-    // InternalAnnotations.g:2036:1: rule__ExtendedID__Group_2__0 : rule__ExtendedID__Group_2__0__Impl rule__ExtendedID__Group_2__1 ;
+    // InternalAnnotations.g:2543:1: rule__ExtendedID__Group_2__0 : rule__ExtendedID__Group_2__0__Impl rule__ExtendedID__Group_2__1 ;
     public final void rule__ExtendedID__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2040:1: ( rule__ExtendedID__Group_2__0__Impl rule__ExtendedID__Group_2__1 )
-            // InternalAnnotations.g:2041:2: rule__ExtendedID__Group_2__0__Impl rule__ExtendedID__Group_2__1
+            // InternalAnnotations.g:2547:1: ( rule__ExtendedID__Group_2__0__Impl rule__ExtendedID__Group_2__1 )
+            // InternalAnnotations.g:2548:2: rule__ExtendedID__Group_2__0__Impl rule__ExtendedID__Group_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_16);
+            pushFollow(FollowSets000.FOLLOW_13);
             rule__ExtendedID__Group_2__0__Impl();
 
             state._fsp--;
@@ -5361,20 +6726,20 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExtendedID__Group_2__0__Impl"
-    // InternalAnnotations.g:2048:1: rule__ExtendedID__Group_2__0__Impl : ( '#' ) ;
+    // InternalAnnotations.g:2555:1: rule__ExtendedID__Group_2__0__Impl : ( '#' ) ;
     public final void rule__ExtendedID__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2052:1: ( ( '#' ) )
-            // InternalAnnotations.g:2053:1: ( '#' )
+            // InternalAnnotations.g:2559:1: ( ( '#' ) )
+            // InternalAnnotations.g:2560:1: ( '#' )
             {
-            // InternalAnnotations.g:2053:1: ( '#' )
-            // InternalAnnotations.g:2054:1: '#'
+            // InternalAnnotations.g:2560:1: ( '#' )
+            // InternalAnnotations.g:2561:1: '#'
             {
              before(grammarAccess.getExtendedIDAccess().getNumberSignKeyword_2_0()); 
-            match(input,20,FollowSets000.FOLLOW_2); 
+            match(input,19,FollowSets000.FOLLOW_2); 
              after(grammarAccess.getExtendedIDAccess().getNumberSignKeyword_2_0()); 
 
             }
@@ -5398,14 +6763,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExtendedID__Group_2__1"
-    // InternalAnnotations.g:2067:1: rule__ExtendedID__Group_2__1 : rule__ExtendedID__Group_2__1__Impl ;
+    // InternalAnnotations.g:2574:1: rule__ExtendedID__Group_2__1 : rule__ExtendedID__Group_2__1__Impl ;
     public final void rule__ExtendedID__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2071:1: ( rule__ExtendedID__Group_2__1__Impl )
-            // InternalAnnotations.g:2072:2: rule__ExtendedID__Group_2__1__Impl
+            // InternalAnnotations.g:2578:1: ( rule__ExtendedID__Group_2__1__Impl )
+            // InternalAnnotations.g:2579:2: rule__ExtendedID__Group_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ExtendedID__Group_2__1__Impl();
@@ -5431,17 +6796,17 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExtendedID__Group_2__1__Impl"
-    // InternalAnnotations.g:2078:1: rule__ExtendedID__Group_2__1__Impl : ( RULE_INT ) ;
+    // InternalAnnotations.g:2585:1: rule__ExtendedID__Group_2__1__Impl : ( RULE_INT ) ;
     public final void rule__ExtendedID__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2082:1: ( ( RULE_INT ) )
-            // InternalAnnotations.g:2083:1: ( RULE_INT )
+            // InternalAnnotations.g:2589:1: ( ( RULE_INT ) )
+            // InternalAnnotations.g:2590:1: ( RULE_INT )
             {
-            // InternalAnnotations.g:2083:1: ( RULE_INT )
-            // InternalAnnotations.g:2084:1: RULE_INT
+            // InternalAnnotations.g:2590:1: ( RULE_INT )
+            // InternalAnnotations.g:2591:1: RULE_INT
             {
              before(grammarAccess.getExtendedIDAccess().getINTTerminalRuleCall_2_1()); 
             match(input,RULE_INT,FollowSets000.FOLLOW_2); 
@@ -5468,16 +6833,16 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Integer__Group__0"
-    // InternalAnnotations.g:2099:1: rule__Integer__Group__0 : rule__Integer__Group__0__Impl rule__Integer__Group__1 ;
+    // InternalAnnotations.g:2608:1: rule__Integer__Group__0 : rule__Integer__Group__0__Impl rule__Integer__Group__1 ;
     public final void rule__Integer__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2103:1: ( rule__Integer__Group__0__Impl rule__Integer__Group__1 )
-            // InternalAnnotations.g:2104:2: rule__Integer__Group__0__Impl rule__Integer__Group__1
+            // InternalAnnotations.g:2612:1: ( rule__Integer__Group__0__Impl rule__Integer__Group__1 )
+            // InternalAnnotations.g:2613:2: rule__Integer__Group__0__Impl rule__Integer__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_12);
+            pushFollow(FollowSets000.FOLLOW_14);
             rule__Integer__Group__0__Impl();
 
             state._fsp--;
@@ -5506,31 +6871,31 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Integer__Group__0__Impl"
-    // InternalAnnotations.g:2111:1: rule__Integer__Group__0__Impl : ( ( '-' )? ) ;
+    // InternalAnnotations.g:2620:1: rule__Integer__Group__0__Impl : ( ( '-' )? ) ;
     public final void rule__Integer__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2115:1: ( ( ( '-' )? ) )
-            // InternalAnnotations.g:2116:1: ( ( '-' )? )
+            // InternalAnnotations.g:2624:1: ( ( ( '-' )? ) )
+            // InternalAnnotations.g:2625:1: ( ( '-' )? )
             {
-            // InternalAnnotations.g:2116:1: ( ( '-' )? )
-            // InternalAnnotations.g:2117:1: ( '-' )?
+            // InternalAnnotations.g:2625:1: ( ( '-' )? )
+            // InternalAnnotations.g:2626:1: ( '-' )?
             {
              before(grammarAccess.getIntegerAccess().getHyphenMinusKeyword_0()); 
-            // InternalAnnotations.g:2118:1: ( '-' )?
-            int alt10=2;
-            int LA10_0 = input.LA(1);
+            // InternalAnnotations.g:2627:1: ( '-' )?
+            int alt14=2;
+            int LA14_0 = input.LA(1);
 
-            if ( (LA10_0==21) ) {
-                alt10=1;
+            if ( (LA14_0==17) ) {
+                alt14=1;
             }
-            switch (alt10) {
+            switch (alt14) {
                 case 1 :
-                    // InternalAnnotations.g:2119:2: '-'
+                    // InternalAnnotations.g:2628:2: '-'
                     {
-                    match(input,21,FollowSets000.FOLLOW_2); 
+                    match(input,17,FollowSets000.FOLLOW_2); 
 
                     }
                     break;
@@ -5560,14 +6925,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Integer__Group__1"
-    // InternalAnnotations.g:2130:1: rule__Integer__Group__1 : rule__Integer__Group__1__Impl ;
+    // InternalAnnotations.g:2639:1: rule__Integer__Group__1 : rule__Integer__Group__1__Impl ;
     public final void rule__Integer__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2134:1: ( rule__Integer__Group__1__Impl )
-            // InternalAnnotations.g:2135:2: rule__Integer__Group__1__Impl
+            // InternalAnnotations.g:2643:1: ( rule__Integer__Group__1__Impl )
+            // InternalAnnotations.g:2644:2: rule__Integer__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Integer__Group__1__Impl();
@@ -5593,17 +6958,17 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Integer__Group__1__Impl"
-    // InternalAnnotations.g:2141:1: rule__Integer__Group__1__Impl : ( RULE_INT ) ;
+    // InternalAnnotations.g:2650:1: rule__Integer__Group__1__Impl : ( RULE_INT ) ;
     public final void rule__Integer__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2145:1: ( ( RULE_INT ) )
-            // InternalAnnotations.g:2146:1: ( RULE_INT )
+            // InternalAnnotations.g:2654:1: ( ( RULE_INT ) )
+            // InternalAnnotations.g:2655:1: ( RULE_INT )
             {
-            // InternalAnnotations.g:2146:1: ( RULE_INT )
-            // InternalAnnotations.g:2147:1: RULE_INT
+            // InternalAnnotations.g:2655:1: ( RULE_INT )
+            // InternalAnnotations.g:2656:1: RULE_INT
             {
              before(grammarAccess.getIntegerAccess().getINTTerminalRuleCall_1()); 
             match(input,RULE_INT,FollowSets000.FOLLOW_2); 
@@ -5630,16 +6995,16 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Floateger__Group__0"
-    // InternalAnnotations.g:2162:1: rule__Floateger__Group__0 : rule__Floateger__Group__0__Impl rule__Floateger__Group__1 ;
+    // InternalAnnotations.g:2671:1: rule__Floateger__Group__0 : rule__Floateger__Group__0__Impl rule__Floateger__Group__1 ;
     public final void rule__Floateger__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2166:1: ( rule__Floateger__Group__0__Impl rule__Floateger__Group__1 )
-            // InternalAnnotations.g:2167:2: rule__Floateger__Group__0__Impl rule__Floateger__Group__1
+            // InternalAnnotations.g:2675:1: ( rule__Floateger__Group__0__Impl rule__Floateger__Group__1 )
+            // InternalAnnotations.g:2676:2: rule__Floateger__Group__0__Impl rule__Floateger__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_13);
+            pushFollow(FollowSets000.FOLLOW_4);
             rule__Floateger__Group__0__Impl();
 
             state._fsp--;
@@ -5668,31 +7033,31 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Floateger__Group__0__Impl"
-    // InternalAnnotations.g:2174:1: rule__Floateger__Group__0__Impl : ( ( '-' )? ) ;
+    // InternalAnnotations.g:2683:1: rule__Floateger__Group__0__Impl : ( ( '-' )? ) ;
     public final void rule__Floateger__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2178:1: ( ( ( '-' )? ) )
-            // InternalAnnotations.g:2179:1: ( ( '-' )? )
+            // InternalAnnotations.g:2687:1: ( ( ( '-' )? ) )
+            // InternalAnnotations.g:2688:1: ( ( '-' )? )
             {
-            // InternalAnnotations.g:2179:1: ( ( '-' )? )
-            // InternalAnnotations.g:2180:1: ( '-' )?
+            // InternalAnnotations.g:2688:1: ( ( '-' )? )
+            // InternalAnnotations.g:2689:1: ( '-' )?
             {
              before(grammarAccess.getFloategerAccess().getHyphenMinusKeyword_0()); 
-            // InternalAnnotations.g:2181:1: ( '-' )?
-            int alt11=2;
-            int LA11_0 = input.LA(1);
+            // InternalAnnotations.g:2690:1: ( '-' )?
+            int alt15=2;
+            int LA15_0 = input.LA(1);
 
-            if ( (LA11_0==21) ) {
-                alt11=1;
+            if ( (LA15_0==17) ) {
+                alt15=1;
             }
-            switch (alt11) {
+            switch (alt15) {
                 case 1 :
-                    // InternalAnnotations.g:2182:2: '-'
+                    // InternalAnnotations.g:2691:2: '-'
                     {
-                    match(input,21,FollowSets000.FOLLOW_2); 
+                    match(input,17,FollowSets000.FOLLOW_2); 
 
                     }
                     break;
@@ -5722,14 +7087,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Floateger__Group__1"
-    // InternalAnnotations.g:2193:1: rule__Floateger__Group__1 : rule__Floateger__Group__1__Impl ;
+    // InternalAnnotations.g:2702:1: rule__Floateger__Group__1 : rule__Floateger__Group__1__Impl ;
     public final void rule__Floateger__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2197:1: ( rule__Floateger__Group__1__Impl )
-            // InternalAnnotations.g:2198:2: rule__Floateger__Group__1__Impl
+            // InternalAnnotations.g:2706:1: ( rule__Floateger__Group__1__Impl )
+            // InternalAnnotations.g:2707:2: rule__Floateger__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Floateger__Group__1__Impl();
@@ -5755,17 +7120,17 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Floateger__Group__1__Impl"
-    // InternalAnnotations.g:2204:1: rule__Floateger__Group__1__Impl : ( RULE_FLOAT ) ;
+    // InternalAnnotations.g:2713:1: rule__Floateger__Group__1__Impl : ( RULE_FLOAT ) ;
     public final void rule__Floateger__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2208:1: ( ( RULE_FLOAT ) )
-            // InternalAnnotations.g:2209:1: ( RULE_FLOAT )
+            // InternalAnnotations.g:2717:1: ( ( RULE_FLOAT ) )
+            // InternalAnnotations.g:2718:1: ( RULE_FLOAT )
             {
-            // InternalAnnotations.g:2209:1: ( RULE_FLOAT )
-            // InternalAnnotations.g:2210:1: RULE_FLOAT
+            // InternalAnnotations.g:2718:1: ( RULE_FLOAT )
+            // InternalAnnotations.g:2719:1: RULE_FLOAT
             {
              before(grammarAccess.getFloategerAccess().getFLOATTerminalRuleCall_1()); 
             match(input,RULE_FLOAT,FollowSets000.FOLLOW_2); 
@@ -5792,17 +7157,17 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__CommentAnnotation__ValuesAssignment"
-    // InternalAnnotations.g:2226:1: rule__CommentAnnotation__ValuesAssignment : ( RULE_COMMENT_ANNOTATION ) ;
+    // InternalAnnotations.g:2735:1: rule__CommentAnnotation__ValuesAssignment : ( RULE_COMMENT_ANNOTATION ) ;
     public final void rule__CommentAnnotation__ValuesAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2230:1: ( ( RULE_COMMENT_ANNOTATION ) )
-            // InternalAnnotations.g:2231:1: ( RULE_COMMENT_ANNOTATION )
+            // InternalAnnotations.g:2739:1: ( ( RULE_COMMENT_ANNOTATION ) )
+            // InternalAnnotations.g:2740:1: ( RULE_COMMENT_ANNOTATION )
             {
-            // InternalAnnotations.g:2231:1: ( RULE_COMMENT_ANNOTATION )
-            // InternalAnnotations.g:2232:1: RULE_COMMENT_ANNOTATION
+            // InternalAnnotations.g:2740:1: ( RULE_COMMENT_ANNOTATION )
+            // InternalAnnotations.g:2741:1: RULE_COMMENT_ANNOTATION
             {
              before(grammarAccess.getCommentAnnotationAccess().getValuesCOMMENT_ANNOTATIONTerminalRuleCall_0()); 
             match(input,RULE_COMMENT_ANNOTATION,FollowSets000.FOLLOW_2); 
@@ -5829,17 +7194,17 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TagAnnotation__NameAssignment_1"
-    // InternalAnnotations.g:2241:1: rule__TagAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
+    // InternalAnnotations.g:2751:1: rule__TagAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__TagAnnotation__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2245:1: ( ( ruleExtendedID ) )
-            // InternalAnnotations.g:2246:1: ( ruleExtendedID )
+            // InternalAnnotations.g:2755:1: ( ( ruleExtendedID ) )
+            // InternalAnnotations.g:2756:1: ( ruleExtendedID )
             {
-            // InternalAnnotations.g:2246:1: ( ruleExtendedID )
-            // InternalAnnotations.g:2247:1: ruleExtendedID
+            // InternalAnnotations.g:2756:1: ( ruleExtendedID )
+            // InternalAnnotations.g:2757:1: ruleExtendedID
             {
              before(grammarAccess.getTagAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
             pushFollow(FollowSets000.FOLLOW_2);
@@ -5869,18 +7234,59 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
     // $ANTLR end "rule__TagAnnotation__NameAssignment_1"
 
 
+    // $ANTLR start "rule__PragmaTag__NameAssignment_1"
+    // InternalAnnotations.g:2766:1: rule__PragmaTag__NameAssignment_1 : ( ruleExtendedID ) ;
+    public final void rule__PragmaTag__NameAssignment_1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:2770:1: ( ( ruleExtendedID ) )
+            // InternalAnnotations.g:2771:1: ( ruleExtendedID )
+            {
+            // InternalAnnotations.g:2771:1: ( ruleExtendedID )
+            // InternalAnnotations.g:2772:1: ruleExtendedID
+            {
+             before(grammarAccess.getPragmaTagAccess().getNameExtendedIDParserRuleCall_1_0()); 
+            pushFollow(FollowSets000.FOLLOW_2);
+            ruleExtendedID();
+
+            state._fsp--;
+
+             after(grammarAccess.getPragmaTagAccess().getNameExtendedIDParserRuleCall_1_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__PragmaTag__NameAssignment_1"
+
+
     // $ANTLR start "rule__KeyStringValueAnnotation__NameAssignment_1"
-    // InternalAnnotations.g:2256:1: rule__KeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
+    // InternalAnnotations.g:2781:1: rule__KeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__KeyStringValueAnnotation__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2260:1: ( ( ruleExtendedID ) )
-            // InternalAnnotations.g:2261:1: ( ruleExtendedID )
+            // InternalAnnotations.g:2785:1: ( ( ruleExtendedID ) )
+            // InternalAnnotations.g:2786:1: ( ruleExtendedID )
             {
-            // InternalAnnotations.g:2261:1: ( ruleExtendedID )
-            // InternalAnnotations.g:2262:1: ruleExtendedID
+            // InternalAnnotations.g:2786:1: ( ruleExtendedID )
+            // InternalAnnotations.g:2787:1: ruleExtendedID
             {
              before(grammarAccess.getKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
             pushFollow(FollowSets000.FOLLOW_2);
@@ -5911,25 +7317,25 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__ValuesAssignment_2"
-    // InternalAnnotations.g:2271:1: rule__KeyStringValueAnnotation__ValuesAssignment_2 : ( ruleEString ) ;
+    // InternalAnnotations.g:2796:1: rule__KeyStringValueAnnotation__ValuesAssignment_2 : ( ruleEStringAllTypes ) ;
     public final void rule__KeyStringValueAnnotation__ValuesAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2275:1: ( ( ruleEString ) )
-            // InternalAnnotations.g:2276:1: ( ruleEString )
+            // InternalAnnotations.g:2800:1: ( ( ruleEStringAllTypes ) )
+            // InternalAnnotations.g:2801:1: ( ruleEStringAllTypes )
             {
-            // InternalAnnotations.g:2276:1: ( ruleEString )
-            // InternalAnnotations.g:2277:1: ruleEString
+            // InternalAnnotations.g:2801:1: ( ruleEStringAllTypes )
+            // InternalAnnotations.g:2802:1: ruleEStringAllTypes
             {
-             before(grammarAccess.getKeyStringValueAnnotationAccess().getValuesEStringParserRuleCall_2_0()); 
+             before(grammarAccess.getKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_2_0()); 
             pushFollow(FollowSets000.FOLLOW_2);
-            ruleEString();
+            ruleEStringAllTypes();
 
             state._fsp--;
 
-             after(grammarAccess.getKeyStringValueAnnotationAccess().getValuesEStringParserRuleCall_2_0()); 
+             after(grammarAccess.getKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_2_0()); 
 
             }
 
@@ -5952,25 +7358,25 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__ValuesAssignment_3_1"
-    // InternalAnnotations.g:2286:1: rule__KeyStringValueAnnotation__ValuesAssignment_3_1 : ( ruleEString ) ;
+    // InternalAnnotations.g:2811:1: rule__KeyStringValueAnnotation__ValuesAssignment_3_1 : ( ruleEStringAllTypes ) ;
     public final void rule__KeyStringValueAnnotation__ValuesAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2290:1: ( ( ruleEString ) )
-            // InternalAnnotations.g:2291:1: ( ruleEString )
+            // InternalAnnotations.g:2815:1: ( ( ruleEStringAllTypes ) )
+            // InternalAnnotations.g:2816:1: ( ruleEStringAllTypes )
             {
-            // InternalAnnotations.g:2291:1: ( ruleEString )
-            // InternalAnnotations.g:2292:1: ruleEString
+            // InternalAnnotations.g:2816:1: ( ruleEStringAllTypes )
+            // InternalAnnotations.g:2817:1: ruleEStringAllTypes
             {
-             before(grammarAccess.getKeyStringValueAnnotationAccess().getValuesEStringParserRuleCall_3_1_0()); 
+             before(grammarAccess.getKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_3_1_0()); 
             pushFollow(FollowSets000.FOLLOW_2);
-            ruleEString();
+            ruleEStringAllTypes();
 
             state._fsp--;
 
-             after(grammarAccess.getKeyStringValueAnnotationAccess().getValuesEStringParserRuleCall_3_1_0()); 
+             after(grammarAccess.getKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_3_1_0()); 
 
             }
 
@@ -5992,18 +7398,264 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
     // $ANTLR end "rule__KeyStringValueAnnotation__ValuesAssignment_3_1"
 
 
+    // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__NameAssignment_1"
+    // InternalAnnotations.g:2826:1: rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
+    public final void rule__RestrictedKeyStringValueAnnotation__NameAssignment_1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:2830:1: ( ( ruleExtendedID ) )
+            // InternalAnnotations.g:2831:1: ( ruleExtendedID )
+            {
+            // InternalAnnotations.g:2831:1: ( ruleExtendedID )
+            // InternalAnnotations.g:2832:1: ruleExtendedID
+            {
+             before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
+            pushFollow(FollowSets000.FOLLOW_2);
+            ruleExtendedID();
+
+            state._fsp--;
+
+             after(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedKeyStringValueAnnotation__NameAssignment_1"
+
+
+    // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2"
+    // InternalAnnotations.g:2841:1: rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 : ( ruleEStringBoolean ) ;
+    public final void rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:2845:1: ( ( ruleEStringBoolean ) )
+            // InternalAnnotations.g:2846:1: ( ruleEStringBoolean )
+            {
+            // InternalAnnotations.g:2846:1: ( ruleEStringBoolean )
+            // InternalAnnotations.g:2847:1: ruleEStringBoolean
+            {
+             before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_2_0()); 
+            pushFollow(FollowSets000.FOLLOW_2);
+            ruleEStringBoolean();
+
+            state._fsp--;
+
+             after(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_2_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2"
+
+
+    // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1"
+    // InternalAnnotations.g:2856:1: rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 : ( ruleEStringBoolean ) ;
+    public final void rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:2860:1: ( ( ruleEStringBoolean ) )
+            // InternalAnnotations.g:2861:1: ( ruleEStringBoolean )
+            {
+            // InternalAnnotations.g:2861:1: ( ruleEStringBoolean )
+            // InternalAnnotations.g:2862:1: ruleEStringBoolean
+            {
+             before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_3_1_0()); 
+            pushFollow(FollowSets000.FOLLOW_2);
+            ruleEStringBoolean();
+
+            state._fsp--;
+
+             after(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_3_1_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1"
+
+
+    // $ANTLR start "rule__StringPragma__NameAssignment_1"
+    // InternalAnnotations.g:2871:1: rule__StringPragma__NameAssignment_1 : ( ruleExtendedID ) ;
+    public final void rule__StringPragma__NameAssignment_1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:2875:1: ( ( ruleExtendedID ) )
+            // InternalAnnotations.g:2876:1: ( ruleExtendedID )
+            {
+            // InternalAnnotations.g:2876:1: ( ruleExtendedID )
+            // InternalAnnotations.g:2877:1: ruleExtendedID
+            {
+             before(grammarAccess.getStringPragmaAccess().getNameExtendedIDParserRuleCall_1_0()); 
+            pushFollow(FollowSets000.FOLLOW_2);
+            ruleExtendedID();
+
+            state._fsp--;
+
+             after(grammarAccess.getStringPragmaAccess().getNameExtendedIDParserRuleCall_1_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__StringPragma__NameAssignment_1"
+
+
+    // $ANTLR start "rule__StringPragma__ValuesAssignment_2"
+    // InternalAnnotations.g:2886:1: rule__StringPragma__ValuesAssignment_2 : ( ruleEStringAllTypes ) ;
+    public final void rule__StringPragma__ValuesAssignment_2() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:2890:1: ( ( ruleEStringAllTypes ) )
+            // InternalAnnotations.g:2891:1: ( ruleEStringAllTypes )
+            {
+            // InternalAnnotations.g:2891:1: ( ruleEStringAllTypes )
+            // InternalAnnotations.g:2892:1: ruleEStringAllTypes
+            {
+             before(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_2_0()); 
+            pushFollow(FollowSets000.FOLLOW_2);
+            ruleEStringAllTypes();
+
+            state._fsp--;
+
+             after(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_2_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__StringPragma__ValuesAssignment_2"
+
+
+    // $ANTLR start "rule__StringPragma__ValuesAssignment_3_1"
+    // InternalAnnotations.g:2901:1: rule__StringPragma__ValuesAssignment_3_1 : ( ruleEStringAllTypes ) ;
+    public final void rule__StringPragma__ValuesAssignment_3_1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:2905:1: ( ( ruleEStringAllTypes ) )
+            // InternalAnnotations.g:2906:1: ( ruleEStringAllTypes )
+            {
+            // InternalAnnotations.g:2906:1: ( ruleEStringAllTypes )
+            // InternalAnnotations.g:2907:1: ruleEStringAllTypes
+            {
+             before(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_3_1_0()); 
+            pushFollow(FollowSets000.FOLLOW_2);
+            ruleEStringAllTypes();
+
+            state._fsp--;
+
+             after(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_3_1_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__StringPragma__ValuesAssignment_3_1"
+
+
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__NameAssignment_1"
-    // InternalAnnotations.g:2301:1: rule__TypedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
+    // InternalAnnotations.g:2916:1: rule__TypedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__TypedKeyStringValueAnnotation__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2305:1: ( ( ruleExtendedID ) )
-            // InternalAnnotations.g:2306:1: ( ruleExtendedID )
+            // InternalAnnotations.g:2920:1: ( ( ruleExtendedID ) )
+            // InternalAnnotations.g:2921:1: ( ruleExtendedID )
             {
-            // InternalAnnotations.g:2306:1: ( ruleExtendedID )
-            // InternalAnnotations.g:2307:1: ruleExtendedID
+            // InternalAnnotations.g:2921:1: ( ruleExtendedID )
+            // InternalAnnotations.g:2922:1: ruleExtendedID
             {
              before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
             pushFollow(FollowSets000.FOLLOW_2);
@@ -6034,17 +7686,17 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__TypeAssignment_3"
-    // InternalAnnotations.g:2316:1: rule__TypedKeyStringValueAnnotation__TypeAssignment_3 : ( ruleExtendedID ) ;
+    // InternalAnnotations.g:2931:1: rule__TypedKeyStringValueAnnotation__TypeAssignment_3 : ( ruleExtendedID ) ;
     public final void rule__TypedKeyStringValueAnnotation__TypeAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2320:1: ( ( ruleExtendedID ) )
-            // InternalAnnotations.g:2321:1: ( ruleExtendedID )
+            // InternalAnnotations.g:2935:1: ( ( ruleExtendedID ) )
+            // InternalAnnotations.g:2936:1: ( ruleExtendedID )
             {
-            // InternalAnnotations.g:2321:1: ( ruleExtendedID )
-            // InternalAnnotations.g:2322:1: ruleExtendedID
+            // InternalAnnotations.g:2936:1: ( ruleExtendedID )
+            // InternalAnnotations.g:2937:1: ruleExtendedID
             {
              before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0()); 
             pushFollow(FollowSets000.FOLLOW_2);
@@ -6075,25 +7727,25 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__ValuesAssignment_5"
-    // InternalAnnotations.g:2331:1: rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 : ( ruleEStringBoolean ) ;
+    // InternalAnnotations.g:2946:1: rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 : ( ruleEStringAllTypes ) ;
     public final void rule__TypedKeyStringValueAnnotation__ValuesAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2335:1: ( ( ruleEStringBoolean ) )
-            // InternalAnnotations.g:2336:1: ( ruleEStringBoolean )
+            // InternalAnnotations.g:2950:1: ( ( ruleEStringAllTypes ) )
+            // InternalAnnotations.g:2951:1: ( ruleEStringAllTypes )
             {
-            // InternalAnnotations.g:2336:1: ( ruleEStringBoolean )
-            // InternalAnnotations.g:2337:1: ruleEStringBoolean
+            // InternalAnnotations.g:2951:1: ( ruleEStringAllTypes )
+            // InternalAnnotations.g:2952:1: ruleEStringAllTypes
             {
-             before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_5_0()); 
+             before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_5_0()); 
             pushFollow(FollowSets000.FOLLOW_2);
-            ruleEStringBoolean();
+            ruleEStringAllTypes();
 
             state._fsp--;
 
-             after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_5_0()); 
+             after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_5_0()); 
 
             }
 
@@ -6116,25 +7768,25 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1"
-    // InternalAnnotations.g:2346:1: rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 : ( ruleEStringBoolean ) ;
+    // InternalAnnotations.g:2961:1: rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 : ( ruleEStringAllTypes ) ;
     public final void rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2350:1: ( ( ruleEStringBoolean ) )
-            // InternalAnnotations.g:2351:1: ( ruleEStringBoolean )
+            // InternalAnnotations.g:2965:1: ( ( ruleEStringAllTypes ) )
+            // InternalAnnotations.g:2966:1: ( ruleEStringAllTypes )
             {
-            // InternalAnnotations.g:2351:1: ( ruleEStringBoolean )
-            // InternalAnnotations.g:2352:1: ruleEStringBoolean
+            // InternalAnnotations.g:2966:1: ( ruleEStringAllTypes )
+            // InternalAnnotations.g:2967:1: ruleEStringAllTypes
             {
-             before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_6_1_0()); 
+             before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_6_1_0()); 
             pushFollow(FollowSets000.FOLLOW_2);
-            ruleEStringBoolean();
+            ruleEStringAllTypes();
 
             state._fsp--;
 
-             after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_6_1_0()); 
+             after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_6_1_0()); 
 
             }
 
@@ -6156,18 +7808,182 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
     // $ANTLR end "rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1"
 
 
+    // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1"
+    // InternalAnnotations.g:2976:1: rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
+    public final void rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:2980:1: ( ( ruleExtendedID ) )
+            // InternalAnnotations.g:2981:1: ( ruleExtendedID )
+            {
+            // InternalAnnotations.g:2981:1: ( ruleExtendedID )
+            // InternalAnnotations.g:2982:1: ruleExtendedID
+            {
+             before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
+            pushFollow(FollowSets000.FOLLOW_2);
+            ruleExtendedID();
+
+            state._fsp--;
+
+             after(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1"
+
+
+    // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3"
+    // InternalAnnotations.g:2991:1: rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 : ( ruleExtendedID ) ;
+    public final void rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:2995:1: ( ( ruleExtendedID ) )
+            // InternalAnnotations.g:2996:1: ( ruleExtendedID )
+            {
+            // InternalAnnotations.g:2996:1: ( ruleExtendedID )
+            // InternalAnnotations.g:2997:1: ruleExtendedID
+            {
+             before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0()); 
+            pushFollow(FollowSets000.FOLLOW_2);
+            ruleExtendedID();
+
+            state._fsp--;
+
+             after(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3"
+
+
+    // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5"
+    // InternalAnnotations.g:3006:1: rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 : ( ruleEStringBoolean ) ;
+    public final void rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:3010:1: ( ( ruleEStringBoolean ) )
+            // InternalAnnotations.g:3011:1: ( ruleEStringBoolean )
+            {
+            // InternalAnnotations.g:3011:1: ( ruleEStringBoolean )
+            // InternalAnnotations.g:3012:1: ruleEStringBoolean
+            {
+             before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_5_0()); 
+            pushFollow(FollowSets000.FOLLOW_2);
+            ruleEStringBoolean();
+
+            state._fsp--;
+
+             after(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_5_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5"
+
+
+    // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1"
+    // InternalAnnotations.g:3021:1: rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 : ( ruleEStringBoolean ) ;
+    public final void rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalAnnotations.g:3025:1: ( ( ruleEStringBoolean ) )
+            // InternalAnnotations.g:3026:1: ( ruleEStringBoolean )
+            {
+            // InternalAnnotations.g:3026:1: ( ruleEStringBoolean )
+            // InternalAnnotations.g:3027:1: ruleEStringBoolean
+            {
+             before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_6_1_0()); 
+            pushFollow(FollowSets000.FOLLOW_2);
+            ruleEStringBoolean();
+
+            state._fsp--;
+
+             after(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_6_1_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1"
+
+
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__NameAssignment_1"
-    // InternalAnnotations.g:2361:1: rule__QuotedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
+    // InternalAnnotations.g:3036:1: rule__QuotedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__QuotedKeyStringValueAnnotation__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2365:1: ( ( ruleExtendedID ) )
-            // InternalAnnotations.g:2366:1: ( ruleExtendedID )
+            // InternalAnnotations.g:3040:1: ( ( ruleExtendedID ) )
+            // InternalAnnotations.g:3041:1: ( ruleExtendedID )
             {
-            // InternalAnnotations.g:2366:1: ( ruleExtendedID )
-            // InternalAnnotations.g:2367:1: ruleExtendedID
+            // InternalAnnotations.g:3041:1: ( ruleExtendedID )
+            // InternalAnnotations.g:3042:1: ruleExtendedID
             {
              before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
             pushFollow(FollowSets000.FOLLOW_2);
@@ -6198,17 +8014,17 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2"
-    // InternalAnnotations.g:2376:1: rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 : ( RULE_STRING ) ;
+    // InternalAnnotations.g:3051:1: rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 : ( RULE_STRING ) ;
     public final void rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2380:1: ( ( RULE_STRING ) )
-            // InternalAnnotations.g:2381:1: ( RULE_STRING )
+            // InternalAnnotations.g:3055:1: ( ( RULE_STRING ) )
+            // InternalAnnotations.g:3056:1: ( RULE_STRING )
             {
-            // InternalAnnotations.g:2381:1: ( RULE_STRING )
-            // InternalAnnotations.g:2382:1: RULE_STRING
+            // InternalAnnotations.g:3056:1: ( RULE_STRING )
+            // InternalAnnotations.g:3057:1: RULE_STRING
             {
              before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_2_0()); 
             match(input,RULE_STRING,FollowSets000.FOLLOW_2); 
@@ -6235,17 +8051,17 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1"
-    // InternalAnnotations.g:2391:1: rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 : ( RULE_STRING ) ;
+    // InternalAnnotations.g:3066:1: rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 : ( RULE_STRING ) ;
     public final void rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2395:1: ( ( RULE_STRING ) )
-            // InternalAnnotations.g:2396:1: ( RULE_STRING )
+            // InternalAnnotations.g:3070:1: ( ( RULE_STRING ) )
+            // InternalAnnotations.g:3071:1: ( RULE_STRING )
             {
-            // InternalAnnotations.g:2396:1: ( RULE_STRING )
-            // InternalAnnotations.g:2397:1: RULE_STRING
+            // InternalAnnotations.g:3071:1: ( RULE_STRING )
+            // InternalAnnotations.g:3072:1: RULE_STRING
             {
              before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_3_1_0()); 
             match(input,RULE_STRING,FollowSets000.FOLLOW_2); 
@@ -6272,17 +8088,17 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1"
-    // InternalAnnotations.g:2406:1: rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
+    // InternalAnnotations.g:3081:1: rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2410:1: ( ( ruleExtendedID ) )
-            // InternalAnnotations.g:2411:1: ( ruleExtendedID )
+            // InternalAnnotations.g:3085:1: ( ( ruleExtendedID ) )
+            // InternalAnnotations.g:3086:1: ( ruleExtendedID )
             {
-            // InternalAnnotations.g:2411:1: ( ruleExtendedID )
-            // InternalAnnotations.g:2412:1: ruleExtendedID
+            // InternalAnnotations.g:3086:1: ( ruleExtendedID )
+            // InternalAnnotations.g:3087:1: ruleExtendedID
             {
              before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
             pushFollow(FollowSets000.FOLLOW_2);
@@ -6313,17 +8129,17 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3"
-    // InternalAnnotations.g:2421:1: rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 : ( ruleExtendedID ) ;
+    // InternalAnnotations.g:3096:1: rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 : ( ruleExtendedID ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2425:1: ( ( ruleExtendedID ) )
-            // InternalAnnotations.g:2426:1: ( ruleExtendedID )
+            // InternalAnnotations.g:3100:1: ( ( ruleExtendedID ) )
+            // InternalAnnotations.g:3101:1: ( ruleExtendedID )
             {
-            // InternalAnnotations.g:2426:1: ( ruleExtendedID )
-            // InternalAnnotations.g:2427:1: ruleExtendedID
+            // InternalAnnotations.g:3101:1: ( ruleExtendedID )
+            // InternalAnnotations.g:3102:1: ruleExtendedID
             {
              before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0()); 
             pushFollow(FollowSets000.FOLLOW_2);
@@ -6354,17 +8170,17 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5"
-    // InternalAnnotations.g:2436:1: rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 : ( RULE_STRING ) ;
+    // InternalAnnotations.g:3111:1: rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 : ( RULE_STRING ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2440:1: ( ( RULE_STRING ) )
-            // InternalAnnotations.g:2441:1: ( RULE_STRING )
+            // InternalAnnotations.g:3115:1: ( ( RULE_STRING ) )
+            // InternalAnnotations.g:3116:1: ( RULE_STRING )
             {
-            // InternalAnnotations.g:2441:1: ( RULE_STRING )
-            // InternalAnnotations.g:2442:1: RULE_STRING
+            // InternalAnnotations.g:3116:1: ( RULE_STRING )
+            // InternalAnnotations.g:3117:1: RULE_STRING
             {
              before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_5_0()); 
             match(input,RULE_STRING,FollowSets000.FOLLOW_2); 
@@ -6391,17 +8207,17 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1"
-    // InternalAnnotations.g:2451:1: rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 : ( RULE_STRING ) ;
+    // InternalAnnotations.g:3126:1: rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 : ( RULE_STRING ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalAnnotations.g:2455:1: ( ( RULE_STRING ) )
-            // InternalAnnotations.g:2456:1: ( RULE_STRING )
+            // InternalAnnotations.g:3130:1: ( ( RULE_STRING ) )
+            // InternalAnnotations.g:3131:1: ( RULE_STRING )
             {
-            // InternalAnnotations.g:2456:1: ( RULE_STRING )
-            // InternalAnnotations.g:2457:1: RULE_STRING
+            // InternalAnnotations.g:3131:1: ( RULE_STRING )
+            // InternalAnnotations.g:3132:1: RULE_STRING
             {
              before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_6_1_0()); 
             match(input,RULE_STRING,FollowSets000.FOLLOW_2); 
@@ -6426,274 +8242,29 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
     }
     // $ANTLR end "rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1"
 
-
-    // $ANTLR start "rule__KeyBooleanValueAnnotation__NameAssignment_1"
-    // InternalAnnotations.g:2466:1: rule__KeyBooleanValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
-    public final void rule__KeyBooleanValueAnnotation__NameAssignment_1() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:2470:1: ( ( ruleExtendedID ) )
-            // InternalAnnotations.g:2471:1: ( ruleExtendedID )
-            {
-            // InternalAnnotations.g:2471:1: ( ruleExtendedID )
-            // InternalAnnotations.g:2472:1: ruleExtendedID
-            {
-             before(grammarAccess.getKeyBooleanValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
-            pushFollow(FollowSets000.FOLLOW_2);
-            ruleExtendedID();
-
-            state._fsp--;
-
-             after(grammarAccess.getKeyBooleanValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__KeyBooleanValueAnnotation__NameAssignment_1"
-
-
-    // $ANTLR start "rule__KeyBooleanValueAnnotation__ValueAssignment_2"
-    // InternalAnnotations.g:2481:1: rule__KeyBooleanValueAnnotation__ValueAssignment_2 : ( RULE_BOOLEAN ) ;
-    public final void rule__KeyBooleanValueAnnotation__ValueAssignment_2() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:2485:1: ( ( RULE_BOOLEAN ) )
-            // InternalAnnotations.g:2486:1: ( RULE_BOOLEAN )
-            {
-            // InternalAnnotations.g:2486:1: ( RULE_BOOLEAN )
-            // InternalAnnotations.g:2487:1: RULE_BOOLEAN
-            {
-             before(grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBOOLEANTerminalRuleCall_2_0()); 
-            match(input,RULE_BOOLEAN,FollowSets000.FOLLOW_2); 
-             after(grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBOOLEANTerminalRuleCall_2_0()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__KeyBooleanValueAnnotation__ValueAssignment_2"
-
-
-    // $ANTLR start "rule__KeyIntValueAnnotation__NameAssignment_1"
-    // InternalAnnotations.g:2496:1: rule__KeyIntValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
-    public final void rule__KeyIntValueAnnotation__NameAssignment_1() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:2500:1: ( ( ruleExtendedID ) )
-            // InternalAnnotations.g:2501:1: ( ruleExtendedID )
-            {
-            // InternalAnnotations.g:2501:1: ( ruleExtendedID )
-            // InternalAnnotations.g:2502:1: ruleExtendedID
-            {
-             before(grammarAccess.getKeyIntValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
-            pushFollow(FollowSets000.FOLLOW_2);
-            ruleExtendedID();
-
-            state._fsp--;
-
-             after(grammarAccess.getKeyIntValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__KeyIntValueAnnotation__NameAssignment_1"
-
-
-    // $ANTLR start "rule__KeyIntValueAnnotation__ValueAssignment_2"
-    // InternalAnnotations.g:2511:1: rule__KeyIntValueAnnotation__ValueAssignment_2 : ( ruleInteger ) ;
-    public final void rule__KeyIntValueAnnotation__ValueAssignment_2() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:2515:1: ( ( ruleInteger ) )
-            // InternalAnnotations.g:2516:1: ( ruleInteger )
-            {
-            // InternalAnnotations.g:2516:1: ( ruleInteger )
-            // InternalAnnotations.g:2517:1: ruleInteger
-            {
-             before(grammarAccess.getKeyIntValueAnnotationAccess().getValueIntegerParserRuleCall_2_0()); 
-            pushFollow(FollowSets000.FOLLOW_2);
-            ruleInteger();
-
-            state._fsp--;
-
-             after(grammarAccess.getKeyIntValueAnnotationAccess().getValueIntegerParserRuleCall_2_0()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__KeyIntValueAnnotation__ValueAssignment_2"
-
-
-    // $ANTLR start "rule__KeyFloatValueAnnotation__NameAssignment_1"
-    // InternalAnnotations.g:2526:1: rule__KeyFloatValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
-    public final void rule__KeyFloatValueAnnotation__NameAssignment_1() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:2530:1: ( ( ruleExtendedID ) )
-            // InternalAnnotations.g:2531:1: ( ruleExtendedID )
-            {
-            // InternalAnnotations.g:2531:1: ( ruleExtendedID )
-            // InternalAnnotations.g:2532:1: ruleExtendedID
-            {
-             before(grammarAccess.getKeyFloatValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
-            pushFollow(FollowSets000.FOLLOW_2);
-            ruleExtendedID();
-
-            state._fsp--;
-
-             after(grammarAccess.getKeyFloatValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__KeyFloatValueAnnotation__NameAssignment_1"
-
-
-    // $ANTLR start "rule__KeyFloatValueAnnotation__ValueAssignment_2"
-    // InternalAnnotations.g:2541:1: rule__KeyFloatValueAnnotation__ValueAssignment_2 : ( ruleFloateger ) ;
-    public final void rule__KeyFloatValueAnnotation__ValueAssignment_2() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalAnnotations.g:2545:1: ( ( ruleFloateger ) )
-            // InternalAnnotations.g:2546:1: ( ruleFloateger )
-            {
-            // InternalAnnotations.g:2546:1: ( ruleFloateger )
-            // InternalAnnotations.g:2547:1: ruleFloateger
-            {
-             before(grammarAccess.getKeyFloatValueAnnotationAccess().getValueFloategerParserRuleCall_2_0()); 
-            pushFollow(FollowSets000.FOLLOW_2);
-            ruleFloateger();
-
-            state._fsp--;
-
-             after(grammarAccess.getKeyFloatValueAnnotationAccess().getValueFloategerParserRuleCall_2_0()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__KeyFloatValueAnnotation__ValueAssignment_2"
-
     // Delegated rules
 
 
     protected DFA1 dfa1 = new DFA1(this);
-    static final String dfa_1s = "\17\uffff";
-    static final String dfa_2s = "\3\uffff\1\13\11\uffff\2\13";
-    static final String dfa_3s = "\1\11\1\uffff\1\6\1\4\1\6\1\7\1\uffff\1\7\5\uffff\2\4";
-    static final String dfa_4s = "\1\17\1\uffff\1\6\1\25\1\6\1\7\1\uffff\1\10\5\uffff\2\25";
-    static final String dfa_5s = "\1\uffff\1\1\4\uffff\1\2\1\uffff\1\5\1\4\1\6\1\7\1\3\2\uffff";
-    static final String dfa_6s = "\17\uffff}>";
+    static final String dfa_1s = "\14\uffff";
+    static final String dfa_2s = "\3\uffff\1\7\6\uffff\2\7";
+    static final String dfa_3s = "\1\11\1\uffff\1\6\1\4\2\6\1\7\3\uffff\2\4";
+    static final String dfa_4s = "\1\22\1\uffff\1\6\1\25\1\6\1\10\1\7\3\uffff\2\25";
+    static final String dfa_5s = "\1\uffff\1\1\5\uffff\1\4\1\3\1\2\2\uffff";
+    static final String dfa_6s = "\14\uffff}>";
     static final String[] dfa_7s = {
-            "\1\1\5\uffff\1\2",
+            "\1\1\10\uffff\1\2",
             "",
             "\1\3",
-            "\1\14\1\6\1\14\1\10\1\12\10\uffff\1\11\1\uffff\1\4\1\5\1\7",
-            "\1\15",
-            "\1\16",
-            "",
-            "\1\10\1\12",
-            "",
+            "\5\11\7\uffff\1\4\1\5\1\uffff\1\6\1\uffff\1\10",
+            "\1\12",
+            "\1\12\2\11",
+            "\1\13",
             "",
             "",
             "",
-            "",
-            "\1\14\1\6\1\14\1\10\1\12\10\uffff\1\11\1\uffff\1\4\1\5\1\7",
-            "\1\14\1\6\1\14\1\10\1\12\10\uffff\1\11\3\uffff\1\7"
+            "\5\11\7\uffff\1\4\1\5\1\uffff\1\6\1\uffff\1\10",
+            "\5\11\10\uffff\1\11\3\uffff\1\10"
     };
 
     static final short[] dfa_1 = DFA.unpackEncodedString(dfa_1s);
@@ -6718,7 +8289,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             this.transition = dfa_7;
         }
         public String getDescription() {
-            return "484:1: rule__Annotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleKeyBooleanValueAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedKeyStringValueAnnotation ) | ( ruleKeyIntValueAnnotation ) | ( ruleKeyFloatValueAnnotation ) | ( ruleTagAnnotation ) );";
+            return "522:1: rule__Annotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedKeyStringValueAnnotation ) | ( ruleTagAnnotation ) );";
         }
     }
  
@@ -6728,19 +8299,17 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
         public static final BitSet FOLLOW_1 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_2 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x0000000000000040L});
-        public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x0000000000000050L});
-        public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x0000000000010000L});
-        public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x0000000000010002L});
-        public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0000000000020000L});
-        public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0000000000040000L});
-        public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x0000000000000070L});
+        public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x00000000000201F0L});
+        public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x0000000000100000L});
+        public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x0000000000100002L});
+        public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0000000000000070L});
+        public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0000000000200000L});
+        public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x0000000000400000L});
         public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0000000000200080L});
-        public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0000000000200100L});
-        public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000000000180000L});
-        public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0000000000080002L});
-        public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x0000000000000080L});
+        public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x00000000000B0000L});
+        public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0000000000030002L});
+        public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0000000000000080L});
+        public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000000000020080L});
     }
 
 

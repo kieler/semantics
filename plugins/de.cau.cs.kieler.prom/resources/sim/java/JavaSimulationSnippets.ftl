@@ -1,8 +1,6 @@
-
 /*****************************************************************************/
 /* MACROS TO SEND / RECEIVE A VARIABLE
 /*****************************************************************************/
-
 <#macro Simulate isInput isOutput indices...>
     <@input>
     // Receive ${varname}

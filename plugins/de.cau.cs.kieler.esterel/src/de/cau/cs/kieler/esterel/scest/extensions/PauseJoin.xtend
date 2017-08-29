@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.esterel.scest.extensions
 
-import de.cau.cs.kieler.scl.scl.Conditional
+import de.cau.cs.kieler.scl.Conditional
 
 /**
  * @author mrb

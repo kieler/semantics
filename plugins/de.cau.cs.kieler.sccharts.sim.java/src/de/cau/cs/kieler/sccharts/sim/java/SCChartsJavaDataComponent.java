@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,6 +45,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.osgi.framework.Bundle;
 
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Iterators;
 import com.google.inject.Guice;
 
 import de.cau.cs.kieler.circuit.Actor;
@@ -55,7 +60,6 @@ import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.TransformationIntermediateResult;
 import de.cau.cs.kieler.kico.internal.KiCoUtil;
-import de.cau.cs.kieler.kico.klighd.KiCoKlighdPlugin;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.sim.java.xtend.JavaSimulationSCChart;
 import de.cau.cs.kieler.sccharts.sim.java.xtend.JavaSimulationSCG;
@@ -413,10 +417,10 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
 
         JSONObject res = new JSONObject();
         try {
-            if (myModel != null
-                    && kExpressionValuedObjectExtensions.getValuedObjects(myModel) != null) {
-                for (ValuedObject valuedObject : kExpressionValuedObjectExtensions
-                        .getValuedObjects(myModel)) {
+            if (myModel != null && Iterators.any(myModel.eAllContents(), Predicates.instanceOf(ValuedObject.class))) {
+                Iterator<ValuedObject> vos = Iterators.filter(myModel.eAllContents(), ValuedObject.class);
+                while (vos.hasNext()) {
+                    ValuedObject valuedObject = vos.next();
                     if (kExpressionValuedObjectExtensions.isInput(valuedObject)) {
                         String valuedObjectName = valuedObject.getName();
                         inputVariableList.add(valuedObjectName);
@@ -571,9 +575,11 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
                 // In case we want to simulate a circuit, first re-compile the model
                 // but just up to SSA-SCG.
                 HashMap<IPath, EObject> map = KiemPlugin.getOpenedModelRootObjects();
-                if (map.containsKey(new Path(KiCoKlighdPlugin.SOURCE_MODEL_ID))) {
-                    EObject sourceModel =
-                            (EObject) map.get(new Path(KiCoKlighdPlugin.SOURCE_MODEL_ID));
+                // TODO adapt to kicool
+//                if (map.containsKey(new Path(KiCoKlighdPlugin.SOURCE_MODEL_ID))) {
+//                    EObject sourceModel =
+//                            (EObject) map.get(new Path(KiCoKlighdPlugin.SOURCE_MODEL_ID));
+                    EObject sourceModel = null;
 
                     // Compile to SSA_SCG
 
@@ -594,7 +600,7 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
                     myModel = sourceModel;
                     extendedSCChart = highLeveleCompilationResult.getEObject();
                 }
-            }
+//            }
 
             
             if (isExposeAllVars()) {
@@ -723,7 +729,7 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
 
             String modelName = "SCG";
             if (myModel instanceof State) {
-                modelName = ((State) myModel).getId();
+                modelName = ((State) myModel).getName();
             }
             if (myModel instanceof SCGraph) {
                 modelName = ((SCGraph) myModel).getLabel();

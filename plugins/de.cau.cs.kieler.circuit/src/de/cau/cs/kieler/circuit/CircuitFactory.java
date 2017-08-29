@@ -25,47 +25,47 @@ import org.eclipse.emf.ecore.EFactory;
  */
 public interface CircuitFactory extends EFactory {
 	/**
-	 * The singleton instance of the factory.
-	 * <!-- begin-user-doc -->
+     * The singleton instance of the factory.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	CircuitFactory eINSTANCE = de.cau.cs.kieler.circuit.impl.CircuitFactoryImpl.init();
 
 	/**
-	 * Returns a new object of class '<em>Actor</em>'.
-	 * <!-- begin-user-doc -->
+     * Returns a new object of class '<em>Actor</em>'.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Actor</em>'.
-	 * @generated
-	 */
+     * @return a new object of class '<em>Actor</em>'.
+     * @generated
+     */
 	Actor createActor();
 
 	/**
-	 * Returns a new object of class '<em>Link</em>'.
-	 * <!-- begin-user-doc -->
+     * Returns a new object of class '<em>Link</em>'.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Link</em>'.
-	 * @generated
-	 */
+     * @return a new object of class '<em>Link</em>'.
+     * @generated
+     */
 	Link createLink();
 
 	/**
-	 * Returns a new object of class '<em>Port</em>'.
-	 * <!-- begin-user-doc -->
+     * Returns a new object of class '<em>Port</em>'.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Port</em>'.
-	 * @generated
-	 */
+     * @return a new object of class '<em>Port</em>'.
+     * @generated
+     */
 	Port createPort();
 
 	/**
-	 * Returns the package supported by this factory.
-	 * <!-- begin-user-doc -->
+     * Returns the package supported by this factory.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the package supported by this factory.
-	 * @generated
-	 */
+     * @return the package supported by this factory.
+     * @generated
+     */
 	CircuitPackage getCircuitPackage();
 
 } //CircuitFactory

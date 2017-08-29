@@ -467,7 +467,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent
         Display.getDefault().syncExec(new Runnable() {
             public void run() {
                 for (KNode k : notHighlightedStates) {
-                    viewContext.getViewer().scale(k, 1f);
+//                    viewContext.getViewer().scale(k, 1f);
                     KRendering ren = k.getData(KRendering.class);
                     if (Iterables.any(ren.getStyles(), filter)) {
                         Iterables.removeIf(ren.getStyles(), filter);
@@ -522,10 +522,10 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent
                         // }
                         // }
                     }
-                    if (expanded.contains(k)) {
-                        viewContext.getViewer().collapse(k);
-                        expanded.remove(k);
-                    }
+//                    if (expanded.contains(k)) {
+//                        viewContext.getViewer().collapse(k);
+//                        expanded.remove(k);
+//                    }
                 }
             }
         });
@@ -572,13 +572,13 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent
                             }
                         }
 
-                        viewContext.getViewer().scale(viewElementState, 1.0f);
-                        for (KNode r : viewElementState.getChildren()) {
-                            if (!viewContext.getViewer().isExpanded(r)) {
-                                viewContext.getViewer().expand(r);
-                                expanded.add(r);
-                            }
-                        }
+//                        viewContext.getViewer().scale(viewElementState, 1.0f);
+//                        for (KNode r : viewElementState.getChildren()) {
+//                            if (!viewContext.getViewer().isExpanded(r)) {
+//                                viewContext.getViewer().expand(r);
+//                                expanded.add(r);
+//                            }
+//                        }
 
                     }
                 });

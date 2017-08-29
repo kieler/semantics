@@ -1,6 +1,0 @@
-module everyModule:
-input A;
-	every [ A or pre(A) ] do
-		nothing
-	end every
-end module

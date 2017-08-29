@@ -9,8 +9,8 @@ import de.cau.cs.kieler.esterel.esterel.Program;
 
 import de.cau.cs.kieler.esterel.scest.scest.*;
 
-import de.cau.cs.kieler.scl.scl.Statement;
-import de.cau.cs.kieler.scl.scl.StatementContainer;
+import de.cau.cs.kieler.scl.Statement;
+import de.cau.cs.kieler.scl.StatementContainer;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;

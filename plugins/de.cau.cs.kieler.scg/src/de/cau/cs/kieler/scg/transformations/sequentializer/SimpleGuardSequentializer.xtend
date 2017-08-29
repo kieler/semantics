@@ -19,7 +19,7 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
-import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
@@ -27,7 +27,6 @@ import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.transformations.SCGTransformations
 
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.scg.ScheduleDependency
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.Assignment
@@ -35,6 +34,10 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.GuardDependency
 import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Exit
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 
 /** 
  * @author ssm
@@ -108,6 +111,7 @@ class SimpleGuardSequentializer extends AbstractProductionTransformation impleme
         val newSCG = ScgFactory::eINSTANCE.createSCGraph => [
         	annotations += createStringAnnotation(SCGFeatures.SEQUENTIALIZE_ID, SCGFeatures.SEQUENTIALIZE_NAME)
         	label = scg.label
+            scg.copyAnnotations(it, <String> newHashSet("main", "voLink"))
         ]
         
         creationalTransformation(scg, newSCG)
@@ -120,26 +124,51 @@ class SimpleGuardSequentializer extends AbstractProductionTransformation impleme
         ]
         val valuedObjectMap = scg.copyDeclarations(newSCG)
         
-        val assignmentHeadNodes = scg.nodes.filter[ 
-            incoming.filter(ScheduleDependency).empty &&
-            incoming.filter(GuardDependency).empty
-        ]
+        val entryNodes = <Entry> newArrayList
+        val exitNodes = <Exit> newArrayList
+        for(node : scg.nodes) {
+            if (node instanceof Entry) entryNodes += node
+            if (node instanceof Exit) exitNodes += node
+        }
         
-        for(headNode : assignmentHeadNodes) {
-            val assignmentNodes = headNode.getSchedule.filter(Assignment)
+//        val assignmentHeadNodes = scg.nodes.filter[ 
+//            incoming.filter(ScheduleDependency).empty &&
+//            incoming.filter(GuardDependency).empty
+//        ]
+        
+        for(entry : entryNodes) {
+            val entryNode = ScgFactory.eINSTANCE.createEntry => [ newSCG.nodes += it name = entry.name ]
+            val exitNode = ScgFactory.eINSTANCE.createExit => [ newSCG.nodes += it name = entry.name + "_exit" ]
+            val scheduledNodes = entry.getSchedule
             
-            val AAMap = <Assignment, Assignment> newHashMap
-            val scheduleDependencies = <ScheduleDependency> newArrayList
+            val AAMap = <Node, Node> newHashMap => [ put(entry, entryNode)]
+            val scheduleDependencies = <ScheduleDependency> newArrayList => [ it += entry.dependencies.filter(ScheduleDependency) ]
             
          	// Create new assignments
-            for(assignment : assignmentNodes) {
-            	assignment.copySCGAssignment(valuedObjectMap) => [
-            		newSCG.nodes += it
-            		AAMap.put(assignment, it)
-            		
-            		it.trace(assignment)
-            	]
-            	scheduleDependencies += assignment.dependencies.filter(ScheduleDependency)
+//<<<<<<< HEAD
+//            for(assignment : assignmentNodes) {
+//            	assignment.copySCGAssignment(valuedObjectMap) => [
+//            		newSCG.nodes += it
+//            		AAMap.put(assignment, it)
+//            		
+//            		it.trace(assignment)
+//            	]
+//            	scheduleDependencies += assignment.dependencies.filter(ScheduleDependency)
+//=======
+            for(node : scheduledNodes) {
+                if (node instanceof Assignment) {
+                	node.copySCGAssignment(valuedObjectMap) => [
+                		newSCG.nodes += it
+                		AAMap.put(node, it)
+                	]
+            	} else if (node instanceof Exit) {
+            	    ScgFactory.eINSTANCE.createExit => [
+            	        newSCG.nodes += it
+            	        AAMap.put(node, it)
+            	    ]
+            	}
+            	scheduleDependencies += node.dependencies.filter(ScheduleDependency)
+//>>>>>>> ssm/dataflow
             }
             
             // Add a new schedule dependency to cover the last guarded assignments.
@@ -149,16 +178,17 @@ class SimpleGuardSequentializer extends AbstractProductionTransformation impleme
             
             // Connect assignments
             for(schedule : scheduleDependencies) {
-                val originalAssignment = schedule.eContainer as Assignment
+                val originalAssignment = schedule.eContainer as Node
             	val sourceAssignment = AAMap.get(originalAssignment)
-                val targetAssignment = AAMap.get(schedule.target) 
+                var targetAssignment = AAMap.get(schedule.target)
+                if (targetAssignment == null) targetAssignment = exitNode 
             	
             	// Check for guarded assignments
             	val guardDependencies = originalAssignment.dependencies.filter(GuardDependency)
             	if (!guardDependencies.empty) {
             	    val guardConditional = ScgFactory.eINSTANCE.createConditional
                     newSCG.nodes += guardConditional
-                    guardConditional.condition = sourceAssignment.valuedObject.reference  
+                    guardConditional.condition = sourceAssignment.asAssignment.valuedObject.reference  
                     sourceAssignment.createControlFlow.target = guardConditional
                     
                     guardConditional.trace(originalAssignment)
@@ -199,6 +229,9 @@ class SimpleGuardSequentializer extends AbstractProductionTransformation impleme
                    	}
                	} 
             }
+            
+            
+            
         }
         
         newSCG

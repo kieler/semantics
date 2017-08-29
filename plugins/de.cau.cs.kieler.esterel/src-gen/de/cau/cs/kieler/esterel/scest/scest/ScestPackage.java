@@ -4,7 +4,7 @@ package de.cau.cs.kieler.esterel.scest.scest;
 
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 
-import de.cau.cs.kieler.scl.scl.SclPackage;
+import de.cau.cs.kieler.scl.SCLPackage;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -231,7 +231,7 @@ public interface ScestPackage extends EPackage
    * @generated
    * @ordered
    */
-  int UN_EMIT__ANNOTATIONS = SclPackage.STATEMENT__ANNOTATIONS;
+  int UN_EMIT__ANNOTATIONS = SCLPackage.STATEMENT__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Signal</b></em>' reference.
@@ -240,7 +240,7 @@ public interface ScestPackage extends EPackage
    * @generated
    * @ordered
    */
-  int UN_EMIT__SIGNAL = SclPackage.STATEMENT_FEATURE_COUNT + 0;
+  int UN_EMIT__SIGNAL = SCLPackage.STATEMENT_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Un Emit</em>' class.
@@ -249,7 +249,7 @@ public interface ScestPackage extends EPackage
    * @generated
    * @ordered
    */
-  int UN_EMIT_FEATURE_COUNT = SclPackage.STATEMENT_FEATURE_COUNT + 1;
+  int UN_EMIT_FEATURE_COUNT = SCLPackage.STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.scest.scest.impl.SetImpl <em>Set</em>}' class.
@@ -268,7 +268,7 @@ public interface ScestPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SET__ANNOTATIONS = SclPackage.STATEMENT__ANNOTATIONS;
+  int SET__ANNOTATIONS = SCLPackage.STATEMENT__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Signal</b></em>' reference.
@@ -277,7 +277,7 @@ public interface ScestPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SET__SIGNAL = SclPackage.STATEMENT_FEATURE_COUNT + 0;
+  int SET__SIGNAL = SCLPackage.STATEMENT_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -286,7 +286,7 @@ public interface ScestPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SET__EXPRESSION = SclPackage.STATEMENT_FEATURE_COUNT + 1;
+  int SET__EXPRESSION = SCLPackage.STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Set</em>' class.
@@ -295,7 +295,7 @@ public interface ScestPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SET_FEATURE_COUNT = SclPackage.STATEMENT_FEATURE_COUNT + 2;
+  int SET_FEATURE_COUNT = SCLPackage.STATEMENT_FEATURE_COUNT + 2;
 
 
   /**

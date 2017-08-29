@@ -16,8 +16,10 @@ package de.cau.cs.kieler.sccharts.features
 import com.google.inject.Inject
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 
 /**
  * SCCharts Reference Feature.
@@ -40,13 +42,12 @@ class Reference extends Feature {
     }
 
     //-------------------------------------------------------------------------
-    @Inject
-    extension SCChartsExtension
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsStateExtensions
 
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
-        val allStates = model.allStates.toList
-        for (state : allStates) {
+        for (state : model.allStates.toIterable) {
             if (state.isReferencedState) {
                 return true
             }
@@ -56,5 +57,12 @@ class Reference extends Feature {
         }
         return false
     }
+
+    def isContained(SCCharts sccharts) {
+        for(s:sccharts.rootStates) {
+            if (s.isContained) return true
+        }
+        false
+    }      
 
 }

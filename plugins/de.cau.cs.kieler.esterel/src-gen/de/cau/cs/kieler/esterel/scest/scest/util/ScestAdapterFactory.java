@@ -9,8 +9,8 @@ import de.cau.cs.kieler.esterel.esterel.Program;
 
 import de.cau.cs.kieler.esterel.scest.scest.*;
 
-import de.cau.cs.kieler.scl.scl.Statement;
-import de.cau.cs.kieler.scl.scl.StatementContainer;
+import de.cau.cs.kieler.scl.Statement;
+import de.cau.cs.kieler.scl.StatementContainer;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -240,13 +240,13 @@ public class ScestAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.StatementContainer <em>Statement Container</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.StatementContainer <em>Statement Container</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.scl.scl.StatementContainer
+   * @see de.cau.cs.kieler.scl.StatementContainer
    * @generated
    */
   public Adapter createStatementContainerAdapter()
@@ -270,13 +270,13 @@ public class ScestAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.Statement <em>Statement</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.Statement <em>Statement</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.scl.scl.Statement
+   * @see de.cau.cs.kieler.scl.Statement
    * @generated
    */
   public Adapter createStatementAdapter()

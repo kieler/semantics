@@ -16,18 +16,20 @@ package de.cau.cs.kieler.sccharts.transformations
 import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-//import de.cau.cs.kieler.sccharts.sim.c.SCChartsSimCPlugin
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.sccharts.transformations.SCChartsTransformation
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
-import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import com.google.common.collect.Sets
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 import de.cau.cs.kieler.sccharts.SCChartsPlugin
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.CombineOperator
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
+import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 
 /**
  * This class handles the<BR>
@@ -65,17 +67,15 @@ class SimulationVisualization extends AbstractExpansionTransformation {
     
     //-------------------------------------------------------------------------
 
-    @Inject
-    extension KExpressionsCreateExtensions
+    @Inject extension KExpressionsCreateExtensions
+    @Inject extension KEffectsExtensions
+    @Inject extension SCChartsTransformationExtension
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsActionExtensions
+    @Inject extension SCChartsUniqueNameExtensions    
     
-    @Inject
-    extension KEffectsExtensions
-
-    @Inject
-    extension SCChartsExtension
-
-    @Inject
-    extension SCChartsTransformationExtension
+    private val nameCache = new UniqueNameCache
 
     //-------------------------------------------------------------------------
     //--         S I M U L A T I O N    V I S U A L I Z A T I O N            --
@@ -119,13 +119,14 @@ class SimulationVisualization extends AbstractExpansionTransformation {
     static public final String GENERATED_PREFIX = "_"
     
     def State transform(State rootState) {
+        nameCache.clear
         val res = rootState.eResource
         
-        var targetRootState = rootState.fixAllPriorities
+        var targetRootState = rootState
 
 
         // Necessary for ordering
-        var microtick = targetRootState.createVariable("_microtick").setTypeInt.setIsOutput.uniqueName
+        var microtick = targetRootState.createVariable("_microtick").setTypeInt.setIsOutput.uniqueName(nameCache)
         targetRootState.createEntryAction.effects.add("_microtick = 0;".asHostcodeEffect);
 
             
@@ -157,7 +158,7 @@ class SimulationVisualization extends AbstractExpansionTransformation {
 //            targetTransition.transformSimulationVisualizationState(targetRootState, stateUID);
 //        }
 
-        targetRootState.fixAllTextualOrdersByPriorities;
+        targetRootState
     }
 
 
@@ -198,10 +199,10 @@ class SimulationVisualization extends AbstractExpansionTransformation {
 
     // New visualization of active states with immediate during actions
     def void transformSimulationVisualizationState(State state, State targetRootState, String UID) {
-        if (!state.isRootState && !state.hasInnerStatesOrControlflowRegions) {
-            val active = targetRootState.createVariable(UID).setTypeInt.setIsOutput.uniqueName
+        if (!state.isRootState && !state.controlflowRegionsContainStates) {
+            val active = targetRootState.createVariable(UID).setTypeInt.setIsOutput.uniqueName(nameCache)
             active.combineOperator = CombineOperator::ADD;
-            val microtick = targetRootState.createVariable(UID).setTypeInt.setIsOutput.uniqueName
+            val microtick = targetRootState.createVariable(UID).setTypeInt.setIsOutput.uniqueName(nameCache)
             microtick.initialValue = 0.createIntValue;
             
             if (!state.final) {
@@ -209,19 +210,19 @@ class SimulationVisualization extends AbstractExpansionTransformation {
                 val duringAction = state.createDuringAction
                 duringAction.setImmediate(true)
                 //duringAction.setTrigger(TRUE)
-                duringAction.addEffect(active.assingCombined(microtick.reference));     
+                duringAction.addEffect(active.createCombinedAssignment(microtick.reference));     
             } else {
                 // Add entry action - TRUE iff this final state is entered
                 val entryAction = state.createEntryAction
                 //duringAction.setTrigger(TRUE)
-                entryAction.addEffect(active.assingCombined(microtick.reference));     
+                entryAction.addEffect(active.createCombinedAssignment(microtick.reference));     
             }
             
             // Add during action - FALSE otherwise
             val duringAction2 = targetRootState.createDuringAction
             duringAction2.setImmediate(true)
             //duringAction2.setTrigger(TRUE)
-            duringAction2.addAssignment(active.assign(0.createIntValue));
+            duringAction2.addAssignment(active.createAssignment(0.createIntValue));
         }
     }
 
@@ -230,17 +231,17 @@ class SimulationVisualization extends AbstractExpansionTransformation {
     
         // Transform a transition as described in 1.
     def void transformSimulationVisualizationTransition(Transition transition, State targetRootState, String UID) {
-            val active = targetRootState.createVariable(UID).setTypeInt.setIsOutput.uniqueName
+            val active = targetRootState.createVariable(UID).setTypeInt.setIsOutput.uniqueName(nameCache)
             active.combineOperator = CombineOperator::ADD;
 
             // Add action - TRUE iff this transition is taken
             transition.effects.add("_microtick = _microtick + 1".asHostcodeEffect);
-            transition.effects.add(active.assingCombined("_microtick".asTextExpression));
+            transition.effects.add(active.createCombinedAssignment("_microtick".asTextExpression));
 
             // Add during action - FALSE otherwise
             val duringAction2 = targetRootState.createDuringAction()
             duringAction2.immediate = true
-            duringAction2.addAssignment(active.assign("0".asTextExpression));
+            duringAction2.addAssignment(active.createAssignment("0".asTextExpression));
 
     }
     

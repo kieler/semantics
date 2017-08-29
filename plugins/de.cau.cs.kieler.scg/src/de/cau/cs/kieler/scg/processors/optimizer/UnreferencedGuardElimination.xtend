@@ -53,7 +53,7 @@ class UnreferencedGuardElimination extends AbstractOptimizer {
             val incoming = ImmutableList::copyOf(ra.incoming.filter(typeof(ControlFlow)))
             incoming.forEach[ target = ra.next.target ]
             
-            ra.valuedObject.deleteAndCleanup
+            ra.valuedObject.removeFromContainmentAndCleanup
             ra.next.target.incoming -= ra.next
             ra.remove
         ]

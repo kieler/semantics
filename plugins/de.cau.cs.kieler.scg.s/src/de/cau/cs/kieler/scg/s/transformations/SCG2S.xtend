@@ -38,8 +38,8 @@ import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 import java.util.HashMap
 import java.util.List
 
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.scg.s.SCG2SPlugin
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
@@ -152,8 +152,10 @@ class SCG2S extends AbstractProductionTransformation {
         ]
         val instructionCache = <Instruction>newLinkedList
 
-        nodeList += scg.nodes.head
-        nodeInstructionMap.put(scg.nodes.head, instructionCache)
+//        nodeList += scg.nodes.head
+//        nodeInstructionMap.put(scg.nodes.head, instructionCache)
+        nodeList += scg.nodes.filter[ incoming.size == 0 ].head
+        nodeInstructionMap.put(nodeList.head, instructionCache)
 
         while (!nodeList.empty) {
             val node = nodeList.head
@@ -180,6 +182,10 @@ class SCG2S extends AbstractProductionTransformation {
         SCG2SPlugin.log("S transformation finished (time used overall: " + (time / 1000) + "s).")
         sProgram
     }
+
+//    private def dispatch void translate(Void a, Void b) {
+//        
+//    }
 
     private def dispatch void translate(Entry entry, List<Instruction> instructions) {
         if(processedNodes.get(entry) != null) return;

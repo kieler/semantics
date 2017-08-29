@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -36,6 +36,13 @@ class DataPool implements Cloneable {
     private var DataPool previousPool
     
     /**
+     * Indicates that at least one variable might have a user value set,
+     * which must be applied before the next tick is executed.
+     */
+    @Accessors(PUBLIC_GETTER)
+    private boolean hasModifiedVariable
+    
+    /**
      * Clone this object.
      */
     override DataPool clone() {
@@ -44,6 +51,41 @@ class DataPool implements Cloneable {
             pool.addModel(m.clone())            
         }
         return pool
+    }
+    
+    public def Model getModel(String modelName) {
+        return models.findFirst[it.name == modelName]
+    }
+    
+    public def Variable getVariable(String variableName) {
+        return getVariable(variableName, true)
+    }
+    
+    public def Variable getVariable(String variableName, boolean isFullyQualified) {
+        if(!isFullyQualified) {
+            // No model name specified, so search in the complete data pool for the variable
+            return allVariables.findFirst[it.name == variableName]    
+        } else if(!variableName.isNullOrEmpty) {
+            // Separate model name and variable name
+            val i = variableName.indexOf(".")
+            if(i >= 0 && i < variableName.length-1) {
+                val modelName = variableName.substring(0,i)
+                val relativeVariableName = variableName.substring(i + 1, i - variableName.length)
+                return getVariable(modelName, relativeVariableName)
+            } else {
+                // This is not fully qualified actually.
+                return getVariable(variableName, false)
+            }
+        }
+    }
+    
+    public def Variable getVariable(String modelName, String variableName) {
+        if(modelName != null) {
+            val model = getModel(modelName)
+            return model.getVariable(variableName)
+        } else {
+            return getVariable(variableName)
+        }
     }
     
     /**
@@ -65,6 +107,13 @@ class DataPool implements Cloneable {
     }
     
     /**
+     * Remove a model from the pool
+     */
+    public def void removeModel(Model m) {
+        models.remove(m)
+    }
+    
+    /**
      * Add a model to the pool
      */
     public def void addModel(Model m) {
@@ -79,18 +128,42 @@ class DataPool implements Cloneable {
         }
     }
     
+    public def String getUniqueModelName(String name, int suffix) {
+        val uniqueName = if(suffix > 0)
+                             name+"_"+suffix
+                         else
+                             name
+        val modelWithThisName = models.findFirst[it.name.equals(uniqueName)]
+        if(modelWithThisName == null) {
+            return uniqueName
+        } else {
+            return getUniqueModelName(name, suffix+1)
+        }
+    }
+    
     /**
      * Returns a list of all previous pools from old to new.
      */
     public def List<DataPool> getHistory() {
         val List<DataPool> history = newArrayList()
-        history.add(this)
+//        history.add(this)
         var next = this.previousPool
         while(next != null) {
             history.add(next)
             next = next.previousPool
         }
         return history.reverse
+    }
+    
+    protected def void setModifiedVariable() {
+        hasModifiedVariable = true
+    }
+    
+    public def void applyUserValues() {
+        // Apply user made changes to variable values
+        for(m : models) {
+            m.applyUserValues
+        }
     }
     
     /**

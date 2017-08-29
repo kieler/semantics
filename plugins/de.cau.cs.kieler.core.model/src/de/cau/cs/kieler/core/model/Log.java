@@ -110,7 +110,7 @@ public class Log {
      *            the msg
      */
     public static void log(final String msg, Level logLevel) {
-        if (activeLogLevel.intValue() < logLevel.intValue()) {
+        if (activeLogLevel.intValue() > logLevel.intValue()) {
             return;
         }
         

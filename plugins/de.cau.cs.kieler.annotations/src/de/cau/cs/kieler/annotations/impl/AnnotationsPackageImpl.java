@@ -13,16 +13,6 @@
  */
 package de.cau.cs.kieler.annotations.impl;
 
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EGenericType;
-import org.eclipse.emf.ecore.EOperation;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EcorePackage;
-
-import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import de.cau.cs.kieler.annotations.Annotatable;
 import de.cau.cs.kieler.annotations.Annotation;
 import de.cau.cs.kieler.annotations.AnnotationsFactory;
@@ -34,10 +24,19 @@ import de.cau.cs.kieler.annotations.FloatAnnotation;
 import de.cau.cs.kieler.annotations.ImportAnnotation;
 import de.cau.cs.kieler.annotations.IntAnnotation;
 import de.cau.cs.kieler.annotations.NamedObject;
-import de.cau.cs.kieler.annotations.ParameterAnnotation;
+import de.cau.cs.kieler.annotations.Pragma;
+import de.cau.cs.kieler.annotations.Pragmatable;
 import de.cau.cs.kieler.annotations.ReferenceAnnotation;
 import de.cau.cs.kieler.annotations.StringAnnotation;
+import de.cau.cs.kieler.annotations.StringPragma;
 import de.cau.cs.kieler.annotations.TypedStringAnnotation;
+
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+
+import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -59,6 +58,13 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * @generated
      */
     private EClass annotatableEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass pragmatableEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -129,6 +135,20 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * @generated
      */
     private EClass commentAnnotationEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass pragmaEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass stringPragmaEClass = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -225,6 +245,24 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      */
     public EReference getAnnotatable_Annotations() {
         return (EReference)annotatableEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getPragmatable() {
+        return pragmatableEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getPragmatable_Pragmas() {
+        return (EReference)pragmatableEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -394,6 +432,33 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getPragma() {
+        return pragmaEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getStringPragma() {
+        return stringPragmaEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getStringPragma_Values() {
+        return (EAttribute)stringPragmaEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public AnnotationsFactory getAnnotationsFactory() {
         return (AnnotationsFactory)getEFactoryInstance();
     }
@@ -423,6 +488,9 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
         annotatableEClass = createEClass(ANNOTATABLE);
         createEReference(annotatableEClass, ANNOTATABLE__ANNOTATIONS);
 
+        pragmatableEClass = createEClass(PRAGMATABLE);
+        createEReference(pragmatableEClass, PRAGMATABLE__PRAGMAS);
+
         annotationEClass = createEClass(ANNOTATION);
 
         stringAnnotationEClass = createEClass(STRING_ANNOTATION);
@@ -450,6 +518,11 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
         createEAttribute(typedStringAnnotationEClass, TYPED_STRING_ANNOTATION__TYPE);
 
         commentAnnotationEClass = createEClass(COMMENT_ANNOTATION);
+
+        pragmaEClass = createEClass(PRAGMA);
+
+        stringPragmaEClass = createEClass(STRING_PRAGMA);
+        createEAttribute(stringPragmaEClass, STRING_PRAGMA__VALUES);
     }
 
     /**
@@ -480,7 +553,6 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
         // Set bounds for type parameters
 
         // Add supertypes to classes
-        namedObjectEClass.getESuperTypes().add(this.getAnnotatable());
         annotationEClass.getESuperTypes().add(this.getNamedObject());
         stringAnnotationEClass.getESuperTypes().add(this.getAnnotation());
         referenceAnnotationEClass.getESuperTypes().add(this.getAnnotation());
@@ -491,6 +563,9 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
         importAnnotationEClass.getESuperTypes().add(this.getAnnotation());
         typedStringAnnotationEClass.getESuperTypes().add(this.getStringAnnotation());
         commentAnnotationEClass.getESuperTypes().add(this.getStringAnnotation());
+        commentAnnotationEClass.getESuperTypes().add(this.getAnnotatable());
+        pragmaEClass.getESuperTypes().add(this.getNamedObject());
+        stringPragmaEClass.getESuperTypes().add(this.getPragma());
 
         // Initialize classes and features; add operations and parameters
         initEClass(namedObjectEClass, NamedObject.class, "NamedObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -499,18 +574,8 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
         initEClass(annotatableEClass, Annotatable.class, "Annotatable", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getAnnotatable_Annotations(), this.getAnnotation(), null, "annotations", null, 0, -1, Annotatable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        EOperation op = addEOperation(annotatableEClass, this.getAnnotation(), "getAnnotation", 1, 1, IS_UNIQUE, IS_ORDERED);
-        addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-        op = addEOperation(annotatableEClass, null, "getAllAnnotations", 1, 1, IS_UNIQUE, IS_ORDERED);
-        addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
-        EGenericType g1 = createEGenericType(ecorePackage.getEEList());
-        EGenericType g2 = createEGenericType(this.getAnnotation());
-        g1.getETypeArguments().add(g2);
-        initEOperation(op, g1);
-
-        op = addEOperation(annotatableEClass, null, "removeAllAnnotations", 0, 1, IS_UNIQUE, IS_ORDERED);
-        addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
+        initEClass(pragmatableEClass, Pragmatable.class, "Pragmatable", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getPragmatable_Pragmas(), this.getPragma(), null, "pragmas", null, 0, -1, Pragmatable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(annotationEClass, Annotation.class, "Annotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -539,6 +604,11 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
         initEAttribute(getTypedStringAnnotation_Type(), ecorePackage.getEString(), "type", null, 0, 1, TypedStringAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(commentAnnotationEClass, CommentAnnotation.class, "CommentAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(pragmaEClass, Pragma.class, "Pragma", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(stringPragmaEClass, StringPragma.class, "StringPragma", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getStringPragma_Values(), ecorePackage.getEString(), "values", null, 0, -1, StringPragma.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Create resource
         createResource(eNS_URI);

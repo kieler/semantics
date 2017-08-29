@@ -20,7 +20,7 @@ package de.cau.cs.kieler.kexpressions;
  *
  *
  * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getValue()
- * @model
+ * @model interface="true" abstract="true"
  * @generated
  */
 public interface Value extends Expression {

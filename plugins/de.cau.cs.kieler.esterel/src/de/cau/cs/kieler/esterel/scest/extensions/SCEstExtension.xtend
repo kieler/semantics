@@ -13,74 +13,73 @@
 package de.cau.cs.kieler.esterel.scest.extensions
 
 import com.google.inject.Inject
-import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.annotations.Annotatable
+import de.cau.cs.kieler.annotations.Annotation
+import de.cau.cs.kieler.annotations.AnnotationsFactory
+import de.cau.cs.kieler.annotations.IntAnnotation
+import de.cau.cs.kieler.esterel.esterel.Abort
 import de.cau.cs.kieler.esterel.esterel.Await
+import de.cau.cs.kieler.esterel.esterel.Constant
+import de.cau.cs.kieler.esterel.esterel.ConstantRenaming
+import de.cau.cs.kieler.esterel.esterel.DelayExpr
+import de.cau.cs.kieler.esterel.esterel.Do
+import de.cau.cs.kieler.esterel.esterel.ElsIf
+import de.cau.cs.kieler.esterel.esterel.Emit
+import de.cau.cs.kieler.esterel.esterel.EsterelAssignment
+import de.cau.cs.kieler.esterel.esterel.EsterelFactory
 import de.cau.cs.kieler.esterel.esterel.EsterelParallel
+import de.cau.cs.kieler.esterel.esterel.EsterelThread
+import de.cau.cs.kieler.esterel.esterel.Exec
+import de.cau.cs.kieler.esterel.esterel.Exit
+import de.cau.cs.kieler.esterel.esterel.Function
+import de.cau.cs.kieler.esterel.esterel.FunctionRenaming
+import de.cau.cs.kieler.esterel.esterel.ISignal
+import de.cau.cs.kieler.esterel.esterel.IVariable
+import de.cau.cs.kieler.esterel.esterel.IfTest
+import de.cau.cs.kieler.esterel.esterel.Module
 import de.cau.cs.kieler.esterel.esterel.Present
+import de.cau.cs.kieler.esterel.esterel.Procedure
+import de.cau.cs.kieler.esterel.esterel.ProcedureRenaming
+import de.cau.cs.kieler.esterel.esterel.Repeat
+import de.cau.cs.kieler.esterel.esterel.Run
+import de.cau.cs.kieler.esterel.esterel.SensorWithType
+import de.cau.cs.kieler.esterel.esterel.SignalReferenceExpr
+import de.cau.cs.kieler.esterel.esterel.SignalRenaming
 import de.cau.cs.kieler.esterel.esterel.Sustain
+import de.cau.cs.kieler.esterel.esterel.Task
+import de.cau.cs.kieler.esterel.esterel.TaskRenaming
+import de.cau.cs.kieler.esterel.esterel.Trap
+import de.cau.cs.kieler.esterel.esterel.TrapHandler
+import de.cau.cs.kieler.esterel.esterel.Type
+import de.cau.cs.kieler.esterel.esterel.TypeIdentifier
+import de.cau.cs.kieler.esterel.esterel.TypeRenaming
+import de.cau.cs.kieler.esterel.scest.scest.SCEstModule
+import de.cau.cs.kieler.esterel.scest.scest.ScestFactory
+import de.cau.cs.kieler.esterel.scest.scest.Set
+import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.kexpressions.OperatorType
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.scl.scl.Assignment
-import de.cau.cs.kieler.scl.scl.Conditional
-import de.cau.cs.kieler.scl.scl.Label
-import de.cau.cs.kieler.scl.scl.Goto
-import de.cau.cs.kieler.scl.scl.Statement
-import de.cau.cs.kieler.scl.scl.SclFactory
-import de.cau.cs.kieler.scl.scl.ScopeStatement
-import de.cau.cs.kieler.scl.scl.Thread
-import de.cau.cs.kieler.annotations.AnnotationsFactory
-import de.cau.cs.kieler.annotations.Annotation
-import de.cau.cs.kieler.esterel.esterel.EsterelFactory
-import de.cau.cs.kieler.esterel.esterel.IfTest
-import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.esterel.esterel.ISignal
-import de.cau.cs.kieler.annotations.IntAnnotation
-import de.cau.cs.kieler.scl.scl.StatementContainer
-import de.cau.cs.kieler.esterel.esterel.EsterelThread
-import de.cau.cs.kieler.esterel.scest.scest.SCEstModule
-import org.eclipse.emf.ecore.util.EcoreUtil
-import de.cau.cs.kieler.annotations.Annotatable
-import de.cau.cs.kieler.scl.scl.Parallel
-import de.cau.cs.kieler.esterel.esterel.Trap
-import de.cau.cs.kieler.esterel.esterel.Abort
-import de.cau.cs.kieler.esterel.esterel.Exec
-import de.cau.cs.kieler.esterel.esterel.Do
-import de.cau.cs.kieler.esterel.esterel.DelayExpr
-import de.cau.cs.kieler.kexpressions.CombineOperator
-import java.util.HashMap
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.OperatorExpression
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.esterel.esterel.Emit
-import de.cau.cs.kieler.esterel.esterel.EsterelAssignment
-import de.cau.cs.kieler.esterel.esterel.ElsIf
-import de.cau.cs.kieler.esterel.esterel.Repeat
-import de.cau.cs.kieler.esterel.esterel.Exit
-import de.cau.cs.kieler.esterel.esterel.IVariable
-import de.cau.cs.kieler.esterel.scest.scest.Set
-import de.cau.cs.kieler.esterel.esterel.SignalReferenceExpr
-import de.cau.cs.kieler.esterel.esterel.TrapHandler
-import de.cau.cs.kieler.esterel.scest.scest.ScestFactory
-import de.cau.cs.kieler.esterel.esterel.Constant
-import de.cau.cs.kieler.esterel.esterel.TypeIdentifier
-import de.cau.cs.kieler.esterel.esterel.SensorWithType
-import de.cau.cs.kieler.esterel.esterel.Module
-import de.cau.cs.kieler.esterel.esterel.Run
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.scl.Assignment
+import de.cau.cs.kieler.scl.Conditional
+import de.cau.cs.kieler.scl.Goto
+import de.cau.cs.kieler.scl.Label
+import de.cau.cs.kieler.scl.Parallel
+import de.cau.cs.kieler.scl.SCLFactory
+import de.cau.cs.kieler.scl.ScopeStatement
+import de.cau.cs.kieler.scl.Statement
+import de.cau.cs.kieler.scl.StatementContainer
+import java.util.HashMap
 import java.util.LinkedList
-import de.cau.cs.kieler.esterel.esterel.Function
-import de.cau.cs.kieler.esterel.esterel.Procedure
-import de.cau.cs.kieler.esterel.esterel.Type
-import de.cau.cs.kieler.esterel.esterel.Task
-import de.cau.cs.kieler.esterel.esterel.SignalRenaming
-import de.cau.cs.kieler.esterel.esterel.ConstantRenaming
-import de.cau.cs.kieler.esterel.esterel.FunctionRenaming
-import de.cau.cs.kieler.esterel.esterel.ProcedureRenaming
-import de.cau.cs.kieler.esterel.esterel.TypeRenaming
-import de.cau.cs.kieler.esterel.esterel.TaskRenaming
+import org.eclipse.emf.common.util.EList
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.util.EcoreUtil
 
 /**
  * Methods and static variables which are used by the transformations which
@@ -504,7 +503,7 @@ class SCEstExtension {
      * @return The created EmptyStatement
      */
     def createLabel(String label) {
-        SclFactory::eINSTANCE.createLabel => [
+        SCLFactory::eINSTANCE.createLabel => [
             it.name = label
         ]
     }
@@ -515,7 +514,7 @@ class SCEstExtension {
      * @return The created EmptyStatement
      */
     def createLabel() {
-        SclFactory::eINSTANCE.createLabel => [
+        SCLFactory::eINSTANCE.createLabel => [
             it.name = createNewUniqueLabel
         ]
     }
@@ -543,13 +542,13 @@ class SCEstExtension {
       * @param isImmediate When false a pause statement is added prior to the jump
       */
     def Conditional newIfThenGoto(Expression condition, Label targetLabel, boolean isImmediate) {
-        SclFactory::eINSTANCE.createConditional => [
+        SCLFactory::eINSTANCE.createConditional => [
             expression = EcoreUtil.copy(condition)
             if (isImmediate) {
-                statements.addAll(SclFactory::eINSTANCE.createPause)
+                statements.addAll(SCLFactory::eINSTANCE.createPause)
             }
             statements.add(
-                    SclFactory::eINSTANCE.createGoto => [
+                    SCLFactory::eINSTANCE.createGoto => [
                         it.target = targetLabel
                     ])
         ]
@@ -571,7 +570,7 @@ class SCEstExtension {
     * @param targetLabel The target label 
     */
     def createGotoStatement(Label targetLabel) {
-        SclFactory::eINSTANCE.createGoto => [
+        SCLFactory::eINSTANCE.createGoto => [
             it.target = targetLabel
         ]
     }
@@ -693,7 +692,7 @@ class SCEstExtension {
      * @return A SCL conditional
      */
     def createConditional(Expression expr) {
-        SclFactory::eINSTANCE.createConditional => [
+        SCLFactory::eINSTANCE.createConditional => [
             it.expression = EcoreUtil.copy(expr)
         ]
     }
@@ -705,7 +704,7 @@ class SCEstExtension {
      * @return A KExpression Declaration
      */
     def createDeclaration(ValueType type, ValuedObject object) {
-        KExpressionsFactory::eINSTANCE.createDeclaration => [
+        KExpressionsFactory::eINSTANCE.createVariableDeclaration => [
             it.type = type
             if (object != null) {
                 it.valuedObjects.add(object)
@@ -827,7 +826,7 @@ class SCEstExtension {
      * @return An assignment instruction
      */
     def createAssignment(ValuedObject objectToAssign, Expression expression) {
-        SclFactory::eINSTANCE.createAssignment => [
+        SCLFactory::eINSTANCE.createAssignment => [
             it.valuedObject = objectToAssign
             it.expression = EcoreUtil.copy(expression)
         ]
@@ -856,7 +855,7 @@ class SCEstExtension {
      * @return The newly created SCL ScopeStatement
      */
     def createScopeStatement(Declaration decl) {
-        SclFactory::eINSTANCE.createScopeStatement => [
+        SCLFactory::eINSTANCE.createScopeStatement => [
             if (decl != null) {
                 it.declarations.add(decl)
             }
@@ -869,7 +868,7 @@ class SCEstExtension {
      * @return The newly created SCL ScopeStatement
      */
     def createScopeStatement() {
-        SclFactory::eINSTANCE.createScopeStatement
+        SCLFactory::eINSTANCE.createScopeStatement
     }
 
     /**
@@ -878,7 +877,7 @@ class SCEstExtension {
      * @return The newly created SCL Thread
      */
     def createThread() {
-        SclFactory::eINSTANCE.createThread
+        SCLFactory::eINSTANCE.createThread
     }
 
     /**
@@ -888,7 +887,7 @@ class SCEstExtension {
      * @return The newly created SCL Thread
      */
     def createThread(Statement statement) {
-        SclFactory::eINSTANCE.createThread => [
+        SCLFactory::eINSTANCE.createThread => [
             statements += statement
         ]
     }
@@ -900,7 +899,7 @@ class SCEstExtension {
      * @return The newly created SCL Thread
      */
     def createThread(EList<Statement> statements) {
-        SclFactory::eINSTANCE.createThread => [
+        SCLFactory::eINSTANCE.createThread => [
             it.statements.add(statements)
         ]
     }
@@ -911,7 +910,7 @@ class SCEstExtension {
      * @return The newly created SCL Parallel
      */
     def createParallel() {
-        SclFactory::eINSTANCE.createParallel
+        SCLFactory::eINSTANCE.createParallel
     }
     
     /**
@@ -920,7 +919,7 @@ class SCEstExtension {
      * @return The newly created SCL Pause
      */
     def createPause() {
-        SclFactory::eINSTANCE.createPause
+        SCLFactory::eINSTANCE.createPause
     }
     
     /**
@@ -1168,8 +1167,8 @@ class SCEstExtension {
             if (parent == labelParent) {
                 return label
             }
-            else if (parent instanceof Thread) {
-                var thread = parent as Thread
+            else if (parent instanceof de.cau.cs.kieler.scl.Thread) {
+                var thread = parent as de.cau.cs.kieler.scl.Thread
                 if (thread.statements.last instanceof Label) {
                     return thread.statements.last as Label
                 }
@@ -1208,7 +1207,7 @@ class SCEstExtension {
      * @return An ElseScope with statements
      */
     def createElseScope(EList<Statement> statements) {
-        SclFactory::eINSTANCE.createElseScope => [
+        SCLFactory::eINSTANCE.createElseScope => [
             if (statements != null) {
                 it.statements.add(statements)
             }
@@ -1222,7 +1221,7 @@ class SCEstExtension {
      * @return An ElseScope with a statement
      */
     def createElseScope(Statement statement) {
-        SclFactory::eINSTANCE.createElseScope => [
+        SCLFactory::eINSTANCE.createElseScope => [
             if (statement != null) {
                 it.statements.add(statement)
             }
@@ -1631,7 +1630,7 @@ class SCEstExtension {
      * Creates a SCLProgam
      */
     def createSCLProg() {
-        SclFactory::eINSTANCE.createSCLProgram
+        SCLFactory::eINSTANCE.createSCLProgram
     }
     
     /**

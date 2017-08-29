@@ -42,11 +42,11 @@ import de.cau.cs.kieler.esterel.esterel.Sustain;
 import de.cau.cs.kieler.esterel.esterel.TaskRenaming;
 import de.cau.cs.kieler.esterel.esterel.TrapReferenceExpr;
 import de.cau.cs.kieler.esterel.esterel.TypeRenaming;
-import de.cau.cs.kieler.scl.scl.SclPackage
+import de.cau.cs.kieler.scl.SCLPackage
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
 import org.eclipse.xtext.resource.EObjectDescription
-import de.cau.cs.kieler.scl.scl.Label
-import de.cau.cs.kieler.scl.scl.Scope
+import de.cau.cs.kieler.scl.Label
+import de.cau.cs.kieler.scl.Scope
 import java.util.Collections
 import org.eclipse.xtext.naming.QualifiedName
 import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram
@@ -59,6 +59,7 @@ import de.cau.cs.kieler.esterel.esterel.EsterelPackage
 import de.cau.cs.kieler.esterel.esterel.Trap
 import de.cau.cs.kieler.esterel.esterel.TrapHandler
 import de.cau.cs.kieler.esterel.esterel.SignalReferenceExpr
+import de.cau.cs.kieler.esterel.scoping.EsterelScopeProvider
 
 /**
  * This class contains custom scoping description.
@@ -66,7 +67,7 @@ import de.cau.cs.kieler.esterel.esterel.SignalReferenceExpr
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#scoping
  * on how and when to use it.
  */
-public class SCEstScopeProvider extends AbstractDeclarativeScopeProvider {
+public class SCEstScopeProvider extends EsterelScopeProvider {
     
     /**
      * {@inheritDoc}
@@ -81,7 +82,7 @@ public class SCEstScopeProvider extends AbstractDeclarativeScopeProvider {
                 super.getScope(context, reference)
             case KExpressionsPackage.eINSTANCE.valuedObject: 
                 return new SimpleScope(voScope(context)) 
-            case SclPackage.eINSTANCE.label:
+            case SCLPackage.eINSTANCE.label:
                 return new SimpleScope(context.labelScope)
             default :
                 return super.getScope(context, reference)
@@ -139,7 +140,7 @@ public class SCEstScopeProvider extends AbstractDeclarativeScopeProvider {
             ].toList
     }
 
-    def labelScope(EObject context) {
+    override labelScope(EObject context) {
         var program = context
         while (program != null) {
             if (program instanceof SCEstProgram) {

@@ -4,8 +4,8 @@ package de.cau.cs.kieler.esterel.esterel;
 
 import de.cau.cs.kieler.annotations.Annotation;
 
-import de.cau.cs.kieler.scl.scl.Statement;
-import de.cau.cs.kieler.scl.scl.StatementContainer;
+import de.cau.cs.kieler.scl.Statement;
+import de.cau.cs.kieler.scl.StatementContainer;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -100,7 +100,7 @@ public interface Do extends StatementContainer, Statement
 
   /**
    * Returns the value of the '<em><b>Watching Statements</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.scl.scl.Statement}.
+   * The list contents are of type {@link de.cau.cs.kieler.scl.Statement}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Watching Statements</em>' containment reference list isn't clear,

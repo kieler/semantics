@@ -22,7 +22,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.KielerCompilerException
-import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Guard
@@ -245,7 +245,7 @@ class GuardSchedulerV2 extends AbstractScheduler implements Traceable {
                         
                         // Add the guarded scheduling blocks to the list of needed scheduling blocks
                         guard.expression.getAllReferences.forEach[
-                            if (!it.valuedObject.name.equals(AbstractGuardExpressions.GOGUARDNAME)) {
+                            if (!it.valuedObject.name.equals(AbstractGuardExpressions.GO_GUARD_NAME)) {
                                 if (it.valuedObject != null) {
                                     val sb = schedulingBlockVOCache.get(it.valuedObject)
                                     if (sb != null) {

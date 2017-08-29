@@ -9,6 +9,7 @@
             class="de.cau.cs.kieler.scl.scl.SclPackage"
             genModel="model/scl.genmodel"/>
    </extension>
+
    <extension
          point="de.cau.cs.kieler.kico.extension">
       <ExtensionInformation
@@ -29,6 +30,14 @@
       <productionTransformationClass
             class="de.cau.cs.kieler.scl.transformations.SCLToSCGTransformation">
       </productionTransformationClass>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated scl -->
+      <package
+            uri="http://kieler.cs.cau.de/scl/0.2.0"
+            class="de.cau.cs.kieler.scl.SCLPackage"
+            genModel="model/scl.genmodel"/>
    </extension>
 
 </plugin>

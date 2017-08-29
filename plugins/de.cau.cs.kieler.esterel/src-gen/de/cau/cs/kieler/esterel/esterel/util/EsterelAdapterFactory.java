@@ -3,15 +3,18 @@
 package de.cau.cs.kieler.esterel.esterel.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.NamedObject;
 
 import de.cau.cs.kieler.esterel.esterel.*;
 
 import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.Referenceable;
+import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 
-import de.cau.cs.kieler.scl.scl.Statement;
-import de.cau.cs.kieler.scl.scl.StatementContainer;
+import de.cau.cs.kieler.scl.Statement;
+import de.cau.cs.kieler.scl.StatementContainer;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -459,6 +462,16 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
         return createStatementContainerAdapter();
       }
       @Override
+      public Adapter caseNamedObject(NamedObject object)
+      {
+        return createNamedObjectAdapter();
+      }
+      @Override
+      public Adapter caseReferenceable(Referenceable object)
+      {
+        return createReferenceableAdapter();
+      }
+      @Override
       public Adapter caseValuedObject(ValuedObject object)
       {
         return createValuedObjectAdapter();
@@ -467,6 +480,11 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
       public Adapter caseStatement(Statement object)
       {
         return createStatementAdapter();
+      }
+      @Override
+      public Adapter caseSchedulable(Schedulable object)
+      {
+        return createSchedulableAdapter();
       }
       @Override
       public Adapter caseExpression(Expression object)
@@ -1611,16 +1629,46 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.StatementContainer <em>Statement Container</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.StatementContainer <em>Statement Container</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.scl.scl.StatementContainer
+   * @see de.cau.cs.kieler.scl.StatementContainer
    * @generated
    */
   public Adapter createStatementContainerAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.NamedObject <em>Named Object</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.annotations.NamedObject
+   * @generated
+   */
+  public Adapter createNamedObjectAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Referenceable <em>Referenceable</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.kexpressions.Referenceable
+   * @generated
+   */
+  public Adapter createReferenceableAdapter()
   {
     return null;
   }
@@ -1641,16 +1689,31 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.Statement <em>Statement</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.Statement <em>Statement</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.scl.scl.Statement
+   * @see de.cau.cs.kieler.scl.Statement
    * @generated
    */
   public Adapter createStatementAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Schedulable <em>Schedulable</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.kexpressions.Schedulable
+   * @generated
+   */
+  public Adapter createSchedulableAdapter()
   {
     return null;
   }

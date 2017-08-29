@@ -34,278 +34,278 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.circuit.impl.LinkImpl#getSource <em>Source</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.impl.LinkImpl#getTarget <em>Target</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
 public class LinkImpl extends NamedObjectImpl implements Link {
 	/**
-	 * The cached value of the '{@link #getSource() <em>Source</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getSource() <em>Source</em>}' reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getSource()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getSource()
+     * @generated
+     * @ordered
+     */
 	protected Linkable source;
 
 	/**
-	 * The cached value of the '{@link #getTarget() <em>Target</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getTarget() <em>Target</em>}' reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getTarget()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getTarget()
+     * @generated
+     * @ordered
+     */
 	protected Linkable target;
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected LinkImpl() {
-		super();
-	}
+        super();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected EClass eStaticClass() {
-		return CircuitPackage.Literals.LINK;
-	}
+        return CircuitPackage.Literals.LINK;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Linkable getSource() {
-		if (source != null && source.eIsProxy()) {
-			InternalEObject oldSource = (InternalEObject)source;
-			source = (Linkable)eResolveProxy(oldSource);
-			if (source != oldSource) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CircuitPackage.LINK__SOURCE, oldSource, source));
-			}
-		}
-		return source;
-	}
+        if (source != null && source.eIsProxy()) {
+            InternalEObject oldSource = (InternalEObject)source;
+            source = (Linkable)eResolveProxy(oldSource);
+            if (source != oldSource) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, CircuitPackage.LINK__SOURCE, oldSource, source));
+            }
+        }
+        return source;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Linkable basicGetSource() {
-		return source;
-	}
+        return source;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public NotificationChain basicSetSource(Linkable newSource, NotificationChain msgs) {
-		Linkable oldSource = source;
-		source = newSource;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CircuitPackage.LINK__SOURCE, oldSource, newSource);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
+        Linkable oldSource = source;
+        source = newSource;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CircuitPackage.LINK__SOURCE, oldSource, newSource);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setSource(Linkable newSource) {
-		if (newSource != source) {
-			NotificationChain msgs = null;
-			if (source != null)
-				msgs = ((InternalEObject)source).eInverseRemove(this, CircuitPackage.LINKABLE__OUTGOING_LINKS, Linkable.class, msgs);
-			if (newSource != null)
-				msgs = ((InternalEObject)newSource).eInverseAdd(this, CircuitPackage.LINKABLE__OUTGOING_LINKS, Linkable.class, msgs);
-			msgs = basicSetSource(newSource, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CircuitPackage.LINK__SOURCE, newSource, newSource));
-	}
+        if (newSource != source) {
+            NotificationChain msgs = null;
+            if (source != null)
+                msgs = ((InternalEObject)source).eInverseRemove(this, CircuitPackage.LINKABLE__OUTGOING_LINKS, Linkable.class, msgs);
+            if (newSource != null)
+                msgs = ((InternalEObject)newSource).eInverseAdd(this, CircuitPackage.LINKABLE__OUTGOING_LINKS, Linkable.class, msgs);
+            msgs = basicSetSource(newSource, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, CircuitPackage.LINK__SOURCE, newSource, newSource));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Linkable getTarget() {
-		if (target != null && target.eIsProxy()) {
-			InternalEObject oldTarget = (InternalEObject)target;
-			target = (Linkable)eResolveProxy(oldTarget);
-			if (target != oldTarget) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CircuitPackage.LINK__TARGET, oldTarget, target));
-			}
-		}
-		return target;
-	}
+        if (target != null && target.eIsProxy()) {
+            InternalEObject oldTarget = (InternalEObject)target;
+            target = (Linkable)eResolveProxy(oldTarget);
+            if (target != oldTarget) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, CircuitPackage.LINK__TARGET, oldTarget, target));
+            }
+        }
+        return target;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Linkable basicGetTarget() {
-		return target;
-	}
+        return target;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public NotificationChain basicSetTarget(Linkable newTarget, NotificationChain msgs) {
-		Linkable oldTarget = target;
-		target = newTarget;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CircuitPackage.LINK__TARGET, oldTarget, newTarget);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
+        Linkable oldTarget = target;
+        target = newTarget;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CircuitPackage.LINK__TARGET, oldTarget, newTarget);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setTarget(Linkable newTarget) {
-		if (newTarget != target) {
-			NotificationChain msgs = null;
-			if (target != null)
-				msgs = ((InternalEObject)target).eInverseRemove(this, CircuitPackage.LINKABLE__INCOMING_LINKS, Linkable.class, msgs);
-			if (newTarget != null)
-				msgs = ((InternalEObject)newTarget).eInverseAdd(this, CircuitPackage.LINKABLE__INCOMING_LINKS, Linkable.class, msgs);
-			msgs = basicSetTarget(newTarget, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CircuitPackage.LINK__TARGET, newTarget, newTarget));
-	}
+        if (newTarget != target) {
+            NotificationChain msgs = null;
+            if (target != null)
+                msgs = ((InternalEObject)target).eInverseRemove(this, CircuitPackage.LINKABLE__INCOMING_LINKS, Linkable.class, msgs);
+            if (newTarget != null)
+                msgs = ((InternalEObject)newTarget).eInverseAdd(this, CircuitPackage.LINKABLE__INCOMING_LINKS, Linkable.class, msgs);
+            msgs = basicSetTarget(newTarget, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, CircuitPackage.LINK__TARGET, newTarget, newTarget));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case CircuitPackage.LINK__SOURCE:
-				if (source != null)
-					msgs = ((InternalEObject)source).eInverseRemove(this, CircuitPackage.LINKABLE__OUTGOING_LINKS, Linkable.class, msgs);
-				return basicSetSource((Linkable)otherEnd, msgs);
-			case CircuitPackage.LINK__TARGET:
-				if (target != null)
-					msgs = ((InternalEObject)target).eInverseRemove(this, CircuitPackage.LINKABLE__INCOMING_LINKS, Linkable.class, msgs);
-				return basicSetTarget((Linkable)otherEnd, msgs);
-		}
-		return super.eInverseAdd(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case CircuitPackage.LINK__SOURCE:
+                if (source != null)
+                    msgs = ((InternalEObject)source).eInverseRemove(this, CircuitPackage.LINKABLE__OUTGOING_LINKS, Linkable.class, msgs);
+                return basicSetSource((Linkable)otherEnd, msgs);
+            case CircuitPackage.LINK__TARGET:
+                if (target != null)
+                    msgs = ((InternalEObject)target).eInverseRemove(this, CircuitPackage.LINKABLE__INCOMING_LINKS, Linkable.class, msgs);
+                return basicSetTarget((Linkable)otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case CircuitPackage.LINK__SOURCE:
-				return basicSetSource(null, msgs);
-			case CircuitPackage.LINK__TARGET:
-				return basicSetTarget(null, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case CircuitPackage.LINK__SOURCE:
+                return basicSetSource(null, msgs);
+            case CircuitPackage.LINK__TARGET:
+                return basicSetTarget(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case CircuitPackage.LINK__SOURCE:
-				if (resolve) return getSource();
-				return basicGetSource();
-			case CircuitPackage.LINK__TARGET:
-				if (resolve) return getTarget();
-				return basicGetTarget();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case CircuitPackage.LINK__SOURCE:
+                if (resolve) return getSource();
+                return basicGetSource();
+            case CircuitPackage.LINK__TARGET:
+                if (resolve) return getTarget();
+                return basicGetTarget();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case CircuitPackage.LINK__SOURCE:
-				setSource((Linkable)newValue);
-				return;
-			case CircuitPackage.LINK__TARGET:
-				setTarget((Linkable)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case CircuitPackage.LINK__SOURCE:
+                setSource((Linkable)newValue);
+                return;
+            case CircuitPackage.LINK__TARGET:
+                setTarget((Linkable)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
-			case CircuitPackage.LINK__SOURCE:
-				setSource((Linkable)null);
-				return;
-			case CircuitPackage.LINK__TARGET:
-				setTarget((Linkable)null);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case CircuitPackage.LINK__SOURCE:
+                setSource((Linkable)null);
+                return;
+            case CircuitPackage.LINK__TARGET:
+                setTarget((Linkable)null);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case CircuitPackage.LINK__SOURCE:
-				return source != null;
-			case CircuitPackage.LINK__TARGET:
-				return target != null;
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case CircuitPackage.LINK__SOURCE:
+                return source != null;
+            case CircuitPackage.LINK__TARGET:
+                return target != null;
+        }
+        return super.eIsSet(featureID);
+    }
 
 } //LinkImpl

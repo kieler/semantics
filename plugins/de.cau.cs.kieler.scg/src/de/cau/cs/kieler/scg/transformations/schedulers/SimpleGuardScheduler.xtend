@@ -16,7 +16,7 @@ package de.cau.cs.kieler.scg.transformations.schedulers
 import com.google.inject.Inject
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
-import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.Dependency
@@ -34,6 +34,9 @@ import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.SCGPlugin
 import java.util.logging.Level
 import de.cau.cs.kieler.kico.KielerCompilerException
+import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Exit
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -96,7 +99,7 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
     	 * The {@code nodesToSchedule} {@link Set} contains the nodes that are still
     	 * not scheduled. The topological sort should remove nodes after they have been placed.
     	 */
-    	val nodesToSchedule = scg.nodes.filter[ incoming.filter(GuardDependency).empty ].toSet
+    	val nodesToSchedule = scg.nodes.filter[ incoming.filter(GuardDependency).empty].toSet
     	val estimatedScheduleSize = nodesToSchedule.size 	
     	
     	/**
@@ -111,23 +114,21 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
     	}
     	
     	// Create schedule dependencies for the generated schedule
-    	for(var i = 0; i < schedule.size-1; i++) {
-    		schedule.get(i).createScheduleDependency(schedule.get(i+1))
+    	val scheduleList = schedule.toList
+    	for(var i = 0; i < scheduleList.size-1; i++) {
+    		scheduleList.get(i).createScheduleDependency(scheduleList.get(i+1))
     	}
+    	val threadEntry = ScgFactory.eINSTANCE.createEntry
+    	val threadExit = ScgFactory.eINSTANCE.createExit
     	
     	// ASC schedulability output
     	if (schedule.size < estimatedScheduleSize) {
     		SCGPlugin.logError("The SCG is NOT asc-schedulable!")
-    		context.compilationResult?.addPostponedWarning(
+    		context?.compilationResult?.addPostponedWarning(
     		    new KielerCompilerException(getId, getId, "The SCG is NOT ASC-schedulable!")
     		)
     	} else {
     		SCGPlugin.log("The SCG is asc-schedulable.")
-    		var sl = "";
-    		for(s : schedule) {
-    			sl += (s as Assignment).valuedObject.name + " "
-    		}
-    		SCGPlugin.log(sl, Level.FINE)
     	}
     	
     	scg
@@ -183,6 +184,18 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
 			d instanceof ControlDependency ||
 			(d instanceof DataDependency && ((d as DataDependency).concurrent && !(d as DataDependency).confluent))
 		]
+	}
+	
+	protected def dispatch printNode(Assignment assignment) {
+	    assignment.valuedObject.name
+	}
+	
+	protected def dispatch printNode(Entry entry) {
+	    "ENTRY"
+	}
+	
+	protected def dispatch printNode(Exit exit) {
+	    "EXIT"
 	}
 
 }

@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.simulation.ui.toolbar
 
-import de.cau.cs.kieler.simulation.ui.SimulationConsole
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
 
@@ -24,10 +23,8 @@ class StepSimulationMacroTick extends SimulationToolbarButton {
     
     override execute(ExecutionEvent event) throws ExecutionException {
         super.execute(event)
-        if(simulation != null) {
-            SimulationConsole.writeToConsole("Step macro tick")
+        if(simulation != null && !justRestarted) {
             simulation.stepMacroTick()
-//            SimulationConsole.writeToConsole("New pool:" + simulation.currentPool)
         }
         return null
     }

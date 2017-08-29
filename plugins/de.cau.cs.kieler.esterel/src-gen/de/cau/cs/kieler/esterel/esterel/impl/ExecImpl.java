@@ -11,7 +11,7 @@ import de.cau.cs.kieler.esterel.esterel.Task;
 
 import de.cau.cs.kieler.kexpressions.Expression;
 
-import de.cau.cs.kieler.scl.scl.impl.StatementContainerImpl;
+import de.cau.cs.kieler.scl.impl.StatementContainerImpl;
 
 import java.util.Collection;
 

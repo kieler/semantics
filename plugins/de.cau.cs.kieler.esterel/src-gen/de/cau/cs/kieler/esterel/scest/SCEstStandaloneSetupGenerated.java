@@ -41,6 +41,5 @@ public class SCEstStandaloneSetupGenerated implements ISetup {
 		
 
 
-
 	}
 }

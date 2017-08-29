@@ -15,7 +15,7 @@ package de.cau.cs.kieler.scg.processors.optimizations
 
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kico.transformation.Processor
-import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow

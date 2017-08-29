@@ -35,6 +35,7 @@ public class PerspectiveHelper {
 
     static final String VIEW_KLIGHD = "de.cau.cs.kieler.klighd.ui.view.diagram"; //$NON-NLS-1$
     static final String VIEW_KICO = "de.cau.cs.kieler.kico.selection"; //$NON-NLS-1$
+    static final String VIEW_KICOOL = "de.cau.cs.kieler.kicool.ui.view.compiler"; //$NON-NLS-1$
     static final String VIEW_KIEM = "de.cau.cs.kieler.sim.kiem.view"; //$NON-NLS-1$
     static final String VIEW_KIEM_TABLE = "de.cau.cs.kieler.sim.table.view"; //$NON-NLS-1$
     static final String VIEW_KIEM_SIGNALS = "de.cau.cs.kieler.sim.signals.ui.view"; //$NON-NLS-1$

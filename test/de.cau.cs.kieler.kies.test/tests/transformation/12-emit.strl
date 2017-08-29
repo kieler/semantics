@@ -1,6 +1,0 @@
-module emitModule:
-	output O;
-	output R : integer;
-	emit O ;
-	emit R(4)
-end module

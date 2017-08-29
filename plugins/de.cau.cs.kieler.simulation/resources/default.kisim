@@ -1,0 +1,24 @@
+configure sim A {
+    executable: /PROJECT/FOLDERS/EXECUTABLE_FILE_B
+}
+
+configure sim B {
+    executable: /PROJECT/FOLDERS/EXECUTABLE_FILE_A
+}
+
+configure redirect A_to_B {
+    from: A
+    to: B
+}
+
+configure redirect B_to_A {
+    from: B
+    to: A
+}
+
+execution {
+    write sim A
+    write redirect A_to_B
+    write sim B
+    write redirect B_to_A
+}

@@ -9,6 +9,12 @@ var file.extensions = "strl"
 var projectName = "de.cau.cs.kieler.esterel"
 var runtimeProject = "../${projectName}"
 
+/*
+ * IMPORTANT:
+ * Building this grammar requires more memory than usual builds.
+ * 4GB seem to work (JVM argument: -Xmx4g)
+ */
+
 Workflow {
     bean = StandaloneSetup {
         scanClassPath = true
@@ -17,7 +23,7 @@ Workflow {
         registerGeneratedEPackage = "de.cau.cs.kieler.kexpressions.KExpressionsPackage"
         registerGeneratedEPackage = "de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage"
         registerGeneratedEPackage = "de.cau.cs.kieler.kexpressions.kext.KExtPackage"
-        registerGeneratedEPackage = "de.cau.cs.kieler.scl.scl.SclPackage"
+        registerGeneratedEPackage = "de.cau.cs.kieler.scl.SCLPackage"
 //        registerGeneratedEPackage = "de.cau.cs.kieler.esterel.esterel.EsterelPackage"
         registerGenModelFile = "platform:/resource/de.cau.cs.kieler.annotations/model/annotations.genmodel"
         registerGenModelFile = "platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel"
@@ -55,14 +61,13 @@ Workflow {
             // generates Java API for the generated EPackages
             fragment = ecore.EMFGeneratorFragment  {
 //              genModel = "${runtimeProject}/model/Esterel.genmodel"
-//                xmiModelDirectory = "${runtimeProject}/model"
+//              xmiModelDirectory = "${runtimeProject}/model"
             }
 
-            // the serialization component
-            // Old serializer           
-            //fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
-            // New Serializer 2.0
-            fragment = serializer.SerializerFragment {}
+			// the serialization component
+			fragment = serializer.SerializerFragment {
+			    generateXtendStub = true
+			}
 
             // a custom ResourceFactory for use with EMF 
             fragment = resourceFactory.ResourceFactoryFragment {
@@ -79,18 +84,15 @@ Workflow {
             }
 
             // java-based API for validation 
-            fragment = validation.JavaValidatorFragment {
-
+            fragment = validation.ValidatorFragment {
                 composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
                 //composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
             }
 
-            // scoping and exporting API
-            //          fragment = scoping.ImportURIScopingFragment {}
-            //          fragment = exporting.SimpleNamesFragment {}
-
             // scoping and exporting API 
-            fragment = scoping.ImportNamespacesScopingFragment {}
+            fragment = scoping.ImportNamespacesScopingFragment {
+                generateXtendStub = true
+            }
             fragment = exporting.QualifiedNamesFragment {}
 
             // formatter API 
@@ -104,7 +106,7 @@ Workflow {
             fragment = outline.QuickOutlineFragment {}
 
             // java-based API for content assistance 
-            fragment = contentAssist.JavaBasedContentAssistFragment {}
+            fragment = contentAssist.ContentAssistFragment {}
 
             // the following fragment tries to use the Antlr based content assist 
             //     fragment which can be downloaded from http://www.itemis.com 
@@ -117,9 +119,6 @@ Workflow {
                 }
             }
 
-// CHSCH: deactivated builder
-//          fragment = builder.BuilderIntegrationFragment {}
-
             // project wizard (optional) 
             /*
             fragment = projectWizard.SimpleProjectWizardFragment {
@@ -128,8 +127,10 @@ Workflow {
             }
             */
 
-// quickfix API 
-            fragment = quickfix.QuickfixProviderFragment {}
+            // quickfix API 
+            fragment = quickfix.QuickfixProviderFragment {
+                generateXtendStub = true
+            }
         }
     }
 }

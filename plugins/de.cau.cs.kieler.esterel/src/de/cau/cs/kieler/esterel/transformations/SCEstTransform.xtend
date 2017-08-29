@@ -26,18 +26,18 @@ import de.cau.cs.kieler.esterel.scest.extensions.SCEstExtension
 import java.util.HashMap
 import de.cau.cs.kieler.esterel.esterel.Run
 import org.eclipse.emf.common.util.EList
-import de.cau.cs.kieler.scl.scl.Statement
-import de.cau.cs.kieler.scl.scl.StatementContainer
+import de.cau.cs.kieler.scl.Statement
+import de.cau.cs.kieler.scl.StatementContainer
 import de.cau.cs.kieler.esterel.esterel.Trap
 import de.cau.cs.kieler.esterel.esterel.Abort
 import de.cau.cs.kieler.esterel.esterel.Await
 import de.cau.cs.kieler.esterel.esterel.Exec
 import de.cau.cs.kieler.esterel.esterel.Do
-import de.cau.cs.kieler.scl.scl.Conditional
+import de.cau.cs.kieler.scl.Conditional
 import de.cau.cs.kieler.esterel.esterel.Present
 import de.cau.cs.kieler.esterel.esterel.IfTest
 import de.cau.cs.kieler.esterel.esterel.EsterelParallel
-import de.cau.cs.kieler.scl.scl.Parallel
+import de.cau.cs.kieler.scl.Parallel
 import org.eclipse.emf.ecore.util.EcoreUtil
 
 /**

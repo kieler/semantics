@@ -186,7 +186,20 @@ public class KiCoUtil {
                         context.setModelResourceSet(resourceSet);
                     }
                 }
-
+                
+                if (model.eResource() != null && model.eResource().getResourceSet() != null) {
+                    for (Resource resource : model.eResource().getResourceSet().getResources()) {
+                        if (resource != model.eResource()) {
+                            resourceSet.getResource(resource.getURI(), true);
+                        }
+                    }
+                    for (Resource resource : resourceSet.getResources()) {
+                        if (resource instanceof XtextResource) {
+                            ((XtextResource) resource).relink();
+                        }
+                    }
+                }
+                    
                 Resource res = resourceSet.getResource(uri, false);
                 if (res == null) {
                     res = resourceSet.createResource(uri);
@@ -596,10 +609,12 @@ public class KiCoUtil {
      *            the object
      * @param transformationId
      *            the transformation id
+     * @param transformationObject
+     *            the transformation object
      * @return the specific transformation method or fall back
      */
     public static Method getSpecificTransformationMethodOrFallBack(ITransformation transformation,
-            String transformationId) {
+            String transformationId, EObject transformationObject) {
         Method transformMethod = null;
         Method fallbackMethod = null; // is the EObject method
         try {
@@ -610,8 +625,9 @@ public class KiCoUtil {
                     Class<?>[] parameters = m.getParameterTypes();
                     if (parameters != null && parameters.length > 0) {
                         Class<?> parameter = parameters[0];
-                        if (!parameter.getName().equals("org.eclipse.emf.ecore.EObject")) {
-                            // KiCoPlugin.log(m.getName() + " (" + parameter.getName() + ")");
+                        if (!parameter.getName().equals("org.eclipse.emf.ecore.EObject")
+                                && parameter.isInstance(transformationObject)) {
+                            // System.out.println(m.getName() + " (" + parameter.getName() + ")");
                             // not an EObject - more specific
                             transformMethod = m;
                         } else {
@@ -698,9 +714,11 @@ public class KiCoUtil {
      *            the object
      * @param featureId
      *            the feature id
+     * @param model
+     *            the model            
      * @return the specific transformation method or fall back
      */
-    public static Method getSpecificIsContainedMethodOrFallBack(Object object, String featureId) {
+    public static Method getSpecificIsContainedMethodOrFallBack(Object object, String featureId, EObject model) {
         Method transformMethod = null;
         Method fallbackMethod = null; // is the EObject method
         try {
@@ -711,8 +729,14 @@ public class KiCoUtil {
                     if (parameters != null && parameters.length > 0) {
                         Class<?> parameter = parameters[0];
                         String compareName = parameter.getName();
-                        if (!compareName.equals("org.eclipse.emf.ecore.EObject")) {
-                            // KiCoPlugin.log(m.getName() + " (" + parameter.getName() + ")");
+//<<<<<<< HEAD
+//                        if (!compareName.equals("org.eclipse.emf.ecore.EObject")) {
+//                            // KiCoPlugin.log(m.getName() + " (" + parameter.getName() + ")");
+//=======
+                        if (!compareName.equals("org.eclipse.emf.ecore.EObject")
+                            && parameter.isInstance(model)) {                        
+                            // System.out.println(m.getName() + " (" + parameter.getName() + ")");
+//>>>>>>> ssm/dataflow
                             // not an EObject - more specific
                             transformMethod = m;
                         } else {

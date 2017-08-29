@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -19,9 +19,11 @@ package de.cau.cs.kieler.simulation.core
  *
  */
 interface Simulator extends DataHandler {
-    
     /**
      * Initialize the simulation and add variables of the simulation to the given pool.
      */
     public def void initialize(DataPool pool)
+    
+    public def void setBaseModelName(String value)
+    public def String getBaseModelName()
 }

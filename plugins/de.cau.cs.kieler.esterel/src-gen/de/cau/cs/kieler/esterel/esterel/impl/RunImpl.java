@@ -7,7 +7,7 @@ import de.cau.cs.kieler.esterel.esterel.ModuleRenaming;
 import de.cau.cs.kieler.esterel.esterel.Renaming;
 import de.cau.cs.kieler.esterel.esterel.Run;
 
-import de.cau.cs.kieler.scl.scl.impl.StatementImpl;
+import de.cau.cs.kieler.scl.impl.StatementImpl;
 
 import java.util.Collection;
 

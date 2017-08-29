@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -12,11 +12,16 @@
  */
 package de.cau.cs.kieler.simulation.handlers
 
+import com.google.common.io.Files
 import com.google.common.util.concurrent.SimpleTimeLimiter
+import com.google.common.util.concurrent.UncheckedTimeoutException
+import de.cau.cs.kieler.prom.build.ConfigurableAttribute
+import de.cau.cs.kieler.prom.build.SimulationCompiler
+import de.cau.cs.kieler.prom.build.SimulationCompilerListener
+import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.simulation.core.DataPool
-import de.cau.cs.kieler.simulation.core.DefaultDataHandler
 import de.cau.cs.kieler.simulation.core.Model
-import de.cau.cs.kieler.simulation.core.Simulator
+import de.cau.cs.kieler.simulation.core.SimulationManager
 import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
@@ -25,6 +30,7 @@ import java.io.PrintStream
 import java.util.concurrent.Callable
 import java.util.concurrent.TimeUnit
 import org.eclipse.core.resources.IFile
+import org.eclipse.core.runtime.Path
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
@@ -34,16 +40,20 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author aas
  *
  */
-class ExecutableSimulator extends DefaultDataHandler implements Simulator {
+class ExecutableSimulator extends DefaultSimulator {
+    
+    public val executablePath = new ConfigurableAttribute("executable", null, true)
     
     @Accessors
-    private var IFile executable
-    
-    private var String modelName
+    private var IFile executableFile
+    protected var String modelName
     
     private var Process process
     private var BufferedReader processReader
     private var PrintStream processWriter
+    private val timeLimiter = new SimpleTimeLimiter()
+    
+    private var SimulationCompilerListener exeResourceListener
     
     /**
      * Create new process and read it's first JSON object with variables to fill the data pool.
@@ -52,10 +62,11 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
         val currentDir = "." + File.separator
         // Execute jar file or binary
         var ProcessBuilder pBuilder
-        if(executable.name.endsWith(".jar"))
+        if(executable.name.endsWith(".jar")) {
             pBuilder = new ProcessBuilder(#["java", "-jar", currentDir+executable.name])
-        else
-            pBuilder = new ProcessBuilder(#[executable.location.toOSString])
+        } else {
+            pBuilder = new ProcessBuilder(#[executable.location.toOSString])    
+        }
         pBuilder.directory(new File(executable.location.removeLastSegments(1).toOSString))
         process = pBuilder.start()
         
@@ -66,10 +77,37 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
         
         // Read json data
         var String line = waitForJSONOutput(processReader)
-
-        modelName = getUniqueModelName(executable.name, pool, 0)
+    
+        modelName = getUniqueModelName(pool, Files.getNameWithoutExtension(executableFile.name))
         val model = Model.createFromJson(modelName, line)
         pool.addModel(model)
+        
+        // Stop simulation when the executable is deleted
+        registerResourceChangeListener(executable)
+    }
+    
+    private def void registerResourceChangeListener(IFile... files) {
+        // Remove old listener
+        removeResourceChangeListener()
+        // Create new listener
+        exeResourceListener = new SimulationCompilerListener() {
+            override preDelete(IFile oldExecutable) {
+                if(executableFile.fullPath == oldExecutable.fullPath) {
+                    // Stop simulation
+                    SimulationManager.instance.stop
+                    // Notify user why simulation stopped
+                    PromConsole.print("Stopped simulation because the executable '"+executableFile.fullPath+"' changed")
+                }
+            }
+        }
+        // Add new listener
+        SimulationCompiler.addListener(exeResourceListener)
+    }
+    
+    private def void removeResourceChangeListener() {
+        if(exeResourceListener != null) {
+            SimulationCompiler.removeListener(exeResourceListener)    
+        }
     }
     
     /**
@@ -89,7 +127,7 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
         // Let the process perform tick and wait for output
         val line = waitForJSONOutput(processReader)
         val newModel = Model.createFromJson(modelName, line)
-        pool.models.remove(model)
+        pool.removeModel(model)
         pool.addModel(newModel)        
     }
     
@@ -97,17 +135,15 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
      * Terminate the process.
      */
     override stop() {
+        removeResourceChangeListener
         if(process != null) {
             process.destroy()
             process = null
         }
     }
     
-    /**
-     * Returns the name of the executable.
-     */
-    public def String getModelName() {
-        return executable.name
+    override getName() {
+        return "sim"
     }
     
     /**
@@ -117,7 +153,6 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
     private def String waitForJSONOutput(BufferedReader br) {
         // Wait until output has been generated
         var String line
-        val timeLimiter = new SimpleTimeLimiter();
         do {
             // Call readLine with a timeout of 1 second
             val callable = new Callable<String>(){ 
@@ -126,34 +161,40 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
                 }
             }
             try {
-                line = timeLimiter.callWithTimeout(callable, 1, TimeUnit.SECONDS, false)
-            } catch(Exception e) {
-                stop();
-                throw new IOException("Process of simulation "+executable.location.toOSString +" is not responding", e)
+                line = timeLimiter.callWithTimeout(callable, 1, TimeUnit.SECONDS, true)
+            } catch(UncheckedTimeoutException e) {
+                // If the process is null, the simulation was stopped already
+                if(process != null) {
+                    stop();
+                    throw new IOException("Process of simulation '" + executable.name + "' is not responding", e)    
+                }
             }
             
             Thread.sleep(1);
         } while(line == null || !line.startsWith("{") || !line.endsWith("}"))
+        
         return line
     }
     
-    private def String getUniqueModelName(String name, DataPool pool, int suffix) {
-        val uniqueName = if(suffix > 0)
-                             name+"_"+suffix
-                         else
-                             name
-        val modelWithThisName = pool.models.findFirst[it.name.equals(uniqueName)]
-        if(modelWithThisName == null) {
-            return uniqueName
-        } else {
-            return getUniqueModelName(name, pool, suffix+1)
+    private def IFile getExecutable() {
+        if(executableFile == null) {
+            if(executablePath.stringValue.isNullOrEmpty) {
+                throw new Exception("Executable of simulator cannot be null")
+            }
+            val path = new Path(executablePath.stringValue)
+            executableFile = getFile(path)
         }
+        return executableFile
     }
     
     /**
      * {@inheritDoc}
      */
     override String toString() {
-        return "Simulator for "+modelName
+        if(modelName.isNullOrEmpty) {
+            return "Simulator '"+executablePath.stringValue+"'"
+        } else {
+            return "Simulator '"+modelName+"'"
+        }
     }
 }

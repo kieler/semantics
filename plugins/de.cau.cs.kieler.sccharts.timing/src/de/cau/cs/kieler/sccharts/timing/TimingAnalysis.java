@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -44,13 +44,17 @@ import org.eclipse.ui.progress.UIJob;
 import org.eclipse.xtext.ui.util.ResourceUtil;
 
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Iterators;
 
-import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.ValueType;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
+import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
-import de.cau.cs.kieler.kitt.tracing.Tracing;
+import de.cau.cs.kieler.kicool.kitt.tracing.Tracing;
+import de.cau.cs.kieler.klighd.LightDiagramServices;
+import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.krendering.KRectangle;
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory;
 import de.cau.cs.kieler.klighd.krendering.KText;
@@ -147,11 +151,12 @@ public class TimingAnalysis extends Job {
 	private ICodePreparer codePreparer;
 	private final KRenderingFactory renderingFactory = KRenderingFactory.eINSTANCE;
 	private TimingHighlighter timingHighlighter = new TimingHighlighter(renderingFactory);
+	private final ViewContext viewContext;
 
 	protected TimingAnalysis(State rootState, HashMultimap<Region, WeakReference<KText>> regionLabels,
 			Region scchartDummyRegion, Resource resource,
 			HashMultimap<Region, WeakReference<KRectangle>> regionRectangles, boolean highlight,
-			TimingValueRepresentation rep) {
+			TimingValueRepresentation rep, ViewContext context) {
 		super("Timing Analysis");
 		this.scchart = rootState;
 		this.timingLabels = regionLabels;
@@ -161,6 +166,7 @@ public class TimingAnalysis extends Job {
 		this.highlight = highlight;
 		this.rep = rep;
 		this.codePreparer = new KTACodePreparer();
+		this.viewContext = context;
 	}
 
 	/**
@@ -187,7 +193,8 @@ public class TimingAnalysis extends Job {
                 "*T_ABORT, *T_INITIALIZATION, *T_scg.basicblock.sc, *T_s.c, "
                 + "*T_sccharts.scg, *T_NOSIMULATIONVISUALIZATION, *T_scg.guards, "
                 + "*T_scg.scheduling, T_scg.tpp", scchart);
-		context.setProperty(Tracing.ACTIVE_TRACING, true);
+        // TODO: adapt to kicool
+//		context.setProperty(Tracing.ACTIVE_TRACING, true);
 		context.setProperty(SCGTransformation.ENABLE_SFR, true);
 		context.setAdvancedSelect(true);
 		CompilationResult compilationResult = KielerCompiler.compile(context);
@@ -302,94 +309,128 @@ public class TimingAnalysis extends Job {
 		// Step 7: Invoke the timing analysis tool on the code and the generated .ta file
         ////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		// Get the paths to the kta binary and the compiler used by kta, which should be provided by the 
-		// user in the preference page
-		String timingToolLocation = Activator.getDefault().getPreferenceStore().getString("ktaPath");
-		String compilerLocation = Activator.getDefault().getPreferenceStore()
-				.getString("mipsel-mcb32-elf-gccPath");
-		ProcessBuilder pb = new ProcessBuilder(timingToolLocation + "kta", "ta", "-compile", fileFolder 
-				+ cFileName, "-tafile", fileFolder + taFileName);
-		Map<String, String> env = pb.environment();
-		// As the kta tool calls the mipsel-mcb32-elf-gcc compiler, we have to make sure it is on the 
-		// PATH for the kta tool, so it can find it
-		env.put("PATH", compilerLocation + ":$PATH");
-		StringBuilder toolOutputStringBuilder = new StringBuilder();
-		try {
-			Process p = pb.start();
-			// get the timing analysis tool's console output
-			BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
-			BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
-			// read the output of the analysis tool
-			toolOutputStringBuilder.append("Output from the timing analysis tool:\n");
-			String s = null;
-			while ((s = stdInput.readLine()) != null) {
-			    toolOutputStringBuilder.append(s + "\n");
-			}
-			// read error messages of the anaylsis tool
-			toolOutputStringBuilder.append("Error output from the timing analysis tool:\n");
-			toolOutputStringBuilder.append("-----end of timing analysis tool output-------\n");
-			while ((s = stdError.readLine()) != null) {
-			    toolOutputStringBuilder.append(s + "\n");
-			}
-			if (TIMING_ANALYSIS_TOOL_OUTPUT_LOG){
-			    Activator.log(toolOutputStringBuilder.toString() + "\n");
-			}
-			// wait for the timing analysis tool to complete its job
-			p.waitFor();
-		} catch (IOException e) {
-			return new Status(IStatus.ERROR, pluginId,
-					"There is no timing analysis tool connected or the timing analysis tool "
-							+ "could not be invoked. Please check whether you have given the "
-							+ "correct paths to the kta executable and the compiler in the "
-							+ "KIELER Preferences ");
-		} catch (InterruptedException e) {
-			return new Status(IStatus.ERROR, pluginId, "The timing analysis tool invokation was "
-					+ "interrupted");
-		}
+        // Get the paths to the kta binary and the compiler used by kta, which should be provided by
+        // the
+        // user in the preference page
+        boolean manualTest =
+                Activator.getDefault().getPreferenceStore().getBoolean("manualTimingTest");
+        if (!manualTest) {
+            String timingToolLocation =
+                    Activator.getDefault().getPreferenceStore().getString("ktaPath");
+            String compilerLocation = Activator.getDefault().getPreferenceStore()
+                    .getString("mipsel-mcb32-elf-gccPath");
+            ProcessBuilder pb = new ProcessBuilder(timingToolLocation + "kta", "ta", "-compile",
+                    fileFolder + cFileName, "-tafile", fileFolder + taFileName);
+            Map<String, String> env = pb.environment();
+            // As the kta tool calls the mipsel-mcb32-elf-gcc compiler, we have to make sure it is
+            // on the
+            // PATH for the kta tool, so it can find it
+            env.put("PATH", compilerLocation + ":$PATH");
+            StringBuilder toolOutputStringBuilder = new StringBuilder();
+            try {
+                Process p = pb.start();
+                // get the timing analysis tool's console output
+                BufferedReader stdInput =
+                        new BufferedReader(new InputStreamReader(p.getInputStream()));
+                BufferedReader stdError =
+                        new BufferedReader(new InputStreamReader(p.getErrorStream()));
+                // read the output of the analysis tool
+                toolOutputStringBuilder.append("Output from the timing analysis tool:\n");
+                String s = null;
+                while ((s = stdInput.readLine()) != null) {
+                    toolOutputStringBuilder.append(s + "\n");
+                }
+                // read error messages of the anaylsis tool
+                toolOutputStringBuilder.append("Error output from the timing analysis tool:\n");
+                toolOutputStringBuilder.append("-----end of timing analysis tool output-------\n");
+                while ((s = stdError.readLine()) != null) {
+                    toolOutputStringBuilder.append(s + "\n");
+                }
+                if (TIMING_ANALYSIS_TOOL_OUTPUT_LOG) {
+                    Activator.log(toolOutputStringBuilder.toString() + "\n");
+                }
+                // wait for the timing analysis tool to complete its job
+                p.waitFor();
+            } catch (IOException e) {
+                return new Status(IStatus.ERROR, pluginId,
+                        "There is no timing analysis tool connected or the timing analysis tool "
+                                + "could not be invoked. Please check whether you have given the "
+                                + "correct paths to the kta executable and the compiler in the "
+                                + "KIELER Preferences ");
+            } catch (InterruptedException e) {
+                return new Status(IStatus.ERROR, pluginId,
+                        "The timing analysis tool invokation was " + "interrupted");
+            }
 
-		// Refresh to make sure the .c file can be found
-		try {
-			ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, null);
-		} catch (CoreException e) {
-			return new Status(IStatus.ERROR, pluginId, "Files could not be refreshed.");
-		}
+            // Refresh to make sure the .c file can be found
+            try {
+                ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE,
+                        null);
+            } catch (CoreException e) {
+                return new Status(IStatus.ERROR, pluginId, "Files could not be refreshed.");
+            }
 
-		////////////////////////////////////////////////////////////////////////////////////////////////
-		// Step 8: Retrieve timing data and associate with regions
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-		if (monitor.isCanceled()) {
-			// Stop as soon as possible when job canceled
-			return Status.CANCEL_STATUS;
-		}
+            ////////////////////////////////////////////////////////////////////////////////////////////////
+            // Step 8: Retrieve timing data and associate with regions
+            ////////////////////////////////////////////////////////////////////////////////////////////////
+            if (monitor.isCanceled()) {
+                // Stop as soon as possible when job canceled
+                return Status.CANCEL_STATUS;
+            }
 
-		// construct uri, where the analysis tool will deposit the response file
-		// (.ta)
-		String taFile = uriString.replace(".sct", ".ta.out");
-		String taPath = taFile.replace("file:", "");
+            // construct uri, where the analysis tool will deposit the response file
+            // (.ta)
+            String taFile = uriString.replace(".sct", ".ta.out");
+            String taPath = taFile.replace("file:", "");
 
-		int timingInformationFetch = timingAnnotationProvider.getTimingInformation(resultList, taPath,
-				rep);
-		if (timingInformationFetch == 1) {
-		    Throwable detailException = new Throwable("Suggestions: Check, whether there is an .asu"
-                    + " file (with the same name as the model .sct file) with FunctionWCET "
-                    + "assumptions for each hostcode function that is called. Check, whether"
-                    + " you have given the correct path for the compiler used by the analysis tool "
-                    + "in the preferences page for the interactive timing analysis.\n\n"
-                    + toolOutputStringBuilder.toString());
-            return new Status(IStatus.ERROR, pluginId,
-                    "The timing information file was not found. This means that the timing analysis"
-                    + " tool could not work correctly.",
-                    detailException);
-		} else if (timingInformationFetch == 2) {
-			return new Status(IStatus.ERROR, pluginId,
-					"An IO error occurred while timing information was retrieved from file.");
-		}
+            int timingInformationFetch =
+                    timingAnnotationProvider.getTimingInformation(resultList, taPath, rep);
+            if (timingInformationFetch == 1) {
+                Throwable detailException =
+                        new Throwable("Suggestions: Check, whether there is an .asu"
+                                + " file (with the same name as the model .sct file) with FunctionWCET "
+                                + "assumptions for each hostcode function that is called. Check, whether"
+                                + " you have given the correct path for the compiler used by the analysis tool "
+                                + "in the preferences page for the interactive timing analysis.\n\n"
+                                + toolOutputStringBuilder.toString());
+                return new Status(IStatus.ERROR, pluginId,
+                        "The timing information file was not found. This means that the timing analysis"
+                                + " tool could not work correctly.",
+                        detailException);
+            } else if (timingInformationFetch == 2) {
+                return new Status(IStatus.ERROR, pluginId,
+                        "An IO error occurred while timing information was retrieved from file.");
+            }
 
-		// calculate timing values for all regions and store a list of regions
-		// that belong to the
-		// WCET path in wcpRegions for special display
-		wcpRegions = extractTimingLabels(RequestType.FWCET, resultList, timingLabels, timingResults, 
-				tppRegionMap,scchart);
+            // calculate timing values for all regions and store a list of regions
+            // that belong to the
+            // WCET path in wcpRegions for special display
+            wcpRegions = extractTimingLabels(RequestType.FWCET, resultList, timingLabels,
+                    timingResults, tppRegionMap, scchart);
+        } else {
+            // case of manual timing analysis
+            String manualTaFile = uriString.replace(".sct", ".man.ta.out");
+            String manualTaPath = manualTaFile.replace("file:", "");
+            int timingInformationFetch =
+                    timingAnnotationProvider.getTimingInformation(resultList, manualTaPath, rep);
+            if (timingInformationFetch == 1) {
+                Throwable detailException = new Throwable("You activated the manual testing "
+                        + "mode in the preferences page. Check, whether you have provided "
+                        + "a manual timing response file, named as the model's .sct file, but with "
+                        + ".man.ta.out file ending. The file has to be placed in the same folder as"
+                        + " the .sct file. Also check, whether there is "
+                        + "an .asu file (with the same name as the model .sct file) with "
+                        + "FunctionWCET assumptions for each hostcode function called.\n\n");
+                return new Status(IStatus.ERROR, pluginId,
+                        "The timing information file was not found.\n", detailException);
+            } else if (timingInformationFetch == 2) {
+                return new Status(IStatus.ERROR, pluginId,
+                        "An IO error occurred while timing information was retrieved from file.");
+            }
+            // calculate timing values from manually provided file for all regions and
+            wcpRegions = extractTimingLabels(RequestType.FWCET, resultList, timingLabels,
+                    timingResults, tppRegionMap, scchart);
+        }
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		// Step 9: Feedback information to the diagram
@@ -464,6 +505,7 @@ public class TimingAnalysis extends Job {
                                 timingLabels.get(region), regionRectangles, renderingExtensions);
                     }
 				}
+				LightDiagramServices.layoutDiagram(viewContext);
 				return Status.OK_STATUS;
 			}
 		}.schedule();
@@ -512,23 +554,24 @@ public class TimingAnalysis extends Job {
         // Note that at the moment we will generate globalvar assumptions
         // automatically only from boolean inputs, as the kta tool treats all GlobalVar assumptions
         // as Input
-        EList<Declaration> declarationList = scchart.getDeclarations();
-        Iterator<Declaration> declarationListIterator = declarationList.iterator();
+        Iterator<VariableDeclaration> declarationListIterator = Iterators.filter(scchart.getDeclarations().iterator(), VariableDeclaration.class);
         HashSet<String> inputOutputNameSet = new HashSet<String>();
         while (declarationListIterator.hasNext()) {
-            Declaration currentDeclaration = declarationListIterator.next();
-            String name = currentDeclaration.getValuedObjects().get(0)
-                    .getName();
-            if (currentDeclaration.isInput()) {
-                ValueType type = currentDeclaration.getType();
-                if (type.equals(ValueType.BOOL) || type.equals(ValueType.PURE)) {
-                    stringBuilder
-                            .append("\nGlobalVar " + name + " 0..1");
-                    inputOutputNameSet.add(name);
-                }
-            } else {
-                if (currentDeclaration.isOutput()) {
-                    inputOutputNameSet.add(name);
+            VariableDeclaration currentDeclaration = declarationListIterator.next();
+            Iterator<ValuedObject> valuedObjectsListIterator =
+                    currentDeclaration.getValuedObjects().iterator();
+            while (valuedObjectsListIterator.hasNext()) {
+                String name = valuedObjectsListIterator.next().getName();
+                if (currentDeclaration.isInput()) {
+                    ValueType type = currentDeclaration.getType();
+                    if (type.equals(ValueType.BOOL) || type.equals(ValueType.PURE)) {
+                        stringBuilder.append("\nGlobalVar " + name + " 0..1");
+                        inputOutputNameSet.add(name);
+                    }
+                } else {
+                    if (currentDeclaration.isOutput()) {
+                        inputOutputNameSet.add(name);
+                    }
                 }
             }
         }

@@ -10,7 +10,7 @@
   <!-- Define a few properties used throughout all build profiles. -->
   <properties>
     <tycho-version>0.26.0</tycho-version>
-    <xtend-version>2.9.2</xtend-version>
+    <xtend-version>2.10.0</xtend-version>
     <targetJdk>1.8</targetJdk>
   
     <!-- Non-breakable space, as normal spaces are trimmed. -->
@@ -59,10 +59,31 @@
       <modules>
         <module>de.cau.cs.kieler.semantics.targetplatform</module>    
         <module>../plugins/de.cau.cs.kieler.core.product</module>
-        <module>../features/de.cau.cs.kieler.dependencies.feature</module>
+        <module>../features/de.cau.cs.kieler.product.feature</module>
         <module>de.cau.cs.kieler.semantics.product.repository</module>
       </modules>
     </profile>  
+
+
+    <!-- The Semantics bechmarks. -->
+    <profile>
+      <id>semantics.benchmarks</id>
+    
+      <repositories>
+        <repository>
+          <id>p2.kieler-semantics</id>
+          <layout>p2</layout>
+          <url>${kieler.semantics.updatesite}</url>
+        </repository>
+      </repositories>
+      
+      <modules>
+        <module>../test</module>
+        <module>../features/de.cau.cs.kieler.benchmark.feature</module>
+        <module>de.cau.cs.kieler.semantics.benchmark.repository</module>
+        <module>de.cau.cs.kieler.semantics.targetplatform</module>  
+      </modules>
+    </profile> 
   
   </profiles>
 
@@ -114,6 +135,15 @@
         <version>${tycho-version}</version>
         <configuration>
           <argLine>-ea</argLine>
+          <includes>
+           <include>**/Test*.java</include>
+           <include>**/*Test.java</include>
+           <include>**/*Tests.java</include>
+           <include>**/*TestCase.java</include>
+          </includes>
+          <excludes>
+            <exclude>**/Abstract*.java</exclude>
+          </excludes>
         </configuration>
       </plugin>      
 
@@ -200,6 +230,7 @@
           <version>${xtend-version}</version>
           <configuration>
             <outputDirectory>${basedir}/xtend-gen</outputDirectory>
+            <javaSourceVersion>1.8</javaSourceVersion>
           </configuration>
         </plugin>
         <!-- add src-gen and xtend-gen to source-directories -->

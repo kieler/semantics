@@ -34,6 +34,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ValuedObjectReference#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ValuedObjectReference#getIndices <em>Indices</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.ValuedObjectReference#getSubReference <em>Sub Reference</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getValuedObjectReference()
@@ -82,5 +83,31 @@ public interface ValuedObjectReference extends Expression {
      * @generated
      */
     EList<Expression> getIndices();
+
+				/**
+     * Returns the value of the '<em><b>Sub Reference</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Sub Reference</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+     * @return the value of the '<em>Sub Reference</em>' containment reference.
+     * @see #setSubReference(ValuedObjectReference)
+     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getValuedObjectReference_SubReference()
+     * @model containment="true"
+     * @generated
+     */
+	ValuedObjectReference getSubReference();
+
+				/**
+     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.ValuedObjectReference#getSubReference <em>Sub Reference</em>}' containment reference.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Sub Reference</em>' containment reference.
+     * @see #getSubReference()
+     * @generated
+     */
+	void setSubReference(ValuedObjectReference value);
 
 } // ValuedObjectReference

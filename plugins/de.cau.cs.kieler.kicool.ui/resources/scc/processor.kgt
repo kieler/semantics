@@ -1,0 +1,29 @@
+knode processor {
+    krectangle {
+        styles: lineStyle = solid foreground = 100r invisible = true
+    }
+    
+    knode processorbody {
+        properties:
+            org.eclipse.elk.padding = "[top=4.0,left=4.0,bottom=4.0,right=4.0]"
+            org.eclipse.elk.spacing.border = 1
+              
+        kroundedRectangle (8, 8) {
+            styles: lineStyle = solid 
+            foreground = 190r, 190g, 190b 
+            background = 248r, 249g, 253b, 255a -> 205r, 220g, 222b, 243a (90)
+        }
+        knode name {
+//          size: width = 50 height = 2
+            
+            krectangle {
+                styles: invisible = true
+            }
+            klabel "Trigger/Effect" {
+                ktext {
+                    styles: fontName = "Arial" fontSize = 8pt
+                }
+            }
+        }
+    }
+} 

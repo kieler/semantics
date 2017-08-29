@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -14,6 +14,7 @@ package de.cau.cs.kieler.simulation.core
 
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.core.runtime.Assert
 
 /**
  * @author aas
@@ -25,7 +26,7 @@ class NDimensionalArray implements Cloneable{
     private var Integer[] indices;
     
     @Accessors(PUBLIC_GETTER)
-    private var List<NDimensionalArrayElement> elements = newArrayList();
+    private var NDimensionalArrayElement[] elements
     
     new(List<Object> values, Integer... indices) {
         this.indices = indices
@@ -35,9 +36,11 @@ class NDimensionalArray implements Cloneable{
             index.set(i, 0);
         }
         
+        elements = newArrayOfSize(values.size)
+        var i = 0;
         for(v : values) {
             val elem = new NDimensionalArrayElement(v, index)
-            elements += elem
+            elements.set(i, elem)
             
             // Increase index ripple-carry-style
             var d = dimension-1; // "least significant dimension"
@@ -47,6 +50,7 @@ class NDimensionalArray implements Cloneable{
                 d--
                 index.set(d, index.get(d)+1)
             }
+            i++;
         }
     }
     
@@ -58,8 +62,32 @@ class NDimensionalArray implements Cloneable{
         return indices.get(dimension);
     }
     
-    public def Object get(int... indices) {
-        return elements.get(getOneDimensionalIndex(indices)).value
+    public def Object get(List<Integer> index, boolean userValue) {
+        val element = getElement(index)
+        return if(userValue && element.isDirty) element.userValue else element.value
+    }
+    
+    public def Object get(List<Integer> index) {
+        return get(index, false)
+    }
+    
+    public def NDimensionalArrayElement getElement(List<Integer> index) {
+        // Check array sizes
+        Assert.isTrue(index.size == dimension)
+        for(var i = 0; i < index.size; i++) {
+            if(index.get(i) < 0 || index.get(i) >= indices.get(i)) {
+                throw new IllegalArgumentException("Array index out of bounds (index was "+index+", array size is "+indices.toString+")")
+            }
+        }
+        // Return element at the given index
+        val oneDimIndex = getOneDimensionalIndex(index)
+        return elements.get(oneDimIndex)
+    }
+    
+    public def Object set(List<Integer> index, Object value) {
+        val oneDimIndex = getOneDimensionalIndex(index)
+        val newArrayElement = new NDimensionalArrayElement(value, index) 
+        elements.set(oneDimIndex, newArrayElement)
     }
     
     private def int getOneDimensionalIndex(List<Integer> indices) {
@@ -75,12 +103,51 @@ class NDimensionalArray implements Cloneable{
     }
     
     public override NDimensionalArray clone() {
-        val arr = new NDimensionalArray(elements.map[it.cloneOfValue], indices.clone)
+        val arr = new NDimensionalArray(elements.map[NDimensionalArrayElement.getCloneOfValue(it.value)], indices.clone)
+        for(var i = 0; i < elements.size; i++) {
+            val oldElem = elements.get(i)
+            val newElem = arr.elements.get(i)
+            newElem.userValue = NDimensionalArrayElement.getCloneOfValue(oldElem.userValue)
+        }
         return arr 
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override toString() {
-        val values = elements.map[it.value]
+        val values = elements.map[if(it.isDirty)
+                                      "*"+it.userValue
+                                  else
+                                      it.value]
         return values.toString()
+    }
+    
+    /**
+     * Two NDimensionalArrays are equal, if they have the same size of elements
+     * and all their elements are equal within the same order.
+     */
+    override equals(Object other) {
+        if(other != null) {
+            if(other instanceof NDimensionalArray) {
+                if(other.elements.size == elements.size) {
+                    for(var i = 0; i < elements.size; i++) {
+                        if(!elements.get(i).equals(other.elements.get(i))) {
+                            return false
+                        }
+                    }
+                    return true
+                }    
+            }
+        }
+        return false
+    }
+    
+    /**
+     * Returns a string representation for an array.
+     * @param arr The array
+     */
+    public static def <T> String toString(T[] arr) {
+        return "["+arr.map[it.toString].join(", ")+"]"
     }
 }

@@ -69,12 +69,6 @@ public class AnnotationsFormatter extends AbstractDeclarativeFormatter {
         c.setLinewrap().after(f.getTagAnnotationRule());
         c.setLinewrap().before(f.getKeyStringValueAnnotationRule());
         c.setLinewrap().after(f.getKeyStringValueAnnotationRule());
-        c.setLinewrap().before(f.getKeyBooleanValueAnnotationRule());
-        c.setLinewrap().after(f.getKeyBooleanValueAnnotationRule());
-        c.setLinewrap().before(f.getKeyIntValueAnnotationRule());
-        c.setLinewrap().after(f.getKeyIntValueAnnotationRule());
-        c.setLinewrap().before(f.getKeyFloatValueAnnotationRule());
-        c.setLinewrap().after(f.getKeyFloatValueAnnotationRule());
         c.setLinewrap().before(f.getTypedKeyStringValueAnnotationRule());
         c.setLinewrap().after(f.getTypedKeyStringValueAnnotationRule());
 

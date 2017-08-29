@@ -18,7 +18,7 @@ import java.util.List;
 import org.eclipse.core.runtime.IPath;
 import org.junit.runners.model.FrameworkMethod;
 
-import de.cau.cs.kieler.semantics.test.common.runners.KielerTestRunner;
+import de.cau.cs.kieler.test.common.runners.KielerTestRunner;
 
 /**
  * This test runner is used by the KiemAutomatedJUnitTest. In the initialize() method it calls the

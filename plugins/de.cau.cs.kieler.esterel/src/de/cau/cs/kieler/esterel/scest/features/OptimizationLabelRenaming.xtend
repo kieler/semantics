@@ -33,6 +33,6 @@ class OptimizationLabelRenaming extends Feature {
     }
     
     def isContained(SCEstProgram program) {
-        !program.eAllContents.filter(de.cau.cs.kieler.scl.scl.Label).empty
+        !program.eAllContents.filter(de.cau.cs.kieler.scl.Label).empty
     }
 }

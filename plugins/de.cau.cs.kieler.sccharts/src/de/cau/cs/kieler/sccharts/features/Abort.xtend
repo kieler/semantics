@@ -16,7 +16,11 @@ package de.cau.cs.kieler.sccharts.features
 import com.google.inject.Inject
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 
 /**
  * SCCharts Abort Feature.
@@ -39,23 +43,32 @@ class Abort extends Feature {
     }
 
     //-------------------------------------------------------------------------
-    @Inject
-    extension SCChartsExtension
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsActionExtensions
 
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
         val allStates = model.getAllContainedStatesList
         for (state : allStates) {
             val stateHasUntransformedTransitions = ((state.outgoingTransitions.size > 1) || ((state.outgoingTransitions.
-                size == 1) && (!(state.outgoingTransitions.filter[typeTermination].filter[trigger == null].size == 1))))
+                size == 1) && (!(state.outgoingTransitions.filter[isTermination].filter[trigger == null].size == 1))))
 
             //val stateHasUntransformedAborts = (!(state.outgoingTransitions.filter[!typeTermination].nullOrEmpty))
             //        if (state.hierarchical && stateHasUntransformedAborts && state.label != "WaitAandB") {
-            if ((state.hasInnerStatesOrControlflowRegions || state.hasInnerActions) && stateHasUntransformedTransitions) {
+            if ((state.controlflowRegionsContainStates || state.containsInnerActions) && stateHasUntransformedTransitions) {
                 return true
             }
         }
         return false
     }
+    
+    def isContained(SCCharts sccharts) {
+        for(s:sccharts.rootStates) {
+            if (s.isContained) return true
+        }
+        false
+    }    
 
 }

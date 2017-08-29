@@ -82,7 +82,7 @@ import de.cau.cs.kieler.esterel.esterel.VariableDecl;
 
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 
-import de.cau.cs.kieler.scl.scl.SclPackage;
+import de.cau.cs.kieler.scl.SCLPackage;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -659,7 +659,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     isInited = true;
 
     // Initialize simple dependencies
-    SclPackage.eINSTANCE.eClass();
+    SCLPackage.eINSTANCE.eClass();
 
     // Create package meta-data objects
     theEsterelPackage.createPackageContents();
@@ -3192,7 +3192,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     setNsURI(eNS_URI);
 
     // Obtain other dependent packages
-    SclPackage theSclPackage = (SclPackage)EPackage.Registry.INSTANCE.getEPackage(SclPackage.eNS_URI);
+    SCLPackage theSCLPackage = (SCLPackage)EPackage.Registry.INSTANCE.getEPackage(SCLPackage.eNS_URI);
     KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
     AnnotationsPackage theAnnotationsPackage = (AnnotationsPackage)EPackage.Registry.INSTANCE.getEPackage(AnnotationsPackage.eNS_URI);
 
@@ -3201,52 +3201,52 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    moduleEClass.getESuperTypes().add(theSclPackage.getStatementContainer());
+    moduleEClass.getESuperTypes().add(theSCLPackage.getStatementContainer());
     constantEClass.getESuperTypes().add(theKExpressionsPackage.getValuedObject());
     iSignalEClass.getESuperTypes().add(theKExpressionsPackage.getValuedObject());
     relationImplicationEClass.getESuperTypes().add(this.getRelationType());
     relationIncompatibilityEClass.getESuperTypes().add(this.getRelationType());
-    esterelParallelEClass.getESuperTypes().add(theSclPackage.getStatement());
-    esterelThreadEClass.getESuperTypes().add(theSclPackage.getStatementContainer());
-    nothingEClass.getESuperTypes().add(theSclPackage.getStatement());
-    haltEClass.getESuperTypes().add(theSclPackage.getStatement());
-    blockEClass.getESuperTypes().add(theSclPackage.getStatementContainer());
-    blockEClass.getESuperTypes().add(theSclPackage.getStatement());
-    emitEClass.getESuperTypes().add(theSclPackage.getStatement());
-    sustainEClass.getESuperTypes().add(theSclPackage.getStatement());
-    esterelAssignmentEClass.getESuperTypes().add(theSclPackage.getStatement());
-    procCallEClass.getESuperTypes().add(theSclPackage.getStatement());
-    presentEClass.getESuperTypes().add(theSclPackage.getStatement());
-    presentCaseEClass.getESuperTypes().add(theSclPackage.getStatementContainer());
-    ifTestEClass.getESuperTypes().add(theSclPackage.getStatement());
-    loopEClass.getESuperTypes().add(theSclPackage.getStatementContainer());
-    loopEClass.getESuperTypes().add(theSclPackage.getStatement());
-    repeatEClass.getESuperTypes().add(theSclPackage.getStatementContainer());
-    repeatEClass.getESuperTypes().add(theSclPackage.getStatement());
-    abortEClass.getESuperTypes().add(theSclPackage.getStatementContainer());
-    abortEClass.getESuperTypes().add(theSclPackage.getStatement());
-    caseEClass.getESuperTypes().add(theSclPackage.getStatementContainer());
-    awaitEClass.getESuperTypes().add(theSclPackage.getStatementContainer());
-    awaitEClass.getESuperTypes().add(theSclPackage.getStatement());
-    everyDoEClass.getESuperTypes().add(theSclPackage.getStatementContainer());
-    everyDoEClass.getESuperTypes().add(theSclPackage.getStatement());
-    suspendEClass.getESuperTypes().add(theSclPackage.getStatementContainer());
-    suspendEClass.getESuperTypes().add(theSclPackage.getStatement());
-    trapEClass.getESuperTypes().add(theSclPackage.getStatementContainer());
-    trapEClass.getESuperTypes().add(theSclPackage.getStatement());
-    trapHandlerEClass.getESuperTypes().add(theSclPackage.getStatementContainer());
-    exitEClass.getESuperTypes().add(theSclPackage.getStatement());
-    execEClass.getESuperTypes().add(theSclPackage.getStatementContainer());
-    execEClass.getESuperTypes().add(theSclPackage.getStatement());
-    execCaseEClass.getESuperTypes().add(theSclPackage.getStatementContainer());
-    localSignalDeclEClass.getESuperTypes().add(theSclPackage.getStatementContainer());
-    localSignalDeclEClass.getESuperTypes().add(theSclPackage.getStatement());
-    localVariableEClass.getESuperTypes().add(theSclPackage.getStatementContainer());
-    localVariableEClass.getESuperTypes().add(theSclPackage.getStatement());
+    esterelParallelEClass.getESuperTypes().add(theSCLPackage.getStatement());
+    esterelThreadEClass.getESuperTypes().add(theSCLPackage.getStatementContainer());
+    nothingEClass.getESuperTypes().add(theSCLPackage.getStatement());
+    haltEClass.getESuperTypes().add(theSCLPackage.getStatement());
+    blockEClass.getESuperTypes().add(theSCLPackage.getStatementContainer());
+    blockEClass.getESuperTypes().add(theSCLPackage.getStatement());
+    emitEClass.getESuperTypes().add(theSCLPackage.getStatement());
+    sustainEClass.getESuperTypes().add(theSCLPackage.getStatement());
+    esterelAssignmentEClass.getESuperTypes().add(theSCLPackage.getStatement());
+    procCallEClass.getESuperTypes().add(theSCLPackage.getStatement());
+    presentEClass.getESuperTypes().add(theSCLPackage.getStatement());
+    presentCaseEClass.getESuperTypes().add(theSCLPackage.getStatementContainer());
+    ifTestEClass.getESuperTypes().add(theSCLPackage.getStatement());
+    loopEClass.getESuperTypes().add(theSCLPackage.getStatementContainer());
+    loopEClass.getESuperTypes().add(theSCLPackage.getStatement());
+    repeatEClass.getESuperTypes().add(theSCLPackage.getStatementContainer());
+    repeatEClass.getESuperTypes().add(theSCLPackage.getStatement());
+    abortEClass.getESuperTypes().add(theSCLPackage.getStatementContainer());
+    abortEClass.getESuperTypes().add(theSCLPackage.getStatement());
+    caseEClass.getESuperTypes().add(theSCLPackage.getStatementContainer());
+    awaitEClass.getESuperTypes().add(theSCLPackage.getStatementContainer());
+    awaitEClass.getESuperTypes().add(theSCLPackage.getStatement());
+    everyDoEClass.getESuperTypes().add(theSCLPackage.getStatementContainer());
+    everyDoEClass.getESuperTypes().add(theSCLPackage.getStatement());
+    suspendEClass.getESuperTypes().add(theSCLPackage.getStatementContainer());
+    suspendEClass.getESuperTypes().add(theSCLPackage.getStatement());
+    trapEClass.getESuperTypes().add(theSCLPackage.getStatementContainer());
+    trapEClass.getESuperTypes().add(theSCLPackage.getStatement());
+    trapHandlerEClass.getESuperTypes().add(theSCLPackage.getStatementContainer());
+    exitEClass.getESuperTypes().add(theSCLPackage.getStatement());
+    execEClass.getESuperTypes().add(theSCLPackage.getStatementContainer());
+    execEClass.getESuperTypes().add(theSCLPackage.getStatement());
+    execCaseEClass.getESuperTypes().add(theSCLPackage.getStatementContainer());
+    localSignalDeclEClass.getESuperTypes().add(theSCLPackage.getStatementContainer());
+    localSignalDeclEClass.getESuperTypes().add(theSCLPackage.getStatement());
+    localVariableEClass.getESuperTypes().add(theSCLPackage.getStatementContainer());
+    localVariableEClass.getESuperTypes().add(theSCLPackage.getStatement());
     iVariableEClass.getESuperTypes().add(theKExpressionsPackage.getValuedObject());
-    runEClass.getESuperTypes().add(theSclPackage.getStatement());
-    doEClass.getESuperTypes().add(theSclPackage.getStatementContainer());
-    doEClass.getESuperTypes().add(theSclPackage.getStatement());
+    runEClass.getESuperTypes().add(theSCLPackage.getStatement());
+    doEClass.getESuperTypes().add(theSCLPackage.getStatementContainer());
+    doEClass.getESuperTypes().add(theSCLPackage.getStatement());
     inputEClass.getESuperTypes().add(this.getInterfaceSignalDecl());
     outputEClass.getESuperTypes().add(this.getInterfaceSignalDecl());
     inputOutputEClass.getESuperTypes().add(this.getInterfaceSignalDecl());
@@ -3386,10 +3386,10 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEClass(presentEClass, Present.class, "Present", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getPresent_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, Present.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getPresent_ThenAnnotations(), theAnnotationsPackage.getAnnotation(), null, "thenAnnotations", null, 0, -1, Present.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPresent_ThenStatements(), theSclPackage.getStatement(), null, "thenStatements", null, 0, -1, Present.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPresent_ThenStatements(), theSCLPackage.getStatement(), null, "thenStatements", null, 0, -1, Present.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getPresent_Cases(), this.getPresentCase(), null, "cases", null, 0, -1, Present.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getPresent_ElseAnnotations(), theAnnotationsPackage.getAnnotation(), null, "elseAnnotations", null, 0, -1, Present.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPresent_ElseStatements(), theSclPackage.getStatement(), null, "elseStatements", null, 0, -1, Present.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPresent_ElseStatements(), theSCLPackage.getStatement(), null, "elseStatements", null, 0, -1, Present.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(presentCaseEClass, PresentCase.class, "PresentCase", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getPresentCase_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, PresentCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3397,15 +3397,15 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEClass(ifTestEClass, IfTest.class, "IfTest", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getIfTest_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, IfTest.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getIfTest_ThenAnnotations(), theAnnotationsPackage.getAnnotation(), null, "thenAnnotations", null, 0, -1, IfTest.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getIfTest_ThenStatements(), theSclPackage.getStatement(), null, "thenStatements", null, 0, -1, IfTest.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getIfTest_ThenStatements(), theSCLPackage.getStatement(), null, "thenStatements", null, 0, -1, IfTest.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getIfTest_Elseif(), this.getElsIf(), null, "elseif", null, 0, -1, IfTest.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getIfTest_ElseAnnotations(), theAnnotationsPackage.getAnnotation(), null, "elseAnnotations", null, 0, -1, IfTest.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getIfTest_ElseStatements(), theSclPackage.getStatement(), null, "elseStatements", null, 0, -1, IfTest.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getIfTest_ElseStatements(), theSCLPackage.getStatement(), null, "elseStatements", null, 0, -1, IfTest.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(elsIfEClass, ElsIf.class, "ElsIf", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getElsIf_Annotations(), theAnnotationsPackage.getAnnotation(), null, "annotations", null, 0, -1, ElsIf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getElsIf_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, ElsIf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getElsIf_ThenStatements(), theSclPackage.getStatement(), null, "thenStatements", null, 0, -1, ElsIf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getElsIf_ThenStatements(), theSCLPackage.getStatement(), null, "thenStatements", null, 0, -1, ElsIf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(loopEClass, Loop.class, "Loop", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getLoop_Delay(), this.getDelayExpr(), null, "delay", null, 0, 1, Loop.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3417,7 +3417,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEClass(abortEClass, Abort.class, "Abort", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAbort_Weak(), ecorePackage.getEBoolean(), "weak", null, 0, 1, Abort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAbort_Delay(), this.getDelayExpr(), null, "delay", null, 0, 1, Abort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAbort_DoStatements(), theSclPackage.getStatement(), null, "doStatements", null, 0, -1, Abort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAbort_DoStatements(), theSCLPackage.getStatement(), null, "doStatements", null, 0, -1, Abort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAbort_Cases(), this.getCase(), null, "cases", null, 0, -1, Abort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(caseEClass, Case.class, "Case", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -3514,7 +3514,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEReference(getDo_EndingAnnotations(), theAnnotationsPackage.getAnnotation(), null, "endingAnnotations", null, 0, -1, Do.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDo_Expression(), this.getDelayExpr(), null, "expression", null, 0, 1, Do.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDo_Delay(), this.getDelayExpr(), null, "delay", null, 0, 1, Do.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getDo_WatchingStatements(), theSclPackage.getStatement(), null, "watchingStatements", null, 0, -1, Do.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDo_WatchingStatements(), theSCLPackage.getStatement(), null, "watchingStatements", null, 0, -1, Do.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(delayExprEClass, DelayExpr.class, "DelayExpr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getDelayExpr_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, DelayExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

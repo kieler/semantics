@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -12,8 +12,7 @@
  */
 package de.cau.cs.kieler.simulation.ui.toolbar
 
-import de.cau.cs.kieler.simulation.core.SimulationManager
-import de.cau.cs.kieler.simulation.ui.SimulationConsole
+import de.cau.cs.kieler.prom.console.PromConsole
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
 
@@ -25,8 +24,8 @@ class StepSimulationBack extends SimulationToolbarButton {
     
     override execute(ExecutionEvent event) throws ExecutionException {
         super.execute(event)
-        if(SimulationManager.instance != null) {
-            SimulationConsole.writeToConsole("Step Back")
+        if(simulation != null && !justRestarted) {
+            PromConsole.print("Step Back")
             simulation.stepBack()
         }
         return null

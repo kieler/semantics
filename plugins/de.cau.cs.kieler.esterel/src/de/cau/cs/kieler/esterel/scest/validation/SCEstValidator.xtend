@@ -42,16 +42,17 @@ import de.cau.cs.kieler.esterel.esterel.ElsIf
 import de.cau.cs.kieler.esterel.esterel.DelayExpr
 import de.cau.cs.kieler.esterel.esterel.Repeat
 import de.cau.cs.kieler.esterel.esterel.Exit
-import de.cau.cs.kieler.scl.scl.Conditional
-import de.cau.cs.kieler.scl.scl.Assignment
+import de.cau.cs.kieler.scl.Conditional
+import de.cau.cs.kieler.scl.Assignment
 import de.cau.cs.kieler.esterel.scest.scest.Set
 import de.cau.cs.kieler.esterel.esterel.FunctionExpression
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * @author mrb
  *
  */
-class SCEstValidator extends SCEstJavaValidator{
+class SCEstValidator extends AbstractSCEstValidator {
     
     @Inject
     extension SCEstExtension
@@ -89,8 +90,8 @@ class SCEstValidator extends SCEstJavaValidator{
     
     @Check
     def void combineOperatorValuedObject(ValuedObject vo) {
-        if (vo.eContainer instanceof Declaration) {
-            var type = (vo.eContainer as Declaration).type
+        if (vo.eContainer instanceof VariableDeclaration) {
+            var type = (vo.eContainer as VariableDeclaration).type
             if (!combineOperatorFitsType(type, vo.combineOperator)) {
                 error("The combine operator '" + vo.combineOperator + "' does not fit the valued objects type '" + type + "'!", vo, null, -1)
             }
@@ -257,10 +258,10 @@ class SCEstValidator extends SCEstJavaValidator{
     
     @Check
     def void expressionAssignment(Assignment assign) {
-        if ((assign.valuedObject.eContainer as Declaration).type.isBool && !assign.expression.isBoolExpr) {
+        if ((assign.valuedObject.eContainer as VariableDeclaration).type.isBool && !assign.expression.isBoolExpr) {
             warning(BOOLEAN_EXPRESSION, null)
         }
-        else if ((assign.valuedObject.eContainer as Declaration).type.isCalculationType && !assign.expression.isCalculationExpr) {
+        else if ((assign.valuedObject.eContainer as VariableDeclaration).type.isCalculationType && !assign.expression.isCalculationExpr) {
             warning(CALCULATION_EXPRESSION, null)
         }
     }
@@ -278,7 +279,7 @@ class SCEstValidator extends SCEstJavaValidator{
     @Check
     def void expressionValuedObject(ValuedObject vo) {
         var parent = vo.eContainer
-        if (parent instanceof Declaration) {
+        if (parent instanceof VariableDeclaration) {
             if (parent.type.isBool && !vo.initialValue.isBoolExpr) {
                 warning(BOOLEAN_EXPRESSION, null)
             }
@@ -426,7 +427,7 @@ class SCEstValidator extends SCEstJavaValidator{
                 }
             }
             ValuedObject: {
-                if (parent instanceof Declaration) {
+                if (parent instanceof VariableDeclaration) {
                     return parent.type.isBoolOrPure
                 }
             }
@@ -458,7 +459,7 @@ class SCEstValidator extends SCEstJavaValidator{
                 }
             }
             ValuedObject: {
-                if (parent instanceof Declaration) {
+                if (parent instanceof VariableDeclaration) {
                     return parent.type.isCalculationType
                 }
             }

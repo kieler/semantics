@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+scchart illegalstrongabort {
+=======
 // This model should not compile because the signal that triggers the strong abort
 // could not be emitted, if the strong abort is triggered.
 // In Esterel:
@@ -5,6 +8,7 @@
 //    emit S
 //  end
 scchart IllegalStrongAbort {
+>>>>>>> master
   input signal pure I;
   output signal pure O;
   bool L = false;

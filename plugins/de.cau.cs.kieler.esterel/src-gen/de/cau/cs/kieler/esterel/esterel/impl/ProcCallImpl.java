@@ -9,7 +9,7 @@ import de.cau.cs.kieler.esterel.esterel.Procedure;
 
 import de.cau.cs.kieler.kexpressions.Expression;
 
-import de.cau.cs.kieler.scl.scl.impl.StatementImpl;
+import de.cau.cs.kieler.scl.impl.StatementImpl;
 
 import java.util.Collection;
 

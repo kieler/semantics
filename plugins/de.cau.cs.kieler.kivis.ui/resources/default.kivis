@@ -1,0 +1,7 @@
+image: "MyImage.svg"
+
+animate SVG_ELEMENT {
+    apply color {
+        fillColor: "red"
+    }
+}

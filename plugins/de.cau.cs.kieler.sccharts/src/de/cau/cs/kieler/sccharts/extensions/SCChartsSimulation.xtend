@@ -35,11 +35,9 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  */
 class SCChartsSimulation { 
 
-    @Inject
-    extension KExpressionsDeclarationExtensions
-
-    @Inject
-    extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension SCChartsActionExtensions
         
     //-------------------------------------------------------------------------
     //--         S I M U L A T I O N    V I S U A L I Z A T I O N            --
@@ -127,7 +125,7 @@ class SCChartsSimulation {
           
           // Setup the auxiliaryValuedObject as an OUTPUT to the module
           auxiliaryValuedObject.setName(UID);
-          createDeclaration(ValueType::PURE) => [
+          createVariableDeclaration(ValueType::PURE) => [
               signal = true
               input = false
               output = true
@@ -159,7 +157,7 @@ class SCChartsSimulation {
           
                // Setup the auxiliaryValuedObject as an OUTPUT to the module
                auxiliaryValuedObject.setName(UID);
-               createDeclaration(ValueType::PURE) => [
+               createVariableDeclaration(ValueType::PURE) => [
                    signal = true
                    input = false
                    output = true
@@ -175,7 +173,7 @@ class SCChartsSimulation {
                immediateDuringAction.effects.add(auxiliaryEmission);
                
                // Add during action to state
-               state.localActions.add(immediateDuringAction);
+               state.actions.add(immediateDuringAction);
           }
           
      }     

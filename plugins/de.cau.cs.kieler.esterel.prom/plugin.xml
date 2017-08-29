@@ -5,12 +5,12 @@
          point="org.eclipse.ui.newWizards">
       <wizard
             canFinishEarly="false"
-            category="de.cau.cs.kieler.esterel"
+            category="de.cau.cs.kieler.prom.ui.kielerModelingWizards"
             class="de.cau.cs.kieler.esterel.prom.EsterelFileWizard"
             finalPerspective="de.cau.cs.kieler.Modeling"
             hasPages="true"
             icon="icons/foerde-logo-16.png"
-            id="de.cau.cs.kieler.esterel.prom.filewizard"
+            id="de.cau.cs.kieler.esterel.prom.strlWizard"
             name="Esterel File"
             project="false">
          <description>
@@ -18,12 +18,12 @@
          </description>
       </wizard>
       <wizard
-            category="de.cau.cs.kieler.esterel"
+            category="de.cau.cs.kieler.prom.ui.kielerModelingWizards"
             class="de.cau.cs.kieler.esterel.prom.EsterelProjectWizard"
             finalPerspective="de.cau.cs.kieler.Modeling"
             hasPages="true"
             icon="icons/foerde-logo-16.png"
-            id="de.cau.cs.kieler.esterel.prom.projectwizard"
+            id="de.cau.cs.kieler.esterel.prom.esterelProject"
             name="Esterel Project"
             project="true">
          <description>
@@ -34,7 +34,7 @@
    <extension
          point="org.eclipse.debug.ui.launchShortcuts">
       <shortcut
-            class="de.cau.cs.kieler.prom.launchconfig.ui.KiCoLaunchShortcut"
+            class="de.cau.cs.kieler.prom.ui.launch.KiCoLaunchShortcut"
             icon="icons/foerde-logo-16.png"
             id="de.cau.cs.kieler.esterel.prom.launchShortcut"
             label="KiCo Compilation"
@@ -61,12 +61,6 @@
       </shortcut>
    </extension>
    <extension
-         point="de.cau.cs.kieler.prom.wrapperCodeAnnotationAnalyzer">
-      <analyzer
-            class="de.cau.cs.kieler.esterel.prom.EsterelWrapperCodeAnnotationAnalyzer">
-      </analyzer>
-   </extension>
-   <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
             targetID="de.cau.cs.kieler.Modeling">
@@ -91,14 +85,20 @@
          point="org.eclipse.ui.navigator.navigatorContent">
       <commonWizard
             type="new"
-            wizardId="de.cau.cs.kieler.esterel.prom.projectwizard">
+            wizardId="de.cau.cs.kieler.esterel.prom.strlWizard">
          <enablement></enablement>
       </commonWizard>
       <commonWizard
             type="new"
-            wizardId="de.cau.cs.kieler.esterel.prom.filewizard">
+            wizardId="de.cau.cs.kieler.esterel.prom.esterelProject">
          <enablement></enablement>
       </commonWizard>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.prom.modelAnalyzer">
+      <analyzer
+            class="de.cau.cs.kieler.esterel.prom.EsterelAnalyzer">
+      </analyzer>
    </extension>
 
 </plugin>

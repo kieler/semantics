@@ -4,7 +4,7 @@ package de.cau.cs.kieler.esterel.scest.scest;
 
 import de.cau.cs.kieler.esterel.esterel.ISignal;
 
-import de.cau.cs.kieler.scl.scl.Statement;
+import de.cau.cs.kieler.scl.Statement;
 
 /**
  * <!-- begin-user-doc -->

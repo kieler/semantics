@@ -29,7 +29,7 @@ import java.util.Set
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
-import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.transformations.SCGTransformations

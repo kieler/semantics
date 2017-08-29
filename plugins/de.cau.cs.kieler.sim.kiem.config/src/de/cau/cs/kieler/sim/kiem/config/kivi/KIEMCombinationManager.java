@@ -62,16 +62,16 @@ public class KIEMCombinationManager implements IStartup, IPartListener2, IProper
      * {@inheritDoc}
      */
     public void partActivated(IWorkbenchPartReference partRef) {
-        if(activePart == null){
-            activePart = partRef;
-            partRef.addPropertyListener(this);
-        }else{
-            activePart.removePropertyListener(this);
-            activePart = partRef;
-            partRef.addPropertyListener(this);
-        }
-        selection.execute(partRef);
-        autoload.execute(partRef);
+//        if(activePart == null){
+//            activePart = partRef;
+//            partRef.addPropertyListener(this);
+//        }else{
+//            activePart.removePropertyListener(this);
+//            activePart = partRef;
+//            partRef.addPropertyListener(this);
+//        }
+//        selection.execute(partRef);
+//        autoload.execute(partRef);
     }
 
     /**

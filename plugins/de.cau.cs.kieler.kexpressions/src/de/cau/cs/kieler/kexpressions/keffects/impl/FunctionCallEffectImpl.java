@@ -2,11 +2,15 @@
  */
 package de.cau.cs.kieler.kexpressions.keffects.impl;
 
+import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
+import de.cau.cs.kieler.kexpressions.Call;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.Parameter;
 
+import de.cau.cs.kieler.kexpressions.Schedulable;
+import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 import de.cau.cs.kieler.kexpressions.keffects.FunctionCallEffect;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
@@ -33,13 +37,34 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.FunctionCallEffectImpl#getFunctionName <em>Function Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.FunctionCallEffectImpl#getSchedule <em>Schedule</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.FunctionCallEffectImpl#getParameters <em>Parameters</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.FunctionCallEffectImpl#getFunctionName <em>Function Name</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class FunctionCallEffectImpl extends EffectImpl implements FunctionCallEffect {
+public class FunctionCallEffectImpl extends AnnotatableImpl implements FunctionCallEffect {
+    /**
+     * The cached value of the '{@link #getSchedule() <em>Schedule</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getSchedule()
+     * @generated
+     * @ordered
+     */
+    protected EList<ScheduleObjectReference> schedule;
+
+    /**
+     * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getParameters()
+     * @generated
+     * @ordered
+     */
+    protected EList<Parameter> parameters;
+
     /**
      * The default value of the '{@link #getFunctionName() <em>Function Name</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -61,16 +86,6 @@ public class FunctionCallEffectImpl extends EffectImpl implements FunctionCallEf
     protected String functionName = FUNCTION_NAME_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getParameters()
-     * @generated
-     * @ordered
-     */
-    protected EList<Parameter> parameters;
-
-    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -87,6 +102,18 @@ public class FunctionCallEffectImpl extends EffectImpl implements FunctionCallEf
     @Override
     protected EClass eStaticClass() {
         return KEffectsPackage.Literals.FUNCTION_CALL_EFFECT;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<ScheduleObjectReference> getSchedule() {
+        if (schedule == null) {
+            schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KEffectsPackage.FUNCTION_CALL_EFFECT__SCHEDULE);
+        }
+        return schedule;
     }
 
     /**
@@ -130,6 +157,8 @@ public class FunctionCallEffectImpl extends EffectImpl implements FunctionCallEf
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case KEffectsPackage.FUNCTION_CALL_EFFECT__SCHEDULE:
+                return ((InternalEList<?>)getSchedule()).basicRemove(otherEnd, msgs);
             case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS:
                 return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
         }
@@ -144,10 +173,12 @@ public class FunctionCallEffectImpl extends EffectImpl implements FunctionCallEf
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME:
-                return getFunctionName();
+            case KEffectsPackage.FUNCTION_CALL_EFFECT__SCHEDULE:
+                return getSchedule();
             case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS:
                 return getParameters();
+            case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME:
+                return getFunctionName();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -161,12 +192,16 @@ public class FunctionCallEffectImpl extends EffectImpl implements FunctionCallEf
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME:
-                setFunctionName((String)newValue);
+            case KEffectsPackage.FUNCTION_CALL_EFFECT__SCHEDULE:
+                getSchedule().clear();
+                getSchedule().addAll((Collection<? extends ScheduleObjectReference>)newValue);
                 return;
             case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS:
                 getParameters().clear();
                 getParameters().addAll((Collection<? extends Parameter>)newValue);
+                return;
+            case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME:
+                setFunctionName((String)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -180,11 +215,14 @@ public class FunctionCallEffectImpl extends EffectImpl implements FunctionCallEf
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME:
-                setFunctionName(FUNCTION_NAME_EDEFAULT);
+            case KEffectsPackage.FUNCTION_CALL_EFFECT__SCHEDULE:
+                getSchedule().clear();
                 return;
             case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS:
                 getParameters().clear();
+                return;
+            case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME:
+                setFunctionName(FUNCTION_NAME_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -198,10 +236,12 @@ public class FunctionCallEffectImpl extends EffectImpl implements FunctionCallEf
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME:
-                return FUNCTION_NAME_EDEFAULT == null ? functionName != null : !FUNCTION_NAME_EDEFAULT.equals(functionName);
+            case KEffectsPackage.FUNCTION_CALL_EFFECT__SCHEDULE:
+                return schedule != null && !schedule.isEmpty();
             case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS:
                 return parameters != null && !parameters.isEmpty();
+            case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME:
+                return FUNCTION_NAME_EDEFAULT == null ? functionName != null : !FUNCTION_NAME_EDEFAULT.equals(functionName);
         }
         return super.eIsSet(featureID);
     }
@@ -213,15 +253,26 @@ public class FunctionCallEffectImpl extends EffectImpl implements FunctionCallEf
      */
     @Override
     public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+        if (baseClass == Schedulable.class) {
+            switch (derivedFeatureID) {
+                case KEffectsPackage.FUNCTION_CALL_EFFECT__SCHEDULE: return KExpressionsPackage.SCHEDULABLE__SCHEDULE;
+                default: return -1;
+            }
+        }
         if (baseClass == Expression.class) {
             switch (derivedFeatureID) {
+                default: return -1;
+            }
+        }
+        if (baseClass == Call.class) {
+            switch (derivedFeatureID) {
+                case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS: return KExpressionsPackage.CALL__PARAMETERS;
                 default: return -1;
             }
         }
         if (baseClass == FunctionCall.class) {
             switch (derivedFeatureID) {
                 case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME: return KExpressionsPackage.FUNCTION_CALL__FUNCTION_NAME;
-                case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS: return KExpressionsPackage.FUNCTION_CALL__PARAMETERS;
                 default: return -1;
             }
         }
@@ -235,15 +286,26 @@ public class FunctionCallEffectImpl extends EffectImpl implements FunctionCallEf
      */
     @Override
     public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+        if (baseClass == Schedulable.class) {
+            switch (baseFeatureID) {
+                case KExpressionsPackage.SCHEDULABLE__SCHEDULE: return KEffectsPackage.FUNCTION_CALL_EFFECT__SCHEDULE;
+                default: return -1;
+            }
+        }
         if (baseClass == Expression.class) {
             switch (baseFeatureID) {
+                default: return -1;
+            }
+        }
+        if (baseClass == Call.class) {
+            switch (baseFeatureID) {
+                case KExpressionsPackage.CALL__PARAMETERS: return KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS;
                 default: return -1;
             }
         }
         if (baseClass == FunctionCall.class) {
             switch (baseFeatureID) {
                 case KExpressionsPackage.FUNCTION_CALL__FUNCTION_NAME: return KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME;
-                case KExpressionsPackage.FUNCTION_CALL__PARAMETERS: return KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS;
                 default: return -1;
             }
         }

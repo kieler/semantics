@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -39,7 +39,8 @@ interface DataHandler {
     public def void stop()
     
     /**
-     * Determines if this data handler's read method should be called after each step of the simulation.
+     * The name of this data handler.
+     * This must match the name that is used to register the handler in the extension point.
      */
-    public def boolean updateEachStep()
+    public def String getName()
 }

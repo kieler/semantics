@@ -93,9 +93,9 @@ public abstract class AbstractSCLRuntimeModule extends org.eclipse.xtext.service
 		return org.eclipse.xtext.parser.antlr.AntlrTokenDefProvider.class;
 	}
 
-	// contributed by org.eclipse.xtext.generator.validation.JavaValidatorFragment
-	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.scl.validation.SCLJavaValidator> bindSCLJavaValidator() {
-		return de.cau.cs.kieler.scl.validation.SCLJavaValidator.class;
+	// contributed by org.eclipse.xtext.generator.validation.ValidatorFragment
+	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.scl.validation.SCLValidator> bindSCLValidator() {
+		return de.cau.cs.kieler.scl.validation.SCLValidator.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.scoping.AbstractScopingFragment
@@ -123,9 +123,14 @@ public abstract class AbstractSCLRuntimeModule extends org.eclipse.xtext.service
 		return org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider.class;
 	}
 
-	// contributed by org.eclipse.xtext.generator.formatting.FormatterFragment
-	public Class<? extends org.eclipse.xtext.formatting.IFormatter> bindIFormatter() {
-		return de.cau.cs.kieler.scl.formatting.SCLFormatter.class;
+	// contributed by org.eclipse.xtext.generator.formatting2.Formatter2Fragment
+	public Class<? extends org.eclipse.xtext.formatting2.IFormatter2> bindIFormatter2() {
+		return de.cau.cs.kieler.scl.formatting2.SCLFormatter.class;
+	}
+
+	// contributed by org.eclipse.xtext.generator.formatting2.Formatter2Fragment
+	public void configureFormatterPreferences(com.google.inject.Binder binder) {
+		binder.bind(org.eclipse.xtext.preferences.IPreferenceValuesProvider.class).annotatedWith(org.eclipse.xtext.formatting2.FormatterPreferences.class).to(org.eclipse.xtext.formatting2.FormatterPreferenceValuesProvider.class);
 	}
 
 }

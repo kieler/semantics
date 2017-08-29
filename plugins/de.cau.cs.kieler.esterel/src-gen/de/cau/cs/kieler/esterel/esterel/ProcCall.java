@@ -4,7 +4,7 @@ package de.cau.cs.kieler.esterel.esterel;
 
 import de.cau.cs.kieler.kexpressions.Expression;
 
-import de.cau.cs.kieler.scl.scl.Statement;
+import de.cau.cs.kieler.scl.Statement;
 
 import org.eclipse.emf.common.util.EList;
 

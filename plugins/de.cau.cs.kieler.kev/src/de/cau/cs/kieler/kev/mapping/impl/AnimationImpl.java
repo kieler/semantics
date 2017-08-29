@@ -351,5 +351,25 @@ public abstract class AnimationImpl extends EObjectImpl implements Animation {
         }  
     }
 
+    /**
+     * Searches for the key of this animation in the json object.
+     * If this animation uses an array, the json object is searched accordingly.
+     * 
+     * @param jsonObject the json object holding the value
+     * @return the value for the current animation
+     */
+    public String getJsonValue(JSONObject jsonObject) {
+        // Check whether JSON object is an JSONAArray
+        String key = getKey()+".value";
+        String jsonValue = "";
+        if (getAccessID() != null && !getAccessID().equals("")) {
+            int index = Integer.parseInt(getAccessID());
+            JSONArray valueArray = jsonObject.optJSONArray(key);
+            jsonValue = valueArray.optString(index);
+        } else {
+            return jsonObject.optString(key);    
+        }
+        return jsonValue;
+    }
 
 } //AnimationImpl

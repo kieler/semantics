@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.simulation.ui.toolbar
 
-import de.cau.cs.kieler.simulation.ui.SimulationConsole
+import de.cau.cs.kieler.prom.console.PromConsole
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
 
@@ -23,9 +23,10 @@ import org.eclipse.core.commands.ExecutionException
 class StopSimulation extends SimulationToolbarButton {
     
     override execute(ExecutionEvent event) throws ExecutionException {
+        restartSimulationIfStopped = false
         super.execute(event)
-        if(simulation != null) {
-            SimulationConsole.writeToConsole("Halt")
+        if(simulation != null && !justRestarted) {
+            PromConsole.print("Halt")
             simulation.stop()
         }
         return null

@@ -3,15 +3,18 @@
 package de.cau.cs.kieler.esterel.esterel.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.NamedObject;
 
 import de.cau.cs.kieler.esterel.esterel.*;
 
 import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.Referenceable;
+import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 
-import de.cau.cs.kieler.scl.scl.Statement;
-import de.cau.cs.kieler.scl.scl.StatementContainer;
+import de.cau.cs.kieler.scl.Statement;
+import de.cau.cs.kieler.scl.StatementContainer;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -137,7 +140,9 @@ public class EsterelSwitch<T> extends Switch<T>
         Constant constant = (Constant)theEObject;
         T result = caseConstant(constant);
         if (result == null) result = caseValuedObject(constant);
+        if (result == null) result = caseNamedObject(constant);
         if (result == null) result = caseAnnotatable(constant);
+        if (result == null) result = caseReferenceable(constant);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -195,7 +200,9 @@ public class EsterelSwitch<T> extends Switch<T>
         ISignal iSignal = (ISignal)theEObject;
         T result = caseISignal(iSignal);
         if (result == null) result = caseValuedObject(iSignal);
+        if (result == null) result = caseNamedObject(iSignal);
         if (result == null) result = caseAnnotatable(iSignal);
+        if (result == null) result = caseReferenceable(iSignal);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -507,7 +514,9 @@ public class EsterelSwitch<T> extends Switch<T>
         IVariable iVariable = (IVariable)theEObject;
         T result = caseIVariable(iVariable);
         if (result == null) result = caseValuedObject(iVariable);
+        if (result == null) result = caseNamedObject(iVariable);
         if (result == null) result = caseAnnotatable(iVariable);
+        if (result == null) result = caseReferenceable(iVariable);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -639,7 +648,9 @@ public class EsterelSwitch<T> extends Switch<T>
         T result = caseTrapSignal(trapSignal);
         if (result == null) result = caseISignal(trapSignal);
         if (result == null) result = caseValuedObject(trapSignal);
+        if (result == null) result = caseNamedObject(trapSignal);
         if (result == null) result = caseAnnotatable(trapSignal);
+        if (result == null) result = caseReferenceable(trapSignal);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -648,6 +659,7 @@ public class EsterelSwitch<T> extends Switch<T>
         TrapExpression trapExpression = (TrapExpression)theEObject;
         T result = caseTrapExpression(trapExpression);
         if (result == null) result = caseExpression(trapExpression);
+        if (result == null) result = caseSchedulable(trapExpression);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -656,6 +668,7 @@ public class EsterelSwitch<T> extends Switch<T>
         FunctionExpression functionExpression = (FunctionExpression)theEObject;
         T result = caseFunctionExpression(functionExpression);
         if (result == null) result = caseExpression(functionExpression);
+        if (result == null) result = caseSchedulable(functionExpression);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -664,6 +677,7 @@ public class EsterelSwitch<T> extends Switch<T>
         ConstantExpression constantExpression = (ConstantExpression)theEObject;
         T result = caseConstantExpression(constantExpression);
         if (result == null) result = caseExpression(constantExpression);
+        if (result == null) result = caseSchedulable(constantExpression);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -673,6 +687,7 @@ public class EsterelSwitch<T> extends Switch<T>
         T result = caseTrapReferenceExpr(trapReferenceExpr);
         if (result == null) result = caseValuedObjectReference(trapReferenceExpr);
         if (result == null) result = caseExpression(trapReferenceExpr);
+        if (result == null) result = caseSchedulable(trapReferenceExpr);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -682,6 +697,7 @@ public class EsterelSwitch<T> extends Switch<T>
         T result = caseSignalReferenceExpr(signalReferenceExpr);
         if (result == null) result = caseValuedObjectReference(signalReferenceExpr);
         if (result == null) result = caseExpression(signalReferenceExpr);
+        if (result == null) result = caseSchedulable(signalReferenceExpr);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -1890,6 +1906,38 @@ public class EsterelSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Named Object</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Named Object</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseNamedObject(NamedObject object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Referenceable</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Referenceable</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseReferenceable(Referenceable object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Valued Object</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -1917,6 +1965,22 @@ public class EsterelSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseStatement(Statement object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Schedulable</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Schedulable</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSchedulable(Schedulable object)
   {
     return null;
   }

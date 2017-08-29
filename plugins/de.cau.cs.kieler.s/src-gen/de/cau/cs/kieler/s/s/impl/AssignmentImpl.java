@@ -7,7 +7,11 @@ import de.cau.cs.kieler.annotations.Annotation;
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
 
 import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.Schedulable;
+import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator;
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
@@ -40,10 +44,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.AssignmentImpl#getAnnotations <em>Annotations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.AssignmentImpl#getSchedule <em>Schedule</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.AssignmentImpl#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.AssignmentImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.AssignmentImpl#getIndices <em>Indices</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.AssignmentImpl#getOperator <em>Operator</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.AssignmentImpl#getSubReference <em>Sub Reference</em>}</li>
  * </ul>
  *
  * @generated
@@ -59,6 +65,16 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * @ordered
    */
   protected EList<Annotation> annotations;
+
+  /**
+   * The cached value of the '{@link #getSchedule() <em>Schedule</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSchedule()
+   * @generated
+   * @ordered
+   */
+  protected EList<ScheduleObjectReference> schedule;
 
   /**
    * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
@@ -111,6 +127,16 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   protected AssignOperator operator = OPERATOR_EDEFAULT;
 
   /**
+   * The cached value of the '{@link #getSubReference() <em>Sub Reference</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSubReference()
+   * @generated
+   * @ordered
+   */
+  protected ValuedObjectReference subReference;
+
+  /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -143,6 +169,20 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
       annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, SPackage.ASSIGNMENT__ANNOTATIONS);
     }
     return annotations;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<ScheduleObjectReference> getSchedule()
+  {
+    if (schedule == null)
+    {
+      schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, SPackage.ASSIGNMENT__SCHEDULE);
+    }
+    return schedule;
   }
 
   /**
@@ -278,11 +318,9 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
-  public Annotation getAnnotation(String name)
+  public ValuedObjectReference getSubReference()
   {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
+    return subReference;
   }
 
   /**
@@ -290,11 +328,16 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Annotation> getAllAnnotations(String name)
+  public NotificationChain basicSetSubReference(ValuedObjectReference newSubReference, NotificationChain msgs)
   {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
+    ValuedObjectReference oldSubReference = subReference;
+    subReference = newSubReference;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SPackage.ASSIGNMENT__SUB_REFERENCE, oldSubReference, newSubReference);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
   }
 
   /**
@@ -302,11 +345,20 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
-  public void removeAllAnnotations(String name)
+  public void setSubReference(ValuedObjectReference newSubReference)
   {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
+    if (newSubReference != subReference)
+    {
+      NotificationChain msgs = null;
+      if (subReference != null)
+        msgs = ((InternalEObject)subReference).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SPackage.ASSIGNMENT__SUB_REFERENCE, null, msgs);
+      if (newSubReference != null)
+        msgs = ((InternalEObject)newSubReference).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SPackage.ASSIGNMENT__SUB_REFERENCE, null, msgs);
+      msgs = basicSetSubReference(newSubReference, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.ASSIGNMENT__SUB_REFERENCE, newSubReference, newSubReference));
   }
 
   /**
@@ -321,10 +373,14 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
     {
       case SPackage.ASSIGNMENT__ANNOTATIONS:
         return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
+      case SPackage.ASSIGNMENT__SCHEDULE:
+        return ((InternalEList<?>)getSchedule()).basicRemove(otherEnd, msgs);
       case SPackage.ASSIGNMENT__EXPRESSION:
         return basicSetExpression(null, msgs);
       case SPackage.ASSIGNMENT__INDICES:
         return ((InternalEList<?>)getIndices()).basicRemove(otherEnd, msgs);
+      case SPackage.ASSIGNMENT__SUB_REFERENCE:
+        return basicSetSubReference(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -341,6 +397,8 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
     {
       case SPackage.ASSIGNMENT__ANNOTATIONS:
         return getAnnotations();
+      case SPackage.ASSIGNMENT__SCHEDULE:
+        return getSchedule();
       case SPackage.ASSIGNMENT__VALUED_OBJECT:
         if (resolve) return getValuedObject();
         return basicGetValuedObject();
@@ -350,6 +408,8 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
         return getIndices();
       case SPackage.ASSIGNMENT__OPERATOR:
         return getOperator();
+      case SPackage.ASSIGNMENT__SUB_REFERENCE:
+        return getSubReference();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -369,6 +429,10 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
         getAnnotations().clear();
         getAnnotations().addAll((Collection<? extends Annotation>)newValue);
         return;
+      case SPackage.ASSIGNMENT__SCHEDULE:
+        getSchedule().clear();
+        getSchedule().addAll((Collection<? extends ScheduleObjectReference>)newValue);
+        return;
       case SPackage.ASSIGNMENT__VALUED_OBJECT:
         setValuedObject((ValuedObject)newValue);
         return;
@@ -381,6 +445,9 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
         return;
       case SPackage.ASSIGNMENT__OPERATOR:
         setOperator((AssignOperator)newValue);
+        return;
+      case SPackage.ASSIGNMENT__SUB_REFERENCE:
+        setSubReference((ValuedObjectReference)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -399,6 +466,9 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
       case SPackage.ASSIGNMENT__ANNOTATIONS:
         getAnnotations().clear();
         return;
+      case SPackage.ASSIGNMENT__SCHEDULE:
+        getSchedule().clear();
+        return;
       case SPackage.ASSIGNMENT__VALUED_OBJECT:
         setValuedObject((ValuedObject)null);
         return;
@@ -410,6 +480,9 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
         return;
       case SPackage.ASSIGNMENT__OPERATOR:
         setOperator(OPERATOR_EDEFAULT);
+        return;
+      case SPackage.ASSIGNMENT__SUB_REFERENCE:
+        setSubReference((ValuedObjectReference)null);
         return;
     }
     super.eUnset(featureID);
@@ -427,6 +500,8 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
     {
       case SPackage.ASSIGNMENT__ANNOTATIONS:
         return annotations != null && !annotations.isEmpty();
+      case SPackage.ASSIGNMENT__SCHEDULE:
+        return schedule != null && !schedule.isEmpty();
       case SPackage.ASSIGNMENT__VALUED_OBJECT:
         return valuedObject != null;
       case SPackage.ASSIGNMENT__EXPRESSION:
@@ -435,6 +510,8 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
         return indices != null && !indices.isEmpty();
       case SPackage.ASSIGNMENT__OPERATOR:
         return operator != OPERATOR_EDEFAULT;
+      case SPackage.ASSIGNMENT__SUB_REFERENCE:
+        return subReference != null;
     }
     return super.eIsSet(featureID);
   }
@@ -455,6 +532,14 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
         default: return -1;
       }
     }
+    if (baseClass == Schedulable.class)
+    {
+      switch (derivedFeatureID)
+      {
+        case SPackage.ASSIGNMENT__SCHEDULE: return KExpressionsPackage.SCHEDULABLE__SCHEDULE;
+        default: return -1;
+      }
+    }
     if (baseClass == Effect.class)
     {
       switch (derivedFeatureID)
@@ -470,6 +555,7 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
         case SPackage.ASSIGNMENT__EXPRESSION: return KEffectsPackage.ASSIGNMENT__EXPRESSION;
         case SPackage.ASSIGNMENT__INDICES: return KEffectsPackage.ASSIGNMENT__INDICES;
         case SPackage.ASSIGNMENT__OPERATOR: return KEffectsPackage.ASSIGNMENT__OPERATOR;
+        case SPackage.ASSIGNMENT__SUB_REFERENCE: return KEffectsPackage.ASSIGNMENT__SUB_REFERENCE;
         default: return -1;
       }
     }
@@ -492,6 +578,14 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
         default: return -1;
       }
     }
+    if (baseClass == Schedulable.class)
+    {
+      switch (baseFeatureID)
+      {
+        case KExpressionsPackage.SCHEDULABLE__SCHEDULE: return SPackage.ASSIGNMENT__SCHEDULE;
+        default: return -1;
+      }
+    }
     if (baseClass == Effect.class)
     {
       switch (baseFeatureID)
@@ -507,6 +601,7 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
         case KEffectsPackage.ASSIGNMENT__EXPRESSION: return SPackage.ASSIGNMENT__EXPRESSION;
         case KEffectsPackage.ASSIGNMENT__INDICES: return SPackage.ASSIGNMENT__INDICES;
         case KEffectsPackage.ASSIGNMENT__OPERATOR: return SPackage.ASSIGNMENT__OPERATOR;
+        case KEffectsPackage.ASSIGNMENT__SUB_REFERENCE: return SPackage.ASSIGNMENT__SUB_REFERENCE;
         default: return -1;
       }
     }

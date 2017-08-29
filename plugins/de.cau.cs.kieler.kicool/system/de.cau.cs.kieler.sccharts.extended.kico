@@ -1,0 +1,7 @@
+system de.cau.cs.kieler.sccharts.extended
+	version 1 
+	label "Extended SCCharts"
+	
+system de.cau.cs.kieler.sccharts.extended.synccharts
+system de.cau.cs.kieler.sccharts.extended.scadeQuartzEsterelV7
+system de.cau.cs.kieler.sccharts.extended.statecharts

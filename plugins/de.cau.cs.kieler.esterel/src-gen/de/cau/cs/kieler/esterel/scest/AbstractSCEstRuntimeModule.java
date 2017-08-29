@@ -93,9 +93,9 @@ public abstract class AbstractSCEstRuntimeModule extends org.eclipse.xtext.servi
 		return org.eclipse.xtext.parser.antlr.AntlrTokenDefProvider.class;
 	}
 
-	// contributed by org.eclipse.xtext.generator.validation.JavaValidatorFragment
-	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.esterel.scest.validation.SCEstJavaValidator> bindSCEstJavaValidator() {
-		return de.cau.cs.kieler.esterel.scest.validation.SCEstJavaValidator.class;
+	// contributed by org.eclipse.xtext.generator.validation.ValidatorFragment
+	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.esterel.scest.validation.SCEstValidator> bindSCEstValidator() {
+		return de.cau.cs.kieler.esterel.scest.validation.SCEstValidator.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.scoping.AbstractScopingFragment

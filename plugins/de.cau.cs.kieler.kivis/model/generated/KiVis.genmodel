@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.kivis/src-gen" editDirectory="/de.cau.cs.kieler.kivis.edit/src"
+    editorDirectory="/de.cau.cs.kieler.kivis.editor/src" modelPluginID="de.cau.cs.kieler.kivis"
+    forceOverwrite="true" modelName="KiVis" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="6.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.kivis.edit"
+    editorPluginID="de.cau.cs.kieler.kivis.editor" runtimeVersion="2.12" usedGenPackages="platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel#//kexpressions platform:/resource/de.cau.cs.kieler.prom/model/generated/KiBuild.genmodel#//kibuild">
+  <genPackages prefix="Kivis" basePackage="de.cau.cs.kieler.kivis" disposableProviderFactory="true"
+      ecorePackage="KiVis.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="KiVis.ecore#//DOMEvent">
+      <genEnumLiterals ecoreEnumLiteral="KiVis.ecore#//DOMEvent/CLICK"/>
+      <genEnumLiterals ecoreEnumLiteral="KiVis.ecore#//DOMEvent/MOUSEDOWN"/>
+      <genEnumLiterals ecoreEnumLiteral="KiVis.ecore#//DOMEvent/MOUSEUP"/>
+      <genEnumLiterals ecoreEnumLiteral="KiVis.ecore#//DOMEvent/MOUSEMOVE"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="KiVis.ecore#//SimulationOperation">
+      <genEnumLiterals ecoreEnumLiteral="KiVis.ecore#//SimulationOperation/STEP"/>
+      <genEnumLiterals ecoreEnumLiteral="KiVis.ecore#//SimulationOperation/STOP"/>
+      <genEnumLiterals ecoreEnumLiteral="KiVis.ecore#//SimulationOperation/PAUSE"/>
+      <genEnumLiterals ecoreEnumLiteral="KiVis.ecore#//SimulationOperation/PLAY"/>
+    </genEnums>
+    <genClasses ecoreClass="KiVis.ecore#//VisualizationConfiguration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//VisualizationConfiguration/image"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//VisualizationConfiguration/elements"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//VisualizationConfiguration/interactions"/>
+    </genClasses>
+    <genClasses ecoreClass="KiVis.ecore#//Element">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//Element/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Element/animations"/>
+    </genClasses>
+    <genClasses ecoreClass="KiVis.ecore#//Interaction">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Interaction/event"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Interaction/actions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Interaction/condition"/>
+    </genClasses>
+    <genClasses ecoreClass="KiVis.ecore#//Event">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//Event/event"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//Event/element"/>
+    </genClasses>
+    <genClasses ecoreClass="KiVis.ecore#//Action">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Action/variable"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Action/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//Action/operation"/>
+    </genClasses>
+    <genClasses ecoreClass="KiVis.ecore#//Animation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//Animation/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Animation/variable"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Animation/attributeMappings"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Animation/condition"/>
+    </genClasses>
+    <genClasses ecoreClass="KiVis.ecore#//AttributeMapping">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//AttributeMapping/attribute"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//AttributeMapping/literal"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//AttributeMapping/mappings"/>
+    </genClasses>
+    <genClasses ecoreClass="KiVis.ecore#//Mapping">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Mapping/variableDomain"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Mapping/attributeDomain"/>
+    </genClasses>
+    <genClasses ecoreClass="KiVis.ecore#//Condition"/>
+    <genClasses ecoreClass="KiVis.ecore#//Comparison">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Comparison/left"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//Comparison/relation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Comparison/right"/>
+    </genClasses>
+    <genClasses ecoreClass="KiVis.ecore#//Domain">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Domain/value"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Domain/range"/>
+    </genClasses>
+    <genClasses ecoreClass="KiVis.ecore#//Interval">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Interval/from"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Interval/to"/>
+    </genClasses>
+    <genClasses ecoreClass="KiVis.ecore#//VariableReference">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//VariableReference/model"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//VariableReference/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//VariableReference/indices"/>
+    </genClasses>
+    <genClasses ecoreClass="KiVis.ecore#//ModelReference">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//ModelReference/name"/>
+    </genClasses>
+    <genClasses ecoreClass="KiVis.ecore#//BooleanOperator">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//BooleanOperator/AND"/>
+    </genClasses>
+    <genClasses ecoreClass="KiVis.ecore#//AndExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//AndExpression/left"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//AndExpression/operator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//AndExpression/right"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
