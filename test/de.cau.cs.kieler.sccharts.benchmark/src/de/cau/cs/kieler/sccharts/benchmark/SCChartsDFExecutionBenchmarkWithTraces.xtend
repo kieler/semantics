@@ -14,32 +14,35 @@ package de.cau.cs.kieler.sccharts.benchmark
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.benchmark.common.AbstractXTextModelBenchmark
-import de.cau.cs.kieler.kico.CompilationResult
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Fork
-import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.simulation.SimulationUtil
-import de.cau.cs.kieler.simulation.core.SimulationManager
+import de.cau.cs.kieler.simulation.core.SimulationEvent
+import de.cau.cs.kieler.simulation.core.SimulationListener
 import de.cau.cs.kieler.test.common.repository.TestModelData
-import de.cau.cs.kieler.prom.PromPlugin
 import org.bson.Document
-import org.eclipse.core.runtime.Path
 import org.eclipse.core.resources.IResource
+import org.eclipse.core.runtime.Path
+import de.cau.cs.kieler.simulation.handlers.Trace
+import de.cau.cs.kieler.simulation.handlers.EsoUtil
+import de.cau.cs.kieler.simulation.core.SimulationManager
+import de.cau.cs.kieler.simulation.core.StepAction
+import de.cau.cs.kieler.simulation.handlers.ExecutableSimulator
+import de.cau.cs.kieler.simulation.handlers.TraceMismatchEvent
+import de.cau.cs.kieler.simulation.core.SimulationEventType
+import de.cau.cs.kieler.simulation.handlers.TraceFinishedEvent
 
 /**
  * @author lpe
  *
  */
-class SCChartsDataflowBasedCompilationBenchmarkHighlightJitter extends AbstractXTextModelBenchmark<State> {
+class SCChartsDFExecutionBenchmarkWithTraces extends AbstractXTextModelBenchmark<State> implements SimulationListener {
     
-    @Inject
-    extension SCChartsExtension
     @Inject
     extension SCGThreadExtensions
     
@@ -86,9 +89,13 @@ class SCChartsDataflowBasedCompilationBenchmarkHighlightJitter extends AbstractX
     /** Warm up flag */
     private static var warmUp = false
     
-    private final val NUMBER_OF_RUNS = 20
+    private final val NUMBER_OF_RUNS = 50
     
-    private final val N_BEST = 15
+    private final val N_BEST = 0.8
+    
+    var boolean traceFinished = false
+    
+    var TraceMismatchEvent traceError = null
     
     //-----------------------------------------------------------------------------------------------------------------
 
@@ -96,14 +103,16 @@ class SCChartsDataflowBasedCompilationBenchmarkHighlightJitter extends AbstractX
      * {@inheritDoc}
      */
     override getID() {
-        return "sccharts-dataflow-based-compilation-jitter"
+        return "sccharts-dataflow-based-execution-traces"
     }
     
     /**
      * {@inheritDoc}
      */
     override filter(TestModelData modelData) {
-        return modelData.modelProperties.contains("jitter")
+        return modelData.modelProperties.contains("benchmark") && !modelData.modelProperties.contains("must-fail")
+                && !modelData.modelProperties.contains("known-to-fail") && !modelData.modelProperties.contains("not-sasc")
+                && modelData.tracePaths.exists[fileName.toString.endsWith("eso")] 
     }
     
     /**
@@ -130,7 +139,6 @@ class SCChartsDataflowBasedCompilationBenchmarkHighlightJitter extends AbstractX
     override Document perform(State model, TestModelData modelData) {
         if (model === null) return null
         
-        
         var couldNotSimulate = false
         var averageTickDuration = 0
         var nBestTickTimes = 0
@@ -139,7 +147,7 @@ class SCChartsDataflowBasedCompilationBenchmarkHighlightJitter extends AbstractX
         
         try {
             var tmpProject = SimulationUtil.getTemporarySimulationProject
-            tmpProject.delete(true, null)
+            tmpProject?.delete(true, true, null)
             tmpProject = SimulationUtil.getTemporarySimulationProject
     
             val sclLibFolder = tmpProject.getFolder(new Path("kieler-gen/sim/scl_lib"))
@@ -149,79 +157,92 @@ class SCChartsDataflowBasedCompilationBenchmarkHighlightJitter extends AbstractX
             
             
             var tickDurations = <Integer> newLinkedList
-            val compilationResult = SimulationUtil.compileAndSimulateModel(model, "s.c")
-            for(var i = 0; i < NUMBER_OF_RUNS; i++) {
-                SimulationUtil.startSimulationCompilationResult(compilationResult)
-                val simMan = SimulationManager.instance
-                simMan.stepMacroTick
-    
-                val tickTime = simMan.currentPool.getVariable("tickTime").value as Integer
-                simMan.stop
-    
-                averageTickDuration += tickTime/NUMBER_OF_RUNS
-                tickDurations.add(tickTime)
+            SimulationManager.addListener(this)
+            for(traceFilePath : modelData.tracePaths.filter[fileName.toString.endsWith("eso")]) {
+                val traceFile = tmpProject.getFile(traceFilePath.fileName.toString)
+                traceFile.createLink(modelData.repositoryPath.resolve(traceFilePath).toUri, IResource.ALLOW_MISSING_LOCAL, null)
+                
+                val eso = new EsoUtil(traceFile)
+                for(var j = 0; j < eso.getTraces().size; j++) {
+                    for(var i = 0; i < NUMBER_OF_RUNS; i++) {
+                
+                        val compilationResult = SimulationUtil.compileAndSimulateModel(model, "s.c")
+                        traceFinished = false
+                        
+                        // Create Executable
+                        val exeSimulator = new ExecutableSimulator
+                        exeSimulator.executableFile = compilationResult.createdFiles.head
+                        
+                        // Create Trace
+                        val trace = new Trace()
+                        trace.tracePath.value = traceFile.fullPath.toOSString
+                        trace.currentTraceNumber.value = j
+                        trace.checkOutputs.value = false
+                        
+//                        SimulationUtil.startSimulationCompilationResult(compilationResult)
+                        val sim = SimulationManager.instance
+                        sim.addAction(StepAction.Method.WRITE, trace)
+                        sim.addAction(StepAction.Method.WRITE, exeSimulator)
+//                        sim.addAction(StepAction.Method.READ, trace)
+                        
+                        sim.initialize
+                        while(!traceFinished) {
+                            sim.stepMacroTick
+                            if(traceError !== null) {
+                                println(traceError.message)
+                            }
+                        }
+                        val tickTime = sim.currentPool.getVariable("tickTime").value as Integer
+                        sim.stop
+                        
+                        averageTickDuration += tickTime
+                        tickDurations.add(tickTime)
+                        
+                    }
+                }
+                
+//                SimulationUtil.startSimulationCompilationResult(compilationResult)
+//                val simMan = SimulationManager.instance
+//                simMan.stepMacroTick
+//    
+//                val tickTime = simMan.currentPool.getVariable("tickTime").value as Integer
+//                simMan.stop
+//    
+//                averageTickDuration += tickTime/NUMBER_OF_RUNS
+//                tickDurations.add(tickTime)
             }
             tmpProject.refreshLocal(IResource.DEPTH_INFINITE, null)
             
-            
-            val ys = tickDurations.take((N_BEST + 1) / 2)
+            val n = (tickDurations.size * N_BEST).intValue
+            val ys = tickDurations.take((n + 1) / 2)
             val ys2 = ys.toList
-            ys2.addAll(tickDurations.reverse.take(N_BEST / 2))
+            ys2.addAll(tickDurations.reverse.take(n / 2))
             for(y : ys2) {
                 nBestTickTimes += y/(ys2.size)
             }
-    
+            averageTickDuration /= tickDurations.size
             maxJitter = tickDurations.max - tickDurations.min
             for(t : tickDurations) {
-                avgJitter += Math.abs(averageTickDuration - t)/NUMBER_OF_RUNS
+                avgJitter += Math.abs(averageTickDuration - t)/tickDurations.size
             }
             
         } catch (Exception e) {
             couldNotSimulate = true
+            e.printStackTrace
+        } finally {
+            SimulationManager.removeListener(this)
         }
         
         
         val data = new Document
-        val compileChain = transformations.join("!T_SIMULATIONVISUALIZATION, !T_ABORTWTO, T_", ", T_", "")[it]
         
-        // Compile with KiCo
-        val context = new KielerCompilerContext(compileChain, model)
-        context.advancedSelect = false // Compilation has fixed chain (respecting dependencies)
-        context.inplace = true // Save intermediate results
-        
-        var CompilationResult result = null
-        
-        result = KielerCompiler.compile(context)
-            
-        System.gc
-        
-        
-        if(result != null) {
-            val scg = result.transformationIntermediateResults.findFirst[it.id == "sccharts.scg"].result as SCGraph
-            val normalizedSCChart = result.transformationIntermediateResults.findFirst[it.id == "SURFACEDEPTH"].result as State
-    
-            var numberOfDependencies = 0
-            for(n : scg.nodes) {
-                numberOfDependencies += n.dependencies.filter[it instanceof DataDependency && (it as DataDependency).isConcurrent
-                                && !(it as DataDependency).isConfluent].size
-            }
-            val scgNodes = scg.nodes.size
-            
-            data.put("scgNodes", scgNodes)
-            data.put("normSccNodes", normalizedSCChart.allContainedStatesList.size)
-            data.put("unit", "ns")
-            data.put("threads", scg.nodes.filter[it instanceof Entry].size)
-            data.put("dependencies", numberOfDependencies)
-            if(!couldNotSimulate) {
-                data.put("executionTime", nBestTickTimes)
-                data.put("averageExecutionTime", averageTickDuration)
-                data.put("maxJitter", maxJitter)
-                data.put("avgJitter", avgJitter)
-            } else {
-                data.put("simulatable", false)
-            }
+        if(!couldNotSimulate) {
+            data.put("executionTime", nBestTickTimes)
+            data.put("averageExecutionTime", averageTickDuration)
+            data.put("maxJitter", maxJitter)
+            data.put("avgJitter", avgJitter)
         } else {
-            data.put("schedulable", "false")
+            data.put("simulatable", false)
         }
 
         
@@ -242,6 +263,16 @@ class SCChartsDataflowBasedCompilationBenchmarkHighlightJitter extends AbstractX
         }
         
         return width
+    }
+    
+    override update(SimulationEvent e) {
+        if(e.type == SimulationEventType.TRACE) {
+            if(e instanceof TraceMismatchEvent) {
+                traceError = e
+            } else if (e instanceof TraceFinishedEvent) {
+                traceFinished = true
+            }
+        }
     }
     
 }

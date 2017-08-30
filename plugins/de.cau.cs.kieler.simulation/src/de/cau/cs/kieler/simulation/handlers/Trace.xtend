@@ -149,7 +149,7 @@ class Trace extends DefaultDataHandler {
         }
     }
     
-    private def void loadEsoTrace(IPath path) {
+    public def void loadEsoTrace(IPath path) {
         traceFile = getFile(path)
         if(traceFile != null && traceFile.exists) {
             esoUtil = new EsoUtil(traceFile)

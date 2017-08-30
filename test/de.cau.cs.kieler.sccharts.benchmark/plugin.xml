@@ -12,6 +12,15 @@
       <benchmark
             class="de.cau.cs.kieler.sccharts.benchmark.SCChartsPriorityBasedCompilationBenchmarkHighlightJitter">
       </benchmark>
+      <benchmark
+            class="de.cau.cs.kieler.sccharts.benchmark.SCChartsPBExecutionBenchmarkWithTraces">
+      </benchmark>
+      <benchmark
+            class="de.cau.cs.kieler.sccharts.benchmark.SCChartsDFExecutionBenchmarkWithTraces">
+      </benchmark>
+      <benchmark
+            class="de.cau.cs.kieler.sccharts.benchmark.SCChartsDataflowBasedCompilationBenchmarkHighlightJitter">
+      </benchmark>
    </extension>
 
 </plugin>

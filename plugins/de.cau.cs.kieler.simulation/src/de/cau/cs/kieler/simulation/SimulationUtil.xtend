@@ -292,7 +292,7 @@ class SimulationUtil {
         }
     }
     
-    private static def FileGenerationResult compileModelForSimulation(IFile file, EObject model) {
+    public static def FileGenerationResult compileModelForSimulation(IFile file, EObject model) {
         // Create resources for simulation
         val simTemplate = file.project.getFile("Simulation.ftl")
         val snippetFolder = file.project.getFolder("snippets")

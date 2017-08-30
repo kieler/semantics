@@ -79,9 +79,9 @@ class SCChartsTransformationsBenchmark extends AbstractXTextModelBenchmark<State
     /** Warm up flag */
     private static var warmUp = false
     
-    private final val NUMBER_OF_RUNS = 100
+    private final val NUMBER_OF_RUNS = 50
     
-    private final val N_BEST = 80
+    private final val N_BEST = 40
     
     //-----------------------------------------------------------------------------------------------------------------
 
@@ -98,6 +98,7 @@ class SCChartsTransformationsBenchmark extends AbstractXTextModelBenchmark<State
     override filter(TestModelData modelData) {
         return !modelData.modelProperties.contains("must-fail") && modelData.modelProperties.contains("benchmark")
                 && !modelData.modelProperties.contains("known-to-fail") && !modelData.modelProperties.contains("not-sasc") 
+                && modelData.modelProperties.contains("test")
     }
     
     /**
@@ -192,7 +193,7 @@ class SCChartsTransformationsBenchmark extends AbstractXTextModelBenchmark<State
             
             
             var tickDurations = <Integer> newLinkedList
-            val compilationResult = SimulationUtil.compileAndSimulateModel(model, "T_scg.dependency, T_scg.scgPrio, T_sclp.sclpTrans")
+            val compilationResult = SimulationUtil.compileAndSimulateModel(model, "s.c")
             for(var i = 0; i < NUMBER_OF_RUNS; i++) {
                 SimulationUtil.startSimulationCompilationResult(compilationResult)
                 val simMan = SimulationManager.instance
@@ -208,9 +209,10 @@ class SCChartsTransformationsBenchmark extends AbstractXTextModelBenchmark<State
             
             
             val ys = tickDurations.take((N_BEST + 1) / 2)
-            ys.toList.addAll(tickDurations.reverse.take(N_BEST / 2))
-            for(y : ys) {
-                nBestTickTimes += y/(ys.size)
+            val ys2 = ys.toList
+            ys2.addAll(tickDurations.reverse.take(N_BEST / 2))
+            for(y : ys2) {
+                nBestTickTimes += y/(ys2.size)
             }
     
             maxJitter = tickDurations.max - tickDurations.min
@@ -269,10 +271,11 @@ class SCChartsTransformationsBenchmark extends AbstractXTextModelBenchmark<State
     
             downstreamResults.sort
             val xs = downstreamResults.take((N_BEST + 1) / 2)
-            xs.toList.addAll(downstreamResults.reverse.take(N_BEST / 2))
+            val xs2 = xs.toList
+            xs2.addAll(downstreamResults.reverse.take(N_BEST / 2))
             var nBestDownstreamDuration = 0l
-            for(x : xs) {
-                nBestDownstreamDuration += x/(xs.size)
+            for(x : xs2) {
+                nBestDownstreamDuration += x/(xs2.size)
             }
             
             var numberOfVariables = 0

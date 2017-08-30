@@ -80,9 +80,9 @@ class SCChartsPriorityBasedCompilationBenchmarkHighlightJitter extends AbstractX
     /** Warm up flag */
     private static var warmUp = false
     
-    private final val NUMBER_OF_RUNS = 100
+    private final val NUMBER_OF_RUNS = 20
     
-    private final val N_BEST = 80
+    private final val N_BEST = 15
     
     //-----------------------------------------------------------------------------------------------------------------
 
@@ -159,9 +159,10 @@ class SCChartsPriorityBasedCompilationBenchmarkHighlightJitter extends AbstractX
             
             
             val ys = tickDurations.take((N_BEST + 1) / 2)
-            ys.toList.addAll(tickDurations.reverse.take(N_BEST / 2))
-            for(y : ys) {
-                nBestTickTimes += y/(ys.size)
+            val ys2 = ys.toList
+            ys2.addAll(tickDurations.reverse.take(N_BEST / 2))
+            for(y : ys2) {
+                nBestTickTimes += y/(ys2.size)
             }
     
             maxJitter = tickDurations.max - tickDurations.min

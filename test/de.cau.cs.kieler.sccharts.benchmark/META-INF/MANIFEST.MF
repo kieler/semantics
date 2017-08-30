@@ -21,7 +21,9 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.orbit.mongodb;bundle-version="2.10.1",
  de.cau.cs.kieler.scg;bundle-version="0.12.0",
  de.cau.cs.kieler.simulation;bundle-version="0.1.0",
- de.cau.cs.kieler.prom;bundle-version="0.12.0"
+ de.cau.cs.kieler.prom;bundle-version="0.12.0",
+ de.cau.cs.kieler.sim.eso;bundle-version="0.12.0",
+ de.cau.cs.kieler.sccharts.eso;bundle-version="0.12.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 

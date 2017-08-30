@@ -39,7 +39,11 @@ import de.cau.cs.kieler.simulation.core.Variable;
 public class EsoUtil {
     public EList<trace> traces;
     
-    EsoUtil(IFile file) throws Exception {
+    public EList<trace> getTraces() {
+        return traces;
+    }
+    
+    public EsoUtil(IFile file) throws Exception {
         EObject model = ModelImporter.load(file);
         if(model instanceof tracelist) {
             traces =  ((tracelist)model).getTraces();
