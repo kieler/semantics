@@ -98,7 +98,6 @@ class SCChartsTransformationsBenchmark extends AbstractXTextModelBenchmark<State
     override filter(TestModelData modelData) {
         return !modelData.modelProperties.contains("must-fail") && modelData.modelProperties.contains("benchmark")
                 && !modelData.modelProperties.contains("known-to-fail") && !modelData.modelProperties.contains("not-sasc") 
-                && modelData.modelProperties.contains("test")
     }
     
     /**

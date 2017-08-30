@@ -106,7 +106,7 @@ class SCChartsPBExecutionBenchmarkWithTraces extends AbstractXTextModelBenchmark
     override filter(TestModelData modelData) {
         return modelData.modelProperties.contains("benchmark") && !modelData.modelProperties.contains("must-fail")
                 && !modelData.modelProperties.contains("known-to-fail") && !modelData.modelProperties.contains("not-siasc")
-                && modelData.tracePaths.exists[fileName.toString.endsWith("eso")] && false
+                && modelData.tracePaths.exists[fileName.toString.endsWith("eso")]
     }
     
     /**
