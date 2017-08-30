@@ -30,9 +30,11 @@ import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KGraphElement
+import de.cau.cs.kieler.klighd.kgraph.KLabel
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KPort
 import de.cau.cs.kieler.klighd.krendering.Colors
+import de.cau.cs.kieler.klighd.krendering.LineStyle
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
@@ -58,12 +60,12 @@ import java.util.Map
 import java.util.Set
 import org.eclipse.elk.alg.layered.properties.LayerConstraint
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.core.options.Alignment
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.SizeConstraint
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
-import org.eclipse.elk.core.options.Alignment
 
 /**
  * Visualizes the dataflow between SCChart regions.
@@ -166,8 +168,7 @@ class InducedDataflowHook extends SynthesisActionHook {
      */
     private def void showDependencies(KNode rootNode, State rootState) {
         // Check if we already have dataflow edges.
-        // TODO Can these already exist but be invalid due to incremental update?
-        // Maybe just clean the existing set and do a new analysis. 
+        // Just clean the existing set and do a new analysis. 
         val edges = rootNode.getProperty(DATAFLOW_ELEMENTS);
         if (edges !== null) {
             rootNode.hideDataflow;
@@ -281,19 +282,26 @@ class InducedDataflowHook extends SynthesisActionHook {
                         node = tracking.getTargetElements(region).filter(KNode).head
                     ]
                     readPorts.add(port)
+                    createdElements.add(port)
                 }
                 if (context.preReadComplete.contains(vo)) {
                     val KPort port = createPort => [
                         node = tracking.getTargetElements(region).filter(KNode).head
                     ]
                     preReadPorts.add(port)
+                    createdElements.add(port)
                 }
                 if (context.writeComplete.contains(vo)) {
                     val KPort port = createPort => [
                         node = tracking.getTargetElements(region).filter(KNode).head
                     ]
-                    port.addOutsidePortLabel(vo.name)
+                    val KLabel label = port.addOutsidePortLabel(vo.name)
+                    label.getKRendering => [
+                        fontSize = 11;
+                        fontBold = true;
+                    ]
                     writePorts.add(port)
+                    createdElements.add(port)
                 }
             ]
 
@@ -311,7 +319,11 @@ class InducedDataflowHook extends SynthesisActionHook {
             var KPort preNodeWritePort = if (preNode !== null)
                     createPort => [
                         node = preNode
-                        addOutsidePortLabel("pre(" + vo.name + ")")
+                        val KLabel label = addOutsidePortLabel("pre(" + vo.name + ")")
+                        label.getKRendering => [
+                            fontSize = 11;
+                            fontBold = true;
+                        ]
                     ]
 
             // Create an input node if needed
@@ -403,6 +415,8 @@ class InducedDataflowHook extends SynthesisActionHook {
         DiagramSyntheses.setLayoutOption(node, CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
         DiagramSyntheses.setLayoutOption(node, CoreOptions::DIRECTION, Direction.RIGHT)
         DiagramSyntheses.setLayoutOption(node, LayeredOptions::FEEDBACK_EDGES, true);
+        DiagramSyntheses.setLayoutOption(node, CoreOptions::SPACING_NODE_NODE, 20.0);
+        DiagramSyntheses.setLayoutOption(node, LayeredOptions::SPACING_EDGE_NODE_BETWEEN_LAYERS, 20.0);
 
     }
 
@@ -417,11 +431,18 @@ class InducedDataflowHook extends SynthesisActionHook {
             it.targetPort = targetPort;
             it.target = targetPort.node;
             it.addPolyline => [
-                it.lineWidth = 1
+                it.lineWidth = 2
                 // Default arrow head
-                if(arrowhead) it.addHeadArrowDecorator
+                if (arrowhead)
+                    it.addHeadArrowDecorator => [
+                        it.selectionForeground = Colors.BLUE
+                        it.selectionLineWidth = 3
+                    ]
                 // Junction points because of hyperedges
                 it.addJunctionPointDecorator
+
+                it.selectionForeground = Colors.BLUE
+                it.selectionLineWidth = 3
             ];
         ]
 
@@ -439,15 +460,13 @@ class InducedDataflowHook extends SynthesisActionHook {
                     it.points += createKPosition(LEFT, 0, 0.35f, BOTTOM, 0.5f, 0);
                     it.points += createKPosition(LEFT, 0, 0.5f, BOTTOM, 0, 0.35f);
                     it.points += createKPosition(RIGHT, 0, 0.35f, BOTTOM, 0.5f, 0);
-
                 ]
                 it.background = Colors.WHITE
             ]
-            node.width = 40
-            node.height = 40
+            node.width = 30
+            node.height = 30
         ]
-        preNode.addLayoutParam(CoreOptions::NODE_SIZE_CONSTRAINTS,
-            EnumSet.of(SizeConstraint.PORTS, SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS))
+        preNode.addLayoutParam(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.fixed)
 
         return preNode
     }
@@ -466,10 +485,14 @@ class InducedDataflowHook extends SynthesisActionHook {
             node.width = 35
             node.height = 10
         ]
-        inputNode.addInsideCenteredNodeLabel(vo.name)
+        val KLabel label = inputNode.addInsideCenteredNodeLabel(vo.name)
+        label.getKRendering => [
+            fontSize = 11;
+            fontBold = true;
+        ]
         inputNode.addLayoutParam(CoreOptions::ALIGNMENT, Alignment.LEFT)
         inputNode.addLayoutParam(CoreOptions::NODE_SIZE_CONSTRAINTS,
-            EnumSet.of(SizeConstraint.PORTS, SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS))
+            EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS))
         inputNode.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint.FIRST)
         createPort => [node = inputNode]
         return inputNode
@@ -490,10 +513,14 @@ class InducedDataflowHook extends SynthesisActionHook {
             node.width = 35
             node.height = 10
         ]
-        outputNode.addInsideCenteredNodeLabel(vo.name)
+        val KLabel label = outputNode.addInsideCenteredNodeLabel(vo.name)
+        label.getKRendering => [
+            fontSize = 11;
+            fontBold = true;
+        ]
         outputNode.addLayoutParam(CoreOptions::ALIGNMENT, Alignment.RIGHT)
         outputNode.addLayoutParam(CoreOptions::NODE_SIZE_CONSTRAINTS,
-            EnumSet.of(SizeConstraint.PORTS, SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS))
+            EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS))
         outputNode.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint.LAST)
         createPort => [node = outputNode]
 
