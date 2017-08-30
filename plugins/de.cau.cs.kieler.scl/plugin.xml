@@ -2,16 +2,23 @@
 <?eclipse version="3.0"?>
 
 <plugin>
+
+
    <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated SCL -->
+      <!-- @generated scl -->
       <package
             uri="http://kieler.cs.cau.de/scl/0.2.0"
-            class="de.cau.cs.kieler.scl.scl.SclPackage"
+            class="de.cau.cs.kieler.scl.SCLPackage"
             genModel="model/scl.genmodel"/>
    </extension>
-
    <extension
-         point="de.cau.cs.kieler.kico.extension">
+         point="de.cau.cs.kieler.kicool.system">
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.scl.netlist.kico">
+      </TransformationSystem>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kicool.resource.extension">
       <ExtensionInformation
             ePackageName="scl"
             editor_id="de.cau.cs.kieler.scl.SCL"
@@ -20,24 +27,13 @@
       </ExtensionInformation>
    </extension>
    <extension
-         point="de.cau.cs.kieler.kico.feature">
-      <featureClass
-            class="de.cau.cs.kieler.scl.features.SCL">
-      </featureClass>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.kico.transformation">
-      <productionTransformationClass
-            class="de.cau.cs.kieler.scl.transformations.SCLToSCGTransformation">
-      </productionTransformationClass>
-   </extension>
-
-   <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated scl -->
-      <package
-            uri="http://kieler.cs.cau.de/scl/0.2.0"
-            class="de.cau.cs.kieler.scl.SCLPackage"
-            genModel="model/scl.genmodel"/>
+         point="de.cau.cs.kieler.kicool.processor">
+      <Processor
+            class="de.cau.cs.kieler.scl.processors.transformators.SCGToSCLTransformation">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scl.processors.transformators.SCLToSCGTransformation">
+      </Processor>
    </extension>
 
 </plugin>

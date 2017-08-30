@@ -8,10 +8,15 @@ import "http://kieler.cs.cau.de/kext/0.1.0" as kext
 import "http://kieler.cs.cau.de/scl/0.2.0"
 
 SCLProgram returns SCLProgram:
+    pragmas+=Pragma*
+    modules+=Module*
+;
+
+Module returns Module:
     (annotations += Annotation)*
     'module' name = ID ':'?
     (declarations+=DeclarationWOSemicolon)*
-    ((statements += InstructionStatement';')|(statements += MetaStatement))* (statements += Statement)? 
+    ((statements += InstructionStatement';') | (statements += MetaStatement))* (statements += Statement)? 
 ;
 
 Statement returns Statement:
@@ -44,9 +49,10 @@ Goto returns Goto:
 Assignment returns Assignment:    
     (annotations += Annotation)*
     valuedObject = [kexpressions::ValuedObject] 
-    ('[' indices += Expression ']')* 
-    operator=AssignOperator
+    ('[' indices += Expression ']')*
+    operator = AssignOperator
     expression = Expression
+    ('schedule' schedule+=ScheduleObjectReference+)?
 ;
 
 Conditional returns Conditional: 

@@ -7,6 +7,7 @@ import de.cau.cs.kieler.scl.Conditional;
 import de.cau.cs.kieler.scl.ElseScope;
 import de.cau.cs.kieler.scl.Goto;
 import de.cau.cs.kieler.scl.Label;
+import de.cau.cs.kieler.scl.Module;
 import de.cau.cs.kieler.scl.Parallel;
 import de.cau.cs.kieler.scl.Pause;
 import de.cau.cs.kieler.scl.SCLFactory;
@@ -67,6 +68,7 @@ public class SCLFactoryImpl extends EFactoryImpl implements SCLFactory {
     public EObject create(EClass eClass) {
         switch (eClass.getClassifierID()) {
             case SCLPackage.SCL_PROGRAM: return createSCLProgram();
+            case SCLPackage.MODULE: return createModule();
             case SCLPackage.PAUSE: return createPause();
             case SCLPackage.LABEL: return createLabel();
             case SCLPackage.GOTO: return createGoto();
@@ -89,6 +91,16 @@ public class SCLFactoryImpl extends EFactoryImpl implements SCLFactory {
     public SCLProgram createSCLProgram() {
         SCLProgramImpl sclProgram = new SCLProgramImpl();
         return sclProgram;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Module createModule() {
+        ModuleImpl module = new ModuleImpl();
+        return module;
     }
 
     /**

@@ -21,11 +21,11 @@ Require-Bundle: org.eclipse.xtext.ui;bundle-version="2.1.0",
  de.cau.cs.kieler.scg,
  de.cau.cs.kieler.klighd.ui.view;resolution:=optional,
  de.cau.cs.kieler.klighd,
- org.eclipse.xtext.xbase.lib
+ org.eclipse.xtext.xbase.lib,
+ de.cau.cs.kieler.kicool.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.scl.ui.contentassist,
  de.cau.cs.kieler.scl.ui.contentassist.antlr,
- de.cau.cs.kieler.scl.ui.handlers,
  de.cau.cs.kieler.scl.ui.quickfix,
  de.cau.cs.kieler.scl.ui.contentassist.antlr.internal
 Bundle-Activator: de.cau.cs.kieler.scl.ui.internal.SCLActivator

@@ -11,9 +11,8 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.scl.transformations
+package de.cau.cs.kieler.scl.processors.transformators
 
-import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.annotations.StringAnnotation
@@ -23,7 +22,8 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
@@ -35,39 +35,39 @@ import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scl.Goto
 import de.cau.cs.kieler.scl.Label
+import de.cau.cs.kieler.scl.Module
 import de.cau.cs.kieler.scl.Parallel
 import de.cau.cs.kieler.scl.Pause
+import de.cau.cs.kieler.scl.SCLFactory
 import de.cau.cs.kieler.scl.SCLProgram
 import de.cau.cs.kieler.scl.Scope
 import de.cau.cs.kieler.scl.Statement
 import de.cau.cs.kieler.scl.extensions.SCLExtensions
-import de.cau.cs.kieler.scl.features.SCLFeatures
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
-import java.util.Set
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.scl.SCLFactory
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import org.eclipse.xtend.lib.annotations.Accessors
+
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 
 /** 
  * SCL to SCG Transformation 
  * 
- * @author ssm, cmot
+ * @author ssm, cmot, als
  * @kieler.design 2014-01-27 proposed 
  * @kieler.rating 2014-01-27 proposed yellow
  */
-// This class contains all mandatory methods for the SCGDEP-to-SCGBB-Transformation.
-class SCLToSCGTransformation extends AbstractProductionTransformation implements Traceable {
+class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements Traceable {
 
     private static val String ANNOTATION_HOSTCODE = "hostcode"
     private static val String ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"
@@ -93,46 +93,102 @@ class SCLToSCGTransformation extends AbstractProductionTransformation implements
     extension ScgFactory = ScgFactory::eINSTANCE
     extension AnnotationsFactory = AnnotationsFactory.eINSTANCE
 
-    override getProducedFeatureId() {
-        return SCGFeatures::BASIC_ID
-    }
+    // -------------------------------------------------------------------------
+    // -- Processor
+    // -------------------------------------------------------------------------
     
     override getId() {
-        return SCLTransformations::SCG_ID
+        return "de.cau.cs.kieler.scl.processors.transformators.scl2scg"
     }
     
-    
-        /**
-     * {@inheritDoc}
-     */
-    override Set<String> getRequiredFeatureIds() {
-        return Sets.newHashSet(SCLFeatures.BASIC_ID)
+    override getName() {
+        return "SCL to SCG"
     }
     
+    override getType() {
+        return ProcessorType.TRANSFORMATOR
+    }
     
+    override process() {
+        setModel(getModel.transformSCLToSCG)
+    }
+    
+//    override getProducedFeatureId() {
+//        return SCGFeatures::BASIC_ID
+//    }
+//    override Set<String> getRequiredFeatureIds() {
+//        return Sets.newHashSet(SCLFeatures.BASIC_ID)
+//    }   
+ 
+    // -------------------------------------------------------------------------
+    // -- M2M Transformation 
+    // -------------------------------------------------------------------------
 
     // M2M Mapping
-    //    private val nodeMapping = new HashMap<Node, Node>
-    //    private val revNodeMapping = new HashMap<Node, Node>
     private val valuedObjectMapping = new HashMap<ValuedObject, ValuedObject>
     private val nodeMapping = new HashMap<EObject, List<Node>>()
     private val reverseNodeMapping = new HashMap<Node, EObject>()
     private val labelMapping = new HashMap<Label, Node>()
     private val gotoFlows = new HashMap<Goto, List<ControlFlow>>()
     private val unmappedLabels = new LinkedList<Label>
-
-    // -------------------------------------------------------------------------
-    // -- M2M Transformation 
-    // -------------------------------------------------------------------------
-    override transform(EObject eObject) {
-        (eObject as SCLProgram).transformSCLToSCG
-    }
-
+    
     /*
-	 * Initialize transformation by removing double jumps and explicitly set initial values
-	 * Removes local declarations (StatementScopes)
-	 */
-    def SCLProgram initialize(SCLProgram program) {
+     * Transformation method
+     */
+    def SCGraphs transformSCLToSCG(SCLProgram program) {
+        // Create new SCG...
+        val scgs = createSCGraphs
+        creationalTransformation(program, scgs)
+
+        for (module : program.modules) {
+            val scg = createSCGraph
+            scgs.scgs += scg
+            module.initialize
+            	
+            // ... and copy declarations.
+            for (declaration : module.declarations) {
+                val newDeclaration = createDeclaration(declaration).trace(declaration)
+                newDeclaration.annotations.addAll(declaration.annotations.map[copy])
+                for (valuedObject : declaration.valuedObjects) {
+                    val newValuedObject = createValuedObject(valuedObject.name).trace(valuedObject)
+                    newDeclaration.valuedObjects += newValuedObject
+                    valuedObjectMapping.put(valuedObject, newValuedObject)
+                }
+                scg.declarations += newDeclaration
+            }
+    
+            module.transform(scg, null)
+            module.eAllContents.filter(Goto).forEach[transform(scg, gotoFlows.get(it))]
+    
+            scg.removeSuperflousConditionals
+            
+            val hostcodeAnnotations = module.getAnnotations.filter(typeof(StringAnnotation)).filter[ name == ANNOTATION_HOSTCODE ] 
+            hostcodeAnnotations.forEach [
+                scg.createStringAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
+            ]        
+            
+            val threadPathTypes = (scg.nodes.head as Entry).getThreadControlFlowTypes
+            for (entry : threadPathTypes.keySet) {
+                if (!entry.hasAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE))
+                    entry.createStringAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
+            }             
+        }
+        
+        return scgs
+    }
+    
+    /*
+     * Initialize transformation by removing double jumps and explicitly set initial values
+     * Removes local declarations (StatementScopes)
+     */
+    def void initialize(Module program) {
+        valuedObjectMapping.clear
+        nodeMapping.clear
+        reverseNodeMapping.clear
+        labelMapping.clear
+        gotoFlows.clear
+        unmappedLabels.clear
+        
         program.removeDoubleJumps
         program.removeLocalDeclarations
         program.removeRedundantForks
@@ -152,49 +208,6 @@ class SCLToSCGTransformation extends AbstractProductionTransformation implements
                 }
             }
         ]
-
-        program
-    }
-    
-    /*
-     * Transformation method
-     */
-    def SCGraph transformSCLToSCG(SCLProgram program) {
-    	program.initialize
-
-        // Create new SCG...
-        val scg = createSCGraph
-        creationalTransformation(program, scg)
-
-        // ... and copy declarations.
-        for (declaration : program.declarations) {
-            val newDeclaration = createDeclaration(declaration).trace(declaration)
-            newDeclaration.annotations.addAll(declaration.annotations.map[copy])
-            for (valuedObject : declaration.valuedObjects) {
-                val newValuedObject = createValuedObject(valuedObject.name).trace(valuedObject)
-                newDeclaration.valuedObjects += newValuedObject
-                valuedObjectMapping.put(valuedObject, newValuedObject)
-            }
-            scg.declarations += newDeclaration
-        }
-
-        program.transform(scg, null)
-        program.eAllContents.filter(Goto).forEach[transform(scg, gotoFlows.get(it))]
-
-        scg.removeSuperflousConditionals
-        
-        val hostcodeAnnotations = program.annotations.filter(typeof(StringAnnotation)).filter[ name == ANNOTATION_HOSTCODE ] 
-        hostcodeAnnotations.forEach [
-            scg.createStringAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
-        ]        
-        
-        val threadPathTypes = (scg.nodes.head as Entry).getThreadControlFlowTypes
-        for (entry : threadPathTypes.keySet) {
-            if (!entry.hasAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE))
-                entry.createStringAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
-        }             
-
-        scg
     }
     
     
@@ -213,7 +226,7 @@ class SCLToSCGTransformation extends AbstractProductionTransformation implements
     }
     
 
-    private dispatch def SCLContinuation transform(SCLProgram program, SCGraph scg, List<ControlFlow> incoming) {
+    private dispatch def SCLContinuation transform(Module program, SCGraph scg, List<ControlFlow> incoming) {
         val entry = createEntry.trace(program).createNodeList(program) as Entry => [
             scg.nodes += it
         ]
@@ -221,7 +234,7 @@ class SCLToSCGTransformation extends AbstractProductionTransformation implements
             createExit.trace(program).createNodeList(program) as Exit => [
                 scg.nodes += it
                 it.entry = entry
-                it.controlFlowTarget(continuation.controlFlows)
+                it.controlFlowTarget(continuation.getControlFlows)
                 labelMapping.put(continuation.label, it)
                 for (l : unmappedLabels)
                     labelMapping.put(l, it)
@@ -436,4 +449,10 @@ class SCLToSCGTransformation extends AbstractProductionTransformation implements
 
 
 // -------------------------------------------------------------------------   
+}
+
+class SCLContinuation {
+    @Accessors Node node
+    @Accessors List<ControlFlow> controlFlows = <ControlFlow> newArrayList
+    @Accessors Label Label
 }

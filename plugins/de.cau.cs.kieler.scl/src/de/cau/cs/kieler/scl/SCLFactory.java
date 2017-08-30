@@ -31,6 +31,15 @@ public interface SCLFactory extends EFactory {
     SCLProgram createSCLProgram();
 
     /**
+     * Returns a new object of class '<em>Module</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Module</em>'.
+     * @generated
+     */
+    Module createModule();
+
+    /**
      * Returns a new object of class '<em>Pause</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

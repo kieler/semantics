@@ -25,6 +25,35 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	public class SCLProgramElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.scl.SCL.SCLProgram");
 		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cPragmasAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cPragmasPragmaParserRuleCall_0_0 = (RuleCall)cPragmasAssignment_0.eContents().get(0);
+		private final Assignment cModulesAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cModulesModuleParserRuleCall_1_0 = (RuleCall)cModulesAssignment_1.eContents().get(0);
+		
+		//SCLProgram:
+		//	pragmas+=Pragma*
+		//	modules+=Module*;
+		@Override public ParserRule getRule() { return rule; }
+
+		//pragmas+=Pragma* modules+=Module*
+		public Group getGroup() { return cGroup; }
+
+		//pragmas+=Pragma*
+		public Assignment getPragmasAssignment_0() { return cPragmasAssignment_0; }
+
+		//Pragma
+		public RuleCall getPragmasPragmaParserRuleCall_0_0() { return cPragmasPragmaParserRuleCall_0_0; }
+
+		//modules+=Module*
+		public Assignment getModulesAssignment_1() { return cModulesAssignment_1; }
+
+		//Module
+		public RuleCall getModulesModuleParserRuleCall_1_0() { return cModulesModuleParserRuleCall_1_0; }
+	}
+
+	public class ModuleElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.scl.SCL.Module");
+		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
 		private final Keyword cModuleKeyword_1 = (Keyword)cGroup.eContents().get(1);
@@ -43,7 +72,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cStatementsAssignment_6 = (Assignment)cGroup.eContents().get(6);
 		private final RuleCall cStatementsStatementParserRuleCall_6_0 = (RuleCall)cStatementsAssignment_6.eContents().get(0);
 		
-		//SCLProgram:
+		//Module:
 		//	annotations+=Annotation*
 		//	'module' name=ID ':'?
 		//	declarations+=DeclarationWOSemicolon* (statements+=InstructionStatement ';' | statements+=MetaStatement)*
@@ -288,16 +317,20 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOperatorAssignOperatorEnumRuleCall_3_0 = (RuleCall)cOperatorAssignment_3.eContents().get(0);
 		private final Assignment cExpressionAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cExpressionExpressionParserRuleCall_4_0 = (RuleCall)cExpressionAssignment_4.eContents().get(0);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cScheduleKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cScheduleAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cScheduleScheduleObjectReferenceParserRuleCall_5_1_0 = (RuleCall)cScheduleAssignment_5_1.eContents().get(0);
 		
 		//Assignment:
 		//	annotations+=Annotation*
 		//	valuedObject=[kexpressions::ValuedObject] ('[' indices+=Expression ']')*
 		//	operator=AssignOperator
-		//	expression=Expression;
+		//	expression=Expression ('schedule' schedule+=ScheduleObjectReference+)?;
 		@Override public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* valuedObject=[kexpressions::ValuedObject] ('[' indices+=Expression ']')*
-		//operator=AssignOperator expression=Expression
+		//operator=AssignOperator expression=Expression ('schedule' schedule+=ScheduleObjectReference+)?
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -341,6 +374,18 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 		//Expression
 		public RuleCall getExpressionExpressionParserRuleCall_4_0() { return cExpressionExpressionParserRuleCall_4_0; }
+
+		//('schedule' schedule+=ScheduleObjectReference+)?
+		public Group getGroup_5() { return cGroup_5; }
+
+		//'schedule'
+		public Keyword getScheduleKeyword_5_0() { return cScheduleKeyword_5_0; }
+
+		//schedule+=ScheduleObjectReference+
+		public Assignment getScheduleAssignment_5_1() { return cScheduleAssignment_5_1; }
+
+		//ScheduleObjectReference
+		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_5_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_5_1_0; }
 	}
 
 	public class ConditionalElements extends AbstractParserRuleElementFinder {
@@ -801,6 +846,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	
 	private final SCLProgramElements pSCLProgram;
+	private final ModuleElements pModule;
 	private final StatementElements pStatement;
 	private final InstructionStatementElements pInstructionStatement;
 	private final MetaStatementElements pMetaStatement;
@@ -840,6 +886,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		this.gaAnnotations = gaAnnotations;
 		this.gaTerminals = gaTerminals;
 		this.pSCLProgram = new SCLProgramElements();
+		this.pModule = new ModuleElements();
 		this.pStatement = new StatementElements();
 		this.pInstructionStatement = new InstructionStatementElements();
 		this.pMetaStatement = new MetaStatementElements();
@@ -898,16 +945,27 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//SCLProgram:
-	//	annotations+=Annotation*
-	//	'module' name=ID ':'?
-	//	declarations+=DeclarationWOSemicolon* (statements+=InstructionStatement ';' | statements+=MetaStatement)*
-	//	statements+=Statement?;
+	//	pragmas+=Pragma*
+	//	modules+=Module*;
 	public SCLProgramElements getSCLProgramAccess() {
 		return pSCLProgram;
 	}
 	
 	public ParserRule getSCLProgramRule() {
 		return getSCLProgramAccess().getRule();
+	}
+
+	//Module:
+	//	annotations+=Annotation*
+	//	'module' name=ID ':'?
+	//	declarations+=DeclarationWOSemicolon* (statements+=InstructionStatement ';' | statements+=MetaStatement)*
+	//	statements+=Statement?;
+	public ModuleElements getModuleAccess() {
+		return pModule;
+	}
+	
+	public ParserRule getModuleRule() {
+		return getModuleAccess().getRule();
 	}
 
 	//Statement:
@@ -975,7 +1033,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//	annotations+=Annotation*
 	//	valuedObject=[kexpressions::ValuedObject] ('[' indices+=Expression ']')*
 	//	operator=AssignOperator
-	//	expression=Expression;
+	//	expression=Expression ('schedule' schedule+=ScheduleObjectReference+)?;
 	public AssignmentElements getAssignmentAccess() {
 		return pAssignment;
 	}

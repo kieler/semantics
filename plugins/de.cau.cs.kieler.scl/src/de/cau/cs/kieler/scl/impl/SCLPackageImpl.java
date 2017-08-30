@@ -15,6 +15,7 @@ import de.cau.cs.kieler.scl.Conditional;
 import de.cau.cs.kieler.scl.ElseScope;
 import de.cau.cs.kieler.scl.Goto;
 import de.cau.cs.kieler.scl.Label;
+import de.cau.cs.kieler.scl.Module;
 import de.cau.cs.kieler.scl.Parallel;
 import de.cau.cs.kieler.scl.Pause;
 import de.cau.cs.kieler.scl.SCLFactory;
@@ -45,6 +46,13 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * @generated
      */
     private EClass sclProgramEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass moduleEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -211,8 +219,26 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getSCLProgram_Name() {
-        return (EAttribute)sclProgramEClass.getEStructuralFeatures().get(0);
+    public EReference getSCLProgram_Modules() {
+        return (EReference)sclProgramEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getModule() {
+        return moduleEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getModule_Name() {
+        return (EAttribute)moduleEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -406,7 +432,10 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
 
         // Create classes and their features
         sclProgramEClass = createEClass(SCL_PROGRAM);
-        createEAttribute(sclProgramEClass, SCL_PROGRAM__NAME);
+        createEReference(sclProgramEClass, SCL_PROGRAM__MODULES);
+
+        moduleEClass = createEClass(MODULE);
+        createEAttribute(moduleEClass, MODULE__NAME);
 
         statementEClass = createEClass(STATEMENT);
 
@@ -473,7 +502,8 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
         // Set bounds for type parameters
 
         // Add supertypes to classes
-        sclProgramEClass.getESuperTypes().add(this.getScope());
+        sclProgramEClass.getESuperTypes().add(theAnnotationsPackage.getPragmatable());
+        moduleEClass.getESuperTypes().add(this.getScope());
         statementEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         statementContainerEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         scopeEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
@@ -494,7 +524,10 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
 
         // Initialize classes and features; add operations and parameters
         initEClass(sclProgramEClass, SCLProgram.class, "SCLProgram", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getSCLProgram_Name(), ecorePackage.getEString(), "name", null, 0, 1, SCLProgram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getSCLProgram_Modules(), this.getModule(), null, "modules", null, 1, -1, SCLProgram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(moduleEClass, Module.class, "Module", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getModule_Name(), ecorePackage.getEString(), "name", null, 0, 1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(statementEClass, Statement.class, "Statement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

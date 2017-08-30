@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.scl.transformations
+package de.cau.cs.kieler.scl.processors.transformators
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Expression
@@ -42,6 +42,9 @@ import java.util.HashMap
 import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
 
 /** 
  * SCG to SCL Transformation 
@@ -51,8 +54,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.rating 2013-10-24 proposed yellow
  */
 
-// This class contians all mandatory methods for the SCGDEP-to-SCGBB-Transformation.
-class SCGToSCLTransformation {
+class SCGToSCLTransformation extends Processor<SCGraphs, SCLProgram> {
     
     @Inject
     extension SCGControlFlowExtensions
@@ -62,53 +64,72 @@ class SCGToSCLTransformation {
     
     @Inject 
     extension SCLExtensions
-    
     extension SCLFactory = SCLFactory::eINSTANCE
     
-
     @Inject
     extension KExpressionsDeclarationExtensions
 
     @Inject
     extension KExpressionsValuedObjectExtensions
 
-         
-    // M2M Mapping
-    private val processedNodes = <Node> newLinkedList
-    private val valuedObjectMapping = new HashMap<ValuedObject, ValuedObject>
-    private val nodeLabelMapping = new HashMap<Node, Label>
+    // -------------------------------------------------------------------------
+    // -- Processor
+    // -------------------------------------------------------------------------
+    
+    override getId() {
+        return "de.cau.cs.kieler.scl.processors.transformators.scg2scl"
+    }
+    
+    override getName() {
+        return "SCG to SCL"
+    }
+    
+    override getType() {
+        return ProcessorType.TRANSFORMATOR
+    }
+    
+    override process() {
+        setModel(getModel.transformSCGToSCL)
+    }
     
     // -------------------------------------------------------------------------
     // -- M2M Transformation 
     // -------------------------------------------------------------------------
     
-    def SCLProgram transformSCGToSCL(SCGraph scg) {
-        processedNodes.clear
-        valuedObjectMapping.clear 
-        nodeLabelMapping.clear
-        
-        // Create new SCL program...
+    // M2M Mapping
+    private val processedNodes = <Node> newLinkedList
+    private val valuedObjectMapping = new HashMap<ValuedObject, ValuedObject>
+    private val nodeLabelMapping = new HashMap<Node, Label>
+    
+    def SCLProgram transformSCGToSCL(SCGraphs scgs) {
         val scl = createSCLProgram()
-        scl.name = 'M' + scg.hashCode.toString
+        for (scg : scgs.scgs) {
+            processedNodes.clear
+            valuedObjectMapping.clear 
+            nodeLabelMapping.clear
+        
+            // Create new SCL module
+            val m = createModule
+            m.name = 'M' + scg.hashCode.toString
                   
-        // ... and copy declarations.
-        for(declaration : scg.declarations) {
-            val newDeclaration = createDeclaration(declaration)
-            newDeclaration.annotations += declaration.annotations.map[copy]
-            for (valuedObject : declaration.valuedObjects) {
-            	val newValuedObject = createValuedObject(valuedObject.name)
-            	newDeclaration.valuedObjects += newValuedObject
-	            valuedObjectMapping.put(valuedObject, newValuedObject)
+            for(declaration : scg.declarations) {
+                val newDeclaration = createDeclaration(declaration)
+                newDeclaration.annotations += declaration.annotations.map[copy]
+                for (valuedObject : declaration.valuedObjects) {
+                	val newValuedObject = createValuedObject(valuedObject.name)
+                	newDeclaration.valuedObjects += newValuedObject
+    	            valuedObjectMapping.put(valuedObject, newValuedObject)
+                }
+                m.declarations += newDeclaration 
             }
-            scl.declarations += newDeclaration 
+        
+            scg.transform(m)
+        
+            m.removeSuperfluousGotos
+            m.optimizeLabels
         }
         
-        scg.transform(scl)
-        
-        scl.removeSuperfluousGotos
-        scl.optimizeLabels
-        
-        return scl;
+        return scl
     }
     
     def dispatch Scope transform(SCGraph scg, Scope scope) {
@@ -240,7 +261,5 @@ class SCGToSCLTransformation {
         }
         newExpression
     }
-
-   // -------------------------------------------------------------------------   
-
+    
 }

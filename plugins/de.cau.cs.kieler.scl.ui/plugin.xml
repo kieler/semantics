@@ -226,28 +226,28 @@
     </extension>
 
 
-    <!-- marker definitions for de.cau.cs.kieler.scl.SCL -->
-    <extension
-            id="scl.check.fast"
-            name="SCL Problem"
-            point="org.eclipse.core.resources.markers">
-        <super type="org.eclipse.xtext.ui.check.fast"/>
-        <persistent value="true"/>
-    </extension>
-    <extension
-            id="scl.check.normal"
-            name="SCL Problem"
-            point="org.eclipse.core.resources.markers">
-        <super type="org.eclipse.xtext.ui.check.normal"/>
-        <persistent value="true"/>
-    </extension>
-    <extension
-            id="scl.check.expensive"
-            name="SCL Problem"
-            point="org.eclipse.core.resources.markers">
-        <super type="org.eclipse.xtext.ui.check.expensive"/>
-        <persistent value="true"/>
-    </extension>
+	<!-- marker definitions for de.cau.cs.kieler.scl.SCL -->
+	<extension
+	        id="scl.check.fast"
+	        name="SCL Problem"
+	        point="org.eclipse.core.resources.markers">
+	    <super type="org.eclipse.xtext.ui.check.fast"/>
+	    <persistent value="true"/>
+	</extension>
+	<extension
+	        id="scl.check.normal"
+	        name="SCL Problem"
+	        point="org.eclipse.core.resources.markers">
+	    <super type="org.eclipse.xtext.ui.check.normal"/>
+	    <persistent value="true"/>
+	</extension>
+	<extension
+	        id="scl.check.expensive"
+	        name="SCL Problem"
+	        point="org.eclipse.core.resources.markers">
+	    <super type="org.eclipse.xtext.ui.check.expensive"/>
+	    <persistent value="true"/>
+	</extension>
 
 	<!-- Quick Outline -->
 	<extension
@@ -311,16 +311,6 @@
         </markerResolutionGenerator>
     </extension>
     <extension
-          point="de.cau.cs.kieler.kico.ui.transformation">
-       <editor
-             editor="de.cau.cs.kieler.scl.SCL"
-             features="scg, codegeneration, s, s.target, ssc, T_scg.ssa.scssa, T_scg.ssa.cssa, T_scg.ssa.regular"
-             label="Netlist Compilation (SCL)"
-             preferred="s.c, scl.scg, scg.ssa.scssa"
-             priority="100">
-       </editor>
-    </extension>
-    <extension
           point="de.cau.cs.kieler.klighd.ui.view.editor">
        <editor
              controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
@@ -331,8 +321,15 @@
           point="de.cau.cs.kieler.klighd.diagramSyntheses">
        <diagramSynthesis
              class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scl.ui.synthesis.SCLSynthesis"
-             id="de.cau.cs.kieler.SCLasSCGSynthesis">
+             id="de.cau.cs.kieler.SCLGraphSynthesis">
        </diagramSynthesis>
+    </extension>
+    <extension
+          point="de.cau.cs.kieler.kicool.ui.system">
+       <defaultSystem
+             editor="de.cau.cs.kieler.scl.SCL"
+             id="de.cau.cs.kieler.scl.netlist">
+       </defaultSystem>
     </extension>
     <!--<extension
           point="de.cau.cs.kieler.kico.ui.transformation">

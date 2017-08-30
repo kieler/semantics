@@ -4,6 +4,7 @@ package de.cau.cs.kieler.scl.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
 
+import de.cau.cs.kieler.annotations.Pragmatable;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
@@ -15,6 +16,7 @@ import de.cau.cs.kieler.scl.Conditional;
 import de.cau.cs.kieler.scl.ElseScope;
 import de.cau.cs.kieler.scl.Goto;
 import de.cau.cs.kieler.scl.Label;
+import de.cau.cs.kieler.scl.Module;
 import de.cau.cs.kieler.scl.Parallel;
 import de.cau.cs.kieler.scl.Pause;
 import de.cau.cs.kieler.scl.SCLPackage;
@@ -89,10 +91,17 @@ public class SCLSwitch<T> extends Switch<T> {
             case SCLPackage.SCL_PROGRAM: {
                 SCLProgram sclProgram = (SCLProgram)theEObject;
                 T result = caseSCLProgram(sclProgram);
-                if (result == null) result = caseScope(sclProgram);
-                if (result == null) result = caseDeclarationScope(sclProgram);
-                if (result == null) result = caseStatementContainer(sclProgram);
-                if (result == null) result = caseAnnotatable(sclProgram);
+                if (result == null) result = casePragmatable(sclProgram);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCLPackage.MODULE: {
+                Module module = (Module)theEObject;
+                T result = caseModule(module);
+                if (result == null) result = caseScope(module);
+                if (result == null) result = caseDeclarationScope(module);
+                if (result == null) result = caseStatementContainer(module);
+                if (result == null) result = caseAnnotatable(module);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -220,6 +229,21 @@ public class SCLSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseSCLProgram(SCLProgram object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Module</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Module</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseModule(Module object) {
         return null;
     }
 
@@ -400,6 +424,21 @@ public class SCLSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseElseScope(ElseScope object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Pragmatable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Pragmatable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T casePragmatable(Pragmatable object) {
         return null;
     }
 

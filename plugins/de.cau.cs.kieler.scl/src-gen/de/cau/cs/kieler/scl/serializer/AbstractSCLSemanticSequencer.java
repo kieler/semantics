@@ -46,6 +46,7 @@ import de.cau.cs.kieler.scl.Conditional;
 import de.cau.cs.kieler.scl.ElseScope;
 import de.cau.cs.kieler.scl.Goto;
 import de.cau.cs.kieler.scl.Label;
+import de.cau.cs.kieler.scl.Module;
 import de.cau.cs.kieler.scl.Parallel;
 import de.cau.cs.kieler.scl.Pause;
 import de.cau.cs.kieler.scl.SCLPackage;
@@ -656,6 +657,9 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 			case SCLPackage.LABEL:
 				sequence_Label(context, (Label) semanticObject); 
 				return; 
+			case SCLPackage.MODULE:
+				sequence_Module(context, (Module) semanticObject); 
+				return; 
 			case SCLPackage.PARALLEL:
 				sequence_Parallel(context, (Parallel) semanticObject); 
 				return; 
@@ -684,7 +688,14 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *     Effect returns Assignment
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* valuedObject=[ValuedObject|ID] indices+=Expression* operator=AssignOperator expression=Expression)
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         valuedObject=[ValuedObject|ID] 
+	 *         indices+=Expression* 
+	 *         operator=AssignOperator 
+	 *         expression=Expression 
+	 *         schedule+=ScheduleObjectReference*
+	 *     )
 	 */
 	protected void sequence_Assignment(ISerializationContext context, de.cau.cs.kieler.scl.Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -765,6 +776,24 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     Module returns Module
+	 *
+	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         name=ID 
+	 *         declarations+=DeclarationWOSemicolon* 
+	 *         (statements+=InstructionStatement | statements+=MetaStatement)* 
+	 *         statements+=Statement?
+	 *     )
+	 */
+	protected void sequence_Module(ISerializationContext context, Module semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Statement returns Parallel
 	 *     InstructionStatement returns Parallel
 	 *     Parallel returns Parallel
@@ -796,13 +825,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *     SCLProgram returns SCLProgram
 	 *
 	 * Constraint:
-	 *     (
-	 *         annotations+=Annotation* 
-	 *         name=ID 
-	 *         declarations+=DeclarationWOSemicolon* 
-	 *         (statements+=InstructionStatement | statements+=MetaStatement)* 
-	 *         statements+=Statement?
-	 *     )
+	 *     ((pragmas+=Pragma+ modules+=Module+) | modules+=Module+)?
 	 */
 	protected void sequence_SCLProgram(ISerializationContext context, SCLProgram semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

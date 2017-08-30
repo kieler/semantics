@@ -4,6 +4,7 @@ package de.cau.cs.kieler.scl.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
 
+import de.cau.cs.kieler.annotations.Pragmatable;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
@@ -15,6 +16,7 @@ import de.cau.cs.kieler.scl.Conditional;
 import de.cau.cs.kieler.scl.ElseScope;
 import de.cau.cs.kieler.scl.Goto;
 import de.cau.cs.kieler.scl.Label;
+import de.cau.cs.kieler.scl.Module;
 import de.cau.cs.kieler.scl.Parallel;
 import de.cau.cs.kieler.scl.Pause;
 import de.cau.cs.kieler.scl.SCLPackage;
@@ -92,6 +94,10 @@ public class SCLAdapterFactory extends AdapterFactoryImpl {
                 return createSCLProgramAdapter();
             }
             @Override
+            public Adapter caseModule(Module object) {
+                return createModuleAdapter();
+            }
+            @Override
             public Adapter caseStatement(Statement object) {
                 return createStatementAdapter();
             }
@@ -138,6 +144,10 @@ public class SCLAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseElseScope(ElseScope object) {
                 return createElseScopeAdapter();
+            }
+            @Override
+            public Adapter casePragmatable(Pragmatable object) {
+                return createPragmatableAdapter();
             }
             @Override
             public Adapter caseAnnotatable(Annotatable object) {
@@ -190,6 +200,20 @@ public class SCLAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createSCLProgramAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.Module <em>Module</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scl.Module
+     * @generated
+     */
+    public Adapter createModuleAdapter() {
         return null;
     }
 
@@ -358,6 +382,20 @@ public class SCLAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createElseScopeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.Pragmatable <em>Pragmatable</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.annotations.Pragmatable
+     * @generated
+     */
+    public Adapter createPragmatableAdapter() {
         return null;
     }
 

@@ -67,7 +67,54 @@ public interface SCLPackage extends EPackage {
      * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getScope()
      * @generated
      */
-    int SCOPE = 3;
+    int SCOPE = 4;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scl.impl.ModuleImpl <em>Module</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scl.impl.ModuleImpl
+     * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getModule()
+     * @generated
+     */
+    int MODULE = 1;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scl.impl.SCLProgramImpl <em>Program</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scl.impl.SCLProgramImpl
+     * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getSCLProgram()
+     * @generated
+     */
+    int SCL_PROGRAM = 0;
+
+    /**
+     * The feature id for the '<em><b>Pragmas</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCL_PROGRAM__PRAGMAS = AnnotationsPackage.PRAGMATABLE__PRAGMAS;
+
+    /**
+     * The feature id for the '<em><b>Modules</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCL_PROGRAM__MODULES = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Program</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCL_PROGRAM_FEATURE_COUNT = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -106,23 +153,13 @@ public interface SCLPackage extends EPackage {
     int SCOPE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.scl.impl.SCLProgramImpl <em>Program</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.scl.impl.SCLProgramImpl
-     * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getSCLProgram()
-     * @generated
-     */
-    int SCL_PROGRAM = 0;
-
-    /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCL_PROGRAM__ANNOTATIONS = SCOPE__ANNOTATIONS;
+    int MODULE__ANNOTATIONS = SCOPE__ANNOTATIONS;
 
     /**
      * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
@@ -131,7 +168,7 @@ public interface SCLPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCL_PROGRAM__DECLARATIONS = SCOPE__DECLARATIONS;
+    int MODULE__DECLARATIONS = SCOPE__DECLARATIONS;
 
     /**
      * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -140,7 +177,7 @@ public interface SCLPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCL_PROGRAM__STATEMENTS = SCOPE__STATEMENTS;
+    int MODULE__STATEMENTS = SCOPE__STATEMENTS;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -149,16 +186,16 @@ public interface SCLPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCL_PROGRAM__NAME = SCOPE_FEATURE_COUNT + 0;
+    int MODULE__NAME = SCOPE_FEATURE_COUNT + 0;
 
     /**
-     * The number of structural features of the '<em>Program</em>' class.
+     * The number of structural features of the '<em>Module</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCL_PROGRAM_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 1;
+    int MODULE_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 1;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.scl.impl.StatementImpl <em>Statement</em>}' class.
@@ -168,7 +205,7 @@ public interface SCLPackage extends EPackage {
      * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getStatement()
      * @generated
      */
-    int STATEMENT = 1;
+    int STATEMENT = 2;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -196,7 +233,7 @@ public interface SCLPackage extends EPackage {
      * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getStatementContainer()
      * @generated
      */
-    int STATEMENT_CONTAINER = 2;
+    int STATEMENT_CONTAINER = 3;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -233,7 +270,7 @@ public interface SCLPackage extends EPackage {
      * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getPause()
      * @generated
      */
-    int PAUSE = 4;
+    int PAUSE = 5;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -261,7 +298,7 @@ public interface SCLPackage extends EPackage {
      * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getLabel()
      * @generated
      */
-    int LABEL = 5;
+    int LABEL = 6;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -298,7 +335,7 @@ public interface SCLPackage extends EPackage {
      * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getGoto()
      * @generated
      */
-    int GOTO = 6;
+    int GOTO = 7;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -335,7 +372,7 @@ public interface SCLPackage extends EPackage {
      * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getAssignment()
      * @generated
      */
-    int ASSIGNMENT = 7;
+    int ASSIGNMENT = 8;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -417,7 +454,7 @@ public interface SCLPackage extends EPackage {
      * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getConditional()
      * @generated
      */
-    int CONDITIONAL = 8;
+    int CONDITIONAL = 9;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -481,7 +518,7 @@ public interface SCLPackage extends EPackage {
      * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getParallel()
      * @generated
      */
-    int PARALLEL = 9;
+    int PARALLEL = 10;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -518,7 +555,7 @@ public interface SCLPackage extends EPackage {
      * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getThread()
      * @generated
      */
-    int THREAD = 10;
+    int THREAD = 11;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -564,7 +601,7 @@ public interface SCLPackage extends EPackage {
      * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getScopeStatement()
      * @generated
      */
-    int SCOPE_STATEMENT = 11;
+    int SCOPE_STATEMENT = 12;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -610,7 +647,7 @@ public interface SCLPackage extends EPackage {
      * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getElseScope()
      * @generated
      */
-    int ELSE_SCOPE = 12;
+    int ELSE_SCOPE = 13;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -660,15 +697,36 @@ public interface SCLPackage extends EPackage {
     EClass getSCLProgram();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scl.SCLProgram#getName <em>Name</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.SCLProgram#getModules <em>Modules</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Name</em>'.
-     * @see de.cau.cs.kieler.scl.SCLProgram#getName()
+     * @return the meta object for the containment reference list '<em>Modules</em>'.
+     * @see de.cau.cs.kieler.scl.SCLProgram#getModules()
      * @see #getSCLProgram()
      * @generated
      */
-    EAttribute getSCLProgram_Name();
+    EReference getSCLProgram_Modules();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scl.Module <em>Module</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Module</em>'.
+     * @see de.cau.cs.kieler.scl.Module
+     * @generated
+     */
+    EClass getModule();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scl.Module#getName <em>Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Name</em>'.
+     * @see de.cau.cs.kieler.scl.Module#getName()
+     * @see #getModule()
+     * @generated
+     */
+    EAttribute getModule_Name();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scl.Statement <em>Statement</em>}'.
@@ -889,12 +947,30 @@ public interface SCLPackage extends EPackage {
         EClass SCL_PROGRAM = eINSTANCE.getSCLProgram();
 
         /**
+         * The meta object literal for the '<em><b>Modules</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference SCL_PROGRAM__MODULES = eINSTANCE.getSCLProgram_Modules();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scl.impl.ModuleImpl <em>Module</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scl.impl.ModuleImpl
+         * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getModule()
+         * @generated
+         */
+        EClass MODULE = eINSTANCE.getModule();
+
+        /**
          * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute SCL_PROGRAM__NAME = eINSTANCE.getSCLProgram_Name();
+        EAttribute MODULE__NAME = eINSTANCE.getModule_Name();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scl.impl.StatementImpl <em>Statement</em>}' class.

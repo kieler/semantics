@@ -2,6 +2,9 @@
  */
 package de.cau.cs.kieler.scl;
 
+import de.cau.cs.kieler.annotations.Pragmatable;
+import org.eclipse.emf.common.util.EList;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -12,38 +15,28 @@ package de.cau.cs.kieler.scl;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scl.SCLProgram#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.SCLProgram#getModules <em>Modules</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.scl.SCLPackage#getSCLProgram()
  * @model
  * @generated
  */
-public interface SCLProgram extends Scope {
+public interface SCLProgram extends Pragmatable {
     /**
-     * Returns the value of the '<em><b>Name</b></em>' attribute.
+     * Returns the value of the '<em><b>Modules</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.scl.Module}.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Name</em>' attribute isn't clear,
+     * If the meaning of the '<em>Modules</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Name</em>' attribute.
-     * @see #setName(String)
-     * @see de.cau.cs.kieler.scl.SCLPackage#getSCLProgram_Name()
-     * @model
+     * @return the value of the '<em>Modules</em>' containment reference list.
+     * @see de.cau.cs.kieler.scl.SCLPackage#getSCLProgram_Modules()
+     * @model containment="true" required="true"
      * @generated
      */
-    String getName();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.scl.SCLProgram#getName <em>Name</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Name</em>' attribute.
-     * @see #getName()
-     * @generated
-     */
-    void setName(String value);
+    EList<Module> getModules();
 
 } // SCLProgram

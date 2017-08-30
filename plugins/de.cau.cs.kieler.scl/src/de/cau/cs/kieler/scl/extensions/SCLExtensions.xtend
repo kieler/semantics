@@ -292,29 +292,29 @@ class SCLExtensions {
      * @param scope The Scope to optimize
      * @return     The optimized Scope
      */
-    def removeLocalDeclarations(SCLProgram sclProgram) {
+    def removeLocalDeclarations(Scope scope) {
 
         // Collect all ValuedObject names
         val names = new LinkedList<String>
-        sclProgram.declarations.forEach[valuedObjects.forEach[names += name]]
+        scope.declarations.forEach[valuedObjects.forEach[names += name]]
 
-        val scopes = sclProgram.eAllContents.filter(Scope).toList
+        val scopes = scope.eAllContents.filter(Scope).toList
         val newDecls = new LinkedList<Declaration>
-        for (scope : scopes) {
-            scope.declarations.forEach [
+        for (subScope : scopes) {
+            subScope.declarations.forEach [
                 for (valObj : valuedObjects) {
 
                     // Check whether variable name is already defined
                     if (names.contains(valObj.name)) {
                         val oldName = valObj.name
                         valObj.name = valObj.name.makeUnique(names)
-                        scope.rename(oldName, valObj.name)
+                        subScope.rename(oldName, valObj.name)
                     }
                     names += valObj.name
 
                     // Add explicit assignment if initial value is given
                     if (valObj.initialValue != null) {
-                        scope.statements.add(0, createAssignment => [
+                        subScope.statements.add(0, createAssignment => [
                             it.trace(valObj)
                             valuedObject = valObj
                             expression = valObj.initialValue
@@ -326,15 +326,15 @@ class SCLExtensions {
             ]
 
             // Replace scope by its statements
-            if (scope instanceof ScopeStatement) {
-                val parent = scope.eContainer as Scope
-                parent.statements.addAll(parent.statements.indexOf(scope), scope.statements)
-                scope.remove
+            if (subScope instanceof ScopeStatement) {
+                val parent = subScope.eContainer as Scope
+                parent.statements.addAll(parent.statements.indexOf(subScope), subScope.statements)
+                subScope.remove
             }
         }
-        sclProgram.declarations += newDecls
+        scope.declarations += newDecls
 
-        return sclProgram
+        return scope
     }
 
     /**

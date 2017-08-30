@@ -19,7 +19,7 @@ import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.scl.SCLProgram
-import de.cau.cs.kieler.scl.transformations.SCLToSCGTransformation
+import de.cau.cs.kieler.scl.processors.transformators.SCLToSCGTransformation
 
 class SCLSynthesis extends AbstractDiagramSynthesis<SCLProgram> {
 
