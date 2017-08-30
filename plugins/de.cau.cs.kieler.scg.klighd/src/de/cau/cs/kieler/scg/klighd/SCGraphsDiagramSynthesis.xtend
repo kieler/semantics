@@ -497,7 +497,9 @@ class SCGraphsDiagramSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
 	    val node = createNode
 	    
 	    for(scg : model.scgs) {
-	       node.children += scg.transformSCG
+	       node.children += scg.transformSCG => [
+	           addRectangle => [invisible = true]
+	       ]
 	    }
 	    
 	    node
