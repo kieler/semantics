@@ -85,7 +85,7 @@ class SCChartsPBExecutionBenchmarkWithTraces extends AbstractXTextModelBenchmark
     /** Warm up flag */
     private static var warmUp = false
     
-    private final val NUMBER_OF_RUNS = 10
+    private final val NUMBER_OF_RUNS = 50
     
     private final val N_BEST = 0.8
     
