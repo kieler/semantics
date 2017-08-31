@@ -23,19 +23,21 @@ import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.simulation.SimulationUtil
 import de.cau.cs.kieler.simulation.core.SimulationEvent
+import de.cau.cs.kieler.simulation.core.SimulationEventType
 import de.cau.cs.kieler.simulation.core.SimulationListener
+import de.cau.cs.kieler.simulation.core.SimulationManager
+import de.cau.cs.kieler.simulation.core.StepAction
+import de.cau.cs.kieler.simulation.handlers.EsoUtil
+import de.cau.cs.kieler.simulation.handlers.ExecutableSimulator
+import de.cau.cs.kieler.simulation.handlers.Trace
+import de.cau.cs.kieler.simulation.handlers.TraceFinishedEvent
+import de.cau.cs.kieler.simulation.handlers.TraceMismatchEvent
 import de.cau.cs.kieler.test.common.repository.TestModelData
+import java.util.LinkedList
 import org.bson.Document
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.runtime.Path
-import de.cau.cs.kieler.simulation.handlers.Trace
-import de.cau.cs.kieler.simulation.handlers.EsoUtil
-import de.cau.cs.kieler.simulation.core.SimulationManager
-import de.cau.cs.kieler.simulation.core.StepAction
-import de.cau.cs.kieler.simulation.handlers.ExecutableSimulator
-import de.cau.cs.kieler.simulation.handlers.TraceMismatchEvent
-import de.cau.cs.kieler.simulation.core.SimulationEventType
-import de.cau.cs.kieler.simulation.handlers.TraceFinishedEvent
+import java.util.List
 
 /**
  * @author lpe
@@ -138,7 +140,7 @@ class SCChartsPBExecutionBenchmarkWithTraces extends AbstractXTextModelBenchmark
         var nBestTickTimes = 0
         var maxJitter = 0
         var avgJitter = 0
-        
+        var List<Integer> ys2
         try {
             var tmpProject = SimulationUtil.getTemporarySimulationProject
             tmpProject?.delete(true, true, null)
@@ -209,7 +211,7 @@ class SCChartsPBExecutionBenchmarkWithTraces extends AbstractXTextModelBenchmark
             
             val n = (tickDurations.size * N_BEST).intValue
             val ys = tickDurations.take((n + 1) / 2)
-            val ys2 = ys.toList
+            ys2 = ys.toList
             ys2.addAll(tickDurations.reverse.take(n / 2))
             for(y : ys2) {
                 nBestTickTimes += y/(ys2.size)
@@ -232,6 +234,7 @@ class SCChartsPBExecutionBenchmarkWithTraces extends AbstractXTextModelBenchmark
         
         if(!couldNotSimulate) {
             data.put("executionTime", nBestTickTimes)
+            data.put("times", ys2)
             data.put("averageExecutionTime", averageTickDuration)
             data.put("maxJitter", maxJitter)
             data.put("avgJitter", avgJitter)

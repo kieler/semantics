@@ -98,7 +98,7 @@ class SCChartsPriorityBasedCompilationBenchmark extends AbstractXTextModelBenchm
      */
     override filter(TestModelData modelData) {
         return modelData.modelProperties.contains("benchmark") && !modelData.modelProperties.contains("must-fail")
-                && !modelData.modelProperties.contains("known-to-fail") && !modelData.modelProperties.contains("not-siasc")
+                && !modelData.modelProperties.contains("known-to-fail") && !modelData.modelProperties.contains("not-siasc") && false
     }
     
     /**
