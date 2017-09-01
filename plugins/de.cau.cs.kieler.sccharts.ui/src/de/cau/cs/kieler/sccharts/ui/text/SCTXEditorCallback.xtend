@@ -12,11 +12,17 @@
  */
 package de.cau.cs.kieler.sccharts.ui.text
 
+import com.google.inject.Inject
+import com.google.inject.Injector
+import de.cau.cs.kieler.sccharts.text.SCTXResource
+import org.eclipse.core.resources.IFile
+import org.eclipse.core.runtime.NullProgressMonitor
+import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.ui.editor.IXtextEditorCallback
 import org.eclipse.xtext.ui.editor.XtextEditor
-import de.cau.cs.kieler.sccharts.text.SCTXResource
+import org.eclipse.xtext.ui.validation.IResourceUIValidatorExtension
 import org.eclipse.xtext.util.concurrent.IUnitOfWork
-import org.eclipse.xtext.resource.XtextResource
+import org.eclipse.xtext.validation.CheckMode
 
 /**
  * @author als
@@ -25,16 +31,29 @@ import org.eclipse.xtext.resource.XtextResource
  */
 class SCTXEditorCallback extends IXtextEditorCallback.NullImpl {
     
+    @Inject var Injector injector
+    
     override afterSave(XtextEditor editor) {
-        val res = editor.document.readOnly(new IUnitOfWork<XtextResource, XtextResource>() {
+        // Get resource
+        val resource = editor.document.readOnly(new IUnitOfWork<XtextResource, XtextResource>() {
 
             override exec(XtextResource state) throws Exception {
                 return state
             }
         })
         
-        if (res instanceof SCTXResource) {
-            res.updateImporters
+        // Update imports
+        if (resource instanceof SCTXResource) {
+            resource.updateImporters
+        }
+        
+        // Display error marker on file
+        if (editor.resource !== null && injector !== null) {
+            val iResource = editor.resource
+            val updater = injector.getInstance(IResourceUIValidatorExtension)
+            if (iResource instanceof IFile && updater !== null) {
+                updater.updateValidationMarkers(iResource as IFile, resource, CheckMode.ALL, new NullProgressMonitor)
+            }
         }
     }
 
