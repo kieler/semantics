@@ -3,6 +3,7 @@
  */
 package de.cau.cs.kieler.lustre.lustre;
 
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -14,6 +15,6 @@ package de.cau.cs.kieler.lustre.lustre;
  * @model
  * @generated
  */
-public interface Assertion extends Eq_or_Ast
+public interface Assertion extends EObject
 {
 } // Assertion

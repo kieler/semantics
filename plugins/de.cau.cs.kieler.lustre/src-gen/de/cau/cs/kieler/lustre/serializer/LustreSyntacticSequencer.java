@@ -20,16 +20,16 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class LustreSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected LustreGrammarAccess grammarAccess;
-	protected AbstractElementAlias match_FN_Body_SemicolonKeyword_5_q;
 	protected AbstractElementAlias match_Left_Part_LeftParenthesisKeyword_0_0_q;
+	protected AbstractElementAlias match_Node_Declaration_SemicolonKeyword_15_q;
 	protected AbstractElementAlias match_Primary_LeftParenthesisKeyword_0_0_a;
 	protected AbstractElementAlias match_Primary_LeftParenthesisKeyword_0_0_p;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (LustreGrammarAccess) access;
-		match_FN_Body_SemicolonKeyword_5_q = new TokenAlias(false, true, grammarAccess.getFN_BodyAccess().getSemicolonKeyword_5());
 		match_Left_Part_LeftParenthesisKeyword_0_0_q = new TokenAlias(false, true, grammarAccess.getLeft_PartAccess().getLeftParenthesisKeyword_0_0());
+		match_Node_Declaration_SemicolonKeyword_15_q = new TokenAlias(false, true, grammarAccess.getNode_DeclarationAccess().getSemicolonKeyword_15());
 		match_Primary_LeftParenthesisKeyword_0_0_a = new TokenAlias(true, true, grammarAccess.getPrimaryAccess().getLeftParenthesisKeyword_0_0());
 		match_Primary_LeftParenthesisKeyword_0_0_p = new TokenAlias(true, false, grammarAccess.getPrimaryAccess().getLeftParenthesisKeyword_0_0());
 	}
@@ -46,10 +46,10 @@ public class LustreSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_FN_Body_SemicolonKeyword_5_q.equals(syntax))
-				emit_FN_Body_SemicolonKeyword_5_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_Left_Part_LeftParenthesisKeyword_0_0_q.equals(syntax))
+			if (match_Left_Part_LeftParenthesisKeyword_0_0_q.equals(syntax))
 				emit_Left_Part_LeftParenthesisKeyword_0_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Node_Declaration_SemicolonKeyword_15_q.equals(syntax))
+				emit_Node_Declaration_SemicolonKeyword_15_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Primary_LeftParenthesisKeyword_0_0_a.equals(syntax))
 				emit_Primary_LeftParenthesisKeyword_0_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Primary_LeftParenthesisKeyword_0_0_p.equals(syntax))
@@ -60,25 +60,27 @@ public class LustreSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	/**
 	 * Ambiguous syntax:
-	 *     ';'?
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     (rule start) 'let' 'tel' (ambiguity) (rule start)
-	 *     decl+=Local_Var_Decl 'let' 'tel' (ambiguity) (rule end)
-	 *     eq+=Equation 'tel' (ambiguity) (rule end)
-	 */
-	protected void emit_FN_Body_SemicolonKeyword_5_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Ambiguous syntax:
 	 *     '('?
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) id+=Left
 	 */
 	protected void emit_Left_Part_LeftParenthesisKeyword_0_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ';'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     assertions+=Assertion 'tel' (ambiguity) (rule end)
+	 *     constants+=Local_Constant_Declaration 'let' 'tel' (ambiguity) (rule end)
+	 *     equations+=Equation 'tel' (ambiguity) (rule end)
+	 *     returned+=Variable_Declaration ')' ';' 'let' 'tel' (ambiguity) (rule end)
+	 *     variables+=Local_Variable_Declaration 'let' 'tel' (ambiguity) (rule end)
+	 */
+	protected void emit_Node_Declaration_SemicolonKeyword_15_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -94,18 +96,18 @@ public class LustreSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     (rule start) '..' (ambiguity) 'pre' expression=Primary
 	 *     (rule start) '..' (ambiguity) value=BOOL
 	 *     (rule start) '..' (ambiguity) value=FLOAT
-	 *     (rule start) '..' (ambiguity) value=IDENT
 	 *     (rule start) '..' (ambiguity) value=INT
-	 *     (rule start) '..' (ambiguity) {And.left=}
-	 *     (rule start) '..' (ambiguity) {Arrow.left=}
+	 *     (rule start) '..' (ambiguity) value=[Variable_Declaration|IDENT]
+	 *     (rule start) '..' (ambiguity) {And.subExpressions+=}
+	 *     (rule start) '..' (ambiguity) {Arrow.subExpressions+=}
 	 *     (rule start) '..' (ambiguity) {Comparison.left=}
-	 *     (rule start) '..' (ambiguity) {Div.left=}
+	 *     (rule start) '..' (ambiguity) {Div.subExpressions+=}
 	 *     (rule start) '..' (ambiguity) {Equality.left=}
-	 *     (rule start) '..' (ambiguity) {Fby.left=}
-	 *     (rule start) '..' (ambiguity) {Minus.left=}
-	 *     (rule start) '..' (ambiguity) {Mul.left=}
-	 *     (rule start) '..' (ambiguity) {Or.left=}
-	 *     (rule start) '..' (ambiguity) {Plus.left=}
+	 *     (rule start) '..' (ambiguity) {Fby.subExpressions+=}
+	 *     (rule start) '..' (ambiguity) {Minus.subExpressions+=}
+	 *     (rule start) '..' (ambiguity) {Mul.subExpressions+=}
+	 *     (rule start) '..' (ambiguity) {Or.subExpressions+=}
+	 *     (rule start) '..' (ambiguity) {Plus.subExpressions+=}
 	 *     (rule start) 'assert' (ambiguity) '-' expression=Primary
 	 *     (rule start) 'assert' (ambiguity) 'current' expression=Primary
 	 *     (rule start) 'assert' (ambiguity) 'if' ifexpr=Expression
@@ -113,18 +115,18 @@ public class LustreSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     (rule start) 'assert' (ambiguity) 'pre' expression=Primary
 	 *     (rule start) 'assert' (ambiguity) value=BOOL
 	 *     (rule start) 'assert' (ambiguity) value=FLOAT
-	 *     (rule start) 'assert' (ambiguity) value=IDENT
 	 *     (rule start) 'assert' (ambiguity) value=INT
-	 *     (rule start) 'assert' (ambiguity) {And.left=}
-	 *     (rule start) 'assert' (ambiguity) {Arrow.left=}
+	 *     (rule start) 'assert' (ambiguity) value=[Variable_Declaration|IDENT]
+	 *     (rule start) 'assert' (ambiguity) {And.subExpressions+=}
+	 *     (rule start) 'assert' (ambiguity) {Arrow.subExpressions+=}
 	 *     (rule start) 'assert' (ambiguity) {Comparison.left=}
-	 *     (rule start) 'assert' (ambiguity) {Div.left=}
+	 *     (rule start) 'assert' (ambiguity) {Div.subExpressions+=}
 	 *     (rule start) 'assert' (ambiguity) {Equality.left=}
-	 *     (rule start) 'assert' (ambiguity) {Fby.left=}
-	 *     (rule start) 'assert' (ambiguity) {Minus.left=}
-	 *     (rule start) 'assert' (ambiguity) {Mul.left=}
-	 *     (rule start) 'assert' (ambiguity) {Or.left=}
-	 *     (rule start) 'assert' (ambiguity) {Plus.left=}
+	 *     (rule start) 'assert' (ambiguity) {Fby.subExpressions+=}
+	 *     (rule start) 'assert' (ambiguity) {Minus.subExpressions+=}
+	 *     (rule start) 'assert' (ambiguity) {Mul.subExpressions+=}
+	 *     (rule start) 'assert' (ambiguity) {Or.subExpressions+=}
+	 *     (rule start) 'assert' (ambiguity) {Plus.subExpressions+=}
 	 *     (rule start) (ambiguity) '-' expression=Primary
 	 *     (rule start) (ambiguity) 'current' expression=Primary
 	 *     (rule start) (ambiguity) 'if' ifexpr=Expression
@@ -132,18 +134,18 @@ public class LustreSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     (rule start) (ambiguity) 'pre' expression=Primary
 	 *     (rule start) (ambiguity) value=BOOL
 	 *     (rule start) (ambiguity) value=FLOAT
-	 *     (rule start) (ambiguity) value=IDENT
 	 *     (rule start) (ambiguity) value=INT
-	 *     (rule start) (ambiguity) {And.left=}
-	 *     (rule start) (ambiguity) {Arrow.left=}
+	 *     (rule start) (ambiguity) value=[Variable_Declaration|IDENT]
+	 *     (rule start) (ambiguity) {And.subExpressions+=}
+	 *     (rule start) (ambiguity) {Arrow.subExpressions+=}
 	 *     (rule start) (ambiguity) {Comparison.left=}
-	 *     (rule start) (ambiguity) {Div.left=}
+	 *     (rule start) (ambiguity) {Div.subExpressions+=}
 	 *     (rule start) (ambiguity) {Equality.left=}
-	 *     (rule start) (ambiguity) {Fby.left=}
-	 *     (rule start) (ambiguity) {Minus.left=}
-	 *     (rule start) (ambiguity) {Mul.left=}
-	 *     (rule start) (ambiguity) {Or.left=}
-	 *     (rule start) (ambiguity) {Plus.left=}
+	 *     (rule start) (ambiguity) {Fby.subExpressions+=}
+	 *     (rule start) (ambiguity) {Minus.subExpressions+=}
+	 *     (rule start) (ambiguity) {Mul.subExpressions+=}
+	 *     (rule start) (ambiguity) {Or.subExpressions+=}
+	 *     (rule start) (ambiguity) {Plus.subExpressions+=}
 	 */
 	protected void emit_Primary_LeftParenthesisKeyword_0_0_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -155,16 +157,16 @@ public class LustreSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) 'if' ifexpr=Expression
-	 *     (rule start) (ambiguity) {And.left=}
-	 *     (rule start) (ambiguity) {Arrow.left=}
+	 *     (rule start) (ambiguity) {And.subExpressions+=}
+	 *     (rule start) (ambiguity) {Arrow.subExpressions+=}
 	 *     (rule start) (ambiguity) {Comparison.left=}
-	 *     (rule start) (ambiguity) {Div.left=}
+	 *     (rule start) (ambiguity) {Div.subExpressions+=}
 	 *     (rule start) (ambiguity) {Equality.left=}
-	 *     (rule start) (ambiguity) {Fby.left=}
-	 *     (rule start) (ambiguity) {Minus.left=}
-	 *     (rule start) (ambiguity) {Mul.left=}
-	 *     (rule start) (ambiguity) {Or.left=}
-	 *     (rule start) (ambiguity) {Plus.left=}
+	 *     (rule start) (ambiguity) {Fby.subExpressions+=}
+	 *     (rule start) (ambiguity) {Minus.subExpressions+=}
+	 *     (rule start) (ambiguity) {Mul.subExpressions+=}
+	 *     (rule start) (ambiguity) {Or.subExpressions+=}
+	 *     (rule start) (ambiguity) {Plus.subExpressions+=}
 	 */
 	protected void emit_Primary_LeftParenthesisKeyword_0_0_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

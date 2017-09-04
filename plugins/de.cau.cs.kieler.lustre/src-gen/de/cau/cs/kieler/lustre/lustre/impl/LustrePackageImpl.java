@@ -4,27 +4,21 @@
 package de.cau.cs.kieler.lustre.lustre.impl;
 
 import de.cau.cs.kieler.lustre.lustre.And;
+import de.cau.cs.kieler.lustre.lustre.Array_Type;
 import de.cau.cs.kieler.lustre.lustre.Arrow;
 import de.cau.cs.kieler.lustre.lustre.Assertion;
-import de.cau.cs.kieler.lustre.lustre.BooleanConstant;
+import de.cau.cs.kieler.lustre.lustre.BoolConstant;
 import de.cau.cs.kieler.lustre.lustre.Comparison;
-import de.cau.cs.kieler.lustre.lustre.Const_Decl;
+import de.cau.cs.kieler.lustre.lustre.Constant_Declaration;
 import de.cau.cs.kieler.lustre.lustre.Current;
-import de.cau.cs.kieler.lustre.lustre.Declared_Clock;
 import de.cau.cs.kieler.lustre.lustre.Div;
-import de.cau.cs.kieler.lustre.lustre.Enum_Type;
-import de.cau.cs.kieler.lustre.lustre.Eq_or_Ast;
+import de.cau.cs.kieler.lustre.lustre.Entity_Declaration;
 import de.cau.cs.kieler.lustre.lustre.Equality;
 import de.cau.cs.kieler.lustre.lustre.Equation;
-import de.cau.cs.kieler.lustre.lustre.Equation_List;
 import de.cau.cs.kieler.lustre.lustre.Expression;
-import de.cau.cs.kieler.lustre.lustre.FN_Body;
 import de.cau.cs.kieler.lustre.lustre.Fby;
 import de.cau.cs.kieler.lustre.lustre.Field;
-import de.cau.cs.kieler.lustre.lustre.Field_List;
 import de.cau.cs.kieler.lustre.lustre.FloatConstant;
-import de.cau.cs.kieler.lustre.lustre.Ident_List;
-import de.cau.cs.kieler.lustre.lustre.Identifier;
 import de.cau.cs.kieler.lustre.lustre.IfThenElse;
 import de.cau.cs.kieler.lustre.lustre.IntConstant;
 import de.cau.cs.kieler.lustre.lustre.Left;
@@ -34,25 +28,22 @@ import de.cau.cs.kieler.lustre.lustre.LustreFactory;
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
 import de.cau.cs.kieler.lustre.lustre.Minus;
 import de.cau.cs.kieler.lustre.lustre.Mul;
-import de.cau.cs.kieler.lustre.lustre.Node_Decl;
-import de.cau.cs.kieler.lustre.lustre.Node_Header;
+import de.cau.cs.kieler.lustre.lustre.Node_Declaration;
 import de.cau.cs.kieler.lustre.lustre.Not;
 import de.cau.cs.kieler.lustre.lustre.Or;
-import de.cau.cs.kieler.lustre.lustre.Package_Body_Content;
-import de.cau.cs.kieler.lustre.lustre.Package_Header;
-import de.cau.cs.kieler.lustre.lustre.Package_Provide;
+import de.cau.cs.kieler.lustre.lustre.Package_Declaration;
+import de.cau.cs.kieler.lustre.lustre.Package_Provided;
+import de.cau.cs.kieler.lustre.lustre.Package_Provided_IO;
 import de.cau.cs.kieler.lustre.lustre.Plus;
 import de.cau.cs.kieler.lustre.lustre.Pre;
 import de.cau.cs.kieler.lustre.lustre.Program;
 import de.cau.cs.kieler.lustre.lustre.Record_Type;
-import de.cau.cs.kieler.lustre.lustre.SelTrancheEnd;
 import de.cau.cs.kieler.lustre.lustre.Selector;
 import de.cau.cs.kieler.lustre.lustre.Type;
-import de.cau.cs.kieler.lustre.lustre.Type_Decl;
+import de.cau.cs.kieler.lustre.lustre.Type_Declaration;
 import de.cau.cs.kieler.lustre.lustre.UMinus;
-import de.cau.cs.kieler.lustre.lustre.Var_Decl;
-import de.cau.cs.kieler.lustre.lustre.Var_Decl_List;
-import de.cau.cs.kieler.lustre.lustre.Variableref;
+import de.cau.cs.kieler.lustre.lustre.VariableReference;
+import de.cau.cs.kieler.lustre.lustre.Variable_Declaration;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -81,49 +72,35 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass packageEClass = null;
+  private EClass package_DeclarationEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass package_HeaderEClass = null;
+  private EClass package_ProvidedEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass package_ProvideEClass = null;
+  private EClass package_Provided_IOEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass package_Body_ContentEClass = null;
+  private EClass entity_DeclarationEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass node_DeclEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass identifierEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass type_DeclEClass = null;
+  private EClass type_DeclarationEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -137,14 +114,14 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass record_TypeEClass = null;
+  private EClass array_TypeEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass field_ListEClass = null;
+  private EClass record_TypeEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -158,70 +135,21 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass enum_TypeEClass = null;
+  private EClass constant_DeclarationEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass const_DeclEClass = null;
+  private EClass variable_DeclarationEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass ident_ListEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass node_HeaderEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass var_Decl_ListEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass var_DeclEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass declared_ClockEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass fN_BodyEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass equation_ListEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass eq_or_AstEClass = null;
+  private EClass node_DeclarationEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -229,6 +157,13 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * @generated
    */
   private EClass equationEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass assertionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -263,13 +198,6 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass selTrancheEndEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   private EClass expressionEClass = null;
 
   /**
@@ -277,7 +205,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass assertionEClass = null;
+  private EClass variableReferenceEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -389,14 +317,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass variablerefEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass booleanConstantEClass = null;
+  private EClass boolConstantEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -490,7 +411,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getProgram_Pkg()
+  public EReference getProgram_Packages()
   {
     return (EReference)programEClass.getEStructuralFeatures().get(0);
   }
@@ -500,9 +421,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getPackage()
+  public EClass getPackage_Declaration()
   {
-    return packageEClass;
+    return package_DeclarationEClass;
   }
 
   /**
@@ -510,9 +431,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getPackage_Head()
+  public EAttribute getPackage_Declaration_Name()
   {
-    return (EReference)packageEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)package_DeclarationEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -520,9 +441,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getPackage_Body()
+  public EAttribute getPackage_Declaration_Uses()
   {
-    return (EReference)packageEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)package_DeclarationEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -530,9 +451,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getPackage_Header()
+  public EReference getPackage_Declaration_Provides()
   {
-    return package_HeaderEClass;
+    return (EReference)package_DeclarationEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -540,9 +461,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getPackage_Header_Name()
+  public EReference getPackage_Declaration_Nodes()
   {
-    return (EAttribute)package_HeaderEClass.getEStructuralFeatures().get(0);
+    return (EReference)package_DeclarationEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -550,9 +471,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getPackage_Header_Uses()
+  public EReference getPackage_Declaration_Types()
   {
-    return (EReference)package_HeaderEClass.getEStructuralFeatures().get(1);
+    return (EReference)package_DeclarationEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -560,9 +481,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getPackage_Header_Provides()
+  public EReference getPackage_Declaration_Constants()
   {
-    return (EReference)package_HeaderEClass.getEStructuralFeatures().get(2);
+    return (EReference)package_DeclarationEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -570,9 +491,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getPackage_Provide()
+  public EClass getPackage_Provided()
   {
-    return package_ProvideEClass;
+    return package_ProvidedEClass;
   }
 
   /**
@@ -580,9 +501,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getPackage_Provide_Name()
+  public EReference getPackage_Provided_Name()
   {
-    return (EReference)package_ProvideEClass.getEStructuralFeatures().get(0);
+    return (EReference)package_ProvidedEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -590,9 +511,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getPackage_Provide_Param()
+  public EReference getPackage_Provided_Parameters()
   {
-    return (EReference)package_ProvideEClass.getEStructuralFeatures().get(1);
+    return (EReference)package_ProvidedEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -600,9 +521,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getPackage_Provide_Ret()
+  public EReference getPackage_Provided_Returned()
   {
-    return (EReference)package_ProvideEClass.getEStructuralFeatures().get(2);
+    return (EReference)package_ProvidedEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -610,9 +531,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getPackage_Body_Content()
+  public EClass getPackage_Provided_IO()
   {
-    return package_Body_ContentEClass;
+    return package_Provided_IOEClass;
   }
 
   /**
@@ -620,9 +541,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getPackage_Body_Content_Entities()
+  public EReference getPackage_Provided_IO_Name()
   {
-    return (EReference)package_Body_ContentEClass.getEStructuralFeatures().get(0);
+    return (EReference)package_Provided_IOEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -630,9 +551,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getNode_Decl()
+  public EAttribute getPackage_Provided_IO_Type()
   {
-    return node_DeclEClass;
+    return (EAttribute)package_Provided_IOEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -640,9 +561,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getNode_Decl_Head()
+  public EClass getEntity_Declaration()
   {
-    return (EReference)node_DeclEClass.getEStructuralFeatures().get(0);
+    return entity_DeclarationEClass;
   }
 
   /**
@@ -650,9 +571,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getNode_Decl_Bdy()
+  public EAttribute getEntity_Declaration_Name()
   {
-    return (EReference)node_DeclEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)entity_DeclarationEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -660,9 +581,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getIdentifier()
+  public EClass getType_Declaration()
   {
-    return identifierEClass;
+    return type_DeclarationEClass;
   }
 
   /**
@@ -670,59 +591,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getIdentifier_Pkg()
+  public EReference getType_Declaration_Type()
   {
-    return (EAttribute)identifierEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getIdentifier_FromPgk()
-  {
-    return (EAttribute)identifierEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getIdentifier_Name()
-  {
-    return (EAttribute)identifierEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getType_Decl()
-  {
-    return type_DeclEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getType_Decl_Name()
-  {
-    return (EAttribute)type_DeclEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getType_Decl_Type()
-  {
-    return (EReference)type_DeclEClass.getEStructuralFeatures().get(1);
+    return (EReference)type_DeclarationEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -740,9 +611,39 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getType_Name()
+  public EReference getType_Name()
   {
-    return (EAttribute)typeEClass.getEStructuralFeatures().get(0);
+    return (EReference)typeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getArray_Type()
+  {
+    return array_TypeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getArray_Type_Type()
+  {
+    return (EReference)array_TypeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getArray_Type_Length()
+  {
+    return (EAttribute)array_TypeEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -763,26 +664,6 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
   public EReference getRecord_Type_Fields()
   {
     return (EReference)record_TypeEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getField_List()
-  {
-    return field_ListEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getField_List_Fields()
-  {
-    return (EReference)field_ListEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -820,9 +701,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getEnum_Type()
+  public EClass getConstant_Declaration()
   {
-    return enum_TypeEClass;
+    return constant_DeclarationEClass;
   }
 
   /**
@@ -830,9 +711,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getEnum_Type_NameList()
+  public EReference getConstant_Declaration_Type()
   {
-    return (EReference)enum_TypeEClass.getEStructuralFeatures().get(0);
+    return (EReference)constant_DeclarationEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -840,9 +721,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getConst_Decl()
+  public EReference getConstant_Declaration_Expr()
   {
-    return const_DeclEClass;
+    return (EReference)constant_DeclarationEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -850,9 +731,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getConst_Decl_Name()
+  public EClass getVariable_Declaration()
   {
-    return (EAttribute)const_DeclEClass.getEStructuralFeatures().get(0);
+    return variable_DeclarationEClass;
   }
 
   /**
@@ -860,9 +741,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getConst_Decl_Type()
+  public EAttribute getVariable_Declaration_Name()
   {
-    return (EReference)const_DeclEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)variable_DeclarationEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -870,9 +751,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getConst_Decl_Expr()
+  public EReference getVariable_Declaration_Type()
   {
-    return (EReference)const_DeclEClass.getEStructuralFeatures().get(2);
+    return (EReference)variable_DeclarationEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -880,9 +761,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getIdent_List()
+  public EAttribute getVariable_Declaration_Clock()
   {
-    return ident_ListEClass;
+    return (EAttribute)variable_DeclarationEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -890,9 +771,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getIdent_List_Names()
+  public EClass getNode_Declaration()
   {
-    return (EAttribute)ident_ListEClass.getEStructuralFeatures().get(0);
+    return node_DeclarationEClass;
   }
 
   /**
@@ -900,9 +781,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getNode_Header()
+  public EReference getNode_Declaration_Parameters()
   {
-    return node_HeaderEClass;
+    return (EReference)node_DeclarationEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -910,9 +791,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getNode_Header_Name()
+  public EReference getNode_Declaration_Returned()
   {
-    return (EAttribute)node_HeaderEClass.getEStructuralFeatures().get(0);
+    return (EReference)node_DeclarationEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -920,9 +801,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getNode_Header_Param()
+  public EReference getNode_Declaration_Constants()
   {
-    return (EReference)node_HeaderEClass.getEStructuralFeatures().get(1);
+    return (EReference)node_DeclarationEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -930,9 +811,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getNode_Header_Ret()
+  public EReference getNode_Declaration_Variables()
   {
-    return (EReference)node_HeaderEClass.getEStructuralFeatures().get(2);
+    return (EReference)node_DeclarationEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -940,9 +821,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getVar_Decl_List()
+  public EReference getNode_Declaration_Equations()
   {
-    return var_Decl_ListEClass;
+    return (EReference)node_DeclarationEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -950,129 +831,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getVar_Decl_List_VarList()
+  public EReference getNode_Declaration_Assertions()
   {
-    return (EReference)var_Decl_ListEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getVar_Decl()
-  {
-    return var_DeclEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getVar_Decl_Name()
-  {
-    return (EAttribute)var_DeclEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getVar_Decl_Type()
-  {
-    return (EReference)var_DeclEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getVar_Decl_Clk()
-  {
-    return (EReference)var_DeclEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getDeclared_Clock()
-  {
-    return declared_ClockEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getDeclared_Clock_Name()
-  {
-    return (EReference)declared_ClockEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getFN_Body()
-  {
-    return fN_BodyEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getFN_Body_Decl()
-  {
-    return (EReference)fN_BodyEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getFN_Body_Eq()
-  {
-    return (EReference)fN_BodyEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getEquation_List()
-  {
-    return equation_ListEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getEquation_List_Eq()
-  {
-    return (EReference)equation_ListEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getEq_or_Ast()
-  {
-    return eq_or_AstEClass;
+    return (EReference)node_DeclarationEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -1090,9 +851,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getEquation_Left()
+  public EReference getEquation_Left()
   {
-    return (EAttribute)equationEClass.getEStructuralFeatures().get(0);
+    return (EReference)equationEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1103,6 +864,16 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
   public EReference getEquation_Right()
   {
     return (EReference)equationEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getAssertion()
+  {
+    return assertionEClass;
   }
 
   /**
@@ -1150,9 +921,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getLeft_Name()
+  public EAttribute getLeft_Name()
   {
-    return (EReference)leftEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)leftEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1160,7 +931,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getLeft_Sel()
+  public EReference getLeft_Selector()
   {
     return (EReference)leftEClass.getEStructuralFeatures().get(1);
   }
@@ -1210,16 +981,6 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getSelTrancheEnd()
-  {
-    return selTrancheEndEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getExpression()
   {
     return expressionEClass;
@@ -1230,9 +991,19 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getAssertion()
+  public EClass getVariableReference()
   {
-    return assertionEClass;
+    return variableReferenceEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getVariableReference_Value()
+  {
+    return (EReference)variableReferenceEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1290,19 +1061,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getFby_Left()
+  public EReference getFby_SubExpressions()
   {
     return (EReference)fbyEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getFby_Right()
-  {
-    return (EReference)fbyEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1320,19 +1081,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getArrow_Left()
+  public EReference getArrow_SubExpressions()
   {
     return (EReference)arrowEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getArrow_Right()
-  {
-    return (EReference)arrowEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1350,19 +1101,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getOr_Left()
+  public EReference getOr_SubExpressions()
   {
     return (EReference)orEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getOr_Right()
-  {
-    return (EReference)orEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1380,19 +1121,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getAnd_Left()
+  public EReference getAnd_SubExpressions()
   {
     return (EReference)andEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getAnd_Right()
-  {
-    return (EReference)andEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1490,19 +1221,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getPlus_Left()
+  public EReference getPlus_SubExpressions()
   {
     return (EReference)plusEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getPlus_Right()
-  {
-    return (EReference)plusEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1520,19 +1241,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getMinus_Left()
+  public EReference getMinus_SubExpressions()
   {
     return (EReference)minusEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getMinus_Right()
-  {
-    return (EReference)minusEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1550,19 +1261,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getMul_Left()
+  public EReference getMul_SubExpressions()
   {
     return (EReference)mulEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getMul_Right()
-  {
-    return (EReference)mulEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1580,19 +1281,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getDiv_Left()
+  public EReference getDiv_SubExpressions()
   {
     return (EReference)divEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getDiv_Right()
-  {
-    return (EReference)divEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1680,9 +1371,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getVariableref()
+  public EClass getBoolConstant()
   {
-    return variablerefEClass;
+    return boolConstantEClass;
   }
 
   /**
@@ -1690,29 +1381,9 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getVariableref_Value()
+  public EAttribute getBoolConstant_Value()
   {
-    return (EAttribute)variablerefEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getBooleanConstant()
-  {
-    return booleanConstantEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getBooleanConstant_Value()
-  {
-    return (EAttribute)booleanConstantEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)boolConstantEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1786,90 +1457,67 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
 
     // Create classes and their features
     programEClass = createEClass(PROGRAM);
-    createEReference(programEClass, PROGRAM__PKG);
+    createEReference(programEClass, PROGRAM__PACKAGES);
 
-    packageEClass = createEClass(PACKAGE);
-    createEReference(packageEClass, PACKAGE__HEAD);
-    createEReference(packageEClass, PACKAGE__BODY);
+    package_DeclarationEClass = createEClass(PACKAGE_DECLARATION);
+    createEAttribute(package_DeclarationEClass, PACKAGE_DECLARATION__NAME);
+    createEAttribute(package_DeclarationEClass, PACKAGE_DECLARATION__USES);
+    createEReference(package_DeclarationEClass, PACKAGE_DECLARATION__PROVIDES);
+    createEReference(package_DeclarationEClass, PACKAGE_DECLARATION__NODES);
+    createEReference(package_DeclarationEClass, PACKAGE_DECLARATION__TYPES);
+    createEReference(package_DeclarationEClass, PACKAGE_DECLARATION__CONSTANTS);
 
-    package_HeaderEClass = createEClass(PACKAGE_HEADER);
-    createEAttribute(package_HeaderEClass, PACKAGE_HEADER__NAME);
-    createEReference(package_HeaderEClass, PACKAGE_HEADER__USES);
-    createEReference(package_HeaderEClass, PACKAGE_HEADER__PROVIDES);
+    package_ProvidedEClass = createEClass(PACKAGE_PROVIDED);
+    createEReference(package_ProvidedEClass, PACKAGE_PROVIDED__NAME);
+    createEReference(package_ProvidedEClass, PACKAGE_PROVIDED__PARAMETERS);
+    createEReference(package_ProvidedEClass, PACKAGE_PROVIDED__RETURNED);
 
-    package_ProvideEClass = createEClass(PACKAGE_PROVIDE);
-    createEReference(package_ProvideEClass, PACKAGE_PROVIDE__NAME);
-    createEReference(package_ProvideEClass, PACKAGE_PROVIDE__PARAM);
-    createEReference(package_ProvideEClass, PACKAGE_PROVIDE__RET);
+    package_Provided_IOEClass = createEClass(PACKAGE_PROVIDED_IO);
+    createEReference(package_Provided_IOEClass, PACKAGE_PROVIDED_IO__NAME);
+    createEAttribute(package_Provided_IOEClass, PACKAGE_PROVIDED_IO__TYPE);
 
-    package_Body_ContentEClass = createEClass(PACKAGE_BODY_CONTENT);
-    createEReference(package_Body_ContentEClass, PACKAGE_BODY_CONTENT__ENTITIES);
+    entity_DeclarationEClass = createEClass(ENTITY_DECLARATION);
+    createEAttribute(entity_DeclarationEClass, ENTITY_DECLARATION__NAME);
 
-    node_DeclEClass = createEClass(NODE_DECL);
-    createEReference(node_DeclEClass, NODE_DECL__HEAD);
-    createEReference(node_DeclEClass, NODE_DECL__BDY);
-
-    identifierEClass = createEClass(IDENTIFIER);
-    createEAttribute(identifierEClass, IDENTIFIER__PKG);
-    createEAttribute(identifierEClass, IDENTIFIER__FROM_PGK);
-    createEAttribute(identifierEClass, IDENTIFIER__NAME);
-
-    type_DeclEClass = createEClass(TYPE_DECL);
-    createEAttribute(type_DeclEClass, TYPE_DECL__NAME);
-    createEReference(type_DeclEClass, TYPE_DECL__TYPE);
+    type_DeclarationEClass = createEClass(TYPE_DECLARATION);
+    createEReference(type_DeclarationEClass, TYPE_DECLARATION__TYPE);
 
     typeEClass = createEClass(TYPE);
-    createEAttribute(typeEClass, TYPE__NAME);
+    createEReference(typeEClass, TYPE__NAME);
+
+    array_TypeEClass = createEClass(ARRAY_TYPE);
+    createEReference(array_TypeEClass, ARRAY_TYPE__TYPE);
+    createEAttribute(array_TypeEClass, ARRAY_TYPE__LENGTH);
 
     record_TypeEClass = createEClass(RECORD_TYPE);
     createEReference(record_TypeEClass, RECORD_TYPE__FIELDS);
-
-    field_ListEClass = createEClass(FIELD_LIST);
-    createEReference(field_ListEClass, FIELD_LIST__FIELDS);
 
     fieldEClass = createEClass(FIELD);
     createEAttribute(fieldEClass, FIELD__NAME);
     createEReference(fieldEClass, FIELD__TYPE);
 
-    enum_TypeEClass = createEClass(ENUM_TYPE);
-    createEReference(enum_TypeEClass, ENUM_TYPE__NAME_LIST);
+    constant_DeclarationEClass = createEClass(CONSTANT_DECLARATION);
+    createEReference(constant_DeclarationEClass, CONSTANT_DECLARATION__TYPE);
+    createEReference(constant_DeclarationEClass, CONSTANT_DECLARATION__EXPR);
 
-    const_DeclEClass = createEClass(CONST_DECL);
-    createEAttribute(const_DeclEClass, CONST_DECL__NAME);
-    createEReference(const_DeclEClass, CONST_DECL__TYPE);
-    createEReference(const_DeclEClass, CONST_DECL__EXPR);
+    variable_DeclarationEClass = createEClass(VARIABLE_DECLARATION);
+    createEAttribute(variable_DeclarationEClass, VARIABLE_DECLARATION__NAME);
+    createEReference(variable_DeclarationEClass, VARIABLE_DECLARATION__TYPE);
+    createEAttribute(variable_DeclarationEClass, VARIABLE_DECLARATION__CLOCK);
 
-    ident_ListEClass = createEClass(IDENT_LIST);
-    createEAttribute(ident_ListEClass, IDENT_LIST__NAMES);
-
-    node_HeaderEClass = createEClass(NODE_HEADER);
-    createEAttribute(node_HeaderEClass, NODE_HEADER__NAME);
-    createEReference(node_HeaderEClass, NODE_HEADER__PARAM);
-    createEReference(node_HeaderEClass, NODE_HEADER__RET);
-
-    var_Decl_ListEClass = createEClass(VAR_DECL_LIST);
-    createEReference(var_Decl_ListEClass, VAR_DECL_LIST__VAR_LIST);
-
-    var_DeclEClass = createEClass(VAR_DECL);
-    createEAttribute(var_DeclEClass, VAR_DECL__NAME);
-    createEReference(var_DeclEClass, VAR_DECL__TYPE);
-    createEReference(var_DeclEClass, VAR_DECL__CLK);
-
-    declared_ClockEClass = createEClass(DECLARED_CLOCK);
-    createEReference(declared_ClockEClass, DECLARED_CLOCK__NAME);
-
-    fN_BodyEClass = createEClass(FN_BODY);
-    createEReference(fN_BodyEClass, FN_BODY__DECL);
-    createEReference(fN_BodyEClass, FN_BODY__EQ);
-
-    equation_ListEClass = createEClass(EQUATION_LIST);
-    createEReference(equation_ListEClass, EQUATION_LIST__EQ);
-
-    eq_or_AstEClass = createEClass(EQ_OR_AST);
+    node_DeclarationEClass = createEClass(NODE_DECLARATION);
+    createEReference(node_DeclarationEClass, NODE_DECLARATION__PARAMETERS);
+    createEReference(node_DeclarationEClass, NODE_DECLARATION__RETURNED);
+    createEReference(node_DeclarationEClass, NODE_DECLARATION__CONSTANTS);
+    createEReference(node_DeclarationEClass, NODE_DECLARATION__VARIABLES);
+    createEReference(node_DeclarationEClass, NODE_DECLARATION__EQUATIONS);
+    createEReference(node_DeclarationEClass, NODE_DECLARATION__ASSERTIONS);
 
     equationEClass = createEClass(EQUATION);
-    createEAttribute(equationEClass, EQUATION__LEFT);
+    createEReference(equationEClass, EQUATION__LEFT);
     createEReference(equationEClass, EQUATION__RIGHT);
+
+    assertionEClass = createEClass(ASSERTION);
 
     left_PartEClass = createEClass(LEFT_PART);
 
@@ -1877,19 +1525,18 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
     createEReference(left_ListEClass, LEFT_LIST__ID);
 
     leftEClass = createEClass(LEFT);
-    createEReference(leftEClass, LEFT__NAME);
-    createEReference(leftEClass, LEFT__SEL);
+    createEAttribute(leftEClass, LEFT__NAME);
+    createEReference(leftEClass, LEFT__SELECTOR);
 
     selectorEClass = createEClass(SELECTOR);
     createEAttribute(selectorEClass, SELECTOR__NAME);
     createEReference(selectorEClass, SELECTOR__BEGIN);
     createEReference(selectorEClass, SELECTOR__END);
 
-    selTrancheEndEClass = createEClass(SEL_TRANCHE_END);
-
     expressionEClass = createEClass(EXPRESSION);
 
-    assertionEClass = createEClass(ASSERTION);
+    variableReferenceEClass = createEClass(VARIABLE_REFERENCE);
+    createEReference(variableReferenceEClass, VARIABLE_REFERENCE__VALUE);
 
     ifThenElseEClass = createEClass(IF_THEN_ELSE);
     createEReference(ifThenElseEClass, IF_THEN_ELSE__IFEXPR);
@@ -1897,20 +1544,16 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
     createEReference(ifThenElseEClass, IF_THEN_ELSE__ELSEEXPR);
 
     fbyEClass = createEClass(FBY);
-    createEReference(fbyEClass, FBY__LEFT);
-    createEReference(fbyEClass, FBY__RIGHT);
+    createEReference(fbyEClass, FBY__SUB_EXPRESSIONS);
 
     arrowEClass = createEClass(ARROW);
-    createEReference(arrowEClass, ARROW__LEFT);
-    createEReference(arrowEClass, ARROW__RIGHT);
+    createEReference(arrowEClass, ARROW__SUB_EXPRESSIONS);
 
     orEClass = createEClass(OR);
-    createEReference(orEClass, OR__LEFT);
-    createEReference(orEClass, OR__RIGHT);
+    createEReference(orEClass, OR__SUB_EXPRESSIONS);
 
     andEClass = createEClass(AND);
-    createEReference(andEClass, AND__LEFT);
-    createEReference(andEClass, AND__RIGHT);
+    createEReference(andEClass, AND__SUB_EXPRESSIONS);
 
     equalityEClass = createEClass(EQUALITY);
     createEReference(equalityEClass, EQUALITY__LEFT);
@@ -1923,20 +1566,16 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
     createEReference(comparisonEClass, COMPARISON__RIGHT);
 
     plusEClass = createEClass(PLUS);
-    createEReference(plusEClass, PLUS__LEFT);
-    createEReference(plusEClass, PLUS__RIGHT);
+    createEReference(plusEClass, PLUS__SUB_EXPRESSIONS);
 
     minusEClass = createEClass(MINUS);
-    createEReference(minusEClass, MINUS__LEFT);
-    createEReference(minusEClass, MINUS__RIGHT);
+    createEReference(minusEClass, MINUS__SUB_EXPRESSIONS);
 
     mulEClass = createEClass(MUL);
-    createEReference(mulEClass, MUL__LEFT);
-    createEReference(mulEClass, MUL__RIGHT);
+    createEReference(mulEClass, MUL__SUB_EXPRESSIONS);
 
     divEClass = createEClass(DIV);
-    createEReference(divEClass, DIV__LEFT);
-    createEReference(divEClass, DIV__RIGHT);
+    createEReference(divEClass, DIV__SUB_EXPRESSIONS);
 
     notEClass = createEClass(NOT);
     createEReference(notEClass, NOT__EXPRESSION);
@@ -1950,11 +1589,8 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
     currentEClass = createEClass(CURRENT);
     createEReference(currentEClass, CURRENT__EXPRESSION);
 
-    variablerefEClass = createEClass(VARIABLEREF);
-    createEAttribute(variablerefEClass, VARIABLEREF__VALUE);
-
-    booleanConstantEClass = createEClass(BOOLEAN_CONSTANT);
-    createEAttribute(booleanConstantEClass, BOOLEAN_CONSTANT__VALUE);
+    boolConstantEClass = createEClass(BOOL_CONSTANT);
+    createEAttribute(boolConstantEClass, BOOL_CONSTANT__VALUE);
 
     floatConstantEClass = createEClass(FLOAT_CONSTANT);
     createEAttribute(floatConstantEClass, FLOAT_CONSTANT__VALUE);
@@ -1992,11 +1628,12 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    equationEClass.getESuperTypes().add(this.getEq_or_Ast());
+    type_DeclarationEClass.getESuperTypes().add(this.getEntity_Declaration());
+    constant_DeclarationEClass.getESuperTypes().add(this.getEntity_Declaration());
+    node_DeclarationEClass.getESuperTypes().add(this.getEntity_Declaration());
     left_ListEClass.getESuperTypes().add(this.getLeft_Part());
-    expressionEClass.getESuperTypes().add(this.getSelTrancheEnd());
     expressionEClass.getESuperTypes().add(this.getAssertion());
-    assertionEClass.getESuperTypes().add(this.getEq_or_Ast());
+    variableReferenceEClass.getESuperTypes().add(this.getExpression());
     ifThenElseEClass.getESuperTypes().add(this.getExpression());
     fbyEClass.getESuperTypes().add(this.getExpression());
     arrowEClass.getESuperTypes().add(this.getExpression());
@@ -2012,97 +1649,73 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
     uMinusEClass.getESuperTypes().add(this.getExpression());
     preEClass.getESuperTypes().add(this.getExpression());
     currentEClass.getESuperTypes().add(this.getExpression());
-    variablerefEClass.getESuperTypes().add(this.getExpression());
-    booleanConstantEClass.getESuperTypes().add(this.getExpression());
+    boolConstantEClass.getESuperTypes().add(this.getExpression());
     floatConstantEClass.getESuperTypes().add(this.getExpression());
     intConstantEClass.getESuperTypes().add(this.getExpression());
 
     // Initialize classes and features; add operations and parameters
     initEClass(programEClass, Program.class, "Program", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getProgram_Pkg(), this.getPackage(), null, "pkg", null, 0, 1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getProgram_Packages(), this.getPackage_Declaration(), null, "packages", null, 0, -1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(packageEClass, de.cau.cs.kieler.lustre.lustre.Package.class, "Package", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getPackage_Head(), this.getPackage_Header(), null, "head", null, 0, 1, de.cau.cs.kieler.lustre.lustre.Package.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPackage_Body(), this.getPackage_Body_Content(), null, "body", null, 0, 1, de.cau.cs.kieler.lustre.lustre.Package.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(package_DeclarationEClass, Package_Declaration.class, "Package_Declaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getPackage_Declaration_Name(), ecorePackage.getEString(), "name", null, 0, 1, Package_Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPackage_Declaration_Uses(), ecorePackage.getEString(), "uses", null, 0, -1, Package_Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPackage_Declaration_Provides(), this.getPackage_Provided(), null, "provides", null, 0, -1, Package_Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPackage_Declaration_Nodes(), this.getNode_Declaration(), null, "nodes", null, 0, -1, Package_Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPackage_Declaration_Types(), this.getType_Declaration(), null, "types", null, 0, -1, Package_Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPackage_Declaration_Constants(), this.getConstant_Declaration(), null, "constants", null, 0, -1, Package_Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(package_HeaderEClass, Package_Header.class, "Package_Header", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getPackage_Header_Name(), ecorePackage.getEString(), "name", null, 0, 1, Package_Header.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPackage_Header_Uses(), this.getIdent_List(), null, "uses", null, 0, 1, Package_Header.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPackage_Header_Provides(), this.getPackage_Provide(), null, "provides", null, 0, -1, Package_Header.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(package_ProvidedEClass, Package_Provided.class, "Package_Provided", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getPackage_Provided_Name(), this.getNode_Declaration(), null, "name", null, 0, 1, Package_Provided.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPackage_Provided_Parameters(), this.getPackage_Provided_IO(), null, "parameters", null, 0, -1, Package_Provided.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPackage_Provided_Returned(), this.getPackage_Provided_IO(), null, "returned", null, 0, -1, Package_Provided.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(package_ProvideEClass, Package_Provide.class, "Package_Provide", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getPackage_Provide_Name(), this.getNode_Header(), null, "name", null, 0, 1, Package_Provide.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPackage_Provide_Param(), this.getVar_Decl_List(), null, "param", null, 0, 1, Package_Provide.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPackage_Provide_Ret(), this.getVar_Decl_List(), null, "ret", null, 0, 1, Package_Provide.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(package_Provided_IOEClass, Package_Provided_IO.class, "Package_Provided_IO", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getPackage_Provided_IO_Name(), this.getVariable_Declaration(), null, "name", null, 0, 1, Package_Provided_IO.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPackage_Provided_IO_Type(), ecorePackage.getEString(), "type", null, 0, 1, Package_Provided_IO.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(package_Body_ContentEClass, Package_Body_Content.class, "Package_Body_Content", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getPackage_Body_Content_Entities(), this.getNode_Decl(), null, "entities", null, 0, -1, Package_Body_Content.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(entity_DeclarationEClass, Entity_Declaration.class, "Entity_Declaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getEntity_Declaration_Name(), ecorePackage.getEString(), "name", null, 0, 1, Entity_Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(node_DeclEClass, Node_Decl.class, "Node_Decl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getNode_Decl_Head(), this.getNode_Header(), null, "head", null, 0, 1, Node_Decl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getNode_Decl_Bdy(), this.getFN_Body(), null, "bdy", null, 0, 1, Node_Decl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(identifierEClass, Identifier.class, "Identifier", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getIdentifier_Pkg(), ecorePackage.getEString(), "pkg", null, 0, 1, Identifier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getIdentifier_FromPgk(), ecorePackage.getEBoolean(), "fromPgk", null, 0, 1, Identifier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getIdentifier_Name(), ecorePackage.getEString(), "name", null, 0, 1, Identifier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(type_DeclEClass, Type_Decl.class, "Type_Decl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getType_Decl_Name(), ecorePackage.getEString(), "name", null, 0, 1, Type_Decl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getType_Decl_Type(), this.getType(), null, "type", null, 0, 1, Type_Decl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(type_DeclarationEClass, Type_Declaration.class, "Type_Declaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getType_Declaration_Type(), this.getType(), null, "type", null, 0, 1, Type_Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(typeEClass, Type.class, "Type", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getType_Name(), ecorePackage.getEString(), "name", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getType_Name(), this.getType_Declaration(), null, "name", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(array_TypeEClass, Array_Type.class, "Array_Type", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getArray_Type_Type(), this.getType_Declaration(), null, "type", null, 0, 1, Array_Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getArray_Type_Length(), ecorePackage.getEInt(), "length", null, 0, 1, Array_Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(record_TypeEClass, Record_Type.class, "Record_Type", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getRecord_Type_Fields(), this.getField_List(), null, "fields", null, 0, 1, Record_Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(field_ListEClass, Field_List.class, "Field_List", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getField_List_Fields(), this.getField(), null, "fields", null, 0, -1, Field_List.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRecord_Type_Fields(), this.getField(), null, "fields", null, 0, -1, Record_Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(fieldEClass, Field.class, "Field", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getField_Name(), ecorePackage.getEString(), "name", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getField_Type(), this.getType(), null, "type", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getField_Type(), this.getType(), null, "type", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(enum_TypeEClass, Enum_Type.class, "Enum_Type", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getEnum_Type_NameList(), this.getIdent_List(), null, "nameList", null, 0, 1, Enum_Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(constant_DeclarationEClass, Constant_Declaration.class, "Constant_Declaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getConstant_Declaration_Type(), this.getType(), null, "type", null, 0, 1, Constant_Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getConstant_Declaration_Expr(), this.getExpression(), null, "expr", null, 0, 1, Constant_Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(const_DeclEClass, Const_Decl.class, "Const_Decl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getConst_Decl_Name(), ecorePackage.getEString(), "name", null, 0, 1, Const_Decl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getConst_Decl_Type(), this.getType(), null, "type", null, 0, 1, Const_Decl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getConst_Decl_Expr(), this.getExpression(), null, "expr", null, 0, 1, Const_Decl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(variable_DeclarationEClass, Variable_Declaration.class, "Variable_Declaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getVariable_Declaration_Name(), ecorePackage.getEString(), "name", null, 0, 1, Variable_Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getVariable_Declaration_Type(), this.getType(), null, "type", null, 0, 1, Variable_Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getVariable_Declaration_Clock(), ecorePackage.getEString(), "clock", null, 0, 1, Variable_Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(ident_ListEClass, Ident_List.class, "Ident_List", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getIdent_List_Names(), ecorePackage.getEString(), "names", null, 0, -1, Ident_List.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(node_HeaderEClass, Node_Header.class, "Node_Header", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getNode_Header_Name(), ecorePackage.getEString(), "name", null, 0, 1, Node_Header.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getNode_Header_Param(), this.getVar_Decl_List(), null, "param", null, 0, 1, Node_Header.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getNode_Header_Ret(), this.getVar_Decl_List(), null, "ret", null, 0, 1, Node_Header.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(var_Decl_ListEClass, Var_Decl_List.class, "Var_Decl_List", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getVar_Decl_List_VarList(), this.getVar_Decl(), null, "varList", null, 0, -1, Var_Decl_List.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(var_DeclEClass, Var_Decl.class, "Var_Decl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getVar_Decl_Name(), ecorePackage.getEString(), "name", null, 0, 1, Var_Decl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getVar_Decl_Type(), this.getType(), null, "type", null, 0, 1, Var_Decl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getVar_Decl_Clk(), this.getDeclared_Clock(), null, "clk", null, 0, 1, Var_Decl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(declared_ClockEClass, Declared_Clock.class, "Declared_Clock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getDeclared_Clock_Name(), this.getIdentifier(), null, "name", null, 0, 1, Declared_Clock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(fN_BodyEClass, FN_Body.class, "FN_Body", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getFN_Body_Decl(), this.getVar_Decl(), null, "decl", null, 0, -1, FN_Body.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getFN_Body_Eq(), this.getEquation(), null, "eq", null, 0, -1, FN_Body.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(equation_ListEClass, Equation_List.class, "Equation_List", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getEquation_List_Eq(), this.getEq_or_Ast(), null, "eq", null, 0, -1, Equation_List.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(eq_or_AstEClass, Eq_or_Ast.class, "Eq_or_Ast", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEClass(node_DeclarationEClass, Node_Declaration.class, "Node_Declaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getNode_Declaration_Parameters(), this.getVariable_Declaration(), null, "parameters", null, 0, -1, Node_Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getNode_Declaration_Returned(), this.getVariable_Declaration(), null, "returned", null, 0, -1, Node_Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getNode_Declaration_Constants(), this.getConstant_Declaration(), null, "constants", null, 0, -1, Node_Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getNode_Declaration_Variables(), this.getVariable_Declaration(), null, "variables", null, 0, -1, Node_Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getNode_Declaration_Equations(), this.getEquation(), null, "equations", null, 0, -1, Node_Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getNode_Declaration_Assertions(), this.getAssertion(), null, "assertions", null, 0, -1, Node_Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(equationEClass, Equation.class, "Equation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getEquation_Left(), ecorePackage.getEString(), "left", null, 0, 1, Equation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getEquation_Left(), this.getVariable_Declaration(), null, "left", null, 0, 1, Equation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getEquation_Right(), this.getExpression(), null, "right", null, 0, 1, Equation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(assertionEClass, Assertion.class, "Assertion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(left_PartEClass, Left_Part.class, "Left_Part", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -2110,19 +1723,18 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
     initEReference(getLeft_List_Id(), this.getLeft(), null, "id", null, 0, -1, Left_List.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(leftEClass, Left.class, "Left", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getLeft_Name(), this.getIdentifier(), null, "name", null, 0, 1, Left.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getLeft_Sel(), this.getSelector(), null, "sel", null, 0, 1, Left.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getLeft_Name(), ecorePackage.getEString(), "name", null, 0, 1, Left.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLeft_Selector(), this.getSelector(), null, "selector", null, 0, 1, Left.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(selectorEClass, Selector.class, "Selector", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getSelector_Name(), ecorePackage.getEString(), "name", null, 0, 1, Selector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSelector_Begin(), this.getExpression(), null, "begin", null, 0, 1, Selector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSelector_End(), this.getSelTrancheEnd(), null, "end", null, 0, 1, Selector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(selTrancheEndEClass, SelTrancheEnd.class, "SelTrancheEnd", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getSelector_End(), this.getExpression(), null, "end", null, 0, 1, Selector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(expressionEClass, Expression.class, "Expression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-    initEClass(assertionEClass, Assertion.class, "Assertion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEClass(variableReferenceEClass, VariableReference.class, "VariableReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getVariableReference_Value(), this.getVariable_Declaration(), null, "value", null, 0, 1, VariableReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(ifThenElseEClass, IfThenElse.class, "IfThenElse", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getIfThenElse_Ifexpr(), this.getExpression(), null, "ifexpr", null, 0, 1, IfThenElse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2130,20 +1742,16 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
     initEReference(getIfThenElse_Elseexpr(), this.getExpression(), null, "elseexpr", null, 0, 1, IfThenElse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(fbyEClass, Fby.class, "Fby", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getFby_Left(), this.getExpression(), null, "left", null, 0, 1, Fby.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getFby_Right(), this.getExpression(), null, "right", null, 0, 1, Fby.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFby_SubExpressions(), this.getExpression(), null, "subExpressions", null, 0, -1, Fby.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(arrowEClass, Arrow.class, "Arrow", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getArrow_Left(), this.getExpression(), null, "left", null, 0, 1, Arrow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getArrow_Right(), this.getExpression(), null, "right", null, 0, 1, Arrow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getArrow_SubExpressions(), this.getExpression(), null, "subExpressions", null, 0, -1, Arrow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(orEClass, Or.class, "Or", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getOr_Left(), this.getExpression(), null, "left", null, 0, 1, Or.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getOr_Right(), this.getExpression(), null, "right", null, 0, 1, Or.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getOr_SubExpressions(), this.getExpression(), null, "subExpressions", null, 0, -1, Or.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(andEClass, And.class, "And", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAnd_Left(), this.getExpression(), null, "left", null, 0, 1, And.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAnd_Right(), this.getExpression(), null, "right", null, 0, 1, And.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAnd_SubExpressions(), this.getExpression(), null, "subExpressions", null, 0, -1, And.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(equalityEClass, Equality.class, "Equality", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getEquality_Left(), this.getExpression(), null, "left", null, 0, 1, Equality.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2156,20 +1764,16 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
     initEReference(getComparison_Right(), this.getExpression(), null, "right", null, 0, 1, Comparison.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(plusEClass, Plus.class, "Plus", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getPlus_Left(), this.getExpression(), null, "left", null, 0, 1, Plus.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPlus_Right(), this.getExpression(), null, "right", null, 0, 1, Plus.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPlus_SubExpressions(), this.getExpression(), null, "subExpressions", null, 0, -1, Plus.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(minusEClass, Minus.class, "Minus", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getMinus_Left(), this.getExpression(), null, "left", null, 0, 1, Minus.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getMinus_Right(), this.getExpression(), null, "right", null, 0, 1, Minus.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMinus_SubExpressions(), this.getExpression(), null, "subExpressions", null, 0, -1, Minus.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(mulEClass, Mul.class, "Mul", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getMul_Left(), this.getExpression(), null, "left", null, 0, 1, Mul.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getMul_Right(), this.getExpression(), null, "right", null, 0, 1, Mul.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMul_SubExpressions(), this.getExpression(), null, "subExpressions", null, 0, -1, Mul.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(divEClass, Div.class, "Div", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getDiv_Left(), this.getExpression(), null, "left", null, 0, 1, Div.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getDiv_Right(), this.getExpression(), null, "right", null, 0, 1, Div.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDiv_SubExpressions(), this.getExpression(), null, "subExpressions", null, 0, -1, Div.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(notEClass, Not.class, "Not", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getNot_Expression(), this.getExpression(), null, "expression", null, 0, 1, Not.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2183,11 +1787,8 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
     initEClass(currentEClass, Current.class, "Current", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getCurrent_Expression(), this.getExpression(), null, "expression", null, 0, 1, Current.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(variablerefEClass, Variableref.class, "Variableref", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getVariableref_Value(), ecorePackage.getEString(), "value", null, 0, 1, Variableref.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(booleanConstantEClass, BooleanConstant.class, "BooleanConstant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getBooleanConstant_Value(), ecorePackage.getEBoolean(), "value", null, 0, 1, BooleanConstant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(boolConstantEClass, BoolConstant.class, "BoolConstant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getBoolConstant_Value(), ecorePackage.getEBoolean(), "value", null, 0, 1, BoolConstant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(floatConstantEClass, FloatConstant.class, "FloatConstant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getFloatConstant_Value(), ecorePackage.getEFloat(), "value", null, 0, 1, FloatConstant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

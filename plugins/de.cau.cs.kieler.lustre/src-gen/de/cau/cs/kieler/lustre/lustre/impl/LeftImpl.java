@@ -3,7 +3,6 @@
  */
 package de.cau.cs.kieler.lustre.lustre.impl;
 
-import de.cau.cs.kieler.lustre.lustre.Identifier;
 import de.cau.cs.kieler.lustre.lustre.Left;
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
 import de.cau.cs.kieler.lustre.lustre.Selector;
@@ -26,7 +25,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.LeftImpl#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.LeftImpl#getSel <em>Sel</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.LeftImpl#getSelector <em>Selector</em>}</li>
  * </ul>
  *
  * @generated
@@ -34,24 +33,34 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class LeftImpl extends MinimalEObjectImpl.Container implements Left
 {
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' containment reference.
+   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getName()
    * @generated
    * @ordered
    */
-  protected Identifier name;
+  protected static final String NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getSel() <em>Sel</em>}' containment reference.
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getSel()
+   * @see #getName()
    * @generated
    * @ordered
    */
-  protected Selector sel;
+  protected String name = NAME_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getSelector() <em>Selector</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSelector()
+   * @generated
+   * @ordered
+   */
+  protected Selector selector;
 
   /**
    * <!-- begin-user-doc -->
@@ -79,7 +88,7 @@ public class LeftImpl extends MinimalEObjectImpl.Container implements Left
    * <!-- end-user-doc -->
    * @generated
    */
-  public Identifier getName()
+  public String getName()
   {
     return name;
   }
@@ -89,16 +98,12 @@ public class LeftImpl extends MinimalEObjectImpl.Container implements Left
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetName(Identifier newName, NotificationChain msgs)
+  public void setName(String newName)
   {
-    Identifier oldName = name;
+    String oldName = name;
     name = newName;
     if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LustrePackage.LEFT__NAME, oldName, newName);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
+      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.LEFT__NAME, oldName, name));
   }
 
   /**
@@ -106,20 +111,9 @@ public class LeftImpl extends MinimalEObjectImpl.Container implements Left
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setName(Identifier newName)
+  public Selector getSelector()
   {
-    if (newName != name)
-    {
-      NotificationChain msgs = null;
-      if (name != null)
-        msgs = ((InternalEObject)name).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - LustrePackage.LEFT__NAME, null, msgs);
-      if (newName != null)
-        msgs = ((InternalEObject)newName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - LustrePackage.LEFT__NAME, null, msgs);
-      msgs = basicSetName(newName, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.LEFT__NAME, newName, newName));
+    return selector;
   }
 
   /**
@@ -127,23 +121,13 @@ public class LeftImpl extends MinimalEObjectImpl.Container implements Left
    * <!-- end-user-doc -->
    * @generated
    */
-  public Selector getSel()
+  public NotificationChain basicSetSelector(Selector newSelector, NotificationChain msgs)
   {
-    return sel;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetSel(Selector newSel, NotificationChain msgs)
-  {
-    Selector oldSel = sel;
-    sel = newSel;
+    Selector oldSelector = selector;
+    selector = newSelector;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LustrePackage.LEFT__SEL, oldSel, newSel);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LustrePackage.LEFT__SELECTOR, oldSelector, newSelector);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -154,20 +138,20 @@ public class LeftImpl extends MinimalEObjectImpl.Container implements Left
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setSel(Selector newSel)
+  public void setSelector(Selector newSelector)
   {
-    if (newSel != sel)
+    if (newSelector != selector)
     {
       NotificationChain msgs = null;
-      if (sel != null)
-        msgs = ((InternalEObject)sel).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - LustrePackage.LEFT__SEL, null, msgs);
-      if (newSel != null)
-        msgs = ((InternalEObject)newSel).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - LustrePackage.LEFT__SEL, null, msgs);
-      msgs = basicSetSel(newSel, msgs);
+      if (selector != null)
+        msgs = ((InternalEObject)selector).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - LustrePackage.LEFT__SELECTOR, null, msgs);
+      if (newSelector != null)
+        msgs = ((InternalEObject)newSelector).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - LustrePackage.LEFT__SELECTOR, null, msgs);
+      msgs = basicSetSelector(newSelector, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.LEFT__SEL, newSel, newSel));
+      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.LEFT__SELECTOR, newSelector, newSelector));
   }
 
   /**
@@ -180,10 +164,8 @@ public class LeftImpl extends MinimalEObjectImpl.Container implements Left
   {
     switch (featureID)
     {
-      case LustrePackage.LEFT__NAME:
-        return basicSetName(null, msgs);
-      case LustrePackage.LEFT__SEL:
-        return basicSetSel(null, msgs);
+      case LustrePackage.LEFT__SELECTOR:
+        return basicSetSelector(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -200,8 +182,8 @@ public class LeftImpl extends MinimalEObjectImpl.Container implements Left
     {
       case LustrePackage.LEFT__NAME:
         return getName();
-      case LustrePackage.LEFT__SEL:
-        return getSel();
+      case LustrePackage.LEFT__SELECTOR:
+        return getSelector();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -217,10 +199,10 @@ public class LeftImpl extends MinimalEObjectImpl.Container implements Left
     switch (featureID)
     {
       case LustrePackage.LEFT__NAME:
-        setName((Identifier)newValue);
+        setName((String)newValue);
         return;
-      case LustrePackage.LEFT__SEL:
-        setSel((Selector)newValue);
+      case LustrePackage.LEFT__SELECTOR:
+        setSelector((Selector)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -237,10 +219,10 @@ public class LeftImpl extends MinimalEObjectImpl.Container implements Left
     switch (featureID)
     {
       case LustrePackage.LEFT__NAME:
-        setName((Identifier)null);
+        setName(NAME_EDEFAULT);
         return;
-      case LustrePackage.LEFT__SEL:
-        setSel((Selector)null);
+      case LustrePackage.LEFT__SELECTOR:
+        setSelector((Selector)null);
         return;
     }
     super.eUnset(featureID);
@@ -257,11 +239,28 @@ public class LeftImpl extends MinimalEObjectImpl.Container implements Left
     switch (featureID)
     {
       case LustrePackage.LEFT__NAME:
-        return name != null;
-      case LustrePackage.LEFT__SEL:
-        return sel != null;
+        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case LustrePackage.LEFT__SELECTOR:
+        return selector != null;
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (name: ");
+    result.append(name);
+    result.append(')');
+    return result.toString();
   }
 
 } //LeftImpl

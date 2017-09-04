@@ -3,6 +3,7 @@
  */
 package de.cau.cs.kieler.lustre.lustre;
 
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -13,8 +14,7 @@ package de.cau.cs.kieler.lustre.lustre;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.Div#getLeft <em>Left</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.Div#getRight <em>Right</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.Div#getSubExpressions <em>Sub Expressions</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getDiv()
@@ -24,55 +24,19 @@ package de.cau.cs.kieler.lustre.lustre;
 public interface Div extends Expression
 {
   /**
-   * Returns the value of the '<em><b>Left</b></em>' containment reference.
+   * Returns the value of the '<em><b>Sub Expressions</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.lustre.lustre.Expression}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Left</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Sub Expressions</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Left</em>' containment reference.
-   * @see #setLeft(Expression)
-   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getDiv_Left()
+   * @return the value of the '<em>Sub Expressions</em>' containment reference list.
+   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getDiv_SubExpressions()
    * @model containment="true"
    * @generated
    */
-  Expression getLeft();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.Div#getLeft <em>Left</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Left</em>' containment reference.
-   * @see #getLeft()
-   * @generated
-   */
-  void setLeft(Expression value);
-
-  /**
-   * Returns the value of the '<em><b>Right</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Right</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Right</em>' containment reference.
-   * @see #setRight(Expression)
-   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getDiv_Right()
-   * @model containment="true"
-   * @generated
-   */
-  Expression getRight();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.Div#getRight <em>Right</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Right</em>' containment reference.
-   * @see #getRight()
-   * @generated
-   */
-  void setRight(Expression value);
+  EList<Expression> getSubExpressions();
 
 } // Div

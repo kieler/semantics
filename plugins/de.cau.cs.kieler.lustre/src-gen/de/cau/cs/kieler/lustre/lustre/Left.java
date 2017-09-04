@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.Left#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.Left#getSel <em>Sel</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.Left#getSelector <em>Selector</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getLeft()
@@ -25,55 +25,55 @@ import org.eclipse.emf.ecore.EObject;
 public interface Left extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Name</b></em>' containment reference.
+   * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Name</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Name</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Name</em>' containment reference.
-   * @see #setName(Identifier)
+   * @return the value of the '<em>Name</em>' attribute.
+   * @see #setName(String)
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getLeft_Name()
-   * @model containment="true"
+   * @model
    * @generated
    */
-  Identifier getName();
+  String getName();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.Left#getName <em>Name</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.Left#getName <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Name</em>' containment reference.
+   * @param value the new value of the '<em>Name</em>' attribute.
    * @see #getName()
    * @generated
    */
-  void setName(Identifier value);
+  void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Sel</b></em>' containment reference.
+   * Returns the value of the '<em><b>Selector</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Sel</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Selector</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Sel</em>' containment reference.
-   * @see #setSel(Selector)
-   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getLeft_Sel()
+   * @return the value of the '<em>Selector</em>' containment reference.
+   * @see #setSelector(Selector)
+   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getLeft_Selector()
    * @model containment="true"
    * @generated
    */
-  Selector getSel();
+  Selector getSelector();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.Left#getSel <em>Sel</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.Left#getSelector <em>Selector</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Sel</em>' containment reference.
-   * @see #getSel()
+   * @param value the new value of the '<em>Selector</em>' containment reference.
+   * @see #getSelector()
    * @generated
    */
-  void setSel(Selector value);
+  void setSelector(Selector value);
 
 } // Left

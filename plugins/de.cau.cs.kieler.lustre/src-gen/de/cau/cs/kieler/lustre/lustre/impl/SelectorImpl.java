@@ -5,7 +5,6 @@ package de.cau.cs.kieler.lustre.lustre.impl;
 
 import de.cau.cs.kieler.lustre.lustre.Expression;
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
-import de.cau.cs.kieler.lustre.lustre.SelTrancheEnd;
 import de.cau.cs.kieler.lustre.lustre.Selector;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -72,7 +71,7 @@ public class SelectorImpl extends MinimalEObjectImpl.Container implements Select
    * @generated
    * @ordered
    */
-  protected SelTrancheEnd end;
+  protected Expression end;
 
   /**
    * <!-- begin-user-doc -->
@@ -171,7 +170,7 @@ public class SelectorImpl extends MinimalEObjectImpl.Container implements Select
    * <!-- end-user-doc -->
    * @generated
    */
-  public SelTrancheEnd getEnd()
+  public Expression getEnd()
   {
     return end;
   }
@@ -181,9 +180,9 @@ public class SelectorImpl extends MinimalEObjectImpl.Container implements Select
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetEnd(SelTrancheEnd newEnd, NotificationChain msgs)
+  public NotificationChain basicSetEnd(Expression newEnd, NotificationChain msgs)
   {
-    SelTrancheEnd oldEnd = end;
+    Expression oldEnd = end;
     end = newEnd;
     if (eNotificationRequired())
     {
@@ -198,7 +197,7 @@ public class SelectorImpl extends MinimalEObjectImpl.Container implements Select
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setEnd(SelTrancheEnd newEnd)
+  public void setEnd(Expression newEnd)
   {
     if (newEnd != end)
     {
@@ -269,7 +268,7 @@ public class SelectorImpl extends MinimalEObjectImpl.Container implements Select
         setBegin((Expression)newValue);
         return;
       case LustrePackage.SELECTOR__END:
-        setEnd((SelTrancheEnd)newValue);
+        setEnd((Expression)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -292,7 +291,7 @@ public class SelectorImpl extends MinimalEObjectImpl.Container implements Select
         setBegin((Expression)null);
         return;
       case LustrePackage.SELECTOR__END:
-        setEnd((SelTrancheEnd)null);
+        setEnd((Expression)null);
         return;
     }
     super.eUnset(featureID);

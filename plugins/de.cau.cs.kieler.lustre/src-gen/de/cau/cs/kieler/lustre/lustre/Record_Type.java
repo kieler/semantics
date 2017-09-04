@@ -3,6 +3,8 @@
  */
 package de.cau.cs.kieler.lustre.lustre;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -24,29 +26,19 @@ import org.eclipse.emf.ecore.EObject;
 public interface Record_Type extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Fields</b></em>' containment reference.
+   * Returns the value of the '<em><b>Fields</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.lustre.lustre.Field}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Fields</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Fields</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Fields</em>' containment reference.
-   * @see #setFields(Field_List)
+   * @return the value of the '<em>Fields</em>' containment reference list.
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getRecord_Type_Fields()
    * @model containment="true"
    * @generated
    */
-  Field_List getFields();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.Record_Type#getFields <em>Fields</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Fields</em>' containment reference.
-   * @see #getFields()
-   * @generated
-   */
-  void setFields(Field_List value);
+  EList<Field> getFields();
 
 } // Record_Type

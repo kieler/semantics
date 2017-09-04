@@ -5,24 +5,18 @@ package de.cau.cs.kieler.lustre.serializer;
 
 import com.google.inject.Inject;
 import de.cau.cs.kieler.lustre.lustre.And;
+import de.cau.cs.kieler.lustre.lustre.Array_Type;
 import de.cau.cs.kieler.lustre.lustre.Arrow;
-import de.cau.cs.kieler.lustre.lustre.BooleanConstant;
+import de.cau.cs.kieler.lustre.lustre.BoolConstant;
 import de.cau.cs.kieler.lustre.lustre.Comparison;
-import de.cau.cs.kieler.lustre.lustre.Const_Decl;
+import de.cau.cs.kieler.lustre.lustre.Constant_Declaration;
 import de.cau.cs.kieler.lustre.lustre.Current;
-import de.cau.cs.kieler.lustre.lustre.Declared_Clock;
 import de.cau.cs.kieler.lustre.lustre.Div;
-import de.cau.cs.kieler.lustre.lustre.Enum_Type;
 import de.cau.cs.kieler.lustre.lustre.Equality;
 import de.cau.cs.kieler.lustre.lustre.Equation;
-import de.cau.cs.kieler.lustre.lustre.Equation_List;
-import de.cau.cs.kieler.lustre.lustre.FN_Body;
 import de.cau.cs.kieler.lustre.lustre.Fby;
 import de.cau.cs.kieler.lustre.lustre.Field;
-import de.cau.cs.kieler.lustre.lustre.Field_List;
 import de.cau.cs.kieler.lustre.lustre.FloatConstant;
-import de.cau.cs.kieler.lustre.lustre.Ident_List;
-import de.cau.cs.kieler.lustre.lustre.Identifier;
 import de.cau.cs.kieler.lustre.lustre.IfThenElse;
 import de.cau.cs.kieler.lustre.lustre.IntConstant;
 import de.cau.cs.kieler.lustre.lustre.Left;
@@ -30,24 +24,22 @@ import de.cau.cs.kieler.lustre.lustre.Left_List;
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
 import de.cau.cs.kieler.lustre.lustre.Minus;
 import de.cau.cs.kieler.lustre.lustre.Mul;
-import de.cau.cs.kieler.lustre.lustre.Node_Decl;
-import de.cau.cs.kieler.lustre.lustre.Node_Header;
+import de.cau.cs.kieler.lustre.lustre.Node_Declaration;
 import de.cau.cs.kieler.lustre.lustre.Not;
 import de.cau.cs.kieler.lustre.lustre.Or;
-import de.cau.cs.kieler.lustre.lustre.Package_Body_Content;
-import de.cau.cs.kieler.lustre.lustre.Package_Header;
-import de.cau.cs.kieler.lustre.lustre.Package_Provide;
+import de.cau.cs.kieler.lustre.lustre.Package_Declaration;
+import de.cau.cs.kieler.lustre.lustre.Package_Provided;
+import de.cau.cs.kieler.lustre.lustre.Package_Provided_IO;
 import de.cau.cs.kieler.lustre.lustre.Plus;
 import de.cau.cs.kieler.lustre.lustre.Pre;
 import de.cau.cs.kieler.lustre.lustre.Program;
 import de.cau.cs.kieler.lustre.lustre.Record_Type;
 import de.cau.cs.kieler.lustre.lustre.Selector;
 import de.cau.cs.kieler.lustre.lustre.Type;
-import de.cau.cs.kieler.lustre.lustre.Type_Decl;
+import de.cau.cs.kieler.lustre.lustre.Type_Declaration;
 import de.cau.cs.kieler.lustre.lustre.UMinus;
-import de.cau.cs.kieler.lustre.lustre.Var_Decl;
-import de.cau.cs.kieler.lustre.lustre.Var_Decl_List;
-import de.cau.cs.kieler.lustre.lustre.Variableref;
+import de.cau.cs.kieler.lustre.lustre.VariableReference;
+import de.cau.cs.kieler.lustre.lustre.Variable_Declaration;
 import de.cau.cs.kieler.lustre.services.LustreGrammarAccess;
 import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
@@ -77,29 +69,34 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			case LustrePackage.AND:
 				sequence_And(context, (And) semanticObject); 
 				return; 
+			case LustrePackage.ARRAY_TYPE:
+				sequence_Array_Type(context, (Array_Type) semanticObject); 
+				return; 
 			case LustrePackage.ARROW:
 				sequence_Arrow(context, (Arrow) semanticObject); 
 				return; 
-			case LustrePackage.BOOLEAN_CONSTANT:
-				sequence_ConstantExpression(context, (BooleanConstant) semanticObject); 
+			case LustrePackage.BOOL_CONSTANT:
+				sequence_ConstantExpression(context, (BoolConstant) semanticObject); 
 				return; 
 			case LustrePackage.COMPARISON:
 				sequence_Comparison(context, (Comparison) semanticObject); 
 				return; 
-			case LustrePackage.CONST_DECL:
-				sequence_Const_Decl(context, (Const_Decl) semanticObject); 
-				return; 
+			case LustrePackage.CONSTANT_DECLARATION:
+				if (rule == grammarAccess.getEntity_DeclarationRule()
+						|| rule == grammarAccess.getConstant_DeclarationRule()) {
+					sequence_Constant_Declaration(context, (Constant_Declaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getLocal_Constant_DeclarationRule()) {
+					sequence_Local_Constant_Declaration(context, (Constant_Declaration) semanticObject); 
+					return; 
+				}
+				else break;
 			case LustrePackage.CURRENT:
 				sequence_Primary(context, (Current) semanticObject); 
 				return; 
-			case LustrePackage.DECLARED_CLOCK:
-				sequence_Declared_Clock(context, (Declared_Clock) semanticObject); 
-				return; 
 			case LustrePackage.DIV:
 				sequence_MulOrDiv(context, (Div) semanticObject); 
-				return; 
-			case LustrePackage.ENUM_TYPE:
-				sequence_Enum_Type(context, (Enum_Type) semanticObject); 
 				return; 
 			case LustrePackage.EQUALITY:
 				sequence_Equality(context, (Equality) semanticObject); 
@@ -107,29 +104,14 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			case LustrePackage.EQUATION:
 				sequence_Equation(context, (Equation) semanticObject); 
 				return; 
-			case LustrePackage.EQUATION_LIST:
-				sequence_Equation_List(context, (Equation_List) semanticObject); 
-				return; 
-			case LustrePackage.FN_BODY:
-				sequence_FN_Body(context, (FN_Body) semanticObject); 
-				return; 
 			case LustrePackage.FBY:
 				sequence_Fby(context, (Fby) semanticObject); 
 				return; 
 			case LustrePackage.FIELD:
 				sequence_Field(context, (Field) semanticObject); 
 				return; 
-			case LustrePackage.FIELD_LIST:
-				sequence_Field_List(context, (Field_List) semanticObject); 
-				return; 
 			case LustrePackage.FLOAT_CONSTANT:
 				sequence_ConstantExpression(context, (FloatConstant) semanticObject); 
-				return; 
-			case LustrePackage.IDENT_LIST:
-				sequence_Ident_List(context, (Ident_List) semanticObject); 
-				return; 
-			case LustrePackage.IDENTIFIER:
-				sequence_Identifier(context, (Identifier) semanticObject); 
 				return; 
 			case LustrePackage.IF_THEN_ELSE:
 				sequence_Expression(context, (IfThenElse) semanticObject); 
@@ -149,11 +131,8 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			case LustrePackage.MUL:
 				sequence_MulOrDiv(context, (Mul) semanticObject); 
 				return; 
-			case LustrePackage.NODE_DECL:
-				sequence_Node_Decl(context, (Node_Decl) semanticObject); 
-				return; 
-			case LustrePackage.NODE_HEADER:
-				sequence_Node_Header(context, (Node_Header) semanticObject); 
+			case LustrePackage.NODE_DECLARATION:
+				sequence_Node_Declaration(context, (Node_Declaration) semanticObject); 
 				return; 
 			case LustrePackage.NOT:
 				sequence_Primary(context, (Not) semanticObject); 
@@ -161,17 +140,14 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			case LustrePackage.OR:
 				sequence_Or(context, (Or) semanticObject); 
 				return; 
-			case LustrePackage.PACKAGE:
-				sequence_Package(context, (de.cau.cs.kieler.lustre.lustre.Package) semanticObject); 
+			case LustrePackage.PACKAGE_DECLARATION:
+				sequence_Package_Declaration(context, (Package_Declaration) semanticObject); 
 				return; 
-			case LustrePackage.PACKAGE_BODY_CONTENT:
-				sequence_Package_Body_Content(context, (Package_Body_Content) semanticObject); 
+			case LustrePackage.PACKAGE_PROVIDED:
+				sequence_Package_Provided(context, (Package_Provided) semanticObject); 
 				return; 
-			case LustrePackage.PACKAGE_HEADER:
-				sequence_Package_Header(context, (Package_Header) semanticObject); 
-				return; 
-			case LustrePackage.PACKAGE_PROVIDE:
-				sequence_Package_Provide(context, (Package_Provide) semanticObject); 
+			case LustrePackage.PACKAGE_PROVIDED_IO:
+				sequence_Package_Provided_IO(context, (Package_Provided_IO) semanticObject); 
 				return; 
 			case LustrePackage.PLUS:
 				sequence_PlusOrMinus(context, (Plus) semanticObject); 
@@ -191,20 +167,17 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			case LustrePackage.TYPE:
 				sequence_Type(context, (Type) semanticObject); 
 				return; 
-			case LustrePackage.TYPE_DECL:
-				sequence_Type_Decl(context, (Type_Decl) semanticObject); 
+			case LustrePackage.TYPE_DECLARATION:
+				sequence_Type_Declaration(context, (Type_Declaration) semanticObject); 
 				return; 
 			case LustrePackage.UMINUS:
 				sequence_Primary(context, (UMinus) semanticObject); 
 				return; 
-			case LustrePackage.VAR_DECL:
-				sequence_Var_Decl(context, (Var_Decl) semanticObject); 
+			case LustrePackage.VARIABLE_REFERENCE:
+				sequence_VariableReference(context, (VariableReference) semanticObject); 
 				return; 
-			case LustrePackage.VAR_DECL_LIST:
-				sequence_Var_Decl_List(context, (Var_Decl_List) semanticObject); 
-				return; 
-			case LustrePackage.VARIABLEREF:
-				sequence_AtomicExpression(context, (Variableref) semanticObject); 
+			case LustrePackage.VARIABLE_DECLARATION:
+				sequence_Variable_Declaration(context, (Variable_Declaration) semanticObject); 
 				return; 
 			}
 		if (errorAcceptor != null)
@@ -213,10 +186,9 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     Eq_or_Ast returns And
+	 *     Assertion returns And
 	 *     SelTrancheEnd returns And
 	 *     Right_Part returns And
-	 *     Assertion returns And
 	 *     Expression returns And
 	 *     Fby returns And
 	 *     Fby.Fby_1_0 returns And
@@ -239,28 +211,39 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Primary returns And
 	 *
 	 * Constraint:
-	 *     (left=And_And_1_0 right=Equality)
+	 *     (subExpressions+=And_And_1_0 subExpressions+=Equality+)
 	 */
 	protected void sequence_And(ISerializationContext context, And semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Array_Type returns Array_Type
+	 *
+	 * Constraint:
+	 *     (type=[Type_Declaration|IDENT] length=INT)
+	 */
+	protected void sequence_Array_Type(ISerializationContext context, Array_Type semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.AND__LEFT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.AND__LEFT));
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.AND__RIGHT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.AND__RIGHT));
+			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.ARRAY_TYPE__TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.ARRAY_TYPE__TYPE));
+			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.ARRAY_TYPE__LENGTH) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.ARRAY_TYPE__LENGTH));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getAndAccess().getAndLeftAction_1_0(), semanticObject.getLeft());
-		feeder.accept(grammarAccess.getAndAccess().getRightEqualityParserRuleCall_1_2_0(), semanticObject.getRight());
+		feeder.accept(grammarAccess.getArray_TypeAccess().getTypeType_DeclarationIDENTTerminalRuleCall_0_0_1(), semanticObject.getType());
+		feeder.accept(grammarAccess.getArray_TypeAccess().getLengthINTTerminalRuleCall_2_0(), semanticObject.getLength());
 		feeder.finish();
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Eq_or_Ast returns Arrow
+	 *     Assertion returns Arrow
 	 *     SelTrancheEnd returns Arrow
 	 *     Right_Part returns Arrow
-	 *     Assertion returns Arrow
 	 *     Expression returns Arrow
 	 *     Fby returns Arrow
 	 *     Fby.Fby_1_0 returns Arrow
@@ -283,70 +266,18 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Primary returns Arrow
 	 *
 	 * Constraint:
-	 *     (left=Arrow_Arrow_1_0 right=Or)
+	 *     (subExpressions+=Arrow_Arrow_1_0 subExpressions+=Or+)
 	 */
 	protected void sequence_Arrow(ISerializationContext context, Arrow semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.ARROW__LEFT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.ARROW__LEFT));
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.ARROW__RIGHT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.ARROW__RIGHT));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getArrowAccess().getArrowLeftAction_1_0(), semanticObject.getLeft());
-		feeder.accept(grammarAccess.getArrowAccess().getRightOrParserRuleCall_1_2_0(), semanticObject.getRight());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Eq_or_Ast returns Variableref
-	 *     SelTrancheEnd returns Variableref
-	 *     Right_Part returns Variableref
-	 *     Assertion returns Variableref
-	 *     Expression returns Variableref
-	 *     Fby returns Variableref
-	 *     Fby.Fby_1_0 returns Variableref
-	 *     Arrow returns Variableref
-	 *     Arrow.Arrow_1_0 returns Variableref
-	 *     Or returns Variableref
-	 *     Or.Or_1_0 returns Variableref
-	 *     And returns Variableref
-	 *     And.And_1_0 returns Variableref
-	 *     Equality returns Variableref
-	 *     Equality.Equality_1_0 returns Variableref
-	 *     Comparison returns Variableref
-	 *     Comparison.Comparison_1_0 returns Variableref
-	 *     PlusOrMinus returns Variableref
-	 *     PlusOrMinus.Plus_1_0_0_0 returns Variableref
-	 *     PlusOrMinus.Minus_1_0_1_0 returns Variableref
-	 *     MulOrDiv returns Variableref
-	 *     MulOrDiv.Mul_1_0_0_0 returns Variableref
-	 *     MulOrDiv.Div_1_0_1_0 returns Variableref
-	 *     Primary returns Variableref
-	 *     AtomicExpression returns Variableref
-	 *
-	 * Constraint:
-	 *     value=IDENT
-	 */
-	protected void sequence_AtomicExpression(ISerializationContext context, Variableref semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.VARIABLEREF__VALUE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.VARIABLEREF__VALUE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getAtomicExpressionAccess().getValueIDENTTerminalRuleCall_1_1_0(), semanticObject.getValue());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Eq_or_Ast returns Comparison
+	 *     Assertion returns Comparison
 	 *     SelTrancheEnd returns Comparison
 	 *     Right_Part returns Comparison
-	 *     Assertion returns Comparison
 	 *     Expression returns Comparison
 	 *     Fby returns Comparison
 	 *     Fby.Fby_1_0 returns Comparison
@@ -378,52 +309,39 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     Const_Decl returns Const_Decl
-	 *
-	 * Constraint:
-	 *     ((name=IDENT type=Type) | (name=IDENT expr=Expression) | (name=IDENT type=Type expr=Expression))
-	 */
-	protected void sequence_Const_Decl(ISerializationContext context, Const_Decl semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Eq_or_Ast returns BooleanConstant
-	 *     SelTrancheEnd returns BooleanConstant
-	 *     Right_Part returns BooleanConstant
-	 *     Assertion returns BooleanConstant
-	 *     Expression returns BooleanConstant
-	 *     Fby returns BooleanConstant
-	 *     Fby.Fby_1_0 returns BooleanConstant
-	 *     Arrow returns BooleanConstant
-	 *     Arrow.Arrow_1_0 returns BooleanConstant
-	 *     Or returns BooleanConstant
-	 *     Or.Or_1_0 returns BooleanConstant
-	 *     And returns BooleanConstant
-	 *     And.And_1_0 returns BooleanConstant
-	 *     Equality returns BooleanConstant
-	 *     Equality.Equality_1_0 returns BooleanConstant
-	 *     Comparison returns BooleanConstant
-	 *     Comparison.Comparison_1_0 returns BooleanConstant
-	 *     PlusOrMinus returns BooleanConstant
-	 *     PlusOrMinus.Plus_1_0_0_0 returns BooleanConstant
-	 *     PlusOrMinus.Minus_1_0_1_0 returns BooleanConstant
-	 *     MulOrDiv returns BooleanConstant
-	 *     MulOrDiv.Mul_1_0_0_0 returns BooleanConstant
-	 *     MulOrDiv.Div_1_0_1_0 returns BooleanConstant
-	 *     Primary returns BooleanConstant
-	 *     AtomicExpression returns BooleanConstant
-	 *     ConstantExpression returns BooleanConstant
+	 *     Assertion returns BoolConstant
+	 *     SelTrancheEnd returns BoolConstant
+	 *     Right_Part returns BoolConstant
+	 *     Expression returns BoolConstant
+	 *     Fby returns BoolConstant
+	 *     Fby.Fby_1_0 returns BoolConstant
+	 *     Arrow returns BoolConstant
+	 *     Arrow.Arrow_1_0 returns BoolConstant
+	 *     Or returns BoolConstant
+	 *     Or.Or_1_0 returns BoolConstant
+	 *     And returns BoolConstant
+	 *     And.And_1_0 returns BoolConstant
+	 *     Equality returns BoolConstant
+	 *     Equality.Equality_1_0 returns BoolConstant
+	 *     Comparison returns BoolConstant
+	 *     Comparison.Comparison_1_0 returns BoolConstant
+	 *     PlusOrMinus returns BoolConstant
+	 *     PlusOrMinus.Plus_1_0_0_0 returns BoolConstant
+	 *     PlusOrMinus.Minus_1_0_1_0 returns BoolConstant
+	 *     MulOrDiv returns BoolConstant
+	 *     MulOrDiv.Mul_1_0_0_0 returns BoolConstant
+	 *     MulOrDiv.Div_1_0_1_0 returns BoolConstant
+	 *     Primary returns BoolConstant
+	 *     AtomicExpression returns BoolConstant
+	 *     ConstantExpression returns BoolConstant
 	 *
 	 * Constraint:
 	 *     value=BOOL
 	 */
-	protected void sequence_ConstantExpression(ISerializationContext context, BooleanConstant semanticObject) {
+	protected void sequence_ConstantExpression(ISerializationContext context, BoolConstant semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.BOOLEAN_CONSTANT__VALUE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.BOOLEAN_CONSTANT__VALUE));
+			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.BOOL_CONSTANT__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.BOOL_CONSTANT__VALUE));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getConstantExpressionAccess().getValueBOOLTerminalRuleCall_0_1_0(), semanticObject.isValue());
@@ -433,10 +351,9 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     Eq_or_Ast returns FloatConstant
+	 *     Assertion returns FloatConstant
 	 *     SelTrancheEnd returns FloatConstant
 	 *     Right_Part returns FloatConstant
-	 *     Assertion returns FloatConstant
 	 *     Expression returns FloatConstant
 	 *     Fby returns FloatConstant
 	 *     Fby.Fby_1_0 returns FloatConstant
@@ -476,10 +393,9 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     Eq_or_Ast returns IntConstant
+	 *     Assertion returns IntConstant
 	 *     SelTrancheEnd returns IntConstant
 	 *     Right_Part returns IntConstant
-	 *     Assertion returns IntConstant
 	 *     Expression returns IntConstant
 	 *     Fby returns IntConstant
 	 *     Fby.Fby_1_0 returns IntConstant
@@ -519,46 +435,22 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     Declared_Clock returns Declared_Clock
+	 *     Entity_Declaration returns Constant_Declaration
+	 *     Constant_Declaration returns Constant_Declaration
 	 *
 	 * Constraint:
-	 *     name=Identifier
+	 *     ((name=IDENT type=Type) | (name=IDENT expr=ConstantExpression) | (name=IDENT type=Type expr=ConstantExpression))
 	 */
-	protected void sequence_Declared_Clock(ISerializationContext context, Declared_Clock semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.DECLARED_CLOCK__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.DECLARED_CLOCK__NAME));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getDeclared_ClockAccess().getNameIdentifierParserRuleCall_1_0(), semanticObject.getName());
-		feeder.finish();
+	protected void sequence_Constant_Declaration(ISerializationContext context, Constant_Declaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Enum_Type returns Enum_Type
-	 *
-	 * Constraint:
-	 *     nameList=Ident_List
-	 */
-	protected void sequence_Enum_Type(ISerializationContext context, Enum_Type semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.ENUM_TYPE__NAME_LIST) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.ENUM_TYPE__NAME_LIST));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getEnum_TypeAccess().getNameListIdent_ListParserRuleCall_2_0(), semanticObject.getNameList());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Eq_or_Ast returns Equality
+	 *     Assertion returns Equality
 	 *     SelTrancheEnd returns Equality
 	 *     Right_Part returns Equality
-	 *     Assertion returns Equality
 	 *     Expression returns Equality
 	 *     Fby returns Equality
 	 *     Fby.Fby_1_0 returns Equality
@@ -590,11 +482,10 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     Eq_or_Ast returns Equation
 	 *     Equation returns Equation
 	 *
 	 * Constraint:
-	 *     (left=IDENT right=Right_Part)
+	 *     (left=[Variable_Declaration|IDENT] right=Right_Part)
 	 */
 	protected void sequence_Equation(ISerializationContext context, Equation semanticObject) {
 		if (errorAcceptor != null) {
@@ -604,7 +495,7 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.EQUATION__RIGHT));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getEquationAccess().getLeftIDENTTerminalRuleCall_0_0(), semanticObject.getLeft());
+		feeder.accept(grammarAccess.getEquationAccess().getLeftVariable_DeclarationIDENTTerminalRuleCall_0_0_1(), semanticObject.getLeft());
 		feeder.accept(grammarAccess.getEquationAccess().getRightRight_PartParserRuleCall_2_0(), semanticObject.getRight());
 		feeder.finish();
 	}
@@ -612,22 +503,9 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     Equation_List returns Equation_List
-	 *
-	 * Constraint:
-	 *     eq+=Eq_or_Ast*
-	 */
-	protected void sequence_Equation_List(ISerializationContext context, Equation_List semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Eq_or_Ast returns IfThenElse
+	 *     Assertion returns IfThenElse
 	 *     SelTrancheEnd returns IfThenElse
 	 *     Right_Part returns IfThenElse
-	 *     Assertion returns IfThenElse
 	 *     Expression returns IfThenElse
 	 *     Fby returns IfThenElse
 	 *     Fby.Fby_1_0 returns IfThenElse
@@ -671,22 +549,9 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     FN_Body returns FN_Body
-	 *
-	 * Constraint:
-	 *     (decl+=Local_Var_Decl* eq+=Equation*)
-	 */
-	protected void sequence_FN_Body(ISerializationContext context, FN_Body semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Eq_or_Ast returns Fby
+	 *     Assertion returns Fby
 	 *     SelTrancheEnd returns Fby
 	 *     Right_Part returns Fby
-	 *     Assertion returns Fby
 	 *     Expression returns Fby
 	 *     Fby returns Fby
 	 *     Fby.Fby_1_0 returns Fby
@@ -709,19 +574,10 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Primary returns Fby
 	 *
 	 * Constraint:
-	 *     (left=Fby_Fby_1_0 right=Arrow)
+	 *     (subExpressions+=Fby_Fby_1_0 subExpressions+=Arrow+)
 	 */
 	protected void sequence_Fby(ISerializationContext context, Fby semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.FBY__LEFT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.FBY__LEFT));
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.FBY__RIGHT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.FBY__RIGHT));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getFbyAccess().getFbyLeftAction_1_0(), semanticObject.getLeft());
-		feeder.accept(grammarAccess.getFbyAccess().getRightArrowParserRuleCall_1_2_0(), semanticObject.getRight());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -730,7 +586,7 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Field returns Field
 	 *
 	 * Constraint:
-	 *     (name=IDENT type=Type)
+	 *     (name=IDENT type=[Type|IDENT])
 	 */
 	protected void sequence_Field(ISerializationContext context, Field semanticObject) {
 		if (errorAcceptor != null) {
@@ -741,44 +597,8 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getFieldAccess().getNameIDENTTerminalRuleCall_0_0(), semanticObject.getName());
-		feeder.accept(grammarAccess.getFieldAccess().getTypeTypeParserRuleCall_2_0(), semanticObject.getType());
+		feeder.accept(grammarAccess.getFieldAccess().getTypeTypeIDENTTerminalRuleCall_2_0_1(), semanticObject.getType());
 		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Field_List returns Field_List
-	 *
-	 * Constraint:
-	 *     (fields+=Field fields+=Field*)
-	 */
-	protected void sequence_Field_List(ISerializationContext context, Field_List semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Ident_List returns Ident_List
-	 *
-	 * Constraint:
-	 *     (names+=IDENT names+=IDENT*)
-	 */
-	protected void sequence_Ident_List(ISerializationContext context, Ident_List semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Identifier returns Identifier
-	 *
-	 * Constraint:
-	 *     ((pkg=IDENT fromPgk?='::')? name=IDENT)
-	 */
-	protected void sequence_Identifier(ISerializationContext context, Identifier semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -787,7 +607,7 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Left returns Left
 	 *
 	 * Constraint:
-	 *     (name=Identifier sel=Selector?)
+	 *     (name=IDENT selector=Selector?)
 	 */
 	protected void sequence_Left(ISerializationContext context, Left semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -809,10 +629,21 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     Eq_or_Ast returns Div
+	 *     Local_Constant_Declaration returns Constant_Declaration
+	 *
+	 * Constraint:
+	 *     ((name=IDENT expr=ConstantExpression) | (name=IDENT type=Type expr=ConstantExpression))
+	 */
+	protected void sequence_Local_Constant_Declaration(ISerializationContext context, Constant_Declaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Assertion returns Div
 	 *     SelTrancheEnd returns Div
 	 *     Right_Part returns Div
-	 *     Assertion returns Div
 	 *     Expression returns Div
 	 *     Fby returns Div
 	 *     Fby.Fby_1_0 returns Div
@@ -835,28 +666,18 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Primary returns Div
 	 *
 	 * Constraint:
-	 *     (left=MulOrDiv_Div_1_0_1_0 right=Primary)
+	 *     (subExpressions+=MulOrDiv_Div_1_0_1_0 subExpressions+=Primary)
 	 */
 	protected void sequence_MulOrDiv(ISerializationContext context, Div semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.DIV__LEFT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.DIV__LEFT));
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.DIV__RIGHT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.DIV__RIGHT));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getMulOrDivAccess().getDivLeftAction_1_0_1_0(), semanticObject.getLeft());
-		feeder.accept(grammarAccess.getMulOrDivAccess().getRightPrimaryParserRuleCall_1_1_0(), semanticObject.getRight());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Eq_or_Ast returns Mul
+	 *     Assertion returns Mul
 	 *     SelTrancheEnd returns Mul
 	 *     Right_Part returns Mul
-	 *     Assertion returns Mul
 	 *     Expression returns Mul
 	 *     Fby returns Mul
 	 *     Fby.Fby_1_0 returns Mul
@@ -879,74 +700,39 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Primary returns Mul
 	 *
 	 * Constraint:
-	 *     (left=MulOrDiv_Mul_1_0_0_0 right=Primary)
+	 *     (subExpressions+=MulOrDiv_Mul_1_0_0_0 subExpressions+=Primary)
 	 */
 	protected void sequence_MulOrDiv(ISerializationContext context, Mul semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.MUL__LEFT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.MUL__LEFT));
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.MUL__RIGHT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.MUL__RIGHT));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getMulOrDivAccess().getMulLeftAction_1_0_0_0(), semanticObject.getLeft());
-		feeder.accept(grammarAccess.getMulOrDivAccess().getRightPrimaryParserRuleCall_1_1_0(), semanticObject.getRight());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Entity_Decl returns Node_Decl
-	 *     Node_Decl returns Node_Decl
+	 *     Entity_Declaration returns Node_Declaration
+	 *     Node_Declaration returns Node_Declaration
 	 *
 	 * Constraint:
-	 *     (head=Node_Header bdy=FN_Body)
+	 *     (
+	 *         name=IDENT 
+	 *         (parameters+=Variable_Declaration parameters+=Variable_Declaration*)? 
+	 *         returned+=Variable_Declaration 
+	 *         returned+=Variable_Declaration* 
+	 *         constants+=Local_Constant_Declaration? 
+	 *         (variables+=Local_Variable_Declaration? constants+=Local_Constant_Declaration?)* 
+	 *         (equations+=Equation | assertions+=Assertion)*
+	 *     )
 	 */
-	protected void sequence_Node_Decl(ISerializationContext context, Node_Decl semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.NODE_DECL__HEAD) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.NODE_DECL__HEAD));
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.NODE_DECL__BDY) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.NODE_DECL__BDY));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getNode_DeclAccess().getHeadNode_HeaderParserRuleCall_0_0(), semanticObject.getHead());
-		feeder.accept(grammarAccess.getNode_DeclAccess().getBdyFN_BodyParserRuleCall_1_0(), semanticObject.getBdy());
-		feeder.finish();
+	protected void sequence_Node_Declaration(ISerializationContext context, Node_Declaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Node_Header returns Node_Header
-	 *
-	 * Constraint:
-	 *     (name=IDENT param=Var_Decl_List ret=Var_Decl_List)
-	 */
-	protected void sequence_Node_Header(ISerializationContext context, Node_Header semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.NODE_HEADER__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.NODE_HEADER__NAME));
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.NODE_HEADER__PARAM) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.NODE_HEADER__PARAM));
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.NODE_HEADER__RET) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.NODE_HEADER__RET));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getNode_HeaderAccess().getNameIDENTTerminalRuleCall_1_0(), semanticObject.getName());
-		feeder.accept(grammarAccess.getNode_HeaderAccess().getParamVar_Decl_ListParserRuleCall_3_0(), semanticObject.getParam());
-		feeder.accept(grammarAccess.getNode_HeaderAccess().getRetVar_Decl_ListParserRuleCall_7_0(), semanticObject.getRet());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Eq_or_Ast returns Or
+	 *     Assertion returns Or
 	 *     SelTrancheEnd returns Or
 	 *     Right_Part returns Or
-	 *     Assertion returns Or
 	 *     Expression returns Or
 	 *     Fby returns Or
 	 *     Fby.Fby_1_0 returns Or
@@ -969,97 +755,73 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Primary returns Or
 	 *
 	 * Constraint:
-	 *     (left=Or_Or_1_0 right=And)
+	 *     (subExpressions+=Or_Or_1_0 subExpressions+=And+)
 	 */
 	protected void sequence_Or(ISerializationContext context, Or semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.OR__LEFT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.OR__LEFT));
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.OR__RIGHT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.OR__RIGHT));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getOrAccess().getOrLeftAction_1_0(), semanticObject.getLeft());
-		feeder.accept(grammarAccess.getOrAccess().getRightAndParserRuleCall_1_2_0(), semanticObject.getRight());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Package_Body_Content returns Package_Body_Content
-	 *
-	 * Constraint:
-	 *     entities+=Entity_Decl+
-	 */
-	protected void sequence_Package_Body_Content(ISerializationContext context, Package_Body_Content semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Package_Header returns Package_Header
+	 *     Package_Declaration returns Package_Declaration
 	 *
 	 * Constraint:
-	 *     (name=IDENT uses=Ident_List? provides+=Package_Provide+)
+	 *     (
+	 *         name=IDENT 
+	 *         (uses+=IDENT uses+=IDENT*)? 
+	 *         provides+=Package_Provided+ 
+	 *         (nodes+=Node_Declaration | types+=Type_Declaration | constants+=Constant_Declaration)*
+	 *     )
 	 */
-	protected void sequence_Package_Header(ISerializationContext context, Package_Header semanticObject) {
+	protected void sequence_Package_Declaration(ISerializationContext context, Package_Declaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Package returns Package
+	 *     Package_Provided_IO returns Package_Provided_IO
 	 *
 	 * Constraint:
-	 *     (head=Package_Header body=Package_Body_Content)
+	 *     (name=[Variable_Declaration|IDENT] type=IDENT)
 	 */
-	protected void sequence_Package(ISerializationContext context, de.cau.cs.kieler.lustre.lustre.Package semanticObject) {
+	protected void sequence_Package_Provided_IO(ISerializationContext context, Package_Provided_IO semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.PACKAGE__HEAD) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.PACKAGE__HEAD));
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.PACKAGE__BODY) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.PACKAGE__BODY));
+			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.PACKAGE_PROVIDED_IO__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.PACKAGE_PROVIDED_IO__NAME));
+			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.PACKAGE_PROVIDED_IO__TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.PACKAGE_PROVIDED_IO__TYPE));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getPackageAccess().getHeadPackage_HeaderParserRuleCall_0_0(), semanticObject.getHead());
-		feeder.accept(grammarAccess.getPackageAccess().getBodyPackage_Body_ContentParserRuleCall_1_0(), semanticObject.getBody());
+		feeder.accept(grammarAccess.getPackage_Provided_IOAccess().getNameVariable_DeclarationIDENTTerminalRuleCall_0_0_1(), semanticObject.getName());
+		feeder.accept(grammarAccess.getPackage_Provided_IOAccess().getTypeIDENTTerminalRuleCall_2_0(), semanticObject.getType());
 		feeder.finish();
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Package_Provide returns Package_Provide
+	 *     Package_Provided returns Package_Provided
 	 *
 	 * Constraint:
-	 *     (name=[Node_Header|IDENT] param=Var_Decl_List ret=Var_Decl_List)
+	 *     (
+	 *         name=[Node_Declaration|IDENT] 
+	 *         (parameters+=Package_Provided_IO parameters+=Package_Provided_IO*)? 
+	 *         returned+=Package_Provided_IO 
+	 *         returned+=Package_Provided_IO*
+	 *     )
 	 */
-	protected void sequence_Package_Provide(ISerializationContext context, Package_Provide semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.PACKAGE_PROVIDE__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.PACKAGE_PROVIDE__NAME));
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.PACKAGE_PROVIDE__PARAM) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.PACKAGE_PROVIDE__PARAM));
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.PACKAGE_PROVIDE__RET) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.PACKAGE_PROVIDE__RET));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getPackage_ProvideAccess().getNameNode_HeaderIDENTTerminalRuleCall_1_0_1(), semanticObject.getName());
-		feeder.accept(grammarAccess.getPackage_ProvideAccess().getParamVar_Decl_ListParserRuleCall_3_0(), semanticObject.getParam());
-		feeder.accept(grammarAccess.getPackage_ProvideAccess().getRetVar_Decl_ListParserRuleCall_7_0(), semanticObject.getRet());
-		feeder.finish();
+	protected void sequence_Package_Provided(ISerializationContext context, Package_Provided semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Eq_or_Ast returns Minus
+	 *     Assertion returns Minus
 	 *     SelTrancheEnd returns Minus
 	 *     Right_Part returns Minus
-	 *     Assertion returns Minus
 	 *     Expression returns Minus
 	 *     Fby returns Minus
 	 *     Fby.Fby_1_0 returns Minus
@@ -1082,28 +844,18 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Primary returns Minus
 	 *
 	 * Constraint:
-	 *     (left=PlusOrMinus_Minus_1_0_1_0 right=MulOrDiv)
+	 *     (subExpressions+=PlusOrMinus_Minus_1_0_1_0 subExpressions+=MulOrDiv)
 	 */
 	protected void sequence_PlusOrMinus(ISerializationContext context, Minus semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.MINUS__LEFT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.MINUS__LEFT));
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.MINUS__RIGHT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.MINUS__RIGHT));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getPlusOrMinusAccess().getMinusLeftAction_1_0_1_0(), semanticObject.getLeft());
-		feeder.accept(grammarAccess.getPlusOrMinusAccess().getRightMulOrDivParserRuleCall_1_1_0(), semanticObject.getRight());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Eq_or_Ast returns Plus
+	 *     Assertion returns Plus
 	 *     SelTrancheEnd returns Plus
 	 *     Right_Part returns Plus
-	 *     Assertion returns Plus
 	 *     Expression returns Plus
 	 *     Fby returns Plus
 	 *     Fby.Fby_1_0 returns Plus
@@ -1126,28 +878,18 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Primary returns Plus
 	 *
 	 * Constraint:
-	 *     (left=PlusOrMinus_Plus_1_0_0_0 right=MulOrDiv)
+	 *     (subExpressions+=PlusOrMinus_Plus_1_0_0_0 subExpressions+=MulOrDiv)
 	 */
 	protected void sequence_PlusOrMinus(ISerializationContext context, Plus semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.PLUS__LEFT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.PLUS__LEFT));
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.PLUS__RIGHT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.PLUS__RIGHT));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getPlusOrMinusAccess().getPlusLeftAction_1_0_0_0(), semanticObject.getLeft());
-		feeder.accept(grammarAccess.getPlusOrMinusAccess().getRightMulOrDivParserRuleCall_1_1_0(), semanticObject.getRight());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Eq_or_Ast returns Current
+	 *     Assertion returns Current
 	 *     SelTrancheEnd returns Current
 	 *     Right_Part returns Current
-	 *     Assertion returns Current
 	 *     Expression returns Current
 	 *     Fby returns Current
 	 *     Fby.Fby_1_0 returns Current
@@ -1185,10 +927,9 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     Eq_or_Ast returns Not
+	 *     Assertion returns Not
 	 *     SelTrancheEnd returns Not
 	 *     Right_Part returns Not
-	 *     Assertion returns Not
 	 *     Expression returns Not
 	 *     Fby returns Not
 	 *     Fby.Fby_1_0 returns Not
@@ -1226,10 +967,9 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     Eq_or_Ast returns Pre
+	 *     Assertion returns Pre
 	 *     SelTrancheEnd returns Pre
 	 *     Right_Part returns Pre
-	 *     Assertion returns Pre
 	 *     Expression returns Pre
 	 *     Fby returns Pre
 	 *     Fby.Fby_1_0 returns Pre
@@ -1267,10 +1007,9 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     Eq_or_Ast returns UMinus
+	 *     Assertion returns UMinus
 	 *     SelTrancheEnd returns UMinus
 	 *     Right_Part returns UMinus
-	 *     Assertion returns UMinus
 	 *     Expression returns UMinus
 	 *     Fby returns UMinus
 	 *     Fby.Fby_1_0 returns UMinus
@@ -1311,16 +1050,10 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Program returns Program
 	 *
 	 * Constraint:
-	 *     pkg=Package
+	 *     packages+=Package_Declaration+
 	 */
 	protected void sequence_Program(ISerializationContext context, Program semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.PROGRAM__PKG) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.PROGRAM__PKG));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getProgramAccess().getPkgPackageParserRuleCall_0(), semanticObject.getPkg());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -1329,16 +1062,10 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Record_Type returns Record_Type
 	 *
 	 * Constraint:
-	 *     fields=Field_List
+	 *     (fields+=Field fields+=Field*)
 	 */
 	protected void sequence_Record_Type(ISerializationContext context, Record_Type semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.RECORD_TYPE__FIELDS) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.RECORD_TYPE__FIELDS));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getRecord_TypeAccess().getFieldsField_ListParserRuleCall_2_0(), semanticObject.getFields());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -1356,12 +1083,13 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     Type_Decl returns Type_Decl
+	 *     Entity_Declaration returns Type_Declaration
+	 *     Type_Declaration returns Type_Declaration
 	 *
 	 * Constraint:
 	 *     (name=IDENT | (name=IDENT type=Type))
 	 */
-	protected void sequence_Type_Decl(ISerializationContext context, Type_Decl semanticObject) {
+	protected void sequence_Type_Declaration(ISerializationContext context, Type_Declaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1371,7 +1099,7 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Type returns Type
 	 *
 	 * Constraint:
-	 *     name=IDENT
+	 *     name=[Type_Declaration|IDENT]
 	 */
 	protected void sequence_Type(ISerializationContext context, Type semanticObject) {
 		if (errorAcceptor != null) {
@@ -1379,32 +1107,62 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.TYPE__NAME));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getTypeAccess().getNameIDENTTerminalRuleCall_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getTypeAccess().getNameType_DeclarationIDENTTerminalRuleCall_0_1(), semanticObject.getName());
 		feeder.finish();
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Var_Decl_List returns Var_Decl_List
+	 *     Assertion returns VariableReference
+	 *     SelTrancheEnd returns VariableReference
+	 *     Right_Part returns VariableReference
+	 *     Expression returns VariableReference
+	 *     Fby returns VariableReference
+	 *     Fby.Fby_1_0 returns VariableReference
+	 *     Arrow returns VariableReference
+	 *     Arrow.Arrow_1_0 returns VariableReference
+	 *     Or returns VariableReference
+	 *     Or.Or_1_0 returns VariableReference
+	 *     And returns VariableReference
+	 *     And.And_1_0 returns VariableReference
+	 *     Equality returns VariableReference
+	 *     Equality.Equality_1_0 returns VariableReference
+	 *     Comparison returns VariableReference
+	 *     Comparison.Comparison_1_0 returns VariableReference
+	 *     PlusOrMinus returns VariableReference
+	 *     PlusOrMinus.Plus_1_0_0_0 returns VariableReference
+	 *     PlusOrMinus.Minus_1_0_1_0 returns VariableReference
+	 *     MulOrDiv returns VariableReference
+	 *     MulOrDiv.Mul_1_0_0_0 returns VariableReference
+	 *     MulOrDiv.Div_1_0_1_0 returns VariableReference
+	 *     Primary returns VariableReference
+	 *     AtomicExpression returns VariableReference
+	 *     VariableReference returns VariableReference
 	 *
 	 * Constraint:
-	 *     (varList+=Var_Decl varList+=Var_Decl*)
+	 *     value=[Variable_Declaration|IDENT]
 	 */
-	protected void sequence_Var_Decl_List(ISerializationContext context, Var_Decl_List semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+	protected void sequence_VariableReference(ISerializationContext context, VariableReference semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.VARIABLE_REFERENCE__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.VARIABLE_REFERENCE__VALUE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getVariableReferenceAccess().getValueVariable_DeclarationIDENTTerminalRuleCall_1_0_1(), semanticObject.getValue());
+		feeder.finish();
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Var_Decl returns Var_Decl
-	 *     Local_Var_Decl returns Var_Decl
+	 *     Variable_Declaration returns Variable_Declaration
+	 *     Local_Variable_Declaration returns Variable_Declaration
 	 *
 	 * Constraint:
-	 *     (name=IDENT type=Type clk=Declared_Clock?)
+	 *     (name=IDENT type=Type clock=IDENT?)
 	 */
-	protected void sequence_Var_Decl(ISerializationContext context, Var_Decl semanticObject) {
+	protected void sequence_Variable_Declaration(ISerializationContext context, Variable_Declaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

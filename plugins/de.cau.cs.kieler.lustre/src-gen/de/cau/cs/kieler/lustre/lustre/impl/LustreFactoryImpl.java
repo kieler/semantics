@@ -3,56 +3,7 @@
  */
 package de.cau.cs.kieler.lustre.lustre.impl;
 
-import de.cau.cs.kieler.lustre.lustre.And;
-import de.cau.cs.kieler.lustre.lustre.Arrow;
-import de.cau.cs.kieler.lustre.lustre.Assertion;
-import de.cau.cs.kieler.lustre.lustre.BooleanConstant;
-import de.cau.cs.kieler.lustre.lustre.Comparison;
-import de.cau.cs.kieler.lustre.lustre.Const_Decl;
-import de.cau.cs.kieler.lustre.lustre.Current;
-import de.cau.cs.kieler.lustre.lustre.Declared_Clock;
-import de.cau.cs.kieler.lustre.lustre.Div;
-import de.cau.cs.kieler.lustre.lustre.Enum_Type;
-import de.cau.cs.kieler.lustre.lustre.Eq_or_Ast;
-import de.cau.cs.kieler.lustre.lustre.Equality;
-import de.cau.cs.kieler.lustre.lustre.Equation;
-import de.cau.cs.kieler.lustre.lustre.Equation_List;
-import de.cau.cs.kieler.lustre.lustre.Expression;
-import de.cau.cs.kieler.lustre.lustre.FN_Body;
-import de.cau.cs.kieler.lustre.lustre.Fby;
-import de.cau.cs.kieler.lustre.lustre.Field;
-import de.cau.cs.kieler.lustre.lustre.Field_List;
-import de.cau.cs.kieler.lustre.lustre.FloatConstant;
-import de.cau.cs.kieler.lustre.lustre.Ident_List;
-import de.cau.cs.kieler.lustre.lustre.Identifier;
-import de.cau.cs.kieler.lustre.lustre.IfThenElse;
-import de.cau.cs.kieler.lustre.lustre.IntConstant;
-import de.cau.cs.kieler.lustre.lustre.Left;
-import de.cau.cs.kieler.lustre.lustre.Left_List;
-import de.cau.cs.kieler.lustre.lustre.Left_Part;
-import de.cau.cs.kieler.lustre.lustre.LustreFactory;
-import de.cau.cs.kieler.lustre.lustre.LustrePackage;
-import de.cau.cs.kieler.lustre.lustre.Minus;
-import de.cau.cs.kieler.lustre.lustre.Mul;
-import de.cau.cs.kieler.lustre.lustre.Node_Decl;
-import de.cau.cs.kieler.lustre.lustre.Node_Header;
-import de.cau.cs.kieler.lustre.lustre.Not;
-import de.cau.cs.kieler.lustre.lustre.Or;
-import de.cau.cs.kieler.lustre.lustre.Package_Body_Content;
-import de.cau.cs.kieler.lustre.lustre.Package_Header;
-import de.cau.cs.kieler.lustre.lustre.Package_Provide;
-import de.cau.cs.kieler.lustre.lustre.Plus;
-import de.cau.cs.kieler.lustre.lustre.Pre;
-import de.cau.cs.kieler.lustre.lustre.Program;
-import de.cau.cs.kieler.lustre.lustre.Record_Type;
-import de.cau.cs.kieler.lustre.lustre.SelTrancheEnd;
-import de.cau.cs.kieler.lustre.lustre.Selector;
-import de.cau.cs.kieler.lustre.lustre.Type;
-import de.cau.cs.kieler.lustre.lustre.Type_Decl;
-import de.cau.cs.kieler.lustre.lustre.UMinus;
-import de.cau.cs.kieler.lustre.lustre.Var_Decl;
-import de.cau.cs.kieler.lustre.lustre.Var_Decl_List;
-import de.cau.cs.kieler.lustre.lustre.Variableref;
+import de.cau.cs.kieler.lustre.lustre.*;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -115,35 +66,26 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
     switch (eClass.getClassifierID())
     {
       case LustrePackage.PROGRAM: return createProgram();
-      case LustrePackage.PACKAGE: return createPackage();
-      case LustrePackage.PACKAGE_HEADER: return createPackage_Header();
-      case LustrePackage.PACKAGE_PROVIDE: return createPackage_Provide();
-      case LustrePackage.PACKAGE_BODY_CONTENT: return createPackage_Body_Content();
-      case LustrePackage.NODE_DECL: return createNode_Decl();
-      case LustrePackage.IDENTIFIER: return createIdentifier();
-      case LustrePackage.TYPE_DECL: return createType_Decl();
+      case LustrePackage.PACKAGE_DECLARATION: return createPackage_Declaration();
+      case LustrePackage.PACKAGE_PROVIDED: return createPackage_Provided();
+      case LustrePackage.PACKAGE_PROVIDED_IO: return createPackage_Provided_IO();
+      case LustrePackage.ENTITY_DECLARATION: return createEntity_Declaration();
+      case LustrePackage.TYPE_DECLARATION: return createType_Declaration();
       case LustrePackage.TYPE: return createType();
+      case LustrePackage.ARRAY_TYPE: return createArray_Type();
       case LustrePackage.RECORD_TYPE: return createRecord_Type();
-      case LustrePackage.FIELD_LIST: return createField_List();
       case LustrePackage.FIELD: return createField();
-      case LustrePackage.ENUM_TYPE: return createEnum_Type();
-      case LustrePackage.CONST_DECL: return createConst_Decl();
-      case LustrePackage.IDENT_LIST: return createIdent_List();
-      case LustrePackage.NODE_HEADER: return createNode_Header();
-      case LustrePackage.VAR_DECL_LIST: return createVar_Decl_List();
-      case LustrePackage.VAR_DECL: return createVar_Decl();
-      case LustrePackage.DECLARED_CLOCK: return createDeclared_Clock();
-      case LustrePackage.FN_BODY: return createFN_Body();
-      case LustrePackage.EQUATION_LIST: return createEquation_List();
-      case LustrePackage.EQ_OR_AST: return createEq_or_Ast();
+      case LustrePackage.CONSTANT_DECLARATION: return createConstant_Declaration();
+      case LustrePackage.VARIABLE_DECLARATION: return createVariable_Declaration();
+      case LustrePackage.NODE_DECLARATION: return createNode_Declaration();
       case LustrePackage.EQUATION: return createEquation();
+      case LustrePackage.ASSERTION: return createAssertion();
       case LustrePackage.LEFT_PART: return createLeft_Part();
       case LustrePackage.LEFT_LIST: return createLeft_List();
       case LustrePackage.LEFT: return createLeft();
       case LustrePackage.SELECTOR: return createSelector();
-      case LustrePackage.SEL_TRANCHE_END: return createSelTrancheEnd();
       case LustrePackage.EXPRESSION: return createExpression();
-      case LustrePackage.ASSERTION: return createAssertion();
+      case LustrePackage.VARIABLE_REFERENCE: return createVariableReference();
       case LustrePackage.IF_THEN_ELSE: return createIfThenElse();
       case LustrePackage.FBY: return createFby();
       case LustrePackage.ARROW: return createArrow();
@@ -159,8 +101,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
       case LustrePackage.UMINUS: return createUMinus();
       case LustrePackage.PRE: return createPre();
       case LustrePackage.CURRENT: return createCurrent();
-      case LustrePackage.VARIABLEREF: return createVariableref();
-      case LustrePackage.BOOLEAN_CONSTANT: return createBooleanConstant();
+      case LustrePackage.BOOL_CONSTANT: return createBoolConstant();
       case LustrePackage.FLOAT_CONSTANT: return createFloatConstant();
       case LustrePackage.INT_CONSTANT: return createIntConstant();
       default:
@@ -184,10 +125,10 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public de.cau.cs.kieler.lustre.lustre.Package createPackage()
+  public Package_Declaration createPackage_Declaration()
   {
-    PackageImpl package_ = new PackageImpl();
-    return package_;
+    Package_DeclarationImpl package_Declaration = new Package_DeclarationImpl();
+    return package_Declaration;
   }
 
   /**
@@ -195,10 +136,10 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Package_Header createPackage_Header()
+  public Package_Provided createPackage_Provided()
   {
-    Package_HeaderImpl package_Header = new Package_HeaderImpl();
-    return package_Header;
+    Package_ProvidedImpl package_Provided = new Package_ProvidedImpl();
+    return package_Provided;
   }
 
   /**
@@ -206,10 +147,10 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Package_Provide createPackage_Provide()
+  public Package_Provided_IO createPackage_Provided_IO()
   {
-    Package_ProvideImpl package_Provide = new Package_ProvideImpl();
-    return package_Provide;
+    Package_Provided_IOImpl package_Provided_IO = new Package_Provided_IOImpl();
+    return package_Provided_IO;
   }
 
   /**
@@ -217,10 +158,10 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Package_Body_Content createPackage_Body_Content()
+  public Entity_Declaration createEntity_Declaration()
   {
-    Package_Body_ContentImpl package_Body_Content = new Package_Body_ContentImpl();
-    return package_Body_Content;
+    Entity_DeclarationImpl entity_Declaration = new Entity_DeclarationImpl();
+    return entity_Declaration;
   }
 
   /**
@@ -228,32 +169,10 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Node_Decl createNode_Decl()
+  public Type_Declaration createType_Declaration()
   {
-    Node_DeclImpl node_Decl = new Node_DeclImpl();
-    return node_Decl;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Identifier createIdentifier()
-  {
-    IdentifierImpl identifier = new IdentifierImpl();
-    return identifier;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Type_Decl createType_Decl()
-  {
-    Type_DeclImpl type_Decl = new Type_DeclImpl();
-    return type_Decl;
+    Type_DeclarationImpl type_Declaration = new Type_DeclarationImpl();
+    return type_Declaration;
   }
 
   /**
@@ -272,10 +191,10 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Record_Type createRecord_Type()
+  public Array_Type createArray_Type()
   {
-    Record_TypeImpl record_Type = new Record_TypeImpl();
-    return record_Type;
+    Array_TypeImpl array_Type = new Array_TypeImpl();
+    return array_Type;
   }
 
   /**
@@ -283,10 +202,10 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Field_List createField_List()
+  public Record_Type createRecord_Type()
   {
-    Field_ListImpl field_List = new Field_ListImpl();
-    return field_List;
+    Record_TypeImpl record_Type = new Record_TypeImpl();
+    return record_Type;
   }
 
   /**
@@ -305,10 +224,10 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Enum_Type createEnum_Type()
+  public Constant_Declaration createConstant_Declaration()
   {
-    Enum_TypeImpl enum_Type = new Enum_TypeImpl();
-    return enum_Type;
+    Constant_DeclarationImpl constant_Declaration = new Constant_DeclarationImpl();
+    return constant_Declaration;
   }
 
   /**
@@ -316,10 +235,10 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Const_Decl createConst_Decl()
+  public Variable_Declaration createVariable_Declaration()
   {
-    Const_DeclImpl const_Decl = new Const_DeclImpl();
-    return const_Decl;
+    Variable_DeclarationImpl variable_Declaration = new Variable_DeclarationImpl();
+    return variable_Declaration;
   }
 
   /**
@@ -327,87 +246,10 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Ident_List createIdent_List()
+  public Node_Declaration createNode_Declaration()
   {
-    Ident_ListImpl ident_List = new Ident_ListImpl();
-    return ident_List;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Node_Header createNode_Header()
-  {
-    Node_HeaderImpl node_Header = new Node_HeaderImpl();
-    return node_Header;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Var_Decl_List createVar_Decl_List()
-  {
-    Var_Decl_ListImpl var_Decl_List = new Var_Decl_ListImpl();
-    return var_Decl_List;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Var_Decl createVar_Decl()
-  {
-    Var_DeclImpl var_Decl = new Var_DeclImpl();
-    return var_Decl;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Declared_Clock createDeclared_Clock()
-  {
-    Declared_ClockImpl declared_Clock = new Declared_ClockImpl();
-    return declared_Clock;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public FN_Body createFN_Body()
-  {
-    FN_BodyImpl fN_Body = new FN_BodyImpl();
-    return fN_Body;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Equation_List createEquation_List()
-  {
-    Equation_ListImpl equation_List = new Equation_ListImpl();
-    return equation_List;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Eq_or_Ast createEq_or_Ast()
-  {
-    Eq_or_AstImpl eq_or_Ast = new Eq_or_AstImpl();
-    return eq_or_Ast;
+    Node_DeclarationImpl node_Declaration = new Node_DeclarationImpl();
+    return node_Declaration;
   }
 
   /**
@@ -419,6 +261,17 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
   {
     EquationImpl equation = new EquationImpl();
     return equation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Assertion createAssertion()
+  {
+    AssertionImpl assertion = new AssertionImpl();
+    return assertion;
   }
 
   /**
@@ -470,17 +323,6 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public SelTrancheEnd createSelTrancheEnd()
-  {
-    SelTrancheEndImpl selTrancheEnd = new SelTrancheEndImpl();
-    return selTrancheEnd;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public Expression createExpression()
   {
     ExpressionImpl expression = new ExpressionImpl();
@@ -492,10 +334,10 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Assertion createAssertion()
+  public VariableReference createVariableReference()
   {
-    AssertionImpl assertion = new AssertionImpl();
-    return assertion;
+    VariableReferenceImpl variableReference = new VariableReferenceImpl();
+    return variableReference;
   }
 
   /**
@@ -668,21 +510,10 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Variableref createVariableref()
+  public BoolConstant createBoolConstant()
   {
-    VariablerefImpl variableref = new VariablerefImpl();
-    return variableref;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public BooleanConstant createBooleanConstant()
-  {
-    BooleanConstantImpl booleanConstant = new BooleanConstantImpl();
-    return booleanConstant;
+    BoolConstantImpl boolConstant = new BoolConstantImpl();
+    return boolConstant;
   }
 
   /**

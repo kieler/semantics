@@ -3,120 +3,145 @@ grammar de.cau.cs.kieler.lustre.Lustre
 generate lustre "http://www.cau.de/cs/kieler/lustre/Lustre"
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
+/**
+ * @author cpa
+ */
+
 Program hidden(WS, LUSTRE_COMMENT):
-    pkg=Package
+    packages+=Package_Declaration+   
 ;
 
-Package:
-    head=Package_Header body=Package_Body_Content 'end'
-;
-
-Package_Header:
-    'package' name=IDENT  ('uses' uses=Ident_List)? 'provides' provides+=Package_Provide+
-;
-
-Package_Provide:
-    'node' name=[Node_Header | IDENT] '(' param=Var_Decl_List ')' 'returns' '(' ret=Var_Decl_List ')' ';'
-;
-
-Package_Body_Content:
-    'body' entities+=Entity_Decl+
-;
-
-Entity_Decl returns Node_Decl:
-    Node_Decl
-;
 
 /*
- * Pragmas
+ * Packages
  */
- 
-Pragma:
-    ('%' STRING_CONST '%')*;
 
+Package_Declaration:
+    'package' name=IDENT 
+        ('uses' uses+=IDENT (',' uses+=IDENT)*)? 
+        'provides' provides+=Package_Provided+
+    'body'
+    (
+        nodes+=Node_Declaration |
+        types+=Type_Declaration |
+        constants+=Constant_Declaration
+    )*
+    'end'
+;
+
+Package_Provided:
+    'node' name=[Node_Declaration | IDENT] 
+        '(' (parameters+=Package_Provided_IO (',' parameters+=Package_Provided_IO)*)? ')' 
+        'returns' '(' returned+=Package_Provided_IO (',' returned+=Package_Provided_IO)* ')' 
+    ';'
+;
+
+Package_Provided_IO:
+    name=[Variable_Declaration | IDENT] ':' type=IDENT
+;
+
+Entity_Declaration:
+    Node_Declaration
+    | Type_Declaration
+    | Constant_Declaration
+;
 
 /*
  * Identifiers
  */
  
-Identifier:
-    (pkg=IDENT fromPgk?='::')? name=IDENT;
+//Identifier:
+//    (package=[Package | IDENT] '::')? name=[Variable_Declaration | IDENT] | name=[Node_Declaration | IDENT];
 
 
 /* 
  * Types
  */
 
-Type_Decl:
-    'type' name=IDENT  ';'
-    | 'type' name=IDENT '=' type=Type  ';';
+Type_Declaration:
+    'type' name=IDENT ';'
+    | 'type' name=IDENT '=' type=Type  ';'
+;
 
 Type:
-    name=IDENT
-//    | Record_Type
+    name=[Type_Declaration | IDENT]
 //    | Array_Type
-//    | Enum_Type;
+//    | Record_Type
+//    | Enum_Type
+;
+
+Array_Type:
+    type=[Type_Declaration | IDENT] '^' length=INT
+    // XXX Original Lustre allows Type^Expression  
 ;
 
 Record_Type:
-    'struct' '{' fields=Field_List '}';
-
-Field_List:
-    fields+=Field (',' fields+=Field)*;
+    'struct' '{' fields+=Field (',' fields+=Field)* '}'
+;
 
 Field:
-    name=IDENT ':' type=Type;
+    name=IDENT ':' type=[Type | IDENT]
+;
 
-Enum_Type:
-    'enum' '{' nameList=Ident_List '}';
+//Enum_Type:
+//    'enum' '{' nameList=Ident_List '}'
+//;
+
 
 /*
  * Constants and variables
  */
 
-Const_Decl:
+Constant_Declaration:
     'const' name=IDENT ':' type=Type ';'
-    | 'const' name=IDENT '=' expr=Expression ';'
-    | 'const' name=IDENT ':' type=Type '=' expr=Expression ';'
+    | 'const' name=IDENT '=' expr=ConstantExpression ';'
+    | 'const' name=IDENT ':' type=Type '=' expr=ConstantExpression ';'
+    // XXX Original Lustre allows Expressions
 ;
 
-Ident_List:
-    names+=IDENT (',' names+=IDENT)*;
+Variable_Declaration:
+    name=IDENT ':' type=Type ('when' clock=IDENT)?;
 
-Node_Decl:
-    head=Node_Header bdy=FN_Body;
+Local_Variable_Declaration returns Variable_Declaration:
+    'var' Variable_Declaration ';'
+; 
 
-Node_Header:
-    'node'  name=IDENT '(' param=Var_Decl_List ')' 'returns' '(' ret=Var_Decl_List ')' ';';
-
-Var_Decl_List:
-    varList+=Var_Decl (',' varList+=Var_Decl)*
+Local_Constant_Declaration returns Constant_Declaration:
+    {Constant_Declaration} 'const' name=IDENT '=' expr=ConstantExpression ';'
+    | {Constant_Declaration} 'const' name=IDENT ':' type=Type '=' expr=ConstantExpression ';'
+    // XXX Original Lustre allows Expressions
 ;
 
-Var_Decl:
-    name=IDENT ':' type=Type clk=Declared_Clock?;
 
-Declared_Clock:
-    'when' name=Identifier;
-
-FN_Body:
-    {FN_Body} decl+=Local_Var_Decl* 'let' eq+=Equation* 'tel' ';'?
-;
-
-Local_Var_Decl returns Var_Decl:
-    'var' Var_Decl ';'; 
-
-Equation_List:
-    {Equation_List} eq+=Eq_or_Ast*
-;
-
-Eq_or_Ast:
-    Equation
-    | Assertion
+/*
+ * Nodes
+ */
+ 
+Node_Declaration:
+    'node'  
+        name=IDENT 
+        '(' (parameters+=Variable_Declaration (',' parameters+=Variable_Declaration)*)? ')' 
+        'returns' '(' returned+=Variable_Declaration (',' returned+=Variable_Declaration)* ')' 
+    ';'
+    (
+        constants+=Local_Constant_Declaration |
+        variables+=Local_Variable_Declaration
+    )* 
+    'let' 
+    (
+        equations+=Equation | 
+        assertions+=Assertion
+    )*
+    'tel' ';'?
 ;
 
 Equation:
-    left=IDENT '=' right=Right_Part ';';
+    left=[Variable_Declaration | IDENT] '=' right=Right_Part ';'
+;
+
+Assertion:
+    'assert' Expression ';'
+;
 
 Left_Part:
     '(' Left_List ')'
@@ -126,7 +151,7 @@ Left_List:
     id+=Left (',' id+=Left)*;
 
 Left:
-    name=Identifier sel=Selector?
+    name=IDENT selector=Selector?
 ;
 
 Selector:
@@ -134,15 +159,12 @@ Selector:
      | '[' begin=Expression end=SelTrancheEnd? ']'
  ;
 
-SelTrancheEnd:
+SelTrancheEnd returns Expression:
     '..' Expression;
 
 Right_Part returns Expression:
     Expression
 ;
-
-Assertion:
-    'assert' Expression ';';
 
 /*
  * Expressions
@@ -150,24 +172,23 @@ Assertion:
  
 Expression:
     {IfThenElse} 'if' ifexpr=Expression 'then' thenexpr=Expression 'else' elseexpr=Expression
-//    | {Arrow} left=Expression '->' right=Expression
     | Fby
 ;
 
 Fby returns Expression:
-    Arrow ({Fby.left=current} 'fby' right=Arrow)*
+    Arrow ({Fby.subExpressions+=current} ('fby' subExpressions+=Arrow)+)?
 ;
 
 Arrow returns Expression:
-    Or ({Arrow.left=current} '->' right=Or)*
+    Or ({Arrow.subExpressions+=current} ('->' subExpressions+=Or)+)?
 ;
 
 Or returns Expression:
-    And ({Or.left=current} 'or' right=And)*
+    And ({Or.subExpressions+=current} ('or' subExpressions+=And)+)?
 ;
 
 And returns Expression:
-    Equality ({And.left=current} 'and' right=Equality)*
+    Equality ({And.subExpressions+=current} ('and' subExpressions+=Equality)+)?
 ;
 
 Equality returns Expression:
@@ -179,11 +200,11 @@ Comparison returns Expression:
 ;
 
 PlusOrMinus returns Expression:
-    MulOrDiv ((({Plus.left=current} '+') | ({Minus.left=current} '-')) right=MulOrDiv)*
+    MulOrDiv ((({Plus.subExpressions+=current} '+') | ({Minus.subExpressions+=current} '-')) subExpressions+=MulOrDiv)*
 ;
 
 MulOrDiv returns Expression:
-    Primary ((({Mul.left=current} '*') | ({Div.left=current} '/')) right=Primary)*
+    Primary ((({Mul.subExpressions+=current} '*') | ({Div.subExpressions+=current} '/')) subExpressions+=Primary)*
 ;
 
 Primary returns Expression:
@@ -196,11 +217,15 @@ Primary returns Expression:
 ;
 
 AtomicExpression returns Expression:
-    ConstantExpression | {Variableref} value=IDENT
+    ConstantExpression | VariableReference
+;
+
+VariableReference:
+    {VariableReference} value=[Variable_Declaration | IDENT]
 ;
 
 ConstantExpression returns Expression:
-    {BooleanConstant} value=BOOL
+    {BoolConstant} value=BOOL 
     | {FloatConstant} value=FLOAT
     | {IntConstant} value=INT
 ;
@@ -222,18 +247,20 @@ terminal FLOAT returns ecore::EFloat:
     ('0'..'9')+ '.' ('0'..'9')*
     | '.' ('0'..'9')+;
 
-terminal STRING_CONST: 
+terminal STRING_CONSTANT: 
     '"' ( '\\'('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|'"') )* '"' |
     "'" ( '\\'('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|"'") )* "'"; 
 
 terminal LUSTRE_COMMENT:
-    LUSTRE_ML_COMMENT | LUSTRE_SL_COMMENT;
+    ML_COMMENT | SL_COMMENT;
 
-terminal LUSTRE_ML_COMMENT: 
-    '(*' -> '*)';
+terminal ML_COMMENT: 
+    '(*' -> '*)'
+;
  
-terminal LUSTRE_SL_COMMENT: 
-    '--' !('\n'|'\r')* ('\r'? '\n')?;
- 
+terminal SL_COMMENT: 
+    '--' !('\n'|'\r')* ('\r'? '\n')?
+;
+
 terminal WS: 
     (' '|'\t'|'\r'|'\n')+;

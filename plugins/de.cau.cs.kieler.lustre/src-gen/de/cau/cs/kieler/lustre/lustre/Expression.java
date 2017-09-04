@@ -14,6 +14,6 @@ package de.cau.cs.kieler.lustre.lustre;
  * @model
  * @generated
  */
-public interface Expression extends SelTrancheEnd, Assertion
+public interface Expression extends Assertion
 {
 } // Expression

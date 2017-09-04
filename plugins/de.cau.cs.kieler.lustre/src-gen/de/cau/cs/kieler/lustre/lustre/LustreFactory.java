@@ -33,67 +33,49 @@ public interface LustreFactory extends EFactory
   Program createProgram();
 
   /**
-   * Returns a new object of class '<em>Package</em>'.
+   * Returns a new object of class '<em>Package Declaration</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Package</em>'.
+   * @return a new object of class '<em>Package Declaration</em>'.
    * @generated
    */
-  Package createPackage();
+  Package_Declaration createPackage_Declaration();
 
   /**
-   * Returns a new object of class '<em>Package Header</em>'.
+   * Returns a new object of class '<em>Package Provided</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Package Header</em>'.
+   * @return a new object of class '<em>Package Provided</em>'.
    * @generated
    */
-  Package_Header createPackage_Header();
+  Package_Provided createPackage_Provided();
 
   /**
-   * Returns a new object of class '<em>Package Provide</em>'.
+   * Returns a new object of class '<em>Package Provided IO</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Package Provide</em>'.
+   * @return a new object of class '<em>Package Provided IO</em>'.
    * @generated
    */
-  Package_Provide createPackage_Provide();
+  Package_Provided_IO createPackage_Provided_IO();
 
   /**
-   * Returns a new object of class '<em>Package Body Content</em>'.
+   * Returns a new object of class '<em>Entity Declaration</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Package Body Content</em>'.
+   * @return a new object of class '<em>Entity Declaration</em>'.
    * @generated
    */
-  Package_Body_Content createPackage_Body_Content();
+  Entity_Declaration createEntity_Declaration();
 
   /**
-   * Returns a new object of class '<em>Node Decl</em>'.
+   * Returns a new object of class '<em>Type Declaration</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Node Decl</em>'.
+   * @return a new object of class '<em>Type Declaration</em>'.
    * @generated
    */
-  Node_Decl createNode_Decl();
-
-  /**
-   * Returns a new object of class '<em>Identifier</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Identifier</em>'.
-   * @generated
-   */
-  Identifier createIdentifier();
-
-  /**
-   * Returns a new object of class '<em>Type Decl</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Type Decl</em>'.
-   * @generated
-   */
-  Type_Decl createType_Decl();
+  Type_Declaration createType_Declaration();
 
   /**
    * Returns a new object of class '<em>Type</em>'.
@@ -105,6 +87,15 @@ public interface LustreFactory extends EFactory
   Type createType();
 
   /**
+   * Returns a new object of class '<em>Array Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Array Type</em>'.
+   * @generated
+   */
+  Array_Type createArray_Type();
+
+  /**
    * Returns a new object of class '<em>Record Type</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -112,15 +103,6 @@ public interface LustreFactory extends EFactory
    * @generated
    */
   Record_Type createRecord_Type();
-
-  /**
-   * Returns a new object of class '<em>Field List</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Field List</em>'.
-   * @generated
-   */
-  Field_List createField_List();
 
   /**
    * Returns a new object of class '<em>Field</em>'.
@@ -132,94 +114,31 @@ public interface LustreFactory extends EFactory
   Field createField();
 
   /**
-   * Returns a new object of class '<em>Enum Type</em>'.
+   * Returns a new object of class '<em>Constant Declaration</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Enum Type</em>'.
+   * @return a new object of class '<em>Constant Declaration</em>'.
    * @generated
    */
-  Enum_Type createEnum_Type();
+  Constant_Declaration createConstant_Declaration();
 
   /**
-   * Returns a new object of class '<em>Const Decl</em>'.
+   * Returns a new object of class '<em>Variable Declaration</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Const Decl</em>'.
+   * @return a new object of class '<em>Variable Declaration</em>'.
    * @generated
    */
-  Const_Decl createConst_Decl();
+  Variable_Declaration createVariable_Declaration();
 
   /**
-   * Returns a new object of class '<em>Ident List</em>'.
+   * Returns a new object of class '<em>Node Declaration</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Ident List</em>'.
+   * @return a new object of class '<em>Node Declaration</em>'.
    * @generated
    */
-  Ident_List createIdent_List();
-
-  /**
-   * Returns a new object of class '<em>Node Header</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Node Header</em>'.
-   * @generated
-   */
-  Node_Header createNode_Header();
-
-  /**
-   * Returns a new object of class '<em>Var Decl List</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Var Decl List</em>'.
-   * @generated
-   */
-  Var_Decl_List createVar_Decl_List();
-
-  /**
-   * Returns a new object of class '<em>Var Decl</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Var Decl</em>'.
-   * @generated
-   */
-  Var_Decl createVar_Decl();
-
-  /**
-   * Returns a new object of class '<em>Declared Clock</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Declared Clock</em>'.
-   * @generated
-   */
-  Declared_Clock createDeclared_Clock();
-
-  /**
-   * Returns a new object of class '<em>FN Body</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>FN Body</em>'.
-   * @generated
-   */
-  FN_Body createFN_Body();
-
-  /**
-   * Returns a new object of class '<em>Equation List</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Equation List</em>'.
-   * @generated
-   */
-  Equation_List createEquation_List();
-
-  /**
-   * Returns a new object of class '<em>Eq or Ast</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Eq or Ast</em>'.
-   * @generated
-   */
-  Eq_or_Ast createEq_or_Ast();
+  Node_Declaration createNode_Declaration();
 
   /**
    * Returns a new object of class '<em>Equation</em>'.
@@ -229,6 +148,15 @@ public interface LustreFactory extends EFactory
    * @generated
    */
   Equation createEquation();
+
+  /**
+   * Returns a new object of class '<em>Assertion</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Assertion</em>'.
+   * @generated
+   */
+  Assertion createAssertion();
 
   /**
    * Returns a new object of class '<em>Left Part</em>'.
@@ -267,15 +195,6 @@ public interface LustreFactory extends EFactory
   Selector createSelector();
 
   /**
-   * Returns a new object of class '<em>Sel Tranche End</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Sel Tranche End</em>'.
-   * @generated
-   */
-  SelTrancheEnd createSelTrancheEnd();
-
-  /**
    * Returns a new object of class '<em>Expression</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -285,13 +204,13 @@ public interface LustreFactory extends EFactory
   Expression createExpression();
 
   /**
-   * Returns a new object of class '<em>Assertion</em>'.
+   * Returns a new object of class '<em>Variable Reference</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Assertion</em>'.
+   * @return a new object of class '<em>Variable Reference</em>'.
    * @generated
    */
-  Assertion createAssertion();
+  VariableReference createVariableReference();
 
   /**
    * Returns a new object of class '<em>If Then Else</em>'.
@@ -429,22 +348,13 @@ public interface LustreFactory extends EFactory
   Current createCurrent();
 
   /**
-   * Returns a new object of class '<em>Variableref</em>'.
+   * Returns a new object of class '<em>Bool Constant</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Variableref</em>'.
+   * @return a new object of class '<em>Bool Constant</em>'.
    * @generated
    */
-  Variableref createVariableref();
-
-  /**
-   * Returns a new object of class '<em>Boolean Constant</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Boolean Constant</em>'.
-   * @generated
-   */
-  BooleanConstant createBooleanConstant();
+  BoolConstant createBoolConstant();
 
   /**
    * Returns a new object of class '<em>Float Constant</em>'.

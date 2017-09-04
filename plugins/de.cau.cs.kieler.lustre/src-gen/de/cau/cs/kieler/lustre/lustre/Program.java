@@ -3,6 +3,8 @@
  */
 package de.cau.cs.kieler.lustre.lustre;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -14,7 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.Program#getPkg <em>Pkg</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.Program#getPackages <em>Packages</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getProgram()
@@ -24,29 +26,19 @@ import org.eclipse.emf.ecore.EObject;
 public interface Program extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Pkg</b></em>' containment reference.
+   * Returns the value of the '<em><b>Packages</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.lustre.lustre.Package_Declaration}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Pkg</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Packages</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Pkg</em>' containment reference.
-   * @see #setPkg(de.cau.cs.kieler.lustre.lustre.Package)
-   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getProgram_Pkg()
+   * @return the value of the '<em>Packages</em>' containment reference list.
+   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getProgram_Packages()
    * @model containment="true"
    * @generated
    */
-  de.cau.cs.kieler.lustre.lustre.Package getPkg();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.Program#getPkg <em>Pkg</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Pkg</em>' containment reference.
-   * @see #getPkg()
-   * @generated
-   */
-  void setPkg(de.cau.cs.kieler.lustre.lustre.Package value);
+  EList<Package_Declaration> getPackages();
 
 } // Program

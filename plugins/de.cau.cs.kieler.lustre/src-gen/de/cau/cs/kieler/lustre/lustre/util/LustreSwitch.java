@@ -3,55 +3,7 @@
  */
 package de.cau.cs.kieler.lustre.lustre.util;
 
-import de.cau.cs.kieler.lustre.lustre.And;
-import de.cau.cs.kieler.lustre.lustre.Arrow;
-import de.cau.cs.kieler.lustre.lustre.Assertion;
-import de.cau.cs.kieler.lustre.lustre.BooleanConstant;
-import de.cau.cs.kieler.lustre.lustre.Comparison;
-import de.cau.cs.kieler.lustre.lustre.Const_Decl;
-import de.cau.cs.kieler.lustre.lustre.Current;
-import de.cau.cs.kieler.lustre.lustre.Declared_Clock;
-import de.cau.cs.kieler.lustre.lustre.Div;
-import de.cau.cs.kieler.lustre.lustre.Enum_Type;
-import de.cau.cs.kieler.lustre.lustre.Eq_or_Ast;
-import de.cau.cs.kieler.lustre.lustre.Equality;
-import de.cau.cs.kieler.lustre.lustre.Equation;
-import de.cau.cs.kieler.lustre.lustre.Equation_List;
-import de.cau.cs.kieler.lustre.lustre.Expression;
-import de.cau.cs.kieler.lustre.lustre.FN_Body;
-import de.cau.cs.kieler.lustre.lustre.Fby;
-import de.cau.cs.kieler.lustre.lustre.Field;
-import de.cau.cs.kieler.lustre.lustre.Field_List;
-import de.cau.cs.kieler.lustre.lustre.FloatConstant;
-import de.cau.cs.kieler.lustre.lustre.Ident_List;
-import de.cau.cs.kieler.lustre.lustre.Identifier;
-import de.cau.cs.kieler.lustre.lustre.IfThenElse;
-import de.cau.cs.kieler.lustre.lustre.IntConstant;
-import de.cau.cs.kieler.lustre.lustre.Left;
-import de.cau.cs.kieler.lustre.lustre.Left_List;
-import de.cau.cs.kieler.lustre.lustre.Left_Part;
-import de.cau.cs.kieler.lustre.lustre.LustrePackage;
-import de.cau.cs.kieler.lustre.lustre.Minus;
-import de.cau.cs.kieler.lustre.lustre.Mul;
-import de.cau.cs.kieler.lustre.lustre.Node_Decl;
-import de.cau.cs.kieler.lustre.lustre.Node_Header;
-import de.cau.cs.kieler.lustre.lustre.Not;
-import de.cau.cs.kieler.lustre.lustre.Or;
-import de.cau.cs.kieler.lustre.lustre.Package_Body_Content;
-import de.cau.cs.kieler.lustre.lustre.Package_Header;
-import de.cau.cs.kieler.lustre.lustre.Package_Provide;
-import de.cau.cs.kieler.lustre.lustre.Plus;
-import de.cau.cs.kieler.lustre.lustre.Pre;
-import de.cau.cs.kieler.lustre.lustre.Program;
-import de.cau.cs.kieler.lustre.lustre.Record_Type;
-import de.cau.cs.kieler.lustre.lustre.SelTrancheEnd;
-import de.cau.cs.kieler.lustre.lustre.Selector;
-import de.cau.cs.kieler.lustre.lustre.Type;
-import de.cau.cs.kieler.lustre.lustre.Type_Decl;
-import de.cau.cs.kieler.lustre.lustre.UMinus;
-import de.cau.cs.kieler.lustre.lustre.Var_Decl;
-import de.cau.cs.kieler.lustre.lustre.Var_Decl_List;
-import de.cau.cs.kieler.lustre.lustre.Variableref;
+import de.cau.cs.kieler.lustre.lustre.*;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -128,52 +80,39 @@ public class LustreSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case LustrePackage.PACKAGE:
+      case LustrePackage.PACKAGE_DECLARATION:
       {
-        de.cau.cs.kieler.lustre.lustre.Package package_ = (de.cau.cs.kieler.lustre.lustre.Package)theEObject;
-        T result = casePackage(package_);
+        Package_Declaration package_Declaration = (Package_Declaration)theEObject;
+        T result = casePackage_Declaration(package_Declaration);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case LustrePackage.PACKAGE_HEADER:
+      case LustrePackage.PACKAGE_PROVIDED:
       {
-        Package_Header package_Header = (Package_Header)theEObject;
-        T result = casePackage_Header(package_Header);
+        Package_Provided package_Provided = (Package_Provided)theEObject;
+        T result = casePackage_Provided(package_Provided);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case LustrePackage.PACKAGE_PROVIDE:
+      case LustrePackage.PACKAGE_PROVIDED_IO:
       {
-        Package_Provide package_Provide = (Package_Provide)theEObject;
-        T result = casePackage_Provide(package_Provide);
+        Package_Provided_IO package_Provided_IO = (Package_Provided_IO)theEObject;
+        T result = casePackage_Provided_IO(package_Provided_IO);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case LustrePackage.PACKAGE_BODY_CONTENT:
+      case LustrePackage.ENTITY_DECLARATION:
       {
-        Package_Body_Content package_Body_Content = (Package_Body_Content)theEObject;
-        T result = casePackage_Body_Content(package_Body_Content);
+        Entity_Declaration entity_Declaration = (Entity_Declaration)theEObject;
+        T result = caseEntity_Declaration(entity_Declaration);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case LustrePackage.NODE_DECL:
+      case LustrePackage.TYPE_DECLARATION:
       {
-        Node_Decl node_Decl = (Node_Decl)theEObject;
-        T result = caseNode_Decl(node_Decl);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case LustrePackage.IDENTIFIER:
-      {
-        Identifier identifier = (Identifier)theEObject;
-        T result = caseIdentifier(identifier);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case LustrePackage.TYPE_DECL:
-      {
-        Type_Decl type_Decl = (Type_Decl)theEObject;
-        T result = caseType_Decl(type_Decl);
+        Type_Declaration type_Declaration = (Type_Declaration)theEObject;
+        T result = caseType_Declaration(type_Declaration);
+        if (result == null) result = caseEntity_Declaration(type_Declaration);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -184,17 +123,17 @@ public class LustreSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case LustrePackage.ARRAY_TYPE:
+      {
+        Array_Type array_Type = (Array_Type)theEObject;
+        T result = caseArray_Type(array_Type);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case LustrePackage.RECORD_TYPE:
       {
         Record_Type record_Type = (Record_Type)theEObject;
         T result = caseRecord_Type(record_Type);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case LustrePackage.FIELD_LIST:
-      {
-        Field_List field_List = (Field_List)theEObject;
-        T result = caseField_List(field_List);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -205,73 +144,26 @@ public class LustreSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case LustrePackage.ENUM_TYPE:
+      case LustrePackage.CONSTANT_DECLARATION:
       {
-        Enum_Type enum_Type = (Enum_Type)theEObject;
-        T result = caseEnum_Type(enum_Type);
+        Constant_Declaration constant_Declaration = (Constant_Declaration)theEObject;
+        T result = caseConstant_Declaration(constant_Declaration);
+        if (result == null) result = caseEntity_Declaration(constant_Declaration);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case LustrePackage.CONST_DECL:
+      case LustrePackage.VARIABLE_DECLARATION:
       {
-        Const_Decl const_Decl = (Const_Decl)theEObject;
-        T result = caseConst_Decl(const_Decl);
+        Variable_Declaration variable_Declaration = (Variable_Declaration)theEObject;
+        T result = caseVariable_Declaration(variable_Declaration);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case LustrePackage.IDENT_LIST:
+      case LustrePackage.NODE_DECLARATION:
       {
-        Ident_List ident_List = (Ident_List)theEObject;
-        T result = caseIdent_List(ident_List);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case LustrePackage.NODE_HEADER:
-      {
-        Node_Header node_Header = (Node_Header)theEObject;
-        T result = caseNode_Header(node_Header);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case LustrePackage.VAR_DECL_LIST:
-      {
-        Var_Decl_List var_Decl_List = (Var_Decl_List)theEObject;
-        T result = caseVar_Decl_List(var_Decl_List);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case LustrePackage.VAR_DECL:
-      {
-        Var_Decl var_Decl = (Var_Decl)theEObject;
-        T result = caseVar_Decl(var_Decl);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case LustrePackage.DECLARED_CLOCK:
-      {
-        Declared_Clock declared_Clock = (Declared_Clock)theEObject;
-        T result = caseDeclared_Clock(declared_Clock);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case LustrePackage.FN_BODY:
-      {
-        FN_Body fN_Body = (FN_Body)theEObject;
-        T result = caseFN_Body(fN_Body);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case LustrePackage.EQUATION_LIST:
-      {
-        Equation_List equation_List = (Equation_List)theEObject;
-        T result = caseEquation_List(equation_List);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case LustrePackage.EQ_OR_AST:
-      {
-        Eq_or_Ast eq_or_Ast = (Eq_or_Ast)theEObject;
-        T result = caseEq_or_Ast(eq_or_Ast);
+        Node_Declaration node_Declaration = (Node_Declaration)theEObject;
+        T result = caseNode_Declaration(node_Declaration);
+        if (result == null) result = caseEntity_Declaration(node_Declaration);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -279,7 +171,13 @@ public class LustreSwitch<T> extends Switch<T>
       {
         Equation equation = (Equation)theEObject;
         T result = caseEquation(equation);
-        if (result == null) result = caseEq_or_Ast(equation);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case LustrePackage.ASSERTION:
+      {
+        Assertion assertion = (Assertion)theEObject;
+        T result = caseAssertion(assertion);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -312,28 +210,20 @@ public class LustreSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case LustrePackage.SEL_TRANCHE_END:
-      {
-        SelTrancheEnd selTrancheEnd = (SelTrancheEnd)theEObject;
-        T result = caseSelTrancheEnd(selTrancheEnd);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case LustrePackage.EXPRESSION:
       {
         Expression expression = (Expression)theEObject;
         T result = caseExpression(expression);
-        if (result == null) result = caseSelTrancheEnd(expression);
         if (result == null) result = caseAssertion(expression);
-        if (result == null) result = caseEq_or_Ast(expression);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case LustrePackage.ASSERTION:
+      case LustrePackage.VARIABLE_REFERENCE:
       {
-        Assertion assertion = (Assertion)theEObject;
-        T result = caseAssertion(assertion);
-        if (result == null) result = caseEq_or_Ast(assertion);
+        VariableReference variableReference = (VariableReference)theEObject;
+        T result = caseVariableReference(variableReference);
+        if (result == null) result = caseExpression(variableReference);
+        if (result == null) result = caseAssertion(variableReference);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -342,9 +232,7 @@ public class LustreSwitch<T> extends Switch<T>
         IfThenElse ifThenElse = (IfThenElse)theEObject;
         T result = caseIfThenElse(ifThenElse);
         if (result == null) result = caseExpression(ifThenElse);
-        if (result == null) result = caseSelTrancheEnd(ifThenElse);
         if (result == null) result = caseAssertion(ifThenElse);
-        if (result == null) result = caseEq_or_Ast(ifThenElse);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -353,9 +241,7 @@ public class LustreSwitch<T> extends Switch<T>
         Fby fby = (Fby)theEObject;
         T result = caseFby(fby);
         if (result == null) result = caseExpression(fby);
-        if (result == null) result = caseSelTrancheEnd(fby);
         if (result == null) result = caseAssertion(fby);
-        if (result == null) result = caseEq_or_Ast(fby);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -364,9 +250,7 @@ public class LustreSwitch<T> extends Switch<T>
         Arrow arrow = (Arrow)theEObject;
         T result = caseArrow(arrow);
         if (result == null) result = caseExpression(arrow);
-        if (result == null) result = caseSelTrancheEnd(arrow);
         if (result == null) result = caseAssertion(arrow);
-        if (result == null) result = caseEq_or_Ast(arrow);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -375,9 +259,7 @@ public class LustreSwitch<T> extends Switch<T>
         Or or = (Or)theEObject;
         T result = caseOr(or);
         if (result == null) result = caseExpression(or);
-        if (result == null) result = caseSelTrancheEnd(or);
         if (result == null) result = caseAssertion(or);
-        if (result == null) result = caseEq_or_Ast(or);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -386,9 +268,7 @@ public class LustreSwitch<T> extends Switch<T>
         And and = (And)theEObject;
         T result = caseAnd(and);
         if (result == null) result = caseExpression(and);
-        if (result == null) result = caseSelTrancheEnd(and);
         if (result == null) result = caseAssertion(and);
-        if (result == null) result = caseEq_or_Ast(and);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -397,9 +277,7 @@ public class LustreSwitch<T> extends Switch<T>
         Equality equality = (Equality)theEObject;
         T result = caseEquality(equality);
         if (result == null) result = caseExpression(equality);
-        if (result == null) result = caseSelTrancheEnd(equality);
         if (result == null) result = caseAssertion(equality);
-        if (result == null) result = caseEq_or_Ast(equality);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -408,9 +286,7 @@ public class LustreSwitch<T> extends Switch<T>
         Comparison comparison = (Comparison)theEObject;
         T result = caseComparison(comparison);
         if (result == null) result = caseExpression(comparison);
-        if (result == null) result = caseSelTrancheEnd(comparison);
         if (result == null) result = caseAssertion(comparison);
-        if (result == null) result = caseEq_or_Ast(comparison);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -419,9 +295,7 @@ public class LustreSwitch<T> extends Switch<T>
         Plus plus = (Plus)theEObject;
         T result = casePlus(plus);
         if (result == null) result = caseExpression(plus);
-        if (result == null) result = caseSelTrancheEnd(plus);
         if (result == null) result = caseAssertion(plus);
-        if (result == null) result = caseEq_or_Ast(plus);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -430,9 +304,7 @@ public class LustreSwitch<T> extends Switch<T>
         Minus minus = (Minus)theEObject;
         T result = caseMinus(minus);
         if (result == null) result = caseExpression(minus);
-        if (result == null) result = caseSelTrancheEnd(minus);
         if (result == null) result = caseAssertion(minus);
-        if (result == null) result = caseEq_or_Ast(minus);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -441,9 +313,7 @@ public class LustreSwitch<T> extends Switch<T>
         Mul mul = (Mul)theEObject;
         T result = caseMul(mul);
         if (result == null) result = caseExpression(mul);
-        if (result == null) result = caseSelTrancheEnd(mul);
         if (result == null) result = caseAssertion(mul);
-        if (result == null) result = caseEq_or_Ast(mul);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -452,9 +322,7 @@ public class LustreSwitch<T> extends Switch<T>
         Div div = (Div)theEObject;
         T result = caseDiv(div);
         if (result == null) result = caseExpression(div);
-        if (result == null) result = caseSelTrancheEnd(div);
         if (result == null) result = caseAssertion(div);
-        if (result == null) result = caseEq_or_Ast(div);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -463,9 +331,7 @@ public class LustreSwitch<T> extends Switch<T>
         Not not = (Not)theEObject;
         T result = caseNot(not);
         if (result == null) result = caseExpression(not);
-        if (result == null) result = caseSelTrancheEnd(not);
         if (result == null) result = caseAssertion(not);
-        if (result == null) result = caseEq_or_Ast(not);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -474,9 +340,7 @@ public class LustreSwitch<T> extends Switch<T>
         UMinus uMinus = (UMinus)theEObject;
         T result = caseUMinus(uMinus);
         if (result == null) result = caseExpression(uMinus);
-        if (result == null) result = caseSelTrancheEnd(uMinus);
         if (result == null) result = caseAssertion(uMinus);
-        if (result == null) result = caseEq_or_Ast(uMinus);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -485,9 +349,7 @@ public class LustreSwitch<T> extends Switch<T>
         Pre pre = (Pre)theEObject;
         T result = casePre(pre);
         if (result == null) result = caseExpression(pre);
-        if (result == null) result = caseSelTrancheEnd(pre);
         if (result == null) result = caseAssertion(pre);
-        if (result == null) result = caseEq_or_Ast(pre);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -496,31 +358,16 @@ public class LustreSwitch<T> extends Switch<T>
         Current current = (Current)theEObject;
         T result = caseCurrent(current);
         if (result == null) result = caseExpression(current);
-        if (result == null) result = caseSelTrancheEnd(current);
         if (result == null) result = caseAssertion(current);
-        if (result == null) result = caseEq_or_Ast(current);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case LustrePackage.VARIABLEREF:
+      case LustrePackage.BOOL_CONSTANT:
       {
-        Variableref variableref = (Variableref)theEObject;
-        T result = caseVariableref(variableref);
-        if (result == null) result = caseExpression(variableref);
-        if (result == null) result = caseSelTrancheEnd(variableref);
-        if (result == null) result = caseAssertion(variableref);
-        if (result == null) result = caseEq_or_Ast(variableref);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case LustrePackage.BOOLEAN_CONSTANT:
-      {
-        BooleanConstant booleanConstant = (BooleanConstant)theEObject;
-        T result = caseBooleanConstant(booleanConstant);
-        if (result == null) result = caseExpression(booleanConstant);
-        if (result == null) result = caseSelTrancheEnd(booleanConstant);
-        if (result == null) result = caseAssertion(booleanConstant);
-        if (result == null) result = caseEq_or_Ast(booleanConstant);
+        BoolConstant boolConstant = (BoolConstant)theEObject;
+        T result = caseBoolConstant(boolConstant);
+        if (result == null) result = caseExpression(boolConstant);
+        if (result == null) result = caseAssertion(boolConstant);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -529,9 +376,7 @@ public class LustreSwitch<T> extends Switch<T>
         FloatConstant floatConstant = (FloatConstant)theEObject;
         T result = caseFloatConstant(floatConstant);
         if (result == null) result = caseExpression(floatConstant);
-        if (result == null) result = caseSelTrancheEnd(floatConstant);
         if (result == null) result = caseAssertion(floatConstant);
-        if (result == null) result = caseEq_or_Ast(floatConstant);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -540,9 +385,7 @@ public class LustreSwitch<T> extends Switch<T>
         IntConstant intConstant = (IntConstant)theEObject;
         T result = caseIntConstant(intConstant);
         if (result == null) result = caseExpression(intConstant);
-        if (result == null) result = caseSelTrancheEnd(intConstant);
         if (result == null) result = caseAssertion(intConstant);
-        if (result == null) result = caseEq_or_Ast(intConstant);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -567,113 +410,81 @@ public class LustreSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Package</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Package Declaration</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Package</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Package Declaration</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T casePackage(de.cau.cs.kieler.lustre.lustre.Package object)
+  public T casePackage_Declaration(Package_Declaration object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Package Header</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Package Provided</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Package Header</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Package Provided</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T casePackage_Header(Package_Header object)
+  public T casePackage_Provided(Package_Provided object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Package Provide</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Package Provided IO</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Package Provide</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Package Provided IO</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T casePackage_Provide(Package_Provide object)
+  public T casePackage_Provided_IO(Package_Provided_IO object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Package Body Content</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Entity Declaration</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Package Body Content</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Entity Declaration</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T casePackage_Body_Content(Package_Body_Content object)
+  public T caseEntity_Declaration(Entity_Declaration object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Node Decl</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Type Declaration</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Node Decl</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Type Declaration</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseNode_Decl(Node_Decl object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Identifier</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Identifier</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseIdentifier(Identifier object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Type Decl</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Type Decl</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseType_Decl(Type_Decl object)
+  public T caseType_Declaration(Type_Declaration object)
   {
     return null;
   }
@@ -695,6 +506,22 @@ public class LustreSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Array Type</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Array Type</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseArray_Type(Array_Type object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Record Type</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -706,22 +533,6 @@ public class LustreSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseRecord_Type(Record_Type object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Field List</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Field List</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseField_List(Field_List object)
   {
     return null;
   }
@@ -743,161 +554,49 @@ public class LustreSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Enum Type</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Constant Declaration</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Enum Type</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Constant Declaration</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseEnum_Type(Enum_Type object)
+  public T caseConstant_Declaration(Constant_Declaration object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Const Decl</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Variable Declaration</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Const Decl</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Variable Declaration</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseConst_Decl(Const_Decl object)
+  public T caseVariable_Declaration(Variable_Declaration object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Ident List</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Node Declaration</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Ident List</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Node Declaration</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseIdent_List(Ident_List object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Node Header</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Node Header</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseNode_Header(Node_Header object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Var Decl List</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Var Decl List</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseVar_Decl_List(Var_Decl_List object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Var Decl</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Var Decl</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseVar_Decl(Var_Decl object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Declared Clock</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Declared Clock</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseDeclared_Clock(Declared_Clock object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>FN Body</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>FN Body</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseFN_Body(FN_Body object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Equation List</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Equation List</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseEquation_List(Equation_List object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Eq or Ast</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Eq or Ast</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseEq_or_Ast(Eq_or_Ast object)
+  public T caseNode_Declaration(Node_Declaration object)
   {
     return null;
   }
@@ -914,6 +613,22 @@ public class LustreSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseEquation(Equation object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Assertion</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Assertion</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAssertion(Assertion object)
   {
     return null;
   }
@@ -983,22 +698,6 @@ public class LustreSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Sel Tranche End</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Sel Tranche End</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseSelTrancheEnd(SelTrancheEnd object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Expression</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -1015,17 +714,17 @@ public class LustreSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Assertion</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Variable Reference</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Assertion</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Variable Reference</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseAssertion(Assertion object)
+  public T caseVariableReference(VariableReference object)
   {
     return null;
   }
@@ -1271,33 +970,17 @@ public class LustreSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Variableref</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Bool Constant</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Variableref</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Bool Constant</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseVariableref(Variableref object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Boolean Constant</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Boolean Constant</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseBooleanConstant(BooleanConstant object)
+  public T caseBoolConstant(BoolConstant object)
   {
     return null;
   }

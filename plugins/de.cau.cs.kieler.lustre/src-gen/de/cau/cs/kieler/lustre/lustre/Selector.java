@@ -86,12 +86,12 @@ public interface Selector extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>End</em>' containment reference.
-   * @see #setEnd(SelTrancheEnd)
+   * @see #setEnd(Expression)
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getSelector_End()
    * @model containment="true"
    * @generated
    */
-  SelTrancheEnd getEnd();
+  Expression getEnd();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.Selector#getEnd <em>End</em>}' containment reference.
@@ -101,6 +101,6 @@ public interface Selector extends EObject
    * @see #getEnd()
    * @generated
    */
-  void setEnd(SelTrancheEnd value);
+  void setEnd(Expression value);
 
 } // Selector

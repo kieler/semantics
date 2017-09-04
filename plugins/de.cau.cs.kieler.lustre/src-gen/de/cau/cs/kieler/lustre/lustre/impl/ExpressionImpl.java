@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class ExpressionImpl extends SelTrancheEndImpl implements Expression
+public class ExpressionImpl extends AssertionImpl implements Expression
 {
   /**
    * <!-- begin-user-doc -->

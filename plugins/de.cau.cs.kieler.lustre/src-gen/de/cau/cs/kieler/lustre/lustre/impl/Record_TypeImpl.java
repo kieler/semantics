@@ -3,18 +3,23 @@
  */
 package de.cau.cs.kieler.lustre.lustre.impl;
 
-import de.cau.cs.kieler.lustre.lustre.Field_List;
+import de.cau.cs.kieler.lustre.lustre.Field;
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
 import de.cau.cs.kieler.lustre.lustre.Record_Type;
 
-import org.eclipse.emf.common.notify.Notification;
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,14 +37,14 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class Record_TypeImpl extends MinimalEObjectImpl.Container implements Record_Type
 {
   /**
-   * The cached value of the '{@link #getFields() <em>Fields</em>}' containment reference.
+   * The cached value of the '{@link #getFields() <em>Fields</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getFields()
    * @generated
    * @ordered
    */
-  protected Field_List fields;
+  protected EList<Field> fields;
 
   /**
    * <!-- begin-user-doc -->
@@ -67,47 +72,13 @@ public class Record_TypeImpl extends MinimalEObjectImpl.Container implements Rec
    * <!-- end-user-doc -->
    * @generated
    */
-  public Field_List getFields()
+  public EList<Field> getFields()
   {
+    if (fields == null)
+    {
+      fields = new EObjectContainmentEList<Field>(Field.class, this, LustrePackage.RECORD_TYPE__FIELDS);
+    }
     return fields;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetFields(Field_List newFields, NotificationChain msgs)
-  {
-    Field_List oldFields = fields;
-    fields = newFields;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LustrePackage.RECORD_TYPE__FIELDS, oldFields, newFields);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setFields(Field_List newFields)
-  {
-    if (newFields != fields)
-    {
-      NotificationChain msgs = null;
-      if (fields != null)
-        msgs = ((InternalEObject)fields).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - LustrePackage.RECORD_TYPE__FIELDS, null, msgs);
-      if (newFields != null)
-        msgs = ((InternalEObject)newFields).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - LustrePackage.RECORD_TYPE__FIELDS, null, msgs);
-      msgs = basicSetFields(newFields, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.RECORD_TYPE__FIELDS, newFields, newFields));
   }
 
   /**
@@ -121,7 +92,7 @@ public class Record_TypeImpl extends MinimalEObjectImpl.Container implements Rec
     switch (featureID)
     {
       case LustrePackage.RECORD_TYPE__FIELDS:
-        return basicSetFields(null, msgs);
+        return ((InternalEList<?>)getFields()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -147,13 +118,15 @@ public class Record_TypeImpl extends MinimalEObjectImpl.Container implements Rec
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
       case LustrePackage.RECORD_TYPE__FIELDS:
-        setFields((Field_List)newValue);
+        getFields().clear();
+        getFields().addAll((Collection<? extends Field>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -170,7 +143,7 @@ public class Record_TypeImpl extends MinimalEObjectImpl.Container implements Rec
     switch (featureID)
     {
       case LustrePackage.RECORD_TYPE__FIELDS:
-        setFields((Field_List)null);
+        getFields().clear();
         return;
     }
     super.eUnset(featureID);
@@ -187,7 +160,7 @@ public class Record_TypeImpl extends MinimalEObjectImpl.Container implements Rec
     switch (featureID)
     {
       case LustrePackage.RECORD_TYPE__FIELDS:
-        return fields != null;
+        return fields != null && !fields.isEmpty();
     }
     return super.eIsSet(featureID);
   }

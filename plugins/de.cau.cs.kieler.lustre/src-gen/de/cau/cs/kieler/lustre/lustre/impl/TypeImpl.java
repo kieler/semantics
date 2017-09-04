@@ -5,10 +5,12 @@ package de.cau.cs.kieler.lustre.lustre.impl;
 
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
 import de.cau.cs.kieler.lustre.lustre.Type;
+import de.cau.cs.kieler.lustre.lustre.Type_Declaration;
 
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
@@ -29,24 +31,14 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class TypeImpl extends MinimalEObjectImpl.Container implements Type
 {
   /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+   * The cached value of the '{@link #getName() <em>Name</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getName()
    * @generated
    * @ordered
    */
-  protected static final String NAME_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected String name = NAME_EDEFAULT;
+  protected Type_Declaration name;
 
   /**
    * <!-- begin-user-doc -->
@@ -74,7 +66,27 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getName()
+  public Type_Declaration getName()
+  {
+    if (name != null && name.eIsProxy())
+    {
+      InternalEObject oldName = (InternalEObject)name;
+      name = (Type_Declaration)eResolveProxy(oldName);
+      if (name != oldName)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, LustrePackage.TYPE__NAME, oldName, name));
+      }
+    }
+    return name;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Type_Declaration basicGetName()
   {
     return name;
   }
@@ -84,9 +96,9 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setName(String newName)
+  public void setName(Type_Declaration newName)
   {
-    String oldName = name;
+    Type_Declaration oldName = name;
     name = newName;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.TYPE__NAME, oldName, name));
@@ -103,7 +115,8 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
     switch (featureID)
     {
       case LustrePackage.TYPE__NAME:
-        return getName();
+        if (resolve) return getName();
+        return basicGetName();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -119,7 +132,7 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
     switch (featureID)
     {
       case LustrePackage.TYPE__NAME:
-        setName((String)newValue);
+        setName((Type_Declaration)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -136,7 +149,7 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
     switch (featureID)
     {
       case LustrePackage.TYPE__NAME:
-        setName(NAME_EDEFAULT);
+        setName((Type_Declaration)null);
         return;
     }
     super.eUnset(featureID);
@@ -153,26 +166,9 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
     switch (featureID)
     {
       case LustrePackage.TYPE__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+        return name != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (name: ");
-    result.append(name);
-    result.append(')');
-    return result.toString();
   }
 
 } //TypeImpl

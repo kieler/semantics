@@ -6,6 +6,7 @@ package de.cau.cs.kieler.lustre.lustre.impl;
 import de.cau.cs.kieler.lustre.lustre.Equation;
 import de.cau.cs.kieler.lustre.lustre.Expression;
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
+import de.cau.cs.kieler.lustre.lustre.Variable_Declaration;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -14,6 +15,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,27 +31,17 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class EquationImpl extends Eq_or_AstImpl implements Equation
+public class EquationImpl extends MinimalEObjectImpl.Container implements Equation
 {
   /**
-   * The default value of the '{@link #getLeft() <em>Left</em>}' attribute.
+   * The cached value of the '{@link #getLeft() <em>Left</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getLeft()
    * @generated
    * @ordered
    */
-  protected static final String LEFT_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getLeft() <em>Left</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getLeft()
-   * @generated
-   * @ordered
-   */
-  protected String left = LEFT_EDEFAULT;
+  protected Variable_Declaration left;
 
   /**
    * The cached value of the '{@link #getRight() <em>Right</em>}' containment reference.
@@ -87,7 +79,27 @@ public class EquationImpl extends Eq_or_AstImpl implements Equation
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getLeft()
+  public Variable_Declaration getLeft()
+  {
+    if (left != null && left.eIsProxy())
+    {
+      InternalEObject oldLeft = (InternalEObject)left;
+      left = (Variable_Declaration)eResolveProxy(oldLeft);
+      if (left != oldLeft)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, LustrePackage.EQUATION__LEFT, oldLeft, left));
+      }
+    }
+    return left;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Variable_Declaration basicGetLeft()
   {
     return left;
   }
@@ -97,9 +109,9 @@ public class EquationImpl extends Eq_or_AstImpl implements Equation
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setLeft(String newLeft)
+  public void setLeft(Variable_Declaration newLeft)
   {
-    String oldLeft = left;
+    Variable_Declaration oldLeft = left;
     left = newLeft;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.EQUATION__LEFT, oldLeft, left));
@@ -180,7 +192,8 @@ public class EquationImpl extends Eq_or_AstImpl implements Equation
     switch (featureID)
     {
       case LustrePackage.EQUATION__LEFT:
-        return getLeft();
+        if (resolve) return getLeft();
+        return basicGetLeft();
       case LustrePackage.EQUATION__RIGHT:
         return getRight();
     }
@@ -198,7 +211,7 @@ public class EquationImpl extends Eq_or_AstImpl implements Equation
     switch (featureID)
     {
       case LustrePackage.EQUATION__LEFT:
-        setLeft((String)newValue);
+        setLeft((Variable_Declaration)newValue);
         return;
       case LustrePackage.EQUATION__RIGHT:
         setRight((Expression)newValue);
@@ -218,7 +231,7 @@ public class EquationImpl extends Eq_or_AstImpl implements Equation
     switch (featureID)
     {
       case LustrePackage.EQUATION__LEFT:
-        setLeft(LEFT_EDEFAULT);
+        setLeft((Variable_Declaration)null);
         return;
       case LustrePackage.EQUATION__RIGHT:
         setRight((Expression)null);
@@ -238,28 +251,11 @@ public class EquationImpl extends Eq_or_AstImpl implements Equation
     switch (featureID)
     {
       case LustrePackage.EQUATION__LEFT:
-        return LEFT_EDEFAULT == null ? left != null : !LEFT_EDEFAULT.equals(left);
+        return left != null;
       case LustrePackage.EQUATION__RIGHT:
         return right != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (left: ");
-    result.append(left);
-    result.append(')');
-    return result.toString();
   }
 
 } //EquationImpl

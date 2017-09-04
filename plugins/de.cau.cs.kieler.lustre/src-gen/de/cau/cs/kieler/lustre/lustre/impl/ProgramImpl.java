@@ -4,16 +4,22 @@
 package de.cau.cs.kieler.lustre.lustre.impl;
 
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
+import de.cau.cs.kieler.lustre.lustre.Package_Declaration;
 import de.cau.cs.kieler.lustre.lustre.Program;
 
-import org.eclipse.emf.common.notify.Notification;
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,7 +29,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.ProgramImpl#getPkg <em>Pkg</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.ProgramImpl#getPackages <em>Packages</em>}</li>
  * </ul>
  *
  * @generated
@@ -31,14 +37,14 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
 {
   /**
-   * The cached value of the '{@link #getPkg() <em>Pkg</em>}' containment reference.
+   * The cached value of the '{@link #getPackages() <em>Packages</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getPkg()
+   * @see #getPackages()
    * @generated
    * @ordered
    */
-  protected de.cau.cs.kieler.lustre.lustre.Package pkg;
+  protected EList<Package_Declaration> packages;
 
   /**
    * <!-- begin-user-doc -->
@@ -66,47 +72,13 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
    * <!-- end-user-doc -->
    * @generated
    */
-  public de.cau.cs.kieler.lustre.lustre.Package getPkg()
+  public EList<Package_Declaration> getPackages()
   {
-    return pkg;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetPkg(de.cau.cs.kieler.lustre.lustre.Package newPkg, NotificationChain msgs)
-  {
-    de.cau.cs.kieler.lustre.lustre.Package oldPkg = pkg;
-    pkg = newPkg;
-    if (eNotificationRequired())
+    if (packages == null)
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LustrePackage.PROGRAM__PKG, oldPkg, newPkg);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+      packages = new EObjectContainmentEList<Package_Declaration>(Package_Declaration.class, this, LustrePackage.PROGRAM__PACKAGES);
     }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setPkg(de.cau.cs.kieler.lustre.lustre.Package newPkg)
-  {
-    if (newPkg != pkg)
-    {
-      NotificationChain msgs = null;
-      if (pkg != null)
-        msgs = ((InternalEObject)pkg).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - LustrePackage.PROGRAM__PKG, null, msgs);
-      if (newPkg != null)
-        msgs = ((InternalEObject)newPkg).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - LustrePackage.PROGRAM__PKG, null, msgs);
-      msgs = basicSetPkg(newPkg, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.PROGRAM__PKG, newPkg, newPkg));
+    return packages;
   }
 
   /**
@@ -119,8 +91,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     switch (featureID)
     {
-      case LustrePackage.PROGRAM__PKG:
-        return basicSetPkg(null, msgs);
+      case LustrePackage.PROGRAM__PACKAGES:
+        return ((InternalEList<?>)getPackages()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -135,8 +107,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     switch (featureID)
     {
-      case LustrePackage.PROGRAM__PKG:
-        return getPkg();
+      case LustrePackage.PROGRAM__PACKAGES:
+        return getPackages();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -146,13 +118,15 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case LustrePackage.PROGRAM__PKG:
-        setPkg((de.cau.cs.kieler.lustre.lustre.Package)newValue);
+      case LustrePackage.PROGRAM__PACKAGES:
+        getPackages().clear();
+        getPackages().addAll((Collection<? extends Package_Declaration>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -168,8 +142,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     switch (featureID)
     {
-      case LustrePackage.PROGRAM__PKG:
-        setPkg((de.cau.cs.kieler.lustre.lustre.Package)null);
+      case LustrePackage.PROGRAM__PACKAGES:
+        getPackages().clear();
         return;
     }
     super.eUnset(featureID);
@@ -185,8 +159,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     switch (featureID)
     {
-      case LustrePackage.PROGRAM__PKG:
-        return pkg != null;
+      case LustrePackage.PROGRAM__PACKAGES:
+        return packages != null && !packages.isEmpty();
     }
     return super.eIsSet(featureID);
   }

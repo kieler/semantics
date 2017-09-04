@@ -8,6 +8,8 @@ import de.cau.cs.kieler.lustre.lustre.LustrePackage;
 
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Assertion</b></em>'.
@@ -15,7 +17,7 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class AssertionImpl extends Eq_or_AstImpl implements Assertion
+public class AssertionImpl extends MinimalEObjectImpl.Container implements Assertion
 {
   /**
    * <!-- begin-user-doc -->

@@ -3,6 +3,7 @@
  */
 package de.cau.cs.kieler.lustre.lustre;
 
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -21,33 +22,33 @@ package de.cau.cs.kieler.lustre.lustre;
  * @model
  * @generated
  */
-public interface Equation extends Eq_or_Ast
+public interface Equation extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Left</b></em>' attribute.
+   * Returns the value of the '<em><b>Left</b></em>' reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Left</em>' attribute isn't clear,
+   * If the meaning of the '<em>Left</em>' reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Left</em>' attribute.
-   * @see #setLeft(String)
+   * @return the value of the '<em>Left</em>' reference.
+   * @see #setLeft(Variable_Declaration)
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getEquation_Left()
    * @model
    * @generated
    */
-  String getLeft();
+  Variable_Declaration getLeft();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.Equation#getLeft <em>Left</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.Equation#getLeft <em>Left</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Left</em>' attribute.
+   * @param value the new value of the '<em>Left</em>' reference.
    * @see #getLeft()
    * @generated
    */
-  void setLeft(String value);
+  void setLeft(Variable_Declaration value);
 
   /**
    * Returns the value of the '<em><b>Right</b></em>' containment reference.
