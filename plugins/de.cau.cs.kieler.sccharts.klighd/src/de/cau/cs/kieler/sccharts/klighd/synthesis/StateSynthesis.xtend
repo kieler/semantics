@@ -76,10 +76,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             node.data.add(KGraphFactory::eINSTANCE.createKIdentifier => [it.id = state.id])
         }
         
-        node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.box");
-        node.setLayoutOption(CoreOptions::EXPAND_NODES, true);
-        node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0));
-        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 1.0);
+        // Configure layout options
+        configureLayout(node)
 
         //pre-evaluate type
         val isConnector = state.type == StateType::CONNECTOR
@@ -190,4 +188,11 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             !state.declarations.empty || state.isReferencedState;
     }
 
+    /** Configures the default layout of children (regions in the state) */
+    def static void configureLayout(KNode node) {
+        node.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.box");
+        node.setLayoutOption(CoreOptions::EXPAND_NODES, true);
+        node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0));
+        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 1.0)
+    }
 }

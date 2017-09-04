@@ -53,7 +53,7 @@ class LabelShorteningHook extends SynthesisActionHook {
         newLinkedList(
             LabelShorteningStrategies.NO,
             LabelShorteningStrategies.TRUNCATE,
-            LabelShorteningStrategies.SOFT_WRAPPING,
+            LabelShorteningStrategies.SEMANTIC_SOFT_WRAPPING,
             LabelShorteningStrategies.PRIORITIES
         ), LabelShorteningStrategies.NO).setCategory(LABEL_MANAGEMENT_CATEGORY).
         setUpdateAction(LabelShorteningHook.ID) // Register this action as updater

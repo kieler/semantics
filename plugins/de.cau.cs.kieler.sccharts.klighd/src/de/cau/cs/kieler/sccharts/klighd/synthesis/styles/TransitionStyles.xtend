@@ -62,6 +62,7 @@ class TransitionStyles {
     @Inject
     extension ColorStore
 
+    private static val float TRANSITION_LINE_WIDTH = 2;
     private static val float TRANSITION_DASH_BLACK = 7;
     private static val float TRANSITION_DASH_WHITE = 3;
     private static val List<Float> TRANSITION_DASH_PATTERN = newArrayList(TRANSITION_DASH_BLACK, TRANSITION_DASH_WHITE);
@@ -71,7 +72,7 @@ class TransitionStyles {
      */
     def KSpline addTransitionSpline(KEdge edge) {
         edge.addSpline => [
-            lineWidth = 2;
+            lineWidth = TRANSITION_LINE_WIDTH;
         ]
     }
     
@@ -84,6 +85,17 @@ class TransitionStyles {
             lineStyle.dashPattern.clear;
             lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
         ]
+    }
+
+    /**
+     * Sets the selection style of the edge.
+     */
+    def setSelectionStyle(KEdge edge) {
+        edge.line => [
+            selectionLineWidth = 2 * TRANSITION_LINE_WIDTH;
+            selectionForeground = TRANSITION_SELECTION.color;
+        ]
+
     }
 
     /**
@@ -169,8 +181,10 @@ class TransitionStyles {
      * Adds a normal pointy head arrow decorator.
      */
     def addDefaultDecorator(KEdge edge) {
-        edge.line.addHeadArrowDecorator();
-    }
+        edge.line.addHeadArrowDecorator() => [
+            selectionLineWidth = 2 * TRANSITION_LINE_WIDTH;
+            selectionForeground = TRANSITION_SELECTION.color;             
+        ];    }
     
     /**
      * Adds a abort tail arrow decorator.<br>

@@ -96,6 +96,9 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
             case TERMINATION: edge.addNormalTerminationDecorator
         };
 
+        //Configure selection style
+        edge.setSelectionStyle
+
         // Add Label
         val label = new StringBuilder();
         if (transition.label.nullOrEmpty) {

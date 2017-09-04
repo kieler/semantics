@@ -17,8 +17,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.elk.graph.ElkLabel;
+import org.eclipse.emf.ecore.EObject;
 
+import de.cau.cs.kieler.klighd.KlighdOptions;
+import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties;
+import de.cau.cs.kieler.klighd.kgraph.KLabel;
+import de.cau.cs.kieler.klighd.krendering.KRendering;
+import de.cau.cs.kieler.klighd.krendering.KRenderingRef;
 import de.cau.cs.kieler.klighd.labels.AbstractKlighdLabelManager;
+import de.cau.cs.kieler.sccharts.Transition;
 
 /**
  * A label manager that shortens transition labels to their priority, if any.
@@ -33,17 +40,39 @@ public class TransitionPriorityLabelManager extends AbstractKlighdLabelManager {
      */
     @Override
     public String resizeLabel(ElkLabel label, double targetWidth) {
-        // Regular expression matches "<priority>: <stuff>" and extracts the <priority>" part
-        Pattern pattern = Pattern.compile("(\\d+):.*");
-        Matcher matcher = pattern.matcher(label.getText().trim());
-        
-        if (matcher.matches()) {
-            // The new label is the priority followed by a period
-            return matcher.group(1) + ".";
-        } else {
-            // The new label is the empty label
-            return "/";
-        }
-    }
 
+        // Find the corresponding source model element
+        // Grab the rendering from the label
+        KRendering rendering = label.getProperty(KlighdOptions.K_RENDERING);
+        if (rendering instanceof KRenderingRef) {
+            // Evaluate the rendering reference if needed
+            rendering = ((KRenderingRef) rendering).getRendering();
+        }
+        // Make sure we have a rendering
+        if (rendering != null) {
+            EObject container = rendering.eContainer();
+            // Check the type of the container of the KText. This should be a KLabel.
+            if (container instanceof KLabel) {
+                KLabel kLabel = (KLabel) container;
+                // Try to find the model element
+                Object modelObject = kLabel.getProperty(KlighdInternalProperties.MODEL_ELEMEMT);
+                if (modelObject instanceof Transition) {
+                    // This is the case for sccharts transitions
+                    Pattern pattern = Pattern.compile("(\\d+):.*");
+                    Matcher matcher = pattern.matcher(label.getText().trim());
+                    // Regular expression matches "<priority>: <stuff>" and extracts the 
+                    // <priority> part
+
+                    if (matcher.matches()) {
+                        // The new label is the priority followed by a period
+                        return matcher.group(1) + ".";
+                    } else {
+                        // If no priority available 
+                        return "...";
+                    }
+                }
+            }
+        }
+        return "";
+    }
 }
