@@ -38,7 +38,7 @@ public enum LabelShorteningStrategies {
     public String toString() {
         switch (this) {
         case NO:
-            return "No";
+            return "Original Labels";
         case TRUNCATE:
             return "Truncate";
         case TRUNCATE_VARIABLES:
