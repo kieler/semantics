@@ -103,7 +103,7 @@ class SCTXValidator extends AbstractSCTXValidator {
             val res = pragma.eResource as SCTXResource
             for (var i = 0; i < pragma.values.size; i++) {
                 val import = pragma.values.get(i)
-                if (res.currentImports.get(import).empty) {
+                if (res.directImports.get(import).empty) {
                     if (import.endsWith("*")) {
                         warning(BROKEN_FOLDER_IMPORT, pragma, AnnotationsPackage.eINSTANCE.stringPragma_Values, i);
                     } else {

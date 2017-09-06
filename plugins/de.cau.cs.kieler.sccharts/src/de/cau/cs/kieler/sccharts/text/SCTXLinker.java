@@ -32,7 +32,11 @@ public class SCTXLinker extends Linker {
 
     @Override
     protected boolean isClearAllReferencesRequired(Resource resource) {
-        return false;
+        if (resource instanceof SCTXResource) {
+            return ((SCTXResource) resource).getClearReferencesBeforeLinking();
+        } else {
+            return super.isClearAllReferencesRequired(resource);
+        }
     }
 
     @Override

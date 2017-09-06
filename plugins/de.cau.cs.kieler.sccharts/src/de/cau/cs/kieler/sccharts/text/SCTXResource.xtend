@@ -60,16 +60,22 @@ public class SCTXResource extends LazyLinkingResource {
         "Add resources via import to the resource set.")
 
     /** All resources that were imported */
-    static val IMPORTED_RESOURCES = Multimaps.synchronizedSetMultimap(
+    private static val IMPORTED_RESOURCES = Multimaps.synchronizedSetMultimap(
         HashMultimap.<File, WeakReference<SCTXResource>>create)
 
     /** List of current imports */
-    @Accessors(PUBLIC_GETTER)
     private val currentImports = HashMultimap.<String, File>create
 
     /** The file this resource was imported for */
     @Accessors(PUBLIC_GETTER)
-    private var File underlyingFile = null
+    protected var File underlyingFile = null
+    /** The flag indicating whether this resources was imported by another or not */
+    @Accessors(PUBLIC_GETTER)
+    protected var boolean imported = false
+    
+    /** The flag indicating whether this resources clears it references before linking */
+    @Accessors(PUBLIC_GETTER)    
+    private var clearReferencesBeforeLinking = false
 
     override setURI(URI uri) {
         super.uri = uri
@@ -204,6 +210,7 @@ public class SCTXResource extends LazyLinkingResource {
         // Import if not already imported (prevent double import)
         if (!resourceSet.resources.filter(SCTXResource).exists[file.equals(it.underlyingFile)]) {
             val res = resourceSet.getResource(importUri, true) as SCTXResource
+            res.imported = true
             IMPORTED_RESOURCES.put(file, new WeakReference(res))
         }
 
@@ -215,24 +222,44 @@ public class SCTXResource extends LazyLinkingResource {
         // Remove import association
         currentImports.keySet.removeAll(imports)
 
-        // Remove resource if no import is importing the file
+        val boundImports = boundResources
+
+        // Remove all resources that are no longer imported
+        resourceSet.resources.removeIf[!boundImports.containsValue(it)]
+    }
+
+    protected def boundResources() {
         val resources = resourceSet.resources.filter(SCTXResource).toMap[it.underlyingFile]
-        val checkedImport = newHashMap
+        val boundImport = newHashMap
         val checkImportQueue = newLinkedList(this)
 
         while (!checkImportQueue.empty) {
             val r = checkImportQueue.pop
-            checkedImport.put(r.underlyingFile, r)
+            boundImport.put(r.underlyingFile, r)
             // Add all resources which are imported but not yet checked to check queue
-            checkImportQueue.addAll(r.currentImports.values.filter[!checkedImport.containsKey(it)].map [
+            checkImportQueue.addAll(r.currentImports.values.filter[!boundImport.containsKey(it)].map [
                 resources.get(it)
             ].filterNull.toSet)
         }
-        // Remove all resources that are no longer imported
-        resourceSet.resources.removeIf[!checkedImport.containsValue(it)]
+
+        return boundImport
     }
 
-    def updateImporters() {
+    // ---------------------------------------------------------------------------------------
+    
+    /**
+     * Clears all linked references an then relinks the model.
+     */
+    public def clearRefsAndRelink() {
+        clearReferencesBeforeLinking = true
+        relink
+        clearReferencesBeforeLinking = false
+    }
+    
+    /**
+     * Reloads all resources that also represent the model located in the underlying file but are part of other resource sets (imported by other resources). 
+     */
+    public def reloadImporters() {
         try {
             // Clear empty references 
             IMPORTED_RESOURCES.get(underlyingFile)?.removeIf[get === null]
@@ -241,13 +268,35 @@ public class SCTXResource extends LazyLinkingResource {
             for (other : (IMPORTED_RESOURCES.get(underlyingFile) ?: emptyList).filter[it.get !== this]) {
                 val r = other.get
                 if (r !== null && r.resourceSet !== null) {
+                    // Refresh resource
                     r.unload
                     r.load(r.resourceSet.loadOptions)
+                    
+                    // Relink importer
+                    for (importer : r.resourceSet.resources.filter(SCTXResource).filter[it.currentImports.values.exists[this.underlyingFile.equals(it)]]) {
+                        importer.clearRefsAndRelink
+                    }
                 }
             }
         } catch (Exception e) {
             // fail silent
         }
+    }
+
+    /**
+     * Returns a map of imports. The keys are the user specified import paths and the value are the resolved files associated with the import.
+     * Use {@link getAllImports()} to resolve the file to the actual resources. 
+     */
+    public def getDirectImports() {
+        return Multimaps.unmodifiableMultimap(currentImports)
+    }
+
+    /**
+     * Returns a map of all resources in the resource set that are directly or indirectly imported by this resource (including this resource).
+     * The key are the underlying file and the values are the actual resources. 
+     */
+    public def getAllImports() {
+        return boundResources
     }
 
 }
