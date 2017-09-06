@@ -44,7 +44,7 @@ class SCTXEditorCallback extends IXtextEditorCallback.NullImpl {
         
         // Update imports
         if (resource instanceof SCTXResource) {
-            resource.updateImporters
+            resource.reloadImporters
         }
         
         // Display error marker on file

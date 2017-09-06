@@ -38,4 +38,7 @@ public class SCTXUiModule extends de.cau.cs.kieler.sccharts.ui.text.AbstractSCTX
     public Class<? extends org.eclipse.xtext.ui.editor.IXtextEditorCallback> bindIXtextEditorCallback() {
         return SCTXEditorCallback.class;
     }
+    public Class<? extends org.eclipse.xtext.ui.editor.DirtyStateEditorSupport> bindDirtyStateEditorSupport() {
+        return SCTXDirtyStateEditorSupport.class;
+    }
 }
