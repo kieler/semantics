@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.scl/src-gen" editDirectory="/de.cau.cs.kieler.scl.edit/src"
+    editorDirectory="/de.cau.cs.kieler.scl.editor/src" modelPluginID="de.cau.cs.kieler.scl"
+    forceOverwrite="true" modelName="SCL" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="6.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.scl.edit"
+    editorPluginID="de.cau.cs.kieler.scl.editor" runtimeVersion="2.10" usedGenPackages="platform:/resource/de.cau.cs.kieler.annotations/model/annotations.genmodel#//annotations platform:/resource/de.cau.cs.kieler.kexpressions/model/keffects.genmodel#//keffects platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel#//kexpressions">
+  <genPackages prefix="Scl" basePackage="de.cau.cs.kieler.scl" disposableProviderFactory="true"
+      ecorePackage="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#/">
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//SCLProgram">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//SCLProgram/annotations"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//SCLProgram/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//SCLProgram/declarations"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement/annotations"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//EmptyStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//EmptyStatement/label"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//InstructionStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//InstructionStatement/instruction"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Instruction"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Assignment"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Conditional">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Conditional/expression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Conditional/declarations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Conditional/elseStatements"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Goto">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Goto/targetLabel"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//StatementSequence">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//StatementSequence/statements"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Thread">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Thread/annotations"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Parallel">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Parallel/threads"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Pause"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//StatementScope">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//StatementScope/declarations"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

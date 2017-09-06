@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalSCLParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_HOSTCODE", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_STRING", "RULE_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_NUMBER", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'module'", "'{'", "';'", "'}'", "':'", "'['", "']'", "'='", "'if'", "'then'", "'else'", "'end'", "'goto'", "'thread'", "'fork'", "'par'", "'join'", "'pause'", "'expression'", "'const'", "'extern'", "'volatile'", "'input'", "'output'", "'static'", "'signal'", "','", "'combine'", "'('", "')'", "'<'", "'()'", "'>'", "'!'", "'&'", "'@'", "'.'", "'#'", "'-'", "'++'", "'--'", "'=='", "'<='", "'>='", "'!='", "'pre'", "'|'", "'+'", "'*'", "'%'", "'/'", "'val'", "'||'", "'&&'", "'pure'", "'bool'", "'unsigned'", "'int'", "'float'", "'string'", "'host'", "'none'", "'max'", "'min'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_HOSTCODE", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_STRING", "RULE_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_NUMBER", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'module'", "'{'", "';'", "'}'", "':'", "'['", "']'", "'='", "'if'", "'then'", "'else'", "'end'", "'goto'", "'thread'", "'fork'", "'par'", "'join'", "'pause'", "'expression'", "'const'", "'extern'", "'volatile'", "'input'", "'output'", "'static'", "'signal'", "','", "'combine'", "'('", "')'", "'<'", "'()'", "'>'", "'||'", "'&&'", "'|'", "'&'", "'+'", "'-'", "'*'", "'/'", "'%'", "'!'", "'@'", "'.'", "'#'", "'++'", "'--'", "'=='", "'<='", "'>='", "'!='", "'pre'", "'val'", "'pure'", "'bool'", "'unsigned'", "'int'", "'float'", "'string'", "'host'", "'none'", "'max'", "'min'"
     };
     public static final int T__50=50;
     public static final int RULE_BOOLEAN=8;
@@ -229,7 +229,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                 int alt1=2;
                 int LA1_0 = input.LA(1);
 
-                if ( (LA1_0==RULE_COMMENT_ANNOTATION||LA1_0==51) ) {
+                if ( (LA1_0==RULE_COMMENT_ANNOTATION||LA1_0==59) ) {
                     alt1=1;
                 }
 
@@ -318,7 +318,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                 int alt2=2;
                 int LA2_0 = input.LA(1);
 
-                if ( (LA2_0==RULE_COMMENT_ANNOTATION||(LA2_0>=35 && LA2_0<=41)||LA2_0==51||(LA2_0>=70 && LA2_0<=76)) ) {
+                if ( (LA2_0==RULE_COMMENT_ANNOTATION||(LA2_0>=35 && LA2_0<=41)||LA2_0==59||(LA2_0>=70 && LA2_0<=76)) ) {
                     alt2=1;
                 }
 
@@ -484,7 +484,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             int alt5=2;
             int LA5_0 = input.LA(1);
 
-            if ( (LA5_0==RULE_ID||LA5_0==RULE_COMMENT_ANNOTATION||LA5_0==17||LA5_0==24||LA5_0==28||LA5_0==30||LA5_0==33||LA5_0==51) ) {
+            if ( (LA5_0==RULE_ID||LA5_0==RULE_COMMENT_ANNOTATION||LA5_0==17||LA5_0==24||LA5_0==28||LA5_0==30||LA5_0==33||LA5_0==59) ) {
                 alt5=1;
             }
             switch (alt5) {
@@ -532,7 +532,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                         int alt4=2;
                         int LA4_0 = input.LA(1);
 
-                        if ( (LA4_0==RULE_ID||LA4_0==RULE_COMMENT_ANNOTATION||LA4_0==51) ) {
+                        if ( (LA4_0==RULE_ID||LA4_0==RULE_COMMENT_ANNOTATION||LA4_0==59) ) {
                             alt4=1;
                         }
 
@@ -685,7 +685,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                 int alt6=2;
                 int LA6_0 = input.LA(1);
 
-                if ( (LA6_0==RULE_COMMENT_ANNOTATION||LA6_0==51) ) {
+                if ( (LA6_0==RULE_COMMENT_ANNOTATION||LA6_0==59) ) {
                     alt6=1;
                 }
 
@@ -1159,7 +1159,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                 int alt8=2;
                 int LA8_0 = input.LA(1);
 
-                if ( (LA8_0==RULE_COMMENT_ANNOTATION||LA8_0==51) ) {
+                if ( (LA8_0==RULE_COMMENT_ANNOTATION||LA8_0==59) ) {
                     alt8=1;
                 }
 
@@ -1788,7 +1788,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             int alt13=2;
             int LA13_0 = input.LA(1);
 
-            if ( (LA13_0==RULE_ID||LA13_0==RULE_COMMENT_ANNOTATION||LA13_0==17||LA13_0==24||LA13_0==28||LA13_0==30||LA13_0==33||LA13_0==51) ) {
+            if ( (LA13_0==RULE_ID||LA13_0==RULE_COMMENT_ANNOTATION||LA13_0==17||LA13_0==24||LA13_0==28||LA13_0==30||LA13_0==33||LA13_0==59) ) {
                 alt13=1;
             }
             switch (alt13) {
@@ -1836,7 +1836,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                         int alt12=2;
                         int LA12_0 = input.LA(1);
 
-                        if ( (LA12_0==RULE_ID||LA12_0==RULE_COMMENT_ANNOTATION||LA12_0==51) ) {
+                        if ( (LA12_0==RULE_ID||LA12_0==RULE_COMMENT_ANNOTATION||LA12_0==59) ) {
                             alt12=1;
                         }
 
@@ -2069,7 +2069,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     int alt17=2;
                     int LA17_0 = input.LA(1);
 
-                    if ( (LA17_0==RULE_ID||LA17_0==RULE_COMMENT_ANNOTATION||LA17_0==17||LA17_0==24||LA17_0==28||LA17_0==30||LA17_0==33||LA17_0==51) ) {
+                    if ( (LA17_0==RULE_ID||LA17_0==RULE_COMMENT_ANNOTATION||LA17_0==17||LA17_0==24||LA17_0==28||LA17_0==30||LA17_0==33||LA17_0==59) ) {
                         alt17=1;
                     }
                     switch (alt17) {
@@ -2117,7 +2117,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                                 int alt16=2;
                                 int LA16_0 = input.LA(1);
 
-                                if ( (LA16_0==RULE_ID||LA16_0==RULE_COMMENT_ANNOTATION||LA16_0==51) ) {
+                                if ( (LA16_0==RULE_ID||LA16_0==RULE_COMMENT_ANNOTATION||LA16_0==59) ) {
                                     alt16=1;
                                 }
 
@@ -2428,7 +2428,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                         int alt19=2;
                         int LA19_0 = input.LA(1);
 
-                        if ( (LA19_0==RULE_COMMENT_ANNOTATION||LA19_0==51) ) {
+                        if ( (LA19_0==RULE_COMMENT_ANNOTATION||LA19_0==59) ) {
                             alt19=1;
                         }
 
@@ -2600,7 +2600,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             int alt23=2;
             int LA23_0 = input.LA(1);
 
-            if ( (LA23_0==RULE_ID||LA23_0==RULE_COMMENT_ANNOTATION||LA23_0==17||LA23_0==24||LA23_0==28||LA23_0==30||LA23_0==33||LA23_0==51) ) {
+            if ( (LA23_0==RULE_ID||LA23_0==RULE_COMMENT_ANNOTATION||LA23_0==17||LA23_0==24||LA23_0==28||LA23_0==30||LA23_0==33||LA23_0==59) ) {
                 alt23=1;
             }
             switch (alt23) {
@@ -2648,7 +2648,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                         int alt22=2;
                         int LA22_0 = input.LA(1);
 
-                        if ( (LA22_0==RULE_ID||LA22_0==RULE_COMMENT_ANNOTATION||LA22_0==51) ) {
+                        if ( (LA22_0==RULE_ID||LA22_0==RULE_COMMENT_ANNOTATION||LA22_0==59) ) {
                             alt22=1;
                         }
 
@@ -3294,7 +3294,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             int alt28=2;
             int LA28_0 = input.LA(1);
 
-            if ( (LA28_0==RULE_ID||LA28_0==RULE_COMMENT_ANNOTATION||LA28_0==17||LA28_0==24||LA28_0==28||LA28_0==30||LA28_0==33||LA28_0==51) ) {
+            if ( (LA28_0==RULE_ID||LA28_0==RULE_COMMENT_ANNOTATION||LA28_0==17||LA28_0==24||LA28_0==28||LA28_0==30||LA28_0==33||LA28_0==59) ) {
                 alt28=1;
             }
             switch (alt28) {
@@ -3342,7 +3342,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                         int alt27=2;
                         int LA27_0 = input.LA(1);
 
-                        if ( (LA27_0==RULE_ID||LA27_0==RULE_COMMENT_ANNOTATION||LA27_0==51) ) {
+                        if ( (LA27_0==RULE_ID||LA27_0==RULE_COMMENT_ANNOTATION||LA27_0==59) ) {
                             alt27=1;
                         }
 
@@ -3664,7 +3664,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                 int alt30=2;
                 int LA30_0 = input.LA(1);
 
-                if ( (LA30_0==RULE_COMMENT_ANNOTATION||LA30_0==51) ) {
+                if ( (LA30_0==RULE_COMMENT_ANNOTATION||LA30_0==59) ) {
                     alt30=1;
                 }
 
@@ -3857,7 +3857,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                 int alt31=2;
                 int LA31_0 = input.LA(1);
 
-                if ( (LA31_0==RULE_COMMENT_ANNOTATION||LA31_0==51) ) {
+                if ( (LA31_0==RULE_COMMENT_ANNOTATION||LA31_0==59) ) {
                     alt31=1;
                 }
 
@@ -4830,7 +4830,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                 }
                 }
                 break;
-            case 51:
+            case 59:
                 {
                 int LA44_3 = input.LA(2);
 
@@ -5103,7 +5103,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                 int alt45=2;
                 int LA45_0 = input.LA(1);
 
-                if ( (LA45_0==RULE_COMMENT_ANNOTATION||LA45_0==51) ) {
+                if ( (LA45_0==RULE_COMMENT_ANNOTATION||LA45_0==59) ) {
                     alt45=1;
                 }
 
@@ -5340,7 +5340,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                 int alt47=2;
                 int LA47_0 = input.LA(1);
 
-                if ( (LA47_0==RULE_COMMENT_ANNOTATION||LA47_0==51) ) {
+                if ( (LA47_0==RULE_COMMENT_ANNOTATION||LA47_0==59) ) {
                     alt47=1;
                 }
 
@@ -5613,7 +5613,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                 int alt49=2;
                 int LA49_0 = input.LA(1);
 
-                if ( (LA49_0==RULE_COMMENT_ANNOTATION||LA49_0==51) ) {
+                if ( (LA49_0==RULE_COMMENT_ANNOTATION||LA49_0==59) ) {
                     alt49=1;
                 }
 
@@ -5791,7 +5791,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                 int alt50=2;
                 int LA50_0 = input.LA(1);
 
-                if ( (LA50_0==RULE_COMMENT_ANNOTATION||LA50_0==51) ) {
+                if ( (LA50_0==RULE_COMMENT_ANNOTATION||LA50_0==59) ) {
                     alt50=1;
                 }
 
@@ -6339,26 +6339,29 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLogicalOrExpression"
-    // InternalSCL.g:2175:1: ruleLogicalOrExpression returns [EObject current=null] : (this_LogicalAndExpression_0= ruleLogicalAndExpression ( () ( ( (lv_operator_2_0= ruleLogicalOrOperator ) ) ( (lv_subExpressions_3_0= ruleLogicalAndExpression ) ) )+ )? ) ;
+    // InternalSCL.g:2175:1: ruleLogicalOrExpression returns [EObject current=null] : (this_LogicalAndExpression_0= ruleLogicalAndExpression ( () ( ( (lv_operator_2_0= ruleLogicalOrOperator ) ) ( (lv_subExpressions_3_0= ruleLogicalAndExpression ) ) ) (otherlv_4= '||' ( (lv_subExpressions_5_0= ruleLogicalAndExpression ) ) )* )? ) ;
     public final EObject ruleLogicalOrExpression() throws RecognitionException {
         EObject current = null;
         int ruleLogicalOrExpression_StartIndex = input.index();
+        Token otherlv_4=null;
         EObject this_LogicalAndExpression_0 = null;
 
         Enumerator lv_operator_2_0 = null;
 
         EObject lv_subExpressions_3_0 = null;
 
+        EObject lv_subExpressions_5_0 = null;
+
 
          enterRule(); 
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 46) ) { return current; }
-            // InternalSCL.g:2178:28: ( (this_LogicalAndExpression_0= ruleLogicalAndExpression ( () ( ( (lv_operator_2_0= ruleLogicalOrOperator ) ) ( (lv_subExpressions_3_0= ruleLogicalAndExpression ) ) )+ )? ) )
-            // InternalSCL.g:2179:1: (this_LogicalAndExpression_0= ruleLogicalAndExpression ( () ( ( (lv_operator_2_0= ruleLogicalOrOperator ) ) ( (lv_subExpressions_3_0= ruleLogicalAndExpression ) ) )+ )? )
+            // InternalSCL.g:2178:28: ( (this_LogicalAndExpression_0= ruleLogicalAndExpression ( () ( ( (lv_operator_2_0= ruleLogicalOrOperator ) ) ( (lv_subExpressions_3_0= ruleLogicalAndExpression ) ) ) (otherlv_4= '||' ( (lv_subExpressions_5_0= ruleLogicalAndExpression ) ) )* )? ) )
+            // InternalSCL.g:2179:1: (this_LogicalAndExpression_0= ruleLogicalAndExpression ( () ( ( (lv_operator_2_0= ruleLogicalOrOperator ) ) ( (lv_subExpressions_3_0= ruleLogicalAndExpression ) ) ) (otherlv_4= '||' ( (lv_subExpressions_5_0= ruleLogicalAndExpression ) ) )* )? )
             {
-            // InternalSCL.g:2179:1: (this_LogicalAndExpression_0= ruleLogicalAndExpression ( () ( ( (lv_operator_2_0= ruleLogicalOrOperator ) ) ( (lv_subExpressions_3_0= ruleLogicalAndExpression ) ) )+ )? )
-            // InternalSCL.g:2180:2: this_LogicalAndExpression_0= ruleLogicalAndExpression ( () ( ( (lv_operator_2_0= ruleLogicalOrOperator ) ) ( (lv_subExpressions_3_0= ruleLogicalAndExpression ) ) )+ )?
+            // InternalSCL.g:2179:1: (this_LogicalAndExpression_0= ruleLogicalAndExpression ( () ( ( (lv_operator_2_0= ruleLogicalOrOperator ) ) ( (lv_subExpressions_3_0= ruleLogicalAndExpression ) ) ) (otherlv_4= '||' ( (lv_subExpressions_5_0= ruleLogicalAndExpression ) ) )* )? )
+            // InternalSCL.g:2180:2: this_LogicalAndExpression_0= ruleLogicalAndExpression ( () ( ( (lv_operator_2_0= ruleLogicalOrOperator ) ) ( (lv_subExpressions_3_0= ruleLogicalAndExpression ) ) ) (otherlv_4= '||' ( (lv_subExpressions_5_0= ruleLogicalAndExpression ) ) )* )?
             {
             if ( state.backtracking==0 ) {
                
@@ -6381,16 +6384,16 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                       afterParserOrEnumRuleCall();
                   
             }
-            // InternalSCL.g:2191:1: ( () ( ( (lv_operator_2_0= ruleLogicalOrOperator ) ) ( (lv_subExpressions_3_0= ruleLogicalAndExpression ) ) )+ )?
+            // InternalSCL.g:2191:1: ( () ( ( (lv_operator_2_0= ruleLogicalOrOperator ) ) ( (lv_subExpressions_3_0= ruleLogicalAndExpression ) ) ) (otherlv_4= '||' ( (lv_subExpressions_5_0= ruleLogicalAndExpression ) ) )* )?
             int alt55=2;
             int LA55_0 = input.LA(1);
 
-            if ( (LA55_0==68) ) {
+            if ( (LA55_0==49) ) {
                 alt55=1;
             }
             switch (alt55) {
                 case 1 :
-                    // InternalSCL.g:2191:2: () ( ( (lv_operator_2_0= ruleLogicalOrOperator ) ) ( (lv_subExpressions_3_0= ruleLogicalAndExpression ) ) )+
+                    // InternalSCL.g:2191:2: () ( ( (lv_operator_2_0= ruleLogicalOrOperator ) ) ( (lv_subExpressions_3_0= ruleLogicalAndExpression ) ) ) (otherlv_4= '||' ( (lv_subExpressions_5_0= ruleLogicalAndExpression ) ) )*
                     {
                     // InternalSCL.g:2191:2: ()
                     // InternalSCL.g:2192:2: 
@@ -6410,70 +6413,116 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSCL.g:2200:2: ( ( (lv_operator_2_0= ruleLogicalOrOperator ) ) ( (lv_subExpressions_3_0= ruleLogicalAndExpression ) ) )+
-                    int cnt54=0;
+                    // InternalSCL.g:2200:2: ( ( (lv_operator_2_0= ruleLogicalOrOperator ) ) ( (lv_subExpressions_3_0= ruleLogicalAndExpression ) ) )
+                    // InternalSCL.g:2200:3: ( (lv_operator_2_0= ruleLogicalOrOperator ) ) ( (lv_subExpressions_3_0= ruleLogicalAndExpression ) )
+                    {
+                    // InternalSCL.g:2200:3: ( (lv_operator_2_0= ruleLogicalOrOperator ) )
+                    // InternalSCL.g:2201:1: (lv_operator_2_0= ruleLogicalOrOperator )
+                    {
+                    // InternalSCL.g:2201:1: (lv_operator_2_0= ruleLogicalOrOperator )
+                    // InternalSCL.g:2202:3: lv_operator_2_0= ruleLogicalOrOperator
+                    {
+                    if ( state.backtracking==0 ) {
+                       
+                      	        newCompositeNode(grammarAccess.getLogicalOrExpressionAccess().getOperatorLogicalOrOperatorEnumRuleCall_1_1_0_0()); 
+                      	    
+                    }
+                    pushFollow(FOLLOW_12);
+                    lv_operator_2_0=ruleLogicalOrOperator();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      	        if (current==null) {
+                      	            current = createModelElementForParent(grammarAccess.getLogicalOrExpressionRule());
+                      	        }
+                             		set(
+                             			current, 
+                             			"operator",
+                              		lv_operator_2_0, 
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.LogicalOrOperator");
+                      	        afterParserOrEnumRuleCall();
+                      	    
+                    }
+
+                    }
+
+
+                    }
+
+                    // InternalSCL.g:2218:2: ( (lv_subExpressions_3_0= ruleLogicalAndExpression ) )
+                    // InternalSCL.g:2219:1: (lv_subExpressions_3_0= ruleLogicalAndExpression )
+                    {
+                    // InternalSCL.g:2219:1: (lv_subExpressions_3_0= ruleLogicalAndExpression )
+                    // InternalSCL.g:2220:3: lv_subExpressions_3_0= ruleLogicalAndExpression
+                    {
+                    if ( state.backtracking==0 ) {
+                       
+                      	        newCompositeNode(grammarAccess.getLogicalOrExpressionAccess().getSubExpressionsLogicalAndExpressionParserRuleCall_1_1_1_0()); 
+                      	    
+                    }
+                    pushFollow(FOLLOW_45);
+                    lv_subExpressions_3_0=ruleLogicalAndExpression();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      	        if (current==null) {
+                      	            current = createModelElementForParent(grammarAccess.getLogicalOrExpressionRule());
+                      	        }
+                             		add(
+                             			current, 
+                             			"subExpressions",
+                              		lv_subExpressions_3_0, 
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.LogicalAndExpression");
+                      	        afterParserOrEnumRuleCall();
+                      	    
+                    }
+
+                    }
+
+
+                    }
+
+
+                    }
+
+                    // InternalSCL.g:2236:3: (otherlv_4= '||' ( (lv_subExpressions_5_0= ruleLogicalAndExpression ) ) )*
                     loop54:
                     do {
                         int alt54=2;
                         int LA54_0 = input.LA(1);
 
-                        if ( (LA54_0==68) ) {
+                        if ( (LA54_0==49) ) {
                             alt54=1;
                         }
 
 
                         switch (alt54) {
                     	case 1 :
-                    	    // InternalSCL.g:2200:3: ( (lv_operator_2_0= ruleLogicalOrOperator ) ) ( (lv_subExpressions_3_0= ruleLogicalAndExpression ) )
+                    	    // InternalSCL.g:2236:5: otherlv_4= '||' ( (lv_subExpressions_5_0= ruleLogicalAndExpression ) )
                     	    {
-                    	    // InternalSCL.g:2200:3: ( (lv_operator_2_0= ruleLogicalOrOperator ) )
-                    	    // InternalSCL.g:2201:1: (lv_operator_2_0= ruleLogicalOrOperator )
+                    	    otherlv_4=(Token)match(input,49,FOLLOW_12); if (state.failed) return current;
+                    	    if ( state.backtracking==0 ) {
+
+                    	          	newLeafNode(otherlv_4, grammarAccess.getLogicalOrExpressionAccess().getVerticalLineVerticalLineKeyword_1_2_0());
+                    	          
+                    	    }
+                    	    // InternalSCL.g:2240:1: ( (lv_subExpressions_5_0= ruleLogicalAndExpression ) )
+                    	    // InternalSCL.g:2241:1: (lv_subExpressions_5_0= ruleLogicalAndExpression )
                     	    {
-                    	    // InternalSCL.g:2201:1: (lv_operator_2_0= ruleLogicalOrOperator )
-                    	    // InternalSCL.g:2202:3: lv_operator_2_0= ruleLogicalOrOperator
+                    	    // InternalSCL.g:2241:1: (lv_subExpressions_5_0= ruleLogicalAndExpression )
+                    	    // InternalSCL.g:2242:3: lv_subExpressions_5_0= ruleLogicalAndExpression
                     	    {
                     	    if ( state.backtracking==0 ) {
                     	       
-                    	      	        newCompositeNode(grammarAccess.getLogicalOrExpressionAccess().getOperatorLogicalOrOperatorEnumRuleCall_1_1_0_0()); 
-                    	      	    
-                    	    }
-                    	    pushFollow(FOLLOW_12);
-                    	    lv_operator_2_0=ruleLogicalOrOperator();
-
-                    	    state._fsp--;
-                    	    if (state.failed) return current;
-                    	    if ( state.backtracking==0 ) {
-
-                    	      	        if (current==null) {
-                    	      	            current = createModelElementForParent(grammarAccess.getLogicalOrExpressionRule());
-                    	      	        }
-                    	             		set(
-                    	             			current, 
-                    	             			"operator",
-                    	              		lv_operator_2_0, 
-                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.LogicalOrOperator");
-                    	      	        afterParserOrEnumRuleCall();
-                    	      	    
-                    	    }
-
-                    	    }
-
-
-                    	    }
-
-                    	    // InternalSCL.g:2218:2: ( (lv_subExpressions_3_0= ruleLogicalAndExpression ) )
-                    	    // InternalSCL.g:2219:1: (lv_subExpressions_3_0= ruleLogicalAndExpression )
-                    	    {
-                    	    // InternalSCL.g:2219:1: (lv_subExpressions_3_0= ruleLogicalAndExpression )
-                    	    // InternalSCL.g:2220:3: lv_subExpressions_3_0= ruleLogicalAndExpression
-                    	    {
-                    	    if ( state.backtracking==0 ) {
-                    	       
-                    	      	        newCompositeNode(grammarAccess.getLogicalOrExpressionAccess().getSubExpressionsLogicalAndExpressionParserRuleCall_1_1_1_0()); 
+                    	      	        newCompositeNode(grammarAccess.getLogicalOrExpressionAccess().getSubExpressionsLogicalAndExpressionParserRuleCall_1_2_1_0()); 
                     	      	    
                     	    }
                     	    pushFollow(FOLLOW_45);
-                    	    lv_subExpressions_3_0=ruleLogicalAndExpression();
+                    	    lv_subExpressions_5_0=ruleLogicalAndExpression();
 
                     	    state._fsp--;
                     	    if (state.failed) return current;
@@ -6485,7 +6534,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     	             		add(
                     	             			current, 
                     	             			"subExpressions",
-                    	              		lv_subExpressions_3_0, 
+                    	              		lv_subExpressions_5_0, 
                     	              		"de.cau.cs.kieler.kexpressions.KExpressions.LogicalAndExpression");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
@@ -6501,13 +6550,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    if ( cnt54 >= 1 ) break loop54;
-                    	    if (state.backtracking>0) {state.failed=true; return current;}
-                                EarlyExitException eee =
-                                    new EarlyExitException(54, input);
-                                throw eee;
+                    	    break loop54;
                         }
-                        cnt54++;
                     } while (true);
 
 
@@ -6540,7 +6584,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleLogicalAndExpression"
-    // InternalSCL.g:2244:1: entryRuleLogicalAndExpression returns [EObject current=null] : iv_ruleLogicalAndExpression= ruleLogicalAndExpression EOF ;
+    // InternalSCL.g:2266:1: entryRuleLogicalAndExpression returns [EObject current=null] : iv_ruleLogicalAndExpression= ruleLogicalAndExpression EOF ;
     public final EObject entryRuleLogicalAndExpression() throws RecognitionException {
         EObject current = null;
         int entryRuleLogicalAndExpression_StartIndex = input.index();
@@ -6549,8 +6593,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 47) ) { return current; }
-            // InternalSCL.g:2245:2: (iv_ruleLogicalAndExpression= ruleLogicalAndExpression EOF )
-            // InternalSCL.g:2246:2: iv_ruleLogicalAndExpression= ruleLogicalAndExpression EOF
+            // InternalSCL.g:2267:2: (iv_ruleLogicalAndExpression= ruleLogicalAndExpression EOF )
+            // InternalSCL.g:2268:2: iv_ruleLogicalAndExpression= ruleLogicalAndExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getLogicalAndExpressionRule()); 
@@ -6582,26 +6626,29 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLogicalAndExpression"
-    // InternalSCL.g:2253:1: ruleLogicalAndExpression returns [EObject current=null] : (this_BitwiseOrExpression_0= ruleBitwiseOrExpression ( () ( ( (lv_operator_2_0= ruleLogicalAndOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseOrExpression ) ) )+ )? ) ;
+    // InternalSCL.g:2275:1: ruleLogicalAndExpression returns [EObject current=null] : (this_BitwiseOrExpression_0= ruleBitwiseOrExpression ( () ( ( (lv_operator_2_0= ruleLogicalAndOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseOrExpression ) ) ) (otherlv_4= '&&' ( (lv_subExpressions_5_0= ruleBitwiseOrExpression ) ) )* )? ) ;
     public final EObject ruleLogicalAndExpression() throws RecognitionException {
         EObject current = null;
         int ruleLogicalAndExpression_StartIndex = input.index();
+        Token otherlv_4=null;
         EObject this_BitwiseOrExpression_0 = null;
 
         Enumerator lv_operator_2_0 = null;
 
         EObject lv_subExpressions_3_0 = null;
 
+        EObject lv_subExpressions_5_0 = null;
+
 
          enterRule(); 
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 48) ) { return current; }
-            // InternalSCL.g:2256:28: ( (this_BitwiseOrExpression_0= ruleBitwiseOrExpression ( () ( ( (lv_operator_2_0= ruleLogicalAndOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseOrExpression ) ) )+ )? ) )
-            // InternalSCL.g:2257:1: (this_BitwiseOrExpression_0= ruleBitwiseOrExpression ( () ( ( (lv_operator_2_0= ruleLogicalAndOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseOrExpression ) ) )+ )? )
+            // InternalSCL.g:2278:28: ( (this_BitwiseOrExpression_0= ruleBitwiseOrExpression ( () ( ( (lv_operator_2_0= ruleLogicalAndOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseOrExpression ) ) ) (otherlv_4= '&&' ( (lv_subExpressions_5_0= ruleBitwiseOrExpression ) ) )* )? ) )
+            // InternalSCL.g:2279:1: (this_BitwiseOrExpression_0= ruleBitwiseOrExpression ( () ( ( (lv_operator_2_0= ruleLogicalAndOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseOrExpression ) ) ) (otherlv_4= '&&' ( (lv_subExpressions_5_0= ruleBitwiseOrExpression ) ) )* )? )
             {
-            // InternalSCL.g:2257:1: (this_BitwiseOrExpression_0= ruleBitwiseOrExpression ( () ( ( (lv_operator_2_0= ruleLogicalAndOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseOrExpression ) ) )+ )? )
-            // InternalSCL.g:2258:2: this_BitwiseOrExpression_0= ruleBitwiseOrExpression ( () ( ( (lv_operator_2_0= ruleLogicalAndOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseOrExpression ) ) )+ )?
+            // InternalSCL.g:2279:1: (this_BitwiseOrExpression_0= ruleBitwiseOrExpression ( () ( ( (lv_operator_2_0= ruleLogicalAndOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseOrExpression ) ) ) (otherlv_4= '&&' ( (lv_subExpressions_5_0= ruleBitwiseOrExpression ) ) )* )? )
+            // InternalSCL.g:2280:2: this_BitwiseOrExpression_0= ruleBitwiseOrExpression ( () ( ( (lv_operator_2_0= ruleLogicalAndOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseOrExpression ) ) ) (otherlv_4= '&&' ( (lv_subExpressions_5_0= ruleBitwiseOrExpression ) ) )* )?
             {
             if ( state.backtracking==0 ) {
                
@@ -6624,19 +6671,19 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                       afterParserOrEnumRuleCall();
                   
             }
-            // InternalSCL.g:2269:1: ( () ( ( (lv_operator_2_0= ruleLogicalAndOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseOrExpression ) ) )+ )?
+            // InternalSCL.g:2291:1: ( () ( ( (lv_operator_2_0= ruleLogicalAndOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseOrExpression ) ) ) (otherlv_4= '&&' ( (lv_subExpressions_5_0= ruleBitwiseOrExpression ) ) )* )?
             int alt57=2;
             int LA57_0 = input.LA(1);
 
-            if ( (LA57_0==69) ) {
+            if ( (LA57_0==50) ) {
                 alt57=1;
             }
             switch (alt57) {
                 case 1 :
-                    // InternalSCL.g:2269:2: () ( ( (lv_operator_2_0= ruleLogicalAndOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseOrExpression ) ) )+
+                    // InternalSCL.g:2291:2: () ( ( (lv_operator_2_0= ruleLogicalAndOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseOrExpression ) ) ) (otherlv_4= '&&' ( (lv_subExpressions_5_0= ruleBitwiseOrExpression ) ) )*
                     {
-                    // InternalSCL.g:2269:2: ()
-                    // InternalSCL.g:2270:2: 
+                    // InternalSCL.g:2291:2: ()
+                    // InternalSCL.g:2292:2: 
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -6653,70 +6700,116 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSCL.g:2278:2: ( ( (lv_operator_2_0= ruleLogicalAndOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseOrExpression ) ) )+
-                    int cnt56=0;
+                    // InternalSCL.g:2300:2: ( ( (lv_operator_2_0= ruleLogicalAndOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseOrExpression ) ) )
+                    // InternalSCL.g:2300:3: ( (lv_operator_2_0= ruleLogicalAndOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseOrExpression ) )
+                    {
+                    // InternalSCL.g:2300:3: ( (lv_operator_2_0= ruleLogicalAndOperator ) )
+                    // InternalSCL.g:2301:1: (lv_operator_2_0= ruleLogicalAndOperator )
+                    {
+                    // InternalSCL.g:2301:1: (lv_operator_2_0= ruleLogicalAndOperator )
+                    // InternalSCL.g:2302:3: lv_operator_2_0= ruleLogicalAndOperator
+                    {
+                    if ( state.backtracking==0 ) {
+                       
+                      	        newCompositeNode(grammarAccess.getLogicalAndExpressionAccess().getOperatorLogicalAndOperatorEnumRuleCall_1_1_0_0()); 
+                      	    
+                    }
+                    pushFollow(FOLLOW_12);
+                    lv_operator_2_0=ruleLogicalAndOperator();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      	        if (current==null) {
+                      	            current = createModelElementForParent(grammarAccess.getLogicalAndExpressionRule());
+                      	        }
+                             		set(
+                             			current, 
+                             			"operator",
+                              		lv_operator_2_0, 
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.LogicalAndOperator");
+                      	        afterParserOrEnumRuleCall();
+                      	    
+                    }
+
+                    }
+
+
+                    }
+
+                    // InternalSCL.g:2318:2: ( (lv_subExpressions_3_0= ruleBitwiseOrExpression ) )
+                    // InternalSCL.g:2319:1: (lv_subExpressions_3_0= ruleBitwiseOrExpression )
+                    {
+                    // InternalSCL.g:2319:1: (lv_subExpressions_3_0= ruleBitwiseOrExpression )
+                    // InternalSCL.g:2320:3: lv_subExpressions_3_0= ruleBitwiseOrExpression
+                    {
+                    if ( state.backtracking==0 ) {
+                       
+                      	        newCompositeNode(grammarAccess.getLogicalAndExpressionAccess().getSubExpressionsBitwiseOrExpressionParserRuleCall_1_1_1_0()); 
+                      	    
+                    }
+                    pushFollow(FOLLOW_46);
+                    lv_subExpressions_3_0=ruleBitwiseOrExpression();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      	        if (current==null) {
+                      	            current = createModelElementForParent(grammarAccess.getLogicalAndExpressionRule());
+                      	        }
+                             		add(
+                             			current, 
+                             			"subExpressions",
+                              		lv_subExpressions_3_0, 
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.BitwiseOrExpression");
+                      	        afterParserOrEnumRuleCall();
+                      	    
+                    }
+
+                    }
+
+
+                    }
+
+
+                    }
+
+                    // InternalSCL.g:2336:3: (otherlv_4= '&&' ( (lv_subExpressions_5_0= ruleBitwiseOrExpression ) ) )*
                     loop56:
                     do {
                         int alt56=2;
                         int LA56_0 = input.LA(1);
 
-                        if ( (LA56_0==69) ) {
+                        if ( (LA56_0==50) ) {
                             alt56=1;
                         }
 
 
                         switch (alt56) {
                     	case 1 :
-                    	    // InternalSCL.g:2278:3: ( (lv_operator_2_0= ruleLogicalAndOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseOrExpression ) )
+                    	    // InternalSCL.g:2336:5: otherlv_4= '&&' ( (lv_subExpressions_5_0= ruleBitwiseOrExpression ) )
                     	    {
-                    	    // InternalSCL.g:2278:3: ( (lv_operator_2_0= ruleLogicalAndOperator ) )
-                    	    // InternalSCL.g:2279:1: (lv_operator_2_0= ruleLogicalAndOperator )
+                    	    otherlv_4=(Token)match(input,50,FOLLOW_12); if (state.failed) return current;
+                    	    if ( state.backtracking==0 ) {
+
+                    	          	newLeafNode(otherlv_4, grammarAccess.getLogicalAndExpressionAccess().getAmpersandAmpersandKeyword_1_2_0());
+                    	          
+                    	    }
+                    	    // InternalSCL.g:2340:1: ( (lv_subExpressions_5_0= ruleBitwiseOrExpression ) )
+                    	    // InternalSCL.g:2341:1: (lv_subExpressions_5_0= ruleBitwiseOrExpression )
                     	    {
-                    	    // InternalSCL.g:2279:1: (lv_operator_2_0= ruleLogicalAndOperator )
-                    	    // InternalSCL.g:2280:3: lv_operator_2_0= ruleLogicalAndOperator
+                    	    // InternalSCL.g:2341:1: (lv_subExpressions_5_0= ruleBitwiseOrExpression )
+                    	    // InternalSCL.g:2342:3: lv_subExpressions_5_0= ruleBitwiseOrExpression
                     	    {
                     	    if ( state.backtracking==0 ) {
                     	       
-                    	      	        newCompositeNode(grammarAccess.getLogicalAndExpressionAccess().getOperatorLogicalAndOperatorEnumRuleCall_1_1_0_0()); 
-                    	      	    
-                    	    }
-                    	    pushFollow(FOLLOW_12);
-                    	    lv_operator_2_0=ruleLogicalAndOperator();
-
-                    	    state._fsp--;
-                    	    if (state.failed) return current;
-                    	    if ( state.backtracking==0 ) {
-
-                    	      	        if (current==null) {
-                    	      	            current = createModelElementForParent(grammarAccess.getLogicalAndExpressionRule());
-                    	      	        }
-                    	             		set(
-                    	             			current, 
-                    	             			"operator",
-                    	              		lv_operator_2_0, 
-                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.LogicalAndOperator");
-                    	      	        afterParserOrEnumRuleCall();
-                    	      	    
-                    	    }
-
-                    	    }
-
-
-                    	    }
-
-                    	    // InternalSCL.g:2296:2: ( (lv_subExpressions_3_0= ruleBitwiseOrExpression ) )
-                    	    // InternalSCL.g:2297:1: (lv_subExpressions_3_0= ruleBitwiseOrExpression )
-                    	    {
-                    	    // InternalSCL.g:2297:1: (lv_subExpressions_3_0= ruleBitwiseOrExpression )
-                    	    // InternalSCL.g:2298:3: lv_subExpressions_3_0= ruleBitwiseOrExpression
-                    	    {
-                    	    if ( state.backtracking==0 ) {
-                    	       
-                    	      	        newCompositeNode(grammarAccess.getLogicalAndExpressionAccess().getSubExpressionsBitwiseOrExpressionParserRuleCall_1_1_1_0()); 
+                    	      	        newCompositeNode(grammarAccess.getLogicalAndExpressionAccess().getSubExpressionsBitwiseOrExpressionParserRuleCall_1_2_1_0()); 
                     	      	    
                     	    }
                     	    pushFollow(FOLLOW_46);
-                    	    lv_subExpressions_3_0=ruleBitwiseOrExpression();
+                    	    lv_subExpressions_5_0=ruleBitwiseOrExpression();
 
                     	    state._fsp--;
                     	    if (state.failed) return current;
@@ -6728,7 +6821,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     	             		add(
                     	             			current, 
                     	             			"subExpressions",
-                    	              		lv_subExpressions_3_0, 
+                    	              		lv_subExpressions_5_0, 
                     	              		"de.cau.cs.kieler.kexpressions.KExpressions.BitwiseOrExpression");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
@@ -6744,13 +6837,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    if ( cnt56 >= 1 ) break loop56;
-                    	    if (state.backtracking>0) {state.failed=true; return current;}
-                                EarlyExitException eee =
-                                    new EarlyExitException(56, input);
-                                throw eee;
+                    	    break loop56;
                         }
-                        cnt56++;
                     } while (true);
 
 
@@ -6783,7 +6871,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleBitwiseOrExpression"
-    // InternalSCL.g:2322:1: entryRuleBitwiseOrExpression returns [EObject current=null] : iv_ruleBitwiseOrExpression= ruleBitwiseOrExpression EOF ;
+    // InternalSCL.g:2366:1: entryRuleBitwiseOrExpression returns [EObject current=null] : iv_ruleBitwiseOrExpression= ruleBitwiseOrExpression EOF ;
     public final EObject entryRuleBitwiseOrExpression() throws RecognitionException {
         EObject current = null;
         int entryRuleBitwiseOrExpression_StartIndex = input.index();
@@ -6792,8 +6880,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 49) ) { return current; }
-            // InternalSCL.g:2323:2: (iv_ruleBitwiseOrExpression= ruleBitwiseOrExpression EOF )
-            // InternalSCL.g:2324:2: iv_ruleBitwiseOrExpression= ruleBitwiseOrExpression EOF
+            // InternalSCL.g:2367:2: (iv_ruleBitwiseOrExpression= ruleBitwiseOrExpression EOF )
+            // InternalSCL.g:2368:2: iv_ruleBitwiseOrExpression= ruleBitwiseOrExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getBitwiseOrExpressionRule()); 
@@ -6825,26 +6913,29 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseOrExpression"
-    // InternalSCL.g:2331:1: ruleBitwiseOrExpression returns [EObject current=null] : (this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () ( ( (lv_operator_2_0= ruleBitwiseOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) )+ )? ) ;
+    // InternalSCL.g:2375:1: ruleBitwiseOrExpression returns [EObject current=null] : (this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () ( ( (lv_operator_2_0= ruleBitwiseOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) ) (otherlv_4= '|' ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) ) )* )? ) ;
     public final EObject ruleBitwiseOrExpression() throws RecognitionException {
         EObject current = null;
         int ruleBitwiseOrExpression_StartIndex = input.index();
+        Token otherlv_4=null;
         EObject this_BitwiseAndExpression_0 = null;
 
         Enumerator lv_operator_2_0 = null;
 
         EObject lv_subExpressions_3_0 = null;
 
+        EObject lv_subExpressions_5_0 = null;
+
 
          enterRule(); 
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 50) ) { return current; }
-            // InternalSCL.g:2334:28: ( (this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () ( ( (lv_operator_2_0= ruleBitwiseOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) )+ )? ) )
-            // InternalSCL.g:2335:1: (this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () ( ( (lv_operator_2_0= ruleBitwiseOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) )+ )? )
+            // InternalSCL.g:2378:28: ( (this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () ( ( (lv_operator_2_0= ruleBitwiseOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) ) (otherlv_4= '|' ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) ) )* )? ) )
+            // InternalSCL.g:2379:1: (this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () ( ( (lv_operator_2_0= ruleBitwiseOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) ) (otherlv_4= '|' ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) ) )* )? )
             {
-            // InternalSCL.g:2335:1: (this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () ( ( (lv_operator_2_0= ruleBitwiseOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) )+ )? )
-            // InternalSCL.g:2336:2: this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () ( ( (lv_operator_2_0= ruleBitwiseOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) )+ )?
+            // InternalSCL.g:2379:1: (this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () ( ( (lv_operator_2_0= ruleBitwiseOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) ) (otherlv_4= '|' ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) ) )* )? )
+            // InternalSCL.g:2380:2: this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () ( ( (lv_operator_2_0= ruleBitwiseOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) ) (otherlv_4= '|' ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) ) )* )?
             {
             if ( state.backtracking==0 ) {
                
@@ -6867,19 +6958,19 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                       afterParserOrEnumRuleCall();
                   
             }
-            // InternalSCL.g:2347:1: ( () ( ( (lv_operator_2_0= ruleBitwiseOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) )+ )?
+            // InternalSCL.g:2391:1: ( () ( ( (lv_operator_2_0= ruleBitwiseOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) ) (otherlv_4= '|' ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) ) )* )?
             int alt59=2;
             int LA59_0 = input.LA(1);
 
-            if ( (LA59_0==62) ) {
+            if ( (LA59_0==51) ) {
                 alt59=1;
             }
             switch (alt59) {
                 case 1 :
-                    // InternalSCL.g:2347:2: () ( ( (lv_operator_2_0= ruleBitwiseOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) )+
+                    // InternalSCL.g:2391:2: () ( ( (lv_operator_2_0= ruleBitwiseOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) ) (otherlv_4= '|' ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) ) )*
                     {
-                    // InternalSCL.g:2347:2: ()
-                    // InternalSCL.g:2348:2: 
+                    // InternalSCL.g:2391:2: ()
+                    // InternalSCL.g:2392:2: 
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -6896,70 +6987,116 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSCL.g:2356:2: ( ( (lv_operator_2_0= ruleBitwiseOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) )+
-                    int cnt58=0;
+                    // InternalSCL.g:2400:2: ( ( (lv_operator_2_0= ruleBitwiseOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) ) )
+                    // InternalSCL.g:2400:3: ( (lv_operator_2_0= ruleBitwiseOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) )
+                    {
+                    // InternalSCL.g:2400:3: ( (lv_operator_2_0= ruleBitwiseOrOperator ) )
+                    // InternalSCL.g:2401:1: (lv_operator_2_0= ruleBitwiseOrOperator )
+                    {
+                    // InternalSCL.g:2401:1: (lv_operator_2_0= ruleBitwiseOrOperator )
+                    // InternalSCL.g:2402:3: lv_operator_2_0= ruleBitwiseOrOperator
+                    {
+                    if ( state.backtracking==0 ) {
+                       
+                      	        newCompositeNode(grammarAccess.getBitwiseOrExpressionAccess().getOperatorBitwiseOrOperatorEnumRuleCall_1_1_0_0()); 
+                      	    
+                    }
+                    pushFollow(FOLLOW_12);
+                    lv_operator_2_0=ruleBitwiseOrOperator();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      	        if (current==null) {
+                      	            current = createModelElementForParent(grammarAccess.getBitwiseOrExpressionRule());
+                      	        }
+                             		set(
+                             			current, 
+                             			"operator",
+                              		lv_operator_2_0, 
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.BitwiseOrOperator");
+                      	        afterParserOrEnumRuleCall();
+                      	    
+                    }
+
+                    }
+
+
+                    }
+
+                    // InternalSCL.g:2418:2: ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) )
+                    // InternalSCL.g:2419:1: (lv_subExpressions_3_0= ruleBitwiseAndExpression )
+                    {
+                    // InternalSCL.g:2419:1: (lv_subExpressions_3_0= ruleBitwiseAndExpression )
+                    // InternalSCL.g:2420:3: lv_subExpressions_3_0= ruleBitwiseAndExpression
+                    {
+                    if ( state.backtracking==0 ) {
+                       
+                      	        newCompositeNode(grammarAccess.getBitwiseOrExpressionAccess().getSubExpressionsBitwiseAndExpressionParserRuleCall_1_1_1_0()); 
+                      	    
+                    }
+                    pushFollow(FOLLOW_47);
+                    lv_subExpressions_3_0=ruleBitwiseAndExpression();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      	        if (current==null) {
+                      	            current = createModelElementForParent(grammarAccess.getBitwiseOrExpressionRule());
+                      	        }
+                             		add(
+                             			current, 
+                             			"subExpressions",
+                              		lv_subExpressions_3_0, 
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.BitwiseAndExpression");
+                      	        afterParserOrEnumRuleCall();
+                      	    
+                    }
+
+                    }
+
+
+                    }
+
+
+                    }
+
+                    // InternalSCL.g:2436:3: (otherlv_4= '|' ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) ) )*
                     loop58:
                     do {
                         int alt58=2;
                         int LA58_0 = input.LA(1);
 
-                        if ( (LA58_0==62) ) {
+                        if ( (LA58_0==51) ) {
                             alt58=1;
                         }
 
 
                         switch (alt58) {
                     	case 1 :
-                    	    // InternalSCL.g:2356:3: ( (lv_operator_2_0= ruleBitwiseOrOperator ) ) ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) )
+                    	    // InternalSCL.g:2436:5: otherlv_4= '|' ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) )
                     	    {
-                    	    // InternalSCL.g:2356:3: ( (lv_operator_2_0= ruleBitwiseOrOperator ) )
-                    	    // InternalSCL.g:2357:1: (lv_operator_2_0= ruleBitwiseOrOperator )
+                    	    otherlv_4=(Token)match(input,51,FOLLOW_12); if (state.failed) return current;
+                    	    if ( state.backtracking==0 ) {
+
+                    	          	newLeafNode(otherlv_4, grammarAccess.getBitwiseOrExpressionAccess().getVerticalLineKeyword_1_2_0());
+                    	          
+                    	    }
+                    	    // InternalSCL.g:2440:1: ( (lv_subExpressions_5_0= ruleBitwiseAndExpression ) )
+                    	    // InternalSCL.g:2441:1: (lv_subExpressions_5_0= ruleBitwiseAndExpression )
                     	    {
-                    	    // InternalSCL.g:2357:1: (lv_operator_2_0= ruleBitwiseOrOperator )
-                    	    // InternalSCL.g:2358:3: lv_operator_2_0= ruleBitwiseOrOperator
+                    	    // InternalSCL.g:2441:1: (lv_subExpressions_5_0= ruleBitwiseAndExpression )
+                    	    // InternalSCL.g:2442:3: lv_subExpressions_5_0= ruleBitwiseAndExpression
                     	    {
                     	    if ( state.backtracking==0 ) {
                     	       
-                    	      	        newCompositeNode(grammarAccess.getBitwiseOrExpressionAccess().getOperatorBitwiseOrOperatorEnumRuleCall_1_1_0_0()); 
-                    	      	    
-                    	    }
-                    	    pushFollow(FOLLOW_12);
-                    	    lv_operator_2_0=ruleBitwiseOrOperator();
-
-                    	    state._fsp--;
-                    	    if (state.failed) return current;
-                    	    if ( state.backtracking==0 ) {
-
-                    	      	        if (current==null) {
-                    	      	            current = createModelElementForParent(grammarAccess.getBitwiseOrExpressionRule());
-                    	      	        }
-                    	             		set(
-                    	             			current, 
-                    	             			"operator",
-                    	              		lv_operator_2_0, 
-                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.BitwiseOrOperator");
-                    	      	        afterParserOrEnumRuleCall();
-                    	      	    
-                    	    }
-
-                    	    }
-
-
-                    	    }
-
-                    	    // InternalSCL.g:2374:2: ( (lv_subExpressions_3_0= ruleBitwiseAndExpression ) )
-                    	    // InternalSCL.g:2375:1: (lv_subExpressions_3_0= ruleBitwiseAndExpression )
-                    	    {
-                    	    // InternalSCL.g:2375:1: (lv_subExpressions_3_0= ruleBitwiseAndExpression )
-                    	    // InternalSCL.g:2376:3: lv_subExpressions_3_0= ruleBitwiseAndExpression
-                    	    {
-                    	    if ( state.backtracking==0 ) {
-                    	       
-                    	      	        newCompositeNode(grammarAccess.getBitwiseOrExpressionAccess().getSubExpressionsBitwiseAndExpressionParserRuleCall_1_1_1_0()); 
+                    	      	        newCompositeNode(grammarAccess.getBitwiseOrExpressionAccess().getSubExpressionsBitwiseAndExpressionParserRuleCall_1_2_1_0()); 
                     	      	    
                     	    }
                     	    pushFollow(FOLLOW_47);
-                    	    lv_subExpressions_3_0=ruleBitwiseAndExpression();
+                    	    lv_subExpressions_5_0=ruleBitwiseAndExpression();
 
                     	    state._fsp--;
                     	    if (state.failed) return current;
@@ -6971,7 +7108,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     	             		add(
                     	             			current, 
                     	             			"subExpressions",
-                    	              		lv_subExpressions_3_0, 
+                    	              		lv_subExpressions_5_0, 
                     	              		"de.cau.cs.kieler.kexpressions.KExpressions.BitwiseAndExpression");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
@@ -6987,13 +7124,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    if ( cnt58 >= 1 ) break loop58;
-                    	    if (state.backtracking>0) {state.failed=true; return current;}
-                                EarlyExitException eee =
-                                    new EarlyExitException(58, input);
-                                throw eee;
+                    	    break loop58;
                         }
-                        cnt58++;
                     } while (true);
 
 
@@ -7026,7 +7158,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleBitwiseAndExpression"
-    // InternalSCL.g:2400:1: entryRuleBitwiseAndExpression returns [EObject current=null] : iv_ruleBitwiseAndExpression= ruleBitwiseAndExpression EOF ;
+    // InternalSCL.g:2466:1: entryRuleBitwiseAndExpression returns [EObject current=null] : iv_ruleBitwiseAndExpression= ruleBitwiseAndExpression EOF ;
     public final EObject entryRuleBitwiseAndExpression() throws RecognitionException {
         EObject current = null;
         int entryRuleBitwiseAndExpression_StartIndex = input.index();
@@ -7035,8 +7167,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 51) ) { return current; }
-            // InternalSCL.g:2401:2: (iv_ruleBitwiseAndExpression= ruleBitwiseAndExpression EOF )
-            // InternalSCL.g:2402:2: iv_ruleBitwiseAndExpression= ruleBitwiseAndExpression EOF
+            // InternalSCL.g:2467:2: (iv_ruleBitwiseAndExpression= ruleBitwiseAndExpression EOF )
+            // InternalSCL.g:2468:2: iv_ruleBitwiseAndExpression= ruleBitwiseAndExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getBitwiseAndExpressionRule()); 
@@ -7068,26 +7200,29 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseAndExpression"
-    // InternalSCL.g:2409:1: ruleBitwiseAndExpression returns [EObject current=null] : (this_CompareOperation_0= ruleCompareOperation ( () ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) )+ )? ) ;
+    // InternalSCL.g:2475:1: ruleBitwiseAndExpression returns [EObject current=null] : (this_CompareOperation_0= ruleCompareOperation ( () ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) ) (otherlv_4= '&' ( (lv_subExpressions_5_0= ruleCompareOperation ) ) )* )? ) ;
     public final EObject ruleBitwiseAndExpression() throws RecognitionException {
         EObject current = null;
         int ruleBitwiseAndExpression_StartIndex = input.index();
+        Token otherlv_4=null;
         EObject this_CompareOperation_0 = null;
 
         Enumerator lv_operator_2_0 = null;
 
         EObject lv_subExpressions_3_0 = null;
 
+        EObject lv_subExpressions_5_0 = null;
+
 
          enterRule(); 
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 52) ) { return current; }
-            // InternalSCL.g:2412:28: ( (this_CompareOperation_0= ruleCompareOperation ( () ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) )+ )? ) )
-            // InternalSCL.g:2413:1: (this_CompareOperation_0= ruleCompareOperation ( () ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) )+ )? )
+            // InternalSCL.g:2478:28: ( (this_CompareOperation_0= ruleCompareOperation ( () ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) ) (otherlv_4= '&' ( (lv_subExpressions_5_0= ruleCompareOperation ) ) )* )? ) )
+            // InternalSCL.g:2479:1: (this_CompareOperation_0= ruleCompareOperation ( () ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) ) (otherlv_4= '&' ( (lv_subExpressions_5_0= ruleCompareOperation ) ) )* )? )
             {
-            // InternalSCL.g:2413:1: (this_CompareOperation_0= ruleCompareOperation ( () ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) )+ )? )
-            // InternalSCL.g:2414:2: this_CompareOperation_0= ruleCompareOperation ( () ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) )+ )?
+            // InternalSCL.g:2479:1: (this_CompareOperation_0= ruleCompareOperation ( () ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) ) (otherlv_4= '&' ( (lv_subExpressions_5_0= ruleCompareOperation ) ) )* )? )
+            // InternalSCL.g:2480:2: this_CompareOperation_0= ruleCompareOperation ( () ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) ) (otherlv_4= '&' ( (lv_subExpressions_5_0= ruleCompareOperation ) ) )* )?
             {
             if ( state.backtracking==0 ) {
                
@@ -7110,19 +7245,19 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                       afterParserOrEnumRuleCall();
                   
             }
-            // InternalSCL.g:2425:1: ( () ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) )+ )?
+            // InternalSCL.g:2491:1: ( () ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) ) (otherlv_4= '&' ( (lv_subExpressions_5_0= ruleCompareOperation ) ) )* )?
             int alt61=2;
             int LA61_0 = input.LA(1);
 
-            if ( (LA61_0==50) ) {
+            if ( (LA61_0==52) ) {
                 alt61=1;
             }
             switch (alt61) {
                 case 1 :
-                    // InternalSCL.g:2425:2: () ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) )+
+                    // InternalSCL.g:2491:2: () ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) ) (otherlv_4= '&' ( (lv_subExpressions_5_0= ruleCompareOperation ) ) )*
                     {
-                    // InternalSCL.g:2425:2: ()
-                    // InternalSCL.g:2426:2: 
+                    // InternalSCL.g:2491:2: ()
+                    // InternalSCL.g:2492:2: 
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -7139,70 +7274,116 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSCL.g:2434:2: ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) )+
-                    int cnt60=0;
+                    // InternalSCL.g:2500:2: ( ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) ) )
+                    // InternalSCL.g:2500:3: ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) )
+                    {
+                    // InternalSCL.g:2500:3: ( (lv_operator_2_0= ruleBitwiseAndOperator ) )
+                    // InternalSCL.g:2501:1: (lv_operator_2_0= ruleBitwiseAndOperator )
+                    {
+                    // InternalSCL.g:2501:1: (lv_operator_2_0= ruleBitwiseAndOperator )
+                    // InternalSCL.g:2502:3: lv_operator_2_0= ruleBitwiseAndOperator
+                    {
+                    if ( state.backtracking==0 ) {
+                       
+                      	        newCompositeNode(grammarAccess.getBitwiseAndExpressionAccess().getOperatorBitwiseAndOperatorEnumRuleCall_1_1_0_0()); 
+                      	    
+                    }
+                    pushFollow(FOLLOW_12);
+                    lv_operator_2_0=ruleBitwiseAndOperator();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      	        if (current==null) {
+                      	            current = createModelElementForParent(grammarAccess.getBitwiseAndExpressionRule());
+                      	        }
+                             		set(
+                             			current, 
+                             			"operator",
+                              		lv_operator_2_0, 
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.BitwiseAndOperator");
+                      	        afterParserOrEnumRuleCall();
+                      	    
+                    }
+
+                    }
+
+
+                    }
+
+                    // InternalSCL.g:2518:2: ( (lv_subExpressions_3_0= ruleCompareOperation ) )
+                    // InternalSCL.g:2519:1: (lv_subExpressions_3_0= ruleCompareOperation )
+                    {
+                    // InternalSCL.g:2519:1: (lv_subExpressions_3_0= ruleCompareOperation )
+                    // InternalSCL.g:2520:3: lv_subExpressions_3_0= ruleCompareOperation
+                    {
+                    if ( state.backtracking==0 ) {
+                       
+                      	        newCompositeNode(grammarAccess.getBitwiseAndExpressionAccess().getSubExpressionsCompareOperationParserRuleCall_1_1_1_0()); 
+                      	    
+                    }
+                    pushFollow(FOLLOW_48);
+                    lv_subExpressions_3_0=ruleCompareOperation();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      	        if (current==null) {
+                      	            current = createModelElementForParent(grammarAccess.getBitwiseAndExpressionRule());
+                      	        }
+                             		add(
+                             			current, 
+                             			"subExpressions",
+                              		lv_subExpressions_3_0, 
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.CompareOperation");
+                      	        afterParserOrEnumRuleCall();
+                      	    
+                    }
+
+                    }
+
+
+                    }
+
+
+                    }
+
+                    // InternalSCL.g:2536:3: (otherlv_4= '&' ( (lv_subExpressions_5_0= ruleCompareOperation ) ) )*
                     loop60:
                     do {
                         int alt60=2;
                         int LA60_0 = input.LA(1);
 
-                        if ( (LA60_0==50) ) {
+                        if ( (LA60_0==52) ) {
                             alt60=1;
                         }
 
 
                         switch (alt60) {
                     	case 1 :
-                    	    // InternalSCL.g:2434:3: ( (lv_operator_2_0= ruleBitwiseAndOperator ) ) ( (lv_subExpressions_3_0= ruleCompareOperation ) )
+                    	    // InternalSCL.g:2536:5: otherlv_4= '&' ( (lv_subExpressions_5_0= ruleCompareOperation ) )
                     	    {
-                    	    // InternalSCL.g:2434:3: ( (lv_operator_2_0= ruleBitwiseAndOperator ) )
-                    	    // InternalSCL.g:2435:1: (lv_operator_2_0= ruleBitwiseAndOperator )
+                    	    otherlv_4=(Token)match(input,52,FOLLOW_12); if (state.failed) return current;
+                    	    if ( state.backtracking==0 ) {
+
+                    	          	newLeafNode(otherlv_4, grammarAccess.getBitwiseAndExpressionAccess().getAmpersandKeyword_1_2_0());
+                    	          
+                    	    }
+                    	    // InternalSCL.g:2540:1: ( (lv_subExpressions_5_0= ruleCompareOperation ) )
+                    	    // InternalSCL.g:2541:1: (lv_subExpressions_5_0= ruleCompareOperation )
                     	    {
-                    	    // InternalSCL.g:2435:1: (lv_operator_2_0= ruleBitwiseAndOperator )
-                    	    // InternalSCL.g:2436:3: lv_operator_2_0= ruleBitwiseAndOperator
+                    	    // InternalSCL.g:2541:1: (lv_subExpressions_5_0= ruleCompareOperation )
+                    	    // InternalSCL.g:2542:3: lv_subExpressions_5_0= ruleCompareOperation
                     	    {
                     	    if ( state.backtracking==0 ) {
                     	       
-                    	      	        newCompositeNode(grammarAccess.getBitwiseAndExpressionAccess().getOperatorBitwiseAndOperatorEnumRuleCall_1_1_0_0()); 
-                    	      	    
-                    	    }
-                    	    pushFollow(FOLLOW_12);
-                    	    lv_operator_2_0=ruleBitwiseAndOperator();
-
-                    	    state._fsp--;
-                    	    if (state.failed) return current;
-                    	    if ( state.backtracking==0 ) {
-
-                    	      	        if (current==null) {
-                    	      	            current = createModelElementForParent(grammarAccess.getBitwiseAndExpressionRule());
-                    	      	        }
-                    	             		set(
-                    	             			current, 
-                    	             			"operator",
-                    	              		lv_operator_2_0, 
-                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.BitwiseAndOperator");
-                    	      	        afterParserOrEnumRuleCall();
-                    	      	    
-                    	    }
-
-                    	    }
-
-
-                    	    }
-
-                    	    // InternalSCL.g:2452:2: ( (lv_subExpressions_3_0= ruleCompareOperation ) )
-                    	    // InternalSCL.g:2453:1: (lv_subExpressions_3_0= ruleCompareOperation )
-                    	    {
-                    	    // InternalSCL.g:2453:1: (lv_subExpressions_3_0= ruleCompareOperation )
-                    	    // InternalSCL.g:2454:3: lv_subExpressions_3_0= ruleCompareOperation
-                    	    {
-                    	    if ( state.backtracking==0 ) {
-                    	       
-                    	      	        newCompositeNode(grammarAccess.getBitwiseAndExpressionAccess().getSubExpressionsCompareOperationParserRuleCall_1_1_1_0()); 
+                    	      	        newCompositeNode(grammarAccess.getBitwiseAndExpressionAccess().getSubExpressionsCompareOperationParserRuleCall_1_2_1_0()); 
                     	      	    
                     	    }
                     	    pushFollow(FOLLOW_48);
-                    	    lv_subExpressions_3_0=ruleCompareOperation();
+                    	    lv_subExpressions_5_0=ruleCompareOperation();
 
                     	    state._fsp--;
                     	    if (state.failed) return current;
@@ -7214,7 +7395,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     	             		add(
                     	             			current, 
                     	             			"subExpressions",
-                    	              		lv_subExpressions_3_0, 
+                    	              		lv_subExpressions_5_0, 
                     	              		"de.cau.cs.kieler.kexpressions.KExpressions.CompareOperation");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
@@ -7230,13 +7411,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    if ( cnt60 >= 1 ) break loop60;
-                    	    if (state.backtracking>0) {state.failed=true; return current;}
-                                EarlyExitException eee =
-                                    new EarlyExitException(60, input);
-                                throw eee;
+                    	    break loop60;
                         }
-                        cnt60++;
                     } while (true);
 
 
@@ -7269,7 +7445,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleCompareOperation"
-    // InternalSCL.g:2478:1: entryRuleCompareOperation returns [EObject current=null] : iv_ruleCompareOperation= ruleCompareOperation EOF ;
+    // InternalSCL.g:2566:1: entryRuleCompareOperation returns [EObject current=null] : iv_ruleCompareOperation= ruleCompareOperation EOF ;
     public final EObject entryRuleCompareOperation() throws RecognitionException {
         EObject current = null;
         int entryRuleCompareOperation_StartIndex = input.index();
@@ -7278,8 +7454,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 53) ) { return current; }
-            // InternalSCL.g:2479:2: (iv_ruleCompareOperation= ruleCompareOperation EOF )
-            // InternalSCL.g:2480:2: iv_ruleCompareOperation= ruleCompareOperation EOF
+            // InternalSCL.g:2567:2: (iv_ruleCompareOperation= ruleCompareOperation EOF )
+            // InternalSCL.g:2568:2: iv_ruleCompareOperation= ruleCompareOperation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getCompareOperationRule()); 
@@ -7311,7 +7487,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCompareOperation"
-    // InternalSCL.g:2487:1: ruleCompareOperation returns [EObject current=null] : (this_NotOrValuedExpression_0= ruleNotOrValuedExpression ( () ( (lv_operator_2_0= ruleCompareOperator ) ) ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) ) )? ) ;
+    // InternalSCL.g:2575:1: ruleCompareOperation returns [EObject current=null] : (this_NotOrValuedExpression_0= ruleNotOrValuedExpression ( () ( (lv_operator_2_0= ruleCompareOperator ) ) ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) ) )? ) ;
     public final EObject ruleCompareOperation() throws RecognitionException {
         EObject current = null;
         int ruleCompareOperation_StartIndex = input.index();
@@ -7326,11 +7502,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 54) ) { return current; }
-            // InternalSCL.g:2490:28: ( (this_NotOrValuedExpression_0= ruleNotOrValuedExpression ( () ( (lv_operator_2_0= ruleCompareOperator ) ) ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) ) )? ) )
-            // InternalSCL.g:2491:1: (this_NotOrValuedExpression_0= ruleNotOrValuedExpression ( () ( (lv_operator_2_0= ruleCompareOperator ) ) ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) ) )? )
+            // InternalSCL.g:2578:28: ( (this_NotOrValuedExpression_0= ruleNotOrValuedExpression ( () ( (lv_operator_2_0= ruleCompareOperator ) ) ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) ) )? ) )
+            // InternalSCL.g:2579:1: (this_NotOrValuedExpression_0= ruleNotOrValuedExpression ( () ( (lv_operator_2_0= ruleCompareOperator ) ) ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) ) )? )
             {
-            // InternalSCL.g:2491:1: (this_NotOrValuedExpression_0= ruleNotOrValuedExpression ( () ( (lv_operator_2_0= ruleCompareOperator ) ) ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) ) )? )
-            // InternalSCL.g:2492:2: this_NotOrValuedExpression_0= ruleNotOrValuedExpression ( () ( (lv_operator_2_0= ruleCompareOperator ) ) ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) ) )?
+            // InternalSCL.g:2579:1: (this_NotOrValuedExpression_0= ruleNotOrValuedExpression ( () ( (lv_operator_2_0= ruleCompareOperator ) ) ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) ) )? )
+            // InternalSCL.g:2580:2: this_NotOrValuedExpression_0= ruleNotOrValuedExpression ( () ( (lv_operator_2_0= ruleCompareOperator ) ) ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) ) )?
             {
             if ( state.backtracking==0 ) {
                
@@ -7353,19 +7529,19 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                       afterParserOrEnumRuleCall();
                   
             }
-            // InternalSCL.g:2503:1: ( () ( (lv_operator_2_0= ruleCompareOperator ) ) ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) ) )?
+            // InternalSCL.g:2591:1: ( () ( (lv_operator_2_0= ruleCompareOperator ) ) ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) ) )?
             int alt62=2;
             int LA62_0 = input.LA(1);
 
-            if ( (LA62_0==46||LA62_0==48||(LA62_0>=57 && LA62_0<=60)) ) {
+            if ( (LA62_0==46||LA62_0==48||(LA62_0>=64 && LA62_0<=67)) ) {
                 alt62=1;
             }
             switch (alt62) {
                 case 1 :
-                    // InternalSCL.g:2503:2: () ( (lv_operator_2_0= ruleCompareOperator ) ) ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) )
+                    // InternalSCL.g:2591:2: () ( (lv_operator_2_0= ruleCompareOperator ) ) ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) )
                     {
-                    // InternalSCL.g:2503:2: ()
-                    // InternalSCL.g:2504:2: 
+                    // InternalSCL.g:2591:2: ()
+                    // InternalSCL.g:2592:2: 
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -7382,11 +7558,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSCL.g:2512:2: ( (lv_operator_2_0= ruleCompareOperator ) )
-                    // InternalSCL.g:2513:1: (lv_operator_2_0= ruleCompareOperator )
+                    // InternalSCL.g:2600:2: ( (lv_operator_2_0= ruleCompareOperator ) )
+                    // InternalSCL.g:2601:1: (lv_operator_2_0= ruleCompareOperator )
                     {
-                    // InternalSCL.g:2513:1: (lv_operator_2_0= ruleCompareOperator )
-                    // InternalSCL.g:2514:3: lv_operator_2_0= ruleCompareOperator
+                    // InternalSCL.g:2601:1: (lv_operator_2_0= ruleCompareOperator )
+                    // InternalSCL.g:2602:3: lv_operator_2_0= ruleCompareOperator
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -7417,11 +7593,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSCL.g:2530:2: ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) )
-                    // InternalSCL.g:2531:1: (lv_subExpressions_3_0= ruleNotOrValuedExpression )
+                    // InternalSCL.g:2618:2: ( (lv_subExpressions_3_0= ruleNotOrValuedExpression ) )
+                    // InternalSCL.g:2619:1: (lv_subExpressions_3_0= ruleNotOrValuedExpression )
                     {
-                    // InternalSCL.g:2531:1: (lv_subExpressions_3_0= ruleNotOrValuedExpression )
-                    // InternalSCL.g:2532:3: lv_subExpressions_3_0= ruleNotOrValuedExpression
+                    // InternalSCL.g:2619:1: (lv_subExpressions_3_0= ruleNotOrValuedExpression )
+                    // InternalSCL.g:2620:3: lv_subExpressions_3_0= ruleNotOrValuedExpression
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -7482,7 +7658,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleNotOrValuedExpression"
-    // InternalSCL.g:2556:1: entryRuleNotOrValuedExpression returns [EObject current=null] : iv_ruleNotOrValuedExpression= ruleNotOrValuedExpression EOF ;
+    // InternalSCL.g:2644:1: entryRuleNotOrValuedExpression returns [EObject current=null] : iv_ruleNotOrValuedExpression= ruleNotOrValuedExpression EOF ;
     public final EObject entryRuleNotOrValuedExpression() throws RecognitionException {
         EObject current = null;
         int entryRuleNotOrValuedExpression_StartIndex = input.index();
@@ -7491,8 +7667,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 55) ) { return current; }
-            // InternalSCL.g:2557:2: (iv_ruleNotOrValuedExpression= ruleNotOrValuedExpression EOF )
-            // InternalSCL.g:2558:2: iv_ruleNotOrValuedExpression= ruleNotOrValuedExpression EOF
+            // InternalSCL.g:2645:2: (iv_ruleNotOrValuedExpression= ruleNotOrValuedExpression EOF )
+            // InternalSCL.g:2646:2: iv_ruleNotOrValuedExpression= ruleNotOrValuedExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getNotOrValuedExpressionRule()); 
@@ -7524,7 +7700,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleNotOrValuedExpression"
-    // InternalSCL.g:2565:1: ruleNotOrValuedExpression returns [EObject current=null] : (this_ValuedExpression_0= ruleValuedExpression | this_NotExpression_1= ruleNotExpression ) ;
+    // InternalSCL.g:2653:1: ruleNotOrValuedExpression returns [EObject current=null] : (this_ValuedExpression_0= ruleValuedExpression | this_NotExpression_1= ruleNotExpression ) ;
     public final EObject ruleNotOrValuedExpression() throws RecognitionException {
         EObject current = null;
         int ruleNotOrValuedExpression_StartIndex = input.index();
@@ -7537,15 +7713,15 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 56) ) { return current; }
-            // InternalSCL.g:2568:28: ( (this_ValuedExpression_0= ruleValuedExpression | this_NotExpression_1= ruleNotExpression ) )
-            // InternalSCL.g:2569:1: (this_ValuedExpression_0= ruleValuedExpression | this_NotExpression_1= ruleNotExpression )
+            // InternalSCL.g:2656:28: ( (this_ValuedExpression_0= ruleValuedExpression | this_NotExpression_1= ruleNotExpression ) )
+            // InternalSCL.g:2657:1: (this_ValuedExpression_0= ruleValuedExpression | this_NotExpression_1= ruleNotExpression )
             {
-            // InternalSCL.g:2569:1: (this_ValuedExpression_0= ruleValuedExpression | this_NotExpression_1= ruleNotExpression )
+            // InternalSCL.g:2657:1: (this_ValuedExpression_0= ruleValuedExpression | this_NotExpression_1= ruleNotExpression )
             int alt63=2;
             alt63 = dfa63.predict(input);
             switch (alt63) {
                 case 1 :
-                    // InternalSCL.g:2570:2: this_ValuedExpression_0= ruleValuedExpression
+                    // InternalSCL.g:2658:2: this_ValuedExpression_0= ruleValuedExpression
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -7572,7 +7748,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSCL.g:2583:2: this_NotExpression_1= ruleNotExpression
+                    // InternalSCL.g:2671:2: this_NotExpression_1= ruleNotExpression
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -7622,7 +7798,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleNotExpression"
-    // InternalSCL.g:2602:1: entryRuleNotExpression returns [EObject current=null] : iv_ruleNotExpression= ruleNotExpression EOF ;
+    // InternalSCL.g:2690:1: entryRuleNotExpression returns [EObject current=null] : iv_ruleNotExpression= ruleNotExpression EOF ;
     public final EObject entryRuleNotExpression() throws RecognitionException {
         EObject current = null;
         int entryRuleNotExpression_StartIndex = input.index();
@@ -7631,8 +7807,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 57) ) { return current; }
-            // InternalSCL.g:2603:2: (iv_ruleNotExpression= ruleNotExpression EOF )
-            // InternalSCL.g:2604:2: iv_ruleNotExpression= ruleNotExpression EOF
+            // InternalSCL.g:2691:2: (iv_ruleNotExpression= ruleNotExpression EOF )
+            // InternalSCL.g:2692:2: iv_ruleNotExpression= ruleNotExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getNotExpressionRule()); 
@@ -7664,7 +7840,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleNotExpression"
-    // InternalSCL.g:2611:1: ruleNotExpression returns [EObject current=null] : ( ( () ( (lv_operator_1_0= ruleNotOperator ) ) ( (lv_subExpressions_2_0= ruleNotExpression ) ) ) | this_AtomicExpression_3= ruleAtomicExpression ) ;
+    // InternalSCL.g:2699:1: ruleNotExpression returns [EObject current=null] : ( ( () ( (lv_operator_1_0= ruleNotOperator ) ) ( (lv_subExpressions_2_0= ruleNotExpression ) ) ) | this_AtomicExpression_3= ruleAtomicExpression ) ;
     public final EObject ruleNotExpression() throws RecognitionException {
         EObject current = null;
         int ruleNotExpression_StartIndex = input.index();
@@ -7679,17 +7855,17 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 58) ) { return current; }
-            // InternalSCL.g:2614:28: ( ( ( () ( (lv_operator_1_0= ruleNotOperator ) ) ( (lv_subExpressions_2_0= ruleNotExpression ) ) ) | this_AtomicExpression_3= ruleAtomicExpression ) )
-            // InternalSCL.g:2615:1: ( ( () ( (lv_operator_1_0= ruleNotOperator ) ) ( (lv_subExpressions_2_0= ruleNotExpression ) ) ) | this_AtomicExpression_3= ruleAtomicExpression )
+            // InternalSCL.g:2702:28: ( ( ( () ( (lv_operator_1_0= ruleNotOperator ) ) ( (lv_subExpressions_2_0= ruleNotExpression ) ) ) | this_AtomicExpression_3= ruleAtomicExpression ) )
+            // InternalSCL.g:2703:1: ( ( () ( (lv_operator_1_0= ruleNotOperator ) ) ( (lv_subExpressions_2_0= ruleNotExpression ) ) ) | this_AtomicExpression_3= ruleAtomicExpression )
             {
-            // InternalSCL.g:2615:1: ( ( () ( (lv_operator_1_0= ruleNotOperator ) ) ( (lv_subExpressions_2_0= ruleNotExpression ) ) ) | this_AtomicExpression_3= ruleAtomicExpression )
+            // InternalSCL.g:2703:1: ( ( () ( (lv_operator_1_0= ruleNotOperator ) ) ( (lv_subExpressions_2_0= ruleNotExpression ) ) ) | this_AtomicExpression_3= ruleAtomicExpression )
             int alt64=2;
             int LA64_0 = input.LA(1);
 
-            if ( (LA64_0==49) ) {
+            if ( (LA64_0==58) ) {
                 alt64=1;
             }
-            else if ( ((LA64_0>=RULE_ID && LA64_0<=RULE_HOSTCODE)||LA64_0==RULE_BOOLEAN||LA64_0==44||LA64_0==46||LA64_0==61||LA64_0==67) ) {
+            else if ( ((LA64_0>=RULE_ID && LA64_0<=RULE_HOSTCODE)||LA64_0==RULE_BOOLEAN||LA64_0==44||LA64_0==46||(LA64_0>=68 && LA64_0<=69)) ) {
                 alt64=2;
             }
             else {
@@ -7701,13 +7877,13 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             }
             switch (alt64) {
                 case 1 :
-                    // InternalSCL.g:2615:2: ( () ( (lv_operator_1_0= ruleNotOperator ) ) ( (lv_subExpressions_2_0= ruleNotExpression ) ) )
+                    // InternalSCL.g:2703:2: ( () ( (lv_operator_1_0= ruleNotOperator ) ) ( (lv_subExpressions_2_0= ruleNotExpression ) ) )
                     {
-                    // InternalSCL.g:2615:2: ( () ( (lv_operator_1_0= ruleNotOperator ) ) ( (lv_subExpressions_2_0= ruleNotExpression ) ) )
-                    // InternalSCL.g:2615:3: () ( (lv_operator_1_0= ruleNotOperator ) ) ( (lv_subExpressions_2_0= ruleNotExpression ) )
+                    // InternalSCL.g:2703:2: ( () ( (lv_operator_1_0= ruleNotOperator ) ) ( (lv_subExpressions_2_0= ruleNotExpression ) ) )
+                    // InternalSCL.g:2703:3: () ( (lv_operator_1_0= ruleNotOperator ) ) ( (lv_subExpressions_2_0= ruleNotExpression ) )
                     {
-                    // InternalSCL.g:2615:3: ()
-                    // InternalSCL.g:2616:2: 
+                    // InternalSCL.g:2703:3: ()
+                    // InternalSCL.g:2704:2: 
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -7724,11 +7900,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSCL.g:2624:2: ( (lv_operator_1_0= ruleNotOperator ) )
-                    // InternalSCL.g:2625:1: (lv_operator_1_0= ruleNotOperator )
+                    // InternalSCL.g:2712:2: ( (lv_operator_1_0= ruleNotOperator ) )
+                    // InternalSCL.g:2713:1: (lv_operator_1_0= ruleNotOperator )
                     {
-                    // InternalSCL.g:2625:1: (lv_operator_1_0= ruleNotOperator )
-                    // InternalSCL.g:2626:3: lv_operator_1_0= ruleNotOperator
+                    // InternalSCL.g:2713:1: (lv_operator_1_0= ruleNotOperator )
+                    // InternalSCL.g:2714:3: lv_operator_1_0= ruleNotOperator
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -7759,11 +7935,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSCL.g:2642:2: ( (lv_subExpressions_2_0= ruleNotExpression ) )
-                    // InternalSCL.g:2643:1: (lv_subExpressions_2_0= ruleNotExpression )
+                    // InternalSCL.g:2730:2: ( (lv_subExpressions_2_0= ruleNotExpression ) )
+                    // InternalSCL.g:2731:1: (lv_subExpressions_2_0= ruleNotExpression )
                     {
-                    // InternalSCL.g:2643:1: (lv_subExpressions_2_0= ruleNotExpression )
-                    // InternalSCL.g:2644:3: lv_subExpressions_2_0= ruleNotExpression
+                    // InternalSCL.g:2731:1: (lv_subExpressions_2_0= ruleNotExpression )
+                    // InternalSCL.g:2732:3: lv_subExpressions_2_0= ruleNotExpression
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -7801,7 +7977,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSCL.g:2662:2: this_AtomicExpression_3= ruleAtomicExpression
+                    // InternalSCL.g:2750:2: this_AtomicExpression_3= ruleAtomicExpression
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -7851,7 +8027,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleValuedExpression"
-    // InternalSCL.g:2681:1: entryRuleValuedExpression returns [EObject current=null] : iv_ruleValuedExpression= ruleValuedExpression EOF ;
+    // InternalSCL.g:2769:1: entryRuleValuedExpression returns [EObject current=null] : iv_ruleValuedExpression= ruleValuedExpression EOF ;
     public final EObject entryRuleValuedExpression() throws RecognitionException {
         EObject current = null;
         int entryRuleValuedExpression_StartIndex = input.index();
@@ -7860,8 +8036,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 59) ) { return current; }
-            // InternalSCL.g:2682:2: (iv_ruleValuedExpression= ruleValuedExpression EOF )
-            // InternalSCL.g:2683:2: iv_ruleValuedExpression= ruleValuedExpression EOF
+            // InternalSCL.g:2770:2: (iv_ruleValuedExpression= ruleValuedExpression EOF )
+            // InternalSCL.g:2771:2: iv_ruleValuedExpression= ruleValuedExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getValuedExpressionRule()); 
@@ -7893,7 +8069,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleValuedExpression"
-    // InternalSCL.g:2690:1: ruleValuedExpression returns [EObject current=null] : this_AddExpression_0= ruleAddExpression ;
+    // InternalSCL.g:2778:1: ruleValuedExpression returns [EObject current=null] : this_AddExpression_0= ruleAddExpression ;
     public final EObject ruleValuedExpression() throws RecognitionException {
         EObject current = null;
         int ruleValuedExpression_StartIndex = input.index();
@@ -7904,8 +8080,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 60) ) { return current; }
-            // InternalSCL.g:2693:28: (this_AddExpression_0= ruleAddExpression )
-            // InternalSCL.g:2695:2: this_AddExpression_0= ruleAddExpression
+            // InternalSCL.g:2781:28: (this_AddExpression_0= ruleAddExpression )
+            // InternalSCL.g:2783:2: this_AddExpression_0= ruleAddExpression
             {
             if ( state.backtracking==0 ) {
                
@@ -7949,7 +8125,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAddExpression"
-    // InternalSCL.g:2714:1: entryRuleAddExpression returns [EObject current=null] : iv_ruleAddExpression= ruleAddExpression EOF ;
+    // InternalSCL.g:2802:1: entryRuleAddExpression returns [EObject current=null] : iv_ruleAddExpression= ruleAddExpression EOF ;
     public final EObject entryRuleAddExpression() throws RecognitionException {
         EObject current = null;
         int entryRuleAddExpression_StartIndex = input.index();
@@ -7958,8 +8134,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 61) ) { return current; }
-            // InternalSCL.g:2715:2: (iv_ruleAddExpression= ruleAddExpression EOF )
-            // InternalSCL.g:2716:2: iv_ruleAddExpression= ruleAddExpression EOF
+            // InternalSCL.g:2803:2: (iv_ruleAddExpression= ruleAddExpression EOF )
+            // InternalSCL.g:2804:2: iv_ruleAddExpression= ruleAddExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAddExpressionRule()); 
@@ -7991,26 +8167,29 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAddExpression"
-    // InternalSCL.g:2723:1: ruleAddExpression returns [EObject current=null] : (this_SubExpression_0= ruleSubExpression ( () ( ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleSubExpression ) ) )+ )? ) ;
+    // InternalSCL.g:2811:1: ruleAddExpression returns [EObject current=null] : (this_SubExpression_0= ruleSubExpression ( () ( ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleSubExpression ) ) ) (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleSubExpression ) ) )* )? ) ;
     public final EObject ruleAddExpression() throws RecognitionException {
         EObject current = null;
         int ruleAddExpression_StartIndex = input.index();
+        Token otherlv_4=null;
         EObject this_SubExpression_0 = null;
 
         Enumerator lv_operator_2_0 = null;
 
         EObject lv_subExpressions_3_0 = null;
 
+        EObject lv_subExpressions_5_0 = null;
+
 
          enterRule(); 
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 62) ) { return current; }
-            // InternalSCL.g:2726:28: ( (this_SubExpression_0= ruleSubExpression ( () ( ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleSubExpression ) ) )+ )? ) )
-            // InternalSCL.g:2727:1: (this_SubExpression_0= ruleSubExpression ( () ( ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleSubExpression ) ) )+ )? )
+            // InternalSCL.g:2814:28: ( (this_SubExpression_0= ruleSubExpression ( () ( ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleSubExpression ) ) ) (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleSubExpression ) ) )* )? ) )
+            // InternalSCL.g:2815:1: (this_SubExpression_0= ruleSubExpression ( () ( ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleSubExpression ) ) ) (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleSubExpression ) ) )* )? )
             {
-            // InternalSCL.g:2727:1: (this_SubExpression_0= ruleSubExpression ( () ( ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleSubExpression ) ) )+ )? )
-            // InternalSCL.g:2728:2: this_SubExpression_0= ruleSubExpression ( () ( ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleSubExpression ) ) )+ )?
+            // InternalSCL.g:2815:1: (this_SubExpression_0= ruleSubExpression ( () ( ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleSubExpression ) ) ) (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleSubExpression ) ) )* )? )
+            // InternalSCL.g:2816:2: this_SubExpression_0= ruleSubExpression ( () ( ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleSubExpression ) ) ) (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleSubExpression ) ) )* )?
             {
             if ( state.backtracking==0 ) {
                
@@ -8033,19 +8212,19 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                       afterParserOrEnumRuleCall();
                   
             }
-            // InternalSCL.g:2739:1: ( () ( ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleSubExpression ) ) )+ )?
+            // InternalSCL.g:2827:1: ( () ( ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleSubExpression ) ) ) (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleSubExpression ) ) )* )?
             int alt66=2;
             int LA66_0 = input.LA(1);
 
-            if ( (LA66_0==63) ) {
+            if ( (LA66_0==53) ) {
                 alt66=1;
             }
             switch (alt66) {
                 case 1 :
-                    // InternalSCL.g:2739:2: () ( ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleSubExpression ) ) )+
+                    // InternalSCL.g:2827:2: () ( ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleSubExpression ) ) ) (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleSubExpression ) ) )*
                     {
-                    // InternalSCL.g:2739:2: ()
-                    // InternalSCL.g:2740:2: 
+                    // InternalSCL.g:2827:2: ()
+                    // InternalSCL.g:2828:2: 
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -8062,70 +8241,116 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSCL.g:2748:2: ( ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleSubExpression ) ) )+
-                    int cnt65=0;
+                    // InternalSCL.g:2836:2: ( ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleSubExpression ) ) )
+                    // InternalSCL.g:2836:3: ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleSubExpression ) )
+                    {
+                    // InternalSCL.g:2836:3: ( (lv_operator_2_0= ruleAddOperator ) )
+                    // InternalSCL.g:2837:1: (lv_operator_2_0= ruleAddOperator )
+                    {
+                    // InternalSCL.g:2837:1: (lv_operator_2_0= ruleAddOperator )
+                    // InternalSCL.g:2838:3: lv_operator_2_0= ruleAddOperator
+                    {
+                    if ( state.backtracking==0 ) {
+                       
+                      	        newCompositeNode(grammarAccess.getAddExpressionAccess().getOperatorAddOperatorEnumRuleCall_1_1_0_0()); 
+                      	    
+                    }
+                    pushFollow(FOLLOW_51);
+                    lv_operator_2_0=ruleAddOperator();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      	        if (current==null) {
+                      	            current = createModelElementForParent(grammarAccess.getAddExpressionRule());
+                      	        }
+                             		set(
+                             			current, 
+                             			"operator",
+                              		lv_operator_2_0, 
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.AddOperator");
+                      	        afterParserOrEnumRuleCall();
+                      	    
+                    }
+
+                    }
+
+
+                    }
+
+                    // InternalSCL.g:2854:2: ( (lv_subExpressions_3_0= ruleSubExpression ) )
+                    // InternalSCL.g:2855:1: (lv_subExpressions_3_0= ruleSubExpression )
+                    {
+                    // InternalSCL.g:2855:1: (lv_subExpressions_3_0= ruleSubExpression )
+                    // InternalSCL.g:2856:3: lv_subExpressions_3_0= ruleSubExpression
+                    {
+                    if ( state.backtracking==0 ) {
+                       
+                      	        newCompositeNode(grammarAccess.getAddExpressionAccess().getSubExpressionsSubExpressionParserRuleCall_1_1_1_0()); 
+                      	    
+                    }
+                    pushFollow(FOLLOW_50);
+                    lv_subExpressions_3_0=ruleSubExpression();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      	        if (current==null) {
+                      	            current = createModelElementForParent(grammarAccess.getAddExpressionRule());
+                      	        }
+                             		add(
+                             			current, 
+                             			"subExpressions",
+                              		lv_subExpressions_3_0, 
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.SubExpression");
+                      	        afterParserOrEnumRuleCall();
+                      	    
+                    }
+
+                    }
+
+
+                    }
+
+
+                    }
+
+                    // InternalSCL.g:2872:3: (otherlv_4= '+' ( (lv_subExpressions_5_0= ruleSubExpression ) ) )*
                     loop65:
                     do {
                         int alt65=2;
                         int LA65_0 = input.LA(1);
 
-                        if ( (LA65_0==63) ) {
+                        if ( (LA65_0==53) ) {
                             alt65=1;
                         }
 
 
                         switch (alt65) {
                     	case 1 :
-                    	    // InternalSCL.g:2748:3: ( (lv_operator_2_0= ruleAddOperator ) ) ( (lv_subExpressions_3_0= ruleSubExpression ) )
+                    	    // InternalSCL.g:2872:5: otherlv_4= '+' ( (lv_subExpressions_5_0= ruleSubExpression ) )
                     	    {
-                    	    // InternalSCL.g:2748:3: ( (lv_operator_2_0= ruleAddOperator ) )
-                    	    // InternalSCL.g:2749:1: (lv_operator_2_0= ruleAddOperator )
+                    	    otherlv_4=(Token)match(input,53,FOLLOW_51); if (state.failed) return current;
+                    	    if ( state.backtracking==0 ) {
+
+                    	          	newLeafNode(otherlv_4, grammarAccess.getAddExpressionAccess().getPlusSignKeyword_1_2_0());
+                    	          
+                    	    }
+                    	    // InternalSCL.g:2876:1: ( (lv_subExpressions_5_0= ruleSubExpression ) )
+                    	    // InternalSCL.g:2877:1: (lv_subExpressions_5_0= ruleSubExpression )
                     	    {
-                    	    // InternalSCL.g:2749:1: (lv_operator_2_0= ruleAddOperator )
-                    	    // InternalSCL.g:2750:3: lv_operator_2_0= ruleAddOperator
+                    	    // InternalSCL.g:2877:1: (lv_subExpressions_5_0= ruleSubExpression )
+                    	    // InternalSCL.g:2878:3: lv_subExpressions_5_0= ruleSubExpression
                     	    {
                     	    if ( state.backtracking==0 ) {
                     	       
-                    	      	        newCompositeNode(grammarAccess.getAddExpressionAccess().getOperatorAddOperatorEnumRuleCall_1_1_0_0()); 
-                    	      	    
-                    	    }
-                    	    pushFollow(FOLLOW_51);
-                    	    lv_operator_2_0=ruleAddOperator();
-
-                    	    state._fsp--;
-                    	    if (state.failed) return current;
-                    	    if ( state.backtracking==0 ) {
-
-                    	      	        if (current==null) {
-                    	      	            current = createModelElementForParent(grammarAccess.getAddExpressionRule());
-                    	      	        }
-                    	             		set(
-                    	             			current, 
-                    	             			"operator",
-                    	              		lv_operator_2_0, 
-                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.AddOperator");
-                    	      	        afterParserOrEnumRuleCall();
-                    	      	    
-                    	    }
-
-                    	    }
-
-
-                    	    }
-
-                    	    // InternalSCL.g:2766:2: ( (lv_subExpressions_3_0= ruleSubExpression ) )
-                    	    // InternalSCL.g:2767:1: (lv_subExpressions_3_0= ruleSubExpression )
-                    	    {
-                    	    // InternalSCL.g:2767:1: (lv_subExpressions_3_0= ruleSubExpression )
-                    	    // InternalSCL.g:2768:3: lv_subExpressions_3_0= ruleSubExpression
-                    	    {
-                    	    if ( state.backtracking==0 ) {
-                    	       
-                    	      	        newCompositeNode(grammarAccess.getAddExpressionAccess().getSubExpressionsSubExpressionParserRuleCall_1_1_1_0()); 
+                    	      	        newCompositeNode(grammarAccess.getAddExpressionAccess().getSubExpressionsSubExpressionParserRuleCall_1_2_1_0()); 
                     	      	    
                     	    }
                     	    pushFollow(FOLLOW_50);
-                    	    lv_subExpressions_3_0=ruleSubExpression();
+                    	    lv_subExpressions_5_0=ruleSubExpression();
 
                     	    state._fsp--;
                     	    if (state.failed) return current;
@@ -8137,7 +8362,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     	             		add(
                     	             			current, 
                     	             			"subExpressions",
-                    	              		lv_subExpressions_3_0, 
+                    	              		lv_subExpressions_5_0, 
                     	              		"de.cau.cs.kieler.kexpressions.KExpressions.SubExpression");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
@@ -8153,13 +8378,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    if ( cnt65 >= 1 ) break loop65;
-                    	    if (state.backtracking>0) {state.failed=true; return current;}
-                                EarlyExitException eee =
-                                    new EarlyExitException(65, input);
-                                throw eee;
+                    	    break loop65;
                         }
-                        cnt65++;
                     } while (true);
 
 
@@ -8192,7 +8412,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleSubExpression"
-    // InternalSCL.g:2792:1: entryRuleSubExpression returns [EObject current=null] : iv_ruleSubExpression= ruleSubExpression EOF ;
+    // InternalSCL.g:2902:1: entryRuleSubExpression returns [EObject current=null] : iv_ruleSubExpression= ruleSubExpression EOF ;
     public final EObject entryRuleSubExpression() throws RecognitionException {
         EObject current = null;
         int entryRuleSubExpression_StartIndex = input.index();
@@ -8201,8 +8421,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 63) ) { return current; }
-            // InternalSCL.g:2793:2: (iv_ruleSubExpression= ruleSubExpression EOF )
-            // InternalSCL.g:2794:2: iv_ruleSubExpression= ruleSubExpression EOF
+            // InternalSCL.g:2903:2: (iv_ruleSubExpression= ruleSubExpression EOF )
+            // InternalSCL.g:2904:2: iv_ruleSubExpression= ruleSubExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getSubExpressionRule()); 
@@ -8234,26 +8454,29 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSubExpression"
-    // InternalSCL.g:2801:1: ruleSubExpression returns [EObject current=null] : (this_MultExpression_0= ruleMultExpression ( () ( ( (lv_operator_2_0= ruleSubOperator ) ) ( (lv_subExpressions_3_0= ruleMultExpression ) ) )+ )? ) ;
+    // InternalSCL.g:2911:1: ruleSubExpression returns [EObject current=null] : (this_MultExpression_0= ruleMultExpression ( () ( ( (lv_operator_2_0= ruleSubOperator ) ) ( (lv_subExpressions_3_0= ruleMultExpression ) ) ) (otherlv_4= '-' ( (lv_subExpressions_5_0= ruleMultExpression ) ) )* )? ) ;
     public final EObject ruleSubExpression() throws RecognitionException {
         EObject current = null;
         int ruleSubExpression_StartIndex = input.index();
+        Token otherlv_4=null;
         EObject this_MultExpression_0 = null;
 
         Enumerator lv_operator_2_0 = null;
 
         EObject lv_subExpressions_3_0 = null;
 
+        EObject lv_subExpressions_5_0 = null;
+
 
          enterRule(); 
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 64) ) { return current; }
-            // InternalSCL.g:2804:28: ( (this_MultExpression_0= ruleMultExpression ( () ( ( (lv_operator_2_0= ruleSubOperator ) ) ( (lv_subExpressions_3_0= ruleMultExpression ) ) )+ )? ) )
-            // InternalSCL.g:2805:1: (this_MultExpression_0= ruleMultExpression ( () ( ( (lv_operator_2_0= ruleSubOperator ) ) ( (lv_subExpressions_3_0= ruleMultExpression ) ) )+ )? )
+            // InternalSCL.g:2914:28: ( (this_MultExpression_0= ruleMultExpression ( () ( ( (lv_operator_2_0= ruleSubOperator ) ) ( (lv_subExpressions_3_0= ruleMultExpression ) ) ) (otherlv_4= '-' ( (lv_subExpressions_5_0= ruleMultExpression ) ) )* )? ) )
+            // InternalSCL.g:2915:1: (this_MultExpression_0= ruleMultExpression ( () ( ( (lv_operator_2_0= ruleSubOperator ) ) ( (lv_subExpressions_3_0= ruleMultExpression ) ) ) (otherlv_4= '-' ( (lv_subExpressions_5_0= ruleMultExpression ) ) )* )? )
             {
-            // InternalSCL.g:2805:1: (this_MultExpression_0= ruleMultExpression ( () ( ( (lv_operator_2_0= ruleSubOperator ) ) ( (lv_subExpressions_3_0= ruleMultExpression ) ) )+ )? )
-            // InternalSCL.g:2806:2: this_MultExpression_0= ruleMultExpression ( () ( ( (lv_operator_2_0= ruleSubOperator ) ) ( (lv_subExpressions_3_0= ruleMultExpression ) ) )+ )?
+            // InternalSCL.g:2915:1: (this_MultExpression_0= ruleMultExpression ( () ( ( (lv_operator_2_0= ruleSubOperator ) ) ( (lv_subExpressions_3_0= ruleMultExpression ) ) ) (otherlv_4= '-' ( (lv_subExpressions_5_0= ruleMultExpression ) ) )* )? )
+            // InternalSCL.g:2916:2: this_MultExpression_0= ruleMultExpression ( () ( ( (lv_operator_2_0= ruleSubOperator ) ) ( (lv_subExpressions_3_0= ruleMultExpression ) ) ) (otherlv_4= '-' ( (lv_subExpressions_5_0= ruleMultExpression ) ) )* )?
             {
             if ( state.backtracking==0 ) {
                
@@ -8276,7 +8499,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                       afterParserOrEnumRuleCall();
                   
             }
-            // InternalSCL.g:2817:1: ( () ( ( (lv_operator_2_0= ruleSubOperator ) ) ( (lv_subExpressions_3_0= ruleMultExpression ) ) )+ )?
+            // InternalSCL.g:2927:1: ( () ( ( (lv_operator_2_0= ruleSubOperator ) ) ( (lv_subExpressions_3_0= ruleMultExpression ) ) ) (otherlv_4= '-' ( (lv_subExpressions_5_0= ruleMultExpression ) ) )* )?
             int alt68=2;
             int LA68_0 = input.LA(1);
 
@@ -8285,10 +8508,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             }
             switch (alt68) {
                 case 1 :
-                    // InternalSCL.g:2817:2: () ( ( (lv_operator_2_0= ruleSubOperator ) ) ( (lv_subExpressions_3_0= ruleMultExpression ) ) )+
+                    // InternalSCL.g:2927:2: () ( ( (lv_operator_2_0= ruleSubOperator ) ) ( (lv_subExpressions_3_0= ruleMultExpression ) ) ) (otherlv_4= '-' ( (lv_subExpressions_5_0= ruleMultExpression ) ) )*
                     {
-                    // InternalSCL.g:2817:2: ()
-                    // InternalSCL.g:2818:2: 
+                    // InternalSCL.g:2927:2: ()
+                    // InternalSCL.g:2928:2: 
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -8305,8 +8528,83 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSCL.g:2826:2: ( ( (lv_operator_2_0= ruleSubOperator ) ) ( (lv_subExpressions_3_0= ruleMultExpression ) ) )+
-                    int cnt67=0;
+                    // InternalSCL.g:2936:2: ( ( (lv_operator_2_0= ruleSubOperator ) ) ( (lv_subExpressions_3_0= ruleMultExpression ) ) )
+                    // InternalSCL.g:2936:3: ( (lv_operator_2_0= ruleSubOperator ) ) ( (lv_subExpressions_3_0= ruleMultExpression ) )
+                    {
+                    // InternalSCL.g:2936:3: ( (lv_operator_2_0= ruleSubOperator ) )
+                    // InternalSCL.g:2937:1: (lv_operator_2_0= ruleSubOperator )
+                    {
+                    // InternalSCL.g:2937:1: (lv_operator_2_0= ruleSubOperator )
+                    // InternalSCL.g:2938:3: lv_operator_2_0= ruleSubOperator
+                    {
+                    if ( state.backtracking==0 ) {
+                       
+                      	        newCompositeNode(grammarAccess.getSubExpressionAccess().getOperatorSubOperatorEnumRuleCall_1_1_0_0()); 
+                      	    
+                    }
+                    pushFollow(FOLLOW_51);
+                    lv_operator_2_0=ruleSubOperator();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      	        if (current==null) {
+                      	            current = createModelElementForParent(grammarAccess.getSubExpressionRule());
+                      	        }
+                             		set(
+                             			current, 
+                             			"operator",
+                              		lv_operator_2_0, 
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.SubOperator");
+                      	        afterParserOrEnumRuleCall();
+                      	    
+                    }
+
+                    }
+
+
+                    }
+
+                    // InternalSCL.g:2954:2: ( (lv_subExpressions_3_0= ruleMultExpression ) )
+                    // InternalSCL.g:2955:1: (lv_subExpressions_3_0= ruleMultExpression )
+                    {
+                    // InternalSCL.g:2955:1: (lv_subExpressions_3_0= ruleMultExpression )
+                    // InternalSCL.g:2956:3: lv_subExpressions_3_0= ruleMultExpression
+                    {
+                    if ( state.backtracking==0 ) {
+                       
+                      	        newCompositeNode(grammarAccess.getSubExpressionAccess().getSubExpressionsMultExpressionParserRuleCall_1_1_1_0()); 
+                      	    
+                    }
+                    pushFollow(FOLLOW_52);
+                    lv_subExpressions_3_0=ruleMultExpression();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      	        if (current==null) {
+                      	            current = createModelElementForParent(grammarAccess.getSubExpressionRule());
+                      	        }
+                             		add(
+                             			current, 
+                             			"subExpressions",
+                              		lv_subExpressions_3_0, 
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.MultExpression");
+                      	        afterParserOrEnumRuleCall();
+                      	    
+                    }
+
+                    }
+
+
+                    }
+
+
+                    }
+
+                    // InternalSCL.g:2972:3: (otherlv_4= '-' ( (lv_subExpressions_5_0= ruleMultExpression ) ) )*
                     loop67:
                     do {
                         int alt67=2;
@@ -8319,56 +8617,27 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                         switch (alt67) {
                     	case 1 :
-                    	    // InternalSCL.g:2826:3: ( (lv_operator_2_0= ruleSubOperator ) ) ( (lv_subExpressions_3_0= ruleMultExpression ) )
+                    	    // InternalSCL.g:2972:5: otherlv_4= '-' ( (lv_subExpressions_5_0= ruleMultExpression ) )
                     	    {
-                    	    // InternalSCL.g:2826:3: ( (lv_operator_2_0= ruleSubOperator ) )
-                    	    // InternalSCL.g:2827:1: (lv_operator_2_0= ruleSubOperator )
+                    	    otherlv_4=(Token)match(input,54,FOLLOW_51); if (state.failed) return current;
+                    	    if ( state.backtracking==0 ) {
+
+                    	          	newLeafNode(otherlv_4, grammarAccess.getSubExpressionAccess().getHyphenMinusKeyword_1_2_0());
+                    	          
+                    	    }
+                    	    // InternalSCL.g:2976:1: ( (lv_subExpressions_5_0= ruleMultExpression ) )
+                    	    // InternalSCL.g:2977:1: (lv_subExpressions_5_0= ruleMultExpression )
                     	    {
-                    	    // InternalSCL.g:2827:1: (lv_operator_2_0= ruleSubOperator )
-                    	    // InternalSCL.g:2828:3: lv_operator_2_0= ruleSubOperator
+                    	    // InternalSCL.g:2977:1: (lv_subExpressions_5_0= ruleMultExpression )
+                    	    // InternalSCL.g:2978:3: lv_subExpressions_5_0= ruleMultExpression
                     	    {
                     	    if ( state.backtracking==0 ) {
                     	       
-                    	      	        newCompositeNode(grammarAccess.getSubExpressionAccess().getOperatorSubOperatorEnumRuleCall_1_1_0_0()); 
-                    	      	    
-                    	    }
-                    	    pushFollow(FOLLOW_51);
-                    	    lv_operator_2_0=ruleSubOperator();
-
-                    	    state._fsp--;
-                    	    if (state.failed) return current;
-                    	    if ( state.backtracking==0 ) {
-
-                    	      	        if (current==null) {
-                    	      	            current = createModelElementForParent(grammarAccess.getSubExpressionRule());
-                    	      	        }
-                    	             		set(
-                    	             			current, 
-                    	             			"operator",
-                    	              		lv_operator_2_0, 
-                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.SubOperator");
-                    	      	        afterParserOrEnumRuleCall();
-                    	      	    
-                    	    }
-
-                    	    }
-
-
-                    	    }
-
-                    	    // InternalSCL.g:2844:2: ( (lv_subExpressions_3_0= ruleMultExpression ) )
-                    	    // InternalSCL.g:2845:1: (lv_subExpressions_3_0= ruleMultExpression )
-                    	    {
-                    	    // InternalSCL.g:2845:1: (lv_subExpressions_3_0= ruleMultExpression )
-                    	    // InternalSCL.g:2846:3: lv_subExpressions_3_0= ruleMultExpression
-                    	    {
-                    	    if ( state.backtracking==0 ) {
-                    	       
-                    	      	        newCompositeNode(grammarAccess.getSubExpressionAccess().getSubExpressionsMultExpressionParserRuleCall_1_1_1_0()); 
+                    	      	        newCompositeNode(grammarAccess.getSubExpressionAccess().getSubExpressionsMultExpressionParserRuleCall_1_2_1_0()); 
                     	      	    
                     	    }
                     	    pushFollow(FOLLOW_52);
-                    	    lv_subExpressions_3_0=ruleMultExpression();
+                    	    lv_subExpressions_5_0=ruleMultExpression();
 
                     	    state._fsp--;
                     	    if (state.failed) return current;
@@ -8380,7 +8649,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     	             		add(
                     	             			current, 
                     	             			"subExpressions",
-                    	              		lv_subExpressions_3_0, 
+                    	              		lv_subExpressions_5_0, 
                     	              		"de.cau.cs.kieler.kexpressions.KExpressions.MultExpression");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
@@ -8396,13 +8665,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    if ( cnt67 >= 1 ) break loop67;
-                    	    if (state.backtracking>0) {state.failed=true; return current;}
-                                EarlyExitException eee =
-                                    new EarlyExitException(67, input);
-                                throw eee;
+                    	    break loop67;
                         }
-                        cnt67++;
                     } while (true);
 
 
@@ -8435,7 +8699,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleMultExpression"
-    // InternalSCL.g:2870:1: entryRuleMultExpression returns [EObject current=null] : iv_ruleMultExpression= ruleMultExpression EOF ;
+    // InternalSCL.g:3002:1: entryRuleMultExpression returns [EObject current=null] : iv_ruleMultExpression= ruleMultExpression EOF ;
     public final EObject entryRuleMultExpression() throws RecognitionException {
         EObject current = null;
         int entryRuleMultExpression_StartIndex = input.index();
@@ -8444,8 +8708,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 65) ) { return current; }
-            // InternalSCL.g:2871:2: (iv_ruleMultExpression= ruleMultExpression EOF )
-            // InternalSCL.g:2872:2: iv_ruleMultExpression= ruleMultExpression EOF
+            // InternalSCL.g:3003:2: (iv_ruleMultExpression= ruleMultExpression EOF )
+            // InternalSCL.g:3004:2: iv_ruleMultExpression= ruleMultExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getMultExpressionRule()); 
@@ -8477,26 +8741,29 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMultExpression"
-    // InternalSCL.g:2879:1: ruleMultExpression returns [EObject current=null] : (this_DivExpression_0= ruleDivExpression ( () ( ( (lv_operator_2_0= ruleMultOperator ) ) ( (lv_subExpressions_3_0= ruleDivExpression ) ) )+ )? ) ;
+    // InternalSCL.g:3011:1: ruleMultExpression returns [EObject current=null] : (this_DivExpression_0= ruleDivExpression ( () ( ( (lv_operator_2_0= ruleMultOperator ) ) ( (lv_subExpressions_3_0= ruleDivExpression ) ) ) (otherlv_4= '*' ( (lv_subExpressions_5_0= ruleDivExpression ) ) )* )? ) ;
     public final EObject ruleMultExpression() throws RecognitionException {
         EObject current = null;
         int ruleMultExpression_StartIndex = input.index();
+        Token otherlv_4=null;
         EObject this_DivExpression_0 = null;
 
         Enumerator lv_operator_2_0 = null;
 
         EObject lv_subExpressions_3_0 = null;
 
+        EObject lv_subExpressions_5_0 = null;
+
 
          enterRule(); 
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 66) ) { return current; }
-            // InternalSCL.g:2882:28: ( (this_DivExpression_0= ruleDivExpression ( () ( ( (lv_operator_2_0= ruleMultOperator ) ) ( (lv_subExpressions_3_0= ruleDivExpression ) ) )+ )? ) )
-            // InternalSCL.g:2883:1: (this_DivExpression_0= ruleDivExpression ( () ( ( (lv_operator_2_0= ruleMultOperator ) ) ( (lv_subExpressions_3_0= ruleDivExpression ) ) )+ )? )
+            // InternalSCL.g:3014:28: ( (this_DivExpression_0= ruleDivExpression ( () ( ( (lv_operator_2_0= ruleMultOperator ) ) ( (lv_subExpressions_3_0= ruleDivExpression ) ) ) (otherlv_4= '*' ( (lv_subExpressions_5_0= ruleDivExpression ) ) )* )? ) )
+            // InternalSCL.g:3015:1: (this_DivExpression_0= ruleDivExpression ( () ( ( (lv_operator_2_0= ruleMultOperator ) ) ( (lv_subExpressions_3_0= ruleDivExpression ) ) ) (otherlv_4= '*' ( (lv_subExpressions_5_0= ruleDivExpression ) ) )* )? )
             {
-            // InternalSCL.g:2883:1: (this_DivExpression_0= ruleDivExpression ( () ( ( (lv_operator_2_0= ruleMultOperator ) ) ( (lv_subExpressions_3_0= ruleDivExpression ) ) )+ )? )
-            // InternalSCL.g:2884:2: this_DivExpression_0= ruleDivExpression ( () ( ( (lv_operator_2_0= ruleMultOperator ) ) ( (lv_subExpressions_3_0= ruleDivExpression ) ) )+ )?
+            // InternalSCL.g:3015:1: (this_DivExpression_0= ruleDivExpression ( () ( ( (lv_operator_2_0= ruleMultOperator ) ) ( (lv_subExpressions_3_0= ruleDivExpression ) ) ) (otherlv_4= '*' ( (lv_subExpressions_5_0= ruleDivExpression ) ) )* )? )
+            // InternalSCL.g:3016:2: this_DivExpression_0= ruleDivExpression ( () ( ( (lv_operator_2_0= ruleMultOperator ) ) ( (lv_subExpressions_3_0= ruleDivExpression ) ) ) (otherlv_4= '*' ( (lv_subExpressions_5_0= ruleDivExpression ) ) )* )?
             {
             if ( state.backtracking==0 ) {
                
@@ -8519,19 +8786,19 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                       afterParserOrEnumRuleCall();
                   
             }
-            // InternalSCL.g:2895:1: ( () ( ( (lv_operator_2_0= ruleMultOperator ) ) ( (lv_subExpressions_3_0= ruleDivExpression ) ) )+ )?
+            // InternalSCL.g:3027:1: ( () ( ( (lv_operator_2_0= ruleMultOperator ) ) ( (lv_subExpressions_3_0= ruleDivExpression ) ) ) (otherlv_4= '*' ( (lv_subExpressions_5_0= ruleDivExpression ) ) )* )?
             int alt70=2;
             int LA70_0 = input.LA(1);
 
-            if ( (LA70_0==64) ) {
+            if ( (LA70_0==55) ) {
                 alt70=1;
             }
             switch (alt70) {
                 case 1 :
-                    // InternalSCL.g:2895:2: () ( ( (lv_operator_2_0= ruleMultOperator ) ) ( (lv_subExpressions_3_0= ruleDivExpression ) ) )+
+                    // InternalSCL.g:3027:2: () ( ( (lv_operator_2_0= ruleMultOperator ) ) ( (lv_subExpressions_3_0= ruleDivExpression ) ) ) (otherlv_4= '*' ( (lv_subExpressions_5_0= ruleDivExpression ) ) )*
                     {
-                    // InternalSCL.g:2895:2: ()
-                    // InternalSCL.g:2896:2: 
+                    // InternalSCL.g:3027:2: ()
+                    // InternalSCL.g:3028:2: 
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -8548,70 +8815,116 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSCL.g:2904:2: ( ( (lv_operator_2_0= ruleMultOperator ) ) ( (lv_subExpressions_3_0= ruleDivExpression ) ) )+
-                    int cnt69=0;
+                    // InternalSCL.g:3036:2: ( ( (lv_operator_2_0= ruleMultOperator ) ) ( (lv_subExpressions_3_0= ruleDivExpression ) ) )
+                    // InternalSCL.g:3036:3: ( (lv_operator_2_0= ruleMultOperator ) ) ( (lv_subExpressions_3_0= ruleDivExpression ) )
+                    {
+                    // InternalSCL.g:3036:3: ( (lv_operator_2_0= ruleMultOperator ) )
+                    // InternalSCL.g:3037:1: (lv_operator_2_0= ruleMultOperator )
+                    {
+                    // InternalSCL.g:3037:1: (lv_operator_2_0= ruleMultOperator )
+                    // InternalSCL.g:3038:3: lv_operator_2_0= ruleMultOperator
+                    {
+                    if ( state.backtracking==0 ) {
+                       
+                      	        newCompositeNode(grammarAccess.getMultExpressionAccess().getOperatorMultOperatorEnumRuleCall_1_1_0_0()); 
+                      	    
+                    }
+                    pushFollow(FOLLOW_51);
+                    lv_operator_2_0=ruleMultOperator();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      	        if (current==null) {
+                      	            current = createModelElementForParent(grammarAccess.getMultExpressionRule());
+                      	        }
+                             		set(
+                             			current, 
+                             			"operator",
+                              		lv_operator_2_0, 
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.MultOperator");
+                      	        afterParserOrEnumRuleCall();
+                      	    
+                    }
+
+                    }
+
+
+                    }
+
+                    // InternalSCL.g:3054:2: ( (lv_subExpressions_3_0= ruleDivExpression ) )
+                    // InternalSCL.g:3055:1: (lv_subExpressions_3_0= ruleDivExpression )
+                    {
+                    // InternalSCL.g:3055:1: (lv_subExpressions_3_0= ruleDivExpression )
+                    // InternalSCL.g:3056:3: lv_subExpressions_3_0= ruleDivExpression
+                    {
+                    if ( state.backtracking==0 ) {
+                       
+                      	        newCompositeNode(grammarAccess.getMultExpressionAccess().getSubExpressionsDivExpressionParserRuleCall_1_1_1_0()); 
+                      	    
+                    }
+                    pushFollow(FOLLOW_53);
+                    lv_subExpressions_3_0=ruleDivExpression();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      	        if (current==null) {
+                      	            current = createModelElementForParent(grammarAccess.getMultExpressionRule());
+                      	        }
+                             		add(
+                             			current, 
+                             			"subExpressions",
+                              		lv_subExpressions_3_0, 
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.DivExpression");
+                      	        afterParserOrEnumRuleCall();
+                      	    
+                    }
+
+                    }
+
+
+                    }
+
+
+                    }
+
+                    // InternalSCL.g:3072:3: (otherlv_4= '*' ( (lv_subExpressions_5_0= ruleDivExpression ) ) )*
                     loop69:
                     do {
                         int alt69=2;
                         int LA69_0 = input.LA(1);
 
-                        if ( (LA69_0==64) ) {
+                        if ( (LA69_0==55) ) {
                             alt69=1;
                         }
 
 
                         switch (alt69) {
                     	case 1 :
-                    	    // InternalSCL.g:2904:3: ( (lv_operator_2_0= ruleMultOperator ) ) ( (lv_subExpressions_3_0= ruleDivExpression ) )
+                    	    // InternalSCL.g:3072:5: otherlv_4= '*' ( (lv_subExpressions_5_0= ruleDivExpression ) )
                     	    {
-                    	    // InternalSCL.g:2904:3: ( (lv_operator_2_0= ruleMultOperator ) )
-                    	    // InternalSCL.g:2905:1: (lv_operator_2_0= ruleMultOperator )
+                    	    otherlv_4=(Token)match(input,55,FOLLOW_51); if (state.failed) return current;
+                    	    if ( state.backtracking==0 ) {
+
+                    	          	newLeafNode(otherlv_4, grammarAccess.getMultExpressionAccess().getAsteriskKeyword_1_2_0());
+                    	          
+                    	    }
+                    	    // InternalSCL.g:3076:1: ( (lv_subExpressions_5_0= ruleDivExpression ) )
+                    	    // InternalSCL.g:3077:1: (lv_subExpressions_5_0= ruleDivExpression )
                     	    {
-                    	    // InternalSCL.g:2905:1: (lv_operator_2_0= ruleMultOperator )
-                    	    // InternalSCL.g:2906:3: lv_operator_2_0= ruleMultOperator
+                    	    // InternalSCL.g:3077:1: (lv_subExpressions_5_0= ruleDivExpression )
+                    	    // InternalSCL.g:3078:3: lv_subExpressions_5_0= ruleDivExpression
                     	    {
                     	    if ( state.backtracking==0 ) {
                     	       
-                    	      	        newCompositeNode(grammarAccess.getMultExpressionAccess().getOperatorMultOperatorEnumRuleCall_1_1_0_0()); 
-                    	      	    
-                    	    }
-                    	    pushFollow(FOLLOW_51);
-                    	    lv_operator_2_0=ruleMultOperator();
-
-                    	    state._fsp--;
-                    	    if (state.failed) return current;
-                    	    if ( state.backtracking==0 ) {
-
-                    	      	        if (current==null) {
-                    	      	            current = createModelElementForParent(grammarAccess.getMultExpressionRule());
-                    	      	        }
-                    	             		set(
-                    	             			current, 
-                    	             			"operator",
-                    	              		lv_operator_2_0, 
-                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.MultOperator");
-                    	      	        afterParserOrEnumRuleCall();
-                    	      	    
-                    	    }
-
-                    	    }
-
-
-                    	    }
-
-                    	    // InternalSCL.g:2922:2: ( (lv_subExpressions_3_0= ruleDivExpression ) )
-                    	    // InternalSCL.g:2923:1: (lv_subExpressions_3_0= ruleDivExpression )
-                    	    {
-                    	    // InternalSCL.g:2923:1: (lv_subExpressions_3_0= ruleDivExpression )
-                    	    // InternalSCL.g:2924:3: lv_subExpressions_3_0= ruleDivExpression
-                    	    {
-                    	    if ( state.backtracking==0 ) {
-                    	       
-                    	      	        newCompositeNode(grammarAccess.getMultExpressionAccess().getSubExpressionsDivExpressionParserRuleCall_1_1_1_0()); 
+                    	      	        newCompositeNode(grammarAccess.getMultExpressionAccess().getSubExpressionsDivExpressionParserRuleCall_1_2_1_0()); 
                     	      	    
                     	    }
                     	    pushFollow(FOLLOW_53);
-                    	    lv_subExpressions_3_0=ruleDivExpression();
+                    	    lv_subExpressions_5_0=ruleDivExpression();
 
                     	    state._fsp--;
                     	    if (state.failed) return current;
@@ -8623,7 +8936,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     	             		add(
                     	             			current, 
                     	             			"subExpressions",
-                    	              		lv_subExpressions_3_0, 
+                    	              		lv_subExpressions_5_0, 
                     	              		"de.cau.cs.kieler.kexpressions.KExpressions.DivExpression");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
@@ -8639,13 +8952,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    if ( cnt69 >= 1 ) break loop69;
-                    	    if (state.backtracking>0) {state.failed=true; return current;}
-                                EarlyExitException eee =
-                                    new EarlyExitException(69, input);
-                                throw eee;
+                    	    break loop69;
                         }
-                        cnt69++;
                     } while (true);
 
 
@@ -8678,7 +8986,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDivExpression"
-    // InternalSCL.g:2948:1: entryRuleDivExpression returns [EObject current=null] : iv_ruleDivExpression= ruleDivExpression EOF ;
+    // InternalSCL.g:3102:1: entryRuleDivExpression returns [EObject current=null] : iv_ruleDivExpression= ruleDivExpression EOF ;
     public final EObject entryRuleDivExpression() throws RecognitionException {
         EObject current = null;
         int entryRuleDivExpression_StartIndex = input.index();
@@ -8687,8 +8995,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 67) ) { return current; }
-            // InternalSCL.g:2949:2: (iv_ruleDivExpression= ruleDivExpression EOF )
-            // InternalSCL.g:2950:2: iv_ruleDivExpression= ruleDivExpression EOF
+            // InternalSCL.g:3103:2: (iv_ruleDivExpression= ruleDivExpression EOF )
+            // InternalSCL.g:3104:2: iv_ruleDivExpression= ruleDivExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getDivExpressionRule()); 
@@ -8720,26 +9028,29 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDivExpression"
-    // InternalSCL.g:2957:1: ruleDivExpression returns [EObject current=null] : (this_ModExpression_0= ruleModExpression ( () ( ( (lv_operator_2_0= ruleDivOperator ) ) ( (lv_subExpressions_3_0= ruleModExpression ) ) )+ )? ) ;
+    // InternalSCL.g:3111:1: ruleDivExpression returns [EObject current=null] : (this_ModExpression_0= ruleModExpression ( () ( ( (lv_operator_2_0= ruleDivOperator ) ) ( (lv_subExpressions_3_0= ruleModExpression ) ) ) (otherlv_4= '/' ( (lv_subExpressions_5_0= ruleModExpression ) ) )* )? ) ;
     public final EObject ruleDivExpression() throws RecognitionException {
         EObject current = null;
         int ruleDivExpression_StartIndex = input.index();
+        Token otherlv_4=null;
         EObject this_ModExpression_0 = null;
 
         Enumerator lv_operator_2_0 = null;
 
         EObject lv_subExpressions_3_0 = null;
 
+        EObject lv_subExpressions_5_0 = null;
+
 
          enterRule(); 
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 68) ) { return current; }
-            // InternalSCL.g:2960:28: ( (this_ModExpression_0= ruleModExpression ( () ( ( (lv_operator_2_0= ruleDivOperator ) ) ( (lv_subExpressions_3_0= ruleModExpression ) ) )+ )? ) )
-            // InternalSCL.g:2961:1: (this_ModExpression_0= ruleModExpression ( () ( ( (lv_operator_2_0= ruleDivOperator ) ) ( (lv_subExpressions_3_0= ruleModExpression ) ) )+ )? )
+            // InternalSCL.g:3114:28: ( (this_ModExpression_0= ruleModExpression ( () ( ( (lv_operator_2_0= ruleDivOperator ) ) ( (lv_subExpressions_3_0= ruleModExpression ) ) ) (otherlv_4= '/' ( (lv_subExpressions_5_0= ruleModExpression ) ) )* )? ) )
+            // InternalSCL.g:3115:1: (this_ModExpression_0= ruleModExpression ( () ( ( (lv_operator_2_0= ruleDivOperator ) ) ( (lv_subExpressions_3_0= ruleModExpression ) ) ) (otherlv_4= '/' ( (lv_subExpressions_5_0= ruleModExpression ) ) )* )? )
             {
-            // InternalSCL.g:2961:1: (this_ModExpression_0= ruleModExpression ( () ( ( (lv_operator_2_0= ruleDivOperator ) ) ( (lv_subExpressions_3_0= ruleModExpression ) ) )+ )? )
-            // InternalSCL.g:2962:2: this_ModExpression_0= ruleModExpression ( () ( ( (lv_operator_2_0= ruleDivOperator ) ) ( (lv_subExpressions_3_0= ruleModExpression ) ) )+ )?
+            // InternalSCL.g:3115:1: (this_ModExpression_0= ruleModExpression ( () ( ( (lv_operator_2_0= ruleDivOperator ) ) ( (lv_subExpressions_3_0= ruleModExpression ) ) ) (otherlv_4= '/' ( (lv_subExpressions_5_0= ruleModExpression ) ) )* )? )
+            // InternalSCL.g:3116:2: this_ModExpression_0= ruleModExpression ( () ( ( (lv_operator_2_0= ruleDivOperator ) ) ( (lv_subExpressions_3_0= ruleModExpression ) ) ) (otherlv_4= '/' ( (lv_subExpressions_5_0= ruleModExpression ) ) )* )?
             {
             if ( state.backtracking==0 ) {
                
@@ -8762,19 +9073,19 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                       afterParserOrEnumRuleCall();
                   
             }
-            // InternalSCL.g:2973:1: ( () ( ( (lv_operator_2_0= ruleDivOperator ) ) ( (lv_subExpressions_3_0= ruleModExpression ) ) )+ )?
+            // InternalSCL.g:3127:1: ( () ( ( (lv_operator_2_0= ruleDivOperator ) ) ( (lv_subExpressions_3_0= ruleModExpression ) ) ) (otherlv_4= '/' ( (lv_subExpressions_5_0= ruleModExpression ) ) )* )?
             int alt72=2;
             int LA72_0 = input.LA(1);
 
-            if ( (LA72_0==66) ) {
+            if ( (LA72_0==56) ) {
                 alt72=1;
             }
             switch (alt72) {
                 case 1 :
-                    // InternalSCL.g:2973:2: () ( ( (lv_operator_2_0= ruleDivOperator ) ) ( (lv_subExpressions_3_0= ruleModExpression ) ) )+
+                    // InternalSCL.g:3127:2: () ( ( (lv_operator_2_0= ruleDivOperator ) ) ( (lv_subExpressions_3_0= ruleModExpression ) ) ) (otherlv_4= '/' ( (lv_subExpressions_5_0= ruleModExpression ) ) )*
                     {
-                    // InternalSCL.g:2973:2: ()
-                    // InternalSCL.g:2974:2: 
+                    // InternalSCL.g:3127:2: ()
+                    // InternalSCL.g:3128:2: 
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -8791,70 +9102,116 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSCL.g:2982:2: ( ( (lv_operator_2_0= ruleDivOperator ) ) ( (lv_subExpressions_3_0= ruleModExpression ) ) )+
-                    int cnt71=0;
+                    // InternalSCL.g:3136:2: ( ( (lv_operator_2_0= ruleDivOperator ) ) ( (lv_subExpressions_3_0= ruleModExpression ) ) )
+                    // InternalSCL.g:3136:3: ( (lv_operator_2_0= ruleDivOperator ) ) ( (lv_subExpressions_3_0= ruleModExpression ) )
+                    {
+                    // InternalSCL.g:3136:3: ( (lv_operator_2_0= ruleDivOperator ) )
+                    // InternalSCL.g:3137:1: (lv_operator_2_0= ruleDivOperator )
+                    {
+                    // InternalSCL.g:3137:1: (lv_operator_2_0= ruleDivOperator )
+                    // InternalSCL.g:3138:3: lv_operator_2_0= ruleDivOperator
+                    {
+                    if ( state.backtracking==0 ) {
+                       
+                      	        newCompositeNode(grammarAccess.getDivExpressionAccess().getOperatorDivOperatorEnumRuleCall_1_1_0_0()); 
+                      	    
+                    }
+                    pushFollow(FOLLOW_51);
+                    lv_operator_2_0=ruleDivOperator();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      	        if (current==null) {
+                      	            current = createModelElementForParent(grammarAccess.getDivExpressionRule());
+                      	        }
+                             		set(
+                             			current, 
+                             			"operator",
+                              		lv_operator_2_0, 
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.DivOperator");
+                      	        afterParserOrEnumRuleCall();
+                      	    
+                    }
+
+                    }
+
+
+                    }
+
+                    // InternalSCL.g:3154:2: ( (lv_subExpressions_3_0= ruleModExpression ) )
+                    // InternalSCL.g:3155:1: (lv_subExpressions_3_0= ruleModExpression )
+                    {
+                    // InternalSCL.g:3155:1: (lv_subExpressions_3_0= ruleModExpression )
+                    // InternalSCL.g:3156:3: lv_subExpressions_3_0= ruleModExpression
+                    {
+                    if ( state.backtracking==0 ) {
+                       
+                      	        newCompositeNode(grammarAccess.getDivExpressionAccess().getSubExpressionsModExpressionParserRuleCall_1_1_1_0()); 
+                      	    
+                    }
+                    pushFollow(FOLLOW_54);
+                    lv_subExpressions_3_0=ruleModExpression();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      	        if (current==null) {
+                      	            current = createModelElementForParent(grammarAccess.getDivExpressionRule());
+                      	        }
+                             		add(
+                             			current, 
+                             			"subExpressions",
+                              		lv_subExpressions_3_0, 
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.ModExpression");
+                      	        afterParserOrEnumRuleCall();
+                      	    
+                    }
+
+                    }
+
+
+                    }
+
+
+                    }
+
+                    // InternalSCL.g:3172:3: (otherlv_4= '/' ( (lv_subExpressions_5_0= ruleModExpression ) ) )*
                     loop71:
                     do {
                         int alt71=2;
                         int LA71_0 = input.LA(1);
 
-                        if ( (LA71_0==66) ) {
+                        if ( (LA71_0==56) ) {
                             alt71=1;
                         }
 
 
                         switch (alt71) {
                     	case 1 :
-                    	    // InternalSCL.g:2982:3: ( (lv_operator_2_0= ruleDivOperator ) ) ( (lv_subExpressions_3_0= ruleModExpression ) )
+                    	    // InternalSCL.g:3172:5: otherlv_4= '/' ( (lv_subExpressions_5_0= ruleModExpression ) )
                     	    {
-                    	    // InternalSCL.g:2982:3: ( (lv_operator_2_0= ruleDivOperator ) )
-                    	    // InternalSCL.g:2983:1: (lv_operator_2_0= ruleDivOperator )
+                    	    otherlv_4=(Token)match(input,56,FOLLOW_51); if (state.failed) return current;
+                    	    if ( state.backtracking==0 ) {
+
+                    	          	newLeafNode(otherlv_4, grammarAccess.getDivExpressionAccess().getSolidusKeyword_1_2_0());
+                    	          
+                    	    }
+                    	    // InternalSCL.g:3176:1: ( (lv_subExpressions_5_0= ruleModExpression ) )
+                    	    // InternalSCL.g:3177:1: (lv_subExpressions_5_0= ruleModExpression )
                     	    {
-                    	    // InternalSCL.g:2983:1: (lv_operator_2_0= ruleDivOperator )
-                    	    // InternalSCL.g:2984:3: lv_operator_2_0= ruleDivOperator
+                    	    // InternalSCL.g:3177:1: (lv_subExpressions_5_0= ruleModExpression )
+                    	    // InternalSCL.g:3178:3: lv_subExpressions_5_0= ruleModExpression
                     	    {
                     	    if ( state.backtracking==0 ) {
                     	       
-                    	      	        newCompositeNode(grammarAccess.getDivExpressionAccess().getOperatorDivOperatorEnumRuleCall_1_1_0_0()); 
-                    	      	    
-                    	    }
-                    	    pushFollow(FOLLOW_51);
-                    	    lv_operator_2_0=ruleDivOperator();
-
-                    	    state._fsp--;
-                    	    if (state.failed) return current;
-                    	    if ( state.backtracking==0 ) {
-
-                    	      	        if (current==null) {
-                    	      	            current = createModelElementForParent(grammarAccess.getDivExpressionRule());
-                    	      	        }
-                    	             		set(
-                    	             			current, 
-                    	             			"operator",
-                    	              		lv_operator_2_0, 
-                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.DivOperator");
-                    	      	        afterParserOrEnumRuleCall();
-                    	      	    
-                    	    }
-
-                    	    }
-
-
-                    	    }
-
-                    	    // InternalSCL.g:3000:2: ( (lv_subExpressions_3_0= ruleModExpression ) )
-                    	    // InternalSCL.g:3001:1: (lv_subExpressions_3_0= ruleModExpression )
-                    	    {
-                    	    // InternalSCL.g:3001:1: (lv_subExpressions_3_0= ruleModExpression )
-                    	    // InternalSCL.g:3002:3: lv_subExpressions_3_0= ruleModExpression
-                    	    {
-                    	    if ( state.backtracking==0 ) {
-                    	       
-                    	      	        newCompositeNode(grammarAccess.getDivExpressionAccess().getSubExpressionsModExpressionParserRuleCall_1_1_1_0()); 
+                    	      	        newCompositeNode(grammarAccess.getDivExpressionAccess().getSubExpressionsModExpressionParserRuleCall_1_2_1_0()); 
                     	      	    
                     	    }
                     	    pushFollow(FOLLOW_54);
-                    	    lv_subExpressions_3_0=ruleModExpression();
+                    	    lv_subExpressions_5_0=ruleModExpression();
 
                     	    state._fsp--;
                     	    if (state.failed) return current;
@@ -8866,7 +9223,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     	             		add(
                     	             			current, 
                     	             			"subExpressions",
-                    	              		lv_subExpressions_3_0, 
+                    	              		lv_subExpressions_5_0, 
                     	              		"de.cau.cs.kieler.kexpressions.KExpressions.ModExpression");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
@@ -8882,13 +9239,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    if ( cnt71 >= 1 ) break loop71;
-                    	    if (state.backtracking>0) {state.failed=true; return current;}
-                                EarlyExitException eee =
-                                    new EarlyExitException(71, input);
-                                throw eee;
+                    	    break loop71;
                         }
-                        cnt71++;
                     } while (true);
 
 
@@ -8921,7 +9273,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleModExpression"
-    // InternalSCL.g:3026:1: entryRuleModExpression returns [EObject current=null] : iv_ruleModExpression= ruleModExpression EOF ;
+    // InternalSCL.g:3202:1: entryRuleModExpression returns [EObject current=null] : iv_ruleModExpression= ruleModExpression EOF ;
     public final EObject entryRuleModExpression() throws RecognitionException {
         EObject current = null;
         int entryRuleModExpression_StartIndex = input.index();
@@ -8930,8 +9282,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 69) ) { return current; }
-            // InternalSCL.g:3027:2: (iv_ruleModExpression= ruleModExpression EOF )
-            // InternalSCL.g:3028:2: iv_ruleModExpression= ruleModExpression EOF
+            // InternalSCL.g:3203:2: (iv_ruleModExpression= ruleModExpression EOF )
+            // InternalSCL.g:3204:2: iv_ruleModExpression= ruleModExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getModExpressionRule()); 
@@ -8963,26 +9315,29 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleModExpression"
-    // InternalSCL.g:3035:1: ruleModExpression returns [EObject current=null] : (this_NegExpression_0= ruleNegExpression ( () ( ( (lv_operator_2_0= ruleModOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) )+ )? ) ;
+    // InternalSCL.g:3211:1: ruleModExpression returns [EObject current=null] : (this_NegExpression_0= ruleNegExpression ( () ( ( (lv_operator_2_0= ruleModOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) ) (otherlv_4= '%' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )* )? ) ;
     public final EObject ruleModExpression() throws RecognitionException {
         EObject current = null;
         int ruleModExpression_StartIndex = input.index();
+        Token otherlv_4=null;
         EObject this_NegExpression_0 = null;
 
         Enumerator lv_operator_2_0 = null;
 
         EObject lv_subExpressions_3_0 = null;
 
+        EObject lv_subExpressions_5_0 = null;
+
 
          enterRule(); 
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 70) ) { return current; }
-            // InternalSCL.g:3038:28: ( (this_NegExpression_0= ruleNegExpression ( () ( ( (lv_operator_2_0= ruleModOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) )+ )? ) )
-            // InternalSCL.g:3039:1: (this_NegExpression_0= ruleNegExpression ( () ( ( (lv_operator_2_0= ruleModOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) )+ )? )
+            // InternalSCL.g:3214:28: ( (this_NegExpression_0= ruleNegExpression ( () ( ( (lv_operator_2_0= ruleModOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) ) (otherlv_4= '%' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )* )? ) )
+            // InternalSCL.g:3215:1: (this_NegExpression_0= ruleNegExpression ( () ( ( (lv_operator_2_0= ruleModOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) ) (otherlv_4= '%' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )* )? )
             {
-            // InternalSCL.g:3039:1: (this_NegExpression_0= ruleNegExpression ( () ( ( (lv_operator_2_0= ruleModOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) )+ )? )
-            // InternalSCL.g:3040:2: this_NegExpression_0= ruleNegExpression ( () ( ( (lv_operator_2_0= ruleModOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) )+ )?
+            // InternalSCL.g:3215:1: (this_NegExpression_0= ruleNegExpression ( () ( ( (lv_operator_2_0= ruleModOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) ) (otherlv_4= '%' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )* )? )
+            // InternalSCL.g:3216:2: this_NegExpression_0= ruleNegExpression ( () ( ( (lv_operator_2_0= ruleModOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) ) (otherlv_4= '%' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )* )?
             {
             if ( state.backtracking==0 ) {
                
@@ -9005,19 +9360,19 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                       afterParserOrEnumRuleCall();
                   
             }
-            // InternalSCL.g:3051:1: ( () ( ( (lv_operator_2_0= ruleModOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) )+ )?
+            // InternalSCL.g:3227:1: ( () ( ( (lv_operator_2_0= ruleModOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) ) (otherlv_4= '%' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )* )?
             int alt74=2;
             int LA74_0 = input.LA(1);
 
-            if ( (LA74_0==65) ) {
+            if ( (LA74_0==57) ) {
                 alt74=1;
             }
             switch (alt74) {
                 case 1 :
-                    // InternalSCL.g:3051:2: () ( ( (lv_operator_2_0= ruleModOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) )+
+                    // InternalSCL.g:3227:2: () ( ( (lv_operator_2_0= ruleModOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) ) (otherlv_4= '%' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )*
                     {
-                    // InternalSCL.g:3051:2: ()
-                    // InternalSCL.g:3052:2: 
+                    // InternalSCL.g:3227:2: ()
+                    // InternalSCL.g:3228:2: 
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -9034,70 +9389,116 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSCL.g:3060:2: ( ( (lv_operator_2_0= ruleModOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) )+
-                    int cnt73=0;
+                    // InternalSCL.g:3236:2: ( ( (lv_operator_2_0= ruleModOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) )
+                    // InternalSCL.g:3236:3: ( (lv_operator_2_0= ruleModOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) )
+                    {
+                    // InternalSCL.g:3236:3: ( (lv_operator_2_0= ruleModOperator ) )
+                    // InternalSCL.g:3237:1: (lv_operator_2_0= ruleModOperator )
+                    {
+                    // InternalSCL.g:3237:1: (lv_operator_2_0= ruleModOperator )
+                    // InternalSCL.g:3238:3: lv_operator_2_0= ruleModOperator
+                    {
+                    if ( state.backtracking==0 ) {
+                       
+                      	        newCompositeNode(grammarAccess.getModExpressionAccess().getOperatorModOperatorEnumRuleCall_1_1_0_0()); 
+                      	    
+                    }
+                    pushFollow(FOLLOW_51);
+                    lv_operator_2_0=ruleModOperator();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      	        if (current==null) {
+                      	            current = createModelElementForParent(grammarAccess.getModExpressionRule());
+                      	        }
+                             		set(
+                             			current, 
+                             			"operator",
+                              		lv_operator_2_0, 
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.ModOperator");
+                      	        afterParserOrEnumRuleCall();
+                      	    
+                    }
+
+                    }
+
+
+                    }
+
+                    // InternalSCL.g:3254:2: ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) )
+                    // InternalSCL.g:3255:1: (lv_subExpressions_3_0= ruleAtomicValuedExpression )
+                    {
+                    // InternalSCL.g:3255:1: (lv_subExpressions_3_0= ruleAtomicValuedExpression )
+                    // InternalSCL.g:3256:3: lv_subExpressions_3_0= ruleAtomicValuedExpression
+                    {
+                    if ( state.backtracking==0 ) {
+                       
+                      	        newCompositeNode(grammarAccess.getModExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_1_1_1_0()); 
+                      	    
+                    }
+                    pushFollow(FOLLOW_55);
+                    lv_subExpressions_3_0=ruleAtomicValuedExpression();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      	        if (current==null) {
+                      	            current = createModelElementForParent(grammarAccess.getModExpressionRule());
+                      	        }
+                             		add(
+                             			current, 
+                             			"subExpressions",
+                              		lv_subExpressions_3_0, 
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.AtomicValuedExpression");
+                      	        afterParserOrEnumRuleCall();
+                      	    
+                    }
+
+                    }
+
+
+                    }
+
+
+                    }
+
+                    // InternalSCL.g:3272:3: (otherlv_4= '%' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )*
                     loop73:
                     do {
                         int alt73=2;
                         int LA73_0 = input.LA(1);
 
-                        if ( (LA73_0==65) ) {
+                        if ( (LA73_0==57) ) {
                             alt73=1;
                         }
 
 
                         switch (alt73) {
                     	case 1 :
-                    	    // InternalSCL.g:3060:3: ( (lv_operator_2_0= ruleModOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) )
+                    	    // InternalSCL.g:3272:5: otherlv_4= '%' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) )
                     	    {
-                    	    // InternalSCL.g:3060:3: ( (lv_operator_2_0= ruleModOperator ) )
-                    	    // InternalSCL.g:3061:1: (lv_operator_2_0= ruleModOperator )
+                    	    otherlv_4=(Token)match(input,57,FOLLOW_51); if (state.failed) return current;
+                    	    if ( state.backtracking==0 ) {
+
+                    	          	newLeafNode(otherlv_4, grammarAccess.getModExpressionAccess().getPercentSignKeyword_1_2_0());
+                    	          
+                    	    }
+                    	    // InternalSCL.g:3276:1: ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) )
+                    	    // InternalSCL.g:3277:1: (lv_subExpressions_5_0= ruleAtomicValuedExpression )
                     	    {
-                    	    // InternalSCL.g:3061:1: (lv_operator_2_0= ruleModOperator )
-                    	    // InternalSCL.g:3062:3: lv_operator_2_0= ruleModOperator
+                    	    // InternalSCL.g:3277:1: (lv_subExpressions_5_0= ruleAtomicValuedExpression )
+                    	    // InternalSCL.g:3278:3: lv_subExpressions_5_0= ruleAtomicValuedExpression
                     	    {
                     	    if ( state.backtracking==0 ) {
                     	       
-                    	      	        newCompositeNode(grammarAccess.getModExpressionAccess().getOperatorModOperatorEnumRuleCall_1_1_0_0()); 
-                    	      	    
-                    	    }
-                    	    pushFollow(FOLLOW_51);
-                    	    lv_operator_2_0=ruleModOperator();
-
-                    	    state._fsp--;
-                    	    if (state.failed) return current;
-                    	    if ( state.backtracking==0 ) {
-
-                    	      	        if (current==null) {
-                    	      	            current = createModelElementForParent(grammarAccess.getModExpressionRule());
-                    	      	        }
-                    	             		set(
-                    	             			current, 
-                    	             			"operator",
-                    	              		lv_operator_2_0, 
-                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.ModOperator");
-                    	      	        afterParserOrEnumRuleCall();
-                    	      	    
-                    	    }
-
-                    	    }
-
-
-                    	    }
-
-                    	    // InternalSCL.g:3078:2: ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) )
-                    	    // InternalSCL.g:3079:1: (lv_subExpressions_3_0= ruleAtomicValuedExpression )
-                    	    {
-                    	    // InternalSCL.g:3079:1: (lv_subExpressions_3_0= ruleAtomicValuedExpression )
-                    	    // InternalSCL.g:3080:3: lv_subExpressions_3_0= ruleAtomicValuedExpression
-                    	    {
-                    	    if ( state.backtracking==0 ) {
-                    	       
-                    	      	        newCompositeNode(grammarAccess.getModExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_1_1_1_0()); 
+                    	      	        newCompositeNode(grammarAccess.getModExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_1_2_1_0()); 
                     	      	    
                     	    }
                     	    pushFollow(FOLLOW_55);
-                    	    lv_subExpressions_3_0=ruleAtomicValuedExpression();
+                    	    lv_subExpressions_5_0=ruleAtomicValuedExpression();
 
                     	    state._fsp--;
                     	    if (state.failed) return current;
@@ -9109,7 +9510,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     	             		add(
                     	             			current, 
                     	             			"subExpressions",
-                    	              		lv_subExpressions_3_0, 
+                    	              		lv_subExpressions_5_0, 
                     	              		"de.cau.cs.kieler.kexpressions.KExpressions.AtomicValuedExpression");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
@@ -9125,13 +9526,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    if ( cnt73 >= 1 ) break loop73;
-                    	    if (state.backtracking>0) {state.failed=true; return current;}
-                                EarlyExitException eee =
-                                    new EarlyExitException(73, input);
-                                throw eee;
+                    	    break loop73;
                         }
-                        cnt73++;
                     } while (true);
 
 
@@ -9164,7 +9560,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleNegExpression"
-    // InternalSCL.g:3104:1: entryRuleNegExpression returns [EObject current=null] : iv_ruleNegExpression= ruleNegExpression EOF ;
+    // InternalSCL.g:3302:1: entryRuleNegExpression returns [EObject current=null] : iv_ruleNegExpression= ruleNegExpression EOF ;
     public final EObject entryRuleNegExpression() throws RecognitionException {
         EObject current = null;
         int entryRuleNegExpression_StartIndex = input.index();
@@ -9173,8 +9569,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 71) ) { return current; }
-            // InternalSCL.g:3105:2: (iv_ruleNegExpression= ruleNegExpression EOF )
-            // InternalSCL.g:3106:2: iv_ruleNegExpression= ruleNegExpression EOF
+            // InternalSCL.g:3303:2: (iv_ruleNegExpression= ruleNegExpression EOF )
+            // InternalSCL.g:3304:2: iv_ruleNegExpression= ruleNegExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getNegExpressionRule()); 
@@ -9206,7 +9602,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleNegExpression"
-    // InternalSCL.g:3113:1: ruleNegExpression returns [EObject current=null] : ( ( () ( (lv_operator_1_0= ruleSubOperator ) ) ( (lv_subExpressions_2_0= ruleNegExpression ) ) ) | this_AtomicValuedExpression_3= ruleAtomicValuedExpression ) ;
+    // InternalSCL.g:3311:1: ruleNegExpression returns [EObject current=null] : ( ( () ( (lv_operator_1_0= ruleSubOperator ) ) ( (lv_subExpressions_2_0= ruleNegExpression ) ) ) | this_AtomicValuedExpression_3= ruleAtomicValuedExpression ) ;
     public final EObject ruleNegExpression() throws RecognitionException {
         EObject current = null;
         int ruleNegExpression_StartIndex = input.index();
@@ -9221,17 +9617,17 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 72) ) { return current; }
-            // InternalSCL.g:3116:28: ( ( ( () ( (lv_operator_1_0= ruleSubOperator ) ) ( (lv_subExpressions_2_0= ruleNegExpression ) ) ) | this_AtomicValuedExpression_3= ruleAtomicValuedExpression ) )
-            // InternalSCL.g:3117:1: ( ( () ( (lv_operator_1_0= ruleSubOperator ) ) ( (lv_subExpressions_2_0= ruleNegExpression ) ) ) | this_AtomicValuedExpression_3= ruleAtomicValuedExpression )
+            // InternalSCL.g:3314:28: ( ( ( () ( (lv_operator_1_0= ruleSubOperator ) ) ( (lv_subExpressions_2_0= ruleNegExpression ) ) ) | this_AtomicValuedExpression_3= ruleAtomicValuedExpression ) )
+            // InternalSCL.g:3315:1: ( ( () ( (lv_operator_1_0= ruleSubOperator ) ) ( (lv_subExpressions_2_0= ruleNegExpression ) ) ) | this_AtomicValuedExpression_3= ruleAtomicValuedExpression )
             {
-            // InternalSCL.g:3117:1: ( ( () ( (lv_operator_1_0= ruleSubOperator ) ) ( (lv_subExpressions_2_0= ruleNegExpression ) ) ) | this_AtomicValuedExpression_3= ruleAtomicValuedExpression )
+            // InternalSCL.g:3315:1: ( ( () ( (lv_operator_1_0= ruleSubOperator ) ) ( (lv_subExpressions_2_0= ruleNegExpression ) ) ) | this_AtomicValuedExpression_3= ruleAtomicValuedExpression )
             int alt75=2;
             int LA75_0 = input.LA(1);
 
             if ( (LA75_0==54) ) {
                 alt75=1;
             }
-            else if ( ((LA75_0>=RULE_ID && LA75_0<=RULE_STRING)||LA75_0==44||LA75_0==46||LA75_0==61||LA75_0==67) ) {
+            else if ( ((LA75_0>=RULE_ID && LA75_0<=RULE_STRING)||LA75_0==44||LA75_0==46||(LA75_0>=68 && LA75_0<=69)) ) {
                 alt75=2;
             }
             else {
@@ -9243,13 +9639,13 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             }
             switch (alt75) {
                 case 1 :
-                    // InternalSCL.g:3117:2: ( () ( (lv_operator_1_0= ruleSubOperator ) ) ( (lv_subExpressions_2_0= ruleNegExpression ) ) )
+                    // InternalSCL.g:3315:2: ( () ( (lv_operator_1_0= ruleSubOperator ) ) ( (lv_subExpressions_2_0= ruleNegExpression ) ) )
                     {
-                    // InternalSCL.g:3117:2: ( () ( (lv_operator_1_0= ruleSubOperator ) ) ( (lv_subExpressions_2_0= ruleNegExpression ) ) )
-                    // InternalSCL.g:3117:3: () ( (lv_operator_1_0= ruleSubOperator ) ) ( (lv_subExpressions_2_0= ruleNegExpression ) )
+                    // InternalSCL.g:3315:2: ( () ( (lv_operator_1_0= ruleSubOperator ) ) ( (lv_subExpressions_2_0= ruleNegExpression ) ) )
+                    // InternalSCL.g:3315:3: () ( (lv_operator_1_0= ruleSubOperator ) ) ( (lv_subExpressions_2_0= ruleNegExpression ) )
                     {
-                    // InternalSCL.g:3117:3: ()
-                    // InternalSCL.g:3118:2: 
+                    // InternalSCL.g:3315:3: ()
+                    // InternalSCL.g:3316:2: 
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -9266,11 +9662,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSCL.g:3126:2: ( (lv_operator_1_0= ruleSubOperator ) )
-                    // InternalSCL.g:3127:1: (lv_operator_1_0= ruleSubOperator )
+                    // InternalSCL.g:3324:2: ( (lv_operator_1_0= ruleSubOperator ) )
+                    // InternalSCL.g:3325:1: (lv_operator_1_0= ruleSubOperator )
                     {
-                    // InternalSCL.g:3127:1: (lv_operator_1_0= ruleSubOperator )
-                    // InternalSCL.g:3128:3: lv_operator_1_0= ruleSubOperator
+                    // InternalSCL.g:3325:1: (lv_operator_1_0= ruleSubOperator )
+                    // InternalSCL.g:3326:3: lv_operator_1_0= ruleSubOperator
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -9301,11 +9697,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSCL.g:3144:2: ( (lv_subExpressions_2_0= ruleNegExpression ) )
-                    // InternalSCL.g:3145:1: (lv_subExpressions_2_0= ruleNegExpression )
+                    // InternalSCL.g:3342:2: ( (lv_subExpressions_2_0= ruleNegExpression ) )
+                    // InternalSCL.g:3343:1: (lv_subExpressions_2_0= ruleNegExpression )
                     {
-                    // InternalSCL.g:3145:1: (lv_subExpressions_2_0= ruleNegExpression )
-                    // InternalSCL.g:3146:3: lv_subExpressions_2_0= ruleNegExpression
+                    // InternalSCL.g:3343:1: (lv_subExpressions_2_0= ruleNegExpression )
+                    // InternalSCL.g:3344:3: lv_subExpressions_2_0= ruleNegExpression
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -9343,7 +9739,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSCL.g:3164:2: this_AtomicValuedExpression_3= ruleAtomicValuedExpression
+                    // InternalSCL.g:3362:2: this_AtomicValuedExpression_3= ruleAtomicValuedExpression
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -9393,7 +9789,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAtomicExpression"
-    // InternalSCL.g:3183:1: entryRuleAtomicExpression returns [EObject current=null] : iv_ruleAtomicExpression= ruleAtomicExpression EOF ;
+    // InternalSCL.g:3381:1: entryRuleAtomicExpression returns [EObject current=null] : iv_ruleAtomicExpression= ruleAtomicExpression EOF ;
     public final EObject entryRuleAtomicExpression() throws RecognitionException {
         EObject current = null;
         int entryRuleAtomicExpression_StartIndex = input.index();
@@ -9402,8 +9798,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 73) ) { return current; }
-            // InternalSCL.g:3184:2: (iv_ruleAtomicExpression= ruleAtomicExpression EOF )
-            // InternalSCL.g:3185:2: iv_ruleAtomicExpression= ruleAtomicExpression EOF
+            // InternalSCL.g:3382:2: (iv_ruleAtomicExpression= ruleAtomicExpression EOF )
+            // InternalSCL.g:3383:2: iv_ruleAtomicExpression= ruleAtomicExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAtomicExpressionRule()); 
@@ -9435,7 +9831,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAtomicExpression"
-    // InternalSCL.g:3192:1: ruleAtomicExpression returns [EObject current=null] : (this_BoolValue_0= ruleBoolValue | this_ValuedObjectTestExpression_1= ruleValuedObjectTestExpression | (otherlv_2= '(' this_BoolExpression_3= ruleBoolExpression otherlv_4= ')' ) | this_FunctionCall_5= ruleFunctionCall | this_TextExpression_6= ruleTextExpression ) ;
+    // InternalSCL.g:3390:1: ruleAtomicExpression returns [EObject current=null] : (this_BoolValue_0= ruleBoolValue | this_ValuedObjectTestExpression_1= ruleValuedObjectTestExpression | (otherlv_2= '(' this_BoolExpression_3= ruleBoolExpression otherlv_4= ')' ) | this_FunctionCall_5= ruleFunctionCall | this_TextExpression_6= ruleTextExpression ) ;
     public final EObject ruleAtomicExpression() throws RecognitionException {
         EObject current = null;
         int ruleAtomicExpression_StartIndex = input.index();
@@ -9456,10 +9852,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 74) ) { return current; }
-            // InternalSCL.g:3195:28: ( (this_BoolValue_0= ruleBoolValue | this_ValuedObjectTestExpression_1= ruleValuedObjectTestExpression | (otherlv_2= '(' this_BoolExpression_3= ruleBoolExpression otherlv_4= ')' ) | this_FunctionCall_5= ruleFunctionCall | this_TextExpression_6= ruleTextExpression ) )
-            // InternalSCL.g:3196:1: (this_BoolValue_0= ruleBoolValue | this_ValuedObjectTestExpression_1= ruleValuedObjectTestExpression | (otherlv_2= '(' this_BoolExpression_3= ruleBoolExpression otherlv_4= ')' ) | this_FunctionCall_5= ruleFunctionCall | this_TextExpression_6= ruleTextExpression )
+            // InternalSCL.g:3393:28: ( (this_BoolValue_0= ruleBoolValue | this_ValuedObjectTestExpression_1= ruleValuedObjectTestExpression | (otherlv_2= '(' this_BoolExpression_3= ruleBoolExpression otherlv_4= ')' ) | this_FunctionCall_5= ruleFunctionCall | this_TextExpression_6= ruleTextExpression ) )
+            // InternalSCL.g:3394:1: (this_BoolValue_0= ruleBoolValue | this_ValuedObjectTestExpression_1= ruleValuedObjectTestExpression | (otherlv_2= '(' this_BoolExpression_3= ruleBoolExpression otherlv_4= ')' ) | this_FunctionCall_5= ruleFunctionCall | this_TextExpression_6= ruleTextExpression )
             {
-            // InternalSCL.g:3196:1: (this_BoolValue_0= ruleBoolValue | this_ValuedObjectTestExpression_1= ruleValuedObjectTestExpression | (otherlv_2= '(' this_BoolExpression_3= ruleBoolExpression otherlv_4= ')' ) | this_FunctionCall_5= ruleFunctionCall | this_TextExpression_6= ruleTextExpression )
+            // InternalSCL.g:3394:1: (this_BoolValue_0= ruleBoolValue | this_ValuedObjectTestExpression_1= ruleValuedObjectTestExpression | (otherlv_2= '(' this_BoolExpression_3= ruleBoolExpression otherlv_4= ')' ) | this_FunctionCall_5= ruleFunctionCall | this_TextExpression_6= ruleTextExpression )
             int alt76=5;
             switch ( input.LA(1) ) {
             case RULE_BOOLEAN:
@@ -9468,8 +9864,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                 }
                 break;
             case RULE_ID:
-            case 61:
-            case 67:
+            case 68:
+            case 69:
                 {
                 alt76=2;
                 }
@@ -9499,7 +9895,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             switch (alt76) {
                 case 1 :
-                    // InternalSCL.g:3197:2: this_BoolValue_0= ruleBoolValue
+                    // InternalSCL.g:3395:2: this_BoolValue_0= ruleBoolValue
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -9526,7 +9922,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSCL.g:3210:2: this_ValuedObjectTestExpression_1= ruleValuedObjectTestExpression
+                    // InternalSCL.g:3408:2: this_ValuedObjectTestExpression_1= ruleValuedObjectTestExpression
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -9553,10 +9949,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalSCL.g:3222:6: (otherlv_2= '(' this_BoolExpression_3= ruleBoolExpression otherlv_4= ')' )
+                    // InternalSCL.g:3420:6: (otherlv_2= '(' this_BoolExpression_3= ruleBoolExpression otherlv_4= ')' )
                     {
-                    // InternalSCL.g:3222:6: (otherlv_2= '(' this_BoolExpression_3= ruleBoolExpression otherlv_4= ')' )
-                    // InternalSCL.g:3222:8: otherlv_2= '(' this_BoolExpression_3= ruleBoolExpression otherlv_4= ')'
+                    // InternalSCL.g:3420:6: (otherlv_2= '(' this_BoolExpression_3= ruleBoolExpression otherlv_4= ')' )
+                    // InternalSCL.g:3420:8: otherlv_2= '(' this_BoolExpression_3= ruleBoolExpression otherlv_4= ')'
                     {
                     otherlv_2=(Token)match(input,44,FOLLOW_12); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -9598,7 +9994,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalSCL.g:3244:2: this_FunctionCall_5= ruleFunctionCall
+                    // InternalSCL.g:3442:2: this_FunctionCall_5= ruleFunctionCall
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -9625,7 +10021,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalSCL.g:3257:2: this_TextExpression_6= ruleTextExpression
+                    // InternalSCL.g:3455:2: this_TextExpression_6= ruleTextExpression
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -9675,7 +10071,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAtomicValuedExpression"
-    // InternalSCL.g:3276:1: entryRuleAtomicValuedExpression returns [EObject current=null] : iv_ruleAtomicValuedExpression= ruleAtomicValuedExpression EOF ;
+    // InternalSCL.g:3474:1: entryRuleAtomicValuedExpression returns [EObject current=null] : iv_ruleAtomicValuedExpression= ruleAtomicValuedExpression EOF ;
     public final EObject entryRuleAtomicValuedExpression() throws RecognitionException {
         EObject current = null;
         int entryRuleAtomicValuedExpression_StartIndex = input.index();
@@ -9684,8 +10080,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 75) ) { return current; }
-            // InternalSCL.g:3277:2: (iv_ruleAtomicValuedExpression= ruleAtomicValuedExpression EOF )
-            // InternalSCL.g:3278:2: iv_ruleAtomicValuedExpression= ruleAtomicValuedExpression EOF
+            // InternalSCL.g:3475:2: (iv_ruleAtomicValuedExpression= ruleAtomicValuedExpression EOF )
+            // InternalSCL.g:3476:2: iv_ruleAtomicValuedExpression= ruleAtomicValuedExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAtomicValuedExpressionRule()); 
@@ -9717,7 +10113,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAtomicValuedExpression"
-    // InternalSCL.g:3285:1: ruleAtomicValuedExpression returns [EObject current=null] : (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | (otherlv_3= '(' this_ValuedExpression_4= ruleValuedExpression otherlv_5= ')' ) | this_AtomicExpression_6= ruleAtomicExpression ) ;
+    // InternalSCL.g:3483:1: ruleAtomicValuedExpression returns [EObject current=null] : (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | (otherlv_3= '(' this_ValuedExpression_4= ruleValuedExpression otherlv_5= ')' ) | this_AtomicExpression_6= ruleAtomicExpression ) ;
     public final EObject ruleAtomicValuedExpression() throws RecognitionException {
         EObject current = null;
         int ruleAtomicValuedExpression_StartIndex = input.index();
@@ -9738,15 +10134,15 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 76) ) { return current; }
-            // InternalSCL.g:3288:28: ( (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | (otherlv_3= '(' this_ValuedExpression_4= ruleValuedExpression otherlv_5= ')' ) | this_AtomicExpression_6= ruleAtomicExpression ) )
-            // InternalSCL.g:3289:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | (otherlv_3= '(' this_ValuedExpression_4= ruleValuedExpression otherlv_5= ')' ) | this_AtomicExpression_6= ruleAtomicExpression )
+            // InternalSCL.g:3486:28: ( (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | (otherlv_3= '(' this_ValuedExpression_4= ruleValuedExpression otherlv_5= ')' ) | this_AtomicExpression_6= ruleAtomicExpression ) )
+            // InternalSCL.g:3487:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | (otherlv_3= '(' this_ValuedExpression_4= ruleValuedExpression otherlv_5= ')' ) | this_AtomicExpression_6= ruleAtomicExpression )
             {
-            // InternalSCL.g:3289:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | (otherlv_3= '(' this_ValuedExpression_4= ruleValuedExpression otherlv_5= ')' ) | this_AtomicExpression_6= ruleAtomicExpression )
+            // InternalSCL.g:3487:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | (otherlv_3= '(' this_ValuedExpression_4= ruleValuedExpression otherlv_5= ')' ) | this_AtomicExpression_6= ruleAtomicExpression )
             int alt77=5;
             alt77 = dfa77.predict(input);
             switch (alt77) {
                 case 1 :
-                    // InternalSCL.g:3290:2: this_IntValue_0= ruleIntValue
+                    // InternalSCL.g:3488:2: this_IntValue_0= ruleIntValue
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -9773,7 +10169,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSCL.g:3303:2: this_FloatValue_1= ruleFloatValue
+                    // InternalSCL.g:3501:2: this_FloatValue_1= ruleFloatValue
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -9800,7 +10196,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalSCL.g:3316:2: this_StringValue_2= ruleStringValue
+                    // InternalSCL.g:3514:2: this_StringValue_2= ruleStringValue
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -9827,10 +10223,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalSCL.g:3328:6: (otherlv_3= '(' this_ValuedExpression_4= ruleValuedExpression otherlv_5= ')' )
+                    // InternalSCL.g:3526:6: (otherlv_3= '(' this_ValuedExpression_4= ruleValuedExpression otherlv_5= ')' )
                     {
-                    // InternalSCL.g:3328:6: (otherlv_3= '(' this_ValuedExpression_4= ruleValuedExpression otherlv_5= ')' )
-                    // InternalSCL.g:3328:8: otherlv_3= '(' this_ValuedExpression_4= ruleValuedExpression otherlv_5= ')'
+                    // InternalSCL.g:3526:6: (otherlv_3= '(' this_ValuedExpression_4= ruleValuedExpression otherlv_5= ')' )
+                    // InternalSCL.g:3526:8: otherlv_3= '(' this_ValuedExpression_4= ruleValuedExpression otherlv_5= ')'
                     {
                     otherlv_3=(Token)match(input,44,FOLLOW_51); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -9872,7 +10268,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalSCL.g:3350:2: this_AtomicExpression_6= ruleAtomicExpression
+                    // InternalSCL.g:3548:2: this_AtomicExpression_6= ruleAtomicExpression
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -9922,7 +10318,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleValuedObjectTestExpression"
-    // InternalSCL.g:3369:1: entryRuleValuedObjectTestExpression returns [EObject current=null] : iv_ruleValuedObjectTestExpression= ruleValuedObjectTestExpression EOF ;
+    // InternalSCL.g:3567:1: entryRuleValuedObjectTestExpression returns [EObject current=null] : iv_ruleValuedObjectTestExpression= ruleValuedObjectTestExpression EOF ;
     public final EObject entryRuleValuedObjectTestExpression() throws RecognitionException {
         EObject current = null;
         int entryRuleValuedObjectTestExpression_StartIndex = input.index();
@@ -9931,8 +10327,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 77) ) { return current; }
-            // InternalSCL.g:3370:2: (iv_ruleValuedObjectTestExpression= ruleValuedObjectTestExpression EOF )
-            // InternalSCL.g:3371:2: iv_ruleValuedObjectTestExpression= ruleValuedObjectTestExpression EOF
+            // InternalSCL.g:3568:2: (iv_ruleValuedObjectTestExpression= ruleValuedObjectTestExpression EOF )
+            // InternalSCL.g:3569:2: iv_ruleValuedObjectTestExpression= ruleValuedObjectTestExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getValuedObjectTestExpressionRule()); 
@@ -9964,7 +10360,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleValuedObjectTestExpression"
-    // InternalSCL.g:3378:1: ruleValuedObjectTestExpression returns [EObject current=null] : ( ( () ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) ) otherlv_4= ')' ) | this_ValuedObjectReference_5= ruleValuedObjectReference ) ;
+    // InternalSCL.g:3576:1: ruleValuedObjectTestExpression returns [EObject current=null] : ( ( () ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) ) otherlv_4= ')' ) | this_ValuedObjectReference_5= ruleValuedObjectReference ) ;
     public final EObject ruleValuedObjectTestExpression() throws RecognitionException {
         EObject current = null;
         int ruleValuedObjectTestExpression_StartIndex = input.index();
@@ -9983,14 +10379,14 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 78) ) { return current; }
-            // InternalSCL.g:3381:28: ( ( ( () ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) ) otherlv_4= ')' ) | this_ValuedObjectReference_5= ruleValuedObjectReference ) )
-            // InternalSCL.g:3382:1: ( ( () ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) ) otherlv_4= ')' ) | this_ValuedObjectReference_5= ruleValuedObjectReference )
+            // InternalSCL.g:3579:28: ( ( ( () ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) ) otherlv_4= ')' ) | this_ValuedObjectReference_5= ruleValuedObjectReference ) )
+            // InternalSCL.g:3580:1: ( ( () ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) ) otherlv_4= ')' ) | this_ValuedObjectReference_5= ruleValuedObjectReference )
             {
-            // InternalSCL.g:3382:1: ( ( () ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) ) otherlv_4= ')' ) | this_ValuedObjectReference_5= ruleValuedObjectReference )
+            // InternalSCL.g:3580:1: ( ( () ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) ) otherlv_4= ')' ) | this_ValuedObjectReference_5= ruleValuedObjectReference )
             int alt79=2;
             int LA79_0 = input.LA(1);
 
-            if ( (LA79_0==61||LA79_0==67) ) {
+            if ( ((LA79_0>=68 && LA79_0<=69)) ) {
                 alt79=1;
             }
             else if ( (LA79_0==RULE_ID) ) {
@@ -10005,13 +10401,13 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             }
             switch (alt79) {
                 case 1 :
-                    // InternalSCL.g:3382:2: ( () ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) ) otherlv_4= ')' )
+                    // InternalSCL.g:3580:2: ( () ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) ) otherlv_4= ')' )
                     {
-                    // InternalSCL.g:3382:2: ( () ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) ) otherlv_4= ')' )
-                    // InternalSCL.g:3382:3: () ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) ) otherlv_4= ')'
+                    // InternalSCL.g:3580:2: ( () ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) ) otherlv_4= ')' )
+                    // InternalSCL.g:3580:3: () ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) ) otherlv_4= ')'
                     {
-                    // InternalSCL.g:3382:3: ()
-                    // InternalSCL.g:3383:2: 
+                    // InternalSCL.g:3580:3: ()
+                    // InternalSCL.g:3581:2: 
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -10028,20 +10424,20 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSCL.g:3391:2: ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) )
-                    // InternalSCL.g:3392:1: ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) )
+                    // InternalSCL.g:3589:2: ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) )
+                    // InternalSCL.g:3590:1: ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) )
                     {
-                    // InternalSCL.g:3392:1: ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) )
-                    // InternalSCL.g:3393:1: (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator )
+                    // InternalSCL.g:3590:1: ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) )
+                    // InternalSCL.g:3591:1: (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator )
                     {
-                    // InternalSCL.g:3393:1: (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator )
+                    // InternalSCL.g:3591:1: (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator )
                     int alt78=2;
                     int LA78_0 = input.LA(1);
 
-                    if ( (LA78_0==61) ) {
+                    if ( (LA78_0==68) ) {
                         alt78=1;
                     }
-                    else if ( (LA78_0==67) ) {
+                    else if ( (LA78_0==69) ) {
                         alt78=2;
                     }
                     else {
@@ -10053,7 +10449,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt78) {
                         case 1 :
-                            // InternalSCL.g:3394:3: lv_operator_1_1= rulePreOperator
+                            // InternalSCL.g:3592:3: lv_operator_1_1= rulePreOperator
                             {
                             if ( state.backtracking==0 ) {
                                
@@ -10082,7 +10478,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // InternalSCL.g:3409:8: lv_operator_1_2= ruleValOperator
+                            // InternalSCL.g:3607:8: lv_operator_1_2= ruleValOperator
                             {
                             if ( state.backtracking==0 ) {
                                
@@ -10125,11 +10521,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                           	newLeafNode(otherlv_2, grammarAccess.getValuedObjectTestExpressionAccess().getLeftParenthesisKeyword_0_2());
                           
                     }
-                    // InternalSCL.g:3431:1: ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) )
-                    // InternalSCL.g:3432:1: (lv_subExpressions_3_0= ruleValuedObjectTestExpression )
+                    // InternalSCL.g:3629:1: ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) )
+                    // InternalSCL.g:3630:1: (lv_subExpressions_3_0= ruleValuedObjectTestExpression )
                     {
-                    // InternalSCL.g:3432:1: (lv_subExpressions_3_0= ruleValuedObjectTestExpression )
-                    // InternalSCL.g:3433:3: lv_subExpressions_3_0= ruleValuedObjectTestExpression
+                    // InternalSCL.g:3630:1: (lv_subExpressions_3_0= ruleValuedObjectTestExpression )
+                    // InternalSCL.g:3631:3: lv_subExpressions_3_0= ruleValuedObjectTestExpression
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -10173,7 +10569,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSCL.g:3455:2: this_ValuedObjectReference_5= ruleValuedObjectReference
+                    // InternalSCL.g:3653:2: this_ValuedObjectReference_5= ruleValuedObjectReference
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -10223,7 +10619,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleValuedObjectReference"
-    // InternalSCL.g:3474:1: entryRuleValuedObjectReference returns [EObject current=null] : iv_ruleValuedObjectReference= ruleValuedObjectReference EOF ;
+    // InternalSCL.g:3672:1: entryRuleValuedObjectReference returns [EObject current=null] : iv_ruleValuedObjectReference= ruleValuedObjectReference EOF ;
     public final EObject entryRuleValuedObjectReference() throws RecognitionException {
         EObject current = null;
         int entryRuleValuedObjectReference_StartIndex = input.index();
@@ -10232,8 +10628,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 79) ) { return current; }
-            // InternalSCL.g:3475:2: (iv_ruleValuedObjectReference= ruleValuedObjectReference EOF )
-            // InternalSCL.g:3476:2: iv_ruleValuedObjectReference= ruleValuedObjectReference EOF
+            // InternalSCL.g:3673:2: (iv_ruleValuedObjectReference= ruleValuedObjectReference EOF )
+            // InternalSCL.g:3674:2: iv_ruleValuedObjectReference= ruleValuedObjectReference EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getValuedObjectReferenceRule()); 
@@ -10265,7 +10661,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleValuedObjectReference"
-    // InternalSCL.g:3483:1: ruleValuedObjectReference returns [EObject current=null] : ( ( (otherlv_0= RULE_ID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* ) ;
+    // InternalSCL.g:3681:1: ruleValuedObjectReference returns [EObject current=null] : ( ( (otherlv_0= RULE_ID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* ) ;
     public final EObject ruleValuedObjectReference() throws RecognitionException {
         EObject current = null;
         int ruleValuedObjectReference_StartIndex = input.index();
@@ -10279,17 +10675,17 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 80) ) { return current; }
-            // InternalSCL.g:3486:28: ( ( ( (otherlv_0= RULE_ID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* ) )
-            // InternalSCL.g:3487:1: ( ( (otherlv_0= RULE_ID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* )
+            // InternalSCL.g:3684:28: ( ( ( (otherlv_0= RULE_ID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* ) )
+            // InternalSCL.g:3685:1: ( ( (otherlv_0= RULE_ID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* )
             {
-            // InternalSCL.g:3487:1: ( ( (otherlv_0= RULE_ID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* )
-            // InternalSCL.g:3487:2: ( (otherlv_0= RULE_ID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )*
+            // InternalSCL.g:3685:1: ( ( (otherlv_0= RULE_ID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* )
+            // InternalSCL.g:3685:2: ( (otherlv_0= RULE_ID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )*
             {
-            // InternalSCL.g:3487:2: ( (otherlv_0= RULE_ID ) )
-            // InternalSCL.g:3488:1: (otherlv_0= RULE_ID )
+            // InternalSCL.g:3685:2: ( (otherlv_0= RULE_ID ) )
+            // InternalSCL.g:3686:1: (otherlv_0= RULE_ID )
             {
-            // InternalSCL.g:3488:1: (otherlv_0= RULE_ID )
-            // InternalSCL.g:3489:3: otherlv_0= RULE_ID
+            // InternalSCL.g:3686:1: (otherlv_0= RULE_ID )
+            // InternalSCL.g:3687:3: otherlv_0= RULE_ID
             {
             if ( state.backtracking==0 ) {
                
@@ -10315,7 +10711,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSCL.g:3503:2: (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )*
+            // InternalSCL.g:3701:2: (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )*
             loop80:
             do {
                 int alt80=2;
@@ -10328,7 +10724,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                 switch (alt80) {
             	case 1 :
-            	    // InternalSCL.g:3503:4: otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']'
+            	    // InternalSCL.g:3701:4: otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']'
             	    {
             	    otherlv_1=(Token)match(input,21,FOLLOW_12); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -10336,11 +10732,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             	          	newLeafNode(otherlv_1, grammarAccess.getValuedObjectReferenceAccess().getLeftSquareBracketKeyword_1_0());
             	          
             	    }
-            	    // InternalSCL.g:3507:1: ( (lv_indices_2_0= ruleExpression ) )
-            	    // InternalSCL.g:3508:1: (lv_indices_2_0= ruleExpression )
+            	    // InternalSCL.g:3705:1: ( (lv_indices_2_0= ruleExpression ) )
+            	    // InternalSCL.g:3706:1: (lv_indices_2_0= ruleExpression )
             	    {
-            	    // InternalSCL.g:3508:1: (lv_indices_2_0= ruleExpression )
-            	    // InternalSCL.g:3509:3: lv_indices_2_0= ruleExpression
+            	    // InternalSCL.g:3706:1: (lv_indices_2_0= ruleExpression )
+            	    // InternalSCL.g:3707:3: lv_indices_2_0= ruleExpression
             	    {
             	    if ( state.backtracking==0 ) {
             	       
@@ -10410,7 +10806,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleFunctionCall"
-    // InternalSCL.g:3537:1: entryRuleFunctionCall returns [EObject current=null] : iv_ruleFunctionCall= ruleFunctionCall EOF ;
+    // InternalSCL.g:3735:1: entryRuleFunctionCall returns [EObject current=null] : iv_ruleFunctionCall= ruleFunctionCall EOF ;
     public final EObject entryRuleFunctionCall() throws RecognitionException {
         EObject current = null;
         int entryRuleFunctionCall_StartIndex = input.index();
@@ -10419,8 +10815,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 81) ) { return current; }
-            // InternalSCL.g:3538:2: (iv_ruleFunctionCall= ruleFunctionCall EOF )
-            // InternalSCL.g:3539:2: iv_ruleFunctionCall= ruleFunctionCall EOF
+            // InternalSCL.g:3736:2: (iv_ruleFunctionCall= ruleFunctionCall EOF )
+            // InternalSCL.g:3737:2: iv_ruleFunctionCall= ruleFunctionCall EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getFunctionCallRule()); 
@@ -10452,7 +10848,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFunctionCall"
-    // InternalSCL.g:3546:1: ruleFunctionCall returns [EObject current=null] : (otherlv_0= '<' ( (lv_functionName_1_0= ruleExtendedID ) ) ( (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' ) | otherlv_7= '()' )? otherlv_8= '>' ) ;
+    // InternalSCL.g:3744:1: ruleFunctionCall returns [EObject current=null] : (otherlv_0= '<' ( (lv_functionName_1_0= ruleExtendedID ) ) ( (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' ) | otherlv_7= '()' )? otherlv_8= '>' ) ;
     public final EObject ruleFunctionCall() throws RecognitionException {
         EObject current = null;
         int ruleFunctionCall_StartIndex = input.index();
@@ -10473,11 +10869,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 82) ) { return current; }
-            // InternalSCL.g:3549:28: ( (otherlv_0= '<' ( (lv_functionName_1_0= ruleExtendedID ) ) ( (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' ) | otherlv_7= '()' )? otherlv_8= '>' ) )
-            // InternalSCL.g:3550:1: (otherlv_0= '<' ( (lv_functionName_1_0= ruleExtendedID ) ) ( (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' ) | otherlv_7= '()' )? otherlv_8= '>' )
+            // InternalSCL.g:3747:28: ( (otherlv_0= '<' ( (lv_functionName_1_0= ruleExtendedID ) ) ( (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' ) | otherlv_7= '()' )? otherlv_8= '>' ) )
+            // InternalSCL.g:3748:1: (otherlv_0= '<' ( (lv_functionName_1_0= ruleExtendedID ) ) ( (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' ) | otherlv_7= '()' )? otherlv_8= '>' )
             {
-            // InternalSCL.g:3550:1: (otherlv_0= '<' ( (lv_functionName_1_0= ruleExtendedID ) ) ( (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' ) | otherlv_7= '()' )? otherlv_8= '>' )
-            // InternalSCL.g:3550:3: otherlv_0= '<' ( (lv_functionName_1_0= ruleExtendedID ) ) ( (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' ) | otherlv_7= '()' )? otherlv_8= '>'
+            // InternalSCL.g:3748:1: (otherlv_0= '<' ( (lv_functionName_1_0= ruleExtendedID ) ) ( (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' ) | otherlv_7= '()' )? otherlv_8= '>' )
+            // InternalSCL.g:3748:3: otherlv_0= '<' ( (lv_functionName_1_0= ruleExtendedID ) ) ( (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' ) | otherlv_7= '()' )? otherlv_8= '>'
             {
             otherlv_0=(Token)match(input,46,FOLLOW_4); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -10485,11 +10881,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_0, grammarAccess.getFunctionCallAccess().getLessThanSignKeyword_0());
                   
             }
-            // InternalSCL.g:3554:1: ( (lv_functionName_1_0= ruleExtendedID ) )
-            // InternalSCL.g:3555:1: (lv_functionName_1_0= ruleExtendedID )
+            // InternalSCL.g:3752:1: ( (lv_functionName_1_0= ruleExtendedID ) )
+            // InternalSCL.g:3753:1: (lv_functionName_1_0= ruleExtendedID )
             {
-            // InternalSCL.g:3555:1: (lv_functionName_1_0= ruleExtendedID )
-            // InternalSCL.g:3556:3: lv_functionName_1_0= ruleExtendedID
+            // InternalSCL.g:3753:1: (lv_functionName_1_0= ruleExtendedID )
+            // InternalSCL.g:3754:3: lv_functionName_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                
@@ -10520,7 +10916,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSCL.g:3572:2: ( (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' ) | otherlv_7= '()' )?
+            // InternalSCL.g:3770:2: ( (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' ) | otherlv_7= '()' )?
             int alt82=3;
             int LA82_0 = input.LA(1);
 
@@ -10532,10 +10928,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             }
             switch (alt82) {
                 case 1 :
-                    // InternalSCL.g:3572:3: (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' )
+                    // InternalSCL.g:3770:3: (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' )
                     {
-                    // InternalSCL.g:3572:3: (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' )
-                    // InternalSCL.g:3572:5: otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')'
+                    // InternalSCL.g:3770:3: (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' )
+                    // InternalSCL.g:3770:5: otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')'
                     {
                     otherlv_2=(Token)match(input,44,FOLLOW_42); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -10543,11 +10939,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                           	newLeafNode(otherlv_2, grammarAccess.getFunctionCallAccess().getLeftParenthesisKeyword_2_0_0());
                           
                     }
-                    // InternalSCL.g:3576:1: ( (lv_parameters_3_0= ruleParameter ) )
-                    // InternalSCL.g:3577:1: (lv_parameters_3_0= ruleParameter )
+                    // InternalSCL.g:3774:1: ( (lv_parameters_3_0= ruleParameter ) )
+                    // InternalSCL.g:3775:1: (lv_parameters_3_0= ruleParameter )
                     {
-                    // InternalSCL.g:3577:1: (lv_parameters_3_0= ruleParameter )
-                    // InternalSCL.g:3578:3: lv_parameters_3_0= ruleParameter
+                    // InternalSCL.g:3775:1: (lv_parameters_3_0= ruleParameter )
+                    // InternalSCL.g:3776:3: lv_parameters_3_0= ruleParameter
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -10578,7 +10974,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSCL.g:3594:2: (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )*
+                    // InternalSCL.g:3792:2: (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )*
                     loop81:
                     do {
                         int alt81=2;
@@ -10591,7 +10987,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                         switch (alt81) {
                     	case 1 :
-                    	    // InternalSCL.g:3594:4: otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) )
+                    	    // InternalSCL.g:3792:4: otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) )
                     	    {
                     	    otherlv_4=(Token)match(input,42,FOLLOW_42); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
@@ -10599,11 +10995,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     	          	newLeafNode(otherlv_4, grammarAccess.getFunctionCallAccess().getCommaKeyword_2_0_2_0());
                     	          
                     	    }
-                    	    // InternalSCL.g:3598:1: ( (lv_parameters_5_0= ruleParameter ) )
-                    	    // InternalSCL.g:3599:1: (lv_parameters_5_0= ruleParameter )
+                    	    // InternalSCL.g:3796:1: ( (lv_parameters_5_0= ruleParameter ) )
+                    	    // InternalSCL.g:3797:1: (lv_parameters_5_0= ruleParameter )
                     	    {
-                    	    // InternalSCL.g:3599:1: (lv_parameters_5_0= ruleParameter )
-                    	    // InternalSCL.g:3600:3: lv_parameters_5_0= ruleParameter
+                    	    // InternalSCL.g:3797:1: (lv_parameters_5_0= ruleParameter )
+                    	    // InternalSCL.g:3798:3: lv_parameters_5_0= ruleParameter
                     	    {
                     	    if ( state.backtracking==0 ) {
                     	       
@@ -10656,7 +11052,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSCL.g:3621:7: otherlv_7= '()'
+                    // InternalSCL.g:3819:7: otherlv_7= '()'
                     {
                     otherlv_7=(Token)match(input,47,FOLLOW_44); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -10700,7 +11096,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleParameter"
-    // InternalSCL.g:3637:1: entryRuleParameter returns [EObject current=null] : iv_ruleParameter= ruleParameter EOF ;
+    // InternalSCL.g:3835:1: entryRuleParameter returns [EObject current=null] : iv_ruleParameter= ruleParameter EOF ;
     public final EObject entryRuleParameter() throws RecognitionException {
         EObject current = null;
         int entryRuleParameter_StartIndex = input.index();
@@ -10709,8 +11105,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 83) ) { return current; }
-            // InternalSCL.g:3638:2: (iv_ruleParameter= ruleParameter EOF )
-            // InternalSCL.g:3639:2: iv_ruleParameter= ruleParameter EOF
+            // InternalSCL.g:3836:2: (iv_ruleParameter= ruleParameter EOF )
+            // InternalSCL.g:3837:2: iv_ruleParameter= ruleParameter EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getParameterRule()); 
@@ -10742,7 +11138,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleParameter"
-    // InternalSCL.g:3646:1: ruleParameter returns [EObject current=null] : ( ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) ) ) ;
+    // InternalSCL.g:3844:1: ruleParameter returns [EObject current=null] : ( ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) ) ) ;
     public final EObject ruleParameter() throws RecognitionException {
         EObject current = null;
         int ruleParameter_StartIndex = input.index();
@@ -10755,45 +11151,45 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 84) ) { return current; }
-            // InternalSCL.g:3649:28: ( ( ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) ) ) )
-            // InternalSCL.g:3650:1: ( ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) ) )
+            // InternalSCL.g:3847:28: ( ( ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) ) ) )
+            // InternalSCL.g:3848:1: ( ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) ) )
             {
-            // InternalSCL.g:3650:1: ( ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) ) )
-            // InternalSCL.g:3650:2: ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) )
+            // InternalSCL.g:3848:1: ( ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) ) )
+            // InternalSCL.g:3848:2: ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) )
             {
-            // InternalSCL.g:3650:2: ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )?
+            // InternalSCL.g:3848:2: ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )?
             int alt84=2;
             int LA84_0 = input.LA(1);
 
-            if ( (LA84_0==49) ) {
+            if ( (LA84_0==58) ) {
                 int LA84_1 = input.LA(2);
 
-                if ( (LA84_1==50) ) {
+                if ( (LA84_1==52) ) {
                     alt84=1;
                 }
             }
-            else if ( (LA84_0==50) ) {
+            else if ( (LA84_0==52) ) {
                 alt84=1;
             }
             switch (alt84) {
                 case 1 :
-                    // InternalSCL.g:3650:3: ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) )
+                    // InternalSCL.g:3848:3: ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) )
                     {
-                    // InternalSCL.g:3650:3: ( (lv_pureOutput_0_0= '!' ) )?
+                    // InternalSCL.g:3848:3: ( (lv_pureOutput_0_0= '!' ) )?
                     int alt83=2;
                     int LA83_0 = input.LA(1);
 
-                    if ( (LA83_0==49) ) {
+                    if ( (LA83_0==58) ) {
                         alt83=1;
                     }
                     switch (alt83) {
                         case 1 :
-                            // InternalSCL.g:3651:1: (lv_pureOutput_0_0= '!' )
+                            // InternalSCL.g:3849:1: (lv_pureOutput_0_0= '!' )
                             {
-                            // InternalSCL.g:3651:1: (lv_pureOutput_0_0= '!' )
-                            // InternalSCL.g:3652:3: lv_pureOutput_0_0= '!'
+                            // InternalSCL.g:3849:1: (lv_pureOutput_0_0= '!' )
+                            // InternalSCL.g:3850:3: lv_pureOutput_0_0= '!'
                             {
-                            lv_pureOutput_0_0=(Token)match(input,49,FOLLOW_59); if (state.failed) return current;
+                            lv_pureOutput_0_0=(Token)match(input,58,FOLLOW_59); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                       newLeafNode(lv_pureOutput_0_0, grammarAccess.getParameterAccess().getPureOutputExclamationMarkKeyword_0_0_0());
@@ -10816,13 +11212,13 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSCL.g:3665:3: ( (lv_callByReference_1_0= '&' ) )
-                    // InternalSCL.g:3666:1: (lv_callByReference_1_0= '&' )
+                    // InternalSCL.g:3863:3: ( (lv_callByReference_1_0= '&' ) )
+                    // InternalSCL.g:3864:1: (lv_callByReference_1_0= '&' )
                     {
-                    // InternalSCL.g:3666:1: (lv_callByReference_1_0= '&' )
-                    // InternalSCL.g:3667:3: lv_callByReference_1_0= '&'
+                    // InternalSCL.g:3864:1: (lv_callByReference_1_0= '&' )
+                    // InternalSCL.g:3865:3: lv_callByReference_1_0= '&'
                     {
-                    lv_callByReference_1_0=(Token)match(input,50,FOLLOW_12); if (state.failed) return current;
+                    lv_callByReference_1_0=(Token)match(input,52,FOLLOW_12); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               newLeafNode(lv_callByReference_1_0, grammarAccess.getParameterAccess().getCallByReferenceAmpersandKeyword_0_1_0());
@@ -10848,11 +11244,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSCL.g:3680:4: ( (lv_expression_2_0= ruleExpression ) )
-            // InternalSCL.g:3681:1: (lv_expression_2_0= ruleExpression )
+            // InternalSCL.g:3878:4: ( (lv_expression_2_0= ruleExpression ) )
+            // InternalSCL.g:3879:1: (lv_expression_2_0= ruleExpression )
             {
-            // InternalSCL.g:3681:1: (lv_expression_2_0= ruleExpression )
-            // InternalSCL.g:3682:3: lv_expression_2_0= ruleExpression
+            // InternalSCL.g:3879:1: (lv_expression_2_0= ruleExpression )
+            // InternalSCL.g:3880:3: lv_expression_2_0= ruleExpression
             {
             if ( state.backtracking==0 ) {
                
@@ -10907,7 +11303,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTextExpression"
-    // InternalSCL.g:3706:1: entryRuleTextExpression returns [EObject current=null] : iv_ruleTextExpression= ruleTextExpression EOF ;
+    // InternalSCL.g:3904:1: entryRuleTextExpression returns [EObject current=null] : iv_ruleTextExpression= ruleTextExpression EOF ;
     public final EObject entryRuleTextExpression() throws RecognitionException {
         EObject current = null;
         int entryRuleTextExpression_StartIndex = input.index();
@@ -10916,8 +11312,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 85) ) { return current; }
-            // InternalSCL.g:3707:2: (iv_ruleTextExpression= ruleTextExpression EOF )
-            // InternalSCL.g:3708:2: iv_ruleTextExpression= ruleTextExpression EOF
+            // InternalSCL.g:3905:2: (iv_ruleTextExpression= ruleTextExpression EOF )
+            // InternalSCL.g:3906:2: iv_ruleTextExpression= ruleTextExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTextExpressionRule()); 
@@ -10949,7 +11345,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTextExpression"
-    // InternalSCL.g:3715:1: ruleTextExpression returns [EObject current=null] : ( (lv_text_0_0= RULE_HOSTCODE ) ) ;
+    // InternalSCL.g:3913:1: ruleTextExpression returns [EObject current=null] : ( (lv_text_0_0= RULE_HOSTCODE ) ) ;
     public final EObject ruleTextExpression() throws RecognitionException {
         EObject current = null;
         int ruleTextExpression_StartIndex = input.index();
@@ -10959,14 +11355,14 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 86) ) { return current; }
-            // InternalSCL.g:3718:28: ( ( (lv_text_0_0= RULE_HOSTCODE ) ) )
-            // InternalSCL.g:3719:1: ( (lv_text_0_0= RULE_HOSTCODE ) )
+            // InternalSCL.g:3916:28: ( ( (lv_text_0_0= RULE_HOSTCODE ) ) )
+            // InternalSCL.g:3917:1: ( (lv_text_0_0= RULE_HOSTCODE ) )
             {
-            // InternalSCL.g:3719:1: ( (lv_text_0_0= RULE_HOSTCODE ) )
-            // InternalSCL.g:3720:1: (lv_text_0_0= RULE_HOSTCODE )
+            // InternalSCL.g:3917:1: ( (lv_text_0_0= RULE_HOSTCODE ) )
+            // InternalSCL.g:3918:1: (lv_text_0_0= RULE_HOSTCODE )
             {
-            // InternalSCL.g:3720:1: (lv_text_0_0= RULE_HOSTCODE )
-            // InternalSCL.g:3721:3: lv_text_0_0= RULE_HOSTCODE
+            // InternalSCL.g:3918:1: (lv_text_0_0= RULE_HOSTCODE )
+            // InternalSCL.g:3919:3: lv_text_0_0= RULE_HOSTCODE
             {
             lv_text_0_0=(Token)match(input,RULE_HOSTCODE,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -11013,7 +11409,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleIntValue"
-    // InternalSCL.g:3745:1: entryRuleIntValue returns [EObject current=null] : iv_ruleIntValue= ruleIntValue EOF ;
+    // InternalSCL.g:3943:1: entryRuleIntValue returns [EObject current=null] : iv_ruleIntValue= ruleIntValue EOF ;
     public final EObject entryRuleIntValue() throws RecognitionException {
         EObject current = null;
         int entryRuleIntValue_StartIndex = input.index();
@@ -11022,8 +11418,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 87) ) { return current; }
-            // InternalSCL.g:3746:2: (iv_ruleIntValue= ruleIntValue EOF )
-            // InternalSCL.g:3747:2: iv_ruleIntValue= ruleIntValue EOF
+            // InternalSCL.g:3944:2: (iv_ruleIntValue= ruleIntValue EOF )
+            // InternalSCL.g:3945:2: iv_ruleIntValue= ruleIntValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getIntValueRule()); 
@@ -11055,7 +11451,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleIntValue"
-    // InternalSCL.g:3754:1: ruleIntValue returns [EObject current=null] : ( (lv_value_0_0= RULE_INT ) ) ;
+    // InternalSCL.g:3952:1: ruleIntValue returns [EObject current=null] : ( (lv_value_0_0= RULE_INT ) ) ;
     public final EObject ruleIntValue() throws RecognitionException {
         EObject current = null;
         int ruleIntValue_StartIndex = input.index();
@@ -11065,14 +11461,14 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 88) ) { return current; }
-            // InternalSCL.g:3757:28: ( ( (lv_value_0_0= RULE_INT ) ) )
-            // InternalSCL.g:3758:1: ( (lv_value_0_0= RULE_INT ) )
+            // InternalSCL.g:3955:28: ( ( (lv_value_0_0= RULE_INT ) ) )
+            // InternalSCL.g:3956:1: ( (lv_value_0_0= RULE_INT ) )
             {
-            // InternalSCL.g:3758:1: ( (lv_value_0_0= RULE_INT ) )
-            // InternalSCL.g:3759:1: (lv_value_0_0= RULE_INT )
+            // InternalSCL.g:3956:1: ( (lv_value_0_0= RULE_INT ) )
+            // InternalSCL.g:3957:1: (lv_value_0_0= RULE_INT )
             {
-            // InternalSCL.g:3759:1: (lv_value_0_0= RULE_INT )
-            // InternalSCL.g:3760:3: lv_value_0_0= RULE_INT
+            // InternalSCL.g:3957:1: (lv_value_0_0= RULE_INT )
+            // InternalSCL.g:3958:3: lv_value_0_0= RULE_INT
             {
             lv_value_0_0=(Token)match(input,RULE_INT,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -11119,7 +11515,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleFloatValue"
-    // InternalSCL.g:3784:1: entryRuleFloatValue returns [EObject current=null] : iv_ruleFloatValue= ruleFloatValue EOF ;
+    // InternalSCL.g:3982:1: entryRuleFloatValue returns [EObject current=null] : iv_ruleFloatValue= ruleFloatValue EOF ;
     public final EObject entryRuleFloatValue() throws RecognitionException {
         EObject current = null;
         int entryRuleFloatValue_StartIndex = input.index();
@@ -11128,8 +11524,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 89) ) { return current; }
-            // InternalSCL.g:3785:2: (iv_ruleFloatValue= ruleFloatValue EOF )
-            // InternalSCL.g:3786:2: iv_ruleFloatValue= ruleFloatValue EOF
+            // InternalSCL.g:3983:2: (iv_ruleFloatValue= ruleFloatValue EOF )
+            // InternalSCL.g:3984:2: iv_ruleFloatValue= ruleFloatValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getFloatValueRule()); 
@@ -11161,7 +11557,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFloatValue"
-    // InternalSCL.g:3793:1: ruleFloatValue returns [EObject current=null] : ( (lv_value_0_0= RULE_FLOAT ) ) ;
+    // InternalSCL.g:3991:1: ruleFloatValue returns [EObject current=null] : ( (lv_value_0_0= RULE_FLOAT ) ) ;
     public final EObject ruleFloatValue() throws RecognitionException {
         EObject current = null;
         int ruleFloatValue_StartIndex = input.index();
@@ -11171,14 +11567,14 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 90) ) { return current; }
-            // InternalSCL.g:3796:28: ( ( (lv_value_0_0= RULE_FLOAT ) ) )
-            // InternalSCL.g:3797:1: ( (lv_value_0_0= RULE_FLOAT ) )
+            // InternalSCL.g:3994:28: ( ( (lv_value_0_0= RULE_FLOAT ) ) )
+            // InternalSCL.g:3995:1: ( (lv_value_0_0= RULE_FLOAT ) )
             {
-            // InternalSCL.g:3797:1: ( (lv_value_0_0= RULE_FLOAT ) )
-            // InternalSCL.g:3798:1: (lv_value_0_0= RULE_FLOAT )
+            // InternalSCL.g:3995:1: ( (lv_value_0_0= RULE_FLOAT ) )
+            // InternalSCL.g:3996:1: (lv_value_0_0= RULE_FLOAT )
             {
-            // InternalSCL.g:3798:1: (lv_value_0_0= RULE_FLOAT )
-            // InternalSCL.g:3799:3: lv_value_0_0= RULE_FLOAT
+            // InternalSCL.g:3996:1: (lv_value_0_0= RULE_FLOAT )
+            // InternalSCL.g:3997:3: lv_value_0_0= RULE_FLOAT
             {
             lv_value_0_0=(Token)match(input,RULE_FLOAT,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -11225,7 +11621,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleBoolValue"
-    // InternalSCL.g:3823:1: entryRuleBoolValue returns [EObject current=null] : iv_ruleBoolValue= ruleBoolValue EOF ;
+    // InternalSCL.g:4021:1: entryRuleBoolValue returns [EObject current=null] : iv_ruleBoolValue= ruleBoolValue EOF ;
     public final EObject entryRuleBoolValue() throws RecognitionException {
         EObject current = null;
         int entryRuleBoolValue_StartIndex = input.index();
@@ -11234,8 +11630,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 91) ) { return current; }
-            // InternalSCL.g:3824:2: (iv_ruleBoolValue= ruleBoolValue EOF )
-            // InternalSCL.g:3825:2: iv_ruleBoolValue= ruleBoolValue EOF
+            // InternalSCL.g:4022:2: (iv_ruleBoolValue= ruleBoolValue EOF )
+            // InternalSCL.g:4023:2: iv_ruleBoolValue= ruleBoolValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getBoolValueRule()); 
@@ -11267,7 +11663,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBoolValue"
-    // InternalSCL.g:3832:1: ruleBoolValue returns [EObject current=null] : ( (lv_value_0_0= RULE_BOOLEAN ) ) ;
+    // InternalSCL.g:4030:1: ruleBoolValue returns [EObject current=null] : ( (lv_value_0_0= RULE_BOOLEAN ) ) ;
     public final EObject ruleBoolValue() throws RecognitionException {
         EObject current = null;
         int ruleBoolValue_StartIndex = input.index();
@@ -11277,14 +11673,14 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 92) ) { return current; }
-            // InternalSCL.g:3835:28: ( ( (lv_value_0_0= RULE_BOOLEAN ) ) )
-            // InternalSCL.g:3836:1: ( (lv_value_0_0= RULE_BOOLEAN ) )
+            // InternalSCL.g:4033:28: ( ( (lv_value_0_0= RULE_BOOLEAN ) ) )
+            // InternalSCL.g:4034:1: ( (lv_value_0_0= RULE_BOOLEAN ) )
             {
-            // InternalSCL.g:3836:1: ( (lv_value_0_0= RULE_BOOLEAN ) )
-            // InternalSCL.g:3837:1: (lv_value_0_0= RULE_BOOLEAN )
+            // InternalSCL.g:4034:1: ( (lv_value_0_0= RULE_BOOLEAN ) )
+            // InternalSCL.g:4035:1: (lv_value_0_0= RULE_BOOLEAN )
             {
-            // InternalSCL.g:3837:1: (lv_value_0_0= RULE_BOOLEAN )
-            // InternalSCL.g:3838:3: lv_value_0_0= RULE_BOOLEAN
+            // InternalSCL.g:4035:1: (lv_value_0_0= RULE_BOOLEAN )
+            // InternalSCL.g:4036:3: lv_value_0_0= RULE_BOOLEAN
             {
             lv_value_0_0=(Token)match(input,RULE_BOOLEAN,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -11331,7 +11727,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleStringValue"
-    // InternalSCL.g:3862:1: entryRuleStringValue returns [EObject current=null] : iv_ruleStringValue= ruleStringValue EOF ;
+    // InternalSCL.g:4060:1: entryRuleStringValue returns [EObject current=null] : iv_ruleStringValue= ruleStringValue EOF ;
     public final EObject entryRuleStringValue() throws RecognitionException {
         EObject current = null;
         int entryRuleStringValue_StartIndex = input.index();
@@ -11340,8 +11736,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 93) ) { return current; }
-            // InternalSCL.g:3863:2: (iv_ruleStringValue= ruleStringValue EOF )
-            // InternalSCL.g:3864:2: iv_ruleStringValue= ruleStringValue EOF
+            // InternalSCL.g:4061:2: (iv_ruleStringValue= ruleStringValue EOF )
+            // InternalSCL.g:4062:2: iv_ruleStringValue= ruleStringValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getStringValueRule()); 
@@ -11373,7 +11769,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleStringValue"
-    // InternalSCL.g:3871:1: ruleStringValue returns [EObject current=null] : ( (lv_value_0_0= RULE_STRING ) ) ;
+    // InternalSCL.g:4069:1: ruleStringValue returns [EObject current=null] : ( (lv_value_0_0= RULE_STRING ) ) ;
     public final EObject ruleStringValue() throws RecognitionException {
         EObject current = null;
         int ruleStringValue_StartIndex = input.index();
@@ -11383,14 +11779,14 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 94) ) { return current; }
-            // InternalSCL.g:3874:28: ( ( (lv_value_0_0= RULE_STRING ) ) )
-            // InternalSCL.g:3875:1: ( (lv_value_0_0= RULE_STRING ) )
+            // InternalSCL.g:4072:28: ( ( (lv_value_0_0= RULE_STRING ) ) )
+            // InternalSCL.g:4073:1: ( (lv_value_0_0= RULE_STRING ) )
             {
-            // InternalSCL.g:3875:1: ( (lv_value_0_0= RULE_STRING ) )
-            // InternalSCL.g:3876:1: (lv_value_0_0= RULE_STRING )
+            // InternalSCL.g:4073:1: ( (lv_value_0_0= RULE_STRING ) )
+            // InternalSCL.g:4074:1: (lv_value_0_0= RULE_STRING )
             {
-            // InternalSCL.g:3876:1: (lv_value_0_0= RULE_STRING )
-            // InternalSCL.g:3877:3: lv_value_0_0= RULE_STRING
+            // InternalSCL.g:4074:1: (lv_value_0_0= RULE_STRING )
+            // InternalSCL.g:4075:3: lv_value_0_0= RULE_STRING
             {
             lv_value_0_0=(Token)match(input,RULE_STRING,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -11437,7 +11833,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAnnotation"
-    // InternalSCL.g:3903:1: entryRuleAnnotation returns [EObject current=null] : iv_ruleAnnotation= ruleAnnotation EOF ;
+    // InternalSCL.g:4103:1: entryRuleAnnotation returns [EObject current=null] : iv_ruleAnnotation= ruleAnnotation EOF ;
     public final EObject entryRuleAnnotation() throws RecognitionException {
         EObject current = null;
         int entryRuleAnnotation_StartIndex = input.index();
@@ -11446,8 +11842,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 95) ) { return current; }
-            // InternalSCL.g:3904:2: (iv_ruleAnnotation= ruleAnnotation EOF )
-            // InternalSCL.g:3905:2: iv_ruleAnnotation= ruleAnnotation EOF
+            // InternalSCL.g:4104:2: (iv_ruleAnnotation= ruleAnnotation EOF )
+            // InternalSCL.g:4105:2: iv_ruleAnnotation= ruleAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAnnotationRule()); 
@@ -11479,7 +11875,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAnnotation"
-    // InternalSCL.g:3912:1: ruleAnnotation returns [EObject current=null] : (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyBooleanValueAnnotation_1= ruleKeyBooleanValueAnnotation | this_KeyStringValueAnnotation_2= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_3= ruleTypedKeyStringValueAnnotation | this_KeyIntValueAnnotation_4= ruleKeyIntValueAnnotation | this_KeyFloatValueAnnotation_5= ruleKeyFloatValueAnnotation | this_TagAnnotation_6= ruleTagAnnotation ) ;
+    // InternalSCL.g:4112:1: ruleAnnotation returns [EObject current=null] : (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyBooleanValueAnnotation_1= ruleKeyBooleanValueAnnotation | this_KeyStringValueAnnotation_2= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_3= ruleTypedKeyStringValueAnnotation | this_KeyIntValueAnnotation_4= ruleKeyIntValueAnnotation | this_KeyFloatValueAnnotation_5= ruleKeyFloatValueAnnotation | this_TagAnnotation_6= ruleTagAnnotation ) ;
     public final EObject ruleAnnotation() throws RecognitionException {
         EObject current = null;
         int ruleAnnotation_StartIndex = input.index();
@@ -11502,15 +11898,15 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 96) ) { return current; }
-            // InternalSCL.g:3915:28: ( (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyBooleanValueAnnotation_1= ruleKeyBooleanValueAnnotation | this_KeyStringValueAnnotation_2= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_3= ruleTypedKeyStringValueAnnotation | this_KeyIntValueAnnotation_4= ruleKeyIntValueAnnotation | this_KeyFloatValueAnnotation_5= ruleKeyFloatValueAnnotation | this_TagAnnotation_6= ruleTagAnnotation ) )
-            // InternalSCL.g:3916:1: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyBooleanValueAnnotation_1= ruleKeyBooleanValueAnnotation | this_KeyStringValueAnnotation_2= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_3= ruleTypedKeyStringValueAnnotation | this_KeyIntValueAnnotation_4= ruleKeyIntValueAnnotation | this_KeyFloatValueAnnotation_5= ruleKeyFloatValueAnnotation | this_TagAnnotation_6= ruleTagAnnotation )
+            // InternalSCL.g:4115:28: ( (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyBooleanValueAnnotation_1= ruleKeyBooleanValueAnnotation | this_KeyStringValueAnnotation_2= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_3= ruleTypedKeyStringValueAnnotation | this_KeyIntValueAnnotation_4= ruleKeyIntValueAnnotation | this_KeyFloatValueAnnotation_5= ruleKeyFloatValueAnnotation | this_TagAnnotation_6= ruleTagAnnotation ) )
+            // InternalSCL.g:4116:1: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyBooleanValueAnnotation_1= ruleKeyBooleanValueAnnotation | this_KeyStringValueAnnotation_2= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_3= ruleTypedKeyStringValueAnnotation | this_KeyIntValueAnnotation_4= ruleKeyIntValueAnnotation | this_KeyFloatValueAnnotation_5= ruleKeyFloatValueAnnotation | this_TagAnnotation_6= ruleTagAnnotation )
             {
-            // InternalSCL.g:3916:1: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyBooleanValueAnnotation_1= ruleKeyBooleanValueAnnotation | this_KeyStringValueAnnotation_2= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_3= ruleTypedKeyStringValueAnnotation | this_KeyIntValueAnnotation_4= ruleKeyIntValueAnnotation | this_KeyFloatValueAnnotation_5= ruleKeyFloatValueAnnotation | this_TagAnnotation_6= ruleTagAnnotation )
+            // InternalSCL.g:4116:1: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyBooleanValueAnnotation_1= ruleKeyBooleanValueAnnotation | this_KeyStringValueAnnotation_2= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_3= ruleTypedKeyStringValueAnnotation | this_KeyIntValueAnnotation_4= ruleKeyIntValueAnnotation | this_KeyFloatValueAnnotation_5= ruleKeyFloatValueAnnotation | this_TagAnnotation_6= ruleTagAnnotation )
             int alt85=7;
             alt85 = dfa85.predict(input);
             switch (alt85) {
                 case 1 :
-                    // InternalSCL.g:3917:2: this_CommentAnnotation_0= ruleCommentAnnotation
+                    // InternalSCL.g:4117:2: this_CommentAnnotation_0= ruleCommentAnnotation
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -11537,7 +11933,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSCL.g:3930:2: this_KeyBooleanValueAnnotation_1= ruleKeyBooleanValueAnnotation
+                    // InternalSCL.g:4130:2: this_KeyBooleanValueAnnotation_1= ruleKeyBooleanValueAnnotation
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -11564,7 +11960,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalSCL.g:3943:2: this_KeyStringValueAnnotation_2= ruleKeyStringValueAnnotation
+                    // InternalSCL.g:4143:2: this_KeyStringValueAnnotation_2= ruleKeyStringValueAnnotation
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -11591,7 +11987,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalSCL.g:3956:2: this_TypedKeyStringValueAnnotation_3= ruleTypedKeyStringValueAnnotation
+                    // InternalSCL.g:4156:2: this_TypedKeyStringValueAnnotation_3= ruleTypedKeyStringValueAnnotation
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -11618,7 +12014,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalSCL.g:3969:2: this_KeyIntValueAnnotation_4= ruleKeyIntValueAnnotation
+                    // InternalSCL.g:4169:2: this_KeyIntValueAnnotation_4= ruleKeyIntValueAnnotation
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -11645,7 +12041,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalSCL.g:3982:2: this_KeyFloatValueAnnotation_5= ruleKeyFloatValueAnnotation
+                    // InternalSCL.g:4182:2: this_KeyFloatValueAnnotation_5= ruleKeyFloatValueAnnotation
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -11672,7 +12068,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalSCL.g:3995:2: this_TagAnnotation_6= ruleTagAnnotation
+                    // InternalSCL.g:4195:2: this_TagAnnotation_6= ruleTagAnnotation
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -11722,7 +12118,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleRestrictedAnnotation"
-    // InternalSCL.g:4016:1: entryRuleRestrictedAnnotation returns [EObject current=null] : iv_ruleRestrictedAnnotation= ruleRestrictedAnnotation EOF ;
+    // InternalSCL.g:4216:1: entryRuleRestrictedAnnotation returns [EObject current=null] : iv_ruleRestrictedAnnotation= ruleRestrictedAnnotation EOF ;
     public final EObject entryRuleRestrictedAnnotation() throws RecognitionException {
         EObject current = null;
         int entryRuleRestrictedAnnotation_StartIndex = input.index();
@@ -11731,8 +12127,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 97) ) { return current; }
-            // InternalSCL.g:4017:2: (iv_ruleRestrictedAnnotation= ruleRestrictedAnnotation EOF )
-            // InternalSCL.g:4018:2: iv_ruleRestrictedAnnotation= ruleRestrictedAnnotation EOF
+            // InternalSCL.g:4217:2: (iv_ruleRestrictedAnnotation= ruleRestrictedAnnotation EOF )
+            // InternalSCL.g:4218:2: iv_ruleRestrictedAnnotation= ruleRestrictedAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getRestrictedAnnotationRule()); 
@@ -11764,7 +12160,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleRestrictedAnnotation"
-    // InternalSCL.g:4025:1: ruleRestrictedAnnotation returns [EObject current=null] : (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_KeyBooleanValueAnnotation_3= ruleKeyBooleanValueAnnotation | this_KeyIntValueAnnotation_4= ruleKeyIntValueAnnotation | this_KeyFloatValueAnnotation_5= ruleKeyFloatValueAnnotation | this_TagAnnotation_6= ruleTagAnnotation ) ;
+    // InternalSCL.g:4225:1: ruleRestrictedAnnotation returns [EObject current=null] : (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_KeyBooleanValueAnnotation_3= ruleKeyBooleanValueAnnotation | this_KeyIntValueAnnotation_4= ruleKeyIntValueAnnotation | this_KeyFloatValueAnnotation_5= ruleKeyFloatValueAnnotation | this_TagAnnotation_6= ruleTagAnnotation ) ;
     public final EObject ruleRestrictedAnnotation() throws RecognitionException {
         EObject current = null;
         int ruleRestrictedAnnotation_StartIndex = input.index();
@@ -11787,15 +12183,15 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 98) ) { return current; }
-            // InternalSCL.g:4028:28: ( (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_KeyBooleanValueAnnotation_3= ruleKeyBooleanValueAnnotation | this_KeyIntValueAnnotation_4= ruleKeyIntValueAnnotation | this_KeyFloatValueAnnotation_5= ruleKeyFloatValueAnnotation | this_TagAnnotation_6= ruleTagAnnotation ) )
-            // InternalSCL.g:4029:1: (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_KeyBooleanValueAnnotation_3= ruleKeyBooleanValueAnnotation | this_KeyIntValueAnnotation_4= ruleKeyIntValueAnnotation | this_KeyFloatValueAnnotation_5= ruleKeyFloatValueAnnotation | this_TagAnnotation_6= ruleTagAnnotation )
+            // InternalSCL.g:4228:28: ( (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_KeyBooleanValueAnnotation_3= ruleKeyBooleanValueAnnotation | this_KeyIntValueAnnotation_4= ruleKeyIntValueAnnotation | this_KeyFloatValueAnnotation_5= ruleKeyFloatValueAnnotation | this_TagAnnotation_6= ruleTagAnnotation ) )
+            // InternalSCL.g:4229:1: (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_KeyBooleanValueAnnotation_3= ruleKeyBooleanValueAnnotation | this_KeyIntValueAnnotation_4= ruleKeyIntValueAnnotation | this_KeyFloatValueAnnotation_5= ruleKeyFloatValueAnnotation | this_TagAnnotation_6= ruleTagAnnotation )
             {
-            // InternalSCL.g:4029:1: (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_KeyBooleanValueAnnotation_3= ruleKeyBooleanValueAnnotation | this_KeyIntValueAnnotation_4= ruleKeyIntValueAnnotation | this_KeyFloatValueAnnotation_5= ruleKeyFloatValueAnnotation | this_TagAnnotation_6= ruleTagAnnotation )
+            // InternalSCL.g:4229:1: (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_KeyBooleanValueAnnotation_3= ruleKeyBooleanValueAnnotation | this_KeyIntValueAnnotation_4= ruleKeyIntValueAnnotation | this_KeyFloatValueAnnotation_5= ruleKeyFloatValueAnnotation | this_TagAnnotation_6= ruleTagAnnotation )
             int alt86=7;
             alt86 = dfa86.predict(input);
             switch (alt86) {
                 case 1 :
-                    // InternalSCL.g:4030:2: this_CommentAnnotation_0= ruleCommentAnnotation
+                    // InternalSCL.g:4230:2: this_CommentAnnotation_0= ruleCommentAnnotation
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -11822,7 +12218,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSCL.g:4043:2: this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation
+                    // InternalSCL.g:4243:2: this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -11849,7 +12245,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalSCL.g:4056:2: this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation
+                    // InternalSCL.g:4256:2: this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -11876,7 +12272,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalSCL.g:4069:2: this_KeyBooleanValueAnnotation_3= ruleKeyBooleanValueAnnotation
+                    // InternalSCL.g:4269:2: this_KeyBooleanValueAnnotation_3= ruleKeyBooleanValueAnnotation
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -11903,7 +12299,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalSCL.g:4082:2: this_KeyIntValueAnnotation_4= ruleKeyIntValueAnnotation
+                    // InternalSCL.g:4282:2: this_KeyIntValueAnnotation_4= ruleKeyIntValueAnnotation
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -11930,7 +12326,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalSCL.g:4095:2: this_KeyFloatValueAnnotation_5= ruleKeyFloatValueAnnotation
+                    // InternalSCL.g:4295:2: this_KeyFloatValueAnnotation_5= ruleKeyFloatValueAnnotation
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -11957,7 +12353,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalSCL.g:4108:2: this_TagAnnotation_6= ruleTagAnnotation
+                    // InternalSCL.g:4308:2: this_TagAnnotation_6= ruleTagAnnotation
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -12007,7 +12403,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleCommentAnnotation"
-    // InternalSCL.g:4127:1: entryRuleCommentAnnotation returns [EObject current=null] : iv_ruleCommentAnnotation= ruleCommentAnnotation EOF ;
+    // InternalSCL.g:4327:1: entryRuleCommentAnnotation returns [EObject current=null] : iv_ruleCommentAnnotation= ruleCommentAnnotation EOF ;
     public final EObject entryRuleCommentAnnotation() throws RecognitionException {
         EObject current = null;
         int entryRuleCommentAnnotation_StartIndex = input.index();
@@ -12016,8 +12412,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 99) ) { return current; }
-            // InternalSCL.g:4128:2: (iv_ruleCommentAnnotation= ruleCommentAnnotation EOF )
-            // InternalSCL.g:4129:2: iv_ruleCommentAnnotation= ruleCommentAnnotation EOF
+            // InternalSCL.g:4328:2: (iv_ruleCommentAnnotation= ruleCommentAnnotation EOF )
+            // InternalSCL.g:4329:2: iv_ruleCommentAnnotation= ruleCommentAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getCommentAnnotationRule()); 
@@ -12049,7 +12445,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCommentAnnotation"
-    // InternalSCL.g:4136:1: ruleCommentAnnotation returns [EObject current=null] : ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) ) ;
+    // InternalSCL.g:4336:1: ruleCommentAnnotation returns [EObject current=null] : ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) ) ;
     public final EObject ruleCommentAnnotation() throws RecognitionException {
         EObject current = null;
         int ruleCommentAnnotation_StartIndex = input.index();
@@ -12059,14 +12455,14 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 100) ) { return current; }
-            // InternalSCL.g:4139:28: ( ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) ) )
-            // InternalSCL.g:4140:1: ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) )
+            // InternalSCL.g:4339:28: ( ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) ) )
+            // InternalSCL.g:4340:1: ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) )
             {
-            // InternalSCL.g:4140:1: ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) )
-            // InternalSCL.g:4141:1: (lv_values_0_0= RULE_COMMENT_ANNOTATION )
+            // InternalSCL.g:4340:1: ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) )
+            // InternalSCL.g:4341:1: (lv_values_0_0= RULE_COMMENT_ANNOTATION )
             {
-            // InternalSCL.g:4141:1: (lv_values_0_0= RULE_COMMENT_ANNOTATION )
-            // InternalSCL.g:4142:3: lv_values_0_0= RULE_COMMENT_ANNOTATION
+            // InternalSCL.g:4341:1: (lv_values_0_0= RULE_COMMENT_ANNOTATION )
+            // InternalSCL.g:4342:3: lv_values_0_0= RULE_COMMENT_ANNOTATION
             {
             lv_values_0_0=(Token)match(input,RULE_COMMENT_ANNOTATION,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -12113,7 +12509,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTagAnnotation"
-    // InternalSCL.g:4166:1: entryRuleTagAnnotation returns [EObject current=null] : iv_ruleTagAnnotation= ruleTagAnnotation EOF ;
+    // InternalSCL.g:4366:1: entryRuleTagAnnotation returns [EObject current=null] : iv_ruleTagAnnotation= ruleTagAnnotation EOF ;
     public final EObject entryRuleTagAnnotation() throws RecognitionException {
         EObject current = null;
         int entryRuleTagAnnotation_StartIndex = input.index();
@@ -12122,8 +12518,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 101) ) { return current; }
-            // InternalSCL.g:4167:2: (iv_ruleTagAnnotation= ruleTagAnnotation EOF )
-            // InternalSCL.g:4168:2: iv_ruleTagAnnotation= ruleTagAnnotation EOF
+            // InternalSCL.g:4367:2: (iv_ruleTagAnnotation= ruleTagAnnotation EOF )
+            // InternalSCL.g:4368:2: iv_ruleTagAnnotation= ruleTagAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTagAnnotationRule()); 
@@ -12155,7 +12551,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTagAnnotation"
-    // InternalSCL.g:4175:1: ruleTagAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ) ;
+    // InternalSCL.g:4375:1: ruleTagAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ) ;
     public final EObject ruleTagAnnotation() throws RecognitionException {
         EObject current = null;
         int ruleTagAnnotation_StartIndex = input.index();
@@ -12167,23 +12563,23 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 102) ) { return current; }
-            // InternalSCL.g:4178:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ) )
-            // InternalSCL.g:4179:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) )
+            // InternalSCL.g:4378:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ) )
+            // InternalSCL.g:4379:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) )
             {
-            // InternalSCL.g:4179:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) )
-            // InternalSCL.g:4179:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalSCL.g:4379:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) )
+            // InternalSCL.g:4379:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) )
             {
-            otherlv_0=(Token)match(input,51,FOLLOW_4); if (state.failed) return current;
+            otherlv_0=(Token)match(input,59,FOLLOW_4); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getTagAnnotationAccess().getCommercialAtKeyword_0());
                   
             }
-            // InternalSCL.g:4183:1: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalSCL.g:4184:1: (lv_name_1_0= ruleExtendedID )
+            // InternalSCL.g:4383:1: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalSCL.g:4384:1: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalSCL.g:4184:1: (lv_name_1_0= ruleExtendedID )
-            // InternalSCL.g:4185:3: lv_name_1_0= ruleExtendedID
+            // InternalSCL.g:4384:1: (lv_name_1_0= ruleExtendedID )
+            // InternalSCL.g:4385:3: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                
@@ -12238,7 +12634,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleKeyStringValueAnnotation"
-    // InternalSCL.g:4209:1: entryRuleKeyStringValueAnnotation returns [EObject current=null] : iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF ;
+    // InternalSCL.g:4409:1: entryRuleKeyStringValueAnnotation returns [EObject current=null] : iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF ;
     public final EObject entryRuleKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
         int entryRuleKeyStringValueAnnotation_StartIndex = input.index();
@@ -12247,8 +12643,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 103) ) { return current; }
-            // InternalSCL.g:4210:2: (iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF )
-            // InternalSCL.g:4211:2: iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF
+            // InternalSCL.g:4410:2: (iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF )
+            // InternalSCL.g:4411:2: iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getKeyStringValueAnnotationRule()); 
@@ -12280,7 +12676,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleKeyStringValueAnnotation"
-    // InternalSCL.g:4218:1: ruleKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEString ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEString ) ) )* ) ;
+    // InternalSCL.g:4418:1: ruleKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEString ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEString ) ) )* ) ;
     public final EObject ruleKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
         int ruleKeyStringValueAnnotation_StartIndex = input.index();
@@ -12297,23 +12693,23 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 104) ) { return current; }
-            // InternalSCL.g:4221:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEString ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEString ) ) )* ) )
-            // InternalSCL.g:4222:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEString ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEString ) ) )* )
+            // InternalSCL.g:4421:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEString ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEString ) ) )* ) )
+            // InternalSCL.g:4422:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEString ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEString ) ) )* )
             {
-            // InternalSCL.g:4222:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEString ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEString ) ) )* )
-            // InternalSCL.g:4222:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEString ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEString ) ) )*
+            // InternalSCL.g:4422:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEString ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEString ) ) )* )
+            // InternalSCL.g:4422:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEString ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEString ) ) )*
             {
-            otherlv_0=(Token)match(input,51,FOLLOW_4); if (state.failed) return current;
+            otherlv_0=(Token)match(input,59,FOLLOW_4); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
                   
             }
-            // InternalSCL.g:4226:1: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalSCL.g:4227:1: (lv_name_1_0= ruleExtendedID )
+            // InternalSCL.g:4426:1: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalSCL.g:4427:1: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalSCL.g:4227:1: (lv_name_1_0= ruleExtendedID )
-            // InternalSCL.g:4228:3: lv_name_1_0= ruleExtendedID
+            // InternalSCL.g:4427:1: (lv_name_1_0= ruleExtendedID )
+            // InternalSCL.g:4428:3: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                
@@ -12344,11 +12740,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSCL.g:4244:2: ( (lv_values_2_0= ruleEString ) )
-            // InternalSCL.g:4245:1: (lv_values_2_0= ruleEString )
+            // InternalSCL.g:4444:2: ( (lv_values_2_0= ruleEString ) )
+            // InternalSCL.g:4445:1: (lv_values_2_0= ruleEString )
             {
-            // InternalSCL.g:4245:1: (lv_values_2_0= ruleEString )
-            // InternalSCL.g:4246:3: lv_values_2_0= ruleEString
+            // InternalSCL.g:4445:1: (lv_values_2_0= ruleEString )
+            // InternalSCL.g:4446:3: lv_values_2_0= ruleEString
             {
             if ( state.backtracking==0 ) {
                
@@ -12379,7 +12775,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSCL.g:4262:2: (otherlv_3= ',' ( (lv_values_4_0= ruleEString ) ) )*
+            // InternalSCL.g:4462:2: (otherlv_3= ',' ( (lv_values_4_0= ruleEString ) ) )*
             loop87:
             do {
                 int alt87=2;
@@ -12392,7 +12788,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                 switch (alt87) {
             	case 1 :
-            	    // InternalSCL.g:4262:4: otherlv_3= ',' ( (lv_values_4_0= ruleEString ) )
+            	    // InternalSCL.g:4462:4: otherlv_3= ',' ( (lv_values_4_0= ruleEString ) )
             	    {
             	    otherlv_3=(Token)match(input,42,FOLLOW_60); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -12400,11 +12796,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             	          	newLeafNode(otherlv_3, grammarAccess.getKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
             	          
             	    }
-            	    // InternalSCL.g:4266:1: ( (lv_values_4_0= ruleEString ) )
-            	    // InternalSCL.g:4267:1: (lv_values_4_0= ruleEString )
+            	    // InternalSCL.g:4466:1: ( (lv_values_4_0= ruleEString ) )
+            	    // InternalSCL.g:4467:1: (lv_values_4_0= ruleEString )
             	    {
-            	    // InternalSCL.g:4267:1: (lv_values_4_0= ruleEString )
-            	    // InternalSCL.g:4268:3: lv_values_4_0= ruleEString
+            	    // InternalSCL.g:4467:1: (lv_values_4_0= ruleEString )
+            	    // InternalSCL.g:4468:3: lv_values_4_0= ruleEString
             	    {
             	    if ( state.backtracking==0 ) {
             	       
@@ -12468,7 +12864,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTypedKeyStringValueAnnotation"
-    // InternalSCL.g:4292:1: entryRuleTypedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF ;
+    // InternalSCL.g:4492:1: entryRuleTypedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF ;
     public final EObject entryRuleTypedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
         int entryRuleTypedKeyStringValueAnnotation_StartIndex = input.index();
@@ -12477,8 +12873,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 105) ) { return current; }
-            // InternalSCL.g:4293:2: (iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF )
-            // InternalSCL.g:4294:2: iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF
+            // InternalSCL.g:4493:2: (iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF )
+            // InternalSCL.g:4494:2: iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationRule()); 
@@ -12510,7 +12906,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTypedKeyStringValueAnnotation"
-    // InternalSCL.g:4301:1: ruleTypedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* ) ;
+    // InternalSCL.g:4501:1: ruleTypedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* ) ;
     public final EObject ruleTypedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
         int ruleTypedKeyStringValueAnnotation_StartIndex = input.index();
@@ -12531,23 +12927,23 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 106) ) { return current; }
-            // InternalSCL.g:4304:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* ) )
-            // InternalSCL.g:4305:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* )
+            // InternalSCL.g:4504:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* ) )
+            // InternalSCL.g:4505:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* )
             {
-            // InternalSCL.g:4305:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* )
-            // InternalSCL.g:4305:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )*
+            // InternalSCL.g:4505:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* )
+            // InternalSCL.g:4505:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )*
             {
-            otherlv_0=(Token)match(input,51,FOLLOW_4); if (state.failed) return current;
+            otherlv_0=(Token)match(input,59,FOLLOW_4); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
                   
             }
-            // InternalSCL.g:4309:1: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalSCL.g:4310:1: (lv_name_1_0= ruleExtendedID )
+            // InternalSCL.g:4509:1: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalSCL.g:4510:1: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalSCL.g:4310:1: (lv_name_1_0= ruleExtendedID )
-            // InternalSCL.g:4311:3: lv_name_1_0= ruleExtendedID
+            // InternalSCL.g:4510:1: (lv_name_1_0= ruleExtendedID )
+            // InternalSCL.g:4511:3: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                
@@ -12584,11 +12980,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_2, grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
                   
             }
-            // InternalSCL.g:4331:1: ( (lv_type_3_0= ruleExtendedID ) )
-            // InternalSCL.g:4332:1: (lv_type_3_0= ruleExtendedID )
+            // InternalSCL.g:4531:1: ( (lv_type_3_0= ruleExtendedID ) )
+            // InternalSCL.g:4532:1: (lv_type_3_0= ruleExtendedID )
             {
-            // InternalSCL.g:4332:1: (lv_type_3_0= ruleExtendedID )
-            // InternalSCL.g:4333:3: lv_type_3_0= ruleExtendedID
+            // InternalSCL.g:4532:1: (lv_type_3_0= ruleExtendedID )
+            // InternalSCL.g:4533:3: lv_type_3_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                
@@ -12625,11 +13021,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_4, grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
                   
             }
-            // InternalSCL.g:4353:1: ( (lv_values_5_0= ruleEStringBoolean ) )
-            // InternalSCL.g:4354:1: (lv_values_5_0= ruleEStringBoolean )
+            // InternalSCL.g:4553:1: ( (lv_values_5_0= ruleEStringBoolean ) )
+            // InternalSCL.g:4554:1: (lv_values_5_0= ruleEStringBoolean )
             {
-            // InternalSCL.g:4354:1: (lv_values_5_0= ruleEStringBoolean )
-            // InternalSCL.g:4355:3: lv_values_5_0= ruleEStringBoolean
+            // InternalSCL.g:4554:1: (lv_values_5_0= ruleEStringBoolean )
+            // InternalSCL.g:4555:3: lv_values_5_0= ruleEStringBoolean
             {
             if ( state.backtracking==0 ) {
                
@@ -12660,7 +13056,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSCL.g:4371:2: (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )*
+            // InternalSCL.g:4571:2: (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )*
             loop88:
             do {
                 int alt88=2;
@@ -12673,7 +13069,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                 switch (alt88) {
             	case 1 :
-            	    // InternalSCL.g:4371:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) )
+            	    // InternalSCL.g:4571:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) )
             	    {
             	    otherlv_6=(Token)match(input,42,FOLLOW_63); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -12681,11 +13077,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             	          	newLeafNode(otherlv_6, grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
             	          
             	    }
-            	    // InternalSCL.g:4375:1: ( (lv_values_7_0= ruleEStringBoolean ) )
-            	    // InternalSCL.g:4376:1: (lv_values_7_0= ruleEStringBoolean )
+            	    // InternalSCL.g:4575:1: ( (lv_values_7_0= ruleEStringBoolean ) )
+            	    // InternalSCL.g:4576:1: (lv_values_7_0= ruleEStringBoolean )
             	    {
-            	    // InternalSCL.g:4376:1: (lv_values_7_0= ruleEStringBoolean )
-            	    // InternalSCL.g:4377:3: lv_values_7_0= ruleEStringBoolean
+            	    // InternalSCL.g:4576:1: (lv_values_7_0= ruleEStringBoolean )
+            	    // InternalSCL.g:4577:3: lv_values_7_0= ruleEStringBoolean
             	    {
             	    if ( state.backtracking==0 ) {
             	       
@@ -12749,7 +13145,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleQuotedKeyStringValueAnnotation"
-    // InternalSCL.g:4401:1: entryRuleQuotedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF ;
+    // InternalSCL.g:4601:1: entryRuleQuotedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF ;
     public final EObject entryRuleQuotedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
         int entryRuleQuotedKeyStringValueAnnotation_StartIndex = input.index();
@@ -12758,8 +13154,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 107) ) { return current; }
-            // InternalSCL.g:4402:2: (iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF )
-            // InternalSCL.g:4403:2: iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF
+            // InternalSCL.g:4602:2: (iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF )
+            // InternalSCL.g:4603:2: iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getQuotedKeyStringValueAnnotationRule()); 
@@ -12791,7 +13187,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleQuotedKeyStringValueAnnotation"
-    // InternalSCL.g:4410:1: ruleQuotedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* ) ;
+    // InternalSCL.g:4610:1: ruleQuotedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* ) ;
     public final EObject ruleQuotedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
         int ruleQuotedKeyStringValueAnnotation_StartIndex = input.index();
@@ -12806,23 +13202,23 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 108) ) { return current; }
-            // InternalSCL.g:4413:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* ) )
-            // InternalSCL.g:4414:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* )
+            // InternalSCL.g:4613:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* ) )
+            // InternalSCL.g:4614:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* )
             {
-            // InternalSCL.g:4414:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* )
-            // InternalSCL.g:4414:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )*
+            // InternalSCL.g:4614:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* )
+            // InternalSCL.g:4614:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )*
             {
-            otherlv_0=(Token)match(input,51,FOLLOW_4); if (state.failed) return current;
+            otherlv_0=(Token)match(input,59,FOLLOW_4); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
                   
             }
-            // InternalSCL.g:4418:1: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalSCL.g:4419:1: (lv_name_1_0= ruleExtendedID )
+            // InternalSCL.g:4618:1: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalSCL.g:4619:1: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalSCL.g:4419:1: (lv_name_1_0= ruleExtendedID )
-            // InternalSCL.g:4420:3: lv_name_1_0= ruleExtendedID
+            // InternalSCL.g:4619:1: (lv_name_1_0= ruleExtendedID )
+            // InternalSCL.g:4620:3: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                
@@ -12853,11 +13249,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSCL.g:4436:2: ( (lv_values_2_0= RULE_STRING ) )
-            // InternalSCL.g:4437:1: (lv_values_2_0= RULE_STRING )
+            // InternalSCL.g:4636:2: ( (lv_values_2_0= RULE_STRING ) )
+            // InternalSCL.g:4637:1: (lv_values_2_0= RULE_STRING )
             {
-            // InternalSCL.g:4437:1: (lv_values_2_0= RULE_STRING )
-            // InternalSCL.g:4438:3: lv_values_2_0= RULE_STRING
+            // InternalSCL.g:4637:1: (lv_values_2_0= RULE_STRING )
+            // InternalSCL.g:4638:3: lv_values_2_0= RULE_STRING
             {
             lv_values_2_0=(Token)match(input,RULE_STRING,FOLLOW_61); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -12883,7 +13279,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSCL.g:4454:2: (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )*
+            // InternalSCL.g:4654:2: (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )*
             loop89:
             do {
                 int alt89=2;
@@ -12896,7 +13292,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                 switch (alt89) {
             	case 1 :
-            	    // InternalSCL.g:4454:4: otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) )
+            	    // InternalSCL.g:4654:4: otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) )
             	    {
             	    otherlv_3=(Token)match(input,42,FOLLOW_64); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -12904,11 +13300,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             	          	newLeafNode(otherlv_3, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
             	          
             	    }
-            	    // InternalSCL.g:4458:1: ( (lv_values_4_0= RULE_STRING ) )
-            	    // InternalSCL.g:4459:1: (lv_values_4_0= RULE_STRING )
+            	    // InternalSCL.g:4658:1: ( (lv_values_4_0= RULE_STRING ) )
+            	    // InternalSCL.g:4659:1: (lv_values_4_0= RULE_STRING )
             	    {
-            	    // InternalSCL.g:4459:1: (lv_values_4_0= RULE_STRING )
-            	    // InternalSCL.g:4460:3: lv_values_4_0= RULE_STRING
+            	    // InternalSCL.g:4659:1: (lv_values_4_0= RULE_STRING )
+            	    // InternalSCL.g:4660:3: lv_values_4_0= RULE_STRING
             	    {
             	    lv_values_4_0=(Token)match(input,RULE_STRING,FOLLOW_61); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -12967,7 +13363,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleQuotedTypedKeyStringValueAnnotation"
-    // InternalSCL.g:4484:1: entryRuleQuotedTypedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF ;
+    // InternalSCL.g:4684:1: entryRuleQuotedTypedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF ;
     public final EObject entryRuleQuotedTypedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
         int entryRuleQuotedTypedKeyStringValueAnnotation_StartIndex = input.index();
@@ -12976,8 +13372,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 109) ) { return current; }
-            // InternalSCL.g:4485:2: (iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF )
-            // InternalSCL.g:4486:2: iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF
+            // InternalSCL.g:4685:2: (iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF )
+            // InternalSCL.g:4686:2: iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule()); 
@@ -13009,7 +13405,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleQuotedTypedKeyStringValueAnnotation"
-    // InternalSCL.g:4493:1: ruleQuotedTypedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* ) ;
+    // InternalSCL.g:4693:1: ruleQuotedTypedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* ) ;
     public final EObject ruleQuotedTypedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
         int ruleQuotedTypedKeyStringValueAnnotation_StartIndex = input.index();
@@ -13028,23 +13424,23 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 110) ) { return current; }
-            // InternalSCL.g:4496:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* ) )
-            // InternalSCL.g:4497:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* )
+            // InternalSCL.g:4696:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* ) )
+            // InternalSCL.g:4697:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* )
             {
-            // InternalSCL.g:4497:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* )
-            // InternalSCL.g:4497:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )*
+            // InternalSCL.g:4697:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* )
+            // InternalSCL.g:4697:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )*
             {
-            otherlv_0=(Token)match(input,51,FOLLOW_4); if (state.failed) return current;
+            otherlv_0=(Token)match(input,59,FOLLOW_4); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
                   
             }
-            // InternalSCL.g:4501:1: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalSCL.g:4502:1: (lv_name_1_0= ruleExtendedID )
+            // InternalSCL.g:4701:1: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalSCL.g:4702:1: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalSCL.g:4502:1: (lv_name_1_0= ruleExtendedID )
-            // InternalSCL.g:4503:3: lv_name_1_0= ruleExtendedID
+            // InternalSCL.g:4702:1: (lv_name_1_0= ruleExtendedID )
+            // InternalSCL.g:4703:3: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                
@@ -13081,11 +13477,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_2, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
                   
             }
-            // InternalSCL.g:4523:1: ( (lv_type_3_0= ruleExtendedID ) )
-            // InternalSCL.g:4524:1: (lv_type_3_0= ruleExtendedID )
+            // InternalSCL.g:4723:1: ( (lv_type_3_0= ruleExtendedID ) )
+            // InternalSCL.g:4724:1: (lv_type_3_0= ruleExtendedID )
             {
-            // InternalSCL.g:4524:1: (lv_type_3_0= ruleExtendedID )
-            // InternalSCL.g:4525:3: lv_type_3_0= ruleExtendedID
+            // InternalSCL.g:4724:1: (lv_type_3_0= ruleExtendedID )
+            // InternalSCL.g:4725:3: lv_type_3_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                
@@ -13122,11 +13518,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_4, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
                   
             }
-            // InternalSCL.g:4545:1: ( (lv_values_5_0= RULE_STRING ) )
-            // InternalSCL.g:4546:1: (lv_values_5_0= RULE_STRING )
+            // InternalSCL.g:4745:1: ( (lv_values_5_0= RULE_STRING ) )
+            // InternalSCL.g:4746:1: (lv_values_5_0= RULE_STRING )
             {
-            // InternalSCL.g:4546:1: (lv_values_5_0= RULE_STRING )
-            // InternalSCL.g:4547:3: lv_values_5_0= RULE_STRING
+            // InternalSCL.g:4746:1: (lv_values_5_0= RULE_STRING )
+            // InternalSCL.g:4747:3: lv_values_5_0= RULE_STRING
             {
             lv_values_5_0=(Token)match(input,RULE_STRING,FOLLOW_61); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -13152,7 +13548,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSCL.g:4563:2: (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )*
+            // InternalSCL.g:4763:2: (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )*
             loop90:
             do {
                 int alt90=2;
@@ -13165,7 +13561,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                 switch (alt90) {
             	case 1 :
-            	    // InternalSCL.g:4563:4: otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) )
+            	    // InternalSCL.g:4763:4: otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) )
             	    {
             	    otherlv_6=(Token)match(input,42,FOLLOW_64); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -13173,11 +13569,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             	          	newLeafNode(otherlv_6, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
             	          
             	    }
-            	    // InternalSCL.g:4567:1: ( (lv_values_7_0= RULE_STRING ) )
-            	    // InternalSCL.g:4568:1: (lv_values_7_0= RULE_STRING )
+            	    // InternalSCL.g:4767:1: ( (lv_values_7_0= RULE_STRING ) )
+            	    // InternalSCL.g:4768:1: (lv_values_7_0= RULE_STRING )
             	    {
-            	    // InternalSCL.g:4568:1: (lv_values_7_0= RULE_STRING )
-            	    // InternalSCL.g:4569:3: lv_values_7_0= RULE_STRING
+            	    // InternalSCL.g:4768:1: (lv_values_7_0= RULE_STRING )
+            	    // InternalSCL.g:4769:3: lv_values_7_0= RULE_STRING
             	    {
             	    lv_values_7_0=(Token)match(input,RULE_STRING,FOLLOW_61); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -13236,7 +13632,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleKeyBooleanValueAnnotation"
-    // InternalSCL.g:4593:1: entryRuleKeyBooleanValueAnnotation returns [EObject current=null] : iv_ruleKeyBooleanValueAnnotation= ruleKeyBooleanValueAnnotation EOF ;
+    // InternalSCL.g:4793:1: entryRuleKeyBooleanValueAnnotation returns [EObject current=null] : iv_ruleKeyBooleanValueAnnotation= ruleKeyBooleanValueAnnotation EOF ;
     public final EObject entryRuleKeyBooleanValueAnnotation() throws RecognitionException {
         EObject current = null;
         int entryRuleKeyBooleanValueAnnotation_StartIndex = input.index();
@@ -13245,8 +13641,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 111) ) { return current; }
-            // InternalSCL.g:4594:2: (iv_ruleKeyBooleanValueAnnotation= ruleKeyBooleanValueAnnotation EOF )
-            // InternalSCL.g:4595:2: iv_ruleKeyBooleanValueAnnotation= ruleKeyBooleanValueAnnotation EOF
+            // InternalSCL.g:4794:2: (iv_ruleKeyBooleanValueAnnotation= ruleKeyBooleanValueAnnotation EOF )
+            // InternalSCL.g:4795:2: iv_ruleKeyBooleanValueAnnotation= ruleKeyBooleanValueAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getKeyBooleanValueAnnotationRule()); 
@@ -13278,7 +13674,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleKeyBooleanValueAnnotation"
-    // InternalSCL.g:4602:1: ruleKeyBooleanValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= RULE_BOOLEAN ) ) ) ;
+    // InternalSCL.g:4802:1: ruleKeyBooleanValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= RULE_BOOLEAN ) ) ) ;
     public final EObject ruleKeyBooleanValueAnnotation() throws RecognitionException {
         EObject current = null;
         int ruleKeyBooleanValueAnnotation_StartIndex = input.index();
@@ -13291,23 +13687,23 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 112) ) { return current; }
-            // InternalSCL.g:4605:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= RULE_BOOLEAN ) ) ) )
-            // InternalSCL.g:4606:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= RULE_BOOLEAN ) ) )
+            // InternalSCL.g:4805:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= RULE_BOOLEAN ) ) ) )
+            // InternalSCL.g:4806:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= RULE_BOOLEAN ) ) )
             {
-            // InternalSCL.g:4606:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= RULE_BOOLEAN ) ) )
-            // InternalSCL.g:4606:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= RULE_BOOLEAN ) )
+            // InternalSCL.g:4806:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= RULE_BOOLEAN ) ) )
+            // InternalSCL.g:4806:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= RULE_BOOLEAN ) )
             {
-            otherlv_0=(Token)match(input,51,FOLLOW_4); if (state.failed) return current;
+            otherlv_0=(Token)match(input,59,FOLLOW_4); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getKeyBooleanValueAnnotationAccess().getCommercialAtKeyword_0());
                   
             }
-            // InternalSCL.g:4610:1: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalSCL.g:4611:1: (lv_name_1_0= ruleExtendedID )
+            // InternalSCL.g:4810:1: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalSCL.g:4811:1: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalSCL.g:4611:1: (lv_name_1_0= ruleExtendedID )
-            // InternalSCL.g:4612:3: lv_name_1_0= ruleExtendedID
+            // InternalSCL.g:4811:1: (lv_name_1_0= ruleExtendedID )
+            // InternalSCL.g:4812:3: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                
@@ -13338,11 +13734,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSCL.g:4628:2: ( (lv_value_2_0= RULE_BOOLEAN ) )
-            // InternalSCL.g:4629:1: (lv_value_2_0= RULE_BOOLEAN )
+            // InternalSCL.g:4828:2: ( (lv_value_2_0= RULE_BOOLEAN ) )
+            // InternalSCL.g:4829:1: (lv_value_2_0= RULE_BOOLEAN )
             {
-            // InternalSCL.g:4629:1: (lv_value_2_0= RULE_BOOLEAN )
-            // InternalSCL.g:4630:3: lv_value_2_0= RULE_BOOLEAN
+            // InternalSCL.g:4829:1: (lv_value_2_0= RULE_BOOLEAN )
+            // InternalSCL.g:4830:3: lv_value_2_0= RULE_BOOLEAN
             {
             lv_value_2_0=(Token)match(input,RULE_BOOLEAN,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -13392,7 +13788,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleKeyIntValueAnnotation"
-    // InternalSCL.g:4654:1: entryRuleKeyIntValueAnnotation returns [EObject current=null] : iv_ruleKeyIntValueAnnotation= ruleKeyIntValueAnnotation EOF ;
+    // InternalSCL.g:4854:1: entryRuleKeyIntValueAnnotation returns [EObject current=null] : iv_ruleKeyIntValueAnnotation= ruleKeyIntValueAnnotation EOF ;
     public final EObject entryRuleKeyIntValueAnnotation() throws RecognitionException {
         EObject current = null;
         int entryRuleKeyIntValueAnnotation_StartIndex = input.index();
@@ -13401,8 +13797,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 113) ) { return current; }
-            // InternalSCL.g:4655:2: (iv_ruleKeyIntValueAnnotation= ruleKeyIntValueAnnotation EOF )
-            // InternalSCL.g:4656:2: iv_ruleKeyIntValueAnnotation= ruleKeyIntValueAnnotation EOF
+            // InternalSCL.g:4855:2: (iv_ruleKeyIntValueAnnotation= ruleKeyIntValueAnnotation EOF )
+            // InternalSCL.g:4856:2: iv_ruleKeyIntValueAnnotation= ruleKeyIntValueAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getKeyIntValueAnnotationRule()); 
@@ -13434,7 +13830,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleKeyIntValueAnnotation"
-    // InternalSCL.g:4663:1: ruleKeyIntValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleInteger ) ) ) ;
+    // InternalSCL.g:4863:1: ruleKeyIntValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleInteger ) ) ) ;
     public final EObject ruleKeyIntValueAnnotation() throws RecognitionException {
         EObject current = null;
         int ruleKeyIntValueAnnotation_StartIndex = input.index();
@@ -13448,23 +13844,23 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 114) ) { return current; }
-            // InternalSCL.g:4666:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleInteger ) ) ) )
-            // InternalSCL.g:4667:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleInteger ) ) )
+            // InternalSCL.g:4866:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleInteger ) ) ) )
+            // InternalSCL.g:4867:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleInteger ) ) )
             {
-            // InternalSCL.g:4667:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleInteger ) ) )
-            // InternalSCL.g:4667:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleInteger ) )
+            // InternalSCL.g:4867:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleInteger ) ) )
+            // InternalSCL.g:4867:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleInteger ) )
             {
-            otherlv_0=(Token)match(input,51,FOLLOW_4); if (state.failed) return current;
+            otherlv_0=(Token)match(input,59,FOLLOW_4); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getKeyIntValueAnnotationAccess().getCommercialAtKeyword_0());
                   
             }
-            // InternalSCL.g:4671:1: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalSCL.g:4672:1: (lv_name_1_0= ruleExtendedID )
+            // InternalSCL.g:4871:1: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalSCL.g:4872:1: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalSCL.g:4672:1: (lv_name_1_0= ruleExtendedID )
-            // InternalSCL.g:4673:3: lv_name_1_0= ruleExtendedID
+            // InternalSCL.g:4872:1: (lv_name_1_0= ruleExtendedID )
+            // InternalSCL.g:4873:3: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                
@@ -13495,11 +13891,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSCL.g:4689:2: ( (lv_value_2_0= ruleInteger ) )
-            // InternalSCL.g:4690:1: (lv_value_2_0= ruleInteger )
+            // InternalSCL.g:4889:2: ( (lv_value_2_0= ruleInteger ) )
+            // InternalSCL.g:4890:1: (lv_value_2_0= ruleInteger )
             {
-            // InternalSCL.g:4690:1: (lv_value_2_0= ruleInteger )
-            // InternalSCL.g:4691:3: lv_value_2_0= ruleInteger
+            // InternalSCL.g:4890:1: (lv_value_2_0= ruleInteger )
+            // InternalSCL.g:4891:3: lv_value_2_0= ruleInteger
             {
             if ( state.backtracking==0 ) {
                
@@ -13554,7 +13950,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleKeyFloatValueAnnotation"
-    // InternalSCL.g:4715:1: entryRuleKeyFloatValueAnnotation returns [EObject current=null] : iv_ruleKeyFloatValueAnnotation= ruleKeyFloatValueAnnotation EOF ;
+    // InternalSCL.g:4915:1: entryRuleKeyFloatValueAnnotation returns [EObject current=null] : iv_ruleKeyFloatValueAnnotation= ruleKeyFloatValueAnnotation EOF ;
     public final EObject entryRuleKeyFloatValueAnnotation() throws RecognitionException {
         EObject current = null;
         int entryRuleKeyFloatValueAnnotation_StartIndex = input.index();
@@ -13563,8 +13959,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 115) ) { return current; }
-            // InternalSCL.g:4716:2: (iv_ruleKeyFloatValueAnnotation= ruleKeyFloatValueAnnotation EOF )
-            // InternalSCL.g:4717:2: iv_ruleKeyFloatValueAnnotation= ruleKeyFloatValueAnnotation EOF
+            // InternalSCL.g:4916:2: (iv_ruleKeyFloatValueAnnotation= ruleKeyFloatValueAnnotation EOF )
+            // InternalSCL.g:4917:2: iv_ruleKeyFloatValueAnnotation= ruleKeyFloatValueAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getKeyFloatValueAnnotationRule()); 
@@ -13596,7 +13992,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleKeyFloatValueAnnotation"
-    // InternalSCL.g:4724:1: ruleKeyFloatValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleFloateger ) ) ) ;
+    // InternalSCL.g:4924:1: ruleKeyFloatValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleFloateger ) ) ) ;
     public final EObject ruleKeyFloatValueAnnotation() throws RecognitionException {
         EObject current = null;
         int ruleKeyFloatValueAnnotation_StartIndex = input.index();
@@ -13610,23 +14006,23 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 116) ) { return current; }
-            // InternalSCL.g:4727:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleFloateger ) ) ) )
-            // InternalSCL.g:4728:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleFloateger ) ) )
+            // InternalSCL.g:4927:28: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleFloateger ) ) ) )
+            // InternalSCL.g:4928:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleFloateger ) ) )
             {
-            // InternalSCL.g:4728:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleFloateger ) ) )
-            // InternalSCL.g:4728:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleFloateger ) )
+            // InternalSCL.g:4928:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleFloateger ) ) )
+            // InternalSCL.g:4928:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleFloateger ) )
             {
-            otherlv_0=(Token)match(input,51,FOLLOW_4); if (state.failed) return current;
+            otherlv_0=(Token)match(input,59,FOLLOW_4); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getKeyFloatValueAnnotationAccess().getCommercialAtKeyword_0());
                   
             }
-            // InternalSCL.g:4732:1: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalSCL.g:4733:1: (lv_name_1_0= ruleExtendedID )
+            // InternalSCL.g:4932:1: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalSCL.g:4933:1: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalSCL.g:4733:1: (lv_name_1_0= ruleExtendedID )
-            // InternalSCL.g:4734:3: lv_name_1_0= ruleExtendedID
+            // InternalSCL.g:4933:1: (lv_name_1_0= ruleExtendedID )
+            // InternalSCL.g:4934:3: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                
@@ -13657,11 +14053,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSCL.g:4750:2: ( (lv_value_2_0= ruleFloateger ) )
-            // InternalSCL.g:4751:1: (lv_value_2_0= ruleFloateger )
+            // InternalSCL.g:4950:2: ( (lv_value_2_0= ruleFloateger ) )
+            // InternalSCL.g:4951:1: (lv_value_2_0= ruleFloateger )
             {
-            // InternalSCL.g:4751:1: (lv_value_2_0= ruleFloateger )
-            // InternalSCL.g:4752:3: lv_value_2_0= ruleFloateger
+            // InternalSCL.g:4951:1: (lv_value_2_0= ruleFloateger )
+            // InternalSCL.g:4952:3: lv_value_2_0= ruleFloateger
             {
             if ( state.backtracking==0 ) {
                
@@ -13716,7 +14112,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleEString"
-    // InternalSCL.g:4776:1: entryRuleEString returns [String current=null] : iv_ruleEString= ruleEString EOF ;
+    // InternalSCL.g:4976:1: entryRuleEString returns [String current=null] : iv_ruleEString= ruleEString EOF ;
     public final String entryRuleEString() throws RecognitionException {
         String current = null;
         int entryRuleEString_StartIndex = input.index();
@@ -13725,8 +14121,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 117) ) { return current; }
-            // InternalSCL.g:4777:2: (iv_ruleEString= ruleEString EOF )
-            // InternalSCL.g:4778:2: iv_ruleEString= ruleEString EOF
+            // InternalSCL.g:4977:2: (iv_ruleEString= ruleEString EOF )
+            // InternalSCL.g:4978:2: iv_ruleEString= ruleEString EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getEStringRule()); 
@@ -13758,7 +14154,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEString"
-    // InternalSCL.g:4785:1: ruleEString returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID ) ;
+    // InternalSCL.g:4985:1: ruleEString returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID ) ;
     public final AntlrDatatypeRuleToken ruleEString() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
         int ruleEString_StartIndex = input.index();
@@ -13770,10 +14166,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 118) ) { return current; }
-            // InternalSCL.g:4788:28: ( (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID ) )
-            // InternalSCL.g:4789:1: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID )
+            // InternalSCL.g:4988:28: ( (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID ) )
+            // InternalSCL.g:4989:1: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID )
             {
-            // InternalSCL.g:4789:1: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID )
+            // InternalSCL.g:4989:1: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID )
             int alt91=2;
             int LA91_0 = input.LA(1);
 
@@ -13792,7 +14188,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             }
             switch (alt91) {
                 case 1 :
-                    // InternalSCL.g:4789:6: this_STRING_0= RULE_STRING
+                    // InternalSCL.g:4989:6: this_STRING_0= RULE_STRING
                     {
                     this_STRING_0=(Token)match(input,RULE_STRING,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -13809,7 +14205,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSCL.g:4798:5: this_ExtendedID_1= ruleExtendedID
+                    // InternalSCL.g:4998:5: this_ExtendedID_1= ruleExtendedID
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -13858,7 +14254,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleEStringBoolean"
-    // InternalSCL.g:4816:1: entryRuleEStringBoolean returns [String current=null] : iv_ruleEStringBoolean= ruleEStringBoolean EOF ;
+    // InternalSCL.g:5016:1: entryRuleEStringBoolean returns [String current=null] : iv_ruleEStringBoolean= ruleEStringBoolean EOF ;
     public final String entryRuleEStringBoolean() throws RecognitionException {
         String current = null;
         int entryRuleEStringBoolean_StartIndex = input.index();
@@ -13867,8 +14263,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 119) ) { return current; }
-            // InternalSCL.g:4817:2: (iv_ruleEStringBoolean= ruleEStringBoolean EOF )
-            // InternalSCL.g:4818:2: iv_ruleEStringBoolean= ruleEStringBoolean EOF
+            // InternalSCL.g:5017:2: (iv_ruleEStringBoolean= ruleEStringBoolean EOF )
+            // InternalSCL.g:5018:2: iv_ruleEStringBoolean= ruleEStringBoolean EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getEStringBooleanRule()); 
@@ -13900,7 +14296,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEStringBoolean"
-    // InternalSCL.g:4825:1: ruleEStringBoolean returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN ) ;
+    // InternalSCL.g:5025:1: ruleEStringBoolean returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN ) ;
     public final AntlrDatatypeRuleToken ruleEStringBoolean() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
         int ruleEStringBoolean_StartIndex = input.index();
@@ -13913,10 +14309,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 120) ) { return current; }
-            // InternalSCL.g:4828:28: ( (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN ) )
-            // InternalSCL.g:4829:1: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN )
+            // InternalSCL.g:5028:28: ( (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN ) )
+            // InternalSCL.g:5029:1: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN )
             {
-            // InternalSCL.g:4829:1: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN )
+            // InternalSCL.g:5029:1: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN )
             int alt92=3;
             switch ( input.LA(1) ) {
             case RULE_STRING:
@@ -13944,7 +14340,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             switch (alt92) {
                 case 1 :
-                    // InternalSCL.g:4829:6: this_STRING_0= RULE_STRING
+                    // InternalSCL.g:5029:6: this_STRING_0= RULE_STRING
                     {
                     this_STRING_0=(Token)match(input,RULE_STRING,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -13961,7 +14357,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSCL.g:4838:5: this_ExtendedID_1= ruleExtendedID
+                    // InternalSCL.g:5038:5: this_ExtendedID_1= ruleExtendedID
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -13987,7 +14383,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalSCL.g:4849:10: this_BOOLEAN_2= RULE_BOOLEAN
+                    // InternalSCL.g:5049:10: this_BOOLEAN_2= RULE_BOOLEAN
                     {
                     this_BOOLEAN_2=(Token)match(input,RULE_BOOLEAN,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -14027,7 +14423,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleExtendedID"
-    // InternalSCL.g:4864:1: entryRuleExtendedID returns [String current=null] : iv_ruleExtendedID= ruleExtendedID EOF ;
+    // InternalSCL.g:5064:1: entryRuleExtendedID returns [String current=null] : iv_ruleExtendedID= ruleExtendedID EOF ;
     public final String entryRuleExtendedID() throws RecognitionException {
         String current = null;
         int entryRuleExtendedID_StartIndex = input.index();
@@ -14036,8 +14432,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 121) ) { return current; }
-            // InternalSCL.g:4865:2: (iv_ruleExtendedID= ruleExtendedID EOF )
-            // InternalSCL.g:4866:2: iv_ruleExtendedID= ruleExtendedID EOF
+            // InternalSCL.g:5065:2: (iv_ruleExtendedID= ruleExtendedID EOF )
+            // InternalSCL.g:5066:2: iv_ruleExtendedID= ruleExtendedID EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getExtendedIDRule()); 
@@ -14069,7 +14465,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleExtendedID"
-    // InternalSCL.g:4873:1: ruleExtendedID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* (kw= '#' this_INT_4= RULE_INT )? ) ;
+    // InternalSCL.g:5073:1: ruleExtendedID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* (kw= '#' this_INT_4= RULE_INT )? ) ;
     public final AntlrDatatypeRuleToken ruleExtendedID() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
         int ruleExtendedID_StartIndex = input.index();
@@ -14082,11 +14478,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 122) ) { return current; }
-            // InternalSCL.g:4876:28: ( (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* (kw= '#' this_INT_4= RULE_INT )? ) )
-            // InternalSCL.g:4877:1: (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* (kw= '#' this_INT_4= RULE_INT )? )
+            // InternalSCL.g:5076:28: ( (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* (kw= '#' this_INT_4= RULE_INT )? ) )
+            // InternalSCL.g:5077:1: (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* (kw= '#' this_INT_4= RULE_INT )? )
             {
-            // InternalSCL.g:4877:1: (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* (kw= '#' this_INT_4= RULE_INT )? )
-            // InternalSCL.g:4877:6: this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* (kw= '#' this_INT_4= RULE_INT )?
+            // InternalSCL.g:5077:1: (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* (kw= '#' this_INT_4= RULE_INT )? )
+            // InternalSCL.g:5077:6: this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* (kw= '#' this_INT_4= RULE_INT )?
             {
             this_ID_0=(Token)match(input,RULE_ID,FOLLOW_68); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -14099,22 +14495,22 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                   newLeafNode(this_ID_0, grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_0()); 
                   
             }
-            // InternalSCL.g:4884:1: (kw= '.' this_ID_2= RULE_ID )*
+            // InternalSCL.g:5084:1: (kw= '.' this_ID_2= RULE_ID )*
             loop93:
             do {
                 int alt93=2;
                 int LA93_0 = input.LA(1);
 
-                if ( (LA93_0==52) ) {
+                if ( (LA93_0==60) ) {
                     alt93=1;
                 }
 
 
                 switch (alt93) {
             	case 1 :
-            	    // InternalSCL.g:4885:2: kw= '.' this_ID_2= RULE_ID
+            	    // InternalSCL.g:5085:2: kw= '.' this_ID_2= RULE_ID
             	    {
-            	    kw=(Token)match(input,52,FOLLOW_4); if (state.failed) return current;
+            	    kw=(Token)match(input,60,FOLLOW_4); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	              current.merge(kw);
@@ -14141,18 +14537,18 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalSCL.g:4897:3: (kw= '#' this_INT_4= RULE_INT )?
+            // InternalSCL.g:5097:3: (kw= '#' this_INT_4= RULE_INT )?
             int alt94=2;
             int LA94_0 = input.LA(1);
 
-            if ( (LA94_0==53) ) {
+            if ( (LA94_0==61) ) {
                 alt94=1;
             }
             switch (alt94) {
                 case 1 :
-                    // InternalSCL.g:4898:2: kw= '#' this_INT_4= RULE_INT
+                    // InternalSCL.g:5098:2: kw= '#' this_INT_4= RULE_INT
                     {
-                    kw=(Token)match(input,53,FOLLOW_69); if (state.failed) return current;
+                    kw=(Token)match(input,61,FOLLOW_69); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -14200,7 +14596,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleInteger"
-    // InternalSCL.g:4918:1: entryRuleInteger returns [String current=null] : iv_ruleInteger= ruleInteger EOF ;
+    // InternalSCL.g:5118:1: entryRuleInteger returns [String current=null] : iv_ruleInteger= ruleInteger EOF ;
     public final String entryRuleInteger() throws RecognitionException {
         String current = null;
         int entryRuleInteger_StartIndex = input.index();
@@ -14209,8 +14605,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 123) ) { return current; }
-            // InternalSCL.g:4919:2: (iv_ruleInteger= ruleInteger EOF )
-            // InternalSCL.g:4920:2: iv_ruleInteger= ruleInteger EOF
+            // InternalSCL.g:5119:2: (iv_ruleInteger= ruleInteger EOF )
+            // InternalSCL.g:5120:2: iv_ruleInteger= ruleInteger EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getIntegerRule()); 
@@ -14242,7 +14638,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleInteger"
-    // InternalSCL.g:4927:1: ruleInteger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_INT_1= RULE_INT ) ;
+    // InternalSCL.g:5127:1: ruleInteger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_INT_1= RULE_INT ) ;
     public final AntlrDatatypeRuleToken ruleInteger() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
         int ruleInteger_StartIndex = input.index();
@@ -14253,13 +14649,13 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 124) ) { return current; }
-            // InternalSCL.g:4930:28: ( ( (kw= '-' )? this_INT_1= RULE_INT ) )
-            // InternalSCL.g:4931:1: ( (kw= '-' )? this_INT_1= RULE_INT )
+            // InternalSCL.g:5130:28: ( ( (kw= '-' )? this_INT_1= RULE_INT ) )
+            // InternalSCL.g:5131:1: ( (kw= '-' )? this_INT_1= RULE_INT )
             {
-            // InternalSCL.g:4931:1: ( (kw= '-' )? this_INT_1= RULE_INT )
-            // InternalSCL.g:4931:2: (kw= '-' )? this_INT_1= RULE_INT
+            // InternalSCL.g:5131:1: ( (kw= '-' )? this_INT_1= RULE_INT )
+            // InternalSCL.g:5131:2: (kw= '-' )? this_INT_1= RULE_INT
             {
-            // InternalSCL.g:4931:2: (kw= '-' )?
+            // InternalSCL.g:5131:2: (kw= '-' )?
             int alt95=2;
             int LA95_0 = input.LA(1);
 
@@ -14268,7 +14664,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             }
             switch (alt95) {
                 case 1 :
-                    // InternalSCL.g:4932:2: kw= '-'
+                    // InternalSCL.g:5132:2: kw= '-'
                     {
                     kw=(Token)match(input,54,FOLLOW_69); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -14318,7 +14714,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleFloateger"
-    // InternalSCL.g:4952:1: entryRuleFloateger returns [String current=null] : iv_ruleFloateger= ruleFloateger EOF ;
+    // InternalSCL.g:5152:1: entryRuleFloateger returns [String current=null] : iv_ruleFloateger= ruleFloateger EOF ;
     public final String entryRuleFloateger() throws RecognitionException {
         String current = null;
         int entryRuleFloateger_StartIndex = input.index();
@@ -14327,8 +14723,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 125) ) { return current; }
-            // InternalSCL.g:4953:2: (iv_ruleFloateger= ruleFloateger EOF )
-            // InternalSCL.g:4954:2: iv_ruleFloateger= ruleFloateger EOF
+            // InternalSCL.g:5153:2: (iv_ruleFloateger= ruleFloateger EOF )
+            // InternalSCL.g:5154:2: iv_ruleFloateger= ruleFloateger EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getFloategerRule()); 
@@ -14360,7 +14756,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFloateger"
-    // InternalSCL.g:4961:1: ruleFloateger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT ) ;
+    // InternalSCL.g:5161:1: ruleFloateger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT ) ;
     public final AntlrDatatypeRuleToken ruleFloateger() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
         int ruleFloateger_StartIndex = input.index();
@@ -14371,13 +14767,13 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 126) ) { return current; }
-            // InternalSCL.g:4964:28: ( ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT ) )
-            // InternalSCL.g:4965:1: ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT )
+            // InternalSCL.g:5164:28: ( ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT ) )
+            // InternalSCL.g:5165:1: ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT )
             {
-            // InternalSCL.g:4965:1: ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT )
-            // InternalSCL.g:4965:2: (kw= '-' )? this_FLOAT_1= RULE_FLOAT
+            // InternalSCL.g:5165:1: ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT )
+            // InternalSCL.g:5165:2: (kw= '-' )? this_FLOAT_1= RULE_FLOAT
             {
-            // InternalSCL.g:4965:2: (kw= '-' )?
+            // InternalSCL.g:5165:2: (kw= '-' )?
             int alt96=2;
             int LA96_0 = input.LA(1);
 
@@ -14386,7 +14782,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             }
             switch (alt96) {
                 case 1 :
-                    // InternalSCL.g:4966:2: kw= '-'
+                    // InternalSCL.g:5166:2: kw= '-'
                     {
                     kw=(Token)match(input,54,FOLLOW_70); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -14436,7 +14832,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePostfixOperator"
-    // InternalSCL.g:4988:1: rulePostfixOperator returns [Enumerator current=null] : ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) ) ;
+    // InternalSCL.g:5188:1: rulePostfixOperator returns [Enumerator current=null] : ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) ) ;
     public final Enumerator rulePostfixOperator() throws RecognitionException {
         Enumerator current = null;
         int rulePostfixOperator_StartIndex = input.index();
@@ -14446,17 +14842,17 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 127) ) { return current; }
-            // InternalSCL.g:4990:28: ( ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) ) )
-            // InternalSCL.g:4991:1: ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) )
+            // InternalSCL.g:5190:28: ( ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) ) )
+            // InternalSCL.g:5191:1: ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) )
             {
-            // InternalSCL.g:4991:1: ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) )
+            // InternalSCL.g:5191:1: ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) )
             int alt97=2;
             int LA97_0 = input.LA(1);
 
-            if ( (LA97_0==55) ) {
+            if ( (LA97_0==62) ) {
                 alt97=1;
             }
-            else if ( (LA97_0==56) ) {
+            else if ( (LA97_0==63) ) {
                 alt97=2;
             }
             else {
@@ -14468,12 +14864,12 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             }
             switch (alt97) {
                 case 1 :
-                    // InternalSCL.g:4991:2: (enumLiteral_0= '++' )
+                    // InternalSCL.g:5191:2: (enumLiteral_0= '++' )
                     {
-                    // InternalSCL.g:4991:2: (enumLiteral_0= '++' )
-                    // InternalSCL.g:4991:4: enumLiteral_0= '++'
+                    // InternalSCL.g:5191:2: (enumLiteral_0= '++' )
+                    // InternalSCL.g:5191:4: enumLiteral_0= '++'
                     {
-                    enumLiteral_0=(Token)match(input,55,FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,62,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getPostfixOperatorAccess().getPOSTFIXADDEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -14487,12 +14883,12 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSCL.g:4997:6: (enumLiteral_1= '--' )
+                    // InternalSCL.g:5197:6: (enumLiteral_1= '--' )
                     {
-                    // InternalSCL.g:4997:6: (enumLiteral_1= '--' )
-                    // InternalSCL.g:4997:8: enumLiteral_1= '--'
+                    // InternalSCL.g:5197:6: (enumLiteral_1= '--' )
+                    // InternalSCL.g:5197:8: enumLiteral_1= '--'
                     {
-                    enumLiteral_1=(Token)match(input,56,FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_1=(Token)match(input,63,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getPostfixOperatorAccess().getPOSTFIXSUBEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -14529,7 +14925,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCompareOperator"
-    // InternalSCL.g:5007:1: ruleCompareOperator returns [Enumerator current=null] : ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) ) ;
+    // InternalSCL.g:5207:1: ruleCompareOperator returns [Enumerator current=null] : ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) ) ;
     public final Enumerator ruleCompareOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleCompareOperator_StartIndex = input.index();
@@ -14543,13 +14939,13 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 128) ) { return current; }
-            // InternalSCL.g:5009:28: ( ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) ) )
-            // InternalSCL.g:5010:1: ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) )
+            // InternalSCL.g:5209:28: ( ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) ) )
+            // InternalSCL.g:5210:1: ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) )
             {
-            // InternalSCL.g:5010:1: ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) )
+            // InternalSCL.g:5210:1: ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) )
             int alt98=6;
             switch ( input.LA(1) ) {
-            case 57:
+            case 64:
                 {
                 alt98=1;
                 }
@@ -14559,7 +14955,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                 alt98=2;
                 }
                 break;
-            case 58:
+            case 65:
                 {
                 alt98=3;
                 }
@@ -14569,12 +14965,12 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                 alt98=4;
                 }
                 break;
-            case 59:
+            case 66:
                 {
                 alt98=5;
                 }
                 break;
-            case 60:
+            case 67:
                 {
                 alt98=6;
                 }
@@ -14589,12 +14985,12 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             switch (alt98) {
                 case 1 :
-                    // InternalSCL.g:5010:2: (enumLiteral_0= '==' )
+                    // InternalSCL.g:5210:2: (enumLiteral_0= '==' )
                     {
-                    // InternalSCL.g:5010:2: (enumLiteral_0= '==' )
-                    // InternalSCL.g:5010:4: enumLiteral_0= '=='
+                    // InternalSCL.g:5210:2: (enumLiteral_0= '==' )
+                    // InternalSCL.g:5210:4: enumLiteral_0= '=='
                     {
-                    enumLiteral_0=(Token)match(input,57,FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,64,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getEQEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -14608,10 +15004,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSCL.g:5016:6: (enumLiteral_1= '<' )
+                    // InternalSCL.g:5216:6: (enumLiteral_1= '<' )
                     {
-                    // InternalSCL.g:5016:6: (enumLiteral_1= '<' )
-                    // InternalSCL.g:5016:8: enumLiteral_1= '<'
+                    // InternalSCL.g:5216:6: (enumLiteral_1= '<' )
+                    // InternalSCL.g:5216:8: enumLiteral_1= '<'
                     {
                     enumLiteral_1=(Token)match(input,46,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -14627,12 +15023,12 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalSCL.g:5022:6: (enumLiteral_2= '<=' )
+                    // InternalSCL.g:5222:6: (enumLiteral_2= '<=' )
                     {
-                    // InternalSCL.g:5022:6: (enumLiteral_2= '<=' )
-                    // InternalSCL.g:5022:8: enumLiteral_2= '<='
+                    // InternalSCL.g:5222:6: (enumLiteral_2= '<=' )
+                    // InternalSCL.g:5222:8: enumLiteral_2= '<='
                     {
-                    enumLiteral_2=(Token)match(input,58,FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_2=(Token)match(input,65,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getLEQEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -14646,10 +15042,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalSCL.g:5028:6: (enumLiteral_3= '>' )
+                    // InternalSCL.g:5228:6: (enumLiteral_3= '>' )
                     {
-                    // InternalSCL.g:5028:6: (enumLiteral_3= '>' )
-                    // InternalSCL.g:5028:8: enumLiteral_3= '>'
+                    // InternalSCL.g:5228:6: (enumLiteral_3= '>' )
+                    // InternalSCL.g:5228:8: enumLiteral_3= '>'
                     {
                     enumLiteral_3=(Token)match(input,48,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -14665,12 +15061,12 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalSCL.g:5034:6: (enumLiteral_4= '>=' )
+                    // InternalSCL.g:5234:6: (enumLiteral_4= '>=' )
                     {
-                    // InternalSCL.g:5034:6: (enumLiteral_4= '>=' )
-                    // InternalSCL.g:5034:8: enumLiteral_4= '>='
+                    // InternalSCL.g:5234:6: (enumLiteral_4= '>=' )
+                    // InternalSCL.g:5234:8: enumLiteral_4= '>='
                     {
-                    enumLiteral_4=(Token)match(input,59,FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_4=(Token)match(input,66,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getGEQEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -14684,12 +15080,12 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalSCL.g:5040:6: (enumLiteral_5= '!=' )
+                    // InternalSCL.g:5240:6: (enumLiteral_5= '!=' )
                     {
-                    // InternalSCL.g:5040:6: (enumLiteral_5= '!=' )
-                    // InternalSCL.g:5040:8: enumLiteral_5= '!='
+                    // InternalSCL.g:5240:6: (enumLiteral_5= '!=' )
+                    // InternalSCL.g:5240:8: enumLiteral_5= '!='
                     {
-                    enumLiteral_5=(Token)match(input,60,FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_5=(Token)match(input,67,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getNEEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
@@ -14726,7 +15122,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePreOperator"
-    // InternalSCL.g:5050:1: rulePreOperator returns [Enumerator current=null] : (enumLiteral_0= 'pre' ) ;
+    // InternalSCL.g:5250:1: rulePreOperator returns [Enumerator current=null] : (enumLiteral_0= 'pre' ) ;
     public final Enumerator rulePreOperator() throws RecognitionException {
         Enumerator current = null;
         int rulePreOperator_StartIndex = input.index();
@@ -14735,13 +15131,13 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 129) ) { return current; }
-            // InternalSCL.g:5052:28: ( (enumLiteral_0= 'pre' ) )
-            // InternalSCL.g:5053:1: (enumLiteral_0= 'pre' )
+            // InternalSCL.g:5252:28: ( (enumLiteral_0= 'pre' ) )
+            // InternalSCL.g:5253:1: (enumLiteral_0= 'pre' )
             {
-            // InternalSCL.g:5053:1: (enumLiteral_0= 'pre' )
-            // InternalSCL.g:5053:3: enumLiteral_0= 'pre'
+            // InternalSCL.g:5253:1: (enumLiteral_0= 'pre' )
+            // InternalSCL.g:5253:3: enumLiteral_0= 'pre'
             {
-            enumLiteral_0=(Token)match(input,61,FOLLOW_2); if (state.failed) return current;
+            enumLiteral_0=(Token)match(input,68,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current = grammarAccess.getPreOperatorAccess().getPREEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -14772,7 +15168,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseOrOperator"
-    // InternalSCL.g:5063:1: ruleBitwiseOrOperator returns [Enumerator current=null] : (enumLiteral_0= '|' ) ;
+    // InternalSCL.g:5263:1: ruleBitwiseOrOperator returns [Enumerator current=null] : (enumLiteral_0= '|' ) ;
     public final Enumerator ruleBitwiseOrOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleBitwiseOrOperator_StartIndex = input.index();
@@ -14781,13 +15177,13 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 130) ) { return current; }
-            // InternalSCL.g:5065:28: ( (enumLiteral_0= '|' ) )
-            // InternalSCL.g:5066:1: (enumLiteral_0= '|' )
+            // InternalSCL.g:5265:28: ( (enumLiteral_0= '|' ) )
+            // InternalSCL.g:5266:1: (enumLiteral_0= '|' )
             {
-            // InternalSCL.g:5066:1: (enumLiteral_0= '|' )
-            // InternalSCL.g:5066:3: enumLiteral_0= '|'
+            // InternalSCL.g:5266:1: (enumLiteral_0= '|' )
+            // InternalSCL.g:5266:3: enumLiteral_0= '|'
             {
-            enumLiteral_0=(Token)match(input,62,FOLLOW_2); if (state.failed) return current;
+            enumLiteral_0=(Token)match(input,51,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current = grammarAccess.getBitwiseOrOperatorAccess().getBITWISE_OREnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -14818,7 +15214,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseAndOperator"
-    // InternalSCL.g:5076:1: ruleBitwiseAndOperator returns [Enumerator current=null] : (enumLiteral_0= '&' ) ;
+    // InternalSCL.g:5276:1: ruleBitwiseAndOperator returns [Enumerator current=null] : (enumLiteral_0= '&' ) ;
     public final Enumerator ruleBitwiseAndOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleBitwiseAndOperator_StartIndex = input.index();
@@ -14827,13 +15223,13 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 131) ) { return current; }
-            // InternalSCL.g:5078:28: ( (enumLiteral_0= '&' ) )
-            // InternalSCL.g:5079:1: (enumLiteral_0= '&' )
+            // InternalSCL.g:5278:28: ( (enumLiteral_0= '&' ) )
+            // InternalSCL.g:5279:1: (enumLiteral_0= '&' )
             {
-            // InternalSCL.g:5079:1: (enumLiteral_0= '&' )
-            // InternalSCL.g:5079:3: enumLiteral_0= '&'
+            // InternalSCL.g:5279:1: (enumLiteral_0= '&' )
+            // InternalSCL.g:5279:3: enumLiteral_0= '&'
             {
-            enumLiteral_0=(Token)match(input,50,FOLLOW_2); if (state.failed) return current;
+            enumLiteral_0=(Token)match(input,52,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current = grammarAccess.getBitwiseAndOperatorAccess().getBITWISE_ANDEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -14864,7 +15260,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleNotOperator"
-    // InternalSCL.g:5089:1: ruleNotOperator returns [Enumerator current=null] : (enumLiteral_0= '!' ) ;
+    // InternalSCL.g:5289:1: ruleNotOperator returns [Enumerator current=null] : (enumLiteral_0= '!' ) ;
     public final Enumerator ruleNotOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleNotOperator_StartIndex = input.index();
@@ -14873,13 +15269,13 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 132) ) { return current; }
-            // InternalSCL.g:5091:28: ( (enumLiteral_0= '!' ) )
-            // InternalSCL.g:5092:1: (enumLiteral_0= '!' )
+            // InternalSCL.g:5291:28: ( (enumLiteral_0= '!' ) )
+            // InternalSCL.g:5292:1: (enumLiteral_0= '!' )
             {
-            // InternalSCL.g:5092:1: (enumLiteral_0= '!' )
-            // InternalSCL.g:5092:3: enumLiteral_0= '!'
+            // InternalSCL.g:5292:1: (enumLiteral_0= '!' )
+            // InternalSCL.g:5292:3: enumLiteral_0= '!'
             {
-            enumLiteral_0=(Token)match(input,49,FOLLOW_2); if (state.failed) return current;
+            enumLiteral_0=(Token)match(input,58,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current = grammarAccess.getNotOperatorAccess().getNOTEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -14910,7 +15306,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAddOperator"
-    // InternalSCL.g:5102:1: ruleAddOperator returns [Enumerator current=null] : (enumLiteral_0= '+' ) ;
+    // InternalSCL.g:5302:1: ruleAddOperator returns [Enumerator current=null] : (enumLiteral_0= '+' ) ;
     public final Enumerator ruleAddOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleAddOperator_StartIndex = input.index();
@@ -14919,13 +15315,13 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 133) ) { return current; }
-            // InternalSCL.g:5104:28: ( (enumLiteral_0= '+' ) )
-            // InternalSCL.g:5105:1: (enumLiteral_0= '+' )
+            // InternalSCL.g:5304:28: ( (enumLiteral_0= '+' ) )
+            // InternalSCL.g:5305:1: (enumLiteral_0= '+' )
             {
-            // InternalSCL.g:5105:1: (enumLiteral_0= '+' )
-            // InternalSCL.g:5105:3: enumLiteral_0= '+'
+            // InternalSCL.g:5305:1: (enumLiteral_0= '+' )
+            // InternalSCL.g:5305:3: enumLiteral_0= '+'
             {
-            enumLiteral_0=(Token)match(input,63,FOLLOW_2); if (state.failed) return current;
+            enumLiteral_0=(Token)match(input,53,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current = grammarAccess.getAddOperatorAccess().getADDEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -14956,7 +15352,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSubOperator"
-    // InternalSCL.g:5115:1: ruleSubOperator returns [Enumerator current=null] : (enumLiteral_0= '-' ) ;
+    // InternalSCL.g:5315:1: ruleSubOperator returns [Enumerator current=null] : (enumLiteral_0= '-' ) ;
     public final Enumerator ruleSubOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleSubOperator_StartIndex = input.index();
@@ -14965,11 +15361,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 134) ) { return current; }
-            // InternalSCL.g:5117:28: ( (enumLiteral_0= '-' ) )
-            // InternalSCL.g:5118:1: (enumLiteral_0= '-' )
+            // InternalSCL.g:5317:28: ( (enumLiteral_0= '-' ) )
+            // InternalSCL.g:5318:1: (enumLiteral_0= '-' )
             {
-            // InternalSCL.g:5118:1: (enumLiteral_0= '-' )
-            // InternalSCL.g:5118:3: enumLiteral_0= '-'
+            // InternalSCL.g:5318:1: (enumLiteral_0= '-' )
+            // InternalSCL.g:5318:3: enumLiteral_0= '-'
             {
             enumLiteral_0=(Token)match(input,54,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -15002,7 +15398,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMultOperator"
-    // InternalSCL.g:5128:1: ruleMultOperator returns [Enumerator current=null] : (enumLiteral_0= '*' ) ;
+    // InternalSCL.g:5328:1: ruleMultOperator returns [Enumerator current=null] : (enumLiteral_0= '*' ) ;
     public final Enumerator ruleMultOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleMultOperator_StartIndex = input.index();
@@ -15011,13 +15407,13 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 135) ) { return current; }
-            // InternalSCL.g:5130:28: ( (enumLiteral_0= '*' ) )
-            // InternalSCL.g:5131:1: (enumLiteral_0= '*' )
+            // InternalSCL.g:5330:28: ( (enumLiteral_0= '*' ) )
+            // InternalSCL.g:5331:1: (enumLiteral_0= '*' )
             {
-            // InternalSCL.g:5131:1: (enumLiteral_0= '*' )
-            // InternalSCL.g:5131:3: enumLiteral_0= '*'
+            // InternalSCL.g:5331:1: (enumLiteral_0= '*' )
+            // InternalSCL.g:5331:3: enumLiteral_0= '*'
             {
-            enumLiteral_0=(Token)match(input,64,FOLLOW_2); if (state.failed) return current;
+            enumLiteral_0=(Token)match(input,55,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current = grammarAccess.getMultOperatorAccess().getMULTEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -15048,7 +15444,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleModOperator"
-    // InternalSCL.g:5141:1: ruleModOperator returns [Enumerator current=null] : (enumLiteral_0= '%' ) ;
+    // InternalSCL.g:5341:1: ruleModOperator returns [Enumerator current=null] : (enumLiteral_0= '%' ) ;
     public final Enumerator ruleModOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleModOperator_StartIndex = input.index();
@@ -15057,13 +15453,13 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 136) ) { return current; }
-            // InternalSCL.g:5143:28: ( (enumLiteral_0= '%' ) )
-            // InternalSCL.g:5144:1: (enumLiteral_0= '%' )
+            // InternalSCL.g:5343:28: ( (enumLiteral_0= '%' ) )
+            // InternalSCL.g:5344:1: (enumLiteral_0= '%' )
             {
-            // InternalSCL.g:5144:1: (enumLiteral_0= '%' )
-            // InternalSCL.g:5144:3: enumLiteral_0= '%'
+            // InternalSCL.g:5344:1: (enumLiteral_0= '%' )
+            // InternalSCL.g:5344:3: enumLiteral_0= '%'
             {
-            enumLiteral_0=(Token)match(input,65,FOLLOW_2); if (state.failed) return current;
+            enumLiteral_0=(Token)match(input,57,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current = grammarAccess.getModOperatorAccess().getMODEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -15094,7 +15490,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDivOperator"
-    // InternalSCL.g:5154:1: ruleDivOperator returns [Enumerator current=null] : (enumLiteral_0= '/' ) ;
+    // InternalSCL.g:5354:1: ruleDivOperator returns [Enumerator current=null] : (enumLiteral_0= '/' ) ;
     public final Enumerator ruleDivOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleDivOperator_StartIndex = input.index();
@@ -15103,13 +15499,13 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 137) ) { return current; }
-            // InternalSCL.g:5156:28: ( (enumLiteral_0= '/' ) )
-            // InternalSCL.g:5157:1: (enumLiteral_0= '/' )
+            // InternalSCL.g:5356:28: ( (enumLiteral_0= '/' ) )
+            // InternalSCL.g:5357:1: (enumLiteral_0= '/' )
             {
-            // InternalSCL.g:5157:1: (enumLiteral_0= '/' )
-            // InternalSCL.g:5157:3: enumLiteral_0= '/'
+            // InternalSCL.g:5357:1: (enumLiteral_0= '/' )
+            // InternalSCL.g:5357:3: enumLiteral_0= '/'
             {
-            enumLiteral_0=(Token)match(input,66,FOLLOW_2); if (state.failed) return current;
+            enumLiteral_0=(Token)match(input,56,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current = grammarAccess.getDivOperatorAccess().getDIVEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -15140,7 +15536,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleValOperator"
-    // InternalSCL.g:5167:1: ruleValOperator returns [Enumerator current=null] : (enumLiteral_0= 'val' ) ;
+    // InternalSCL.g:5367:1: ruleValOperator returns [Enumerator current=null] : (enumLiteral_0= 'val' ) ;
     public final Enumerator ruleValOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleValOperator_StartIndex = input.index();
@@ -15149,13 +15545,13 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 138) ) { return current; }
-            // InternalSCL.g:5169:28: ( (enumLiteral_0= 'val' ) )
-            // InternalSCL.g:5170:1: (enumLiteral_0= 'val' )
+            // InternalSCL.g:5369:28: ( (enumLiteral_0= 'val' ) )
+            // InternalSCL.g:5370:1: (enumLiteral_0= 'val' )
             {
-            // InternalSCL.g:5170:1: (enumLiteral_0= 'val' )
-            // InternalSCL.g:5170:3: enumLiteral_0= 'val'
+            // InternalSCL.g:5370:1: (enumLiteral_0= 'val' )
+            // InternalSCL.g:5370:3: enumLiteral_0= 'val'
             {
-            enumLiteral_0=(Token)match(input,67,FOLLOW_2); if (state.failed) return current;
+            enumLiteral_0=(Token)match(input,69,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current = grammarAccess.getValOperatorAccess().getVALEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -15186,7 +15582,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLogicalOrOperator"
-    // InternalSCL.g:5180:1: ruleLogicalOrOperator returns [Enumerator current=null] : (enumLiteral_0= '||' ) ;
+    // InternalSCL.g:5380:1: ruleLogicalOrOperator returns [Enumerator current=null] : (enumLiteral_0= '||' ) ;
     public final Enumerator ruleLogicalOrOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleLogicalOrOperator_StartIndex = input.index();
@@ -15195,13 +15591,13 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 139) ) { return current; }
-            // InternalSCL.g:5182:28: ( (enumLiteral_0= '||' ) )
-            // InternalSCL.g:5183:1: (enumLiteral_0= '||' )
+            // InternalSCL.g:5382:28: ( (enumLiteral_0= '||' ) )
+            // InternalSCL.g:5383:1: (enumLiteral_0= '||' )
             {
-            // InternalSCL.g:5183:1: (enumLiteral_0= '||' )
-            // InternalSCL.g:5183:3: enumLiteral_0= '||'
+            // InternalSCL.g:5383:1: (enumLiteral_0= '||' )
+            // InternalSCL.g:5383:3: enumLiteral_0= '||'
             {
-            enumLiteral_0=(Token)match(input,68,FOLLOW_2); if (state.failed) return current;
+            enumLiteral_0=(Token)match(input,49,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current = grammarAccess.getLogicalOrOperatorAccess().getLOGICAL_OREnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -15232,7 +15628,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLogicalAndOperator"
-    // InternalSCL.g:5193:1: ruleLogicalAndOperator returns [Enumerator current=null] : (enumLiteral_0= '&&' ) ;
+    // InternalSCL.g:5393:1: ruleLogicalAndOperator returns [Enumerator current=null] : (enumLiteral_0= '&&' ) ;
     public final Enumerator ruleLogicalAndOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleLogicalAndOperator_StartIndex = input.index();
@@ -15241,13 +15637,13 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 140) ) { return current; }
-            // InternalSCL.g:5195:28: ( (enumLiteral_0= '&&' ) )
-            // InternalSCL.g:5196:1: (enumLiteral_0= '&&' )
+            // InternalSCL.g:5395:28: ( (enumLiteral_0= '&&' ) )
+            // InternalSCL.g:5396:1: (enumLiteral_0= '&&' )
             {
-            // InternalSCL.g:5196:1: (enumLiteral_0= '&&' )
-            // InternalSCL.g:5196:3: enumLiteral_0= '&&'
+            // InternalSCL.g:5396:1: (enumLiteral_0= '&&' )
+            // InternalSCL.g:5396:3: enumLiteral_0= '&&'
             {
-            enumLiteral_0=(Token)match(input,69,FOLLOW_2); if (state.failed) return current;
+            enumLiteral_0=(Token)match(input,50,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current = grammarAccess.getLogicalAndOperatorAccess().getLOGICAL_ANDEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -15278,7 +15674,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleValueType"
-    // InternalSCL.g:5210:1: ruleValueType returns [Enumerator current=null] : ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) ) ;
+    // InternalSCL.g:5410:1: ruleValueType returns [Enumerator current=null] : ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) ) ;
     public final Enumerator ruleValueType() throws RecognitionException {
         Enumerator current = null;
         int ruleValueType_StartIndex = input.index();
@@ -15293,10 +15689,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 141) ) { return current; }
-            // InternalSCL.g:5212:28: ( ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) ) )
-            // InternalSCL.g:5213:1: ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) )
+            // InternalSCL.g:5412:28: ( ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) ) )
+            // InternalSCL.g:5413:1: ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) )
             {
-            // InternalSCL.g:5213:1: ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) )
+            // InternalSCL.g:5413:1: ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) )
             int alt99=7;
             switch ( input.LA(1) ) {
             case 70:
@@ -15344,10 +15740,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             switch (alt99) {
                 case 1 :
-                    // InternalSCL.g:5213:2: (enumLiteral_0= 'pure' )
+                    // InternalSCL.g:5413:2: (enumLiteral_0= 'pure' )
                     {
-                    // InternalSCL.g:5213:2: (enumLiteral_0= 'pure' )
-                    // InternalSCL.g:5213:4: enumLiteral_0= 'pure'
+                    // InternalSCL.g:5413:2: (enumLiteral_0= 'pure' )
+                    // InternalSCL.g:5413:4: enumLiteral_0= 'pure'
                     {
                     enumLiteral_0=(Token)match(input,70,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -15363,10 +15759,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSCL.g:5219:6: (enumLiteral_1= 'bool' )
+                    // InternalSCL.g:5419:6: (enumLiteral_1= 'bool' )
                     {
-                    // InternalSCL.g:5219:6: (enumLiteral_1= 'bool' )
-                    // InternalSCL.g:5219:8: enumLiteral_1= 'bool'
+                    // InternalSCL.g:5419:6: (enumLiteral_1= 'bool' )
+                    // InternalSCL.g:5419:8: enumLiteral_1= 'bool'
                     {
                     enumLiteral_1=(Token)match(input,71,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -15382,10 +15778,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalSCL.g:5225:6: (enumLiteral_2= 'unsigned' )
+                    // InternalSCL.g:5425:6: (enumLiteral_2= 'unsigned' )
                     {
-                    // InternalSCL.g:5225:6: (enumLiteral_2= 'unsigned' )
-                    // InternalSCL.g:5225:8: enumLiteral_2= 'unsigned'
+                    // InternalSCL.g:5425:6: (enumLiteral_2= 'unsigned' )
+                    // InternalSCL.g:5425:8: enumLiteral_2= 'unsigned'
                     {
                     enumLiteral_2=(Token)match(input,72,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -15401,10 +15797,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalSCL.g:5231:6: (enumLiteral_3= 'int' )
+                    // InternalSCL.g:5431:6: (enumLiteral_3= 'int' )
                     {
-                    // InternalSCL.g:5231:6: (enumLiteral_3= 'int' )
-                    // InternalSCL.g:5231:8: enumLiteral_3= 'int'
+                    // InternalSCL.g:5431:6: (enumLiteral_3= 'int' )
+                    // InternalSCL.g:5431:8: enumLiteral_3= 'int'
                     {
                     enumLiteral_3=(Token)match(input,73,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -15420,10 +15816,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalSCL.g:5237:6: (enumLiteral_4= 'float' )
+                    // InternalSCL.g:5437:6: (enumLiteral_4= 'float' )
                     {
-                    // InternalSCL.g:5237:6: (enumLiteral_4= 'float' )
-                    // InternalSCL.g:5237:8: enumLiteral_4= 'float'
+                    // InternalSCL.g:5437:6: (enumLiteral_4= 'float' )
+                    // InternalSCL.g:5437:8: enumLiteral_4= 'float'
                     {
                     enumLiteral_4=(Token)match(input,74,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -15439,10 +15835,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalSCL.g:5243:6: (enumLiteral_5= 'string' )
+                    // InternalSCL.g:5443:6: (enumLiteral_5= 'string' )
                     {
-                    // InternalSCL.g:5243:6: (enumLiteral_5= 'string' )
-                    // InternalSCL.g:5243:8: enumLiteral_5= 'string'
+                    // InternalSCL.g:5443:6: (enumLiteral_5= 'string' )
+                    // InternalSCL.g:5443:8: enumLiteral_5= 'string'
                     {
                     enumLiteral_5=(Token)match(input,75,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -15458,10 +15854,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalSCL.g:5249:6: (enumLiteral_6= 'host' )
+                    // InternalSCL.g:5449:6: (enumLiteral_6= 'host' )
                     {
-                    // InternalSCL.g:5249:6: (enumLiteral_6= 'host' )
-                    // InternalSCL.g:5249:8: enumLiteral_6= 'host'
+                    // InternalSCL.g:5449:6: (enumLiteral_6= 'host' )
+                    // InternalSCL.g:5449:8: enumLiteral_6= 'host'
                     {
                     enumLiteral_6=(Token)match(input,76,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -15500,7 +15896,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCombineOperator"
-    // InternalSCL.g:5261:1: ruleCombineOperator returns [Enumerator current=null] : ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) ) ;
+    // InternalSCL.g:5461:1: ruleCombineOperator returns [Enumerator current=null] : ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) ) ;
     public final Enumerator ruleCombineOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleCombineOperator_StartIndex = input.index();
@@ -15516,10 +15912,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 142) ) { return current; }
-            // InternalSCL.g:5263:28: ( ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) ) )
-            // InternalSCL.g:5264:1: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
+            // InternalSCL.g:5463:28: ( ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) ) )
+            // InternalSCL.g:5464:1: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
             {
-            // InternalSCL.g:5264:1: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
+            // InternalSCL.g:5464:1: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
             int alt100=8;
             switch ( input.LA(1) ) {
             case 77:
@@ -15527,12 +15923,12 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                 alt100=1;
                 }
                 break;
-            case 63:
+            case 53:
                 {
                 alt100=2;
                 }
                 break;
-            case 64:
+            case 55:
                 {
                 alt100=3;
                 }
@@ -15547,12 +15943,12 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                 alt100=5;
                 }
                 break;
-            case 62:
+            case 51:
                 {
                 alt100=6;
                 }
                 break;
-            case 50:
+            case 52:
                 {
                 alt100=7;
                 }
@@ -15572,10 +15968,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             switch (alt100) {
                 case 1 :
-                    // InternalSCL.g:5264:2: (enumLiteral_0= 'none' )
+                    // InternalSCL.g:5464:2: (enumLiteral_0= 'none' )
                     {
-                    // InternalSCL.g:5264:2: (enumLiteral_0= 'none' )
-                    // InternalSCL.g:5264:4: enumLiteral_0= 'none'
+                    // InternalSCL.g:5464:2: (enumLiteral_0= 'none' )
+                    // InternalSCL.g:5464:4: enumLiteral_0= 'none'
                     {
                     enumLiteral_0=(Token)match(input,77,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -15591,12 +15987,12 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSCL.g:5270:6: (enumLiteral_1= '+' )
+                    // InternalSCL.g:5470:6: (enumLiteral_1= '+' )
                     {
-                    // InternalSCL.g:5270:6: (enumLiteral_1= '+' )
-                    // InternalSCL.g:5270:8: enumLiteral_1= '+'
+                    // InternalSCL.g:5470:6: (enumLiteral_1= '+' )
+                    // InternalSCL.g:5470:8: enumLiteral_1= '+'
                     {
-                    enumLiteral_1=(Token)match(input,63,FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_1=(Token)match(input,53,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getADDEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -15610,12 +16006,12 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalSCL.g:5276:6: (enumLiteral_2= '*' )
+                    // InternalSCL.g:5476:6: (enumLiteral_2= '*' )
                     {
-                    // InternalSCL.g:5276:6: (enumLiteral_2= '*' )
-                    // InternalSCL.g:5276:8: enumLiteral_2= '*'
+                    // InternalSCL.g:5476:6: (enumLiteral_2= '*' )
+                    // InternalSCL.g:5476:8: enumLiteral_2= '*'
                     {
-                    enumLiteral_2=(Token)match(input,64,FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_2=(Token)match(input,55,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getMULTEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -15629,10 +16025,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalSCL.g:5282:6: (enumLiteral_3= 'max' )
+                    // InternalSCL.g:5482:6: (enumLiteral_3= 'max' )
                     {
-                    // InternalSCL.g:5282:6: (enumLiteral_3= 'max' )
-                    // InternalSCL.g:5282:8: enumLiteral_3= 'max'
+                    // InternalSCL.g:5482:6: (enumLiteral_3= 'max' )
+                    // InternalSCL.g:5482:8: enumLiteral_3= 'max'
                     {
                     enumLiteral_3=(Token)match(input,78,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -15648,10 +16044,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalSCL.g:5288:6: (enumLiteral_4= 'min' )
+                    // InternalSCL.g:5488:6: (enumLiteral_4= 'min' )
                     {
-                    // InternalSCL.g:5288:6: (enumLiteral_4= 'min' )
-                    // InternalSCL.g:5288:8: enumLiteral_4= 'min'
+                    // InternalSCL.g:5488:6: (enumLiteral_4= 'min' )
+                    // InternalSCL.g:5488:8: enumLiteral_4= 'min'
                     {
                     enumLiteral_4=(Token)match(input,79,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -15667,12 +16063,12 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalSCL.g:5294:6: (enumLiteral_5= '|' )
+                    // InternalSCL.g:5494:6: (enumLiteral_5= '|' )
                     {
-                    // InternalSCL.g:5294:6: (enumLiteral_5= '|' )
-                    // InternalSCL.g:5294:8: enumLiteral_5= '|'
+                    // InternalSCL.g:5494:6: (enumLiteral_5= '|' )
+                    // InternalSCL.g:5494:8: enumLiteral_5= '|'
                     {
-                    enumLiteral_5=(Token)match(input,62,FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_5=(Token)match(input,51,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getOREnumLiteralDeclaration_5().getEnumLiteral().getInstance();
@@ -15686,12 +16082,12 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalSCL.g:5300:6: (enumLiteral_6= '&' )
+                    // InternalSCL.g:5500:6: (enumLiteral_6= '&' )
                     {
-                    // InternalSCL.g:5300:6: (enumLiteral_6= '&' )
-                    // InternalSCL.g:5300:8: enumLiteral_6= '&'
+                    // InternalSCL.g:5500:6: (enumLiteral_6= '&' )
+                    // InternalSCL.g:5500:8: enumLiteral_6= '&'
                     {
-                    enumLiteral_6=(Token)match(input,50,FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_6=(Token)match(input,52,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getANDEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
@@ -15705,10 +16101,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // InternalSCL.g:5306:6: (enumLiteral_7= 'host' )
+                    // InternalSCL.g:5506:6: (enumLiteral_7= 'host' )
                     {
-                    // InternalSCL.g:5306:6: (enumLiteral_7= 'host' )
-                    // InternalSCL.g:5306:8: enumLiteral_7= 'host'
+                    // InternalSCL.g:5506:6: (enumLiteral_7= 'host' )
+                    // InternalSCL.g:5506:8: enumLiteral_7= 'host'
                     {
                     enumLiteral_7=(Token)match(input,76,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -16255,8 +16651,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
         EObject this_ValuedExpression_0 = null;
 
 
-        // InternalSCL.g:2570:2: (this_ValuedExpression_0= ruleValuedExpression )
-        // InternalSCL.g:2570:2: this_ValuedExpression_0= ruleValuedExpression
+        // InternalSCL.g:2658:2: (this_ValuedExpression_0= ruleValuedExpression )
+        // InternalSCL.g:2658:2: this_ValuedExpression_0= ruleValuedExpression
         {
         if ( state.backtracking==0 ) {
            
@@ -16280,11 +16676,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
         EObject this_ValuedExpression_4 = null;
 
 
-        // InternalSCL.g:3328:6: ( (otherlv_3= '(' this_ValuedExpression_4= ruleValuedExpression otherlv_5= ')' ) )
-        // InternalSCL.g:3328:6: (otherlv_3= '(' this_ValuedExpression_4= ruleValuedExpression otherlv_5= ')' )
+        // InternalSCL.g:3526:6: ( (otherlv_3= '(' this_ValuedExpression_4= ruleValuedExpression otherlv_5= ')' ) )
+        // InternalSCL.g:3526:6: (otherlv_3= '(' this_ValuedExpression_4= ruleValuedExpression otherlv_5= ')' )
         {
-        // InternalSCL.g:3328:6: (otherlv_3= '(' this_ValuedExpression_4= ruleValuedExpression otherlv_5= ')' )
-        // InternalSCL.g:3328:8: otherlv_3= '(' this_ValuedExpression_4= ruleValuedExpression otherlv_5= ')'
+        // InternalSCL.g:3526:6: (otherlv_3= '(' this_ValuedExpression_4= ruleValuedExpression otherlv_5= ')' )
+        // InternalSCL.g:3526:8: otherlv_3= '(' this_ValuedExpression_4= ruleValuedExpression otherlv_5= ')'
         {
         otherlv_3=(Token)match(input,44,FOLLOW_51); if (state.failed) return ;
         pushFollow(FOLLOW_37);
@@ -16560,11 +16956,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
     protected DFA86 dfa86 = new DFA86(this);
     static final String dfa_1s = "\14\uffff";
     static final String dfa_2s = "\1\4\10\0\3\uffff";
-    static final String dfa_3s = "\1\63\10\0\3\uffff";
+    static final String dfa_3s = "\1\73\10\0\3\uffff";
     static final String dfa_4s = "\11\uffff\1\3\1\1\1\2";
     static final String dfa_5s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\3\uffff}>";
     static final String[] dfa_6s = {
-            "\1\3\5\uffff\1\1\6\uffff\1\10\1\uffff\1\11\4\uffff\1\4\3\uffff\1\5\1\uffff\1\6\2\uffff\1\7\21\uffff\1\2",
+            "\1\3\5\uffff\1\1\6\uffff\1\10\1\uffff\1\11\4\uffff\1\4\3\uffff\1\5\1\uffff\1\6\2\uffff\1\7\31\uffff\1\2",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -16740,60 +17136,60 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
         }
     }
     static final String dfa_7s = "\61\uffff";
-    static final String dfa_8s = "\3\4\2\uffff\2\4\2\6\11\4\1\6\1\4\1\26\5\4\1\6\2\4\1\6\2\26\7\4\1\6\6\4\1\6\2\4";
-    static final String dfa_9s = "\2\114\1\4\2\uffff\1\114\1\4\1\6\1\7\2\114\1\4\5\114\1\4\1\6\1\11\1\65\4\114\1\4\1\6\1\11\1\4\1\6\1\65\1\26\5\114\1\11\1\4\1\6\5\114\1\4\1\6\2\114";
+    static final String dfa_8s = "\3\4\2\uffff\2\4\1\6\3\4\1\6\5\4\1\26\2\4\1\6\1\4\1\6\5\4\2\26\4\4\1\6\2\4\1\6\10\4\1\6\2\4";
+    static final String dfa_9s = "\2\114\1\4\2\uffff\1\114\1\4\1\6\1\4\2\114\1\7\5\114\1\75\1\11\1\4\1\6\1\4\1\6\1\11\4\114\1\75\1\26\3\114\1\4\1\6\1\11\1\4\1\6\7\114\1\4\1\6\2\114";
     static final String dfa_10s = "\3\uffff\1\2\1\1\54\uffff";
     static final String dfa_11s = "\61\uffff}>";
     static final String[] dfa_12s = {
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\1\uffff\3\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\11\uffff\1\2\22\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\11\uffff\1\2\22\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\1\uffff\3\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\21\uffff\1\2\12\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\21\uffff\1\2\12\uffff\7\4",
             "\1\5",
             "",
             "",
-            "\1\12\1\uffff\1\15\1\11\1\16\1\14\1\1\6\uffff\1\3\3\uffff\1\13\2\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\11\uffff\1\2\1\6\1\7\1\10\17\uffff\7\4",
+            "\1\12\1\uffff\1\14\1\16\1\15\1\11\1\1\6\uffff\1\3\3\uffff\1\10\2\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\14\uffff\1\13\4\uffff\1\2\1\6\1\7\10\uffff\7\4",
             "\1\17",
             "\1\20",
-            "\1\15\1\11",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\11\uffff\1\2\22\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\2\uffff\2\3\1\uffff\2\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\23\10\uffff\1\2\1\21\1\22\20\uffff\7\4",
-            "\1\24",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\23\10\uffff\1\2\22\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\11\uffff\1\2\22\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\11\uffff\1\2\22\uffff\7\4",
-            "\1\12\1\uffff\1\15\1\11\1\16\1\14\1\1\6\uffff\1\3\3\uffff\1\13\2\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\11\uffff\1\2\1\6\1\7\1\10\17\uffff\7\4",
-            "\1\12\1\uffff\1\15\1\11\1\16\1\14\1\1\6\uffff\1\3\3\uffff\1\13\2\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\11\uffff\1\2\2\uffff\1\10\17\uffff\7\4",
-            "\1\25",
-            "\1\26",
-            "\1\30\4\uffff\1\27",
-            "\1\33\35\uffff\1\31\1\32",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\23\10\uffff\1\2\1\21\1\22\20\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\23\10\uffff\1\2\22\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\23\10\uffff\1\2\22\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\23\10\uffff\1\2\1\34\1\35\20\uffff\7\4",
-            "\1\36",
-            "\1\37",
-            "\1\41\3\uffff\1\42\1\40",
-            "\1\43",
-            "\1\44",
-            "\1\33\35\uffff\1\31\1\32",
+            "\1\21",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\20\uffff\1\2\12\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\2\uffff\2\3\1\uffff\2\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\20\uffff\1\2\1\23\1\24\10\uffff\7\4",
+            "\1\14\1\16",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\21\uffff\1\2\12\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\21\uffff\1\2\12\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\21\uffff\1\2\12\uffff\7\4",
+            "\1\12\1\uffff\1\14\1\16\1\15\1\11\1\1\6\uffff\1\3\3\uffff\1\10\2\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\14\uffff\1\13\4\uffff\1\2\1\6\1\7\10\uffff\7\4",
+            "\1\12\1\uffff\1\14\1\16\1\15\1\11\1\1\6\uffff\1\3\3\uffff\1\10\2\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\14\uffff\1\13\4\uffff\1\2\12\uffff\7\4",
+            "\1\27\45\uffff\1\25\1\26",
+            "\1\31\4\uffff\1\30",
+            "\1\32",
             "\1\33",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\45\10\uffff\1\2\22\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\45\10\uffff\1\2\1\46\1\47\20\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\45\10\uffff\1\2\22\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\23\10\uffff\1\2\1\34\1\35\20\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\23\10\uffff\1\2\22\uffff\7\4",
+            "\1\34",
+            "\1\35",
+            "\1\37\3\uffff\1\40\1\36",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\20\uffff\1\2\12\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\20\uffff\1\2\1\41\1\42\10\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\20\uffff\1\2\1\23\1\24\10\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\20\uffff\1\2\12\uffff\7\4",
+            "\1\27\45\uffff\1\25\1\26",
+            "\1\27",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\20\uffff\1\2\12\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\20\uffff\1\2\1\44\1\45\10\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\20\uffff\1\2\12\uffff\7\4",
+            "\1\46",
+            "\1\47",
             "\1\51\3\uffff\1\52\1\50",
             "\1\53",
             "\1\54",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\45\10\uffff\1\2\22\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\45\10\uffff\1\2\1\55\1\56\20\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\45\10\uffff\1\2\22\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\45\10\uffff\1\2\1\46\1\47\20\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\45\10\uffff\1\2\22\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\20\uffff\1\2\1\41\1\42\10\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\20\uffff\1\2\12\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\20\uffff\1\2\12\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\20\uffff\1\2\1\55\1\56\10\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\20\uffff\1\2\12\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\20\uffff\1\2\1\44\1\45\10\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\20\uffff\1\2\12\uffff\7\4",
             "\1\57",
             "\1\60",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\45\10\uffff\1\2\1\55\1\56\20\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\45\10\uffff\1\2\22\uffff\7\4"
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\20\uffff\1\2\1\55\1\56\10\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\20\uffff\1\2\12\uffff\7\4"
     };
 
     static final short[] dfa_7 = DFA.unpackEncodedString(dfa_7s);
@@ -16822,11 +17218,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
     }
     static final String dfa_13s = "\15\uffff";
     static final String dfa_14s = "\1\4\10\0\4\uffff";
-    static final String dfa_15s = "\1\63\10\0\4\uffff";
+    static final String dfa_15s = "\1\73\10\0\4\uffff";
     static final String dfa_16s = "\11\uffff\1\3\1\uffff\1\1\1\2";
     static final String dfa_17s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\4\uffff}>";
     static final String[] dfa_18s = {
-            "\1\3\5\uffff\1\1\6\uffff\1\10\6\uffff\1\4\1\uffff\2\11\1\5\1\uffff\1\6\2\uffff\1\7\21\uffff\1\2",
+            "\1\3\5\uffff\1\1\6\uffff\1\10\6\uffff\1\4\1\uffff\2\11\1\5\1\uffff\1\6\2\uffff\1\7\31\uffff\1\2",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -17002,58 +17398,58 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_19s = "\3\4\2\uffff\2\4\1\6\3\4\1\6\5\4\1\26\2\4\1\6\1\4\1\6\5\4\2\26\4\4\1\6\2\4\1\6\10\4\1\6\2\4";
-    static final String dfa_20s = "\2\114\1\4\2\uffff\1\114\1\4\1\6\1\4\2\114\1\7\5\114\1\65\1\11\1\4\1\6\1\4\1\6\1\11\4\114\1\65\1\26\3\114\1\4\1\6\1\11\1\4\1\6\7\114\1\4\1\6\2\114";
+    static final String dfa_19s = "\3\4\2\uffff\2\4\1\6\2\4\1\6\7\4\1\6\1\4\1\26\5\4\1\6\2\4\1\6\2\26\7\4\1\6\6\4\1\6\2\4";
+    static final String dfa_20s = "\2\114\1\4\2\uffff\1\114\1\4\1\6\2\114\1\7\1\114\1\4\4\114\1\4\1\6\1\11\1\75\4\114\1\4\1\6\1\11\1\4\1\6\1\75\1\26\5\114\1\11\1\4\1\6\5\114\1\4\1\6\2\114";
     static final String[] dfa_21s = {
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\2\uffff\2\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\11\uffff\1\2\22\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\11\uffff\1\2\22\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\2\uffff\2\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\21\uffff\1\2\12\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\21\uffff\1\2\12\uffff\7\4",
             "\1\5",
             "",
             "",
-            "\1\12\1\uffff\1\14\1\16\1\15\1\11\1\1\6\uffff\1\3\3\uffff\1\10\2\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\11\uffff\1\2\1\6\1\7\1\13\17\uffff\7\4",
+            "\1\11\1\uffff\1\16\1\13\1\10\1\15\1\1\6\uffff\1\3\3\uffff\1\14\2\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\14\uffff\1\12\4\uffff\1\2\1\6\1\7\10\uffff\7\4",
             "\1\17",
             "\1\20",
-            "\1\21",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\10\uffff\1\2\22\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\2\uffff\2\3\1\uffff\2\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\10\uffff\1\2\1\23\1\24\20\uffff\7\4",
-            "\1\14\1\16",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\11\uffff\1\2\22\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\11\uffff\1\2\22\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\11\uffff\1\2\22\uffff\7\4",
-            "\1\12\1\uffff\1\14\1\16\1\15\1\11\1\1\6\uffff\1\3\3\uffff\1\10\2\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\11\uffff\1\2\1\6\1\7\1\13\17\uffff\7\4",
-            "\1\12\1\uffff\1\14\1\16\1\15\1\11\1\1\6\uffff\1\3\3\uffff\1\10\2\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\11\uffff\1\2\2\uffff\1\13\17\uffff\7\4",
-            "\1\27\35\uffff\1\25\1\26",
-            "\1\31\4\uffff\1\30",
-            "\1\32",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\21\uffff\1\2\12\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\2\uffff\2\3\1\uffff\2\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\23\20\uffff\1\2\1\21\1\22\10\uffff\7\4",
+            "\1\16\1\13",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\21\uffff\1\2\12\uffff\7\4",
+            "\1\24",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\23\20\uffff\1\2\12\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\21\uffff\1\2\12\uffff\7\4",
+            "\1\11\1\uffff\1\16\1\13\1\10\1\15\1\1\6\uffff\1\3\3\uffff\1\14\2\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\14\uffff\1\12\4\uffff\1\2\1\6\1\7\10\uffff\7\4",
+            "\1\11\1\uffff\1\16\1\13\1\10\1\15\1\1\6\uffff\1\3\3\uffff\1\14\2\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\14\uffff\1\12\4\uffff\1\2\12\uffff\7\4",
+            "\1\25",
+            "\1\26",
+            "\1\30\4\uffff\1\27",
+            "\1\33\45\uffff\1\31\1\32",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\23\20\uffff\1\2\1\21\1\22\10\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\23\20\uffff\1\2\12\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\23\20\uffff\1\2\12\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\23\20\uffff\1\2\1\34\1\35\10\uffff\7\4",
+            "\1\36",
+            "\1\37",
+            "\1\41\3\uffff\1\42\1\40",
+            "\1\43",
+            "\1\44",
+            "\1\33\45\uffff\1\31\1\32",
             "\1\33",
-            "\1\34",
-            "\1\35",
-            "\1\37\3\uffff\1\40\1\36",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\10\uffff\1\2\22\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\10\uffff\1\2\1\41\1\42\20\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\10\uffff\1\2\1\23\1\24\20\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\10\uffff\1\2\22\uffff\7\4",
-            "\1\27\35\uffff\1\25\1\26",
-            "\1\27",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\10\uffff\1\2\22\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\10\uffff\1\2\1\44\1\45\20\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\10\uffff\1\2\22\uffff\7\4",
-            "\1\46",
-            "\1\47",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\45\20\uffff\1\2\12\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\45\20\uffff\1\2\1\46\1\47\10\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\45\20\uffff\1\2\12\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\23\20\uffff\1\2\1\34\1\35\10\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\23\20\uffff\1\2\12\uffff\7\4",
             "\1\51\3\uffff\1\52\1\50",
             "\1\53",
             "\1\54",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\10\uffff\1\2\1\41\1\42\20\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\10\uffff\1\2\22\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\10\uffff\1\2\22\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\10\uffff\1\2\1\55\1\56\20\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\10\uffff\1\2\22\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\10\uffff\1\2\1\44\1\45\20\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\10\uffff\1\2\22\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\45\20\uffff\1\2\12\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\45\20\uffff\1\2\1\55\1\56\10\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\45\20\uffff\1\2\12\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\45\20\uffff\1\2\1\46\1\47\10\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\45\20\uffff\1\2\12\uffff\7\4",
             "\1\57",
             "\1\60",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\10\uffff\1\2\1\55\1\56\20\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\10\uffff\1\2\22\uffff\7\4"
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\45\20\uffff\1\2\1\55\1\56\10\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\45\20\uffff\1\2\12\uffff\7\4"
     };
     static final char[] dfa_19 = DFA.unpackEncodedStringToUnsignedChars(dfa_19s);
     static final char[] dfa_20 = DFA.unpackEncodedStringToUnsignedChars(dfa_20s);
@@ -17077,7 +17473,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
         }
     }
     static final String[] dfa_22s = {
-            "\1\3\5\uffff\1\1\6\uffff\1\10\6\uffff\1\4\2\uffff\1\11\1\5\1\uffff\1\6\2\uffff\1\7\21\uffff\1\2",
+            "\1\3\5\uffff\1\1\6\uffff\1\10\6\uffff\1\4\2\uffff\1\11\1\5\1\uffff\1\6\2\uffff\1\7\31\uffff\1\2",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -17247,59 +17643,59 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
         }
     }
     static final String dfa_23s = "\1\4\60\uffff";
-    static final String dfa_24s = "\3\4\2\uffff\2\4\2\6\10\4\1\26\2\4\1\6\1\4\1\6\5\4\2\26\4\4\1\6\2\4\1\6\10\4\1\6\2\4";
-    static final String dfa_25s = "\2\63\1\4\2\uffff\1\66\1\4\1\6\1\7\2\63\1\4\1\63\1\65\1\63\2\66\1\65\1\11\1\4\1\6\1\4\1\6\1\11\1\63\2\65\1\63\1\65\1\26\1\63\1\65\1\63\1\4\1\6\1\11\1\4\1\6\1\65\2\63\1\65\1\63\1\65\1\63\1\4\1\6\1\65\1\63";
+    static final String dfa_24s = "\3\4\2\uffff\2\4\2\6\11\4\1\6\1\4\1\26\5\4\1\6\2\4\1\6\2\26\7\4\1\6\6\4\1\6\2\4";
+    static final String dfa_25s = "\2\73\1\4\2\uffff\1\75\1\4\1\6\1\7\3\73\1\75\1\4\1\73\1\75\1\73\1\4\1\6\1\11\2\75\2\73\1\75\1\4\1\6\1\11\1\4\1\6\1\75\1\26\1\73\1\75\1\73\1\75\1\73\1\11\1\4\1\6\1\73\1\75\1\73\1\75\1\73\1\4\1\6\1\75\1\73";
     static final String dfa_26s = "\3\uffff\1\1\1\2\54\uffff";
     static final String[] dfa_27s = {
-            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\4\4\21\uffff\1\2",
-            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\21\uffff\1\2",
+            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\4\4\31\uffff\1\2",
+            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\31\uffff\1\2",
             "\1\5",
             "",
             "",
-            "\1\15\1\uffff\1\11\1\16\1\12\1\14\1\1\6\uffff\1\4\3\uffff\1\13\2\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\21\uffff\1\2\1\6\1\7\1\10",
+            "\1\14\1\uffff\1\11\1\13\1\12\1\16\1\1\6\uffff\1\4\3\uffff\1\15\2\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\24\uffff\1\10\4\uffff\1\2\1\6\1\7",
             "\1\17",
             "\1\20",
-            "\1\11\1\16",
-            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\21\uffff\1\2",
-            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\21\uffff\1\2",
-            "\1\21",
-            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\22\10\uffff\1\2",
-            "\1\4\5\uffff\1\1\6\uffff\1\4\2\uffff\2\4\1\uffff\2\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\22\10\uffff\1\2\1\23\1\24",
-            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\21\uffff\1\2",
-            "\1\15\1\uffff\1\11\1\16\1\12\1\14\1\1\6\uffff\1\4\3\uffff\1\13\2\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\21\uffff\1\2\1\6\1\7\1\10",
-            "\1\15\1\uffff\1\11\1\16\1\12\1\14\1\1\6\uffff\1\4\3\uffff\1\13\2\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\21\uffff\1\2\2\uffff\1\10",
-            "\1\27\35\uffff\1\25\1\26",
-            "\1\31\4\uffff\1\30",
-            "\1\32",
+            "\1\11\1\13",
+            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\31\uffff\1\2",
+            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\31\uffff\1\2",
+            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\31\uffff\1\2",
+            "\1\4\5\uffff\1\1\6\uffff\1\4\2\uffff\2\4\1\uffff\2\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\23\20\uffff\1\2\1\21\1\22",
+            "\1\24",
+            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\23\20\uffff\1\2",
+            "\1\14\1\uffff\1\11\1\13\1\12\1\16\1\1\6\uffff\1\4\3\uffff\1\15\2\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\24\uffff\1\10\4\uffff\1\2\1\6\1\7",
+            "\1\14\1\uffff\1\11\1\13\1\12\1\16\1\1\6\uffff\1\4\3\uffff\1\15\2\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\24\uffff\1\10\4\uffff\1\2",
+            "\1\25",
+            "\1\26",
+            "\1\30\4\uffff\1\27",
+            "\1\33\45\uffff\1\31\1\32",
+            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\23\20\uffff\1\2\1\21\1\22",
+            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\23\20\uffff\1\2",
+            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\23\20\uffff\1\2",
+            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\23\20\uffff\1\2\1\34\1\35",
+            "\1\36",
+            "\1\37",
+            "\1\41\3\uffff\1\42\1\40",
+            "\1\43",
+            "\1\44",
+            "\1\33\45\uffff\1\31\1\32",
             "\1\33",
-            "\1\34",
-            "\1\35",
-            "\1\37\3\uffff\1\40\1\36",
-            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\22\10\uffff\1\2",
-            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\22\10\uffff\1\2\1\41\1\42",
-            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\22\10\uffff\1\2\1\23\1\24",
-            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\22\10\uffff\1\2",
-            "\1\27\35\uffff\1\25\1\26",
-            "\1\27",
-            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\43\10\uffff\1\2",
-            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\43\10\uffff\1\2\1\44\1\45",
-            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\43\10\uffff\1\2",
-            "\1\46",
-            "\1\47",
+            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\45\20\uffff\1\2",
+            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\45\20\uffff\1\2\1\46\1\47",
+            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\45\20\uffff\1\2",
+            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\23\20\uffff\1\2\1\34\1\35",
+            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\23\20\uffff\1\2",
             "\1\51\3\uffff\1\52\1\50",
             "\1\53",
             "\1\54",
-            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\22\10\uffff\1\2\1\41\1\42",
-            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\22\10\uffff\1\2",
-            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\43\10\uffff\1\2",
-            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\43\10\uffff\1\2\1\55\1\56",
-            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\43\10\uffff\1\2",
-            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\43\10\uffff\1\2\1\44\1\45",
-            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\43\10\uffff\1\2",
+            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\45\20\uffff\1\2",
+            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\45\20\uffff\1\2\1\55\1\56",
+            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\45\20\uffff\1\2",
+            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\45\20\uffff\1\2\1\46\1\47",
+            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\45\20\uffff\1\2",
             "\1\57",
             "\1\60",
-            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\43\10\uffff\1\2\1\55\1\56",
-            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\43\10\uffff\1\2"
+            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\45\20\uffff\1\2\1\55\1\56",
+            "\1\4\5\uffff\1\1\6\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\10\uffff\1\45\20\uffff\1\2"
     };
     static final short[] dfa_23 = DFA.unpackEncodedString(dfa_23s);
     static final char[] dfa_24 = DFA.unpackEncodedStringToUnsignedChars(dfa_24s);
@@ -17327,11 +17723,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
     static final String dfa_28s = "\16\uffff";
     static final String dfa_29s = "\1\11\15\uffff";
     static final String dfa_30s = "\1\4\10\0\5\uffff";
-    static final String dfa_31s = "\1\63\10\0\5\uffff";
+    static final String dfa_31s = "\1\73\10\0\5\uffff";
     static final String dfa_32s = "\11\uffff\1\3\2\uffff\1\1\1\2";
     static final String dfa_33s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\5\uffff}>";
     static final String[] dfa_34s = {
-            "\1\3\5\uffff\1\1\6\uffff\1\10\6\uffff\1\4\3\uffff\1\5\1\uffff\1\6\2\11\1\7\21\uffff\1\2",
+            "\1\3\5\uffff\1\1\6\uffff\1\10\6\uffff\1\4\3\uffff\1\5\1\uffff\1\6\2\11\1\7\31\uffff\1\2",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -17509,60 +17905,58 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_35s = "\2\114\1\4\2\uffff\1\114\1\4\1\6\1\7\1\114\1\4\6\114\1\65\1\11\1\4\1\6\1\4\1\6\1\11\4\114\1\65\1\26\3\114\1\4\1\6\1\11\1\4\1\6\7\114\1\4\1\6\2\114";
-    static final String[] dfa_36s = {
-            "\1\3\5\uffff\1\1\6\uffff\1\3\1\uffff\1\3\4\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\11\uffff\1\2\22\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\11\uffff\1\2\22\uffff\7\4",
+    static final String[] dfa_35s = {
+            "\1\3\5\uffff\1\1\6\uffff\1\3\1\uffff\1\3\4\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\21\uffff\1\2\12\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\21\uffff\1\2\12\uffff\7\4",
             "\1\5",
             "",
             "",
-            "\1\14\1\uffff\1\15\1\11\1\16\1\13\1\1\6\uffff\1\3\3\uffff\1\12\2\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\11\uffff\1\2\1\6\1\7\1\10\17\uffff\7\4",
+            "\1\12\1\uffff\1\14\1\16\1\15\1\11\1\1\6\uffff\1\3\3\uffff\1\10\2\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\14\uffff\1\13\4\uffff\1\2\1\6\1\7\10\uffff\7\4",
             "\1\17",
             "\1\20",
-            "\1\15\1\11",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\11\uffff\1\2\22\uffff\7\4",
             "\1\21",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\10\uffff\1\2\22\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\2\uffff\2\3\1\uffff\2\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\10\uffff\1\2\1\23\1\24\20\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\11\uffff\1\2\22\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\11\uffff\1\2\22\uffff\7\4",
-            "\1\14\1\uffff\1\15\1\11\1\16\1\13\1\1\6\uffff\1\3\3\uffff\1\12\2\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\11\uffff\1\2\1\6\1\7\1\10\17\uffff\7\4",
-            "\1\14\1\uffff\1\15\1\11\1\16\1\13\1\1\6\uffff\1\3\3\uffff\1\12\2\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\11\uffff\1\2\2\uffff\1\10\17\uffff\7\4",
-            "\1\27\35\uffff\1\25\1\26",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\20\uffff\1\2\12\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\2\uffff\2\3\1\uffff\2\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\20\uffff\1\2\1\23\1\24\10\uffff\7\4",
+            "\1\14\1\16",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\21\uffff\1\2\12\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\21\uffff\1\2\12\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\21\uffff\1\2\12\uffff\7\4",
+            "\1\12\1\uffff\1\14\1\16\1\15\1\11\1\1\6\uffff\1\3\3\uffff\1\10\2\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\14\uffff\1\13\4\uffff\1\2\1\6\1\7\10\uffff\7\4",
+            "\1\12\1\uffff\1\14\1\16\1\15\1\11\1\1\6\uffff\1\3\3\uffff\1\10\2\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\14\uffff\1\13\4\uffff\1\2\12\uffff\7\4",
+            "\1\27\45\uffff\1\25\1\26",
             "\1\31\4\uffff\1\30",
             "\1\32",
             "\1\33",
             "\1\34",
             "\1\35",
             "\1\37\3\uffff\1\40\1\36",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\10\uffff\1\2\22\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\10\uffff\1\2\1\41\1\42\20\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\10\uffff\1\2\1\23\1\24\20\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\10\uffff\1\2\22\uffff\7\4",
-            "\1\27\35\uffff\1\25\1\26",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\20\uffff\1\2\12\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\20\uffff\1\2\1\41\1\42\10\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\20\uffff\1\2\1\23\1\24\10\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\20\uffff\1\2\12\uffff\7\4",
+            "\1\27\45\uffff\1\25\1\26",
             "\1\27",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\10\uffff\1\2\22\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\10\uffff\1\2\1\44\1\45\20\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\10\uffff\1\2\22\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\20\uffff\1\2\12\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\20\uffff\1\2\1\44\1\45\10\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\20\uffff\1\2\12\uffff\7\4",
             "\1\46",
             "\1\47",
             "\1\51\3\uffff\1\52\1\50",
             "\1\53",
             "\1\54",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\10\uffff\1\2\1\41\1\42\20\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\10\uffff\1\2\22\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\10\uffff\1\2\22\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\10\uffff\1\2\1\55\1\56\20\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\10\uffff\1\2\22\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\10\uffff\1\2\1\44\1\45\20\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\10\uffff\1\2\22\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\20\uffff\1\2\1\41\1\42\10\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\22\20\uffff\1\2\12\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\20\uffff\1\2\12\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\20\uffff\1\2\1\55\1\56\10\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\20\uffff\1\2\12\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\20\uffff\1\2\1\44\1\45\10\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\20\uffff\1\2\12\uffff\7\4",
             "\1\57",
             "\1\60",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\10\uffff\1\2\1\55\1\56\20\uffff\7\4",
-            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\10\uffff\1\2\22\uffff\7\4"
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\20\uffff\1\2\1\55\1\56\10\uffff\7\4",
+            "\1\3\5\uffff\1\1\6\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\7\4\1\43\20\uffff\1\2\12\uffff\7\4"
     };
-    static final char[] dfa_35 = DFA.unpackEncodedStringToUnsignedChars(dfa_35s);
-    static final short[][] dfa_36 = unpackEncodedStringArray(dfa_36s);
+    static final short[][] dfa_35 = unpackEncodedStringArray(dfa_35s);
 
     class DFA25 extends DFA {
 
@@ -17571,11 +17965,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             this.decisionNumber = 25;
             this.eot = dfa_7;
             this.eof = dfa_7;
-            this.min = dfa_24;
-            this.max = dfa_35;
+            this.min = dfa_8;
+            this.max = dfa_9;
             this.accept = dfa_10;
             this.special = dfa_11;
-            this.transition = dfa_36;
+            this.transition = dfa_35;
         }
         public String getDescription() {
             return "()* loopback of 1086:1: ( (lv_declarations_2_0= ruleDeclaration ) )*";
@@ -17736,120 +18130,120 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_37s = "\112\uffff";
-    static final String dfa_38s = "\11\uffff\1\4\100\uffff";
-    static final String dfa_39s = "\3\4\2\uffff\2\4\1\6\3\4\1\6\7\4\1\6\3\4\1\26\7\4\1\6\2\4\1\6\1\4\1\6\1\4\1\6\5\4\2\26\7\4\1\26\2\4\1\6\2\4\1\6\7\4\2\26\2\4\1\6\2\4";
-    static final String dfa_40s = "\2\63\1\4\2\uffff\1\66\1\4\1\6\1\63\1\70\1\63\1\7\2\63\1\4\2\66\1\11\1\4\1\6\1\11\1\63\1\4\1\65\1\63\2\65\2\63\1\66\1\4\1\6\1\11\1\4\1\6\1\4\1\6\1\63\1\7\2\63\1\70\1\63\1\4\1\65\1\26\1\63\1\65\1\63\1\65\1\63\2\66\1\65\1\11\1\4\1\6\1\11\1\4\1\6\1\11\1\63\1\65\1\63\1\65\2\63\1\65\1\26\1\63\1\4\1\6\1\65\1\63";
-    static final String dfa_41s = "\3\uffff\1\1\1\2\105\uffff";
-    static final String dfa_42s = "\112\uffff}>";
-    static final String[] dfa_43s = {
-            "\2\4\4\uffff\1\1\27\uffff\1\3\13\uffff\1\4\4\uffff\1\2",
-            "\2\4\4\uffff\1\1\27\uffff\1\3\13\uffff\1\4\4\uffff\1\2",
+    static final String dfa_36s = "\112\uffff";
+    static final String dfa_37s = "\14\uffff\1\4\75\uffff";
+    static final String dfa_38s = "\3\4\2\uffff\2\4\2\6\10\4\1\26\2\4\1\6\4\4\1\6\7\4\2\26\4\4\1\6\1\4\2\6\10\4\1\6\5\4\1\26\7\4\1\6\2\4\1\6\2\26\3\4";
+    static final String dfa_39s = "\2\73\1\4\2\uffff\1\75\1\4\1\6\1\7\1\73\1\4\1\73\1\77\2\73\1\75\1\73\1\75\1\11\1\4\1\6\1\11\1\73\2\4\1\6\1\11\1\73\2\75\2\73\2\75\1\26\1\73\1\75\1\73\1\4\1\6\1\4\1\6\1\7\1\73\1\4\1\73\1\77\2\73\1\11\1\4\1\6\1\11\1\75\1\73\1\75\1\73\1\75\1\73\1\75\1\73\1\75\2\73\1\4\1\6\1\11\1\4\1\6\1\75\1\26\1\73\1\75\1\73";
+    static final String dfa_40s = "\3\uffff\1\1\1\2\105\uffff";
+    static final String dfa_41s = "\112\uffff}>";
+    static final String[] dfa_42s = {
+            "\2\4\4\uffff\1\1\27\uffff\1\3\13\uffff\1\4\14\uffff\1\2",
+            "\2\4\4\uffff\1\1\27\uffff\1\3\13\uffff\1\4\14\uffff\1\2",
             "\1\5",
             "",
             "",
-            "\1\11\1\4\1\14\1\15\1\12\1\10\1\1\12\uffff\1\16\14\uffff\1\3\13\uffff\1\4\4\uffff\1\2\1\6\1\7\1\13",
+            "\1\14\1\4\1\16\1\11\1\15\1\13\1\1\12\uffff\1\12\14\uffff\1\3\13\uffff\1\4\7\uffff\1\10\4\uffff\1\2\1\6\1\7",
             "\1\17",
             "\1\20",
-            "\2\4\4\uffff\1\1\27\uffff\1\3\7\uffff\1\21\3\uffff\1\4\4\uffff\1\2",
-            "\2\4\4\uffff\1\25\12\uffff\1\4\14\uffff\1\3\7\uffff\1\24\1\uffff\1\4\1\uffff\1\4\4\uffff\1\26\1\22\1\23\1\uffff\2\4",
-            "\2\4\4\uffff\1\1\27\uffff\1\3\13\uffff\1\4\4\uffff\1\2",
-            "\1\14\1\15",
-            "\2\4\4\uffff\1\1\27\uffff\1\3\13\uffff\1\4\4\uffff\1\2",
-            "\2\4\4\uffff\1\1\27\uffff\1\3\13\uffff\1\4\4\uffff\1\2",
-            "\1\27",
-            "\1\11\1\4\1\14\1\15\1\12\1\10\1\1\12\uffff\1\16\14\uffff\1\3\13\uffff\1\4\4\uffff\1\2\1\6\1\7\1\13",
-            "\1\11\1\4\1\14\1\15\1\12\1\10\1\1\12\uffff\1\16\14\uffff\1\3\13\uffff\1\4\4\uffff\1\2\2\uffff\1\13",
-            "\1\31\4\uffff\1\30",
-            "\1\32",
-            "\1\33",
-            "\1\31\4\uffff\1\34",
-            "\2\4\4\uffff\1\25\27\uffff\1\3\13\uffff\1\4\4\uffff\1\26",
+            "\1\16\1\11",
+            "\2\4\4\uffff\1\1\27\uffff\1\3\13\uffff\1\4\14\uffff\1\2",
+            "\1\21",
+            "\2\4\4\uffff\1\1\27\uffff\1\3\7\uffff\1\22\3\uffff\1\4\14\uffff\1\2",
+            "\2\4\4\uffff\1\26\12\uffff\1\4\14\uffff\1\3\7\uffff\1\25\1\uffff\1\4\1\uffff\1\4\14\uffff\1\27\1\23\1\24\2\4",
+            "\2\4\4\uffff\1\1\27\uffff\1\3\13\uffff\1\4\14\uffff\1\2",
+            "\2\4\4\uffff\1\1\27\uffff\1\3\13\uffff\1\4\14\uffff\1\2",
+            "\1\14\1\4\1\16\1\11\1\15\1\13\1\1\12\uffff\1\12\14\uffff\1\3\13\uffff\1\4\7\uffff\1\10\4\uffff\1\2\1\6\1\7",
+            "\1\14\1\4\1\16\1\11\1\15\1\13\1\1\12\uffff\1\12\14\uffff\1\3\13\uffff\1\4\7\uffff\1\10\4\uffff\1\2",
+            "\1\32\45\uffff\1\30\1\31",
+            "\1\34\4\uffff\1\33",
             "\1\35",
-            "\1\40\35\uffff\1\36\1\37",
-            "\2\4\4\uffff\1\1\27\uffff\1\3\7\uffff\1\21\3\uffff\1\4\4\uffff\1\2",
-            "\2\4\4\uffff\1\25\27\uffff\1\3\7\uffff\1\24\3\uffff\1\4\4\uffff\1\26\1\41\1\42",
-            "\2\4\4\uffff\1\25\27\uffff\1\3\7\uffff\1\24\3\uffff\1\4\4\uffff\1\26\1\22\1\23",
-            "\2\4\4\uffff\1\25\27\uffff\1\3\7\uffff\1\24\3\uffff\1\4\4\uffff\1\26",
-            "\2\4\4\uffff\1\25\27\uffff\1\3\7\uffff\1\24\3\uffff\1\4\4\uffff\1\26",
-            "\1\51\1\4\1\47\1\52\1\45\1\50\1\25\12\uffff\1\53\14\uffff\1\3\13\uffff\1\4\4\uffff\1\26\1\43\1\44\1\46",
-            "\1\54",
-            "\1\55",
-            "\1\57\3\uffff\1\60\1\56",
-            "\1\61",
-            "\1\62",
-            "\1\63",
-            "\1\64",
-            "\2\4\4\uffff\1\25\27\uffff\1\3\13\uffff\1\4\4\uffff\1\26",
-            "\1\47\1\52",
-            "\2\4\4\uffff\1\25\27\uffff\1\3\13\uffff\1\4\4\uffff\1\26",
-            "\2\4\4\uffff\1\25\27\uffff\1\3\7\uffff\1\24\3\uffff\1\4\4\uffff\1\26",
-            "\2\4\4\uffff\1\25\12\uffff\1\4\14\uffff\1\3\7\uffff\1\24\3\uffff\1\4\4\uffff\1\26\1\22\1\23\1\uffff\2\4",
-            "\2\4\4\uffff\1\25\27\uffff\1\3\13\uffff\1\4\4\uffff\1\26",
-            "\1\65",
-            "\1\40\35\uffff\1\36\1\37",
+            "\1\36",
+            "\1\34\4\uffff\1\37",
+            "\2\4\4\uffff\1\26\27\uffff\1\3\13\uffff\1\4\14\uffff\1\27",
             "\1\40",
-            "\2\4\4\uffff\1\1\27\uffff\1\3\7\uffff\1\66\3\uffff\1\4\4\uffff\1\2",
-            "\2\4\4\uffff\1\25\27\uffff\1\3\7\uffff\1\71\3\uffff\1\4\4\uffff\1\26\1\67\1\70",
-            "\2\4\4\uffff\1\25\27\uffff\1\3\7\uffff\1\71\3\uffff\1\4\4\uffff\1\26",
-            "\2\4\4\uffff\1\25\27\uffff\1\3\7\uffff\1\24\3\uffff\1\4\4\uffff\1\26\1\41\1\42",
-            "\2\4\4\uffff\1\25\27\uffff\1\3\7\uffff\1\24\3\uffff\1\4\4\uffff\1\26",
-            "\1\51\1\4\1\47\1\52\1\45\1\50\1\25\12\uffff\1\53\14\uffff\1\3\13\uffff\1\4\4\uffff\1\26\1\43\1\44\1\46",
-            "\1\51\1\4\1\47\1\52\1\45\1\50\1\25\12\uffff\1\53\14\uffff\1\3\13\uffff\1\4\4\uffff\1\26\2\uffff\1\46",
-            "\1\74\35\uffff\1\72\1\73",
-            "\1\76\3\uffff\1\77\1\75",
-            "\1\100",
-            "\1\101",
-            "\1\76\3\uffff\1\77\1\102",
-            "\1\103",
-            "\1\104",
-            "\1\57\3\uffff\1\60\1\105",
-            "\2\4\4\uffff\1\1\27\uffff\1\3\7\uffff\1\66\3\uffff\1\4\4\uffff\1\2",
-            "\2\4\4\uffff\1\25\27\uffff\1\3\7\uffff\1\71\3\uffff\1\4\4\uffff\1\26\1\106\1\107",
-            "\2\4\4\uffff\1\25\27\uffff\1\3\7\uffff\1\71\3\uffff\1\4\4\uffff\1\26",
-            "\2\4\4\uffff\1\25\27\uffff\1\3\7\uffff\1\71\3\uffff\1\4\4\uffff\1\26\1\67\1\70",
-            "\2\4\4\uffff\1\25\27\uffff\1\3\7\uffff\1\71\3\uffff\1\4\4\uffff\1\26",
-            "\2\4\4\uffff\1\25\27\uffff\1\3\7\uffff\1\71\3\uffff\1\4\4\uffff\1\26",
-            "\1\74\35\uffff\1\72\1\73",
-            "\1\74",
-            "\2\4\4\uffff\1\25\27\uffff\1\3\7\uffff\1\71\3\uffff\1\4\4\uffff\1\26",
+            "\1\41",
+            "\1\42",
+            "\1\44\3\uffff\1\45\1\43",
+            "\2\4\4\uffff\1\1\27\uffff\1\3\7\uffff\1\22\3\uffff\1\4\14\uffff\1\2",
+            "\2\4\4\uffff\1\26\27\uffff\1\3\7\uffff\1\25\3\uffff\1\4\14\uffff\1\27\1\46\1\47",
+            "\2\4\4\uffff\1\26\27\uffff\1\3\7\uffff\1\25\3\uffff\1\4\14\uffff\1\27\1\23\1\24",
+            "\2\4\4\uffff\1\26\27\uffff\1\3\7\uffff\1\25\3\uffff\1\4\14\uffff\1\27",
+            "\2\4\4\uffff\1\26\27\uffff\1\3\7\uffff\1\25\3\uffff\1\4\14\uffff\1\27",
+            "\1\56\1\4\1\57\1\53\1\60\1\55\1\26\12\uffff\1\54\14\uffff\1\3\13\uffff\1\4\7\uffff\1\52\4\uffff\1\27\1\50\1\51",
+            "\1\32\45\uffff\1\30\1\31",
+            "\1\32",
+            "\2\4\4\uffff\1\1\27\uffff\1\3\7\uffff\1\61\3\uffff\1\4\14\uffff\1\2",
+            "\2\4\4\uffff\1\26\27\uffff\1\3\7\uffff\1\64\3\uffff\1\4\14\uffff\1\27\1\62\1\63",
+            "\2\4\4\uffff\1\26\27\uffff\1\3\7\uffff\1\64\3\uffff\1\4\14\uffff\1\27",
+            "\1\65",
+            "\1\66",
+            "\1\67",
+            "\1\70",
+            "\1\57\1\53",
+            "\2\4\4\uffff\1\26\27\uffff\1\3\13\uffff\1\4\14\uffff\1\27",
+            "\1\71",
+            "\2\4\4\uffff\1\26\27\uffff\1\3\7\uffff\1\25\3\uffff\1\4\14\uffff\1\27",
+            "\2\4\4\uffff\1\26\12\uffff\1\4\14\uffff\1\3\7\uffff\1\25\3\uffff\1\4\14\uffff\1\27\1\23\1\24\2\4",
+            "\2\4\4\uffff\1\26\27\uffff\1\3\13\uffff\1\4\14\uffff\1\27",
+            "\2\4\4\uffff\1\26\27\uffff\1\3\13\uffff\1\4\14\uffff\1\27",
+            "\1\73\3\uffff\1\74\1\72",
+            "\1\75",
+            "\1\76",
+            "\1\73\3\uffff\1\74\1\77",
+            "\2\4\4\uffff\1\26\27\uffff\1\3\7\uffff\1\25\3\uffff\1\4\14\uffff\1\27\1\46\1\47",
+            "\2\4\4\uffff\1\26\27\uffff\1\3\7\uffff\1\25\3\uffff\1\4\14\uffff\1\27",
+            "\1\56\1\4\1\57\1\53\1\60\1\55\1\26\12\uffff\1\54\14\uffff\1\3\13\uffff\1\4\7\uffff\1\52\4\uffff\1\27\1\50\1\51",
+            "\1\56\1\4\1\57\1\53\1\60\1\55\1\26\12\uffff\1\54\14\uffff\1\3\13\uffff\1\4\7\uffff\1\52\4\uffff\1\27",
+            "\1\102\45\uffff\1\100\1\101",
+            "\2\4\4\uffff\1\1\27\uffff\1\3\7\uffff\1\61\3\uffff\1\4\14\uffff\1\2",
+            "\2\4\4\uffff\1\26\27\uffff\1\3\7\uffff\1\64\3\uffff\1\4\14\uffff\1\27\1\103\1\104",
+            "\2\4\4\uffff\1\26\27\uffff\1\3\7\uffff\1\64\3\uffff\1\4\14\uffff\1\27",
+            "\2\4\4\uffff\1\26\27\uffff\1\3\7\uffff\1\64\3\uffff\1\4\14\uffff\1\27\1\62\1\63",
+            "\2\4\4\uffff\1\26\27\uffff\1\3\7\uffff\1\64\3\uffff\1\4\14\uffff\1\27",
+            "\2\4\4\uffff\1\26\27\uffff\1\3\7\uffff\1\64\3\uffff\1\4\14\uffff\1\27",
+            "\1\105",
+            "\1\106",
+            "\1\44\3\uffff\1\45\1\107",
             "\1\110",
             "\1\111",
-            "\2\4\4\uffff\1\25\27\uffff\1\3\7\uffff\1\71\3\uffff\1\4\4\uffff\1\26\1\106\1\107",
-            "\2\4\4\uffff\1\25\27\uffff\1\3\7\uffff\1\71\3\uffff\1\4\4\uffff\1\26"
+            "\1\102\45\uffff\1\100\1\101",
+            "\1\102",
+            "\2\4\4\uffff\1\26\27\uffff\1\3\7\uffff\1\64\3\uffff\1\4\14\uffff\1\27",
+            "\2\4\4\uffff\1\26\27\uffff\1\3\7\uffff\1\64\3\uffff\1\4\14\uffff\1\27\1\103\1\104",
+            "\2\4\4\uffff\1\26\27\uffff\1\3\7\uffff\1\64\3\uffff\1\4\14\uffff\1\27"
     };
 
+    static final short[] dfa_36 = DFA.unpackEncodedString(dfa_36s);
     static final short[] dfa_37 = DFA.unpackEncodedString(dfa_37s);
-    static final short[] dfa_38 = DFA.unpackEncodedString(dfa_38s);
+    static final char[] dfa_38 = DFA.unpackEncodedStringToUnsignedChars(dfa_38s);
     static final char[] dfa_39 = DFA.unpackEncodedStringToUnsignedChars(dfa_39s);
-    static final char[] dfa_40 = DFA.unpackEncodedStringToUnsignedChars(dfa_40s);
+    static final short[] dfa_40 = DFA.unpackEncodedString(dfa_40s);
     static final short[] dfa_41 = DFA.unpackEncodedString(dfa_41s);
-    static final short[] dfa_42 = DFA.unpackEncodedString(dfa_42s);
-    static final short[][] dfa_43 = unpackEncodedStringArray(dfa_43s);
+    static final short[][] dfa_42 = unpackEncodedStringArray(dfa_42s);
 
     class DFA29 extends DFA {
 
         public DFA29(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 29;
-            this.eot = dfa_37;
-            this.eof = dfa_38;
-            this.min = dfa_39;
-            this.max = dfa_40;
-            this.accept = dfa_41;
-            this.special = dfa_42;
-            this.transition = dfa_43;
+            this.eot = dfa_36;
+            this.eof = dfa_37;
+            this.min = dfa_38;
+            this.max = dfa_39;
+            this.accept = dfa_40;
+            this.special = dfa_41;
+            this.transition = dfa_42;
         }
         public String getDescription() {
             return "1208:1: ( ( (lv_expression_0_0= ruleAnnotatedExpression ) ) | ( (lv_effect_1_0= ruleEffect ) ) )";
         }
     }
-    static final String dfa_44s = "\1\4\13\0\2\uffff";
-    static final String dfa_45s = "\1\103\13\0\2\uffff";
-    static final String dfa_46s = "\14\uffff\1\1\1\2";
-    static final String dfa_47s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\2\uffff}>";
-    static final String[] dfa_48s = {
-            "\1\11\1\13\1\2\1\3\1\6\1\4\42\uffff\1\5\1\uffff\1\12\2\uffff\1\14\4\uffff\1\1\6\uffff\1\7\5\uffff\1\10",
+    static final String dfa_43s = "\1\4\13\0\2\uffff";
+    static final String dfa_44s = "\1\105\13\0\2\uffff";
+    static final String dfa_45s = "\14\uffff\1\1\1\2";
+    static final String dfa_46s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\2\uffff}>";
+    static final String[] dfa_47s = {
+            "\1\11\1\13\1\2\1\3\1\6\1\4\42\uffff\1\5\1\uffff\1\12\7\uffff\1\1\3\uffff\1\14\11\uffff\1\7\1\10",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -17864,11 +18258,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             "",
             ""
     };
+    static final char[] dfa_43 = DFA.unpackEncodedStringToUnsignedChars(dfa_43s);
     static final char[] dfa_44 = DFA.unpackEncodedStringToUnsignedChars(dfa_44s);
-    static final char[] dfa_45 = DFA.unpackEncodedStringToUnsignedChars(dfa_45s);
+    static final short[] dfa_45 = DFA.unpackEncodedString(dfa_45s);
     static final short[] dfa_46 = DFA.unpackEncodedString(dfa_46s);
-    static final short[] dfa_47 = DFA.unpackEncodedString(dfa_47s);
-    static final short[][] dfa_48 = unpackEncodedStringArray(dfa_48s);
+    static final short[][] dfa_47 = unpackEncodedStringArray(dfa_47s);
 
     class DFA53 extends DFA {
 
@@ -17877,11 +18271,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             this.decisionNumber = 53;
             this.eot = dfa_28;
             this.eof = dfa_28;
-            this.min = dfa_44;
-            this.max = dfa_45;
-            this.accept = dfa_46;
-            this.special = dfa_47;
-            this.transition = dfa_48;
+            this.min = dfa_43;
+            this.max = dfa_44;
+            this.accept = dfa_45;
+            this.special = dfa_46;
+            this.transition = dfa_47;
         }
         public String getDescription() {
             return "2100:1: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression )";
@@ -18063,12 +18457,12 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_49s = "\1\4\4\uffff\7\0\1\uffff";
-    static final String dfa_50s = "\1\103\4\uffff\7\0\1\uffff";
-    static final String dfa_51s = "\1\uffff\1\1\12\uffff\1\2";
-    static final String dfa_52s = "\5\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\uffff}>";
-    static final String[] dfa_53s = {
-            "\1\11\1\13\2\1\1\6\1\1\42\uffff\1\5\1\uffff\1\12\2\uffff\1\14\4\uffff\1\1\6\uffff\1\7\5\uffff\1\10",
+    static final String dfa_48s = "\1\4\4\uffff\7\0\1\uffff";
+    static final String dfa_49s = "\1\105\4\uffff\7\0\1\uffff";
+    static final String dfa_50s = "\1\uffff\1\1\12\uffff\1\2";
+    static final String dfa_51s = "\5\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\uffff}>";
+    static final String[] dfa_52s = {
+            "\1\11\1\13\2\1\1\6\1\1\42\uffff\1\5\1\uffff\1\12\7\uffff\1\1\3\uffff\1\14\11\uffff\1\7\1\10",
             "",
             "",
             "",
@@ -18082,11 +18476,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             "\1\uffff",
             ""
     };
+    static final char[] dfa_48 = DFA.unpackEncodedStringToUnsignedChars(dfa_48s);
     static final char[] dfa_49 = DFA.unpackEncodedStringToUnsignedChars(dfa_49s);
-    static final char[] dfa_50 = DFA.unpackEncodedStringToUnsignedChars(dfa_50s);
+    static final short[] dfa_50 = DFA.unpackEncodedString(dfa_50s);
     static final short[] dfa_51 = DFA.unpackEncodedString(dfa_51s);
-    static final short[] dfa_52 = DFA.unpackEncodedString(dfa_52s);
-    static final short[][] dfa_53 = unpackEncodedStringArray(dfa_53s);
+    static final short[][] dfa_52 = unpackEncodedStringArray(dfa_52s);
 
     class DFA63 extends DFA {
 
@@ -18095,14 +18489,14 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             this.decisionNumber = 63;
             this.eot = dfa_13;
             this.eof = dfa_13;
-            this.min = dfa_49;
-            this.max = dfa_50;
-            this.accept = dfa_51;
-            this.special = dfa_52;
-            this.transition = dfa_53;
+            this.min = dfa_48;
+            this.max = dfa_49;
+            this.accept = dfa_50;
+            this.special = dfa_51;
+            this.transition = dfa_52;
         }
         public String getDescription() {
-            return "2569:1: (this_ValuedExpression_0= ruleValuedExpression | this_NotExpression_1= ruleNotExpression )";
+            return "2657:1: (this_ValuedExpression_0= ruleValuedExpression | this_NotExpression_1= ruleNotExpression )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -18221,12 +18615,12 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_54s = "\1\4\3\uffff\1\0\7\uffff";
-    static final String dfa_55s = "\1\103\3\uffff\1\0\7\uffff";
-    static final String dfa_56s = "\1\uffff\1\1\1\2\1\3\1\uffff\1\5\5\uffff\1\4";
-    static final String dfa_57s = "\4\uffff\1\0\7\uffff}>";
-    static final String[] dfa_58s = {
-            "\2\5\1\1\1\2\1\5\1\3\42\uffff\1\4\1\uffff\1\5\16\uffff\1\5\5\uffff\1\5",
+    static final String dfa_53s = "\1\4\3\uffff\1\0\7\uffff";
+    static final String dfa_54s = "\1\105\3\uffff\1\0\7\uffff";
+    static final String dfa_55s = "\1\uffff\1\1\1\2\1\3\1\uffff\1\5\5\uffff\1\4";
+    static final String dfa_56s = "\4\uffff\1\0\7\uffff}>";
+    static final String[] dfa_57s = {
+            "\2\5\1\1\1\2\1\5\1\3\42\uffff\1\4\1\uffff\1\5\25\uffff\2\5",
             "",
             "",
             "",
@@ -18239,11 +18633,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             "",
             ""
     };
+    static final char[] dfa_53 = DFA.unpackEncodedStringToUnsignedChars(dfa_53s);
     static final char[] dfa_54 = DFA.unpackEncodedStringToUnsignedChars(dfa_54s);
-    static final char[] dfa_55 = DFA.unpackEncodedStringToUnsignedChars(dfa_55s);
+    static final short[] dfa_55 = DFA.unpackEncodedString(dfa_55s);
     static final short[] dfa_56 = DFA.unpackEncodedString(dfa_56s);
-    static final short[] dfa_57 = DFA.unpackEncodedString(dfa_57s);
-    static final short[][] dfa_58 = unpackEncodedStringArray(dfa_58s);
+    static final short[][] dfa_57 = unpackEncodedStringArray(dfa_57s);
 
     class DFA77 extends DFA {
 
@@ -18252,14 +18646,14 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             this.decisionNumber = 77;
             this.eot = dfa_1;
             this.eof = dfa_1;
-            this.min = dfa_54;
-            this.max = dfa_55;
-            this.accept = dfa_56;
-            this.special = dfa_57;
-            this.transition = dfa_58;
+            this.min = dfa_53;
+            this.max = dfa_54;
+            this.accept = dfa_55;
+            this.special = dfa_56;
+            this.transition = dfa_57;
         }
         public String getDescription() {
-            return "3289:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | (otherlv_3= '(' this_ValuedExpression_4= ruleValuedExpression otherlv_5= ')' ) | this_AtomicExpression_6= ruleAtomicExpression )";
+            return "3487:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | (otherlv_3= '(' this_ValuedExpression_4= ruleValuedExpression otherlv_5= ')' ) | this_AtomicExpression_6= ruleAtomicExpression )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -18288,132 +18682,132 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_59s = "\20\uffff";
-    static final String dfa_60s = "\3\uffff\1\10\3\uffff\1\6\6\uffff\2\10";
-    static final String dfa_61s = "\1\12\1\uffff\3\4\1\6\1\uffff\1\4\1\uffff\1\6\4\uffff\2\4";
-    static final String dfa_62s = "\1\63\1\uffff\1\4\1\114\1\4\1\6\1\uffff\1\114\1\uffff\1\7\4\uffff\2\114";
-    static final String dfa_63s = "\1\uffff\1\1\4\uffff\1\3\1\uffff\1\7\1\uffff\1\6\1\2\1\5\1\4\2\uffff";
-    static final String dfa_64s = "\20\uffff}>";
-    static final String[] dfa_65s = {
-            "\1\1\50\uffff\1\2",
+    static final String dfa_58s = "\20\uffff";
+    static final String dfa_59s = "\3\uffff\1\11\4\uffff\1\7\5\uffff\2\11";
+    static final String dfa_60s = "\1\12\1\uffff\3\4\1\6\2\uffff\1\4\1\uffff\1\6\3\uffff\2\4";
+    static final String dfa_61s = "\1\73\1\uffff\1\4\1\114\1\4\1\6\2\uffff\1\114\1\uffff\1\7\3\uffff\2\114";
+    static final String dfa_62s = "\1\uffff\1\1\4\uffff\1\4\1\3\1\uffff\1\7\1\uffff\1\6\1\2\1\5\2\uffff";
+    static final String dfa_63s = "\20\uffff}>";
+    static final String[] dfa_64s = {
+            "\1\1\60\uffff\1\2",
             "",
             "\1\3",
-            "\1\7\1\10\1\14\1\12\1\13\1\6\1\10\5\uffff\2\10\3\uffff\1\15\2\uffff\1\10\3\uffff\3\10\2\uffff\11\10\4\uffff\1\10\4\uffff\1\10\1\4\1\5\1\11\17\uffff\7\10",
+            "\1\10\1\11\1\15\1\13\1\14\1\7\1\11\5\uffff\2\11\3\uffff\1\6\2\uffff\1\11\3\uffff\3\11\2\uffff\11\11\4\uffff\1\11\7\uffff\1\12\4\uffff\1\11\1\4\1\5\10\uffff\7\11",
             "\1\16",
             "\1\17",
             "",
-            "\2\6\4\uffff\1\6\5\uffff\2\6\2\uffff\2\10\1\uffff\1\10\1\6\3\uffff\3\6\2\uffff\12\6\3\uffff\1\6\4\uffff\3\6\1\uffff\2\10\15\uffff\7\6",
             "",
-            "\1\14\1\12",
+            "\2\7\4\uffff\1\7\5\uffff\2\7\2\uffff\2\11\1\uffff\1\11\1\7\3\uffff\3\7\2\uffff\12\7\3\uffff\1\7\14\uffff\3\7\2\11\6\uffff\7\7",
+            "",
+            "\1\15\1\13",
             "",
             "",
             "",
-            "",
-            "\1\7\1\10\1\14\1\12\1\13\1\6\1\10\5\uffff\2\10\3\uffff\1\15\2\uffff\1\10\3\uffff\3\10\2\uffff\11\10\4\uffff\1\10\4\uffff\1\10\1\4\1\5\1\11\17\uffff\7\10",
-            "\1\7\1\10\1\14\1\12\1\13\1\6\1\10\5\uffff\2\10\3\uffff\1\15\2\uffff\1\10\3\uffff\3\10\2\uffff\11\10\4\uffff\1\10\4\uffff\1\10\2\uffff\1\11\17\uffff\7\10"
+            "\1\10\1\11\1\15\1\13\1\14\1\7\1\11\5\uffff\2\11\3\uffff\1\6\2\uffff\1\11\3\uffff\3\11\2\uffff\11\11\4\uffff\1\11\7\uffff\1\12\4\uffff\1\11\1\4\1\5\10\uffff\7\11",
+            "\1\10\1\11\1\15\1\13\1\14\1\7\1\11\5\uffff\2\11\3\uffff\1\6\2\uffff\1\11\3\uffff\3\11\2\uffff\11\11\4\uffff\1\11\7\uffff\1\12\4\uffff\1\11\12\uffff\7\11"
     };
 
+    static final short[] dfa_58 = DFA.unpackEncodedString(dfa_58s);
     static final short[] dfa_59 = DFA.unpackEncodedString(dfa_59s);
-    static final short[] dfa_60 = DFA.unpackEncodedString(dfa_60s);
+    static final char[] dfa_60 = DFA.unpackEncodedStringToUnsignedChars(dfa_60s);
     static final char[] dfa_61 = DFA.unpackEncodedStringToUnsignedChars(dfa_61s);
-    static final char[] dfa_62 = DFA.unpackEncodedStringToUnsignedChars(dfa_62s);
+    static final short[] dfa_62 = DFA.unpackEncodedString(dfa_62s);
     static final short[] dfa_63 = DFA.unpackEncodedString(dfa_63s);
-    static final short[] dfa_64 = DFA.unpackEncodedString(dfa_64s);
-    static final short[][] dfa_65 = unpackEncodedStringArray(dfa_65s);
+    static final short[][] dfa_64 = unpackEncodedStringArray(dfa_64s);
 
     class DFA85 extends DFA {
 
         public DFA85(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 85;
-            this.eot = dfa_59;
-            this.eof = dfa_60;
-            this.min = dfa_61;
-            this.max = dfa_62;
-            this.accept = dfa_63;
-            this.special = dfa_64;
-            this.transition = dfa_65;
+            this.eot = dfa_58;
+            this.eof = dfa_59;
+            this.min = dfa_60;
+            this.max = dfa_61;
+            this.accept = dfa_62;
+            this.special = dfa_63;
+            this.transition = dfa_64;
         }
         public String getDescription() {
-            return "3916:1: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyBooleanValueAnnotation_1= ruleKeyBooleanValueAnnotation | this_KeyStringValueAnnotation_2= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_3= ruleTypedKeyStringValueAnnotation | this_KeyIntValueAnnotation_4= ruleKeyIntValueAnnotation | this_KeyFloatValueAnnotation_5= ruleKeyFloatValueAnnotation | this_TagAnnotation_6= ruleTagAnnotation )";
+            return "4116:1: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyBooleanValueAnnotation_1= ruleKeyBooleanValueAnnotation | this_KeyStringValueAnnotation_2= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_3= ruleTypedKeyStringValueAnnotation | this_KeyIntValueAnnotation_4= ruleKeyIntValueAnnotation | this_KeyFloatValueAnnotation_5= ruleKeyFloatValueAnnotation | this_TagAnnotation_6= ruleTagAnnotation )";
         }
     }
-    static final String dfa_66s = "\17\uffff";
-    static final String dfa_67s = "\3\uffff\1\13\11\uffff\2\13";
-    static final String dfa_68s = "\1\12\1\uffff\3\4\2\6\6\uffff\2\4";
-    static final String dfa_69s = "\1\63\1\uffff\1\4\1\66\1\4\1\6\1\7\6\uffff\2\66";
-    static final String dfa_70s = "\1\uffff\1\1\5\uffff\1\5\1\4\1\3\1\2\1\7\1\6\2\uffff";
-    static final String dfa_71s = "\17\uffff}>";
-    static final String[] dfa_72s = {
-            "\1\1\50\uffff\1\2",
+    static final String dfa_65s = "\17\uffff";
+    static final String dfa_66s = "\3\uffff\1\6\11\uffff\2\6";
+    static final String dfa_67s = "\1\12\1\uffff\3\4\1\6\1\uffff\1\6\5\uffff\2\4";
+    static final String dfa_68s = "\1\73\1\uffff\1\4\1\75\1\4\1\6\1\uffff\1\7\5\uffff\1\75\1\73";
+    static final String dfa_69s = "\1\uffff\1\1\4\uffff\1\7\1\uffff\1\6\1\5\1\4\1\3\1\2\2\uffff";
+    static final String dfa_70s = "\17\uffff}>";
+    static final String[] dfa_71s = {
+            "\1\1\60\uffff\1\2",
             "",
             "\1\3",
-            "\1\13\1\uffff\1\7\1\14\1\10\1\12\1\13\12\uffff\1\11\35\uffff\1\13\1\4\1\5\1\6",
+            "\1\6\1\uffff\1\11\1\10\1\12\1\14\1\6\12\uffff\1\13\40\uffff\1\7\4\uffff\1\6\1\4\1\5",
             "\1\15",
             "\1\16",
-            "\1\7\1\14",
+            "",
+            "\1\11\1\10",
             "",
             "",
             "",
             "",
             "",
-            "",
-            "\1\13\1\uffff\1\7\1\14\1\10\1\12\1\13\12\uffff\1\11\35\uffff\1\13\1\4\1\5\1\6",
-            "\1\13\1\uffff\1\7\1\14\1\10\1\12\1\13\12\uffff\1\11\35\uffff\1\13\2\uffff\1\6"
+            "\1\6\1\uffff\1\11\1\10\1\12\1\14\1\6\12\uffff\1\13\40\uffff\1\7\4\uffff\1\6\1\4\1\5",
+            "\1\6\1\uffff\1\11\1\10\1\12\1\14\1\6\12\uffff\1\13\40\uffff\1\7\4\uffff\1\6"
     };
 
+    static final short[] dfa_65 = DFA.unpackEncodedString(dfa_65s);
     static final short[] dfa_66 = DFA.unpackEncodedString(dfa_66s);
-    static final short[] dfa_67 = DFA.unpackEncodedString(dfa_67s);
+    static final char[] dfa_67 = DFA.unpackEncodedStringToUnsignedChars(dfa_67s);
     static final char[] dfa_68 = DFA.unpackEncodedStringToUnsignedChars(dfa_68s);
-    static final char[] dfa_69 = DFA.unpackEncodedStringToUnsignedChars(dfa_69s);
+    static final short[] dfa_69 = DFA.unpackEncodedString(dfa_69s);
     static final short[] dfa_70 = DFA.unpackEncodedString(dfa_70s);
-    static final short[] dfa_71 = DFA.unpackEncodedString(dfa_71s);
-    static final short[][] dfa_72 = unpackEncodedStringArray(dfa_72s);
+    static final short[][] dfa_71 = unpackEncodedStringArray(dfa_71s);
 
     class DFA86 extends DFA {
 
         public DFA86(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 86;
-            this.eot = dfa_66;
-            this.eof = dfa_67;
-            this.min = dfa_68;
-            this.max = dfa_69;
-            this.accept = dfa_70;
-            this.special = dfa_71;
-            this.transition = dfa_72;
+            this.eot = dfa_65;
+            this.eof = dfa_66;
+            this.min = dfa_67;
+            this.max = dfa_68;
+            this.accept = dfa_69;
+            this.special = dfa_70;
+            this.transition = dfa_71;
         }
         public String getDescription() {
-            return "4029:1: (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_KeyBooleanValueAnnotation_3= ruleKeyBooleanValueAnnotation | this_KeyIntValueAnnotation_4= ruleKeyIntValueAnnotation | this_KeyFloatValueAnnotation_5= ruleKeyFloatValueAnnotation | this_TagAnnotation_6= ruleTagAnnotation )";
+            return "4229:1: (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_KeyBooleanValueAnnotation_3= ruleKeyBooleanValueAnnotation | this_KeyIntValueAnnotation_4= ruleKeyIntValueAnnotation | this_KeyFloatValueAnnotation_5= ruleKeyFloatValueAnnotation | this_TagAnnotation_6= ruleTagAnnotation )";
         }
     }
  
 
     public static final BitSet FOLLOW_1 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_2 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x0008000000010400L});
+    public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x0800000000010400L});
     public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x000803F800030400L,0x0000000000001FC0L});
-    public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x00080002510B0410L});
+    public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x080003F800030400L,0x0000000000001FC0L});
+    public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x08000002510B0410L});
     public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0000000000040000L});
-    public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0008000000010410L});
+    public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0800000000010410L});
     public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x0000000000100000L});
-    public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0008000251030410L});
+    public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0800000251030410L});
     public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000000000A00000L});
-    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x20425000000003F0L,0x0000000000000008L});
+    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x04405000000003F0L,0x0000000000000030L});
     public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0000000000400000L});
     public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000000002000000L});
-    public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x000803FA5D030410L,0x0000000000001FC0L});
-    public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x000800025D030410L});
-    public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x000803FA59030410L,0x0000000000001FC0L});
-    public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0008000259030410L});
-    public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0008000020010400L});
-    public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0008000251030412L});
-    public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x00080003F1030410L});
+    public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x080003FA5D030410L,0x0000000000001FC0L});
+    public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x080000025D030410L});
+    public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x080003FA59030410L,0x0000000000001FC0L});
+    public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0800000259030410L});
+    public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0800000020010400L});
+    public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0800000251030412L});
+    public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x08000003F1030410L});
     public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x0000000180000000L});
-    public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x000803FA510B0410L,0x0000000000001FC0L});
-    public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0008000400010400L});
-    public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x000803F800010400L,0x0000000000001FC0L});
+    public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x080003FA510B0410L,0x0000000000001FC0L});
+    public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0800000400010400L});
+    public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x080003F800010400L,0x0000000000001FC0L});
     public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x000003F000000000L,0x0000000000001FC0L});
     public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x000003E000000000L,0x0000000000001FC0L});
     public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x000003C000000000L,0x0000000000001FC0L});
@@ -18423,31 +18817,31 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0000040000040000L});
     public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x0000080000A00002L});
     public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x0000080000000002L});
-    public static final BitSet FOLLOW_35 = new BitSet(new long[]{0xC004000000000000L,0x000000000000F001L});
+    public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x00B8000000000000L,0x000000000000F000L});
     public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x0000100000000002L});
     public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x0000200000000000L});
-    public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x0180000000200000L});
-    public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x0008000000010420L});
-    public static final BitSet FOLLOW_40 = new BitSet(new long[]{0x0008400000010400L});
+    public static final BitSet FOLLOW_38 = new BitSet(new long[]{0xC000000000200000L});
+    public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x0800000000010420L});
+    public static final BitSet FOLLOW_40 = new BitSet(new long[]{0x0800400000010400L});
     public static final BitSet FOLLOW_41 = new BitSet(new long[]{0x0001900000000000L});
-    public static final BitSet FOLLOW_42 = new BitSet(new long[]{0x20465000000003F0L,0x0000000000000008L});
+    public static final BitSet FOLLOW_42 = new BitSet(new long[]{0x04505000000003F0L,0x0000000000000030L});
     public static final BitSet FOLLOW_43 = new BitSet(new long[]{0x0000240000000000L});
     public static final BitSet FOLLOW_44 = new BitSet(new long[]{0x0001000000000000L});
-    public static final BitSet FOLLOW_45 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000010L});
-    public static final BitSet FOLLOW_46 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000020L});
-    public static final BitSet FOLLOW_47 = new BitSet(new long[]{0x4000000000000002L});
-    public static final BitSet FOLLOW_48 = new BitSet(new long[]{0x0004000000000002L});
-    public static final BitSet FOLLOW_49 = new BitSet(new long[]{0x1E01400000000002L});
-    public static final BitSet FOLLOW_50 = new BitSet(new long[]{0x8000000000000002L});
-    public static final BitSet FOLLOW_51 = new BitSet(new long[]{0x20405000000003F0L,0x0000000000000008L});
+    public static final BitSet FOLLOW_45 = new BitSet(new long[]{0x0002000000000002L});
+    public static final BitSet FOLLOW_46 = new BitSet(new long[]{0x0004000000000002L});
+    public static final BitSet FOLLOW_47 = new BitSet(new long[]{0x0008000000000002L});
+    public static final BitSet FOLLOW_48 = new BitSet(new long[]{0x0010000000000002L});
+    public static final BitSet FOLLOW_49 = new BitSet(new long[]{0x0001400000000002L,0x000000000000000FL});
+    public static final BitSet FOLLOW_50 = new BitSet(new long[]{0x0020000000000002L});
+    public static final BitSet FOLLOW_51 = new BitSet(new long[]{0x00405000000003F0L,0x0000000000000030L});
     public static final BitSet FOLLOW_52 = new BitSet(new long[]{0x0040000000000002L});
-    public static final BitSet FOLLOW_53 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000001L});
-    public static final BitSet FOLLOW_54 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000004L});
-    public static final BitSet FOLLOW_55 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000002L});
+    public static final BitSet FOLLOW_53 = new BitSet(new long[]{0x0080000000000002L});
+    public static final BitSet FOLLOW_54 = new BitSet(new long[]{0x0100000000000002L});
+    public static final BitSet FOLLOW_55 = new BitSet(new long[]{0x0200000000000002L});
     public static final BitSet FOLLOW_56 = new BitSet(new long[]{0x0000100000000000L});
-    public static final BitSet FOLLOW_57 = new BitSet(new long[]{0x2000000000000010L,0x0000000000000008L});
+    public static final BitSet FOLLOW_57 = new BitSet(new long[]{0x0000000000000010L,0x0000000000000030L});
     public static final BitSet FOLLOW_58 = new BitSet(new long[]{0x0000000000200002L});
-    public static final BitSet FOLLOW_59 = new BitSet(new long[]{0x0004000000000000L});
+    public static final BitSet FOLLOW_59 = new BitSet(new long[]{0x0010000000000000L});
     public static final BitSet FOLLOW_60 = new BitSet(new long[]{0x0000000000000210L});
     public static final BitSet FOLLOW_61 = new BitSet(new long[]{0x0000040000000002L});
     public static final BitSet FOLLOW_62 = new BitSet(new long[]{0x0000000000200000L});
@@ -18456,7 +18850,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_65 = new BitSet(new long[]{0x0000000000000100L});
     public static final BitSet FOLLOW_66 = new BitSet(new long[]{0x0040000000000040L});
     public static final BitSet FOLLOW_67 = new BitSet(new long[]{0x0040000000000080L});
-    public static final BitSet FOLLOW_68 = new BitSet(new long[]{0x0030000000000002L});
+    public static final BitSet FOLLOW_68 = new BitSet(new long[]{0x3000000000000002L});
     public static final BitSet FOLLOW_69 = new BitSet(new long[]{0x0000000000000040L});
     public static final BitSet FOLLOW_70 = new BitSet(new long[]{0x0000000000000080L});
 
