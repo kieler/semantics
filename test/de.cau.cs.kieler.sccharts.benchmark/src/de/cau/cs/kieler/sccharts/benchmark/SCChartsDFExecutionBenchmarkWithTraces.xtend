@@ -36,6 +36,7 @@ import de.cau.cs.kieler.simulation.handlers.ExecutableSimulator
 import de.cau.cs.kieler.simulation.handlers.TraceMismatchEvent
 import de.cau.cs.kieler.simulation.core.SimulationEventType
 import de.cau.cs.kieler.simulation.handlers.TraceFinishedEvent
+import java.util.List
 
 /**
  * @author lpe
@@ -112,7 +113,7 @@ class SCChartsDFExecutionBenchmarkWithTraces extends AbstractXTextModelBenchmark
     override filter(TestModelData modelData) {
         return modelData.modelProperties.contains("benchmark") && !modelData.modelProperties.contains("must-fail")
                 && !modelData.modelProperties.contains("known-to-fail") && !modelData.modelProperties.contains("not-sasc")
-                && modelData.tracePaths.exists[fileName.toString.endsWith("eso")] && false
+                && modelData.tracePaths.exists[fileName.toString.endsWith("eso")]
     }
     
     /**
@@ -144,6 +145,7 @@ class SCChartsDFExecutionBenchmarkWithTraces extends AbstractXTextModelBenchmark
         var nBestTickTimes = 0
         var maxJitter = 0
         var avgJitter = 0
+        var List<Integer> ys2
         
         try {
             var tmpProject = SimulationUtil.getTemporarySimulationProject
@@ -215,7 +217,7 @@ class SCChartsDFExecutionBenchmarkWithTraces extends AbstractXTextModelBenchmark
             
             val n = (tickDurations.size * N_BEST).intValue
             val ys = tickDurations.take((n + 1) / 2)
-            val ys2 = ys.toList
+            ys2 = ys.toList
             ys2.addAll(tickDurations.reverse.take(n / 2))
             for(y : ys2) {
                 nBestTickTimes += y/(ys2.size)
@@ -238,6 +240,7 @@ class SCChartsDFExecutionBenchmarkWithTraces extends AbstractXTextModelBenchmark
         
         if(!couldNotSimulate) {
             data.put("executionTime", nBestTickTimes)
+            data.put("times", ys2)
             data.put("averageExecutionTime", averageTickDuration)
             data.put("maxJitter", maxJitter)
             data.put("avgJitter", avgJitter)

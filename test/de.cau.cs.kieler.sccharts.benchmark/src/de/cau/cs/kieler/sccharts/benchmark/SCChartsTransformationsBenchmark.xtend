@@ -97,7 +97,7 @@ class SCChartsTransformationsBenchmark extends AbstractXTextModelBenchmark<State
      */
     override filter(TestModelData modelData) {
         return !modelData.modelProperties.contains("must-fail") && modelData.modelProperties.contains("benchmark")
-                && !modelData.modelProperties.contains("known-to-fail") && !modelData.modelProperties.contains("not-sasc") && false
+                && !modelData.modelProperties.contains("known-to-fail") && !modelData.modelProperties.contains("not-sasc")
     }
     
     /**
@@ -179,6 +179,7 @@ class SCChartsTransformationsBenchmark extends AbstractXTextModelBenchmark<State
         var nBestTickTimes = 0
         var maxJitter = 0
         var avgJitter = 0
+        var size = 0
         
         try {
             var tmpProject = SimulationUtil.getTemporarySimulationProject
@@ -193,11 +194,14 @@ class SCChartsTransformationsBenchmark extends AbstractXTextModelBenchmark<State
             
             var tickDurations = <Integer> newLinkedList
             val compilationResult = SimulationUtil.compileAndSimulateModel(model, "s.c")
+            if(!compilationResult.createdFiles.empty) {
+                val file = compilationResult.createdFiles.head.rawLocation.makeAbsolute.toFile
+                size = file.length.intValue
+            }
             for(var i = 0; i < NUMBER_OF_RUNS; i++) {
                 SimulationUtil.startSimulationCompilationResult(compilationResult)
                 val simMan = SimulationManager.instance
                 simMan.stepMacroTick
-    
                 val tickTime = simMan.currentPool.getVariable("tickTime").value as Integer
                 simMan.stop
     
@@ -293,7 +297,11 @@ class SCChartsTransformationsBenchmark extends AbstractXTextModelBenchmark<State
 //            data.put("unit", "ns")
             data.put("averageDownstreamDuration", averageDownstreamDuration)   
             data.put("nBestDownstreamDuration", nBestDownstreamDuration)     
-            data.put("size",(result.object as String).length)    
+            if(size != 0) {
+                data.put("size",size)                    
+            } else {
+                data.put("size", -1)
+            }
             data.put("numberOfVariables", numberOfVariables)
 //            data.put("threads", scg.nodes.filter[it instanceof Entry].size)
 //            data.put("maxParallelThreads", maxWidth)

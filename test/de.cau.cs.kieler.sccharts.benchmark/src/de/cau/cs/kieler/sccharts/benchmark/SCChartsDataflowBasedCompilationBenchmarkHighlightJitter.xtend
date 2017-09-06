@@ -103,7 +103,7 @@ class SCChartsDataflowBasedCompilationBenchmarkHighlightJitter extends AbstractX
      * {@inheritDoc}
      */
     override filter(TestModelData modelData) {
-        return modelData.modelProperties.contains("jitter") && false
+        return modelData.modelProperties.contains("jitter")
     }
     
     /**

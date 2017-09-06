@@ -98,7 +98,7 @@ class SCChartsPriorityBasedCompilationBenchmark extends AbstractXTextModelBenchm
      */
     override filter(TestModelData modelData) {
         return modelData.modelProperties.contains("benchmark") && !modelData.modelProperties.contains("must-fail")
-                && !modelData.modelProperties.contains("known-to-fail") && !modelData.modelProperties.contains("not-siasc") && false
+                && !modelData.modelProperties.contains("known-to-fail") && !modelData.modelProperties.contains("not-siasc")
     }
     
     /**
@@ -130,6 +130,7 @@ class SCChartsPriorityBasedCompilationBenchmark extends AbstractXTextModelBenchm
         var nBestTickTimes = 0
         var maxJitter = 0
         var avgJitter = 0
+        var size = 0
         
         try {
             var tmpProject = SimulationUtil.getTemporarySimulationProject
@@ -144,11 +145,14 @@ class SCChartsPriorityBasedCompilationBenchmark extends AbstractXTextModelBenchm
             
             var tickDurations = <Integer> newLinkedList
             val compilationResult = SimulationUtil.compileAndSimulateModel(model, "T_scg.dependency, T_scg.scgPrio, T_sclp.sclpTrans")
+            if(!compilationResult.createdFiles.empty) {
+                val file = compilationResult.createdFiles.head.rawLocation.makeAbsolute.toFile
+                size = file.length.intValue
+            }
             for(var i = 0; i < NUMBER_OF_RUNS; i++) {
                 SimulationUtil.startSimulationCompilationResult(compilationResult)
                 val simMan = SimulationManager.instance
                 simMan.stepMacroTick
-    
                 val tickTime = simMan.currentPool.getVariable("tickTime").value as Integer
                 simMan.stop
     
@@ -156,7 +160,6 @@ class SCChartsPriorityBasedCompilationBenchmark extends AbstractXTextModelBenchm
                 tickDurations.add(tickTime)
             }
             tmpProject.refreshLocal(IResource.DEPTH_INFINITE, null)
-            
             
             val ys = tickDurations.take((N_BEST + 1) / 2)
             val ys2 = ys.toList
@@ -246,8 +249,12 @@ class SCChartsPriorityBasedCompilationBenchmark extends AbstractXTextModelBenchm
             data.put("duration", overallDuration)
             data.put("unit", "ns")
             data.put("averageDownstreamDuration", averageDownstreamDuration)   
-            data.put("nBestDownstreamDuration", nBestDownstreamDuration)     
-            data.put("size",(result.object as String).length)    
+            data.put("nBestDownstreamDuration", nBestDownstreamDuration)   
+            if(size != 0) {
+                data.put("size",size)                    
+            } else {
+                data.put("size", -1)
+            }
             data.put("numberOfVariables", numberOfVariables)
             data.put("threads", scg.nodes.filter[it instanceof Entry].size)
             data.put("maxParallelThreads", maxWidth)
