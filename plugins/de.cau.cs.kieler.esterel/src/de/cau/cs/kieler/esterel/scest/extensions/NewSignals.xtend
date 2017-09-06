@@ -13,6 +13,8 @@
 package de.cau.cs.kieler.esterel.scest.extensions
 
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import javax.xml.ws.Action
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * This class contains all new valued objects which are needed to transform valued signals.
@@ -52,10 +54,10 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
  */
 class NewSignals {
     
-    var ValuedObject s
-    var ValuedObject s_set
-    var ValuedObject s_cur
-    var ValuedObject s_val
+    @Accessors var ValuedObject s
+    @Accessors var ValuedObject s_set
+    @Accessors var ValuedObject s_cur
+    @Accessors var ValuedObject s_val
     
     new (ValuedObject s, ValuedObject s_set, ValuedObject s_cur, ValuedObject s_val) {
         this.s = s
@@ -66,37 +68,5 @@ class NewSignals {
     
     new (ValuedObject s) {
         this.s = s
-    }
-    
-    def getS() {
-        s
-    }
-    
-    def getS_set() {
-        s_set
-    }
-    
-    def getS_cur() {
-        s_cur
-    }
-    
-    def getS_val() {
-        s_val
-    }
-    
-    def setS(ValuedObject temp) {
-        s = temp
-    }
-    
-    def setS_set(ValuedObject temp) {
-        s_set = temp
-    }
-    
-    def setS_cur(ValuedObject temp) {
-        s_cur = temp
-    }
-    
-    def setS_val(ValuedObject temp) {
-        s_val = temp
     }
 }

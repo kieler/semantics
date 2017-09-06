@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.esterel.scest.extensions
 
 import de.cau.cs.kieler.scl.Conditional
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author mrb
@@ -20,8 +21,8 @@ import de.cau.cs.kieler.scl.Conditional
  */
 class PauseJoin {
     
-    var Conditional pause
-    var Conditional join
+    @Accessors var Conditional pause
+    @Accessors var Conditional join
     
     new(Conditional pause, Conditional join) {
         this.pause = pause
@@ -32,21 +33,4 @@ class PauseJoin {
         
     }
     
-    def getPause() {
-        this.pause
-    }
-    
-    def getJoin() {
-        this.join
-    }
-    
-    def setPause(Conditional pause) {
-        this.pause = pause
-    }
-    
-    def setJoin(Conditional join) {
-        this.join = join
-    }
-
-
 }

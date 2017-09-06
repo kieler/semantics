@@ -139,7 +139,6 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getNegExpressionAccess().getAlternatives(), "rule__NegExpression__Alternatives");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getAlternatives(), "rule__ValuedObjectTestExpression__Alternatives");
 					put(grammarAccess.getEsterel_ValuedObjectAccess().getAlternatives(), "rule__Esterel_ValuedObject__Alternatives");
-					put(grammarAccess.getSCLProgramAccess().getAlternatives_5(), "rule__SCLProgram__Alternatives_5");
 					put(grammarAccess.getStatementAccess().getAlternatives(), "rule__Statement__Alternatives");
 					put(grammarAccess.getInstructionStatementAccess().getAlternatives(), "rule__InstructionStatement__Alternatives");
 					put(grammarAccess.getTestEntityAccess().getAlternatives(), "rule__TestEntity__Alternatives");
@@ -481,13 +480,13 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0(), "rule__ValuedObjectTestExpression__Group_0__0");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_1(), "rule__ValuedObjectTestExpression__Group_1__0");
 					put(grammarAccess.getSCLProgramAccess().getGroup(), "rule__SCLProgram__Group__0");
-					put(grammarAccess.getSCLProgramAccess().getGroup_5_0(), "rule__SCLProgram__Group_5_0__0");
 					put(grammarAccess.getPauseAccess().getGroup(), "rule__Pause__Group__0");
 					put(grammarAccess.getLabelAccess().getGroup(), "rule__Label__Group__0");
 					put(grammarAccess.getLabelAccess().getGroup_1(), "rule__Label__Group_1__0");
 					put(grammarAccess.getGotoAccess().getGroup(), "rule__Goto__Group__0");
 					put(grammarAccess.getAssignmentAccess().getGroup(), "rule__Assignment__Group__0");
 					put(grammarAccess.getAssignmentAccess().getGroup_2(), "rule__Assignment__Group_2__0");
+					put(grammarAccess.getAssignmentAccess().getGroup_5(), "rule__Assignment__Group_5__0");
 					put(grammarAccess.getRootScopeAccess().getGroup(), "rule__RootScope__Group__0");
 					put(grammarAccess.getRootScopeAccess().getGroup_3(), "rule__RootScope__Group_3__0");
 					put(grammarAccess.getScopeAccess().getGroup(), "rule__Scope__Group__0");
@@ -790,7 +789,7 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getScopeStatementAccess().getStatementsAssignment_4_0_0_0(), "rule__ScopeStatement__StatementsAssignment_4_0_0_0");
 					put(grammarAccess.getScopeStatementAccess().getStatementsAssignment_4_0_1(), "rule__ScopeStatement__StatementsAssignment_4_0_1");
 					put(grammarAccess.getScopeStatementAccess().getStatementsAssignment_4_1(), "rule__ScopeStatement__StatementsAssignment_4_1");
-					put(grammarAccess.getProgramAccess().getModulesAssignment(), "rule__Program__ModulesAssignment");
+					put(grammarAccess.getEsterelProgramAccess().getModulesAssignment(), "rule__EsterelProgram__ModulesAssignment");
 					put(grammarAccess.getModuleAccess().getAnnotationsAssignment_0(), "rule__Module__AnnotationsAssignment_0");
 					put(grammarAccess.getModuleAccess().getNameAssignment_2(), "rule__Module__NameAssignment_2");
 					put(grammarAccess.getModuleAccess().getIntSignalDeclsAssignment_4_0(), "rule__Module__IntSignalDeclsAssignment_4_0");
@@ -1025,12 +1024,8 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAssignment_1_1(), "rule__ValuedObjectTestExpression__OperatorAssignment_1_1");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsAssignment_1_2(), "rule__ValuedObjectTestExpression__SubExpressionsAssignment_1_2");
-					put(grammarAccess.getSCLProgramAccess().getAnnotationsAssignment_0(), "rule__SCLProgram__AnnotationsAssignment_0");
-					put(grammarAccess.getSCLProgramAccess().getNameAssignment_2(), "rule__SCLProgram__NameAssignment_2");
-					put(grammarAccess.getSCLProgramAccess().getDeclarationsAssignment_4(), "rule__SCLProgram__DeclarationsAssignment_4");
-					put(grammarAccess.getSCLProgramAccess().getStatementsAssignment_5_0_0(), "rule__SCLProgram__StatementsAssignment_5_0_0");
-					put(grammarAccess.getSCLProgramAccess().getStatementsAssignment_5_1(), "rule__SCLProgram__StatementsAssignment_5_1");
-					put(grammarAccess.getSCLProgramAccess().getStatementsAssignment_6(), "rule__SCLProgram__StatementsAssignment_6");
+					put(grammarAccess.getSCLProgramAccess().getPragmasAssignment_0(), "rule__SCLProgram__PragmasAssignment_0");
+					put(grammarAccess.getSCLProgramAccess().getModulesAssignment_1(), "rule__SCLProgram__ModulesAssignment_1");
 					put(grammarAccess.getPauseAccess().getAnnotationsAssignment_1(), "rule__Pause__AnnotationsAssignment_1");
 					put(grammarAccess.getLabelAccess().getAnnotationsAssignment_0(), "rule__Label__AnnotationsAssignment_0");
 					put(grammarAccess.getLabelAccess().getNameAssignment_1_0(), "rule__Label__NameAssignment_1_0");
@@ -1040,6 +1035,7 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAssignmentAccess().getIndicesAssignment_2_1(), "rule__Assignment__IndicesAssignment_2_1");
 					put(grammarAccess.getAssignmentAccess().getOperatorAssignment_3(), "rule__Assignment__OperatorAssignment_3");
 					put(grammarAccess.getAssignmentAccess().getExpressionAssignment_4(), "rule__Assignment__ExpressionAssignment_4");
+					put(grammarAccess.getAssignmentAccess().getScheduleAssignment_5_1(), "rule__Assignment__ScheduleAssignment_5_1");
 					put(grammarAccess.getKextAccess().getScopesAssignment(), "rule__Kext__ScopesAssignment");
 					put(grammarAccess.getRootScopeAccess().getDeclarationsAssignment_1(), "rule__RootScope__DeclarationsAssignment_1");
 					put(grammarAccess.getRootScopeAccess().getEntitiesAssignment_2(), "rule__RootScope__EntitiesAssignment_2");

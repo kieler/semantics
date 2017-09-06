@@ -13,49 +13,45 @@
 package de.cau.cs.kieler.esterel.scest.transformations
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.esterel.Abort
+import de.cau.cs.kieler.esterel.Await
+import de.cau.cs.kieler.esterel.Do
+import de.cau.cs.kieler.esterel.EsterelParallel
+import de.cau.cs.kieler.esterel.Exec
+import de.cau.cs.kieler.esterel.Exit
+import de.cau.cs.kieler.esterel.ISignal
+import de.cau.cs.kieler.esterel.IfTest
+import de.cau.cs.kieler.esterel.Present
+import de.cau.cs.kieler.esterel.Run
+import de.cau.cs.kieler.esterel.Trap
+import de.cau.cs.kieler.esterel.TrapExpression
+import de.cau.cs.kieler.esterel.scest.SCEstProgram
 import de.cau.cs.kieler.esterel.scest.extensions.SCEstExtension
-import de.cau.cs.kieler.esterel.scest.features.SCEstFeature
-import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram
-import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
-import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
-import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.esterel.scest.processors.SCEstProcessor
+import de.cau.cs.kieler.kexpressions.CombineOperator
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.scl.Conditional
+import de.cau.cs.kieler.scl.Label
+import de.cau.cs.kieler.scl.Parallel
+import de.cau.cs.kieler.scl.Pause
 import de.cau.cs.kieler.scl.Statement
 import de.cau.cs.kieler.scl.StatementContainer
-import de.cau.cs.kieler.esterel.esterel.Trap
-import de.cau.cs.kieler.esterel.esterel.Exec
-import de.cau.cs.kieler.esterel.esterel.Do
-import de.cau.cs.kieler.esterel.esterel.Present
-import de.cau.cs.kieler.esterel.esterel.IfTest
-import de.cau.cs.kieler.esterel.esterel.Abort
-import de.cau.cs.kieler.scl.Conditional
-import de.cau.cs.kieler.esterel.esterel.EsterelParallel
-import de.cau.cs.kieler.scl.Parallel
-import com.google.common.collect.Sets
-import de.cau.cs.kieler.scl.Pause
 import java.util.HashMap
-import de.cau.cs.kieler.esterel.esterel.ISignal
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.ValueType
 import java.util.LinkedList
-import org.eclipse.emf.ecore.util.EcoreUtil
-import de.cau.cs.kieler.esterel.esterel.Exit
-import de.cau.cs.kieler.scl.Label
 import java.util.Map
-import de.cau.cs.kieler.kexpressions.CombineOperator
-import de.cau.cs.kieler.kexpressions.OperatorType
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.esterel.esterel.TrapExpression
-import de.cau.cs.kieler.kexpressions.Expression
+import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.esterel.esterel.Await
-import de.cau.cs.kieler.esterel.esterel.TrapReferenceExpr
-import de.cau.cs.kieler.esterel.esterel.Run
+import org.eclipse.emf.ecore.util.EcoreUtil
 
 /**
  * @author mrb
  *
  */
-class TrapTransformation extends AbstractExpansionTransformation implements Traceable{
+class TrapTransformation extends SCEstProcessor {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -68,21 +64,21 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
         return SCEstTransformation::TRAP_NAME
     }
 
-    override getExpandsFeatureId() {
-        return SCEstFeature::TRAP_ID
-    }
-        
-    override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::HALT_ID,
-            SCEstTransformation::LOCALSIGNALDECL_ID, SCEstTransformation::LOCALVARIABLE_ID,
-            SCEstTransformation::AWAIT_ID, SCEstTransformation::SUSTAIN_ID,
-            SCEstTransformation::DO_ID, SCEstTransformation::RUN_ID)
-    }
+//    override getExpandsFeatureId() {
+//        return SCEstFeature::TRAP_ID
+//    }
+//        
+//    override getNotHandlesFeatureIds() {
+//        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::HALT_ID,
+//            SCEstTransformation::LOCALSIGNALDECL_ID, SCEstTransformation::LOCALVARIABLE_ID,
+//            SCEstTransformation::AWAIT_ID, SCEstTransformation::SUSTAIN_ID,
+//            SCEstTransformation::DO_ID, SCEstTransformation::RUN_ID)
+//    }
 
     @Inject
     extension SCEstExtension
         
-    def SCEstProgram transform(SCEstProgram prog) {
+    override SCEstProgram transform(SCEstProgram prog) {
         prog.modules.forEach [ m | transformStatements(m.statements)]
         return prog
     }

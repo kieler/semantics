@@ -60,8 +60,8 @@
 'every'=89
 'exec'=95
 'exit'=128
-'expression'=135
-'extern'=137
+'expression'=136
+'extern'=138
 'float'=45
 'fork'=106
 'function'=113
@@ -98,13 +98,13 @@
 'prio'=139
 'procedure'=114
 'pure'=41
-'ref'=136
+'ref'=137
 'relation'=121
 'repeat'=84
 'return'=98
 'run'=129
-'schedule'=138
-'scope'=134
+'schedule'=134
+'scope'=135
 'sensor'=120
 'set'=105
 'signal'=99

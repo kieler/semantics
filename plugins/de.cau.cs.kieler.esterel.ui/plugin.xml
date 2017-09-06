@@ -28,6 +28,10 @@
             controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
             editorID="de.cau.cs.kieler.esterel.Esterel">
       </editor>
+      <editor
+            controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
+            editorID="de.cau.cs.kieler.esterel.scest.SCEst">
+      </editor>
    </extension>
     <extension
         point="org.eclipse.ui.handlers">
@@ -355,17 +359,6 @@
             label="SCEst to SCL Transformation"
             preferred="scest.scl, s.c, scl.scg"
             priority="100">
-      </editor>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.klighd.ui.view.editor">
-      <editor
-            controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
-            editorID="de.cau.cs.kieler.esterel.Esterel">
-      </editor>
-      <editor
-            controllerID="de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController"
-            editorID="de.cau.cs.kieler.esterel.scest.SCEst">
       </editor>
    </extension>
 

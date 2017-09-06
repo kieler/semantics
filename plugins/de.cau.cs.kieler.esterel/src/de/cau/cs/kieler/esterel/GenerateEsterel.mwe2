@@ -62,6 +62,7 @@ Workflow {
             fragment = ecore.EMFGeneratorFragment  {
 //              genModel = "${runtimeProject}/model/Esterel.genmodel"
 //              xmiModelDirectory = "${runtimeProject}/model"
+                basePackage = "de.cau.cs.kieler"
             }
 
 			// the serialization component

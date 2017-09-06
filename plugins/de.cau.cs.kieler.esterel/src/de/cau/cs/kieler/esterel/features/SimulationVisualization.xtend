@@ -13,8 +13,8 @@
  */
 package de.cau.cs.kieler.esterel.features
 
+import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.kico.features.Feature
-import de.cau.cs.kieler.esterel.esterel.Program
 
 /**
  * SCCharts Simulation Visualization Feature.
@@ -39,7 +39,7 @@ class SimulationVisualization extends Feature {
     //-------------------------------------------------------------------------
 
     // This method checks, if this feature is contained in a model
-    def isContained(Program program) {
+    def isContained(EsterelProgram program) {
         return true
     }
 

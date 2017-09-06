@@ -57,32 +57,32 @@ import de.cau.cs.kieler.esterel.services.EsterelGrammarAccess;
 
 
 
-// Entry rule entryRuleProgram
-entryRuleProgram 
+// Entry rule entryRuleEsterelProgram
+entryRuleEsterelProgram 
 @init {
 	HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_SL_COMMENT", "RULE_ML_COMMENT", "RULE_WS");
 }
 :
-{ before(grammarAccess.getProgramRule()); }
-	 ruleProgram
-{ after(grammarAccess.getProgramRule()); } 
+{ before(grammarAccess.getEsterelProgramRule()); }
+	 ruleEsterelProgram
+{ after(grammarAccess.getEsterelProgramRule()); } 
 	 EOF 
 ;
 finally {
 	myHiddenTokenState.restore();
 }
 
-// Rule Program
-ruleProgram
+// Rule EsterelProgram
+ruleEsterelProgram
     @init {
 		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_SL_COMMENT", "RULE_ML_COMMENT", "RULE_WS");
 		int stackSize = keepStackSize();
     }
 	:
 (
-{ before(grammarAccess.getProgramAccess().getModulesAssignment()); }
-(rule__Program__ModulesAssignment)*
-{ after(grammarAccess.getProgramAccess().getModulesAssignment()); }
+{ before(grammarAccess.getEsterelProgramAccess().getModulesAssignment()); }
+(rule__EsterelProgram__ModulesAssignment)*
+{ after(grammarAccess.getEsterelProgramAccess().getModulesAssignment()); }
 )
 
 ;
@@ -4287,6 +4287,32 @@ finally {
 
 
 
+// Entry rule entryRulePragma
+entryRulePragma 
+:
+{ before(grammarAccess.getPragmaRule()); }
+	 rulePragma
+{ after(grammarAccess.getPragmaRule()); } 
+	 EOF 
+;
+
+// Rule Pragma
+rulePragma
+    @init {
+		int stackSize = keepStackSize();
+    }
+	:
+(
+{ before(grammarAccess.getPragmaAccess().getAlternatives()); }
+(rule__Pragma__Alternatives)
+{ after(grammarAccess.getPragmaAccess().getAlternatives()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
 
 
 
@@ -7059,7 +7085,6 @@ finally {
 }
 
 
-
 rule__Statement__Alternatives
     @init {
 		int stackSize = keepStackSize();
@@ -7648,6 +7673,27 @@ finally {
 	restoreStackSize(stackSize);
 }
 
+rule__Pragma__Alternatives
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getPragmaAccess().getStringPragmaParserRuleCall_0()); }
+	ruleStringPragma
+{ after(grammarAccess.getPragmaAccess().getStringPragmaParserRuleCall_0()); }
+)
+
+    |(
+{ before(grammarAccess.getPragmaAccess().getPragmaTagParserRuleCall_1()); }
+	rulePragmaTag
+{ after(grammarAccess.getPragmaAccess().getPragmaTagParserRuleCall_1()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
 
 
 
@@ -33453,7 +33499,6 @@ finally {
 
 
 
-
 rule__Pause__Group__0
     @init {
 		int stackSize = keepStackSize();
@@ -33859,6 +33904,7 @@ rule__Assignment__Group__4
     }
 :
 	rule__Assignment__Group__4__Impl
+	rule__Assignment__Group__5
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -33879,6 +33925,36 @@ rule__Assignment__Group__4__Impl
 finally {
 	restoreStackSize(stackSize);
 }
+
+
+rule__Assignment__Group__5
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__Assignment__Group__5__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Assignment__Group__5__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getAssignmentAccess().getGroup_5()); }
+(rule__Assignment__Group_5__0)?
+{ after(grammarAccess.getAssignmentAccess().getGroup_5()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
 
 
 
@@ -33981,6 +34057,76 @@ finally {
 }
 
 
+
+
+
+
+
+
+rule__Assignment__Group_5__0
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__Assignment__Group_5__0__Impl
+	rule__Assignment__Group_5__1
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Assignment__Group_5__0__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getAssignmentAccess().getScheduleKeyword_5_0()); }
+
+	'schedule' 
+
+{ after(grammarAccess.getAssignmentAccess().getScheduleKeyword_5_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+rule__Assignment__Group_5__1
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__Assignment__Group_5__1__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Assignment__Group_5__1__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+(
+{ before(grammarAccess.getAssignmentAccess().getScheduleAssignment_5_1()); }
+(rule__Assignment__ScheduleAssignment_5_1)
+{ after(grammarAccess.getAssignmentAccess().getScheduleAssignment_5_1()); }
+)
+(
+{ before(grammarAccess.getAssignmentAccess().getScheduleAssignment_5_1()); }
+(rule__Assignment__ScheduleAssignment_5_1)*
+{ after(grammarAccess.getAssignmentAccess().getScheduleAssignment_5_1()); }
+)
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
 
 
 
@@ -44603,14 +44749,14 @@ finally {
 
 
 
-rule__Program__ModulesAssignment
+rule__EsterelProgram__ModulesAssignment
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getProgramAccess().getModulesModuleParserRuleCall_0()); }
-	ruleModule{ after(grammarAccess.getProgramAccess().getModulesModuleParserRuleCall_0()); }
+{ before(grammarAccess.getEsterelProgramAccess().getModulesModuleParserRuleCall_0()); }
+	ruleModule{ after(grammarAccess.getEsterelProgramAccess().getModulesModuleParserRuleCall_0()); }
 )
 
 ;
@@ -50147,10 +50293,6 @@ finally {
 
 
 
-
-
-
-
 rule__Pause__AnnotationsAssignment_1
     @init {
 		int stackSize = keepStackSize();
@@ -50287,6 +50429,21 @@ rule__Assignment__ExpressionAssignment_4
 (
 { before(grammarAccess.getAssignmentAccess().getExpressionExpressionParserRuleCall_4_0()); }
 	ruleExpression{ after(grammarAccess.getAssignmentAccess().getExpressionExpressionParserRuleCall_4_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Assignment__ScheduleAssignment_5_1
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getAssignmentAccess().getScheduleScheduleObjectReferenceParserRuleCall_5_1_0()); }
+	ruleScheduleObjectReference{ after(grammarAccess.getAssignmentAccess().getScheduleScheduleObjectReferenceParserRuleCall_5_1_0()); }
 )
 
 ;

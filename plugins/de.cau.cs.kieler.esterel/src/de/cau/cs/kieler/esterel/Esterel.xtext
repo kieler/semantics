@@ -9,7 +9,7 @@ import "http://kieler.cs.cau.de/kext/0.1.0" as kext
 import "http://kieler.cs.cau.de/scl/0.2.0" as scl
 
 //  root rule. an esterel file can contain multiple modules
-Program hidden(SL_COMMENT, ML_COMMENT, WS):
+EsterelProgram hidden(SL_COMMENT, ML_COMMENT, WS):
     (modules+=Module)*;
 
 /*

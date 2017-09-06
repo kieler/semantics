@@ -11,77 +11,77 @@ import de.cau.cs.kieler.annotations.Pragma;
 import de.cau.cs.kieler.annotations.StringAnnotation;
 import de.cau.cs.kieler.annotations.StringPragma;
 import de.cau.cs.kieler.annotations.TypedStringAnnotation;
-import de.cau.cs.kieler.esterel.esterel.Abort;
-import de.cau.cs.kieler.esterel.esterel.Await;
-import de.cau.cs.kieler.esterel.esterel.Block;
-import de.cau.cs.kieler.esterel.esterel.Case;
-import de.cau.cs.kieler.esterel.esterel.Constant;
-import de.cau.cs.kieler.esterel.esterel.ConstantDecls;
-import de.cau.cs.kieler.esterel.esterel.ConstantExpression;
-import de.cau.cs.kieler.esterel.esterel.ConstantRenaming;
-import de.cau.cs.kieler.esterel.esterel.DelayExpr;
-import de.cau.cs.kieler.esterel.esterel.Do;
-import de.cau.cs.kieler.esterel.esterel.ElsIf;
-import de.cau.cs.kieler.esterel.esterel.Emit;
-import de.cau.cs.kieler.esterel.esterel.EsterelAssignment;
-import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
-import de.cau.cs.kieler.esterel.esterel.EsterelParallel;
-import de.cau.cs.kieler.esterel.esterel.EsterelThread;
-import de.cau.cs.kieler.esterel.esterel.EveryDo;
-import de.cau.cs.kieler.esterel.esterel.Exec;
-import de.cau.cs.kieler.esterel.esterel.ExecCase;
-import de.cau.cs.kieler.esterel.esterel.Exit;
-import de.cau.cs.kieler.esterel.esterel.Function;
-import de.cau.cs.kieler.esterel.esterel.FunctionDecl;
-import de.cau.cs.kieler.esterel.esterel.FunctionExpression;
-import de.cau.cs.kieler.esterel.esterel.FunctionRenaming;
-import de.cau.cs.kieler.esterel.esterel.Halt;
-import de.cau.cs.kieler.esterel.esterel.ISignal;
-import de.cau.cs.kieler.esterel.esterel.IVariable;
-import de.cau.cs.kieler.esterel.esterel.IfTest;
-import de.cau.cs.kieler.esterel.esterel.Input;
-import de.cau.cs.kieler.esterel.esterel.InputOutput;
-import de.cau.cs.kieler.esterel.esterel.LocalSignalDecl;
-import de.cau.cs.kieler.esterel.esterel.LocalVariable;
-import de.cau.cs.kieler.esterel.esterel.Loop;
-import de.cau.cs.kieler.esterel.esterel.Module;
-import de.cau.cs.kieler.esterel.esterel.ModuleRenaming;
-import de.cau.cs.kieler.esterel.esterel.Nothing;
-import de.cau.cs.kieler.esterel.esterel.OneTypeConstantDecls;
-import de.cau.cs.kieler.esterel.esterel.Output;
-import de.cau.cs.kieler.esterel.esterel.Present;
-import de.cau.cs.kieler.esterel.esterel.PresentCase;
-import de.cau.cs.kieler.esterel.esterel.ProcCall;
-import de.cau.cs.kieler.esterel.esterel.Procedure;
-import de.cau.cs.kieler.esterel.esterel.ProcedureDecl;
-import de.cau.cs.kieler.esterel.esterel.ProcedureRenaming;
-import de.cau.cs.kieler.esterel.esterel.Program;
-import de.cau.cs.kieler.esterel.esterel.Relation;
-import de.cau.cs.kieler.esterel.esterel.RelationImplication;
-import de.cau.cs.kieler.esterel.esterel.RelationIncompatibility;
-import de.cau.cs.kieler.esterel.esterel.Renaming;
-import de.cau.cs.kieler.esterel.esterel.Repeat;
-import de.cau.cs.kieler.esterel.esterel.Return;
-import de.cau.cs.kieler.esterel.esterel.Run;
-import de.cau.cs.kieler.esterel.esterel.SensorDecl;
-import de.cau.cs.kieler.esterel.esterel.SensorWithType;
-import de.cau.cs.kieler.esterel.esterel.SignalReferenceExpr;
-import de.cau.cs.kieler.esterel.esterel.SignalRenaming;
-import de.cau.cs.kieler.esterel.esterel.Suspend;
-import de.cau.cs.kieler.esterel.esterel.Sustain;
-import de.cau.cs.kieler.esterel.esterel.Task;
-import de.cau.cs.kieler.esterel.esterel.TaskDecl;
-import de.cau.cs.kieler.esterel.esterel.TaskRenaming;
-import de.cau.cs.kieler.esterel.esterel.Trap;
-import de.cau.cs.kieler.esterel.esterel.TrapExpression;
-import de.cau.cs.kieler.esterel.esterel.TrapHandler;
-import de.cau.cs.kieler.esterel.esterel.TrapReferenceExpr;
-import de.cau.cs.kieler.esterel.esterel.TrapSignal;
-import de.cau.cs.kieler.esterel.esterel.Type;
-import de.cau.cs.kieler.esterel.esterel.TypeDecl;
-import de.cau.cs.kieler.esterel.esterel.TypeIdentifier;
-import de.cau.cs.kieler.esterel.esterel.TypeRenaming;
-import de.cau.cs.kieler.esterel.esterel.VariableDecl;
+import de.cau.cs.kieler.esterel.Abort;
+import de.cau.cs.kieler.esterel.Await;
+import de.cau.cs.kieler.esterel.Block;
+import de.cau.cs.kieler.esterel.Case;
+import de.cau.cs.kieler.esterel.Constant;
+import de.cau.cs.kieler.esterel.ConstantDecls;
+import de.cau.cs.kieler.esterel.ConstantExpression;
+import de.cau.cs.kieler.esterel.ConstantRenaming;
+import de.cau.cs.kieler.esterel.DelayExpr;
+import de.cau.cs.kieler.esterel.Do;
+import de.cau.cs.kieler.esterel.ElsIf;
+import de.cau.cs.kieler.esterel.Emit;
+import de.cau.cs.kieler.esterel.EsterelAssignment;
+import de.cau.cs.kieler.esterel.EsterelPackage;
+import de.cau.cs.kieler.esterel.EsterelParallel;
+import de.cau.cs.kieler.esterel.EsterelProgram;
+import de.cau.cs.kieler.esterel.EsterelThread;
+import de.cau.cs.kieler.esterel.EveryDo;
+import de.cau.cs.kieler.esterel.Exec;
+import de.cau.cs.kieler.esterel.ExecCase;
+import de.cau.cs.kieler.esterel.Exit;
+import de.cau.cs.kieler.esterel.Function;
+import de.cau.cs.kieler.esterel.FunctionDecl;
+import de.cau.cs.kieler.esterel.FunctionExpression;
+import de.cau.cs.kieler.esterel.FunctionRenaming;
+import de.cau.cs.kieler.esterel.Halt;
+import de.cau.cs.kieler.esterel.ISignal;
+import de.cau.cs.kieler.esterel.IVariable;
+import de.cau.cs.kieler.esterel.IfTest;
+import de.cau.cs.kieler.esterel.Input;
+import de.cau.cs.kieler.esterel.InputOutput;
+import de.cau.cs.kieler.esterel.LocalSignalDecl;
+import de.cau.cs.kieler.esterel.LocalVariable;
+import de.cau.cs.kieler.esterel.Loop;
+import de.cau.cs.kieler.esterel.Module;
+import de.cau.cs.kieler.esterel.ModuleRenaming;
+import de.cau.cs.kieler.esterel.Nothing;
+import de.cau.cs.kieler.esterel.OneTypeConstantDecls;
+import de.cau.cs.kieler.esterel.Output;
+import de.cau.cs.kieler.esterel.Present;
+import de.cau.cs.kieler.esterel.PresentCase;
+import de.cau.cs.kieler.esterel.ProcCall;
+import de.cau.cs.kieler.esterel.Procedure;
+import de.cau.cs.kieler.esterel.ProcedureDecl;
+import de.cau.cs.kieler.esterel.ProcedureRenaming;
+import de.cau.cs.kieler.esterel.Relation;
+import de.cau.cs.kieler.esterel.RelationImplication;
+import de.cau.cs.kieler.esterel.RelationIncompatibility;
+import de.cau.cs.kieler.esterel.Renaming;
+import de.cau.cs.kieler.esterel.Repeat;
+import de.cau.cs.kieler.esterel.Return;
+import de.cau.cs.kieler.esterel.Run;
+import de.cau.cs.kieler.esterel.SensorDecl;
+import de.cau.cs.kieler.esterel.SensorWithType;
+import de.cau.cs.kieler.esterel.SignalReferenceExpr;
+import de.cau.cs.kieler.esterel.SignalRenaming;
+import de.cau.cs.kieler.esterel.Suspend;
+import de.cau.cs.kieler.esterel.Sustain;
+import de.cau.cs.kieler.esterel.Task;
+import de.cau.cs.kieler.esterel.TaskDecl;
+import de.cau.cs.kieler.esterel.TaskRenaming;
+import de.cau.cs.kieler.esterel.Trap;
+import de.cau.cs.kieler.esterel.TrapExpression;
+import de.cau.cs.kieler.esterel.TrapHandler;
+import de.cau.cs.kieler.esterel.TrapReferenceExpr;
+import de.cau.cs.kieler.esterel.TrapSignal;
+import de.cau.cs.kieler.esterel.Type;
+import de.cau.cs.kieler.esterel.TypeDecl;
+import de.cau.cs.kieler.esterel.TypeIdentifier;
+import de.cau.cs.kieler.esterel.TypeRenaming;
+import de.cau.cs.kieler.esterel.VariableDecl;
 import de.cau.cs.kieler.esterel.services.EsterelGrammarAccess;
 import de.cau.cs.kieler.kexpressions.BoolValue;
 import de.cau.cs.kieler.kexpressions.FloatValue;
@@ -251,6 +251,9 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 			case EsterelPackage.ESTEREL_PARALLEL:
 				sequence_EsterelParallel(context, (EsterelParallel) semanticObject); 
 				return; 
+			case EsterelPackage.ESTEREL_PROGRAM:
+				sequence_EsterelProgram(context, (EsterelProgram) semanticObject); 
+				return; 
 			case EsterelPackage.ESTEREL_THREAD:
 				sequence_EsterelThread(context, (EsterelThread) semanticObject); 
 				return; 
@@ -345,9 +348,6 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				return; 
 			case EsterelPackage.PROCEDURE_RENAMING:
 				sequence_ProcedureRenaming(context, (ProcedureRenaming) semanticObject); 
-				return; 
-			case EsterelPackage.PROGRAM:
-				sequence_Program(context, (Program) semanticObject); 
 				return; 
 			case EsterelPackage.RELATION:
 				sequence_RelationDecl(context, (Relation) semanticObject); 
@@ -1142,6 +1142,18 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
+	 *     EsterelProgram returns EsterelProgram
+	 *
+	 * Constraint:
+	 *     modules+=Module+
+	 */
+	protected void sequence_EsterelProgram(ISerializationContext context, EsterelProgram semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     StatementContainerInterface returns EsterelThread
 	 *     EsterelThread returns EsterelThread
 	 *
@@ -1657,18 +1669,6 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     (name=ID (variables+=TypeIdentifier variables+=TypeIdentifier*)? (expressions+=TypeIdentifier expressions+=TypeIdentifier*)?)
 	 */
 	protected void sequence_Procedure(ISerializationContext context, Procedure semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Program returns Program
-	 *
-	 * Constraint:
-	 *     modules+=Module+
-	 */
-	protected void sequence_Program(ISerializationContext context, Program semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

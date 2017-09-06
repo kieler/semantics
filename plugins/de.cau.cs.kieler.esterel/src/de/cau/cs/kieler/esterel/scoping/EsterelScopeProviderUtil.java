@@ -24,7 +24,28 @@ import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.EObjectDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
-import de.cau.cs.kieler.esterel.esterel.*;
+import de.cau.cs.kieler.esterel.Constant;
+import de.cau.cs.kieler.esterel.ConstantDecls;
+import de.cau.cs.kieler.esterel.EsterelProgram;
+import de.cau.cs.kieler.esterel.Function;
+import de.cau.cs.kieler.esterel.FunctionDecl;
+import de.cau.cs.kieler.esterel.ISignal;
+import de.cau.cs.kieler.esterel.IVariable;
+import de.cau.cs.kieler.esterel.InterfaceSignalDecl;
+import de.cau.cs.kieler.esterel.LocalSignalDecl;
+import de.cau.cs.kieler.esterel.LocalVariable;
+import de.cau.cs.kieler.esterel.Module;
+import de.cau.cs.kieler.esterel.OneTypeConstantDecls;
+import de.cau.cs.kieler.esterel.Procedure;
+import de.cau.cs.kieler.esterel.ProcedureDecl;
+import de.cau.cs.kieler.esterel.SensorDecl;
+import de.cau.cs.kieler.esterel.SensorWithType;
+import de.cau.cs.kieler.esterel.Task;
+import de.cau.cs.kieler.esterel.TaskDecl;
+import de.cau.cs.kieler.esterel.Trap;
+import de.cau.cs.kieler.esterel.Type;
+import de.cau.cs.kieler.esterel.TypeDecl;
+import de.cau.cs.kieler.esterel.VariableDecl;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 
 /**
@@ -197,7 +218,7 @@ public final class EsterelScopeProviderUtil {
         }
         function.collect((Module) parent, scopeElems);
         // collect from possible other modules
-        Program p = (Program) ((Module) parent).eContainer();
+        EsterelProgram p = (EsterelProgram) ((Module) parent).eContainer();
         for (Module m : p.getModules()) {
             function.collect(m, scopeElems);
         }
@@ -301,8 +322,8 @@ public final class EsterelScopeProviderUtil {
         EObject parent = context.eContainer();
         // find all Modules
         while (parent != null) {
-            if (parent instanceof Program) {
-                Program p = (Program) parent;
+            if (parent instanceof EsterelProgram) {
+                EsterelProgram p = (EsterelProgram) parent;
                 // add Trap to the scope
                 for (Module m : p.getModules()) {
                     scopeElems.add(new EObjectDescription(QualifiedName.create(m.getName()), m,

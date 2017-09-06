@@ -24,9 +24,28 @@ import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.EObjectDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
-import de.cau.cs.kieler.esterel.esterel.*;
-import de.cau.cs.kieler.esterel.esterel.Module;
-import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram;
+import de.cau.cs.kieler.esterel.Constant;
+import de.cau.cs.kieler.esterel.ConstantDecls;
+import de.cau.cs.kieler.esterel.Function;
+import de.cau.cs.kieler.esterel.FunctionDecl;
+import de.cau.cs.kieler.esterel.ISignal;
+import de.cau.cs.kieler.esterel.IVariable;
+import de.cau.cs.kieler.esterel.InterfaceSignalDecl;
+import de.cau.cs.kieler.esterel.LocalSignalDecl;
+import de.cau.cs.kieler.esterel.LocalVariable;
+import de.cau.cs.kieler.esterel.Module;
+import de.cau.cs.kieler.esterel.OneTypeConstantDecls;
+import de.cau.cs.kieler.esterel.Procedure;
+import de.cau.cs.kieler.esterel.ProcedureDecl;
+import de.cau.cs.kieler.esterel.SensorDecl;
+import de.cau.cs.kieler.esterel.SensorWithType;
+import de.cau.cs.kieler.esterel.Task;
+import de.cau.cs.kieler.esterel.TaskDecl;
+import de.cau.cs.kieler.esterel.Trap;
+import de.cau.cs.kieler.esterel.Type;
+import de.cau.cs.kieler.esterel.TypeDecl;
+import de.cau.cs.kieler.esterel.VariableDecl;
+import de.cau.cs.kieler.esterel.scest.SCEstProgram;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 
 /**

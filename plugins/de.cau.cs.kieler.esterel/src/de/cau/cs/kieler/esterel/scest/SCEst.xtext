@@ -13,7 +13,7 @@ import "http://www.cau.de/cs/kieler/esterel/Esterel" as esterel
 SCEstProgram hidden(SL_COMMENT, ML_COMMENT, WS):
     (modules+=SCEstModule)*;
 
-ProgramInterface returns esterel::Program:
+ProgramInterface returns esterel::EsterelProgram:
     SCEstProgram;
 
 /* ###################################################

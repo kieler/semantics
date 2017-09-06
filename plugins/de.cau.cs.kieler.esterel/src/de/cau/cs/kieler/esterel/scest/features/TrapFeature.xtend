@@ -12,8 +12,9 @@
  */
 package de.cau.cs.kieler.esterel.scest.features
 
+import de.cau.cs.kieler.esterel.Trap
+import de.cau.cs.kieler.esterel.scest.SCEstProgram
 import de.cau.cs.kieler.kico.features.Feature
-import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram
 
 /**
  * @author mrb
@@ -33,7 +34,7 @@ class TrapFeature extends Feature {
     }
     
     def isContained(SCEstProgram program) {
-        !program.eAllContents.filter(de.cau.cs.kieler.esterel.esterel.Trap).empty
+        !program.eAllContents.filter(Trap).empty
     }
     
 }

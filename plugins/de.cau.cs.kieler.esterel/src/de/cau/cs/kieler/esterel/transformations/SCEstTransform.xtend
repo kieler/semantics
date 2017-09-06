@@ -13,31 +13,28 @@
  */
 package de.cau.cs.kieler.esterel.transformations
 
-import com.google.common.collect.Sets
-import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
-import de.cau.cs.kieler.esterel.features.EsterelFeature
-import de.cau.cs.kieler.esterel.esterel.Program
-import de.cau.cs.kieler.esterel.scest.transformations.SCEstTransformation
-import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram
-import de.cau.cs.kieler.esterel.scest.scest.SCEstModule
-import de.cau.cs.kieler.esterel.esterel.Module
 import com.google.inject.Inject
+import de.cau.cs.kieler.esterel.Abort
+import de.cau.cs.kieler.esterel.Await
+import de.cau.cs.kieler.esterel.Do
+import de.cau.cs.kieler.esterel.EsterelParallel
+import de.cau.cs.kieler.esterel.EsterelProgram
+import de.cau.cs.kieler.esterel.Exec
+import de.cau.cs.kieler.esterel.IfTest
+import de.cau.cs.kieler.esterel.Module
+import de.cau.cs.kieler.esterel.Present
+import de.cau.cs.kieler.esterel.Run
+import de.cau.cs.kieler.esterel.Trap
+import de.cau.cs.kieler.esterel.scest.SCEstModule
+import de.cau.cs.kieler.esterel.scest.SCEstProgram
 import de.cau.cs.kieler.esterel.scest.extensions.SCEstExtension
-import java.util.HashMap
-import de.cau.cs.kieler.esterel.esterel.Run
-import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.scl.Conditional
+import de.cau.cs.kieler.scl.Parallel
 import de.cau.cs.kieler.scl.Statement
 import de.cau.cs.kieler.scl.StatementContainer
-import de.cau.cs.kieler.esterel.esterel.Trap
-import de.cau.cs.kieler.esterel.esterel.Abort
-import de.cau.cs.kieler.esterel.esterel.Await
-import de.cau.cs.kieler.esterel.esterel.Exec
-import de.cau.cs.kieler.esterel.esterel.Do
-import de.cau.cs.kieler.scl.Conditional
-import de.cau.cs.kieler.esterel.esterel.Present
-import de.cau.cs.kieler.esterel.esterel.IfTest
-import de.cau.cs.kieler.esterel.esterel.EsterelParallel
-import de.cau.cs.kieler.scl.Parallel
+import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.util.EcoreUtil
 
 /**
@@ -47,7 +44,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil
  * @kieler.design 2014-07-23 proposed cmot
  * @kieler.rating 2014-07-23 proposed yellow
  */
-class SCEstTransform extends AbstractExpansionTransformation {
+class SCEstTransform extends Processor<EsterelProgram, SCEstProgram> {
     
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
@@ -60,21 +57,29 @@ class SCEstTransform extends AbstractExpansionTransformation {
     override getName() {
         return "SCEst"
     }
-
-    override getExpandsFeatureId() {
-        return "esterel.scest"
+    
+    override getType() {
+        return ProcessorType.TRANSFORMATOR
+    }
+    
+    override process() {
+        setModel(getModel.transform)
     }
 
-    override getProducesFeatureIds() {
-        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID)
-    }
+//    override getExpandsFeatureId() {
+//        return "esterel.scest"
+//    }
+//
+//    override getProducesFeatureIds() {
+//        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID)
+//    }
     
     @Inject
     extension SCEstExtension
     
     var SCEstProgram scestProgram
     
-    def SCEstProgram transform(Program prog) {
+    def SCEstProgram transform(EsterelProgram prog) {
         scestProgram = createSCEstProgram
         for (var i=0; i<prog.modules.length; i++) {
             var m = prog.modules.get(i)

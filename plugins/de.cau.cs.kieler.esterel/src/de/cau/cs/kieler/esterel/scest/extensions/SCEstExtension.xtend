@@ -17,45 +17,45 @@ import de.cau.cs.kieler.annotations.Annotatable
 import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.annotations.IntAnnotation
-import de.cau.cs.kieler.esterel.esterel.Abort
-import de.cau.cs.kieler.esterel.esterel.Await
-import de.cau.cs.kieler.esterel.esterel.Constant
-import de.cau.cs.kieler.esterel.esterel.ConstantRenaming
-import de.cau.cs.kieler.esterel.esterel.DelayExpr
-import de.cau.cs.kieler.esterel.esterel.Do
-import de.cau.cs.kieler.esterel.esterel.ElsIf
-import de.cau.cs.kieler.esterel.esterel.Emit
-import de.cau.cs.kieler.esterel.esterel.EsterelAssignment
-import de.cau.cs.kieler.esterel.esterel.EsterelFactory
-import de.cau.cs.kieler.esterel.esterel.EsterelParallel
-import de.cau.cs.kieler.esterel.esterel.EsterelThread
-import de.cau.cs.kieler.esterel.esterel.Exec
-import de.cau.cs.kieler.esterel.esterel.Exit
-import de.cau.cs.kieler.esterel.esterel.Function
-import de.cau.cs.kieler.esterel.esterel.FunctionRenaming
-import de.cau.cs.kieler.esterel.esterel.ISignal
-import de.cau.cs.kieler.esterel.esterel.IVariable
-import de.cau.cs.kieler.esterel.esterel.IfTest
-import de.cau.cs.kieler.esterel.esterel.Module
-import de.cau.cs.kieler.esterel.esterel.Present
-import de.cau.cs.kieler.esterel.esterel.Procedure
-import de.cau.cs.kieler.esterel.esterel.ProcedureRenaming
-import de.cau.cs.kieler.esterel.esterel.Repeat
-import de.cau.cs.kieler.esterel.esterel.Run
-import de.cau.cs.kieler.esterel.esterel.SensorWithType
-import de.cau.cs.kieler.esterel.esterel.SignalReferenceExpr
-import de.cau.cs.kieler.esterel.esterel.SignalRenaming
-import de.cau.cs.kieler.esterel.esterel.Sustain
-import de.cau.cs.kieler.esterel.esterel.Task
-import de.cau.cs.kieler.esterel.esterel.TaskRenaming
-import de.cau.cs.kieler.esterel.esterel.Trap
-import de.cau.cs.kieler.esterel.esterel.TrapHandler
-import de.cau.cs.kieler.esterel.esterel.Type
-import de.cau.cs.kieler.esterel.esterel.TypeIdentifier
-import de.cau.cs.kieler.esterel.esterel.TypeRenaming
-import de.cau.cs.kieler.esterel.scest.scest.SCEstModule
-import de.cau.cs.kieler.esterel.scest.scest.ScestFactory
-import de.cau.cs.kieler.esterel.scest.scest.Set
+import de.cau.cs.kieler.esterel.Abort
+import de.cau.cs.kieler.esterel.Await
+import de.cau.cs.kieler.esterel.Constant
+import de.cau.cs.kieler.esterel.ConstantRenaming
+import de.cau.cs.kieler.esterel.DelayExpr
+import de.cau.cs.kieler.esterel.Do
+import de.cau.cs.kieler.esterel.ElsIf
+import de.cau.cs.kieler.esterel.Emit
+import de.cau.cs.kieler.esterel.EsterelAssignment
+import de.cau.cs.kieler.esterel.EsterelFactory
+import de.cau.cs.kieler.esterel.EsterelParallel
+import de.cau.cs.kieler.esterel.EsterelThread
+import de.cau.cs.kieler.esterel.Exec
+import de.cau.cs.kieler.esterel.Exit
+import de.cau.cs.kieler.esterel.Function
+import de.cau.cs.kieler.esterel.FunctionRenaming
+import de.cau.cs.kieler.esterel.ISignal
+import de.cau.cs.kieler.esterel.IVariable
+import de.cau.cs.kieler.esterel.IfTest
+import de.cau.cs.kieler.esterel.Module
+import de.cau.cs.kieler.esterel.Present
+import de.cau.cs.kieler.esterel.Procedure
+import de.cau.cs.kieler.esterel.ProcedureRenaming
+import de.cau.cs.kieler.esterel.Repeat
+import de.cau.cs.kieler.esterel.Run
+import de.cau.cs.kieler.esterel.SensorWithType
+import de.cau.cs.kieler.esterel.SignalReferenceExpr
+import de.cau.cs.kieler.esterel.SignalRenaming
+import de.cau.cs.kieler.esterel.Sustain
+import de.cau.cs.kieler.esterel.Task
+import de.cau.cs.kieler.esterel.TaskRenaming
+import de.cau.cs.kieler.esterel.Trap
+import de.cau.cs.kieler.esterel.TrapHandler
+import de.cau.cs.kieler.esterel.Type
+import de.cau.cs.kieler.esterel.TypeIdentifier
+import de.cau.cs.kieler.esterel.TypeRenaming
+import de.cau.cs.kieler.esterel.scest.SCEstModule
+import de.cau.cs.kieler.esterel.scest.ScestFactory
+import de.cau.cs.kieler.esterel.scest.Set
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
@@ -1631,6 +1631,13 @@ class SCEstExtension {
      */
     def createSCLProg() {
         SCLFactory::eINSTANCE.createSCLProgram
+    }
+    
+    /**
+     * Creates a SCLProgam
+     */
+    def createSCLModule() {
+        SCLFactory::eINSTANCE.createModule
     }
     
     /**

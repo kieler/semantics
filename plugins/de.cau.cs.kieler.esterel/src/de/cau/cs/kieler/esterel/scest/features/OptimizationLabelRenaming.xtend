@@ -12,8 +12,9 @@
  */
 package de.cau.cs.kieler.esterel.scest.features
 
+import de.cau.cs.kieler.esterel.scest.SCEstProgram
 import de.cau.cs.kieler.kico.features.Feature
-import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram
+import de.cau.cs.kieler.scl.Label
 
 /**
  * @author mrb
@@ -33,6 +34,6 @@ class OptimizationLabelRenaming extends Feature {
     }
     
     def isContained(SCEstProgram program) {
-        !program.eAllContents.filter(de.cau.cs.kieler.scl.Label).empty
+        !program.eAllContents.filter(Label).empty
     }
 }

@@ -31,7 +31,7 @@ public class SCEstStandaloneSetupGenerated implements ISetup {
 	
 	public void register(Injector injector) {
 	if (!EPackage.Registry.INSTANCE.containsKey("http://www.cau.de/cs/kieler/esterel/scest/SCEst")) {
-		EPackage.Registry.INSTANCE.put("http://www.cau.de/cs/kieler/esterel/scest/SCEst", de.cau.cs.kieler.esterel.scest.scest.ScestPackage.eINSTANCE);
+		EPackage.Registry.INSTANCE.put("http://www.cau.de/cs/kieler/esterel/scest/SCEst", de.cau.cs.kieler.esterel.scest.ScestPackage.eINSTANCE);
 	}
 
 		org.eclipse.xtext.resource.IResourceFactory resourceFactory = injector.getInstance(org.eclipse.xtext.resource.IResourceFactory.class);

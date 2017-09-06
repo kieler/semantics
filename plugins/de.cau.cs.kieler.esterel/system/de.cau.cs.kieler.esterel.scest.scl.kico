@@ -1,0 +1,34 @@
+system de.cau.cs.kieler.esterel.scest.scl
+    version 1 
+    label "SCEst to SCL"
+    
+scest.initialization
+esterel.run
+esterel.do
+esterel.everydo
+esterel.await
+esterel.sensor
+esterel.constant
+esterel.signal
+esterel.localsignaldecl
+scest.unemit
+esterel.loop
+esterel.halt
+esterel.sustain
+esterel.exec
+esterel.proccall
+esterel.localvariable
+esterel.suspend
+esterel.parallel
+esterel.iftest
+esterel.abort
+esterel.trap
+scest.^set
+esterel.emit
+esterel.nothing
+esterel.block
+esterel.present
+esterel.function
+esterel.repeat
+scest.labelrenaming
+scest.esterelToScl

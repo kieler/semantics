@@ -13139,50 +13139,6 @@ ruleValuedObjectTestExpression returns [EObject current=null]
 
 
 
-// Entry rule entryRuleStatement
-entryRuleStatement returns [EObject current=null] 
-	:
-	{ newCompositeNode(grammarAccess.getStatementRule()); }
-	 iv_ruleStatement=ruleStatement 
-	 { $current=$iv_ruleStatement.current; } 
-	 EOF 
-;
-
-// Rule Statement
-ruleStatement returns [EObject current=null] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-(
-	{ 
-	  /* */ 
-	}
-    { 
-        newCompositeNode(grammarAccess.getStatementAccess().getInstructionStatementParserRuleCall_0()); 
-    }
-    this_InstructionStatement_0=ruleInstructionStatement
-    { 
-        $current = $this_InstructionStatement_0.current; 
-        afterParserOrEnumRuleCall();
-    }
-
-    |
-	{ 
-	  /* */ 
-	}
-    { 
-        newCompositeNode(grammarAccess.getStatementAccess().getMetaStatementParserRuleCall_1()); 
-    }
-    this_MetaStatement_1=ruleMetaStatement
-    { 
-        $current = $this_MetaStatement_1.current; 
-        afterParserOrEnumRuleCall();
-    }
-)
-;
-
-
-
 
 
 // Entry rule entryRuleInstructionStatement
@@ -13534,7 +13490,29 @@ ruleAssignment returns [EObject current=null]
 	    }
 
 )
-))
+)(	otherlv_7='schedule' 
+    {
+    	newLeafNode(otherlv_7, grammarAccess.getAssignmentAccess().getScheduleKeyword_5_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getAssignmentAccess().getScheduleScheduleObjectReferenceParserRuleCall_5_1_0()); 
+	    }
+		lv_schedule_8_0=ruleScheduleObjectReference		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getAssignmentRule());
+	        }
+       		add(
+       			$current, 
+       			"schedule",
+        		lv_schedule_8_0, 
+        		"de.cau.cs.kieler.kexpressions.KExpressions.ScheduleObjectReference");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)+)?)
 ;
 
 
@@ -13920,63 +13898,6 @@ ruleDeclaration returns [EObject current=null]
 ;
 
 
-
-
-
-// Entry rule entryRuleDeclarationWOSemicolon
-entryRuleDeclarationWOSemicolon returns [EObject current=null] 
-	:
-	{ newCompositeNode(grammarAccess.getDeclarationWOSemicolonRule()); }
-	 iv_ruleDeclarationWOSemicolon=ruleDeclarationWOSemicolon 
-	 { $current=$iv_ruleDeclarationWOSemicolon.current; } 
-	 EOF 
-;
-
-// Rule DeclarationWOSemicolon
-ruleDeclarationWOSemicolon returns [EObject current=null] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-(
-	{ 
-	  /* */ 
-	}
-    { 
-        newCompositeNode(grammarAccess.getDeclarationWOSemicolonAccess().getVariableDeclarationWOSemicolonParserRuleCall_0()); 
-    }
-    this_VariableDeclarationWOSemicolon_0=ruleVariableDeclarationWOSemicolon
-    { 
-        $current = $this_VariableDeclarationWOSemicolon_0.current; 
-        afterParserOrEnumRuleCall();
-    }
-
-    |
-	{ 
-	  /* */ 
-	}
-    { 
-        newCompositeNode(grammarAccess.getDeclarationWOSemicolonAccess().getReferenceDeclarationWOSemicolonParserRuleCall_1()); 
-    }
-    this_ReferenceDeclarationWOSemicolon_1=ruleReferenceDeclarationWOSemicolon
-    { 
-        $current = $this_ReferenceDeclarationWOSemicolon_1.current; 
-        afterParserOrEnumRuleCall();
-    }
-
-    |
-	{ 
-	  /* */ 
-	}
-    { 
-        newCompositeNode(grammarAccess.getDeclarationWOSemicolonAccess().getScheduleDeclarationWOSemicolonParserRuleCall_2()); 
-    }
-    this_ScheduleDeclarationWOSemicolon_2=ruleScheduleDeclarationWOSemicolon
-    { 
-        $current = $this_ScheduleDeclarationWOSemicolon_2.current; 
-        afterParserOrEnumRuleCall();
-    }
-)
-;
 
 
 
@@ -17117,6 +17038,50 @@ ruleAnnotation returns [EObject current=null]
 ;
 
 
+
+
+
+// Entry rule entryRulePragma
+entryRulePragma returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getPragmaRule()); }
+	 iv_rulePragma=rulePragma 
+	 { $current=$iv_rulePragma.current; } 
+	 EOF 
+;
+
+// Rule Pragma
+rulePragma returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getPragmaAccess().getStringPragmaParserRuleCall_0()); 
+    }
+    this_StringPragma_0=ruleStringPragma
+    { 
+        $current = $this_StringPragma_0.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getPragmaAccess().getPragmaTagParserRuleCall_1()); 
+    }
+    this_PragmaTag_1=rulePragmaTag
+    { 
+        $current = $this_PragmaTag_1.current; 
+        afterParserOrEnumRuleCall();
+    }
+)
+;
 
 
 

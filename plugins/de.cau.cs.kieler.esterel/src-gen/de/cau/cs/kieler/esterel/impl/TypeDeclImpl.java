@@ -1,0 +1,207 @@
+/**
+ */
+package de.cau.cs.kieler.esterel.impl;
+
+import de.cau.cs.kieler.annotations.Annotation;
+
+import de.cau.cs.kieler.esterel.EsterelPackage;
+import de.cau.cs.kieler.esterel.Type;
+import de.cau.cs.kieler.esterel.TypeDecl;
+
+import java.util.Collection;
+
+import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
+
+/**
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>Type Decl</b></em>'.
+ * <!-- end-user-doc -->
+ * <p>
+ * The following features are implemented:
+ * </p>
+ * <ul>
+ *   <li>{@link de.cau.cs.kieler.esterel.impl.TypeDeclImpl#getAnnotations <em>Annotations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.impl.TypeDeclImpl#getTypes <em>Types</em>}</li>
+ * </ul>
+ *
+ * @generated
+ */
+public class TypeDeclImpl extends MinimalEObjectImpl.Container implements TypeDecl
+{
+  /**
+   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAnnotations()
+   * @generated
+   * @ordered
+   */
+  protected EList<Annotation> annotations;
+
+  /**
+   * The cached value of the '{@link #getTypes() <em>Types</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getTypes()
+   * @generated
+   * @ordered
+   */
+  protected EList<Type> types;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected TypeDeclImpl()
+  {
+    super();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected EClass eStaticClass()
+  {
+    return EsterelPackage.Literals.TYPE_DECL;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Annotation> getAnnotations()
+  {
+    if (annotations == null)
+    {
+      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.TYPE_DECL__ANNOTATIONS);
+    }
+    return annotations;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Type> getTypes()
+  {
+    if (types == null)
+    {
+      types = new EObjectContainmentEList<Type>(Type.class, this, EsterelPackage.TYPE_DECL__TYPES);
+    }
+    return types;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case EsterelPackage.TYPE_DECL__ANNOTATIONS:
+        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.TYPE_DECL__TYPES:
+        return ((InternalEList<?>)getTypes()).basicRemove(otherEnd, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Object eGet(int featureID, boolean resolve, boolean coreType)
+  {
+    switch (featureID)
+    {
+      case EsterelPackage.TYPE_DECL__ANNOTATIONS:
+        return getAnnotations();
+      case EsterelPackage.TYPE_DECL__TYPES:
+        return getTypes();
+    }
+    return super.eGet(featureID, resolve, coreType);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @SuppressWarnings("unchecked")
+  @Override
+  public void eSet(int featureID, Object newValue)
+  {
+    switch (featureID)
+    {
+      case EsterelPackage.TYPE_DECL__ANNOTATIONS:
+        getAnnotations().clear();
+        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
+      case EsterelPackage.TYPE_DECL__TYPES:
+        getTypes().clear();
+        getTypes().addAll((Collection<? extends Type>)newValue);
+        return;
+    }
+    super.eSet(featureID, newValue);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void eUnset(int featureID)
+  {
+    switch (featureID)
+    {
+      case EsterelPackage.TYPE_DECL__ANNOTATIONS:
+        getAnnotations().clear();
+        return;
+      case EsterelPackage.TYPE_DECL__TYPES:
+        getTypes().clear();
+        return;
+    }
+    super.eUnset(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public boolean eIsSet(int featureID)
+  {
+    switch (featureID)
+    {
+      case EsterelPackage.TYPE_DECL__ANNOTATIONS:
+        return annotations != null && !annotations.isEmpty();
+      case EsterelPackage.TYPE_DECL__TYPES:
+        return types != null && !types.isEmpty();
+    }
+    return super.eIsSet(featureID);
+  }
+
+} //TypeDeclImpl

@@ -45,7 +45,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.ProgramInterface");
 		private final RuleCall cSCEstProgramParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
-		//ProgramInterface esterel::Program:
+		//ProgramInterface esterel::EsterelProgram:
 		//	SCEstProgram
 		@Override public ParserRule getRule() { return rule; }
 
@@ -4043,7 +4043,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getSCEstProgramAccess().getRule();
 	}
 
-	//ProgramInterface esterel::Program:
+	//ProgramInterface esterel::EsterelProgram:
 	//	SCEstProgram
 	public ProgramInterfaceElements getProgramInterfaceAccess() {
 		return pProgramInterface;
@@ -4621,15 +4621,15 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//java.lang.RuntimeException: No EObjectDescription could be found in Scope ParserRule.hiddenTokens for Grammar'de.cau.cs.kieler.esterel.scest.SCEst'.rules[37]->TerminalRule'SL_COMMENT'
-	//Semantic Object: Grammar'de.cau.cs.kieler.esterel.Esterel'.rules[0]->ParserRule'Program'
+	//Semantic Object: Grammar'de.cau.cs.kieler.esterel.Esterel'.rules[0]->ParserRule'EsterelProgram'
 	//URI: file:/home/terra/eclipses/kieler-semantics-ssc/git/semantics/plugins/de.cau.cs.kieler.esterel/bin/de/cau/cs/kieler/esterel/Esterel.xtext
 	//EStructuralFeature: xtext::ParserRule.hiddenTokens
-	public EsterelGrammarAccess.ProgramElements getProgramAccess() {
-		return gaEsterel.getProgramAccess();
+	public EsterelGrammarAccess.EsterelProgramElements getEsterelProgramAccess() {
+		return gaEsterel.getEsterelProgramAccess();
 	}
 	
-	public ParserRule getProgramRule() {
-		return getProgramAccess().getRule();
+	public ParserRule getEsterelProgramRule() {
+		return getEsterelProgramAccess().getRule();
 	}
 
 	/// *
@@ -5747,10 +5747,8 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//SCLProgram:
-	//	annotations+=Annotation*
-	//	'module' name=ID ':'?
-	//	declarations+=DeclarationWOSemicolon* (statements+=InstructionStatement ';' | statements+=super::MetaStatement)*
-	//	statements+=Statement?;
+	//	pragmas+=Pragma*
+	//	modules+=super::Module*;
 	public SCLGrammarAccess.SCLProgramElements getSCLProgramAccess() {
 		return gaSCL.getSCLProgramAccess();
 	}
@@ -5814,7 +5812,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//	annotations+=Annotation*
 	//	valuedObject=[kexpressions::ValuedObject] ('[' indices+=super::Expression ']')*
 	//	operator=AssignOperator
-	//	expression=super::Expression;
+	//	expression=super::Expression ('schedule' schedule+=ScheduleObjectReference+)?;
 	public SCLGrammarAccess.AssignmentElements getAssignmentAccess() {
 		return gaSCL.getAssignmentAccess();
 	}

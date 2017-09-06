@@ -13,36 +13,20 @@
 package de.cau.cs.kieler.esterel.scest.transformations
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.esterel.FunctionExpression
+import de.cau.cs.kieler.esterel.scest.SCEstProgram
 import de.cau.cs.kieler.esterel.scest.extensions.SCEstExtension
-import de.cau.cs.kieler.esterel.scest.features.SCEstFeature
-import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram
-import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
-import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
-import org.eclipse.emf.common.util.EList
-import de.cau.cs.kieler.scl.Statement
-import de.cau.cs.kieler.scl.StatementContainer
-import de.cau.cs.kieler.esterel.esterel.Trap
-import de.cau.cs.kieler.esterel.esterel.Exec
-import de.cau.cs.kieler.esterel.esterel.Do
-import de.cau.cs.kieler.esterel.esterel.Present
-import de.cau.cs.kieler.esterel.esterel.IfTest
-import de.cau.cs.kieler.esterel.esterel.Abort
-import de.cau.cs.kieler.scl.Conditional
-import de.cau.cs.kieler.esterel.esterel.EsterelParallel
-import de.cau.cs.kieler.scl.Parallel
-import com.google.common.collect.Sets
-import de.cau.cs.kieler.esterel.esterel.ProcCall
-import org.eclipse.emf.ecore.util.EcoreUtil
-import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.esterel.esterel.FunctionExpression
+import de.cau.cs.kieler.esterel.scest.processors.SCEstProcessor
 import de.cau.cs.kieler.kexpressions.Expression
 import java.util.Iterator
+import org.eclipse.emf.common.util.EList
+import org.eclipse.emf.ecore.util.EcoreUtil
 
 /**
  * @author mrb
  *
  */
-class FunctionTransformation extends AbstractExpansionTransformation implements Traceable{
+class FunctionTransformation extends SCEstProcessor {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -55,18 +39,18 @@ class FunctionTransformation extends AbstractExpansionTransformation implements 
         return SCEstTransformation::FUNCTION_NAME
     }
 
-    override getExpandsFeatureId() {
-        return SCEstFeature::FUNCTION_ID
-    }
-
-    override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::RUN_ID)
-    }
+//    override getExpandsFeatureId() {
+//        return SCEstFeature::FUNCTION_ID
+//    }
+//
+//    override getNotHandlesFeatureIds() {
+//        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::RUN_ID)
+//    }
 
     @Inject
     extension SCEstExtension
     
-    def SCEstProgram transform(SCEstProgram prog) {
+    override SCEstProgram transform(SCEstProgram prog) {
         prog.modules.forEach [ m | 
             var functions = m.eAllContents.filter(FunctionExpression)
             functions.transformFunctions

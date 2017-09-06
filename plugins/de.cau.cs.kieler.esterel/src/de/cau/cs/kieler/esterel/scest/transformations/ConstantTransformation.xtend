@@ -13,30 +13,27 @@
 package de.cau.cs.kieler.esterel.scest.transformations
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.esterel.Constant
+import de.cau.cs.kieler.esterel.ConstantExpression
+import de.cau.cs.kieler.esterel.scest.SCEstModule
+import de.cau.cs.kieler.esterel.scest.SCEstProgram
 import de.cau.cs.kieler.esterel.scest.extensions.SCEstExtension
-import de.cau.cs.kieler.esterel.scest.features.SCEstFeature
-import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram
-import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
-import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
-import org.eclipse.emf.common.util.EList
-import de.cau.cs.kieler.scl.Statement
-import com.google.common.collect.Sets
-import java.util.HashMap
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import java.util.Map
-import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.esterel.scest.scest.SCEstModule
-import de.cau.cs.kieler.esterel.esterel.Constant
-import de.cau.cs.kieler.scl.ScopeStatement
-import de.cau.cs.kieler.esterel.esterel.ConstantExpression
+import de.cau.cs.kieler.esterel.scest.processors.SCEstProcessor
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.scl.ScopeStatement
+import de.cau.cs.kieler.scl.Statement
+import java.util.HashMap
+import java.util.Map
+import org.eclipse.emf.common.util.EList
 
 /**
  * @author mrb
  *
  */
-class ConstantTransformation extends AbstractExpansionTransformation implements Traceable{
+class ConstantTransformation extends SCEstProcessor {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -49,18 +46,18 @@ class ConstantTransformation extends AbstractExpansionTransformation implements 
         return SCEstTransformation::CONSTANT_NAME
     }
 
-    override getExpandsFeatureId() {
-        return SCEstFeature::CONSTANT_ID
-    }
-        
-    override getNotHandlesFeatureIds() {
-        return Sets.newHashSet( SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::RUN_ID)
-    }
+//    override getExpandsFeatureId() {
+//        return SCEstFeature::CONSTANT_ID
+//    }
+//        
+//    override getNotHandlesFeatureIds() {
+//        return Sets.newHashSet( SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::RUN_ID)
+//    }
 
     @Inject
     extension SCEstExtension
     
-    def SCEstProgram transform(SCEstProgram prog) {
+    override SCEstProgram transform(SCEstProgram prog) {
         prog.modules.forEach [ m | (m as SCEstModule).transformConstants]
         return prog
     }

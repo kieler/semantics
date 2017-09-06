@@ -51,7 +51,7 @@ import de.cau.cs.kieler.esterel.services.EsterelGrammarAccess;
     
     @Override
     protected String getFirstRuleName() {
-    	return "Program";	
+    	return "EsterelProgram";	
    	}
    	
    	@Override
@@ -70,23 +70,23 @@ import de.cau.cs.kieler.esterel.services.EsterelGrammarAccess;
 
 
 
-// Entry rule entryRuleProgram
-entryRuleProgram returns [EObject current=null] 
+// Entry rule entryRuleEsterelProgram
+entryRuleEsterelProgram returns [EObject current=null] 
 	@init { 
 		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_SL_COMMENT", "RULE_ML_COMMENT", "RULE_WS");
 	}
 	:
-	{ newCompositeNode(grammarAccess.getProgramRule()); }
-	 iv_ruleProgram=ruleProgram 
-	 { $current=$iv_ruleProgram.current; } 
+	{ newCompositeNode(grammarAccess.getEsterelProgramRule()); }
+	 iv_ruleEsterelProgram=ruleEsterelProgram 
+	 { $current=$iv_ruleEsterelProgram.current; } 
 	 EOF 
 ;
 finally {
 	myHiddenTokenState.restore();
 }
 
-// Rule Program
-ruleProgram returns [EObject current=null] 
+// Rule EsterelProgram
+ruleEsterelProgram returns [EObject current=null] 
     @init { enterRule(); 
 		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_SL_COMMENT", "RULE_ML_COMMENT", "RULE_WS");
     }
@@ -94,11 +94,11 @@ ruleProgram returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getProgramAccess().getModulesModuleParserRuleCall_0()); 
+	        newCompositeNode(grammarAccess.getEsterelProgramAccess().getModulesModuleParserRuleCall_0()); 
 	    }
 		lv_modules_0_0=ruleModule		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getProgramRule());
+	            $current = createModelElementForParent(grammarAccess.getEsterelProgramRule());
 	        }
        		add(
        			$current, 
@@ -11358,7 +11358,29 @@ ruleAssignment returns [EObject current=null]
 	    }
 
 )
-))
+)(	otherlv_7='schedule' 
+    {
+    	newLeafNode(otherlv_7, grammarAccess.getAssignmentAccess().getScheduleKeyword_5_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getAssignmentAccess().getScheduleScheduleObjectReferenceParserRuleCall_5_1_0()); 
+	    }
+		lv_schedule_8_0=ruleScheduleObjectReference		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getAssignmentRule());
+	        }
+       		add(
+       			$current, 
+       			"schedule",
+        		lv_schedule_8_0, 
+        		"de.cau.cs.kieler.kexpressions.KExpressions.ScheduleObjectReference");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)+)?)
 ;
 
 
@@ -15578,6 +15600,50 @@ ruleAnnotation returns [EObject current=null]
 ;
 
 
+
+
+
+// Entry rule entryRulePragma
+entryRulePragma returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getPragmaRule()); }
+	 iv_rulePragma=rulePragma 
+	 { $current=$iv_rulePragma.current; } 
+	 EOF 
+;
+
+// Rule Pragma
+rulePragma returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getPragmaAccess().getStringPragmaParserRuleCall_0()); 
+    }
+    this_StringPragma_0=ruleStringPragma
+    { 
+        $current = $this_StringPragma_0.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getPragmaAccess().getPragmaTagParserRuleCall_1()); 
+    }
+    this_PragmaTag_1=rulePragmaTag
+    { 
+        $current = $this_PragmaTag_1.current; 
+        afterParserOrEnumRuleCall();
+    }
+)
+;
 
 
 

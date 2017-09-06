@@ -12,63 +12,60 @@
  */
 package de.cau.cs.kieler.esterel.scest.transformations
 
-import de.cau.cs.kieler.esterel.scest.features.SCEstFeature
-import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram
-import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
-import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
-import com.google.common.collect.Sets
 import com.google.inject.Inject
+import de.cau.cs.kieler.esterel.Abort
+import de.cau.cs.kieler.esterel.Await
+import de.cau.cs.kieler.esterel.Constant
+import de.cau.cs.kieler.esterel.ConstantExpression
+import de.cau.cs.kieler.esterel.ConstantRenaming
+import de.cau.cs.kieler.esterel.Do
+import de.cau.cs.kieler.esterel.Emit
+import de.cau.cs.kieler.esterel.EsterelParallel
+import de.cau.cs.kieler.esterel.Exec
+import de.cau.cs.kieler.esterel.Function
+import de.cau.cs.kieler.esterel.FunctionExpression
+import de.cau.cs.kieler.esterel.FunctionRenaming
+import de.cau.cs.kieler.esterel.ISignal
+import de.cau.cs.kieler.esterel.IfTest
+import de.cau.cs.kieler.esterel.Module
+import de.cau.cs.kieler.esterel.ModuleRenaming
+import de.cau.cs.kieler.esterel.OneTypeConstantDecls
+import de.cau.cs.kieler.esterel.Present
+import de.cau.cs.kieler.esterel.Procedure
+import de.cau.cs.kieler.esterel.ProcedureRenaming
+import de.cau.cs.kieler.esterel.RelationImplication
+import de.cau.cs.kieler.esterel.RelationIncompatibility
+import de.cau.cs.kieler.esterel.Run
+import de.cau.cs.kieler.esterel.SensorWithType
+import de.cau.cs.kieler.esterel.SignalRenaming
+import de.cau.cs.kieler.esterel.Task
+import de.cau.cs.kieler.esterel.TaskRenaming
+import de.cau.cs.kieler.esterel.Trap
+import de.cau.cs.kieler.esterel.Type
+import de.cau.cs.kieler.esterel.TypeIdentifier
+import de.cau.cs.kieler.esterel.TypeRenaming
+import de.cau.cs.kieler.esterel.scest.SCEstProgram
+import de.cau.cs.kieler.esterel.scest.Set
+import de.cau.cs.kieler.esterel.scest.UnEmit
 import de.cau.cs.kieler.esterel.scest.extensions.SCEstExtension
-import de.cau.cs.kieler.esterel.esterel.Run
-import org.eclipse.emf.ecore.util.EcoreUtil
-import de.cau.cs.kieler.esterel.esterel.ISignal
-import de.cau.cs.kieler.esterel.esterel.SignalRenaming
-import de.cau.cs.kieler.esterel.esterel.ConstantRenaming
-import java.util.HashMap
-import java.util.LinkedList
-import de.cau.cs.kieler.esterel.esterel.Emit
-import de.cau.cs.kieler.esterel.esterel.Exec
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.esterel.scest.processors.SCEstProcessor
 import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.esterel.scest.scest.UnEmit
-import de.cau.cs.kieler.esterel.scest.scest.Set
-import de.cau.cs.kieler.esterel.esterel.ModuleRenaming
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.esterel.esterel.ConstantExpression
-import de.cau.cs.kieler.esterel.esterel.Constant
-import de.cau.cs.kieler.esterel.esterel.Module
-import de.cau.cs.kieler.esterel.esterel.OneTypeConstantDecls
-import de.cau.cs.kieler.esterel.esterel.SensorWithType
-import de.cau.cs.kieler.esterel.esterel.Type
-import de.cau.cs.kieler.esterel.esterel.TypeIdentifier
-import de.cau.cs.kieler.esterel.esterel.Function
-import de.cau.cs.kieler.esterel.esterel.Procedure
-import de.cau.cs.kieler.esterel.esterel.Task
-import de.cau.cs.kieler.esterel.esterel.FunctionRenaming
-import de.cau.cs.kieler.esterel.esterel.ProcedureRenaming
-import de.cau.cs.kieler.esterel.esterel.TypeRenaming
-import de.cau.cs.kieler.esterel.esterel.TaskRenaming
-import de.cau.cs.kieler.esterel.esterel.FunctionExpression
-import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.scl.Conditional
+import de.cau.cs.kieler.scl.Parallel
 import de.cau.cs.kieler.scl.Statement
 import de.cau.cs.kieler.scl.StatementContainer
-import de.cau.cs.kieler.esterel.esterel.Trap
-import de.cau.cs.kieler.esterel.esterel.Abort
-import de.cau.cs.kieler.esterel.esterel.Await
-import de.cau.cs.kieler.esterel.esterel.Do
-import de.cau.cs.kieler.scl.Conditional
-import de.cau.cs.kieler.esterel.esterel.Present
-import de.cau.cs.kieler.esterel.esterel.IfTest
-import de.cau.cs.kieler.esterel.esterel.EsterelParallel
-import de.cau.cs.kieler.scl.Parallel
-import de.cau.cs.kieler.esterel.esterel.RelationImplication
-import de.cau.cs.kieler.esterel.esterel.RelationIncompatibility
+import java.util.HashMap
+import java.util.LinkedList
+import org.eclipse.emf.common.util.EList
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.util.EcoreUtil
 
 /**
  * @author mrb
  *
  */
-class RunTransformation extends AbstractExpansionTransformation implements Traceable{
+class RunTransformation extends SCEstProcessor {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -81,13 +78,13 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
         return SCEstTransformation::RUN_NAME
     }
 
-    override getExpandsFeatureId() {
-        return SCEstFeature::RUN_ID
-    }
-        
-    override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID)
-    }
+//    override getExpandsFeatureId() {
+//        return SCEstFeature::RUN_ID
+//    }
+//        
+//    override getNotHandlesFeatureIds() {
+//        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID)
+//    }
     
     @Inject
     extension SCEstExtension
@@ -118,7 +115,7 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
     var relationImplications = new LinkedList<RelationImplication>
     var relationIncompatibilities = new LinkedList<RelationIncompatibility>
     
-    def SCEstProgram transform(SCEstProgram prog) {
+    override SCEstProgram transform(SCEstProgram prog) {
         prog.moveGeneratedModulesToEnd
         for (var i=0; i<prog.modules.length; i++) {
             var m = prog.modules.get(i)

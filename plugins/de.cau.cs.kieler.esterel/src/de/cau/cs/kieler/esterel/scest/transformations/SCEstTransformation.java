@@ -111,7 +111,7 @@ public class SCEstTransformation {
     public final static String CONSTANT_ID = "esterel.constant";
     public final static String CONSTANT_NAME = "Constants";
     
-    public final static String SCL_ID = "scest.esterelTOscl";
+    public final static String SCL_ID = "scest.esterelToScl";
     public final static String SCL_NAME = "SCL";
     
 }

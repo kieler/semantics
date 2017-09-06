@@ -12,19 +12,14 @@
  */
 package de.cau.cs.kieler.esterel.scest.transformations
 
-import de.cau.cs.kieler.esterel.scest.features.SCEstFeature
-import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram
-import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
-import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
-import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram
-import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram
-import com.google.common.collect.Sets
+import de.cau.cs.kieler.esterel.scest.SCEstProgram
+import de.cau.cs.kieler.esterel.scest.processors.SCEstProcessor
 
 /**
  * @author mrb
  *
  */
-class ExecTransformation extends AbstractExpansionTransformation implements Traceable{
+class ExecTransformation extends SCEstProcessor {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -37,15 +32,15 @@ class ExecTransformation extends AbstractExpansionTransformation implements Trac
         return SCEstTransformation::EXEC_NAME
     }
 
-    override getExpandsFeatureId() {
-        return SCEstFeature::EXEC_ID
-    }
-        
-    override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::RUN_ID)
-    }
+//    override getExpandsFeatureId() {
+//        return SCEstFeature::EXEC_ID
+//    }
+//        
+//    override getNotHandlesFeatureIds() {
+//        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::RUN_ID)
+//    }
 
-    def SCEstProgram transform(SCEstProgram prog) {
+    override SCEstProgram transform(SCEstProgram prog) {
         return prog
     }
     

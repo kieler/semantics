@@ -59,7 +59,6 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	protected AbstractElementAlias match_Repeat_RepeatKeyword_7_q;
 	protected AbstractElementAlias match_SCEstModule_FullStopKeyword_5_0_2_1_or___EndKeyword_5_0_2_0_0_ModuleKeyword_5_0_2_0_1__;
 	protected AbstractElementAlias match_SCEstModule_FullStopKeyword_5_0_2_1_or___EndKeyword_5_0_2_0_0_ModuleKeyword_5_0_2_0_1___or___LeftCurlyBracketKeyword_5_1_1_RightCurlyBracketKeyword_5_1_3__;
-	protected AbstractElementAlias match_SCLProgram_ColonKeyword_3_q;
 	protected AbstractElementAlias match_SignalAtomicExpression_LeftParenthesisKeyword_0_0_a;
 	protected AbstractElementAlias match_SignalAtomicExpression_LeftParenthesisKeyword_0_0_p;
 	protected AbstractElementAlias match_Thread___LeftCurlyBracketKeyword_1_0_1_RightCurlyBracketKeyword_1_0_4__q;
@@ -106,7 +105,6 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 		match_Repeat_RepeatKeyword_7_q = new TokenAlias(false, true, grammarAccess.getRepeatAccess().getRepeatKeyword_7());
 		match_SCEstModule_FullStopKeyword_5_0_2_1_or___EndKeyword_5_0_2_0_0_ModuleKeyword_5_0_2_0_1__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getSCEstModuleAccess().getEndKeyword_5_0_2_0_0()), new TokenAlias(false, false, grammarAccess.getSCEstModuleAccess().getModuleKeyword_5_0_2_0_1())), new TokenAlias(false, false, grammarAccess.getSCEstModuleAccess().getFullStopKeyword_5_0_2_1()));
 		match_SCEstModule_FullStopKeyword_5_0_2_1_or___EndKeyword_5_0_2_0_0_ModuleKeyword_5_0_2_0_1___or___LeftCurlyBracketKeyword_5_1_1_RightCurlyBracketKeyword_5_1_3__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getSCEstModuleAccess().getEndKeyword_5_0_2_0_0()), new TokenAlias(false, false, grammarAccess.getSCEstModuleAccess().getModuleKeyword_5_0_2_0_1())), new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getSCEstModuleAccess().getLeftCurlyBracketKeyword_5_1_1()), new TokenAlias(false, false, grammarAccess.getSCEstModuleAccess().getRightCurlyBracketKeyword_5_1_3())), new TokenAlias(false, false, grammarAccess.getSCEstModuleAccess().getFullStopKeyword_5_0_2_1()));
-		match_SCLProgram_ColonKeyword_3_q = new TokenAlias(false, true, grammarAccess.getSCLProgramAccess().getColonKeyword_3());
 		match_SignalAtomicExpression_LeftParenthesisKeyword_0_0_a = new TokenAlias(true, true, grammarAccess.getSignalAtomicExpressionAccess().getLeftParenthesisKeyword_0_0());
 		match_SignalAtomicExpression_LeftParenthesisKeyword_0_0_p = new TokenAlias(true, false, grammarAccess.getSignalAtomicExpressionAccess().getLeftParenthesisKeyword_0_0());
 		match_Thread___LeftCurlyBracketKeyword_1_0_1_RightCurlyBracketKeyword_1_0_4__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getThreadAccess().getLeftCurlyBracketKeyword_1_0_1()), new TokenAlias(false, false, grammarAccess.getThreadAccess().getRightCurlyBracketKeyword_1_0_4()));
@@ -200,8 +198,6 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 				emit_SCEstModule_FullStopKeyword_5_0_2_1_or___EndKeyword_5_0_2_0_0_ModuleKeyword_5_0_2_0_1__(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_SCEstModule_FullStopKeyword_5_0_2_1_or___EndKeyword_5_0_2_0_0_ModuleKeyword_5_0_2_0_1___or___LeftCurlyBracketKeyword_5_1_1_RightCurlyBracketKeyword_5_1_3__.equals(syntax))
 				emit_SCEstModule_FullStopKeyword_5_0_2_1_or___EndKeyword_5_0_2_0_0_ModuleKeyword_5_0_2_0_1___or___LeftCurlyBracketKeyword_5_1_1_RightCurlyBracketKeyword_5_1_3__(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_SCLProgram_ColonKeyword_3_q.equals(syntax))
-				emit_SCLProgram_ColonKeyword_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_SignalAtomicExpression_LeftParenthesisKeyword_0_0_a.equals(syntax))
 				emit_SignalAtomicExpression_LeftParenthesisKeyword_0_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_SignalAtomicExpression_LeftParenthesisKeyword_0_0_p.equals(syntax))
@@ -746,21 +742,6 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	 *     name=ID ':' (ambiguity) (rule end)
 	 */
 	protected void emit_SCEstModule_FullStopKeyword_5_0_2_1_or___EndKeyword_5_0_2_0_0_ModuleKeyword_5_0_2_0_1___or___LeftCurlyBracketKeyword_5_1_1_RightCurlyBracketKeyword_5_1_3__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Ambiguous syntax:
-	 *     ':'?
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     name=ID (ambiguity) (rule end)
-	 *     name=ID (ambiguity) declarations+=DeclarationWOSemicolon
-	 *     name=ID (ambiguity) statements+=InstructionStatement
-	 *     name=ID (ambiguity) statements+=MetaStatement
-	 *     name=ID (ambiguity) statements+=Statement
-	 */
-	protected void emit_SCLProgram_ColonKeyword_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

@@ -23,13 +23,13 @@ import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
 public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	
-	public class ProgramElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.Esterel.Program");
+	public class EsterelProgramElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.Esterel.EsterelProgram");
 		private final Assignment cModulesAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cModulesModuleParserRuleCall_0 = (RuleCall)cModulesAssignment.eContents().get(0);
 		
 		////  root rule. an esterel file can contain multiple modules
-		//Program hidden(SL_COMMENT, ML_COMMENT, WS):
+		//EsterelProgram hidden(SL_COMMENT, ML_COMMENT, WS):
 		//	modules+=Module*;
 		@Override public ParserRule getRule() { return rule; }
 
@@ -7724,7 +7724,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getHOSTHostKeyword_7_0() { return cHOSTHostKeyword_7_0; }
 	}
 	
-	private final ProgramElements pProgram;
+	private final EsterelProgramElements pEsterelProgram;
 	private final ModuleElements pModule;
 	private final TypeIdentifierElements pTypeIdentifier;
 	private final TypeDeclElements pTypeDecl;
@@ -7872,7 +7872,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		this.gaKExpressions = gaKExpressions;
 		this.gaAnnotations = gaAnnotations;
 		this.gaTerminals = gaTerminals;
-		this.pProgram = new ProgramElements();
+		this.pEsterelProgram = new EsterelProgramElements();
 		this.pModule = new ModuleElements();
 		this.pTypeIdentifier = new TypeIdentifierElements();
 		this.pTypeDecl = new TypeDeclElements();
@@ -8040,14 +8040,14 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	////  root rule. an esterel file can contain multiple modules
-	//Program hidden(SL_COMMENT, ML_COMMENT, WS):
+	//EsterelProgram hidden(SL_COMMENT, ML_COMMENT, WS):
 	//	modules+=Module*;
-	public ProgramElements getProgramAccess() {
-		return pProgram;
+	public EsterelProgramElements getEsterelProgramAccess() {
+		return pEsterelProgram;
 	}
 	
-	public ParserRule getProgramRule() {
-		return getProgramAccess().getRule();
+	public ParserRule getEsterelProgramRule() {
+		return getEsterelProgramAccess().getRule();
 	}
 
 	/// *
@@ -9545,10 +9545,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//SCLProgram:
-	//	annotations+=Annotation*
-	//	'module' name=ID ':'?
-	//	declarations+=DeclarationWOSemicolon* (statements+=InstructionStatement ';' | statements+=MetaStatement)*
-	//	statements+=Statement?;
+	//	pragmas+=Pragma*
+	//	modules+=super::Module*;
 	public SCLGrammarAccess.SCLProgramElements getSCLProgramAccess() {
 		return gaSCL.getSCLProgramAccess();
 	}
@@ -9622,7 +9620,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//	annotations+=Annotation*
 	//	valuedObject=[kexpressions::ValuedObject] ('[' indices+=super::Expression ']')*
 	//	operator=AssignOperator
-	//	expression=super::Expression;
+	//	expression=super::Expression ('schedule' schedule+=ScheduleObjectReference+)?;
 	public SCLGrammarAccess.AssignmentElements getAssignmentAccess() {
 		return gaSCL.getAssignmentAccess();
 	}

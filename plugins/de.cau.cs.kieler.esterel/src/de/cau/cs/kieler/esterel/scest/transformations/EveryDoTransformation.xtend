@@ -13,34 +13,31 @@
 package de.cau.cs.kieler.esterel.scest.transformations
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.esterel.Abort
+import de.cau.cs.kieler.esterel.Await
+import de.cau.cs.kieler.esterel.Do
+import de.cau.cs.kieler.esterel.EsterelParallel
+import de.cau.cs.kieler.esterel.EveryDo
+import de.cau.cs.kieler.esterel.Exec
+import de.cau.cs.kieler.esterel.IfTest
+import de.cau.cs.kieler.esterel.Present
+import de.cau.cs.kieler.esterel.Run
+import de.cau.cs.kieler.esterel.Trap
+import de.cau.cs.kieler.esterel.scest.SCEstProgram
 import de.cau.cs.kieler.esterel.scest.extensions.SCEstExtension
-import de.cau.cs.kieler.esterel.scest.features.SCEstFeature
-import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram
-import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
-import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
-import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.esterel.scest.processors.SCEstProcessor
+import de.cau.cs.kieler.scl.Conditional
+import de.cau.cs.kieler.scl.Parallel
 import de.cau.cs.kieler.scl.Statement
 import de.cau.cs.kieler.scl.StatementContainer
-import de.cau.cs.kieler.esterel.esterel.Trap
-import de.cau.cs.kieler.esterel.esterel.Exec
-import de.cau.cs.kieler.esterel.esterel.Do
-import de.cau.cs.kieler.esterel.esterel.Present
-import de.cau.cs.kieler.esterel.esterel.IfTest
-import de.cau.cs.kieler.esterel.esterel.Abort
-import de.cau.cs.kieler.scl.Conditional
-import de.cau.cs.kieler.esterel.esterel.EsterelParallel
-import de.cau.cs.kieler.scl.Parallel
-import de.cau.cs.kieler.esterel.esterel.EveryDo
+import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.util.EcoreUtil
-import com.google.common.collect.Sets
-import de.cau.cs.kieler.esterel.esterel.Await
-import de.cau.cs.kieler.esterel.esterel.Run
 
 /**
  * @author mrb
  *
  */
-class EveryDoTransformation extends AbstractExpansionTransformation implements Traceable{
+class EveryDoTransformation extends SCEstProcessor {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -53,22 +50,22 @@ class EveryDoTransformation extends AbstractExpansionTransformation implements T
         return SCEstTransformation::EVERYDO_NAME
     }
 
-    override getExpandsFeatureId() {
-        return SCEstFeature::EVERYDO_ID
-    }
-        
-    override getProducesFeatureIds() {
-        return Sets.newHashSet(SCEstTransformation::AWAIT_ID, SCEstTransformation::LOOP_ID)
-    }
-
-    override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::RUN_ID)
-    }
+//    override getExpandsFeatureId() {
+//        return SCEstFeature::EVERYDO_ID
+//    }
+//        
+//    override getProducesFeatureIds() {
+//        return Sets.newHashSet(SCEstTransformation::AWAIT_ID, SCEstTransformation::LOOP_ID)
+//    }
+//
+//    override getNotHandlesFeatureIds() {
+//        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::RUN_ID)
+//    }
 
     @Inject
     extension SCEstExtension
     
-    def SCEstProgram transform(SCEstProgram prog) {
+    override SCEstProgram transform(SCEstProgram prog) {
         prog.modules.forEach [ m | transformStatements(m.statements)]
         return prog
     }

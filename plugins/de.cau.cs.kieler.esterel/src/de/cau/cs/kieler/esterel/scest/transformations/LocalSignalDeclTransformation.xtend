@@ -13,39 +13,36 @@
 package de.cau.cs.kieler.esterel.scest.transformations
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.esterel.Abort
+import de.cau.cs.kieler.esterel.Await
+import de.cau.cs.kieler.esterel.Do
+import de.cau.cs.kieler.esterel.EsterelParallel
+import de.cau.cs.kieler.esterel.Exec
+import de.cau.cs.kieler.esterel.ISignal
+import de.cau.cs.kieler.esterel.IfTest
+import de.cau.cs.kieler.esterel.LocalSignalDecl
+import de.cau.cs.kieler.esterel.Present
+import de.cau.cs.kieler.esterel.Run
+import de.cau.cs.kieler.esterel.Trap
+import de.cau.cs.kieler.esterel.scest.SCEstProgram
+import de.cau.cs.kieler.esterel.scest.extensions.NewSignals
 import de.cau.cs.kieler.esterel.scest.extensions.SCEstExtension
-import de.cau.cs.kieler.esterel.scest.features.SCEstFeature
-import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram
-import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
-import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
-import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.esterel.scest.processors.SCEstProcessor
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.scl.Conditional
+import de.cau.cs.kieler.scl.Parallel
+import de.cau.cs.kieler.scl.ScopeStatement
 import de.cau.cs.kieler.scl.Statement
 import de.cau.cs.kieler.scl.StatementContainer
-import de.cau.cs.kieler.esterel.esterel.Trap
-import de.cau.cs.kieler.esterel.esterel.Exec
-import de.cau.cs.kieler.esterel.esterel.Do
-import de.cau.cs.kieler.esterel.esterel.Present
-import de.cau.cs.kieler.esterel.esterel.IfTest
-import de.cau.cs.kieler.esterel.esterel.Abort
-import de.cau.cs.kieler.scl.Conditional
-import de.cau.cs.kieler.esterel.esterel.EsterelParallel
-import de.cau.cs.kieler.scl.Parallel
-import com.google.common.collect.Sets
-import de.cau.cs.kieler.esterel.esterel.LocalSignalDecl
-import de.cau.cs.kieler.scl.ScopeStatement
-import de.cau.cs.kieler.esterel.esterel.ISignal
-import de.cau.cs.kieler.kexpressions.ValueType
 import java.util.HashMap
-import de.cau.cs.kieler.esterel.scest.extensions.NewSignals
-import de.cau.cs.kieler.kexpressions.Declaration
-import de.cau.cs.kieler.esterel.esterel.Await
-import de.cau.cs.kieler.esterel.esterel.Run
+import org.eclipse.emf.common.util.EList
 
 /**
  * @author mrb
  *
  */
-class LocalSignalDeclTransformation extends AbstractExpansionTransformation implements Traceable{
+class LocalSignalDeclTransformation extends SCEstProcessor {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -58,14 +55,14 @@ class LocalSignalDeclTransformation extends AbstractExpansionTransformation impl
         return SCEstTransformation::LOCALSIGNALDECL_NAME
     }
 
-    override getExpandsFeatureId() {
-        return SCEstFeature::LOCALSIGNALDECL_ID
-    }
-        
-    override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::SIGNAL_ID,
-                               SCEstTransformation::RUN_ID)
-    }
+//    override getExpandsFeatureId() {
+//        return SCEstFeature::LOCALSIGNALDECL_ID
+//    }
+//        
+//    override getNotHandlesFeatureIds() {
+//        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::SIGNAL_ID,
+//                               SCEstTransformation::RUN_ID)
+//    }
 
     @Inject
     extension SCEstExtension
@@ -76,7 +73,7 @@ class LocalSignalDeclTransformation extends AbstractExpansionTransformation impl
      * Therefore the signal transformation would have problems when "createParallelForSignals" is called.
      */
     
-    def SCEstProgram transform(SCEstProgram prog) {
+    override SCEstProgram transform(SCEstProgram prog) {
         for (m : prog.modules) { 
             transformStatements(m.statements)
         }
