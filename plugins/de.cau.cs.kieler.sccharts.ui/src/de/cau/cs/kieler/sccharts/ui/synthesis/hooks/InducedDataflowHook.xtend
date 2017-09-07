@@ -58,12 +58,14 @@ import java.util.Map
 import java.util.Set
 import org.eclipse.elk.alg.layered.properties.LayerConstraint
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.core.math.ElkPadding
 import org.eclipse.elk.core.options.Alignment
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.SizeConstraint
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
+import de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses
 
 /**
  * Visualizes the dataflow between SCChart regions.
@@ -229,9 +231,9 @@ class InducedDataflowHook extends SynthesisHook {
         if (ioType == IOType.Local) {
             // Gather local data from all regions
             regionAccesses.forEach [ region, context |
-                allLocalReads.addAll(context.readLocal)
-                allLocalReads.addAll(context.preReadLocal)
-                allLocalWrites.addAll(context.anyWriteLocal)
+                allLocalReads.addAll(context.readLocal.filter[(it.eContainer as VariableDeclaration).input])
+                allLocalReads.addAll(context.preReadLocal.filter[(it.eContainer as VariableDeclaration).input])
+                allLocalWrites.addAll(context.anyWriteLocal.filter[(it.eContainer as VariableDeclaration).output])
             ]
             // Store the I/O as relevant
             relevantVOs.addAll(allLocalReads)
@@ -349,6 +351,8 @@ class InducedDataflowHook extends SynthesisHook {
      */
     /** Configure the layout on the state node for proper dataflow layout */
     private def void configureParentLayout(KNode node) {
+        DiagramSyntheses.setLayoutOption(node, CoreOptions::PADDING, new ElkPadding(10));
+        node.addLayoutParam(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
         node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
         node.addLayoutParam(CoreOptions::DIRECTION, Direction.RIGHT)
         node.addLayoutParam(LayeredOptions::FEEDBACK_EDGES, true);
@@ -483,7 +487,8 @@ class InducedDataflowHook extends SynthesisHook {
         inputNode.addLayoutParam(CoreOptions::ALIGNMENT, Alignment.LEFT)
         inputNode.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint.FIRST)
         // Create a single port on the node
-        createPort => [node = inputNode]
+        val KPort port = createPort => [node = inputNode]
+        port.addLayoutParam(PORT_ABSOLUTE_WRITE, true)
         return inputNode
     }
 
@@ -566,12 +571,14 @@ class InducedDataflowHook extends SynthesisHook {
         if (expression !== null) {
             // Combine the expression and all sub elements, then filter for all valued objects
             Iterators.concat(Iterators.singletonIterator(expression), expression.eAllContents).filter(
-                ValuedObjectReference).filter[!it.valuedObject.equals(excludedVO)].forEach [
+                ValuedObjectReference).forEach [
                 if (it.eContainer instanceof OperatorExpression &&
                     (it.eContainer as OperatorExpression).operator == OperatorType.PRE) {
-                    preReads.add(it.valuedObject)
+                        preReads.add(it.valuedObject)    
                 } else {
-                    reads.add(it.valuedObject)
+                    if (!it.valuedObject.equals(excludedVO)) {
+                        reads.add(it.valuedObject)                        
+                    }
                 }
             ]
         }
