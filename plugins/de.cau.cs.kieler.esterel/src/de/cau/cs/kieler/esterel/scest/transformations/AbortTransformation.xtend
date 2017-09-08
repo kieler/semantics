@@ -105,6 +105,7 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
             
             // check if its just a single abort delay or if this abort includes cases
             if (abort.delay != null) {
+                abort.delay.transformReferences
                 // abort with expression before signal expression. e.g. "abort when 3 A" or "weak abort when 3 A"
                 if (abort.delay.expression != null) {
                     var abortFlag = createNewUniqueAbortFlag(createBoolValue(false))
@@ -248,6 +249,7 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
                 abort.statements.transformStatements
                 scope.statements.add(label)
                 for ( c : abort.cases ) {
+                    c.delay.transformReferences
                     // creating counting variables for cases with an expression before the signal expression
                     if (c.delay.expression != null) {
                         var variable = createNewUniqueVariable(createIntValue(0))

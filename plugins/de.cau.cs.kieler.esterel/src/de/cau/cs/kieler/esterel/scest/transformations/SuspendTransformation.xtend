@@ -104,6 +104,7 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
             if (!suspend.statements.empty) {
                 suspend.statements.get(0).transformStatement
             }
+            suspend.delay.transformReferences
             if (suspend.delay.expression != null) {
                 // create a scope because a declaration (variable for counting) is needed
                 var variable = createNewUniqueVariable(createIntValue(0))

@@ -92,6 +92,7 @@ class AwaitTransformation extends AbstractExpansionTransformation implements Tra
                 var label = createLabel(createNewUniqueLabel)
                 var variable = createNewUniqueVariable(createIntValue(0))
                 var decl = createDeclaration(ValueType.INT, variable)
+                await.delay.transformReferences
                 if (await.delay.expression != null) {
                     var scope = createScopeStatement(decl)
                     statements.set(pos, scope)
@@ -156,6 +157,7 @@ class AwaitTransformation extends AbstractExpansionTransformation implements Tra
                 for (var i=0; i<cases.length; i++) {
                     var c = cases.get(i)
                     if (c.delay != null) {
+                        c.delay.transformReferences
                         if (c.delay.expression != null) {
                             var variable = createNewUniqueVariable(createIntValue(0))
                             var decl = createDeclaration(ValueType.INT, variable)

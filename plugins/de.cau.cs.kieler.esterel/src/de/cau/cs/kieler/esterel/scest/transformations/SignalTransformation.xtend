@@ -69,6 +69,12 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
         return SCEstFeature::SIGNAL_ID
     }
     
+    override getProducesFeatureIds() {
+        return Sets.newHashSet(SCEstTransformation::LOOP_ID, SCEstTransformation::ABORT_ID
+                            , SCEstTransformation::AWAIT_ID, SCEstTransformation::PRESENT_ID
+                            , SCEstTransformation::IFTEST_ID)
+    }  
+    
     override getNotHandlesFeatureIds() {
         return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::RUN_ID)
     }
@@ -103,6 +109,7 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
         for (interfaceSD : signalDecl) {
             for (signal : interfaceSD.signals) {
                 var s = createSignalVariable(createFalse, null, signal.name)
+                signal.name = signal.name.createNewUniqueSignalName
                 var decl = createDeclaration(ValueType.BOOL, s)
                 var Declaration decl2 = createDeclaration(null, null)
                 if (signal.type != null) {
@@ -111,10 +118,10 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
                         newSignals.put(signal, new NewSignals(s))
                     }
                     else {
-                        var s_set = createSignalVariable(createFalse, null, signal.name + "_set")
+                        var s_set = createSignalVariable(createFalse, null, s.name + "_set")
                         decl.valuedObjects.add(s_set)
-                        var s_cur = createSignalVariable(null, signal.combineOperator, signal.name + "_cur")
-                        var s_val = createSignalVariable(signal.expression, signal.combineOperator, signal.name + "_val")
+                        var s_cur = createSignalVariable(null, signal.combineOperator, s.name + "_cur")
+                        var s_val = createSignalVariable(signal.expression, signal.combineOperator, s.name + "_val")
                         var tempType = if (signal.type == ValueType.DOUBLE) ValueType.FLOAT else signal.type
                         decl2 = createDeclaration(tempType, null)
                         decl2.valuedObjects.add(s_cur)
@@ -125,7 +132,7 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
                 }
                 else { // shouldn't be possible
                     throw new UnsupportedOperationException(
-                        "The following signal doesn't have a type! " + signal.name)
+                        "The following signal doesn't have a type! " + s.name)
                 }
                 if (interfaceSD instanceof Input) {
                     decl.input = true
@@ -147,7 +154,7 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
             }
         }
         createParallelForSignals(scope, newSignals)
-        scope.transformReferences
+//        scope.transformReferences
     }
     
     def createParallelForSignals(ScopeStatement scope, HashMap<ISignal, NewSignals> signalsMap) {

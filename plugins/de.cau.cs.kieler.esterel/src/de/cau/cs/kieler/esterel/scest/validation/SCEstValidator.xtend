@@ -46,6 +46,7 @@ import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.Assignment
 import de.cau.cs.kieler.esterel.scest.scest.Set
 import de.cau.cs.kieler.esterel.esterel.FunctionExpression
+import org.eclipse.xtext.validation.CheckType
 
 /**
  * @author mrb
@@ -140,7 +141,7 @@ class SCEstValidator extends SCEstJavaValidator{
      * ##########################################################
      */
     
-    @Check
+    @Check(CheckType.EXPENSIVE)
     def void expressionISignal(ISignal signal) {
         if (signal.expression != null) {
             if (signal.type.isBool && !signal.expression.isBoolExpr) {
@@ -152,7 +153,7 @@ class SCEstValidator extends SCEstJavaValidator{
         }
     }
     
-    @Check
+    @Check(CheckType.EXPENSIVE)
     def void expressionTrapSignal(TrapSignal trap) {
         if (trap.expression != null) {
             if (trap.type.isBool && !trap.expression.isBoolExpr) {
@@ -164,7 +165,7 @@ class SCEstValidator extends SCEstJavaValidator{
         }
     }
     
-    @Check
+    @Check(CheckType.EXPENSIVE)
     def void expressionEmit(Emit emit) {
         if (emit.expression != null) {
             if (emit.signal.type.isBool && !emit.expression.isBoolExpr) {
@@ -176,7 +177,7 @@ class SCEstValidator extends SCEstJavaValidator{
         }
     }
     
-    @Check
+    @Check(CheckType.EXPENSIVE)
     def void expressionSustain(Sustain sustain) {
         if (sustain.expression != null) {
             if (sustain.signal.type.isBool && !sustain.expression.isBoolExpr) {
@@ -188,7 +189,7 @@ class SCEstValidator extends SCEstJavaValidator{
         }
     }
     
-    @Check
+    @Check(CheckType.EXPENSIVE)
     def void expressionEsterelAssignment(EsterelAssignment assign) {
         if ((assign.getVar.eContainer as VariableDecl).type?.type.isBool && !assign.expression.isBoolExpr) {
             warning(BOOLEAN_EXPRESSION, null)
@@ -198,35 +199,35 @@ class SCEstValidator extends SCEstJavaValidator{
         }
     }
     
-    @Check
+    @Check(CheckType.EXPENSIVE)
     def void expressionIfTest(IfTest ifTest) {
         if (!ifTest.expression.isBoolExpr) {
             warning(BOOLEAN_EXPRESSION, null)
         }
     }
     
-    @Check
+    @Check(CheckType.EXPENSIVE)
     def void expressionElsIf(ElsIf elsIf) {
         if (!elsIf.expression.isBoolExpr) {
             warning(BOOLEAN_EXPRESSION, null)
         }
     }
     
-    @Check
+    @Check(CheckType.EXPENSIVE)
     def void expressionDelayExpr(DelayExpr delay) {
         if (delay.expression != null && !delay.expression.isCalculationExpr) {
             warning(CALCULATION_EXPRESSION, null)
         }
     }
     
-    @Check
+    @Check(CheckType.EXPENSIVE)
     def void expressionRepeat(Repeat repeat) {
         if (!repeat.expression.isCalculationExpr) {
             warning("The expression should be of type INT.", null)
         }
     }
     
-    @Check
+    @Check(CheckType.EXPENSIVE)
     def void expressionExit(Exit exit) {
         if (exit.expression != null) {
             if (exit.trap.type.isBool && !exit.expression.isBoolExpr) {
@@ -238,7 +239,7 @@ class SCEstValidator extends SCEstJavaValidator{
         }
     }
     
-    @Check
+    @Check(CheckType.EXPENSIVE)
     def void expressionIVariable(IVariable variable) {
         if ((variable.eContainer as VariableDecl).type?.type.isBool && !variable.expression.isBoolExpr) {
             warning(BOOLEAN_EXPRESSION, null)
@@ -248,14 +249,14 @@ class SCEstValidator extends SCEstJavaValidator{
         }
     }
     
-    @Check
+    @Check(CheckType.EXPENSIVE)
     def void expressionConditional(Conditional conditional) {
         if (!conditional.expression.isBoolExpr) {
             warning(BOOLEAN_EXPRESSION, null)
         }
     }
     
-    @Check
+    @Check(CheckType.EXPENSIVE)
     def void expressionAssignment(Assignment assign) {
         if ((assign.valuedObject.eContainer as Declaration).type.isBool && !assign.expression.isBoolExpr) {
             warning(BOOLEAN_EXPRESSION, null)
@@ -265,7 +266,7 @@ class SCEstValidator extends SCEstJavaValidator{
         }
     }
     
-    @Check
+    @Check(CheckType.EXPENSIVE)
     def void expressionSet(Set set) {
         if (set.signal.type.isBool && !set.expression.isBoolExpr) {
             warning(BOOLEAN_EXPRESSION, null)
@@ -275,7 +276,7 @@ class SCEstValidator extends SCEstJavaValidator{
         }
     }
     
-    @Check
+    @Check(CheckType.EXPENSIVE)
     def void expressionValuedObject(ValuedObject vo) {
         var parent = vo.eContainer
         if (parent instanceof Declaration) {
