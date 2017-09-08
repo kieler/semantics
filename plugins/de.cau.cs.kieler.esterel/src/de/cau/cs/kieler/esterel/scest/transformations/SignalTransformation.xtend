@@ -89,11 +89,7 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
      *  see KExt.xtext => Declaration
     */
     
-    /*
-     * This transformation has to be done before the local signal transformation because the local signal transformation
-     * writes also in the end its signals to "newSignals" in SCEstExtension.
-     * Therefore this transformation would also iterate over the local signals when "createParallelForSignals" is called.
-     */
+    
     
     def SCEstProgram transform(SCEstProgram prog) {
         for (m : prog.modules) { 
@@ -105,6 +101,7 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
     }
     
     def transformSignals(EList<InterfaceSignalDecl> signalDecl, Module module) {
+        var HashMap<ISignal, NewSignals> signalsMap = new HashMap<ISignal, NewSignals>
         var ScopeStatement scope = module.getIScope
         for (interfaceSD : signalDecl) {
             for (signal : interfaceSD.signals) {
@@ -115,7 +112,7 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
                 if (signal.type != null) {
                     scope.declarations.add(decl)
                     if (signal.type == ValueType.PURE) {
-                        newSignals.put(signal, new NewSignals(s))
+                        signalsMap.put(signal, new NewSignals(s))
                     }
                     else {
                         var s_set = createSignalVariable(createFalse, null, s.name + "_set")
@@ -126,7 +123,7 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
                         decl2 = createDeclaration(tempType, null)
                         decl2.valuedObjects.add(s_cur)
                         decl2.valuedObjects.add(s_val)
-                        newSignals.put(signal, new NewSignals(s, s_set, s_cur, s_val))
+                        signalsMap.put(signal, new NewSignals(s, s_set, s_cur, s_val))
                         scope.declarations.add(decl2)
                     }
                 }
@@ -153,7 +150,8 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
                 }
             }
         }
-        createParallelForSignals(scope, newSignals)
+        createParallelForSignals(scope, signalsMap)
+        newSignals.putAll(signalsMap)
 //        scope.transformReferences
     }
     

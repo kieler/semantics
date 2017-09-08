@@ -458,7 +458,7 @@ class SCEstExtension {
      */
     def createNewUniqueSignalName(String name) {
         if (name != null) {
-            return name + "_sig"
+            return name + "_sig" 
         }
         else {
             signalSuffix++
