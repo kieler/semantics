@@ -27603,7 +27603,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseOrOperator"
-    // InternalSCTX.g:9574:1: ruleBitwiseOrOperator returns [Enumerator current=null] : (enumLiteral_0= '|' ) ;
+    // InternalSCTX.g:9578:1: ruleBitwiseOrOperator returns [Enumerator current=null] : (enumLiteral_0= '|' ) ;
     public final Enumerator ruleBitwiseOrOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -27611,11 +27611,11 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalSCTX.g:9576:28: ( (enumLiteral_0= '|' ) )
-            // InternalSCTX.g:9577:1: (enumLiteral_0= '|' )
+            // InternalSCTX.g:9580:28: ( (enumLiteral_0= '|' ) )
+            // InternalSCTX.g:9581:1: (enumLiteral_0= '|' )
             {
-            // InternalSCTX.g:9577:1: (enumLiteral_0= '|' )
-            // InternalSCTX.g:9577:3: enumLiteral_0= '|'
+            // InternalSCTX.g:9581:1: (enumLiteral_0= '|' )
+            // InternalSCTX.g:9581:3: enumLiteral_0= '|'
             {
             enumLiteral_0=(Token)match(input,71,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -27647,7 +27647,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseAndOperator"
-    // InternalSCTX.g:9587:1: ruleBitwiseAndOperator returns [Enumerator current=null] : (enumLiteral_0= '&' ) ;
+    // InternalSCTX.g:9591:1: ruleBitwiseAndOperator returns [Enumerator current=null] : (enumLiteral_0= '&' ) ;
     public final Enumerator ruleBitwiseAndOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -27655,11 +27655,11 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalSCTX.g:9589:28: ( (enumLiteral_0= '&' ) )
-            // InternalSCTX.g:9590:1: (enumLiteral_0= '&' )
+            // InternalSCTX.g:9593:28: ( (enumLiteral_0= '&' ) )
+            // InternalSCTX.g:9594:1: (enumLiteral_0= '&' )
             {
-            // InternalSCTX.g:9590:1: (enumLiteral_0= '&' )
-            // InternalSCTX.g:9590:3: enumLiteral_0= '&'
+            // InternalSCTX.g:9594:1: (enumLiteral_0= '&' )
+            // InternalSCTX.g:9594:3: enumLiteral_0= '&'
             {
             enumLiteral_0=(Token)match(input,30,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -27691,7 +27691,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleNotOperator"
-    // InternalSCTX.g:9600:1: ruleNotOperator returns [Enumerator current=null] : (enumLiteral_0= '!' ) ;
+    // InternalSCTX.g:9604:1: ruleNotOperator returns [Enumerator current=null] : (enumLiteral_0= '!' ) ;
     public final Enumerator ruleNotOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -27699,11 +27699,11 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalSCTX.g:9602:28: ( (enumLiteral_0= '!' ) )
-            // InternalSCTX.g:9603:1: (enumLiteral_0= '!' )
+            // InternalSCTX.g:9606:28: ( (enumLiteral_0= '!' ) )
+            // InternalSCTX.g:9607:1: (enumLiteral_0= '!' )
             {
-            // InternalSCTX.g:9603:1: (enumLiteral_0= '!' )
-            // InternalSCTX.g:9603:3: enumLiteral_0= '!'
+            // InternalSCTX.g:9607:1: (enumLiteral_0= '!' )
+            // InternalSCTX.g:9607:3: enumLiteral_0= '!'
             {
             enumLiteral_0=(Token)match(input,29,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -27735,7 +27735,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAddOperator"
-    // InternalSCTX.g:9613:1: ruleAddOperator returns [Enumerator current=null] : (enumLiteral_0= '+' ) ;
+    // InternalSCTX.g:9617:1: ruleAddOperator returns [Enumerator current=null] : (enumLiteral_0= '+' ) ;
     public final Enumerator ruleAddOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -27743,11 +27743,11 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalSCTX.g:9615:28: ( (enumLiteral_0= '+' ) )
-            // InternalSCTX.g:9616:1: (enumLiteral_0= '+' )
+            // InternalSCTX.g:9619:28: ( (enumLiteral_0= '+' ) )
+            // InternalSCTX.g:9620:1: (enumLiteral_0= '+' )
             {
-            // InternalSCTX.g:9616:1: (enumLiteral_0= '+' )
-            // InternalSCTX.g:9616:3: enumLiteral_0= '+'
+            // InternalSCTX.g:9620:1: (enumLiteral_0= '+' )
+            // InternalSCTX.g:9620:3: enumLiteral_0= '+'
             {
             enumLiteral_0=(Token)match(input,72,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -27779,7 +27779,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSubOperator"
-    // InternalSCTX.g:9626:1: ruleSubOperator returns [Enumerator current=null] : (enumLiteral_0= '-' ) ;
+    // InternalSCTX.g:9630:1: ruleSubOperator returns [Enumerator current=null] : (enumLiteral_0= '-' ) ;
     public final Enumerator ruleSubOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -27787,11 +27787,11 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalSCTX.g:9628:28: ( (enumLiteral_0= '-' ) )
-            // InternalSCTX.g:9629:1: (enumLiteral_0= '-' )
+            // InternalSCTX.g:9632:28: ( (enumLiteral_0= '-' ) )
+            // InternalSCTX.g:9633:1: (enumLiteral_0= '-' )
             {
-            // InternalSCTX.g:9629:1: (enumLiteral_0= '-' )
-            // InternalSCTX.g:9629:3: enumLiteral_0= '-'
+            // InternalSCTX.g:9633:1: (enumLiteral_0= '-' )
+            // InternalSCTX.g:9633:3: enumLiteral_0= '-'
             {
             enumLiteral_0=(Token)match(input,73,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -27823,7 +27823,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMultOperator"
-    // InternalSCTX.g:9639:1: ruleMultOperator returns [Enumerator current=null] : (enumLiteral_0= '*' ) ;
+    // InternalSCTX.g:9643:1: ruleMultOperator returns [Enumerator current=null] : (enumLiteral_0= '*' ) ;
     public final Enumerator ruleMultOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -27831,11 +27831,11 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalSCTX.g:9641:28: ( (enumLiteral_0= '*' ) )
-            // InternalSCTX.g:9642:1: (enumLiteral_0= '*' )
+            // InternalSCTX.g:9645:28: ( (enumLiteral_0= '*' ) )
+            // InternalSCTX.g:9646:1: (enumLiteral_0= '*' )
             {
-            // InternalSCTX.g:9642:1: (enumLiteral_0= '*' )
-            // InternalSCTX.g:9642:3: enumLiteral_0= '*'
+            // InternalSCTX.g:9646:1: (enumLiteral_0= '*' )
+            // InternalSCTX.g:9646:3: enumLiteral_0= '*'
             {
             enumLiteral_0=(Token)match(input,74,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -27867,7 +27867,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleModOperator"
-    // InternalSCTX.g:9652:1: ruleModOperator returns [Enumerator current=null] : (enumLiteral_0= '%' ) ;
+    // InternalSCTX.g:9656:1: ruleModOperator returns [Enumerator current=null] : (enumLiteral_0= '%' ) ;
     public final Enumerator ruleModOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -27875,11 +27875,11 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalSCTX.g:9654:28: ( (enumLiteral_0= '%' ) )
-            // InternalSCTX.g:9655:1: (enumLiteral_0= '%' )
+            // InternalSCTX.g:9658:28: ( (enumLiteral_0= '%' ) )
+            // InternalSCTX.g:9659:1: (enumLiteral_0= '%' )
             {
-            // InternalSCTX.g:9655:1: (enumLiteral_0= '%' )
-            // InternalSCTX.g:9655:3: enumLiteral_0= '%'
+            // InternalSCTX.g:9659:1: (enumLiteral_0= '%' )
+            // InternalSCTX.g:9659:3: enumLiteral_0= '%'
             {
             enumLiteral_0=(Token)match(input,76,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -27911,7 +27911,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDivOperator"
-    // InternalSCTX.g:9665:1: ruleDivOperator returns [Enumerator current=null] : (enumLiteral_0= '/' ) ;
+    // InternalSCTX.g:9669:1: ruleDivOperator returns [Enumerator current=null] : (enumLiteral_0= '/' ) ;
     public final Enumerator ruleDivOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -27919,11 +27919,11 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalSCTX.g:9667:28: ( (enumLiteral_0= '/' ) )
-            // InternalSCTX.g:9668:1: (enumLiteral_0= '/' )
+            // InternalSCTX.g:9671:28: ( (enumLiteral_0= '/' ) )
+            // InternalSCTX.g:9672:1: (enumLiteral_0= '/' )
             {
-            // InternalSCTX.g:9668:1: (enumLiteral_0= '/' )
-            // InternalSCTX.g:9668:3: enumLiteral_0= '/'
+            // InternalSCTX.g:9672:1: (enumLiteral_0= '/' )
+            // InternalSCTX.g:9672:3: enumLiteral_0= '/'
             {
             enumLiteral_0=(Token)match(input,75,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -27955,7 +27955,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleValOperator"
-    // InternalSCTX.g:9678:1: ruleValOperator returns [Enumerator current=null] : (enumLiteral_0= 'val' ) ;
+    // InternalSCTX.g:9682:1: ruleValOperator returns [Enumerator current=null] : (enumLiteral_0= 'val' ) ;
     public final Enumerator ruleValOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -27963,11 +27963,11 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalSCTX.g:9680:28: ( (enumLiteral_0= 'val' ) )
-            // InternalSCTX.g:9681:1: (enumLiteral_0= 'val' )
+            // InternalSCTX.g:9684:28: ( (enumLiteral_0= 'val' ) )
+            // InternalSCTX.g:9685:1: (enumLiteral_0= 'val' )
             {
-            // InternalSCTX.g:9681:1: (enumLiteral_0= 'val' )
-            // InternalSCTX.g:9681:3: enumLiteral_0= 'val'
+            // InternalSCTX.g:9685:1: (enumLiteral_0= 'val' )
+            // InternalSCTX.g:9685:3: enumLiteral_0= 'val'
             {
             enumLiteral_0=(Token)match(input,113,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -27999,7 +27999,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLogicalOrOperator"
-    // InternalSCTX.g:9691:1: ruleLogicalOrOperator returns [Enumerator current=null] : (enumLiteral_0= '||' ) ;
+    // InternalSCTX.g:9695:1: ruleLogicalOrOperator returns [Enumerator current=null] : (enumLiteral_0= '||' ) ;
     public final Enumerator ruleLogicalOrOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -28007,11 +28007,11 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalSCTX.g:9693:28: ( (enumLiteral_0= '||' ) )
-            // InternalSCTX.g:9694:1: (enumLiteral_0= '||' )
+            // InternalSCTX.g:9697:28: ( (enumLiteral_0= '||' ) )
+            // InternalSCTX.g:9698:1: (enumLiteral_0= '||' )
             {
-            // InternalSCTX.g:9694:1: (enumLiteral_0= '||' )
-            // InternalSCTX.g:9694:3: enumLiteral_0= '||'
+            // InternalSCTX.g:9698:1: (enumLiteral_0= '||' )
+            // InternalSCTX.g:9698:3: enumLiteral_0= '||'
             {
             enumLiteral_0=(Token)match(input,69,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -28043,7 +28043,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLogicalAndOperator"
-    // InternalSCTX.g:9704:1: ruleLogicalAndOperator returns [Enumerator current=null] : (enumLiteral_0= '&&' ) ;
+    // InternalSCTX.g:9708:1: ruleLogicalAndOperator returns [Enumerator current=null] : (enumLiteral_0= '&&' ) ;
     public final Enumerator ruleLogicalAndOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -28051,11 +28051,11 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalSCTX.g:9706:28: ( (enumLiteral_0= '&&' ) )
-            // InternalSCTX.g:9707:1: (enumLiteral_0= '&&' )
+            // InternalSCTX.g:9710:28: ( (enumLiteral_0= '&&' ) )
+            // InternalSCTX.g:9711:1: (enumLiteral_0= '&&' )
             {
-            // InternalSCTX.g:9707:1: (enumLiteral_0= '&&' )
-            // InternalSCTX.g:9707:3: enumLiteral_0= '&&'
+            // InternalSCTX.g:9711:1: (enumLiteral_0= '&&' )
+            // InternalSCTX.g:9711:3: enumLiteral_0= '&&'
             {
             enumLiteral_0=(Token)match(input,70,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -28087,7 +28087,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleValueType"
-    // InternalSCTX.g:9721:1: ruleValueType returns [Enumerator current=null] : ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) ) ;
+    // InternalSCTX.g:9733:1: ruleValueType returns [Enumerator current=null] : ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) ) ;
     public final Enumerator ruleValueType() throws RecognitionException {
         Enumerator current = null;
 
@@ -28101,10 +28101,10 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalSCTX.g:9723:28: ( ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) ) )
-            // InternalSCTX.g:9724:1: ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) )
+            // InternalSCTX.g:9735:28: ( ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) ) )
+            // InternalSCTX.g:9736:1: ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) )
             {
-            // InternalSCTX.g:9724:1: ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) )
+            // InternalSCTX.g:9736:1: ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) )
             int alt237=7;
             switch ( input.LA(1) ) {
             case 114:
@@ -28152,10 +28152,10 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
             switch (alt237) {
                 case 1 :
-                    // InternalSCTX.g:9724:2: (enumLiteral_0= 'pure' )
+                    // InternalSCTX.g:9736:2: (enumLiteral_0= 'pure' )
                     {
-                    // InternalSCTX.g:9724:2: (enumLiteral_0= 'pure' )
-                    // InternalSCTX.g:9724:4: enumLiteral_0= 'pure'
+                    // InternalSCTX.g:9736:2: (enumLiteral_0= 'pure' )
+                    // InternalSCTX.g:9736:4: enumLiteral_0= 'pure'
                     {
                     enumLiteral_0=(Token)match(input,114,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -28171,10 +28171,10 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSCTX.g:9730:6: (enumLiteral_1= 'bool' )
+                    // InternalSCTX.g:9742:6: (enumLiteral_1= 'bool' )
                     {
-                    // InternalSCTX.g:9730:6: (enumLiteral_1= 'bool' )
-                    // InternalSCTX.g:9730:8: enumLiteral_1= 'bool'
+                    // InternalSCTX.g:9742:6: (enumLiteral_1= 'bool' )
+                    // InternalSCTX.g:9742:8: enumLiteral_1= 'bool'
                     {
                     enumLiteral_1=(Token)match(input,115,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -28190,10 +28190,10 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalSCTX.g:9736:6: (enumLiteral_2= 'unsigned' )
+                    // InternalSCTX.g:9748:6: (enumLiteral_2= 'unsigned' )
                     {
-                    // InternalSCTX.g:9736:6: (enumLiteral_2= 'unsigned' )
-                    // InternalSCTX.g:9736:8: enumLiteral_2= 'unsigned'
+                    // InternalSCTX.g:9748:6: (enumLiteral_2= 'unsigned' )
+                    // InternalSCTX.g:9748:8: enumLiteral_2= 'unsigned'
                     {
                     enumLiteral_2=(Token)match(input,116,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -28209,10 +28209,10 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalSCTX.g:9742:6: (enumLiteral_3= 'int' )
+                    // InternalSCTX.g:9754:6: (enumLiteral_3= 'int' )
                     {
-                    // InternalSCTX.g:9742:6: (enumLiteral_3= 'int' )
-                    // InternalSCTX.g:9742:8: enumLiteral_3= 'int'
+                    // InternalSCTX.g:9754:6: (enumLiteral_3= 'int' )
+                    // InternalSCTX.g:9754:8: enumLiteral_3= 'int'
                     {
                     enumLiteral_3=(Token)match(input,117,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -28228,10 +28228,10 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalSCTX.g:9748:6: (enumLiteral_4= 'float' )
+                    // InternalSCTX.g:9760:6: (enumLiteral_4= 'float' )
                     {
-                    // InternalSCTX.g:9748:6: (enumLiteral_4= 'float' )
-                    // InternalSCTX.g:9748:8: enumLiteral_4= 'float'
+                    // InternalSCTX.g:9760:6: (enumLiteral_4= 'float' )
+                    // InternalSCTX.g:9760:8: enumLiteral_4= 'float'
                     {
                     enumLiteral_4=(Token)match(input,118,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -28247,10 +28247,10 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalSCTX.g:9754:6: (enumLiteral_5= 'string' )
+                    // InternalSCTX.g:9766:6: (enumLiteral_5= 'string' )
                     {
-                    // InternalSCTX.g:9754:6: (enumLiteral_5= 'string' )
-                    // InternalSCTX.g:9754:8: enumLiteral_5= 'string'
+                    // InternalSCTX.g:9766:6: (enumLiteral_5= 'string' )
+                    // InternalSCTX.g:9766:8: enumLiteral_5= 'string'
                     {
                     enumLiteral_5=(Token)match(input,119,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -28266,10 +28266,10 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalSCTX.g:9760:6: (enumLiteral_6= 'host' )
+                    // InternalSCTX.g:9772:6: (enumLiteral_6= 'host' )
                     {
-                    // InternalSCTX.g:9760:6: (enumLiteral_6= 'host' )
-                    // InternalSCTX.g:9760:8: enumLiteral_6= 'host'
+                    // InternalSCTX.g:9772:6: (enumLiteral_6= 'host' )
+                    // InternalSCTX.g:9772:8: enumLiteral_6= 'host'
                     {
                     enumLiteral_6=(Token)match(input,120,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -28307,7 +28307,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCombineOperator"
-    // InternalSCTX.g:9772:1: ruleCombineOperator returns [Enumerator current=null] : ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) ) ;
+    // InternalSCTX.g:9784:1: ruleCombineOperator returns [Enumerator current=null] : ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) ) ;
     public final Enumerator ruleCombineOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -28322,10 +28322,10 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalSCTX.g:9774:28: ( ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) ) )
-            // InternalSCTX.g:9775:1: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
+            // InternalSCTX.g:9786:28: ( ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) ) )
+            // InternalSCTX.g:9787:1: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
             {
-            // InternalSCTX.g:9775:1: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
+            // InternalSCTX.g:9787:1: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
             int alt238=8;
             switch ( input.LA(1) ) {
             case 121:
@@ -28378,10 +28378,10 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
             switch (alt238) {
                 case 1 :
-                    // InternalSCTX.g:9775:2: (enumLiteral_0= 'none' )
+                    // InternalSCTX.g:9787:2: (enumLiteral_0= 'none' )
                     {
-                    // InternalSCTX.g:9775:2: (enumLiteral_0= 'none' )
-                    // InternalSCTX.g:9775:4: enumLiteral_0= 'none'
+                    // InternalSCTX.g:9787:2: (enumLiteral_0= 'none' )
+                    // InternalSCTX.g:9787:4: enumLiteral_0= 'none'
                     {
                     enumLiteral_0=(Token)match(input,121,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -28397,10 +28397,10 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSCTX.g:9781:6: (enumLiteral_1= '+' )
+                    // InternalSCTX.g:9793:6: (enumLiteral_1= '+' )
                     {
-                    // InternalSCTX.g:9781:6: (enumLiteral_1= '+' )
-                    // InternalSCTX.g:9781:8: enumLiteral_1= '+'
+                    // InternalSCTX.g:9793:6: (enumLiteral_1= '+' )
+                    // InternalSCTX.g:9793:8: enumLiteral_1= '+'
                     {
                     enumLiteral_1=(Token)match(input,72,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -28416,10 +28416,10 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalSCTX.g:9787:6: (enumLiteral_2= '*' )
+                    // InternalSCTX.g:9799:6: (enumLiteral_2= '*' )
                     {
-                    // InternalSCTX.g:9787:6: (enumLiteral_2= '*' )
-                    // InternalSCTX.g:9787:8: enumLiteral_2= '*'
+                    // InternalSCTX.g:9799:6: (enumLiteral_2= '*' )
+                    // InternalSCTX.g:9799:8: enumLiteral_2= '*'
                     {
                     enumLiteral_2=(Token)match(input,74,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -28435,10 +28435,10 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalSCTX.g:9793:6: (enumLiteral_3= 'max' )
+                    // InternalSCTX.g:9805:6: (enumLiteral_3= 'max' )
                     {
-                    // InternalSCTX.g:9793:6: (enumLiteral_3= 'max' )
-                    // InternalSCTX.g:9793:8: enumLiteral_3= 'max'
+                    // InternalSCTX.g:9805:6: (enumLiteral_3= 'max' )
+                    // InternalSCTX.g:9805:8: enumLiteral_3= 'max'
                     {
                     enumLiteral_3=(Token)match(input,122,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -28454,10 +28454,10 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalSCTX.g:9799:6: (enumLiteral_4= 'min' )
+                    // InternalSCTX.g:9811:6: (enumLiteral_4= 'min' )
                     {
-                    // InternalSCTX.g:9799:6: (enumLiteral_4= 'min' )
-                    // InternalSCTX.g:9799:8: enumLiteral_4= 'min'
+                    // InternalSCTX.g:9811:6: (enumLiteral_4= 'min' )
+                    // InternalSCTX.g:9811:8: enumLiteral_4= 'min'
                     {
                     enumLiteral_4=(Token)match(input,123,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -28473,10 +28473,10 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalSCTX.g:9805:6: (enumLiteral_5= '|' )
+                    // InternalSCTX.g:9817:6: (enumLiteral_5= '|' )
                     {
-                    // InternalSCTX.g:9805:6: (enumLiteral_5= '|' )
-                    // InternalSCTX.g:9805:8: enumLiteral_5= '|'
+                    // InternalSCTX.g:9817:6: (enumLiteral_5= '|' )
+                    // InternalSCTX.g:9817:8: enumLiteral_5= '|'
                     {
                     enumLiteral_5=(Token)match(input,71,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -28492,10 +28492,10 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalSCTX.g:9811:6: (enumLiteral_6= '&' )
+                    // InternalSCTX.g:9823:6: (enumLiteral_6= '&' )
                     {
-                    // InternalSCTX.g:9811:6: (enumLiteral_6= '&' )
-                    // InternalSCTX.g:9811:8: enumLiteral_6= '&'
+                    // InternalSCTX.g:9823:6: (enumLiteral_6= '&' )
+                    // InternalSCTX.g:9823:8: enumLiteral_6= '&'
                     {
                     enumLiteral_6=(Token)match(input,30,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -28511,10 +28511,10 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // InternalSCTX.g:9817:6: (enumLiteral_7= 'host' )
+                    // InternalSCTX.g:9829:6: (enumLiteral_7= 'host' )
                     {
-                    // InternalSCTX.g:9817:6: (enumLiteral_7= 'host' )
-                    // InternalSCTX.g:9817:8: enumLiteral_7= 'host'
+                    // InternalSCTX.g:9829:6: (enumLiteral_7= 'host' )
+                    // InternalSCTX.g:9829:8: enumLiteral_7= 'host'
                     {
                     enumLiteral_7=(Token)match(input,120,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
