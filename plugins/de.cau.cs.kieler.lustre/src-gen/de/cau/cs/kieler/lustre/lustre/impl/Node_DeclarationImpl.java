@@ -4,6 +4,7 @@
 package de.cau.cs.kieler.lustre.lustre.impl;
 
 import de.cau.cs.kieler.lustre.lustre.Assertion;
+import de.cau.cs.kieler.lustre.lustre.Automaton;
 import de.cau.cs.kieler.lustre.lustre.Constant_Declaration;
 import de.cau.cs.kieler.lustre.lustre.Equation;
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
@@ -36,6 +37,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.Node_DeclarationImpl#getVariables <em>Variables</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.Node_DeclarationImpl#getEquations <em>Equations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.Node_DeclarationImpl#getAssertions <em>Assertions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.Node_DeclarationImpl#getAutomatons <em>Automatons</em>}</li>
  * </ul>
  *
  * @generated
@@ -101,6 +103,16 @@ public class Node_DeclarationImpl extends Entity_DeclarationImpl implements Node
    * @ordered
    */
   protected EList<Assertion> assertions;
+
+  /**
+   * The cached value of the '{@link #getAutomatons() <em>Automatons</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAutomatons()
+   * @generated
+   * @ordered
+   */
+  protected EList<Automaton> automatons;
 
   /**
    * <!-- begin-user-doc -->
@@ -212,6 +224,20 @@ public class Node_DeclarationImpl extends Entity_DeclarationImpl implements Node
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Automaton> getAutomatons()
+  {
+    if (automatons == null)
+    {
+      automatons = new EObjectContainmentEList<Automaton>(Automaton.class, this, LustrePackage.NODE_DECLARATION__AUTOMATONS);
+    }
+    return automatons;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -229,6 +255,8 @@ public class Node_DeclarationImpl extends Entity_DeclarationImpl implements Node
         return ((InternalEList<?>)getEquations()).basicRemove(otherEnd, msgs);
       case LustrePackage.NODE_DECLARATION__ASSERTIONS:
         return ((InternalEList<?>)getAssertions()).basicRemove(otherEnd, msgs);
+      case LustrePackage.NODE_DECLARATION__AUTOMATONS:
+        return ((InternalEList<?>)getAutomatons()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -255,6 +283,8 @@ public class Node_DeclarationImpl extends Entity_DeclarationImpl implements Node
         return getEquations();
       case LustrePackage.NODE_DECLARATION__ASSERTIONS:
         return getAssertions();
+      case LustrePackage.NODE_DECLARATION__AUTOMATONS:
+        return getAutomatons();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -294,6 +324,10 @@ public class Node_DeclarationImpl extends Entity_DeclarationImpl implements Node
         getAssertions().clear();
         getAssertions().addAll((Collection<? extends Assertion>)newValue);
         return;
+      case LustrePackage.NODE_DECLARATION__AUTOMATONS:
+        getAutomatons().clear();
+        getAutomatons().addAll((Collection<? extends Automaton>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -326,6 +360,9 @@ public class Node_DeclarationImpl extends Entity_DeclarationImpl implements Node
       case LustrePackage.NODE_DECLARATION__ASSERTIONS:
         getAssertions().clear();
         return;
+      case LustrePackage.NODE_DECLARATION__AUTOMATONS:
+        getAutomatons().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -352,6 +389,8 @@ public class Node_DeclarationImpl extends Entity_DeclarationImpl implements Node
         return equations != null && !equations.isEmpty();
       case LustrePackage.NODE_DECLARATION__ASSERTIONS:
         return assertions != null && !assertions.isEmpty();
+      case LustrePackage.NODE_DECLARATION__AUTOMATONS:
+        return automatons != null && !automatons.isEmpty();
     }
     return super.eIsSet(featureID);
   }

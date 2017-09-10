@@ -151,6 +151,21 @@ public class LustreAdapterFactory extends AdapterFactoryImpl
         return createAssertionAdapter();
       }
       @Override
+      public Adapter caseAutomaton(Automaton object)
+      {
+        return createAutomatonAdapter();
+      }
+      @Override
+      public Adapter caseAState(AState object)
+      {
+        return createAStateAdapter();
+      }
+      @Override
+      public Adapter caseATransition(ATransition object)
+      {
+        return createATransitionAdapter();
+      }
+      @Override
       public Adapter caseLeft_Part(Left_Part object)
       {
         return createLeft_PartAdapter();
@@ -214,6 +229,11 @@ public class LustreAdapterFactory extends AdapterFactoryImpl
       public Adapter caseComparison(Comparison object)
       {
         return createComparisonAdapter();
+      }
+      @Override
+      public Adapter caseMod(Mod object)
+      {
+        return createModAdapter();
       }
       @Override
       public Adapter casePlus(Plus object)
@@ -518,6 +538,51 @@ public class LustreAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.Automaton <em>Automaton</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.Automaton
+   * @generated
+   */
+  public Adapter createAutomatonAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.AState <em>AState</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.AState
+   * @generated
+   */
+  public Adapter createAStateAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.ATransition <em>ATransition</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.ATransition
+   * @generated
+   */
+  public Adapter createATransitionAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.Left_Part <em>Left Part</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -708,6 +773,21 @@ public class LustreAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createComparisonAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.Mod <em>Mod</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.Mod
+   * @generated
+   */
+  public Adapter createModAdapter()
   {
     return null;
   }

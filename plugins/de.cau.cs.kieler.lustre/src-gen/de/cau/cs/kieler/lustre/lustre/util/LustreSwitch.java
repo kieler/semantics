@@ -181,6 +181,27 @@ public class LustreSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case LustrePackage.AUTOMATON:
+      {
+        Automaton automaton = (Automaton)theEObject;
+        T result = caseAutomaton(automaton);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case LustrePackage.ASTATE:
+      {
+        AState aState = (AState)theEObject;
+        T result = caseAState(aState);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case LustrePackage.ATRANSITION:
+      {
+        ATransition aTransition = (ATransition)theEObject;
+        T result = caseATransition(aTransition);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case LustrePackage.LEFT_PART:
       {
         Left_Part left_Part = (Left_Part)theEObject;
@@ -287,6 +308,15 @@ public class LustreSwitch<T> extends Switch<T>
         T result = caseComparison(comparison);
         if (result == null) result = caseExpression(comparison);
         if (result == null) result = caseAssertion(comparison);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case LustrePackage.MOD:
+      {
+        Mod mod = (Mod)theEObject;
+        T result = caseMod(mod);
+        if (result == null) result = caseExpression(mod);
+        if (result == null) result = caseAssertion(mod);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -634,6 +664,54 @@ public class LustreSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Automaton</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Automaton</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAutomaton(Automaton object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>AState</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>AState</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAState(AState object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>ATransition</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>ATransition</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseATransition(ATransition object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Left Part</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -837,6 +915,22 @@ public class LustreSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseComparison(Comparison object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Mod</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Mod</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseMod(Mod object)
   {
     return null;
   }

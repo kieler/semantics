@@ -80,6 +80,9 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
       case LustrePackage.NODE_DECLARATION: return createNode_Declaration();
       case LustrePackage.EQUATION: return createEquation();
       case LustrePackage.ASSERTION: return createAssertion();
+      case LustrePackage.AUTOMATON: return createAutomaton();
+      case LustrePackage.ASTATE: return createAState();
+      case LustrePackage.ATRANSITION: return createATransition();
       case LustrePackage.LEFT_PART: return createLeft_Part();
       case LustrePackage.LEFT_LIST: return createLeft_List();
       case LustrePackage.LEFT: return createLeft();
@@ -93,6 +96,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
       case LustrePackage.AND: return createAnd();
       case LustrePackage.EQUALITY: return createEquality();
       case LustrePackage.COMPARISON: return createComparison();
+      case LustrePackage.MOD: return createMod();
       case LustrePackage.PLUS: return createPlus();
       case LustrePackage.MINUS: return createMinus();
       case LustrePackage.MUL: return createMul();
@@ -279,6 +283,39 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  public Automaton createAutomaton()
+  {
+    AutomatonImpl automaton = new AutomatonImpl();
+    return automaton;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public AState createAState()
+  {
+    AStateImpl aState = new AStateImpl();
+    return aState;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ATransition createATransition()
+  {
+    ATransitionImpl aTransition = new ATransitionImpl();
+    return aTransition;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public Left_Part createLeft_Part()
   {
     Left_PartImpl left_Part = new Left_PartImpl();
@@ -415,6 +452,17 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
   {
     ComparisonImpl comparison = new ComparisonImpl();
     return comparison;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Mod createMod()
+  {
+    ModImpl mod = new ModImpl();
+    return mod;
   }
 
   /**

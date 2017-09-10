@@ -7,7 +7,7 @@
   <genPackages prefix="Lustre" basePackage="de.cau.cs.kieler.lustre" disposableProviderFactory="true"
       fileExtensions="lus" ecorePackage="Lustre.ecore#/">
     <genClasses ecoreClass="Lustre.ecore#//Program">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//Program/packages"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//Program/nodes"/>
     </genClasses>
     <genClasses ecoreClass="Lustre.ecore#//Package_Declaration">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//Package_Declaration/name"/>
@@ -33,7 +33,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//Type_Declaration/type"/>
     </genClasses>
     <genClasses ecoreClass="Lustre.ecore#//Type">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Lustre.ecore#//Type/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//Type/name"/>
     </genClasses>
     <genClasses ecoreClass="Lustre.ecore#//Array_Type">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Lustre.ecore#//Array_Type/type"/>
@@ -62,12 +62,29 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//Node_Declaration/variables"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//Node_Declaration/equations"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//Node_Declaration/assertions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//Node_Declaration/automatons"/>
     </genClasses>
     <genClasses ecoreClass="Lustre.ecore#//Equation">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Lustre.ecore#//Equation/left"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//Equation/right"/>
     </genClasses>
     <genClasses ecoreClass="Lustre.ecore#//Assertion"/>
+    <genClasses ecoreClass="Lustre.ecore#//Automaton">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//Automaton/states"/>
+    </genClasses>
+    <genClasses ecoreClass="Lustre.ecore#//AState">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//AState/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//AState/equations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//AState/assertions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//AState/automatons"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//AState/transitions"/>
+    </genClasses>
+    <genClasses ecoreClass="Lustre.ecore#//ATransition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//ATransition/strong"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//ATransition/condition"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//ATransition/history"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Lustre.ecore#//ATransition/nextState"/>
+    </genClasses>
     <genClasses ecoreClass="Lustre.ecore#//Left_Part"/>
     <genClasses ecoreClass="Lustre.ecore#//Left_List">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//Left_List/id"/>
@@ -111,6 +128,9 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//Comparison/left"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//Comparison/op"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//Comparison/right"/>
+    </genClasses>
+    <genClasses ecoreClass="Lustre.ecore#//Mod">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//Mod/subExpressions"/>
     </genClasses>
     <genClasses ecoreClass="Lustre.ecore#//Plus">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//Plus/subExpressions"/>

@@ -20,6 +20,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.Node_Declaration#getVariables <em>Variables</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.Node_Declaration#getEquations <em>Equations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.Node_Declaration#getAssertions <em>Assertions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.Node_Declaration#getAutomatons <em>Automatons</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getNode_Declaration()
@@ -123,5 +124,21 @@ public interface Node_Declaration extends Entity_Declaration
    * @generated
    */
   EList<Assertion> getAssertions();
+
+  /**
+   * Returns the value of the '<em><b>Automatons</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.lustre.lustre.Automaton}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Automatons</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Automatons</em>' containment reference list.
+   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getNode_Declaration_Automatons()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Automaton> getAutomatons();
 
 } // Node_Declaration

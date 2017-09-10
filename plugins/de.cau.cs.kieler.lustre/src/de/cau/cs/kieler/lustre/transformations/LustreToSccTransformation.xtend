@@ -12,8 +12,11 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.lustre.features.LustreFeature
+import de.cau.cs.kieler.lustre.lustre.AState
+import de.cau.cs.kieler.lustre.lustre.ATransition
 import de.cau.cs.kieler.lustre.lustre.And
 import de.cau.cs.kieler.lustre.lustre.Arrow
+import de.cau.cs.kieler.lustre.lustre.Automaton
 import de.cau.cs.kieler.lustre.lustre.BoolConstant
 import de.cau.cs.kieler.lustre.lustre.Comparison
 import de.cau.cs.kieler.lustre.lustre.Constant_Declaration
@@ -27,6 +30,7 @@ import de.cau.cs.kieler.lustre.lustre.FloatConstant
 import de.cau.cs.kieler.lustre.lustre.IfThenElse
 import de.cau.cs.kieler.lustre.lustre.IntConstant
 import de.cau.cs.kieler.lustre.lustre.Minus
+import de.cau.cs.kieler.lustre.lustre.Mod
 import de.cau.cs.kieler.lustre.lustre.Mul
 import de.cau.cs.kieler.lustre.lustre.Node_Declaration
 import de.cau.cs.kieler.lustre.lustre.Not
@@ -39,6 +43,7 @@ import de.cau.cs.kieler.lustre.lustre.UMinus
 import de.cau.cs.kieler.lustre.lustre.VariableReference
 import de.cau.cs.kieler.lustre.lustre.Variable_Declaration
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
@@ -91,7 +96,7 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
 
     def State transform(Program p, KielerCompilerContext context) {
         // transformPackage_Declaration(p.packages.get(0))
-        transformNode(p.packages.get(0).nodes.get(0))
+        transformNode(p.nodes.get(0))
     }
 
     private def State transformPackage_Declaration(Package_Declaration p) {
@@ -138,7 +143,6 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
                     effects += createAssignment(VO.get(eq.left.name), eq.right.toKexpression)
                 ]
             else {
-                println("1")
                 val region = scc.createControlflowRegion => [
                     id = ""
                     label = id
@@ -153,9 +157,7 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
                 ]
 
                 region.states += initialState
-                println("2")
                 val stateList = eq.right.transformEquation(eq.left.name, state, initialState, region)
-                println("end")
                 for (State s : stateList) {
                     scc.createTransition => [
                         targetState = initialState
@@ -163,6 +165,16 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
                     ]
                 }
             }
+        }
+        for (Automaton a : node.automatons) {
+             val region = scc.createControlflowRegion => [
+                    id = ""
+                    label = id
+                    state.regions += it
+                ]
+                
+                a.transformAutomaton(state, region)
+            
 
         }
 
@@ -176,14 +188,13 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
             expression.transformIfThenElseExpression(currentVar, superState, previousState, region)
         else if (expression instanceof Or || expression instanceof And || expression instanceof Equality ||
             expression instanceof Comparison || expression instanceof Plus || expression instanceof Minus ||
-            expression instanceof Mul || expression instanceof Div)
+            expression instanceof Mul || expression instanceof Div || expression instanceof Mod)
             expression.transformBinaryExpression(currentVar, superState, previousState, region)
         else if (expression instanceof Fby) // expression.transformFbyExpression(currentVar, superState, previousState, region)
         {
         } else if (expression instanceof Arrow) {
             expression.transformArrowExpression(currentVar, superState, previousState, region)
         }
-
     }
 
     def private transformBinaryExpression(Expression expression, String currentVar, State superState,
@@ -220,6 +231,10 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
                     op = OperatorType::GEQ
                 else
                     op = OperatorType::LEQ
+            }
+            Mod: {
+                subE.addAll(expression.subExpressions)
+                op = OperatorType::MOD
             }
             Plus: {
                 subE.addAll(expression.subExpressions)
@@ -405,6 +420,72 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
         val ret = new ArrayList<State>
         ret
     }
+    
+    def private void transformAutomaton(Automaton automaton, State superState, ControlflowRegion region) {
+        val stateList = new Hashtable<AState, State>
+        for (AState astate : automaton.states) {
+            val state = scc.createState => [
+                label = astate.name
+                id = ""
+                stateList.put(astate, it)
+                region.states += it
+            ]
+            
+            for (Equation eq : astate.equations) {
+                if (eq.right.isPureExpression)
+                    state.createImmediateDuringAction() => [
+                        effects += createAssignment(VO.get(eq.left.name), eq.right.toKexpression)
+                    ]
+                else {
+                    val r = scc.createControlflowRegion => [
+                        id = ""
+                        label = id
+    
+                        state.regions += it
+                    ]
+                    
+                    val initialState = scc.createState => [
+                        id = ""
+                        label = id
+                        initial = true
+                    ]
+    
+                    r.states += initialState
+                    
+                    val sList = eq.right.transformEquation(eq.left.name, state, initialState, r)
+                    for (State s : sList) {
+                        scc.createTransition => [
+                            targetState = initialState
+                            s.outgoingTransitions += it
+                        ]
+                    }
+                }
+            }
+            
+            for (Automaton a : astate.automatons) {
+                    val r = scc.createControlflowRegion => [
+                        id = ""
+                        label = id
+                        state.regions += it
+                    ]
+                    
+                    a.transformAutomaton(state, r)
+            }
+        }
+        
+        for (AState astate : automaton.states) {
+            for (ATransition trans : astate.transitions) {
+                scc.createTransition => [
+                    targetState = stateList.get(trans.nextState)
+                    stateList.get(astate).outgoingTransitions+=it
+                    trigger = trans.condition.toKexpression
+                    type = if (trans.strong) TransitionType::STRONGABORT else TransitionType::WEAKABORT
+                    history = if (trans.history) HistoryType::DEEP else HistoryType::RESET
+                ]
+            }
+        }
+        
+    }
 
     def private assignExpression(State startState, State endState, String currentVar, Expression expression,
         Boolean isImmediate, Expression trig) {
@@ -437,11 +518,11 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
     }
 
     def private addDeclaration(State state, Variable_Declaration variable, IOType io) {
-        addDeclaration(state, variable.name, variable.type.name.name, io, false)
+        addDeclaration(state, variable.name, variable.type.name, io, false)
     }
 
     def private addDeclaration(State state, Constant_Declaration constant) {
-        addDeclaration(state, constant.name, constant.type.name.name, IOType.LOCAL, true)
+        addDeclaration(state, constant.name, constant.type.name, IOType.LOCAL, true)
     }
 
     def private addDeclaration(State state, String varName, String varType, IOType io, Boolean isConst) {
@@ -490,6 +571,10 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
                 ]
             And:
                 createOperatorExpression(OperatorType::LOGICAL_AND) => [
+                    it.subExpressions.addExprList(e.subExpressions)
+                ]
+            Mod:
+                createOperatorExpression(OperatorType::MOD) => [
                     it.subExpressions.addExprList(e.subExpressions)
                 ]
             Plus:
@@ -562,6 +647,8 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
             VariableReference: true
             Or: e.subExpressions.allPureExpression
             And: e.subExpressions.allPureExpression
+            Mod: e.subExpressions.allPureExpression
+            Div: e.subExpressions.allPureExpression
             Plus: e.subExpressions.allPureExpression
             Minus: e.subExpressions.allPureExpression
             Mul: e.subExpressions.allPureExpression

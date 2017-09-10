@@ -25,20 +25,22 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public class ProgramElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.Program");
-		private final Assignment cPackagesAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cPackagesPackage_DeclarationParserRuleCall_0 = (RuleCall)cPackagesAssignment.eContents().get(0);
+		private final Assignment cNodesAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cNodesNode_DeclarationParserRuleCall_0 = (RuleCall)cNodesAssignment.eContents().get(0);
 		
 		/// **
 		// * @author cpa
 		// * / Program hidden(WS, LUSTRE_COMMENT):
-		//	packages+=Package_Declaration+;
+		//	nodes+=Node_Declaration+
+		//	//    packages+=Package_Declaration+   
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//packages+=Package_Declaration+
-		public Assignment getPackagesAssignment() { return cPackagesAssignment; }
+		//nodes+=Node_Declaration+
+		public Assignment getNodesAssignment() { return cNodesAssignment; }
 		
-		//Package_Declaration
-		public RuleCall getPackagesPackage_DeclarationParserRuleCall_0() { return cPackagesPackage_DeclarationParserRuleCall_0; }
+		//Node_Declaration
+		public RuleCall getNodesNode_DeclarationParserRuleCall_0() { return cNodesNode_DeclarationParserRuleCall_0; }
 	}
 	public class Package_DeclarationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.Package_Declaration");
@@ -389,21 +391,21 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	public class TypeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.Type");
 		private final Assignment cNameAssignment = (Assignment)rule.eContents().get(1);
-		private final CrossReference cNameType_DeclarationCrossReference_0 = (CrossReference)cNameAssignment.eContents().get(0);
-		private final RuleCall cNameType_DeclarationIDENTTerminalRuleCall_0_1 = (RuleCall)cNameType_DeclarationCrossReference_0.eContents().get(1);
+		private final RuleCall cNameIDENTTerminalRuleCall_0 = (RuleCall)cNameAssignment.eContents().get(0);
 		
 		//Type:
-		//	name=[Type_Declaration|IDENT];
+		//	name=IDENT
+		//	//    | Array_Type
+		//	//    | Record_Type
+		//	//    | Enum_Type
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//name=[Type_Declaration|IDENT]
+		//name=IDENT
 		public Assignment getNameAssignment() { return cNameAssignment; }
 		
-		//[Type_Declaration|IDENT]
-		public CrossReference getNameType_DeclarationCrossReference_0() { return cNameType_DeclarationCrossReference_0; }
-		
 		//IDENT
-		public RuleCall getNameType_DeclarationIDENTTerminalRuleCall_0_1() { return cNameType_DeclarationIDENTTerminalRuleCall_0_1; }
+		public RuleCall getNameIDENTTerminalRuleCall_0() { return cNameIDENTTerminalRuleCall_0; }
 	}
 	public class Array_TypeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.Array_Type");
@@ -856,6 +858,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEquationsEquationParserRuleCall_13_0_0 = (RuleCall)cEquationsAssignment_13_0.eContents().get(0);
 		private final Assignment cAssertionsAssignment_13_1 = (Assignment)cAlternatives_13.eContents().get(1);
 		private final RuleCall cAssertionsAssertionParserRuleCall_13_1_0 = (RuleCall)cAssertionsAssignment_13_1.eContents().get(0);
+		private final Assignment cAutomatonsAssignment_13_2 = (Assignment)cAlternatives_13.eContents().get(2);
+		private final RuleCall cAutomatonsAutomatonParserRuleCall_13_2_0 = (RuleCall)cAutomatonsAssignment_13_2.eContents().get(0);
 		private final Keyword cTelKeyword_14 = (Keyword)cGroup.eContents().get(14);
 		private final Keyword cSemicolonKeyword_15 = (Keyword)cGroup.eContents().get(15);
 		
@@ -867,13 +871,14 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//	'(' (parameters+=Variable_Declaration (',' parameters+=Variable_Declaration)*)? ')'
 		//	'returns' '(' returned+=Variable_Declaration (',' returned+=Variable_Declaration)* ')'
 		//	';' (constants+=Local_Constant_Declaration | variables+=Local_Variable_Declaration)*
-		//	'let' (equations+=Equation | assertions+=Assertion)*
+		//	'let' (equations+=Equation | assertions+=Assertion | automatons+=Automaton)*
 		//	'tel' ';'?;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//'node' name=IDENT '(' (parameters+=Variable_Declaration (',' parameters+=Variable_Declaration)*)? ')' 'returns' '('
 		//returned+=Variable_Declaration (',' returned+=Variable_Declaration)* ')' ';' (constants+=Local_Constant_Declaration |
-		//variables+=Local_Variable_Declaration)* 'let' (equations+=Equation | assertions+=Assertion)* 'tel' ';'?
+		//variables+=Local_Variable_Declaration)* 'let' (equations+=Equation | assertions+=Assertion | automatons+=Automaton)*
+		//'tel' ';'?
 		public Group getGroup() { return cGroup; }
 		
 		//'node'
@@ -960,7 +965,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//'let'
 		public Keyword getLetKeyword_12() { return cLetKeyword_12; }
 		
-		//(equations+=Equation | assertions+=Assertion)*
+		//(equations+=Equation | assertions+=Assertion | automatons+=Automaton)*
 		public Alternatives getAlternatives_13() { return cAlternatives_13; }
 		
 		//equations+=Equation
@@ -974,6 +979,12 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Assertion
 		public RuleCall getAssertionsAssertionParserRuleCall_13_1_0() { return cAssertionsAssertionParserRuleCall_13_1_0; }
+		
+		//automatons+=Automaton
+		public Assignment getAutomatonsAssignment_13_2() { return cAutomatonsAssignment_13_2; }
+		
+		//Automaton
+		public RuleCall getAutomatonsAutomatonParserRuleCall_13_2_0() { return cAutomatonsAutomatonParserRuleCall_13_2_0; }
 		
 		//'tel'
 		public Keyword getTelKeyword_14() { return cTelKeyword_14; }
@@ -1042,6 +1053,180 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//';'
 		public Keyword getSemicolonKeyword_2() { return cSemicolonKeyword_2; }
+	}
+	public class AutomatonElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.Automaton");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cAutomatonKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cStatesAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cStatesAStateParserRuleCall_1_0 = (RuleCall)cStatesAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cVerticalLineKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cStatesAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cStatesAStateParserRuleCall_2_1_0 = (RuleCall)cStatesAssignment_2_1.eContents().get(0);
+		private final Keyword cEndKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		
+		//Automaton:
+		//	'automaton' states+=AState ('|' states+=AState)* 'end' ';';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'automaton' states+=AState ('|' states+=AState)* 'end' ';'
+		public Group getGroup() { return cGroup; }
+		
+		//'automaton'
+		public Keyword getAutomatonKeyword_0() { return cAutomatonKeyword_0; }
+		
+		//states+=AState
+		public Assignment getStatesAssignment_1() { return cStatesAssignment_1; }
+		
+		//AState
+		public RuleCall getStatesAStateParserRuleCall_1_0() { return cStatesAStateParserRuleCall_1_0; }
+		
+		//('|' states+=AState)*
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//'|'
+		public Keyword getVerticalLineKeyword_2_0() { return cVerticalLineKeyword_2_0; }
+		
+		//states+=AState
+		public Assignment getStatesAssignment_2_1() { return cStatesAssignment_2_1; }
+		
+		//AState
+		public RuleCall getStatesAStateParserRuleCall_2_1_0() { return cStatesAStateParserRuleCall_2_1_0; }
+		
+		//'end'
+		public Keyword getEndKeyword_3() { return cEndKeyword_3; }
+		
+		//';'
+		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
+	}
+	public class AStateElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.AState");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cNameIDENTTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
+		private final Keyword cHyphenMinusGreaterThanSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
+		private final Assignment cEquationsAssignment_2_0 = (Assignment)cAlternatives_2.eContents().get(0);
+		private final RuleCall cEquationsEquationParserRuleCall_2_0_0 = (RuleCall)cEquationsAssignment_2_0.eContents().get(0);
+		private final Assignment cAssertionsAssignment_2_1 = (Assignment)cAlternatives_2.eContents().get(1);
+		private final RuleCall cAssertionsAssertionParserRuleCall_2_1_0 = (RuleCall)cAssertionsAssignment_2_1.eContents().get(0);
+		private final Assignment cAutomatonsAssignment_2_2 = (Assignment)cAlternatives_2.eContents().get(2);
+		private final RuleCall cAutomatonsAutomatonParserRuleCall_2_2_0 = (RuleCall)cAutomatonsAssignment_2_2.eContents().get(0);
+		private final Assignment cTransitionsAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cTransitionsATransitionParserRuleCall_3_0 = (RuleCall)cTransitionsAssignment_3.eContents().get(0);
+		
+		//AState:
+		//	name=IDENT '->' (equations+=Equation | assertions+=Assertion | automatons+=Automaton)*
+		//	transitions+=ATransition+;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//name=IDENT '->' (equations+=Equation | assertions+=Assertion | automatons+=Automaton)* transitions+=ATransition+
+		public Group getGroup() { return cGroup; }
+		
+		//name=IDENT
+		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
+		
+		//IDENT
+		public RuleCall getNameIDENTTerminalRuleCall_0_0() { return cNameIDENTTerminalRuleCall_0_0; }
+		
+		//'->'
+		public Keyword getHyphenMinusGreaterThanSignKeyword_1() { return cHyphenMinusGreaterThanSignKeyword_1; }
+		
+		//(equations+=Equation | assertions+=Assertion | automatons+=Automaton)*
+		public Alternatives getAlternatives_2() { return cAlternatives_2; }
+		
+		//equations+=Equation
+		public Assignment getEquationsAssignment_2_0() { return cEquationsAssignment_2_0; }
+		
+		//Equation
+		public RuleCall getEquationsEquationParserRuleCall_2_0_0() { return cEquationsEquationParserRuleCall_2_0_0; }
+		
+		//assertions+=Assertion
+		public Assignment getAssertionsAssignment_2_1() { return cAssertionsAssignment_2_1; }
+		
+		//Assertion
+		public RuleCall getAssertionsAssertionParserRuleCall_2_1_0() { return cAssertionsAssertionParserRuleCall_2_1_0; }
+		
+		//automatons+=Automaton
+		public Assignment getAutomatonsAssignment_2_2() { return cAutomatonsAssignment_2_2; }
+		
+		//Automaton
+		public RuleCall getAutomatonsAutomatonParserRuleCall_2_2_0() { return cAutomatonsAutomatonParserRuleCall_2_2_0; }
+		
+		//transitions+=ATransition+
+		public Assignment getTransitionsAssignment_3() { return cTransitionsAssignment_3; }
+		
+		//ATransition
+		public RuleCall getTransitionsATransitionParserRuleCall_3_0() { return cTransitionsATransitionParserRuleCall_3_0; }
+	}
+	public class ATransitionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.ATransition");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Keyword cUntilKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
+		private final Assignment cStrongAssignment_0_1 = (Assignment)cAlternatives_0.eContents().get(1);
+		private final Keyword cStrongUnlessKeyword_0_1_0 = (Keyword)cStrongAssignment_0_1.eContents().get(0);
+		private final Assignment cConditionAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cConditionExpressionParserRuleCall_1_0 = (RuleCall)cConditionAssignment_1.eContents().get(0);
+		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
+		private final Keyword cThenKeyword_2_0 = (Keyword)cAlternatives_2.eContents().get(0);
+		private final Assignment cHistoryAssignment_2_1 = (Assignment)cAlternatives_2.eContents().get(1);
+		private final Keyword cHistoryContinueKeyword_2_1_0 = (Keyword)cHistoryAssignment_2_1.eContents().get(0);
+		private final Assignment cNextStateAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final CrossReference cNextStateAStateCrossReference_3_0 = (CrossReference)cNextStateAssignment_3.eContents().get(0);
+		private final RuleCall cNextStateAStateIDENTTerminalRuleCall_3_0_1 = (RuleCall)cNextStateAStateCrossReference_3_0.eContents().get(1);
+		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		
+		//ATransition:
+		//	('until' | strong?='unless') condition=Expression ('then' | history?='continue') nextState=[AState|IDENT] ';';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//('until' | strong?='unless') condition=Expression ('then' | history?='continue') nextState=[AState|IDENT] ';'
+		public Group getGroup() { return cGroup; }
+		
+		//('until' | strong?='unless')
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+		
+		//'until'
+		public Keyword getUntilKeyword_0_0() { return cUntilKeyword_0_0; }
+		
+		//strong?='unless'
+		public Assignment getStrongAssignment_0_1() { return cStrongAssignment_0_1; }
+		
+		//'unless'
+		public Keyword getStrongUnlessKeyword_0_1_0() { return cStrongUnlessKeyword_0_1_0; }
+		
+		//condition=Expression
+		public Assignment getConditionAssignment_1() { return cConditionAssignment_1; }
+		
+		//Expression
+		public RuleCall getConditionExpressionParserRuleCall_1_0() { return cConditionExpressionParserRuleCall_1_0; }
+		
+		//('then' | history?='continue')
+		public Alternatives getAlternatives_2() { return cAlternatives_2; }
+		
+		//'then'
+		public Keyword getThenKeyword_2_0() { return cThenKeyword_2_0; }
+		
+		//history?='continue'
+		public Assignment getHistoryAssignment_2_1() { return cHistoryAssignment_2_1; }
+		
+		//'continue'
+		public Keyword getHistoryContinueKeyword_2_1_0() { return cHistoryContinueKeyword_2_1_0; }
+		
+		//nextState=[AState|IDENT]
+		public Assignment getNextStateAssignment_3() { return cNextStateAssignment_3; }
+		
+		//[AState|IDENT]
+		public CrossReference getNextStateAStateCrossReference_3_0() { return cNextStateAStateCrossReference_3_0; }
+		
+		//IDENT
+		public RuleCall getNextStateAStateIDENTTerminalRuleCall_3_0_1() { return cNextStateAStateIDENTTerminalRuleCall_3_0_1; }
+		
+		//';'
+		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
 	}
 	public class Left_PartElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.Left_Part");
@@ -1491,7 +1676,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	public class ComparisonElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.Comparison");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cPlusOrMinusParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final RuleCall cModParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Action cComparisonLeftAction_1_0 = (Action)cGroup_1.eContents().get(0);
 		private final Assignment cOpAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
@@ -1501,19 +1686,19 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cOpGreaterThanSignKeyword_1_1_0_2 = (Keyword)cOpAlternatives_1_1_0.eContents().get(2);
 		private final Keyword cOpLessThanSignKeyword_1_1_0_3 = (Keyword)cOpAlternatives_1_1_0.eContents().get(3);
 		private final Assignment cRightAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cRightPlusOrMinusParserRuleCall_1_2_0 = (RuleCall)cRightAssignment_1_2.eContents().get(0);
+		private final RuleCall cRightModParserRuleCall_1_2_0 = (RuleCall)cRightAssignment_1_2.eContents().get(0);
 		
 		//Comparison Expression:
-		//	PlusOrMinus ({Comparison.left=current} op=('>=' | '<=' | '>' | '<') right=PlusOrMinus)*
+		//	Mod ({Comparison.left=current} op=('>=' | '<=' | '>' | '<') right=Mod)*
 		@Override public ParserRule getRule() { return rule; }
 		
-		//PlusOrMinus ({Comparison.left=current} op=('>=' | '<=' | '>' | '<') right=PlusOrMinus)*
+		//Mod ({Comparison.left=current} op=('>=' | '<=' | '>' | '<') right=Mod)*
 		public Group getGroup() { return cGroup; }
 		
-		//PlusOrMinus
-		public RuleCall getPlusOrMinusParserRuleCall_0() { return cPlusOrMinusParserRuleCall_0; }
+		//Mod
+		public RuleCall getModParserRuleCall_0() { return cModParserRuleCall_0; }
 		
-		//({Comparison.left=current} op=('>=' | '<=' | '>' | '<') right=PlusOrMinus)*
+		//({Comparison.left=current} op=('>=' | '<=' | '>' | '<') right=Mod)*
 		public Group getGroup_1() { return cGroup_1; }
 		
 		//{Comparison.left=current}
@@ -1537,11 +1722,46 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//'<'
 		public Keyword getOpLessThanSignKeyword_1_1_0_3() { return cOpLessThanSignKeyword_1_1_0_3; }
 		
-		//right=PlusOrMinus
+		//right=Mod
 		public Assignment getRightAssignment_1_2() { return cRightAssignment_1_2; }
 		
+		//Mod
+		public RuleCall getRightModParserRuleCall_1_2_0() { return cRightModParserRuleCall_1_2_0; }
+	}
+	public class ModElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.Mod");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cPlusOrMinusParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cModSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Keyword cModKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final RuleCall cSubExpressionsPlusOrMinusParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		
+		//Mod Expression:
+		//	PlusOrMinus ({Mod.subExpressions+=current} 'mod' subExpressions+=PlusOrMinus)*
+		@Override public ParserRule getRule() { return rule; }
+		
+		//PlusOrMinus ({Mod.subExpressions+=current} 'mod' subExpressions+=PlusOrMinus)*
+		public Group getGroup() { return cGroup; }
+		
 		//PlusOrMinus
-		public RuleCall getRightPlusOrMinusParserRuleCall_1_2_0() { return cRightPlusOrMinusParserRuleCall_1_2_0; }
+		public RuleCall getPlusOrMinusParserRuleCall_0() { return cPlusOrMinusParserRuleCall_0; }
+		
+		//({Mod.subExpressions+=current} 'mod' subExpressions+=PlusOrMinus)*
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//{Mod.subExpressions+=current}
+		public Action getModSubExpressionsAction_1_0() { return cModSubExpressionsAction_1_0; }
+		
+		//'mod'
+		public Keyword getModKeyword_1_1() { return cModKeyword_1_1; }
+		
+		//subExpressions+=PlusOrMinus
+		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
+		
+		//PlusOrMinus
+		public RuleCall getSubExpressionsPlusOrMinusParserRuleCall_1_2_0() { return cSubExpressionsPlusOrMinusParserRuleCall_1_2_0; }
 	}
 	public class PlusOrMinusElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.PlusOrMinus");
@@ -1896,6 +2116,9 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	private final Node_DeclarationElements pNode_Declaration;
 	private final EquationElements pEquation;
 	private final AssertionElements pAssertion;
+	private final AutomatonElements pAutomaton;
+	private final AStateElements pAState;
+	private final ATransitionElements pATransition;
 	private final Left_PartElements pLeft_Part;
 	private final Left_ListElements pLeft_List;
 	private final LeftElements pLeft;
@@ -1909,6 +2132,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	private final AndElements pAnd;
 	private final EqualityElements pEquality;
 	private final ComparisonElements pComparison;
+	private final ModElements pMod;
 	private final PlusOrMinusElements pPlusOrMinus;
 	private final MulOrDivElements pMulOrDiv;
 	private final PrimaryElements pPrimary;
@@ -1947,6 +2171,9 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		this.pNode_Declaration = new Node_DeclarationElements();
 		this.pEquation = new EquationElements();
 		this.pAssertion = new AssertionElements();
+		this.pAutomaton = new AutomatonElements();
+		this.pAState = new AStateElements();
+		this.pATransition = new ATransitionElements();
 		this.pLeft_Part = new Left_PartElements();
 		this.pLeft_List = new Left_ListElements();
 		this.pLeft = new LeftElements();
@@ -1960,6 +2187,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		this.pAnd = new AndElements();
 		this.pEquality = new EqualityElements();
 		this.pComparison = new ComparisonElements();
+		this.pMod = new ModElements();
 		this.pPlusOrMinus = new PlusOrMinusElements();
 		this.pMulOrDiv = new MulOrDivElements();
 		this.pPrimary = new PrimaryElements();
@@ -2003,7 +2231,9 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	/// **
 	// * @author cpa
 	// * / Program hidden(WS, LUSTRE_COMMENT):
-	//	packages+=Package_Declaration+;
+	//	nodes+=Node_Declaration+
+	//	//    packages+=Package_Declaration+   
+	//;
 	public ProgramElements getProgramAccess() {
 		return pProgram;
 	}
@@ -2080,7 +2310,11 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Type:
-	//	name=[Type_Declaration|IDENT];
+	//	name=IDENT
+	//	//    | Array_Type
+	//	//    | Record_Type
+	//	//    | Enum_Type
+	//;
 	public TypeElements getTypeAccess() {
 		return pType;
 	}
@@ -2179,7 +2413,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	//	'(' (parameters+=Variable_Declaration (',' parameters+=Variable_Declaration)*)? ')'
 	//	'returns' '(' returned+=Variable_Declaration (',' returned+=Variable_Declaration)* ')'
 	//	';' (constants+=Local_Constant_Declaration | variables+=Local_Variable_Declaration)*
-	//	'let' (equations+=Equation | assertions+=Assertion)*
+	//	'let' (equations+=Equation | assertions+=Assertion | automatons+=Automaton)*
 	//	'tel' ';'?;
 	public Node_DeclarationElements getNode_DeclarationAccess() {
 		return pNode_Declaration;
@@ -2207,6 +2441,37 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getAssertionRule() {
 		return getAssertionAccess().getRule();
+	}
+	
+	//Automaton:
+	//	'automaton' states+=AState ('|' states+=AState)* 'end' ';';
+	public AutomatonElements getAutomatonAccess() {
+		return pAutomaton;
+	}
+	
+	public ParserRule getAutomatonRule() {
+		return getAutomatonAccess().getRule();
+	}
+	
+	//AState:
+	//	name=IDENT '->' (equations+=Equation | assertions+=Assertion | automatons+=Automaton)*
+	//	transitions+=ATransition+;
+	public AStateElements getAStateAccess() {
+		return pAState;
+	}
+	
+	public ParserRule getAStateRule() {
+		return getAStateAccess().getRule();
+	}
+	
+	//ATransition:
+	//	('until' | strong?='unless') condition=Expression ('then' | history?='continue') nextState=[AState|IDENT] ';';
+	public ATransitionElements getATransitionAccess() {
+		return pATransition;
+	}
+	
+	public ParserRule getATransitionRule() {
+		return getATransitionAccess().getRule();
 	}
 	
 	//Left_Part:
@@ -2335,13 +2600,23 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Comparison Expression:
-	//	PlusOrMinus ({Comparison.left=current} op=('>=' | '<=' | '>' | '<') right=PlusOrMinus)*
+	//	Mod ({Comparison.left=current} op=('>=' | '<=' | '>' | '<') right=Mod)*
 	public ComparisonElements getComparisonAccess() {
 		return pComparison;
 	}
 	
 	public ParserRule getComparisonRule() {
 		return getComparisonAccess().getRule();
+	}
+	
+	//Mod Expression:
+	//	PlusOrMinus ({Mod.subExpressions+=current} 'mod' subExpressions+=PlusOrMinus)*
+	public ModElements getModAccess() {
+		return pMod;
+	}
+	
+	public ParserRule getModRule() {
+		return getModAccess().getRule();
 	}
 	
 	//PlusOrMinus Expression:

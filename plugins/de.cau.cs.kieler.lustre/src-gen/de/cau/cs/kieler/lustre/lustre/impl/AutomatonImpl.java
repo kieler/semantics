@@ -3,57 +3,55 @@
  */
 package de.cau.cs.kieler.lustre.lustre.impl;
 
+import de.cau.cs.kieler.lustre.lustre.AState;
+import de.cau.cs.kieler.lustre.lustre.Automaton;
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
-import de.cau.cs.kieler.lustre.lustre.Type;
 
-import org.eclipse.emf.common.notify.Notification;
+import java.util.Collection;
+
+import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Type</b></em>'.
+ * An implementation of the model object '<em><b>Automaton</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.TypeImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.AutomatonImpl#getStates <em>States</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class TypeImpl extends MinimalEObjectImpl.Container implements Type
+public class AutomatonImpl extends MinimalEObjectImpl.Container implements Automaton
 {
   /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+   * The cached value of the '{@link #getStates() <em>States</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getName()
+   * @see #getStates()
    * @generated
    * @ordered
    */
-  protected static final String NAME_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected String name = NAME_EDEFAULT;
+  protected EList<AState> states;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected TypeImpl()
+  protected AutomatonImpl()
   {
     super();
   }
@@ -66,7 +64,7 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
   @Override
   protected EClass eStaticClass()
   {
-    return LustrePackage.Literals.TYPE;
+    return LustrePackage.Literals.AUTOMATON;
   }
 
   /**
@@ -74,9 +72,13 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getName()
+  public EList<AState> getStates()
   {
-    return name;
+    if (states == null)
+    {
+      states = new EObjectContainmentEList<AState>(AState.class, this, LustrePackage.AUTOMATON__STATES);
+    }
+    return states;
   }
 
   /**
@@ -84,12 +86,15 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setName(String newName)
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-    String oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.TYPE__NAME, oldName, name));
+    switch (featureID)
+    {
+      case LustrePackage.AUTOMATON__STATES:
+        return ((InternalEList<?>)getStates()).basicRemove(otherEnd, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
@@ -102,8 +107,8 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
   {
     switch (featureID)
     {
-      case LustrePackage.TYPE__NAME:
-        return getName();
+      case LustrePackage.AUTOMATON__STATES:
+        return getStates();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -113,13 +118,15 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case LustrePackage.TYPE__NAME:
-        setName((String)newValue);
+      case LustrePackage.AUTOMATON__STATES:
+        getStates().clear();
+        getStates().addAll((Collection<? extends AState>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -135,8 +142,8 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
   {
     switch (featureID)
     {
-      case LustrePackage.TYPE__NAME:
-        setName(NAME_EDEFAULT);
+      case LustrePackage.AUTOMATON__STATES:
+        getStates().clear();
         return;
     }
     super.eUnset(featureID);
@@ -152,27 +159,10 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
   {
     switch (featureID)
     {
-      case LustrePackage.TYPE__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case LustrePackage.AUTOMATON__STATES:
+        return states != null && !states.isEmpty();
     }
     return super.eIsSet(featureID);
   }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (name: ");
-    result.append(name);
-    result.append(')');
-    return result.toString();
-  }
-
-} //TypeImpl
+} //AutomatonImpl

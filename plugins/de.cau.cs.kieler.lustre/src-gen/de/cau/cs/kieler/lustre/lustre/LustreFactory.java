@@ -159,6 +159,33 @@ public interface LustreFactory extends EFactory
   Assertion createAssertion();
 
   /**
+   * Returns a new object of class '<em>Automaton</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Automaton</em>'.
+   * @generated
+   */
+  Automaton createAutomaton();
+
+  /**
+   * Returns a new object of class '<em>AState</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>AState</em>'.
+   * @generated
+   */
+  AState createAState();
+
+  /**
+   * Returns a new object of class '<em>ATransition</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>ATransition</em>'.
+   * @generated
+   */
+  ATransition createATransition();
+
+  /**
    * Returns a new object of class '<em>Left Part</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -274,6 +301,15 @@ public interface LustreFactory extends EFactory
    * @generated
    */
   Comparison createComparison();
+
+  /**
+   * Returns a new object of class '<em>Mod</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Mod</em>'.
+   * @generated
+   */
+  Mod createMod();
 
   /**
    * Returns a new object of class '<em>Plus</em>'.

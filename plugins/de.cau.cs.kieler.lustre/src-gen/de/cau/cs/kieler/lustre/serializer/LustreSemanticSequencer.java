@@ -4,9 +4,12 @@
 package de.cau.cs.kieler.lustre.serializer;
 
 import com.google.inject.Inject;
+import de.cau.cs.kieler.lustre.lustre.AState;
+import de.cau.cs.kieler.lustre.lustre.ATransition;
 import de.cau.cs.kieler.lustre.lustre.And;
 import de.cau.cs.kieler.lustre.lustre.Array_Type;
 import de.cau.cs.kieler.lustre.lustre.Arrow;
+import de.cau.cs.kieler.lustre.lustre.Automaton;
 import de.cau.cs.kieler.lustre.lustre.BoolConstant;
 import de.cau.cs.kieler.lustre.lustre.Comparison;
 import de.cau.cs.kieler.lustre.lustre.Constant_Declaration;
@@ -23,6 +26,7 @@ import de.cau.cs.kieler.lustre.lustre.Left;
 import de.cau.cs.kieler.lustre.lustre.Left_List;
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
 import de.cau.cs.kieler.lustre.lustre.Minus;
+import de.cau.cs.kieler.lustre.lustre.Mod;
 import de.cau.cs.kieler.lustre.lustre.Mul;
 import de.cau.cs.kieler.lustre.lustre.Node_Declaration;
 import de.cau.cs.kieler.lustre.lustre.Not;
@@ -66,6 +70,12 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 		Set<Parameter> parameters = context.getEnabledBooleanParameters();
 		if (epackage == LustrePackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
+			case LustrePackage.ASTATE:
+				sequence_AState(context, (AState) semanticObject); 
+				return; 
+			case LustrePackage.ATRANSITION:
+				sequence_ATransition(context, (ATransition) semanticObject); 
+				return; 
 			case LustrePackage.AND:
 				sequence_And(context, (And) semanticObject); 
 				return; 
@@ -74,6 +84,9 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case LustrePackage.ARROW:
 				sequence_Arrow(context, (Arrow) semanticObject); 
+				return; 
+			case LustrePackage.AUTOMATON:
+				sequence_Automaton(context, (Automaton) semanticObject); 
 				return; 
 			case LustrePackage.BOOL_CONSTANT:
 				sequence_ConstantExpression(context, (BoolConstant) semanticObject); 
@@ -127,6 +140,9 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case LustrePackage.MINUS:
 				sequence_PlusOrMinus(context, (Minus) semanticObject); 
+				return; 
+			case LustrePackage.MOD:
+				sequence_Mod(context, (Mod) semanticObject); 
 				return; 
 			case LustrePackage.MUL:
 				sequence_MulOrDiv(context, (Mul) semanticObject); 
@@ -186,6 +202,30 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     AState returns AState
+	 *
+	 * Constraint:
+	 *     (name=IDENT (equations+=Equation | assertions+=Assertion | automatons+=Automaton)* transitions+=ATransition+)
+	 */
+	protected void sequence_AState(ISerializationContext context, AState semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ATransition returns ATransition
+	 *
+	 * Constraint:
+	 *     (strong?='unless'? condition=Expression history?='continue'? nextState=[AState|IDENT])
+	 */
+	protected void sequence_ATransition(ISerializationContext context, ATransition semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Assertion returns And
 	 *     SelTrancheEnd returns And
 	 *     Right_Part returns And
@@ -202,6 +242,8 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Equality.Equality_1_0 returns And
 	 *     Comparison returns And
 	 *     Comparison.Comparison_1_0 returns And
+	 *     Mod returns And
+	 *     Mod.Mod_1_0 returns And
 	 *     PlusOrMinus returns And
 	 *     PlusOrMinus.Plus_1_0_0_0 returns And
 	 *     PlusOrMinus.Minus_1_0_1_0 returns And
@@ -257,6 +299,8 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Equality.Equality_1_0 returns Arrow
 	 *     Comparison returns Arrow
 	 *     Comparison.Comparison_1_0 returns Arrow
+	 *     Mod returns Arrow
+	 *     Mod.Mod_1_0 returns Arrow
 	 *     PlusOrMinus returns Arrow
 	 *     PlusOrMinus.Plus_1_0_0_0 returns Arrow
 	 *     PlusOrMinus.Minus_1_0_1_0 returns Arrow
@@ -269,6 +313,18 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     (subExpressions+=Arrow_Arrow_1_0 subExpressions+=Or+)
 	 */
 	protected void sequence_Arrow(ISerializationContext context, Arrow semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Automaton returns Automaton
+	 *
+	 * Constraint:
+	 *     (states+=AState states+=AState*)
+	 */
+	protected void sequence_Automaton(ISerializationContext context, Automaton semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -291,6 +347,8 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Equality.Equality_1_0 returns Comparison
 	 *     Comparison returns Comparison
 	 *     Comparison.Comparison_1_0 returns Comparison
+	 *     Mod returns Comparison
+	 *     Mod.Mod_1_0 returns Comparison
 	 *     PlusOrMinus returns Comparison
 	 *     PlusOrMinus.Plus_1_0_0_0 returns Comparison
 	 *     PlusOrMinus.Minus_1_0_1_0 returns Comparison
@@ -300,7 +358,7 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Primary returns Comparison
 	 *
 	 * Constraint:
-	 *     (left=Comparison_Comparison_1_0 (op='>=' | op='<=' | op='>' | op='<') right=PlusOrMinus)
+	 *     (left=Comparison_Comparison_1_0 (op='>=' | op='<=' | op='>' | op='<') right=Mod)
 	 */
 	protected void sequence_Comparison(ISerializationContext context, Comparison semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -325,6 +383,8 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Equality.Equality_1_0 returns BoolConstant
 	 *     Comparison returns BoolConstant
 	 *     Comparison.Comparison_1_0 returns BoolConstant
+	 *     Mod returns BoolConstant
+	 *     Mod.Mod_1_0 returns BoolConstant
 	 *     PlusOrMinus returns BoolConstant
 	 *     PlusOrMinus.Plus_1_0_0_0 returns BoolConstant
 	 *     PlusOrMinus.Minus_1_0_1_0 returns BoolConstant
@@ -367,6 +427,8 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Equality.Equality_1_0 returns FloatConstant
 	 *     Comparison returns FloatConstant
 	 *     Comparison.Comparison_1_0 returns FloatConstant
+	 *     Mod returns FloatConstant
+	 *     Mod.Mod_1_0 returns FloatConstant
 	 *     PlusOrMinus returns FloatConstant
 	 *     PlusOrMinus.Plus_1_0_0_0 returns FloatConstant
 	 *     PlusOrMinus.Minus_1_0_1_0 returns FloatConstant
@@ -409,6 +471,8 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Equality.Equality_1_0 returns IntConstant
 	 *     Comparison returns IntConstant
 	 *     Comparison.Comparison_1_0 returns IntConstant
+	 *     Mod returns IntConstant
+	 *     Mod.Mod_1_0 returns IntConstant
 	 *     PlusOrMinus returns IntConstant
 	 *     PlusOrMinus.Plus_1_0_0_0 returns IntConstant
 	 *     PlusOrMinus.Minus_1_0_1_0 returns IntConstant
@@ -464,6 +528,8 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Equality.Equality_1_0 returns Equality
 	 *     Comparison returns Equality
 	 *     Comparison.Comparison_1_0 returns Equality
+	 *     Mod returns Equality
+	 *     Mod.Mod_1_0 returns Equality
 	 *     PlusOrMinus returns Equality
 	 *     PlusOrMinus.Plus_1_0_0_0 returns Equality
 	 *     PlusOrMinus.Minus_1_0_1_0 returns Equality
@@ -519,6 +585,8 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Equality.Equality_1_0 returns IfThenElse
 	 *     Comparison returns IfThenElse
 	 *     Comparison.Comparison_1_0 returns IfThenElse
+	 *     Mod returns IfThenElse
+	 *     Mod.Mod_1_0 returns IfThenElse
 	 *     PlusOrMinus returns IfThenElse
 	 *     PlusOrMinus.Plus_1_0_0_0 returns IfThenElse
 	 *     PlusOrMinus.Minus_1_0_1_0 returns IfThenElse
@@ -565,6 +633,8 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Equality.Equality_1_0 returns Fby
 	 *     Comparison returns Fby
 	 *     Comparison.Comparison_1_0 returns Fby
+	 *     Mod returns Fby
+	 *     Mod.Mod_1_0 returns Fby
 	 *     PlusOrMinus returns Fby
 	 *     PlusOrMinus.Plus_1_0_0_0 returns Fby
 	 *     PlusOrMinus.Minus_1_0_1_0 returns Fby
@@ -641,6 +711,42 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     Assertion returns Mod
+	 *     SelTrancheEnd returns Mod
+	 *     Right_Part returns Mod
+	 *     Expression returns Mod
+	 *     Fby returns Mod
+	 *     Fby.Fby_1_0 returns Mod
+	 *     Arrow returns Mod
+	 *     Arrow.Arrow_1_0 returns Mod
+	 *     Or returns Mod
+	 *     Or.Or_1_0 returns Mod
+	 *     And returns Mod
+	 *     And.And_1_0 returns Mod
+	 *     Equality returns Mod
+	 *     Equality.Equality_1_0 returns Mod
+	 *     Comparison returns Mod
+	 *     Comparison.Comparison_1_0 returns Mod
+	 *     Mod returns Mod
+	 *     Mod.Mod_1_0 returns Mod
+	 *     PlusOrMinus returns Mod
+	 *     PlusOrMinus.Plus_1_0_0_0 returns Mod
+	 *     PlusOrMinus.Minus_1_0_1_0 returns Mod
+	 *     MulOrDiv returns Mod
+	 *     MulOrDiv.Mul_1_0_0_0 returns Mod
+	 *     MulOrDiv.Div_1_0_1_0 returns Mod
+	 *     Primary returns Mod
+	 *
+	 * Constraint:
+	 *     (subExpressions+=Mod_Mod_1_0 subExpressions+=PlusOrMinus)
+	 */
+	protected void sequence_Mod(ISerializationContext context, Mod semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Assertion returns Div
 	 *     SelTrancheEnd returns Div
 	 *     Right_Part returns Div
@@ -657,6 +763,8 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Equality.Equality_1_0 returns Div
 	 *     Comparison returns Div
 	 *     Comparison.Comparison_1_0 returns Div
+	 *     Mod returns Div
+	 *     Mod.Mod_1_0 returns Div
 	 *     PlusOrMinus returns Div
 	 *     PlusOrMinus.Plus_1_0_0_0 returns Div
 	 *     PlusOrMinus.Minus_1_0_1_0 returns Div
@@ -691,6 +799,8 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Equality.Equality_1_0 returns Mul
 	 *     Comparison returns Mul
 	 *     Comparison.Comparison_1_0 returns Mul
+	 *     Mod returns Mul
+	 *     Mod.Mod_1_0 returns Mul
 	 *     PlusOrMinus returns Mul
 	 *     PlusOrMinus.Plus_1_0_0_0 returns Mul
 	 *     PlusOrMinus.Minus_1_0_1_0 returns Mul
@@ -720,7 +830,7 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *         returned+=Variable_Declaration* 
 	 *         constants+=Local_Constant_Declaration? 
 	 *         (variables+=Local_Variable_Declaration? constants+=Local_Constant_Declaration?)* 
-	 *         (equations+=Equation | assertions+=Assertion)*
+	 *         (equations+=Equation | assertions+=Assertion | automatons+=Automaton)*
 	 *     )
 	 */
 	protected void sequence_Node_Declaration(ISerializationContext context, Node_Declaration semanticObject) {
@@ -746,6 +856,8 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Equality.Equality_1_0 returns Or
 	 *     Comparison returns Or
 	 *     Comparison.Comparison_1_0 returns Or
+	 *     Mod returns Or
+	 *     Mod.Mod_1_0 returns Or
 	 *     PlusOrMinus returns Or
 	 *     PlusOrMinus.Plus_1_0_0_0 returns Or
 	 *     PlusOrMinus.Minus_1_0_1_0 returns Or
@@ -835,6 +947,8 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Equality.Equality_1_0 returns Minus
 	 *     Comparison returns Minus
 	 *     Comparison.Comparison_1_0 returns Minus
+	 *     Mod returns Minus
+	 *     Mod.Mod_1_0 returns Minus
 	 *     PlusOrMinus returns Minus
 	 *     PlusOrMinus.Plus_1_0_0_0 returns Minus
 	 *     PlusOrMinus.Minus_1_0_1_0 returns Minus
@@ -869,6 +983,8 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Equality.Equality_1_0 returns Plus
 	 *     Comparison returns Plus
 	 *     Comparison.Comparison_1_0 returns Plus
+	 *     Mod returns Plus
+	 *     Mod.Mod_1_0 returns Plus
 	 *     PlusOrMinus returns Plus
 	 *     PlusOrMinus.Plus_1_0_0_0 returns Plus
 	 *     PlusOrMinus.Minus_1_0_1_0 returns Plus
@@ -903,6 +1019,8 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Equality.Equality_1_0 returns Current
 	 *     Comparison returns Current
 	 *     Comparison.Comparison_1_0 returns Current
+	 *     Mod returns Current
+	 *     Mod.Mod_1_0 returns Current
 	 *     PlusOrMinus returns Current
 	 *     PlusOrMinus.Plus_1_0_0_0 returns Current
 	 *     PlusOrMinus.Minus_1_0_1_0 returns Current
@@ -943,6 +1061,8 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Equality.Equality_1_0 returns Not
 	 *     Comparison returns Not
 	 *     Comparison.Comparison_1_0 returns Not
+	 *     Mod returns Not
+	 *     Mod.Mod_1_0 returns Not
 	 *     PlusOrMinus returns Not
 	 *     PlusOrMinus.Plus_1_0_0_0 returns Not
 	 *     PlusOrMinus.Minus_1_0_1_0 returns Not
@@ -983,6 +1103,8 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Equality.Equality_1_0 returns Pre
 	 *     Comparison returns Pre
 	 *     Comparison.Comparison_1_0 returns Pre
+	 *     Mod returns Pre
+	 *     Mod.Mod_1_0 returns Pre
 	 *     PlusOrMinus returns Pre
 	 *     PlusOrMinus.Plus_1_0_0_0 returns Pre
 	 *     PlusOrMinus.Minus_1_0_1_0 returns Pre
@@ -1023,6 +1145,8 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Equality.Equality_1_0 returns UMinus
 	 *     Comparison returns UMinus
 	 *     Comparison.Comparison_1_0 returns UMinus
+	 *     Mod returns UMinus
+	 *     Mod.Mod_1_0 returns UMinus
 	 *     PlusOrMinus returns UMinus
 	 *     PlusOrMinus.Plus_1_0_0_0 returns UMinus
 	 *     PlusOrMinus.Minus_1_0_1_0 returns UMinus
@@ -1050,7 +1174,7 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Program returns Program
 	 *
 	 * Constraint:
-	 *     packages+=Package_Declaration+
+	 *     nodes+=Node_Declaration+
 	 */
 	protected void sequence_Program(ISerializationContext context, Program semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1099,7 +1223,7 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Type returns Type
 	 *
 	 * Constraint:
-	 *     name=[Type_Declaration|IDENT]
+	 *     name=IDENT
 	 */
 	protected void sequence_Type(ISerializationContext context, Type semanticObject) {
 		if (errorAcceptor != null) {
@@ -1107,7 +1231,7 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.TYPE__NAME));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getTypeAccess().getNameType_DeclarationIDENTTerminalRuleCall_0_1(), semanticObject.getName());
+		feeder.accept(grammarAccess.getTypeAccess().getNameIDENTTerminalRuleCall_0(), semanticObject.getName());
 		feeder.finish();
 	}
 	
@@ -1130,6 +1254,8 @@ public class LustreSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Equality.Equality_1_0 returns VariableReference
 	 *     Comparison returns VariableReference
 	 *     Comparison.Comparison_1_0 returns VariableReference
+	 *     Mod returns VariableReference
+	 *     Mod.Mod_1_0 returns VariableReference
 	 *     PlusOrMinus returns VariableReference
 	 *     PlusOrMinus.Plus_1_0_0_0 returns VariableReference
 	 *     PlusOrMinus.Minus_1_0_1_0 returns VariableReference

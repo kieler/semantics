@@ -75,6 +75,7 @@ public class LustreSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     assertions+=Assertion 'tel' (ambiguity) (rule end)
+	 *     automatons+=Automaton 'tel' (ambiguity) (rule end)
 	 *     constants+=Local_Constant_Declaration 'let' 'tel' (ambiguity) (rule end)
 	 *     equations+=Equation 'tel' (ambiguity) (rule end)
 	 *     returned+=Variable_Declaration ')' ';' 'let' 'tel' (ambiguity) (rule end)
@@ -105,6 +106,7 @@ public class LustreSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     (rule start) '..' (ambiguity) {Equality.left=}
 	 *     (rule start) '..' (ambiguity) {Fby.subExpressions+=}
 	 *     (rule start) '..' (ambiguity) {Minus.subExpressions+=}
+	 *     (rule start) '..' (ambiguity) {Mod.subExpressions+=}
 	 *     (rule start) '..' (ambiguity) {Mul.subExpressions+=}
 	 *     (rule start) '..' (ambiguity) {Or.subExpressions+=}
 	 *     (rule start) '..' (ambiguity) {Plus.subExpressions+=}
@@ -124,6 +126,7 @@ public class LustreSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     (rule start) 'assert' (ambiguity) {Equality.left=}
 	 *     (rule start) 'assert' (ambiguity) {Fby.subExpressions+=}
 	 *     (rule start) 'assert' (ambiguity) {Minus.subExpressions+=}
+	 *     (rule start) 'assert' (ambiguity) {Mod.subExpressions+=}
 	 *     (rule start) 'assert' (ambiguity) {Mul.subExpressions+=}
 	 *     (rule start) 'assert' (ambiguity) {Or.subExpressions+=}
 	 *     (rule start) 'assert' (ambiguity) {Plus.subExpressions+=}
@@ -143,6 +146,7 @@ public class LustreSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     (rule start) (ambiguity) {Equality.left=}
 	 *     (rule start) (ambiguity) {Fby.subExpressions+=}
 	 *     (rule start) (ambiguity) {Minus.subExpressions+=}
+	 *     (rule start) (ambiguity) {Mod.subExpressions+=}
 	 *     (rule start) (ambiguity) {Mul.subExpressions+=}
 	 *     (rule start) (ambiguity) {Or.subExpressions+=}
 	 *     (rule start) (ambiguity) {Plus.subExpressions+=}
@@ -164,6 +168,7 @@ public class LustreSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     (rule start) (ambiguity) {Equality.left=}
 	 *     (rule start) (ambiguity) {Fby.subExpressions+=}
 	 *     (rule start) (ambiguity) {Minus.subExpressions+=}
+	 *     (rule start) (ambiguity) {Mod.subExpressions+=}
 	 *     (rule start) (ambiguity) {Mul.subExpressions+=}
 	 *     (rule start) (ambiguity) {Or.subExpressions+=}
 	 *     (rule start) (ambiguity) {Plus.subExpressions+=}

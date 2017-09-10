@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.Program#getPackages <em>Packages</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.Program#getNodes <em>Nodes</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getProgram()
@@ -26,19 +26,19 @@ import org.eclipse.emf.ecore.EObject;
 public interface Program extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Packages</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.lustre.lustre.Package_Declaration}.
+   * Returns the value of the '<em><b>Nodes</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.lustre.lustre.Node_Declaration}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Packages</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Nodes</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Packages</em>' containment reference list.
-   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getProgram_Packages()
+   * @return the value of the '<em>Nodes</em>' containment reference list.
+   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getProgram_Nodes()
    * @model containment="true"
    * @generated
    */
-  EList<Package_Declaration> getPackages();
+  EList<Node_Declaration> getNodes();
 
 } // Program

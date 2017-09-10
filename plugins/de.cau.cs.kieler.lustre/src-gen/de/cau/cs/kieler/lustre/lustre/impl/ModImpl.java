@@ -3,9 +3,9 @@
  */
 package de.cau.cs.kieler.lustre.lustre.impl;
 
+import de.cau.cs.kieler.lustre.lustre.Expression;
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
-import de.cau.cs.kieler.lustre.lustre.Node_Declaration;
-import de.cau.cs.kieler.lustre.lustre.Program;
+import de.cau.cs.kieler.lustre.lustre.Mod;
 
 import java.util.Collection;
 
@@ -16,42 +16,40 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Program</b></em>'.
+ * An implementation of the model object '<em><b>Mod</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.ProgramImpl#getNodes <em>Nodes</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.ModImpl#getSubExpressions <em>Sub Expressions</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
+public class ModImpl extends ExpressionImpl implements Mod
 {
   /**
-   * The cached value of the '{@link #getNodes() <em>Nodes</em>}' containment reference list.
+   * The cached value of the '{@link #getSubExpressions() <em>Sub Expressions</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getNodes()
+   * @see #getSubExpressions()
    * @generated
    * @ordered
    */
-  protected EList<Node_Declaration> nodes;
+  protected EList<Expression> subExpressions;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ProgramImpl()
+  protected ModImpl()
   {
     super();
   }
@@ -64,7 +62,7 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   @Override
   protected EClass eStaticClass()
   {
-    return LustrePackage.Literals.PROGRAM;
+    return LustrePackage.Literals.MOD;
   }
 
   /**
@@ -72,13 +70,13 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Node_Declaration> getNodes()
+  public EList<Expression> getSubExpressions()
   {
-    if (nodes == null)
+    if (subExpressions == null)
     {
-      nodes = new EObjectContainmentEList<Node_Declaration>(Node_Declaration.class, this, LustrePackage.PROGRAM__NODES);
+      subExpressions = new EObjectContainmentEList<Expression>(Expression.class, this, LustrePackage.MOD__SUB_EXPRESSIONS);
     }
-    return nodes;
+    return subExpressions;
   }
 
   /**
@@ -91,8 +89,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     switch (featureID)
     {
-      case LustrePackage.PROGRAM__NODES:
-        return ((InternalEList<?>)getNodes()).basicRemove(otherEnd, msgs);
+      case LustrePackage.MOD__SUB_EXPRESSIONS:
+        return ((InternalEList<?>)getSubExpressions()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -107,8 +105,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     switch (featureID)
     {
-      case LustrePackage.PROGRAM__NODES:
-        return getNodes();
+      case LustrePackage.MOD__SUB_EXPRESSIONS:
+        return getSubExpressions();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -124,9 +122,9 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     switch (featureID)
     {
-      case LustrePackage.PROGRAM__NODES:
-        getNodes().clear();
-        getNodes().addAll((Collection<? extends Node_Declaration>)newValue);
+      case LustrePackage.MOD__SUB_EXPRESSIONS:
+        getSubExpressions().clear();
+        getSubExpressions().addAll((Collection<? extends Expression>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -142,8 +140,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     switch (featureID)
     {
-      case LustrePackage.PROGRAM__NODES:
-        getNodes().clear();
+      case LustrePackage.MOD__SUB_EXPRESSIONS:
+        getSubExpressions().clear();
         return;
     }
     super.eUnset(featureID);
@@ -159,10 +157,10 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     switch (featureID)
     {
-      case LustrePackage.PROGRAM__NODES:
-        return nodes != null && !nodes.isEmpty();
+      case LustrePackage.MOD__SUB_EXPRESSIONS:
+        return subExpressions != null && !subExpressions.isEmpty();
     }
     return super.eIsSet(featureID);
   }
 
-} //ProgramImpl
+} //ModImpl

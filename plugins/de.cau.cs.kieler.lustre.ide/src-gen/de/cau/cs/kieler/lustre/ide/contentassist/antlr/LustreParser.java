@@ -42,6 +42,9 @@ public class LustreParser extends AbstractContentAssistParser {
 					put(grammarAccess.getLocal_Constant_DeclarationAccess().getAlternatives(), "rule__Local_Constant_Declaration__Alternatives");
 					put(grammarAccess.getNode_DeclarationAccess().getAlternatives_11(), "rule__Node_Declaration__Alternatives_11");
 					put(grammarAccess.getNode_DeclarationAccess().getAlternatives_13(), "rule__Node_Declaration__Alternatives_13");
+					put(grammarAccess.getAStateAccess().getAlternatives_2(), "rule__AState__Alternatives_2");
+					put(grammarAccess.getATransitionAccess().getAlternatives_0(), "rule__ATransition__Alternatives_0");
+					put(grammarAccess.getATransitionAccess().getAlternatives_2(), "rule__ATransition__Alternatives_2");
 					put(grammarAccess.getLeft_PartAccess().getAlternatives(), "rule__Left_Part__Alternatives");
 					put(grammarAccess.getSelectorAccess().getAlternatives(), "rule__Selector__Alternatives");
 					put(grammarAccess.getExpressionAccess().getAlternatives(), "rule__Expression__Alternatives");
@@ -80,6 +83,10 @@ public class LustreParser extends AbstractContentAssistParser {
 					put(grammarAccess.getNode_DeclarationAccess().getGroup_8(), "rule__Node_Declaration__Group_8__0");
 					put(grammarAccess.getEquationAccess().getGroup(), "rule__Equation__Group__0");
 					put(grammarAccess.getAssertionAccess().getGroup(), "rule__Assertion__Group__0");
+					put(grammarAccess.getAutomatonAccess().getGroup(), "rule__Automaton__Group__0");
+					put(grammarAccess.getAutomatonAccess().getGroup_2(), "rule__Automaton__Group_2__0");
+					put(grammarAccess.getAStateAccess().getGroup(), "rule__AState__Group__0");
+					put(grammarAccess.getATransitionAccess().getGroup(), "rule__ATransition__Group__0");
 					put(grammarAccess.getLeft_PartAccess().getGroup_0(), "rule__Left_Part__Group_0__0");
 					put(grammarAccess.getLeft_ListAccess().getGroup(), "rule__Left_List__Group__0");
 					put(grammarAccess.getLeft_ListAccess().getGroup_1(), "rule__Left_List__Group_1__0");
@@ -104,6 +111,8 @@ public class LustreParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEqualityAccess().getGroup_1(), "rule__Equality__Group_1__0");
 					put(grammarAccess.getComparisonAccess().getGroup(), "rule__Comparison__Group__0");
 					put(grammarAccess.getComparisonAccess().getGroup_1(), "rule__Comparison__Group_1__0");
+					put(grammarAccess.getModAccess().getGroup(), "rule__Mod__Group__0");
+					put(grammarAccess.getModAccess().getGroup_1(), "rule__Mod__Group_1__0");
 					put(grammarAccess.getPlusOrMinusAccess().getGroup(), "rule__PlusOrMinus__Group__0");
 					put(grammarAccess.getPlusOrMinusAccess().getGroup_1(), "rule__PlusOrMinus__Group_1__0");
 					put(grammarAccess.getPlusOrMinusAccess().getGroup_1_0_0(), "rule__PlusOrMinus__Group_1_0_0__0");
@@ -121,7 +130,7 @@ public class LustreParser extends AbstractContentAssistParser {
 					put(grammarAccess.getConstantExpressionAccess().getGroup_0(), "rule__ConstantExpression__Group_0__0");
 					put(grammarAccess.getConstantExpressionAccess().getGroup_1(), "rule__ConstantExpression__Group_1__0");
 					put(grammarAccess.getConstantExpressionAccess().getGroup_2(), "rule__ConstantExpression__Group_2__0");
-					put(grammarAccess.getProgramAccess().getPackagesAssignment(), "rule__Program__PackagesAssignment");
+					put(grammarAccess.getProgramAccess().getNodesAssignment(), "rule__Program__NodesAssignment");
 					put(grammarAccess.getPackage_DeclarationAccess().getNameAssignment_1(), "rule__Package_Declaration__NameAssignment_1");
 					put(grammarAccess.getPackage_DeclarationAccess().getUsesAssignment_2_1(), "rule__Package_Declaration__UsesAssignment_2_1");
 					put(grammarAccess.getPackage_DeclarationAccess().getUsesAssignment_2_2_1(), "rule__Package_Declaration__UsesAssignment_2_2_1");
@@ -170,8 +179,20 @@ public class LustreParser extends AbstractContentAssistParser {
 					put(grammarAccess.getNode_DeclarationAccess().getVariablesAssignment_11_1(), "rule__Node_Declaration__VariablesAssignment_11_1");
 					put(grammarAccess.getNode_DeclarationAccess().getEquationsAssignment_13_0(), "rule__Node_Declaration__EquationsAssignment_13_0");
 					put(grammarAccess.getNode_DeclarationAccess().getAssertionsAssignment_13_1(), "rule__Node_Declaration__AssertionsAssignment_13_1");
+					put(grammarAccess.getNode_DeclarationAccess().getAutomatonsAssignment_13_2(), "rule__Node_Declaration__AutomatonsAssignment_13_2");
 					put(grammarAccess.getEquationAccess().getLeftAssignment_0(), "rule__Equation__LeftAssignment_0");
 					put(grammarAccess.getEquationAccess().getRightAssignment_2(), "rule__Equation__RightAssignment_2");
+					put(grammarAccess.getAutomatonAccess().getStatesAssignment_1(), "rule__Automaton__StatesAssignment_1");
+					put(grammarAccess.getAutomatonAccess().getStatesAssignment_2_1(), "rule__Automaton__StatesAssignment_2_1");
+					put(grammarAccess.getAStateAccess().getNameAssignment_0(), "rule__AState__NameAssignment_0");
+					put(grammarAccess.getAStateAccess().getEquationsAssignment_2_0(), "rule__AState__EquationsAssignment_2_0");
+					put(grammarAccess.getAStateAccess().getAssertionsAssignment_2_1(), "rule__AState__AssertionsAssignment_2_1");
+					put(grammarAccess.getAStateAccess().getAutomatonsAssignment_2_2(), "rule__AState__AutomatonsAssignment_2_2");
+					put(grammarAccess.getAStateAccess().getTransitionsAssignment_3(), "rule__AState__TransitionsAssignment_3");
+					put(grammarAccess.getATransitionAccess().getStrongAssignment_0_1(), "rule__ATransition__StrongAssignment_0_1");
+					put(grammarAccess.getATransitionAccess().getConditionAssignment_1(), "rule__ATransition__ConditionAssignment_1");
+					put(grammarAccess.getATransitionAccess().getHistoryAssignment_2_1(), "rule__ATransition__HistoryAssignment_2_1");
+					put(grammarAccess.getATransitionAccess().getNextStateAssignment_3(), "rule__ATransition__NextStateAssignment_3");
 					put(grammarAccess.getLeft_ListAccess().getIdAssignment_0(), "rule__Left_List__IdAssignment_0");
 					put(grammarAccess.getLeft_ListAccess().getIdAssignment_1_1(), "rule__Left_List__IdAssignment_1_1");
 					put(grammarAccess.getLeftAccess().getNameAssignment_0(), "rule__Left__NameAssignment_0");
@@ -190,6 +211,7 @@ public class LustreParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEqualityAccess().getRightAssignment_1_2(), "rule__Equality__RightAssignment_1_2");
 					put(grammarAccess.getComparisonAccess().getOpAssignment_1_1(), "rule__Comparison__OpAssignment_1_1");
 					put(grammarAccess.getComparisonAccess().getRightAssignment_1_2(), "rule__Comparison__RightAssignment_1_2");
+					put(grammarAccess.getModAccess().getSubExpressionsAssignment_1_2(), "rule__Mod__SubExpressionsAssignment_1_2");
 					put(grammarAccess.getPlusOrMinusAccess().getSubExpressionsAssignment_1_1(), "rule__PlusOrMinus__SubExpressionsAssignment_1_1");
 					put(grammarAccess.getMulOrDivAccess().getSubExpressionsAssignment_1_1(), "rule__MulOrDiv__SubExpressionsAssignment_1_1");
 					put(grammarAccess.getPrimaryAccess().getExpressionAssignment_1_2(), "rule__Primary__ExpressionAssignment_1_2");
