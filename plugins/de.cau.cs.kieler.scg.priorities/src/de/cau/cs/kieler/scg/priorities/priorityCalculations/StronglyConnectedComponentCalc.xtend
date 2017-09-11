@@ -49,7 +49,7 @@ class StronglyConnectedComponentCalc {
     private var count = 0
     private var visited = <Node, Boolean>newHashMap
     private var stack = new Stack<Node>
-    private var dfs = <Node, Integer>newHashMap
+    private var index = <Node, Integer>newHashMap
     private var lowlink = <Node, Integer>newHashMap
     private var sccList = <LinkedList<Node>>newLinkedList
     private var isContained = <Node, Boolean>newHashMap
@@ -69,7 +69,7 @@ class StronglyConnectedComponentCalc {
 
         // Clear everything to enable a second run
         lowlink.clear
-        dfs.clear
+        index.clear
         sccList.clear
         stack.clear
         visited.clear
@@ -103,7 +103,7 @@ class StronglyConnectedComponentCalc {
      */
     private def void tarjan(Node currentNode) {
 
-        dfs.put(currentNode, count)
+        index.put(currentNode, count)
         lowlink.put(currentNode, count)
         count++
         stack.push(currentNode)
@@ -117,7 +117,7 @@ class StronglyConnectedComponentCalc {
                     tarjan(nextNode)
                     lowlink.replace(currentNode, Math.min(lowlink.get(currentNode), lowlink.get(nextNode)))
                 } // Next node has already been visited, hence in the current Strongly Connected Component
-                else if (dfs.get(nextNode) < dfs.get(currentNode)) {
+                else if (index.get(nextNode) < index.get(currentNode)) {
                     if (stack.contains(nextNode)) {
                         lowlink.replace(currentNode, Math.min(lowlink.get(currentNode), lowlink.get(nextNode)))
                     }
@@ -126,7 +126,7 @@ class StronglyConnectedComponentCalc {
         }
 
         // Create the Strongly Connected Component
-        if (dfs.get(currentNode) == lowlink.get(currentNode)) {
+        if (index.get(currentNode) == lowlink.get(currentNode)) {
             var schizophrenic = false
             var scc = <Node>newLinkedList
             var w = stack.peek;

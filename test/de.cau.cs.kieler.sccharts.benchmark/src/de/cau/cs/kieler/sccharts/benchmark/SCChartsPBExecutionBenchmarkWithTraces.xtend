@@ -38,6 +38,8 @@ import org.bson.Document
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.runtime.Path
 import java.util.List
+import de.cau.cs.kieler.kico.CompilationResult
+import de.cau.cs.kieler.scg.SCGraph
 
 /**
  * @author lpe
@@ -141,6 +143,8 @@ class SCChartsPBExecutionBenchmarkWithTraces extends AbstractXTextModelBenchmark
         var maxJitter = 0
         var avgJitter = 0
         var List<Integer> ys2
+        var CompilationResult result = null
+        var scgNodes = 0
         try {
             var tmpProject = SimulationUtil.getTemporarySimulationProject
             tmpProject?.delete(true, true, null)
@@ -222,6 +226,19 @@ class SCChartsPBExecutionBenchmarkWithTraces extends AbstractXTextModelBenchmark
                 avgJitter += Math.abs(averageTickDuration - t)/tickDurations.size
             }
             
+            
+            
+            // Compile with KiCo
+            val compileChain = transformations.join("!T_SIMULATIONVISUALIZATION, !T_ABORTWTO, T_", ", T_", "")[it]
+            val context = new KielerCompilerContext(compileChain, model)
+            context.advancedSelect = false // Compilation has fixed chain (respecting dependencies)
+            context.inplace = true // Save intermediate results
+            
+            result = KielerCompiler.compile(context)
+            
+            val scg = result.transformationIntermediateResults.findFirst[it.id == "sccharts.scg"].result as SCGraph
+            scgNodes = scg.nodes.size
+            
         } catch (Exception e) {
             couldNotSimulate = true
             e.printStackTrace
@@ -233,6 +250,7 @@ class SCChartsPBExecutionBenchmarkWithTraces extends AbstractXTextModelBenchmark
         val data = new Document
         
         if(!couldNotSimulate) {
+            data.put("scgNodes", 2)
             data.put("executionTime", nBestTickTimes)
             data.put("times", ys2)
             data.put("averageExecutionTime", averageTickDuration)

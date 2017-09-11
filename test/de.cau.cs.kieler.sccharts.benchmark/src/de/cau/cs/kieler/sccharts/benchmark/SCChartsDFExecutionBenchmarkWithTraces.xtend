@@ -14,29 +14,31 @@ package de.cau.cs.kieler.sccharts.benchmark
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.benchmark.common.AbstractXTextModelBenchmark
+import de.cau.cs.kieler.kico.CompilationResult
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Fork
+import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.simulation.SimulationUtil
 import de.cau.cs.kieler.simulation.core.SimulationEvent
+import de.cau.cs.kieler.simulation.core.SimulationEventType
 import de.cau.cs.kieler.simulation.core.SimulationListener
+import de.cau.cs.kieler.simulation.core.SimulationManager
+import de.cau.cs.kieler.simulation.core.StepAction
+import de.cau.cs.kieler.simulation.handlers.EsoUtil
+import de.cau.cs.kieler.simulation.handlers.ExecutableSimulator
+import de.cau.cs.kieler.simulation.handlers.Trace
+import de.cau.cs.kieler.simulation.handlers.TraceFinishedEvent
+import de.cau.cs.kieler.simulation.handlers.TraceMismatchEvent
 import de.cau.cs.kieler.test.common.repository.TestModelData
+import java.util.List
 import org.bson.Document
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.runtime.Path
-import de.cau.cs.kieler.simulation.handlers.Trace
-import de.cau.cs.kieler.simulation.handlers.EsoUtil
-import de.cau.cs.kieler.simulation.core.SimulationManager
-import de.cau.cs.kieler.simulation.core.StepAction
-import de.cau.cs.kieler.simulation.handlers.ExecutableSimulator
-import de.cau.cs.kieler.simulation.handlers.TraceMismatchEvent
-import de.cau.cs.kieler.simulation.core.SimulationEventType
-import de.cau.cs.kieler.simulation.handlers.TraceFinishedEvent
-import java.util.List
 
 /**
  * @author lpe
@@ -146,6 +148,8 @@ class SCChartsDFExecutionBenchmarkWithTraces extends AbstractXTextModelBenchmark
         var maxJitter = 0
         var avgJitter = 0
         var List<Integer> ys2
+        var CompilationResult result = null
+        var scgNodes = 0
         
         try {
             var tmpProject = SimulationUtil.getTemporarySimulationProject
@@ -227,6 +231,18 @@ class SCChartsDFExecutionBenchmarkWithTraces extends AbstractXTextModelBenchmark
             for(t : tickDurations) {
                 avgJitter += Math.abs(averageTickDuration - t)/tickDurations.size
             }
+            
+            
+            // Compile with KiCo
+            val compileChain = transformations.join("!T_SIMULATIONVISUALIZATION, !T_ABORTWTO, T_", ", T_", "")[it]
+            val context = new KielerCompilerContext(compileChain, model)
+            context.advancedSelect = false // Compilation has fixed chain (respecting dependencies)
+            context.inplace = true // Save intermediate results
+            
+            result = KielerCompiler.compile(context)
+            
+            val scg = result.transformationIntermediateResults.findFirst[it.id == "sccharts.scg"].result as SCGraph
+            scgNodes = scg.nodes.size
             
         } catch (Exception e) {
             couldNotSimulate = true
