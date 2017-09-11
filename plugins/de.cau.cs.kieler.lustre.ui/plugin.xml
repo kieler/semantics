@@ -411,8 +411,9 @@
        point="de.cau.cs.kieler.kico.ui.transformation">
     <editor
           editor="de.cau.cs.kieler.lustre.Lustre"
-          features="lustre.basic, REFERENCE"
-          label="Lustre"
+          features="lustre.basic, HISTORY, WEAKSUSPEND,DEFERRED,STATIC,SIGNAL,COUNTDELAY,PRE,SUSPEND,COMPLEXFINALSTATE,ABORT, T_ABORT, T_ABORTWTO ,DURING,INITIALIZATION,ENTRY,EXIT,CONNECTOR,SCADEQUARTZESTEREL, STATECHARTS, SYNCCHARTS, EXTENDED, CORE, TRIGGEREFFECT, SURFACEDEPTH, NORMALIZED, MAP, FOR, REFERENCE, CONST, EXPANSION, scg, scg.basic, scg.dependency, scg.basicblock, scg.guard, scg.scheduling, scg.sequentialize, circuit, VHDL, circuit.basic, scg.seqssa, codegeneration, s, s.target, s.c, s.java, s.arduino"
+          preferred="ABORT, INITIALIZATION, scg.basicblock.sc, s.c, sccharts.scg, NOSIMULATIONVISUALIZATION, scg.guards, scg.scheduling"
+          label="Lustre Netlist"
           priority="100">
     </editor>
  </extension>
