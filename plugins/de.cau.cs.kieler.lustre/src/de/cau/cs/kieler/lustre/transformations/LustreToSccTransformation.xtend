@@ -93,8 +93,12 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
     }
 
     private Hashtable<String, ValuedObject> VO = new Hashtable
+    private var regionNameIdx = 0;
+    private var stateNameIdx = 0;
 
     def State transform(Program p, KielerCompilerContext context) {
+        regionNameIdx = 0
+        stateNameIdx = 0
         // transformPackage_Declaration(p.packages.get(0))
         transformNode(p.nodes.get(0))
     }
@@ -106,7 +110,7 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
 
             scc.createControlflowRegion => [
                 id = "_main"
-                label = id
+                label = ""
 
                 root.regions += it
             ]
@@ -144,15 +148,15 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
                 ]
             else {
                 val region = scc.createControlflowRegion => [
-                    id = ""
-                    label = id
+                    id = "_r"+regionNameIdx++
+                    label = ""
 
                     state.regions += it
                 ]
                 
                 val initialState = scc.createState => [
-                    id = ""
-                    label = id
+                    id = "_s"+stateNameIdx++
+                    label = ""
                     initial = true
                 ]
 
@@ -168,8 +172,8 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
         }
         for (Automaton a : node.automatons) {
              val region = scc.createControlflowRegion => [
-                    id = ""
-                    label = id
+                    id = "_r"+regionNameIdx++
+                    label = ""
                     state.regions += it
                 ]
                 
@@ -261,13 +265,13 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
                 purePart.subExpressions += e.toKexpression
             } else if (e instanceof Arrow) {
                 val newRegion = scc.createControlflowRegion => [
-                    id = ""
-                    label = id
+                    id = "_r"+regionNameIdx++
+                    label = ""
                     superState.regions += it
                 ]
                 val newState = scc.createState => [
-                    id = ""
-                    label = id
+                    id = "_s"+stateNameIdx++
+                    label = ""
                     initial = true
                     newRegion.states += it
                 ]
@@ -280,13 +284,13 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
             
             } else {
                 val newRegion = scc.createControlflowRegion => [
-                    id = ""
-                    label = id
+                    id = "_r"+regionNameIdx++
+                    label = ""
                     previousState.regions += it
                 ]
                 val newState = scc.createState => [
-                    id = ""
-                    label = id
+                    id = "_s"+stateNameIdx++
+                    label = ""
                     initial = true
                     newRegion.states += it
                 ]
@@ -299,8 +303,8 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
             }
         }
         val endState = scc.createState => [ s |
-            s.id = ""
-            s.label = s.id
+            s.id = "_s"+stateNameIdx++
+            s.label = ""
             region.states += s
 
             scc.createTransition => [
@@ -328,8 +332,8 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
 
         if (expression.ifexpr.isPureExpression) {
             val endState = scc.createState => [
-                id = ""
-                label = id
+                id = "_s"+stateNameIdx++
+                label = ""
                 region.states += it
             ]
 
@@ -344,13 +348,13 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
             val ifState = previousState
 
             val ifRegion = scc.createControlflowRegion => [
-                id = ""
-                label = id
+                id = "_r"+regionNameIdx++
+                label = ""
                 ifState.regions += it
             ]
             val ifStartingState = scc.createState => [
-                id = ""
-                label = id
+                id = "_s"+stateNameIdx++
+                label = ""
                 initial = true
                 ifRegion.states += it
             ]
@@ -363,18 +367,18 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
             expression.ifexpr.transformEquation(currentVar + "_if", superState, ifStartingState, ifRegion)
 
             val thenState = scc.createState => [
-                id = ""
-                label = id
+                id = "_s"+stateNameIdx++
+                label = ""
             ]
 
             val thenRegion = scc.createControlflowRegion => [
-                id = ""
-                label = id
+                id = "_r"+regionNameIdx++
+                label = ""
                 thenState.regions += it
             ]
             val thenStartingState = scc.createState => [
-                id = ""
-                label = id
+                id = "_s"+stateNameIdx++
+                label = ""
                 initial = true
                 thenRegion.states += it
             ]
@@ -383,17 +387,17 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
             region.states += thenState
 
             val elseState = scc.createState => [
-                id = ""
-                label = id
+                id = "_s"+stateNameIdx++
+                label = ""
             ]
             val elseRegion = scc.createControlflowRegion => [
-                id = ""
-                label = id
+                id = "_r"+regionNameIdx++
+                label = ""
                 elseState.regions += it
             ]
             val elseStartingState = scc.createState => [
-                id = ""
-                label = id
+                id = "_s"+stateNameIdx++
+                label = ""
                 initial = true
                 elseRegion.states += it
             ]
@@ -429,8 +433,8 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
         for (Expression subE : expression.subExpressions) {
             if (subE != expression.subExpressions.last) {
                 val nextState = scc.createState => [
+                    id = "_s"+stateNameIdx++
                     label = ""
-                    id = label
                     region.states += it
                 ]
                 assignExpression(pState, nextState, currentVar, subE, (subE == expression.subExpressions.head), null)
@@ -449,7 +453,7 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
         for (AState astate : automaton.states) {
             val state = scc.createState => [
                 label = astate.name
-                id = ""
+                id = "_s"+stateNameIdx++
                 stateList.put(astate, it)
                 region.states += it
             ]
@@ -461,15 +465,15 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
                     ]
                 else {
                     val r = scc.createControlflowRegion => [
-                        id = ""
-                        label = id
+                        id = "_r"+regionNameIdx++
+                        label = ""
     
                         state.regions += it
                     ]
                     
                     val initialState = scc.createState => [
-                        id = ""
-                        label = id
+                        id = "_s"+stateNameIdx++
+                        label = ""
                         initial = true
                     ]
     
@@ -487,8 +491,8 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
             
             for (Automaton a : astate.automatons) {
                     val r = scc.createControlflowRegion => [
-                        id = ""
-                        label = id
+                        id = "_r"+regionNameIdx++
+                        label = ""
                         state.regions += it
                     ]
                     
@@ -519,8 +523,8 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
             ]
         } else {
             val rightState = scc.createState => [
-                id = ""
-                label = id
+                id = "_s"+stateNameIdx++
+                label = ""
                 startState.parentRegion.states += it
             ]
             endStates.addAll(expression.transformEquation(currentVar, startState.parentRegion.parentState, rightState,
