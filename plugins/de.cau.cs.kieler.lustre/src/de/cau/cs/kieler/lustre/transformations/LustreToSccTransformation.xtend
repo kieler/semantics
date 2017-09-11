@@ -454,6 +454,7 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
             val state = scc.createState => [
                 label = astate.name
                 id = "_s"+stateNameIdx++
+                initial = astate == automaton.states.head
                 stateList.put(astate, it)
                 region.states += it
             ]
