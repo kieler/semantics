@@ -210,7 +210,7 @@ litigation.
    </license>
 
    <url>
-      <update label="KIELER Release 0.12.2" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release-semantics-0.12.2/"/>
+      <update label="KIELER Release 0.12.2-lustre" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release-semantics-0.12.2-lustre/"/>
    </url>
 
    <requires>
