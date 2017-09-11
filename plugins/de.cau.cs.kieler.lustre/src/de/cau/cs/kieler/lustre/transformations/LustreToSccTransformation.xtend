@@ -149,7 +149,7 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
 
                     state.regions += it
                 ]
-                println("1")
+                
                 val initialState = scc.createState => [
                     id = ""
                     label = id
@@ -259,6 +259,25 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
         for (Expression e : subE) {
             if (e.isPureExpression) {
                 purePart.subExpressions += e.toKexpression
+            } else if (e instanceof Arrow) {
+                val newRegion = scc.createControlflowRegion => [
+                    id = ""
+                    label = id
+                    superState.regions += it
+                ]
+                val newState = scc.createState => [
+                    id = ""
+                    label = id
+                    initial = true
+                    newRegion.states += it
+                ]
+                
+                val newVarName = "__" + currentVar + "_" + subE.indexOf(e)
+                superState.addDeclaration(newVarName, VO.get(currentVar).declaration.type.toString, IOType.LOCAL, false)
+                
+                e.transformArrowExpression(newVarName, superState, newState, newRegion)
+                purePart.subExpressions += VO.get(newVarName).reference
+            
             } else {
                 val newRegion = scc.createControlflowRegion => [
                     id = ""
@@ -288,7 +307,11 @@ class LustreToSccTransformation extends AbstractExpansionTransformation {
                 targetState = s
                 previousState.outgoingTransitions += it
                 immediate = true
-                type = TransitionType::TERMINATION
+                if (previousState.regions.isEmpty) 
+                    immediate = true  
+                else
+                    type = TransitionType::TERMINATION
+                    
                 effects += createAssignment(VO.get(currentVar), purePart)
             ]
         ]
