@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.kico.feature">
+      <featureClass
+            class="de.cau.cs.kieler.lustre.features.Lustre">
+      </featureClass>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.transformation">
+      <expansionTransformationClass
+            class="de.cau.cs.kieler.lustre.transformations.LustreToSccTransformation">
+      </expansionTransformationClass>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecore.generated_package">
+      <package
+            class="de.cau.cs.kieler.lustre.lustre.LustrePackage"
+            genModel="de/cau/cs/kieler/lustre/Lustre.genmodel"
+            uri="http://www.cau.de/cs/kieler/lustre/Lustre">
+      </package>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.extension">
+      <ExtensionInformation
+            ePackageName="lustre"
+            editor_id="de.cau.cs.kieler.lustre.Lustre"
+            extensionName="lus"
+            isXMI="false">
+      </ExtensionInformation>
+   </extension>
+
+</plugin>
