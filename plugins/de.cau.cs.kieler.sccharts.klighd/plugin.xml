@@ -44,10 +44,6 @@
             class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.actions.ExpandAllRegionsAction"
             id="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.actions.ExpandAllRegionsAction">
       </action>
-      <action
-            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.InducedDataflowHook"
-            id="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.InducedDataflowHook">
-      </action>
    </extension>
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
