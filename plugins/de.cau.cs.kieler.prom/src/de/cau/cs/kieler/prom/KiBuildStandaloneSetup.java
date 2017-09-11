@@ -3,14 +3,16 @@
  */
 package de.cau.cs.kieler.prom;
 
+import com.google.inject.Injector;
+
 /**
  * Initialization support for running Xtext languages 
  * without equinox extension registry
  */
 public class KiBuildStandaloneSetup extends KiBuildStandaloneSetupGenerated{
 
-	public static void doSetup() {
-		new KiBuildStandaloneSetup().createInjectorAndDoEMFRegistration();
+	public static Injector doSetup() {
+		return new KiBuildStandaloneSetup().createInjectorAndDoEMFRegistration();
 	}
 }
 

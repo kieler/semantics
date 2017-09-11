@@ -60,6 +60,7 @@ class CompilerViewPartListener implements IPartListener2 {
     }    
     
     override partActivated(IWorkbenchPartReference partRef) {
+        updateCompilerView(partRef)
     }
     
     override partBroughtToTop(IWorkbenchPartReference partRef) {

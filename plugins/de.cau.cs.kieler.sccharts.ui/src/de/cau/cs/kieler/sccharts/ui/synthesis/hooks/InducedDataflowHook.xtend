@@ -13,9 +13,8 @@
  */
 package de.cau.cs.kieler.sccharts.ui.synthesis.hooks
 
-import com.google.common.collect.HashMultimap
 import com.google.common.collect.Iterators
-import com.google.common.collect.Multimap
+import com.google.common.collect.Maps
 import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Expression
@@ -23,21 +22,26 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Emission
+import de.cau.cs.kieler.kicool.ui.synthesis.updates.MessageObjectReferencesManager
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.kgraph.KEdge
-import de.cau.cs.kieler.klighd.kgraph.KGraphElement
+import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KPort
+import de.cau.cs.kieler.klighd.krendering.Colors
+import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
@@ -46,28 +50,35 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
 import de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsDiagramProperties
-import de.cau.cs.kieler.sccharts.ui.synthesis.StateSynthesis
 import java.util.Collection
 import java.util.Collections
 import java.util.EnumSet
 import java.util.Iterator
+import java.util.Map
 import java.util.Set
+import org.eclipse.elk.alg.layered.properties.LayerConstraint
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.core.math.ElkPadding
+import org.eclipse.elk.core.options.Alignment
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
-import org.eclipse.elk.core.options.PortConstraints
-import org.eclipse.elk.core.options.PortSide
 import org.eclipse.elk.core.options.SizeConstraint
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
-import de.cau.cs.kieler.kicool.ui.synthesis.updates.MessageObjectReferencesManager
+import de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses
 
 /**
  * Visualizes the dataflow between SCChart regions.
  * 
  * @author nbw
  */
-class InducedDataflowHook extends SynthesisActionHook {
+class InducedDataflowHook extends SynthesisHook {
+
+    private enum IOType {
+        None,
+        Local,
+        All
+    }
 
     @Inject extension KEdgeExtensions
     @Inject extension KPortExtensions
@@ -75,6 +86,7 @@ class InducedDataflowHook extends SynthesisActionHook {
     @Inject extension KRenderingExtensions
     @Inject extension KPolylineExtensions
     @Inject extension KNodeExtensions
+    @Inject extension KContainerRenderingExtensions
 
     /** Action ID */
     public static final String ID = "de.cau.cs.kieler.sccharts.ui.synthesis.hooks.InducedDataflowHook";
@@ -84,58 +96,42 @@ class InducedDataflowHook extends SynthesisActionHook {
 
     /** The related synthesis option */
     public static final SynthesisOption SHOW_DATAFLOW = SynthesisOption.createCheckOption("Show Induced Dataflow",
-        false).setCategory(GeneralSynthesisOptions::DEBUGGING).setUpdateAction(InducedDataflowHook.ID);
+        false).setCategory(GeneralSynthesisOptions::DEBUGGING);
+    public static final SynthesisOption SHOW_DATAFLOW_IO = SynthesisOption.createChoiceOption("Show Dataflow I/O",
+        newArrayList(IOType.None, IOType.Local, IOType.All), IOType.None).setCategory(
+        GeneralSynthesisOptions::DEBUGGING);
 
-    /** Property to store analysis results */
-    private static final IProperty<Set<KGraphElement>> DATAFLOW_ELEMENTS = new Property<Set<KGraphElement>>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.hooks.dataflow.elements", null);
+    /** Property to mark the type of write ports */
+    private static final IProperty<Boolean> PORT_ABSOLUTE_WRITE = new Property<Boolean>(
+        "de.cau.cs.kieler.sccharts.ui.synthesis.hooks.dataflow.absolute", false);
+
+    private static final int EDGE_PRIORITY_NORMAL = 10
+    private static final int EDGE_PRIORITY_PRE = 50
 
     override getDisplayedSynthesisOptions() {
-        return newLinkedList(SHOW_DATAFLOW);
+        return newLinkedList(SHOW_DATAFLOW, SHOW_DATAFLOW_IO);
+    }
+
+    /** Ensure this processor runs before the layout annotation processor */
+    override getPriority() {
+        return 70;
     }
 
     override finish(Scope model, KNode rootNode) {
         if (SHOW_DATAFLOW.booleanValue) {
-            rootNode.showDependencies(model);
-        }
-    }
-
-    override executeAction(KNode rootNode) {
-        if (SHOW_DATAFLOW.booleanValue) {
-            rootNode.showDependencies(usedContext.inputModel);
-        } else {
-            rootNode.hideDependencies;
-        }
-        return ActionResult.createResult(true);
-    }
-
-    /** 
-     * Hide the dependency edges
-     */
-    private def hideDependencies(KNode rootNode) {
-        val edges = rootNode.getProperty(DATAFLOW_ELEMENTS);
-        if (edges !== null) {
-            val viewer = usedContext.viewer;
-            edges.forEach [
-                viewer.hide(it)
-                if (it instanceof KEdge) {                    
-                    viewer.hide(it.sourcePort)
-                    viewer.hide(it.targetPort)
-                    StateSynthesis.configureLayout(it.source.parent)
-                }
-            ];
+            rootNode.showDataflow(model);
         }
     }
 
     /* ===============
-     * ADDING DEPENDENCIES
+     * ADDING
      * ===============
      */
     /** 
      * Infer the dataflow between regions of superstates. This is only possible for
      * models passed as {@code SCCharts} or as {@code State}.
      */
-    private def void showDependencies(KNode rootNode, Object model) {
+    private def void showDataflow(KNode rootNode, Object model) {
         // Ensure a valid input model
         if (model instanceof State) {
             showDependencies(rootNode, model as State);
@@ -152,28 +148,6 @@ class InducedDataflowHook extends SynthesisActionHook {
      * Infer the dataflow in the model, given by the root state.
      */
     private def void showDependencies(KNode rootNode, State rootState) {
-        // Check if we already have dataflow edges.
-        // TODO Can these already exist but be invalid due to incremental update?
-        // Maybe just clean the existing set and do a new analysis. 
-        val edges = rootNode.getProperty(DATAFLOW_ELEMENTS);
-        if (edges !== null) {
-            // Edges exist already
-            val viewer = usedContext.viewer
-            rootNode.hideDependencies;
-            edges.forEach [
-                if (it instanceof KEdge) {                    
-                    configureParentLayout(it.source.parent)
-                    viewer.show(it.sourcePort)
-                    viewer.show(it.targetPort)
-                }
-                viewer.show(it)
-            ];
-            return;
-        }
-        // Prepare set for all created edges to be able to hide these
-        val Set<KGraphElement> createdElements = Sets.newHashSet
-
-        // No edges present yet, do the full analysis
         // Get the model tracking between model elements and diagram elements
         val tracking = rootNode.getProperty(SCChartsDiagramProperties::MODEL_TRACKER)
         if (tracking === null) {
@@ -181,150 +155,191 @@ class InducedDataflowHook extends SynthesisActionHook {
         }
 
         // Prepare maps to know which ValuedObjects are written or read in each state
-        val Multimap<State, ValuedObject> readStates = HashMultimap.create
-        val Multimap<State, ValuedObject> preReadStates = HashMultimap.create
-        val Multimap<State, ValuedObject> writeStates = HashMultimap.create
+        val Map<State, AccessContext> accessContexts = Maps.newHashMap
 
         // We traverse the model postfix dfs, so we have all used valued objects
         // in the child states available when performing the analysis of the parent state
         for (State currState : getPostfixDFSIterator(rootState).toIterable) {
             // For all states we need to make sure to account for actions on the state
+            val AccessContext stateAccess = new AccessContext
+            accessContexts.put(currState, stateAccess)
             for (Action action : currState.actions) {
-                addValuedObjectsOfActions(action, readStates.get(currState), preReadStates.get(currState),
-                    writeStates.get(currState))
+                addValuedObjectsOfActions(action, stateAccess)
             }
 
             if (currState.regions.filter(ControlflowRegion).size > 0) {
                 // Prepare maps to know which ValuedObjects are written or read in each state
-                val Multimap<Region, ValuedObject> readRegions = HashMultimap.create
-                val Multimap<Region, ValuedObject> preReadRegions = HashMultimap.create
-                val Multimap<Region, ValuedObject> writeRegions = HashMultimap.create
+                val Map<Region, AccessContext> regionAccesses = Maps.newHashMap
 
                 // For hierarchical states we assume that we have all usages of childstates already
                 // calculated and only need to take care of the actions and transitions in this state
                 // TODO This only works for control flow at the moment
                 for (ControlflowRegion region : currState.regions.filter(ControlflowRegion)) {
+                    val AccessContext regionAccess = new AccessContext
+                    regionAccesses.put(region, regionAccess)
                     for (State state : region.states) {
                         // Store the known child dependencies for the region
-                        readRegions.putAll(region, readStates.get(state))
-                        preReadRegions.putAll(region, preReadStates.get(state))
-                        writeRegions.putAll(region, writeStates.get(state))
-
+                        regionAccess.copyAll(accessContexts.get(state))
                         // While going along here, store the transition values for all states in the region
                         state.outgoingTransitions.forEach [ trans |
-                            addValuedObjectsOfActions(trans, readRegions.get(region), preReadRegions.get(region),
-                                writeRegions.get(region))
+                            addValuedObjectsOfActions(trans, regionAccess)
                         ]
                     }
                     // Store everything we found in the region in the parent state map
-                    readStates.putAll(currState, readRegions.get(region))
-                    preReadStates.putAll(currState, preReadRegions.get(region))
-                    writeStates.putAll(currState, writeRegions.get(region))
+                    regionAccess.propagateUp(stateAccess)
                 }
 
                 // Draw the edges for all the regions in the current state
-                createDataflowHyperedges(currState, readRegions, preReadRegions, writeRegions, tracking, createdElements)
+                createDataflowHyperedges(currState, regionAccesses, tracking) // , createdElements)
             }
         }
-        rootNode.setProperty(DATAFLOW_ELEMENTS, createdElements)
     }
 
     /**
      * Create a dataflow hyperedge for each signal flowing between concurrent regions. All the "producing" and the 
      * "consuming" regions are attached to that hyperedge. 
      */
-    def createDataflowHyperedges(State state, Multimap<Region, ValuedObject> reads,
-        Multimap<Region, ValuedObject> preReads, Multimap<Region, ValuedObject> writes,
-        SourceModelTrackingAdapter tracking, Set<KGraphElement> createdElements) {
+    def createDataflowHyperedges(State state, Map<Region, AccessContext> regionAccesses,
+        SourceModelTrackingAdapter tracking) {
+        val IOType ioType = usedContext.getOptionValue(SHOW_DATAFLOW_IO) as IOType
         // We search for all VOs that are read and also written in this hierarchy
         val Set<ValuedObject> relevantVOs = Sets.newHashSet
-        writes.asMap.forEach [ writeRegion, writeVOs |
-            writeVOs.forEach [ writeVO |
-                // Search in the pre reads for the current VO in a different region
-                preReads.asMap.filter [ preReadRegion, preReadVOs |
-                    !writeRegion.equals(preReadRegion) && preReadVOs.contains(writeVO)
-                ].forEach[preReadRegion, preReadVOs|relevantVOs.add(writeVO)]
-                // Search in the normal reads for the current VO in a different region
-                reads.asMap.filter[readRegion, readVOs|!writeRegion.equals(readRegion) && readVOs.contains(writeVO)].
-                    forEach[readRegion, readVOs|relevantVOs.add(writeVO)]
+        regionAccesses.forEach [ writeRegion, writeContext |
+            writeContext.anyWriteAnywhere.forEach [ writeVO |
+                // Search in different regions for a read/preRead access
+                regionAccesses.filter [ readRegion, readContext |
+                    !writeRegion.equals(readRegion) &&
+                        (readContext.readAnywhere.contains(writeVO) || readContext.preReadAnywhere.contains(writeVO))
+                ].forEach[k, v|relevantVOs.add(writeVO)]
             ]
         ]
+
+        if (ioType == IOType.All) {
+            // Add valued objects to the relevant objects, if they are declared as input or output
+            // TODO Include objects here that are declared on a higher hierarchy
+            regionAccesses.forEach [ region, context |
+                relevantVOs.addAll(context.readAnywhere.filter[(it.eContainer as VariableDeclaration).input])
+                relevantVOs.addAll(context.preReadAnywhere.filter[(it.eContainer as VariableDeclaration).input])
+                relevantVOs.addAll(context.anyWriteAnywhere.filter[(it.eContainer as VariableDeclaration).output])
+            ]
+        }
+
+        // Gather all local valued objects if we want to draw local I/O 
+        val Set<ValuedObject> allLocalReads = Sets.newHashSet
+        val Set<ValuedObject> allLocalWrites = Sets.newHashSet
+
+        if (ioType == IOType.Local) {
+            // Gather local data from all regions
+            regionAccesses.forEach [ region, context |
+                allLocalReads.addAll(context.readLocal.filter[(it.eContainer as VariableDeclaration).input])
+                allLocalReads.addAll(context.preReadLocal.filter[(it.eContainer as VariableDeclaration).input])
+                allLocalWrites.addAll(context.anyWriteLocal.filter[(it.eContainer as VariableDeclaration).output])
+            ]
+            // Store the I/O as relevant
+            relevantVOs.addAll(allLocalReads)
+            relevantVOs.addAll(allLocalWrites)
+        }
 
         // Each valued object will be handled by a hyperedge 
         for (ValuedObject vo : relevantVOs) {
             val Set<KPort> readPorts = Sets.newHashSet
-            reads.asMap.filter[region, VOs|VOs.contains(vo)].forEach [ region, VOs |
-                val KPort port = createPort => [
-                    node = tracking.getTargetElements(region).filter(KNode).head
-                ]
-                port.addLayoutParam(CoreOptions::PORT_SIDE, PortSide::WEST)
-                readPorts.add(port)
-            ]
             val Set<KPort> preReadPorts = Sets.newHashSet
-            preReads.asMap.filter[region, VOs|VOs.contains(vo)].forEach [ region, VOs |
-                val KPort port = createPort => [
-                    node = tracking.getTargetElements(region).filter(KNode).head
-                ]
-                port.addLayoutParam(CoreOptions::PORT_SIDE, PortSide::WEST)
-                preReadPorts.add(port)
-            ]
             val Set<KPort> writePorts = Sets.newHashSet
-            writes.asMap.filter[region, VOs|VOs.contains(vo)].forEach [ region, VOs |
-                val KPort port = createPort => [
-                    node = tracking.getTargetElements(region).filter(KNode).head
-                ]
-                port.addLayoutParam(CoreOptions::PORT_SIDE, PortSide::EAST)
-                port.addOutsidePortLabel(vo.name)
-                writePorts.add(port)
+            // Create the necessary ports for all regions
+            regionAccesses.forEach [ region, context |
+                val KNode regionNode = tracking.getTargetElements(region).filter(KNode).head
+                // Create port for read access
+                if (context.readAnywhere.contains(vo)) {
+                    readPorts.add(createDataflowPort(regionNode, false, null))
+                }
+                // Create port for read access of previous value 
+                if (context.preReadAnywhere.contains(vo)) {
+                    preReadPorts.add(createDataflowPort(regionNode, false, null))
+                }
+                // Create ports for write access
+                if (context.absoluteWriteAnywhere.contains(vo)) {
+                    // Add port for absolute write
+                    writePorts.add(createDataflowPort(regionNode, true, vo.name))
+                } else if (context.relativeWriteAnywhere.contains(vo)) {
+                    // Only create port for relative writes if not also absolute write
+                    writePorts.add(createDataflowPort(regionNode, false, vo.name))
+                }
             ]
 
-            var KNode preNode
-            var KPort preNodeReadPort
-            var KPort preNodeWritePort
+            // Create a pre actor if needed
+            val KNode preNode = if (!preReadPorts.empty) {
+                    val node = createPreNode(vo)
+                    // Grab parent node from the region node to ensure proper handling on root state
+                    preReadPorts.head.node.parent.children.add(node)
+                    node
+                }
+            val KPort preNodeReadPort = if(preNode !== null) createDataflowPort(preNode, false, null)
+            var KPort preNodeWritePort = if(preNode !== null) createDataflowPort(preNode, true, "pre(" + vo.name + ")")
 
+            // Create an input node if needed
+            val boolean needInput = ioType == IOType.All || (ioType == IOType.Local && allLocalReads.contains(vo))
+            val KNode inputNode = if (needInput && !(readPorts.empty && preReadPorts.empty) &&
+                    (vo.eContainer as VariableDeclaration).input) {
+                    val node = createInputNode(vo)
+                    Sets.union(readPorts, preReadPorts).head.node.parent.children.add(node)
+                    node
+                }
+
+            // Create an output node if needed
+            val boolean needOutput = ioType == IOType.All || (ioType == IOType.Local && allLocalWrites.contains(vo))
+            val KNode outputNode = if (needOutput && !writePorts.empty &&
+                    (vo.eContainer as VariableDeclaration).output) {
+                    val node = createOutputNode(vo)
+                    writePorts.head.node.parent.children.add(node)
+                    node
+                }
             for (KPort writePort : writePorts) {
                 // Create an edge for every normal reader that is not the current writer
-                readPorts.filter[readPort|!readPort.node.equals(writePort.node)].forEach[readPort |
-                    val KEdge edge = createDataflowEdge(writePort, readPort, 5)
-                    createdElements.add(edge);
-
-                    // This leaves a mark on the edge, so that succeeding processors find it.
-                    // TODO Implement better mechanism than name matching.
-                    edge.setProperty(MessageObjectReferencesManager.MESSAGE_OBJECT_REFERENCE, vo.name)
-                    
+                readPorts.filter[readPort|!readPort.node.equals(writePort.node)].forEach [ readPort |
+                    createDataflowEdge(writePort, readPort, EDGE_PRIORITY_NORMAL, vo)
                     // Configure source and target layout constraints
                     configurePortLayout(writePort.node)
                     configurePortLayout(readPort.node)
                 ]
-                
+
                 // Create an edge to the preNode if there is at least one pre Reader
-                if (!preReadPorts.filter[preReadPort|!preReadPort.node.equals(writePort.node)].empty) {
-                    if (preNode === null) {
-                        preNode = createPreNode(vo)
-                        createdElements.add(preNode)
-                        writePort.node.parent.children.add(preNode)
-                        preNodeReadPort = createPort
-                        preNodeReadPort.node = preNode
-                        preNodeReadPort.addLayoutParam(CoreOptions::PORT_SIDE, PortSide.WEST)
-                        preNodeWritePort = createPort
-                        preNodeWritePort.node = preNode
-                        preNodeWritePort.addLayoutParam(CoreOptions::PORT_SIDE, PortSide.EAST)                        
-                        preNodeWritePort.addOutsidePortLabel("pre(" + vo.name + ")")
-                    }
-                    val KEdge edge = createDataflowEdge(writePort, preNodeReadPort, 0)
-                    createdElements.add(edge)
-                    
+                if (preNode !== null) {
+                    createDataflowEdge(writePort, preNodeReadPort, 0, vo)
+                    // Configure only source layout to not reconfigure the pre node
                     configurePortLayout(writePort.node)
                 }
+
+                // Create an edge to the output if there is one
+                if (outputNode !== null) {
+                    createDataflowEdge(writePort, outputNode.ports.head, EDGE_PRIORITY_NORMAL, vo)
+                    // Configure only source layout to not reconfigure the output node
+                    configurePortLayout(writePort.node)
+                    // Remove the port label if name already determined by output
+                    writePort.labels.clear
+                }
             }
+
+            if (inputNode !== null) {
+                val KPort inputPort = inputNode.ports.head
+                // Create an edge to every reader
+                for (KPort readPort : readPorts) {
+                    createDataflowEdge(inputPort, readPort, EDGE_PRIORITY_NORMAL, vo)
+                    // Configure only target layout to not reconfigure the input node
+                    configurePortLayout(readPort.node)
+                }
+
+                if (preNode !== null) {
+                    createDataflowEdge(inputPort, preNodeReadPort, EDGE_PRIORITY_NORMAL, vo)
+                }
+            }
+
             if (preNode !== null) {
                 // Create an edge from the preNode to every reader
                 for (KPort preReadPort : preReadPorts) {
-                    val KEdge edge = createDataflowEdge(preNodeWritePort, preReadPort, 10)
-                    createdElements.add(edge);
-
+                    createDataflowEdge(preNodeWritePort, preReadPort, EDGE_PRIORITY_PRE, vo)
+                    // Configure only target layout to not reconfigure the pre node
                     configurePortLayout(preReadPort.node)
-                    
+
                 }
             }
         }
@@ -334,75 +349,215 @@ class InducedDataflowHook extends SynthesisActionHook {
      * UTILITY METHODS
      * =============
      */
+    /** Configure the layout on the state node for proper dataflow layout */
     private def void configureParentLayout(KNode node) {
-        DiagramSyntheses.setLayoutOption(node, CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
-        DiagramSyntheses.setLayoutOption(node, CoreOptions::DIRECTION, Direction.RIGHT)
+        DiagramSyntheses.setLayoutOption(node, CoreOptions::PADDING, new ElkPadding(10));
+        node.addLayoutParam(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
+        node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
+        node.addLayoutParam(CoreOptions::DIRECTION, Direction.RIGHT)
+        node.addLayoutParam(LayeredOptions::FEEDBACK_EDGES, true);
+        node.addLayoutParam(CoreOptions::SPACING_NODE_NODE, 20.0);
+        node.addLayoutParam(LayeredOptions::SPACING_EDGE_NODE_BETWEEN_LAYERS, 20.0);
     }
 
+    /** Configure the layout on the attached node */
     private def void configurePortLayout(KNode node) {
-        DiagramSyntheses.setLayoutOption(node, CoreOptions::PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE)
-        DiagramSyntheses.setLayoutOption(node, CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
+        node.addLayoutParam(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
     }
 
-    private def KEdge createDataflowEdge(KPort sourcePort, KPort targetPort, int priority) {
+    /** Create a port for the dataflow layout */
+    private def KPort createDataflowPort(KNode kNode, boolean absoluteWrite, String name) {
+        // Create basic port
+        val KPort port = createPort => [
+            node = kNode
+        ]
+
+        // Set property to mark relative access on write ports
+        // Is also set on read ports but is ignored there
+        port.setProperty(PORT_ABSOLUTE_WRITE, absoluteWrite)
+
+        // Create label if necessary
+        if (!name.isNullOrEmpty) {
+            port.addOutsidePortLabel(name).getKRendering => [
+                fontSize = 11;
+                fontBold = true;
+            ]
+        }
+
+        return port;
+    }
+
+    /** Create an edge for the dataflow */
+    private def KEdge createDataflowEdge(KPort sourcePort, KPort targetPort, int priority, ValuedObject vo) {
         val KEdge edge = createEdge => [
             it.sourcePort = sourcePort;
             it.source = sourcePort.node;
             it.targetPort = targetPort;
             it.target = targetPort.node;
             it.addPolyline => [
-                it.lineWidth = 1
+                if (!sourcePort.getProperty(PORT_ABSOLUTE_WRITE)) {
+                    it.foreground = Colors.YELLOW_GREEN
+                }
+                it.lineWidth = 2
                 // Default arrow head
-                it.addHeadArrowDecorator
+                it.addHeadArrowDecorator => [
+                    it.selectionForeground = Colors.BLUE
+                    it.selectionLineWidth = 3
+                ]
                 // Junction points because of hyperedges
                 it.addJunctionPointDecorator
+
+                it.selectionForeground = Colors.BLUE
+                it.selectionLineWidth = 3
             ];
         ]
-        
+
+        // Add an identifier to the edge to help incremental update
+        edge.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = vo.name + sourcePort.edges.size]
+        // Add tooltip to edge
+        edge.setProperty(KlighdProperties.TOOLTIP, vo.name)
+
+        // This leaves a mark on the edge, so that succeeding processors find it.
+        // TODO Implement better mechanism than name matching.
+        edge.setProperty(MessageObjectReferencesManager.MESSAGE_OBJECT_REFERENCE, vo.name)
+
         edge.addLayoutParam(LayeredOptions::PRIORITY_DIRECTION, priority);
-        
+
+        // Ensure proper layout of the parent node
         configureParentLayout(edge.source.parent)
 
         return edge
     }
 
+    /** Create a node for the pre register */
     private def KNode createPreNode(ValuedObject vo) {
         val preNode = createNode => [ node |
-            node.addRectangle
-            node.width = 40
-            node.height = 40
+            // Create a basic outer rectangle
+            node.addRectangle => [
+                // Add a small wedge at the bottom
+                it.addPolygon => [
+                    it.points += createKPosition(LEFT, 0, 0.35f, BOTTOM, 0.5f, 0);
+                    it.points += createKPosition(LEFT, 0, 0.5f, BOTTOM, 0, 0.35f);
+                    it.points += createKPosition(RIGHT, 0, 0.35f, BOTTOM, 0.5f, 0);
+                ]
+                it.background = Colors.WHITE
+            ]
+            node.width = 30
+            node.height = 30
         ]
-        preNode.addInsideCenteredNodeLabel("pre")
-        preNode.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE)
-        preNode.addLayoutParam(CoreOptions::NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.PORTS,SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS))
-        
+        // Add an identifier to help incremental updates
+        preNode.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = "preReg_" + vo.name]
+
+        // Prevent node resizing
+        preNode.addLayoutParam(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.fixed)
+
         return preNode
     }
 
-    private def addValuedObjectsOfActions(Action action, Collection<ValuedObject> reads,
-        Collection<ValuedObject> preReads, Collection<ValuedObject> writes) {
+    /** Create an input node for a given valued object */
+    private def KNode createInputNode(ValuedObject vo) {
+        val inputNode = createNode => [ node |
+            // Create a small arrow-like node
+            node.addPolygon => [
+                it.points += createKPosition(RIGHT, 12, 0.0f, TOP, 0, 0);
+                it.points += createKPosition(RIGHT, 0, 1.0f, TOP, 0, 0);
+                it.points += createKPosition(RIGHT, 0, 1.0f, TOP, 0, 1.0f);
+                it.points += createKPosition(RIGHT, 12, 0.0f, TOP, 0, 1.0f);
+                it.points += createKPosition(RIGHT, 0, 0.0f, TOP, 0, 0.5f);
+                it.points += createKPosition(RIGHT, 12, 0.0f, TOP, 0, 0);
+                it.background = Colors.WHITE
+            ]
+            // Minimal node size
+            node.width = 35
+            node.height = 10
+        ]
+        // Add the name of the object as an inside label
+        inputNode.addInsideCenteredNodeLabel(vo.name).getKRendering => [
+            fontSize = 11;
+            fontBold = true;
+        ]
+
+        // Add an identifier to help incremental updates
+        inputNode.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = "input_" + vo.name]
+
+        // Allow resizing of the node for the node label
+        inputNode.addLayoutParam(CoreOptions::NODE_SIZE_CONSTRAINTS,
+            EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS))
+        // Tune the alignment of the input node
+        inputNode.addLayoutParam(CoreOptions::ALIGNMENT, Alignment.LEFT)
+        inputNode.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint.FIRST)
+        // Create a single port on the node
+        val KPort port = createPort => [node = inputNode]
+        port.addLayoutParam(PORT_ABSOLUTE_WRITE, true)
+        return inputNode
+    }
+
+    /** Create an output node for a given valued object */
+    private def KNode createOutputNode(ValuedObject vo) {
+        val outputNode = createNode => [ node |
+            // Create a small arrow-like node
+            node.addPolygon => [
+                it.points += createKPosition(LEFT, 12, 0.0f, TOP, 0, 0);
+                it.points += createKPosition(LEFT, 0, 1.0f, TOP, 0, 0);
+                it.points += createKPosition(LEFT, 0, 1.0f, TOP, 0, 1.0f);
+                it.points += createKPosition(LEFT, 12, 0.0f, TOP, 0, 1.0f);
+                it.points += createKPosition(LEFT, 0, 0.0f, TOP, 0, 0.5f);
+                it.points += createKPosition(LEFT, 12, 0.0f, TOP, 0, 0);
+                it.background = Colors.WHITE
+            ]
+            // Minimal node size
+            node.width = 35
+            node.height = 10
+        ]
+        // Add the name of the object as an inside label
+        outputNode.addInsideCenteredNodeLabel(vo.name).getKRendering => [
+            fontSize = 11;
+            fontBold = true;
+        ]
+
+        // Add an identifier to help incremental updates
+        outputNode.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = "output_" + vo.name]
+
+        // Allow resizing of the node for the node label
+        outputNode.addLayoutParam(CoreOptions::NODE_SIZE_CONSTRAINTS,
+            EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS))
+        // Tune the alignment of the output node
+        outputNode.addLayoutParam(CoreOptions::ALIGNMENT, Alignment.RIGHT)
+        outputNode.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint.LAST)
+        // Create a single port on the node
+        createPort => [node = outputNode]
+        return outputNode
+    }
+
+    /** Gathers the valued objects used in the given action */
+    private def addValuedObjectsOfActions(Action action, AccessContext context) {
         // Here we need to do the magic and find out which ValuedObjects are read and which are written
         // The trigger should not have any side effect so it will only be a read access
         // TODO Make sure this is a valid assumption
         // So we take all ValuedObjects from the trigger and just take these
-        collectReadAccessFromExpression(action.trigger, reads, preReads, null)
+        collectReadAccessFromExpression(action.trigger, context.readLocal, context.preReadLocal, null)
 
         // The effect is a bit more complicated, it could be an assignment, 
         // an emission or something else that we don't care in
         // TODO Make sure there is nothing else we are interested in
         action.effects.forEach [ effect |
             if (effect instanceof Emission) {
-                val emission = effect as Emission;
                 // Store the emitted object as written
-                writes.add(emission.valuedObject);
+                context.absoluteWriteLocal.add(effect.valuedObject);
                 // Store the parts of the value as read object
-                collectReadAccessFromExpression(emission.newValue, reads, preReads, emission.valuedObject)
+                collectReadAccessFromExpression(effect.newValue, context.readLocal, context.preReadLocal,
+                    effect.valuedObject)
             } else if (effect instanceof Assignment) {
-                val assignment = effect as Assignment;
-                // Store the target as written
-                writes.add(assignment.valuedObject);
+                // Store the target as absolute write or relative write
+                if (effect.operator == AssignOperator.ASSIGN) {
+                    context.absoluteWriteLocal.add(effect.valuedObject);
+                } else {
+                    context.relativeWriteLocal.add(effect.valuedObject);
+                }
+
                 // Store the parts of the value as read object
-                collectReadAccessFromExpression(assignment.expression, reads, preReads, assignment.valuedObject)
+                collectReadAccessFromExpression(effect.expression, context.readLocal, context.preReadLocal,
+                    effect.valuedObject)
             }
         ]
     }
@@ -414,13 +569,16 @@ class InducedDataflowHook extends SynthesisActionHook {
     private def collectReadAccessFromExpression(Expression expression, Collection<ValuedObject> reads,
         Collection<ValuedObject> preReads, ValuedObject excludedVO) {
         if (expression !== null) {
+            // Combine the expression and all sub elements, then filter for all valued objects
             Iterators.concat(Iterators.singletonIterator(expression), expression.eAllContents).filter(
-                ValuedObjectReference).filter[!it.valuedObject.equals(excludedVO)].forEach [
+                ValuedObjectReference).forEach [
                 if (it.eContainer instanceof OperatorExpression &&
                     (it.eContainer as OperatorExpression).operator == OperatorType.PRE) {
-                    preReads.add(it.valuedObject)
+                        preReads.add(it.valuedObject)    
                 } else {
-                    reads.add(it.valuedObject)
+                    if (!it.valuedObject.equals(excludedVO)) {
+                        reads.add(it.valuedObject)                        
+                    }
                 }
             ]
         }
@@ -432,13 +590,115 @@ class InducedDataflowHook extends SynthesisActionHook {
      */
     private def Iterator<State> getPostfixDFSIterator(State rootState) {
         val Iterator<State> iterator = rootState.regions.filter(ControlflowRegion).fold(
+            // Start with an empty iterator
             Collections.emptyIterator,
+            // Concatenate the child iterators recursively
             [ iter, region |
                 region.states.fold(iter, [ currIter, currState |
                     Iterators.concat(currIter, getPostfixDFSIterator(currState))
                 ])
             ]
         )
+        // Append the current element at the end
         return Iterators.concat(iterator, Iterators.singletonIterator(rootState));
+    }
+
+}
+
+/**
+ * Container object to simplify the storage of read and write objects.
+ */
+class AccessContext {
+    public Set<ValuedObject> readLocal
+    public Set<ValuedObject> preReadLocal
+    public Set<ValuedObject> absoluteWriteLocal
+    public Set<ValuedObject> relativeWriteLocal
+    public Set<ValuedObject> readNested
+    public Set<ValuedObject> preReadNested
+    public Set<ValuedObject> absoluteWriteNested
+    public Set<ValuedObject> relativeWriteNested
+
+    /** Create a new container and initialize all sets */
+    new() {
+        readLocal = newHashSet()
+        preReadLocal = newHashSet()
+        absoluteWriteLocal = newHashSet()
+        relativeWriteLocal = newHashSet()
+        readNested = newHashSet()
+        preReadNested = newHashSet()
+        absoluteWriteNested = newHashSet()
+        relativeWriteNested = newHashSet()
+    }
+
+    /** Clear all sets in the container */
+    def clear() {
+        readLocal.clear
+        preReadLocal.clear
+        absoluteWriteLocal.clear
+        relativeWriteLocal.clear
+        readNested.clear
+        preReadNested.clear
+        absoluteWriteNested.clear
+        relativeWriteNested.clear
+    }
+
+    /** Convenience to get all direct reads, local or nested. */
+    def Set<ValuedObject> getReadAnywhere() {
+        return Sets.union(readLocal, readNested)
+    }
+
+    /** Convenience to get all pre reads, local or nested. */
+    def Set<ValuedObject> getPreReadAnywhere() {
+        return Sets.union(preReadLocal, preReadNested)
+    }
+
+    /** Convenience to get all absolute writes, local or nested. */
+    def Set<ValuedObject> getAbsoluteWriteAnywhere() {
+        return Sets.union(absoluteWriteLocal, absoluteWriteNested)
+    }
+
+    /** Convenience to get all relative writes, local or nested. */
+    def Set<ValuedObject> getRelativeWriteAnywhere() {
+        return Sets.union(relativeWriteLocal, relativeWriteNested)
+    }
+
+    /** Convenience to get all writes, local or nested. */
+    def Set<ValuedObject> getAnyWriteAnywhere() {
+        return Sets.union(Sets.union(relativeWriteLocal, absoluteWriteLocal),
+            Sets.union(relativeWriteNested, absoluteWriteNested))
+    }
+
+    /** Convenience to get all local writes */
+    def Set<ValuedObject> getAnyWriteLocal() {
+        return Sets.union(relativeWriteLocal, absoluteWriteLocal)
+    }
+
+    /** Convenience to get all nested writes */
+    def Set<ValuedObject> getAnyWriteNested() {
+        return Sets.union(relativeWriteNested, absoluteWriteNested)
+    }
+
+    /** Copies all data from {@code other} to the current container */
+    def copyAll(AccessContext other) {
+        if (other !== null) {
+            readNested.addAll(other.readNested)
+            preReadNested.addAll(other.preReadNested)
+            absoluteWriteNested.addAll(other.absoluteWriteNested)
+            relativeWriteNested.addAll(other.relativeWriteNested)
+            readLocal.addAll(other.readLocal)
+            preReadLocal.addAll(other.preReadLocal)
+            absoluteWriteLocal.addAll(other.absoluteWriteLocal)
+            relativeWriteLocal.addAll(other.relativeWriteLocal)
+        }
+    }
+
+    /** Adds the data from the container as nested data in the parent container */
+    def propagateUp(AccessContext parent) {
+        if (parent !== null) {
+            parent.readNested.addAll(this.readAnywhere)
+            parent.preReadNested.addAll(this.preReadAnywhere)
+            parent.absoluteWriteNested.addAll(this.absoluteWriteAnywhere)
+            parent.relativeWriteNested.addAll(this.relativeWriteAnywhere)
+        }
     }
 }

@@ -27,6 +27,9 @@ import java.io.File
 import com.google.common.io.Files
 import org.eclipse.core.runtime.Path
 import org.eclipse.core.resources.ResourcesPlugin
+import com.google.common.io.CharStreams
+import java.io.InputStreamReader
+import com.google.common.base.Charsets
 
 /**
  * @author aas
@@ -150,12 +153,13 @@ abstract class SimulationCompiler extends Configurable {
                                      + "in directory '" + pBuilder.directory + "')\n\n"
                               + "Please check the KIELER Console output.")
         }
+        
         // Check that there was no error
         if(exception == null && p.exitValue != 0) {
             exception = new Exception("Simulation compilation had issues: " + p.exitValue + "\n"
                               + "(command: " + pBuilder.command + ",\n"
-                              + "in directory '" + pBuilder.directory + "')\n\n"
-                              + "Please check the KIELER Console output.")
+                              + "in directory '" + pBuilder.directory + "')\n",
+                              new Exception(CharStreams.toString(new InputStreamReader(p.inputStream, Charsets.UTF_8))))
         }
         if(p.inputStream.available > 0) {
             // Print output of process to eclipse console
@@ -163,6 +167,7 @@ abstract class SimulationCompiler extends Configurable {
             PromConsole.copy(p.inputStream)
             PromConsole.print("\n\n")
         }
+
         if(exception != null) {
             val problem = BuildProblem.createError(file, exception)
             result.addProblem(problem)

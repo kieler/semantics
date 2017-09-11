@@ -97,20 +97,16 @@ class KEffectsExtensions {
     
     // was assingCombined
     def Assignment createCombinedAssignment(ValuedObject valuedObject, Expression newValue) {
-        if (valuedObject.combineOperator == CombineOperator::AND) {
-            return valuedObject.createAssignment(valuedObject.reference.and(newValue))
-        } else if (valuedObject.combineOperator == CombineOperator::OR) {
-            return valuedObject.createAssignment(valuedObject.reference.or(newValue))
-        } else if (valuedObject.combineOperator == CombineOperator::ADD) {
-            return valuedObject.createAssignment(valuedObject.reference.add(newValue))
-        } else if (valuedObject.combineOperator == CombineOperator::MULT) {
-            return valuedObject.createAssignment(valuedObject.reference.mult(newValue))
-        } else if (valuedObject.combineOperator == CombineOperator::MAX) {
-            return valuedObject.createAssignment(valuedObject.reference.max(newValue))
-        } else if (valuedObject.combineOperator == CombineOperator::MIN) {
-            return valuedObject.createAssignment(valuedObject.reference.min(newValue))
+        val op = switch(valuedObject.combineOperator) {
+            case ADD: AssignOperator.ASSIGNADD
+            case AND: AssignOperator.ASSIGNAND
+            case MAX: AssignOperator.ASSIGNMAX
+            case MIN: AssignOperator.ASSIGNMIN
+            case MULT: AssignOperator.ASSIGNMUL
+            case OR: AssignOperator.ASSIGNOR
+            default: AssignOperator.ASSIGN
         }
-        return valuedObject.createAssignment(newValue)
+        return valuedObject.createAssignment(newValue, op)
     }
     
 

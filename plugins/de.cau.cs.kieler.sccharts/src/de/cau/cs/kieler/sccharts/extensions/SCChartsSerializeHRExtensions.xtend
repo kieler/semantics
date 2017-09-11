@@ -89,12 +89,6 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     def dispatch CharSequence serializeHR(Action action){
         action.serialize(true)
     }
-    
-//    private def CharSequence serialize(Action action, boolean hr) {
-//        val joiner = Joiner.on(" ");
-//        val parts = action.serializeComponents(hr)
-//        return joiner.join(parts.key) + joiner.join(parts.value);
-//    }
 
     private def CharSequence serialize(Action action, boolean hr) {
         val joiner = Joiner.on(" ");
@@ -227,45 +221,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     
     private def addText(List<Pair<CharSequence, Boolean>> list, CharSequence text) {
         list += new Pair(text, false)
-    }    
-
-//    def dispatch Pair<List<String>, List<String>> serializeComponents(Action action, boolean hr) {
-//        val keywords = newLinkedList;
-//        val content = newLinkedList;
-//
-//        if (action.immediate) {
-//            keywords += "immediate";
-//        }
-//
-//        keywords += switch action {
-//            EntryAction: "entry"
-//            DuringAction: "during"
-//            ExitAction: "exit"
-//            SuspendAction case action.isWeak: "weak suspend"
-//            SuspendAction: "suspend"
-//            IterateAction: "iterate"
-//            default: ""
-//        }
-//
-//        if (action.trigger != null) {
-//            if (hr) {
-//                content += action.trigger.serializeHR as String
-//            }else{
-//                content += action.trigger.serialize as String
-//            }
-//        }
-//
-//        if (!action.effects.empty) {
-//            content += "/"
-//            if (hr) {
-//                content += action.effects.serializeHR as String
-//            }else{
-//                content += action.effects.serialize as String
-//            }
-//        }
-//
-//        return new Pair(keywords, content);
-//    }
+    }
     
     def dispatch CharSequence serialize(VariableDeclaration declaration) {
         declaration.serialize(false)

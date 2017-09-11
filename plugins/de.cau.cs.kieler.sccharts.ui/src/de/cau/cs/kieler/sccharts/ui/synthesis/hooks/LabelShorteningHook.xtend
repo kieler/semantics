@@ -52,9 +52,9 @@ class LabelShorteningHook extends SynthesisActionHook {
     public static val SynthesisOption SHORTEN_LABEL_STRATEGY = SynthesisOption::createChoiceOption("Label Management",
         newLinkedList(
             LabelShorteningStrategies.NO,
-            LabelShorteningStrategies.TRUNCATE,
-            LabelShorteningStrategies.SOFT_WRAPPING,
-            LabelShorteningStrategies.PRIORITIES
+            LabelShorteningStrategies.PRIORITIES,
+            LabelShorteningStrategies.SEMANTIC_SOFT_WRAPPING,
+            LabelShorteningStrategies.TRUNCATE
         ), LabelShorteningStrategies.NO).setCategory(LABEL_MANAGEMENT_CATEGORY).
         setUpdateAction(LabelShorteningHook.ID) // Register this action as updater
     /** The synthesis option for fixed shorten labels value */

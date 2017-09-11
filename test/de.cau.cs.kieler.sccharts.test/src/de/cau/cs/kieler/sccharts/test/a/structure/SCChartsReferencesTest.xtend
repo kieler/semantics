@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.test
+package de.cau.cs.kieler.sccharts.test.a.structure
 
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
@@ -54,7 +54,8 @@ class SCChartsReferencesTest extends AbstractXTextModelRepositoryTest<SCCharts> 
      * {@inheritDoc}
      */
     override filter(TestModelData modelData) {
-        return modelData.modelProperties.contains("scchartsX") && !modelData.resourceSetID.nullOrEmpty
+        return modelData.modelProperties.contains("sccharts")
+            && !modelData.modelProperties.contains("must-fail")
     }
     
     @Test
@@ -63,14 +64,14 @@ class SCChartsReferencesTest extends AbstractXTextModelRepositoryTest<SCCharts> 
         for (res : scc.eResource.resourceSet.resources.filter(XtextResource)) {
             val parserNodes = res.parseResult.rootNode
             parserNodes.asTreeIterable.filter[
-                semanticElement instanceof SCCharts 
-                && grammarElement.eClass.equals(keyword.eClass)
+                grammarElement.eClass.equals(keyword.eClass)
                 && (grammarElement as Keyword).value == keyword.value
             ].forEach[
-                assertTrue("Referenced state " + (semanticElement as State).name + " in " + res.URI.segment(res.URI.segmentCount - 1) + " cannot be resolved",
+                assertTrue("Referenced state " + (semanticElement as State).name + " in " + res.getURI.segment(res.getURI.segmentCount - 1) + " cannot be resolved",
                     (semanticElement as State).reference.scope !== null)
             ]
         }
     }
       
 }
+				

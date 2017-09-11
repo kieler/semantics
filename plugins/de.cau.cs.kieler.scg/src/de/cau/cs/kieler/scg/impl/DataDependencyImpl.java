@@ -87,7 +87,7 @@ public class DataDependencyImpl extends DependencyImpl implements DataDependency
      * @generated
      * @ordered
      */
-	protected static final DataDependencyType TYPE_EDEFAULT = DataDependencyType.WRITE_WRITE;
+	protected static final DataDependencyType TYPE_EDEFAULT = DataDependencyType.IGNORE;
 
 				/**
      * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
