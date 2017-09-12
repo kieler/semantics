@@ -35,6 +35,7 @@ class SCLFormatter extends KExtFormatter {
 		}
 		for (Module modules : sclprogram.getModules()) {
 			format(modules, document);
+            modules.append[ newLine ]
 		}
 	}
 
