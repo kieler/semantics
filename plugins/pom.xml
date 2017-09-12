@@ -35,12 +35,8 @@
     <module>de.cau.cs.kieler.esterel.cec.linux.x86_64</module>
     <module>de.cau.cs.kieler.esterel.cec.macosx.x86_64</module>
     <module>de.cau.cs.kieler.esterel.cec.win32.x86</module>
-    <!-- <module>de.cau.cs.kieler.esterel.cec.sim</module> -->
     <module>de.cau.cs.kieler.esterel.examples</module>
     <module>de.cau.cs.kieler.esterel.prom</module>
-    <!-- <module>de.cau.cs.kieler.esterel.sim</module> -->
-    <!-- <module>de.cau.cs.kieler.esterel.sim.c</module> -->
-    <!-- <module>de.cau.cs.kieler.esterel.sim.kivi</module> -->
     <module>de.cau.cs.kieler.esterel.scl</module>
     <module>de.cau.cs.kieler.esterel.ui</module>
     <module>de.cau.cs.kieler.kev</module>

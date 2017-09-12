@@ -252,12 +252,6 @@ litigation.
 
    <plugin id="de.cau.cs.kieler.esterel.cec" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
-   <plugin id="de.cau.cs.kieler.esterel.cec.sim" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-
-   <plugin id="de.cau.cs.kieler.esterel.sim" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-
-  <plugin id="de.cau.cs.kieler.esterel.sim.kivi" download-size="0" install-size="0" version="0.0.0" unpack="false"/> 
-
    <plugin id="de.cau.cs.kieler.esterel" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
    <plugin id="de.cau.cs.kieler.esterel.cec.linux.x86" os="linux" arch="x86" download-size="0" install-size="0" version="0.0.0" fragment="true"/>
