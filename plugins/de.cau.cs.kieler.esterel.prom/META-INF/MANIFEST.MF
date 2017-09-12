@@ -14,10 +14,10 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.common,
  com.google.guava;bundle-version="15.0.0",
  de.cau.cs.kieler.esterel,
- de.cau.cs.kieler.esterel.kexpressions;bundle-version="0.4.4",
  de.cau.cs.kieler.prom,
  de.cau.cs.kieler.prom.ui,
- de.cau.cs.kieler.sccharts
+ de.cau.cs.kieler.sccharts,
+ de.cau.cs.kieler.scl
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Kiel University
