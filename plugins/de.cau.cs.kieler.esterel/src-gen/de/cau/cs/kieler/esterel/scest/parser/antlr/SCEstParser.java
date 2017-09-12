@@ -25,7 +25,7 @@ public class SCEstParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrPar
 	
 	@Override 
 	protected String getDefaultRuleName() {
-		return "SCEstProgram";
+		return "EsterelProgram";
 	}
 	
 	public SCEstGrammarAccess getGrammarAccess() {

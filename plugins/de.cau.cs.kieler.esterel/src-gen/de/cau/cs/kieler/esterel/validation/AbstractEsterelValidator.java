@@ -14,7 +14,7 @@ public class AbstractEsterelValidator extends de.cau.cs.kieler.scl.validation.SC
 	@Override
 	protected List<EPackage> getEPackages() {
 	    List<EPackage> result = new ArrayList<EPackage>(super.getEPackages());
-	    result.add(de.cau.cs.kieler.esterel.EsterelPackage.eINSTANCE);
+	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.cau.de/cs/kieler/esterel/Esterel"));
 	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/scl/0.2.0"));
 	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/kexpressions/0.1.2"));
 	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/kext/0.1.0"));

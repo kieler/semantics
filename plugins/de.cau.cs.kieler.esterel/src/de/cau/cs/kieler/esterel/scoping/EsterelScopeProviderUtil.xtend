@@ -1,0 +1,284 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://rtsys.informatik.uni-kiel.de/kieler
+ * 
+ * Copyright 2017 by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ */
+package de.cau.cs.kieler.esterel.scoping
+
+import de.cau.cs.kieler.esterel.Constant
+import de.cau.cs.kieler.esterel.ConstantMultiDeclaration
+import de.cau.cs.kieler.esterel.EsterelModule
+import de.cau.cs.kieler.esterel.EsterelProgram
+import de.cau.cs.kieler.esterel.EsterelVariableDeclaration
+import de.cau.cs.kieler.esterel.Function
+import de.cau.cs.kieler.esterel.FunctionDeclaration
+import de.cau.cs.kieler.esterel.LocalSignalDeclaration
+import de.cau.cs.kieler.esterel.LocalVariableDeclaration
+import de.cau.cs.kieler.esterel.Procedure
+import de.cau.cs.kieler.esterel.ProcedureDeclaration
+import de.cau.cs.kieler.esterel.Sensor
+import de.cau.cs.kieler.esterel.SensorDeclaration
+import de.cau.cs.kieler.esterel.Signal
+import de.cau.cs.kieler.esterel.SignalDeclaration
+import de.cau.cs.kieler.esterel.Task
+import de.cau.cs.kieler.esterel.TaskDeclaration
+import de.cau.cs.kieler.esterel.Trap
+import de.cau.cs.kieler.esterel.TypeDeclaration
+import de.cau.cs.kieler.esterel.TypeDefinition
+import de.cau.cs.kieler.esterel.Variable
+import java.util.ArrayList
+import java.util.List
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.naming.QualifiedName
+import org.eclipse.xtext.resource.EObjectDescription
+import org.eclipse.xtext.resource.IEObjectDescription
+
+/**
+ * @author als
+ * @kieler.design proposed
+ * @kieler.rating proposed yellow
+ */
+class EsterelScopeProviderUtil {
+    
+    /** collecting all sensors of a passed module. */
+    public static val ScopeFunction<EsterelModule> COLLECT_SENSORS = new ScopeFunction<EsterelModule>() {
+        override collect(EsterelModule m, List<IEObjectDescription> scopeElems) {
+            for (s : m.esterelDeclarations.filter(SensorDeclaration).map[valuedObjects.filter(Sensor)].flatten) {
+                scopeElems.add(new EObjectDescription(QualifiedName.create(s.name), s, emptyMap));
+            }
+        }
+    }
+
+    /** collecting all constants of a passed module. */
+    public static val ScopeFunction<EsterelModule> COLLECT_CONSTANTS = new ScopeFunction<EsterelModule>() {
+        override collect(EsterelModule m, List<IEObjectDescription> scopeElems) {
+            for (d : m.esterelDeclarations.filter(ConstantMultiDeclaration)) {
+                for (s : d.constantDecalrations.map[constants.filter(Constant)].flatten) {
+                    scopeElems.add(new EObjectDescription(QualifiedName.create(s.name), s, emptyMap));
+                }
+            }
+        }
+    }
+
+    /** collecting all functions of a passed module. */
+    public static val ScopeFunction<EsterelModule> COLLECT_FUNCTIONS = new ScopeFunction<EsterelModule>() {
+        override collect(EsterelModule m, List<IEObjectDescription> scopeElems) {
+            for (s : m.esterelDeclarations.filter(FunctionDeclaration).map[functions.filter(Function)].flatten) {
+                scopeElems.add(new EObjectDescription(QualifiedName.create(s.name), s, emptyMap));
+            }
+        }
+    };
+
+    /** collecting all procedures of a passed module. */
+    public static val ScopeFunction<EsterelModule> COLLECT_PROCEDURES = new ScopeFunction<EsterelModule>() {
+        override collect(EsterelModule m, List<IEObjectDescription> scopeElems) {
+            for (s : m.esterelDeclarations.filter(ProcedureDeclaration).map[procedures.filter(Procedure)].flatten) {
+                scopeElems.add(new EObjectDescription(QualifiedName.create(s.name), s, emptyMap));
+            }
+        }
+    };
+
+    /** collecting all signals of a passed module. */
+    public static val ScopeFunction<EsterelModule> COLLECT_SIGNALS = new ScopeFunction<EsterelModule>() {
+        override collect(EsterelModule m, List<IEObjectDescription> scopeElems) {
+            for (s : m.esterelDeclarations.filter(SignalDeclaration).map[valuedObjects.filter(Signal)].flatten) {
+                scopeElems.add(new EObjectDescription(QualifiedName.create(s.name), s, emptyMap));
+            }
+        }
+    };
+    /** collecting all types of a passed module. */
+    public static val ScopeFunction<EsterelModule> COLLECT_TYPES = new ScopeFunction<EsterelModule>() {
+        override collect(EsterelModule m, List<IEObjectDescription> scopeElems) {
+            for (s : m.esterelDeclarations.filter(TypeDeclaration).map[types.filter(TypeDefinition)].flatten) {
+                scopeElems.add(new EObjectDescription(QualifiedName.create(s.name), s, emptyMap));
+            }
+        }
+    };
+    /** collecting all tasks of a passed module. */
+    public static val ScopeFunction<EsterelModule> COLLECT_TASKS = new ScopeFunction<EsterelModule>() {
+        override collect(EsterelModule m, List<IEObjectDescription> scopeElems) {
+            for (s : m.esterelDeclarations.filter(TaskDeclaration).map[tasks.filter(Task)].flatten) {
+                scopeElems.add(new EObjectDescription(QualifiedName.create(s.name), s, emptyMap));
+            }
+        }
+    };
+
+    /**
+     * Collects all Signals of the current module (including local signals) and all other modules.
+     * 
+     * @param context
+     *            context
+     * @return list with the new scope elements.
+     */
+    public static def List<IEObjectDescription> getAllSignals(EObject context) {
+        val scopeElems = getLocalSignals(context);
+        scopeElems.addAll(getAllElements(context, COLLECT_SIGNALS));
+        return scopeElems;
+    }
+
+    /**
+     * Gets all elements collected by the passed function within the context's scope up to its
+     * parent module.
+     * 
+     * @param context
+     *            context
+     * @param function
+     *            function collecting scope elements
+     * @return list with the according scope elements.
+     */
+    public static def List<IEObjectDescription> getElements(EObject context, ScopeFunction<EsterelModule> function) {
+        val scopeElems = new ArrayList<IEObjectDescription>();
+        var parent = context.eContainer();
+        // get this scope's module interface
+        while (!(parent instanceof EsterelModule) && parent != null) {
+            parent = parent.eContainer();
+        }
+        if (parent != null) function.collect(parent as EsterelModule, scopeElems);
+        return scopeElems;
+    }
+
+    /**
+     * Gets all elements collected by the passed function within the context's scope up to its
+     * parent module <b>and</b> all other modules withing the .strl file!
+     * 
+     * @param context
+     *            context
+     * @param function
+     *            function collecting scope elements
+     * @return list with the according scope elements.n
+     */
+    public static def List<IEObjectDescription> getAllElements(EObject context, ScopeFunction<EsterelModule> function) {
+
+        val scopeElems = new ArrayList<IEObjectDescription>();
+        var parent = context.eContainer();
+        // get this scope's module interface
+        while (!(parent instanceof EsterelModule) && parent != null) {
+            parent = parent.eContainer();
+        }
+        if (parent != null) {
+            function.collect(parent as EsterelModule, scopeElems);
+            // collect from possible other modules
+            val p = (parent as EsterelModule).eContainer() as EsterelProgram;
+            for (EsterelModule m : p.modules.filter(EsterelModule)) {
+                function.collect(m, scopeElems);
+            }
+        }
+        return scopeElems;
+    }
+
+    /**
+     * collect all local signals of the context up to its parent module.
+     * 
+     * @param context
+     *            context
+     * @return list with scope elements
+     */
+    public static def List<IEObjectDescription> getLocalSignals(EObject context) {
+        val scopeElems = new ArrayList<IEObjectDescription>();
+
+        var parent = context.eContainer();
+        // Go up in the Structure until EsterelModule/MainEsterelModule
+        while (!(parent instanceof EsterelModule) && parent != null) {
+            // Get the local signals into the scope
+            if (parent instanceof LocalSignalDeclaration) {
+                val signals = (parent as LocalSignalDeclaration).getValuedObjects();
+                for (s : signals) {
+                    scopeElems.add(new EObjectDescription(QualifiedName.create(s.getName()), s, emptyMap));
+                }
+            }
+            parent = parent.eContainer();
+        }
+
+        return scopeElems;
+    }
+
+    /**
+     * collect all local variables of the context up to its parent module.
+     * 
+     * @param context
+     *            context
+     * @return list with scope elements
+     */
+    public static def List<IEObjectDescription> getLocalVariables(EObject context) {
+        val scopeElems = new ArrayList<IEObjectDescription>();
+
+        var parent = context.eContainer();
+        // Go up in the Structure until EsterelModule/MainEsterelModule
+        while (!(parent instanceof EsterelModule) && parent != null) {
+            // Get the local variables into the scope
+            if (parent instanceof LocalVariableDeclaration) {
+                val decl = (parent as LocalVariableDeclaration).getVariableDeclarations();
+                for (EsterelVariableDeclaration vdecl : decl) {
+                    for (Variable varSingle : vdecl.getVariables()) {
+                        scopeElems.add(new EObjectDescription(QualifiedName.create(varSingle
+                                .getName()), varSingle, emptyMap));
+                    }
+                }
+            }
+            parent = parent.eContainer();
+        }
+
+        return scopeElems;
+    }
+
+    /**
+     * collect all local traps of the context up to its parent module.
+     * 
+     * @param context
+     *            context
+     * @return list with scope elements
+     */
+    public static def List<IEObjectDescription> getLocalTraps(EObject context) {
+        val scopeElems = new ArrayList<IEObjectDescription>();
+
+        var parent = context.eContainer();
+        // find all Traps
+        while (!(parent instanceof EsterelModule) && parent != null) {
+            if (parent instanceof Trap) {
+                val trapDecl = (parent as Trap).getTrapSignals();
+                // add Trap to the scope
+                for (Signal trap : trapDecl) {
+                    scopeElems.add(new EObjectDescription(QualifiedName.create(trap.getName()),
+                            trap, emptyMap));
+                }
+            }
+            parent = parent.eContainer();
+        }
+
+        return scopeElems;
+    }
+
+    /**
+     * collect all modules of the current esterel file.
+     * 
+     * @param context
+     *            context
+     * @return list with scope elements
+     */
+    public static def List<IEObjectDescription> getAllEsterelModules(EObject context) {
+        val scopeElems = new ArrayList<IEObjectDescription>();
+
+        var parent = context.eContainer();
+        // find all EsterelModules
+        while (parent != null) {
+            if (parent instanceof EsterelProgram) {
+                val p = parent;
+                // add Trap to the scope
+                for (m : p.modules.filter(EsterelModule)) {
+                    scopeElems.add(new EObjectDescription(QualifiedName.create(m.getName()), m, emptyMap));
+                }
+                return scopeElems;
+            }
+            parent = parent.eContainer();
+        }
+
+        return scopeElems;
+    }
+}

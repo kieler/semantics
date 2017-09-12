@@ -7,7 +7,6 @@ import de.cau.cs.kieler.esterel.ConstantExpression
 import de.cau.cs.kieler.esterel.ConstantRenaming
 import de.cau.cs.kieler.esterel.Emit
 import de.cau.cs.kieler.esterel.Exit
-import de.cau.cs.kieler.esterel.FunctionExpression
 import de.cau.cs.kieler.esterel.FunctionRenaming
 import de.cau.cs.kieler.esterel.ModuleRenaming
 import de.cau.cs.kieler.esterel.ProcedureRenaming
@@ -28,7 +27,7 @@ import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.impl.SimpleScope
 
 import static de.cau.cs.kieler.esterel.scoping.EsterelScopeProviderUtil.*
-import de.cau.cs.kieler.esterel.EsterelPackage
+import de.cau.cs.kieler.esterel.EsterelFunctionCall
 
 /**
  * This class contains custom scoping description.
@@ -95,7 +94,7 @@ class EsterelScopeProvider extends SCLScopeProvider {
         return new SimpleScope(getLocalTraps(context));
     }
 
-    def IScope scope_FunctionExpression_function(FunctionExpression context, EReference ref) {
+    def IScope scope_EsterelFunctionCall_function(EsterelFunctionCall context, EReference ref) {
         return new SimpleScope(getAllElements(context, COLLECT_FUNCTIONS));
     }
 
@@ -161,7 +160,7 @@ class EsterelScopeProvider extends SCLScopeProvider {
     }
 
     def IScope scope_ModuleRenaming_module(ModuleRenaming context, EReference ref) {
-        return new SimpleScope(getModules(context));
+        return new SimpleScope(getAllEsterelModules(context));
     }
 
 }

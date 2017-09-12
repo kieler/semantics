@@ -16,72 +16,71 @@ import de.cau.cs.kieler.esterel.Await;
 import de.cau.cs.kieler.esterel.Block;
 import de.cau.cs.kieler.esterel.Case;
 import de.cau.cs.kieler.esterel.Constant;
-import de.cau.cs.kieler.esterel.ConstantDecls;
+import de.cau.cs.kieler.esterel.ConstantDeclaration;
 import de.cau.cs.kieler.esterel.ConstantExpression;
+import de.cau.cs.kieler.esterel.ConstantMultiDeclaration;
 import de.cau.cs.kieler.esterel.ConstantRenaming;
 import de.cau.cs.kieler.esterel.DelayExpr;
 import de.cau.cs.kieler.esterel.Do;
 import de.cau.cs.kieler.esterel.ElsIf;
 import de.cau.cs.kieler.esterel.Emit;
-import de.cau.cs.kieler.esterel.EsterelAssignment;
+import de.cau.cs.kieler.esterel.EsterelFunctionCall;
+import de.cau.cs.kieler.esterel.EsterelModule;
 import de.cau.cs.kieler.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.EsterelParallel;
 import de.cau.cs.kieler.esterel.EsterelProgram;
 import de.cau.cs.kieler.esterel.EsterelThread;
+import de.cau.cs.kieler.esterel.EsterelVariableDeclaration;
 import de.cau.cs.kieler.esterel.EveryDo;
 import de.cau.cs.kieler.esterel.Exec;
 import de.cau.cs.kieler.esterel.ExecCase;
 import de.cau.cs.kieler.esterel.Exit;
 import de.cau.cs.kieler.esterel.Function;
-import de.cau.cs.kieler.esterel.FunctionDecl;
-import de.cau.cs.kieler.esterel.FunctionExpression;
+import de.cau.cs.kieler.esterel.FunctionDeclaration;
 import de.cau.cs.kieler.esterel.FunctionRenaming;
 import de.cau.cs.kieler.esterel.Halt;
-import de.cau.cs.kieler.esterel.ISignal;
-import de.cau.cs.kieler.esterel.IVariable;
 import de.cau.cs.kieler.esterel.IfTest;
-import de.cau.cs.kieler.esterel.Input;
-import de.cau.cs.kieler.esterel.InputOutput;
-import de.cau.cs.kieler.esterel.LocalSignalDecl;
-import de.cau.cs.kieler.esterel.LocalVariable;
+import de.cau.cs.kieler.esterel.InputDeclaration;
+import de.cau.cs.kieler.esterel.InputOutputDeclaration;
+import de.cau.cs.kieler.esterel.LocalSignalDeclaration;
+import de.cau.cs.kieler.esterel.LocalVariableDeclaration;
 import de.cau.cs.kieler.esterel.Loop;
-import de.cau.cs.kieler.esterel.Module;
 import de.cau.cs.kieler.esterel.ModuleRenaming;
 import de.cau.cs.kieler.esterel.Nothing;
-import de.cau.cs.kieler.esterel.OneTypeConstantDecls;
-import de.cau.cs.kieler.esterel.Output;
+import de.cau.cs.kieler.esterel.OutputDeclaration;
 import de.cau.cs.kieler.esterel.Present;
 import de.cau.cs.kieler.esterel.PresentCase;
-import de.cau.cs.kieler.esterel.ProcCall;
 import de.cau.cs.kieler.esterel.Procedure;
-import de.cau.cs.kieler.esterel.ProcedureDecl;
+import de.cau.cs.kieler.esterel.ProcedureCall;
+import de.cau.cs.kieler.esterel.ProcedureDeclaration;
 import de.cau.cs.kieler.esterel.ProcedureRenaming;
-import de.cau.cs.kieler.esterel.Relation;
+import de.cau.cs.kieler.esterel.RelationDeclaration;
 import de.cau.cs.kieler.esterel.RelationImplication;
 import de.cau.cs.kieler.esterel.RelationIncompatibility;
-import de.cau.cs.kieler.esterel.Renaming;
+import de.cau.cs.kieler.esterel.Renamings;
 import de.cau.cs.kieler.esterel.Repeat;
-import de.cau.cs.kieler.esterel.Return;
+import de.cau.cs.kieler.esterel.ReturnDeclaration;
 import de.cau.cs.kieler.esterel.Run;
-import de.cau.cs.kieler.esterel.SensorDecl;
-import de.cau.cs.kieler.esterel.SensorWithType;
+import de.cau.cs.kieler.esterel.Sensor;
+import de.cau.cs.kieler.esterel.SensorDeclaration;
+import de.cau.cs.kieler.esterel.Signal;
 import de.cau.cs.kieler.esterel.SignalReferenceExpr;
 import de.cau.cs.kieler.esterel.SignalRenaming;
 import de.cau.cs.kieler.esterel.Suspend;
 import de.cau.cs.kieler.esterel.Sustain;
 import de.cau.cs.kieler.esterel.Task;
-import de.cau.cs.kieler.esterel.TaskDecl;
+import de.cau.cs.kieler.esterel.TaskDeclaration;
 import de.cau.cs.kieler.esterel.TaskRenaming;
 import de.cau.cs.kieler.esterel.Trap;
 import de.cau.cs.kieler.esterel.TrapExpression;
 import de.cau.cs.kieler.esterel.TrapHandler;
 import de.cau.cs.kieler.esterel.TrapReferenceExpr;
 import de.cau.cs.kieler.esterel.TrapSignal;
-import de.cau.cs.kieler.esterel.Type;
-import de.cau.cs.kieler.esterel.TypeDecl;
+import de.cau.cs.kieler.esterel.TypeDeclaration;
+import de.cau.cs.kieler.esterel.TypeDefinition;
 import de.cau.cs.kieler.esterel.TypeIdentifier;
 import de.cau.cs.kieler.esterel.TypeRenaming;
-import de.cau.cs.kieler.esterel.VariableDecl;
+import de.cau.cs.kieler.esterel.Variable;
 import de.cau.cs.kieler.esterel.services.EsterelGrammarAccess;
 import de.cau.cs.kieler.kexpressions.BoolValue;
 import de.cau.cs.kieler.kexpressions.FloatValue;
@@ -117,6 +116,7 @@ import de.cau.cs.kieler.scl.Conditional;
 import de.cau.cs.kieler.scl.ElseScope;
 import de.cau.cs.kieler.scl.Goto;
 import de.cau.cs.kieler.scl.Label;
+import de.cau.cs.kieler.scl.Module;
 import de.cau.cs.kieler.scl.Parallel;
 import de.cau.cs.kieler.scl.Pause;
 import de.cau.cs.kieler.scl.SCLPackage;
@@ -224,11 +224,14 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 			case EsterelPackage.CONSTANT:
 				sequence_Constant(context, (Constant) semanticObject); 
 				return; 
-			case EsterelPackage.CONSTANT_DECLS:
-				sequence_ConstantDecls(context, (ConstantDecls) semanticObject); 
+			case EsterelPackage.CONSTANT_DECLARATION:
+				sequence_ConstantDeclaration(context, (ConstantDeclaration) semanticObject); 
 				return; 
 			case EsterelPackage.CONSTANT_EXPRESSION:
 				sequence_ConstantExpression(context, (ConstantExpression) semanticObject); 
+				return; 
+			case EsterelPackage.CONSTANT_MULTI_DECLARATION:
+				sequence_ConstantMultiDeclaration(context, (ConstantMultiDeclaration) semanticObject); 
 				return; 
 			case EsterelPackage.CONSTANT_RENAMING:
 				sequence_ConstantRenaming(context, (ConstantRenaming) semanticObject); 
@@ -245,8 +248,11 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 			case EsterelPackage.EMIT:
 				sequence_Emit(context, (Emit) semanticObject); 
 				return; 
-			case EsterelPackage.ESTEREL_ASSIGNMENT:
-				sequence_EsterelAssignment(context, (EsterelAssignment) semanticObject); 
+			case EsterelPackage.ESTEREL_FUNCTION_CALL:
+				sequence_EsterelFunctionCall(context, (EsterelFunctionCall) semanticObject); 
+				return; 
+			case EsterelPackage.ESTEREL_MODULE:
+				sequence_EsterelModule(context, (EsterelModule) semanticObject); 
 				return; 
 			case EsterelPackage.ESTEREL_PARALLEL:
 				sequence_EsterelParallel(context, (EsterelParallel) semanticObject); 
@@ -256,6 +262,9 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				return; 
 			case EsterelPackage.ESTEREL_THREAD:
 				sequence_EsterelThread(context, (EsterelThread) semanticObject); 
+				return; 
+			case EsterelPackage.ESTEREL_VARIABLE_DECLARATION:
+				sequence_EsterelVariableDeclaration(context, (EsterelVariableDeclaration) semanticObject); 
 				return; 
 			case EsterelPackage.EVERY_DO:
 				sequence_EveryDo(context, (EveryDo) semanticObject); 
@@ -272,11 +281,8 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 			case EsterelPackage.FUNCTION:
 				sequence_Function(context, (Function) semanticObject); 
 				return; 
-			case EsterelPackage.FUNCTION_DECL:
-				sequence_FunctionDecl(context, (FunctionDecl) semanticObject); 
-				return; 
-			case EsterelPackage.FUNCTION_EXPRESSION:
-				sequence_FunctionExpression(context, (FunctionExpression) semanticObject); 
+			case EsterelPackage.FUNCTION_DECLARATION:
+				sequence_FunctionDeclaration(context, (FunctionDeclaration) semanticObject); 
 				return; 
 			case EsterelPackage.FUNCTION_RENAMING:
 				sequence_FunctionRenaming(context, (FunctionRenaming) semanticObject); 
@@ -284,40 +290,23 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 			case EsterelPackage.HALT:
 				sequence_Halt(context, (Halt) semanticObject); 
 				return; 
-			case EsterelPackage.ISIGNAL:
-				if (rule == grammarAccess.getISignalRule()
-						|| rule == grammarAccess.getEsterel_ValuedObjectRule()) {
-					sequence_ISignal(context, (ISignal) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getSensorRule()) {
-					sequence_Sensor(context, (ISignal) semanticObject); 
-					return; 
-				}
-				else break;
-			case EsterelPackage.IVARIABLE:
-				sequence_IVariable(context, (IVariable) semanticObject); 
-				return; 
 			case EsterelPackage.IF_TEST:
 				sequence_IfTest(context, (IfTest) semanticObject); 
 				return; 
-			case EsterelPackage.INPUT:
-				sequence_InterfaceSignalDecl(context, (Input) semanticObject); 
+			case EsterelPackage.INPUT_DECLARATION:
+				sequence_InputDeclaration(context, (InputDeclaration) semanticObject); 
 				return; 
-			case EsterelPackage.INPUT_OUTPUT:
-				sequence_InterfaceSignalDecl(context, (InputOutput) semanticObject); 
+			case EsterelPackage.INPUT_OUTPUT_DECLARATION:
+				sequence_InputOutputDeclaration(context, (InputOutputDeclaration) semanticObject); 
 				return; 
-			case EsterelPackage.LOCAL_SIGNAL_DECL:
-				sequence_LocalSignalDecl(context, (LocalSignalDecl) semanticObject); 
+			case EsterelPackage.LOCAL_SIGNAL_DECLARATION:
+				sequence_LocalSignalDeclaration(context, (LocalSignalDeclaration) semanticObject); 
 				return; 
-			case EsterelPackage.LOCAL_VARIABLE:
-				sequence_LocalVariable(context, (LocalVariable) semanticObject); 
+			case EsterelPackage.LOCAL_VARIABLE_DECLARATION:
+				sequence_LocalVariableDeclaration(context, (LocalVariableDeclaration) semanticObject); 
 				return; 
 			case EsterelPackage.LOOP:
 				sequence_Loop(context, (Loop) semanticObject); 
-				return; 
-			case EsterelPackage.MODULE:
-				sequence_Module(context, (Module) semanticObject); 
 				return; 
 			case EsterelPackage.MODULE_RENAMING:
 				sequence_ModuleRenaming(context, (ModuleRenaming) semanticObject); 
@@ -325,11 +314,8 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 			case EsterelPackage.NOTHING:
 				sequence_Nothing(context, (Nothing) semanticObject); 
 				return; 
-			case EsterelPackage.ONE_TYPE_CONSTANT_DECLS:
-				sequence_OneTypeConstantDecls(context, (OneTypeConstantDecls) semanticObject); 
-				return; 
-			case EsterelPackage.OUTPUT:
-				sequence_InterfaceSignalDecl(context, (Output) semanticObject); 
+			case EsterelPackage.OUTPUT_DECLARATION:
+				sequence_OutputDeclaration(context, (OutputDeclaration) semanticObject); 
 				return; 
 			case EsterelPackage.PRESENT:
 				sequence_Present(context, (Present) semanticObject); 
@@ -337,20 +323,20 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 			case EsterelPackage.PRESENT_CASE:
 				sequence_PresentCase(context, (PresentCase) semanticObject); 
 				return; 
-			case EsterelPackage.PROC_CALL:
-				sequence_ProcCall(context, (ProcCall) semanticObject); 
-				return; 
 			case EsterelPackage.PROCEDURE:
 				sequence_Procedure(context, (Procedure) semanticObject); 
 				return; 
-			case EsterelPackage.PROCEDURE_DECL:
-				sequence_ProcedureDecl(context, (ProcedureDecl) semanticObject); 
+			case EsterelPackage.PROCEDURE_CALL:
+				sequence_ProcedureCall(context, (ProcedureCall) semanticObject); 
+				return; 
+			case EsterelPackage.PROCEDURE_DECLARATION:
+				sequence_ProcedureDeclaration(context, (ProcedureDeclaration) semanticObject); 
 				return; 
 			case EsterelPackage.PROCEDURE_RENAMING:
 				sequence_ProcedureRenaming(context, (ProcedureRenaming) semanticObject); 
 				return; 
-			case EsterelPackage.RELATION:
-				sequence_RelationDecl(context, (Relation) semanticObject); 
+			case EsterelPackage.RELATION_DECLARATION:
+				sequence_RelationDeclaration(context, (RelationDeclaration) semanticObject); 
 				return; 
 			case EsterelPackage.RELATION_IMPLICATION:
 				sequence_RelationImplication(context, (RelationImplication) semanticObject); 
@@ -358,23 +344,26 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 			case EsterelPackage.RELATION_INCOMPATIBILITY:
 				sequence_RelationIncompatibility(context, (RelationIncompatibility) semanticObject); 
 				return; 
-			case EsterelPackage.RENAMING:
-				sequence_Renaming(context, (Renaming) semanticObject); 
+			case EsterelPackage.RENAMINGS:
+				sequence_Renamings(context, (Renamings) semanticObject); 
 				return; 
 			case EsterelPackage.REPEAT:
 				sequence_Repeat(context, (Repeat) semanticObject); 
 				return; 
-			case EsterelPackage.RETURN:
-				sequence_InterfaceSignalDecl(context, (Return) semanticObject); 
+			case EsterelPackage.RETURN_DECLARATION:
+				sequence_ReturnDeclaration(context, (ReturnDeclaration) semanticObject); 
 				return; 
 			case EsterelPackage.RUN:
 				sequence_Run(context, (Run) semanticObject); 
 				return; 
-			case EsterelPackage.SENSOR_DECL:
-				sequence_SensorDecl(context, (SensorDecl) semanticObject); 
+			case EsterelPackage.SENSOR:
+				sequence_Sensor(context, (Sensor) semanticObject); 
 				return; 
-			case EsterelPackage.SENSOR_WITH_TYPE:
-				sequence_SensorWithType(context, (SensorWithType) semanticObject); 
+			case EsterelPackage.SENSOR_DECLARATION:
+				sequence_SensorDeclaration(context, (SensorDeclaration) semanticObject); 
+				return; 
+			case EsterelPackage.SIGNAL:
+				sequence_Signal(context, (Signal) semanticObject); 
 				return; 
 			case EsterelPackage.SIGNAL_REFERENCE_EXPR:
 				sequence_SignalReferenceExpr(context, (SignalReferenceExpr) semanticObject); 
@@ -391,8 +380,8 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 			case EsterelPackage.TASK:
 				sequence_Task(context, (Task) semanticObject); 
 				return; 
-			case EsterelPackage.TASK_DECL:
-				sequence_TaskDecl(context, (TaskDecl) semanticObject); 
+			case EsterelPackage.TASK_DECLARATION:
+				sequence_TaskDeclaration(context, (TaskDeclaration) semanticObject); 
 				return; 
 			case EsterelPackage.TASK_RENAMING:
 				sequence_TaskRenaming(context, (TaskRenaming) semanticObject); 
@@ -412,11 +401,11 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 			case EsterelPackage.TRAP_SIGNAL:
 				sequence_TrapSignal(context, (TrapSignal) semanticObject); 
 				return; 
-			case EsterelPackage.TYPE:
-				sequence_Type(context, (Type) semanticObject); 
+			case EsterelPackage.TYPE_DECLARATION:
+				sequence_TypeDeclaration(context, (TypeDeclaration) semanticObject); 
 				return; 
-			case EsterelPackage.TYPE_DECL:
-				sequence_TypeDecl(context, (TypeDecl) semanticObject); 
+			case EsterelPackage.TYPE_DEFINITION:
+				sequence_TypeDefinition(context, (TypeDefinition) semanticObject); 
 				return; 
 			case EsterelPackage.TYPE_IDENTIFIER:
 				sequence_TypeIdentifier(context, (TypeIdentifier) semanticObject); 
@@ -424,8 +413,8 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 			case EsterelPackage.TYPE_RENAMING:
 				sequence_TypeRenaming(context, (TypeRenaming) semanticObject); 
 				return; 
-			case EsterelPackage.VARIABLE_DECL:
-				sequence_VariableDecl(context, (VariableDecl) semanticObject); 
+			case EsterelPackage.VARIABLE:
+				sequence_Variable(context, (Variable) semanticObject); 
 				return; 
 			}
 		else if (epackage == KEffectsPackage.eINSTANCE)
@@ -660,6 +649,9 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 			case SCLPackage.LABEL:
 				sequence_Label(context, (Label) semanticObject); 
 				return; 
+			case SCLPackage.MODULE:
+				sequence_Module(context, (Module) semanticObject); 
+				return; 
 			case SCLPackage.PARALLEL:
 				sequence_Parallel(context, (Parallel) semanticObject); 
 				return; 
@@ -682,7 +674,6 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     StatementContainerInterface returns Abort
 	 *     EsterelStatement returns Abort
 	 *     AtomicStatement returns Abort
 	 *     Abort returns Abort
@@ -691,9 +682,9 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     (
 	 *         annotations+=Annotation* 
 	 *         weak?='weak'? 
-	 *         statements+=EsterelStatement* 
+	 *         (statements+=EsterelStatement | statements+=MetaStatement)* 
 	 *         statements+=EsterelStatement? 
-	 *         ((delay=DelayExpr doStatements+=EsterelStatement* doStatements+=EsterelStatement?) | delay=DelayExpr | cases+=Case+)
+	 *         ((delay=DelayExpr (doStatements+=EsterelStatement | doStatements+=MetaStatement)* doStatements+=EsterelStatement?) | delay=DelayExpr | cases+=Case+)
 	 *     )
 	 */
 	protected void sequence_Abort(ISerializationContext context, Abort semanticObject) {
@@ -708,18 +699,18 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     (
-	 *         (subExpressions+=OrExpression_OperatorExpression_1_0 (operator=Esterel_OrOperator subExpressions+=AndExpression)+) | 
-	 *         (subExpressions+=AndExpression_OperatorExpression_1_0 (operator=Esterel_AndOperator subExpressions+=CompareOperation)+) | 
-	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=Esterel_CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (operator=Esterel_NotOperator subExpressions+=NotExpression) | 
-	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 (operator=Esterel_AddOperator subExpressions+=SubExpression)+) | 
-	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 (operator=Esterel_SubOperator subExpressions+=MultExpression)+) | 
-	 *         (subExpressions+=MultExpression_OperatorExpression_1_0 (operator=Esterel_MultOperator subExpressions+=DivExpression)+) | 
-	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=Esterel_DivOperator subExpressions+=ModExpression) | 
-	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=Esterel_ModOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (operator=Esterel_SubOperator subExpressions+=NegExpression) | 
-	 *         (operator=Esterel_PreOperator subExpressions+=ValuedObjectTestExpression) | 
-	 *         (operator=Esterel_ValueTestOperator subExpressions+=ValuedObjectReference) | 
+	 *         (subExpressions+=OrExpression_OperatorExpression_1_0 (operator=EsterelOrOperator subExpressions+=AndExpression)+) | 
+	 *         (subExpressions+=AndExpression_OperatorExpression_1_0 (operator=EsterelAndOperator subExpressions+=CompareOperation)+) | 
+	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=EsterelCompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (operator=EsterelNotOperator subExpressions+=NotExpression) | 
+	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 (operator=EsterelAddOperator subExpressions+=SubExpression)+) | 
+	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 (operator=EsterelSubOperator subExpressions+=MultExpression)+) | 
+	 *         (subExpressions+=MultExpression_OperatorExpression_1_0 (operator=EsterelMultOperator subExpressions+=DivExpression)+) | 
+	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=EsterelDivOperator subExpressions+=ModExpression) | 
+	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=EsterelModOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=EsterelSubOperator subExpressions+=NegExpression) | 
+	 *         (operator=EsterelPreOperator subExpressions+=ValuedObjectTestExpression) | 
+	 *         (operator=EsterelValueTestOperator subExpressions+=ValuedObjectReference) | 
 	 *         (
 	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
 	 *             operator=LogicalOrOperator 
@@ -758,18 +749,18 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     (
-	 *         (subExpressions+=OrExpression_OperatorExpression_1_0 (operator=Esterel_OrOperator subExpressions+=AndExpression)+) | 
-	 *         (subExpressions+=AndExpression_OperatorExpression_1_0 (operator=Esterel_AndOperator subExpressions+=CompareOperation)+) | 
-	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=Esterel_CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (operator=Esterel_NotOperator subExpressions+=NotExpression) | 
-	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 (operator=Esterel_AddOperator subExpressions+=SubExpression)+) | 
-	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 (operator=Esterel_SubOperator subExpressions+=MultExpression)+) | 
-	 *         (subExpressions+=MultExpression_OperatorExpression_1_0 (operator=Esterel_MultOperator subExpressions+=DivExpression)+) | 
-	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=Esterel_DivOperator subExpressions+=ModExpression) | 
-	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=Esterel_ModOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (operator=Esterel_SubOperator subExpressions+=NegExpression) | 
-	 *         (operator=Esterel_PreOperator subExpressions+=ValuedObjectTestExpression) | 
-	 *         (operator=Esterel_ValueTestOperator subExpressions+=ValuedObjectReference) | 
+	 *         (subExpressions+=OrExpression_OperatorExpression_1_0 (operator=EsterelOrOperator subExpressions+=AndExpression)+) | 
+	 *         (subExpressions+=AndExpression_OperatorExpression_1_0 (operator=EsterelAndOperator subExpressions+=CompareOperation)+) | 
+	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=EsterelCompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (operator=EsterelNotOperator subExpressions+=NotExpression) | 
+	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 (operator=EsterelAddOperator subExpressions+=SubExpression)+) | 
+	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 (operator=EsterelSubOperator subExpressions+=MultExpression)+) | 
+	 *         (subExpressions+=MultExpression_OperatorExpression_1_0 (operator=EsterelMultOperator subExpressions+=DivExpression)+) | 
+	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=EsterelDivOperator subExpressions+=ModExpression) | 
+	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=EsterelModOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=EsterelSubOperator subExpressions+=NegExpression) | 
+	 *         (operator=EsterelPreOperator subExpressions+=ValuedObjectTestExpression) | 
+	 *         (operator=EsterelValueTestOperator subExpressions+=ValuedObjectReference) | 
 	 *         (
 	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
 	 *             operator=LogicalAndOperator 
@@ -802,18 +793,18 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     (
-	 *         (subExpressions+=OrExpression_OperatorExpression_1_0 (operator=Esterel_OrOperator subExpressions+=AndExpression)+) | 
-	 *         (subExpressions+=AndExpression_OperatorExpression_1_0 (operator=Esterel_AndOperator subExpressions+=CompareOperation)+) | 
-	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=Esterel_CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (operator=Esterel_NotOperator subExpressions+=NotExpression) | 
-	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 (operator=Esterel_AddOperator subExpressions+=SubExpression)+) | 
-	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 (operator=Esterel_SubOperator subExpressions+=MultExpression)+) | 
-	 *         (subExpressions+=MultExpression_OperatorExpression_1_0 (operator=Esterel_MultOperator subExpressions+=DivExpression)+) | 
-	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=Esterel_DivOperator subExpressions+=ModExpression) | 
-	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=Esterel_ModOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (operator=Esterel_SubOperator subExpressions+=NegExpression) | 
-	 *         (operator=Esterel_PreOperator subExpressions+=ValuedObjectTestExpression) | 
-	 *         (operator=Esterel_ValueTestOperator subExpressions+=ValuedObjectReference) | 
+	 *         (subExpressions+=OrExpression_OperatorExpression_1_0 (operator=EsterelOrOperator subExpressions+=AndExpression)+) | 
+	 *         (subExpressions+=AndExpression_OperatorExpression_1_0 (operator=EsterelAndOperator subExpressions+=CompareOperation)+) | 
+	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=EsterelCompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (operator=EsterelNotOperator subExpressions+=NotExpression) | 
+	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 (operator=EsterelAddOperator subExpressions+=SubExpression)+) | 
+	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 (operator=EsterelSubOperator subExpressions+=MultExpression)+) | 
+	 *         (subExpressions+=MultExpression_OperatorExpression_1_0 (operator=EsterelMultOperator subExpressions+=DivExpression)+) | 
+	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=EsterelDivOperator subExpressions+=ModExpression) | 
+	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=EsterelModOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=EsterelSubOperator subExpressions+=NegExpression) | 
+	 *         (operator=EsterelPreOperator subExpressions+=ValuedObjectTestExpression) | 
+	 *         (operator=EsterelValueTestOperator subExpressions+=ValuedObjectReference) | 
 	 *         (
 	 *             subExpressions+=BitwiseOrExpression_OperatorExpression_1_0 
 	 *             operator=BitwiseOrOperator 
@@ -840,18 +831,18 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     (
-	 *         (subExpressions+=OrExpression_OperatorExpression_1_0 (operator=Esterel_OrOperator subExpressions+=AndExpression)+) | 
-	 *         (subExpressions+=AndExpression_OperatorExpression_1_0 (operator=Esterel_AndOperator subExpressions+=CompareOperation)+) | 
-	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=Esterel_CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (operator=Esterel_NotOperator subExpressions+=NotExpression) | 
-	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 (operator=Esterel_AddOperator subExpressions+=SubExpression)+) | 
-	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 (operator=Esterel_SubOperator subExpressions+=MultExpression)+) | 
-	 *         (subExpressions+=MultExpression_OperatorExpression_1_0 (operator=Esterel_MultOperator subExpressions+=DivExpression)+) | 
-	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=Esterel_DivOperator subExpressions+=ModExpression) | 
-	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=Esterel_ModOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (operator=Esterel_SubOperator subExpressions+=NegExpression) | 
-	 *         (operator=Esterel_PreOperator subExpressions+=ValuedObjectTestExpression) | 
-	 *         (operator=Esterel_ValueTestOperator subExpressions+=ValuedObjectReference) | 
+	 *         (subExpressions+=OrExpression_OperatorExpression_1_0 (operator=EsterelOrOperator subExpressions+=AndExpression)+) | 
+	 *         (subExpressions+=AndExpression_OperatorExpression_1_0 (operator=EsterelAndOperator subExpressions+=CompareOperation)+) | 
+	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=EsterelCompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (operator=EsterelNotOperator subExpressions+=NotExpression) | 
+	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 (operator=EsterelAddOperator subExpressions+=SubExpression)+) | 
+	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 (operator=EsterelSubOperator subExpressions+=MultExpression)+) | 
+	 *         (subExpressions+=MultExpression_OperatorExpression_1_0 (operator=EsterelMultOperator subExpressions+=DivExpression)+) | 
+	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=EsterelDivOperator subExpressions+=ModExpression) | 
+	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=EsterelModOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=EsterelSubOperator subExpressions+=NegExpression) | 
+	 *         (operator=EsterelPreOperator subExpressions+=ValuedObjectTestExpression) | 
+	 *         (operator=EsterelValueTestOperator subExpressions+=ValuedObjectReference) | 
 	 *         (
 	 *             subExpressions+=BitwiseAndExpression_OperatorExpression_1_0 
 	 *             operator=BitwiseAndOperator 
@@ -897,18 +888,18 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     (
-	 *         (subExpressions+=OrExpression_OperatorExpression_1_0 (operator=Esterel_OrOperator subExpressions+=AndExpression)+) | 
-	 *         (subExpressions+=AndExpression_OperatorExpression_1_0 (operator=Esterel_AndOperator subExpressions+=CompareOperation)+) | 
-	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=Esterel_CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (operator=Esterel_NotOperator subExpressions+=NotExpression) | 
-	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 (operator=Esterel_AddOperator subExpressions+=SubExpression)+) | 
-	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 (operator=Esterel_SubOperator subExpressions+=MultExpression)+) | 
-	 *         (subExpressions+=MultExpression_OperatorExpression_1_0 (operator=Esterel_MultOperator subExpressions+=DivExpression)+) | 
-	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=Esterel_DivOperator subExpressions+=ModExpression) | 
-	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=Esterel_ModOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (operator=Esterel_SubOperator subExpressions+=NegExpression) | 
-	 *         (operator=Esterel_PreOperator subExpressions+=ValuedObjectTestExpression) | 
-	 *         (operator=Esterel_ValueTestOperator subExpressions+=ValuedObjectReference)
+	 *         (subExpressions+=OrExpression_OperatorExpression_1_0 (operator=EsterelOrOperator subExpressions+=AndExpression)+) | 
+	 *         (subExpressions+=AndExpression_OperatorExpression_1_0 (operator=EsterelAndOperator subExpressions+=CompareOperation)+) | 
+	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=EsterelCompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (operator=EsterelNotOperator subExpressions+=NotExpression) | 
+	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 (operator=EsterelAddOperator subExpressions+=SubExpression)+) | 
+	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 (operator=EsterelSubOperator subExpressions+=MultExpression)+) | 
+	 *         (subExpressions+=MultExpression_OperatorExpression_1_0 (operator=EsterelMultOperator subExpressions+=DivExpression)+) | 
+	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=EsterelDivOperator subExpressions+=ModExpression) | 
+	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=EsterelModOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=EsterelSubOperator subExpressions+=NegExpression) | 
+	 *         (operator=EsterelPreOperator subExpressions+=ValuedObjectTestExpression) | 
+	 *         (operator=EsterelValueTestOperator subExpressions+=ValuedObjectReference)
 	 *     )
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
@@ -918,13 +909,41 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     StatementContainerInterface returns Await
+	 *     EsterelStatement returns Assignment
+	 *     AtomicStatement returns Assignment
+	 *     Assignment returns Assignment
+	 *     Statement returns Assignment
+	 *     InstructionStatement returns Assignment
+	 *     Effect returns Assignment
+	 *
+	 * Constraint:
+	 *     (valuedObject=[Variable|ID] expression=Expression)
+	 */
+	protected void sequence_Assignment(ISerializationContext context, de.cau.cs.kieler.scl.Assignment semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, KEffectsPackage.Literals.ASSIGNMENT__VALUED_OBJECT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KEffectsPackage.Literals.ASSIGNMENT__VALUED_OBJECT));
+			if (transientValues.isValueTransient(semanticObject, KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getAssignmentAccess().getValuedObjectVariableIDTerminalRuleCall_0_0_1(), semanticObject.getValuedObject());
+		feeder.accept(grammarAccess.getAssignmentAccess().getExpressionExpressionParserRuleCall_2_0(), semanticObject.getExpression());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     EsterelStatement returns Await
 	 *     AtomicStatement returns Await
 	 *     Await returns Await
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* ((delay=DelayExpr statements+=EsterelStatement* statements+=EsterelStatement?) | cases+=Case+))
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         ((delay=DelayExpr (statements+=EsterelStatement | statements+=MetaStatement)* statements+=EsterelStatement?) | cases+=Case+)
+	 *     )
 	 */
 	protected void sequence_Await(ISerializationContext context, Await semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -933,13 +952,12 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     StatementContainerInterface returns Block
 	 *     EsterelStatement returns Block
 	 *     AtomicStatement returns Block
 	 *     Block returns Block
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* statements+=EsterelStatement* statements+=EsterelStatement?)
+	 *     (annotations+=Annotation* (statements+=EsterelStatement | statements+=MetaStatement)* statements+=EsterelStatement?)
 	 */
 	protected void sequence_Block(ISerializationContext context, Block semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -948,11 +966,10 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     StatementContainerInterface returns Case
 	 *     Case returns Case
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* delay=DelayExpr statements+=EsterelStatement* statements+=EsterelStatement?)
+	 *     (annotations+=Annotation* delay=DelayExpr (statements+=EsterelStatement | statements+=MetaStatement)* statements+=EsterelStatement?)
 	 */
 	protected void sequence_Case(ISerializationContext context, Case semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -961,12 +978,12 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     ConstantDecls returns ConstantDecls
+	 *     ConstantDeclaration returns ConstantDeclaration
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* constants+=OneTypeConstantDecls constants+=OneTypeConstantDecls*)
+	 *     (constants+=Constant constants+=Constant* type=TypeIdentifier)
 	 */
-	protected void sequence_ConstantDecls(ISerializationContext context, ConstantDecls semanticObject) {
+	protected void sequence_ConstantDeclaration(ISerializationContext context, ConstantDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1011,9 +1028,22 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     VectorValueMember returns ConstantExpression
 	 *
 	 * Constraint:
-	 *     (constant=[Constant|ID] | value=ConstantValue)
+	 *     (constant=[Constant|ID] | value=AnyValue)
 	 */
 	protected void sequence_ConstantExpression(ISerializationContext context, ConstantExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     EsterelDeclaration returns ConstantMultiDeclaration
+	 *     ConstantMultiDeclaration returns ConstantMultiDeclaration
+	 *
+	 * Constraint:
+	 *     (annotations+=Annotation* constantDecalrations+=ConstantDeclaration constantDecalrations+=ConstantDeclaration*)
+	 */
+	protected void sequence_ConstantMultiDeclaration(ISerializationContext context, ConstantMultiDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1023,7 +1053,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     ConstantRenaming returns ConstantRenaming
 	 *
 	 * Constraint:
-	 *     ((newName=[Constant|ID] | newValue=ConstantValue) oldName=[Constant|ID])
+	 *     ((newName=[Constant|ID] | newValue=AnyValue) oldName=[Constant|ID])
 	 */
 	protected void sequence_ConstantRenaming(ISerializationContext context, ConstantRenaming semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1033,13 +1063,21 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	/**
 	 * Contexts:
 	 *     Constant returns Constant
-	 *     Esterel_ValuedObject returns Constant
 	 *
 	 * Constraint:
-	 *     (name=ID value=ConstantValue?)
+	 *     (name=ID initialValue=AnyValue)
 	 */
 	protected void sequence_Constant(ISerializationContext context, Constant semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AnnotationsPackage.Literals.NAMED_OBJECT__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AnnotationsPackage.Literals.NAMED_OBJECT__NAME));
+			if (transientValues.isValueTransient(semanticObject, EsterelPackage.Literals.CONSTANT__INITIAL_VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EsterelPackage.Literals.CONSTANT__INITIAL_VALUE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getConstantAccess().getNameIDTerminalRuleCall_0_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getConstantAccess().getInitialValueAnyValueParserRuleCall_2_0(), semanticObject.getInitialValue());
+		feeder.finish();
 	}
 	
 	
@@ -1048,7 +1086,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     DelayExpr returns DelayExpr
 	 *
 	 * Constraint:
-	 *     ((expression=Expression | isImmediate?='immediate')? (signalExpr=SignalReferenceExpr | signalExpr=SignalExpression))
+	 *     ((delay=Expression | immediate?='immediate')? (expression=SignalReferenceExpr | expression=SignalExpression))
 	 */
 	protected void sequence_DelayExpr(ISerializationContext context, DelayExpr semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1057,7 +1095,6 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     StatementContainerInterface returns Do
 	 *     EsterelStatement returns Do
 	 *     AtomicStatement returns Do
 	 *     Do returns Do
@@ -1065,11 +1102,16 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         statements+=EsterelStatement* 
+	 *         (statements+=EsterelStatement | statements+=MetaStatement)* 
 	 *         statements+=EsterelStatement? 
 	 *         (
-	 *             (endingAnnotations+=Annotation* expression=DelayExpr) | 
-	 *             (endingAnnotations+=Annotation* delay=DelayExpr watchingStatements+=EsterelStatement* watchingStatements+=EsterelStatement?)
+	 *             (annotations+=Annotation* delay=DelayExpr) | 
+	 *             (
+	 *                 watchingAnnotations+=Annotation* 
+	 *                 watching=DelayExpr 
+	 *                 (watchingStatements+=EsterelStatement | statements+=MetaStatement)* 
+	 *                 watchingStatements+=EsterelStatement?
+	 *             )
 	 *         )
 	 *     )
 	 */
@@ -1083,7 +1125,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     ElsIf returns ElsIf
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* expression=Expression thenStatements+=EsterelStatement* thenStatements+=EsterelStatement?)
+	 *     (annotations+=Annotation* expression=Expression (statements+=EsterelStatement | statements+=MetaStatement)* statements+=EsterelStatement?)
 	 */
 	protected void sequence_ElsIf(ISerializationContext context, ElsIf semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1097,7 +1139,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     Emit returns Emit
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* signal=[ISignal|ID] expression=Expression?)
+	 *     (annotations+=Annotation* signal=[Signal|ID] expression=Expression?)
 	 */
 	protected void sequence_Emit(ISerializationContext context, Emit semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1106,24 +1148,66 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     EsterelStatement returns EsterelAssignment
-	 *     AtomicStatement returns EsterelAssignment
-	 *     EsterelAssignment returns EsterelAssignment
+	 *     AtomicExpression returns EsterelFunctionCall
+	 *     EsterelFunctionCall returns EsterelFunctionCall
+	 *     Expression returns EsterelFunctionCall
+	 *     BooleanExpression returns EsterelFunctionCall
+	 *     OrExpression returns EsterelFunctionCall
+	 *     OrExpression.OperatorExpression_1_0 returns EsterelFunctionCall
+	 *     AndExpression returns EsterelFunctionCall
+	 *     AndExpression.OperatorExpression_1_0 returns EsterelFunctionCall
+	 *     CompareOperation returns EsterelFunctionCall
+	 *     CompareOperation.OperatorExpression_1_0 returns EsterelFunctionCall
+	 *     NotOrValuedExpression returns EsterelFunctionCall
+	 *     NotExpression returns EsterelFunctionCall
+	 *     ValuedExpression returns EsterelFunctionCall
+	 *     AddExpression returns EsterelFunctionCall
+	 *     AddExpression.OperatorExpression_1_0 returns EsterelFunctionCall
+	 *     SubExpression returns EsterelFunctionCall
+	 *     SubExpression.OperatorExpression_1_0 returns EsterelFunctionCall
+	 *     MultExpression returns EsterelFunctionCall
+	 *     MultExpression.OperatorExpression_1_0 returns EsterelFunctionCall
+	 *     DivExpression returns EsterelFunctionCall
+	 *     DivExpression.OperatorExpression_1_0 returns EsterelFunctionCall
+	 *     ModExpression returns EsterelFunctionCall
+	 *     ModExpression.OperatorExpression_1_0 returns EsterelFunctionCall
+	 *     NegExpression returns EsterelFunctionCall
+	 *     AtomicValuedExpression returns EsterelFunctionCall
+	 *     Root returns EsterelFunctionCall
+	 *     BoolExpression returns EsterelFunctionCall
+	 *     LogicalOrExpression returns EsterelFunctionCall
+	 *     LogicalOrExpression.OperatorExpression_1_0 returns EsterelFunctionCall
+	 *     LogicalAndExpression returns EsterelFunctionCall
+	 *     LogicalAndExpression.OperatorExpression_1_0 returns EsterelFunctionCall
+	 *     BitwiseOrExpression returns EsterelFunctionCall
+	 *     BitwiseOrExpression.OperatorExpression_1_0 returns EsterelFunctionCall
+	 *     BitwiseAndExpression returns EsterelFunctionCall
+	 *     BitwiseAndExpression.OperatorExpression_1_0 returns EsterelFunctionCall
+	 *     VectorValueMember returns EsterelFunctionCall
 	 *
 	 * Constraint:
-	 *     (var=[IVariable|ID] expression=Expression)
+	 *     (function=[Function|ID] (parameter+=Expression parameter+=Expression*)?)
 	 */
-	protected void sequence_EsterelAssignment(ISerializationContext context, EsterelAssignment semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, EsterelPackage.Literals.ESTEREL_ASSIGNMENT__VAR) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EsterelPackage.Literals.ESTEREL_ASSIGNMENT__VAR));
-			if (transientValues.isValueTransient(semanticObject, EsterelPackage.Literals.ESTEREL_ASSIGNMENT__EXPRESSION) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EsterelPackage.Literals.ESTEREL_ASSIGNMENT__EXPRESSION));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getEsterelAssignmentAccess().getVarIVariableIDTerminalRuleCall_0_0_1(), semanticObject.getVar());
-		feeder.accept(grammarAccess.getEsterelAssignmentAccess().getExpressionExpressionParserRuleCall_2_0(), semanticObject.getExpression());
-		feeder.finish();
+	protected void sequence_EsterelFunctionCall(ISerializationContext context, EsterelFunctionCall semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     EsterelModule returns EsterelModule
+	 *
+	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         name=ID 
+	 *         esterelDeclarations+=EsterelDeclaration* 
+	 *         (statements+=EsterelStatement | statements+=MetaStatement)* 
+	 *         statements+=EsterelStatement?
+	 *     )
+	 */
+	protected void sequence_EsterelModule(ISerializationContext context, EsterelModule semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -1145,7 +1229,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     EsterelProgram returns EsterelProgram
 	 *
 	 * Constraint:
-	 *     modules+=Module+
+	 *     ((pragmas+=Pragma+ modules+=EsterelModule+) | modules+=EsterelModule+)?
 	 */
 	protected void sequence_EsterelProgram(ISerializationContext context, EsterelProgram semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1154,11 +1238,10 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     StatementContainerInterface returns EsterelThread
 	 *     EsterelThread returns EsterelThread
 	 *
 	 * Constraint:
-	 *     (statements+=AtomicStatement* statements+=AtomicStatement?)
+	 *     ((statements+=AtomicStatement | statements+=MetaStatement)* statements+=AtomicStatement?)
 	 */
 	protected void sequence_EsterelThread(ISerializationContext context, EsterelThread semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1167,13 +1250,24 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     StatementContainerInterface returns EveryDo
+	 *     EsterelVariableDeclaration returns EsterelVariableDeclaration
+	 *
+	 * Constraint:
+	 *     (variables+=Variable variables+=Variable* type=TypeIdentifier)
+	 */
+	protected void sequence_EsterelVariableDeclaration(ISerializationContext context, EsterelVariableDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     EsterelStatement returns EveryDo
 	 *     AtomicStatement returns EveryDo
 	 *     EveryDo returns EveryDo
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* delay=DelayExpr statements+=EsterelStatement* statements+=EsterelStatement?)
+	 *     (annotations+=Annotation* delay=DelayExpr (statements+=EsterelStatement | statements+=MetaStatement)* statements+=EsterelStatement?)
 	 */
 	protected void sequence_EveryDo(ISerializationContext context, EveryDo semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1182,17 +1276,16 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     StatementContainerInterface returns ExecCase
 	 *     ExecCase returns ExecCase
 	 *
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
 	 *         task=[Task|ID] 
-	 *         (vars+=[IVariable|ID] vars+=[IVariable|ID]*)? 
-	 *         (kexpressions+=Expression kexpressions+=Expression*)? 
-	 *         retSignal=[ISignal|ID] 
-	 *         statements+=EsterelStatement* 
+	 *         (referenceParameters+=[Variable|ID] referenceParameters+=[Variable|ID]*)? 
+	 *         (valueParameters+=Expression valueParameters+=Expression*)? 
+	 *         returnSignal=[Signal|ID] 
+	 *         (statements+=EsterelStatement | statements+=MetaStatement)* 
 	 *         statements+=EsterelStatement?
 	 *     )
 	 */
@@ -1203,7 +1296,6 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     StatementContainerInterface returns Exec
 	 *     EsterelStatement returns Exec
 	 *     AtomicStatement returns Exec
 	 *     Exec returns Exec
@@ -1214,10 +1306,10 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (
 	 *             (
 	 *                 task=[Task|ID] 
-	 *                 (vars+=[IVariable|ID] vars+=[IVariable|ID]*)? 
-	 *                 (kexpressions+=Expression kexpressions+=Expression*)? 
-	 *                 retSignal=[ISignal|ID] 
-	 *                 statements+=EsterelStatement* 
+	 *                 (referenceParameters+=[Variable|ID] referenceParameters+=[Variable|ID]*)? 
+	 *                 (valueParameters+=Expression valueParameters+=Expression*)? 
+	 *                 returnSignal=[Signal|ID] 
+	 *                 (statements+=EsterelStatement | statements+=MetaStatement)* 
 	 *                 statements+=EsterelStatement?
 	 *             ) | 
 	 *             execCaseList+=ExecCase+
@@ -1245,59 +1337,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     FunctionDecl returns FunctionDecl
+	 *     EsterelDeclaration returns FunctionDeclaration
+	 *     FunctionDeclaration returns FunctionDeclaration
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* functions+=Function functions+=Function*)
 	 */
-	protected void sequence_FunctionDecl(ISerializationContext context, FunctionDecl semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     AtomicExpression returns FunctionExpression
-	 *     FunctionExpression returns FunctionExpression
-	 *     Expression returns FunctionExpression
-	 *     BooleanExpression returns FunctionExpression
-	 *     OrExpression returns FunctionExpression
-	 *     OrExpression.OperatorExpression_1_0 returns FunctionExpression
-	 *     AndExpression returns FunctionExpression
-	 *     AndExpression.OperatorExpression_1_0 returns FunctionExpression
-	 *     CompareOperation returns FunctionExpression
-	 *     CompareOperation.OperatorExpression_1_0 returns FunctionExpression
-	 *     NotOrValuedExpression returns FunctionExpression
-	 *     NotExpression returns FunctionExpression
-	 *     ValuedExpression returns FunctionExpression
-	 *     AddExpression returns FunctionExpression
-	 *     AddExpression.OperatorExpression_1_0 returns FunctionExpression
-	 *     SubExpression returns FunctionExpression
-	 *     SubExpression.OperatorExpression_1_0 returns FunctionExpression
-	 *     MultExpression returns FunctionExpression
-	 *     MultExpression.OperatorExpression_1_0 returns FunctionExpression
-	 *     DivExpression returns FunctionExpression
-	 *     DivExpression.OperatorExpression_1_0 returns FunctionExpression
-	 *     ModExpression returns FunctionExpression
-	 *     ModExpression.OperatorExpression_1_0 returns FunctionExpression
-	 *     NegExpression returns FunctionExpression
-	 *     AtomicValuedExpression returns FunctionExpression
-	 *     Root returns FunctionExpression
-	 *     BoolExpression returns FunctionExpression
-	 *     LogicalOrExpression returns FunctionExpression
-	 *     LogicalOrExpression.OperatorExpression_1_0 returns FunctionExpression
-	 *     LogicalAndExpression returns FunctionExpression
-	 *     LogicalAndExpression.OperatorExpression_1_0 returns FunctionExpression
-	 *     BitwiseOrExpression returns FunctionExpression
-	 *     BitwiseOrExpression.OperatorExpression_1_0 returns FunctionExpression
-	 *     BitwiseAndExpression returns FunctionExpression
-	 *     BitwiseAndExpression.OperatorExpression_1_0 returns FunctionExpression
-	 *     VectorValueMember returns FunctionExpression
-	 *
-	 * Constraint:
-	 *     (function=[Function|ID] (kexpressions+=Expression kexpressions+=Expression*)?)
-	 */
-	protected void sequence_FunctionExpression(ISerializationContext context, FunctionExpression semanticObject) {
+	protected void sequence_FunctionDeclaration(ISerializationContext context, FunctionDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1319,7 +1365,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     Function returns Function
 	 *
 	 * Constraint:
-	 *     (name=ID (idList+=TypeIdentifier idList+=TypeIdentifier*)? type=TypeIdentifier)
+	 *     (name=ID (parameterTypes+=TypeIdentifier parameterTypes+=TypeIdentifier*)? returnType=TypeIdentifier)
 	 */
 	protected void sequence_Function(ISerializationContext context, Function semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1342,46 +1388,6 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     ISignal returns ISignal
-	 *     Esterel_ValuedObject returns ISignal
-	 *
-	 * Constraint:
-	 *     (
-	 *         name=ID 
-	 *         (
-	 *             type=Esterel_ValueType | 
-	 *             typeID=ID | 
-	 *             ((type=Esterel_ValueType | typeID=ID) (func=[Function|ID] | combineOperator=Esterel_CombineOperator)) | 
-	 *             type=Esterel_ValueType | 
-	 *             typeID=ID | 
-	 *             ((type=Esterel_ValueType | typeID=ID) (func=[Function|ID] | combineOperator=Esterel_CombineOperator)) | 
-	 *             (
-	 *                 expression=Expression 
-	 *                 (type=Esterel_ValueType | typeID=ID | ((type=Esterel_ValueType | typeID=ID) (func=[Function|ID] | combineOperator=Esterel_CombineOperator)))
-	 *             )
-	 *         )?
-	 *     )
-	 */
-	protected void sequence_ISignal(ISerializationContext context, ISignal semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     IVariable returns IVariable
-	 *     Esterel_ValuedObject returns IVariable
-	 *
-	 * Constraint:
-	 *     (name=ID expression=Expression?)
-	 */
-	protected void sequence_IVariable(ISerializationContext context, IVariable semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     EsterelStatement returns IfTest
 	 *     AtomicStatement returns IfTest
 	 *     IfTest returns IfTest
@@ -1390,12 +1396,12 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     (
 	 *         annotations+=Annotation* 
 	 *         expression=Expression 
-	 *         thenAnnotations+=Annotation* 
-	 *         thenStatements+=EsterelStatement* 
-	 *         thenStatements+=EsterelStatement? 
+	 *         annotations+=Annotation* 
+	 *         (statements+=EsterelStatement | statements+=MetaStatement)* 
+	 *         statements+=EsterelStatement? 
 	 *         elseif+=ElsIf* 
-	 *         elseAnnotations+=Annotation* 
-	 *         elseStatements+=EsterelStatement* 
+	 *         elseStatements+=MetaStatement? 
+	 *         (elseStatements+=EsterelStatement? elseStatements+=MetaStatement?)* 
 	 *         elseStatements+=EsterelStatement?
 	 *     )
 	 */
@@ -1406,91 +1412,78 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     InterfaceSignalDecl returns Input
+	 *     EsterelDeclaration returns InputDeclaration
+	 *     InputDeclaration returns InputDeclaration
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* signals+=ISignal signals+=ISignal*)
+	 *     (annotations+=Annotation* valuedObjects+=Signal valuedObjects+=Signal*)
 	 */
-	protected void sequence_InterfaceSignalDecl(ISerializationContext context, Input semanticObject) {
+	protected void sequence_InputDeclaration(ISerializationContext context, InputDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     InterfaceSignalDecl returns InputOutput
+	 *     EsterelDeclaration returns InputOutputDeclaration
+	 *     InputOutputDeclaration returns InputOutputDeclaration
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* signals+=ISignal signals+=ISignal*)
+	 *     (annotations+=Annotation* valuedObjects+=Signal valuedObjects+=Signal*)
 	 */
-	protected void sequence_InterfaceSignalDecl(ISerializationContext context, InputOutput semanticObject) {
+	protected void sequence_InputOutputDeclaration(ISerializationContext context, InputOutputDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     InterfaceSignalDecl returns Output
+	 *     EsterelStatement returns LocalSignalDeclaration
+	 *     AtomicStatement returns LocalSignalDeclaration
+	 *     LocalSignalDeclaration returns LocalSignalDeclaration
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* signals+=ISignal signals+=ISignal*)
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         valuedObjects+=Signal 
+	 *         valuedObjects+=Signal* 
+	 *         (statements+=EsterelStatement | statements+=MetaStatement)* 
+	 *         statements+=EsterelStatement?
+	 *     )
 	 */
-	protected void sequence_InterfaceSignalDecl(ISerializationContext context, Output semanticObject) {
+	protected void sequence_LocalSignalDeclaration(ISerializationContext context, LocalSignalDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     InterfaceSignalDecl returns Return
+	 *     EsterelStatement returns LocalVariableDeclaration
+	 *     AtomicStatement returns LocalVariableDeclaration
+	 *     LocalVariableDeclaration returns LocalVariableDeclaration
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* signals+=ISignal signals+=ISignal*)
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         variableDeclarations+=EsterelVariableDeclaration 
+	 *         variableDeclarations+=EsterelVariableDeclaration* 
+	 *         (statements+=EsterelStatement | statements+=MetaStatement)* 
+	 *         statements+=EsterelStatement?
+	 *     )
 	 */
-	protected void sequence_InterfaceSignalDecl(ISerializationContext context, Return semanticObject) {
+	protected void sequence_LocalVariableDeclaration(ISerializationContext context, LocalVariableDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     StatementContainerInterface returns LocalSignalDecl
-	 *     EsterelStatement returns LocalSignalDecl
-	 *     AtomicStatement returns LocalSignalDecl
-	 *     LocalSignalDecl returns LocalSignalDecl
-	 *
-	 * Constraint:
-	 *     (annotations+=Annotation* signals+=ISignal signals+=ISignal* statements+=EsterelStatement* statements+=EsterelStatement?)
-	 */
-	protected void sequence_LocalSignalDecl(ISerializationContext context, LocalSignalDecl semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     StatementContainerInterface returns LocalVariable
-	 *     EsterelStatement returns LocalVariable
-	 *     AtomicStatement returns LocalVariable
-	 *     LocalVariable returns LocalVariable
-	 *
-	 * Constraint:
-	 *     (annotations+=Annotation* varDecls+=VariableDecl varDecls+=VariableDecl* statements+=EsterelStatement* statements+=EsterelStatement?)
-	 */
-	protected void sequence_LocalVariable(ISerializationContext context, LocalVariable semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     StatementContainerInterface returns Loop
 	 *     EsterelStatement returns Loop
 	 *     AtomicStatement returns Loop
 	 *     Loop returns Loop
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* statements+=EsterelStatement* statements+=EsterelStatement? delay=DelayExpr?)
+	 *     (annotations+=Annotation* (statements+=EsterelStatement | statements+=MetaStatement)* statements+=EsterelStatement? delay=DelayExpr?)
 	 */
 	protected void sequence_Loop(ISerializationContext context, Loop semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1502,7 +1495,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     ModuleRenaming returns ModuleRenaming
 	 *
 	 * Constraint:
-	 *     (module=[Module|ID] | (newName=ID module=[Module|ID]))
+	 *     (module=[EsterelModule|ID] | (newName=ID module=[EsterelModule|ID]))
 	 */
 	protected void sequence_ModuleRenaming(ISerializationContext context, ModuleRenaming semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1511,37 +1504,11 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     Module returns Module
-	 *     StatementContainerInterface returns Module
-	 *
-	 * Constraint:
-	 *     (
-	 *         annotations+=Annotation* 
-	 *         name=ID 
-	 *         (
-	 *             intSignalDecls+=InterfaceSignalDecl | 
-	 *             intTypeDecls+=TypeDecl | 
-	 *             intSensorDecls+=SensorDecl | 
-	 *             intConstantDecls+=ConstantDecls | 
-	 *             intRelationDecls+=RelationDecl | 
-	 *             intTaskDecls+=TaskDecl | 
-	 *             intFunctionDecls+=FunctionDecl | 
-	 *             intProcedureDecls+=ProcedureDecl
-	 *         )* 
-	 *         statements+=EsterelStatement* 
-	 *         statements+=EsterelStatement?
-	 *     )
-	 */
-	protected void sequence_Module(ISerializationContext context, Module semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
+	 *     MetaStatement returns Nothing
 	 *     EsterelStatement returns Nothing
 	 *     AtomicStatement returns Nothing
 	 *     Nothing returns Nothing
+	 *     Statement returns Nothing
 	 *
 	 * Constraint:
 	 *     annotations+=Annotation*
@@ -1553,26 +1520,27 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     OneTypeConstantDecls returns OneTypeConstantDecls
+	 *     EsterelDeclaration returns OutputDeclaration
+	 *     OutputDeclaration returns OutputDeclaration
 	 *
 	 * Constraint:
-	 *     (constants+=Constant constants+=Constant* type=TypeIdentifier)
+	 *     (annotations+=Annotation* valuedObjects+=Signal valuedObjects+=Signal*)
 	 */
-	protected void sequence_OneTypeConstantDecls(ISerializationContext context, OneTypeConstantDecls semanticObject) {
+	protected void sequence_OutputDeclaration(ISerializationContext context, OutputDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     StatementContainerInterface returns PresentCase
 	 *     PresentCase returns PresentCase
 	 *
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
 	 *         (expression=SignalExpression | expression=SignalExpression) 
-	 *         statements+=EsterelStatement* 
+	 *         statements+=EsterelStatement? 
+	 *         (statements+=MetaStatement? statements+=EsterelStatement?)* 
 	 *         statements+=EsterelStatement?
 	 *     )
 	 */
@@ -1593,14 +1561,15 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (
 	 *             (
 	 *                 (expression=SignalExpression | expression=SignalExpression) 
-	 *                 thenAnnotations+=Annotation* 
-	 *                 thenStatements+=EsterelStatement* 
-	 *                 thenStatements+=EsterelStatement?
+	 *                 annotations+=Annotation* 
+	 *                 statements+=MetaStatement? 
+	 *                 (statements+=EsterelStatement? statements+=MetaStatement?)* 
+	 *                 statements+=EsterelStatement?
 	 *             ) | 
 	 *             cases+=PresentCase+
 	 *         ) 
-	 *         elseAnnotations+=Annotation* 
-	 *         elseStatements+=EsterelStatement* 
+	 *         elseStatements+=MetaStatement? 
+	 *         (elseStatements+=EsterelStatement? elseStatements+=MetaStatement?)* 
 	 *         elseStatements+=EsterelStatement?
 	 *     )
 	 */
@@ -1611,31 +1580,32 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     EsterelStatement returns ProcCall
-	 *     AtomicStatement returns ProcCall
-	 *     ProcCall returns ProcCall
+	 *     EsterelStatement returns ProcedureCall
+	 *     AtomicStatement returns ProcedureCall
+	 *     ProcedureCall returns ProcedureCall
 	 *
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         proc=[Procedure|ID] 
-	 *         (varList+=[IVariable|ID] varList+=[IVariable|ID]*)? 
-	 *         (kexpressions+=Expression kexpressions+=Expression*)?
+	 *         procedure=[Procedure|ID] 
+	 *         (referenceArguments+=[Variable|ID] referenceArguments+=[Variable|ID]*)? 
+	 *         (valueArguments+=Expression valueArguments+=Expression*)?
 	 *     )
 	 */
-	protected void sequence_ProcCall(ISerializationContext context, ProcCall semanticObject) {
+	protected void sequence_ProcedureCall(ISerializationContext context, ProcedureCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     ProcedureDecl returns ProcedureDecl
+	 *     EsterelDeclaration returns ProcedureDeclaration
+	 *     ProcedureDeclaration returns ProcedureDeclaration
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* procedures+=Procedure procedures+=Procedure*)
 	 */
-	protected void sequence_ProcedureDecl(ISerializationContext context, ProcedureDecl semanticObject) {
+	protected void sequence_ProcedureDeclaration(ISerializationContext context, ProcedureDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1666,7 +1636,11 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     Procedure returns Procedure
 	 *
 	 * Constraint:
-	 *     (name=ID (variables+=TypeIdentifier variables+=TypeIdentifier*)? (expressions+=TypeIdentifier expressions+=TypeIdentifier*)?)
+	 *     (
+	 *         name=ID 
+	 *         (referenceArguments+=TypeIdentifier referenceArguments+=TypeIdentifier*)? 
+	 *         (valueArguments+=TypeIdentifier valueArguments+=TypeIdentifier*)?
+	 *     )
 	 */
 	protected void sequence_Procedure(ISerializationContext context, Procedure semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1675,48 +1649,49 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     RelationDecl returns Relation
+	 *     EsterelDeclaration returns RelationDeclaration
+	 *     RelationDeclaration returns RelationDeclaration
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* relations+=RelationType relations+=RelationType*)
+	 *     (annotations+=Annotation* relations+=Relation relations+=Relation*)
 	 */
-	protected void sequence_RelationDecl(ISerializationContext context, Relation semanticObject) {
+	protected void sequence_RelationDeclaration(ISerializationContext context, RelationDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     RelationType returns RelationImplication
+	 *     Relation returns RelationImplication
 	 *     RelationImplication returns RelationImplication
 	 *
 	 * Constraint:
-	 *     (first=[ISignal|ID] type='=>' second=[ISignal|ID])
+	 *     (first=[Signal|ID] type='=>' second=[Signal|ID])
 	 */
 	protected void sequence_RelationImplication(ISerializationContext context, RelationImplication semanticObject) {
 		if (errorAcceptor != null) {
 			if (transientValues.isValueTransient(semanticObject, EsterelPackage.Literals.RELATION_IMPLICATION__FIRST) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EsterelPackage.Literals.RELATION_IMPLICATION__FIRST));
-			if (transientValues.isValueTransient(semanticObject, EsterelPackage.Literals.RELATION_TYPE__TYPE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EsterelPackage.Literals.RELATION_TYPE__TYPE));
+			if (transientValues.isValueTransient(semanticObject, EsterelPackage.Literals.RELATION__TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EsterelPackage.Literals.RELATION__TYPE));
 			if (transientValues.isValueTransient(semanticObject, EsterelPackage.Literals.RELATION_IMPLICATION__SECOND) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EsterelPackage.Literals.RELATION_IMPLICATION__SECOND));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getRelationImplicationAccess().getFirstISignalIDTerminalRuleCall_0_0_1(), semanticObject.getFirst());
+		feeder.accept(grammarAccess.getRelationImplicationAccess().getFirstSignalIDTerminalRuleCall_0_0_1(), semanticObject.getFirst());
 		feeder.accept(grammarAccess.getRelationImplicationAccess().getTypeEqualsSignGreaterThanSignKeyword_1_0(), semanticObject.getType());
-		feeder.accept(grammarAccess.getRelationImplicationAccess().getSecondISignalIDTerminalRuleCall_2_0_1(), semanticObject.getSecond());
+		feeder.accept(grammarAccess.getRelationImplicationAccess().getSecondSignalIDTerminalRuleCall_2_0_1(), semanticObject.getSecond());
 		feeder.finish();
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     RelationType returns RelationIncompatibility
+	 *     Relation returns RelationIncompatibility
 	 *     RelationIncompatibility returns RelationIncompatibility
 	 *
 	 * Constraint:
-	 *     (incomp+=[ISignal|ID] type='#' incomp+=[ISignal|ID] incomp+=[ISignal|ID]*)
+	 *     (incomp+=[Signal|ID] type='#' incomp+=[Signal|ID] incomp+=[Signal|ID]*)
 	 */
 	protected void sequence_RelationIncompatibility(ISerializationContext context, RelationIncompatibility semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1725,7 +1700,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     Renaming returns Renaming
+	 *     Renamings returns Renamings
 	 *
 	 * Constraint:
 	 *     (
@@ -1740,22 +1715,40 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         )
 	 *     )
 	 */
-	protected void sequence_Renaming(ISerializationContext context, Renaming semanticObject) {
+	protected void sequence_Renamings(ISerializationContext context, Renamings semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     StatementContainerInterface returns Repeat
 	 *     EsterelStatement returns Repeat
 	 *     AtomicStatement returns Repeat
 	 *     Repeat returns Repeat
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* positive?='positive'? expression=Expression statements+=EsterelStatement* statements+=EsterelStatement?)
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         positive?='positive'? 
+	 *         expression=Expression 
+	 *         (statements+=EsterelStatement | statements+=MetaStatement)* 
+	 *         statements+=EsterelStatement?
+	 *     )
 	 */
 	protected void sequence_Repeat(ISerializationContext context, Repeat semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     EsterelDeclaration returns ReturnDeclaration
+	 *     ReturnDeclaration returns ReturnDeclaration
+	 *
+	 * Constraint:
+	 *     (annotations+=Annotation* valuedObjects+=Signal valuedObjects+=Signal*)
+	 */
+	protected void sequence_ReturnDeclaration(ISerializationContext context, ReturnDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1769,7 +1762,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         ((module=ModuleRenaming (list+=Renaming list+=Renaming*)?) | (module=ModuleRenaming (list+=Renaming list+=Renaming*)?))
+	 *         ((module=ModuleRenaming (renamings+=Renamings renamings+=Renamings*)?) | (module=ModuleRenaming (renamings+=Renamings renamings+=Renamings*)?))
 	 *     )
 	 */
 	protected void sequence_Run(ISerializationContext context, Run semanticObject) {
@@ -1779,43 +1772,26 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     SensorDecl returns SensorDecl
+	 *     EsterelDeclaration returns SensorDeclaration
+	 *     SensorDeclaration returns SensorDeclaration
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* sensors+=SensorWithType sensors+=SensorWithType*)
+	 *     (annotations+=Annotation* valuedObjects+=Sensor valuedObjects+=Sensor*)
 	 */
-	protected void sequence_SensorDecl(ISerializationContext context, SensorDecl semanticObject) {
+	protected void sequence_SensorDeclaration(ISerializationContext context, SensorDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     SensorWithType returns SensorWithType
+	 *     Sensor returns Sensor
 	 *
 	 * Constraint:
-	 *     (sensor=Sensor (type=TypeIdentifier | type=TypeIdentifier))
+	 *     (name=ID (type=TypeIdentifier | type=TypeIdentifier)?)
 	 */
-	protected void sequence_SensorWithType(ISerializationContext context, SensorWithType semanticObject) {
+	protected void sequence_Sensor(ISerializationContext context, Sensor semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Sensor returns ISignal
-	 *
-	 * Constraint:
-	 *     name=ID
-	 */
-	protected void sequence_Sensor(ISerializationContext context, ISignal semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, AnnotationsPackage.Literals.NAMED_OBJECT__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AnnotationsPackage.Literals.NAMED_OBJECT__NAME));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getSensorAccess().getNameIDTerminalRuleCall_0(), semanticObject.getName());
-		feeder.finish();
 	}
 	
 	
@@ -1830,10 +1806,10 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     (
-	 *         (subExpressions+=SignalExpression_OperatorExpression_1_0 (operator=Esterel_OrOperator subExpressions+=SignalAndExpression)+) | 
-	 *         (subExpressions+=SignalAndExpression_OperatorExpression_1_0 (operator=Esterel_AndOperator subExpressions+=SignalNotExpression)+) | 
-	 *         (operator=Esterel_NotOperator+ subExpressions+=SignalAtomicExpression) | 
-	 *         (operator=Esterel_PreOperator subExpressions+=SignalReferenceExpr)
+	 *         (subExpressions+=SignalExpression_OperatorExpression_1_0 (operator=EsterelOrOperator subExpressions+=SignalAndExpression)+) | 
+	 *         (subExpressions+=SignalAndExpression_OperatorExpression_1_0 (operator=EsterelAndOperator subExpressions+=SignalNotExpression)+) | 
+	 *         (operator=EsterelNotOperator+ subExpressions+=SignalAtomicExpression) | 
+	 *         (operator=EsterelPreOperator subExpressions+=SignalReferenceExpr)
 	 *     )
 	 */
 	protected void sequence_SignalAndExpression_SignalExpression_SignalNotExpression_SignalPreExpr(ISerializationContext context, OperatorExpression semanticObject) {
@@ -1846,7 +1822,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     SignalPreExpr returns OperatorExpression
 	 *
 	 * Constraint:
-	 *     (operator=Esterel_PreOperator subExpressions+=SignalReferenceExpr)
+	 *     (operator=EsterelPreOperator subExpressions+=SignalReferenceExpr)
 	 */
 	protected void sequence_SignalPreExpr(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1864,7 +1840,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     SignalReferenceExpr returns SignalReferenceExpr
 	 *
 	 * Constraint:
-	 *     valuedObject=[ISignal|ID]
+	 *     valuedObject=[Signal|ID]
 	 */
 	protected void sequence_SignalReferenceExpr(ISerializationContext context, SignalReferenceExpr semanticObject) {
 		if (errorAcceptor != null) {
@@ -1872,7 +1848,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__VALUED_OBJECT));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getSignalReferenceExprAccess().getValuedObjectISignalIDTerminalRuleCall_1_0_1(), semanticObject.getValuedObject());
+		feeder.accept(grammarAccess.getSignalReferenceExprAccess().getValuedObjectSignalIDTerminalRuleCall_1_0_1(), semanticObject.getValuedObject());
 		feeder.finish();
 	}
 	
@@ -1882,7 +1858,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     SignalRenaming returns SignalRenaming
 	 *
 	 * Constraint:
-	 *     (newName=[ISignal|ID] oldName=[ISignal|ID])
+	 *     (newName=[Signal|ID] oldName=[Signal|ID])
 	 */
 	protected void sequence_SignalRenaming(ISerializationContext context, SignalRenaming semanticObject) {
 		if (errorAcceptor != null) {
@@ -1892,21 +1868,46 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EsterelPackage.Literals.SIGNAL_RENAMING__OLD_NAME));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getSignalRenamingAccess().getNewNameISignalIDTerminalRuleCall_0_0_1(), semanticObject.getNewName());
-		feeder.accept(grammarAccess.getSignalRenamingAccess().getOldNameISignalIDTerminalRuleCall_2_0_1(), semanticObject.getOldName());
+		feeder.accept(grammarAccess.getSignalRenamingAccess().getNewNameSignalIDTerminalRuleCall_0_0_1(), semanticObject.getNewName());
+		feeder.accept(grammarAccess.getSignalRenamingAccess().getOldNameSignalIDTerminalRuleCall_2_0_1(), semanticObject.getOldName());
 		feeder.finish();
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     StatementContainerInterface returns Suspend
+	 *     Signal returns Signal
+	 *
+	 * Constraint:
+	 *     (
+	 *         name=ID 
+	 *         (
+	 *             type=EsterelValueType | 
+	 *             idType=ID | 
+	 *             ((type=EsterelValueType | idType=ID) (combineFunction=[Function|ID] | combineOperator=EsterelCombineOperator)) | 
+	 *             type=EsterelValueType | 
+	 *             idType=ID | 
+	 *             ((type=EsterelValueType | idType=ID) (combineFunction=[Function|ID] | combineOperator=EsterelCombineOperator)) | 
+	 *             (
+	 *                 initialValue=Expression 
+	 *                 (type=EsterelValueType | idType=ID | ((type=EsterelValueType | idType=ID) (combineFunction=[Function|ID] | combineOperator=EsterelCombineOperator)))
+	 *             )
+	 *         )?
+	 *     )
+	 */
+	protected void sequence_Signal(ISerializationContext context, Signal semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     EsterelStatement returns Suspend
 	 *     AtomicStatement returns Suspend
 	 *     Suspend returns Suspend
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* weak?='weak'? statements+=EsterelStatement* statements+=EsterelStatement? delay=DelayExpr)
+	 *     (annotations+=Annotation* weak?='weak'? (statements+=EsterelStatement | statements+=MetaStatement)* statements+=EsterelStatement? delay=DelayExpr)
 	 */
 	protected void sequence_Suspend(ISerializationContext context, Suspend semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1920,7 +1921,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     Sustain returns Sustain
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* signal=[ISignal|ID] expression=Expression?)
+	 *     (annotations+=Annotation* signal=[Signal|ID] expression=Expression?)
 	 */
 	protected void sequence_Sustain(ISerializationContext context, Sustain semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1929,12 +1930,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     TaskDecl returns TaskDecl
+	 *     EsterelDeclaration returns TaskDeclaration
+	 *     TaskDeclaration returns TaskDeclaration
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* tasks+=Task tasks+=Task*)
 	 */
-	protected void sequence_TaskDecl(ISerializationContext context, TaskDecl semanticObject) {
+	protected void sequence_TaskDeclaration(ISerializationContext context, TaskDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1965,7 +1967,11 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     Task returns Task
 	 *
 	 * Constraint:
-	 *     (name=ID (variables+=TypeIdentifier variables+=TypeIdentifier*)? (expressions+=TypeIdentifier expressions+=TypeIdentifier*)?)
+	 *     (
+	 *         name=ID 
+	 *         (referenceArguments+=TypeIdentifier referenceArguments+=TypeIdentifier*)? 
+	 *         (valueArguments+=TypeIdentifier valueArguments+=TypeIdentifier*)?
+	 *     )
 	 */
 	protected void sequence_Task(ISerializationContext context, Task semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1978,9 +1984,9 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     (
-	 *         (subExpressions+=TrapExpr_OperatorExpression_1_0 (operator=Esterel_OrOperator subExpressions+=TrapAndExpression)+) | 
-	 *         (subExpressions+=TrapAndExpression_OperatorExpression_1_0 (operator=Esterel_AndOperator subExpressions+=TrapNotExpression)+) | 
-	 *         (operator=Esterel_NotOperator+ subExpressions+=TrapAtomicExpression)
+	 *         (subExpressions+=TrapExpr_OperatorExpression_1_0 (operator=EsterelOrOperator subExpressions+=TrapAndExpression)+) | 
+	 *         (subExpressions+=TrapAndExpression_OperatorExpression_1_0 (operator=EsterelAndOperator subExpressions+=TrapNotExpression)+) | 
+	 *         (operator=EsterelNotOperator+ subExpressions+=TrapAtomicExpression)
 	 *     )
 	 */
 	protected void sequence_TrapAndExpression_TrapExpr_TrapNotExpression(ISerializationContext context, OperatorExpression semanticObject) {
@@ -1995,8 +2001,8 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     (
-	 *         (subExpressions+=TrapAndExpression_OperatorExpression_1_0 (operator=Esterel_AndOperator subExpressions+=TrapNotExpression)+) | 
-	 *         (operator=Esterel_NotOperator+ subExpressions+=TrapAtomicExpression)
+	 *         (subExpressions+=TrapAndExpression_OperatorExpression_1_0 (operator=EsterelAndOperator subExpressions+=TrapNotExpression)+) | 
+	 *         (operator=EsterelNotOperator+ subExpressions+=TrapAtomicExpression)
 	 *     )
 	 */
 	protected void sequence_TrapAndExpression_TrapNotExpression(ISerializationContext context, OperatorExpression semanticObject) {
@@ -2050,7 +2056,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     VectorValueMember returns TrapExpression
 	 *
 	 * Constraint:
-	 *     trap=[ISignal|ID]
+	 *     trap=[Signal|ID]
 	 */
 	protected void sequence_TrapExpression(ISerializationContext context, TrapExpression semanticObject) {
 		if (errorAcceptor != null) {
@@ -2058,18 +2064,17 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EsterelPackage.Literals.TRAP_EXPRESSION__TRAP));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getTrapExpressionAccess().getTrapISignalIDTerminalRuleCall_2_0_1(), semanticObject.getTrap());
+		feeder.accept(grammarAccess.getTrapExpressionAccess().getTrapSignalIDTerminalRuleCall_2_0_1(), semanticObject.getTrap());
 		feeder.finish();
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     StatementContainerInterface returns TrapHandler
 	 *     TrapHandler returns TrapHandler
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* trapExpr=TrapExpr statements+=EsterelStatement* statements+=EsterelStatement?)
+	 *     (annotations+=Annotation* trapExpr=TrapExpr (statements+=EsterelStatement | statements+=MetaStatement)* statements+=EsterelStatement?)
 	 */
 	protected void sequence_TrapHandler(ISerializationContext context, TrapHandler semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2082,7 +2087,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     TrapNotExpression returns OperatorExpression
 	 *
 	 * Constraint:
-	 *     (operator=Esterel_NotOperator+ subExpressions+=TrapAtomicExpression)
+	 *     (operator=EsterelNotOperator+ subExpressions+=TrapAtomicExpression)
 	 */
 	protected void sequence_TrapNotExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2116,21 +2121,20 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	/**
 	 * Contexts:
 	 *     TrapSignal returns TrapSignal
-	 *     Esterel_ValuedObject returns TrapSignal
 	 *
 	 * Constraint:
 	 *     (
 	 *         name=ID 
 	 *         (
-	 *             type=Esterel_ValueType | 
-	 *             typeID=ID | 
-	 *             ((type=Esterel_ValueType | typeID=ID) (func=[Function|ID] | combineOperator=Esterel_CombineOperator)) | 
-	 *             type=Esterel_ValueType | 
-	 *             typeID=ID | 
-	 *             ((type=Esterel_ValueType | typeID=ID) (func=[Function|ID] | combineOperator=Esterel_CombineOperator)) | 
+	 *             type=EsterelValueType | 
+	 *             idType=ID | 
+	 *             ((type=EsterelValueType | idType=ID) (combineFunction=[Function|ID] | combineOperator=EsterelCombineOperator)) | 
+	 *             type=EsterelValueType | 
+	 *             idType=ID | 
+	 *             ((type=EsterelValueType | idType=ID) (combineFunction=[Function|ID] | combineOperator=EsterelCombineOperator)) | 
 	 *             (
-	 *                 expression=Expression 
-	 *                 (type=Esterel_ValueType | typeID=ID | ((type=Esterel_ValueType | typeID=ID) (func=[Function|ID] | combineOperator=Esterel_CombineOperator)))
+	 *                 initialValue=Expression 
+	 *                 (type=EsterelValueType | idType=ID | ((type=EsterelValueType | idType=ID) (combineFunction=[Function|ID] | combineOperator=EsterelCombineOperator)))
 	 *             )
 	 *         )?
 	 *     )
@@ -2142,7 +2146,6 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     StatementContainerInterface returns Trap
 	 *     EsterelStatement returns Trap
 	 *     AtomicStatement returns Trap
 	 *     Trap returns Trap
@@ -2152,7 +2155,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         annotations+=Annotation* 
 	 *         trapSignals+=TrapSignal 
 	 *         trapSignals+=TrapSignal* 
-	 *         statements+=EsterelStatement* 
+	 *         (statements+=EsterelStatement | statements+=MetaStatement)* 
 	 *         statements+=EsterelStatement? 
 	 *         trapHandler+=TrapHandler*
 	 *     )
@@ -2164,13 +2167,32 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     TypeDecl returns TypeDecl
+	 *     EsterelDeclaration returns TypeDeclaration
+	 *     TypeDeclaration returns TypeDeclaration
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* types+=Type types+=Type*)
+	 *     (annotations+=Annotation* types+=TypeDefinition types+=TypeDefinition*)
 	 */
-	protected void sequence_TypeDecl(ISerializationContext context, TypeDecl semanticObject) {
+	protected void sequence_TypeDeclaration(ISerializationContext context, TypeDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TypeDefinition returns TypeDefinition
+	 *
+	 * Constraint:
+	 *     name=ID
+	 */
+	protected void sequence_TypeDefinition(ISerializationContext context, TypeDefinition semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AnnotationsPackage.Literals.NAMED_OBJECT__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AnnotationsPackage.Literals.NAMED_OBJECT__NAME));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getTypeDefinitionAccess().getNameIDTerminalRuleCall_0(), semanticObject.getName());
+		feeder.finish();
 	}
 	
 	
@@ -2179,7 +2201,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     TypeIdentifier returns TypeIdentifier
 	 *
 	 * Constraint:
-	 *     (type=Esterel_ValueType | ((type=Esterel_ValueType | typeID=ID) operator=Esterel_CombineOperator) | estType=[Type|ID] | typeID=ID)
+	 *     (type=EsterelValueType | ((type=EsterelValueType | idType=ID) operator=EsterelCombineOperator) | esterelType=[TypeDefinition|ID] | idType=ID)
 	 */
 	protected void sequence_TypeIdentifier(ISerializationContext context, TypeIdentifier semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2191,28 +2213,10 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     TypeRenaming returns TypeRenaming
 	 *
 	 * Constraint:
-	 *     ((newName=[Type|ID] | newType=Esterel_ValueType) oldName=[Type|ID])
+	 *     ((newName=[TypeDefinition|ID] | newType=EsterelValueType) oldName=[TypeDefinition|ID])
 	 */
 	protected void sequence_TypeRenaming(ISerializationContext context, TypeRenaming semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Type returns Type
-	 *
-	 * Constraint:
-	 *     name=ID
-	 */
-	protected void sequence_Type(ISerializationContext context, Type semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, EsterelPackage.Literals.TYPE__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EsterelPackage.Literals.TYPE__NAME));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getTypeAccess().getNameIDTerminalRuleCall_0(), semanticObject.getName());
-		feeder.finish();
 	}
 	
 	
@@ -2222,8 +2226,8 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     (
-	 *         (operator=Esterel_PreOperator subExpressions+=ValuedObjectTestExpression) | 
-	 *         (operator=Esterel_ValueTestOperator subExpressions+=ValuedObjectReference)
+	 *         (operator=EsterelPreOperator subExpressions+=ValuedObjectTestExpression) | 
+	 *         (operator=EsterelValueTestOperator subExpressions+=ValuedObjectReference)
 	 *     )
 	 */
 	protected void sequence_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
@@ -2233,12 +2237,12 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     VariableDecl returns VariableDecl
+	 *     Variable returns Variable
 	 *
 	 * Constraint:
-	 *     (variables+=IVariable variables+=IVariable* type=TypeIdentifier)
+	 *     (name=ID initialValue=Expression?)
 	 */
-	protected void sequence_VariableDecl(ISerializationContext context, VariableDecl semanticObject) {
+	protected void sequence_Variable(ISerializationContext context, Variable semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

@@ -20,6 +20,7 @@ import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.util.Strings;
 
 import de.cau.cs.kieler.annotations.formatting.AnnotationsValueConverter;
+import de.cau.cs.kieler.scl.formatting.SCLValueConverter;
 
 /**
  * Reuse functionality introduced by the KExpressionsValueConverter here.
@@ -29,7 +30,7 @@ import de.cau.cs.kieler.annotations.formatting.AnnotationsValueConverter;
  * @kieler.rating 2012-10-08 proposed yellow cmot
  * 
  */
-public class EsterelValueConverter extends AnnotationsValueConverter  {
+public class EsterelValueConverter extends SCLValueConverter  {
     
     /**
      * Standard boolean data type converter to convert standard Java style

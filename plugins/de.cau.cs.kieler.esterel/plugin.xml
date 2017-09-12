@@ -156,7 +156,7 @@
   <extension
         point="de.cau.cs.kieler.kicool.processor">
      <Processor
-           class="de.cau.cs.kieler.esterel.transformations.SCEstTransform">
+           class="de.cau.cs.kieler.esterel.processors.incremental.SCEstTransform">
      </Processor>
      <Processor
            class="de.cau.cs.kieler.esterel.scest.transformations.AbortTransformation">

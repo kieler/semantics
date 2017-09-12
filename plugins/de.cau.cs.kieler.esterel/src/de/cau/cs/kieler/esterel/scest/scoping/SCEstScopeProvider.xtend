@@ -3,27 +3,15 @@
  */
 package de.cau.cs.kieler.esterel.scest.scoping;
 
-import de.cau.cs.kieler.esterel.EsterelPackage
-import de.cau.cs.kieler.esterel.LocalSignalDecl
-import de.cau.cs.kieler.esterel.LocalVariable
-import de.cau.cs.kieler.esterel.SignalReferenceExpr
-import de.cau.cs.kieler.esterel.Trap
-import de.cau.cs.kieler.esterel.TrapReferenceExpr
-import de.cau.cs.kieler.esterel.scest.SCEstModule
-import de.cau.cs.kieler.esterel.scest.SCEstProgram
 import de.cau.cs.kieler.esterel.scoping.EsterelScopeProvider
-import de.cau.cs.kieler.kexpressions.KExpressionsPackage
-import de.cau.cs.kieler.scl.Label
-import de.cau.cs.kieler.scl.SCLPackage
-import de.cau.cs.kieler.scl.Scope
-import java.util.Collections
-import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import java.util.ArrayList
 import org.eclipse.emf.ecore.EReference
-import org.eclipse.xtext.naming.QualifiedName
-import org.eclipse.xtext.resource.EObjectDescription
 import org.eclipse.xtext.resource.IEObjectDescription
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.impl.SimpleScope
+
+import static de.cau.cs.kieler.esterel.scoping.EsterelScopeProviderUtil.*
 
 /**
  * This class contains custom scoping description.
@@ -33,66 +21,13 @@ import org.eclipse.xtext.scoping.impl.SimpleScope
  */
 public class SCEstScopeProvider extends EsterelScopeProvider {
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    override IScope getScope(EObject context, EReference reference) {
-        switch (reference.EReferenceType) {
-            case EsterelPackage.eINSTANCE.ISignal,
-            case EsterelPackage.eINSTANCE.IVariable,
-            case EsterelPackage.eINSTANCE.trapSignal:
-                return super.getScope(context, reference)
-            case KExpressionsPackage.eINSTANCE.valuedObject:
-                return new SimpleScope(voScope(context))
-            default:
-                return super.getScope(context, reference)
-        }
-    }
-
-    def voScope(EObject context) {
-        var parent = context;
-        val vos = newLinkedList()
-        if (parent instanceof TrapReferenceExpr) {
-            // parent is of type TrapReferenceExpr therefore parent=parent.eContainer is not valid 
-            var EObject newParent = context
-            while (newParent != null) {
-                if (newParent instanceof Trap) {
-                    vos.addAll(newParent.trapSignals)
-                }
-                newParent = newParent.eContainer
-            }
-        } else if (parent instanceof SignalReferenceExpr) {
-            // parent is of type TrapReferenceExpr therefore parent=parent.eContainer is not valid
-            var EObject newParent = context
-            while (newParent != null) {
-                if (newParent instanceof LocalSignalDecl) {
-                    vos.addAll(newParent.signals)
-                } else if (newParent instanceof SCEstModule) {
-                    newParent.intSignalDecls.forEach[d|vos.addAll(d.signals)]
-                    newParent.intSensorDecls.forEach[d|d.sensors.forEach[s|vos.add(s.sensor)]]
-                }
-                newParent = newParent.eContainer
-            }
-        } else {
-            while (parent != null) {
-                if (parent instanceof SCEstModule) {
-                    parent.intSignalDecls.forEach[d|vos.addAll(d.signals)]
-                    parent.intSensorDecls.forEach[d|d.sensors.forEach[s|vos.add(s.sensor)]]
-                    parent.intConstantDecls.forEach[d|d.constants.forEach[c|vos.addAll(c.constants)]]
-                } else if (parent instanceof Scope) {
-                    parent.declarations.forEach[d|vos.addAll(d.valuedObjects)]
-                } else if (parent instanceof LocalVariable) {
-                    parent.varDecls.forEach[d|vos.addAll(d.variables)]
-                } else if (parent instanceof LocalSignalDecl) {
-                    vos.addAll(parent.signals)
-                }
-                parent = parent.eContainer
-            }
-        }
-        return vos.map [
-            new EObjectDescription(QualifiedName.create(it.name), it,
-                Collections.<String, String>emptyMap()) as IEObjectDescription
-        ].toList
+    override IScope scope_ValuedObjectReference_valuedObject(ValuedObjectReference context, EReference ref) {
+        val ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
+        // there are several elements which are scoped as valued object
+        scopeElems.addAll(getLocalSignals(context));
+        scopeElems.addAll(getLocalVariables(context));
+        scopeElems.addAll(getLocalTraps(context));
+        scopeElems.addAll(getAllElements(context, COLLECT_CONSTANTS.merge(COLLECT_SENSORS).merge(COLLECT_SIGNALS)));
+        return new SimpleScope(getScopeForValuedObjectReference(context, ref), scopeElems);
     }
 }

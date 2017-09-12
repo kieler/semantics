@@ -14,8 +14,8 @@
 package de.cau.cs.kieler.esterel.extensions
 
 import de.cau.cs.kieler.esterel.EsterelProgram
-import de.cau.cs.kieler.esterel.ISignal
-import de.cau.cs.kieler.esterel.InterfaceSignalDecl
+import de.cau.cs.kieler.esterel.Signal
+import de.cau.cs.kieler.esterel.SignalDeclaration
 import de.cau.cs.kieler.kexpressions.ValueType
 
 //WAS import static extension org.eclipse.xtext.xtend2.lib.EObjectExtensions.*
@@ -37,14 +37,14 @@ class InterfaceDeclarationFix {
 //			target.modules.add(CloningExtensions::clone(module) as Module);	
 //		}   		
    		
-		var interfaceSignalDeclList = program.eAllContents().toIterable().filter(typeof(InterfaceSignalDecl)).toList;
+		var interfaceSignalDeclList = program.eAllContents().toIterable().filter(typeof(SignalDeclaration)).toList;
 //WAS	var interfaceSignalDeclList = program.allContentsIterable.filter(typeof(InterfaceSignalDecl)).toList;
 		
 		for (Object object : interfaceSignalDeclList) {
-			var InterfaceSignalDecl interfaceSignalDecl = object as InterfaceSignalDecl;
-			var signalList = interfaceSignalDecl.signals;
+			var SignalDeclaration interfaceSignalDecl = object as SignalDeclaration;
+			var signalList = interfaceSignalDecl.valuedObjects.filter(Signal);
 			
-			for (ISignal signal : signalList) {
+			for (Signal signal : signalList) {
 				
 				switch (signal.type.toString) {
 					case "int": signal.setType(ValueType::INT)

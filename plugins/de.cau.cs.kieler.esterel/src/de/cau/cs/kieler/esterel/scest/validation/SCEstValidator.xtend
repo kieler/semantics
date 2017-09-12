@@ -18,20 +18,13 @@ import de.cau.cs.kieler.esterel.Constant
 import de.cau.cs.kieler.esterel.DelayExpr
 import de.cau.cs.kieler.esterel.ElsIf
 import de.cau.cs.kieler.esterel.Emit
-import de.cau.cs.kieler.esterel.EsterelAssignment
 import de.cau.cs.kieler.esterel.Exit
-import de.cau.cs.kieler.esterel.FunctionExpression
-import de.cau.cs.kieler.esterel.ISignal
-import de.cau.cs.kieler.esterel.IVariable
 import de.cau.cs.kieler.esterel.IfTest
-import de.cau.cs.kieler.esterel.OneTypeConstantDecls
 import de.cau.cs.kieler.esterel.Repeat
-import de.cau.cs.kieler.esterel.SensorWithType
+import de.cau.cs.kieler.esterel.Set
 import de.cau.cs.kieler.esterel.Sustain
 import de.cau.cs.kieler.esterel.TrapSignal
-import de.cau.cs.kieler.esterel.VariableDecl
-import de.cau.cs.kieler.esterel.scest.Set
-import de.cau.cs.kieler.esterel.scest.extensions.SCEstExtension
+import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.Expression
@@ -46,6 +39,13 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.scl.Assignment
 import de.cau.cs.kieler.scl.Conditional
 import org.eclipse.xtext.validation.Check
+import de.cau.cs.kieler.esterel.Signal
+import de.cau.cs.kieler.esterel.EsterelVariableDeclaration
+import de.cau.cs.kieler.esterel.ConstantDeclaration
+import de.cau.cs.kieler.esterel.SensorDeclaration
+import de.cau.cs.kieler.esterel.Sensor
+import de.cau.cs.kieler.esterel.EsterelFunctionCall
+import de.cau.cs.kieler.esterel.Variable
 
 /**
  * @author mrb
@@ -54,7 +54,7 @@ import org.eclipse.xtext.validation.Check
 class SCEstValidator extends AbstractSCEstValidator {
     
     @Inject
-    extension SCEstExtension
+    extension EsterelTransformationExtensions
     
     final String CALCULATION_EXPRESSION = "The expression should be of type INT/FLOAT/DOUBLE/UNSIGNED."
     final String BOOLEAN_EXPRESSION = "The expression should be of type BOOL."
@@ -68,7 +68,7 @@ class SCEstValidator extends AbstractSCEstValidator {
         
     @Check
     def void emitSignal(Emit emit) {
-        if (emit.signal.type.isPure) {
+        if ((emit.signal as Signal).type.isPure) {
             if (emit.expression != null) {
                 error(emit.signal.name + " is not a valued signal!", emit, null, -1)
             }
@@ -98,8 +98,8 @@ class SCEstValidator extends AbstractSCEstValidator {
     }
     
     @Check
-    def void combineOperatorIVariable(IVariable variable) {
-        var parent = variable.eContainer as VariableDecl
+    def void combineOperatorIVariable(Variable variable) {
+        var parent = variable.eContainer as EsterelVariableDeclaration
         if (!combineOperatorFitsType(parent.type?.type, parent.type?.operator)) {
             error("The combine operator '" + parent.type?.operator + "' does not fit the variables type '" + parent.type?.type + "'!", variable, null, -1)
         }
@@ -107,16 +107,16 @@ class SCEstValidator extends AbstractSCEstValidator {
     
     @Check
     def void combineOperatorConstant(Constant constant) {
-        var parent = constant.eContainer as OneTypeConstantDecls
+        var parent = constant.eContainer as ConstantDeclaration
         if (!combineOperatorFitsType(parent.type?.type, parent.type?.operator)) {
             error("The combine operator '" + parent.type?.operator + "' does not fit the constants type '" + parent.type?.type + "'!", constant, null, -1)
         }
     }
     
     @Check
-    def void combineOperatorISignal(ISignal signal) {
-        if (signal.eContainer instanceof SensorWithType) {
-            var parent = signal.eContainer as SensorWithType
+    def void combineOperatorISignal(Signal signal) {
+        if (signal instanceof Sensor) {
+            var parent = signal.eContainer as Sensor
             if (!combineOperatorFitsType(parent.type?.type, parent.type?.operator)) {
                 error("The combine operator '" + parent.type?.operator + "' does not fit the sensors type '" + parent.type?.type + "'!", signal, null, -1)
             }
@@ -141,12 +141,12 @@ class SCEstValidator extends AbstractSCEstValidator {
      */
     
     @Check
-    def void expressionISignal(ISignal signal) {
-        if (signal.expression != null) {
-            if (signal.type.isBool && !signal.expression.isBoolExpr) {
+    def void expressionISignal(Signal signal) {
+        if (signal.initialValue != null) {
+            if (signal.type.isBool && !signal.initialValue.isBoolExpr) {
                 warning(BOOLEAN_EXPRESSION, null)
             }
-            else if (signal.type.isCalculationType && !signal.expression.isCalculationExpr) {
+            else if (signal.type.isCalculationType && !signal.initialValue.isCalculationExpr) {
                 warning(CALCULATION_EXPRESSION, null)
             }
         }
@@ -154,11 +154,11 @@ class SCEstValidator extends AbstractSCEstValidator {
     
     @Check
     def void expressionTrapSignal(TrapSignal trap) {
-        if (trap.expression != null) {
-            if (trap.type.isBool && !trap.expression.isBoolExpr) {
+        if (trap.initialValue != null) {
+            if (trap.type.isBool && !trap.initialValue.isBoolExpr) {
                 warning(BOOLEAN_EXPRESSION, null)
             }
-            else if (trap.type.isCalculationType && !trap.expression.isCalculationExpr) {
+            else if (trap.type.isCalculationType && !trap.initialValue.isCalculationExpr) {
                 warning(CALCULATION_EXPRESSION, null)
             }
         }
@@ -167,10 +167,10 @@ class SCEstValidator extends AbstractSCEstValidator {
     @Check
     def void expressionEmit(Emit emit) {
         if (emit.expression != null) {
-            if (emit.signal.type.isBool && !emit.expression.isBoolExpr) {
+            if ((emit.signal as Signal).type.isBool && !emit.expression.isBoolExpr) {
                 warning(BOOLEAN_EXPRESSION, null)
             }
-            else if (emit.signal.type.isCalculationType && !emit.expression.isCalculationExpr) {
+            else if ((emit.signal as Signal).type.isCalculationType && !emit.expression.isCalculationExpr) {
                 warning(CALCULATION_EXPRESSION, null)
             }
         }
@@ -179,21 +179,21 @@ class SCEstValidator extends AbstractSCEstValidator {
     @Check
     def void expressionSustain(Sustain sustain) {
         if (sustain.expression != null) {
-            if (sustain.signal.type.isBool && !sustain.expression.isBoolExpr) {
+            if ((sustain.signal as Signal).type.isBool && !sustain.expression.isBoolExpr) {
                 warning(BOOLEAN_EXPRESSION, null)
             }
-            else if (sustain.signal.type.isCalculationType && !sustain.expression.isCalculationExpr) {
+            else if ((sustain.signal as Signal).type.isCalculationType && !sustain.expression.isCalculationExpr) {
                 warning(CALCULATION_EXPRESSION, null)
             }
         }
     }
     
     @Check
-    def void expressionEsterelAssignment(EsterelAssignment assign) {
-        if ((assign.getVar.eContainer as VariableDecl).type?.type.isBool && !assign.expression.isBoolExpr) {
+    def void expressionEsterelAssignment(Assignment assign) {
+        if ((assign.valuedObject.eContainer as EsterelVariableDeclaration).type?.type.isBool && !assign.expression.isBoolExpr) {
             warning(BOOLEAN_EXPRESSION, null)
         }
-        else if ((assign.getVar.eContainer as VariableDecl).type?.type.isCalculationType && !assign.expression.isCalculationExpr) {
+        else if ((assign.valuedObject.eContainer as EsterelVariableDeclaration).type?.type.isCalculationType && !assign.expression.isCalculationExpr) {
             warning(CALCULATION_EXPRESSION, null)
         }
     }
@@ -239,11 +239,11 @@ class SCEstValidator extends AbstractSCEstValidator {
     }
     
     @Check
-    def void expressionIVariable(IVariable variable) {
-        if ((variable.eContainer as VariableDecl).type?.type.isBool && !variable.expression.isBoolExpr) {
+    def void expressionIVariable(Variable variable) {
+        if ((variable.eContainer as EsterelVariableDeclaration).type?.type.isBool && !variable.initialValue.isBoolExpr) {
             warning(BOOLEAN_EXPRESSION, null)
         }
-        else if ((variable.eContainer as VariableDecl).type?.type.isCalculationType && !variable.expression.isCalculationExpr) {
+        else if ((variable.eContainer as EsterelVariableDeclaration).type?.type.isCalculationType && !variable.initialValue.isCalculationExpr) {
             warning(CALCULATION_EXPRESSION, null)
         }
     }
@@ -330,8 +330,8 @@ class SCEstValidator extends AbstractSCEstValidator {
             ValuedObjectReference: {
                 return expr.isCalculationValuedObject
             }
-            FunctionExpression: {
-                return expr.function.type.type.isCalculationType
+            EsterelFunctionCall: {
+                return expr.function.returnType.type.isCalculationType
             }
             case null: {
                 return true
@@ -376,8 +376,8 @@ class SCEstValidator extends AbstractSCEstValidator {
             ValuedObjectReference: {
                 return expr.justReferenceIsBoolValuedObject
             }
-            FunctionExpression: {
-                return expr.function.type.type.isBool
+            EsterelFunctionCall: {
+                return expr.function.returnType.type.isBool
             }
             case null: {
                 return true
@@ -394,7 +394,7 @@ class SCEstValidator extends AbstractSCEstValidator {
      * @param voRef The ValuedObjectReference in question
      */
     def boolean justReferenceIsBoolValuedObject(ValuedObjectReference voRef) {
-        if (voRef.valuedObject instanceof ISignal) {
+        if (voRef.valuedObject instanceof Signal) {
             return true
         }
         else {
@@ -412,16 +412,16 @@ class SCEstValidator extends AbstractSCEstValidator {
         var parent = vo.eContainer
         switch vo {
             TrapSignal,
-            ISignal: {
+            Signal: {
                 return vo.type.isBoolOrPure
             }
             Constant: {
-                if (parent instanceof OneTypeConstantDecls) {
+                if (parent instanceof ConstantDeclaration) {
                    return parent.type?.type.isBoolOrPure
                 }
             }
-            IVariable: {
-                if (parent instanceof VariableDecl) {
+            Variable: {
+                if (parent instanceof EsterelVariableDeclaration) {
                    return parent.type?.type.isBoolOrPure
                 }
             }
@@ -444,16 +444,16 @@ class SCEstValidator extends AbstractSCEstValidator {
         var parent = vo.eContainer
         switch vo {
             TrapSignal,
-            ISignal: {
+            Signal: {
                 return vo.type.isCalculationType 
             }
             Constant: {
-                if (parent instanceof OneTypeConstantDecls) {
+                if (parent instanceof ConstantDeclaration) {
                    return parent.type?.type.isCalculationType
                 }
             }
-            IVariable: {
-                if (parent instanceof VariableDecl) {
+            Variable: {
+                if (parent instanceof EsterelVariableDeclaration) {
                    return parent.type?.type.isCalculationType
                 }
             }

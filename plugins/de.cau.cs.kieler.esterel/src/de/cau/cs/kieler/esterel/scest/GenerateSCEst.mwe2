@@ -30,8 +30,7 @@ Workflow {
         registerGenModelFile = "platform:/resource/de.cau.cs.kieler.kexpressions/model/keffects.genmodel"
         registerGenModelFile = "platform:/resource/de.cau.cs.kieler.kexpressions/model/kext.genmodel"
         registerGenModelFile = "platform:/resource/de.cau.cs.kieler.scl/model/scl.genmodel"
-        registerGenModelFile = "platform:/resource/de.cau.cs.kieler.esterel/model/generated/Esterel.genmodel"
-//        registerGenModelFile = "platform:/resource/de.cau.cs.kieler.esterel/model/generated/SCEst.genmodel"
+        registerGenModelFile = "platform:/resource/de.cau.cs.kieler.esterel/model/Esterel.genmodel"
     }
 
 // DO NOT CLEAN! This is done by the Esterel MWE
@@ -95,7 +94,7 @@ Workflow {
             fragment = exporting.QualifiedNamesFragment {}
 
             // formatter API 
-            fragment = ecore2xtext.FormatterFragment {}
+            fragment = formatting2.Formatter2Fragment {} //ecore2xtext.FormatterFragment {}
 
             // labeling API 
             fragment = labeling.LabelProviderFragment {}

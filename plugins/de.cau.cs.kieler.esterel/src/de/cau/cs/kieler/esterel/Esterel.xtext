@@ -1,16 +1,17 @@
 grammar de.cau.cs.kieler.esterel.Esterel with de.cau.cs.kieler.scl.SCL
 
-generate esterel "http://www.cau.de/cs/kieler/esterel/Esterel"
-import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+//import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 import "http://kieler.cs.cau.de/annotations" as annotations
 import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions
 import "http://kieler.cs.cau.de/keffects/0.1.0" as keffects
 import "http://kieler.cs.cau.de/kext/0.1.0" as kext
 import "http://kieler.cs.cau.de/scl/0.2.0" as scl
+import "http://www.cau.de/cs/kieler/esterel/Esterel"
 
 //  root rule. an esterel file can contain multiple modules
 EsterelProgram hidden(SL_COMMENT, ML_COMMENT, WS):
-    (modules+=Module)*;
+    pragmas+=Pragma*
+    (modules+=EsterelModule)*;
 
 /*
  * The numbering references:
@@ -34,19 +35,11 @@ EsterelProgram hidden(SL_COMMENT, ML_COMMENT, WS):
  
 // ==> module: a module consists of an interface and a body
 // -------------------------------------
-Module:
+EsterelModule:
     (annotations += Annotation)*
-    "module" name=ID ":" 
-    (     intSignalDecls+=InterfaceSignalDecl
-        | intTypeDecls+=TypeDecl
-        | intSensorDecls+=SensorDecl
-        | intConstantDecls+=ConstantDecls
-        | intRelationDecls+=RelationDecl
-        | intTaskDecls+=TaskDecl
-        | intFunctionDecls+=FunctionDecl
-        | intProcedureDecls+=ProcedureDecl
-    )* 
-    ( (statements+=EsterelStatement ";")* statements+=EsterelStatement? )
+    "module" name=ID ":"
+    (esterelDeclarations+=EsterelDeclaration)*
+    ( (statements+=EsterelStatement ";" | statements+=MetaStatement)* statements+=EsterelStatement? )
     ("end" "module" | ".");
 
 
@@ -55,47 +48,57 @@ Module:
  * ###################################################
  */
  
+EsterelDeclaration:
+    InputDeclaration
+    | OutputDeclaration
+    | InputOutputDeclaration
+    | ReturnDeclaration
+    | TypeDeclaration
+    | SensorDeclaration
+    | ConstantMultiDeclaration
+    | RelationDeclaration
+    | TaskDeclaration
+    | FunctionDeclaration
+    | ProcedureDeclaration;
+ 
 // ==> Interface Declaration
 // ----------------------------------------------
 
 // overwrite to allow type definitions in a specific module
 TypeIdentifier: 
-      type=Esterel_ValueType
-    | ("combine" (type=Esterel_ValueType | typeID=ID) "with" operator=Esterel_CombineOperator)
-    | estType=[Type|ID]
-    | typeID=ID; 
+      type=EsterelValueType
+    | ("combine" (type=EsterelValueType | idType=ID) "with" operator=EsterelCombineOperator)
+    | esterelType=[TypeDefinition|ID]
+    | idType=ID;
     
 // ==> 7.3.1 Type Declarations
 // -------------------------------------
-TypeDecl:
+TypeDeclaration:
     (annotations += Annotation)*
     "type" 
-    types+=Type ("," types+=Type)* 
+    types+=TypeDefinition ("," types+=TypeDefinition)* 
     ";";
 
-Type:
+TypeDefinition:
     name=ID;
     
 // ==> 7.3.2 Constant Declarations
 // -------------------------------------
-ConstantDecls:
+ConstantMultiDeclaration:
     (annotations += Annotation)*
     "constant" 
-    constants+=OneTypeConstantDecls ("," constants+=OneTypeConstantDecls)* 
+    constantDecalrations+=ConstantDeclaration ("," constantDecalrations+=ConstantDeclaration)* 
     ";";
 
-OneTypeConstantDecls:
+ConstantDeclaration:
     constants+=Constant ("," constants+=Constant)* ":" type=TypeIdentifier;
 
 Constant:
-    {Constant} name=ID ("=" value=ConstantValue)?;
-
-ConstantValue:
-    INT | FLOAT | BOOLEAN | ID | STRING;
+    name=ID "=" initialValue=AnyValue;
     
 // ==> 7.3.3 Function Declaration
 // -------------------------------------
-FunctionDecl:
+FunctionDeclaration:
     (annotations += Annotation)*
     "function" 
     functions+=Function ("," functions+=Function)* 
@@ -103,102 +106,111 @@ FunctionDecl:
 
 Function:
     name=ID 
-    "(" (idList+=TypeIdentifier ("," idList+=TypeIdentifier)*)? ")" 
-    ":" type=TypeIdentifier;
+    "(" (parameterTypes+=TypeIdentifier ("," parameterTypes+=TypeIdentifier)*)? ")" 
+    ":" returnType=TypeIdentifier;
 
 // ==> 7.3.4 Procedure Declaration
 // -------------------------------------
-ProcedureDecl:
+ProcedureDeclaration:
     (annotations += Annotation)*
     "procedure" procedures+=Procedure ("," procedures+=Procedure)* 
     ";";
 
 Procedure:
     name=ID 
-    "(" (variables+=TypeIdentifier ("," variables+=TypeIdentifier)*)? ")" 
-    "(" (expressions+=TypeIdentifier ("," expressions+=TypeIdentifier)*)? ")";
+    "(" (referenceArguments+=TypeIdentifier ("," referenceArguments+=TypeIdentifier)*)? ")" 
+    "(" (valueArguments+=TypeIdentifier ("," valueArguments+=TypeIdentifier)*)? ")";
 
 // ==> 7.3.5 Task Declaration
 // -------------------------------------
-TaskDecl:
+TaskDeclaration:
     (annotations += Annotation)*
     "task" tasks+=Task ("," tasks+=Task)* 
     ";";
 
 Task:
-    name=ID 
-    "(" (variables+=TypeIdentifier ("," variables+=TypeIdentifier)*)? ")" 
-    "(" (expressions+=TypeIdentifier ("," expressions+=TypeIdentifier)*)? ")";
+    name=ID
+    "(" (referenceArguments+=TypeIdentifier ("," referenceArguments+=TypeIdentifier)*)? ")" 
+    "(" (valueArguments+=TypeIdentifier ("," valueArguments+=TypeIdentifier)*)? ")";
     
 // ==> 7.3.6 Signal Declaration
 // -------------------------------------
-InterfaceSignalDecl:
-    {Input} (annotations += Annotation)* "input" signals+=ISignal ("," signals+=ISignal)* ";" 
-    |
-    {Output} (annotations += Annotation)* "output" signals+=ISignal ("," signals+=ISignal)* ";" 
-    |
-    {InputOutput} (annotations += Annotation)* "inputoutput" signals+=ISignal ("," signals+=ISignal)* ";" 
-    |
-    {Return} (annotations += Annotation)* "return" signals+=ISignal ("," signals+=ISignal)* ";";
+InputDeclaration:
+    (annotations += Annotation)*
+    "input"
+    valuedObjects+=Signal ("," valuedObjects+=Signal)*
+    ";";
+    
+OutputDeclaration:
+    (annotations += Annotation)*
+    "output"
+    valuedObjects+=Signal ("," valuedObjects+=Signal)*
+    ";";
+    
+InputOutputDeclaration:
+    (annotations += Annotation)*
+    "inputoutput"
+    valuedObjects+=Signal ("," valuedObjects+=Signal)*
+    ";";
+    
+ReturnDeclaration:
+    (annotations += Annotation)*
+    "return"
+    valuedObjects+=Signal ("," valuedObjects+=Signal)*
+    ";";
     
 // example 1:   A : combine boolean with or
 // example 2:   A (combine boolean with or)
 // example 3:   A := 0 : combine integer with '+'
-ISignal returns ISignal:
-    {ISignal}
+Signal:
     name=ID (   
           ":" 
-          (       type=Esterel_ValueType
-                | typeID=ID
-                | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | combineOperator=Esterel_CombineOperator)) 
+          (       type=EsterelValueType
+                | idType=ID
+                | ("combine" (type=EsterelValueType | idType=ID) "with" (combineFunction=[Function|ID] | combineOperator=EsterelCombineOperator)) 
           )
         | ("(" 
-            (     type=Esterel_ValueType
-                | typeID=ID
-                | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | combineOperator=Esterel_CombineOperator))
+            (     type=EsterelValueType
+                | idType=ID
+                | ("combine" (type=EsterelValueType | idType=ID) "with" (combineFunction=[Function|ID] | combineOperator=EsterelCombineOperator))
             )
            ")")
-        | (":=" expression=Expression ":" 
-                (     type=Esterel_ValueType
-                    | typeID=ID
-                    | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | combineOperator=Esterel_CombineOperator))
+        | (":=" initialValue=Expression ":" 
+                (     type=EsterelValueType
+                    | idType=ID
+                    | ("combine" (type=EsterelValueType | idType=ID) "with" (combineFunction=[Function|ID] | combineOperator=EsterelCombineOperator))
                 )
           ) 
     )?;
 
 // ==> 7.3.7 Sensor Declaration
 // -------------------------------------
-SensorDecl:
+SensorDeclaration:
     (annotations += Annotation)*
     "sensor" 
-    sensors+=SensorWithType ("," sensors+=SensorWithType)* 
+    valuedObjects+=Sensor ("," valuedObjects+=Sensor)* 
     ";";
 
-SensorWithType:
-    sensor=Sensor ( 
-        (":" type=TypeIdentifier) | ("(" type=TypeIdentifier ")")
-    );
-
-Sensor returns ISignal:
-    name=ID;
+Sensor:
+    name=ID
+    ((":" type=TypeIdentifier) | ("(" type=TypeIdentifier ")"))?;
 
 // ==> 7.3.8 Input Relation Declaration
 // -------------------------------------
-RelationDecl:
-    {Relation} 
+RelationDeclaration:
     (annotations += Annotation)* 
     "relation" 
-    relations+=RelationType ("," relations+=RelationType)* 
+    relations+=Relation ("," relations+=Relation)* 
     ";";
 
-RelationType:
+Relation:
     RelationImplication | RelationIncompatibility;
 
 RelationImplication:
-    first=[ISignal|ID] type="=>" second=[ISignal|ID];
+    first=[Signal|ID] type="=>" second=[Signal|ID];
 
 RelationIncompatibility:
-    incomp+=[ISignal|ID] type="#" incomp+=[ISignal|ID] ("#" incomp+=[ISignal|ID])*;
+    incomp+=[Signal|ID] type="#" incomp+=[Signal|ID] ("#" incomp+=[Signal|ID])*;
 
 
 /* ###################################################
@@ -206,23 +218,22 @@ RelationIncompatibility:
  * ###################################################
  */
 
-StatementContainerInterface returns scl::StatementContainer:
-    Abort | Await |  Block | Case | Do | EveryDo | Exec | 
-    ExecCase | LocalSignalDecl | LocalVariable | Loop | 
-    PresentCase |  Repeat | Suspend | EsterelThread | 
-    Trap | TrapHandler | Module;
+// A label is not allowed in Esterel
+MetaStatement returns scl::Statement:
+    Nothing ";"
+;
     
 // ==> Statement
 // -------------------------------------
 EsterelStatement returns scl::Statement:
-    EsterelParallel | AtomicStatement;
+    EsterelParallel | AtomicStatement; // Prevents left-recursion
 
 // ==> Atomic Statements
 // -------------------------------------
 AtomicStatement returns scl::Statement:
-    Abort | EsterelAssignment | Await | Block | ProcCall | Do | Emit | EveryDo | 
-    Exit | Exec | Halt | IfTest | LocalSignalDecl | Loop | Nothing | Pause | Present | 
-    Repeat | Run | Suspend | Sustain | Trap | LocalVariable ;
+    Abort | Assignment | Await | Block | ProcedureCall | Do | Emit | EveryDo | 
+    Exit | Exec | Halt | IfTest | LocalSignalDeclaration | Loop | Nothing | Pause | Present | 
+    Repeat | Run | Suspend | Sustain | Trap | LocalVariableDeclaration ;
         
 // ==> Parallel: at least two threads
 // -------------------------------------
@@ -236,7 +247,7 @@ EsterelParallel:
 // -------------------------------------
 EsterelThread:
     {EsterelThread}
-    (statements+=AtomicStatement ";")* statements+=AtomicStatement?;
+    (statements+=AtomicStatement ";" | statements+=MetaStatement)* statements+=AtomicStatement?;
     
 // ==> Nothing
 // -------------------------------------
@@ -257,37 +268,37 @@ Halt:
 Block:
     {Block}
     (annotations += Annotation)*
-    "[" ( (statements+=EsterelStatement ";")* statements+=EsterelStatement? ) "]";
+    "[" ( (statements+=EsterelStatement ";" | statements+=MetaStatement)* statements+=EsterelStatement? ) "]";
 
 // ==> 7.5.1 Signal Emission
 // -------------------------------------
 Emit:
     (annotations += Annotation)*
     "emit" 
-    signal=[ISignal|ID]       
+    signal=[Signal|ID]       
     ("("expression=Expression")")?;
     
 // emit a signal indefinitely
 Sustain:
     (annotations += Annotation)*
     "sustain" 
-    signal=[ISignal|ID]
+    signal=[Signal|ID]
     ("(" expression=Expression ")")?;
 
 // ==> 7.5.2 Assignment and Procedure Call
 // -------------------------------------
-EsterelAssignment:
-    var=[IVariable|ID] ":=" expression=Expression;
+Assignment returns scl::Assignment:
+    valuedObject=[Variable|ID] ":=" expression=Expression;
     
-ProcCall:
+ProcedureCall:
     (annotations += Annotation)*
     "call" 
-    proc=[Procedure|ID] 
+    procedure=[Procedure|ID] 
     "(" 
-        ( varList+=[IVariable|ID] ("," varList+=[IVariable|ID])* )?
+        ( referenceArguments+=[Variable|ID] ("," referenceArguments+=[Variable|ID])* )?
     ")"
     "(" 
-        ( kexpressions+=Expression ("," kexpressions+=Expression)* )? 
+        ( valueArguments+=Expression ("," valueArguments+=Expression)* )? 
     ")";
 
 // ==> 7.5.3 The present Signal Test
@@ -300,18 +311,17 @@ Present:
                 | "[" expression=SignalExpression "]"
             ) 
             (
-                (thenAnnotations += Annotation)*
+                (annotations += Annotation)*
                 "then" 
-                ( (thenStatements+=EsterelStatement ";")* thenStatements+=EsterelStatement? )
+                ( (statements+=EsterelStatement ";" | statements+=MetaStatement)* statements+=EsterelStatement? )
             )?
         ) 
         | 
         cases+=PresentCase+ 
     ) 
     (
-        (elseAnnotations += Annotation)*
         "else" 
-        ( (elseStatements+=EsterelStatement ";")* elseStatements+=EsterelStatement? )
+        ( (elseStatements+=EsterelStatement ";" | elseStatements+=MetaStatement)* elseStatements+=EsterelStatement? )
     )? 
     "end" "present"?;
 
@@ -322,7 +332,7 @@ PresentCase:
         | "[" expression=SignalExpression "]"
     )
     (   "do" 
-        ( (statements+=EsterelStatement ";")* statements+=EsterelStatement? )
+        ( (statements+=EsterelStatement ";" | statements+=MetaStatement)* statements+=EsterelStatement? )
     )?;
 
 // ==> 7.5.4 The if Data Test
@@ -332,15 +342,14 @@ IfTest:
     "if" 
     expression=Expression 
     (
-        (thenAnnotations += Annotation)*
+        (annotations+=Annotation)*
         "then" 
-        ( (thenStatements+=EsterelStatement ";")* thenStatements+=EsterelStatement? )
+        ( (statements+=EsterelStatement ";" | statements+=MetaStatement)* statements+=EsterelStatement? )
     )? 
     (elseif+=ElsIf)* 
     (
-            (elseAnnotations += Annotation)*
             "else" 
-            ( (elseStatements+=EsterelStatement ";")* elseStatements+=EsterelStatement? )
+            ( (elseStatements+=EsterelStatement ";" | elseStatements+=MetaStatement)* elseStatements+=EsterelStatement? )
     )? 
     "end" "if"?;
 
@@ -350,7 +359,7 @@ ElsIf:
     expression=Expression 
     (
         "then" 
-        ( (thenStatements+=EsterelStatement ";")* thenStatements+=EsterelStatement? )
+        ( (statements+=EsterelStatement ";" | statements+=MetaStatement)* statements+=EsterelStatement? )
     )?;
 
 // ==> 7.5.5 Looping & 7.5.9 Temporal Loops
@@ -359,7 +368,7 @@ Loop:
     {Loop}
     (annotations += Annotation)*
     "loop" 
-    ( (statements+=EsterelStatement ";")* statements+=EsterelStatement? ) 
+    ( (statements+=EsterelStatement ";" | statements+=MetaStatement)* statements+=EsterelStatement? ) 
     ("end" "loop"? | "each" delay=DelayExpr);
 
 // ==> 7.5.6 Repeat Looping
@@ -370,7 +379,7 @@ Repeat:
     "repeat" 
     expression=Expression 
     "times" 
-    ( (statements+=EsterelStatement ";")* statements+=EsterelStatement? ) 
+    ( (statements+=EsterelStatement ";" | statements+=MetaStatement)* statements+=EsterelStatement? ) 
     "end" "repeat"?;
 
 // ==> 7.5.7 The abort Statements
@@ -378,13 +387,13 @@ Repeat:
 Abort:
     (annotations += Annotation)*
     ((weak?="weak")? "abort") 
-    ( (statements+=EsterelStatement ";")* statements+=EsterelStatement? ) 
+    ( (statements+=EsterelStatement ";" | statements+=MetaStatement)* statements+=EsterelStatement? ) 
     "when" 
     (
         delay=DelayExpr
         (   
             "do" 
-            ( (doStatements+=EsterelStatement ";")* doStatements+=EsterelStatement? )
+            ( (doStatements+=EsterelStatement ";" | doStatements+=MetaStatement)* doStatements+=EsterelStatement? )
         )?
         "end" ("weak" "abort" | "abort")?
     |
@@ -401,7 +410,7 @@ Case:
     delay=DelayExpr 
     ( 
         "do" 
-        ( (statements+=EsterelStatement ";")* statements+=EsterelStatement? ) 
+        ( (statements+=EsterelStatement ";" | statements+=MetaStatement)* statements+=EsterelStatement? ) 
     )?;
 
 // ==> 7.5.8 The await Statement
@@ -413,7 +422,7 @@ Await:
         delay=DelayExpr
         (   
             "do" 
-            ( (statements+=EsterelStatement ";")* statements+=EsterelStatement? )
+            ( (statements+=EsterelStatement ";" | statements+=MetaStatement)* statements+=EsterelStatement? )
             "end" "await"?
         )?
     |
@@ -431,7 +440,7 @@ EveryDo:
     "every" 
     delay=DelayExpr 
     "do" 
-    ( (statements+=EsterelStatement ";")* statements+=EsterelStatement? ) 
+    ( (statements+=EsterelStatement ";" | statements+=MetaStatement)* statements+=EsterelStatement? ) 
     "end" "every"?;
 
 // ==> 7.5.10 The suspend Statement
@@ -439,7 +448,7 @@ EveryDo:
 Suspend:
     (annotations += Annotation)*
     ((weak?="weak")? "suspend") 
-    ( (statements+=EsterelStatement ";")* statements+=EsterelStatement? ) 
+    ( (statements+=EsterelStatement ";" | statements+=MetaStatement)* statements+=EsterelStatement? ) 
     "when" 
     delay=DelayExpr; 
     
@@ -450,29 +459,29 @@ Trap:
     "trap" 
     trapSignals+=TrapSignal ("," trapSignals+=TrapSignal)* 
     "in" 
-    ( (statements+=EsterelStatement ";")* statements+=EsterelStatement? )
+    ( (statements+=EsterelStatement ";" | statements+=MetaStatement)* statements+=EsterelStatement? )
     (trapHandler+=TrapHandler)* 
     "end" "trap"?;
 
-TrapSignal returns ISignal:
-    {TrapSignal} 
+TrapSignal returns Signal:
+    {TrapSignal}
     name=ID 
     ( 
           ":"?
-          (    type=Esterel_ValueType
-                | typeID=ID
-                | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | combineOperator=Esterel_CombineOperator)) 
+          (    type=EsterelValueType
+                | idType=ID
+                | ("combine" (type=EsterelValueType | idType=ID) "with" (combineFunction=[Function|ID] | combineOperator=EsterelCombineOperator)) 
           )
         | ("("
-            (     type=Esterel_ValueType
-                | typeID=ID
-                | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | combineOperator=Esterel_CombineOperator))
+            (     type=EsterelValueType
+                | idType=ID
+                | ("combine" (type=EsterelValueType | idType=ID) "with" (combineFunction=[Function|ID] | combineOperator=EsterelCombineOperator))
             )
            ")")
-        | (":=" expression=Expression ":" 
-            (     type=Esterel_ValueType
-                | typeID=ID
-                | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | combineOperator=Esterel_CombineOperator))
+        | (":=" initialValue=Expression ":" 
+            (     type=EsterelValueType
+                | idType=ID
+                | ("combine" (type=EsterelValueType | idType=ID) "with" (combineFunction=[Function|ID] | combineOperator=EsterelCombineOperator))
             )
           ) 
      )?;
@@ -482,7 +491,7 @@ TrapHandler:
     "handle" 
     trapExpr=TrapExpr 
     "do" 
-    ( (statements+=EsterelStatement ";")* statements+=EsterelStatement? );
+    ( (statements+=EsterelStatement ";" | statements+=MetaStatement)* statements+=EsterelStatement? );
 
 Exit:
     (annotations += Annotation)*
@@ -495,11 +504,11 @@ Exit:
 Exec:
     (annotations += Annotation)*
         (   "exec" task=[Task|ID] 
-            "(" (vars+=[IVariable|ID] ("," vars+=[IVariable|ID])*)? ")" 
-            "(" (kexpressions+=Expression ("," kexpressions+=Expression)*)? ")" 
+            "(" (referenceParameters+=[Variable|ID] ("," referenceParameters+=[Variable|ID])*)? ")" 
+            "(" (valueParameters+=Expression ("," valueParameters+=Expression)*)? ")" 
             "return" 
-            retSignal=[ISignal] 
-            ("do" ( (statements+=EsterelStatement ";")* statements+=EsterelStatement? ))? 
+            returnSignal=[Signal] 
+            ("do" ( (statements+=EsterelStatement ";" | statements+=MetaStatement)* statements+=EsterelStatement? ))? 
         | 
             "exec" execCaseList+=ExecCase+ 
         ) 
@@ -508,35 +517,35 @@ Exec:
 ExecCase:
     (annotations += Annotation)*
     "case" task=[Task|ID] 
-    "(" (vars+=[IVariable|ID] ("," vars+=[IVariable|ID])*)? ")" 
-    "(" (kexpressions+=Expression ("," kexpressions+=Expression)*)? ")" 
+    "(" (referenceParameters+=[Variable|ID] ("," referenceParameters+=[Variable|ID])*)? ")" 
+    "(" (valueParameters+=Expression ("," valueParameters+=Expression)*)? ")" 
     "return" 
-    retSignal=[ISignal] 
-    ("do" ( (statements+=EsterelStatement ";")* statements+=EsterelStatement? ))?;
+    returnSignal=[Signal] 
+    ("do" ( (statements+=EsterelStatement ";" | statements+=MetaStatement)* statements+=EsterelStatement? ))?;
 
 // ==> 7.5.13 Local Signal Declaration    
 // -------------------------------------
-LocalSignalDecl:
+LocalSignalDeclaration:
     (annotations += Annotation)*
-    "signal" signals+=ISignal ("," signals+=ISignal)* 
-    "in" ( (statements+=EsterelStatement ";")* statements+=EsterelStatement? ) 
+    "signal" valuedObjects+=Signal ("," valuedObjects+=Signal)* 
+    "in" ( (statements+=EsterelStatement ";" | statements+=MetaStatement)* statements+=EsterelStatement? ) 
     "end" "signal"?;
 
 // ==> 7.5.14 Local Variable Declaration
 // ------------------------------------- 
-LocalVariable:
+LocalVariableDeclaration:
     (annotations += Annotation)*
     "var" 
-    (varDecls+=VariableDecl) ("," varDecls+=VariableDecl)* 
+    (variableDeclarations+=EsterelVariableDeclaration) ("," variableDeclarations+=EsterelVariableDeclaration)* 
     "in" 
-    ( (statements+=EsterelStatement ";")* statements+=EsterelStatement? ) 
+    ( (statements+=EsterelStatement ";" | statements+=MetaStatement)* statements+=EsterelStatement? ) 
     "end" "var"?;
     
-VariableDecl:
-    (variables+=IVariable) ("," variables+=IVariable)* ":" type=TypeIdentifier;
+EsterelVariableDeclaration:
+    (variables+=Variable) ("," variables+=Variable)* ":" type=TypeIdentifier;
 
-IVariable:
-     name=ID (":=" expression=Expression)?;
+Variable:
+     name=ID (":=" initialValue=Expression)?;
 
 // ==> 7.5.15 The run Module Instantiation Statement
 // -------------------------------------
@@ -544,21 +553,21 @@ Run:
     (annotations += Annotation)*
     (   (   "run" 
             module=ModuleRenaming 
-            ("[" list+=Renaming (";" list+=Renaming)* "]")? 
+            ("[" renamings+=Renamings (";" renamings+=Renamings)* "]")? 
         )
         | 
-        (    "copymodule"
+        (   "copymodule"
             module=ModuleRenaming
-            ("[" list+=Renaming (";" list+=Renaming)* "]")?
+            ("[" renamings+=Renamings (";" renamings+=Renamings)* "]")?
             
          )
     ); //deprecated
 
 ModuleRenaming:
-       module=[Module|ID] 
-    | (newName=ID "/" module=[Module|ID])
+       module=[EsterelModule|ID] 
+    | (newName=ID "/" module=[EsterelModule|ID])
 ;
-Renaming:
+Renamings:
     (annotations += Annotation)*
     ("type" renamings+=TypeRenaming ("," renamings+=TypeRenaming)*
     | "constant" renamings+=ConstantRenaming ("," renamings+=ConstantRenaming)*
@@ -568,10 +577,10 @@ Renaming:
     | "signal" renamings+=SignalRenaming ("," renamings+=SignalRenaming)* );
 
 TypeRenaming:
-    (newName=[Type|ID] | newType=Esterel_ValueType) "/" oldName=[Type|ID];
+    (newName=[TypeDefinition|ID] | newType=EsterelValueType) "/" oldName=[TypeDefinition|ID];
 
 ConstantRenaming:
-    (newName=[Constant|ID] | newValue=ConstantValue) "/" oldName=[Constant|ID];
+    (newName=[Constant|ID] | newValue=AnyValue) "/" oldName=[Constant|ID];
 
 FunctionRenaming:
     (newName=[Function|ID] | newFunc=BuildInFunction) "/" oldName=[Function|ID];
@@ -583,7 +592,7 @@ TaskRenaming:
     newName=[Task|ID] "/" oldName=[Task|ID];
 
 SignalRenaming:
-    newName=[ISignal|ID] "/" oldName=[ISignal|ID];
+    newName=[Signal|ID] "/" oldName=[Signal|ID];
 
 // renaming can also rename build in types and functions
 BuildInFunction:
@@ -598,18 +607,18 @@ BuildInFunction:
 Do:
     (annotations += Annotation)*
     "do" 
-    ( (statements+=EsterelStatement ";")* statements+=EsterelStatement? ) 
+    ( (statements+=EsterelStatement ";" | statements+=MetaStatement)* statements+=EsterelStatement? ) 
     ( 
-        (endingAnnotations += Annotation)* 
+        (annotations += Annotation)* 
         "upto" 
-        expression=DelayExpr
+        delay=DelayExpr
         | 
-        (endingAnnotations += Annotation)* 
+        (watchingAnnotations += Annotation)* 
         "watching" 
-        delay=DelayExpr 
+        watching=DelayExpr 
         ( 
             "timeout" 
-            ( (watchingStatements+=EsterelStatement ";")* watchingStatements+=EsterelStatement? ) 
+            ( (watchingStatements+=EsterelStatement ";" | statements+=MetaStatement)* watchingStatements+=EsterelStatement? ) 
             "end" "timeout"?  
         )?
     );
@@ -620,49 +629,49 @@ Do:
  * ###################################################
  */
    
-enum Esterel_CompareOperator returns kexpressions::OperatorType:
+enum EsterelCompareOperator returns kexpressions::OperatorType:
     EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
 
-enum Esterel_PreOperator returns kexpressions::OperatorType:
+enum EsterelPreOperator returns kexpressions::OperatorType:
     PRE="pre";
 
-enum Esterel_OrOperator returns kexpressions::OperatorType:
+enum EsterelOrOperator returns kexpressions::OperatorType:
     LOGICAL_OR="or";
 
-enum Esterel_AndOperator returns kexpressions::OperatorType:
+enum EsterelAndOperator returns kexpressions::OperatorType:
     LOGICAL_AND="and";
 
-enum Esterel_NotOperator returns kexpressions::OperatorType:
+enum EsterelNotOperator returns kexpressions::OperatorType:
     NOT="not";
 
-enum Esterel_AddOperator returns kexpressions::OperatorType:
+enum EsterelAddOperator returns kexpressions::OperatorType:
     ADD="+";
     
-enum Esterel_SubOperator returns kexpressions::OperatorType:
+enum EsterelSubOperator returns kexpressions::OperatorType:
     SUB="-";
     
-enum Esterel_MultOperator returns kexpressions::OperatorType: 
+enum EsterelMultOperator returns kexpressions::OperatorType: 
     MULT="*";
 
-enum Esterel_ModOperator returns kexpressions::OperatorType:  
+enum EsterelModOperator returns kexpressions::OperatorType:  
     MOD="mod";
 
-enum Esterel_DivOperator returns kexpressions::OperatorType:  
+enum EsterelDivOperator returns kexpressions::OperatorType:  
     DIV="/";
 
-enum Esterel_ValueTestOperator returns kexpressions::OperatorType:
+enum EsterelValueTestOperator returns kexpressions::OperatorType:
     VAL="?";    
 
 /*
    the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 
 */
-enum Esterel_ValueType returns kexpressions::ValueType:
+enum EsterelValueType returns kexpressions::ValueType:
     PURE="pure" | BOOL="boolean" | UNSIGNED="unsigned"  | 
     INT="integer" | FLOAT="float" | DOUBLE="double" |
     STRING="string" | HOST="host";
 
 
-enum Esterel_CombineOperator returns kexpressions::CombineOperator:
+enum EsterelCombineOperator returns kexpressions::CombineOperator:
     NONE="none" | ADD="+" | MULT="*" | MAX="max" |
     MIN="min" | OR="or" | AND="and" | HOST="host";
 
@@ -679,11 +688,11 @@ terminal ML_COMMENT:
     ('%' '{')->('}' '%');
 
 // allow escaping by double quotes ( "this is a ""quote"", how nice." ) - Esterel style
-terminal STRING returns ecore::EString:
+terminal STRING:
     '"' (!('"') | ('"' '"'))* '"';
 
 // custom terminal rule allowing to save transition label string as they are
-terminal HOSTCODE returns ecore::EString: 
+terminal HOSTCODE: 
     "'" ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|"'") )* "'";       
        
        
@@ -696,7 +705,7 @@ terminal HOSTCODE returns ecore::EString:
 // These rules are introduced here.
 // Care about order of the rules! 
 AtomicExpression returns kexpressions::Expression:
-    FunctionExpression
+    EsterelFunctionCall
     | TrapExpression
     | BoolValue
     | ValuedObjectTestExpression
@@ -705,14 +714,14 @@ AtomicExpression returns kexpressions::Expression:
     | ConstantExpression;
 
 TrapExpression returns kexpressions::Expression:
-    {TrapExpression} "??" trap=[ISignal|ID];
+    {TrapExpression} "??" trap=[Signal|ID];
 
-FunctionExpression returns kexpressions::Expression:
-    {FunctionExpression} function=[Function|ID] 
-    "(" (kexpressions+=Expression ("," kexpressions+=Expression)*)? ")";
+EsterelFunctionCall:
+    function=[Function|ID] 
+    "(" (parameter+=Expression ("," parameter+=Expression)*)? ")";
 
 ConstantExpression returns kexpressions::Expression:
-    {ConstantExpression} (constant=[Constant|ID] | value=ConstantValue);
+    {ConstantExpression} (constant=[Constant|ID] | value=AnyValue);
 
 // --> B.3.5 Trap Expressions <--
 // -------------------------------------
@@ -720,20 +729,20 @@ ConstantExpression returns kexpressions::Expression:
 TrapExpr returns kexpressions::Expression:
     TrapAndExpression 
     (   {kexpressions::OperatorExpression.subExpressions+=current} 
-        (operator=Esterel_OrOperator subExpressions+=TrapAndExpression)+
+        (operator=EsterelOrOperator subExpressions+=TrapAndExpression)+
     )?;
     
 // The warning can be ignored since the operator will only override itself in this loop.
 TrapAndExpression returns kexpressions::Expression:
     TrapNotExpression 
     (   {kexpressions::OperatorExpression.subExpressions+=current} 
-        (operator=Esterel_AndOperator subExpressions+=TrapNotExpression)+
+        (operator=EsterelAndOperator subExpressions+=TrapNotExpression)+
     )?;
 
 // The warning can be ignored since the operator will only override itself in this loop.
 TrapNotExpression returns kexpressions::Expression:
     {kexpressions::OperatorExpression} 
-    (operator=Esterel_NotOperator)+ 
+    (operator=EsterelNotOperator)+ 
     subExpressions+=TrapAtomicExpression
     |
     TrapAtomicExpression;
@@ -751,20 +760,20 @@ TrapReferenceExpr returns kexpressions::ValuedObjectReference:
 SignalExpression returns kexpressions::Expression:
     SignalAndExpression 
     (   {kexpressions::OperatorExpression.subExpressions+=current} 
-        (operator=Esterel_OrOperator subExpressions+=SignalAndExpression)+
+        (operator=EsterelOrOperator subExpressions+=SignalAndExpression)+
     )?;
 
 // The warning can be ignored since the operator will only override itself in this loop.
 SignalAndExpression returns kexpressions::Expression:
     SignalNotExpression 
     (   {kexpressions::OperatorExpression.subExpressions+=current} 
-        (operator=Esterel_AndOperator subExpressions+=SignalNotExpression)+
+        (operator=EsterelAndOperator subExpressions+=SignalNotExpression)+
     )?;
 
 // The warning can be ignored since the operator will only override itself in this loop.
 SignalNotExpression returns kexpressions::Expression:
     {kexpressions::OperatorExpression} 
-    (operator=Esterel_NotOperator)+ 
+    (operator=EsterelNotOperator)+ 
     subExpressions+=SignalAtomicExpression
     |
     SignalAtomicExpression;
@@ -775,19 +784,19 @@ SignalAtomicExpression returns kexpressions::Expression:
     | SignalReferenceExpr;
 
 SignalReferenceExpr returns kexpressions::ValuedObjectReference:
-    {SignalReferenceExpr} valuedObject=[ISignal|ID];
+    {SignalReferenceExpr} valuedObject=[Signal|ID];
 
 SignalPreExpr returns kexpressions::Expression:
     {kexpressions::OperatorExpression} 
-    operator=Esterel_PreOperator 
+    operator=EsterelPreOperator 
     '(' subExpressions+=SignalReferenceExpr ')';
 
 // --> B.3.4 Delay Expressions <--
 // -------------------------------------
 DelayExpr:
-    ( expression=Expression | isImmediate?="immediate" )?
-    (     signalExpr=SignalReferenceExpr 
-        | "[" signalExpr=SignalExpression "]"
+    ( delay=Expression | immediate?="immediate" )?
+    (     expression=SignalReferenceExpr 
+        | "[" expression=SignalExpression "]"
     );   
 
     
@@ -816,7 +825,7 @@ BooleanExpression returns kexpressions::Expression:
 OrExpression returns kexpressions::Expression:
     AndExpression 
     (   {kexpressions::OperatorExpression.subExpressions+=current} 
-        (operator=Esterel_OrOperator subExpressions+=AndExpression)+
+        (operator=EsterelOrOperator subExpressions+=AndExpression)+
     )?;
 
 
@@ -825,7 +834,7 @@ OrExpression returns kexpressions::Expression:
 AndExpression returns kexpressions::Expression:
     CompareOperation 
     (   {kexpressions::OperatorExpression.subExpressions+=current} 
-        (operator=Esterel_AndOperator subExpressions+=CompareOperation)+
+        (operator=EsterelAndOperator subExpressions+=CompareOperation)+
     )?;
 
 
@@ -833,7 +842,7 @@ AndExpression returns kexpressions::Expression:
 CompareOperation returns kexpressions::Expression:
     NotOrValuedExpression 
     ({kexpressions::OperatorExpression.subExpressions+=current} 
-        operator=Esterel_CompareOperator subExpressions+=NotOrValuedExpression
+        operator=EsterelCompareOperator subExpressions+=NotOrValuedExpression
     )?;
 
 
@@ -847,7 +856,7 @@ NotOrValuedExpression returns kexpressions::Expression:
 // at the latter we need the parans to indicate the right binding
 NotExpression returns kexpressions::Expression:
     {kexpressions::OperatorExpression} 
-    operator=Esterel_NotOperator 
+    operator=EsterelNotOperator 
     subExpressions+=(NotExpression)
     | 
     AtomicExpression;
@@ -863,7 +872,7 @@ ValuedExpression returns kexpressions::Expression:
 AddExpression returns kexpressions::Expression:
     SubExpression 
     (   {kexpressions::OperatorExpression.subExpressions+=current} 
-        (operator=Esterel_AddOperator subExpressions+=SubExpression)+
+        (operator=EsterelAddOperator subExpressions+=SubExpression)+
     )?;
 
 
@@ -872,7 +881,7 @@ AddExpression returns kexpressions::Expression:
 SubExpression returns kexpressions::Expression:
     MultExpression 
     (   {kexpressions::OperatorExpression.subExpressions+=current} 
-        (operator=Esterel_SubOperator subExpressions+=MultExpression)+
+        (operator=EsterelSubOperator subExpressions+=MultExpression)+
     )?;
 
 
@@ -881,7 +890,7 @@ SubExpression returns kexpressions::Expression:
 MultExpression returns kexpressions::Expression:
     DivExpression 
     (   {kexpressions::OperatorExpression.subExpressions+=current} 
-        (operator=Esterel_MultOperator subExpressions+=DivExpression)+
+        (operator=EsterelMultOperator subExpressions+=DivExpression)+
     )?;
 
 
@@ -890,7 +899,7 @@ MultExpression returns kexpressions::Expression:
 DivExpression returns kexpressions::Expression:
     ModExpression 
     (   {kexpressions::OperatorExpression.subExpressions+=current} 
-        operator=Esterel_DivOperator 
+        operator=EsterelDivOperator 
         subExpressions+=ModExpression
     )?;
     
@@ -899,7 +908,7 @@ DivExpression returns kexpressions::Expression:
 ModExpression returns kexpressions::Expression:
     NegExpression 
     (   {kexpressions::OperatorExpression.subExpressions+=current} 
-        operator=Esterel_ModOperator 
+        operator=EsterelModOperator 
         subExpressions+=AtomicValuedExpression
     )?;
 
@@ -908,7 +917,7 @@ ModExpression returns kexpressions::Expression:
 // at the latter we need the parans to indicate the right binding
 NegExpression returns kexpressions::Expression:
     {kexpressions::OperatorExpression} 
-    operator=Esterel_SubOperator 
+    operator=EsterelSubOperator 
     subExpressions+=(NegExpression)
     | 
     AtomicValuedExpression;
@@ -922,10 +931,6 @@ AtomicValuedExpression returns kexpressions::Expression:
 
 // Example: pre(pre(?A)), pre(pre(A)), ?A, A varX
 ValuedObjectTestExpression returns kexpressions::Expression:
-    {kexpressions::OperatorExpression} operator=Esterel_PreOperator '('subExpressions+=ValuedObjectTestExpression')'
-    | {kexpressions::OperatorExpression} operator=Esterel_ValueTestOperator subExpressions+=ValuedObjectReference
+    {kexpressions::OperatorExpression} operator=EsterelPreOperator '('subExpressions+=ValuedObjectTestExpression')'
+    | {kexpressions::OperatorExpression} operator=EsterelValueTestOperator subExpressions+=ValuedObjectReference
     | ValuedObjectReference;
-
-
-Esterel_ValuedObject returns kexpressions::ValuedObject:
-    ISignal | Constant | TrapSignal | IVariable | ValuedObject;
