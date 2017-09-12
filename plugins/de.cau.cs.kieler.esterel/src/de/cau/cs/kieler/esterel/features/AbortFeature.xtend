@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.esterel.scest.features
+package de.cau.cs.kieler.esterel.features
 
 import de.cau.cs.kieler.esterel.Abort
 import de.cau.cs.kieler.esterel.EsterelProgram

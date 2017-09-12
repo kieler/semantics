@@ -10,10 +10,10 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.esterel.scest.featuregroups
+package de.cau.cs.kieler.esterel.featuregroups
 
 import de.cau.cs.kieler.kico.features.FeatureGroup
-import de.cau.cs.kieler.esterel.scest.features.SCEstFeature
+import de.cau.cs.kieler.esterel.features.SCEstFeature
 import com.google.common.collect.Sets
 
 /**
