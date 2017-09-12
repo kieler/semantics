@@ -131,8 +131,12 @@ class KiCoolRegistration {
         val processors = getRegisteredProcessors
         processorMap.clear
         for(processor : processors) {
-            val instance = getInstance(processor) as Processor
-            processorMap.put(instance.getId, processor)
+            try {
+                val instance = getInstance(processor) as Processor
+                processorMap.put(instance.getId, processor)
+            } catch(Throwable e) {
+                java.lang.System.err.println("KiCool: Cannot load processor " + processor.name);
+            }
         }
         processors
     }
@@ -146,7 +150,7 @@ class KiCoolRegistration {
                 val clazz = instance.getClass
                 resourceList += clazz as Class<? extends Processor> 
                 //Class.forName(processor.name) as Class<? extends Processor>
-            } catch(Exception e) {
+            } catch(Throwable e) {
                 java.lang.System.err.println("KiCool: Cannot load processor " + processor.getAttribute("class"));
             }
         }
