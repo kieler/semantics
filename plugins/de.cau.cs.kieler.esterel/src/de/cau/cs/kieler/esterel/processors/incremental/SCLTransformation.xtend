@@ -10,25 +10,26 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.esterel.scest.transformations
+package de.cau.cs.kieler.esterel.processors.incremental
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.esterel.LocalSignalDecl
 import de.cau.cs.kieler.esterel.LocalVariable
 import de.cau.cs.kieler.esterel.EsterelProgram
-import de.cau.cs.kieler.esterel.scest.extensions.EsterelTransformationExtensions
+import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.scl.SCLProgram
 import de.cau.cs.kieler.scl.ScopeStatement
 import de.cau.cs.kieler.esterel.Module
+import de.cau.cs.kieler.esterel.processors.EsterelProcessor
 
 /**
  * @author mrb
  *
  */
-class SCLTransformation extends Processor<SCEstProgram, SCLProgram> {
+class SCLTransformation extends EsterelProcessor {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -80,7 +81,7 @@ class SCLTransformation extends Processor<SCEstProgram, SCLProgram> {
     @Inject
     extension EsterelTransformationExtensions
 
-    def SCLProgram transform(SCEstProgram prog) {
+    def SCLProgram transform(EsterelProgram prog) {
         val sclProg = createSCLProg
         val module = createSCLModule
         sclProg.modules += module

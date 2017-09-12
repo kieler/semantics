@@ -27,7 +27,7 @@ import de.cau.cs.kieler.esterel.Run
 import de.cau.cs.kieler.esterel.Trap
 import de.cau.cs.kieler.esterel.scest.SCEstModule
 import de.cau.cs.kieler.esterel.scest.SCEstProgram
-import de.cau.cs.kieler.esterel.scest.extensions.EsterelTransformationExtensions
+import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.scl.Conditional

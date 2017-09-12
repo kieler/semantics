@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.esterel.scest.transformations
+package de.cau.cs.kieler.esterel.processors.incremental
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.esterel.ISignal
@@ -21,7 +21,7 @@ import de.cau.cs.kieler.esterel.Module
 import de.cau.cs.kieler.esterel.Output
 import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.scest.extensions.NewSignals
-import de.cau.cs.kieler.esterel.scest.extensions.EsterelTransformationExtensions
+import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.esterel.processors.EsterelProcessor
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.scl.ScopeStatement
