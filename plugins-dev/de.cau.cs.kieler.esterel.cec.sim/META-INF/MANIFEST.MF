@@ -12,7 +12,6 @@ Require-Bundle: de.cau.cs.kieler.esterel.cec,
  de.cau.cs.kieler.sim.kiem.ui.datacomponent,
  de.cau.cs.kieler.esterel,
  de.cau.cs.kieler.sim.signals,
- de.cau.cs.kieler.esterel.kexpressions.ui;bundle-version="0.4.1",
  de.cau.cs.kieler.sim.benchmark,
  de.cau.cs.kieler.esterel.sim
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
