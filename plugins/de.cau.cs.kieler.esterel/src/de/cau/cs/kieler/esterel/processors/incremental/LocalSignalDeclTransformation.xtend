@@ -149,7 +149,8 @@ class LocalSignalDeclTransformation extends EsterelProcessor {
         var scope = createScopeStatement
         scope.statements.add(localSignals.statements)
         for (signal : localSignals.signals) {
-                var s = createSignalVariable(createFalse, null, signal.name)
+                var s = createSignalVariable(createFalse, null, null.createNewUniqueSignalName)
+                signal.name = null.createNewUniqueSignalName
                 var decl = createDeclaration(ValueType.BOOL, s)
                 var Declaration decl2 = createDeclaration(null, null)
                 if (signal.type != null) {
@@ -158,10 +159,10 @@ class LocalSignalDeclTransformation extends EsterelProcessor {
                         signalsMap.put(signal, new NewSignals(s))
                     }
                     else {
-                        var s_set = createSignalVariable(createFalse, null, signal.name + "_set")
+                        var s_set = createSignalVariable(createFalse, null, s.name + "_set")
                         decl.valuedObjects.add(s_set)
-                        var s_val = createSignalVariable(signal.expression, signal.combineOperator, signal.name + "_val")
-                        var s_cur = createSignalVariable(null, signal.combineOperator, signal.name + "_cur")
+                        var s_val = createSignalVariable(signal.expression, signal.combineOperator, s.name + "_val")
+                        var s_cur = createSignalVariable(null, signal.combineOperator, s.name + "_cur")
                         var tempType = if (signal.type == ValueType.DOUBLE) ValueType.FLOAT else signal.type
                         decl2 = createDeclaration(tempType, null)
                         decl2.valuedObjects.add(s_val)
@@ -172,7 +173,7 @@ class LocalSignalDeclTransformation extends EsterelProcessor {
                 }
                 else { // shouldn't be possible
                     throw new UnsupportedOperationException(
-                        "The following signal doesn't have a type! " + signal.name)
+                        "The following signal doesn't have a type! " + s.name)
                 }
         }
         createParallelForSignals(scope, signalsMap)
@@ -183,7 +184,7 @@ class LocalSignalDeclTransformation extends EsterelProcessor {
         
         newSignals.putAll(signalsMap)
         scope.statements.transformStatements
-        scope.transformReferences
+//        scope.transformReferences
     }
     
     def createParallelForSignals(ScopeStatement scope, HashMap<ISignal, NewSignals> signalsMap) {

@@ -84,12 +84,13 @@ class IfTestTransformation extends EsterelProcessor {
                 ifTest.elseif.forEach [ elsif | transformStatements(elsif.thenStatements)]
             }
             transformStatements(ifTest.elseStatements)
-            
+            ifTest.expression.transformReferences
             var conditional = createConditional(ifTest.expression)
             conditional.statements.add(ifTest.thenStatements)
             if (!ifTest.elseif.empty) {
                 var tempConditional = conditional
                 for (e : ifTest.elseif) {
+                    e.expression.transformReferences
                     var conditional2 = createConditional(e.expression)
                     conditional2.statements.add(e.thenStatements)
                     var elseStatement = createElseScope(conditional2)

@@ -87,11 +87,13 @@ class PresentTransformation extends EsterelProcessor {
             
             var Conditional conditional
             if (!present.cases.empty) {
+                present.cases.get(0).expression.transformReferences
                 conditional = createConditional(present.cases.get(0).expression)
                 conditional.statements.add(present.cases.get(0).statements)
                 var tempConditional = conditional
                 for (var i=1; i<present.cases.length; i++) {
                     var e = present.cases.get(i)
+                    e.expression.transformReferences
                     var conditional2 = createConditional(e.expression)
                     conditional2.statements.add(e.statements)
                     var elseStatement = createElseScope(conditional2)
@@ -103,6 +105,7 @@ class PresentTransformation extends EsterelProcessor {
                 }
             }
             else {
+                present.expression.transformReferences
                 conditional = createConditional(present.expression)
                 conditional.statements.add(present.thenStatements)
                 if (!present.elseStatements.isEmpty) {

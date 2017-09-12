@@ -307,10 +307,19 @@ class EsterelTransformationExtensions {
      * @return A new ValuedObject with an unused name
      */
     def ValuedObject createSignalVariable(Expression expr, CombineOperator op, String name) {
-        createValuedObject(createNewUniqueSignalName(name)) => [
+        if (name != null) {
+            createValuedObject(name) => [
+                it.initialValue = EcoreUtil.copy(expr)
+                it.combineOperator = op
+            ]
+        }
+        else {
+            createValuedObject(createNewUniqueSignalName(null)) => [
             it.initialValue = EcoreUtil.copy(expr)
             it.combineOperator = op
         ]
+        }
+        
     }
     
     /**
@@ -453,9 +462,10 @@ class EsterelTransformationExtensions {
     def createNewUniqueSignalName(String name) {
         signalSuffix++
         if (name != null) {
-            return name + "_s" + signalSuffix
+            return name + "_sig"
         }
         else {
+            signalSuffix++
             "s" + signalSuffix
         }
     }
@@ -1395,14 +1405,17 @@ class EsterelTransformationExtensions {
     }
     
     /**
-     * Transform all references to Signals in the scope of the given statement.
+     * Transform all references to ISignals in the scope of the given object.
      * 
-     * @param statement The statement which sets the scope
+     * @param obj The object which contains references to signals
      */
-    def transformReferences(Statement statement) {
+    def transformReferences(EObject obj) {
         // iterate over all valued object references contained in the scope
         // if a reference references a transformed signal then set the reference to the new signal
-        var references = statement.eAllContents.filter(ValuedObjectReference).toList
+        var references = obj.eAllContents.filter(ValuedObjectReference).toList
+        if (obj instanceof ValuedObjectReference) {
+            references += obj
+        }
         for (ref : references) {
             if (ref.valuedObject instanceof Signal) {
                 var signal = ref.valuedObject as Signal
@@ -1833,6 +1846,29 @@ class EsterelTransformationExtensions {
         EsterelFactory::eINSTANCE.createFunctionDeclaration => [
             it.functions += function
         ]
+    }
+    
+    /**
+     * Change SignalReferenceExpr to ValuedObjectReference.
+     * 
+     * @param object The object containing an arbitrary number of SignalReferenceExpr
+     */
+    def changeSignalRefExprToVORef(EObject obj) {
+        var references = obj.eAllContents.filter(SignalReferenceExpr).toList
+        for (ref : references) {
+            // if "ref" is still a SignalReferenceExpr it must be transformed into a ValuedObjectReference
+            if (ref.eContainer != null && ref instanceof SignalReferenceExpr && ref.valuedObject != null) {
+                if(ref.eContainer.eGet(ref.eContainingFeature) instanceof EList) {
+                    var list = ref.eContainer.eGet(ref.eContainingFeature) as EList<Expression>
+                    var pos = list.indexOf(ref)
+                    list.set(pos, createValuedObjectReference(ref.valuedObject))
+                }
+                else {
+                    var voRef = createValuedObjectReference(ref.valuedObject)
+                    setExpression(voRef, ref.eContainer, true)
+                }
+            }
+        }
     }
  
 }
