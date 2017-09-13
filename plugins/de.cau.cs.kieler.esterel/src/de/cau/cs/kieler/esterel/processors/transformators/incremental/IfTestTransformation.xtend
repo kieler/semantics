@@ -17,12 +17,12 @@ import de.cau.cs.kieler.esterel.Abort
 import de.cau.cs.kieler.esterel.Await
 import de.cau.cs.kieler.esterel.Do
 import de.cau.cs.kieler.esterel.EsterelParallel
+import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.Exec
 import de.cau.cs.kieler.esterel.IfTest
 import de.cau.cs.kieler.esterel.Present
 import de.cau.cs.kieler.esterel.Run
 import de.cau.cs.kieler.esterel.Trap
-import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.esterel.processors.EsterelProcessor
 import de.cau.cs.kieler.scl.Conditional
@@ -79,20 +79,20 @@ class IfTestTransformation extends EsterelProcessor {
     def Statement transformStatement(Statement statement) {
         if (statement instanceof IfTest) {
             var ifTest = statement as IfTest
-            transformStatements(ifTest.thenStatements)
+            transformStatements(ifTest.statements)
             if (ifTest.elseif != null) {
-                ifTest.elseif.forEach [ elsif | transformStatements(elsif.thenStatements)]
+                ifTest.elseif.forEach [ elsif | transformStatements(elsif.statements)]
             }
             transformStatements(ifTest.elseStatements)
             ifTest.expression.transformReferences
             var conditional = createConditional(ifTest.expression)
-            conditional.statements.add(ifTest.thenStatements)
+            conditional.statements.add(ifTest.statements)
             if (!ifTest.elseif.empty) {
                 var tempConditional = conditional
                 for (e : ifTest.elseif) {
                     e.expression.transformReferences
                     var conditional2 = createConditional(e.expression)
-                    conditional2.statements.add(e.thenStatements)
+                    conditional2.statements.add(e.statements)
                     var elseStatement = createElseScope(conditional2)
                     tempConditional.setElse(elseStatement)
                     tempConditional = conditional2
@@ -106,6 +106,13 @@ class IfTestTransformation extends EsterelProcessor {
             }
             
             return conditional
+        }
+        else if (statement instanceof Present) {
+            transformStatements((statement as Present).statements)
+            if ((statement as Present).cases != null) {
+                (statement as Present).cases.forEach[ c | transformStatements(c.statements)]
+            }
+            transformStatements((statement as Present).elseStatements)
         }
         else if (statement instanceof StatementContainer) {
             
@@ -138,13 +145,6 @@ class IfTestTransformation extends EsterelProcessor {
                     transformStatements((statement as Conditional).getElse().statements)
                 }
             }
-        }
-        else if (statement instanceof Present) {
-            transformStatements((statement as Present).thenStatements)
-            if ((statement as Present).cases != null) {
-                (statement as Present).cases.forEach[ c | transformStatements(c.statements)]
-            }
-            transformStatements((statement as Present).elseStatements)
         }
         else if (statement instanceof EsterelParallel) {
             (statement as EsterelParallel).threads.forEach [ t |

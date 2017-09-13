@@ -17,13 +17,14 @@ import de.cau.cs.kieler.esterel.Abort
 import de.cau.cs.kieler.esterel.Await
 import de.cau.cs.kieler.esterel.Do
 import de.cau.cs.kieler.esterel.EsterelParallel
+import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.Exec
 import de.cau.cs.kieler.esterel.IfTest
 import de.cau.cs.kieler.esterel.Present
-import de.cau.cs.kieler.esterel.ProcCall
+import de.cau.cs.kieler.esterel.ProcedureCall
+import de.cau.cs.kieler.esterel.ProcedureDeclaration
 import de.cau.cs.kieler.esterel.Run
 import de.cau.cs.kieler.esterel.Trap
-import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.esterel.processors.EsterelProcessor
 import de.cau.cs.kieler.kexpressions.ValueType
@@ -65,7 +66,7 @@ class ProcCallTransformation extends EsterelProcessor {
     override EsterelProgram transform(EsterelProgram prog) {
         prog.modules.forEach [ m | 
             transformStatements(m.statements)
-            m.intProcedureDecls.clear()
+            m.declarations.removeIf[it instanceof ProcedureDeclaration]
         ]
         return prog
     }
@@ -78,8 +79,22 @@ class ProcCallTransformation extends EsterelProcessor {
     }
     
     def Statement transformStatement(Statement statement) {
-        if (statement instanceof ProcCall) {
+        if (statement instanceof ProcedureCall) {
             statement.transformProcCallArguments
+        }
+        else if (statement instanceof Present) {
+            transformStatements((statement as Present).statements)
+            if ((statement as Present).cases != null) {
+                (statement as Present).cases.forEach[ c | transformStatements(c.statements)]
+            }
+            transformStatements((statement as Present).elseStatements)
+        }
+        else if (statement instanceof IfTest) {
+            transformStatements((statement as IfTest).statements)
+            if ((statement as IfTest).elseif != null) {
+                (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.statements)]
+            }
+            transformStatements((statement as IfTest).elseStatements)
         }
         else if (statement instanceof StatementContainer) {
             
@@ -105,16 +120,6 @@ class ProcCallTransformation extends EsterelProcessor {
                 transformStatements((statement as Conditional).getElse()?.statements)
             }
         }
-        else if (statement instanceof Present) {
-            transformStatements((statement as Present).thenStatements)
-            (statement as Present).cases?.forEach[ c | transformStatements(c.statements)]
-            transformStatements((statement as Present).elseStatements)
-        }
-        else if (statement instanceof IfTest) {
-            transformStatements((statement as IfTest).thenStatements)
-            (statement as IfTest).elseif?.forEach [ elsif | transformStatements(elsif.thenStatements)]
-            transformStatements((statement as IfTest).elseStatements)
-        }
         else if (statement instanceof EsterelParallel) {
             (statement as EsterelParallel).threads.forEach [ t |
                 transformStatements(t.statements)
@@ -132,14 +137,14 @@ class ProcCallTransformation extends EsterelProcessor {
     }
     
     def transformProcCallArguments(Statement statement) {
-        var procedure = statement as ProcCall
-        var function = createFunction(procedure.proc.name)
+        var procedure = statement as ProcedureCall
+        var function = createFunction(procedure.procedure.name)
         // create Parameter for call by reference parameters of procedure
-        for (v : procedure.varList) {
+        for (v : procedure.referenceArguments) {
            function.parameters.add(createParameter(createValuedObjectReference(v), true))
         }
         // create Parameter for call by value parameters of procedure
-        for (expr : procedure.kexpressions) {
+        for (expr : procedure.valueArguments) {
            function.parameters.add(createParameter(EcoreUtil.copy(expr), false))
         }
         var statements = statement.getContainingList

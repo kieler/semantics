@@ -59,7 +59,7 @@ class InitializationTransformation extends EsterelProcessor {
     @Inject
     extension EsterelTransformationExtensions
     
-    var SCEstProgram scestProgram
+    var EsterelProgram scestProgram
     
     override EsterelProgram transform(EsterelProgram prog) {
         scestProgram = prog
@@ -102,6 +102,20 @@ class InitializationTransformation extends EsterelProcessor {
             (statement as Parallel).threads.forEach [ t |
                 transformStatements(t.statements, depth+1)
             ]
+        }
+        else if (statement instanceof Present) {
+            transformStatements((statement as Present).statements, depth+1)
+            if ((statement as Present).cases != null) {
+                (statement as Present).cases.forEach[ c | transformStatements(c.statements, depth+1)]
+            }
+            transformStatements((statement as Present).elseStatements, depth+1)
+        }
+        else if (statement instanceof IfTest) {
+            transformStatements((statement as IfTest).statements, depth+1)
+            if ((statement as IfTest).elseif != null) {
+                (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.statements, depth+1)]
+            }
+            transformStatements((statement as IfTest).elseStatements, depth+1)
         }
         else if (statement instanceof StatementContainer) {
             
@@ -147,20 +161,6 @@ class InitializationTransformation extends EsterelProcessor {
                     transformStatements((statement as Conditional).getElse().statements, depth+1)
                 }
             }
-        }
-        else if (statement instanceof Present) {
-            transformStatements((statement as Present).thenStatements, depth+1)
-            if ((statement as Present).cases != null) {
-                (statement as Present).cases.forEach[ c | transformStatements(c.statements, depth+1)]
-            }
-            transformStatements((statement as Present).elseStatements, depth+1)
-        }
-        else if (statement instanceof IfTest) {
-            transformStatements((statement as IfTest).thenStatements, depth+1)
-            if ((statement as IfTest).elseif != null) {
-                (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.thenStatements, depth+1)]
-            }
-            transformStatements((statement as IfTest).elseStatements, depth+1)
         }
         else if (statement instanceof Run) {
             // create a copy of the referenced module

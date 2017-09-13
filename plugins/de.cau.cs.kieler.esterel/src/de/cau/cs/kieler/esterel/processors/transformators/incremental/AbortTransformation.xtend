@@ -121,7 +121,7 @@ class AbortTransformation extends EsterelProcessor {
                     var label3 = createLabel
                     var conditional = newIfThenGoto(createValuedObjectReference(abortFlag), label3, false)
                     conditional.annotations.add(createAnnotation(depth))
-                    var conditional2  = createConditional(EcoreUtil.copy(abort.delay.signalExpr))
+                    var conditional2  = createConditional(EcoreUtil.copy(abort.delay.expression))
                     conditional2.statements.add(incrementInt(variable))
                     thread1.statements.add(label2)
                     thread1.statements.add(conditional) 
@@ -191,7 +191,7 @@ class AbortTransformation extends EsterelProcessor {
                         // e.g. "abort when immediate A"
                         if (abort.delay.isImmediate) {
                             var label = createLabel
-                            var conditional = newIfThenGoto(EcoreUtil.copy(abort.delay.signalExpr), label, false)
+                            var conditional = newIfThenGoto(EcoreUtil.copy(abort.delay.expression), label, false)
                             // the order of the next three lines is crucial! (first trasformStatements, add(Label), then transformPauses)
                             abort.statements.transformStatements
                             abort.statements.add(label)
@@ -199,7 +199,7 @@ class AbortTransformation extends EsterelProcessor {
                             scope.statements.add(conditional)
                             scope.statements.add(abort.statements)
                             if (!abort.doStatements.empty) {
-                                var conditional2 = createConditional(EcoreUtil.copy(abort.delay.signalExpr))
+                                var conditional2 = createConditional(EcoreUtil.copy(abort.delay.expression))
                                 conditional2.statements.add(abort.doStatements)
                                 scope.statements.add(conditional2)
                             }
@@ -255,13 +255,13 @@ class AbortTransformation extends EsterelProcessor {
                         var decl2 = createDeclaration(ValueType.INT, variable)
                         countingVariables.add(variable)
                         scope.declarations.add(decl2)  
-                        var conditional2  = createConditional(EcoreUtil.copy(c.delay.signalExpr))
+                        var conditional2  = createConditional(EcoreUtil.copy(c.delay.expression))
                         conditional2.statements.add(incrementInt(variable))
                         thread1.statements.add(conditional2)
                     }
                     // adding if for an immediate case before the statements which should be aborted
-                    else if (c.delay.isIsImmediate && !abort.weak) {
-                        var conditional2 = newIfThenGoto(EcoreUtil.copy(c.delay.signalExpr), label, false)
+                    else if (c.delay.immediate && !abort.weak) {
+                        var conditional2 = newIfThenGoto(EcoreUtil.copy(c.delay.expression), label, false)
                         conditional2.annotations.add(createAnnotation(depth))
                         scope.statements.add(scope.statements.length-1, conditional2)
                     }
@@ -278,11 +278,11 @@ class AbortTransformation extends EsterelProcessor {
                 // adding the do blocks of the cases after the abort label
                 for ( c : abort.cases ) {
                     var Conditional conditional2
-                    if (c.delay.isIsImmediate) {
-                        conditional2 = newIfThenGoto(EcoreUtil.copy(c.delay.signalExpr), label2, false)
+                    if (c.delay.immediate) {
+                        conditional2 = newIfThenGoto(EcoreUtil.copy(c.delay.expression), label2, false)
                     }
                     else if (c.delay.expression == null) {
-                        conditional2 = newIfThenGoto(createAnd(EcoreUtil.copy(c.delay.signalExpr), createValuedObjectReference(depthFlag)), label2, false)
+                        conditional2 = newIfThenGoto(createAnd(EcoreUtil.copy(c.delay.expression), createValuedObjectReference(depthFlag)), label2, false)
                     }
                     else {
                         countingVariables.get(i)
@@ -298,6 +298,16 @@ class AbortTransformation extends EsterelProcessor {
             }
             statements.checkGotos
             return scope
+        }
+        else if (statement instanceof Present) {
+            transformStatements((statement as Present).statements)
+            (statement as Present).cases?.forEach[ c | transformStatements(c.statements)]
+            transformStatements((statement as Present).elseStatements)
+        }
+        else if (statement instanceof IfTest) {
+            transformStatements((statement as IfTest).statements)
+            (statement as IfTest).elseif?.forEach [ elsif | transformStatements(elsif.statements)]
+            transformStatements((statement as IfTest).elseStatements)
         }
         else if (statement instanceof StatementContainer) {
             
@@ -322,16 +332,6 @@ class AbortTransformation extends EsterelProcessor {
             else if (statement instanceof Conditional) {
                 transformStatements((statement as Conditional).getElse()?.statements)
             }
-        }
-        else if (statement instanceof Present) {
-            transformStatements((statement as Present).thenStatements)
-            (statement as Present).cases?.forEach[ c | transformStatements(c.statements)]
-            transformStatements((statement as Present).elseStatements)
-        }
-        else if (statement instanceof IfTest) {
-            transformStatements((statement as IfTest).thenStatements)
-            (statement as IfTest).elseif?.forEach [ elsif | transformStatements(elsif.thenStatements)]
-            transformStatements((statement as IfTest).elseStatements)
         }
         else if (statement instanceof EsterelParallel) {
             (statement as EsterelParallel).threads?.forEach [ t |
@@ -376,7 +376,7 @@ class AbortTransformation extends EsterelProcessor {
                 // e.g. "weak abort immediate A"
                 if (abort.delay.isImmediate) {
                     if (label2 != null) {
-                        var conditional = newIfThenGoto(abort.delay.signalExpr, label2, false)
+                        var conditional = newIfThenGoto(abort.delay.expression, label2, false)
                         conditional.annotations.add(createAnnotation(depth))
                         conditional.statements.add(0, createAssignment(abortFlag, createBoolValue(true)))
                         insertConditionalAbove(statements, conditional, pos, depth)
@@ -386,7 +386,7 @@ class AbortTransformation extends EsterelProcessor {
                 else {
                     // e.g. "weak abort when A"
                     if (abort.delay.expression == null && label2 != null) {
-                        var expr = createAnd(EcoreUtil.copy(abort.delay.signalExpr), createValuedObjectReference(depthFlag))
+                        var expr = createAnd(EcoreUtil.copy(abort.delay.expression), createValuedObjectReference(depthFlag))
                         var conditional = newIfThenGoto(expr, label2, false)
                         conditional.annotations.add(createAnnotation(depth))
                         conditional.statements.add(0, createAssignment(abortFlag, createBoolValue(true)))
@@ -412,7 +412,7 @@ class AbortTransformation extends EsterelProcessor {
                 // e.g. "abort immediate A"
                 if (abort.delay.isImmediate) {
                     if (label2 != null) {
-                        var conditional = newIfThenGoto(abort.delay.signalExpr, label2, false)
+                        var conditional = newIfThenGoto(abort.delay.expression, label2, false)
                         conditional.annotations.add(createAnnotation(depth))
                         insertConditional(statements, conditional, pos, depth)
                     }
@@ -420,7 +420,7 @@ class AbortTransformation extends EsterelProcessor {
                 else {
                     // e.g. "abort when A"
                     if (abort.delay.expression == null && label2 != null) {
-                        var conditional = newIfThenGoto(abort.delay.signalExpr, label2, false)
+                        var conditional = newIfThenGoto(abort.delay.expression, label2, false)
                         conditional.annotations.add(createAnnotation(depth))
                         conditional.statements.add(0, createAssignment(abortFlag, createBoolValue(true)))
                         insertConditional(statements, conditional, pos, depth)
@@ -455,6 +455,16 @@ class AbortTransformation extends EsterelProcessor {
             transformJoin(statement, abort, label, abortFlag)
             
         }
+        else if (statement instanceof Present) {
+            transformPauses((statement as Present).statements, abort, label, abortFlag, depthFlag, countingVariables)
+            (statement as Present).cases?.forEach[ c | transformPauses(c.statements, abort, label, abortFlag, depthFlag, countingVariables)]
+            transformPauses((statement as Present).elseStatements, abort, label, abortFlag, depthFlag, countingVariables)
+        }
+        else if (statement instanceof IfTest) {
+            transformPauses((statement as IfTest).statements, abort, label, abortFlag, depthFlag, countingVariables)
+            (statement as IfTest).elseif?.forEach [ elsif | transformPauses(elsif.statements, abort, label, abortFlag, depthFlag, countingVariables)]
+            transformPauses((statement as IfTest).elseStatements, abort, label, abortFlag, depthFlag, countingVariables)
+        }
         else if (statement instanceof StatementContainer) {
             if (!(statement instanceof Conditional)) {
                 transformPauses((statement as StatementContainer).statements, abort, label, abortFlag, depthFlag, countingVariables)
@@ -485,16 +495,6 @@ class AbortTransformation extends EsterelProcessor {
                 }
             }
         }
-        else if (statement instanceof Present) {
-            transformPauses((statement as Present).thenStatements, abort, label, abortFlag, depthFlag, countingVariables)
-            (statement as Present).cases?.forEach[ c | transformPauses(c.statements, abort, label, abortFlag, depthFlag, countingVariables)]
-            transformPauses((statement as Present).elseStatements, abort, label, abortFlag, depthFlag, countingVariables)
-        }
-        else if (statement instanceof IfTest) {
-            transformPauses((statement as IfTest).thenStatements, abort, label, abortFlag, depthFlag, countingVariables)
-            (statement as IfTest).elseif?.forEach [ elsif | transformPauses(elsif.thenStatements, abort, label, abortFlag, depthFlag, countingVariables)]
-            transformPauses((statement as IfTest).elseStatements, abort, label, abortFlag, depthFlag, countingVariables)
-        }
         else if (statement instanceof Run) {
             transformPauses(statement.module?.module?.statements, abort, label, abortFlag, depthFlag, countingVariables)    
         }
@@ -504,11 +504,11 @@ class AbortTransformation extends EsterelProcessor {
     def void transformJoin(Statement statement, Abort abort, Label label, ValuedObject flag) {
         var statements =  statement.getContainingList
         var pos = statements.indexOf(statement)
-        var conditional = newIfThenGoto(abort.delay?.signalExpr, findClosestLabel(label, statement), false)
+        var conditional = newIfThenGoto(abort.delay?.expression, findClosestLabel(label, statement), false)
         conditional.annotations.add(createAnnotation(getDepth(abort)))
         if (abort.delay?.isImmediate && !abort.weak) {
             // just for an immediate strong abort
-            conditional = newIfThenGoto(abort.delay?.signalExpr, findClosestLabel(label, statement), false)
+            conditional = newIfThenGoto(abort.delay?.expression, findClosestLabel(label, statement), false)
         } 
         else {
             conditional = newIfThenGoto(createValuedObjectReference(flag), findClosestLabel(label, statement), false)
@@ -538,12 +538,12 @@ class AbortTransformation extends EsterelProcessor {
             }
             // e.g. "case immediate A" or "case A"
             else {
-                var conditional = newIfThenGoto(EcoreUtil.copy(c.delay.signalExpr), label, false)
-                if (!c.delay.isIsImmediate) {
-                    conditional = newIfThenGoto(createAnd(EcoreUtil.copy(c.delay.signalExpr), createValuedObjectReference(depthFlag)), label, false)
+                var conditional = newIfThenGoto(EcoreUtil.copy(c.delay.expression), label, false)
+                if (!c.delay.immediate) {
+                    conditional = newIfThenGoto(createAnd(EcoreUtil.copy(c.delay.expression), createValuedObjectReference(depthFlag)), label, false)
                 }
                 else {
-                    conditional = newIfThenGoto(EcoreUtil.copy(c.delay.signalExpr), label, false)
+                    conditional = newIfThenGoto(EcoreUtil.copy(c.delay.expression), label, false)
                 }
                 conditional.statements.add(0, createAssignment(abortFlag, createBoolValue(true)))
                 conditional.annotations.add(createAnnotation(getDepth(abort)))

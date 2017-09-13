@@ -18,12 +18,13 @@ import de.cau.cs.kieler.esterel.Await
 import de.cau.cs.kieler.esterel.Do
 import de.cau.cs.kieler.esterel.Emit
 import de.cau.cs.kieler.esterel.EsterelParallel
+import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.Exec
 import de.cau.cs.kieler.esterel.IfTest
 import de.cau.cs.kieler.esterel.Present
 import de.cau.cs.kieler.esterel.Run
 import de.cau.cs.kieler.esterel.Trap
-import de.cau.cs.kieler.esterel.EsterelProgram
+import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.esterel.processors.EsterelProcessor
 import de.cau.cs.kieler.kexpressions.ValueType
@@ -59,8 +60,8 @@ class EmitTransformation extends EsterelProcessor {
 //                                SCEstTransformation::LOCALSIGNALDECL_ID, SCEstTransformation::RUN_ID)
 //    }
 
-    @Inject
-    extension EsterelTransformationExtensions
+    @Inject extension EsterelTransformationExtensions
+    @Inject extension EsterelExtensions
     
     // TODO only works with in place transformation
     // need to talk about solution
@@ -82,6 +83,20 @@ class EmitTransformation extends EsterelProcessor {
     def transformStatement(Statement statement) {
         if (statement instanceof Emit) {
             transformEmit(statement)
+        }
+        else if (statement instanceof Present) {
+            transformStatements((statement as Present).statements)
+            if ((statement as Present).cases != null) {
+                (statement as Present).cases.forEach[ c | transformStatements(c.statements)]
+            }
+            transformStatements((statement as Present).elseStatements)
+        }
+        else if (statement instanceof IfTest) {
+            transformStatements((statement as IfTest).statements)
+            if ((statement as IfTest).elseif != null) {
+                (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.statements)]
+            }
+            transformStatements((statement as IfTest).elseStatements)
         }
         else if (statement instanceof StatementContainer) {
             
@@ -106,16 +121,6 @@ class EmitTransformation extends EsterelProcessor {
             else if (statement instanceof Conditional) {
                 transformStatements((statement as Conditional).getElse()?.statements)
             }
-        }
-        else if (statement instanceof Present) {
-            transformStatements((statement as Present).thenStatements)
-            (statement as Present).cases?.forEach[ c | transformStatements(c.statements)]
-            transformStatements((statement as Present).elseStatements)
-        }
-        else if (statement instanceof IfTest) {
-            transformStatements((statement as IfTest).thenStatements)
-            (statement as IfTest).elseif?.forEach [ elsif | transformStatements(elsif.thenStatements)]
-            transformStatements((statement as IfTest).elseStatements)
         }
         else if (statement instanceof EsterelParallel) {
             (statement as EsterelParallel).threads.forEach [ t |

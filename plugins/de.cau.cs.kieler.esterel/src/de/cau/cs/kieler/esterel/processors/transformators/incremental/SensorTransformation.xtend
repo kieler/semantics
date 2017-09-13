@@ -13,9 +13,9 @@
 package de.cau.cs.kieler.esterel.processors.transformators.incremental
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.esterel.ISignal
-import de.cau.cs.kieler.esterel.Module
+import de.cau.cs.kieler.esterel.EsterelModule
 import de.cau.cs.kieler.esterel.EsterelProgram
+import de.cau.cs.kieler.esterel.Signal
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.esterel.processors.EsterelProcessor
 import de.cau.cs.kieler.kexpressions.ValueType
@@ -25,6 +25,9 @@ import de.cau.cs.kieler.scl.ScopeStatement
 import de.cau.cs.kieler.scl.Statement
 import java.util.HashMap
 import java.util.Map
+import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
+import de.cau.cs.kieler.esterel.Sensor
+import de.cau.cs.kieler.esterel.SensorDeclaration
 
 /**
  * @author mrb
@@ -53,28 +56,30 @@ class SensorTransformation extends EsterelProcessor {
 
     @Inject
     extension EsterelTransformationExtensions
+    @Inject
+    extension EsterelExtensions
     
     override EsterelProgram transform(EsterelProgram prog) {
-        prog.modules.forEach [ m | m.transformSensors]
+        prog.modules.filter(EsterelModule).forEach [ m | m.transformSensors]
         return prog
     }
     
-    def transformSensors(Module module) {
+    def transformSensors(EsterelModule module) {
         // this map combines an Esterel sensor with the new SCL variable
-        var HashMap<ISignal, ValuedObject> newVariables = new HashMap<ISignal, ValuedObject>()
+        var HashMap<Sensor, ValuedObject> newVariables = new HashMap<Sensor, ValuedObject>()
         var ScopeStatement scope = module.getIScope
-        for (decl: module.intSensorDecls) {
-            for (s : decl.sensors) {
+        for (decl: module.sensorDeclarations) {
+            for (s : decl.valuedObjects) {
                 if (s.type.type != null) {
                     var variable = createNewUniqueVariable(null)
                     var ValueType newType
                     if (s.type.type != ValueType.PURE) {
                         newType = if (s.type.type == ValueType.DOUBLE) ValueType.FLOAT else s.type.type
-                        newVariables.put(s.sensor, variable)
+                        newVariables.put(s, variable)
                     }
                     else {
                         throw new UnsupportedOperationException(
-                        "The following sensor doesn't have a valid type for SCL! " + s.sensor.name)
+                        "The following sensor doesn't have a valid type for SCL! " + s.name)
                     }
                     var newDecl = createDeclaration(newType, variable)
                     newDecl.valuedObjects.add(variable)
@@ -82,21 +87,21 @@ class SensorTransformation extends EsterelProcessor {
                 }
                 else { 
                     throw new UnsupportedOperationException(
-                        "The following sensor doesn't have a valid type for SCL! " + s.sensor.name)
+                        "The following sensor doesn't have a valid type for SCL! " + s.name)
                 }
             }
         }
         transformReferences(scope, newVariables)
-        module.intSensorDecls.clear
+        module.declarations.removeIf[it instanceof SensorDeclaration]
     }
     
-    def transformReferences(Statement statement, Map<ISignal, ValuedObject> newVariables) {
+    def transformReferences(Statement statement, Map<Sensor, ValuedObject> newVariables) {
         var references = statement.eAllContents.filter(ValuedObjectReference).toList
         // iterate over all valued object references contained in the scope
         // if a reference references a transformed sensor then set the reference to the new variable
         for (ref : references) {
-            if (ref.valuedObject instanceof ISignal) {
-                var vObject = ref.valuedObject as ISignal
+            if (ref.valuedObject instanceof Sensor) {
+                var vObject = ref.valuedObject as Sensor
                 if (newVariables.containsKey(vObject)) {
                     ref.valuedObject = newVariables.get(vObject)
                     removeValueTestOperator(ref.eContainer)

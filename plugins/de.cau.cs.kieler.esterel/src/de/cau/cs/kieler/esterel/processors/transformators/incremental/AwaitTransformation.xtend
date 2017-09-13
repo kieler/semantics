@@ -94,7 +94,7 @@ class AwaitTransformation extends EsterelProcessor {
                     var scope = createScopeStatement(decl)
                     statements.set(pos, scope)
                     var lt = createLT(createValuedObjectReference(variable), await.delay.expression)
-                    var conditional = createConditional(await.delay.signalExpr)
+                    var conditional = createConditional(await.delay.expression)
                     conditional.statements.add(incrementInt(variable))
                     conditional.annotations.add(createAnnotation(0))
                     var conditional2 = newIfThenGoto(lt, label, false)
@@ -123,9 +123,9 @@ class AwaitTransformation extends EsterelProcessor {
                     */
                 }
                 else {
-                    if (await.delay.isIsImmediate) {
+                    if (await.delay.immediate) {
                         statements.set(pos, label)
-                        statements.add(pos+1, newIfThenGoto(createNot(await.delay.signalExpr), label, true))
+                        statements.add(pos+1, newIfThenGoto(createNot(await.delay.expression), label, true))
                         if (await.statements != null) {
                             statements.add(pos+2, await.statements)
                         }
@@ -133,7 +133,7 @@ class AwaitTransformation extends EsterelProcessor {
                     else {
                         statements.set(pos, label)
                         statements.add(pos+1, createPause)
-                        statements.add(pos+2, newIfThenGoto(createNot(await.delay.signalExpr), label, false))
+                        statements.add(pos+2, newIfThenGoto(createNot(await.delay.expression), label, false))
                         if (await.statements != null) {
                             statements.add(pos+3, await.statements)
                         }
@@ -159,7 +159,7 @@ class AwaitTransformation extends EsterelProcessor {
                             var variable = createNewUniqueVariable(createIntValue(0))
                             var decl = createDeclaration(ValueType.INT, variable)
                             scope.declarations.add(decl)
-                            var conditional = createConditional(c.delay.signalExpr)
+                            var conditional = createConditional(c.delay.expression)
                             conditional.statements.add(incrementInt(variable))
                             var lt = createLT(createValuedObjectReference(variable), c.delay.expression)
                             var conditional2 = newIfThenGoto(lt, nextLabel, false)
@@ -177,9 +177,9 @@ class AwaitTransformation extends EsterelProcessor {
                             }
                         }
                         else {
-                            var conditional = newIfThenGoto(createNot(c.delay.signalExpr), nextLabel, false)
+                            var conditional = newIfThenGoto(createNot(c.delay.expression), nextLabel, false)
                             scope.statements.add(conditional)
-                            if (c.delay.isIsImmediate) {
+                            if (c.delay.immediate) {
                                 immediateLabels.add(new Pair(label, conditional))
                             }
                             if (c.statements != null) {
@@ -226,6 +226,20 @@ class AwaitTransformation extends EsterelProcessor {
             
             return null
         }
+        else if (statement instanceof Present) {
+            transformStatements((statement as Present).statements)
+            if ((statement as Present).cases != null) {
+                (statement as Present).cases.forEach[ c | transformStatements(c.statements)]
+            }
+            transformStatements((statement as Present).elseStatements)
+        }
+        else if (statement instanceof IfTest) {
+            transformStatements((statement as IfTest).statements)
+            if ((statement as IfTest).elseif != null) {
+                (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.statements)]
+            }
+            transformStatements((statement as IfTest).elseStatements)
+        }
         else if (statement instanceof StatementContainer) {
             
             transformStatements((statement as StatementContainer).statements)
@@ -254,20 +268,6 @@ class AwaitTransformation extends EsterelProcessor {
                     transformStatements((statement as Conditional).getElse().statements)
                 }
             }
-        }
-        else if (statement instanceof Present) {
-            transformStatements((statement as Present).thenStatements)
-            if ((statement as Present).cases != null) {
-                (statement as Present).cases.forEach[ c | transformStatements(c.statements)]
-            }
-            transformStatements((statement as Present).elseStatements)
-        }
-        else if (statement instanceof IfTest) {
-            transformStatements((statement as IfTest).thenStatements)
-            if ((statement as IfTest).elseif != null) {
-                (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.thenStatements)]
-            }
-            transformStatements((statement as IfTest).elseStatements)
         }
         else if (statement instanceof EsterelParallel) {
             (statement as EsterelParallel).threads.forEach [ t |

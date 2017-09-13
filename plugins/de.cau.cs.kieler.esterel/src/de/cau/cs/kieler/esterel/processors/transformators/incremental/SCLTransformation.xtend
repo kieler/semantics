@@ -14,22 +14,22 @@ package de.cau.cs.kieler.esterel.processors.transformators.incremental
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.Annotation
-import de.cau.cs.kieler.esterel.LocalSignalDecl
-import de.cau.cs.kieler.esterel.LocalVariable
+import de.cau.cs.kieler.esterel.EsterelModule
 import de.cau.cs.kieler.esterel.EsterelProgram
+import de.cau.cs.kieler.esterel.LocalSignalDeclaration
+import de.cau.cs.kieler.esterel.LocalVariableDeclaration
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.scl.Module
 import de.cau.cs.kieler.scl.SCLProgram
 import de.cau.cs.kieler.scl.ScopeStatement
-import de.cau.cs.kieler.esterel.Module
-import de.cau.cs.kieler.esterel.processors.EsterelProcessor
 
 /**
  * @author mrb
  *
  */
-class SCLTransformation extends EsterelProcessor {
+class SCLTransformation extends Processor<EsterelProgram, SCLProgram> {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -83,10 +83,10 @@ class SCLTransformation extends EsterelProcessor {
 
     def SCLProgram transform(EsterelProgram prog) {
         val sclProg = createSCLProg
-        val module = createSCLModule
-        sclProg.modules += module
-        module.name = "GENERATED_SCL_MODULE"
-        for (m : prog.modules) {
+        for (m : prog.modules.filter(EsterelModule)) {
+            val module = createSCLModule
+            sclProg.modules += module
+            module.name = m.name
             m.removeLocalSignalsAndVariables
             m.removeDepthAnnotations
             transformModule(m, module)
@@ -94,7 +94,7 @@ class SCLTransformation extends EsterelProcessor {
         return sclProg
     }
     
-    def transformModule(Module module, de.cau.cs.kieler.scl.Module prog) {
+    def transformModule(EsterelModule module, Module prog) {
         if (module.statements.length == 1 && module.statements.get(0).isInterfaceScope() ) {
             (module.statements.get(0) as ScopeStatement).renameIScope(module.name)
             prog.statements.add( module.statements.get(0) )
@@ -106,8 +106,8 @@ class SCLTransformation extends EsterelProcessor {
     }
     
     def removeLocalSignalsAndVariables(Module module) {
-        var localVariables = module.eAllContents.toList.filter(LocalVariable)
-        var localSignals = module.eAllContents.toList.filter(LocalSignalDecl)
+        var localVariables = module.eAllContents.toList.filter(LocalVariableDeclaration)
+        var localSignals = module.eAllContents.toList.filter(LocalSignalDeclaration)
         // remove original local IVariables
         for (v : localVariables) {
             if (v.statements.size == 1 && (v.statements.get(0) instanceof ScopeStatement)) {

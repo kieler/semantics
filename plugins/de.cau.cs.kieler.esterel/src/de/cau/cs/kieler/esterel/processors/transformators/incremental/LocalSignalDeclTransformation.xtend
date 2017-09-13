@@ -17,16 +17,16 @@ import de.cau.cs.kieler.esterel.Abort
 import de.cau.cs.kieler.esterel.Await
 import de.cau.cs.kieler.esterel.Do
 import de.cau.cs.kieler.esterel.EsterelParallel
+import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.Exec
-import de.cau.cs.kieler.esterel.ISignal
 import de.cau.cs.kieler.esterel.IfTest
-import de.cau.cs.kieler.esterel.LocalSignalDecl
+import de.cau.cs.kieler.esterel.LocalSignalDeclaration
 import de.cau.cs.kieler.esterel.Present
 import de.cau.cs.kieler.esterel.Run
+import de.cau.cs.kieler.esterel.Signal
 import de.cau.cs.kieler.esterel.Trap
-import de.cau.cs.kieler.esterel.EsterelProgram
-import de.cau.cs.kieler.esterel.scest.extensions.NewSignals
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
+import de.cau.cs.kieler.esterel.extensions.NewSignals
 import de.cau.cs.kieler.esterel.processors.EsterelProcessor
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.ValueType
@@ -88,8 +88,22 @@ class LocalSignalDeclTransformation extends EsterelProcessor {
     }
     
     def transformStatement(Statement statement) {
-        if (statement instanceof LocalSignalDecl) {
+        if (statement instanceof LocalSignalDeclaration) {
             statement.transformSignals
+        }
+        else if (statement instanceof Present) {
+            transformStatements((statement as Present).statements)
+            if ((statement as Present).cases != null) {
+                (statement as Present).cases.forEach[ c | transformStatements(c.statements)]
+            }
+            transformStatements((statement as Present).elseStatements)
+        }
+        else if (statement instanceof IfTest) {
+            transformStatements((statement as IfTest).statements)
+            if ((statement as IfTest).elseif != null) {
+                (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.statements)]
+            }
+            transformStatements((statement as IfTest).elseStatements)
         }
         else if (statement instanceof StatementContainer) {
             
@@ -115,16 +129,6 @@ class LocalSignalDeclTransformation extends EsterelProcessor {
                 transformStatements((statement as Conditional).getElse()?.statements)
             }
         }
-        else if (statement instanceof Present) {
-            transformStatements((statement as Present).thenStatements)
-            (statement as Present).cases?.forEach[ c | transformStatements(c.statements)]
-            transformStatements((statement as Present).elseStatements)
-        }
-        else if (statement instanceof IfTest) {
-            transformStatements((statement as IfTest).thenStatements)
-            (statement as IfTest).elseif?.forEach [ elsif | transformStatements(elsif.thenStatements)]
-            transformStatements((statement as IfTest).elseStatements)
-        }
         else if (statement instanceof EsterelParallel) {
             (statement as EsterelParallel).threads.forEach [ t |
                 transformStatements(t.statements)
@@ -142,13 +146,13 @@ class LocalSignalDeclTransformation extends EsterelProcessor {
     
     def transformSignals(Statement statement) {
         // for valued singals: signal S will be transformed to s, s_set, s_cur, s_val => new NewSignals(s, s_set, s_cur, s_val)
-        var HashMap<ISignal, NewSignals> signalsMap = new HashMap<ISignal, NewSignals>()
-        var localSignals = statement as LocalSignalDecl
+        var HashMap<Signal, NewSignals> signalsMap = new HashMap<Signal, NewSignals>()
+        var localSignals = statement as LocalSignalDeclaration
         var statements =  statement.getContainingList
         var pos = statements.indexOf(statement)
         var scope = createScopeStatement
         scope.statements.add(localSignals.statements)
-        for (signal : localSignals.signals) {
+        for (signal : localSignals.valuedObjects.filter(Signal)) {
                 var s = createSignalVariable(createFalse, null, null.createNewUniqueSignalName)
                 signal.name = null.createNewUniqueSignalName
                 var decl = createDeclaration(ValueType.BOOL, s)
@@ -161,7 +165,7 @@ class LocalSignalDeclTransformation extends EsterelProcessor {
                     else {
                         var s_set = createSignalVariable(createFalse, null, s.name + "_set")
                         decl.valuedObjects.add(s_set)
-                        var s_val = createSignalVariable(signal.expression, signal.combineOperator, s.name + "_val")
+                        var s_val = createSignalVariable(signal.initialValue, signal.combineOperator, s.name + "_val")
                         var s_cur = createSignalVariable(null, signal.combineOperator, s.name + "_cur")
                         var tempType = if (signal.type == ValueType.DOUBLE) ValueType.FLOAT else signal.type
                         decl2 = createDeclaration(tempType, null)
@@ -187,7 +191,7 @@ class LocalSignalDeclTransformation extends EsterelProcessor {
 //        scope.transformReferences
     }
     
-    def createParallelForSignals(ScopeStatement scope, HashMap<ISignal, NewSignals> signalsMap) {
+    def createParallelForSignals(ScopeStatement scope, HashMap<Signal, NewSignals> signalsMap) {
         var signals = signalsMap.keySet.iterator.toList
         var term = createNewUniqueTermFlag(createFalse)
         var decl = createDeclaration(ValueType.BOOL, term)

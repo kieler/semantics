@@ -79,7 +79,7 @@ class PresentTransformation extends EsterelProcessor {
     def Statement transformStatement(Statement statement) {
         if (statement instanceof Present) {
             var present = statement as Present
-            transformStatements(present.thenStatements)
+            transformStatements(present.statements)
             if (present.cases != null) {
                 present.cases.forEach[ c | transformStatements(c.statements)]
             }
@@ -107,13 +107,20 @@ class PresentTransformation extends EsterelProcessor {
             else {
                 present.expression.transformReferences
                 conditional = createConditional(present.expression)
-                conditional.statements.add(present.thenStatements)
+                conditional.statements.add(present.statements)
                 if (!present.elseStatements.isEmpty) {
                     conditional.setElse(createElseScope(present.elseStatements))
                 }
             }
             
             return conditional
+        }
+        else if (statement instanceof IfTest) {
+            transformStatements((statement as IfTest).statements)
+            if ((statement as IfTest).elseif != null) {
+                (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.statements)]
+            }
+            transformStatements((statement as IfTest).elseStatements)
         }
         else if (statement instanceof StatementContainer) {
             
@@ -146,13 +153,6 @@ class PresentTransformation extends EsterelProcessor {
                     transformStatements((statement as Conditional).getElse().statements)
                 }
             }
-        }
-        else if (statement instanceof IfTest) {
-            transformStatements((statement as IfTest).thenStatements)
-            if ((statement as IfTest).elseif != null) {
-                (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.thenStatements)]
-            }
-            transformStatements((statement as IfTest).elseStatements)
         }
         else if (statement instanceof EsterelParallel) {
             (statement as EsterelParallel).threads.forEach [ t |

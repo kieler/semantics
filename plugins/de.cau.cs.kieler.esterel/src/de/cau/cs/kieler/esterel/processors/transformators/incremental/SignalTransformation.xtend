@@ -13,20 +13,20 @@
 package de.cau.cs.kieler.esterel.processors.transformators.incremental
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.esterel.ISignal
-import de.cau.cs.kieler.esterel.Input
-import de.cau.cs.kieler.esterel.InterfaceSignalDecl
-import de.cau.cs.kieler.esterel.LocalSignalDecl
-import de.cau.cs.kieler.esterel.Module
-import de.cau.cs.kieler.esterel.Output
 import de.cau.cs.kieler.esterel.EsterelProgram
-import de.cau.cs.kieler.esterel.scest.extensions.NewSignals
+import de.cau.cs.kieler.esterel.LocalSignalDeclaration
+import de.cau.cs.kieler.esterel.OutputDeclaration
+import de.cau.cs.kieler.esterel.Signal
+import de.cau.cs.kieler.esterel.SignalDeclaration
+import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
+import de.cau.cs.kieler.esterel.extensions.NewSignals
 import de.cau.cs.kieler.esterel.processors.EsterelProcessor
 import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.scl.Module
 import de.cau.cs.kieler.scl.ScopeStatement
 import java.util.HashMap
-import org.eclipse.emf.common.util.EList
+import java.util.List
 
 /**
  * @author mrb
@@ -55,6 +55,8 @@ class  SignalTransformation extends EsterelProcessor {
 
     @Inject
     extension EsterelTransformationExtensions
+    @Inject
+    extension EsterelExtensions
     
     /*
      *  TODO only the signals with type != null will be transformed
@@ -71,14 +73,14 @@ class  SignalTransformation extends EsterelProcessor {
     
     override EsterelProgram transform(EsterelProgram prog) {
         for (m : prog.modules) { 
-            m.intSignalDecls.transformSignals(m)
+            m.signalDeclarations.toList.transformSignals(m)
 //            transformStatements(m.statements)
 //            m.intSignalDecls.clear
         }
         return prog
     }
     
-    def transformSignals(EList<InterfaceSignalDecl> signalDecl, Module module) {
+    def transformSignals(List<SignalDeclaration> signalDecl, Module module) {
         var ScopeStatement scope = module.getIScope
         for (interfaceSD : signalDecl) {
             for (signal : interfaceSD.signals) {
@@ -95,7 +97,7 @@ class  SignalTransformation extends EsterelProcessor {
                         var s_set = createSignalVariable(createFalse, null, s.name + "_set")
                         decl.valuedObjects.add(s_set)
                         var s_cur = createSignalVariable(null, signal.combineOperator, s.name + "_cur")
-                        var s_val = createSignalVariable(signal.expression, signal.combineOperator, s.name + "_val")
+                        var s_val = createSignalVariable(signal.initialValue, signal.combineOperator, s.name + "_val")
                         var tempType = if (signal.type == ValueType.DOUBLE) ValueType.FLOAT else signal.type
                         decl2 = createDeclaration(tempType, null)
                         decl2.valuedObjects.add(s_cur)
@@ -108,37 +110,25 @@ class  SignalTransformation extends EsterelProcessor {
                     throw new UnsupportedOperationException(
                         "The following signal doesn't have a type! " + s.name)
                 }
-                if (interfaceSD instanceof Input) {
-                    decl.input = true
-                    decl2.input = true
-                }
-                else if (interfaceSD instanceof Output) {
-                    decl.output = true
-                    decl2.output = true
-                }
-                else if (interfaceSD instanceof InputOutput) {
-                    decl.input = true
-                    decl.output = true
-                    decl2.input = true
-                    decl2.output = true
-                }
-                else { 
-                    // Return can't be displayed in SCL
-                }
+
+                decl.input = interfaceSD.input
+                decl.output = interfaceSD.input
+                decl2.input = interfaceSD.output
+                decl2.output = interfaceSD.output
             }
         }
         createParallelForSignals(scope, newSignals)
 //        scope.transformReferences
     }
     
-    def createParallelForSignals(ScopeStatement scope, HashMap<ISignal, NewSignals> signalsMap) {
+    def createParallelForSignals(ScopeStatement scope, HashMap<Signal, NewSignals> signalsMap) {
         var necessary = false
         var signals = signalsMap.keySet.iterator.toList
         var i = 0
         while (!necessary && i<signals.length) {
-            var ISignal signal = signals.get(i)
+            var Signal signal = signals.get(i)
             necessary = necessary || (signal.type != ValueType.PURE) || 
-                            (signal.eContainer instanceof Output) || (signal.eContainer instanceof LocalSignalDecl)
+                            (signal.eContainer instanceof OutputDeclaration) || (signal.eContainer instanceof LocalSignalDeclaration)
             i++
         }
         if (necessary) {
@@ -164,11 +154,11 @@ class  SignalTransformation extends EsterelProcessor {
                     var s_set = keyValue.s_set
                     var s_cur = keyValue.s_cur
                     var s_val = keyValue.s_val
-                    if (signal.eContainer instanceof Output) {
+                    if (signal.eContainer instanceof OutputDeclaration) {
                         var assign1 = createAssignment(s, createFalse)
                         thread1.statements.add(assign1)
                     }
-                    else if (signal.eContainer instanceof LocalSignalDecl) {
+                    else if (signal.eContainer instanceof LocalSignalDeclaration) {
                         var assign1 = createAssignment(s, createFalse)
                         thread1.statements.add(assign1)
                     }
@@ -184,11 +174,11 @@ class  SignalTransformation extends EsterelProcessor {
                     thread1.statements.add(conditional2)
                     
                 }
-                else if (signal.eContainer instanceof Output) {
+                else if (signal.eContainer instanceof OutputDeclaration) {
                     var assign1 = createAssignment(s, createFalse)
                     thread1.statements.add(assign1)
                 }
-                else if (signal.eContainer instanceof LocalSignalDecl) {
+                else if (signal.eContainer instanceof LocalSignalDeclaration) {
                     var assign1 = createAssignment(s, createFalse)
                     thread1.statements.add(assign1)
                 }

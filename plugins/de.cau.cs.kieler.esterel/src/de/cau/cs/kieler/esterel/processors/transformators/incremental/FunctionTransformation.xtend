@@ -13,8 +13,9 @@
 package de.cau.cs.kieler.esterel.processors.transformators.incremental
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.esterel.FunctionExpression
+import de.cau.cs.kieler.esterel.EsterelFunctionCall
 import de.cau.cs.kieler.esterel.EsterelProgram
+import de.cau.cs.kieler.esterel.FunctionDeclaration
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.esterel.processors.EsterelProcessor
 import de.cau.cs.kieler.kexpressions.Expression
@@ -52,18 +53,18 @@ class FunctionTransformation extends EsterelProcessor {
     
     override EsterelProgram transform(EsterelProgram prog) {
         prog.modules.forEach [ m | 
-            var functions = m.eAllContents.filter(FunctionExpression)
+            var functions = m.eAllContents.filter(EsterelFunctionCall)
             functions.transformFunctions
-            m.intFunctionDecls.clear
+            m.declarations.removeIf[it instanceof FunctionDeclaration]
         ]
         return prog
     }
     
-    def transformFunctions(Iterator<FunctionExpression> functions) {
+    def transformFunctions(Iterator<EsterelFunctionCall> functions) {
         while(functions.hasNext) {
             var f = functions.next
             var newF = createFunction(f.function.name)
-            for (e : f.kexpressions) {
+            for (e : f.parameter) {
                 newF.parameters.add(createParameter(EcoreUtil.copy(e), false))
             }
             if(f.eContainer.eGet(f.eContainingFeature) instanceof EList) {

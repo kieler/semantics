@@ -93,6 +93,20 @@ class SustainTransformation extends EsterelProcessor {
             statements.add(pos+3, createGotoStatement(label))
             return null
         }
+        else if (statement instanceof Present) {
+            transformStatements((statement as Present).statements)
+            if ((statement as Present).cases != null) {
+                (statement as Present).cases.forEach[ c | transformStatements(c.statements)]
+            }
+            transformStatements((statement as Present).elseStatements)
+        }
+        else if (statement instanceof IfTest) {
+            transformStatements((statement as IfTest).statements)
+            if ((statement as IfTest).elseif != null) {
+                (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.statements)]
+            }
+            transformStatements((statement as IfTest).elseStatements)
+        }
         else if (statement instanceof StatementContainer) {
             
             transformStatements((statement as StatementContainer).statements)
@@ -124,20 +138,6 @@ class SustainTransformation extends EsterelProcessor {
                     transformStatements((statement as Conditional).getElse().statements)
                 }
             }
-        }
-        else if (statement instanceof Present) {
-            transformStatements((statement as Present).thenStatements)
-            if ((statement as Present).cases != null) {
-                (statement as Present).cases.forEach[ c | transformStatements(c.statements)]
-            }
-            transformStatements((statement as Present).elseStatements)
-        }
-        else if (statement instanceof IfTest) {
-            transformStatements((statement as IfTest).thenStatements)
-            if ((statement as IfTest).elseif != null) {
-                (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.thenStatements)]
-            }
-            transformStatements((statement as IfTest).elseStatements)
         }
         else if (statement instanceof EsterelParallel) {
             (statement as EsterelParallel).threads.forEach [ t |

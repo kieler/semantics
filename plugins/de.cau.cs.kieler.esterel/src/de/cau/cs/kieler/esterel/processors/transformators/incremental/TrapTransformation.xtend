@@ -17,15 +17,15 @@ import de.cau.cs.kieler.esterel.Abort
 import de.cau.cs.kieler.esterel.Await
 import de.cau.cs.kieler.esterel.Do
 import de.cau.cs.kieler.esterel.EsterelParallel
+import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.Exec
 import de.cau.cs.kieler.esterel.Exit
-import de.cau.cs.kieler.esterel.ISignal
 import de.cau.cs.kieler.esterel.IfTest
 import de.cau.cs.kieler.esterel.Present
 import de.cau.cs.kieler.esterel.Run
+import de.cau.cs.kieler.esterel.Signal
 import de.cau.cs.kieler.esterel.Trap
 import de.cau.cs.kieler.esterel.TrapExpression
-import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.esterel.processors.EsterelProcessor
 import de.cau.cs.kieler.kexpressions.CombineOperator
@@ -97,7 +97,7 @@ class TrapTransformation extends EsterelProcessor {
             var pos = statements.indexOf(statement)
             var scope = createScopeStatement
             var depth = trap.getDepth
-            var HashMap<ISignal, Pair<ValuedObject, ValuedObject>> exitVariables = new HashMap<ISignal, Pair<ValuedObject, ValuedObject>>()
+            var HashMap<Signal, Pair<ValuedObject, ValuedObject>> exitVariables = new HashMap<Signal, Pair<ValuedObject, ValuedObject>>()
             var signalDecl = createDeclaration(ValueType.BOOL, null)
             var signals = new LinkedList<ValuedObject>()
             var Conditional conditional
@@ -174,6 +174,20 @@ class TrapTransformation extends EsterelProcessor {
             transformTrapExpressions(scope, exitVariables)
             statements.set(pos, scope)
         }
+        else if (statement instanceof Present) {
+            transformStatements((statement as Present).statements)
+            if ((statement as Present).cases != null) {
+                (statement as Present).cases.forEach[ c | transformStatements(c.statements)]
+            }
+            transformStatements((statement as Present).elseStatements)
+        }
+        else if (statement instanceof IfTest) {
+            transformStatements((statement as IfTest).statements)
+            if ((statement as IfTest).elseif != null) {
+                (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.statements)]
+            }
+            transformStatements((statement as IfTest).elseStatements)
+        }
         else if (statement instanceof StatementContainer) {
             
             transformStatements((statement as StatementContainer).statements)
@@ -195,16 +209,6 @@ class TrapTransformation extends EsterelProcessor {
                 transformStatements((statement as Conditional).getElse()?.statements)
             }
         }
-        else if (statement instanceof Present) {
-            transformStatements((statement as Present).thenStatements)
-            (statement as Present).cases?.forEach[ c | transformStatements(c.statements)]
-            transformStatements((statement as Present).elseStatements)
-        }
-        else if (statement instanceof IfTest) {
-            transformStatements((statement as IfTest).thenStatements)
-            (statement as IfTest).elseif?.forEach [ elsif | transformStatements(elsif.thenStatements)]
-            transformStatements((statement as IfTest).elseStatements)
-        }
         else if (statement instanceof EsterelParallel) {
             (statement as EsterelParallel).threads.forEach [ t |
                 transformStatements(t.statements)
@@ -220,7 +224,7 @@ class TrapTransformation extends EsterelProcessor {
         }
     }
     
-    def boolean transformPausesJoins(EList<Statement> statements, Conditional conditional, Label label, Map<ISignal, Pair<ValuedObject, ValuedObject>> exitVariables, boolean criedWolf) {
+    def boolean transformPausesJoins(EList<Statement> statements, Conditional conditional, Label label, Map<Signal, Pair<ValuedObject, ValuedObject>> exitVariables, boolean criedWolf) {
         var cryingWolf = criedWolf
         for (var i=0; i<statements?.length; i++) {
             var pair = statements.get(i).transformPauseJoin(conditional, label, exitVariables, cryingWolf)
@@ -231,7 +235,7 @@ class TrapTransformation extends EsterelProcessor {
         return cryingWolf
     }
     
-    def Pair<Integer, Boolean> transformPauseJoin(Statement statement, Conditional conditional, Label label, Map<ISignal, Pair<ValuedObject, ValuedObject>> exitVariables, boolean criedWolf) {
+    def Pair<Integer, Boolean> transformPauseJoin(Statement statement, Conditional conditional, Label label, Map<Signal, Pair<ValuedObject, ValuedObject>> exitVariables, boolean criedWolf) {
         
         // 'cryingWolf' stands for "transforming first pauses even if it is not necessary"
         var cryingWolf = criedWolf
@@ -266,6 +270,20 @@ class TrapTransformation extends EsterelProcessor {
                 cryingWolf = transformPausesJoins((statement as Conditional).getElse()?.statements, conditional, label, exitVariables, criedWolf) && cryingWolf
             }
         }
+        else if (statement instanceof Present) {
+            cryingWolf = transformPausesJoins((statement as Present).statements, conditional, label, exitVariables, criedWolf) && cryingWolf
+            for (c : statement.cases) {
+                cryingWolf = transformPausesJoins(c.statements, conditional, label, exitVariables, criedWolf) && cryingWolf
+            }
+            cryingWolf = transformPausesJoins((statement as Present).elseStatements, conditional, label, exitVariables, criedWolf) && cryingWolf
+        }
+        else if (statement instanceof IfTest) {
+            cryingWolf = transformPausesJoins((statement as IfTest).statements, conditional, label, exitVariables, criedWolf) && cryingWolf
+            for (elsif : statement.elseif) {
+                cryingWolf = transformPausesJoins(elsif.statements, conditional, label, exitVariables, criedWolf) && cryingWolf
+            }
+            cryingWolf = transformPausesJoins((statement as IfTest).elseStatements, conditional, label, exitVariables, criedWolf) && cryingWolf
+        }
         else if (statement instanceof StatementContainer) {
             
             cryingWolf = transformPausesJoins((statement as StatementContainer).statements, conditional, label, exitVariables, criedWolf) && cryingWolf
@@ -298,20 +316,6 @@ class TrapTransformation extends EsterelProcessor {
                 cryingWolf = transformPausesJoins((statement as Do).watchingStatements, conditional, label, exitVariables, cryingWolf) && cryingWolf
             }
         }
-        else if (statement instanceof Present) {
-            cryingWolf = transformPausesJoins((statement as Present).thenStatements, conditional, label, exitVariables, criedWolf) && cryingWolf
-            for (c : statement.cases) {
-                cryingWolf = transformPausesJoins(c.statements, conditional, label, exitVariables, criedWolf) && cryingWolf
-            }
-            cryingWolf = transformPausesJoins((statement as Present).elseStatements, conditional, label, exitVariables, criedWolf) && cryingWolf
-        }
-        else if (statement instanceof IfTest) {
-            cryingWolf = transformPausesJoins((statement as IfTest).thenStatements, conditional, label, exitVariables, criedWolf) && cryingWolf
-            for (elsif : statement.elseif) {
-                cryingWolf = transformPausesJoins(elsif.thenStatements, conditional, label, exitVariables, criedWolf) && cryingWolf
-            }
-            cryingWolf = transformPausesJoins((statement as IfTest).elseStatements, conditional, label, exitVariables, criedWolf) && cryingWolf
-        }
         else if (statement instanceof Run) {
             cryingWolf = statement.module?.module?.statements.transformPausesJoins(conditional, label, exitVariables, criedWolf)    
         }
@@ -337,7 +341,7 @@ class TrapTransformation extends EsterelProcessor {
         insertConditional(statements, conditional2, pos, conditional.depth)
     }
     
-    def transformExit(Statement statement, Label label, Map<ISignal, Pair<ValuedObject, ValuedObject>> exitVariables) {
+    def transformExit(Statement statement, Label label, Map<Signal, Pair<ValuedObject, ValuedObject>> exitVariables) {
         var exit = statement as Exit
         var statements =  statement.getContainingList
         var pos = statements.indexOf(statement)
@@ -369,14 +373,14 @@ class TrapTransformation extends EsterelProcessor {
         }
     }
     
-    def transformReferences(EObject statement, Map<ISignal, Pair<ValuedObject, ValuedObject>> exitVariables) {
+    def transformReferences(EObject statement, Map<Signal, Pair<ValuedObject, ValuedObject>> exitVariables) {
         // iterate over all valued object references contained in the scope
         // if a reference references a transformed signal then set the reference to the new signal
         var references = statement.eAllContents.filter(ValuedObjectReference)
         while (references.hasNext) {
             var ref = references.next
-            if (ref.valuedObject instanceof ISignal) {
-                var signal = ref.valuedObject as ISignal
+            if (ref.valuedObject instanceof Signal) {
+                var signal = ref.valuedObject as Signal
                 // if the valued object reference references a transformed trap signal
                 if (exitVariables.containsKey(signal)) {
                     ref.valuedObject = exitVariables.get(signal).key
@@ -393,12 +397,12 @@ class TrapTransformation extends EsterelProcessor {
         }
     }
     
-    def transformTrapExpressions(Statement statement, Map<ISignal, Pair<ValuedObject, ValuedObject>> exitVariables) {
+    def transformTrapExpressions(Statement statement, Map<Signal, Pair<ValuedObject, ValuedObject>> exitVariables) {
         var trapExpressions = statement.eAllContents.filter(TrapExpression)
         while (trapExpressions.hasNext) {
             var expr = trapExpressions.next
-            if (expr.trap instanceof ISignal) {
-                var signal = expr.trap as ISignal
+            if (expr.trap instanceof Signal) {
+                var signal = expr.trap as Signal
                 // if the trap references a transformed trap signal
                 if (exitVariables.containsKey(signal)) {
                     if (exitVariables.get(signal).value != null) {
@@ -444,6 +448,38 @@ class TrapTransformation extends EsterelProcessor {
         }
         if (statement instanceof Exit) {
             return new Pair(true, false)
+        }
+        else if (statement instanceof Present) {
+            var temp = checkPotentiallyInstantaneous((statement as Present).statements)
+            if (temp.key) {
+                criedWolf = new Pair(true, criedWolf.value && temp.value)
+            }
+            for (c : (statement as Present).cases) {
+                temp = checkPotentiallyInstantaneous((statement as Present).elseStatements)
+                if (temp.key == true) {
+                    criedWolf = new Pair(true, criedWolf.value && temp.value)
+                }
+            }
+            temp = checkPotentiallyInstantaneous((statement as Present).elseStatements)
+            if (temp.key) {
+                criedWolf = new Pair(true, criedWolf.value && temp.value)
+            }
+        }
+        else if (statement instanceof IfTest) {
+            var temp = checkPotentiallyInstantaneous((statement as IfTest).statements)
+            if (temp.key) {
+                criedWolf = new Pair(true, criedWolf.value && temp.value)
+            }
+            for (e : (statement as IfTest).elseif) {
+                temp = checkPotentiallyInstantaneous(e.statements)
+                if (temp.key == true) {
+                    criedWolf = new Pair(true, criedWolf.value && temp.value)
+                }
+            }
+            temp = checkPotentiallyInstantaneous((statement as IfTest).elseStatements)
+            if (temp.key) {
+                criedWolf = new Pair(true, criedWolf.value && temp.value)
+            }
         }
         else if (statement instanceof StatementContainer) {
             
@@ -496,38 +532,6 @@ class TrapTransformation extends EsterelProcessor {
                 if (temp.key) {
                     criedWolf = new Pair(true, criedWolf.value && temp.value)
                 }
-            }
-        }
-        else if (statement instanceof Present) {
-            var temp = checkPotentiallyInstantaneous((statement as Present).thenStatements)
-            if (temp.key) {
-                criedWolf = new Pair(true, criedWolf.value && temp.value)
-            }
-            for (c : (statement as Present).cases) {
-                temp = checkPotentiallyInstantaneous((statement as Present).elseStatements)
-                if (temp.key == true) {
-                    criedWolf = new Pair(true, criedWolf.value && temp.value)
-                }
-            }
-            temp = checkPotentiallyInstantaneous((statement as Present).elseStatements)
-            if (temp.key) {
-                criedWolf = new Pair(true, criedWolf.value && temp.value)
-            }
-        }
-        else if (statement instanceof IfTest) {
-            var temp = checkPotentiallyInstantaneous((statement as IfTest).thenStatements)
-            if (temp.key) {
-                criedWolf = new Pair(true, criedWolf.value && temp.value)
-            }
-            for (e : (statement as IfTest).elseif) {
-                temp = checkPotentiallyInstantaneous(e.thenStatements)
-                if (temp.key == true) {
-                    criedWolf = new Pair(true, criedWolf.value && temp.value)
-                }
-            }
-            temp = checkPotentiallyInstantaneous((statement as IfTest).elseStatements)
-            if (temp.key) {
-                criedWolf = new Pair(true, criedWolf.value && temp.value)
             }
         }
         else if (statement instanceof EsterelParallel) {

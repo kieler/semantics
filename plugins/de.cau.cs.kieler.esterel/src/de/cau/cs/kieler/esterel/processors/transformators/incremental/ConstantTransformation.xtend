@@ -15,7 +15,7 @@ package de.cau.cs.kieler.esterel.processors.transformators.incremental
 import com.google.inject.Inject
 import de.cau.cs.kieler.esterel.Constant
 import de.cau.cs.kieler.esterel.ConstantExpression
-import de.cau.cs.kieler.esterel.scest.SCEstModule
+import de.cau.cs.kieler.esterel.EsterelModule
 import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.esterel.processors.EsterelProcessor
@@ -28,6 +28,8 @@ import de.cau.cs.kieler.scl.Statement
 import java.util.HashMap
 import java.util.Map
 import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
+import de.cau.cs.kieler.esterel.ConstantMultiDeclaration
 
 /**
  * @author mrb
@@ -56,45 +58,45 @@ class ConstantTransformation extends EsterelProcessor {
 
     @Inject
     extension EsterelTransformationExtensions
+    @Inject
+    extension EsterelExtensions
     
     override EsterelProgram transform(EsterelProgram prog) {
-        prog.modules.forEach [ m | (m as SCEstModule).transformConstants]
+        prog.modules.filter(EsterelModule).forEach [transformConstants]
         return prog
     }
     
-    def transformConstants(SCEstModule module) {
+    def transformConstants(EsterelModule module) {
         // this map combines an Esterel sensor with the new SCL variable
         var HashMap<Constant, ValuedObject> newVariables = new HashMap<Constant, ValuedObject>()
         var ScopeStatement scope = module.getIScope
-        for (decl: module.intConstantDecls) {
-            for (constants : decl.constants) {
-                if (constants.type.type != null) {
-                    var ValueType newType
-                    if (constants.type.type != ValueType.PURE) {
-                        newType = if (constants.type.type == ValueType.DOUBLE) ValueType.FLOAT else constants.type.type
-                    }
-                    else {
-                        throw new UnsupportedOperationException(
-                        "The following constant doesn't have a valid type for SCL! " + constants)
-                    }
-                    var newDecl = createDeclaration(newType, null)
-                    for (v : constants.constants) {
-                        var c = v as Constant
-                        var variable = createNewUniqueVariable(if (c.value!=null) createStringValue(c.value) else null)
-                        newVariables.put(c, variable)
-                        newDecl.valuedObjects.add(variable)
-                    }
-                    scope.declarations.add(newDecl)
+        for (decl: module.constantDeclarations) {
+            if (decl.type != null) {
+                var ValueType newType
+                if (decl.type != ValueType.PURE) {
+                    newType = if (decl.type == ValueType.DOUBLE) ValueType.FLOAT else decl.type.type
                 }
-                else { 
+                else {
                     throw new UnsupportedOperationException(
-                        "The following constants don't have a valid type for SCL! " + constants)
+                    "The following constant doesn't have a valid type for SCL! " + decl)
                 }
+                var newDecl = createDeclaration(newType, null)
+                for (v : decl.constants) {
+                    var c = v as Constant
+                    var variable = createNewUniqueVariable(if (c.initialValue!=null) c.initialValue else null)
+                    newVariables.put(c, variable)
+                    newDecl.valuedObjects.add(variable)
+                }
+                scope.declarations.add(newDecl)
+            }
+            else { 
+                throw new UnsupportedOperationException(
+                    "The following constants don't have a valid type for SCL! " + decl)
             }
         }
         transformReferences(scope, newVariables)
         transformConstantExpressions(scope, newVariables)
-        module.intConstantDecls.clear
+        module.declarations.removeIf[it instanceof ConstantMultiDeclaration]
     }
     
     def transformReferences(Statement statement, Map<Constant, ValuedObject> newVariables) {
@@ -133,10 +135,10 @@ class ConstantTransformation extends EsterelProcessor {
                 if(expr.eContainer.eGet(expr.eContainingFeature) instanceof EList) {
                     var list = expr.eContainer.eGet(expr.eContainingFeature) as EList<Expression>
                     var pos = list.indexOf(expr)
-                    list.set(pos, createStringValue(expr.value))
+                    list.set(pos, expr.value)
                 }
                 else {
-                    setExpression(createStringValue(expr.value), expr.eContainer, false)
+                    setExpression(expr.value, expr.eContainer, false)
                 }
             }
             else {

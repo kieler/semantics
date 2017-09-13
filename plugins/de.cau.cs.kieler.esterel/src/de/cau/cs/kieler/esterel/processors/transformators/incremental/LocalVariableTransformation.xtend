@@ -16,16 +16,15 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.esterel.Abort
 import de.cau.cs.kieler.esterel.Await
 import de.cau.cs.kieler.esterel.Do
-import de.cau.cs.kieler.esterel.EsterelAssignment
 import de.cau.cs.kieler.esterel.EsterelParallel
+import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.Exec
-import de.cau.cs.kieler.esterel.IVariable
 import de.cau.cs.kieler.esterel.IfTest
-import de.cau.cs.kieler.esterel.LocalVariable
+import de.cau.cs.kieler.esterel.LocalVariableDeclaration
 import de.cau.cs.kieler.esterel.Present
 import de.cau.cs.kieler.esterel.Run
 import de.cau.cs.kieler.esterel.Trap
-import de.cau.cs.kieler.esterel.EsterelProgram
+import de.cau.cs.kieler.esterel.Variable
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.esterel.processors.EsterelProcessor
 import de.cau.cs.kieler.kexpressions.ValueType
@@ -84,8 +83,22 @@ class LocalVariableTransformation extends EsterelProcessor {
     }
     
     def void transformStatement(Statement statement) {
-        if (statement instanceof LocalVariable) {
+        if (statement instanceof LocalVariableDeclaration) {
             statement.transformVariable
+        }
+        else if (statement instanceof Present) {
+            transformStatements((statement as Present).statements)
+            if ((statement as Present).cases != null) {
+                (statement as Present).cases.forEach[ c | transformStatements(c.statements)]
+            }
+            transformStatements((statement as Present).elseStatements)
+        }
+        else if (statement instanceof IfTest) {
+            transformStatements((statement as IfTest).statements)
+            if ((statement as IfTest).elseif != null) {
+                (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.statements)]
+            }
+            transformStatements((statement as IfTest).elseStatements)
         }
         else if (statement instanceof StatementContainer) {
             
@@ -111,16 +124,6 @@ class LocalVariableTransformation extends EsterelProcessor {
                 transformStatements((statement as Conditional).getElse()?.statements)
             }
         }
-        else if (statement instanceof Present) {
-            transformStatements((statement as Present).thenStatements)
-            (statement as Present).cases?.forEach[ c | transformStatements(c.statements)]
-            transformStatements((statement as Present).elseStatements)
-        }
-        else if (statement instanceof IfTest) {
-            transformStatements((statement as IfTest).thenStatements)
-            (statement as IfTest).elseif?.forEach [ elsif | transformStatements(elsif.thenStatements)]
-            transformStatements((statement as IfTest).elseStatements)
-        }
         else if (statement instanceof EsterelParallel) {
             (statement as EsterelParallel).threads.forEach [ t |
                 transformStatements(t.statements)
@@ -137,15 +140,15 @@ class LocalVariableTransformation extends EsterelProcessor {
     }
     
     def transformVariable(Statement statement) {
-        var variables = statement as LocalVariable
+        var variables = statement as LocalVariableDeclaration
         var statements = statement.getContainingList
         var pos = statements.indexOf(statement)
         var scope = createScopeStatement
         scope.statements.add(variables.statements)
         // this map combines an Esterel variable with the new SCL variable
-        var HashMap<IVariable, ValuedObject> newVariables = new HashMap<IVariable, ValuedObject>()
+        var HashMap<Variable, ValuedObject> newVariables = new HashMap<Variable, ValuedObject>()
         // go through all declarations
-        for (decl : variables.varDecls) {
+        for (decl : variables.variableDeclarations) {
             if (decl.type.type != null) {
                 var ValueType type
                 switch decl.type.type {
@@ -176,7 +179,7 @@ class LocalVariableTransformation extends EsterelProcessor {
                 scope.declarations.add(declaration)
                 // go through all variables in the current declaration
                 for (variable : decl.variables) {
-                    var v = createNewUniqueVariable(EcoreUtil.copy(variable.expression))
+                    var v = createNewUniqueVariable(EcoreUtil.copy(variable.initialValue))
                     v.combineOperator = variable.combineOperator
                     declaration.valuedObjects.add(v)
                     newVariables.put(variable, v)
@@ -184,7 +187,7 @@ class LocalVariableTransformation extends EsterelProcessor {
             }
             else {
                  throw new UnsupportedOperationException(
-                        "The type is not supported! " + decl.type.typeID + "|" + decl.type.estType)
+                        "The type is not supported! " + decl.type.idType + "|" + decl.type.type)
             }
                 
         }
@@ -199,13 +202,13 @@ class LocalVariableTransformation extends EsterelProcessor {
         
     }
     
-    def transformReferences(Statement statement, Map<IVariable, ValuedObject> newVariables) {
+    def transformReferences(Statement statement, Map<Variable, ValuedObject> newVariables) {
         var references = statement.eAllContents.filter(ValuedObjectReference).toList
         // iterate over all valued object references contained in the scope
         // if a reference references a transformed variable then set the reference to the new variable
         for (ref : references) {
-            if (ref.valuedObject instanceof IVariable) {
-                var vObject = ref.valuedObject as IVariable
+            if (ref.valuedObject instanceof Variable) {
+                var vObject = ref.valuedObject as Variable
                 if (newVariables.containsKey(vObject)) {
                     ref.valuedObject = newVariables.get(vObject)
                     removeValueTestOperator(ref.eContainer)
@@ -214,14 +217,14 @@ class LocalVariableTransformation extends EsterelProcessor {
         }
     }
     
-    def transformAssignments(Statement statement, Map<IVariable, ValuedObject> newVariables) {
+    def transformAssignments(Statement statement, Map<Variable, ValuedObject> newVariables) {
         // iterate over all Esterel assignments in the scope
-        var assignmentsEst = statement.eAllContents.filter(EsterelAssignment).toList
+        var assignmentsEst = statement.eAllContents.filter(Assignment).toList
         for (a : assignmentsEst) {
-            if (newVariables.containsKey(a.getVar())) {
+            if (newVariables.containsKey(a.valuedObject)) {
                 var statements = a.getContainingList
                 var pos = statements.indexOf(a)
-                var assignment = createAssignment(newVariables.get(a.getVar()), EcoreUtil.copy(a.expression))
+                var assignment = createAssignment(newVariables.get(a.valuedObject), EcoreUtil.copy(a.expression))
                 statements.set(pos, assignment)
             }
         }

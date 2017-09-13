@@ -118,8 +118,8 @@ class SuspendTransformation extends EsterelProcessor {
                 scope.declarations.add(createDeclaration(ValueType.BOOL, termFlag))
                 var conditional = newIfThenGoto(createValuedObjectReference(termFlag), label2, false)
                 conditional.annotations.add(createAnnotation(depth))
-                var conditional2  = createConditional(EcoreUtil.copy(suspend.delay.signalExpr))
-                var conditional3 = createConditional(createEquals(createValuedObjectReference(variable), EcoreUtil.copy(suspend.delay.expression)))
+                var conditional2  = createConditional(EcoreUtil.copy(suspend.delay.expression))
+                var conditional3 = createConditional(createEquals(createValuedObjectReference(variable), EcoreUtil.copy(suspend.delay.delay)))
                 conditional3.statements.add(createAssignment(variable, createIntValue(0)))
                 conditional2.statements.add(conditional3)
                 conditional2.statements.add(incrementInt(variable))
@@ -142,7 +142,7 @@ class SuspendTransformation extends EsterelProcessor {
                 if (suspend.delay.isImmediate) {
                     var label = createLabel
                     statements.set(pos, label)
-                    statements.add(pos+1, newIfThenGoto(EcoreUtil.copy(suspend.delay.signalExpr), label, true))
+                    statements.add(pos+1, newIfThenGoto(EcoreUtil.copy(suspend.delay.expression), label, true))
                     statements.add(pos+2, suspend.statements)
                 }
                 else {
@@ -151,6 +151,20 @@ class SuspendTransformation extends EsterelProcessor {
                 }
                 return null
             }
+        }
+        else if (statement instanceof Present) {
+            transformStatements((statement as Present).statements)
+            if ((statement as Present).cases != null) {
+                (statement as Present).cases.forEach[ c | transformStatements(c.statements)]
+            }
+            transformStatements((statement as Present).elseStatements)
+        }
+        else if (statement instanceof IfTest) {
+            transformStatements((statement as IfTest).statements)
+            if ((statement as IfTest).elseif != null) {
+                (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.statements)]
+            }
+            transformStatements((statement as IfTest).elseStatements)
         }
         else if (statement instanceof StatementContainer) {
             
@@ -175,16 +189,6 @@ class SuspendTransformation extends EsterelProcessor {
             else if (statement instanceof Conditional) {
                 transformStatements((statement as Conditional).getElse()?.statements)
             }
-        }
-        else if (statement instanceof Present) {
-            transformStatements((statement as Present).thenStatements)
-            (statement as Present).cases?.forEach[ c | transformStatements(c.statements)]
-            transformStatements((statement as Present).elseStatements)
-        }
-        else if (statement instanceof IfTest) {
-            transformStatements((statement as IfTest).thenStatements)
-            (statement as IfTest).elseif?.forEach [ elsif | transformStatements(elsif.thenStatements)]
-            transformStatements((statement as IfTest).elseStatements)
         }
         else if (statement instanceof EsterelParallel) {
             (statement as EsterelParallel).threads.forEach [ t |
@@ -226,12 +230,22 @@ class SuspendTransformation extends EsterelProcessor {
                 conditional =  newIfThenGoto(createGEQ(createValuedObjectReference(variable), EcoreUtil.copy(delay.expression)), label, false)
             }
             else {
-                conditional = newIfThenGoto(EcoreUtil.copy(delay.signalExpr), label, false)
+                conditional = newIfThenGoto(EcoreUtil.copy(delay.expression), label, false)
             }
             conditional.annotations.add(createAnnotation(depth))
             insertConditional(statements, conditional, pos, depth)
             statements.add(pos, label)
             return null
+        }
+        else if (statement instanceof Present) {
+            transformPauses((statement as Present).statements, depth, delay, variable)
+            (statement as Present).cases?.forEach[ c | transformPauses(c.statements, depth, delay, variable)]
+            transformPauses((statement as Present).elseStatements, depth, delay, variable)
+        }
+        else if (statement instanceof IfTest) {
+            transformPauses((statement as IfTest).statements, depth, delay, variable)
+            (statement as IfTest).elseif?.forEach [ elsif | transformPauses(elsif.statements, depth, delay, variable)]
+            transformPauses((statement as IfTest).elseStatements, depth, delay, variable)
         }
         else if (statement instanceof StatementContainer) {
             if (!(statement instanceof Conditional)) {
@@ -259,16 +273,6 @@ class SuspendTransformation extends EsterelProcessor {
                     transformPauses((statement as Conditional).getElse()?.statements, depth, delay, variable)
                 }
             }
-        }
-        else if (statement instanceof Present) {
-            transformPauses((statement as Present).thenStatements, depth, delay, variable)
-            (statement as Present).cases?.forEach[ c | transformPauses(c.statements, depth, delay, variable)]
-            transformPauses((statement as Present).elseStatements, depth, delay, variable)
-        }
-        else if (statement instanceof IfTest) {
-            transformPauses((statement as IfTest).thenStatements, depth, delay, variable)
-            (statement as IfTest).elseif?.forEach [ elsif | transformPauses(elsif.thenStatements, depth, delay, variable)]
-            transformPauses((statement as IfTest).elseStatements, depth, delay, variable)
         }
         else if (statement instanceof EsterelParallel) {
             (statement as EsterelParallel).threads?.forEach [ t |
