@@ -73,7 +73,7 @@ class DominatorTreeSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
         ]
     }
     
-    def transform(SCGraph scg) {
+    private def transform(SCGraph scg) {
         if (!scg.basicBlocks.nullOrEmpty) {
             return new DominatorTree(scg).transform
         } else {
