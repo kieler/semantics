@@ -12,7 +12,7 @@
             id="de.cau.cs.kieler.scg.klighd.diagramSynthesis.scgraphs">
       </diagramSynthesis>
       <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scg.klighd.ssa.DominatorTreeSynthesis"
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scg.klighd.ssa.domtree.DominatorTreeSynthesis"
             id="de.cau.cs.kieler.scg.ssa.domtree">
       </diagramSynthesis>
    </extension>
