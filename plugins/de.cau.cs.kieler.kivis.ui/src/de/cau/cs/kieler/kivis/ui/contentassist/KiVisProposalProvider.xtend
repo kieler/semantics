@@ -22,6 +22,9 @@ class KiVisProposalProvider extends AbstractKiVisProposalProvider {
     @Inject
     extension AttributeExtensions attributeExtensions
     
+    /**
+     * Add completion proposals for attribute names of animations.
+     */
     override completeAttributeMapping_Attribute(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         // Add proposals of super class
         super.completeAttributeMapping_Attribute(model, assignment, context, acceptor);

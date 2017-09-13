@@ -46,6 +46,7 @@ import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
 import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.kicool.compilation.observer.AbstractProcessorNotification
 import de.cau.cs.kieler.sccharts.processors.transformators.TakenTransitionSignaling
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 
 /**
  * @author aas
@@ -220,20 +221,23 @@ class KiCoModelCompiler extends ModelCompiler {
     }
     
     private def CompilationContext compileWithKiCo(EObject model) {
+        // Create compilation context
         val compilationSystemFile = project?.getFile(compilationSystem.stringValue)
-        var CompilationContext context
+        var de.cau.cs.kieler.kicool.System system
         if(compilationSystemFile != null && compilationSystemFile.exists) {
-            val system = ModelImporter.load(compilationSystemFile)
-            if(system != null && system instanceof de.cau.cs.kieler.kicool.System) {
-                context = Compile.createCompilationContext(system as de.cau.cs.kieler.kicool.System, model)
+            val systemModel = ModelImporter.load(compilationSystemFile)
+            if(systemModel != null && systemModel instanceof de.cau.cs.kieler.kicool.System) {
+                system = systemModel as de.cau.cs.kieler.kicool.System
             } else {
                 throw new Exception("Compilation system could not be loaded from resource '"+compilationSystemFile+"'")
             }
         } else {
             val compilationSystemID = compilationSystem.stringValue
-            context = Compile.createCompilationContext(compilationSystemID, model)
+            system = KiCoolRegistration.getSystemById(compilationSystemID)
         }
+        val context = Compile.createCompilationContext(system, model)
         context.startEnvironment.setProperty(Environment.INPLACE, true)
+        
         // Add observer to update the progress monitor
         if(monitor != null) {
             context.addObserver(new Observer() {

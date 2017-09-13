@@ -744,9 +744,13 @@ class DataPoolView extends ViewPart {
     
     private def void highlightDiagram(DataPool pool) {
         if(diagramViewContext == null) {
-            diagramViewContext = getDiagramViewContext    
+            diagramViewContext = getDiagramViewContext
+            // If there is no diagram, then there is nothing to highlight
+            if(diagramViewContext == null) {
+                return;
+            }
         }
-        
+        // Calculate the simulation controlflow to determine what must be highlighted
         calculateSimulationControlFlow(pool)
         
         if(traversedTransitions.isNullOrEmpty && traversedStates.isNullOrEmpty && currentStates.isNullOrEmpty) {

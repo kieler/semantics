@@ -18,29 +18,45 @@ import de.cau.cs.kieler.simulation.core.DataPool
 import org.w3c.dom.Element
 
 /**
+ * Text animation for SVG text elements.
+ * The displayed string can be changed as well as the font size and family.
+ * 
  * @author aas
  *
  */
 class TextAnimation extends AnimationHandler {
+    /**
+     * The text to be displayed.
+     */
     public val text = new ConfigurableAttribute("text")
+    /**
+     * The font size to be used.
+     */
     public val fontSize = new ConfigurableAttribute("fontSize")
+    /**
+     * The font family to be used
+     */
     public val fontFamily = new ConfigurableAttribute("fontFamily")
     
+    /**
+     * {@inheritDoc}
+     */
     new() {
+        initializeAttributes
     }
     
-    new(String svgElementId, Animation animation) {
-        super(svgElementId, animation)
-        initialize
-    }
-    
+    /**
+     * {@inheritDoc}
+     */
     override getName() {
         return "text"
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override doApply(DataPool pool, Element elem) {
-        // Apply attributes to svg element
-        if(text != null) {
+        if(text.value != null) {
             elem.setText(text.stringValue)
         }
         if(fontSize.value != null && fontSize.floatValue >= 0) {

@@ -112,6 +112,20 @@ class ExtensionLookupUtil {
     }
     
     /**
+     * Searches and returns extensions which contribute to the given extension point id.
+     * 
+     * @param extensionPointId The extension point id
+     */
+    static def IConfigurationElement[] getConfigurationElements(String extensionPointId) {
+        val extensions = getExtensions(extensionPointId)
+        val List<IConfigurationElement> allConfigurationElements = newArrayList
+        for(ext : extensions) {
+            allConfigurationElements.addAll(ext.configurationElements)
+        }
+        return allConfigurationElements
+    }
+    
+    /**
      * Searches and returns extensions which contribute to the given extension point id
      * and have a configuration that matches the given constraint.
      * 
@@ -119,11 +133,7 @@ class ExtensionLookupUtil {
      * @param configurationConstraint A constraint that at least one configuration element must match (such as a special name or type) 
      */
     static def IConfigurationElement[] getConfigurationElements(String extensionPointId, (IConfigurationElement)=>boolean configurationConstraint) {
-        val extensions = getExtensions(extensionPointId)
-        val List<IConfigurationElement> allConfigurationElements = newArrayList
-        for(ext : extensions) {
-            allConfigurationElements.addAll(ext.configurationElements)
-        }
+        val allConfigurationElements = getConfigurationElements(extensionPointId)
         return allConfigurationElements.filter[configurationConstraint.apply(it)]
     }
 }

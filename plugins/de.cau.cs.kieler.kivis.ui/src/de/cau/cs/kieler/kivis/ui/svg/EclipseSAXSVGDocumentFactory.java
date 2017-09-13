@@ -1,13 +1,15 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse Rich Client
- * 
+ *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2009 by + Kiel University + Department of Computer Science +
- * Real-Time and Embedded Systems Group
+ * Copyright 2009 by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
  * 
- * This code is provided under the terms of the Eclipse Public License (EPL). See the file
- * epl-v10.html for the license text.
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
  */
 
 package de.cau.cs.kieler.kivis.ui.svg;
@@ -31,7 +33,6 @@ import org.xml.sax.SAXException;
  * for loading the parser.
  * 
  * @author sschwieb
- * @kieler.ignore deprecated project
  * 
  */
 public class EclipseSAXSVGDocumentFactory extends SAXSVGDocumentFactory {
@@ -46,15 +47,12 @@ public class EclipseSAXSVGDocumentFactory extends SAXSVGDocumentFactory {
         super(parser, dd);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected Document createDocument(final InputSource is) throws IOException {
         try {
             Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
-            // Das Systemproperty muss gel�scht werden, sonst kann nicht auf das Ressourceset
-            // zugegriffen werden
-            // System.setProperty("javax.xml.parsers.SAXParserFactory",
-            // SAXParserFactoryImpl.class.getName()); //Different Parser then the XMI-Parser (hat
-            // mich stunden gekostent, diesen Fehler zu finden!!!!ARRRRR!)
-            // //java -Djaxp.debug=1 Aufruf als consolendebug des jaxparsers
             SAXParserFactory factory = SAXParserFactory.newInstance();
             factory.setFeature("http://xml.org/sax/features/namespaces", true);
             factory.setFeature("http://xml.org/sax/features/namespace-prefixes", true);

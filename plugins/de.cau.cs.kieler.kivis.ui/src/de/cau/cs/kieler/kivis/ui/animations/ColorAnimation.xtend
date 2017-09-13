@@ -18,30 +18,59 @@ import de.cau.cs.kieler.simulation.core.DataPool
 import org.w3c.dom.Element
 
 /**
+ * Color animation for SVG elements.
+ * The fill/stroke color and opacity can be changed separately.
+ * Further the overal opacity can be changed and the stroke width.
+ * 
  * @author aas
  *
  */
 class ColorAnimation extends AnimationHandler {
     
+    /**
+     * The fill color.
+     * This can be the name of a color such as "green", "orange" or "lime".
+     */
     public val fillColor = new ConfigurableAttribute("fillColor")
+    /**
+     * The fill color.
+     * This can be the name of a color such as "green", "orange" or "lime".
+     */
     public val strokeColor = new ConfigurableAttribute("strokeColor")
+    /**
+     * The stroke width.
+     */
     public val strokeWidth = new ConfigurableAttribute("strokeWidth")
+    /**
+     * The overall opacity. Ranges from 0 to 1.
+     */
     public val opacity = new ConfigurableAttribute("opacity")
+    /**
+     * The fill opacity.  from 0 to 1.
+     */
     public val fillOpacity = new ConfigurableAttribute("fillOpacity")
+    /**
+     * The stroke opacity. Ranges from 0 to 1.
+     */
     public val strokeOpacity = new ConfigurableAttribute("strokeOpacity")
     
+    /**
+     * {@inheritDoc}
+     */
     new() {
+        initializeAttributes
     }
     
-    new(String svgElementId, Animation animation) {
-        super(svgElementId, animation)
-        initialize
-    }
-    
+    /**
+     * {@inheritDoc}
+     */
     override getName() {
         return "color"
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override doApply(DataPool pool, Element elem) {
         for(attr : attributes) {
             if(attr.value != null) {
