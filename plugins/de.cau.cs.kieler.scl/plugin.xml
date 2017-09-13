@@ -34,6 +34,12 @@
       <Processor
             class="de.cau.cs.kieler.scl.processors.transformators.SCLToSCGTransformation">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scl.processors.transformators.RestrictedSCG2SCL">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scl.processors.transformators.ssa.SSASCG2SSASCL">
+      </Processor>
    </extension>
 
 </plugin>

@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.ssc.ssa
+package de.cau.cs.kieler.scg.ssa
 
 import com.google.common.collect.HashBiMap
 import com.google.common.collect.HashMultimap
@@ -33,14 +33,14 @@ import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.ssc.features.SSAFeature
 
-import static de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import static de.cau.cs.kieler.scg.ssc.ssa.SSAFunction.*
+import static de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
 
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension java.lang.Character.*
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * @author als
@@ -143,7 +143,7 @@ class SSACoreExtensions {
         
     def createSSADeclarations(SCGraph scg) {
         val ssaDecl = HashBiMap.create(scg.declarations.size)
-        for (decl : scg.declarations.filter[!hasAnnotation("ignore")].toList) {
+        for (decl : scg.declarations.filter(VariableDeclaration).filter[!hasAnnotation("ignore")].toList) {
             for (vo : decl.valuedObjects) {
                 ssaDecl.put(vo, createDeclaration => [
                     scg.declarations += it
@@ -206,7 +206,7 @@ class SSACoreExtensions {
     }
     
     def removeUnusedSSADeclarations(SCGraph scg) {
-        scg.declarations.removeIf[input == false && output == false && it.valuedObjects.empty]
+        scg.declarations.removeIf[if (it instanceof VariableDeclaration) input == false && output == false && it.valuedObjects.empty]
     }
     
     def getAllDefs(SCGraph scg) {
@@ -219,7 +219,7 @@ class SSACoreExtensions {
     }
    
     def getDefs(SCGraph scg) {
-        if (!scg.hasAnnotation(SSAFeature.ID)) {
+        if (!scg.isSSA) {
             throw new IllegalArgumentException("Given SCG is not in SSA form")
         }
         val def = <ValuedObject, Assignment>newHashMap
@@ -231,7 +231,7 @@ class SSACoreExtensions {
     }
     
     def getUses(SCGraph scg) {
-        if (!scg.hasAnnotation(SSAFeature.ID)) {
+        if (!scg.isSSA) {
             throw new IllegalArgumentException("Given SCG is not in SSA form")
         }
         val use = HashMultimap.<ValuedObject, Node>create

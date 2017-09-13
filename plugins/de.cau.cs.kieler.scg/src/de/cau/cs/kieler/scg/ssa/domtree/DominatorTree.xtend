@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.ssc.ssa.domtree
+package de.cau.cs.kieler.scg.ssa.domtree
 
 import com.google.common.collect.BiMap
 import com.google.common.collect.HashBiMap

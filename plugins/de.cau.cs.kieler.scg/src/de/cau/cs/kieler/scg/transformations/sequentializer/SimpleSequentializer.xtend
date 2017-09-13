@@ -47,7 +47,7 @@ import java.util.HashMap
 import java.util.List
 import java.util.Set
 
-import static de.cau.cs.kieler.scg.SCGAnnotations.*
+import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions

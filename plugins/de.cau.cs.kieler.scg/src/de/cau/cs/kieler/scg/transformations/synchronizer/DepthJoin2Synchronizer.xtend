@@ -46,7 +46,7 @@ import de.cau.cs.kieler.scg.transformations.sequentializer.EmptyExpression
 import java.util.Set
 import de.cau.cs.kieler.scg.BranchType
 import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
-import de.cau.cs.kieler.scg.SCGAnnotations
+import de.cau.cs.kieler.scg.common.SCGAnnotations
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler

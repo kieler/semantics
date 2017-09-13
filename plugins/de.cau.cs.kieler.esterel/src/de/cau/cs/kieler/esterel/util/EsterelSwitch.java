@@ -733,6 +733,16 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case EsterelPackage.TICK_REFERENCE: {
+                TickReference tickReference = (TickReference)theEObject;
+                T result = caseTickReference(tickReference);
+                if (result == null) result = caseSignalReferenceExpr(tickReference);
+                if (result == null) result = caseValuedObjectReference(tickReference);
+                if (result == null) result = caseExpression(tickReference);
+                if (result == null) result = caseSchedulable(tickReference);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case EsterelPackage.SC_EST_STATEMENT: {
                 SCEstStatement scEstStatement = (SCEstStatement)theEObject;
                 T result = caseSCEstStatement(scEstStatement);
@@ -1885,6 +1895,21 @@ public class EsterelSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseSignalReferenceExpr(SignalReferenceExpr object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Tick Reference</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Tick Reference</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseTickReference(TickReference object) {
         return null;
     }
 

@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.esterel.processors.scc
+package de.cau.cs.kieler.esterel.processors.transformators.ssa
 
 import com.google.common.collect.HashBiMap
 import com.google.common.collect.HashMultimap
@@ -56,6 +56,7 @@ import de.cau.cs.kieler.scl.Thread
 import java.util.List
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.scg.ssa.SSATransformationExtensions
 
 /**
  * This class contains methods to transform an Kernel SC Esterel program to SCL using signal notation.
@@ -69,7 +70,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
     override getId() {
-        return "de.cau.cs.kieler.esterel.scc.scl"
+        return "de.cau.cs.kieler.esterel.processors.transformators.ssa.ssc.scest2scl"
     }
 
     override getName() {
@@ -167,7 +168,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
         // Special Decl
         suspendDecl = createVariableDeclaration(ValueType.PURE) => [
             annotations += createStringAnnotation => [
-                name = "ignore"
+                name = SSATransformationExtensions.ANNOTATION_IGNORE_DECLARATION
             ]
             annotations += createStringAnnotation => [
                 name = "suspend"
@@ -175,7 +176,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
         ]
         exitDecl = createVariableDeclaration(ValueType.PURE) => [
             annotations += createStringAnnotation => [
-                name = "ignore"
+                name = SSATransformationExtensions.ANNOTATION_IGNORE_DECLARATION
             ]
             annotations += createStringAnnotation => [
                 name = "exit"

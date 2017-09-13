@@ -652,6 +652,15 @@ public interface EsterelFactory extends EFactory {
     SignalReferenceExpr createSignalReferenceExpr();
 
     /**
+     * Returns a new object of class '<em>Tick Reference</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Tick Reference</em>'.
+     * @generated
+     */
+    TickReference createTickReference();
+
+    /**
      * Returns a new object of class '<em>SC Est Statement</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.ssc.ssa
+package de.cau.cs.kieler.scg.processors.transformators.ssa
 
 import com.google.common.collect.BiMap
 import com.google.common.collect.HashMultimap
@@ -23,9 +23,9 @@ import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
-import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Conditional
@@ -33,21 +33,25 @@ import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
-import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.scg.ssc.features.SSAFeature
-import de.cau.cs.kieler.scg.ssc.ssa.domtree.DominatorTree
+import de.cau.cs.kieler.scg.ssa.IOPreserverExtensions
+import de.cau.cs.kieler.scg.ssa.MergeExpressionExtension
+import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
+import de.cau.cs.kieler.scg.ssa.SSATransformationExtensions
+import de.cau.cs.kieler.scg.ssa.domtree.DominatorTree
 import java.util.Collection
 import javax.inject.Inject
 
 import static com.google.common.collect.Lists.*
-import static de.cau.cs.kieler.scg.ssc.ssa.SSAFunction.*
+import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
 
 import static extension com.google.common.base.Predicates.*
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * The SSA transformation for SCGs
@@ -56,25 +60,26 @@ import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class SCSSATransformation extends AbstractProductionTransformation implements Traceable {
+class SCSSATransformation extends Processor<SCGraphs, SCGraphs> implements Traceable {
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
     override getId() {
-        return "scg.ssa.scssa"
+        return "de.cau.cs.kieler.scg.processors.transformators.ssa.scssa"
     }
 
     override getName() {
-        return "SCSSA"
+        return "Sequential SSA"
     }
-
-    override getProducedFeatureId() {
-        return SSAFeature.ID
+    
+    override getType() {
+        return ProcessorType.TRANSFORMATOR
     }
-
-    override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::BASICBLOCK_ID, SCGFeatures::DEPENDENCY_ID)
+    
+    override process() {
+        model.scgs.forEach[transform]
+        model = model
     }
 
     // -------------------------------------------------------------------------
@@ -86,17 +91,16 @@ class SCSSATransformation extends AbstractProductionTransformation implements Tr
     @Inject extension AnnotationsExtensions
     @Inject extension SSACoreExtensions
     @Inject extension IOPreserverExtensions
-    @Inject extension MergeExpressionExtension    
+    @Inject extension MergeExpressionExtension
+    @Inject extension SSATransformationExtensions
+       
 
     // -------------------------------------------------------------------------
-    def SCGraph transform(SCGraph scg, KielerCompilerContext context) {
+    def SCGraph transform(SCGraph scg) {
         
         // It is expected that this node is an entry node.
+        validate(scg)
         val entryNode = scg.nodes.head
-        if (!(entryNode instanceof Entry) || scg.basicBlocks.head.schedulingBlocks.head.nodes.head != entryNode) {
-            throw new UnsupportedSCGException(
-                "The SSA analysis expects an entry node as first node in the first basic block!")
-        }
         val entryBB = scg.basicBlocks.head
         // map for saving parameter references
         val ssaReferences = HashMultimap.<Assignment, Parameter>create
@@ -129,7 +133,6 @@ class SCSSATransformation extends AbstractProductionTransformation implements Tr
         // 5. Rename Variables
         // ---------------
         scg.rename(dt, entryBB, ssaDecl, ssaReferences)
-        scg.createStringAnnotation(SSAFeature.ID, SSAFeature.ID)
 
         // ---------------
         // 6. Optimize concurrent dominant writes
@@ -142,6 +145,7 @@ class SCSSATransformation extends AbstractProductionTransformation implements Tr
         // 7. Preserve delayed Values
         // ---------------
         scg.postprocessIO(entryNode as Entry, ssaDecl, preserverAsm)
+        scg.annotations += createStringAnnotation(SCGAnnotations.ANNOTATION_SSA, id)
 
         // ---------------
         // 8. Compact SSA merge expression
@@ -149,7 +153,7 @@ class SCSSATransformation extends AbstractProductionTransformation implements Tr
         for (e : scg.mergeExpressions.values) {
             e.replace(e.reduce)
         }
-       
+        
         // ---------------
         // 9. Remove unused ssa versions
         // ---------------
@@ -166,12 +170,11 @@ class SCSSATransformation extends AbstractProductionTransformation implements Tr
         scg.optimizeIO
 
         
-        scg.createStringAnnotation(SSAFeature.ID, SSAFeature.ID)
         return scg
     }
         
     private def Collection<Node> placeMergeExp(SCGraph scg, DominatorTree dt,
-        Multimap<Assignment, Parameter> ssaReferences, BiMap<ValuedObject, Declaration> ssaDecl) {
+        Multimap<Assignment, Parameter> ssaReferences, BiMap<ValuedObject, VariableDeclaration> ssaDecl) {
         val nodes = newLinkedHashSet
         for (node : newArrayList(scg.nodes.filter(instanceOf(Assignment).or(instanceOf(Conditional))))) {
             val expr = node.eContents.filter(Expression).head
@@ -190,7 +193,7 @@ class SCSSATransformation extends AbstractProductionTransformation implements Tr
     }
 
     private def void rename(SCGraph scg, DominatorTree dt, BasicBlock start,
-        BiMap<ValuedObject, Declaration> ssaDecl, Multimap<Assignment, Parameter> ssaReferences) {
+        BiMap<ValuedObject, VariableDeclaration> ssaDecl, Multimap<Assignment, Parameter> ssaReferences) {
         start.recursiveRename(dt, ssaDecl)
         for (entry : ssaReferences.entries) {
             val ref = entry.value.expression as ValuedObjectReference
@@ -198,7 +201,7 @@ class SCSSATransformation extends AbstractProductionTransformation implements Tr
         }
     }
 
-    private def void recursiveRename(BasicBlock block, DominatorTree dt, BiMap<ValuedObject, Declaration> ssaDecl) {
+    private def void recursiveRename(BasicBlock block, DominatorTree dt, BiMap<ValuedObject, VariableDeclaration> ssaDecl) {
         for (sb : block.schedulingBlocks) {
             for (s : sb.nodes) {
                 // rename definitions
@@ -250,7 +253,7 @@ class SCSSATransformation extends AbstractProductionTransformation implements Tr
                 ].forEach[forEach[
                     val node = it.eContainer as Node;
                     if (node instanceof Assignment) {
-                        if (node.valuedObject.declaration == asm.valuedObject.declaration && node != asm){
+                        if (node.valuedObject.variableDeclaration == asm.valuedObject.declaration && node != asm){
                             precedingDefs.add(node)
                         }
                     }

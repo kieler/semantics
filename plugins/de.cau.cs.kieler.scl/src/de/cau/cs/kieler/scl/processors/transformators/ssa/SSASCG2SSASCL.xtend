@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.ssc.scl
+package de.cau.cs.kieler.scl.processors.transformators.ssa
 
 import com.google.common.collect.Multimap
 import com.google.inject.Inject
@@ -30,44 +30,53 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.KielerCompilerException
-import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.ssc.features.SSAFeature
-import de.cau.cs.kieler.scg.ssc.features.SSASCLFeature
-import de.cau.cs.kieler.scg.ssc.ssa.IOPreserverExtensions
-import de.cau.cs.kieler.scg.ssc.ssa.MergeExpressionExtension
-import de.cau.cs.kieler.scg.ssc.ssa.SSACoreExtensions
+import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.scg.ssa.IOPreserverExtensions
+import de.cau.cs.kieler.scg.ssa.MergeExpressionExtension
+import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
+import de.cau.cs.kieler.scl.SCLProgram
+import de.cau.cs.kieler.scl.processors.transformators.RestrictedSCG2SCL
 import java.util.Map
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scl.SCLFactory
 
 /**
+ * This transformation creates an SCL program from an SCG in SSA form.
+ * Note that it uses the {@link RestrictedSCG2SCL} transformation and has the same restrictions!
+ * 
  * @author als
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class SSASCG2SSASCL extends AbstractProductionTransformation {
+class SSASCG2SSASCL extends RestrictedSCG2SCL {
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
+    
     override getId() {
-        return "scg2scl"
+        return "de.cau.cs.kieler.scl.processors.transformators.ssa.scg2scl"
     }
 
     override getName() {
         return "SSA-SCL"
     }
 
-    override getProducedFeatureId() {
-        return SSASCLFeature.ID
+    override getType() {
+        return ProcessorType.TRANSFORMATOR
     }
-
-    override getRequiredFeatureIds() {
-        return newHashSet(SSAFeature.ID)
+    
+    override process() {
+        val scl = createSCLProgram
+        model.scgs.forEach[scl.modules += it.transform]
+        model = scl
     }
 
     // -------------------------------------------------------------------------
@@ -81,36 +90,35 @@ class SSASCG2SSASCL extends AbstractProductionTransformation {
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsCreateExtensions  
     @Inject extension KExpressionsValuedObjectExtensions  
+    extension SCLFactory = SCLFactory::eINSTANCE  
     
     // -------------------------------------------------------------------------
     // -- Transformation 
     // -------------------------------------------------------------------------
     
-    def transform(SCGraph scg, KielerCompilerContext context) {
-        transformation.context = context
-               
+    override transform(SCGraph scg) {
         // Remove incompatible ssa annotation in declarations
         scg.declarations.forEach[annotations.clear]
         
         // Convert to booleans
         val def = scg.defs
         val use = scg.uses
-        if (scg.declarations.exists[(input || output) && type != ValueType.BOOL && type != ValueType.PURE]) {
-            context.compilationResult.addPostponedWarning(new KielerCompilerException(id, id, "Program contains non-boolean interface variables!"));
+        if (scg.variableDeclarations.exists[(input || output) && type != ValueType.BOOL && type != ValueType.PURE] || scg.declarations.size > scg.variableDeclarations.size) {
+            environment.errors.add("Program contains non-boolean interface variables!")
         }
-        for (decl : scg.declarations.filter[type == ValueType.INT]) {
+        for (decl : scg.variableDeclarations.filter[type == ValueType.INT]) {
             if (decl.valuedObjects.forall[it.isBoolDef(def) && it.isBoolUse(use)]) {
                 decl.type = ValueType.BOOL
             }
         }
         if (scg.declarations.exists[type != ValueType.BOOL && type != ValueType.PURE]) {
-            context.compilationResult.addPostponedWarning(new KielerCompilerException(id, id, "Program contains boolean incompatible types!"));
+            environment.errors.add("Program contains boolean incompatible types!")
         }
         
         // Normalize
         for (e : scg.mergeExpressions.values) {
             if (e.eAllContents.filter(StringValue).exists[!(value.equals("AND") || value.equals("OR") || value.equals("NOT"))]) {
-                context.compilationResult.addPostponedWarning(new KielerCompilerException(id, id, "Program contains boolean incompatible combine functions!"))
+                environment.errors.add("Program contains boolean incompatible combine functions!")
             }
             e.replace(e.normalize)
         }
@@ -124,16 +132,16 @@ class SSASCG2SSASCL extends AbstractProductionTransformation {
                 }
             }
         } catch (IllegalArgumentException iae) {
-            context.compilationResult.addPostponedWarning(new KielerCompilerException(id, id, iae.message));
+            environment.errors.add(iae.message)
         }
         // Split IO
-        for (iodecl : scg.declarations.filter[input && output].toList) {
+        for (iodecl : scg.variableDeclarations.filter[input && output].toList) {
             scg.declarations.add(scg.declarations.indexOf(iodecl), createDeclaration => [
                 type = iodecl.type
                 output = true
                 iodecl.output = false
                 for (vo : iodecl.valuedObjects) {
-                    context.compilationResult.addPostponedWarning(new KielerCompilerException(id, id, "Split up input output variable: " + vo.name));
+                    environment.warnings.add("Split up input output variable: " + vo.name)
                     val oldname = vo.name
                     vo.name = oldname + "i"
                     val ovo = createValuedObject => [
@@ -148,8 +156,7 @@ class SSASCG2SSASCL extends AbstractProductionTransformation {
         }
         
         // Transform to SCL
-        val scl = scg.transformSCGToSCL
-        return scl
+        return super.transform(scg)
     }
     
     private def boolean isBoolDef(ValuedObject vo, Map<ValuedObject, Assignment> defs) {

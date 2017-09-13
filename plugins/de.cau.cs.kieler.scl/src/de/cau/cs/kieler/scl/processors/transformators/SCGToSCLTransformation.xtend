@@ -14,11 +14,14 @@
 package de.cau.cs.kieler.scl.processors.transformators
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -29,6 +32,7 @@ import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
@@ -42,9 +46,7 @@ import java.util.HashMap
 import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
 
 /** 
  * SCG to SCL Transformation 
@@ -71,6 +73,9 @@ class SCGToSCLTransformation extends Processor<SCGraphs, SCLProgram> {
 
     @Inject
     extension KExpressionsValuedObjectExtensions
+    
+    @Inject
+    extension AnnotationsExtensions
 
     // -------------------------------------------------------------------------
     // -- Processor
@@ -110,7 +115,7 @@ class SCGToSCLTransformation extends Processor<SCGraphs, SCLProgram> {
         
             // Create new SCL module
             val m = createModule
-            m.name = 'M' + scg.hashCode.toString
+            m.name = if (!scg.getStringAnnotationValue(ANNOTATION_NAME).nullOrEmpty) scg.getStringAnnotationValue(ANNOTATION_NAME) else 'M' + scg.hashCode.toString
                   
             for(declaration : scg.declarations) {
                 val newDeclaration = createDeclaration(declaration)

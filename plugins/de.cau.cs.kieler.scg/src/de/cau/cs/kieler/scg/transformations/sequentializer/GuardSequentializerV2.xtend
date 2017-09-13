@@ -43,7 +43,7 @@ import java.util.HashMap
 import java.util.List
 import java.util.Set
 
-import static de.cau.cs.kieler.scg.SCGAnnotations.*
+import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 

@@ -11,13 +11,18 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.scg
+package de.cau.cs.kieler.scg.common
 
-import static extension de.cau.cs.kieler.annotations.registry.AnnotationsRegistry.*
-import de.cau.cs.kieler.annotations.registry.AnnotationsType
-import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.Annotation
+import de.cau.cs.kieler.annotations.StringAnnotation
+import de.cau.cs.kieler.annotations.registry.AnnotationsType
+import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.SCGraph
 import org.eclipse.emf.ecore.EObject
+
+import static de.cau.cs.kieler.annotations.registry.AnnotationsRegistry.*
 
 /** 
  * @author ssm
@@ -27,6 +32,11 @@ import org.eclipse.emf.ecore.EObject
  */
 
 class SCGAnnotations {
+    
+                
+    public static val String ANNOTATION_NAME = 
+        register("module.name", AnnotationsType.SYSTEM, StringAnnotation, SCGraph, 
+            "Stores the mane of the module this SCG is created from.");
     
     public static val ANNOTATION_GUARDCREATOR = 
         register("guardCreator", AnnotationsType.SYSTEM, StringAnnotation, SCGraph, 
@@ -75,5 +85,8 @@ class SCGAnnotations {
     public static val String ANNOTATION_HEADNODE = 
         register("sbHeadNode", AnnotationsType.SYSTEM, StringAnnotation, EObject, 
             "Indicates scheduling blocks with head nodes.");
-
+            
+    public static val ANNOTATION_SSA = 
+        register("SSA", AnnotationsType.SYSTEM, StringAnnotation, SCGraph, 
+            "Marks an SCG as being in SSA form.")
 }

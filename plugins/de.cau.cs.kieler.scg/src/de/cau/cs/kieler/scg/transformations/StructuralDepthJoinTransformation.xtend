@@ -25,7 +25,7 @@ import de.cau.cs.kieler.scg.processors.analyzer.PotentiallyInstantaneousLoopAnal
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.Exit
-import de.cau.cs.kieler.scg.SCGAnnotations
+import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import java.util.Set
 import de.cau.cs.kieler.scg.Node

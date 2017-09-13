@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.ssc.ssa
+package de.cau.cs.kieler.scg.ssa
 
 import com.google.common.collect.BiMap
 import com.google.common.collect.LinkedHashMultimap
@@ -33,10 +33,12 @@ import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.ScgPackage
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.scg.ssc.ssa.domtree.DominatorTree
+import de.cau.cs.kieler.scg.ssa.domtree.DominatorTree
 import javax.inject.Inject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+
 /**
  * The SSA transformation for SCGs
  * 
@@ -67,7 +69,7 @@ class IOPreserverExtensions {
     
     // -------------------------------------------------------------------------
     
-    def preprocessIO(SCGraph scg, Entry entryNode, BiMap<ValuedObject, Declaration> ssaDecl) {
+    def preprocessIO(SCGraph scg, Entry entryNode, BiMap<ValuedObject, VariableDeclaration> ssaDecl) {
         if (scg.isDelayed) {
             // Create Registers
             for (entry : ssaDecl.entrySet.filter[!value.input]) {
@@ -80,11 +82,11 @@ class IOPreserverExtensions {
         }
     }
 
-    def postprocessIO(SCGraph scg, Entry entryNode, BiMap<ValuedObject, Declaration> ssaDecl, Multimap<ValuedObject, Assignment> preserveAsm) {
+    def postprocessIO(SCGraph scg, Entry entryNode, BiMap<ValuedObject, VariableDeclaration> ssaDecl, Multimap<ValuedObject, Assignment> preserveAsm) {
         if (scg.isDelayed) {
             // Delete unused Registers
             val use = scg.uses
-            for (decl : ssaDecl.entrySet.filter[it.key.declaration.output == false].map[value]) {
+            for (decl : ssaDecl.entrySet.filter[it.key.variableDeclaration.output == false].map[value]) {
                 decl.valuedObjects.removeIf[isRegister && use.get(it).empty]
                 preserveAsm.values.removeIf[valuedObject.eContainer == null]
             }
@@ -184,7 +186,7 @@ class IOPreserverExtensions {
 //        scg.nodes.removeAll(rems)
     }
     
-    def createPreservingAssignments(SCGraph scg, DominatorTree dt, Multimap<Assignment, Parameter> ssaReferences, BiMap<ValuedObject, Declaration> ssaDecl) {
+    def createPreservingAssignments(SCGraph scg, DominatorTree dt, Multimap<Assignment, Parameter> ssaReferences, BiMap<ValuedObject, VariableDeclaration> ssaDecl) {
         val map = LinkedHashMultimap.create
         if (scg.isDelayed) {
             for (entry : ssaDecl.entrySet.filter[value.valuedObjects.exists[isRegister]].sortBy[(value.eContainer as SCGraph).declarations.indexOf(value)]) {
@@ -206,7 +208,7 @@ class IOPreserverExtensions {
                     ])
                 }
             }
-            for (iovo : ssaDecl.entrySet.filter[key.declaration.input && key.declaration.output].sortBy[(value.eContainer as SCGraph).declarations.indexOf(value)].map[key]) {
+            for (iovo : ssaDecl.entrySet.filter[key.variableDeclaration.input && key.variableDeclaration.output].sortBy[(value.eContainer as SCGraph).declarations.indexOf(value)].map[key]) {
                 map.put(iovo, createAssignment => [
                     valuedObject = iovo
                     val nodes = scg.nodes.filter(Assignment).filter[valuedObject == iovo].map[it as Node].toList
@@ -217,7 +219,7 @@ class IOPreserverExtensions {
                     }
                 ])
             }
-            for (entry : ssaDecl.entrySet.filter[!key.declaration.input && key.declaration.output && value.valuedObjects.exists[isRegister]].sortBy[(value.eContainer as SCGraph).declarations.indexOf(value)]) {
+            for (entry : ssaDecl.entrySet.filter[!key.variableDeclaration.input && key.variableDeclaration.output && value.valuedObjects.exists[isRegister]].sortBy[(value.eContainer as SCGraph).declarations.indexOf(value)]) {
                 map.put(entry.key, createAssignment => [
                     valuedObject = entry.key
                     expression = entry.value.valuedObjects.findFirst[isRegister].reference
@@ -229,7 +231,7 @@ class IOPreserverExtensions {
     
     private def preserveOutput(Node node, SCGraph scg) {
         if(!node.basicBlock.deadBlock) {
-            for (decl : scg.declarations.reverseView.filter[output]) {
+            for (decl : scg.variableDeclarations.reverseView.filter[output]) {
                 for (vo : decl.valuedObjects.reverseView) {
                     // Create self assignment which will not be renamed
                     val asm = createAssignment => [

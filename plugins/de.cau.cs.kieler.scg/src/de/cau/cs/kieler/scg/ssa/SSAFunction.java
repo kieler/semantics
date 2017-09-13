@@ -19,13 +19,13 @@ package de.cau.cs.kieler.scg.ssa;
  */
 public enum SSAFunction {
     
-	PHI("de.cau.cs.kieler.scg.ssc.ssa.phi", "\u03A6"),
-	PHI_ASM("de.cau.cs.kieler.scg.ssc.ssa.phi.assignment", "\u03A6"),
-	PSI("de.cau.cs.kieler.scg.ssc.ssa.psi", "\u03A8"),
-	PI("de.cau.cs.kieler.scg.ssc.ssa.pi", "\u03A0"),
-	SEQ("de.cau.cs.kieler.scg.ssc.ssa.seq", "seq"),
-	CONC("de.cau.cs.kieler.scg.ssc.ssa.conc", "conc"),
-	COMBINE("de.cau.cs.kieler.scg.ssc.ssa.combine", "combine");
+	PHI("de.cau.cs.kieler.scg.ssa.phi", "\u03A6"),
+	PHI_ASM("de.cau.cs.kieler.scg.ssa.phi.assignment", "\u03A6"),
+	PSI("de.cau.cs.kieler.scg.ssa.psi", "\u03A8"),
+	PI("de.cau.cs.kieler.scg.ssa.pi", "\u03A0"),
+	SEQ("de.cau.cs.kieler.scg.ssa.seq", "seq"),
+	CONC("de.cau.cs.kieler.scg.ssa.conc", "conc"),
+	COMBINE("de.cau.cs.kieler.scg.ssa.combine", "combine");
 
 	private SSAFunction(String id, String symbol) {
 		this.id = id;

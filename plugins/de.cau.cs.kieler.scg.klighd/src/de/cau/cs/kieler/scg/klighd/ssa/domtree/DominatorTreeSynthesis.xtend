@@ -28,17 +28,18 @@ import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.scg.features.SCGFeatures
+import de.cau.cs.kieler.scg.ssa.domtree.DominatorTree
 import java.util.Map
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
-class DominatorTreeSynthesis extends AbstractDiagramSynthesis<SCGraph> {
+class DominatorTreeSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
     
     @Inject
     extension SCGControlFlowExtensions
@@ -61,9 +62,19 @@ class DominatorTreeSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     
     @Inject
     extension KContainerRenderingExtensions
-
-    override transform(SCGraph scg) {
-        if (scg.hasAnnotation(SCGFeatures::BASICBLOCK_ID)) {
+    
+    override transform(SCGraphs scgs) {
+        createNode() => [
+            for (scg : scgs.scgs) {
+                children += scg.transform => [
+                    addRectangle => [invisible = true]
+                ]
+            }
+        ]
+    }
+    
+    def transform(SCGraph scg) {
+        if (!scg.basicBlocks.nullOrEmpty) {
             return new DominatorTree(scg).transform
         } else {
             return createNode() => [

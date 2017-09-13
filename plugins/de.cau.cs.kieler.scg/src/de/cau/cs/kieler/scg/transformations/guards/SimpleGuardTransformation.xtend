@@ -27,7 +27,7 @@ import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.Join
-import de.cau.cs.kieler.scg.SCGAnnotations
+import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions

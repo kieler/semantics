@@ -10,15 +10,12 @@ RegularSSATransformation.xtend * KIELER - Kiel Integrated Environment for Layout
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.ssc.ssa
+package de.cau.cs.kieler.scg.processors.transformators.ssa
 
-import com.google.common.base.Function
-import com.google.common.collect.BiMap
 import com.google.common.collect.HashMultimap
 import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.BoolValue
-import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.FunctionCall
 import de.cau.cs.kieler.kexpressions.OperatorExpression
@@ -28,10 +25,11 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
-import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.BranchType
@@ -39,31 +37,29 @@ import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Depth
-import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.Predecessor
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.ScgPackage
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
-import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.scg.ssc.features.SSAFeature
-import de.cau.cs.kieler.scg.ssc.ssa.domtree.DominatorTree
+import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
+import de.cau.cs.kieler.scg.ssa.SSAFunction
+import de.cau.cs.kieler.scg.ssa.SSATransformationExtensions
+import de.cau.cs.kieler.scg.ssa.domtree.DominatorTree
 import java.util.BitSet
-import java.util.Collection
-import java.util.Deque
-import java.util.LinkedList
+import java.util.Map
 import javax.inject.Inject
 
 import static com.google.common.collect.Lists.*
 import static com.google.common.collect.Maps.*
-import static de.cau.cs.kieler.scg.ssc.ssa.SSAFunction.*
+import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
 
 import static extension com.google.common.collect.Sets.*
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 
 /**
  * The SSA transformation for SCGs
@@ -72,52 +68,50 @@ import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class WeakUnemitSSATransformation extends AbstractProductionTransformation implements Traceable {
+class WeakUnemitSSATransformation extends Processor<SCGraphs, SCGraphs> implements Traceable {
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
     override getId() {
-        return "scg.ssa.wunemit"
+        return "de.cau.cs.kieler.scg.processors.transformators.ssa.wuscc"
     }
 
     override getName() {
         return "Weak Unemit SSA"
     }
-
-    override getProducedFeatureId() {
-        return SSAFeature.ID
+    
+    override getType() {
+        return ProcessorType.TRANSFORMATOR
     }
-
-    override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::BASICBLOCK_ID)
+    
+    override process() {
+        model.scgs.forEach[transform]
     }
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
     
+    public static val IMPLICIT_ANNOTAION = "scg.ssa.implicit"
+    public static val ATTACH_ANNOTATION = "scg.ssa.attach"
+    public static val BRANCH_ANNOTATION = "scg.ssa.branch"
+    
     @Inject extension SCGCoreExtensions
     @Inject extension SCGControlFlowExtensions
+    @Inject extension KExpressionsDeclarationExtensions
     extension ScgFactory = ScgPackage.eINSTANCE.scgFactory
     extension AnnotationsFactory = AnnotationsFactory.eINSTANCE
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension AnnotationsExtensions
+    @Inject extension SSATransformationExtensions
     @Inject extension SSACoreExtensions
     
-    static val IMPLICIT_ANNOTAION = "scg.ssa.implicit"
-    static val ATTACH_ANNOTATION = "attach"
-    val bbVersion = <Parameter, BasicBlock>newHashMap
+    var Map<Parameter, BasicBlock> bbVersion
 
     // -------------------------------------------------------------------------
-    def SCGraph transform(SCGraph scg, KielerCompilerContext context) {
-        bbVersion.clear
-        // It is expected that this node is an entry node.
-        val entryNode = scg.nodes.head
-        if (!(entryNode instanceof Entry) || scg.basicBlocks.head.schedulingBlocks.head.nodes.head != entryNode) {
-            throw new UnsupportedSCGException(
-                "The SSA analysis expects an entry node as first node in the first basic block!")
-        }
+    def transform(SCGraph scg) {
+        validate(scg)
         val entryBB = scg.basicBlocks.head
         
         // Add implicit assignments at the entry and after each pause 
@@ -130,43 +124,65 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
         // ---------------
         // 1. Place Phi
         // ---------------
-        scg.placePhi(dt)
+        dt.place[ ValuedObject vo, Node bbHead |
+            val asm = phiPlacer.apply(vo, bbHead)
+            
+            if (bbHead instanceof Join) {
+                asm.expression = PSI.createFunction
+            } else {
+                if (bbHead instanceof Assignment && ((bbHead as Assignment).valuedObject.name.startsWith("join_")
+                    || (bbHead as Assignment).eAllContents.filter(FunctionCall).exists[functionName == PSI.symbol])) {
+                    asm.expression = PSI.createFunction
+                }
+            }
+            
+            return asm
+        ]
+        scg.snapshot
         
         // ---------------
         // 2. Renaming
         // ---------------
-        scg.rename(dt, entryBB, ssaDecl)
-        scg.createStringAnnotation(SSAFeature.ID, SSAFeature.ID)
+        bbVersion = dt.rename(entryBB, ssaDecl)
+        scg.snapshot
         
         // Transform phi node into assignments in each branch
         scg.transformPhi(dt)
+        scg.snapshot
         // Reduce introduced assignments using constant propagation
         scg.propagatePhi(PHI_ASM)
+        scg.snapshot
         
         // Adds reads to concurrent writers
         scg.addConcurrentWritersToReaders
+        scg.snapshot
         
         // Removes all references to signals that are never emitted
         scg.removeAbsentReads  
+        scg.snapshot
               
         // Removes assignments to signals which are never read
         scg.removePhiWritesWithoutRead
+        scg.snapshot
         // DONT ACTIVATE: trap-par-example wrong semantics for B
-//         scg.propagatePhi(PHI)
+        // scg.propagatePhi(PHI)
         
         // Removes the introduced implicit writers
         scg.removeImplicitEvironmentAssignments
+        scg.snapshot
                 
         // ---------------
         // 3. Remove unused ssa versions
         // ---------------
         
         // Removes conditional with constant conditions
-        scg.removeDeadCodeStupidly
+        scg.removeDeadCodeSimple
+        scg.snapshot
         // Removes all ssa versions which are not read
         scg.removeUnusedSSAVersions
         // Merges ssa version which are always used together (in OR expressions)
         scg.mergeIneffectiveSSAVersions
+        scg.snapshot
         // Removes version index is only one version exits
         scg.removeSingleSSAVersions
 
@@ -174,185 +190,15 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
         // 4. Update SSA VO version numbering
         // ---------------   
         scg.updateSSAVersions
-        
-        return scg
+        scg.snapshot
     }
     
-    def removeDeadCodeStupidly(SCGraph scg) {
-         for (c : scg.nodes.filter(Conditional).toList) {
-            val cond = c.condition
-            if (cond instanceof BoolValue) {
-                var kill = if (cond.value) c.then else c.^else
-                while (kill.target.incoming.filter(ControlFlow).size == 1) {
-                    val t = kill.target
-                    scg.nodes.remove(t)
-                    kill.target = null
-                    kill = (t as Assignment).allNext.head
-                }
-                val keep = if (!cond.value) c.then else c.^else
-                c.incoming.toList.forEach[target = keep.target]
-                keep.target = null
-                scg.nodes.remove(c)
-            }
-        }
-    }
-
     // -------------------------------------------------------------------------
-    /**
-     * Places phi nodes.
-     */
-    protected def Collection<Assignment> placePhi(SCGraph scg, DominatorTree dt) {
-        val placedAssignment = newLinkedHashSet
-        val hasPhi = HashMultimap.create
-        val work = newLinkedList
-        val defsite = scg.defSite
-
-        for (vo : scg.declarations.filter[!hasAnnotation("ignore")].toList.allValuedObjectsOrdered.reverseView) {
-            work.addAll(defsite.get(vo))
-            while (!work.empty) {
-                val workBlock = work.pop
-                for (frontierBlock : dt.getDominanceFrontiers(workBlock)) {
-                    // insert phi
-                    if (!hasPhi.containsEntry(vo, frontierBlock) && !frontierBlock.deadBlock) {
-                        var bbHead = frontierBlock.firstNode
-                        // Create Phi assignment
-                        val asm = createAssignment
-                        val bbHeadSB = bbHead.schedulingBlock
-                        bbHeadSB.nodes.add(bbHeadSB.nodes.indexOf(bbHead), asm)
-                        scg.nodes.add(scg.nodes.indexOf(bbHead), asm)
-                        placedAssignment.add(asm)
-                        asm.valuedObject = vo
-                        asm.markSSA(PHI)
-                        if (bbHead instanceof Join) {
-                            asm.expression = PSI.createFunction
-                            // Insert after
-                            val cf = bbHead.allNext.head
-                            asm.createControlFlow.target = cf.target
-                            cf.target = asm
-                        } else {
-                            if (bbHead instanceof Assignment && ((bbHead as Assignment).valuedObject.name.startsWith("join_") ||
-                                (bbHead as Assignment).eAllContents.filter(FunctionCall).exists[functionName == PSI.symbol])) {
-                                asm.expression = PSI.createFunction
-                            } else {
-                                asm.expression = PHI.createFunction
-                            }
-                            // Insert before
-                            bbHead.allPrevious.toList.forEach[target = asm]
-                            asm.createControlFlow.target = bbHead
-                        }
-                        // Add to work
-                        hasPhi.put(vo, frontierBlock)
-                        if (!defsite.get(vo).contains(frontierBlock)) {
-                            work.add(frontierBlock)
-                        }
-                    }
-                }
-            }
-        }
-
-        return placedAssignment
-    }
-
-    protected def void rename(SCGraph scg, DominatorTree dt, BasicBlock start, BiMap<ValuedObject, Declaration> ssaDecl) {
-        val versionStack = <ValuedObject, LinkedList<Integer>>newHashMap
-        val versionStackFunc = [ ValuedObject vo |
-            var voStack = versionStack.get(vo)
-            if (voStack == null) {
-                voStack = newLinkedList(0)
-                versionStack.put(vo, voStack)
-            }
-            return voStack
-        ]
-        recursiveRename(start, dt, versionStackFunc, ssaDecl)
-    }
-
-    protected def void recursiveRename(BasicBlock block, DominatorTree dt, Function<ValuedObject, Deque<Integer>> stack, BiMap<ValuedObject, Declaration> ssaDecl) {
-        val renamedDefs = <ValuedObject>newLinkedList
-        for (sb : block.schedulingBlocks) {
-            for (s : sb.nodes) {
-                if (!s.isSSA && (s instanceof Assignment || s instanceof Conditional)) {
-                    val expr = s.eContents.filter(Expression).head
-                    for (ref : expr.allReferences.filter[!valuedObject.declaration.input && !valuedObject.declaration.hasAnnotation("ignore")]) {//FIXME ignored input
-                        val vo = ref.valuedObject
-                        ref.valuedObject = ssaDecl.get(vo).valuedObjects.get(stack.get(vo).peek)
-                    }
-                }
-                if (s instanceof Assignment) {
-                    // create new version
-                    var vo = s.valuedObject
-                    if (!vo.declaration.hasAnnotation("ignore")) {
-                        val version = ssaDecl.get(vo).valuedObjects.size
-                        val newVO = vo.copy
-                        ssaDecl.get(vo).valuedObjects.add(newVO)
-                        stack.get(vo).push(version)
-                        s.valuedObject = newVO
-                        renamedDefs.add(vo)
-                    }
-                }
-            }
-        }
-        for (m : dt.successors(block)) {
-            for (sb : m.schedulingBlocks) {
-                for (asm : sb.nodes.filter(Assignment).filter[isSSA(PHI)]) {
-                    val vo = if (ssaDecl.containsKey(asm.valuedObject)) {
-                        asm.valuedObject
-                    } else {
-                        ssaDecl.inverse.get(asm.valuedObject.declaration)
-                    }
-                    (asm.expression as FunctionCall).parameters += createParameter => [
-                        expression = ssaDecl.get(vo).valuedObjects.get(stack.get(vo).peek).reference
-                        bbVersion.put(it, block)
-                    ]
-                }
-            }
-        }
-        val bbs = (block.eContainer as SCGraph).basicBlocks
-        for (m : dt.children(block).sortBy[bbs.indexOf(it)]) {
-            m.recursiveRename(dt, stack, ssaDecl)
-        }
-        // leave version scopes
-        for (vo : renamedDefs) {
-            stack.get(vo).pop
-        }
-    }
     
-    protected def get(Function<ValuedObject, Deque<Integer>> stackFunc, ValuedObject vo) {
-        return stackFunc.apply(vo)
-    }
-
-    protected def allValuedObjectsOrdered(Collection<Declaration> declarations) {
-        val vars = newArrayListWithExpectedSize(declarations.size)
-        declarations.forEach [
-            vars.addAll(it.valuedObjects)
-        ]
-        return vars
-    }
-
-    def firstNode(BasicBlock block) {
-        // Assuming the nodes are ordered correctly
-        return block.schedulingBlocks.head.nodes.head
-// FIXME otherwise uncomment
-//        var bbHead = block.schedulingBlocks.head.nodes.head
-//        var bbHeadPrev = bbHead.allPrevious.map[eContainer as Node].head
-//        while (bbHead.allPrevious.size == 1 && bbHeadPrev.basicBlock == m && !bbHeadPrev.hasAnnotation(SSA)) {
-//            bbHead = bbHeadPrev
-//            bbHeadPrev = bbHead.allPrevious.map[eContainer as Node].head
-//        }
-//        return bbHead
-    }
-    
-    protected def defSite(SCGraph scg) {
-        val defsite = HashMultimap.<ValuedObject, BasicBlock>create
-        for (asm : scg.nodes.filter(Assignment)) {
-            defsite.put(asm.valuedObject, asm.basicBlock)
-        }
-        return defsite
-    }
-
     def void addConcurrentWritersToReaders(SCGraph scg) {
         for (node : scg.uses.values.filter[!isSSA].toSet) {
             for (declDepPair : node.incoming.filter(DataDependency).filter[concurrent].groupBy[(eContainer as Assignment).valuedObject.declaration].entrySet) {
-                if (!declDepPair.key.hasAnnotation("ignore")) {
+                if (!declDepPair.key.hasAnnotation(SSATransformationExtensions.ANNOTATION_IGNORE_DECLARATION)) {
                     val refs = node.eContents.filter(Expression).head.allReferences.filter[valuedObject.declaration == declDepPair.key].toList
                     for (ref : refs) {
                         ref.replace(createOperatorExpression(OperatorType.BITWISE_OR) => [
@@ -371,7 +217,7 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
         for (n : nodes) {
             val cf = n.eContents.filter(ControlFlow).head
             val sb = scg.schedulingBlocks.findFirst[it.nodes.contains(n)]
-            for (d: scg.declarations.filter[type == ValueType.PURE && !input && !hasAnnotation("ignore")]) {//FIXME ignored input
+            for (d: scg.variableDeclarations.filter[type == ValueType.PURE && !input && !hasAnnotation(SSATransformationExtensions.ANNOTATION_IGNORE_DECLARATION)]) {//FIXME ignored input
                 for (vo : d.valuedObjects) {
                     scg.nodes += createAssignment => [
                         annotations += createStringAnnotation(WeakUnemitSSATransformation.IMPLICIT_ANNOTAION, WeakUnemitSSATransformation.IMPLICIT_ANNOTAION)
@@ -411,7 +257,7 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
         while (continue) {
             continue = false
             for (use : uses.entries.immutableCopy) {
-                if (!use.key.declaration.input) {
+                if (!use.key.variableDeclaration.input) {
                     if (defs.get(use.key).forall[expression instanceof BoolValue && !(expression as BoolValue).value]) {
                         // remove
                         val exp = use.value.eContents.filter(Expression).head
@@ -592,7 +438,7 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
                         object = attach
                     ]
                     if (branch != null) {
-                        annotations += createStringAnnotation("branch", branch)
+                        annotations += createStringAnnotation(BRANCH_ANNOTATION, branch)
                     }
                     val bb = prev.basicBlock
                     markSSA(PHI_ASM)
@@ -730,5 +576,25 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
         // Return the list.
         predecessors
     }
+    
+    def removeDeadCodeSimple(SCGraph scg) {
+         for (c : scg.nodes.filter(Conditional).toList) {
+            val cond = c.condition
+            if (cond instanceof BoolValue) {
+                var kill = if (cond.value) c.then else c.^else
+                while (kill.target.incoming.filter(ControlFlow).size == 1) {
+                    val t = kill.target
+                    scg.nodes.remove(t)
+                    kill.target = null
+                    kill = (t as Assignment).allNext.head
+                }
+                val keep = if (!cond.value) c.then else c.^else
+                c.incoming.toList.forEach[target = keep.target]
+                keep.target = null
+                scg.nodes.remove(c)
+            }
+        }
+    }
+    
 }
     

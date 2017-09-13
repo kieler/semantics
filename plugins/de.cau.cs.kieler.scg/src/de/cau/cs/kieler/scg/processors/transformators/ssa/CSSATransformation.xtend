@@ -10,38 +10,38 @@ RegularSSATransformation.xtend * KIELER - Kiel Integrated Environment for Layout
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.ssc.ssa
+package de.cau.cs.kieler.scg.processors.transformators.ssa
 
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kexpressions.FunctionCall
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.DataDependency
-import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.ScgPackage
+import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
-import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.scg.ssc.features.SSAFeature
-import de.cau.cs.kieler.scg.ssc.ssa.domtree.DominatorTree
-import java.util.Collection
+import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
+import de.cau.cs.kieler.scg.ssa.SSATransformationExtensions
+import de.cau.cs.kieler.scg.ssa.domtree.DominatorTree
 import javax.inject.Inject
 
 import static com.google.common.collect.Maps.*
-import static de.cau.cs.kieler.scg.ssc.ssa.SSAFunction.*
 import static de.cau.cs.kieler.scg.DataDependencyType.*
+import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
 
 /**
  * The SSA transformation for SCGs
@@ -50,25 +50,26 @@ import static de.cau.cs.kieler.scg.DataDependencyType.*
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class CSSATransformation extends RegularSSATransformation {
+class CSSATransformation extends Processor<SCGraphs, SCGraphs> implements Traceable {
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
     override getId() {
-        return "scg.ssa.cssa"
+        return "de.cau.cs.kieler.scg.processors.transformators.ssa.cssa"
     }
 
     override getName() {
         return "CSSA"
     }
-
-    override getProducedFeatureId() {
-        return SSAFeature.ID
+    
+    override getType() {
+        return ProcessorType.TRANSFORMATOR
     }
-
-    override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::BASICBLOCK_ID)
+    
+    override process() {
+        model.scgs.forEach[transform]
+        model = model
     }
 
     // -------------------------------------------------------------------------
@@ -81,49 +82,57 @@ class CSSATransformation extends RegularSSATransformation {
     @Inject extension KExpressionsCreateExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension SSACoreExtensions
-
+    @Inject extension SSATransformationExtensions
+    
     // -------------------------------------------------------------------------
-    override transform(SCGraph scg, KielerCompilerContext context) {
+    def SCGraph transform(SCGraph scg) {
+        validate(scg)
         
-        // It is expected that this node is an entry node.
-        val entryNode = scg.nodes.head
-        if (!(entryNode instanceof Entry) || scg.basicBlocks.head.schedulingBlocks.head.nodes.head != entryNode) {
-            throw new UnsupportedSCGException(
-                "The SSA analysis expects an entry node as first node in the first basic block!")
+        if (scg.nodes.exists[it instanceof Surface]) {
+            environment.warnings.add("Cannot handle SCG with Concurrency or synchronous ticks")
         }
+        
         val entryBB = scg.basicBlocks.head
         
         // Create new declarations for SSA versions
         val ssaDecl = scg.createSSADeclarations
         val dt = new DominatorTree(scg)
-
-        // ---------------
-        // 1. Place Phi
-        // ---------------
-        val phiDefs = scg.placePhi(dt)
         
         // ---------------
-        // 2. Replace Phi at thread join by Psi
+        // 1. Place Phi & Psi
         // ---------------
-        scg.placePsi(phiDefs)
-
+        dt.place[ ValuedObject vo, Node bbHead |
+            val asm = phiPlacer.apply(vo, bbHead)
+            
+            if (bbHead instanceof Join) {
+                asm.expression = PSI.createFunction
+            }
+            
+            return asm
+        ]
+        scg.snapshot
+        
         // ---------------
         // 3. Place Pi at thread read access on shared variables
         // ---------------
         val ssaReferences = scg.placePi
+        scg.snapshot
+        
         
         // ---------------
-        // 4. Renaming
+        // 2. Renaming
         // ---------------
-        scg.rename(dt, entryBB, ssaDecl)
-
+        dt.rename(entryBB, ssaDecl)
+        scg.snapshot
+        
         // ---------------
         // 5. Fix Pi references
         // ---------------
         for (ref : ssaReferences.entries) {
             ref.value.expression = ref.key.valuedObject.reference
-        }
-        scg.createStringAnnotation(SSAFeature.ID, SSAFeature.ID)
+        }        
+        scg.annotations += createStringAnnotation(SCGAnnotations.ANNOTATION_SSA, id)
+        scg.snapshot
 
         // ---------------
         // 6. Remove unused ssa versions
@@ -139,36 +148,7 @@ class CSSATransformation extends RegularSSATransformation {
     }
 
     // -------------------------------------------------------------------------
-    
-    protected def Collection<Assignment> placePsi(SCGraph scg, Collection<Assignment> phiDefs) {
-        val psiDefs = newHashSet
-        for (phi : phiDefs) {
-            var Node predecessor = phi
-            var continue = true
-            var psi = false
-            while (continue) {
-                val predecessors = predecessor.incoming.filter(ControlFlow).toList
-                if (predecessors.size != 1) {
-                    continue = false
-                } else {
-                    predecessor = predecessors.head.eContainer as Node
-                    if (predecessor instanceof Join) {
-                        continue = false
-                        psi = true
-                    } else if (!predecessor.isSSA){
-                        continue = false
-                    }
-                }
-            }
-            if (psi) {
-                phi.markSSA(PSI)
-                (phi.expression as FunctionCall).functionName = PSI.symbol
-                psiDefs.add(phi)
-            }
-        }
-        return psiDefs
-    }
-
+ 
     protected def Multimap<Assignment, Parameter> placePi(SCGraph scg) {
         val refs = HashMultimap.<Assignment, Parameter>create
         val nodes = newHashMap

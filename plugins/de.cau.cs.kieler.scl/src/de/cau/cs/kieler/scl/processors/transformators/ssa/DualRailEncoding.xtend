@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.ssc.scl
+package de.cau.cs.kieler.scl.processors.transformators.ssa
 
 import com.google.common.collect.Iterators
 import com.google.inject.Inject
@@ -28,48 +28,54 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
-import de.cau.cs.kieler.scg.ssc.features.DualRailFeature
-import de.cau.cs.kieler.scg.ssc.features.SSASCLFeature
-import de.cau.cs.kieler.scg.ssc.ssa.SSAFunction
-import de.cau.cs.kieler.scl.scl.Assignment
-import de.cau.cs.kieler.scl.scl.Conditional
-import de.cau.cs.kieler.scl.scl.SCLProgram
-import de.cau.cs.kieler.scl.scl.SclFactory
-import de.cau.cs.kieler.scl.scl.Statement
+import de.cau.cs.kieler.scg.ssa.SSAFunction
+import de.cau.cs.kieler.scl.Assignment
+import de.cau.cs.kieler.scl.Conditional
+import de.cau.cs.kieler.scl.SCLProgram
+import de.cau.cs.kieler.scl.SCLFactory
+import de.cau.cs.kieler.scl.Statement
 import java.util.Iterator
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.scl.Module
 
 /**
+ * BROKEN!
+ * 
+ * COnverts a SCL Program in SCSSA form into a dual rail encoded SSA program.
+ * 
  * @author als
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class DualRailEncoding extends AbstractProductionTransformation {
+class DualRailEncoding extends Processor<SCLProgram, SCLProgram> {
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
     override getId() {
-        return "scl.dualrailencoding"
+        return "de.cau.cs.kieler.scl.processors.transformators.ssa.dualrailencoding"
     }
 
     override getName() {
         return "SCL Dual-Rail Encoding"
     }
-
-    override getProducedFeatureId() {
-        return DualRailFeature.ID
+    
+    override getType() {
+        return ProcessorType.TRANSFORMATOR
     }
-
-    override getRequiredFeatureIds() {
-        return newHashSet(SSASCLFeature.ID)
+    
+    override process() {
+        model.modules.forEach[transform]
+        model = model
     }
 
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
-    extension SclFactory = SclFactory::eINSTANCE
+    extension SCLFactory = SCLFactory::eINSTANCE
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
@@ -78,11 +84,12 @@ class DualRailEncoding extends AbstractProductionTransformation {
     // -- Transformation 
     // -------------------------------------------------------------------------
     val duals = <ValuedObject, ValuedObject>newHashMap()
-    def transform(SCLProgram scl, KielerCompilerContext context) {
+    
+    def transform(Module scl) {
         duals.clear
         
         // Create dual  booleans
-        for (decl : scl.declarations.filter[type == ValueType.BOOL]) {
+        for (decl : scl.variableDeclarations.filter[type == ValueType.BOOL]) {
             for (vo : decl.valuedObjects) {
                 duals.put(vo, createValuedObject("not_" + vo.name))
             }
@@ -93,10 +100,10 @@ class DualRailEncoding extends AbstractProductionTransformation {
 
         // Create Error
         val error = createValuedObject("error")
-        if (scl.declarations.exists[type == ValueType.PURE]) {
-            scl.declarations.findFirst[type == ValueType.PURE].valuedObjects.add(error)
+        if (scl.variableDeclarations.exists[type == ValueType.PURE]) {
+            scl.variableDeclarations.findFirst[type == ValueType.PURE].valuedObjects.add(error)
         } else {
-            scl.declarations.add(createDeclaration(ValueType.PURE) => [it.valuedObjects.add(error)])
+            scl.declarations.add(createVariableDeclaration(ValueType.PURE) => [it.valuedObjects.add(error)])
         }
 
         val assignmentInstructions = newHashSet
@@ -104,13 +111,13 @@ class DualRailEncoding extends AbstractProductionTransformation {
         for (instr : scl.eAllContents.filter(Statement).toIterable) {
             if (instr instanceof Assignment) {
                 val asm = instr as Assignment
-                if (asm.valuedObject.declaration.type == ValueType.BOOL && asm.expression.allReferences.forall[valuedObject.declaration.type == ValueType.BOOL]) {
+                if (asm.valuedObject.variableDeclaration.type == ValueType.BOOL && asm.expression.allReferences.forall[valuedObject.variableDeclaration.type == ValueType.BOOL]) {
                     assignmentInstructions.add(instr)
                 }
             }
             if (instr instanceof Conditional) {
                 val cond = instr as Conditional
-                if (cond.expression.allReferences.forall[valuedObject.declaration.type == ValueType.BOOL]) {
+                if (cond.expression.allReferences.forall[valuedObject.variableDeclaration.type == ValueType.BOOL]) {
                     conditionalInstructions.add(instr)
                 }
             }

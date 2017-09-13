@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.ssc.scl
+package de.cau.cs.kieler.scl.processors.transformators
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Expression
@@ -33,44 +33,74 @@ import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scl.extensions.SCLExtensions
-import de.cau.cs.kieler.scl.scl.Goto
-import de.cau.cs.kieler.scl.scl.SCLProgram
-import de.cau.cs.kieler.scl.scl.SclFactory
+import de.cau.cs.kieler.scl.Goto
+import de.cau.cs.kieler.scl.SCLProgram
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scl.scl.Label
-import de.cau.cs.kieler.scl.scl.Scope
-
+import de.cau.cs.kieler.scl.Label
+import de.cau.cs.kieler.scl.Scope
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.scl.SCLProgram
+import de.cau.cs.kieler.scl.SCLFactory
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.scl.Module
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
 /**
+ * This class transforms SCGs into SCL program in a more natural way (especially if-else branches) than the regular SCG to SCL transformation.
+ * However, it cannot handle jumps into/outof branches!
+ * 
  * @author als
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class RestrictedSCG2SCL {
-    public var KielerCompilerContext context
-
+class RestrictedSCG2SCL extends Processor<SCGraphs, SCLProgram> {
+    
+    override getId() {
+        return "de.cau.cs.kieler.scl.processors.transformators.scg2scl.restricted"
+    }
+    
+    override getName() {
+        return "SCG to SCL"
+    }
+    
+    override getType() {
+        return ProcessorType.TRANSFORMATOR
+    }
+    
+    override process() {
+        val scl = createSCLProgram
+        model.scgs.forEach[ scl.modules += it.transform]
+        model = scl
+    }
+    
+    
+    // ----------------------------------------------------------
+    
+    extension SCLFactory = SCLFactory::eINSTANCE
     @Inject extension SCGControlFlowExtensions
     @Inject extension SCGThreadExtensions
-    extension SclFactory = SclFactory::eINSTANCE
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCLExtensions
+    @Inject extension AnnotationsExtensions
 
     val labels = <Node, Label>newLinkedHashMap
     val gotos = <Goto, Node>newLinkedHashMap
     val voMapping = <ValuedObject, ValuedObject>newHashMap
     val visited = newHashSet
 
-    def SCLProgram transformSCGToSCL(SCGraph scg) {
+    def Module transform(SCGraph scg) {
         labels.clear
         gotos.clear
         voMapping.clear
         visited.clear
         
         // Create new SCL program...
-        val scl = SclFactory::eINSTANCE.createSCLProgram()
-        scl.name = 'M' + scg.hashCode.toString
-                  
+        val scl = createModule
+        scl.name = if (!scg.getStringAnnotationValue(ANNOTATION_NAME).nullOrEmpty) scg.getStringAnnotationValue(ANNOTATION_NAME) else 'M' + scg.hashCode.toString
+
         // ... and copy declarations.
         for(declaration : scg.declarations) {
             val newDeclaration = createDeclaration(declaration)
@@ -380,4 +410,5 @@ class RestrictedSCG2SCL {
         }
         newExpression
     }
+    
 }

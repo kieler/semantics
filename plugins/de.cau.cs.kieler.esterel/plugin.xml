@@ -156,7 +156,7 @@
   <extension
         point="de.cau.cs.kieler.kicool.processor">
      <Processor
-           class="de.cau.cs.kieler.esterel.processors.incremental.SCEstTransform">
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.SCEstTransform">
      </Processor>
      <Processor
            class="de.cau.cs.kieler.esterel.scest.transformations.AbortTransformation">
@@ -283,6 +283,12 @@
         point="de.cau.cs.kieler.kicool.processor">
      <Processor
            class="de.cau.cs.kieler.esterel.processors.scc.SCEstToSSCSCLTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.scl.processors.transformators.ssa.SSASCG2SSASCL">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.ssa.SSCEsterelReconstruction">
      </Processor>
   </extension>
   <!--extension

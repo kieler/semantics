@@ -3575,6 +3575,61 @@ public interface EsterelPackage extends EPackage {
     int SIGNAL_REFERENCE_EXPR_FEATURE_COUNT = KExpressionsPackage.VALUED_OBJECT_REFERENCE_FEATURE_COUNT + 0;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.esterel.impl.TickReferenceImpl <em>Tick Reference</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.esterel.impl.TickReferenceImpl
+     * @see de.cau.cs.kieler.esterel.impl.EsterelPackageImpl#getTickReference()
+     * @generated
+     */
+    int TICK_REFERENCE = 75;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TICK_REFERENCE__SCHEDULE = SIGNAL_REFERENCE_EXPR__SCHEDULE;
+
+    /**
+     * The feature id for the '<em><b>Valued Object</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TICK_REFERENCE__VALUED_OBJECT = SIGNAL_REFERENCE_EXPR__VALUED_OBJECT;
+
+    /**
+     * The feature id for the '<em><b>Indices</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TICK_REFERENCE__INDICES = SIGNAL_REFERENCE_EXPR__INDICES;
+
+    /**
+     * The feature id for the '<em><b>Sub Reference</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TICK_REFERENCE__SUB_REFERENCE = SIGNAL_REFERENCE_EXPR__SUB_REFERENCE;
+
+    /**
+     * The number of structural features of the '<em>Tick Reference</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TICK_REFERENCE_FEATURE_COUNT = SIGNAL_REFERENCE_EXPR_FEATURE_COUNT + 0;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.esterel.impl.SCEstStatementImpl <em>SC Est Statement</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3582,7 +3637,7 @@ public interface EsterelPackage extends EPackage {
      * @see de.cau.cs.kieler.esterel.impl.EsterelPackageImpl#getSCEstStatement()
      * @generated
      */
-    int SC_EST_STATEMENT = 75;
+    int SC_EST_STATEMENT = 76;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -3610,7 +3665,7 @@ public interface EsterelPackage extends EPackage {
      * @see de.cau.cs.kieler.esterel.impl.EsterelPackageImpl#getUnEmit()
      * @generated
      */
-    int UN_EMIT = 76;
+    int UN_EMIT = 77;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -3647,7 +3702,7 @@ public interface EsterelPackage extends EPackage {
      * @see de.cau.cs.kieler.esterel.impl.EsterelPackageImpl#getSet()
      * @generated
      */
-    int SET = 77;
+    int SET = 78;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -5625,6 +5680,16 @@ public interface EsterelPackage extends EPackage {
     EClass getSignalReferenceExpr();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.TickReference <em>Tick Reference</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Tick Reference</em>'.
+     * @see de.cau.cs.kieler.esterel.TickReference
+     * @generated
+     */
+    EClass getTickReference();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.SCEstStatement <em>SC Est Statement</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -7322,6 +7387,16 @@ public interface EsterelPackage extends EPackage {
          * @generated
          */
         EClass SIGNAL_REFERENCE_EXPR = eINSTANCE.getSignalReferenceExpr();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.esterel.impl.TickReferenceImpl <em>Tick Reference</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.esterel.impl.TickReferenceImpl
+         * @see de.cau.cs.kieler.esterel.impl.EsterelPackageImpl#getTickReference()
+         * @generated
+         */
+        EClass TICK_REFERENCE = eINSTANCE.getTickReference();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.esterel.impl.SCEstStatementImpl <em>SC Est Statement</em>}' class.

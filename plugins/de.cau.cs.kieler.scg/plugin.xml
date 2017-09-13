@@ -147,6 +147,18 @@
       <Processor
             class="de.cau.cs.kieler.scg.processors.transformators.dependencies.DependencyTransformationV2">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.ssa.RegularSSATransformation">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.ssa.CSSATransformation">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.ssa.SCSSATransformation">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.ssa.WeakUnemitSSATransformation">
+      </Processor>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.system">

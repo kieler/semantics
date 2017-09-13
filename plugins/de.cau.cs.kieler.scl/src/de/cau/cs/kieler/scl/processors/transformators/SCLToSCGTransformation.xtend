@@ -59,6 +59,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
 
 /** 
  * SCL to SCG Transformation 
@@ -143,6 +144,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
         for (module : program.modules) {
             val scg = createSCGraph
             scgs.scgs += scg
+            scg.addStringAnnotation(ANNOTATION_NAME, module.name)
             module.initialize
             	
             // ... and copy declarations.

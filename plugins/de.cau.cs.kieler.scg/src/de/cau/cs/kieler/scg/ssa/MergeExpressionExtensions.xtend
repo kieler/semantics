@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.ssc.ssa
+package de.cau.cs.kieler.scg.ssa
 
 import com.google.common.collect.BiMap
 import com.google.common.collect.HashMultimap
@@ -29,7 +29,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kitt.tracing.Tracing
+import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Entry
@@ -44,7 +44,7 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.scg.ssc.ssa.domtree.DominatorTree
+import de.cau.cs.kieler.scg.ssa.domtree.DominatorTree
 import java.util.Collection
 import java.util.LinkedList
 import java.util.List
@@ -52,7 +52,7 @@ import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 import org.eclipse.xtend.lib.annotations.Data
 
-import static de.cau.cs.kieler.scg.ssc.ssa.SSAFunction.*
+import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
 
 import static extension com.google.common.base.Predicates.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
@@ -60,6 +60,8 @@ import de.cau.cs.kieler.scg.Dependency
 import com.google.common.base.Predicates
 import de.cau.cs.kieler.scg.ScheduleDependency
 import de.cau.cs.kieler.scg.GuardDependency
+import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * @author als
@@ -113,19 +115,22 @@ class MergeExpressionExtension {
             copy.nodes.removeAll(independentNodes)
             
             // Compile SCG scheduling
-            val context = new KielerCompilerContext(SCGFeatures.DEPENDENCY_ID +","+ SCGFeatures.BASICBLOCK_ID +","+ SCGFeatures.GUARD_EXPRESSIONS_ID +","+ SCGFeatures.GUARDS_ID +","+ SCGFeatures.SCHEDULING_ID + ",*T_scg.basicblock.sc", copy);
-            context.advancedSelect = false;
-            context.setProperty(Tracing.ACTIVE_TRACING, true);
-            val result = KielerCompiler.compile(context);
-            
-            // Check result
-            if (!result.postponedErrors.empty) {
-                throw new IllegalArgumentException("SCG with ValuedObject "+vo.name+" cannot be scheduled",result.postponedErrors.head)
-            }
-            
-            // Extract schedule and map to original VOs
-            val schedSCG = result.object as SCGraph
-            val mapping = result.getAuxiliaryData(Tracing).head?.getMapping(schedSCG, copy);
+            // TODO KICOOL!!!
+//            val context = new KielerCompilerContext(SCGFeatures.DEPENDENCY_ID +","+ SCGFeatures.BASICBLOCK_ID +","+ SCGFeatures.GUARD_EXPRESSIONS_ID +","+ SCGFeatures.GUARDS_ID +","+ SCGFeatures.SCHEDULING_ID + ",*T_scg.basicblock.sc", copy);
+//            context.advancedSelect = false;
+//            context.setProperty(Tracing.ACTIVE_TRACING, true);
+//            val result = KielerCompiler.compile(context);
+//            
+//            // Check result
+//            if (!result.postponedErrors.empty) {
+//                throw new IllegalArgumentException("SCG with ValuedObject "+vo.name+" cannot be scheduled",result.postponedErrors.head)
+//            }
+//            
+//            // Extract schedule and map to original VOs
+//            val schedSCG = result.object as SCGraph
+//            val mapping = result.getAuxiliaryData(Tracing).head?.getMapping(schedSCG, copy);
+val SCGraph schedSCG = null
+val Multimap<EObject, EObject> mapping = null
             var ValuedObject findCopyVO = null
             for (d : schedSCG.declarations) {
                 for (v : d.valuedObjects) {
@@ -161,7 +166,7 @@ class MergeExpressionExtension {
      * Creates a SC specific merge expressions for the given reading node.
      * For combine expressions a prior preparation is needed.
      */
-    def createMergeExpression(Node readingNode, List<Node> concurrentNodes, ValuedObject vo, Multimap<Assignment, Parameter> ssaReferences, BiMap<ValuedObject, Declaration> ssaDecl, DominatorTree dt) {
+    def Expression createMergeExpression(Node readingNode, List<Node> concurrentNodes, ValuedObject vo, Multimap<Assignment, Parameter> ssaReferences, BiMap<ValuedObject, VariableDeclaration> ssaDecl, DominatorTree dt) {
         val scg = readingNode.eContainer as SCGraph
         val hasUpdates = scg.hasUpdates(vo)
         val mexpression = if (hasUpdates) {
@@ -223,7 +228,7 @@ class MergeExpressionExtension {
     // Structual merge expressions
     // -------------------------------------------------------------------------
     
-    def getPatternExpression(SCGraph scg, ValuedObject vo, BiMap<ValuedObject, Declaration> ssaDecl, DominatorTree dt) {
+    def getPatternExpression(SCGraph scg, ValuedObject vo, BiMap<ValuedObject, VariableDeclaration> ssaDecl, DominatorTree dt) {
         val pattern = scg.getPattern(vo, ssaDecl, dt)
         // Copy pattern
         val copier = new Copier();
@@ -238,7 +243,7 @@ class MergeExpressionExtension {
         return new MergeExpression(expCopy, refs)
     }
 
-    def getPattern(SCGraph scg, ValuedObject vo, BiMap<ValuedObject, Declaration> ssaDecl, DominatorTree dt) {
+    def getPattern(SCGraph scg, ValuedObject vo, BiMap<ValuedObject, VariableDeclaration> ssaDecl, DominatorTree dt) {
         if (!patternCache.containsKey(vo)) {
             val entry = scg.nodes.head as Entry
             val refs = HashMultimap.<Assignment, Parameter>create
@@ -249,7 +254,7 @@ class MergeExpressionExtension {
                     expParam.expression
                 }
             var exp = scexp
-            if (vo.declaration.input) {
+            if (vo.variableDeclaration.input) {
                 exp = SEQ.createFunction => [
                     parameters += createParameter => [
                         expression = vo.reference
@@ -392,7 +397,7 @@ class MergeExpressionExtension {
     // Scheduling merge expressions
     // -------------------------------------------------------------------------
     
-    def getScheduledExpression(SCGraph scg, ValuedObject vo, BiMap<ValuedObject, Declaration> ssaDecl) {
+    def getScheduledExpression(SCGraph scg, ValuedObject vo, BiMap<ValuedObject, VariableDeclaration> ssaDecl) {
         if (!schedules.containsKey(vo)) {
             throw new IllegalArgumentException("Missing schedule for variable "+vo.name)
         }
@@ -400,7 +405,7 @@ class MergeExpressionExtension {
         val schedule = newLinkedList
         schedule.addAll(schedules.get(vo).reverseView)
         // Prepend inputs and register reads
-        if (vo.declaration.input) {
+        if (vo.variableDeclaration.input) {
             schedule.add(createAssignment => [
                 expression = vo.reference
             ])

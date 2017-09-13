@@ -59,7 +59,7 @@ import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.GuardDependency
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.SCGAnnotations
+import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScheduleDependency
 import de.cau.cs.kieler.scg.SchedulingBlock
@@ -95,8 +95,8 @@ import org.eclipse.xtext.serializer.ISerializer
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scg.SCGAnnotations
-import static extension de.cau.cs.kieler.scg.SCGAnnotations.*
+import de.cau.cs.kieler.scg.common.SCGAnnotations
+import static extension de.cau.cs.kieler.scg.common.SCGAnnotations.*
 import com.google.common.collect.Multimap
 import org.eclipse.elk.core.options.NodeLabelPlacement
 import de.cau.cs.kieler.klighd.internal.macrolayout.KlighdDiagramLayoutConnector
