@@ -1876,5 +1876,19 @@ class SCEstExtension {
             }
         }
     }
+    
+    /**
+     * Counts the number of statements attached to a given object and prints the number to the console.
+     * 
+     * @param obj The object to which statements are possibly attached 
+     * @return The amount of statements included in the given object
+     */
+    def countStatements(EObject obj) {
+        var counter = obj.eAllContents.toList.filter(Statement).length
+        System.out.println("##############################################################")
+        System.out.println("The object " + obj + " includes " + counter + " statements.")
+        System.out.println("##############################################################")
+        return counter
+    }
  
 }

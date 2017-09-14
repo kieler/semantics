@@ -64,6 +64,7 @@ class InitializationTransformation extends AbstractExpansionTransformation imple
     var SCEstProgram scestProgram
     
     def SCEstProgram transform(SCEstProgram prog) {
+        prog.countStatements
         scestProgram = prog
         resetLabelSuffix
         resetConstantSuffix

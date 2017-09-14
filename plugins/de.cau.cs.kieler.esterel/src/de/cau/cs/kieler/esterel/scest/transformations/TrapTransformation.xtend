@@ -94,6 +94,8 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
         return statements
     }
     
+    var HashMap<ISignal, Pair<ValuedObject, ValuedObject>> exitVariables = new HashMap<ISignal, Pair<ValuedObject, ValuedObject>>()
+    
     def void transformStatement(Statement statement) {
         if (statement instanceof Trap) {
             var trap = statement as Trap
@@ -101,7 +103,7 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
             var pos = statements.indexOf(statement)
             var scope = createScopeStatement
             var depth = trap.getDepth
-            var HashMap<ISignal, Pair<ValuedObject, ValuedObject>> exitVariables = new HashMap<ISignal, Pair<ValuedObject, ValuedObject>>()
+//            var HashMap<ISignal, Pair<ValuedObject, ValuedObject>> exitVariables = new HashMap<ISignal, Pair<ValuedObject, ValuedObject>>()
             var signalDecl = createDeclaration(ValueType.BOOL, null)
             var signals = new LinkedList<ValuedObject>()
             var Conditional conditional

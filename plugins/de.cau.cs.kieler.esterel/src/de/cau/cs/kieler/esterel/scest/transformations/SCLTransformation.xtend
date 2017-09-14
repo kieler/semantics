@@ -83,6 +83,7 @@ class SCLTransformation extends AbstractExpansionTransformation implements Trace
             m.removeDepthAnnotations
             transformModule(m, sclProg)
         }
+        sclProg.countStatements
         return sclProg
     }
     

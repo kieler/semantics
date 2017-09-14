@@ -352,8 +352,9 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
     
     def EList<Statement> transformPauses(EList<Statement> statements, Abort abort, Label label, ValuedObject abortFlag, ValuedObject depthFlag, List<ValuedObject> countingVariables) {
         for (var i=0; i<statements?.length; i++) {
+            var oldS = statements.get(i)
             var offsetI = statements.get(i).transformPause(abort, label, abortFlag, depthFlag, countingVariables)
-            i += offsetI
+            i = statements.indexOf(oldS)
             // the offset is used to prevent the indefinite transformation of one specific pause
             // for example for a "weak delayed abort" an if statement is added before the pause and 
             // therefore in the next cycle without the offset the pause would be transformed again and again ... 
