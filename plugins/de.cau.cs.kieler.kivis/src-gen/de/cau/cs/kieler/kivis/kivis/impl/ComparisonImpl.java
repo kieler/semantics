@@ -52,7 +52,7 @@ public class ComparisonImpl extends ConditionImpl implements Comparison
    * @generated
    * @ordered
    */
-  protected static final OperatorType RELATION_EDEFAULT = OperatorType.EQ;
+  protected static final OperatorType RELATION_EDEFAULT = OperatorType.NOT;
 
   /**
    * The cached value of the '{@link #getRelation() <em>Relation</em>}' attribute.

@@ -1977,6 +1977,10 @@ finally {
 
 
 
+
+
+
+
 // Rule BitwiseOrOperator
 ruleBitwiseOrOperator
     @init {
@@ -2194,6 +2198,14 @@ ruleLogicalAndOperator
 finally {
 	restoreStackSize(stackSize);
 }
+
+
+
+
+
+
+
+
 
 
 

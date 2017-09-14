@@ -57,7 +57,7 @@ public abstract class AbstractKiVisUiModule extends org.eclipse.xtext.ui.Default
 		return de.cau.cs.kieler.kivis.ui.outline.KiVisOutlineTreeProvider.class;
 	}
 
-	// contributed by org.eclipse.xtext.ui.generator.contentAssist.JavaBasedContentAssistFragment
+	// contributed by org.eclipse.xtext.ui.generator.contentAssist.ContentAssistFragment
 	public Class<? extends org.eclipse.xtext.ui.editor.contentassist.IContentProposalProvider> bindIContentProposalProvider() {
 		return de.cau.cs.kieler.kivis.ui.contentassist.KiVisProposalProvider.class;
 	}

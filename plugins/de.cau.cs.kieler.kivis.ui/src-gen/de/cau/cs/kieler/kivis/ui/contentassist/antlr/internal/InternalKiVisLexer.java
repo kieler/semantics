@@ -1319,10 +1319,10 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = RULE_BOOLEAN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:15612:14: ( ( 'true' | 'false' ) )
-            // InternalKiVis.g:15612:16: ( 'true' | 'false' )
+            // InternalKiVis.g:15624:14: ( ( 'true' | 'false' ) )
+            // InternalKiVis.g:15624:16: ( 'true' | 'false' )
             {
-            // InternalKiVis.g:15612:16: ( 'true' | 'false' )
+            // InternalKiVis.g:15624:16: ( 'true' | 'false' )
             int alt1=2;
             int LA1_0 = input.LA(1);
 
@@ -1340,7 +1340,7 @@ public class InternalKiVisLexer extends Lexer {
             }
             switch (alt1) {
                 case 1 :
-                    // InternalKiVis.g:15612:17: 'true'
+                    // InternalKiVis.g:15624:17: 'true'
                     {
                     match("true"); 
 
@@ -1348,7 +1348,7 @@ public class InternalKiVisLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalKiVis.g:15612:24: 'false'
+                    // InternalKiVis.g:15624:24: 'false'
                     {
                     match("false"); 
 
@@ -1374,10 +1374,10 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:15614:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '/' | '\\\\' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '-' | '.' | '/' | '\\\\' | '0' .. '9' )* )
-            // InternalKiVis.g:15614:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '/' | '\\\\' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '-' | '.' | '/' | '\\\\' | '0' .. '9' )*
+            // InternalKiVis.g:15626:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '/' | '\\\\' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '-' | '.' | '/' | '\\\\' | '0' .. '9' )* )
+            // InternalKiVis.g:15626:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '/' | '\\\\' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '-' | '.' | '/' | '\\\\' | '0' .. '9' )*
             {
-            // InternalKiVis.g:15614:11: ( '^' )?
+            // InternalKiVis.g:15626:11: ( '^' )?
             int alt2=2;
             int LA2_0 = input.LA(1);
 
@@ -1386,7 +1386,7 @@ public class InternalKiVisLexer extends Lexer {
             }
             switch (alt2) {
                 case 1 :
-                    // InternalKiVis.g:15614:11: '^'
+                    // InternalKiVis.g:15626:11: '^'
                     {
                     match('^'); 
 
@@ -1404,7 +1404,7 @@ public class InternalKiVisLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // InternalKiVis.g:15614:49: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '-' | '.' | '/' | '\\\\' | '0' .. '9' )*
+            // InternalKiVis.g:15626:49: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '-' | '.' | '/' | '\\\\' | '0' .. '9' )*
             loop3:
             do {
                 int alt3=2;
@@ -1453,11 +1453,11 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = RULE_HOSTCODE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:15616:15: ( '`' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )* '`' )
-            // InternalKiVis.g:15616:17: '`' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )* '`'
+            // InternalKiVis.g:15628:15: ( '`' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )* '`' )
+            // InternalKiVis.g:15628:17: '`' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )* '`'
             {
             match('`'); 
-            // InternalKiVis.g:15616:21: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )*
+            // InternalKiVis.g:15628:21: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )*
             loop4:
             do {
                 int alt4=3;
@@ -1473,7 +1473,7 @@ public class InternalKiVisLexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // InternalKiVis.g:15616:22: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+            	    // InternalKiVis.g:15628:22: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
             	    {
             	    match('\\'); 
             	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -1489,7 +1489,7 @@ public class InternalKiVisLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // InternalKiVis.g:15616:63: ~ ( ( '\\\\' | '`' ) )
+            	    // InternalKiVis.g:15628:63: ~ ( ( '\\\\' | '`' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='_')||(input.LA(1)>='a' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1526,12 +1526,12 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = RULE_COMMENT_ANNOTATION;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:15618:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
-            // InternalKiVis.g:15618:27: '/**' ( options {greedy=false; } : . )* '*/'
+            // InternalKiVis.g:15630:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
+            // InternalKiVis.g:15630:27: '/**' ( options {greedy=false; } : . )* '*/'
             {
             match("/**"); 
 
-            // InternalKiVis.g:15618:33: ( options {greedy=false; } : . )*
+            // InternalKiVis.g:15630:33: ( options {greedy=false; } : . )*
             loop5:
             do {
                 int alt5=2;
@@ -1556,7 +1556,7 @@ public class InternalKiVisLexer extends Lexer {
 
                 switch (alt5) {
             	case 1 :
-            	    // InternalKiVis.g:15618:61: .
+            	    // InternalKiVis.g:15630:61: .
             	    {
             	    matchAny(); 
 
@@ -1586,8 +1586,8 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:15620:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
-            // InternalKiVis.g:15620:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
+            // InternalKiVis.g:15632:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
+            // InternalKiVis.g:15632:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
@@ -1600,7 +1600,7 @@ public class InternalKiVisLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // InternalKiVis.g:15620:31: ( options {greedy=false; } : . )*
+            // InternalKiVis.g:15632:31: ( options {greedy=false; } : . )*
             loop6:
             do {
                 int alt6=2;
@@ -1625,7 +1625,7 @@ public class InternalKiVisLexer extends Lexer {
 
                 switch (alt6) {
             	case 1 :
-            	    // InternalKiVis.g:15620:59: .
+            	    // InternalKiVis.g:15632:59: .
             	    {
             	    matchAny(); 
 
@@ -1655,12 +1655,12 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT_ANNOTATION;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:15622:28: ( '//*' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // InternalKiVis.g:15622:30: '//*' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // InternalKiVis.g:15634:28: ( '//*' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // InternalKiVis.g:15634:30: '//*' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//*"); 
 
-            // InternalKiVis.g:15622:36: (~ ( ( '\\n' | '\\r' ) ) )*
+            // InternalKiVis.g:15634:36: (~ ( ( '\\n' | '\\r' ) ) )*
             loop7:
             do {
                 int alt7=2;
@@ -1673,7 +1673,7 @@ public class InternalKiVisLexer extends Lexer {
 
                 switch (alt7) {
             	case 1 :
-            	    // InternalKiVis.g:15622:36: ~ ( ( '\\n' | '\\r' ) )
+            	    // InternalKiVis.g:15634:36: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1693,7 +1693,7 @@ public class InternalKiVisLexer extends Lexer {
                 }
             } while (true);
 
-            // InternalKiVis.g:15622:52: ( ( '\\r' )? '\\n' )?
+            // InternalKiVis.g:15634:52: ( ( '\\r' )? '\\n' )?
             int alt9=2;
             int LA9_0 = input.LA(1);
 
@@ -1702,9 +1702,9 @@ public class InternalKiVisLexer extends Lexer {
             }
             switch (alt9) {
                 case 1 :
-                    // InternalKiVis.g:15622:53: ( '\\r' )? '\\n'
+                    // InternalKiVis.g:15634:53: ( '\\r' )? '\\n'
                     {
-                    // InternalKiVis.g:15622:53: ( '\\r' )?
+                    // InternalKiVis.g:15634:53: ( '\\r' )?
                     int alt8=2;
                     int LA8_0 = input.LA(1);
 
@@ -1713,7 +1713,7 @@ public class InternalKiVisLexer extends Lexer {
                     }
                     switch (alt8) {
                         case 1 :
-                            // InternalKiVis.g:15622:53: '\\r'
+                            // InternalKiVis.g:15634:53: '\\r'
                             {
                             match('\r'); 
 
@@ -1745,8 +1745,8 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:15624:17: ( '//' ~ ( '*' ) (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // InternalKiVis.g:15624:19: '//' ~ ( '*' ) (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // InternalKiVis.g:15636:17: ( '//' ~ ( '*' ) (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // InternalKiVis.g:15636:19: '//' ~ ( '*' ) (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
@@ -1759,7 +1759,7 @@ public class InternalKiVisLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // InternalKiVis.g:15624:31: (~ ( ( '\\n' | '\\r' ) ) )*
+            // InternalKiVis.g:15636:31: (~ ( ( '\\n' | '\\r' ) ) )*
             loop10:
             do {
                 int alt10=2;
@@ -1772,7 +1772,7 @@ public class InternalKiVisLexer extends Lexer {
 
                 switch (alt10) {
             	case 1 :
-            	    // InternalKiVis.g:15624:31: ~ ( ( '\\n' | '\\r' ) )
+            	    // InternalKiVis.g:15636:31: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1792,7 +1792,7 @@ public class InternalKiVisLexer extends Lexer {
                 }
             } while (true);
 
-            // InternalKiVis.g:15624:47: ( ( '\\r' )? '\\n' )?
+            // InternalKiVis.g:15636:47: ( ( '\\r' )? '\\n' )?
             int alt12=2;
             int LA12_0 = input.LA(1);
 
@@ -1801,9 +1801,9 @@ public class InternalKiVisLexer extends Lexer {
             }
             switch (alt12) {
                 case 1 :
-                    // InternalKiVis.g:15624:48: ( '\\r' )? '\\n'
+                    // InternalKiVis.g:15636:48: ( '\\r' )? '\\n'
                     {
-                    // InternalKiVis.g:15624:48: ( '\\r' )?
+                    // InternalKiVis.g:15636:48: ( '\\r' )?
                     int alt11=2;
                     int LA11_0 = input.LA(1);
 
@@ -1812,7 +1812,7 @@ public class InternalKiVisLexer extends Lexer {
                     }
                     switch (alt11) {
                         case 1 :
-                            // InternalKiVis.g:15624:48: '\\r'
+                            // InternalKiVis.g:15636:48: '\\r'
                             {
                             match('\r'); 
 
@@ -1842,8 +1842,8 @@ public class InternalKiVisLexer extends Lexer {
     // $ANTLR start "RULE_NUMBER"
     public final void mRULE_NUMBER() throws RecognitionException {
         try {
-            // InternalKiVis.g:15626:22: ( '0' .. '9' )
-            // InternalKiVis.g:15626:24: '0' .. '9'
+            // InternalKiVis.g:15638:22: ( '0' .. '9' )
+            // InternalKiVis.g:15638:24: '0' .. '9'
             {
             matchRange('0','9'); 
 
@@ -1860,10 +1860,10 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:15628:10: ( ( RULE_NUMBER )+ )
-            // InternalKiVis.g:15628:12: ( RULE_NUMBER )+
+            // InternalKiVis.g:15640:10: ( ( RULE_NUMBER )+ )
+            // InternalKiVis.g:15640:12: ( RULE_NUMBER )+
             {
-            // InternalKiVis.g:15628:12: ( RULE_NUMBER )+
+            // InternalKiVis.g:15640:12: ( RULE_NUMBER )+
             int cnt13=0;
             loop13:
             do {
@@ -1877,7 +1877,7 @@ public class InternalKiVisLexer extends Lexer {
 
                 switch (alt13) {
             	case 1 :
-            	    // InternalKiVis.g:15628:12: RULE_NUMBER
+            	    // InternalKiVis.g:15640:12: RULE_NUMBER
             	    {
             	    mRULE_NUMBER(); 
 
@@ -1909,17 +1909,17 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = RULE_FLOAT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:15630:12: ( ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' ) )
-            // InternalKiVis.g:15630:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
+            // InternalKiVis.g:15642:12: ( ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' ) )
+            // InternalKiVis.g:15642:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
             {
-            // InternalKiVis.g:15630:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
+            // InternalKiVis.g:15642:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
             int alt21=2;
             alt21 = dfa21.predict(input);
             switch (alt21) {
                 case 1 :
-                    // InternalKiVis.g:15630:15: ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )?
+                    // InternalKiVis.g:15642:15: ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )?
                     {
-                    // InternalKiVis.g:15630:15: ( RULE_NUMBER )+
+                    // InternalKiVis.g:15642:15: ( RULE_NUMBER )+
                     int cnt14=0;
                     loop14:
                     do {
@@ -1933,7 +1933,7 @@ public class InternalKiVisLexer extends Lexer {
 
                         switch (alt14) {
                     	case 1 :
-                    	    // InternalKiVis.g:15630:15: RULE_NUMBER
+                    	    // InternalKiVis.g:15642:15: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -1950,7 +1950,7 @@ public class InternalKiVisLexer extends Lexer {
                     } while (true);
 
                     match('.'); 
-                    // InternalKiVis.g:15630:32: ( RULE_NUMBER )*
+                    // InternalKiVis.g:15642:32: ( RULE_NUMBER )*
                     loop15:
                     do {
                         int alt15=2;
@@ -1963,7 +1963,7 @@ public class InternalKiVisLexer extends Lexer {
 
                         switch (alt15) {
                     	case 1 :
-                    	    // InternalKiVis.g:15630:32: RULE_NUMBER
+                    	    // InternalKiVis.g:15642:32: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -1975,7 +1975,7 @@ public class InternalKiVisLexer extends Lexer {
                         }
                     } while (true);
 
-                    // InternalKiVis.g:15630:45: ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )?
+                    // InternalKiVis.g:15642:45: ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )?
                     int alt18=2;
                     int LA18_0 = input.LA(1);
 
@@ -1984,7 +1984,7 @@ public class InternalKiVisLexer extends Lexer {
                     }
                     switch (alt18) {
                         case 1 :
-                            // InternalKiVis.g:15630:46: ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+
+                            // InternalKiVis.g:15642:46: ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+
                             {
                             if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                                 input.consume();
@@ -1995,7 +1995,7 @@ public class InternalKiVisLexer extends Lexer {
                                 recover(mse);
                                 throw mse;}
 
-                            // InternalKiVis.g:15630:56: ( '+' | '-' )?
+                            // InternalKiVis.g:15642:56: ( '+' | '-' )?
                             int alt16=2;
                             int LA16_0 = input.LA(1);
 
@@ -2021,7 +2021,7 @@ public class InternalKiVisLexer extends Lexer {
 
                             }
 
-                            // InternalKiVis.g:15630:67: ( RULE_NUMBER )+
+                            // InternalKiVis.g:15642:67: ( RULE_NUMBER )+
                             int cnt17=0;
                             loop17:
                             do {
@@ -2035,7 +2035,7 @@ public class InternalKiVisLexer extends Lexer {
 
                                 switch (alt17) {
                             	case 1 :
-                            	    // InternalKiVis.g:15630:67: RULE_NUMBER
+                            	    // InternalKiVis.g:15642:67: RULE_NUMBER
                             	    {
                             	    mRULE_NUMBER(); 
 
@@ -2057,7 +2057,7 @@ public class InternalKiVisLexer extends Lexer {
 
                     }
 
-                    // InternalKiVis.g:15630:82: ( 'f' )?
+                    // InternalKiVis.g:15642:82: ( 'f' )?
                     int alt19=2;
                     int LA19_0 = input.LA(1);
 
@@ -2066,7 +2066,7 @@ public class InternalKiVisLexer extends Lexer {
                     }
                     switch (alt19) {
                         case 1 :
-                            // InternalKiVis.g:15630:82: 'f'
+                            // InternalKiVis.g:15642:82: 'f'
                             {
                             match('f'); 
 
@@ -2079,9 +2079,9 @@ public class InternalKiVisLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalKiVis.g:15630:87: ( RULE_NUMBER )+ 'f'
+                    // InternalKiVis.g:15642:87: ( RULE_NUMBER )+ 'f'
                     {
-                    // InternalKiVis.g:15630:87: ( RULE_NUMBER )+
+                    // InternalKiVis.g:15642:87: ( RULE_NUMBER )+
                     int cnt20=0;
                     loop20:
                     do {
@@ -2095,7 +2095,7 @@ public class InternalKiVisLexer extends Lexer {
 
                         switch (alt20) {
                     	case 1 :
-                    	    // InternalKiVis.g:15630:87: RULE_NUMBER
+                    	    // InternalKiVis.g:15642:87: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -2134,11 +2134,11 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:15632:13: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
-            // InternalKiVis.g:15632:15: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+            // InternalKiVis.g:15644:13: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
+            // InternalKiVis.g:15644:15: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
             {
             match('\"'); 
-            // InternalKiVis.g:15632:19: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
+            // InternalKiVis.g:15644:19: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
             loop22:
             do {
                 int alt22=3;
@@ -2154,7 +2154,7 @@ public class InternalKiVisLexer extends Lexer {
 
                 switch (alt22) {
             	case 1 :
-            	    // InternalKiVis.g:15632:20: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+            	    // InternalKiVis.g:15644:20: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
             	    {
             	    match('\\'); 
             	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -2170,7 +2170,7 @@ public class InternalKiVisLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // InternalKiVis.g:15632:61: ~ ( ( '\\\\' | '\"' ) )
+            	    // InternalKiVis.g:15644:61: ~ ( ( '\\\\' | '\"' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2207,10 +2207,10 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:15634:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // InternalKiVis.g:15634:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalKiVis.g:15646:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // InternalKiVis.g:15646:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // InternalKiVis.g:15634:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalKiVis.g:15646:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt23=0;
             loop23:
             do {
@@ -2264,8 +2264,8 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:15636:16: ( . )
-            // InternalKiVis.g:15636:18: .
+            // InternalKiVis.g:15648:16: ( . )
+            // InternalKiVis.g:15648:18: .
             {
             matchAny(); 
 
@@ -2838,7 +2838,7 @@ public class InternalKiVisLexer extends Lexer {
             this.transition = DFA21_transition;
         }
         public String getDescription() {
-            return "15630:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )";
+            return "15642:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )";
         }
     }
     static final String DFA24_eotS =

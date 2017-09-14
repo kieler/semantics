@@ -5683,6 +5683,10 @@ rulePreOperator returns [Enumerator current=null]
 
 
 
+
+
+
+
 // Rule BitwiseOrOperator
 ruleBitwiseOrOperator returns [Enumerator current=null] 
     @init { enterRule(); }
@@ -5823,6 +5827,14 @@ ruleLogicalAndOperator returns [Enumerator current=null]
         newLeafNode(enumLiteral_0, grammarAccess.getLogicalAndOperatorAccess().getLOGICAL_ANDEnumLiteralDeclaration()); 
     }
 );
+
+
+
+
+
+
+
+
 
 
 

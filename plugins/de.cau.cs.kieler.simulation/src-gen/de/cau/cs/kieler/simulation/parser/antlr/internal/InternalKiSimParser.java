@@ -13903,7 +13903,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseOrOperator"
-    // InternalKiSim.g:4891:1: ruleBitwiseOrOperator returns [Enumerator current=null] : (enumLiteral_0= '|' ) ;
+    // InternalKiSim.g:4895:1: ruleBitwiseOrOperator returns [Enumerator current=null] : (enumLiteral_0= '|' ) ;
     public final Enumerator ruleBitwiseOrOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -13911,11 +13911,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:4893:28: ( (enumLiteral_0= '|' ) )
-            // InternalKiSim.g:4894:1: (enumLiteral_0= '|' )
+            // InternalKiSim.g:4897:28: ( (enumLiteral_0= '|' ) )
+            // InternalKiSim.g:4898:1: (enumLiteral_0= '|' )
             {
-            // InternalKiSim.g:4894:1: (enumLiteral_0= '|' )
-            // InternalKiSim.g:4894:3: enumLiteral_0= '|'
+            // InternalKiSim.g:4898:1: (enumLiteral_0= '|' )
+            // InternalKiSim.g:4898:3: enumLiteral_0= '|'
             {
             enumLiteral_0=(Token)match(input,33,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -13947,7 +13947,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseAndOperator"
-    // InternalKiSim.g:4904:1: ruleBitwiseAndOperator returns [Enumerator current=null] : (enumLiteral_0= '&' ) ;
+    // InternalKiSim.g:4908:1: ruleBitwiseAndOperator returns [Enumerator current=null] : (enumLiteral_0= '&' ) ;
     public final Enumerator ruleBitwiseAndOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -13955,11 +13955,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:4906:28: ( (enumLiteral_0= '&' ) )
-            // InternalKiSim.g:4907:1: (enumLiteral_0= '&' )
+            // InternalKiSim.g:4910:28: ( (enumLiteral_0= '&' ) )
+            // InternalKiSim.g:4911:1: (enumLiteral_0= '&' )
             {
-            // InternalKiSim.g:4907:1: (enumLiteral_0= '&' )
-            // InternalKiSim.g:4907:3: enumLiteral_0= '&'
+            // InternalKiSim.g:4911:1: (enumLiteral_0= '&' )
+            // InternalKiSim.g:4911:3: enumLiteral_0= '&'
             {
             enumLiteral_0=(Token)match(input,34,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -13991,7 +13991,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleNotOperator"
-    // InternalKiSim.g:4917:1: ruleNotOperator returns [Enumerator current=null] : (enumLiteral_0= '!' ) ;
+    // InternalKiSim.g:4921:1: ruleNotOperator returns [Enumerator current=null] : (enumLiteral_0= '!' ) ;
     public final Enumerator ruleNotOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -13999,11 +13999,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:4919:28: ( (enumLiteral_0= '!' ) )
-            // InternalKiSim.g:4920:1: (enumLiteral_0= '!' )
+            // InternalKiSim.g:4923:28: ( (enumLiteral_0= '!' ) )
+            // InternalKiSim.g:4924:1: (enumLiteral_0= '!' )
             {
-            // InternalKiSim.g:4920:1: (enumLiteral_0= '!' )
-            // InternalKiSim.g:4920:3: enumLiteral_0= '!'
+            // InternalKiSim.g:4924:1: (enumLiteral_0= '!' )
+            // InternalKiSim.g:4924:3: enumLiteral_0= '!'
             {
             enumLiteral_0=(Token)match(input,48,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -14035,7 +14035,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAddOperator"
-    // InternalKiSim.g:4930:1: ruleAddOperator returns [Enumerator current=null] : (enumLiteral_0= '+' ) ;
+    // InternalKiSim.g:4934:1: ruleAddOperator returns [Enumerator current=null] : (enumLiteral_0= '+' ) ;
     public final Enumerator ruleAddOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -14043,11 +14043,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:4932:28: ( (enumLiteral_0= '+' ) )
-            // InternalKiSim.g:4933:1: (enumLiteral_0= '+' )
+            // InternalKiSim.g:4936:28: ( (enumLiteral_0= '+' ) )
+            // InternalKiSim.g:4937:1: (enumLiteral_0= '+' )
             {
-            // InternalKiSim.g:4933:1: (enumLiteral_0= '+' )
-            // InternalKiSim.g:4933:3: enumLiteral_0= '+'
+            // InternalKiSim.g:4937:1: (enumLiteral_0= '+' )
+            // InternalKiSim.g:4937:3: enumLiteral_0= '+'
             {
             enumLiteral_0=(Token)match(input,35,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -14079,7 +14079,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSubOperator"
-    // InternalKiSim.g:4943:1: ruleSubOperator returns [Enumerator current=null] : (enumLiteral_0= '-' ) ;
+    // InternalKiSim.g:4947:1: ruleSubOperator returns [Enumerator current=null] : (enumLiteral_0= '-' ) ;
     public final Enumerator ruleSubOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -14087,11 +14087,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:4945:28: ( (enumLiteral_0= '-' ) )
-            // InternalKiSim.g:4946:1: (enumLiteral_0= '-' )
+            // InternalKiSim.g:4949:28: ( (enumLiteral_0= '-' ) )
+            // InternalKiSim.g:4950:1: (enumLiteral_0= '-' )
             {
-            // InternalKiSim.g:4946:1: (enumLiteral_0= '-' )
-            // InternalKiSim.g:4946:3: enumLiteral_0= '-'
+            // InternalKiSim.g:4950:1: (enumLiteral_0= '-' )
+            // InternalKiSim.g:4950:3: enumLiteral_0= '-'
             {
             enumLiteral_0=(Token)match(input,36,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -14123,7 +14123,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMultOperator"
-    // InternalKiSim.g:4956:1: ruleMultOperator returns [Enumerator current=null] : (enumLiteral_0= '*' ) ;
+    // InternalKiSim.g:4960:1: ruleMultOperator returns [Enumerator current=null] : (enumLiteral_0= '*' ) ;
     public final Enumerator ruleMultOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -14131,11 +14131,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:4958:28: ( (enumLiteral_0= '*' ) )
-            // InternalKiSim.g:4959:1: (enumLiteral_0= '*' )
+            // InternalKiSim.g:4962:28: ( (enumLiteral_0= '*' ) )
+            // InternalKiSim.g:4963:1: (enumLiteral_0= '*' )
             {
-            // InternalKiSim.g:4959:1: (enumLiteral_0= '*' )
-            // InternalKiSim.g:4959:3: enumLiteral_0= '*'
+            // InternalKiSim.g:4963:1: (enumLiteral_0= '*' )
+            // InternalKiSim.g:4963:3: enumLiteral_0= '*'
             {
             enumLiteral_0=(Token)match(input,37,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -14167,7 +14167,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleModOperator"
-    // InternalKiSim.g:4969:1: ruleModOperator returns [Enumerator current=null] : (enumLiteral_0= '%' ) ;
+    // InternalKiSim.g:4973:1: ruleModOperator returns [Enumerator current=null] : (enumLiteral_0= '%' ) ;
     public final Enumerator ruleModOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -14175,11 +14175,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:4971:28: ( (enumLiteral_0= '%' ) )
-            // InternalKiSim.g:4972:1: (enumLiteral_0= '%' )
+            // InternalKiSim.g:4975:28: ( (enumLiteral_0= '%' ) )
+            // InternalKiSim.g:4976:1: (enumLiteral_0= '%' )
             {
-            // InternalKiSim.g:4972:1: (enumLiteral_0= '%' )
-            // InternalKiSim.g:4972:3: enumLiteral_0= '%'
+            // InternalKiSim.g:4976:1: (enumLiteral_0= '%' )
+            // InternalKiSim.g:4976:3: enumLiteral_0= '%'
             {
             enumLiteral_0=(Token)match(input,39,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -14211,7 +14211,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDivOperator"
-    // InternalKiSim.g:4982:1: ruleDivOperator returns [Enumerator current=null] : (enumLiteral_0= '/' ) ;
+    // InternalKiSim.g:4986:1: ruleDivOperator returns [Enumerator current=null] : (enumLiteral_0= '/' ) ;
     public final Enumerator ruleDivOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -14219,11 +14219,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:4984:28: ( (enumLiteral_0= '/' ) )
-            // InternalKiSim.g:4985:1: (enumLiteral_0= '/' )
+            // InternalKiSim.g:4988:28: ( (enumLiteral_0= '/' ) )
+            // InternalKiSim.g:4989:1: (enumLiteral_0= '/' )
             {
-            // InternalKiSim.g:4985:1: (enumLiteral_0= '/' )
-            // InternalKiSim.g:4985:3: enumLiteral_0= '/'
+            // InternalKiSim.g:4989:1: (enumLiteral_0= '/' )
+            // InternalKiSim.g:4989:3: enumLiteral_0= '/'
             {
             enumLiteral_0=(Token)match(input,38,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -14255,7 +14255,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleValOperator"
-    // InternalKiSim.g:4995:1: ruleValOperator returns [Enumerator current=null] : (enumLiteral_0= 'val' ) ;
+    // InternalKiSim.g:4999:1: ruleValOperator returns [Enumerator current=null] : (enumLiteral_0= 'val' ) ;
     public final Enumerator ruleValOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -14263,11 +14263,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:4997:28: ( (enumLiteral_0= 'val' ) )
-            // InternalKiSim.g:4998:1: (enumLiteral_0= 'val' )
+            // InternalKiSim.g:5001:28: ( (enumLiteral_0= 'val' ) )
+            // InternalKiSim.g:5002:1: (enumLiteral_0= 'val' )
             {
-            // InternalKiSim.g:4998:1: (enumLiteral_0= 'val' )
-            // InternalKiSim.g:4998:3: enumLiteral_0= 'val'
+            // InternalKiSim.g:5002:1: (enumLiteral_0= 'val' )
+            // InternalKiSim.g:5002:3: enumLiteral_0= 'val'
             {
             enumLiteral_0=(Token)match(input,61,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -14299,7 +14299,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLogicalOrOperator"
-    // InternalKiSim.g:5008:1: ruleLogicalOrOperator returns [Enumerator current=null] : (enumLiteral_0= '||' ) ;
+    // InternalKiSim.g:5012:1: ruleLogicalOrOperator returns [Enumerator current=null] : (enumLiteral_0= '||' ) ;
     public final Enumerator ruleLogicalOrOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -14307,11 +14307,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:5010:28: ( (enumLiteral_0= '||' ) )
-            // InternalKiSim.g:5011:1: (enumLiteral_0= '||' )
+            // InternalKiSim.g:5014:28: ( (enumLiteral_0= '||' ) )
+            // InternalKiSim.g:5015:1: (enumLiteral_0= '||' )
             {
-            // InternalKiSim.g:5011:1: (enumLiteral_0= '||' )
-            // InternalKiSim.g:5011:3: enumLiteral_0= '||'
+            // InternalKiSim.g:5015:1: (enumLiteral_0= '||' )
+            // InternalKiSim.g:5015:3: enumLiteral_0= '||'
             {
             enumLiteral_0=(Token)match(input,31,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -14343,7 +14343,7 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLogicalAndOperator"
-    // InternalKiSim.g:5021:1: ruleLogicalAndOperator returns [Enumerator current=null] : (enumLiteral_0= '&&' ) ;
+    // InternalKiSim.g:5025:1: ruleLogicalAndOperator returns [Enumerator current=null] : (enumLiteral_0= '&&' ) ;
     public final Enumerator ruleLogicalAndOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -14351,11 +14351,11 @@ public class InternalKiSimParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalKiSim.g:5023:28: ( (enumLiteral_0= '&&' ) )
-            // InternalKiSim.g:5024:1: (enumLiteral_0= '&&' )
+            // InternalKiSim.g:5027:28: ( (enumLiteral_0= '&&' ) )
+            // InternalKiSim.g:5028:1: (enumLiteral_0= '&&' )
             {
-            // InternalKiSim.g:5024:1: (enumLiteral_0= '&&' )
-            // InternalKiSim.g:5024:3: enumLiteral_0= '&&'
+            // InternalKiSim.g:5028:1: (enumLiteral_0= '&&' )
+            // InternalKiSim.g:5028:3: enumLiteral_0= '&&'
             {
             enumLiteral_0=(Token)match(input,32,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {

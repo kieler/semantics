@@ -352,8 +352,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_1_2_3 = (Keyword)cGroup_1_2.eContents().get(3);
 		
 		//AttributeMapping:
-		//	name=ID (':' value=Literal | ':' values+=Literal (',' values+=Literal)+ | ':'? '{' attributes+=AttributeMapping+
-		//	'}');
+		//	name=ID (':' value=Literal | ':' values+=Literal (',' values+=Literal)+ | ':'? '{' attributes+=AttributeMapping+ '}');
 		@Override public ParserRule getRule() { return rule; }
 
 		//name=ID (':' value=Literal | ':' values+=Literal (',' values+=Literal)+ | ':'? '{' attributes+=AttributeMapping+ '}')
@@ -739,8 +738,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AttributeMapping:
-	//	name=ID (':' value=Literal | ':' values+=Literal (',' values+=Literal)+ | ':'? '{' attributes+=AttributeMapping+
-	//	'}');
+	//	name=ID (':' value=Literal | ':' values+=Literal (',' values+=Literal)+ | ':'? '{' attributes+=AttributeMapping+ '}');
 	public AttributeMappingElements getAttributeMappingAccess() {
 		return pAttributeMapping;
 	}
@@ -1034,8 +1032,8 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)
-	//	('*' subExpressions+=DivExpression)*)?
+	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression) ('*'
+	//	subExpressions+=DivExpression)*)?
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}
@@ -1229,7 +1227,6 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		return getTextExpressionAccess().getRule();
 	}
 
-	//// Int Value Rule
 	//IntValue:
 	//	value=INT;
 	public KExpressionsGrammarAccess.IntValueElements getIntValueAccess() {
@@ -1240,7 +1237,6 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		return getIntValueAccess().getRule();
 	}
 
-	//// Float Value Rule
 	//FloatValue:
 	//	value=FLOAT;
 	public KExpressionsGrammarAccess.FloatValueElements getFloatValueAccess() {
@@ -1251,7 +1247,6 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		return getFloatValueAccess().getRule();
 	}
 
-	//// Bool Value Rule
 	//BoolValue:
 	//	value=super::BOOLEAN;
 	public KExpressionsGrammarAccess.BoolValueElements getBoolValueAccess() {
@@ -1262,7 +1257,6 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		return getBoolValueAccess().getRule();
 	}
 
-	//// String Value Rule	
 	//StringValue:
 	//	value=STRING;
 	public KExpressionsGrammarAccess.StringValueElements getStringValueAccess() {
@@ -1344,6 +1338,26 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getPreOperatorRule() {
 		return getPreOperatorAccess().getRule();
+	}
+
+	//enum BitwiseNegOperator returns OperatorType:
+	//	BITWISE_NEG="~";
+	public KExpressionsGrammarAccess.BitwiseNegOperatorElements getBitwiseNegOperatorAccess() {
+		return gaKExpressions.getBitwiseNegOperatorAccess();
+	}
+	
+	public EnumRule getBitwiseNegOperatorRule() {
+		return getBitwiseNegOperatorAccess().getRule();
+	}
+
+	//enum BitwiseXOrOperator returns OperatorType:
+	//	BITWISE_XOR="^";
+	public KExpressionsGrammarAccess.BitwiseXOrOperatorElements getBitwiseXOrOperatorAccess() {
+		return gaKExpressions.getBitwiseXOrOperatorAccess();
+	}
+	
+	public EnumRule getBitwiseXOrOperatorRule() {
+		return getBitwiseXOrOperatorAccess().getRule();
 	}
 
 	//enum BitwiseOrOperator returns OperatorType:
@@ -1456,6 +1470,36 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		return getLogicalAndOperatorAccess().getRule();
 	}
 
+	//enum ShiftLeft returns OperatorType:
+	//	SHIFT_LEFT="<<";
+	public KExpressionsGrammarAccess.ShiftLeftElements getShiftLeftAccess() {
+		return gaKExpressions.getShiftLeftAccess();
+	}
+	
+	public EnumRule getShiftLeftRule() {
+		return getShiftLeftAccess().getRule();
+	}
+
+	//enum ShiftRight returns OperatorType:
+	//	SHIFT_RIGHT=">>";
+	public KExpressionsGrammarAccess.ShiftRightElements getShiftRightAccess() {
+		return gaKExpressions.getShiftRightAccess();
+	}
+	
+	public EnumRule getShiftRightRule() {
+		return getShiftRightAccess().getRule();
+	}
+
+	//enum ShiftRightUnsigned returns OperatorType:
+	//	SHIFT_RIGHT=">>>";
+	public KExpressionsGrammarAccess.ShiftRightUnsignedElements getShiftRightUnsignedAccess() {
+		return gaKExpressions.getShiftRightUnsignedAccess();
+	}
+	
+	public EnumRule getShiftRightUnsignedRule() {
+		return getShiftRightUnsignedAccess().getRule();
+	}
+
 	//enum PostfixAdd returns OperatorType:
 	//	POSTFIX_ADD="++";
 	public KExpressionsGrammarAccess.PostfixAddElements getPostfixAddAccess() {
@@ -1474,6 +1518,16 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getPostfixSubRule() {
 		return getPostfixSubAccess().getRule();
+	}
+
+	//enum ConditionalType returns OperatorType:
+	//	CONDITIONAL;
+	public KExpressionsGrammarAccess.ConditionalTypeElements getConditionalTypeAccess() {
+		return gaKExpressions.getConditionalTypeAccess();
+	}
+	
+	public EnumRule getConditionalTypeRule() {
+		return getConditionalTypeAccess().getRule();
 	}
 
 	//enum ValueType:
