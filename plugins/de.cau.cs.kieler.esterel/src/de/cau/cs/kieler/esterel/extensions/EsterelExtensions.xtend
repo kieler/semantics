@@ -95,7 +95,7 @@ class EsterelExtensions {
     
     def ValueType type(ValuedObject vo) {
         switch (vo) {
-            case Signal: return (vo as Signal).type
+            Signal: return vo.type
         }
     }
     
