@@ -1665,8 +1665,9 @@ class SCEstExtension {
      * 
      * @param scope The scope which should be renamed
      * @param name The name of the module 
+     * @param flag Holds this scope the only module of a transformed program
      */
-    def renameIScope(ScopeStatement scope, String name) {
+    def renameIScope(ScopeStatement scope, String name, boolean flag) {
         var list = newLinkedList
         for (a : scope.annotations) {
             if (a.name.equals(interfaceScope)) {
@@ -1674,10 +1675,12 @@ class SCEstExtension {
             }
         }
         list.forEach[a | scope.annotations.remove(a)]
-        scope.annotations.add( 
-            AnnotationsFactory::eINSTANCE.createAnnotation => [
-                it.name = name
-            ])
+        if (!flag) {
+            scope.annotations.add( 
+                AnnotationsFactory::eINSTANCE.createAnnotation => [
+                    it.name = name
+                ])
+        }
     } 
     
     /**

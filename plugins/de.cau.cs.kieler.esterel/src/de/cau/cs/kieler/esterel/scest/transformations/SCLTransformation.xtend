@@ -74,10 +74,18 @@ class SCLTransformation extends AbstractExpansionTransformation implements Trace
 
     @Inject
     extension SCEstExtension
+    
+    var oneModuleFlag = false
 
     def SCLProgram transform(SCEstProgram prog) {
         var sclProg = createSCLProg
-        sclProg.name = "GENERATED_SCL_MODULE"
+        if (prog.modules.length == 1) {
+            sclProg.name = prog.modules.get(0).name
+            oneModuleFlag = true
+        }
+        else {
+            sclProg.name = "GENERATED_SCL_MODULE"
+        }
         for (m : prog.modules) {
             m.removeLocalSignalsAndVariables
             m.removeDepthAnnotations
@@ -89,8 +97,16 @@ class SCLTransformation extends AbstractExpansionTransformation implements Trace
     
     def transformModule(Module module, SCLProgram prog) {
         if (module.statements.length == 1 && module.statements.get(0).isInterfaceScope() ) {
-            (module.statements.get(0) as ScopeStatement).renameIScope(module.name)
-            prog.statements.add( module.statements.get(0) )
+            var statements = (module.statements.get(0) as ScopeStatement).statements
+            var decls = (module.statements.get(0) as ScopeStatement).getDeclarations()
+            (module.statements.get(0) as ScopeStatement).renameIScope(module.name, oneModuleFlag)
+            if (oneModuleFlag) {
+                prog.declarations.addAll(decls)
+                prog.statements.addAll(statements)
+            }
+            else {
+                prog.statements.add( module.statements.get(0) )
+            }
         }
         else {
             throw new UnsupportedOperationException(
