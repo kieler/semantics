@@ -66,6 +66,11 @@ class CLanguage extends AbstractCViewLanguage implements ICViewLanguage {
     public static String CONNECTION_TYPE_REFERENCE_TYPE = "de.cau.cs.kieler.cview.c.connectiontype.type"
     public static String CONNECTION_TYPE_INCLUSION = "de.cau.cs.kieler.cview.c.connectiontype.inclusion"
 
+    // Options
+    public static String OPTION_CONNECTION_FUNC = "de.cau.cs.kieler.cview.c.option.func"
+    public static String OPTION_CONNECTION_TYPE = "de.cau.cs.kieler.cview.c.option.type"
+    public static String OPTION_CONNECTION_INCLUSION = "de.cau.cs.kieler.cview.c.option.inclusion"
+
     // Colors
     public static final String COLOR_STRUCT_NOREF = "#FFD236"
     public static final String COLOR_STRUCT = "#FFF0BD"
@@ -74,7 +79,7 @@ class CLanguage extends AbstractCViewLanguage implements ICViewLanguage {
     public static final String FUNCTIONCOLORREF = "#D5EAFD"
     public static final String FUNCTIONCOLOR = "#82B5E3"
     public static final String FUNCTIONCOLORTRANS = "#286296"
-    
+
     // Synthesis options
     public static final SynthesisOption SHOW_FUNCTIONS = SynthesisOption.createCheckOption("Show Functions", false);
     public static final SynthesisOption SHOW_REFERENCES_FUNC = SynthesisOption.createCheckOption(
@@ -84,8 +89,7 @@ class CLanguage extends AbstractCViewLanguage implements ICViewLanguage {
         false);
     public static final SynthesisOption SHOW_INCLUSION = SynthesisOption.createCheckOption("Show Include", false);
 
-    //-------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------
     override diagramColor(Component component) {
         if (component.isFunction) {
             return FUNCTIONCOLOR
@@ -129,9 +133,12 @@ class CLanguage extends AbstractCViewLanguage implements ICViewLanguage {
     }
 
     override diagramIsVisible(Component component) {
-        return (((component.isTypedef || component.isDecl || component.isStruct) &&
-            SHOW_TYPES.booleanValue) ||
-            ((component.isFunction || component.isFunctionRef) && SHOW_FUNCTIONS.booleanValue))
+        return (((component.isTypedef || component.isDecl || component.isStruct) && 
+            (SHOW_TYPES.booleanValue || OPTION_CONNECTION_TYPE.isOptionRequired)
+        ) ||
+            ((component.isFunction || component.isFunctionRef) 
+                && (SHOW_FUNCTIONS.booleanValue || OPTION_CONNECTION_FUNC.isOptionRequired)
+            ))
     }
 
     override diagramSynthesisOptions() {
@@ -139,7 +146,7 @@ class CLanguage extends AbstractCViewLanguage implements ICViewLanguage {
     }
 
     override reparsingRequired() {
-        return #{SHOW_FUNCTIONS,  SHOW_REFERENCES_FUNC,   SHOW_TYPES, SHOW_REFERENCES_TYPE, SHOW_INCLUSION}
+        return #{SHOW_FUNCTIONS, SHOW_REFERENCES_FUNC, SHOW_TYPES, SHOW_REFERENCES_TYPE, SHOW_INCLUSION}
     }
 
     override diagramHandleComponentCustomTypes() {
@@ -186,7 +193,7 @@ class CLanguage extends AbstractCViewLanguage implements ICViewLanguage {
         val tooltip = extractTooltip(fileComponent.rawdata)
         fileComponent.tooltip = tooltip
 
-        if (parse) {
+        if (parse || OPTION_CONNECTION_TYPE.isOptionRequired || OPTION_CONNECTION_FUNC.isOptionRequired) {
             val ast = fileComponent.AST
 
             val visitor = new ASTVisitor() {
@@ -313,7 +320,10 @@ class CLanguage extends AbstractCViewLanguage implements ICViewLanguage {
 
     override provideConnections(CViewModel model, IProgressMonitor monitor) {
         val HashSet<Connection> returnSet = new HashSet
-        if (SHOW_REFERENCES_FUNC.getBooleanValue) {
+        var boolean c = false
+        // TODO 
+        // need mechanism to ask C view iff calculation is requested by any analysis
+        if (SHOW_REFERENCES_FUNC.getBooleanValue || OPTION_CONNECTION_FUNC.isOptionRequired) {
             // Add more (default-)connections that represent the references here
             for (component : model.components.filter[e|e.isFunctionRef && e.reference != null]) {
                 if (monitor.canceled) {
@@ -327,7 +337,8 @@ class CLanguage extends AbstractCViewLanguage implements ICViewLanguage {
                 returnSet.add(connection)
             }
         }
-        if (SHOW_REFERENCES_TYPE.getBooleanValue) {
+        if (SHOW_REFERENCES_TYPE.getBooleanValue ||
+            de.cau.cs.kieler.cview.c.CLanguage.OPTION_CONNECTION_TYPE.isOptionRequired) {
             // Add more (default-)connections that represent the references here
             for (component : model.components.filter[e|e.reference != null]) {
                 if (monitor.canceled) {
@@ -343,7 +354,7 @@ class CLanguage extends AbstractCViewLanguage implements ICViewLanguage {
                 }
             }
         }
-        if (SHOW_INCLUSION.getBooleanValue) {
+        if (SHOW_INCLUSION.getBooleanValue || OPTION_CONNECTION_INCLUSION.isOptionRequired) {
             for (component : model.components) {
                 if (component.isFile && component.isFileHandled(fileExtensions())) {
                     val ast = component.AST
@@ -392,8 +403,8 @@ class CLanguage extends AbstractCViewLanguage implements ICViewLanguage {
         if (component.parent == null && pathSegments.size > 1) {
             return false
         }
-        
-        pathSegments.remove(pathSegments.size-1)
+
+        pathSegments.remove(pathSegments.size - 1)
         if (pathSegments.size == 0) {
             return true
         }
