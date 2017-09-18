@@ -109,8 +109,10 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
                 // abort with expression before signal expression. e.g. "abort when 3 A" or "weak abort when 3 A"
                 if (abort.delay.expression != null) {
                     var abortFlag = createNewUniqueAbortFlag(createBoolValue(false))
+                    var termFlag = createNewUniqueTermFlag(createFalse)
                     var decl = createDeclaration(ValueType.BOOL, abortFlag)
                     var label = createLabel
+                    decl.valuedObjects.add(termFlag)
                     scope.declarations.add(decl)
                     var countingVariables = new LinkedList<ValuedObject>()
                     var variable = createNewUniqueVariable(createIntValue(0))
@@ -120,7 +122,8 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
                     scope.statements.add(parallel)
                     var label2 = createLabel
                     var label3 = createLabel
-                    var conditional = newIfThenGoto(createValuedObjectReference(abortFlag), label3, false)
+                    var condition = createOr(createValuedObjectReference(abortFlag), createValuedObjectReference(termFlag))
+                    var conditional = newIfThenGoto(condition, label3, false)
                     conditional.annotations.add(createAnnotation(depth))
                     var conditional2  = createConditional(EcoreUtil.copy(abort.delay.signalExpr))
                     conditional2.statements.add(incrementInt(variable))
@@ -134,6 +137,7 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
                     abort.statements.transformStatements
                     scope.statements.add(label)
                     thread2.statements.add(abort.statements)
+                    thread2.statements.add(createAssignment(termFlag, createBoolValue(true)))
                     thread2.statements.add(createLabel)
                     thread2.statements.transformPauses(abort, label, abortFlag, null, countingVariables)
                     scope.statements.add(label)
@@ -235,12 +239,15 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
                 var depthFlag = createNewUniqueDepthFlag(createBoolValue(false))
                 
                 var abortFlag = createNewUniqueAbortFlag(createBoolValue(false))
+                var termFlag = createNewUniqueTermFlag(createFalse)
                 var decl = createDeclaration(ValueType.BOOL, abortFlag)
                 decl.valuedObjects.add(depthFlag)
+                decl.valuedObjects.add(termFlag)
                 var label = createLabel
                 var label3 = createLabel
                 var label4 = createLabel
-                var conditional = newIfThenGoto(createValuedObjectReference(abortFlag), label4, false)
+                var condition = createOr(createValuedObjectReference(abortFlag), createValuedObjectReference(termFlag))
+                var conditional = newIfThenGoto(condition, label4, false)
                 conditional.annotations.add(createAnnotation(depth))
                 thread1.statements.add(label3)
                 thread1.statements.add(conditional) 
@@ -270,6 +277,7 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
                 thread1.statements.add(createGotoStatement(label3))
                 thread1.statements.add(label4)
                 thread2.statements.add(abort.statements)
+                thread2.statements.add(createAssignment(termFlag, createBoolValue(true)))
                 thread2.statements.add(createLabel)
                 scope.declarations.add(decl)
                 scope.statements.add(scope.statements.length-1, parallel)
