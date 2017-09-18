@@ -108,6 +108,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
     public static final SynthesisOption HIDE_UNCONNECTED = SynthesisOption.createCheckOption("Hide Unconnected", false);
 
+    public static final SynthesisOption SHOW_HIDDEN = SynthesisOption.createCheckOption("Show Hidden", false);
+
     public static final SynthesisOption ANONYMIZE = SynthesisOption.createCheckOption("Anonymize", false);
 
     public static final float LINEWIDTH = 1.8f
@@ -240,7 +242,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                     }
                 }
                 if (!skip) {
-                    if (!item.filtered) {
+                    if (item.visibleInView) {
                         val additionalItem = item.transformItem(depth)
                         if (additionalItem != null) {
                             root.children.add(additionalItem)
@@ -254,7 +256,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         if (!HIDE_CONNECTIONS.booleanValue) {
             printlnConsole("INFO: - Drawing connections")
             for (connection : model.connections) {
-                if (!(connection.src.filtered || connection.dst.filtered)) {
+                if (connection.visibleInView) {
                     var connectionColor = "Black".color
                     if (connection.color != null) {
                         connectionColor = connection.color.color
@@ -294,7 +296,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 printlnConsole("INFO: No components")
             }
         }
-
+        
         return root;
     }
 
@@ -415,7 +417,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
             if (!FLATTEN_HIERARCHY.booleanValue) {
                 for (child : item.children) {
-                    if (!child.filtered) {
+                    if (child.visibleInView) {
                         val additionalItem = child.transformItem(depth + 1);
                         if (additionalItem != null) {
                             childArea.children += additionalItem
@@ -475,7 +477,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
             if (!FLATTEN_HIERARCHY.booleanValue) {
                 for (child : item.children) {
-                    if (!child.filtered) {
+                    if (child.visibleInView) {
                         val additionalItem = child.transformItem(depth + 1);
                         if (additionalItem != null) {
                             childArea.children += additionalItem
@@ -956,6 +958,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             options.addAll(SKIP_FILE_CONTENT);
             options.addAll(HIDE_CONNECTIONS);
             options.addAll(HIDE_UNCONNECTED);
+            options.addAll(SHOW_HIDDEN);
             options.addAll(ANONYMIZE);
             // Add custom additional options here        
             for (language : CViewPlugin.getRegisteredLanguageHooks(false)) {
@@ -970,6 +973,20 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         // ================================================================= //
         // ==                     GENERAL HELPER                          == //
         // ================================================================= //
+        //
+        // Determine if the component is visible in the CView view
+        def boolean visibleInView(Component component) {
+//            return true;
+            // If it is visible anyway or if the user has choosen to show hidden
+            return component.visible || (SHOW_HIDDEN.booleanValue && !component.filtered)
+        }
+        def boolean visibleInView(Connection connection) {
+//            return true;
+            // If it is visible anyway or if the user has choosen to show hidden
+            return connection.visible || (SHOW_HIDDEN.booleanValue && !connection.filtered)
+        }
+        
+        
         //
         // The hash helps to detect if any reparsing option of any language is
         // toggled (or more).

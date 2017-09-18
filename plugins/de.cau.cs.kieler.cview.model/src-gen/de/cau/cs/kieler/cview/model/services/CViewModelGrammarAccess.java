@@ -115,6 +115,8 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cRawdataSTRINGTerminalRuleCall_26_0 = (RuleCall)cRawdataAssignment_26.eContents().get(0);
 		private final Assignment cFilteredAssignment_27 = (Assignment)cGroup.eContents().get(27);
 		private final Keyword cFilteredFilteredKeyword_27_0 = (Keyword)cFilteredAssignment_27.eContents().get(0);
+		private final Assignment cHideAssignment_28 = (Assignment)cGroup.eContents().get(28);
+		private final Keyword cHideHideKeyword_28_0 = (Keyword)cHideAssignment_28.eContents().get(0);
 		
 		//Component:
 		//	'Component' name=ID ('parent' '=' parent=[Component])?
@@ -127,14 +129,15 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		//	'location' '=' location=STRING ('referenceLine' '=' referenceLine=INT)? ('children' '=' children+=[Component]*)?
 		//	'tooltip' tooltip=STRING
 		//	'rawdata' rawdata=STRING
-		//	filtered?='filtered'?;
+		//	filtered?='filtered'?
+		//	hide?='hide'?;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//'Component' name=ID ('parent' '=' parent=[Component])? 'type' '=' type=ComponentType 'customTypeID' '='
 		//customTypeID=STRING 'languageID' '=' languageID=STRING 'reference' '=' reference=[Component] 'referenceUnresolved' '='
 		//referenceUnresolved=STRING //           ('referenceFile' '=' referenceFile=[File])?
 		//'location' '=' location=STRING ('referenceLine' '=' referenceLine=INT)? ('children' '=' children+=[Component]*)?
-		//'tooltip' tooltip=STRING 'rawdata' rawdata=STRING filtered?='filtered'?
+		//'tooltip' tooltip=STRING 'rawdata' rawdata=STRING filtered?='filtered'? hide?='hide'?
 		public Group getGroup() { return cGroup; }
 		
 		//'Component'
@@ -296,6 +299,12 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//'filtered'
 		public Keyword getFilteredFilteredKeyword_27_0() { return cFilteredFilteredKeyword_27_0; }
+		
+		//hide?='hide'?
+		public Assignment getHideAssignment_28() { return cHideAssignment_28; }
+		
+		//'hide'
+		public Keyword getHideHideKeyword_28_0() { return cHideHideKeyword_28_0; }
 	}
 	public class ConnectionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.cview.model.CViewModel.Connection");
@@ -320,6 +329,8 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cTooltipKeyword_10 = (Keyword)cGroup.eContents().get(10);
 		private final Assignment cTooltipAssignment_11 = (Assignment)cGroup.eContents().get(11);
 		private final RuleCall cTooltipSTRINGTerminalRuleCall_11_0 = (RuleCall)cTooltipAssignment_11.eContents().get(0);
+		private final Assignment cHideAssignment_12 = (Assignment)cGroup.eContents().get(12);
+		private final Keyword cHideHideKeyword_12_0 = (Keyword)cHideAssignment_12.eContents().get(0);
 		
 		//Connection:
 		//	'src' src=[Component]
@@ -327,11 +338,12 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		//	'label' label=STRING
 		//	'typeID' type=STRING
 		//	'color' color=STRING
-		//	'tooltip' tooltip=STRING;
+		//	'tooltip' tooltip=STRING
+		//	hide?='hide'?;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//'src' src=[Component] 'dst' dst=[Component] 'label' label=STRING 'typeID' type=STRING 'color' color=STRING 'tooltip'
-		//tooltip=STRING
+		//tooltip=STRING hide?='hide'?
 		public Group getGroup() { return cGroup; }
 		
 		//'src'
@@ -393,6 +405,12 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//STRING
 		public RuleCall getTooltipSTRINGTerminalRuleCall_11_0() { return cTooltipSTRINGTerminalRuleCall_11_0; }
+		
+		//hide?='hide'?
+		public Assignment getHideAssignment_12() { return cHideAssignment_12; }
+		
+		//'hide'
+		public Keyword getHideHideKeyword_12_0() { return cHideHideKeyword_12_0; }
 	}
 	
 	public class ComponentTypeElements extends AbstractEnumRuleElementFinder {
@@ -501,7 +519,8 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 	//	'location' '=' location=STRING ('referenceLine' '=' referenceLine=INT)? ('children' '=' children+=[Component]*)?
 	//	'tooltip' tooltip=STRING
 	//	'rawdata' rawdata=STRING
-	//	filtered?='filtered'?;
+	//	filtered?='filtered'?
+	//	hide?='hide'?;
 	public ComponentElements getComponentAccess() {
 		return pComponent;
 	}
@@ -516,7 +535,8 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 	//	'label' label=STRING
 	//	'typeID' type=STRING
 	//	'color' color=STRING
-	//	'tooltip' tooltip=STRING;
+	//	'tooltip' tooltip=STRING
+	//	hide?='hide'?;
 	public ConnectionElements getConnectionAccess() {
 		return pConnection;
 	}

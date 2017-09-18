@@ -48,6 +48,7 @@ import de.cau.cs.kieler.cview.hooks.ICViewAnalysis;
 import de.cau.cs.kieler.cview.hooks.ICViewExport;
 import de.cau.cs.kieler.cview.hooks.ICViewLanguage;
 import de.cau.cs.kieler.cview.model.cViewModel.Component;
+import de.cau.cs.kieler.cview.ui.SelectAnalysisDialog;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
 
@@ -77,12 +78,14 @@ public class CViewPlugin implements BundleActivator {
     static ArrayList<ICViewLanguage> languageHooks = null;
 
     static HashMap<String, char[]> cacheFileRaw = new HashMap<String, char[]>();
-    static HashMap<String, Object> cacheFileParsed =
-            new HashMap<String, Object>();
+    static HashMap<String, Object> cacheFileParsed = new HashMap<String, Object>();
+
+    // Cache if language options are enabled, disabled
+    static HashMap<String, Boolean> chacheLanguageOption = new HashMap<String, Boolean>();
 
     // True if monitor was canceled, enforces complete rebuild
     static public boolean monitorCanceled = false;
-    
+
     // -------------------------------------------------------------------------
 
     private static void cacheReset() {
@@ -111,7 +114,7 @@ public class CViewPlugin implements BundleActivator {
     private static void cachePutFileParsed(String fileLocation, Object fileParsed) {
         cacheFileParsed.put(fileLocation, fileParsed);
     }
-    
+
     public static Object getFileParsed(String fileLocation) {
         Object returnValue = null;
         if (modified(fileLocation)) {
@@ -274,6 +277,8 @@ public class CViewPlugin implements BundleActivator {
     // -------------------------------------------------------------------------
 
     public static void setEnabled(String hookId, boolean enabled) {
+        chacheLanguageOption.clear();
+
         IEclipsePreferences preferences = InstanceScope.INSTANCE.getNode(CVIEW_PREFERENCE_ID);
 
         if (enabled) {
@@ -320,6 +325,28 @@ public class CViewPlugin implements BundleActivator {
 
     public static void refreshCView(boolean forceRebuid) {
         AbstractKLighDController.controller.refreshCView(forceRebuid);
+    }
+
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+    public static boolean isOptionRequired(String optionID) {
+        if (!chacheLanguageOption.containsKey(optionID)) {
+            List<ICViewAnalysis> hooks = getRegisteredAnalysisHooks(true);
+            for (ICViewAnalysis hook : hooks) {
+                if (isEnabled(hook.getId())) {
+                    for (String languageOptionID : hook.requireLanguageOptions()) {
+                        if (languageOptionID.equals(optionID)) {
+                            chacheLanguageOption.put(optionID, true);
+                            return true;
+                        }
+                    }
+                }
+            }
+            chacheLanguageOption.put(optionID, false);
+        }
+        return chacheLanguageOption.get(optionID);
     }
 
     // -------------------------------------------------------------------------
@@ -435,8 +462,8 @@ public class CViewPlugin implements BundleActivator {
                 instance = (ICViewAnalysis) getGuiceInstance(instance);
                 int prio = instance.priority();
                 int putIndex = 0;
-                //TODO: Verify
-                for (ICViewAnalysis otherAnalysisHook: analysisHooks) {
+                // TODO: Verify
+                for (ICViewAnalysis otherAnalysisHook : analysisHooks) {
                     if (otherAnalysisHook.priority() > prio) {
                         break;
                     }
@@ -544,7 +571,8 @@ public class CViewPlugin implements BundleActivator {
 
     // -------------------------------------------------------------------------
 
-    public static void openMessageDialog(String title, String text, boolean error, boolean warning) {
+    public static void openMessageDialog(String title, String text, boolean error,
+            boolean warning) {
         int type = SWT.ICON_INFORMATION;
         if (warning) {
             type = SWT.ICON_WARNING;
@@ -558,7 +586,8 @@ public class CViewPlugin implements BundleActivator {
             @Override
             public void run() {
                 try {
-                    MessageBox dialog = new MessageBox(Display.getCurrent().getShells()[0], type2 | SWT.OK);
+                    MessageBox dialog =
+                            new MessageBox(Display.getCurrent().getShells()[0], type2 | SWT.OK);
                     dialog.setText(title);
                     dialog.setMessage(text);
                     dialog.open();
@@ -567,21 +596,20 @@ public class CViewPlugin implements BundleActivator {
                 }
             }
         });
-        
-        
+
     }
 
     // -------------------------------------------------------------------------
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-    
+
     static HashMap<String, ICViewLanguage> languageHookChache = null;
     static ICViewLanguage defaultLanguage = new DefaultLanguage();
-    
+
     public static ICViewLanguage getLanguageHook(Component component) {
         if (languageHookChache == null) {
-            languageHookChache = new HashMap<String, ICViewLanguage>(); 
+            languageHookChache = new HashMap<String, ICViewLanguage>();
             for (ICViewLanguage language : getRegisteredLanguageHooks(false)) {
                 Set<String> handledTypes = language.diagramHandleComponentCustomTypes();
                 if (handledTypes != null) {
@@ -589,7 +617,9 @@ public class CViewPlugin implements BundleActivator {
                         if (languageHookChache.containsKey(handledType)) {
                             ICViewLanguage otherLanguage = languageHookChache.get(handledType);
                             // Error, already a language
-                            printlnConsole("ERROR: Already a language (" + otherLanguage.getId() + ") that handles the following component custom ID: " + handledType + ". Ignoring " + language.getId());
+                            printlnConsole("ERROR: Already a language (" + otherLanguage.getId()
+                                    + ") that handles the following component custom ID: "
+                                    + handledType + ". Ignoring " + language.getId());
                         } else {
                             // Put this hook here
                             languageHookChache.put(handledType, language);
@@ -619,7 +649,8 @@ public class CViewPlugin implements BundleActivator {
         // Walk thru every extension and instantiate the declared class, then put it into the cache
         for (IConfigurationElement extension : extensions) {
             try {
-                ICViewLanguage instance = (ICViewLanguage) extension.createExecutableExtension("class");
+                ICViewLanguage instance =
+                        (ICViewLanguage) extension.createExecutableExtension("class");
                 // Handle the case that wee need Google Guice for instantiation
                 instance = (ICViewLanguage) getGuiceInstance(instance);
                 languageHooks.add(instance);

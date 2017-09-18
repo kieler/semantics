@@ -42,6 +42,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getTooltip <em>Tooltip</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getRawdata <em>Rawdata</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#isFiltered <em>Filtered</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#isHide <em>Hide</em>}</li>
  * </ul>
  *
  * @generated
@@ -277,6 +278,26 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
    * @ordered
    */
   protected boolean filtered = FILTERED_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isHide() <em>Hide</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isHide()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean HIDE_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isHide() <em>Hide</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isHide()
+   * @generated
+   * @ordered
+   */
+  protected boolean hide = HIDE_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -634,6 +655,29 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
    * <!-- end-user-doc -->
    * @generated
    */
+  public boolean isHide()
+  {
+    return hide;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setHide(boolean newHide)
+  {
+    boolean oldHide = hide;
+    hide = newHide;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CViewModelPackage.COMPONENT__HIDE, oldHide, hide));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -667,6 +711,8 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
         return getRawdata();
       case CViewModelPackage.COMPONENT__FILTERED:
         return isFiltered();
+      case CViewModelPackage.COMPONENT__HIDE:
+        return isHide();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -722,6 +768,9 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
       case CViewModelPackage.COMPONENT__FILTERED:
         setFiltered((Boolean)newValue);
         return;
+      case CViewModelPackage.COMPONENT__HIDE:
+        setHide((Boolean)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -775,6 +824,9 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
       case CViewModelPackage.COMPONENT__FILTERED:
         setFiltered(FILTERED_EDEFAULT);
         return;
+      case CViewModelPackage.COMPONENT__HIDE:
+        setHide(HIDE_EDEFAULT);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -815,6 +867,8 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
         return RAWDATA_EDEFAULT == null ? rawdata != null : !RAWDATA_EDEFAULT.equals(rawdata);
       case CViewModelPackage.COMPONENT__FILTERED:
         return filtered != FILTERED_EDEFAULT;
+      case CViewModelPackage.COMPONENT__HIDE:
+        return hide != HIDE_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -850,6 +904,8 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
     result.append(rawdata);
     result.append(", filtered: ");
     result.append(filtered);
+    result.append(", hide: ");
+    result.append(hide);
     result.append(')');
     return result.toString();
   }

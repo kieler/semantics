@@ -16,9 +16,7 @@ import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Parameter;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.serializer.ISerializationContext;
-import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
 import org.eclipse.xtext.serializer.sequencer.AbstractDelegatingSemanticSequencer;
-import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 
 @SuppressWarnings("all")
 public class CViewModelSemanticSequencer extends AbstractDelegatingSemanticSequencer {
@@ -78,7 +76,8 @@ public class CViewModelSemanticSequencer extends AbstractDelegatingSemanticSeque
 	 *         children+=[Component|ID]* 
 	 *         tooltip=STRING 
 	 *         rawdata=STRING 
-	 *         filtered?='filtered'?
+	 *         filtered?='filtered'? 
+	 *         hide?='hide'?
 	 *     )
 	 */
 	protected void sequence_Component(ISerializationContext context, Component semanticObject) {
@@ -97,32 +96,12 @@ public class CViewModelSemanticSequencer extends AbstractDelegatingSemanticSeque
 	 *         label=STRING 
 	 *         type=STRING 
 	 *         color=STRING 
-	 *         tooltip=STRING
+	 *         tooltip=STRING 
+	 *         hide?='hide'?
 	 *     )
 	 */
 	protected void sequence_Connection(ISerializationContext context, Connection semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, CViewModelPackage.Literals.CONNECTION__SRC) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CViewModelPackage.Literals.CONNECTION__SRC));
-			if (transientValues.isValueTransient(semanticObject, CViewModelPackage.Literals.CONNECTION__DST) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CViewModelPackage.Literals.CONNECTION__DST));
-			if (transientValues.isValueTransient(semanticObject, CViewModelPackage.Literals.CONNECTION__LABEL) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CViewModelPackage.Literals.CONNECTION__LABEL));
-			if (transientValues.isValueTransient(semanticObject, CViewModelPackage.Literals.CONNECTION__TYPE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CViewModelPackage.Literals.CONNECTION__TYPE));
-			if (transientValues.isValueTransient(semanticObject, CViewModelPackage.Literals.CONNECTION__COLOR) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CViewModelPackage.Literals.CONNECTION__COLOR));
-			if (transientValues.isValueTransient(semanticObject, CViewModelPackage.Literals.CONNECTION__TOOLTIP) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CViewModelPackage.Literals.CONNECTION__TOOLTIP));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getConnectionAccess().getSrcComponentIDTerminalRuleCall_1_0_1(), semanticObject.getSrc());
-		feeder.accept(grammarAccess.getConnectionAccess().getDstComponentIDTerminalRuleCall_3_0_1(), semanticObject.getDst());
-		feeder.accept(grammarAccess.getConnectionAccess().getLabelSTRINGTerminalRuleCall_5_0(), semanticObject.getLabel());
-		feeder.accept(grammarAccess.getConnectionAccess().getTypeSTRINGTerminalRuleCall_7_0(), semanticObject.getType());
-		feeder.accept(grammarAccess.getConnectionAccess().getColorSTRINGTerminalRuleCall_9_0(), semanticObject.getColor());
-		feeder.accept(grammarAccess.getConnectionAccess().getTooltipSTRINGTerminalRuleCall_11_0(), semanticObject.getTooltip());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

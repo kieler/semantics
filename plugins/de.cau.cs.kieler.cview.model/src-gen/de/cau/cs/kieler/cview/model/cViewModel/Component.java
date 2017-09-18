@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getTooltip <em>Tooltip</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getRawdata <em>Rawdata</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#isFiltered <em>Filtered</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#isHide <em>Hide</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getComponent()
@@ -367,5 +368,31 @@ public interface Component extends EObject
    * @generated
    */
   void setFiltered(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>Hide</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Hide</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Hide</em>' attribute.
+   * @see #setHide(boolean)
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getComponent_Hide()
+   * @model
+   * @generated
+   */
+  boolean isHide();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.cview.model.cViewModel.Component#isHide <em>Hide</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Hide</em>' attribute.
+   * @see #isHide()
+   * @generated
+   */
+  void setHide(boolean value);
 
 } // Component

@@ -223,13 +223,22 @@ public interface CViewModelPackage extends EPackage
   int COMPONENT__FILTERED = 12;
 
   /**
+   * The feature id for the '<em><b>Hide</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPONENT__HIDE = 13;
+
+  /**
    * The number of structural features of the '<em>Component</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int COMPONENT_FEATURE_COUNT = 13;
+  int COMPONENT_FEATURE_COUNT = 14;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl <em>Connection</em>}' class.
@@ -296,13 +305,22 @@ public interface CViewModelPackage extends EPackage
   int CONNECTION__TOOLTIP = 5;
 
   /**
+   * The feature id for the '<em><b>Hide</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONNECTION__HIDE = 6;
+
+  /**
    * The number of structural features of the '<em>Connection</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONNECTION_FEATURE_COUNT = 6;
+  int CONNECTION_FEATURE_COUNT = 7;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.cview.model.cViewModel.ComponentType <em>Component Type</em>}' enum.
@@ -501,6 +519,17 @@ public interface CViewModelPackage extends EPackage
   EAttribute getComponent_Filtered();
 
   /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.Component#isHide <em>Hide</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Hide</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Component#isHide()
+   * @see #getComponent()
+   * @generated
+   */
+  EAttribute getComponent_Hide();
+
+  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.cview.model.cViewModel.Connection <em>Connection</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -575,6 +604,17 @@ public interface CViewModelPackage extends EPackage
    * @generated
    */
   EAttribute getConnection_Tooltip();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#isHide <em>Hide</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Hide</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Connection#isHide()
+   * @see #getConnection()
+   * @generated
+   */
+  EAttribute getConnection_Hide();
 
   /**
    * Returns the meta object for enum '{@link de.cau.cs.kieler.cview.model.cViewModel.ComponentType <em>Component Type</em>}'.
@@ -750,6 +790,14 @@ public interface CViewModelPackage extends EPackage
     EAttribute COMPONENT__FILTERED = eINSTANCE.getComponent_Filtered();
 
     /**
+     * The meta object literal for the '<em><b>Hide</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute COMPONENT__HIDE = eINSTANCE.getComponent_Hide();
+
+    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl <em>Connection</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -806,6 +854,14 @@ public interface CViewModelPackage extends EPackage
      * @generated
      */
     EAttribute CONNECTION__TOOLTIP = eINSTANCE.getConnection_Tooltip();
+
+    /**
+     * The meta object literal for the '<em><b>Hide</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CONNECTION__HIDE = eINSTANCE.getConnection_Hide();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.cview.model.cViewModel.ComponentType <em>Component Type</em>}' enum.

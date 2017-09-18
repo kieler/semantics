@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.cview.hooks;
 
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -56,7 +57,8 @@ public interface ICViewAnalysis {
      * @param model
      * @return
      */
-    List<Connection> createConnections(Component component, CViewModel model, IProgressMonitor monitor);
+    List<Connection> createConnections(Component component, CViewModel model,
+            IProgressMonitor monitor);
 
     /**
      * Wrapup this connection analysis hook. Called once for all components after createConnections
@@ -65,14 +67,26 @@ public interface ICViewAnalysis {
      * @param model
      */
     void wrapup(CViewModel model, IProgressMonitor monitor);
-    
+
     /**
-     * Return the priority of the analysis which is used to order all analyses that will be run
-     * by the CView. Note that a higher number means that the analysis will run earlier. The
-     * default shall be 0. A priority can also be negative. If there are two or more analyses
-     * with the same priority, then the order is undefined. 
-     * @return
+     * Return the priority of the analysis which is used to order all analyses that will be run by
+     * the CView. Note that a higher number means that the analysis will run earlier. The default
+     * shall be 0. A priority can also be negative. If there are two or more analyses with the same
+     * priority, then the order is undefined.
+     * 
+     * @return priority as integer
      */
     int priority();
+
+    /**
+     * Return a list of IDs of options a language may offer, e.g., to contribute default connections
+     * or other properties. A language shall consider these set options when processing its default
+     * connections. A language may ask the CView to check for an option, if there exist any analysis
+     * that is ENABLED and REQUIRES this option, using CView's isOptionRequired() method of the
+     * AbstractCViewLanguage class.
+     * 
+     * @return list of string IDs
+     */
+    Set<String> requireLanguageOptions();
 
 }

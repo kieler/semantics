@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getColor <em>Color</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getTooltip <em>Tooltip</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#isHide <em>Hide</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getConnection()
@@ -183,5 +184,31 @@ public interface Connection extends EObject
    * @generated
    */
   void setTooltip(String value);
+
+  /**
+   * Returns the value of the '<em><b>Hide</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Hide</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Hide</em>' attribute.
+   * @see #setHide(boolean)
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getConnection_Hide()
+   * @model
+   * @generated
+   */
+  boolean isHide();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#isHide <em>Hide</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Hide</em>' attribute.
+   * @see #isHide()
+   * @generated
+   */
+  void setHide(boolean value);
 
 } // Connection

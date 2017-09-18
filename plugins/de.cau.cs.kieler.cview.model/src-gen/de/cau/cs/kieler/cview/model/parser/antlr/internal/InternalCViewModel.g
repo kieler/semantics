@@ -444,6 +444,20 @@ ruleComponent returns [EObject current=null]
 				}
 			)
 		)?
+		(
+			(
+				lv_hide_34_0='hide'
+				{
+					newLeafNode(lv_hide_34_0, grammarAccess.getComponentAccess().getHideHideKeyword_28_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getComponentRule());
+					}
+					setWithLastConsumed($current, "hide", true, "hide");
+				}
+			)
+		)?
 	)
 ;
 
@@ -585,6 +599,20 @@ ruleConnection returns [EObject current=null]
 				}
 			)
 		)
+		(
+			(
+				lv_hide_12_0='hide'
+				{
+					newLeafNode(lv_hide_12_0, grammarAccess.getConnectionAccess().getHideHideKeyword_12_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getConnectionRule());
+					}
+					setWithLastConsumed($current, "hide", true, "hide");
+				}
+			)
+		)?
 	)
 ;
 

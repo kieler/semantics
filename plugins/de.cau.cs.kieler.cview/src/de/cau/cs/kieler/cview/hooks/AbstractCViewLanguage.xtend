@@ -15,6 +15,7 @@ package de.cau.cs.kieler.cview.hooks
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.ViewContext
+import de.cau.cs.kieler.cview.CViewPlugin
 
 /**
  * @author cmot
@@ -45,12 +46,19 @@ abstract class AbstractCViewLanguage {
         } else if (result instanceof Boolean) {
             return result;
         } else {
-            throw new IllegalArgumentException(
-                "KLighD transformation option handling: " + "The transformation " + this +
-                    " attempted to evaluate the non-Boolean valued transformation option " + option.getName() +
-                    " expecting a Boolean value.");
-                }
+            val message = "KLighD transformation option handling: " + "The transformation " + this +
+                " attempted to evaluate the non-Boolean valued transformation option " + option.getName() +
+                " expecting a Boolean value."
+            throw new IllegalArgumentException(message);
             }
-
         }
-        
+
+        /**
+         * Check, if a language option (represented as a String ID) is required by any enabled analysis. 
+         */
+        def boolean isOptionRequired(String optionID) {
+            return CViewPlugin.isOptionRequired(optionID)
+        }
+
+    }
+    

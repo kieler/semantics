@@ -25,6 +25,7 @@ Component:
            'tooltip' tooltip=STRING
            'rawdata' rawdata=STRING
            (filtered?='filtered')?
+           (hide?='hide')?
 ;
 	
 Connection:
@@ -34,6 +35,7 @@ Connection:
     'typeID' type=STRING
     'color' color=STRING
     'tooltip' tooltip=STRING
+    (hide?='hide')?
 ;	
 	
 	

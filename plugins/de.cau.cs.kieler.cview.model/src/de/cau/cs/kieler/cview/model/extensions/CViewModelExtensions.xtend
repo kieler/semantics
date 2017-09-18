@@ -42,6 +42,11 @@ class CViewModelExtensions {
 
     // ------------------------------------------------------------------------
 
+    def boolean isVisible(Component component) {
+        return !(component.filtered || component.hide)
+    }
+    
+
     def boolean isResolved(Component component) {
         return (component.isReference && component.reference != null)
     }
@@ -191,6 +196,18 @@ class CViewModelExtensions {
     def Connection setTooltip2(Connection connection, String tooltip) {
         connection.tooltip = tooltip
         return connection
+    }
+    
+    def boolean isVisible(Connection connection) {
+        return !(connection.filtered || connection.hide)
+    }
+    
+    /** 
+     * Determine, whether a connection is filtered away, which can be
+     * because of its source or its parent.
+     */
+    def boolean isFiltered(Connection connection) {
+        return (connection.src.isFiltered || connection.dst.isFiltered) 
     }
 
     // -------------------------------------------------------------------------
