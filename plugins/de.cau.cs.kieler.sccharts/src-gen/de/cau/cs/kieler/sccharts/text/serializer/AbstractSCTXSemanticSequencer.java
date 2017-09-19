@@ -767,20 +767,13 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 		else if (epackage == SCChartsPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case SCChartsPackage.CONTROLFLOW_REGION:
-				if (rule == grammarAccess.getControlflowRegionRule()) {
+				if (rule == grammarAccess.getRegionRule()
+						|| rule == grammarAccess.getControlflowRegionRule()) {
 					sequence_ControlflowRegion(context, (ControlflowRegion) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getRegionRule()) {
-					sequence_ControlflowRegion_NestedControlflowRegion(context, (ControlflowRegion) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getImplicitControlflowRegionRule()) {
 					sequence_ImplicitControlflowRegion(context, (ControlflowRegion) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getNestedControlflowRegionRule()) {
-					sequence_NestedControlflowRegion(context, (ControlflowRegion) semanticObject); 
 					return; 
 				}
 				else break;
@@ -843,6 +836,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     Region returns ControlflowRegion
 	 *     ControlflowRegion returns ControlflowRegion
 	 *
 	 * Constraint:
@@ -851,40 +845,10 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *         name=ExtendedID? 
 	 *         label=STRING? 
 	 *         (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
-	 *         declarations+=DeclarationWOSemicolon* 
-	 *         states+=State+
+	 *         ((declarations+=DeclarationWOSemicolon* states+=State*) | (declarations+=DeclarationWOSemicolon* (states+=ImplicitState | states+=State+)))
 	 *     )
 	 */
 	protected void sequence_ControlflowRegion(ISerializationContext context, ControlflowRegion semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Region returns ControlflowRegion
-	 *
-	 * Constraint:
-	 *     (
-	 *         (
-	 *             annotations+=Annotation* 
-	 *             name=ExtendedID? 
-	 *             label=STRING? 
-	 *             (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
-	 *             declarations+=DeclarationWOSemicolon* 
-	 *             states+=State+
-	 *         ) | 
-	 *         (
-	 *             annotations+=Annotation* 
-	 *             name=ExtendedID? 
-	 *             label=STRING? 
-	 *             (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
-	 *             declarations+=DeclarationWOSemicolon* 
-	 *             (states+=ImplicitState | states+=State+)
-	 *         )
-	 *     )
-	 */
-	protected void sequence_ControlflowRegion_NestedControlflowRegion(ISerializationContext context, ControlflowRegion semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -931,7 +895,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *         label=STRING? 
 	 *         (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
 	 *         declarations+=DeclarationWOSemicolon* 
-	 *         equations+=Equation+
+	 *         equations+=Equation*
 	 *     )
 	 */
 	protected void sequence_DataflowRegion(ISerializationContext context, DataflowRegion semanticObject) {
@@ -983,7 +947,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     ImplicitControlflowRegion returns ControlflowRegion
 	 *
 	 * Constraint:
-	 *     states+=State+
+	 *     states+=State*
 	 */
 	protected void sequence_ImplicitControlflowRegion(ISerializationContext context, ControlflowRegion semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -995,7 +959,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     ImplicitDataflowRegion returns DataflowRegion
 	 *
 	 * Constraint:
-	 *     equations+=Equation+
+	 *     equations+=Equation*
 	 */
 	protected void sequence_ImplicitDataflowRegion(ISerializationContext context, DataflowRegion semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1010,25 +974,6 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     regions+=Region+
 	 */
 	protected void sequence_ImplicitState(ISerializationContext context, State semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     NestedControlflowRegion returns ControlflowRegion
-	 *
-	 * Constraint:
-	 *     (
-	 *         annotations+=Annotation* 
-	 *         name=ExtendedID? 
-	 *         label=STRING? 
-	 *         (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
-	 *         declarations+=DeclarationWOSemicolon* 
-	 *         (states+=ImplicitState | states+=State+)
-	 *     )
-	 */
-	protected void sequence_NestedControlflowRegion(ISerializationContext context, ControlflowRegion semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
