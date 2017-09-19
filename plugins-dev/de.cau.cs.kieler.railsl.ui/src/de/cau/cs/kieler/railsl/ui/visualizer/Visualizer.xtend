@@ -29,7 +29,6 @@ import org.eclipse.xtext.ui.editor.utils.EditorUtils
 import org.eclipse.xtext.util.concurrent.IUnitOfWork
 import org.eclipse.jface.text.TextSelection
 import org.eclipse.emf.ecore.EObject
-import java.util.ArrayList
 import com.google.inject.Inject
 
 import org.eclipse.jface.text.IDocumentListener
@@ -39,11 +38,12 @@ import org.eclipse.xtext.ui.editor.XtextEditor
 import org.eclipse.ui.IPartListener2
 import org.eclipse.ui.IWorkbenchPartReference
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.eclipse.ui.internal.Workbench
 import de.cau.cs.kieler.railsl.railSL.ContactWaitStatement
 import de.cau.cs.kieler.railsl.railSL.ConditionalStatement
 import de.cau.cs.kieler.railsl.railSL.ConditionalLine
 import de.cau.cs.kieler.railsl.railSL.Block
+import java.util.List
+import org.eclipse.ui.internal.Workbench
 
 /**
  * Show on-the-fly info about the model being edited.
@@ -407,12 +407,16 @@ class Visualizer {
      * @param statement The statement to be represented
      */
     def addPointValues(Model model, PointStatement statement) {
-
-        var Variable variable
-
         try {
             for (index : statement.points) {
-                variable = new Variable("point_" + index, statement.orientation)
+                val varName = "point_" + index
+                var Variable variable
+                for (elem : model.variables) {
+                    if (elem.name == varName) {
+                        variable = elem
+                    }
+                }
+                variable.value = statement.parsePointSetting
                 model.addVariable(variable)
             }
         } catch (NullPointerException e) {
@@ -429,11 +433,17 @@ class Visualizer {
      */
     def addLightValues(Model model, LightStatement statement) {
 
-        try {
-            var Variable variable
-
+        try { 
             for (index : statement.lights) {
-                variable = new Variable("light_" + index, statement.state)
+                var Variable variable
+                val varName = "light_" + index
+                for (elem : model.variables) {
+                    if (elem.name == varName) {
+                        variable = elem
+                    }
+                }
+                
+                variable.value = statement.state
                 model.addVariable(variable)
             }
         } catch (NullPointerException e) {
@@ -450,10 +460,15 @@ class Visualizer {
      */
     def addContactValue(Model model, ContactWaitStatement statement) {
         try {
-            System.out.println("stuff");
-            val variable = new Variable("c" + statement.parseContactIndex + "_" + statement.segName, 1)
+            val varName = "c" + statement.parseContactIndex + "_" + statement.segName
+            var Variable variable
+            for (elem : model.variables) {
+                if (elem.name == varName) {
+                    variable = elem
+                }
+            }
+            variable.value = 1
             model.addVariable(variable)
-            System.out.println("Setting c" + statement.parseContactIndex + "_" + statement.segName + "to 1.");
         } catch (NullPointerException e) {
             System.out.println("Parsed illegal statement.")
             return
@@ -480,7 +495,14 @@ class Visualizer {
      */
     def addConditionalLineValues(Model model, ConditionalLine line) {
         try {
-            val variable = new Variable(line.segName + "_C_" + line.parseContactIndex, "on")
+            val varName = line.segName + "_C_" + line.parseContactIndex
+            var Variable variable
+            for (elem : model.variables) {
+                if (elem.name == varName) {
+                    variable = elem
+                }
+            }
+            variable.value = 1
             model.addVariable(variable)
         } catch (NullPointerException e) {
             System.out.println("Parsed illegal statement.")

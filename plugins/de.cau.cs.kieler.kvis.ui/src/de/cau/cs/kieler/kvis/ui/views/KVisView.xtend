@@ -526,7 +526,7 @@ class KVisView extends ViewPart {
                         }
                     }
                 }
-                canvas?.svgCanvas?.updateManager?.updateRunnableQueue?.invokeLater(runnable)
+                canvas.svgCanvas.updateManager.updateRunnableQueue.invokeLater(runnable)
             }
         }
     }
@@ -562,6 +562,7 @@ class KVisView extends ViewPart {
                 && e.type != SimulationEventType.VARIABLE_CHANGE) {
                     if(KVisView.instance != null && KVisView.instance.lastPool !== e.pool) {
                         // Update the view in the UI thread
+                        
                         PromUIPlugin.asyncExecInUI[KVisView.instance?.update(SimulationManager.instance?.currentPool)]
                     }
                 }

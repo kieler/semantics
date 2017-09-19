@@ -148,7 +148,7 @@ class SVGExtensions {
         val newField = (fieldName + ":" + fieldValue + ";")
         // Replace the current field from the attribute. That is, replace everything from 'FIELD_NAME:' to ';'
 //        println("old:"+attribute)
-        var newAttribute = attribute.replaceAll(fieldName+":[^;]*[;]?", "");
+        var newAttribute = attribute.replaceAll("^"+fieldName+":[^;]*[;]?", "").replaceAll(";"+fieldName+":[^;]*[;]?", ";")
         if(!newAttribute.isNullOrEmpty && !newAttribute.endsWith(";")) {
             newAttribute += ";"    
         }

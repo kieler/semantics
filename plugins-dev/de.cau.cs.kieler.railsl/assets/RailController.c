@@ -12,11 +12,6 @@
 #include "Controller.c"
 
 #define TO_COLOR(v)     ((v)==1 ? RED : (v)==2 ? YELLOW|GREEN : (v)==3 ? GREEN : OFF)
-#define TO_DIR(v)       ((v)>0 ? FWD : (v)<0 ? REV : OFF)
-#define ABS(v)          ((v)<0 ? -(v) : (v))
-#define MAX(u,v)        ((u)>(v) ? (u) : (v))
-#define CLAMP(v,mi,ma)  ((v)<(mi) ? (mi) : ((v)>(ma) ? (ma) : (v)))
-
 
 // Basic dimension constants
 #define NUM_OF_TRACKS 48
