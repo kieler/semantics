@@ -88,12 +88,12 @@ Region returns sccharts::Region:
 
 ImplicitControlflowRegion returns sccharts::ControlflowRegion:
     {sccharts::ControlflowRegion}
-    states+=State*;
+    states+=State+;
 
 
 ImplicitDataflowRegion returns sccharts::DataflowRegion:
     {sccharts::DataflowRegion}
-    equations += Equation*;
+    equations += Equation+;
 
 
 ControlflowRegion returns sccharts::ControlflowRegion:

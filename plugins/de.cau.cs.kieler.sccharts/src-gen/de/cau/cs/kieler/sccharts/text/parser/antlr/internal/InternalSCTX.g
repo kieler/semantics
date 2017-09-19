@@ -1198,7 +1198,7 @@ ruleImplicitControlflowRegion returns [EObject current=null]
 	    }
 
 )
-)*)
+)+)
 ;
 
 
@@ -1246,7 +1246,7 @@ ruleImplicitDataflowRegion returns [EObject current=null]
 	    }
 
 )
-)*)
+)+)
 ;
 
 

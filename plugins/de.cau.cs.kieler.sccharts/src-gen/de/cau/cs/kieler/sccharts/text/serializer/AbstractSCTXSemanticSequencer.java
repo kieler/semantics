@@ -947,7 +947,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     ImplicitControlflowRegion returns ControlflowRegion
 	 *
 	 * Constraint:
-	 *     states+=State*
+	 *     states+=State+
 	 */
 	protected void sequence_ImplicitControlflowRegion(ISerializationContext context, ControlflowRegion semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -959,7 +959,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     ImplicitDataflowRegion returns DataflowRegion
 	 *
 	 * Constraint:
-	 *     equations+=Equation*
+	 *     equations+=Equation+
 	 */
 	protected void sequence_ImplicitDataflowRegion(ISerializationContext context, DataflowRegion semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

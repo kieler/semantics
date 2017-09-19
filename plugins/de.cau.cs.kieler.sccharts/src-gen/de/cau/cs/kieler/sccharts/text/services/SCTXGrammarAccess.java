@@ -706,16 +706,16 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cStatesStateParserRuleCall_1_0 = (RuleCall)cStatesAssignment_1.eContents().get(0);
 		
 		//ImplicitControlflowRegion sccharts::ControlflowRegion:
-		//	{sccharts::ControlflowRegion} states+=State*
+		//	{sccharts::ControlflowRegion} states+=State+
 		@Override public ParserRule getRule() { return rule; }
 
-		//{sccharts::ControlflowRegion} states+=State*
+		//{sccharts::ControlflowRegion} states+=State+
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::ControlflowRegion}
 		public Action getControlflowRegionAction_0() { return cControlflowRegionAction_0; }
 
-		//states+=State*
+		//states+=State+
 		public Assignment getStatesAssignment_1() { return cStatesAssignment_1; }
 
 		//State
@@ -730,16 +730,16 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEquationsEquationParserRuleCall_1_0 = (RuleCall)cEquationsAssignment_1.eContents().get(0);
 		
 		//ImplicitDataflowRegion sccharts::DataflowRegion:
-		//	{sccharts::DataflowRegion} equations+=Equation*
+		//	{sccharts::DataflowRegion} equations+=Equation+
 		@Override public ParserRule getRule() { return rule; }
 
-		//{sccharts::DataflowRegion} equations+=Equation*
+		//{sccharts::DataflowRegion} equations+=Equation+
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::DataflowRegion}
 		public Action getDataflowRegionAction_0() { return cDataflowRegionAction_0; }
 
-		//equations+=Equation*
+		//equations+=Equation+
 		public Assignment getEquationsAssignment_1() { return cEquationsAssignment_1; }
 
 		//Equation
@@ -2126,7 +2126,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ImplicitControlflowRegion sccharts::ControlflowRegion:
-	//	{sccharts::ControlflowRegion} states+=State*
+	//	{sccharts::ControlflowRegion} states+=State+
 	public ImplicitControlflowRegionElements getImplicitControlflowRegionAccess() {
 		return pImplicitControlflowRegion;
 	}
@@ -2136,7 +2136,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ImplicitDataflowRegion sccharts::DataflowRegion:
-	//	{sccharts::DataflowRegion} equations+=Equation*
+	//	{sccharts::DataflowRegion} equations+=Equation+
 	public ImplicitDataflowRegionElements getImplicitDataflowRegionAccess() {
 		return pImplicitDataflowRegion;
 	}
