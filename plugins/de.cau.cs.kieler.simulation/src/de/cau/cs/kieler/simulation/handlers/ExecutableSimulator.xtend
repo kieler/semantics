@@ -137,7 +137,7 @@ class ExecutableSimulator extends DefaultSimulator {
     override stop() {
         removeResourceChangeListener
         if(process != null) {
-            process.destroy()
+            process.destroyForcibly()
             process = null
         }
     }
