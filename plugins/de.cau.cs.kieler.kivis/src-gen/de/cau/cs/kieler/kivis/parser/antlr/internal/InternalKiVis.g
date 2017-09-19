@@ -4960,11 +4960,11 @@ ruleVectorValueMember returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getVectorValueMemberAccess().getExpressionParserRuleCall_0()); 
+        newCompositeNode(grammarAccess.getVectorValueMemberAccess().getBoolExpressionParserRuleCall_0()); 
     }
-    this_Expression_0=ruleExpression
+    this_BoolExpression_0=ruleBoolExpression
     { 
-        $current = $this_Expression_0.current; 
+        $current = $this_BoolExpression_0.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -4973,11 +4973,24 @@ ruleVectorValueMember returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getVectorValueMemberAccess().getIgnoreValueParserRuleCall_1()); 
+        newCompositeNode(grammarAccess.getVectorValueMemberAccess().getValuedExpressionParserRuleCall_1()); 
     }
-    this_IgnoreValue_1=ruleIgnoreValue
+    this_ValuedExpression_1=ruleValuedExpression
     { 
-        $current = $this_IgnoreValue_1.current; 
+        $current = $this_ValuedExpression_1.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getVectorValueMemberAccess().getIgnoreValueParserRuleCall_2()); 
+    }
+    this_IgnoreValue_2=ruleIgnoreValue
+    { 
+        $current = $this_IgnoreValue_2.current; 
         afterParserOrEnumRuleCall();
     }
 )

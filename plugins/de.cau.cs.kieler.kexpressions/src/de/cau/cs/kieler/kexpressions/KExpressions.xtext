@@ -352,7 +352,7 @@ VectorValue returns VectorValue:
     '{' values+=VectorValueMember (',' values+=VectorValueMember)* '}';
     
 VectorValueMember returns Expression:
-    Expression | IgnoreValue;
+    BoolExpression | ValuedExpression | IgnoreValue;
     
 IgnoreValue returns IgnoreValue:
     {IgnoreValue} '_';

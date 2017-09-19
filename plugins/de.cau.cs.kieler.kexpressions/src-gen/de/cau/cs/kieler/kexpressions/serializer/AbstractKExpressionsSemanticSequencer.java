@@ -151,21 +151,20 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getBoolValueRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()
 						|| rule == grammarAccess.getAnyValueRule()) {
 					sequence_BoolValue(context, (BoolValue) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_BoolValue_Expression(context, (BoolValue) semanticObject); 
 					return; 
 				}
 				else break;
 			case KExpressionsPackage.FLOAT_VALUE:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_Expression_FloatValue(context, (FloatValue) semanticObject); 
 					return; 
 				}
@@ -207,6 +206,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getFloatValueRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()
 						|| rule == grammarAccess.getAnyValueRule()) {
 					sequence_FloatValue(context, (FloatValue) semanticObject); 
 					return; 
@@ -214,8 +214,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				else break;
 			case KExpressionsPackage.FUNCTION_CALL:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_Expression_FunctionCall(context, (FunctionCall) semanticObject); 
 					return; 
 				}
@@ -256,7 +255,8 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
-						|| rule == grammarAccess.getFunctionCallRule()) {
+						|| rule == grammarAccess.getFunctionCallRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_FunctionCall(context, (FunctionCall) semanticObject); 
 					return; 
 				}
@@ -266,8 +266,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				return; 
 			case KExpressionsPackage.INT_VALUE:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_Expression_IntValue(context, (IntValue) semanticObject); 
 					return; 
 				}
@@ -309,6 +308,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getIntValueRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()
 						|| rule == grammarAccess.getAnyValueRule()) {
 					sequence_IntValue(context, (IntValue) semanticObject); 
 					return; 
@@ -316,8 +316,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				else break;
 			case KExpressionsPackage.OPERATOR_EXPRESSION:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_Expression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
@@ -357,7 +356,8 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| rule == grammarAccess.getNegExpressionRule()
 						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
-						|| rule == grammarAccess.getAtomicValuedExpressionRule()) {
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
@@ -371,8 +371,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				return; 
 			case KExpressionsPackage.REFERENCE_CALL:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_Expression_ReferenceCall(context, (ReferenceCall) semanticObject); 
 					return; 
 				}
@@ -413,7 +412,8 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
-						|| rule == grammarAccess.getReferenceCallRule()) {
+						|| rule == grammarAccess.getReferenceCallRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_ReferenceCall(context, (ReferenceCall) semanticObject); 
 					return; 
 				}
@@ -423,8 +423,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				return; 
 			case KExpressionsPackage.STRING_VALUE:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_Expression_StringValue(context, (StringValue) semanticObject); 
 					return; 
 				}
@@ -466,6 +465,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getStringValueRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()
 						|| rule == grammarAccess.getAnyValueRule()) {
 					sequence_StringValue(context, (StringValue) semanticObject); 
 					return; 
@@ -473,8 +473,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				else break;
 			case KExpressionsPackage.TEXT_EXPRESSION:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_Expression_TextExpression(context, (TextExpression) semanticObject); 
 					return; 
 				}
@@ -515,15 +514,15 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
-						|| rule == grammarAccess.getTextExpressionRule()) {
+						|| rule == grammarAccess.getTextExpressionRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_TextExpression(context, (TextExpression) semanticObject); 
 					return; 
 				}
 				else break;
 			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_Expression_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
 					return; 
 				}
@@ -565,15 +564,15 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getValuedObjectTestExpressionRule()
-						|| rule == grammarAccess.getValuedObjectReferenceRule()) {
+						|| rule == grammarAccess.getValuedObjectReferenceRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
 					return; 
 				}
 				else break;
 			case KExpressionsPackage.VECTOR_VALUE:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_Expression_VectorValue(context, (VectorValue) semanticObject); 
 					return; 
 				}
@@ -614,7 +613,8 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
-						|| rule == grammarAccess.getVectorValueRule()) {
+						|| rule == grammarAccess.getVectorValueRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_VectorValue(context, (VectorValue) semanticObject); 
 					return; 
 				}
@@ -628,7 +628,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 * Contexts:
 	 *     Root returns OperatorExpression
 	 *     Expression returns OperatorExpression
-	 *     VectorValueMember returns OperatorExpression
 	 *
 	 * Constraint:
 	 *     (
@@ -750,6 +749,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     TernaryOperation returns OperatorExpression
 	 *     AtomicExpression returns OperatorExpression
 	 *     AtomicValuedExpression returns OperatorExpression
+	 *     VectorValueMember returns OperatorExpression
 	 *
 	 * Constraint:
 	 *     (
@@ -869,6 +869,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     AtomicExpression returns BoolValue
 	 *     AtomicValuedExpression returns BoolValue
 	 *     BoolValue returns BoolValue
+	 *     VectorValueMember returns BoolValue
 	 *     AnyValue returns BoolValue
 	 *
 	 * Constraint:
@@ -889,7 +890,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 * Contexts:
 	 *     Root returns BoolValue
 	 *     Expression returns BoolValue
-	 *     VectorValueMember returns BoolValue
 	 *
 	 * Constraint:
 	 *     (value=BOOLEAN schedule+=ScheduleObjectReference*)
@@ -903,7 +903,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 * Contexts:
 	 *     Root returns FloatValue
 	 *     Expression returns FloatValue
-	 *     VectorValueMember returns FloatValue
 	 *
 	 * Constraint:
 	 *     (value=FLOAT schedule+=ScheduleObjectReference*)
@@ -917,7 +916,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 * Contexts:
 	 *     Root returns FunctionCall
 	 *     Expression returns FunctionCall
-	 *     VectorValueMember returns FunctionCall
 	 *
 	 * Constraint:
 	 *     (functionName=ID (parameters+=Parameter parameters+=Parameter*)? schedule+=ScheduleObjectReference*)
@@ -931,7 +929,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 * Contexts:
 	 *     Root returns IntValue
 	 *     Expression returns IntValue
-	 *     VectorValueMember returns IntValue
 	 *
 	 * Constraint:
 	 *     (value=INT schedule+=ScheduleObjectReference*)
@@ -945,7 +942,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 * Contexts:
 	 *     Root returns ReferenceCall
 	 *     Expression returns ReferenceCall
-	 *     VectorValueMember returns ReferenceCall
 	 *
 	 * Constraint:
 	 *     (valuedObject=[ValuedObject|PrimeID] (parameters+=Parameter parameters+=Parameter*)? schedule+=ScheduleObjectReference*)
@@ -959,7 +955,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 * Contexts:
 	 *     Root returns StringValue
 	 *     Expression returns StringValue
-	 *     VectorValueMember returns StringValue
 	 *
 	 * Constraint:
 	 *     (value=STRING schedule+=ScheduleObjectReference*)
@@ -973,7 +968,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 * Contexts:
 	 *     Root returns TextExpression
 	 *     Expression returns TextExpression
-	 *     VectorValueMember returns TextExpression
 	 *
 	 * Constraint:
 	 *     (text=HOSTCODE schedule+=ScheduleObjectReference*)
@@ -987,7 +981,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 * Contexts:
 	 *     Root returns ValuedObjectReference
 	 *     Expression returns ValuedObjectReference
-	 *     VectorValueMember returns ValuedObjectReference
 	 *
 	 * Constraint:
 	 *     (valuedObject=[ValuedObject|PrimeID] indices+=Expression* subReference=ValuedObjectReference? schedule+=ScheduleObjectReference*)
@@ -1001,7 +994,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 * Contexts:
 	 *     Root returns VectorValue
 	 *     Expression returns VectorValue
-	 *     VectorValueMember returns VectorValue
 	 *
 	 * Constraint:
 	 *     (values+=VectorValueMember values+=VectorValueMember* schedule+=ScheduleObjectReference*)
@@ -1051,6 +1043,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     AtomicExpression returns FloatValue
 	 *     AtomicValuedExpression returns FloatValue
 	 *     FloatValue returns FloatValue
+	 *     VectorValueMember returns FloatValue
 	 *     AnyValue returns FloatValue
 	 *
 	 * Constraint:
@@ -1107,6 +1100,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     AtomicExpression returns FunctionCall
 	 *     AtomicValuedExpression returns FunctionCall
 	 *     FunctionCall returns FunctionCall
+	 *     VectorValueMember returns FunctionCall
 	 *
 	 * Constraint:
 	 *     (functionName=ID (parameters+=Parameter parameters+=Parameter*)?)
@@ -1169,6 +1163,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     AtomicExpression returns IntValue
 	 *     AtomicValuedExpression returns IntValue
 	 *     IntValue returns IntValue
+	 *     VectorValueMember returns IntValue
 	 *     AnyValue returns IntValue
 	 *
 	 * Constraint:
@@ -1237,6 +1232,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     AtomicExpression returns ReferenceCall
 	 *     AtomicValuedExpression returns ReferenceCall
 	 *     ReferenceCall returns ReferenceCall
+	 *     VectorValueMember returns ReferenceCall
 	 *
 	 * Constraint:
 	 *     (valuedObject=[ValuedObject|PrimeID] (parameters+=Parameter parameters+=Parameter*)?)
@@ -1307,6 +1303,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     AtomicExpression returns StringValue
 	 *     AtomicValuedExpression returns StringValue
 	 *     StringValue returns StringValue
+	 *     VectorValueMember returns StringValue
 	 *     AnyValue returns StringValue
 	 *
 	 * Constraint:
@@ -1363,6 +1360,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     AtomicExpression returns TextExpression
 	 *     AtomicValuedExpression returns TextExpression
 	 *     TextExpression returns TextExpression
+	 *     VectorValueMember returns TextExpression
 	 *
 	 * Constraint:
 	 *     text=HOSTCODE
@@ -1419,6 +1417,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     AtomicValuedExpression returns ValuedObjectReference
 	 *     ValuedObjectTestExpression returns ValuedObjectReference
 	 *     ValuedObjectReference returns ValuedObjectReference
+	 *     VectorValueMember returns ValuedObjectReference
 	 *
 	 * Constraint:
 	 *     (valuedObject=[ValuedObject|PrimeID] indices+=Expression* subReference=ValuedObjectReference?)
@@ -1480,6 +1479,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     AtomicExpression returns VectorValue
 	 *     AtomicValuedExpression returns VectorValue
 	 *     VectorValue returns VectorValue
+	 *     VectorValueMember returns VectorValue
 	 *
 	 * Constraint:
 	 *     (values+=VectorValueMember values+=VectorValueMember*)

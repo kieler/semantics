@@ -3392,7 +3392,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//VectorValueMember Expression:
-	//	Expression | IgnoreValue
+	//	BoolExpression | ValuedExpression | IgnoreValue
 	public KExpressionsGrammarAccess.VectorValueMemberElements getVectorValueMemberAccess() {
 		return gaKExpressions.getVectorValueMemberAccess();
 	}

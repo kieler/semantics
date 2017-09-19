@@ -168,21 +168,20 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getBoolValueRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()
 						|| rule == grammarAccess.getAnyValueRule()) {
 					sequence_BoolValue(context, (BoolValue) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_BoolValue_Expression(context, (BoolValue) semanticObject); 
 					return; 
 				}
 				else break;
 			case KExpressionsPackage.FLOAT_VALUE:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_Expression_FloatValue(context, (FloatValue) semanticObject); 
 					return; 
 				}
@@ -224,6 +223,7 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getFloatValueRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()
 						|| rule == grammarAccess.getAnyValueRule()) {
 					sequence_FloatValue(context, (FloatValue) semanticObject); 
 					return; 
@@ -231,8 +231,7 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 				else break;
 			case KExpressionsPackage.FUNCTION_CALL:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_Expression_FunctionCall(context, (FunctionCall) semanticObject); 
 					return; 
 				}
@@ -273,7 +272,8 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
-						|| rule == grammarAccess.getFunctionCallRule()) {
+						|| rule == grammarAccess.getFunctionCallRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_FunctionCall(context, (FunctionCall) semanticObject); 
 					return; 
 				}
@@ -283,8 +283,7 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 				return; 
 			case KExpressionsPackage.INT_VALUE:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_Expression_IntValue(context, (IntValue) semanticObject); 
 					return; 
 				}
@@ -326,6 +325,7 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getIntValueRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()
 						|| rule == grammarAccess.getAnyValueRule()) {
 					sequence_IntValue(context, (IntValue) semanticObject); 
 					return; 
@@ -333,8 +333,7 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 				else break;
 			case KExpressionsPackage.OPERATOR_EXPRESSION:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_Expression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
@@ -374,7 +373,8 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 						|| rule == grammarAccess.getNegExpressionRule()
 						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
-						|| rule == grammarAccess.getAtomicValuedExpressionRule()) {
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
@@ -388,8 +388,7 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 				return; 
 			case KExpressionsPackage.REFERENCE_CALL:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_Expression_ReferenceCall(context, (ReferenceCall) semanticObject); 
 					return; 
 				}
@@ -430,7 +429,8 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
-						|| rule == grammarAccess.getReferenceCallRule()) {
+						|| rule == grammarAccess.getReferenceCallRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_ReferenceCall(context, (ReferenceCall) semanticObject); 
 					return; 
 				}
@@ -440,8 +440,7 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 				return; 
 			case KExpressionsPackage.STRING_VALUE:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_Expression_StringValue(context, (StringValue) semanticObject); 
 					return; 
 				}
@@ -483,6 +482,7 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getStringValueRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()
 						|| rule == grammarAccess.getAnyValueRule()) {
 					sequence_StringValue(context, (StringValue) semanticObject); 
 					return; 
@@ -490,8 +490,7 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 				else break;
 			case KExpressionsPackage.TEXT_EXPRESSION:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_Expression_TextExpression(context, (TextExpression) semanticObject); 
 					return; 
 				}
@@ -532,15 +531,15 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
-						|| rule == grammarAccess.getTextExpressionRule()) {
+						|| rule == grammarAccess.getTextExpressionRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_TextExpression(context, (TextExpression) semanticObject); 
 					return; 
 				}
 				else break;
 			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_Expression_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
 					return; 
 				}
@@ -582,15 +581,15 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getValuedObjectTestExpressionRule()
-						|| rule == grammarAccess.getValuedObjectReferenceRule()) {
+						|| rule == grammarAccess.getValuedObjectReferenceRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
 					return; 
 				}
 				else break;
 			case KExpressionsPackage.VECTOR_VALUE:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_Expression_VectorValue(context, (VectorValue) semanticObject); 
 					return; 
 				}
@@ -631,7 +630,8 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
-						|| rule == grammarAccess.getVectorValueRule()) {
+						|| rule == grammarAccess.getVectorValueRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_VectorValue(context, (VectorValue) semanticObject); 
 					return; 
 				}

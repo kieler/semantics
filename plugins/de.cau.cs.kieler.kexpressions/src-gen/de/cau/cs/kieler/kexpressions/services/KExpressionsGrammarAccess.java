@@ -1864,21 +1864,25 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	public class VectorValueMemberElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.VectorValueMember");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cExpressionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cIgnoreValueParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cBoolExpressionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cValuedExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cIgnoreValueParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//VectorValueMember Expression:
-		//	Expression | IgnoreValue
+		//	BoolExpression | ValuedExpression | IgnoreValue
 		@Override public ParserRule getRule() { return rule; }
 
-		//Expression | IgnoreValue
+		//BoolExpression | ValuedExpression | IgnoreValue
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//Expression
-		public RuleCall getExpressionParserRuleCall_0() { return cExpressionParserRuleCall_0; }
+		//BoolExpression
+		public RuleCall getBoolExpressionParserRuleCall_0() { return cBoolExpressionParserRuleCall_0; }
+
+		//ValuedExpression
+		public RuleCall getValuedExpressionParserRuleCall_1() { return cValuedExpressionParserRuleCall_1; }
 
 		//IgnoreValue
-		public RuleCall getIgnoreValueParserRuleCall_1() { return cIgnoreValueParserRuleCall_1; }
+		public RuleCall getIgnoreValueParserRuleCall_2() { return cIgnoreValueParserRuleCall_2; }
 	}
 
 	public class IgnoreValueElements extends AbstractParserRuleElementFinder {
@@ -3222,7 +3226,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//VectorValueMember Expression:
-	//	Expression | IgnoreValue
+	//	BoolExpression | ValuedExpression | IgnoreValue
 	public VectorValueMemberElements getVectorValueMemberAccess() {
 		return pVectorValueMember;
 	}

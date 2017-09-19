@@ -2907,15 +2907,21 @@ rule__VectorValueMember__Alternatives
     }
 :
 (
-{ before(grammarAccess.getVectorValueMemberAccess().getExpressionParserRuleCall_0()); }
-	ruleExpression
-{ after(grammarAccess.getVectorValueMemberAccess().getExpressionParserRuleCall_0()); }
+{ before(grammarAccess.getVectorValueMemberAccess().getBoolExpressionParserRuleCall_0()); }
+	ruleBoolExpression
+{ after(grammarAccess.getVectorValueMemberAccess().getBoolExpressionParserRuleCall_0()); }
 )
 
     |(
-{ before(grammarAccess.getVectorValueMemberAccess().getIgnoreValueParserRuleCall_1()); }
+{ before(grammarAccess.getVectorValueMemberAccess().getValuedExpressionParserRuleCall_1()); }
+	ruleValuedExpression
+{ after(grammarAccess.getVectorValueMemberAccess().getValuedExpressionParserRuleCall_1()); }
+)
+
+    |(
+{ before(grammarAccess.getVectorValueMemberAccess().getIgnoreValueParserRuleCall_2()); }
 	ruleIgnoreValue
-{ after(grammarAccess.getVectorValueMemberAccess().getIgnoreValueParserRuleCall_1()); }
+{ after(grammarAccess.getVectorValueMemberAccess().getIgnoreValueParserRuleCall_2()); }
 )
 
 ;
