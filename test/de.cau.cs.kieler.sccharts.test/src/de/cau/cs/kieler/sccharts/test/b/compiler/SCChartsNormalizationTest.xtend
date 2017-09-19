@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.test
+package de.cau.cs.kieler.sccharts.test.b.compiler
 
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
@@ -68,9 +68,9 @@ class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<SCChart
      * {@inheritDoc}
      */
     override filter(TestModelData modelData) {
-        return modelData.modelProperties.contains("scchartsX")
+        return modelData.modelProperties.contains("sccharts")
         && !modelData.additionalProperties.containsKey("testSerializability")
-        && !modelData.modelProperties.contains("must-fail")
+        && (!modelData.modelProperties.contains("must-fail") || modelData.modelProperties.contains("must-fail-validation"))
     }
     
     @Test
@@ -80,7 +80,12 @@ class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<SCChart
         // Validate input model
         val validator = resourceSetInjector.getInstance(IResourceValidator)
         var validatorResults = validator.validate(scc.eResource, CheckMode.ALL, CancelIndicator.NullImpl).filter[severity === Severity.ERROR].toList
-        assertTrue("Input model contains validation error markers: \n- " + validatorResults.map[message].join("\n- "), validatorResults.empty)
+        if (modelData.modelProperties.contains("must-fail-validation")) {
+            assertTrue("Input model does not contain the expected validation error markers", !validatorResults.empty)
+            return
+        } else {
+            assertTrue("Input model contains validation error markers: \n- " + validatorResults.map[message].join("\n- "), validatorResults.empty)
+        }
 
        
         // Check all intermediate results
@@ -92,7 +97,7 @@ class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<SCChart
             // Check compiler errors
             if (!iResult.environment.errors.empty) {
                 fail("Intermediate result of transformation " + iResult.id + " has compilation error(s): \n- " + iResult.environment.errors.get(Environment.REPORT_ROOT).map[ err |
-                     if (err.exception != null) {
+                     if (err.exception !== null) {
                          ((new StringWriter) => [err.exception.printStackTrace(new PrintWriter(it))]).toString()
                      } else {
                         err.message
@@ -164,3 +169,4 @@ class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<SCChart
     }
       
 }
+														

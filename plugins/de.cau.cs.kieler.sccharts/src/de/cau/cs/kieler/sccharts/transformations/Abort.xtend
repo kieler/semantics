@@ -186,8 +186,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                 
             var aFinalStateInEveryRegion = true;
             for (region : state.regions.filter(ControlflowRegion)) {
-                if (region.states.filter[ee|ee.final && !ee.hasAnnotation(Termination.ANNOTATION_FINALSTATE)].size ==
-                    0) {
+                if (!region.states.exists[isFinal]){//filter[ee|ee.final && !ee.hasAnnotation(Termination.ANNOTATION_FINALSTATE)].size == 0) {
                     aFinalStateInEveryRegion = false;
                 }
             }

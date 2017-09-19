@@ -135,17 +135,16 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
         // (belonging to the region).
         // Explicitly negate triggers of other outgoing transitions (see test147)
         // This is the special case where we must taken care of a normal termination 
-        //  val terminationTransition = state.getTerminationTransitions;
-        val terminationTransitions = state.outgoingTransitions.filter(e|e.preemption == PreemptionType::TERMINATION);
-        
-        val hasConditionalTerminations = state.outgoingTransitions.filter(e|e.preemption == PreemptionType::TERMINATION && e.trigger != null).size > 0
+        val terminationTransitions = state.outgoingTransitions.filter[preemption == PreemptionType::TERMINATION]      
 
-        if (terminationTransitions.size == 0) {
+        if (terminationTransitions.empty) {
             return
         }
+        
+        val hasConditionalTerminations = terminationTransitions.exists[trigger != null]
+        var Expression triggerExpression = null
 
         // terminationTransition.setDefaultTrace
-        var Expression triggerExpression
 
         // Walk thru all regions that must terminate and create one termination valuedObject per
         // region. For the weak abort create a conjunction of these valuedObjects as the trigger.
@@ -158,7 +157,7 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
             val resetFinished = state.createEntryAction
             resetFinished.effects.add(finishedValuedObject.createAssignment(FALSE))
 
-            val finalStates = region.states.filter(e|e.isFinal == true);
+            val finalStates = region.states.filter[isFinal]
             
             // Optimization (see below)
             var termTriggerDelayed = true;
@@ -193,15 +192,6 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
                     connectorTransition.effects.add(finishedValuedObject.createAssignment(TRUE))
                     
                 }
-                //val T2 = finalState.createImmediateTransitionTo(Final)
-                // Set the final state flag to false
-                //finalState.setFinal(false);
-                if (!hasConditionalTerminations) {
-                    finalState.createStringAnnotation(ANNOTATION_FINALSTATE, "")
-                }
-                //val T2 = finalState.createImmediateTransitionTo(Final)
-                // Set the final state flag to false
-                //finalState.setFinal(false);
                 finalState.createStringAnnotation(ANNOTATION_FINALSTATE, "")
             }
             
@@ -222,26 +212,18 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
         for (terminationTransition : terminationTransitions) {
             terminationTransition.setDefaultTrace
             
-            val isConditionalTermination = terminationTransition.trigger != null
-            
             terminationTransition.preemption = PreemptionType::WEAKABORT
+            
             // TODO: check if optimization is correct in all cases!
             // We should NOT do this for conditional terminations!
-            if (!isConditionalTermination) {
+            if (!(terminationTransition.trigger != null)) {
                 terminationTransition.createStringAnnotation(ANNOTATION_TERMINATIONTRANSITION, "")
                 terminationTransition.setImmediate(true);
+            } else {
+                // A normal termination should immediately be trigger-able! (test 145) 
+                // if not a delayed-conditional termination!
+                terminationTransition.setImmediate(terminationTransition.implicitlyImmediate)
             }
-        }
-
-        for (terminationTransition : terminationTransitions) {
-            terminationTransition.preemption = PreemptionType::WEAKABORT
-            // TODO: check if optimization is correct in all cases!
-            terminationTransition.createStringAnnotation(ANNOTATION_TERMINATIONTRANSITION, "")
-
-            // A normal termination should immediately be trigger-able! (test 145) 
-            // if not a delayed-conditional termination!
-            terminationTransition.setImmediate(terminationTransition.implicitlyImmediate)
-
 
             // if there is just one valuedObject, we do not need an AND!
             if (triggerExpression != null) {

@@ -119,7 +119,7 @@ class ModelsRepository {
         for (repo : getRepositories) {
             // check path
             if (!repo.toFile.isDirectory) {
-                throw new IllegalArgumentException(repo + "is not an existing directory")
+                throw new IllegalArgumentException(repo + " is not an existing directory")
             }
         
             // traverse

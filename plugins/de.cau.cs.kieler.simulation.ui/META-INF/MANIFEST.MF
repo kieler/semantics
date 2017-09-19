@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Simulation Ui
 Bundle-SymbolicName: de.cau.cs.kieler.simulation.ui;singleton:=true
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 0.13.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.simulation.ui.SimulationUiPlugin
 Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui,
@@ -31,5 +31,9 @@ Export-Package: de.cau.cs.kieler.simulation.ui,
  de.cau.cs.kieler.simulation.ui.contentassist,
  de.cau.cs.kieler.simulation.ui.quickfix,
  de.cau.cs.kieler.simulation.ui.contentassist.antlr,
- de.cau.cs.kieler.simulation.ui.contentassist.antlr.internal
+ de.cau.cs.kieler.simulation.ui.contentassist.antlr.internal,
+ de.cau.cs.kieler.simulation.ui.trace.contentassist,
+ de.cau.cs.kieler.simulation.ui.trace.quickfix,
+ de.cau.cs.kieler.simulation.ui.trace.contentassist.antlr,
+ de.cau.cs.kieler.simulation.ui.trace.contentassist.antlr.internal
 Import-Package: org.apache.log4j

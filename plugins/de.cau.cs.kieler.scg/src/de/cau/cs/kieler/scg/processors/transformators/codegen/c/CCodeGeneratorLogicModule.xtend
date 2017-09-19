@@ -37,6 +37,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.IgnoreValue
+import de.cau.cs.kieler.kexpressions.TextExpression
 
 /**
  * C Code Generator Logic Module
@@ -117,6 +118,16 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         if (!conditionalStack.empty) {
             // Apparently, we are in a nested conditional. Handle it if necessary. 
             assignment.handleConditionalNesting
+        }
+        
+        if (assignment.valuedObject === null) {
+            if (assignment.expression instanceof TextExpression) {
+                indent(conditionalStack.size + 1)
+                code.append((assignment.expression as TextExpression).text).append("\n")
+            } else {
+                throw new NullPointerException("Assigned valued object is null")
+            }
+            return
         }
         
         // Add the assignment.

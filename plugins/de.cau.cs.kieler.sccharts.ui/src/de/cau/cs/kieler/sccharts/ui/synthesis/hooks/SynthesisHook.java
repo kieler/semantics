@@ -77,7 +77,7 @@ public abstract class SynthesisHook {
      * @return the priority value
      */
     public int getPriority() {
-        return 0;
+        return 50;
     }
 
     /**
