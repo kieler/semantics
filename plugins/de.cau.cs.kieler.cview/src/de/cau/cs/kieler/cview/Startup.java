@@ -17,11 +17,13 @@ import org.eclipse.ui.IStartup;
 import com.google.inject.Guice;
 
 public class Startup implements IStartup {
-
+    
     @Override
     public void earlyStartup() {
         System.out.println("+++ STARTUP +++");
         Guice.createInjector().getInstance(KLighDController.class);
+        
+        AbstractKLighDController.findAndCloseOldViews();
     }
 
 }

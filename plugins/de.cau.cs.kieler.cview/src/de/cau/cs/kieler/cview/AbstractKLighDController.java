@@ -96,6 +96,8 @@ public abstract class AbstractKLighDController {
     static CViewModel model = null;
     static AbstractKLighDController controller = null;
     static Object[] allSelections;
+    
+    static boolean viewInitialized = false;
 
     // -------------------------------------------------------------------------
 
@@ -151,6 +153,8 @@ public abstract class AbstractKLighDController {
                     public void selectionChanged(IWorkbenchPart part, ISelection selection) {
                         // Save selection in ANY case (for later usage)
                         allSelections = ((IStructuredSelection) selection).toArray();
+                        // Reset initialized flag each time a selection is change
+                        AbstractKLighDController.viewInitialized = false; 
                     }
                 };
                 selectionService.addPostSelectionListener(IPageLayout.ID_PROJECT_EXPLORER,
@@ -161,53 +165,70 @@ public abstract class AbstractKLighDController {
 
     // -------------------------------------------------------------------------
 
-    // public void findAndCloseOldViews() {
-    // IWorkbench workBench = PlatformUI.getWorkbench();
-    // final IWorkbenchWindow window = workBench.getActiveWorkbenchWindow();
-    //
-    // for (IWorkbenchPage page : window.getPages()) {
-    // for (IViewReference viewReference : page.getViewReferences()) {
-    // IViewPart part = viewReference.getView(false);
-    // String id = viewReference.getId();
-    // if (id.equals(CVIEW_KLIGHD_PRIMARY_ID)) {
-    // if (viewReference.getSecondaryId().equals(CVIEW_KLIGHD_ID)) {
-    // page.hideView(part);
-    // System.out.println(">>> " + id);
-    // }
-    // }
-    //
-    // }
-    // }
-    //
-    // }
+    public static void findAndCloseOldViews() {
+        Display.getDefault().asyncExec(new Runnable() {
+            public void run() {
+                IWorkbench workBench = PlatformUI.getWorkbench();
+                for (IWorkbenchWindow window : workBench.getWorkbenchWindows()) {
+                    for (IWorkbenchPage page : window.getPages()) {
+                        for (IViewReference viewReference : page.getViewReferences()) {
+                            IViewPart part = viewReference.getView(false);
+                            String id = viewReference.getId();
+                            if (id.equals(CVIEW_KLIGHD_PRIMARY_ID)) {
+                                if (viewReference.getSecondaryId().startsWith(CVIEW_KLIGHD_ID)) {
+                                    //page.hideView(part);
+                                    //part.dispose();
+                                    page.hideView(part);
+//                                    page.close();
+                                    part.dispose();
+                                    System.out.println(">>> " + id);
+                                }
+                            }
+                        }
+                    }
+                }
+            }});
+
+        
+//        final IWorkbenchWindow window = workBench.getActiveWorkbenchWindow();
+    }
+
+    // -------------------------------------------------------------------------
 
     public void openAndRefreshKLighDView(CViewModel updateModel, boolean updateIfExists) {
         DiagramViewPart view = DiagramViewManager.getView(CVIEW_KLIGHD_ID);
         if (view == null) {
             KlighdSynthesisProperties properties = new KlighdSynthesisProperties();
-//            properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY,
-//                    "de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy");
- //                 "de.cau.cs.kieler.klighd.incremental.IncrementalUpdateStrategy");
+            // properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY,
+            // "de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy");
+            // "de.cau.cs.kieler.klighd.incremental.IncrementalUpdateStrategy");
             if (updateIfExists) {
                 if (updateModel != null) {
                     DiagramViewManager.createView(CVIEW_KLIGHD_ID, CVIEW_KLIGHD_TITLE, updateModel,
-                            properties); 
-                } 
-                else {
+                            properties);
+                } else {
                     CViewModel nullModel = CViewModelFactory.eINSTANCE.createCViewModel();
                     DiagramViewManager.createView(CVIEW_KLIGHD_ID, CVIEW_KLIGHD_TITLE, nullModel,
-                            properties); 
+                            properties);
                 }
             }
         } else {
             if (updateIfExists) {
                 if (updateModel != null) {
-//                    view.initialize(updateModel, CVIEW_KLIGHD_TITLE, null);
-                    DiagramViewManager.updateView(view.getViewContext(), updateModel);
+                    if (!viewInitialized) {
+                        view.initialize(updateModel, CVIEW_KLIGHD_TITLE, null);
+                        viewInitialized = true;
+                    } else {
+                        DiagramViewManager.updateView(view.getViewContext(), updateModel);
+                    }
                 } else {
                     CViewModel nullModel = CViewModelFactory.eINSTANCE.createCViewModel();
-//                    view.initialize(nullModel, CVIEW_KLIGHD_TITLE, null);
-                    DiagramViewManager.updateView(view.getViewContext(), nullModel);
+                    if (!viewInitialized) {
+                        view.initialize(nullModel, CVIEW_KLIGHD_TITLE, null);
+                        viewInitialized = true;
+                    } else {
+                        DiagramViewManager.updateView(view.getViewContext(), nullModel);
+                    }
                 }
             }
         }
@@ -230,24 +251,26 @@ public abstract class AbstractKLighDController {
     // -------------------------------------------------------------------------
 
     public void rebuildModelAndrefreshCView(boolean forceRebuild) {
-        int workTotal = preCalculateModel(allSelections); // , IProgressMonitor monitor));
-        try {
-            new CViewProgressMonitorDialog(new Shell()).run(true, true,
-                    (new RunnableWithProgress() {
-                        public void run(IProgressMonitor monitor) {
-                            SubMonitor subMonitor = SubMonitor.convert(monitor, workTotal);
-                            monitor.beginTask("Processing " + workTotal + " files...", workTotal);
-                            subMonitor.worked(1);
-                            model = calculateModel(allSelections, subMonitor); // , IProgressMonitor
-                                                                               // monitor));
+        if (allSelections != null) {
+            int workTotal = preCalculateModel(allSelections); // , IProgressMonitor monitor));
+            try {
+                new CViewProgressMonitorDialog(new Shell()).run(true, true,
+                        (new RunnableWithProgress() {
+                            public void run(IProgressMonitor monitor) {
+                                SubMonitor subMonitor = SubMonitor.convert(monitor, workTotal);
+                                monitor.beginTask("Processing " + workTotal + " files...", workTotal);
+                                subMonitor.worked(1);
+                                model = calculateModel(allSelections, subMonitor); // , IProgressMonitor
+                                                                                   // monitor));
 
-                            refreshCView(forceRebuild);
-                        }
-                    }));
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+                                refreshCView(forceRebuild);
+                            }
+                        }));
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
