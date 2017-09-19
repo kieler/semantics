@@ -97,6 +97,7 @@ public abstract class AbstractKLighDController {
     static AbstractKLighDController controller = null;
     static Object[] allSelections;
     
+    // Initially, force a complete re-build (no refresh) for the (existing) KLighD view
     static boolean viewInitialized = false;
 
     // -------------------------------------------------------------------------
@@ -153,8 +154,6 @@ public abstract class AbstractKLighDController {
                     public void selectionChanged(IWorkbenchPart part, ISelection selection) {
                         // Save selection in ANY case (for later usage)
                         allSelections = ((IStructuredSelection) selection).toArray();
-                        // Reset initialized flag each time a selection is change
-                        AbstractKLighDController.viewInitialized = false; 
                     }
                 };
                 selectionService.addPostSelectionListener(IPageLayout.ID_PROJECT_EXPLORER,

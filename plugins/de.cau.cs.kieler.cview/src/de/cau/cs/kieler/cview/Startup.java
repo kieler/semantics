@@ -23,7 +23,7 @@ public class Startup implements IStartup {
         System.out.println("+++ STARTUP +++");
         Guice.createInjector().getInstance(KLighDController.class);
         
-        AbstractKLighDController.findAndCloseOldViews();
+        //AbstractKLighDController.findAndCloseOldViews();
     }
 
 }
