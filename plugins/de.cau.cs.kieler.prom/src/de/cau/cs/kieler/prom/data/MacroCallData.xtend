@@ -13,9 +13,10 @@
  */
 package de.cau.cs.kieler.prom.data
 
-import de.cau.cs.kieler.prom.templates.TemplateManager
+import de.cau.cs.kieler.prom.templates.CodeGenerationPhase
+import de.cau.cs.kieler.prom.templates.VariableInterfaceType
+import java.util.HashSet
 import java.util.List
-import java.util.Set
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
@@ -24,21 +25,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * 
  * @author aas
  */
-class MacroCallData {
-    /**
-     * The name of the model.
-     * e.g. 'MyModel' for an scchart 'scchart MyModel {initial state init;}'
-     * If the model name is not specified in the language, the file name without extension should be used.
-     */
-    @Accessors
-    private String modelName = ""
-    
-    /**
-     * The phases in which the macro call should be injected
-     */
-    @Accessors
-    private Set<String> phases = getAllPhaseNames
-    
+class MacroCallData implements Cloneable {
     /**
      * The name of the macro call.
      * e.g. 'Clock' for an annotation '@Clock 500'.
@@ -61,17 +48,34 @@ class MacroCallData {
     private String varName = ""
     
     /**
-     * Variable's type of this annotation.
+     * Variable type of this annotation.
      * e.g. 'int' for an 'input int clock'.
      */
     @Accessors
     private String varType = ""
-    
+
     /**
-     * The interface type can be e.g. inputs, outputs, others or a mixture of those.
+     * The name of the model.
+     * e.g. 'MyModel' for an scchart 'scchart MyModel {initial state init;}'
+     * If the model name is not specified in the language, the file name without extension should be used.
      */
     @Accessors
-    private Set<String> interfaceTypes = newHashSet
+    private String modelName = ""
+        
+    /**
+     * The phases in which the macro call should be injected.
+     * The default is to use the macro call data for all phases.
+     */
+    @Accessors
+    private HashSet<CodeGenerationPhase> phases = CodeGenerationPhase.PHASES
+    
+    /**
+     * Set of variable interface types that is used to categorize for which variable this macro call is used.
+     * This is useful in simulation generation if a subset of all variables
+     * (e.g. the external interface / inputs and outputs) should be communicated.
+     */
+    @Accessors
+    private HashSet<VariableInterfaceType> interfaceTypes = newHashSet
     
     /**
      * Specifies if the template engine should throw an error or ignore it
@@ -79,40 +83,90 @@ class MacroCallData {
      */
     @Accessors
     private boolean ignoreNonExistingSnippet
+
+    /**
+     * Constructor
+     */    
+    public new() {
+    }
     
     /**
-     * Convinience method to set phases
-     * and include the phases for inputs and outputs only if the corresponding parameter is true.
+     * Configure this instance for use in code generation.
+     * 
+     * @param varName The name of the variable (e.g. 'myVar'
+     * @param varType The type of the variable (e.g. 'int')
+     * @param isInput Defines whether the variable is used as input
+     * @param isOuput Defines whether the variable is used as output
      */
-    public def void setPhases(boolean isInput, boolean isOutput) {
-        setAllPhases()
+    public def void initializeForCodeGeneration(String varName, String varType, boolean isInput, boolean isOutput) {
+        this.addInterfaceTypes(isInput, isOutput)
         if(!isInput) {
-            phases.remove("input")
+            this.phases.remove(CodeGenerationPhase.INPUT_PHASE)    
         }
         if(!isOutput) {
-            phases.remove("output")
+            this.phases.remove(CodeGenerationPhase.OUTPUT_PHASE)    
         }
     }
     
     /**
-     * Sets the phases variable to include all code generation phases
+     * Configure this instance for use in simulation code generation.
+     * 
+     * @param varName The name of the variable (e.g. 'myVar'
+     * @param varType The type of the variable (e.g. 'int')
+     * @param isInput Defines whether the variable is used as input
+     * @param isOuput Defines whether the variable is used as output
      */
-    public def void setAllPhases() {
-        phases = getAllPhaseNames
+    public def void initializeForSimulationGeneration(String varName, String varType, boolean isInput, boolean isOutput) {
+        this.varName = varName
+        this.varType = varType
+        this.name = "Simulate"
+        this.addInterfaceTypes(isInput, isOutput)
+        // Add the arguments for the macro call                    
+        this.arguments.add(String.valueOf(isInput))
+        this.arguments.add(String.valueOf(isOutput))
     }
     
     /**
-     * Returns the names of all code generation phases
+     * Adds the corresponding interface types.
+     * 
+     * @param isInput Defines whether the variable is used as input
+     * @param isOuput Defines whether the variable is used as output 
      */
-    public static def Set<String> getAllPhaseNames() {
-        return TemplateManager.codeGenerationPhases.map[it.name].toSet
-    } 
+    private def void addInterfaceTypes(boolean isInput, boolean isOutput) {
+        if(isInput) {
+            interfaceTypes.add(VariableInterfaceType.INPUT)
+        }
+        if(isOutput) {
+            interfaceTypes.add(VariableInterfaceType.OUTPUT)
+        }
+        if(!isInput && !isOutput) {
+            interfaceTypes.add(VariableInterfaceType.INTERNAL)
+        }
+    }
+    
+    /**
+     * Clones the object.
+     * @return the cloned object
+     */
+    public override clone() {
+        val copy = new MacroCallData
+        copy.name = name
+        copy.arguments = arguments.clone
+        copy.varName = varName
+        copy.varType = varType
+        copy.modelName = modelName
+        copy.phases = phases.clone as HashSet
+        copy.interfaceTypes = interfaceTypes.clone as HashSet
+        copy.ignoreNonExistingSnippet = ignoreNonExistingSnippet
+        return copy
+    }
     
     /**
      * Two objects are equal if the name is equal
      * and their argument lists are equal.
      * 
      * @param obj The other object
+     * @return true if they are equal, false otherwise.
      */
     override boolean equals(Object obj){
         if(obj == null)

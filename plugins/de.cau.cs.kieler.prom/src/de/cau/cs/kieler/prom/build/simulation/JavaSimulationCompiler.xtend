@@ -10,19 +10,19 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.prom.build
+package de.cau.cs.kieler.prom.build.simulation
 
 import com.google.common.io.Files
 import de.cau.cs.kieler.prom.PromPlugin
+import de.cau.cs.kieler.prom.build.FileGenerationResult
+import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
-import org.eclipse.core.resources.IResourceChangeListener
 import org.eclipse.core.resources.IncrementalProjectBuilder
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Path
 import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.jobs.Job
-import org.eclipse.core.resources.IFile
 
 /**
  * @author aas

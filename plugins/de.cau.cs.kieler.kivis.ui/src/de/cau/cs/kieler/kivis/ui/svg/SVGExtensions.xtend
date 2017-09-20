@@ -19,6 +19,7 @@ import org.w3c.dom.Node
 import org.w3c.dom.events.EventListener
 import org.w3c.dom.events.EventTarget
 import org.w3c.dom.svg.SVGPoint
+import java.util.regex.Pattern
 
 /**
  * Helper methods for modifying SVG documents.
@@ -205,7 +206,9 @@ class SVGExtensions {
     private def String changeField(String attribute, String fieldName, String fieldValue) {
         val newField = (fieldName + ":" + fieldValue + ";")
         // Replace the current field from the attribute. That is, replace everything from 'FIELD_NAME:' to ';'
-        var newAttribute = attribute.replaceAll(fieldName+":[^;]*[;]?", "");
+        // In case the text is not the first attribute, the ending ';' of the previous attribute may not be removed.
+        var newAttribute = attribute.replaceAll("^"+fieldName+":[^;]*[;]?", "")    // Replace from start to end of attribute
+                                    .replaceAll(";"+fieldName+":[^;]*[;]?", ";");  // Replace from start after another attribute and still keep the end of the previous attribute
         if(!newAttribute.isNullOrEmpty && !newAttribute.endsWith(";")) {
             newAttribute += ";"    
         }

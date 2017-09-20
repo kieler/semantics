@@ -10,16 +10,24 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.prom.build
+package de.cau.cs.kieler.prom.configurable
 
 /**
+ * Base implementation for classes with configurable attributes.
+ * 
  * @author aas
  *
  */
 abstract class Configurable {
     
+    /**
+     * Instance of the attribute extensions.
+     */
     protected extension AttributeExtensions attributeExtensions
     
+    /**
+     * Constructor
+     */
     new() {
         attributeExtensions = new AttributeExtensions
     }

@@ -14,7 +14,7 @@ package de.cau.cs.kieler.simulation.handlers
 
 import com.google.common.base.Charsets
 import com.google.common.io.Files
-import de.cau.cs.kieler.prom.build.ConfigurableAttribute
+import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
 import java.io.File

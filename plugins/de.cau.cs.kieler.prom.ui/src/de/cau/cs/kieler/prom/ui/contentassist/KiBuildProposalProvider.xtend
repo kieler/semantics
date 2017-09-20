@@ -4,11 +4,11 @@
 package de.cau.cs.kieler.prom.ui.contentassist
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.prom.build.AttributeExtensions
-import de.cau.cs.kieler.prom.build.CSimulationCompiler
-import de.cau.cs.kieler.prom.build.JavaSimulationCompiler
-import de.cau.cs.kieler.prom.build.KiCoModelCompiler
-import de.cau.cs.kieler.prom.build.SimpleTemplateProcessor
+import de.cau.cs.kieler.prom.build.compilation.KiCoModelCompiler
+import de.cau.cs.kieler.prom.build.simulation.CSimulationCompiler
+import de.cau.cs.kieler.prom.build.simulation.JavaSimulationCompiler
+import de.cau.cs.kieler.prom.build.templates.SimpleTemplateProcessor
+import de.cau.cs.kieler.prom.configurable.AttributeExtensions
 import de.cau.cs.kieler.prom.kibuild.ModelCompiler
 import de.cau.cs.kieler.prom.kibuild.NormalTemplateProcessor
 import de.cau.cs.kieler.prom.kibuild.SimulationCompiler
@@ -25,9 +25,9 @@ import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
  */
 class KiBuildProposalProvider extends AbstractKiBuildProposalProvider {
     private static val kicoModelCompilerInstance = new KiCoModelCompiler
-    private static val simulationTemplateProcessorInstance = new de.cau.cs.kieler.prom.build.SimulationTemplateProcessor
+    private static val simulationTemplateProcessorInstance = new de.cau.cs.kieler.prom.build.templates.SimulationTemplateProcessor
     private static val templateProcessorInstance = new SimpleTemplateProcessor
-    private static val wrapperCodeTemplateProcessorInstance = new de.cau.cs.kieler.prom.build.WrapperCodeTemplateProcessor
+    private static val wrapperCodeTemplateProcessorInstance = new de.cau.cs.kieler.prom.build.templates.WrapperCodeTemplateProcessor
     private static val javaSimulationCompilerInstance = new JavaSimulationCompiler
     private static val cSimulationCompilerInstance = new CSimulationCompiler
     

@@ -15,9 +15,9 @@ package de.cau.cs.kieler.simulation.handlers
 import com.google.common.io.Files
 import com.google.common.util.concurrent.SimpleTimeLimiter
 import com.google.common.util.concurrent.UncheckedTimeoutException
-import de.cau.cs.kieler.prom.build.ConfigurableAttribute
-import de.cau.cs.kieler.prom.build.SimulationCompiler
-import de.cau.cs.kieler.prom.build.SimulationCompilerListener
+import de.cau.cs.kieler.prom.build.simulation.SimulationCompiler
+import de.cau.cs.kieler.prom.build.simulation.SimulationCompilerListener
+import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
 import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
@@ -137,7 +137,7 @@ class ExecutableSimulator extends DefaultSimulator {
     override stop() {
         removeResourceChangeListener
         if(process != null) {
-            process.destroy()
+            process.destroyForcibly
             process = null
         }
     }

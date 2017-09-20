@@ -31,6 +31,10 @@ Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Kiel University
 Export-Package: de.cau.cs.kieler.prom,
  de.cau.cs.kieler.prom.build,
+ de.cau.cs.kieler.prom.build.compilation,
+ de.cau.cs.kieler.prom.build.simulation,
+ de.cau.cs.kieler.prom.build.templates,
+ de.cau.cs.kieler.prom.configurable,
  de.cau.cs.kieler.prom.console,
  de.cau.cs.kieler.prom.data,
  de.cau.cs.kieler.prom.environments,

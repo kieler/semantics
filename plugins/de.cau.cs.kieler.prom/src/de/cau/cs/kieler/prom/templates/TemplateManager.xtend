@@ -24,7 +24,6 @@ import java.io.File
 import java.io.FileFilter
 import java.io.IOException
 import java.io.StringWriter
-import java.util.ArrayList
 import java.util.List
 import java.util.Map
 import java.util.regex.Pattern
@@ -33,7 +32,6 @@ import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.Platform
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * This class generates wrapper code for models.
@@ -64,8 +62,7 @@ class TemplateManager {
     public static val MODEL_NAMES_VARIABLE = "model_names"
     
     /**
-     * A template variable which is replaced with the name of the file (without file extension)
-     * that is created during wrapper code generation.
+     * A template variable which is replaced with the name of the template file (without file extension).
      */
     public static val FILE_NAME_VARIABLE = "file_name"
     
@@ -75,14 +72,6 @@ class TemplateManager {
      */
     public static val KICO_GENERATED_CODE_VARIABLE = "kico_code"
     
-    private static val declarationPhase = new CodeGenerationPhase("declaration", true, "decl")
-    private static val initializationPhase = new CodeGenerationPhase("initialization", true, "init")
-    private static val inputPhase = new CodeGenerationPhase("input", false)
-    private static val outputPhase = new CodeGenerationPhase("output", false)
-    private static val releasePhase = new CodeGenerationPhase("release", true, "free")
-
-    public static var List<CodeGenerationPhase> codeGenerationPhases = #[declarationPhase, initializationPhase, inputPhase, outputPhase, releasePhase]
-
     /**
      * Macro definitions to use <@init>, <@input>, <@output> in wrapper code snippets.
      */
@@ -105,6 +94,7 @@ class TemplateManager {
      * 
      * @param templatePath The project relative path to the wrapper code template
      * @param datas The model files to generate wrapper code for
+     * @return the generated wrapper code
      */
     def public String generateWrapperCode(String templatePath, FileData... datas) {
         val List<MacroCallData> annotationDatas = newArrayList()
@@ -120,17 +110,18 @@ class TemplateManager {
         // Set model names
         val mapping = #{MODEL_NAME_VARIABLE -> modelName,
                         MODEL_NAMES_VARIABLE -> modelNames}
-        generateWrapperCode(templatePath, annotationDatas, mapping)
+        return generateWrapperCode(templatePath, annotationDatas, mapping)
     }
     
     /**
-     * Generates wrapper code for a list of annotated model files.
+     * Generates wrapper code using the given macro call datas.
      * 
      * @param templatePath The project relative path to the wrapper code template
-     * @param annotationDatas The annotations that injected as macro calls
+     * @param macroCallDatas The macro calls to be injected in the template
+     * @return the generated wrapper code
      */
-    def public String generateWrapperCode(String templatePath, List<MacroCallData> annotationDatas) {
-        generateWrapperCode(templatePath, annotationDatas, #{})
+    def public String generateWrapperCode(String templatePath, List<MacroCallData> macroCallDatas) {
+        generateWrapperCode(templatePath, macroCallDatas, #{})
     }
     
     /**
@@ -156,17 +147,18 @@ class TemplateManager {
     }
     
     /**
-     * Generates wrapper code for a list of annotated model files.
+     * Generates wrapper code with the given macro call datas and additional mappings.
      * 
      * @param templatePath The project relative path to the wrapper code template
+     * @param macroCallDatas The macro calls to be injected in the template
      * @param additionalMappings Additional mappings of placeholder variables to their corresponding values
-     * @param annotationDatas The annotations that injected as macro calls
+     * @return the generated wrapper code
      */
-    def public String generateWrapperCode(String templatePath, List<MacroCallData> annotationDatas, Map<String, Object> additionalMappings) {
+    def public String generateWrapperCode(String templatePath, List<MacroCallData> macroCallDatas, Map<String, Object> additionalMappings) {
 
         // Check consistency of path
         if (!templatePath.isNullOrEmpty()) {
-            val templateWithMacroCalls = getTemplateWithMacroCalls(templatePath, annotationDatas)
+            val templateWithMacroCalls = getTemplateWithMacroCalls(templatePath, macroCallDatas)
             
             // Debug log macro calls
 //            System.err.println(templateWithMacroCalls)
@@ -175,8 +167,8 @@ class TemplateManager {
             val map = <String, Object> newHashMap
             
             // Add name of model 
-            if(!map.containsKey(MODEL_NAME_VARIABLE) && !annotationDatas.isEmpty) {
-                val modelName = annotationDatas.get(0).modelName
+            if(!map.containsKey(MODEL_NAME_VARIABLE) && !macroCallDatas.isEmpty) {
+                val modelName = macroCallDatas.get(0).modelName
                 map.put(MODEL_NAME_VARIABLE, modelName)
                 map.put(MODEL_NAMES_VARIABLE, #[modelName])
             }
@@ -199,7 +191,7 @@ class TemplateManager {
         }
         return ""
     }
-            
+
     /**
      * Searches for wrapper code annotations in the models
      * and injects macro calls accordingly in the template.
@@ -207,8 +199,9 @@ class TemplateManager {
      * @param templatePath The project relative path to the wrapper code template
      * @param additionalMappings Additional mappings of placeholder variables to their corresponding values
      * @param annotationDatas The annotations that injected as macro calls
-     * @return a String with the input template's wrapper code
-     * plus injected macro calls from annotations of the given files.
+     * @return a String with the input template,
+     *         where placeholders for the different phases are replaced with the corresponding macro calls
+     *         that have been injected.
      */
     private def String getTemplateWithMacroCalls(String templatePath, List<MacroCallData> annotationDatas) {
         
@@ -256,8 +249,8 @@ class TemplateManager {
         FreemarkerConfiguration.newConfiguration(project.location.toOSString)
         
         // Add implicit include of assignment macros such as <@init> and <@output>
-        FreemarkerConfiguration.stringTemplateLoader.putTemplate("assignmentMacros", getOrInitializeMacroDefinitions() )
-        FreemarkerConfiguration.configuration.addAutoInclude("assignmentMacros")
+        FreemarkerConfiguration.stringTemplateLoader.putTemplate("injectionMacros", getOrInitializeMacroDefinitions )
+        FreemarkerConfiguration.configuration.addAutoInclude("injectionMacros")
         
         // Process template with macro calls and now implicitly loaded snippet definitions.
         val template = new Template("templateWithMacroCalls", templateWithMacroCalls, FreemarkerConfiguration.configuration)
@@ -284,8 +277,8 @@ class TemplateManager {
         if(macroDefinitions == null){
             macroDefinitions = ""
             
-            for(phase : codeGenerationPhases ){
-                for(macro : phase.macros){
+            for(phase : CodeGenerationPhase.PHASES ){
+                for(macro : phase.injectionMacros){
                     macroDefinitions += macro.freeMarkerDefinition
                     macroDefinitions += "\n"
                 }                
@@ -303,44 +296,35 @@ class TemplateManager {
      */
     private def Map<String, String> getMacroCalls(MacroCallData... annotationDatas) {
         val Map<String, String> map = newHashMap
-        if(annotationDatas.isNullOrEmpty) {
-            // Set the macro value for all placeholders (e.g. ${inputs}, ${outputs}) to the empty string,
-            // because there are no annotations to inject.
-            for(phase : codeGenerationPhases) {
-                for(macro : phase.macros) {
-                    map.put(macro.name+"s", "")
-                }
-            }
-            return map
-        }
+        
         // The assignment macros such as <@init> and <@output> use a variable
         // to determine if their snippet should be inserted.
-        for(phase : codeGenerationPhases) {
-            phase.macroCallsToInject = phase.freeMarkerAssignment+"\n"
+        for(phase : CodeGenerationPhase.PHASES) {
+            phase.codeToInject = phase.freeMarkerAssignment+"\n"
         }
 
         // Keep track of the annotations that were already seen before in this collection
-        val doneAnnotations = new ArrayList<MacroCallData>()
-        var boolean isAnnotationDoneAlready
+        val doneDatas = <MacroCallData> newHashSet
+        var isDoneAlready = false
         
         // Add macro calls for annotations to the different phases
         var MacroCallData prev = null; 
         for (data : annotationDatas) {
             
-            isAnnotationDoneAlready = true
-            if (!doneAnnotations.contains(data)) {
-                doneAnnotations.add(data)
-                isAnnotationDoneAlready = false
+            isDoneAlready = true
+            if (!doneDatas.contains(data)) {
+                doneDatas.add(data)
+                isDoneAlready = false
             }
 
-            for(phase : codeGenerationPhases) {
+            for(phase : CodeGenerationPhase.PHASES) {
                 // We initialize every annotation only once
                 // although the same annotation might be used twice: as input and output.
-                if(!phase.isUsesAnnotationsOnce || (phase.isUsesAnnotationsOnce && !isAnnotationDoneAlready) ) {
+                if(!phase.singleton || (phase.singleton && !isDoneAlready) ) {
                     // Use input annotations on inputs only, and output annotations on outputs only
                     if(phase.isApplicable(data)) {
                         // The macro of this annotation should be called in this phase
-                        phase.macroCallsToInject += getTemplateCodeForAnnotation(data)
+                        phase.codeToInject = phase.codeToInject + getTemplateCodeForAnnotation(data)
                     }
                 }
             }
@@ -348,13 +332,8 @@ class TemplateManager {
         }
 
         // Send FreeMarker the text to replace the placeholder of each phase
-        for(phase : codeGenerationPhases) {
-            for(macro : phase.macros) {
-                // Calling the phase in the template is possible by
-                // using the name of the assignment macro with an 's' added
-                // (e.g. ${declarations} for <@declaration>)
-                map.put(macro.name+"s", phase.macroCallsToInject)
-            }
+        for(phase : CodeGenerationPhase.PHASES) {
+            map.putAll(phase.injectionMacroMappings)
         }
         return map
     }
@@ -421,28 +400,7 @@ class TemplateManager {
 
         return txt
     }
-
-    /**
-     * Searches for files of a given file extension in a directory and sub directories.
-     * 
-     * @param folder The directory to start the search in
-     * @param fileExtension A file extension that found files must match
-     * @return a list with file handles for the found files.
-     */
-    private def List<File> getFilesRecursive(File folder, String fileExtension) {
-        // Filter that accepts directories and files with the given extension.
-        val filter = new FileFilter() {
-            override accept(File file) {
-                return file.isDirectory || Files.getFileExtension(file.name).equalsIgnoreCase(fileExtension)
-            }
-        }
-
-        // Get files
-        val list = new ArrayList<File>()
-        getFilesRecursiveHelper(folder, list, filter)
-        return list
-    }
-
+    
     /**
      * Auxilary method for getFilesRecursive(...).
      * Searches for files in the given folder and recursive in all sub folders.
@@ -578,127 +536,5 @@ class TemplateManager {
                 System.err.println(ex.getMessage());
             }
         }
-    }
-    
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
-    // New Class
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
-    /**
-     * Class to define the phases for which wrapper code is used and thus to define which macro calls
-     * need to be injected in the template.
-     */
-    public static class CodeGenerationPhase {
-        
-        /**
-         * The unique name of this phase.
-         * Used to identify which phase is currently active in the template.
-         */
-        @Accessors(PUBLIC_GETTER)
-        private var String name
-        
-        /**
-         * Defines if the same annotation may be used multiple times in this phase.
-         * (e.g. the same annotation should be initialized only once
-         * but may be used multiple times: as input and output) 
-         */
-        private boolean isUsesAnnotationsOnce
-        
-        /**
-         * The list of assignment macros that will insert its content as part of this phase.
-         * (e.g. <@init> as well as <@initialization> will insert its content as part of the initialization phase)
-         */
-        private val List<AssignmentMacro> macros = newArrayList();
-        
-        /**
-         * A variable to calculate the assignments and macros,
-         * which should be injected in this phase for the current wrapper code generation launch.
-         */
-        @Accessors
-        private var String macroCallsToInject
-        
-        /**
-         * Constructor.
-         * 
-         * @param name The unique name of the phase.
-         * @param isUsesAnnotationsOnce Defines whether the same annotation may be used multiple times in this phase
-         * @param alternativeMacroNames A list of macro names that should be equiivalent to the macro with the same name as this phase. 
-         */
-        new(String name, boolean isUsesAnnotationsOnce, String... alternativeMacroNames) {
-            this.name = name
-            this.isUsesAnnotationsOnce = isUsesAnnotationsOnce
-            
-            // Create macros
-            this.macros += new AssignmentMacro(name, this)
-            for(alternativeMacroName : alternativeMacroNames) {
-                this.macros += new AssignmentMacro(alternativeMacroName, this)
-            }
-        }
-        
-        /**
-         * The FreeMarker assignment statement which will set this phase as active.
-         */
-        public def getFreeMarkerAssignment() '''
-            <#assign phase='«name»' />
-        '''
-        
-        /**
-         * Returns the list of assignment macros, which will insert its content as part of this phase.
-         * 
-         * @return the list of assignment macros for this phase.
-         */
-        public def getMacros(){
-            return macros
-        }
-        
-        /**
-         * Checks if the snippet definition for the annotation should be inserted as part of this phase.
-         * 
-         * @return true if the snippet definition for the annotation should be inserted as part of this phase.
-         */
-        public def boolean isApplicable(MacroCallData data){
-            return data.phases.contains(name)
-        }
-    }
-    
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
-    // New Class
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
-    /**
-     * Class to define assignment macros that will insert their content as part of a given phase. 
-     */
-    private static class AssignmentMacro {
-        /**
-         * The name for the macro
-         */
-        private var String name;
-        
-        /**
-         * The phase in which the content of this macro should be used
-         */
-        private var CodeGenerationPhase phase;
-        
-        /**
-         * Constructor.
-         * 
-         * @param name The name
-         * @param phase The phase
-         */
-        new(String name, CodeGenerationPhase phase) {
-            this.name = name
-            this.phase = phase
-        }
-        
-        /**
-         * The definition of this assignment macro for the FreeMarker template engine.
-         * 
-         * @return the FreeMarker definition of this assignment macro
-         */
-        def getFreeMarkerDefinition() '''
-            <#macro «name»>
-                <#if phase=='«phase.name»'>
-                    <#nested />
-                </#if>
-            </#macro>
-        '''
     }
 }

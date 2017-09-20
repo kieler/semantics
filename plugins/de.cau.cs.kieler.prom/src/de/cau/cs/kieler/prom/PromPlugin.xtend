@@ -67,17 +67,17 @@ class PromPlugin implements BundleActivator  {
     public static val BUILD_DIRECTORY = "kieler-gen"
     
     /**
-     * Qualifier used to set the environment name property of a project.
+     * Qualifier used to set the build configuration for a project.
      */
     public static val BUILD_CONFIGURATION_QUALIFIER = new QualifiedName(PromPlugin.PLUGIN_ID, "build.configuration")
     
     /**
-     * Qualifier used to set the environment name property of a project.
+     * Qualifier used to set the environment name of a project.
      */
     public static val ENVIRIONMENT_QUALIFIER = new QualifiedName(PromPlugin.PLUGIN_ID, "environment")
     
     /**
-     * Qualifier used to set the main file's project relative path of a project.
+     * Qualifier used to set the main file of a project.
      */
     public static val MAIN_FILE_QUALIFIER = new QualifiedName(PromPlugin.PLUGIN_ID, "main.file")
 
@@ -136,7 +136,10 @@ class PromPlugin implements BundleActivator  {
     }
     
     /**
-     * Determines is a project is a java project 
+     * Checks if a project is a java project
+     * 
+     * @param project The project
+     * @return true if the project has the Java project nature, false otherwise.
      */
     public static def boolean isJavaProject(IProject project) {
         return project.hasNature(JavaCore.NATURE_ID)
@@ -148,7 +151,7 @@ class PromPlugin implements BundleActivator  {
      * The contents of the returned input stream optionally may have placeholders which can be directly replaced in this method.
      * 
      * @param filePathOrURL The file path or an URL with the platform protocol
-     * @param placeholderReplacement A map where the keys are placeholders of the stream and the values are the values of the placeholders. 
+     * @param placeholderReplacement A map where the keys are placeholders in the stream and the values are the values for the placeholders. 
      *
      * @return the loaded input stream
      */
@@ -194,7 +197,7 @@ class PromPlugin implements BundleActivator  {
      * @return the complete text of the stream
      */
     def private static String streamToString(InputStream inputStream) {
-        var text = "";
+        var text = ""
         val reader = new InputStreamReader(inputStream, Charsets.UTF_8)
         try {
             text = CharStreams.toString(reader);
@@ -232,9 +235,10 @@ class PromPlugin implements BundleActivator  {
     }
     
     /**
-     * Returns a project handle if the project exists in the current workspace.
+     * Searches and returns the project with the given name. 
      * 
      * @param name The name of a project to be found
+     * @return the project with the given name, or null if none.
      */
     static def IProject findProject(String name) {
         if (!name.isNullOrEmpty && new Path(name).isValidPath(name)) {
@@ -267,6 +271,7 @@ class PromPlugin implements BundleActivator  {
      * 
      * @param resources The resources in which the search takes place
      * @param fileExtension The file extension that files must have, or null if all files should be included
+     * @return a list of the found files
      */
     public static def List<IFile> findFiles(IResource[] resources, String fileExtension) {
         return findFiles(resources, #[fileExtension])
@@ -277,6 +282,7 @@ class PromPlugin implements BundleActivator  {
      * 
      * @param resources The resources in which the search takes place
      * @param fileExtensions The file extensions that files must have, or null if all files should be included
+     * @return a list of the found files
      */
     public static def List<IFile> findFiles(IResource[] resources, String[] fileExtensions) {
         val ArrayList<IFile> findings = newArrayList

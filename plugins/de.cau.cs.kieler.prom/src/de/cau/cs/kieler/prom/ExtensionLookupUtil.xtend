@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.prom
 
-import java.util.ArrayList
 import java.util.List
 import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.IExtension
@@ -21,7 +20,7 @@ import org.eclipse.core.runtime.Platform
 
 /**
  * Auxilary class to search for installed extensions
- * and instantiate implementing classes using the fully qualified class name.
+ * and instantiate classes using the fully qualified class name.
  * 
  * @author aas
  *
@@ -29,7 +28,7 @@ import org.eclipse.core.runtime.Platform
 class ExtensionLookupUtil {
     
     /**
-     * The attribute name for a class which implements a wizard
+     * The attribute name for a class
      */
     public static val CLASS_ATTRIBUTE_NAME = "class"
     
@@ -72,9 +71,16 @@ class ExtensionLookupUtil {
         return null
     }
 
+    /**
+     * Instantiates the class that is configured in the given IConfigurationElement in an attribute 'class',
+     * which must contain a fully qualified class name.
+     * 
+     * @param configElement The IConfigurationElement
+     * @return the instantiated class or null if instantiation failed.
+     */
     static def Object instantiateClassFromConfiguration(IConfigurationElement configElement) {
         try {
-            val object = configElement.createExecutableExtension("class") as Object;
+            val object = configElement.createExecutableExtension(CLASS_ATTRIBUTE_NAME) as Object;
             return object
         } catch (ClassCastException e) {
             return null
@@ -82,7 +88,7 @@ class ExtensionLookupUtil {
     }
 
     /**
-     * Fetches all configuration elements that add to the given extension point.<br/>
+     * Fetches all configuration elements that add to the given extension point.
      * 
      * @param extensionPointId The extension point id
      * @param xmlElementName The name of the xml element that represents the configuration element 

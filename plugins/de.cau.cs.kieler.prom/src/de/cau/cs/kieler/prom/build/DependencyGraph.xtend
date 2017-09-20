@@ -21,6 +21,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author aas
  *
  */
+//TODO: Check if this is still necessary
 class DependencyGraph {
     @Accessors(PUBLIC_GETTER)
     private val List<DependencyNode> nodes = newArrayList

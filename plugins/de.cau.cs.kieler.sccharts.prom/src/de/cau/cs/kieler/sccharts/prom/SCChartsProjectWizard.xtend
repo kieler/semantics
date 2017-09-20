@@ -17,7 +17,7 @@ import de.cau.cs.kieler.prom.ui.wizards.PromProjectWizard
 
 /**
  * Implementation of a project wizard that creates a project via environments
- * and initializes it with an SCT file. 
+ * and initializes it with an SCCharts file. 
  * 
  * @author aas
  */

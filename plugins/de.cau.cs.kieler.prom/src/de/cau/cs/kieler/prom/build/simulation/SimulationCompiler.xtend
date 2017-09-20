@@ -10,10 +10,20 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.prom.build
+package de.cau.cs.kieler.prom.build.simulation
 
+import com.google.common.base.Charsets
+import com.google.common.io.CharStreams
+import com.google.common.io.Files
 import de.cau.cs.kieler.prom.PromPlugin
+import de.cau.cs.kieler.prom.build.BuildProblem
+import de.cau.cs.kieler.prom.build.FileGenerationResult
+import de.cau.cs.kieler.prom.build.KielerModelingBuilder
+import de.cau.cs.kieler.prom.configurable.Configurable
+import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
 import de.cau.cs.kieler.prom.console.PromConsole
+import java.io.File
+import java.io.InputStreamReader
 import java.util.ArrayList
 import java.util.List
 import java.util.concurrent.TimeUnit
@@ -22,14 +32,8 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.Assert
 import org.eclipse.core.runtime.IProgressMonitor
-import org.eclipse.xtend.lib.annotations.Accessors
-import java.io.File
-import com.google.common.io.Files
 import org.eclipse.core.runtime.Path
-import org.eclipse.core.resources.ResourcesPlugin
-import com.google.common.io.CharStreams
-import java.io.InputStreamReader
-import com.google.common.base.Charsets
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author aas

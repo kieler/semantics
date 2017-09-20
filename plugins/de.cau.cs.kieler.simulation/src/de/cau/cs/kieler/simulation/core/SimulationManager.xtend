@@ -13,7 +13,8 @@
 package de.cau.cs.kieler.simulation.core
 
 import de.cau.cs.kieler.prom.ExtensionLookupUtil
-import de.cau.cs.kieler.prom.build.Configurable
+import de.cau.cs.kieler.prom.configurable.Configurable
+import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.kisim.Action
 import de.cau.cs.kieler.simulation.kisim.ActionOperation
 import de.cau.cs.kieler.simulation.kisim.SimulationConfiguration
@@ -25,7 +26,6 @@ import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.prom.build.ConfigurableAttribute
 
 /**
  * The simulation manager holds a configuration of a simulation and takes care of its execution.

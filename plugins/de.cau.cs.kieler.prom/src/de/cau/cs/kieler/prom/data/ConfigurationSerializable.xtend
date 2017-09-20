@@ -338,11 +338,18 @@ abstract class ConfigurationSerializable {
         }
     }
 
+    /**
+     * For a generic class, returns the type of the first generic parameter,
+     * for instance a List<String> would return String here.
+     * 
+     * @param genericType A class with at least one generic argument, e.g., List<T>
+     * @return the type of the first generic 
+     */
     private def Class<?> getClassOfFirstTypeArgument(Type genericType) {
         if(genericType instanceof ParameterizedType){
             val fieldArgTypes = genericType.getActualTypeArguments();
             for(fieldArgType : fieldArgTypes) {
-                return fieldArgType as Class
+                return fieldArgType as Class<?>
             }
         }
         return null

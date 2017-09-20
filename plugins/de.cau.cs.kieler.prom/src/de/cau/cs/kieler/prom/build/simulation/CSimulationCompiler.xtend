@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.prom.build
+package de.cau.cs.kieler.prom.build.simulation
 
 import de.cau.cs.kieler.prom.PromPlugin
 import org.eclipse.core.resources.IProject

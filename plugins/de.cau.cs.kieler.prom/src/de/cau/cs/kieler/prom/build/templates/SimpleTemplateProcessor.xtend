@@ -10,25 +10,42 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.prom.build
+package de.cau.cs.kieler.prom.build.templates
 
 import com.google.common.io.Files
 import de.cau.cs.kieler.prom.PromPlugin
+import de.cau.cs.kieler.prom.build.FileGenerationResult
 import de.cau.cs.kieler.prom.templates.TemplateManager
 
 /**
+ * Template processor that without additional information macro calls
+ * that are injected into the template before it is processed.
+ * 
+ * Lets Freemarker process the input template and saves the output to the target file. 
+ * 
  * @author aas
  *
  */
 class SimpleTemplateProcessor extends TemplateProcessor {
+    /**
+     * Constructor
+     */
     new() {
         super()
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override process() {
+        if(monitor != null) {
+            monitor.subTask("Processing template '"+template.stringValue+"'")
+        }
+        // Get file handles
         val templateFile = project.getFile(template.stringValue)
         val targetFile = project.getFile(target.stringValue)
         
+        // Process the template
         val name = Files.getNameWithoutExtension(templateFile.name)
         val generator = new TemplateManager(project)
         val generatedCode = generator.processTemplate(templateFile.projectRelativePath.toOSString, 

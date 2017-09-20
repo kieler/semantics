@@ -23,14 +23,12 @@ import de.cau.cs.kieler.kivis.kivis.Domain
 import de.cau.cs.kieler.kivis.kivis.Mapping
 import de.cau.cs.kieler.kivis.kivis.SimulationOperation
 import de.cau.cs.kieler.kivis.kivis.VariableReference
-import de.cau.cs.kieler.prom.build.AttributeExtensions
+import de.cau.cs.kieler.prom.configurable.AttributeExtensions
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.NDimensionalArray
 import de.cau.cs.kieler.simulation.core.SimulationManager
-import java.util.List
-import java.util.Map
-import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.simulation.core.Variable
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author aas

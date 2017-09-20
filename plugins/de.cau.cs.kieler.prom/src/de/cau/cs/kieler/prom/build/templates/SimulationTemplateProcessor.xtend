@@ -10,48 +10,100 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.prom.build
+package de.cau.cs.kieler.prom.build.templates
 
 import com.google.common.io.Files
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
+import de.cau.cs.kieler.prom.build.FileGenerationResult
+import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
+import de.cau.cs.kieler.prom.data.MacroCallData
+import de.cau.cs.kieler.prom.templates.TemplateManager
 import java.util.List
 import java.util.Map
 import java.util.Map.Entry
+import java.util.regex.Pattern
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.Assert
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.prom.data.MacroCallData
-import de.cau.cs.kieler.prom.templates.TemplateManager
-import java.util.regex.Pattern
+import de.cau.cs.kieler.prom.templates.VariableInterfaceType
 
 /**
+ * Template processor that injects additional macro calls into the template before it is processed.
+ * The macro calls are created from the variables in a model file to have these available in the simulation.
+ * 
  * @author aas
  *
  */
 class SimulationTemplateProcessor extends TemplateProcessor {
+    
+    /**
+     * The default variable type for additional variables.
+     */
+    public val DEFAULT_VARIABLE_TYPE = "int"
+    
+    /**
+     * The model file with the simulation interface.
+     */
     public val modelPath = new ConfigurableAttribute("modelFile")
+    
+    /**
+     * The location of the compiled model.
+     * It is used for additional variable replacements in the template.
+     */
     public val compiledModelPath = new ConfigurableAttribute("compiledModelFile", "")
+    
+    /**
+     * Additional variables that should be included in the simulation generation.
+     * Example for this field:
+     * 
+     *  variables {
+     *    input: myVar1
+     *    output: {
+     *      bool: myVar2
+     *      bool: myVar4[2][3]
+     *    }
+     *  }
+     */
     public val additionalVariables = new ConfigurableAttribute("variables")
+    
+     /**
+      * The interface types that should be included in the simulation generation.
+      * Examples for interface types are input/output/internal.
+      * 
+      * If this is not set, then all interface types are included.
+      * 
+      * 
+      */
     public val interfaceTypes = new ConfigurableAttribute("interfaceTypes")
     
+    /**
+     * 
+     */
     @Accessors
     private var EObject model
     
+    /**
+     * Constructor
+     */
     new() {
         super()
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override process() {
         Assert.isNotNull(template.stringValue)
         Assert.isNotNull(target.stringValue)
-        
         if(monitor != null) {
             monitor.subTask("Processing simulation template '"+template.stringValue+"'")
         }
+        // Get file handles
         val templateFile = project.getFile(template.stringValue)
         val targetFile = project.getFile(target.stringValue)
+        
         // Get annotations in model
         var List<MacroCallData> annotationDatas = newArrayList()
         var IFile modelFile
@@ -64,9 +116,10 @@ class SimulationTemplateProcessor extends TemplateProcessor {
         if(model != null) {
             TemplateManager.getSimulationInterfaceData(model, annotationDatas)
         }
+        
         // Get additional annotations from configuration
         if(additionalVariables.value != null && additionalVariables.value instanceof Map) {
-            val variablesMap = additionalVariables.value as Map<String, Object>
+            val variablesMap = additionalVariables.mapValue
             for(entry : variablesMap.entrySet) {
                 val datas = createDataFromVariablesMapping(entry)
                 if(!datas.isNullOrEmpty) {
@@ -74,6 +127,7 @@ class SimulationTemplateProcessor extends TemplateProcessor {
                 }
             }
         }
+        
         // Set additional placeholder variables
         val targetName = Files.getNameWithoutExtension(targetFile.name)
         var String compiledModelFileLocation = ""
@@ -86,7 +140,7 @@ class SimulationTemplateProcessor extends TemplateProcessor {
             modelName = Files.getNameWithoutExtension(modelFile.name)
         }
         
-        // Filter annotation datas based on the interface types that should be inclueded (input/output/internal)
+        // Filter annotation datas based on the interface types that should be inclueded (e.g. input/output/internal)
         if(interfaceTypes.value != null) {
             if(interfaceTypes.value instanceof List) {
                 annotationDatas = annotationDatas.filter[it.matches(interfaceTypes.value as List)].toList
@@ -109,30 +163,57 @@ class SimulationTemplateProcessor extends TemplateProcessor {
         return result
     }
     
+    /**
+     * Creates macro call datas from an entry of the configurable additional variables.
+     * 
+     * @param entry An entry of the map of the additional variables
+     * @return The list of macro call datas to simulate the additional variables in the entry
+     */
     private def List<MacroCallData> createDataFromVariablesMapping(Entry<String, Object> entry) {
-        if(entry.value instanceof List) {
+        if(entry.value instanceof String) {
+            // The value is a simple string (e.g. input: I)
+            return #[createData(entry.key, entry.value as String, DEFAULT_VARIABLE_TYPE)]
+        } else if(entry.value instanceof List) {
+            // The value is a list (e.g. output: O, out, x)
             val List<MacroCallData> datas = newArrayList
             for(v : entry.value as List) {
-                datas.add(createData(entry.key, v as String, "int"))
+                if(v instanceof String) {
+                    datas.add(createData(entry.key, v as String, DEFAULT_VARIABLE_TYPE))    
+                } else {
+                    throw new Exception("Could not create additional variable for the value "+v)
+                }
+            }
+            return datas
+        } else if(entry.value instanceof Map) {
+            // If the value is a map, then we assume that the variable type is the key of the map
+            // variable name (and array declaration) is the value of the map.
+            val List<MacroCallData> datas = newArrayList
+            val nameAndTypeMap = entry.value as Map<String,String>
+            for(nameAndType : nameAndTypeMap.entrySet) {
+                datas.add(createData(entry.key, nameAndType.value, nameAndType.key))
             }
             return datas
         } else {
-            return #[createData(entry.key, entry.value as String, "int")]
+            throw new Exception("Could not create additional variable for the value "+entry.value)
         }
     }
     
+    /**
+     * Creates a macro call data for simulation generation.
+     * 
+     * @param variableInterface The interfaceType
+     * @param varName The name of the variable
+     * @param varType The type of the variable
+     * @return the created macro call data
+     */
     private def MacroCallData createData(String variableInterface, String varName, String varType) {
-        val data = new MacroCallData();
         val isInput = (variableInterface == "input")
         val isOutput = (variableInterface == "output")
-        data.arguments.add(String.valueOf(isInput))
-        data.arguments.add(String.valueOf(isOutput))
-        
-        data.interfaceTypes.add(variableInterface)
-        data.phases = #{"declaration", "initialization", "release", "input", "output"}
-        data.name = "Simulate"
-        data.varType = varType
-        data.varName = varName
+        val data = new MacroCallData 
+        data.initializeForSimulationGeneration(varName, varType, isInput, isOutput)
+        if(variableInterface == "other") {
+            data.interfaceTypes.add(VariableInterfaceType.OTHER)
+        }
         
         // Add (optional) array sizes.
         // The format would be VAR_NAME[SIZE_0][SIZE_1]...[SIZE_N]
@@ -150,6 +231,13 @@ class SimulationTemplateProcessor extends TemplateProcessor {
         return data
     }
     
+    /**
+     * Checks whether the data should be used given the interface types.
+     * 
+     * @param data The macro call data
+     * @param interfaceTypes List of the allowed interface types
+     * @return true if the interface type of the data occurs in the list of allowed interface types.
+     */
     private def boolean matches(MacroCallData data, List<String> interfaceTypes) {
         for(interfaceType : interfaceTypes) {
             if(data.matches(interfaceType)) {

@@ -8,7 +8,7 @@ import de.cau.cs.kieler.kivis.extensions.KiVisExtensions
 import de.cau.cs.kieler.kivis.kivis.Interaction
 import de.cau.cs.kieler.kivis.kivis.Interval
 import de.cau.cs.kieler.kivis.kivis.Mapping
-import de.cau.cs.kieler.prom.build.AttributeExtensions
+import de.cau.cs.kieler.prom.configurable.AttributeExtensions
 import org.eclipse.xtext.validation.Check
 
 //import org.eclipse.xtext.validation.Check

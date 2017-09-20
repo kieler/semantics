@@ -12,8 +12,7 @@
  */
 package de.cau.cs.kieler.kivis.ui.animations
 
-import de.cau.cs.kieler.kivis.kivis.Animation
-import de.cau.cs.kieler.prom.build.ConfigurableAttribute
+import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
 import org.apache.batik.dom.svg.SVGOMPathElement
 import org.apache.batik.dom.svg.SVGOMPoint

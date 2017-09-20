@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.simulation.handlers
 
-import de.cau.cs.kieler.prom.build.ConfigurableAttribute
+import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
 import de.cau.cs.kieler.simulation.core.SimulationManager
@@ -24,7 +24,6 @@ import org.eclipse.core.runtime.Path
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.simulation.FileExtensions.*
-import de.cau.cs.kieler.simulation.core.VariableType
 
 /**
  * @author aas

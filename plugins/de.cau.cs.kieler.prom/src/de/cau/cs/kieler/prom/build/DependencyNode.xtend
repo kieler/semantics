@@ -19,6 +19,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author aas
  *
  */
+//TODO: Check if this is still necessary
 class DependencyNode {
     @Accessors(PUBLIC_GETTER)
     private val List<DependencyNode> dependencies = newArrayList

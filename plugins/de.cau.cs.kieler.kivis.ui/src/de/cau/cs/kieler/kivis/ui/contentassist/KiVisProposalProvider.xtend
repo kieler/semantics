@@ -7,7 +7,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kivis.kivis.Animation
 import de.cau.cs.kieler.kivis.ui.animations.AnimationHandler
 import de.cau.cs.kieler.prom.ExtensionLookupUtil
-import de.cau.cs.kieler.prom.build.AttributeExtensions
+import de.cau.cs.kieler.prom.configurable.AttributeExtensions
 import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.Assignment

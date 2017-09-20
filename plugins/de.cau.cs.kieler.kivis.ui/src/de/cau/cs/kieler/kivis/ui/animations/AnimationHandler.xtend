@@ -12,21 +12,21 @@
  */
 package de.cau.cs.kieler.kivis.ui.animations
 
+import de.cau.cs.kieler.kivis.animation.IAnimationHandler
 import de.cau.cs.kieler.kivis.extensions.KiVisExtensions
 import de.cau.cs.kieler.kivis.kivis.Animation
 import de.cau.cs.kieler.kivis.kivis.AttributeMapping
 import de.cau.cs.kieler.kivis.ui.svg.SVGExtensions
 import de.cau.cs.kieler.kivis.ui.views.KiVisView
-import de.cau.cs.kieler.prom.build.AttributeExtensions
-import de.cau.cs.kieler.prom.build.Configurable
-import de.cau.cs.kieler.prom.build.ConfigurableAttribute
+import de.cau.cs.kieler.prom.configurable.AttributeExtensions
+import de.cau.cs.kieler.prom.configurable.Configurable
+import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
+import de.cau.cs.kieler.simulation.core.Variable
 import java.util.List
+import org.eclipse.xtend.lib.annotations.Accessors
 import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGDocument
-import de.cau.cs.kieler.kivis.animation.IAnimationHandler
-import de.cau.cs.kieler.simulation.core.Variable
-import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * Base class for configurable animations of SVG elements.

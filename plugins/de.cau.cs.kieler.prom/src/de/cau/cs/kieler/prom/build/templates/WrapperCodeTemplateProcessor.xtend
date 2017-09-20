@@ -10,47 +10,63 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.prom.build
+package de.cau.cs.kieler.prom.build.templates
 
 import com.google.common.io.Files
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
+import de.cau.cs.kieler.prom.build.BuildProblem
+import de.cau.cs.kieler.prom.build.FileGenerationResult
+import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
 import de.cau.cs.kieler.prom.templates.TemplateManager
 
 /**
+ * Template processor that injects additional macro calls into the template before it is processed.
+ * The macro calls are created from annotations in a model file.
+ * 
  * @author aas
  *
  */
 class WrapperCodeTemplateProcessor extends TemplateProcessor {
+    /**
+     * The model path with annotations to create wrapper code.
+     */
     public val modelPath = new ConfigurableAttribute("modelFile")
     
+    /**
+     * Constructor
+     */
     new() {
         super()
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override process() {
         if(monitor != null) {
             monitor.subTask("Processing wrapper code template '"+template.stringValue+"'")
         }
+        // Prepare result
         val result = new FileGenerationResult
-
+        // Get file handles
         val templateFile = project.getFile(template.stringValue)
         val targetFile = project.getFile(target.stringValue)
         val modelFile = project.getFile(modelPath.stringValue)
         // Get annotations in model
-        val annotationDatas = newArrayList()
+        val macroCallDatas = newArrayList()
         val model = ModelImporter.load(modelFile)
         if(model == null) {
             val problem = BuildProblem.createError(modelFile.project, "Model file '"+modelFile.projectRelativePath+"' "
                                                                     + "could not be loaded.")
             result.addProblem(problem)
         }
-        TemplateManager.getAnnotationInterface(model, annotationDatas)
+        TemplateManager.getAnnotationInterface(model, macroCallDatas)
         
         // Create wrapper code
         val name = Files.getNameWithoutExtension(templateFile.name)
         val generator = new TemplateManager(project)
-        val wrapperCode = generator.generateWrapperCode(templateFile.projectRelativePath.toOSString, annotationDatas,
+        val wrapperCode = generator.generateWrapperCode(templateFile.projectRelativePath.toOSString, macroCallDatas,
             #{TemplateManager.MODEL_NAME_VARIABLE -> name} )
         
         // Save output
