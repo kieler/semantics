@@ -2972,6 +2972,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//enum AssignOperator returns keffects::AssignOperator:
 	//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" |
 	//	ASSIGNMOD="%=" | ASSIGNAND="&=" | ASSIGNOR="|=" | ASSIGNXOR="^=" |
+	//	ASSIGNSHIFTLEFT="<<=" | ASSIGNSHIFTRIGHT=">>=" | ASSIGNSHIFTRIGHTUNSIGNED=">>>=" |
 	//	ASSIGNMIN="min=" | ASSIGNMAX="max=";
 	public KEffectsGrammarAccess.AssignOperatorElements getAssignOperatorAccess() {
 		return gaKEffects.getAssignOperatorAccess();
@@ -3087,14 +3088,25 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// Directs to the 'bitwise and' rule and may create an operator expression for 'bitwise or' operations
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//BitwiseOrExpression Expression:
-	//	BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator
-	//	subExpressions+=BitwiseAndExpression) ('|' subExpressions+=BitwiseAndExpression)*)?
+	//	BitwiseXOrExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator
+	//	subExpressions+=BitwiseXOrExpression) ('|' subExpressions+=BitwiseXOrExpression)*)?
 	public KExpressionsGrammarAccess.BitwiseOrExpressionElements getBitwiseOrExpressionAccess() {
 		return gaKExpressions.getBitwiseOrExpressionAccess();
 	}
 	
 	public ParserRule getBitwiseOrExpressionRule() {
 		return getBitwiseOrExpressionAccess().getRule();
+	}
+
+	//BitwiseXOrExpression Expression:
+	//	BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseXOrOperator
+	//	subExpressions+=BitwiseAndExpression) ('^' subExpressions+=BitwiseAndExpression)*)?
+	public KExpressionsGrammarAccess.BitwiseXOrExpressionElements getBitwiseXOrExpressionAccess() {
+		return gaKExpressions.getBitwiseXOrExpressionAccess();
+	}
+	
+	public ParserRule getBitwiseXOrExpressionRule() {
+		return getBitwiseXOrExpressionAccess().getRule();
 	}
 
 	//// Bitwise And Expression Rule
@@ -3109,6 +3121,61 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getBitwiseAndExpressionRule() {
 		return getBitwiseAndExpressionAccess().getRule();
+	}
+
+	//BitwiseNotExpression Expression:
+	//	{OperatorExpression} operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression | super::AtomicExpression
+	public KExpressionsGrammarAccess.BitwiseNotExpressionElements getBitwiseNotExpressionAccess() {
+		return gaKExpressions.getBitwiseNotExpressionAccess();
+	}
+	
+	public ParserRule getBitwiseNotExpressionRule() {
+		return getBitwiseNotExpressionAccess().getRule();
+	}
+
+	//ShiftLeftExpression Expression:
+	//	ShiftRightExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
+	//	subExpressions+=ShiftRightExpression) ('<<' subExpressions+=ShiftRightExpression)*)?
+	public KExpressionsGrammarAccess.ShiftLeftExpressionElements getShiftLeftExpressionAccess() {
+		return gaKExpressions.getShiftLeftExpressionAccess();
+	}
+	
+	public ParserRule getShiftLeftExpressionRule() {
+		return getShiftLeftExpressionAccess().getRule();
+	}
+
+	//ShiftRightExpression Expression:
+	//	ShiftRightUnsignedExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
+	//	subExpressions+=ShiftRightUnsignedExpression) ('>>' subExpressions+=ShiftRightUnsignedExpression)*)?
+	public KExpressionsGrammarAccess.ShiftRightExpressionElements getShiftRightExpressionAccess() {
+		return gaKExpressions.getShiftRightExpressionAccess();
+	}
+	
+	public ParserRule getShiftRightExpressionRule() {
+		return getShiftRightExpressionAccess().getRule();
+	}
+
+	//ShiftRightUnsignedExpression Expression:
+	//	super::AddExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
+	//	subExpressions+=super::AddExpression) ('>>>' subExpressions+=super::AddExpression)*)?
+	public KExpressionsGrammarAccess.ShiftRightUnsignedExpressionElements getShiftRightUnsignedExpressionAccess() {
+		return gaKExpressions.getShiftRightUnsignedExpressionAccess();
+	}
+	
+	public ParserRule getShiftRightUnsignedExpressionRule() {
+		return getShiftRightUnsignedExpressionAccess().getRule();
+	}
+
+	//TernaryOperation Expression:
+	//	{OperatorExpression} subExpressions+=super::AtomicValuedExpression operator=ConditionalOperator
+	//	subExpressions+=super::AtomicValuedExpression ':' subExpressions+=super::AtomicValuedExpression
+	//	| super::AtomicValuedExpression
+	public KExpressionsGrammarAccess.TernaryOperationElements getTernaryOperationAccess() {
+		return gaKExpressions.getTernaryOperationAccess();
+	}
+	
+	public ParserRule getTernaryOperationRule() {
+		return getTernaryOperationAccess().getRule();
 	}
 
 	//// ID with primes
@@ -3236,7 +3303,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//VectorValueMember Expression:
-	//	super::Expression | IgnoreValue
+	//	BoolExpression | super::ValuedExpression | IgnoreValue
 	public KExpressionsGrammarAccess.VectorValueMemberElements getVectorValueMemberAccess() {
 		return gaKExpressions.getVectorValueMemberAccess();
 	}
@@ -3298,14 +3365,14 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getPreOperatorAccess().getRule();
 	}
 
-	//enum BitwiseNegOperator returns OperatorType:
-	//	BITWISE_NEG="~";
-	public KExpressionsGrammarAccess.BitwiseNegOperatorElements getBitwiseNegOperatorAccess() {
-		return gaKExpressions.getBitwiseNegOperatorAccess();
+	//enum BitwiseNotOperator returns OperatorType:
+	//	BITWISE_NOT="~";
+	public KExpressionsGrammarAccess.BitwiseNotOperatorElements getBitwiseNotOperatorAccess() {
+		return gaKExpressions.getBitwiseNotOperatorAccess();
 	}
 	
-	public EnumRule getBitwiseNegOperatorRule() {
-		return getBitwiseNegOperatorAccess().getRule();
+	public EnumRule getBitwiseNotOperatorRule() {
+		return getBitwiseNotOperatorAccess().getRule();
 	}
 
 	//enum BitwiseXOrOperator returns OperatorType:
@@ -3428,34 +3495,34 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getLogicalAndOperatorAccess().getRule();
 	}
 
-	//enum ShiftLeft returns OperatorType:
+	//enum ShiftLeftOperator returns OperatorType:
 	//	SHIFT_LEFT="<<";
-	public KExpressionsGrammarAccess.ShiftLeftElements getShiftLeftAccess() {
-		return gaKExpressions.getShiftLeftAccess();
+	public KExpressionsGrammarAccess.ShiftLeftOperatorElements getShiftLeftOperatorAccess() {
+		return gaKExpressions.getShiftLeftOperatorAccess();
 	}
 	
-	public EnumRule getShiftLeftRule() {
-		return getShiftLeftAccess().getRule();
+	public EnumRule getShiftLeftOperatorRule() {
+		return getShiftLeftOperatorAccess().getRule();
 	}
 
-	//enum ShiftRight returns OperatorType:
+	//enum ShiftRightOperator returns OperatorType:
 	//	SHIFT_RIGHT=">>";
-	public KExpressionsGrammarAccess.ShiftRightElements getShiftRightAccess() {
-		return gaKExpressions.getShiftRightAccess();
+	public KExpressionsGrammarAccess.ShiftRightOperatorElements getShiftRightOperatorAccess() {
+		return gaKExpressions.getShiftRightOperatorAccess();
 	}
 	
-	public EnumRule getShiftRightRule() {
-		return getShiftRightAccess().getRule();
+	public EnumRule getShiftRightOperatorRule() {
+		return getShiftRightOperatorAccess().getRule();
 	}
 
-	//enum ShiftRightUnsigned returns OperatorType:
-	//	SHIFT_RIGHT=">>>";
-	public KExpressionsGrammarAccess.ShiftRightUnsignedElements getShiftRightUnsignedAccess() {
-		return gaKExpressions.getShiftRightUnsignedAccess();
+	//enum ShiftRightUnsignedOperator returns OperatorType:
+	//	SHIFT_RIGHT_UNSIGNED=">>>";
+	public KExpressionsGrammarAccess.ShiftRightUnsignedOperatorElements getShiftRightUnsignedOperatorAccess() {
+		return gaKExpressions.getShiftRightUnsignedOperatorAccess();
 	}
 	
-	public EnumRule getShiftRightUnsignedRule() {
-		return getShiftRightUnsignedAccess().getRule();
+	public EnumRule getShiftRightUnsignedOperatorRule() {
+		return getShiftRightUnsignedOperatorAccess().getRule();
 	}
 
 	//enum PostfixAdd returns OperatorType:
@@ -3478,14 +3545,14 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getPostfixSubAccess().getRule();
 	}
 
-	//enum ConditionalType returns OperatorType:
-	//	CONDITIONAL;
-	public KExpressionsGrammarAccess.ConditionalTypeElements getConditionalTypeAccess() {
-		return gaKExpressions.getConditionalTypeAccess();
+	//enum ConditionalOperator returns OperatorType:
+	//	CONDITIONAL="?";
+	public KExpressionsGrammarAccess.ConditionalOperatorElements getConditionalOperatorAccess() {
+		return gaKExpressions.getConditionalOperatorAccess();
 	}
 	
-	public EnumRule getConditionalTypeRule() {
-		return getConditionalTypeAccess().getRule();
+	public EnumRule getConditionalOperatorRule() {
+		return getConditionalOperatorAccess().getRule();
 	}
 
 	//enum ValueType:

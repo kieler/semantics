@@ -130,9 +130,12 @@ class SCChartsNetlistSimulationTest extends AbstractXTextModelRepositoryTest<SCC
                     while(!traceFinished) {
                         SimulationManager.instance.stepMacroTick
                         if (traceError !== null) {
+                            sim.stop
                             fail(traceError.message)
                         }
                     }
+                    
+                    sim.stop
                 }
             }
         } finally {

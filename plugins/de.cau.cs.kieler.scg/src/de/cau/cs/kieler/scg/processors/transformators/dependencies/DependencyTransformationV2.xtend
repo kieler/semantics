@@ -241,11 +241,14 @@ class DependencyTransformationV2 extends Processor<SCGraphs, SCGraphs> {
     }
     
     protected def void processDependency(ValuedObjectIdentifier valuedObjectIdentifier, ValuedObjectAccess source, ValuedObjectAccess target) {
-        if (source.node == target.node) return;
+        if (source.node == target.node) return
         val type = source.accessType(target)
         if (type == IGNORE) return        
+        val saveOnlyConflicting = environment.getProperty(SAVE_ONLY_CONFLICTING_DEPENDENCIES)
         val concurrent = source.isConcurrentTo(target)
+        if (!concurrent && saveOnlyConflicting) return
         val confluent = (type == WRITE_WRITE && source.isConfluentTo(target))
+        if (confluent && saveOnlyConflicting) return
 
         val dependency = source.node.createDataDependency(target.node, type) => [
             it.concurrent = concurrent

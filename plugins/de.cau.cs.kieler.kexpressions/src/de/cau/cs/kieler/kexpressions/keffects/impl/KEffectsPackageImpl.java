@@ -135,6 +135,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         isInited = true;
 
         // Initialize simple dependencies
+        AnnotationsPackage.eINSTANCE.eClass();
         KExpressionsPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects

@@ -19,7 +19,7 @@ class AnnotationsFormatter extends AbstractFormatter2 {
         annotation.regionFor.keyword("]")?.prepend[ noSpace ]
         annotation.regionFor.keyword(",")?.prepend[ noSpace ]
         annotation.regionFor.keyword("@")?.append[ noSpace ]
-        annotation.append[ newLine ]
+        annotation.append[ newLine highPriority ]
     }
     
     def dispatch format(Pragma pragma, extension IFormattableDocument document) {

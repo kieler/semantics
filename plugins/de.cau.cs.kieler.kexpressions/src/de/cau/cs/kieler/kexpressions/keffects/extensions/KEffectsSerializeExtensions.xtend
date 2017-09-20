@@ -59,6 +59,15 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
         if (operator == AssignOperator::ASSIGNXOR) {
             return " ^= "
         } else 
+        if (operator == AssignOperator::ASSIGNSHIFTLEFT) {
+            return " <<= "
+        } else 
+        if (operator == AssignOperator::ASSIGNSHIFTRIGHT) {
+            return " >>= "
+        } else 
+        if (operator == AssignOperator::ASSIGNSHIFTRIGHTUNSIGNED) {
+            return " >>>= "
+        } else 
         if (operator == AssignOperator::ASSIGNMIN) {
             return " min= " 
         } else 

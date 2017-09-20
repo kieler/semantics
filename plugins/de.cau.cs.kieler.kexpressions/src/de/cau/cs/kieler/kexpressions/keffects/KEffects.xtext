@@ -132,6 +132,7 @@ PrintCallEffect returns keffects::PrintCallEffect:
 enum AssignOperator returns keffects::AssignOperator:
     ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" |
     ASSIGNMOD="%=" | ASSIGNAND="&=" | ASSIGNOR="|=" | ASSIGNXOR="^=" |
+    ASSIGNSHIFTLEFT="<<=" | ASSIGNSHIFTRIGHT=">>=" | ASSIGNSHIFTRIGHTUNSIGNED=">>>=" |
     ASSIGNMIN="min=" | ASSIGNMAX="max=";
 
 // Postfix Operator Enum    

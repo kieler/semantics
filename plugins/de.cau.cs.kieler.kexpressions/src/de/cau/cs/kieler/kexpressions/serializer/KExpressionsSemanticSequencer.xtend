@@ -29,8 +29,13 @@ import org.eclipse.xtext.serializer.acceptor.SequenceFeeder
 class KExpressionsSemanticSequencer extends AbstractKExpressionsSemanticSequencer {
     @Inject
     private KExpressionsGrammarAccess grammarAccess;
-
-    override sequence_AddExpression_BitwiseAndExpression_BitwiseOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_SubExpression_ValuedObjectTestExpression(
+    
+    override sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_Expression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(
+        ISerializationContext context, OperatorExpression semanticObject) {
+            sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(context, semanticObject)
+    }
+    
+    override sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(
         ISerializationContext context, OperatorExpression semanticObject) {
 //        genericSequencer.createSequence(context, semanticObject)
 
@@ -104,8 +109,8 @@ class KExpressionsSemanticSequencer extends AbstractKExpressionsSemanticSequence
                     semanticObject,
                     grammarAccess.bitwiseOrExpressionAccess.operatorExpressionSubExpressionsAction_1_0,
                     grammarAccess.bitwiseOrExpressionAccess.operatorBitwiseOrOperatorEnumRuleCall_1_1_0_0,
-                    grammarAccess.bitwiseOrExpressionAccess.subExpressionsBitwiseAndExpressionParserRuleCall_1_1_1_0,
-                    grammarAccess.bitwiseOrExpressionAccess.subExpressionsBitwiseAndExpressionParserRuleCall_1_2_1_0
+                    grammarAccess.bitwiseOrExpressionAccess.subExpressionsBitwiseXOrExpressionParserRuleCall_1_1_1_0,
+                    grammarAccess.bitwiseOrExpressionAccess.subExpressionsBitwiseXOrExpressionParserRuleCall_1_2_1_0
                 )
             }
             case LOGICAL_AND: {
@@ -149,12 +154,8 @@ class KExpressionsSemanticSequencer extends AbstractKExpressionsSemanticSequence
                     semanticObject.subExpressions.head, 0)
             }
             case POSTFIX_ADD: {
-//            feeder.accept(grammarAccess.notExpressionAccess.operatorNotOperatorEnumRuleCall_0_1_0, semanticObject.operator)
-//            feeder.accept(grammarAccess.notExpressionAccess.subExpressionsNotExpressionParserRuleCall_0_2_0, semanticObject.subExpressions.head, 0)
             }
             case POSTFIX_SUB: {
-//            feeder.accept(grammarAccess.notExpressionAccess.operatorNotOperatorEnumRuleCall_0_1_0, semanticObject.operator)
-//            feeder.accept(grammarAccess.notExpressionAccess.subExpressionsNotExpressionParserRuleCall_0_2_0, semanticObject.subExpressions.head, 0)
             }
             case PRE: {
                 feeder.accept(grammarAccess.valuedObjectTestExpressionAccess.operatorPreOperatorEnumRuleCall_0_1_0_0,
@@ -167,6 +168,58 @@ class KExpressionsSemanticSequencer extends AbstractKExpressionsSemanticSequence
                     semanticObject.operator)
                 feeder.accept(grammarAccess.valuedObjectTestExpressionAccess.
                     subExpressionsValuedObjectTestExpressionParserRuleCall_0_3_0, semanticObject.subExpressions.head, 0)
+            }
+            case BITWISE_NOT: {
+                feeder.accept(grammarAccess.bitwiseNotExpressionAccess.operatorBitwiseNotOperatorEnumRuleCall_0_1_0,
+                    semanticObject.operator)
+                feeder.accept(grammarAccess.bitwiseNotExpressionAccess.subExpressionsBitwiseNotExpressionParserRuleCall_0_2_0,
+                    semanticObject.subExpressions.head, 0)
+            }
+            case BITWISE_XOR: {
+                feeder.multiOP(
+                    semanticObject,
+                    grammarAccess.bitwiseXOrExpressionAccess.operatorExpressionSubExpressionsAction_1_0,
+                    grammarAccess.bitwiseXOrExpressionAccess.operatorBitwiseXOrOperatorEnumRuleCall_1_1_0_0,
+                    grammarAccess.bitwiseXOrExpressionAccess.subExpressionsBitwiseAndExpressionParserRuleCall_1_1_1_0,
+                    grammarAccess.bitwiseXOrExpressionAccess.subExpressionsBitwiseAndExpressionParserRuleCall_1_2_1_0
+                )
+            }
+            case CONDITIONAL: {
+                feeder.accept(grammarAccess.ternaryOperationAccess.subExpressionsAtomicValuedExpressionParserRuleCall_0_1_0,
+                    semanticObject.subExpressions.head, 0)
+                feeder.accept(grammarAccess.ternaryOperationAccess.operatorConditionalOperatorEnumRuleCall_0_2_0,
+                    semanticObject.operator)
+                feeder.accept(grammarAccess.ternaryOperationAccess.subExpressionsAtomicValuedExpressionParserRuleCall_0_3_0,
+                    semanticObject.subExpressions.get(1), 1)
+                feeder.accept(grammarAccess.ternaryOperationAccess.subExpressionsAtomicValuedExpressionParserRuleCall_0_5_0,
+                    semanticObject.subExpressions.get(2), 2)
+            }
+            case SHIFT_LEFT: {
+                feeder.multiOP(
+                    semanticObject,
+                    grammarAccess.shiftLeftExpressionAccess.operatorExpressionSubExpressionsAction_1_0,
+                    grammarAccess.shiftLeftExpressionAccess.operatorShiftLeftOperatorEnumRuleCall_1_1_0_0,
+                    grammarAccess.shiftLeftExpressionAccess.subExpressionsShiftRightExpressionParserRuleCall_1_1_1_0,
+                    grammarAccess.shiftLeftExpressionAccess.subExpressionsShiftRightExpressionParserRuleCall_1_2_1_0
+                )
+            }
+            case SHIFT_RIGHT: {
+                feeder.multiOP(
+                    semanticObject,
+                    grammarAccess.shiftRightExpressionAccess.operatorExpressionSubExpressionsAction_1_0,
+                    grammarAccess.shiftRightExpressionAccess.operatorShiftRightOperatorEnumRuleCall_1_1_0_0,
+                    grammarAccess.shiftRightExpressionAccess.subExpressionsShiftRightUnsignedExpressionParserRuleCall_1_1_1_0,
+                    grammarAccess.shiftRightExpressionAccess.subExpressionsShiftRightUnsignedExpressionParserRuleCall_1_2_1_0
+                )
+            }
+            case SHIFT_RIGHT_UNSIGNED: {
+                feeder.multiOP(
+                    semanticObject,
+                    grammarAccess.shiftRightUnsignedExpressionAccess.operatorExpressionSubExpressionsAction_1_0,
+                    grammarAccess.shiftRightUnsignedExpressionAccess.operatorShiftRightUnsignedOperatorEnumRuleCall_1_1_0_0,
+                    grammarAccess.shiftRightUnsignedExpressionAccess.subExpressionsAddExpressionParserRuleCall_1_1_1_0,
+                    grammarAccess.shiftRightUnsignedExpressionAccess.subExpressionsAddExpressionParserRuleCall_1_2_1_0
+                )
             }
         }
         feeder.finish();

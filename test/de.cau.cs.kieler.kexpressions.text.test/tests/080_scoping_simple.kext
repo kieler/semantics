@@ -41,7 +41,6 @@ global = A & B
 
 @check "scoping.global.reference.operator#002"
 @aliasCheck A, globalA
-@aliasCheck B, globalB
 @strict
 global = pre(A)
 
@@ -70,7 +69,7 @@ scope X {
 	A = false
 
 	@check "scoping.X.literal.E"
-	@aliasCheck E, XE
+	@aliasCheck B, XB
 	B = false
 
 	@check "scoping.X.literal.globalC"
