@@ -4,6 +4,7 @@ package de.cau.cs.kieler.scl;
 
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
 
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -548,6 +549,61 @@ public interface SCLPackage extends EPackage {
     int PARALLEL_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 1;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scl.impl.ModuleCallImpl <em>Module Call</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scl.impl.ModuleCallImpl
+     * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getModuleCall()
+     * @generated
+     */
+    int MODULE_CALL = 11;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MODULE_CALL__SCHEDULE = KExpressionsPackage.CALL__SCHEDULE;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MODULE_CALL__PARAMETERS = KExpressionsPackage.CALL__PARAMETERS;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MODULE_CALL__ANNOTATIONS = KExpressionsPackage.CALL_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Module</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MODULE_CALL__MODULE = KExpressionsPackage.CALL_FEATURE_COUNT + 1;
+
+    /**
+     * The number of structural features of the '<em>Module Call</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MODULE_CALL_FEATURE_COUNT = KExpressionsPackage.CALL_FEATURE_COUNT + 2;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.scl.impl.ThreadImpl <em>Thread</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -555,7 +611,7 @@ public interface SCLPackage extends EPackage {
      * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getThread()
      * @generated
      */
-    int THREAD = 11;
+    int THREAD = 12;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -601,7 +657,7 @@ public interface SCLPackage extends EPackage {
      * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getScopeStatement()
      * @generated
      */
-    int SCOPE_STATEMENT = 12;
+    int SCOPE_STATEMENT = 13;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -647,7 +703,7 @@ public interface SCLPackage extends EPackage {
      * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getElseScope()
      * @generated
      */
-    int ELSE_SCOPE = 13;
+    int ELSE_SCOPE = 14;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -718,17 +774,6 @@ public interface SCLPackage extends EPackage {
     EClass getModule();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scl.Module#getName <em>Name</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Name</em>'.
-     * @see de.cau.cs.kieler.scl.Module#getName()
-     * @see #getModule()
-     * @generated
-     */
-    EAttribute getModule_Name();
-
-    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scl.Statement <em>Statement</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -788,17 +833,6 @@ public interface SCLPackage extends EPackage {
      * @generated
      */
     EClass getLabel();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scl.Label#getName <em>Name</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Name</em>'.
-     * @see de.cau.cs.kieler.scl.Label#getName()
-     * @see #getLabel()
-     * @generated
-     */
-    EAttribute getLabel_Name();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scl.Goto <em>Goto</em>}'.
@@ -885,6 +919,27 @@ public interface SCLPackage extends EPackage {
     EReference getParallel_Threads();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scl.ModuleCall <em>Module Call</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Module Call</em>'.
+     * @see de.cau.cs.kieler.scl.ModuleCall
+     * @generated
+     */
+    EClass getModuleCall();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.scl.ModuleCall#getModule <em>Module</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Module</em>'.
+     * @see de.cau.cs.kieler.scl.ModuleCall#getModule()
+     * @see #getModuleCall()
+     * @generated
+     */
+    EReference getModuleCall_Module();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scl.Thread <em>Thread</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -965,14 +1020,6 @@ public interface SCLPackage extends EPackage {
         EClass MODULE = eINSTANCE.getModule();
 
         /**
-         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute MODULE__NAME = eINSTANCE.getModule_Name();
-
-        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scl.impl.StatementImpl <em>Statement</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -1029,14 +1076,6 @@ public interface SCLPackage extends EPackage {
          * @generated
          */
         EClass LABEL = eINSTANCE.getLabel();
-
-        /**
-         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute LABEL__NAME = eINSTANCE.getLabel_Name();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scl.impl.GotoImpl <em>Goto</em>}' class.
@@ -1109,6 +1148,24 @@ public interface SCLPackage extends EPackage {
          * @generated
          */
         EReference PARALLEL__THREADS = eINSTANCE.getParallel_Threads();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scl.impl.ModuleCallImpl <em>Module Call</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scl.impl.ModuleCallImpl
+         * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getModuleCall()
+         * @generated
+         */
+        EClass MODULE_CALL = eINSTANCE.getModuleCall();
+
+        /**
+         * The meta object literal for the '<em><b>Module</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference MODULE_CALL__MODULE = eINSTANCE.getModuleCall_Module();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scl.impl.ThreadImpl <em>Thread</em>}' class.

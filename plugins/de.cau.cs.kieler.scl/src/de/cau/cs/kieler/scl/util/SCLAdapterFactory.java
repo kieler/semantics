@@ -4,7 +4,10 @@ package de.cau.cs.kieler.scl.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
 
+import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.Pragmatable;
+import de.cau.cs.kieler.kexpressions.Call;
+import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
@@ -17,6 +20,7 @@ import de.cau.cs.kieler.scl.ElseScope;
 import de.cau.cs.kieler.scl.Goto;
 import de.cau.cs.kieler.scl.Label;
 import de.cau.cs.kieler.scl.Module;
+import de.cau.cs.kieler.scl.ModuleCall;
 import de.cau.cs.kieler.scl.Parallel;
 import de.cau.cs.kieler.scl.Pause;
 import de.cau.cs.kieler.scl.SCLPackage;
@@ -134,6 +138,10 @@ public class SCLAdapterFactory extends AdapterFactoryImpl {
                 return createParallelAdapter();
             }
             @Override
+            public Adapter caseModuleCall(ModuleCall object) {
+                return createModuleCallAdapter();
+            }
+            @Override
             public Adapter caseThread(de.cau.cs.kieler.scl.Thread object) {
                 return createThreadAdapter();
             }
@@ -158,6 +166,10 @@ public class SCLAdapterFactory extends AdapterFactoryImpl {
                 return createDeclarationScopeAdapter();
             }
             @Override
+            public Adapter caseNamedObject(NamedObject object) {
+                return createNamedObjectAdapter();
+            }
+            @Override
             public Adapter caseSchedulable(Schedulable object) {
                 return createSchedulableAdapter();
             }
@@ -168,6 +180,14 @@ public class SCLAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseKEffects_Assignment(de.cau.cs.kieler.kexpressions.keffects.Assignment object) {
                 return createKEffects_AssignmentAdapter();
+            }
+            @Override
+            public Adapter caseExpression(Expression object) {
+                return createExpressionAdapter();
+            }
+            @Override
+            public Adapter caseCall(Call object) {
+                return createCallAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -344,6 +364,20 @@ public class SCLAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.ModuleCall <em>Module Call</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scl.ModuleCall
+     * @generated
+     */
+    public Adapter createModuleCallAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.Thread <em>Thread</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -428,6 +462,20 @@ public class SCLAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.NamedObject <em>Named Object</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.annotations.NamedObject
+     * @generated
+     */
+    public Adapter createNamedObjectAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Schedulable <em>Schedulable</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -466,6 +514,34 @@ public class SCLAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createKEffects_AssignmentAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Expression <em>Expression</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.Expression
+     * @generated
+     */
+    public Adapter createExpressionAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Call <em>Call</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.Call
+     * @generated
+     */
+    public Adapter createCallAdapter() {
         return null;
     }
 

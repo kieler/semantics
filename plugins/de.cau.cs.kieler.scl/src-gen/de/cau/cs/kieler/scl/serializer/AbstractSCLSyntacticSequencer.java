@@ -29,7 +29,7 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_4_0__p;
 	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a;
 	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__p;
-	protected AbstractElementAlias match_Conditional_ThenKeyword_3_0_q;
+	protected AbstractElementAlias match_ModuleCall_LeftParenthesisRightParenthesisKeyword_3_1_q;
 	protected AbstractElementAlias match_Module_ColonKeyword_3_q;
 	protected AbstractElementAlias match_Thread___LeftCurlyBracketKeyword_1_0_1_RightCurlyBracketKeyword_1_0_5__q;
 	
@@ -43,7 +43,7 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_4_0__p = new AlternativeAlias(true, false, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()));
 		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a = new GroupAlias(true, true, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()));
 		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__p = new GroupAlias(true, false, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()));
-		match_Conditional_ThenKeyword_3_0_q = new TokenAlias(false, true, grammarAccess.getConditionalAccess().getThenKeyword_3_0());
+		match_ModuleCall_LeftParenthesisRightParenthesisKeyword_3_1_q = new TokenAlias(false, true, grammarAccess.getModuleCallAccess().getLeftParenthesisRightParenthesisKeyword_3_1());
 		match_Module_ColonKeyword_3_q = new TokenAlias(false, true, grammarAccess.getModuleAccess().getColonKeyword_3());
 		match_Thread___LeftCurlyBracketKeyword_1_0_1_RightCurlyBracketKeyword_1_0_5__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getThreadAccess().getLeftCurlyBracketKeyword_1_0_1()), new TokenAlias(false, false, grammarAccess.getThreadAccess().getRightCurlyBracketKeyword_1_0_5()));
 	}
@@ -74,8 +74,8 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__p.equals(syntax))
 				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__p(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_Conditional_ThenKeyword_3_0_q.equals(syntax))
-				emit_Conditional_ThenKeyword_3_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ModuleCall_LeftParenthesisRightParenthesisKeyword_3_1_q.equals(syntax))
+				emit_ModuleCall_LeftParenthesisRightParenthesisKeyword_3_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Module_ColonKeyword_3_q.equals(syntax))
 				emit_Module_ColonKeyword_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Thread___LeftCurlyBracketKeyword_1_0_1_RightCurlyBracketKeyword_1_0_5__q.equals(syntax))
@@ -189,17 +189,12 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 	
 	/**
 	 * Ambiguous syntax:
-	 *     'then'?
+	 *     '()'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     expression=BoolExpression (ambiguity) '{' '}' (rule end)
-	 *     expression=BoolExpression (ambiguity) '{' '}' else=ElseScope
-	 *     expression=BoolExpression (ambiguity) '{' declarations+=DeclarationWOSemicolon
-	 *     expression=BoolExpression (ambiguity) '{' statements+=InstructionStatement
-	 *     expression=BoolExpression (ambiguity) '{' statements+=MetaStatement
-	 *     expression=BoolExpression (ambiguity) '{' statements+=Statement
+	 *     module=[Module|ID] (ambiguity) (rule end)
 	 */
-	protected void emit_Conditional_ThenKeyword_3_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_ModuleCall_LeftParenthesisRightParenthesisKeyword_3_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -209,7 +204,7 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     name=ID (ambiguity) (rule end)
-	 *     name=ID (ambiguity) declarations+=DeclarationWOSemicolon
+	 *     name=ID (ambiguity) declarations+=Declaration
 	 *     name=ID (ambiguity) statements+=InstructionStatement
 	 *     name=ID (ambiguity) statements+=MetaStatement
 	 *     name=ID (ambiguity) statements+=Statement

@@ -95,6 +95,9 @@ Workflow {
 
             // quickfix API 
             fragment = quickfix.QuickfixProviderFragment {}
+            
+            // rename refactoring
+            fragment = refactoring.RefactorElementNameFragment {}       
         }
     }
 }

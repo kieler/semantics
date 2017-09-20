@@ -16,6 +16,7 @@ import de.cau.cs.kieler.scl.ElseScope;
 import de.cau.cs.kieler.scl.Goto;
 import de.cau.cs.kieler.scl.Label;
 import de.cau.cs.kieler.scl.Module;
+import de.cau.cs.kieler.scl.ModuleCall;
 import de.cau.cs.kieler.scl.Parallel;
 import de.cau.cs.kieler.scl.Pause;
 import de.cau.cs.kieler.scl.SCLFactory;
@@ -116,6 +117,13 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * @generated
      */
     private EClass parallelEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass moduleCallEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -237,15 +245,6 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getModule_Name() {
-        return (EAttribute)moduleEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EClass getStatement() {
         return statementEClass;
     }
@@ -293,15 +292,6 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      */
     public EClass getLabel() {
         return labelEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getLabel_Name() {
-        return (EAttribute)labelEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -381,6 +371,24 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getModuleCall() {
+        return moduleCallEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getModuleCall_Module() {
+        return (EReference)moduleCallEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getThread() {
         return threadEClass;
     }
@@ -435,7 +443,6 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
         createEReference(sclProgramEClass, SCL_PROGRAM__MODULES);
 
         moduleEClass = createEClass(MODULE);
-        createEAttribute(moduleEClass, MODULE__NAME);
 
         statementEClass = createEClass(STATEMENT);
 
@@ -447,7 +454,6 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
         pauseEClass = createEClass(PAUSE);
 
         labelEClass = createEClass(LABEL);
-        createEAttribute(labelEClass, LABEL__NAME);
 
         gotoEClass = createEClass(GOTO);
         createEReference(gotoEClass, GOTO__TARGET);
@@ -460,6 +466,9 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
 
         parallelEClass = createEClass(PARALLEL);
         createEReference(parallelEClass, PARALLEL__THREADS);
+
+        moduleCallEClass = createEClass(MODULE_CALL);
+        createEReference(moduleCallEClass, MODULE_CALL__MODULE);
 
         threadEClass = createEClass(THREAD);
 
@@ -504,6 +513,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
         // Add supertypes to classes
         sclProgramEClass.getESuperTypes().add(theAnnotationsPackage.getPragmatable());
         moduleEClass.getESuperTypes().add(this.getScope());
+        moduleEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
         statementEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         statementContainerEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         scopeEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
@@ -511,12 +521,15 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
         scopeEClass.getESuperTypes().add(this.getStatementContainer());
         pauseEClass.getESuperTypes().add(this.getStatement());
         labelEClass.getESuperTypes().add(this.getStatement());
+        labelEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
         gotoEClass.getESuperTypes().add(this.getStatement());
         assignmentEClass.getESuperTypes().add(theKEffectsPackage.getAssignment());
         assignmentEClass.getESuperTypes().add(this.getStatement());
         conditionalEClass.getESuperTypes().add(this.getScope());
         conditionalEClass.getESuperTypes().add(this.getStatement());
         parallelEClass.getESuperTypes().add(this.getStatement());
+        moduleCallEClass.getESuperTypes().add(theKExpressionsPackage.getCall());
+        moduleCallEClass.getESuperTypes().add(this.getStatement());
         threadEClass.getESuperTypes().add(this.getScope());
         scopeStatementEClass.getESuperTypes().add(this.getStatement());
         scopeStatementEClass.getESuperTypes().add(this.getScope());
@@ -527,7 +540,6 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
         initEReference(getSCLProgram_Modules(), this.getModule(), null, "modules", null, 1, -1, SCLProgram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(moduleEClass, Module.class, "Module", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getModule_Name(), ecorePackage.getEString(), "name", null, 0, 1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(statementEClass, Statement.class, "Statement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -539,7 +551,6 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
         initEClass(pauseEClass, Pause.class, "Pause", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(labelEClass, Label.class, "Label", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getLabel_Name(), ecorePackage.getEString(), "name", null, 1, 1, Label.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(gotoEClass, Goto.class, "Goto", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getGoto_Target(), this.getLabel(), null, "target", null, 1, 1, Goto.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -552,6 +563,9 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
 
         initEClass(parallelEClass, Parallel.class, "Parallel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getParallel_Threads(), this.getThread(), null, "threads", null, 0, -1, Parallel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(moduleCallEClass, ModuleCall.class, "ModuleCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getModuleCall_Module(), this.getModule(), null, "module", null, 1, 1, ModuleCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(threadEClass, de.cau.cs.kieler.scl.Thread.class, "Thread", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

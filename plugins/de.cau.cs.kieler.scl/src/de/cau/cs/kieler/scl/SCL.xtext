@@ -14,21 +14,22 @@ SCLProgram returns SCLProgram:
 
 Module returns Module:
     (annotations += Annotation)*
-    'module' name = ID ':'?
-    (declarations+=DeclarationWOSemicolon)*
-    ((statements += InstructionStatement';') | (statements += MetaStatement))* (statements += Statement)? 
+    =>'module' name = ID ':'?
+    (declarations += Declaration)*
+    ((statements += InstructionStatement ';') | (statements += MetaStatement))*
+    (statements += Statement)?
 ;
 
 Statement returns Statement:
-    InstructionStatement | MetaStatement
+    MetaStatement | InstructionStatement
 ;
 
 InstructionStatement returns Statement:
-	Assignment | Conditional | Goto | Parallel | Pause
+	Assignment | LegacyConditional | Goto | Parallel | Pause | ModuleCall
 ;
 
 MetaStatement returns Statement:
-    Label | ScopeStatement
+    Label | ScopeStatement | Conditional
 ;
 
 Pause returns Pause:
@@ -43,27 +44,26 @@ Label returns Label:
 ;
 
 Goto returns Goto:
-    'goto' target = [Label]
+    (annotations += Annotation)*
+    'goto' target = [Label|ID]
 ;
 
-Assignment returns Assignment:    
+Assignment returns Assignment:
     (annotations += Annotation)*
     valuedObject = [kexpressions::ValuedObject] 
     ('[' indices += Expression ']')*
     operator = AssignOperator
     expression = Expression
-    ('schedule' schedule+=ScheduleObjectReference+)?
+    (=>'schedule' schedule+=ScheduleObjectReference+)?
 ;
 
 Conditional returns Conditional: 
     (annotations += Annotation)*
     'if' expression = BoolExpression
-    (
-        'then'? '{'
-        (declarations+=DeclarationWOSemicolon)*
-        ((statements += InstructionStatement';')|(statements += MetaStatement))* (statements += Statement)?
-        '}'
-    )
+    =>'{'
+    (declarations+=Declaration)*
+    ((statements += InstructionStatement ';')|(statements += MetaStatement))* (statements += Statement)?
+    '}'
     (else = ElseScope)?
 ;
 
@@ -71,9 +71,28 @@ ElseScope returns ElseScope:
     {ElseScope}
     (annotations += Annotation)*
     'else' '{'
-    (declarations+=DeclarationWOSemicolon)*
-    ((statements += InstructionStatement';')|(statements += MetaStatement))* (statements += Statement)?        
+    (declarations+=Declaration)*
+    ((statements += InstructionStatement ';')|(statements += MetaStatement))*
+    (statements += Statement)?        
     '}'
+;
+
+LegacyConditional returns Conditional: 
+    (annotations += Annotation)*
+    'if' expression = BoolExpression
+    =>'then'
+    ((statements += InstructionStatement ';')|(statements += MetaStatement))*
+    (statements += Statement)?
+    ( 'end' | (else = LeagacyElseScope))
+;
+
+LeagacyElseScope returns ElseScope:
+    {ElseScope}
+    (annotations += Annotation)*
+    'else'
+    ((statements += InstructionStatement ';')|(statements += MetaStatement))*
+    (statements += Statement)?        
+    'end'
 ;
 
 Thread returns Thread:
@@ -81,12 +100,14 @@ Thread returns Thread:
     (
         (
             (annotations += Annotation)*
-            '{'
-            (declarations+=DeclarationWOSemicolon)*
-            ((statements += InstructionStatement';')|(statements += MetaStatement))* (statements += Statement)?
+            =>'{'
+            (declarations+=Declaration)*
+            ((statements += InstructionStatement ';')|(statements += MetaStatement))*
+            (statements += Statement)?
             '}'
         ) | (
-            ((statements += InstructionStatement';')|(statements += MetaStatement))* (statements += Statement)?
+            ((statements += InstructionStatement ';')|(statements += MetaStatement))*
+            (statements += Statement)?
         )
     )
 ;
@@ -96,7 +117,7 @@ Parallel returns Parallel:
     (
         threads += Thread
         (
-            'par'
+            =>'par'
             threads += Thread
         )*
     )
@@ -107,7 +128,21 @@ ScopeStatement returns ScopeStatement:
     {ScopeStatement}
     (annotations += Annotation)*
     '{'
-        (declarations+=DeclarationWOSemicolon)*
-        ((statements += InstructionStatement';')|(statements += MetaStatement))* (statements += Statement)?
-    '}'    
+        (declarations+=Declaration)*
+        ((statements += InstructionStatement ';')|(statements += MetaStatement))*
+        (statements += Statement)?
+    '}'
 ;
+
+ModuleCall returns ModuleCall:
+    (annotations += Annotation)*
+    'run'
+    module = [Module|ID]
+    ('(' parameters += Parameter (',' parameters += Parameter)* ')' | '()')?
+;
+    
+Parameter returns kexpressions::Parameter:
+    ((pureOutput ?= '!')? callByReference ?= '&')?
+    expression = Expression
+    ('to' explicitBinding = [kexpressions::ValuedObject|ID] ('[' explicitBindingIndices+=Expression ']')*)?
+;    

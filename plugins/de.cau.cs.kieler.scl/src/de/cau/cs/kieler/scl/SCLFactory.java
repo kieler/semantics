@@ -94,6 +94,15 @@ public interface SCLFactory extends EFactory {
     Parallel createParallel();
 
     /**
+     * Returns a new object of class '<em>Module Call</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Module Call</em>'.
+     * @generated
+     */
+    ModuleCall createModuleCall();
+
+    /**
      * Returns a new object of class '<em>Thread</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

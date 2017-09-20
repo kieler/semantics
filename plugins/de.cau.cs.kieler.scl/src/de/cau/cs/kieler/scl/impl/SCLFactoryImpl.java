@@ -8,6 +8,7 @@ import de.cau.cs.kieler.scl.ElseScope;
 import de.cau.cs.kieler.scl.Goto;
 import de.cau.cs.kieler.scl.Label;
 import de.cau.cs.kieler.scl.Module;
+import de.cau.cs.kieler.scl.ModuleCall;
 import de.cau.cs.kieler.scl.Parallel;
 import de.cau.cs.kieler.scl.Pause;
 import de.cau.cs.kieler.scl.SCLFactory;
@@ -75,6 +76,7 @@ public class SCLFactoryImpl extends EFactoryImpl implements SCLFactory {
             case SCLPackage.ASSIGNMENT: return createAssignment();
             case SCLPackage.CONDITIONAL: return createConditional();
             case SCLPackage.PARALLEL: return createParallel();
+            case SCLPackage.MODULE_CALL: return createModuleCall();
             case SCLPackage.THREAD: return createThread();
             case SCLPackage.SCOPE_STATEMENT: return createScopeStatement();
             case SCLPackage.ELSE_SCOPE: return createElseScope();
@@ -161,6 +163,16 @@ public class SCLFactoryImpl extends EFactoryImpl implements SCLFactory {
     public Parallel createParallel() {
         ParallelImpl parallel = new ParallelImpl();
         return parallel;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ModuleCall createModuleCall() {
+        ModuleCallImpl moduleCall = new ModuleCallImpl();
+        return moduleCall;
     }
 
     /**

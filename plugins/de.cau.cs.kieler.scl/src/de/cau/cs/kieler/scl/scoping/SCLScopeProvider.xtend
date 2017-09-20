@@ -4,13 +4,19 @@
 package de.cau.cs.kieler.scl.scoping
 
 import de.cau.cs.kieler.kexpressions.kext.scoping.KExtScopeProvider
+import de.cau.cs.kieler.scl.Goto
 import de.cau.cs.kieler.scl.Label
+import de.cau.cs.kieler.scl.Module
+import de.cau.cs.kieler.scl.ModuleCall
 import de.cau.cs.kieler.scl.SCLProgram
 import java.util.Collections
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.resource.EObjectDescription
 import org.eclipse.xtext.resource.IEObjectDescription
+import org.eclipse.xtext.scoping.IScope
+import org.eclipse.xtext.scoping.Scopes
 
 /**
  * This class contains custom scoping description.
@@ -21,16 +27,32 @@ import org.eclipse.xtext.resource.IEObjectDescription
  */
 class SCLScopeProvider extends KExtScopeProvider {
 
-    def labelScope(EObject context) {
-        var program = context
+    override getScope(EObject context, EReference reference) {
+        switch(context) {
+            Goto: return getScopeForLabel(context, reference)
+            ModuleCall: return getScopeForModule(context, reference)
+        }
+        
+        return super.getScope(context, reference)
+    }
+    
+    protected def IScope getScopeForLabel(Goto goto, EReference reference) {
+        var EObject module = goto
+        while (module != null) {
+            if (module instanceof Module) {
+                return Scopes.scopeFor(module.eAllContents.filter(Label).toIterable)
+            }
+            module = module.eContainer
+        }
+    }
+
+    protected def IScope getScopeForModule(ModuleCall call, EReference reference) {
+        var EObject program = call
         while (program != null) {
             if (program instanceof SCLProgram) {
-                return (program as SCLProgram).eAllContents.filter(Label).map [
-                    new EObjectDescription(QualifiedName.create(it.name), it, Collections.<String, String>emptyMap()) as IEObjectDescription
-                ].toList
+                return Scopes.scopeFor(program.modules)
             }
             program = program.eContainer
         }
     }
-
 }

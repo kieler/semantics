@@ -15,16 +15,21 @@ import org.eclipse.xtext.validation.Check
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 class SCLValidator extends AbstractSCLValidator {
+    
+    public static val DUBLICATE_LABEL = "Duplicate label"
+    public static val LEAGACY_CONDITIONAL = "This conditional uses legacy syntax. Please use if {...} else {...} instead."
 
      /*
      * Checks if labels are unique
      */
     @Check
     def checkUniqueLabel(SCLProgram program) {
-        program.eAllContents().filter(Label).groupBy[name].forEach[name, labels|
-            if (labels.size > 1) {
-                labels.forEach[error("Duplicate label", it, null, -1)]
-            }
-        ]
+        for(module : program.modules) {
+            module.eAllContents().filter(Label).groupBy[name].forEach[name, labels|
+                if (labels.size > 1) {
+                    labels.forEach[error(DUBLICATE_LABEL, it, null, -1)]
+                }
+            ]
+        }
     }
 }

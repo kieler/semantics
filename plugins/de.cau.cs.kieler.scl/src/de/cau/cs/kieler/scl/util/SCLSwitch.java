@@ -4,7 +4,10 @@ package de.cau.cs.kieler.scl.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
 
+import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.Pragmatable;
+import de.cau.cs.kieler.kexpressions.Call;
+import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
@@ -17,6 +20,7 @@ import de.cau.cs.kieler.scl.ElseScope;
 import de.cau.cs.kieler.scl.Goto;
 import de.cau.cs.kieler.scl.Label;
 import de.cau.cs.kieler.scl.Module;
+import de.cau.cs.kieler.scl.ModuleCall;
 import de.cau.cs.kieler.scl.Parallel;
 import de.cau.cs.kieler.scl.Pause;
 import de.cau.cs.kieler.scl.SCLPackage;
@@ -99,6 +103,7 @@ public class SCLSwitch<T> extends Switch<T> {
                 Module module = (Module)theEObject;
                 T result = caseModule(module);
                 if (result == null) result = caseScope(module);
+                if (result == null) result = caseNamedObject(module);
                 if (result == null) result = caseDeclarationScope(module);
                 if (result == null) result = caseStatementContainer(module);
                 if (result == null) result = caseAnnotatable(module);
@@ -140,6 +145,7 @@ public class SCLSwitch<T> extends Switch<T> {
                 Label label = (Label)theEObject;
                 T result = caseLabel(label);
                 if (result == null) result = caseStatement(label);
+                if (result == null) result = caseNamedObject(label);
                 if (result == null) result = caseAnnotatable(label);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -179,6 +185,17 @@ public class SCLSwitch<T> extends Switch<T> {
                 T result = caseParallel(parallel);
                 if (result == null) result = caseStatement(parallel);
                 if (result == null) result = caseAnnotatable(parallel);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCLPackage.MODULE_CALL: {
+                ModuleCall moduleCall = (ModuleCall)theEObject;
+                T result = caseModuleCall(moduleCall);
+                if (result == null) result = caseCall(moduleCall);
+                if (result == null) result = caseStatement(moduleCall);
+                if (result == null) result = caseExpression(moduleCall);
+                if (result == null) result = caseAnnotatable(moduleCall);
+                if (result == null) result = caseSchedulable(moduleCall);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -383,6 +400,21 @@ public class SCLSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Module Call</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Module Call</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseModuleCall(ModuleCall object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Thread</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -473,6 +505,21 @@ public class SCLSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Named Object</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Named Object</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseNamedObject(NamedObject object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Schedulable</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -514,6 +561,36 @@ public class SCLSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseKEffects_Assignment(de.cau.cs.kieler.kexpressions.keffects.Assignment object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Expression</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Expression</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseExpression(Expression object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Call</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Call</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseCall(Call object) {
         return null;
     }
 

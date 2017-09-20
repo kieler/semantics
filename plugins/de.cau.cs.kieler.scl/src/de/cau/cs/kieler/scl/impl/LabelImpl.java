@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.scl.impl;
 
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.scl.Label;
 import de.cau.cs.kieler.scl.SCLPackage;
 
@@ -141,6 +143,38 @@ public class LabelImpl extends StatementImpl implements Label {
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+        if (baseClass == NamedObject.class) {
+            switch (derivedFeatureID) {
+                case SCLPackage.LABEL__NAME: return AnnotationsPackage.NAMED_OBJECT__NAME;
+                default: return -1;
+            }
+        }
+        return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+        if (baseClass == NamedObject.class) {
+            switch (baseFeatureID) {
+                case AnnotationsPackage.NAMED_OBJECT__NAME: return SCLPackage.LABEL__NAME;
+                default: return -1;
+            }
+        }
+        return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
     }
 
     /**
