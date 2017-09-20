@@ -106,6 +106,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
     public static final SynthesisOption HIDE_CONNECTIONS = SynthesisOption.createCheckOption("Hide Connections", false);
 
+    public static final SynthesisOption COMBINE_CONNECTIONS = SynthesisOption.createCheckOption("Combine Connections", false);
+
     public static final SynthesisOption HIDE_UNCONNECTED = SynthesisOption.createCheckOption("Hide Unconnected", false);
 
     public static final SynthesisOption SHOW_HIDDEN = SynthesisOption.createCheckOption("Show Hidden", false);
@@ -252,6 +254,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
         // Create connections (added by extensions)
         if (!HIDE_CONNECTIONS.booleanValue) {
+            val HashMap<Integer, Integer> sourceDest2Number = newHashMap
+            val HashMap<Integer, Connection> sourceDest2MasterConnection = newHashMap
             printlnConsole("INFO: - Drawing connections")
             for (connection : model.connections) {
                 if (connection.visibleInView) {
@@ -259,7 +263,23 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                     if (connection.color != null) {
                         connectionColor = connection.color.color
                     }
-                    connection.addConnection(INTERLEVEL_CONNECTIONS.booleanValue, connectionColor)
+                    
+                    if (!COMBINE_CONNECTIONS.booleanValue) {
+                        connection.addConnection(INTERLEVEL_CONNECTIONS.booleanValue, connectionColor)
+                    } else {
+                        val srcDstKey = connection.src.hashCode + connection.dst.hashCode
+                        if (sourceDest2MasterConnection.containsKey(srcDstKey)) {
+                            // not the first connection from src to dst
+                            val currentSize = 1+sourceDest2Number.get(srcDstKey)
+                            sourceDest2Number.put(srcDstKey, currentSize)
+                            sourceDest2MasterConnection.get(srcDstKey).setSize(currentSize)
+                        } else {
+                            // first connection form src to dst
+                            sourceDest2Number.put(srcDstKey, 1)
+                            sourceDest2MasterConnection.put(srcDstKey, connection)
+                            connection.addConnection(INTERLEVEL_CONNECTIONS.booleanValue, connectionColor)
+                        }
+                    }
                 }
             }
         }
@@ -618,6 +638,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             var KPort dstPort = dstNode.addPort(connection, portId, 0, 0, 8, PortSide::WEST, color)
             edge.sourcePort = srcPort
             edge.targetPort = dstPort
+            edge.line.lineWidth = connection.size*2
             edge.line.setSelectionForeground(SELECTION_CONNECTION_COLOR.color)
             edge.line.setSelectionBackground(SELECTION_CONNECTION_COLOR.color)
             edge.line.foreground.propagateToChildren = true;
@@ -950,6 +971,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             options.addAll(HIERARCHY_HANDLING)
             options.addAll(SKIP_FILE_CONTENT);
             options.addAll(HIDE_CONNECTIONS);
+            options.addAll(COMBINE_CONNECTIONS);
             options.addAll(HIDE_UNCONNECTED);
             options.addAll(SHOW_HIDDEN);
             options.addAll(ANONYMIZE);

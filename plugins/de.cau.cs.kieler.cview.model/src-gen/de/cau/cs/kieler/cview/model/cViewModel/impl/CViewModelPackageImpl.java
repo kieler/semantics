@@ -372,9 +372,29 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getConnection_Hide()
+  public EAttribute getConnection_Size()
   {
     return (EAttribute)connectionEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getConnection_Weight()
+  {
+    return (EAttribute)connectionEClass.getEStructuralFeatures().get(7);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getConnection_Hide()
+  {
+    return (EAttribute)connectionEClass.getEStructuralFeatures().get(8);
   }
 
   /**
@@ -444,6 +464,8 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
     createEAttribute(connectionEClass, CONNECTION__TYPE);
     createEAttribute(connectionEClass, CONNECTION__COLOR);
     createEAttribute(connectionEClass, CONNECTION__TOOLTIP);
+    createEAttribute(connectionEClass, CONNECTION__SIZE);
+    createEAttribute(connectionEClass, CONNECTION__WEIGHT);
     createEAttribute(connectionEClass, CONNECTION__HIDE);
 
     // Create enums
@@ -508,6 +530,8 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
     initEAttribute(getConnection_Type(), ecorePackage.getEString(), "type", null, 0, 1, Connection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getConnection_Color(), ecorePackage.getEString(), "color", null, 0, 1, Connection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getConnection_Tooltip(), ecorePackage.getEString(), "tooltip", null, 0, 1, Connection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getConnection_Size(), ecorePackage.getEInt(), "size", null, 0, 1, Connection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getConnection_Weight(), ecorePackage.getEInt(), "weight", null, 0, 1, Connection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getConnection_Hide(), ecorePackage.getEBoolean(), "hide", null, 0, 1, Connection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals

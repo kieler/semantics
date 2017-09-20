@@ -1,9 +1,9 @@
 ';'=11
 '='=14
-'CUSTOM'=34
+'CUSTOM'=36
 'Component'=12
-'DIR'=32
-'FILE'=33
+'DIR'=34
+'FILE'=35
 'children'=22
 'color'=31
 'customTypeID'=16
@@ -18,10 +18,12 @@
 'reference'=18
 'referenceLine'=21
 'referenceUnresolved'=19
+'size'=32
 'src'=27
 'tooltip'=23
 'type'=15
 'typeID'=30
+'weight'=33
 RULE_ANY_OTHER=10
 RULE_ID=4
 RULE_INT=6
@@ -53,3 +55,5 @@ T__31=31
 T__32=32
 T__33=33
 T__34=34
+T__35=35
+T__36=36

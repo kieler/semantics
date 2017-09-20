@@ -29,6 +29,8 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl#getColor <em>Color</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl#getTooltip <em>Tooltip</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl#getSize <em>Size</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl#getWeight <em>Weight</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl#isHide <em>Hide</em>}</li>
  * </ul>
  *
@@ -135,6 +137,46 @@ public class ConnectionImpl extends MinimalEObjectImpl.Container implements Conn
    * @ordered
    */
   protected String tooltip = TOOLTIP_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getSize() <em>Size</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSize()
+   * @generated
+   * @ordered
+   */
+  protected static final int SIZE_EDEFAULT = 0;
+
+  /**
+   * The cached value of the '{@link #getSize() <em>Size</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSize()
+   * @generated
+   * @ordered
+   */
+  protected int size = SIZE_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getWeight() <em>Weight</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getWeight()
+   * @generated
+   * @ordered
+   */
+  protected static final int WEIGHT_EDEFAULT = 0;
+
+  /**
+   * The cached value of the '{@link #getWeight() <em>Weight</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getWeight()
+   * @generated
+   * @ordered
+   */
+  protected int weight = WEIGHT_EDEFAULT;
 
   /**
    * The default value of the '{@link #isHide() <em>Hide</em>}' attribute.
@@ -360,6 +402,52 @@ public class ConnectionImpl extends MinimalEObjectImpl.Container implements Conn
    * <!-- end-user-doc -->
    * @generated
    */
+  public int getSize()
+  {
+    return size;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setSize(int newSize)
+  {
+    int oldSize = size;
+    size = newSize;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CViewModelPackage.CONNECTION__SIZE, oldSize, size));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public int getWeight()
+  {
+    return weight;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setWeight(int newWeight)
+  {
+    int oldWeight = weight;
+    weight = newWeight;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CViewModelPackage.CONNECTION__WEIGHT, oldWeight, weight));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public boolean isHide()
   {
     return hide;
@@ -402,6 +490,10 @@ public class ConnectionImpl extends MinimalEObjectImpl.Container implements Conn
         return getColor();
       case CViewModelPackage.CONNECTION__TOOLTIP:
         return getTooltip();
+      case CViewModelPackage.CONNECTION__SIZE:
+        return getSize();
+      case CViewModelPackage.CONNECTION__WEIGHT:
+        return getWeight();
       case CViewModelPackage.CONNECTION__HIDE:
         return isHide();
     }
@@ -435,6 +527,12 @@ public class ConnectionImpl extends MinimalEObjectImpl.Container implements Conn
         return;
       case CViewModelPackage.CONNECTION__TOOLTIP:
         setTooltip((String)newValue);
+        return;
+      case CViewModelPackage.CONNECTION__SIZE:
+        setSize((Integer)newValue);
+        return;
+      case CViewModelPackage.CONNECTION__WEIGHT:
+        setWeight((Integer)newValue);
         return;
       case CViewModelPackage.CONNECTION__HIDE:
         setHide((Boolean)newValue);
@@ -471,6 +569,12 @@ public class ConnectionImpl extends MinimalEObjectImpl.Container implements Conn
       case CViewModelPackage.CONNECTION__TOOLTIP:
         setTooltip(TOOLTIP_EDEFAULT);
         return;
+      case CViewModelPackage.CONNECTION__SIZE:
+        setSize(SIZE_EDEFAULT);
+        return;
+      case CViewModelPackage.CONNECTION__WEIGHT:
+        setWeight(WEIGHT_EDEFAULT);
+        return;
       case CViewModelPackage.CONNECTION__HIDE:
         setHide(HIDE_EDEFAULT);
         return;
@@ -500,6 +604,10 @@ public class ConnectionImpl extends MinimalEObjectImpl.Container implements Conn
         return COLOR_EDEFAULT == null ? color != null : !COLOR_EDEFAULT.equals(color);
       case CViewModelPackage.CONNECTION__TOOLTIP:
         return TOOLTIP_EDEFAULT == null ? tooltip != null : !TOOLTIP_EDEFAULT.equals(tooltip);
+      case CViewModelPackage.CONNECTION__SIZE:
+        return size != SIZE_EDEFAULT;
+      case CViewModelPackage.CONNECTION__WEIGHT:
+        return weight != WEIGHT_EDEFAULT;
       case CViewModelPackage.CONNECTION__HIDE:
         return hide != HIDE_EDEFAULT;
     }
@@ -525,6 +633,10 @@ public class ConnectionImpl extends MinimalEObjectImpl.Container implements Conn
     result.append(color);
     result.append(", tooltip: ");
     result.append(tooltip);
+    result.append(", size: ");
+    result.append(size);
+    result.append(", weight: ");
+    result.append(weight);
     result.append(", hide: ");
     result.append(hide);
     result.append(')');

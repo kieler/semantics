@@ -38,6 +38,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Connection/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Connection/color"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Connection/tooltip"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Connection/size"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Connection/weight"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Connection/hide"/>
     </genClasses>
   </genPackages>

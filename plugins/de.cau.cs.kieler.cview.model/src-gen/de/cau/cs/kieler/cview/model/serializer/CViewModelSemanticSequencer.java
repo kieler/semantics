@@ -97,6 +97,8 @@ public class CViewModelSemanticSequencer extends AbstractDelegatingSemanticSeque
 	 *         type=STRING 
 	 *         color=STRING 
 	 *         tooltip=STRING 
+	 *         size=INT 
+	 *         weight=INT 
 	 *         hide?='hide'?
 	 *     )
 	 */

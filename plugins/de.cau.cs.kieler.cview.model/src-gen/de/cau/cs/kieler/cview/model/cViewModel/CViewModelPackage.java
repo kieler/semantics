@@ -305,13 +305,31 @@ public interface CViewModelPackage extends EPackage
   int CONNECTION__TOOLTIP = 5;
 
   /**
+   * The feature id for the '<em><b>Size</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONNECTION__SIZE = 6;
+
+  /**
+   * The feature id for the '<em><b>Weight</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONNECTION__WEIGHT = 7;
+
+  /**
    * The feature id for the '<em><b>Hide</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONNECTION__HIDE = 6;
+  int CONNECTION__HIDE = 8;
 
   /**
    * The number of structural features of the '<em>Connection</em>' class.
@@ -320,7 +338,7 @@ public interface CViewModelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONNECTION_FEATURE_COUNT = 7;
+  int CONNECTION_FEATURE_COUNT = 9;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.cview.model.cViewModel.ComponentType <em>Component Type</em>}' enum.
@@ -606,6 +624,28 @@ public interface CViewModelPackage extends EPackage
   EAttribute getConnection_Tooltip();
 
   /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getSize <em>Size</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Size</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Connection#getSize()
+   * @see #getConnection()
+   * @generated
+   */
+  EAttribute getConnection_Size();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getWeight <em>Weight</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Weight</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Connection#getWeight()
+   * @see #getConnection()
+   * @generated
+   */
+  EAttribute getConnection_Weight();
+
+  /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#isHide <em>Hide</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -854,6 +894,22 @@ public interface CViewModelPackage extends EPackage
      * @generated
      */
     EAttribute CONNECTION__TOOLTIP = eINSTANCE.getConnection_Tooltip();
+
+    /**
+     * The meta object literal for the '<em><b>Size</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CONNECTION__SIZE = eINSTANCE.getConnection_Size();
+
+    /**
+     * The meta object literal for the '<em><b>Weight</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CONNECTION__WEIGHT = eINSTANCE.getConnection_Weight();
 
     /**
      * The meta object literal for the '<em><b>Hide</b></em>' attribute feature.

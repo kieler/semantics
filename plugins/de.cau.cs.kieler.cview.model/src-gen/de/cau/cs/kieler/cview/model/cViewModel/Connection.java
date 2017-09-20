@@ -20,6 +20,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getColor <em>Color</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getTooltip <em>Tooltip</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getSize <em>Size</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getWeight <em>Weight</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#isHide <em>Hide</em>}</li>
  * </ul>
  *
@@ -184,6 +186,58 @@ public interface Connection extends EObject
    * @generated
    */
   void setTooltip(String value);
+
+  /**
+   * Returns the value of the '<em><b>Size</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Size</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Size</em>' attribute.
+   * @see #setSize(int)
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getConnection_Size()
+   * @model
+   * @generated
+   */
+  int getSize();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getSize <em>Size</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Size</em>' attribute.
+   * @see #getSize()
+   * @generated
+   */
+  void setSize(int value);
+
+  /**
+   * Returns the value of the '<em><b>Weight</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Weight</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Weight</em>' attribute.
+   * @see #setWeight(int)
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getConnection_Weight()
+   * @model
+   * @generated
+   */
+  int getWeight();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getWeight <em>Weight</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Weight</em>' attribute.
+   * @see #getWeight()
+   * @generated
+   */
+  void setWeight(int value);
 
   /**
    * Returns the value of the '<em><b>Hide</b></em>' attribute.

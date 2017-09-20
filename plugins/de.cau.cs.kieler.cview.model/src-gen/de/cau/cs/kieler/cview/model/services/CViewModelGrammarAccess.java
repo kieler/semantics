@@ -329,8 +329,14 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cTooltipKeyword_10 = (Keyword)cGroup.eContents().get(10);
 		private final Assignment cTooltipAssignment_11 = (Assignment)cGroup.eContents().get(11);
 		private final RuleCall cTooltipSTRINGTerminalRuleCall_11_0 = (RuleCall)cTooltipAssignment_11.eContents().get(0);
-		private final Assignment cHideAssignment_12 = (Assignment)cGroup.eContents().get(12);
-		private final Keyword cHideHideKeyword_12_0 = (Keyword)cHideAssignment_12.eContents().get(0);
+		private final Keyword cSizeKeyword_12 = (Keyword)cGroup.eContents().get(12);
+		private final Assignment cSizeAssignment_13 = (Assignment)cGroup.eContents().get(13);
+		private final RuleCall cSizeINTTerminalRuleCall_13_0 = (RuleCall)cSizeAssignment_13.eContents().get(0);
+		private final Keyword cWeightKeyword_14 = (Keyword)cGroup.eContents().get(14);
+		private final Assignment cWeightAssignment_15 = (Assignment)cGroup.eContents().get(15);
+		private final RuleCall cWeightINTTerminalRuleCall_15_0 = (RuleCall)cWeightAssignment_15.eContents().get(0);
+		private final Assignment cHideAssignment_16 = (Assignment)cGroup.eContents().get(16);
+		private final Keyword cHideHideKeyword_16_0 = (Keyword)cHideAssignment_16.eContents().get(0);
 		
 		//Connection:
 		//	'src' src=[Component]
@@ -339,11 +345,13 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		//	'typeID' type=STRING
 		//	'color' color=STRING
 		//	'tooltip' tooltip=STRING
+		//	'size' size=INT
+		//	'weight' weight=INT
 		//	hide?='hide'?;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//'src' src=[Component] 'dst' dst=[Component] 'label' label=STRING 'typeID' type=STRING 'color' color=STRING 'tooltip'
-		//tooltip=STRING hide?='hide'?
+		//tooltip=STRING 'size' size=INT 'weight' weight=INT hide?='hide'?
 		public Group getGroup() { return cGroup; }
 		
 		//'src'
@@ -406,11 +414,29 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getTooltipSTRINGTerminalRuleCall_11_0() { return cTooltipSTRINGTerminalRuleCall_11_0; }
 		
+		//'size'
+		public Keyword getSizeKeyword_12() { return cSizeKeyword_12; }
+		
+		//size=INT
+		public Assignment getSizeAssignment_13() { return cSizeAssignment_13; }
+		
+		//INT
+		public RuleCall getSizeINTTerminalRuleCall_13_0() { return cSizeINTTerminalRuleCall_13_0; }
+		
+		//'weight'
+		public Keyword getWeightKeyword_14() { return cWeightKeyword_14; }
+		
+		//weight=INT
+		public Assignment getWeightAssignment_15() { return cWeightAssignment_15; }
+		
+		//INT
+		public RuleCall getWeightINTTerminalRuleCall_15_0() { return cWeightINTTerminalRuleCall_15_0; }
+		
 		//hide?='hide'?
-		public Assignment getHideAssignment_12() { return cHideAssignment_12; }
+		public Assignment getHideAssignment_16() { return cHideAssignment_16; }
 		
 		//'hide'
-		public Keyword getHideHideKeyword_12_0() { return cHideHideKeyword_12_0; }
+		public Keyword getHideHideKeyword_16_0() { return cHideHideKeyword_16_0; }
 	}
 	
 	public class ComponentTypeElements extends AbstractEnumRuleElementFinder {
@@ -536,6 +562,8 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 	//	'typeID' type=STRING
 	//	'color' color=STRING
 	//	'tooltip' tooltip=STRING
+	//	'size' size=INT
+	//	'weight' weight=INT
 	//	hide?='hide'?;
 	public ConnectionElements getConnectionAccess() {
 		return pConnection;

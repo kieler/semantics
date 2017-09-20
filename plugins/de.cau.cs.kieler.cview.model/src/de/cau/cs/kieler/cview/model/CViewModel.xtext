@@ -35,6 +35,8 @@ Connection:
     'typeID' type=STRING
     'color' color=STRING
     'tooltip' tooltip=STRING
+    'size' size=INT
+    'weight' weight=INT
     (hide?='hide')?
 ;	
 	

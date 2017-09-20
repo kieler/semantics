@@ -599,11 +599,55 @@ ruleConnection returns [EObject current=null]
 				}
 			)
 		)
+		otherlv_12='size'
+		{
+			newLeafNode(otherlv_12, grammarAccess.getConnectionAccess().getSizeKeyword_12());
+		}
 		(
 			(
-				lv_hide_12_0='hide'
+				lv_size_13_0=RULE_INT
 				{
-					newLeafNode(lv_hide_12_0, grammarAccess.getConnectionAccess().getHideHideKeyword_12_0());
+					newLeafNode(lv_size_13_0, grammarAccess.getConnectionAccess().getSizeINTTerminalRuleCall_13_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getConnectionRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"size",
+						lv_size_13_0,
+						"org.eclipse.xtext.common.Terminals.INT");
+				}
+			)
+		)
+		otherlv_14='weight'
+		{
+			newLeafNode(otherlv_14, grammarAccess.getConnectionAccess().getWeightKeyword_14());
+		}
+		(
+			(
+				lv_weight_15_0=RULE_INT
+				{
+					newLeafNode(lv_weight_15_0, grammarAccess.getConnectionAccess().getWeightINTTerminalRuleCall_15_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getConnectionRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"weight",
+						lv_weight_15_0,
+						"org.eclipse.xtext.common.Terminals.INT");
+				}
+			)
+		)
+		(
+			(
+				lv_hide_16_0='hide'
+				{
+					newLeafNode(lv_hide_16_0, grammarAccess.getConnectionAccess().getHideHideKeyword_16_0());
 				}
 				{
 					if ($current==null) {
