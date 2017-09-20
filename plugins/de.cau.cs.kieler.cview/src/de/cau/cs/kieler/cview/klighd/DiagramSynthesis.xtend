@@ -84,6 +84,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     public static final int DEFAULT_EXPANDED_VALUE = 2;
     public static final int MAX_EXPANDED_VALUE = 7;
     public static final int MIN_EXPANDED_VALUE = 1;
+    
+    public static final int COMBINED_LINE_WIDTH_MAX = 20
 
     public static int selectedExpandLevel = DEFAULT_EXPANDED_VALUE;
 
@@ -106,7 +108,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
     public static final SynthesisOption HIDE_CONNECTIONS = SynthesisOption.createCheckOption("Hide Connections", false);
 
-    public static final SynthesisOption COMBINE_CONNECTIONS = SynthesisOption.createCheckOption("Combine Connections", false);
+    public static final SynthesisOption COMBINE_CONNECTIONS = SynthesisOption.createCheckOption("Combine Connections",
+        false);
 
     public static final SynthesisOption HIDE_UNCONNECTED = SynthesisOption.createCheckOption("Hide Unconnected", false);
 
@@ -127,6 +130,10 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
     val HashSet<Component> connectedComponents = new HashSet
     val HashSet<Component> connectedComponentsAdditional = new HashSet // thru hierarchy
+    // needed for regarding combining of simple connections
+    val HashMap<String, Integer> sourceDest2Number = newHashMap
+    val HashMap<String, Connection> sourceDest2MasterConnection = newHashMap
+    val HashMap<Connection, KEdge> masterConnection2Edge = newHashMap
 
     // ================================================================= //
     // ==                     MAIN TRANSFORM                          == //
@@ -254,32 +261,22 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
         // Create connections (added by extensions)
         if (!HIDE_CONNECTIONS.booleanValue) {
-            val HashMap<Integer, Integer> sourceDest2Number = newHashMap
-            val HashMap<Integer, Connection> sourceDest2MasterConnection = newHashMap
             printlnConsole("INFO: - Drawing connections")
+            // Reset both hashmaps jere
+            sourceDest2Number.clear
+            sourceDest2MasterConnection.clear
+            masterConnection2Edge.clear
+            for (connection : model.connections) {
+                // Reset size for each pass
+                connection.size = 0
+            }
             for (connection : model.connections) {
                 if (connection.visibleInView) {
                     var connectionColor = "Black".color
                     if (connection.color != null) {
                         connectionColor = connection.color.color
                     }
-                    
-                    if (!COMBINE_CONNECTIONS.booleanValue) {
-                        connection.addConnection(INTERLEVEL_CONNECTIONS.booleanValue, connectionColor)
-                    } else {
-                        val srcDstKey = connection.src.hashCode + connection.dst.hashCode
-                        if (sourceDest2MasterConnection.containsKey(srcDstKey)) {
-                            // not the first connection from src to dst
-                            val currentSize = 1+sourceDest2Number.get(srcDstKey)
-                            sourceDest2Number.put(srcDstKey, currentSize)
-                            sourceDest2MasterConnection.get(srcDstKey).setSize(currentSize)
-                        } else {
-                            // first connection form src to dst
-                            sourceDest2Number.put(srcDstKey, 1)
-                            sourceDest2MasterConnection.put(srcDstKey, connection)
-                            connection.addConnection(INTERLEVEL_CONNECTIONS.booleanValue, connectionColor)
-                        }
-                    }
+                    connection.addConnection(INTERLEVEL_CONNECTIONS.booleanValue, connectionColor)
                 }
             }
         }
@@ -527,10 +524,12 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     // ---------------------------------------------------------------------
     def void addConnection(Connection connection, boolean interLevelConnections, KColor color) {
         if (interLevelConnections) {
-            addSimpleConnection(connection, connection.src.node, connection.dst.node, false, color, true);
+            addSimpleConnectionPossiblyCombined(connection, connection.src.node, connection.dst.node, false, color,
+                true);
         } else {
             if (connection.sameParent) {
-                addSimpleConnection(connection, connection.src.node, connection.dst.node, true, color, true);
+                addSimpleConnectionPossiblyCombined(connection, connection.src.node, connection.dst.node, true, color,
+                    true);
             } else {
                 addPortbasedConnection(connection, connection.src, connection.dst, color);
             }
@@ -548,7 +547,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         connection.dst.addConnectedParents
         if (srcComponent.sameParent(dstComponent)) {
             // Can connect on same level!
-            connection.addSimpleConnection(srcComponent.node, dstComponent.node, true, color, true)
+            connection.addSimpleConnectionPossiblyCombined(srcComponent.node, dstComponent.node, true, color, true)
         } else if (srcComponent.parent == dstComponent) {
             connection.addParentConnection(srcComponent, true, true, color)
         } else if (dstComponent.parent == srcComponent) {
@@ -597,14 +596,65 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             return null
         }
         if (directionToParent) {
-            addSimpleConnection(connection, component.node, component.parent.node, usePorts, color, false)
+            addSimpleConnectionPossiblyCombined(connection, component.node, component.parent.node, usePorts, color,
+                false)
         } else {
-            addSimpleConnection(connection, component.parent.node, component.node, usePorts, color, false)
+            addSimpleConnectionPossiblyCombined(connection, component.parent.node, component.node, usePorts, color,
+                false)
         }
         return component.parent
     }
 
     // ---------------------------------------------------------------------
+    // Add a simple connection or combine with an existing one
+    def void addSimpleConnectionPossiblyCombined(Connection connection, KNode srcNode, KNode dstNode, boolean usePorts,
+        KColor color, boolean addLabel) {
+
+        if (!COMBINE_CONNECTIONS.booleanValue) {
+            addSimpleConnection(connection, srcNode, dstNode, usePorts, color, addLabel)
+        } else {
+            // Key regarding type, src, dst    
+            val srcDstKey = srcNode.hashCode + "." + dstNode.hashCode + "." + connection.type.hashCode
+            println(">>> " + srcDstKey + " " + sourceDest2MasterConnection.containsKey(srcDstKey))
+            if (sourceDest2MasterConnection.containsKey(srcDstKey)) {
+                // not the first connection from src to dst
+                val currentSize = sourceDest2Number.get(srcDstKey)
+                sourceDest2Number.put(srcDstKey, currentSize + 1)
+                val masterConnection = sourceDest2MasterConnection.get(srcDstKey)
+                masterConnection.setSize(currentSize)
+                updateSimpleConnection(masterConnection)
+            } else {
+                // first connection form src to dst
+                addSimpleConnection(connection, srcNode, dstNode, usePorts, color, addLabel)
+                sourceDest2Number.put(srcDstKey, 0)
+                sourceDest2MasterConnection.put(srcDstKey, connection)
+            }
+        }
+    }
+
+    def void updateSimpleConnection(Connection connection) {
+        val edge = masterConnection2Edge.get(connection)
+        if (edge != null) {
+            var tooltipText = connection.tooltip
+            if (connection.size > 0) {
+                // Show connection size (combined)
+                tooltipText = (connection.size + 1) + " connections of type " + connection.type + " combined"
+            }
+            edge.setProperty(KlighdProperties::TOOLTIP, tooltipText);
+            if (edge.labels.size > 0) {
+                edge.labels.get(0).setProperty(KlighdProperties::TOOLTIP, tooltipText);
+            }
+            var combinedLinewWith = 1 + (connection.size / 10)
+            if (combinedLinewWith > COMBINED_LINE_WIDTH_MAX) {
+                combinedLinewWith = COMBINED_LINE_WIDTH_MAX
+            }
+            if (connection.size == 0) {
+                combinedLinewWith = 0
+            }
+            edge.line.lineWidth = 1 + combinedLinewWith
+        }
+    }
+
     def void addSimpleConnection(Connection connection, KNode srcNode, KNode dstNode, boolean usePorts, KColor color,
         boolean addLabel) {
         connectedComponents.add(connection.src)
@@ -613,6 +663,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         connection.dst.addConnectedParents
         val connectionObject = (connection.hashCode + srcNode.hashCode)
         val edge = connectionObject.createEdge()
+        masterConnection2Edge.put(connection, edge)
         val arrowRendering = edge.addPolyline(2).addHeadArrowDecorator();
         arrowRendering.background = color.copy
         arrowRendering.foreground = color.copy
@@ -624,7 +675,11 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             edge.addLabel(connection.label).associateWith(connection);
         }
         if (connection.tooltip != null) {
-            val tooltipText = connection.tooltip
+            var tooltipText = connection.tooltip
+            if (connection.size > 0) {
+                // Show connection size (combined)
+                tooltipText = (connection.size + 1) + " connections of type " + connection.type + " combined"
+            }
             edge.setProperty(KlighdProperties::TOOLTIP, tooltipText);
             if (edge.labels.size > 0) {
                 edge.labels.get(0).setProperty(KlighdProperties::TOOLTIP, tooltipText);
@@ -638,7 +693,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             var KPort dstPort = dstNode.addPort(connection, portId, 0, 0, 8, PortSide::WEST, color)
             edge.sourcePort = srcPort
             edge.targetPort = dstPort
-            edge.line.lineWidth = connection.size*2
+            edge.line.lineWidth = 1 + connection.size
             edge.line.setSelectionForeground(SELECTION_CONNECTION_COLOR.color)
             edge.line.setSelectionBackground(SELECTION_CONNECTION_COLOR.color)
             edge.line.foreground.propagateToChildren = true;
