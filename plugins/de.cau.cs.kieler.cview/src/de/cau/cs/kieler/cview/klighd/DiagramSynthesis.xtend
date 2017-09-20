@@ -84,7 +84,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     public static final int DEFAULT_EXPANDED_VALUE = 2;
     public static final int MAX_EXPANDED_VALUE = 7;
     public static final int MIN_EXPANDED_VALUE = 1;
-    
+
     public static final int COMBINED_LINE_WIDTH_MAX = 20
 
     public static int selectedExpandLevel = DEFAULT_EXPANDED_VALUE;
@@ -132,9 +132,11 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     val HashSet<Component> connectedComponentsAdditional = new HashSet // thru hierarchy
     // needed for regarding combining of simple connections
     val HashMap<String, Integer> sourceDest2Number = newHashMap
+    val HashMap<Connection, Connection> masterConnectionMap = newHashMap
     val HashMap<String, Connection> sourceDest2MasterConnection = newHashMap
-    val HashMap<Connection, KEdge> masterConnection2Edge = newHashMap
+    val HashMap<String, KEdge> sourceDest2Edge = newHashMap
 
+//    var num = 0
     // ================================================================= //
     // ==                     MAIN TRANSFORM                          == //
     // ================================================================= //
@@ -264,8 +266,10 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             printlnConsole("INFO: - Drawing connections")
             // Reset both hashmaps jere
             sourceDest2Number.clear
+            sourceDest2Edge.clear
+            masterConnectionMap.clear
             sourceDest2MasterConnection.clear
-            masterConnection2Edge.clear
+            portCache.clear
             for (connection : model.connections) {
                 // Reset size for each pass
                 connection.size = 0
@@ -606,6 +610,19 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     }
 
     // ---------------------------------------------------------------------
+    def String getKey(Connection connection, KNode srcNode, KNode dstNode) {
+        srcNode.hashCode + "." + dstNode.hashCode; // + "." + connection.type.hashCode
+    }
+
+    def int getSrcDstNumber(Connection connection, KNode srcNode, KNode dstNode) {
+        val srcDstKey = connection.getKey(srcNode, dstNode)
+        if (sourceDest2Number.containsKey(srcDstKey)) {
+            return sourceDest2Number.get(srcDstKey)
+
+        }
+        return -1
+    }
+
     // Add a simple connection or combine with an existing one
     def void addSimpleConnectionPossiblyCombined(Connection connection, KNode srcNode, KNode dstNode, boolean usePorts,
         KColor color, boolean addLabel) {
@@ -614,41 +631,48 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             addSimpleConnection(connection, srcNode, dstNode, usePorts, color, addLabel)
         } else {
             // Key regarding type, src, dst    
-            val srcDstKey = srcNode.hashCode + "." + dstNode.hashCode + "." + connection.type.hashCode
-            println(">>> " + srcDstKey + " " + sourceDest2MasterConnection.containsKey(srcDstKey))
-            if (sourceDest2MasterConnection.containsKey(srcDstKey)) {
+            val srcDstKey = connection.getKey(srcNode, dstNode) // srcNode.hashCode + "." + dstNode.hashCode + "." + connection.type.hashCode
+            val currentNumber = connection.getSrcDstNumber(srcNode, dstNode)
+            if (currentNumber >= 0) {
                 // not the first connection from src to dst
-                val currentSize = sourceDest2Number.get(srcDstKey)
-                sourceDest2Number.put(srcDstKey, currentSize + 1)
+                sourceDest2Number.put(srcDstKey, currentNumber + 1)
+
+                updateSimpleConnection(connection, srcNode, dstNode)
                 val masterConnection = sourceDest2MasterConnection.get(srcDstKey)
-                masterConnection.setSize(currentSize)
-                updateSimpleConnection(masterConnection)
+                if (masterConnection != null) {
+                    masterConnectionMap.put(connection, masterConnection)
+                }
             } else {
                 // first connection form src to dst
                 addSimpleConnection(connection, srcNode, dstNode, usePorts, color, addLabel)
                 sourceDest2Number.put(srcDstKey, 0)
-                sourceDest2MasterConnection.put(srcDstKey, connection)
+                println("PUT(" + srcDstKey + ") " + " 0 : " + srcNode.toString + " --> " + dstNode.toString)
+                val masterConnection = connection
+                sourceDest2MasterConnection.put(srcDstKey, masterConnection)
+            // masterConnectionMap.put(masterConnection, masterConnection)
             }
         }
     }
 
-    def void updateSimpleConnection(Connection connection) {
-        val edge = masterConnection2Edge.get(connection)
+    def void updateSimpleConnection(Connection connection, KNode srcNode, KNode dstNode) {
+        val key = connection.getKey(srcNode, dstNode)
+        val edge = sourceDest2Edge.get(key)
         if (edge != null) {
+            val currentNumber = connection.getSrcDstNumber(srcNode, dstNode)
             var tooltipText = connection.tooltip
-            if (connection.size > 0) {
+            if (currentNumber > 0) {
                 // Show connection size (combined)
-                tooltipText = (connection.size + 1) + " connections of type " + connection.type + " combined"
+                tooltipText = (currentNumber + 1) + " connections of type " + connection.type + " combined"
             }
             edge.setProperty(KlighdProperties::TOOLTIP, tooltipText);
             if (edge.labels.size > 0) {
                 edge.labels.get(0).setProperty(KlighdProperties::TOOLTIP, tooltipText);
             }
-            var combinedLinewWith = 1 + (connection.size / 10)
+            var combinedLinewWith = 1 + (currentNumber / 10)
             if (combinedLinewWith > COMBINED_LINE_WIDTH_MAX) {
                 combinedLinewWith = COMBINED_LINE_WIDTH_MAX
             }
-            if (connection.size == 0) {
+            if (currentNumber == 0) {
                 combinedLinewWith = 0
             }
             edge.line.lineWidth = 1 + combinedLinewWith
@@ -663,7 +687,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         connection.dst.addConnectedParents
         val connectionObject = (connection.hashCode + srcNode.hashCode)
         val edge = connectionObject.createEdge()
-        masterConnection2Edge.put(connection, edge)
+        val key = connection.getKey(srcNode, dstNode)
+        sourceDest2Edge.put(key, edge)
         val arrowRendering = edge.addPolyline(2).addHeadArrowDecorator();
         arrowRendering.background = color.copy
         arrowRendering.foreground = color.copy
@@ -674,12 +699,10 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             // Add Label only if top-most layer for this connection
             edge.addLabel(connection.label).associateWith(connection);
         }
+//        edge.addLabel("" + num++)
+//        edge.setProperty(KlighdProperties::TOOLTIP, "" + num);
         if (connection.tooltip != null) {
             var tooltipText = connection.tooltip
-            if (connection.size > 0) {
-                // Show connection size (combined)
-                tooltipText = (connection.size + 1) + " connections of type " + connection.type + " combined"
-            }
             edge.setProperty(KlighdProperties::TOOLTIP, tooltipText);
             if (edge.labels.size > 0) {
                 edge.labels.get(0).setProperty(KlighdProperties::TOOLTIP, tooltipText);
@@ -689,11 +712,33 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         if (usePorts) {
             // Add the connection
             var portId = connection.hashCode.toString
-            val KPort srcPort = srcNode.addPort(connection, portId, 0, 0, 8, PortSide::EAST, color)
-            var KPort dstPort = dstNode.addPort(connection, portId, 0, 0, 8, PortSide::WEST, color)
+            var portSideDest = PortSide::WEST
+            if (COMBINE_CONNECTIONS.booleanValue) {
+//                val srcDstKey = connection.getKey(srcNode, dstNode)
+//                val currentNumber = connection.getSrcDstNumber(srcNode, dstNode)
+//                println("GET("+srcDstKey+") "  + currentNumber + " : " + srcNode.toString + " --> " + dstNode.toString)
+//                if (currentNumber > -1) {
+//                    portId = srcDstKey
+//                }
+//                val masterConnection = masterConnectionMap.get(connection)
+//                if (masterConnection != null) {
+//                    portId = masterConnection.hashCode.toString
+//                }
+            }
+            // Todo: if masterConnection exists, then REUSE port!!!!
+            val forward = (masterConnectionMap.get(connection) == null)
+            var sideFrom = PortSide::EAST
+            var sideTo = PortSide::WEST
+            if (!forward) {
+                sideFrom = PortSide::WEST
+                sideTo = PortSide::EAST
+            }
+
+            val KPort srcPort = srcNode.retrievePort(connection, portId, 0, 0, 8, sideFrom, color)
+            var KPort dstPort = dstNode.retrievePort(connection, portId, 0, 0, 8, sideTo, color)
             edge.sourcePort = srcPort
             edge.targetPort = dstPort
-            edge.line.lineWidth = 1 + connection.size
+            edge.line.lineWidth = 1
             edge.line.setSelectionForeground(SELECTION_CONNECTION_COLOR.color)
             edge.line.setSelectionBackground(SELECTION_CONNECTION_COLOR.color)
             edge.line.foreground.propagateToChildren = true;
@@ -702,9 +747,35 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     }
 
     // ---------------------------------------------------------------------
+    HashMap<String, KPort> portCache = newHashMap()
+
+    def KPort retrievePort(KNode node, Connection connection, Object mapping, float x, float y, int size, PortSide side,
+        KColor color) {
+        if (!COMBINE_CONNECTIONS.booleanValue) {
+            return node.addPort(connection, mapping, x, y, size, side, color)
+        } else {
+            var portId = node.hashCode.toString + connection.dst.toString
+//            val masterConnection = masterConnectionMap.get(connection)
+//            if (masterConnection != null) {
+//                portId = node.hashCode.toString + masterConnection.hashCode
+//                //portId = mapping.hashCode + ""
+//            }
+            if (portCache.containsKey(portId)) {
+                val returnPort = portCache.get(portId)
+                returnPort.addLayoutParam(CoreOptions::PORT_SIDE, side);
+                return returnPort
+            } else {
+                val newPort = node.addPort(connection, mapping, x, y, size, side, color)
+                portCache.put(portId, newPort)
+                return newPort
+            }
+        }
+    }
+
     def KPort addPort(KNode node, Connection connection, Object mapping, float x, float y, int size, PortSide side,
         KColor color) {
         val returnPort = node.createPort(mapping);
+        // val returnPort = node.createPort(mapping);
         if (side != null) {
             node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
             returnPort.addLayoutParam(CoreOptions::PORT_SIDE, side);
