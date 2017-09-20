@@ -3,78 +3,74 @@
  */
 package de.cau.cs.kieler.esterel.formatting2;
 
-import com.google.inject.Inject;
-import de.cau.cs.kieler.annotations.Annotation;
-import de.cau.cs.kieler.esterel.Abort;
-import de.cau.cs.kieler.esterel.Await;
-import de.cau.cs.kieler.esterel.Block;
-import de.cau.cs.kieler.esterel.Case;
-import de.cau.cs.kieler.esterel.Constant;
-import de.cau.cs.kieler.esterel.ConstantDeclaration;
-import de.cau.cs.kieler.esterel.ConstantExpression;
-import de.cau.cs.kieler.esterel.ConstantMultiDeclaration;
-import de.cau.cs.kieler.esterel.ConstantRenaming;
-import de.cau.cs.kieler.esterel.DelayExpr;
-import de.cau.cs.kieler.esterel.Do;
-import de.cau.cs.kieler.esterel.ElsIf;
-import de.cau.cs.kieler.esterel.Emit;
-import de.cau.cs.kieler.esterel.EsterelDeclaration;
-import de.cau.cs.kieler.esterel.EsterelFunctionCall;
-import de.cau.cs.kieler.esterel.EsterelModule;
-import de.cau.cs.kieler.esterel.EsterelParallel;
-import de.cau.cs.kieler.esterel.EsterelProgram;
-import de.cau.cs.kieler.esterel.EsterelThread;
-import de.cau.cs.kieler.esterel.EsterelVariableDeclaration;
-import de.cau.cs.kieler.esterel.EveryDo;
-import de.cau.cs.kieler.esterel.Exec;
-import de.cau.cs.kieler.esterel.ExecCase;
-import de.cau.cs.kieler.esterel.Exit;
-import de.cau.cs.kieler.esterel.Function;
-import de.cau.cs.kieler.esterel.FunctionDeclaration;
-import de.cau.cs.kieler.esterel.Halt;
-import de.cau.cs.kieler.esterel.IfTest;
-import de.cau.cs.kieler.esterel.InputDeclaration;
-import de.cau.cs.kieler.esterel.InputOutputDeclaration;
-import de.cau.cs.kieler.esterel.LocalSignalDeclaration;
-import de.cau.cs.kieler.esterel.LocalVariableDeclaration;
-import de.cau.cs.kieler.esterel.Loop;
-import de.cau.cs.kieler.esterel.Nothing;
-import de.cau.cs.kieler.esterel.OutputDeclaration;
-import de.cau.cs.kieler.esterel.Present;
-import de.cau.cs.kieler.esterel.PresentCase;
-import de.cau.cs.kieler.esterel.Procedure;
-import de.cau.cs.kieler.esterel.ProcedureCall;
-import de.cau.cs.kieler.esterel.ProcedureDeclaration;
-import de.cau.cs.kieler.esterel.Relation;
-import de.cau.cs.kieler.esterel.RelationDeclaration;
-import de.cau.cs.kieler.esterel.Renaming;
-import de.cau.cs.kieler.esterel.Renamings;
-import de.cau.cs.kieler.esterel.Repeat;
-import de.cau.cs.kieler.esterel.ReturnDeclaration;
-import de.cau.cs.kieler.esterel.Run;
-import de.cau.cs.kieler.esterel.Sensor;
-import de.cau.cs.kieler.esterel.SensorDeclaration;
-import de.cau.cs.kieler.esterel.Signal;
-import de.cau.cs.kieler.esterel.Suspend;
-import de.cau.cs.kieler.esterel.Sustain;
-import de.cau.cs.kieler.esterel.Task;
-import de.cau.cs.kieler.esterel.TaskDeclaration;
-import de.cau.cs.kieler.esterel.Trap;
-import de.cau.cs.kieler.esterel.TrapHandler;
-import de.cau.cs.kieler.esterel.TrapSignal;
-import de.cau.cs.kieler.esterel.TypeDeclaration;
-import de.cau.cs.kieler.esterel.TypeDefinition;
-import de.cau.cs.kieler.esterel.TypeIdentifier;
-import de.cau.cs.kieler.esterel.Variable;
-import de.cau.cs.kieler.esterel.services.EsterelGrammarAccess;
-import de.cau.cs.kieler.kexpressions.Expression;
-import de.cau.cs.kieler.kexpressions.OperatorExpression;
-import de.cau.cs.kieler.kexpressions.ValuedObject;
-import de.cau.cs.kieler.scl.Assignment;
-import de.cau.cs.kieler.scl.Module;
-import de.cau.cs.kieler.scl.Statement;
-import de.cau.cs.kieler.scl.formatting2.SCLFormatter;
-import org.eclipse.xtext.formatting2.IFormattableDocument;
+import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.Annotation
+import de.cau.cs.kieler.esterel.Abort
+import de.cau.cs.kieler.esterel.Await
+import de.cau.cs.kieler.esterel.Block
+import de.cau.cs.kieler.esterel.Case
+import de.cau.cs.kieler.esterel.Constant
+import de.cau.cs.kieler.esterel.ConstantDeclaration
+import de.cau.cs.kieler.esterel.ConstantExpression
+import de.cau.cs.kieler.esterel.ConstantRenaming
+import de.cau.cs.kieler.esterel.Do
+import de.cau.cs.kieler.esterel.ElsIf
+import de.cau.cs.kieler.esterel.Emit
+import de.cau.cs.kieler.esterel.EsterelFunctionCall
+import de.cau.cs.kieler.esterel.EsterelParallel
+import de.cau.cs.kieler.esterel.EsterelProgram
+import de.cau.cs.kieler.esterel.EsterelThread
+import de.cau.cs.kieler.esterel.EsterelVariableDeclaration
+import de.cau.cs.kieler.esterel.EveryDo
+import de.cau.cs.kieler.esterel.Exec
+import de.cau.cs.kieler.esterel.ExecCase
+import de.cau.cs.kieler.esterel.Exit
+import de.cau.cs.kieler.esterel.Function
+import de.cau.cs.kieler.esterel.FunctionDeclaration
+import de.cau.cs.kieler.esterel.Halt
+import de.cau.cs.kieler.esterel.IfTest
+import de.cau.cs.kieler.esterel.InputDeclaration
+import de.cau.cs.kieler.esterel.InputOutputDeclaration
+import de.cau.cs.kieler.esterel.LocalSignalDeclaration
+import de.cau.cs.kieler.esterel.LocalVariableDeclaration
+import de.cau.cs.kieler.esterel.Loop
+import de.cau.cs.kieler.esterel.Nothing
+import de.cau.cs.kieler.esterel.OutputDeclaration
+import de.cau.cs.kieler.esterel.Present
+import de.cau.cs.kieler.esterel.PresentCase
+import de.cau.cs.kieler.esterel.Procedure
+import de.cau.cs.kieler.esterel.ProcedureCall
+import de.cau.cs.kieler.esterel.ProcedureDeclaration
+import de.cau.cs.kieler.esterel.Relation
+import de.cau.cs.kieler.esterel.RelationDeclaration
+import de.cau.cs.kieler.esterel.Renaming
+import de.cau.cs.kieler.esterel.Renamings
+import de.cau.cs.kieler.esterel.Repeat
+import de.cau.cs.kieler.esterel.ReturnDeclaration
+import de.cau.cs.kieler.esterel.Run
+import de.cau.cs.kieler.esterel.Sensor
+import de.cau.cs.kieler.esterel.SensorDeclaration
+import de.cau.cs.kieler.esterel.Signal
+import de.cau.cs.kieler.esterel.Suspend
+import de.cau.cs.kieler.esterel.Sustain
+import de.cau.cs.kieler.esterel.Task
+import de.cau.cs.kieler.esterel.TaskDeclaration
+import de.cau.cs.kieler.esterel.Trap
+import de.cau.cs.kieler.esterel.TrapHandler
+import de.cau.cs.kieler.esterel.TypeDeclaration
+import de.cau.cs.kieler.esterel.TypeDefinition
+import de.cau.cs.kieler.esterel.TypeIdentifier
+import de.cau.cs.kieler.esterel.Variable
+import de.cau.cs.kieler.esterel.services.EsterelGrammarAccess
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.scl.Assignment
+import de.cau.cs.kieler.scl.Module
+import de.cau.cs.kieler.scl.Statement
+import de.cau.cs.kieler.scl.formatting2.SCLFormatter
+import org.eclipse.xtext.formatting2.IFormattableDocument
+import de.cau.cs.kieler.esterel.DelayExpression
 
 class EsterelFormatter extends SCLFormatter {
 	
@@ -87,20 +83,20 @@ class EsterelFormatter extends SCLFormatter {
 		}
 	}
 
-	def dispatch void format(EsterelModule esterelmodule, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Annotation annotations : esterelmodule.getAnnotations()) {
-			format(annotations, document);
-		}
-		for (EsterelDeclaration esterelDeclarations : esterelmodule.getEsterelDeclarations()) {
-			format(esterelDeclarations, document);
-		}
-		for (Statement statements : esterelmodule.getStatements()) {
-			format(statements, document);
-		}
-		
-		esterelmodule.regionFor.keywords(esterelModuleAccess.semicolonKeyword_5_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
-	}
+//	def dispatch void format(EsterelModule esterelmodule, extension IFormattableDocument document) {
+//		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//		for (Annotation annotations : esterelmodule.getAnnotations()) {
+//			format(annotations, document);
+//		}
+//		for (EsterelDeclaration esterelDeclarations : esterelmodule.getEsterelDeclarations()) {
+//			format(esterelDeclarations, document);
+//		}
+//		for (Statement statements : esterelmodule.getStatements()) {
+//			format(statements, document);
+//		}
+//		
+////		esterelmodule.regionFor.keywords(esterelModuleAccess.semicolonKeyword_5_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+//	}
 
 	def dispatch void format(TypeDeclaration typedeclaration, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
@@ -112,27 +108,18 @@ class EsterelFormatter extends SCLFormatter {
 		}
 	}
 
-	def dispatch void format(ConstantMultiDeclaration constantmultideclaration, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Annotation annotations : constantmultideclaration.getAnnotations()) {
-			format(annotations, document);
-		}
-		for (ConstantDeclaration constantDecalrations : constantmultideclaration.getConstantDecalrations()) {
-			format(constantDecalrations, document);
-		}
-	}
-
 	def dispatch void format(ConstantDeclaration constantdeclaration, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		for (Constant constants : constantdeclaration.getConstants()) {
 			format(constants, document);
 		}
-		format(constantdeclaration.getType(), document);
 	}
 
 	def dispatch void format(Constant constant, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		format(constant.getInitialValue(), document);
+		
+		format(constant.getType(), document);
 	}
 
 	def dispatch void format(FunctionDeclaration functiondeclaration, extension IFormattableDocument document) {
@@ -238,7 +225,7 @@ class EsterelFormatter extends SCLFormatter {
 		for (Annotation annotations : sensordeclaration.getAnnotations()) {
 			format(annotations, document);
 		}
-		for (Sensor valuedObjects : sensordeclaration.getValuedObjects()) {
+		for (ValuedObject valuedObjects : sensordeclaration.getValuedObjects()) {
 			format(valuedObjects, document);
 		}
 	}
@@ -260,7 +247,7 @@ class EsterelFormatter extends SCLFormatter {
 
 	def dispatch void format(EsterelParallel esterelparallel, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (de.cau.cs.kieler.scl.Thread threads : esterelparallel.getThreads()) {
+		for (Statement threads : esterelparallel.statements) {
 			format(threads, document);
 		}
 	}
@@ -271,7 +258,7 @@ class EsterelFormatter extends SCLFormatter {
 			format(statements, document);
 		}
         
-        esterelthread.regionFor.keywords(esterelThreadAccess.semicolonKeyword_1_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+//        esterelthread.regionFor.keywords(esterelThreadAccess.semicolonKeyword_1_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
 
 	def dispatch void format(Nothing nothing, extension IFormattableDocument document) {
@@ -297,7 +284,7 @@ class EsterelFormatter extends SCLFormatter {
 			format(statements, document);
 		}
 		
-        block.regionFor.keywords(blockAccess.semicolonKeyword_3_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+//        block.regionFor.keywords(blockAccess.semicolonKeyword_3_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
         block.regionFor.keywordPairs(blockAccess.leftSquareBracketKeyword_2, blockAccess.rightSquareBracketKeyword_4).head?.interior[ indent ]
 	}
 
@@ -349,8 +336,8 @@ class EsterelFormatter extends SCLFormatter {
 			elseStatements.interior[ indent ]
 		}
         
-        present.regionFor.keywords(presentAccess.semicolonKeyword_3_1_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
-        present.regionFor.keywords(presentAccess.semicolonKeyword_2_0_1_2_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+//        present.regionFor.keywords(presentAccess.semicolonKeyword_3_1_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+//        present.regionFor.keywords(presentAccess.semicolonKeyword_2_0_1_2_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
 
 	def dispatch void format(PresentCase presentcase, extension IFormattableDocument document) {
@@ -363,7 +350,7 @@ class EsterelFormatter extends SCLFormatter {
 			format(statements, document);
 		}
 		
-        presentcase.regionFor.keywords(presentCaseAccess.semicolonKeyword_3_1_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+//        presentcase.regionFor.keywords(presentCaseAccess.semicolonKeyword_3_1_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
 
 	def dispatch void format(IfTest iftest, extension IFormattableDocument document) {
@@ -382,8 +369,8 @@ class EsterelFormatter extends SCLFormatter {
 			format(elseStatements, document);
 		}
 		
-        iftest.regionFor.keywords(ifTestAccess.semicolonKeyword_3_2_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
-        iftest.regionFor.keywords(ifTestAccess.semicolonKeyword_5_1_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+//        iftest.regionFor.keywords(ifTestAccess.semicolonKeyword_3_2_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+//        iftest.regionFor.keywords(ifTestAccess.semicolonKeyword_5_1_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
 
 	def dispatch void format(ElsIf elsif, extension IFormattableDocument document) {
@@ -396,7 +383,7 @@ class EsterelFormatter extends SCLFormatter {
 			format(statements, document);
 		}
 		
-        elsif.regionFor.keywords(elsIfAccess.semicolonKeyword_3_1_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+//        elsif.regionFor.keywords(elsIfAccess.semicolonKeyword_3_1_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
 
 	def dispatch void format(Loop loop, extension IFormattableDocument document) {
@@ -409,7 +396,7 @@ class EsterelFormatter extends SCLFormatter {
 		}
 		format(loop.getDelay(), document);
 		
-        loop.regionFor.keywords(loopAccess.semicolonKeyword_3_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+//        loop.regionFor.keywords(loopAccess.semicolonKeyword_3_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
 
 	def dispatch void format(Repeat repeat, extension IFormattableDocument document) {
@@ -422,7 +409,7 @@ class EsterelFormatter extends SCLFormatter {
 			format(statements, document);
 		}
 		
-        repeat.regionFor.keywords(repeatAccess.semicolonKeyword_5_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+//        repeat.regionFor.keywords(repeatAccess.semicolonKeyword_5_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
 
 	def dispatch void format(Abort abort, extension IFormattableDocument document) {
@@ -441,8 +428,8 @@ class EsterelFormatter extends SCLFormatter {
 			format(cases, document);
 		}
 		
-        abort.regionFor.keywords(abortAccess.semicolonKeyword_2_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
-        abort.regionFor.keywords(abortAccess.semicolonKeyword_4_0_1_1_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+//        abort.regionFor.keywords(abortAccess.semicolonKeyword_2_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+//        abort.regionFor.keywords(abortAccess.semicolonKeyword_4_0_1_1_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
 
 	def dispatch void format(Case caseStm, extension IFormattableDocument document) {
@@ -469,7 +456,7 @@ class EsterelFormatter extends SCLFormatter {
 			format(cases, document);
 		}
 		
-        await.regionFor.keywords(awaitAccess.semicolonKeyword_2_0_1_1_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+//        await.regionFor.keywords(awaitAccess.semicolonKeyword_2_0_1_1_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
 
 	def dispatch void format(EveryDo everydo, extension IFormattableDocument document) {
@@ -482,7 +469,7 @@ class EsterelFormatter extends SCLFormatter {
 			format(statements, document);
 		}
 		
-        everydo.regionFor.keywords(everyDoAccess.semicolonKeyword_4_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+//        everydo.regionFor.keywords(everyDoAccess.semicolonKeyword_4_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
 
 	def dispatch void format(Suspend suspend, extension IFormattableDocument document) {
@@ -495,7 +482,7 @@ class EsterelFormatter extends SCLFormatter {
 		}
 		format(suspend.getDelay(), document);
 		
-        suspend.regionFor.keywords(suspendAccess.semicolonKeyword_2_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+//        suspend.regionFor.keywords(suspendAccess.semicolonKeyword_2_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
 
 	def dispatch void format(Trap trap, extension IFormattableDocument document) {
@@ -513,7 +500,7 @@ class EsterelFormatter extends SCLFormatter {
 			format(trapHandler, document);
 		}
 		
-        trap.regionFor.keywords(trapAccess.semicolonKeyword_5_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+//        trap.regionFor.keywords(trapAccess.semicolonKeyword_5_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
 
 	def dispatch void format(TrapHandler traphandler, extension IFormattableDocument document) {
@@ -526,7 +513,7 @@ class EsterelFormatter extends SCLFormatter {
 			format(statements, document);
 		}
 		
-        traphandler.regionFor.keywords(trapHandlerAccess.semicolonKeyword_4_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+//        traphandler.regionFor.keywords(trapHandlerAccess.semicolonKeyword_4_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
 
 	def dispatch void format(Exit exit, extension IFormattableDocument document) {
@@ -552,7 +539,7 @@ class EsterelFormatter extends SCLFormatter {
 			format(execCaseList, document);
 		}
 		
-        exec.regionFor.keywords(execAccess.semicolonKeyword_1_0_10_1_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+//        exec.regionFor.keywords(execAccess.semicolonKeyword_2_0_9_1_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
 
 	def dispatch void format(ExecCase execcase, extension IFormattableDocument document) {
@@ -567,7 +554,7 @@ class EsterelFormatter extends SCLFormatter {
 			format(statements, document);
 		}
 		
-        execcase.regionFor.keywords(execCaseAccess.semicolonKeyword_11_1_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+//        execcase.regionFor.keywords(execCaseAccess.semicolonKeyword_11_1_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
 
 	def dispatch void format(LocalSignalDeclaration localsignaldeclaration, extension IFormattableDocument document) {
@@ -582,7 +569,7 @@ class EsterelFormatter extends SCLFormatter {
 			format(statements, document);
 		}
 		
-        localsignaldeclaration.regionFor.keywords(localSignalDeclarationAccess.semicolonKeyword_5_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+//        localsignaldeclaration.regionFor.keywords(localSignalDeclarationAccess.semicolonKeyword_5_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
 
 	def dispatch void format(LocalVariableDeclaration localvariabledeclaration, extension IFormattableDocument document) {
@@ -597,7 +584,7 @@ class EsterelFormatter extends SCLFormatter {
 			format(statements, document);
 		}
 		
-        localvariabledeclaration.regionFor.keywords(localVariableDeclarationAccess.semicolonKeyword_5_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+//        localvariabledeclaration.regionFor.keywords(localVariableDeclarationAccess.semicolonKeyword_5_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
 
 	def dispatch void format(EsterelVariableDeclaration esterelvariabledeclaration, extension IFormattableDocument document) {
@@ -655,8 +642,6 @@ class EsterelFormatter extends SCLFormatter {
 		for (Statement watchingStatements : doStm.getWatchingStatements()) {
 			format(watchingStatements, document);
 		}
-		
-        doStm.regionFor.keywords(doAccess.semicolonKeyword_2_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
 	}
 
 	def dispatch void format(EsterelFunctionCall esterelfunctioncall, extension IFormattableDocument document) {
@@ -678,7 +663,7 @@ class EsterelFormatter extends SCLFormatter {
 		}
 	}
 
-	def dispatch void format(DelayExpr delayexpr, extension IFormattableDocument document) {
+	def dispatch void format(DelayExpression delayexpr, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		format(delayexpr.getDelay(), document);
 		format(delayexpr.getExpression(), document);

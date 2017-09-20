@@ -98,6 +98,11 @@ class EmitTransformation extends EsterelProcessor {
             }
             transformStatements((statement as IfTest).elseStatements)
         }
+        else if (statement instanceof EsterelParallel) {
+            (statement as EsterelParallel).threads.forEach [ t |
+                transformStatements(t.statements)
+            ]
+        }
         else if (statement instanceof StatementContainer) {
             
             transformStatements((statement as StatementContainer).statements)
@@ -121,11 +126,6 @@ class EmitTransformation extends EsterelProcessor {
             else if (statement instanceof Conditional) {
                 transformStatements((statement as Conditional).getElse()?.statements)
             }
-        }
-        else if (statement instanceof EsterelParallel) {
-            (statement as EsterelParallel).threads.forEach [ t |
-                transformStatements(t.statements)
-            ]
         }
         else if (statement instanceof Parallel) {
             (statement as Parallel).threads.forEach [ t |

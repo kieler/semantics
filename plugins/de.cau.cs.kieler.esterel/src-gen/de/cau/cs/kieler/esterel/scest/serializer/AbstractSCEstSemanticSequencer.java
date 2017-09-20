@@ -18,14 +18,12 @@ import de.cau.cs.kieler.esterel.Case;
 import de.cau.cs.kieler.esterel.Constant;
 import de.cau.cs.kieler.esterel.ConstantDeclaration;
 import de.cau.cs.kieler.esterel.ConstantExpression;
-import de.cau.cs.kieler.esterel.ConstantMultiDeclaration;
 import de.cau.cs.kieler.esterel.ConstantRenaming;
-import de.cau.cs.kieler.esterel.DelayExpr;
+import de.cau.cs.kieler.esterel.DelayExpression;
 import de.cau.cs.kieler.esterel.Do;
 import de.cau.cs.kieler.esterel.ElsIf;
 import de.cau.cs.kieler.esterel.Emit;
 import de.cau.cs.kieler.esterel.EsterelFunctionCall;
-import de.cau.cs.kieler.esterel.EsterelModule;
 import de.cau.cs.kieler.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.EsterelParallel;
 import de.cau.cs.kieler.esterel.EsterelProgram;
@@ -64,17 +62,18 @@ import de.cau.cs.kieler.esterel.Run;
 import de.cau.cs.kieler.esterel.Sensor;
 import de.cau.cs.kieler.esterel.SensorDeclaration;
 import de.cau.cs.kieler.esterel.Signal;
-import de.cau.cs.kieler.esterel.SignalReferenceExpr;
+import de.cau.cs.kieler.esterel.SignalReference;
 import de.cau.cs.kieler.esterel.SignalRenaming;
 import de.cau.cs.kieler.esterel.Suspend;
 import de.cau.cs.kieler.esterel.Sustain;
 import de.cau.cs.kieler.esterel.Task;
 import de.cau.cs.kieler.esterel.TaskDeclaration;
 import de.cau.cs.kieler.esterel.TaskRenaming;
+import de.cau.cs.kieler.esterel.TickReference;
 import de.cau.cs.kieler.esterel.Trap;
 import de.cau.cs.kieler.esterel.TrapExpression;
 import de.cau.cs.kieler.esterel.TrapHandler;
-import de.cau.cs.kieler.esterel.TrapReferenceExpr;
+import de.cau.cs.kieler.esterel.TrapReference;
 import de.cau.cs.kieler.esterel.TrapSignal;
 import de.cau.cs.kieler.esterel.TypeDeclaration;
 import de.cau.cs.kieler.esterel.TypeDefinition;
@@ -119,6 +118,7 @@ import de.cau.cs.kieler.scl.ElseScope;
 import de.cau.cs.kieler.scl.Goto;
 import de.cau.cs.kieler.scl.Label;
 import de.cau.cs.kieler.scl.Module;
+import de.cau.cs.kieler.scl.ModuleCall;
 import de.cau.cs.kieler.scl.Parallel;
 import de.cau.cs.kieler.scl.Pause;
 import de.cau.cs.kieler.scl.SCLPackage;
@@ -229,17 +229,14 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 			case EsterelPackage.CONSTANT_EXPRESSION:
 				sequence_ConstantExpression(context, (ConstantExpression) semanticObject); 
 				return; 
-			case EsterelPackage.CONSTANT_MULTI_DECLARATION:
-				sequence_ConstantMultiDeclaration(context, (ConstantMultiDeclaration) semanticObject); 
-				return; 
 			case EsterelPackage.CONSTANT_RENAMING:
 				sequence_ConstantRenaming(context, (ConstantRenaming) semanticObject); 
 				return; 
-			case EsterelPackage.DELAY_EXPR:
-				sequence_DelayExpr(context, (DelayExpr) semanticObject); 
+			case EsterelPackage.DELAY_EXPRESSION:
+				sequence_DelayExpression(context, (DelayExpression) semanticObject); 
 				return; 
 			case EsterelPackage.DO:
-				sequence_Do(context, (Do) semanticObject); 
+				sequence_LegacyDo(context, (Do) semanticObject); 
 				return; 
 			case EsterelPackage.ELS_IF:
 				sequence_ElsIf(context, (ElsIf) semanticObject); 
@@ -249,9 +246,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 				return; 
 			case EsterelPackage.ESTEREL_FUNCTION_CALL:
 				sequence_EsterelFunctionCall(context, (EsterelFunctionCall) semanticObject); 
-				return; 
-			case EsterelPackage.ESTEREL_MODULE:
-				sequence_EsterelModule(context, (EsterelModule) semanticObject); 
 				return; 
 			case EsterelPackage.ESTEREL_PARALLEL:
 				sequence_EsterelParallel(context, (EsterelParallel) semanticObject); 
@@ -367,8 +361,8 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 			case EsterelPackage.SIGNAL:
 				sequence_Signal(context, (Signal) semanticObject); 
 				return; 
-			case EsterelPackage.SIGNAL_REFERENCE_EXPR:
-				sequence_SignalReferenceExpr(context, (SignalReferenceExpr) semanticObject); 
+			case EsterelPackage.SIGNAL_REFERENCE:
+				sequence_SignalReferenceExpression(context, (SignalReference) semanticObject); 
 				return; 
 			case EsterelPackage.SIGNAL_RENAMING:
 				sequence_SignalRenaming(context, (SignalRenaming) semanticObject); 
@@ -388,6 +382,9 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 			case EsterelPackage.TASK_RENAMING:
 				sequence_TaskRenaming(context, (TaskRenaming) semanticObject); 
 				return; 
+			case EsterelPackage.TICK_REFERENCE:
+				sequence_TickSignalExpression(context, (TickReference) semanticObject); 
+				return; 
 			case EsterelPackage.TRAP:
 				sequence_Trap(context, (Trap) semanticObject); 
 				return; 
@@ -397,8 +394,8 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 			case EsterelPackage.TRAP_HANDLER:
 				sequence_TrapHandler(context, (TrapHandler) semanticObject); 
 				return; 
-			case EsterelPackage.TRAP_REFERENCE_EXPR:
-				sequence_TrapReferenceExpr(context, (TrapReferenceExpr) semanticObject); 
+			case EsterelPackage.TRAP_REFERENCE:
+				sequence_TrapReferenceExpr(context, (TrapReference) semanticObject); 
 				return; 
 			case EsterelPackage.TRAP_SIGNAL:
 				sequence_TrapSignal(context, (TrapSignal) semanticObject); 
@@ -644,23 +641,48 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 					sequence_Assignment(context, (de.cau.cs.kieler.scl.Assignment) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getAtomicStatementRule()
-						|| rule == grammarAccess.getAssignmentRule()
-						|| rule == grammarAccess.getEsterelStatementRule()
-						|| rule == grammarAccess.getEsterelAtomicStatementRule()
-						|| rule == grammarAccess.getStatementRule()
+				else if (rule == grammarAccess.getMetaOrInstructionStatementRule()
 						|| rule == grammarAccess.getInstructionStatementRule()
+						|| rule == grammarAccess.getEsterelThreadRule()
+						|| action == grammarAccess.getEsterelThreadAccess().getEsterelThreadStatementsAction_0_1_0()
+						|| rule == grammarAccess.getAssignmentRule()
+						|| rule == grammarAccess.getEsterelInstructionStatementRule()
+						|| rule == grammarAccess.getEsterelParallelRule()
+						|| action == grammarAccess.getEsterelParallelAccess().getEsterelParallelStatementsAction_1_0()
+						|| rule == grammarAccess.getStatementRule()
 						|| rule == grammarAccess.getEffectRule()) {
 					sequence_Assignment_Assignment(context, (de.cau.cs.kieler.scl.Assignment) semanticObject); 
 					return; 
 				}
 				else break;
 			case SCLPackage.CONDITIONAL:
-				sequence_Conditional(context, (Conditional) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getMetaOrInstructionStatementRule()
+						|| rule == grammarAccess.getMetaStatementRule()
+						|| rule == grammarAccess.getEsterelThreadRule()
+						|| action == grammarAccess.getEsterelThreadAccess().getEsterelThreadStatementsAction_1_1_0()
+						|| rule == grammarAccess.getEsterelParallelRule()
+						|| action == grammarAccess.getEsterelParallelAccess().getEsterelParallelStatementsAction_1_0()
+						|| rule == grammarAccess.getStatementRule()
+						|| rule == grammarAccess.getSCLMetaStatementRule()
+						|| rule == grammarAccess.getConditionalRule()) {
+					sequence_Conditional(context, (Conditional) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getLegacyConditionalRule()) {
+					sequence_LegacyConditional(context, (Conditional) semanticObject); 
+					return; 
+				}
+				else break;
 			case SCLPackage.ELSE_SCOPE:
-				sequence_ElseScope(context, (ElseScope) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getElseScopeRule()) {
+					sequence_ElseScope(context, (ElseScope) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getLeagacyElseScopeRule()) {
+					sequence_LeagacyElseScope(context, (ElseScope) semanticObject); 
+					return; 
+				}
+				else break;
 			case SCLPackage.GOTO:
 				sequence_Goto(context, (Goto) semanticObject); 
 				return; 
@@ -668,7 +690,17 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 				sequence_Label(context, (Label) semanticObject); 
 				return; 
 			case SCLPackage.MODULE:
-				sequence_Module(context, (Module) semanticObject); 
+				if (rule == grammarAccess.getEsterelModuleRule()) {
+					sequence_EsterelModule(context, (Module) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getModuleRule()) {
+					sequence_Module(context, (Module) semanticObject); 
+					return; 
+				}
+				else break;
+			case SCLPackage.MODULE_CALL:
+				sequence_ModuleCall(context, (ModuleCall) semanticObject); 
 				return; 
 			case SCLPackage.PARALLEL:
 				sequence_Parallel(context, (Parallel) semanticObject); 
@@ -711,12 +743,15 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	/**
 	 * Contexts:
-	 *     AtomicStatement returns Assignment
-	 *     Assignment returns Assignment
-	 *     EsterelStatement returns Assignment
-	 *     AtomicStatement returns Assignment
-	 *     Statement returns Assignment
+	 *     MetaOrInstructionStatement returns Assignment
 	 *     InstructionStatement returns Assignment
+	 *     EsterelThread returns Assignment
+	 *     EsterelThread.EsterelThread_0_1_0 returns Assignment
+	 *     Assignment returns Assignment
+	 *     InstructionStatement returns Assignment
+	 *     EsterelParallel returns Assignment
+	 *     EsterelParallel.EsterelParallel_1_0 returns Assignment
+	 *     Statement returns Assignment
 	 *     Effect returns Assignment
 	 *
 	 * Constraint:
@@ -739,19 +774,20 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	/**
 	 * Contexts:
-	 *     EsterelModule returns EsterelModule
+	 *     EsterelModule returns Module
 	 *
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
 	 *         name=ID 
-	 *         declarations+=VariableDeclaration* 
-	 *         esterelDeclarations+=EsterelDeclaration* 
-	 *         statements+=EsterelStatement* 
-	 *         statements+=EsterelStatement?
+	 *         (declarations+=VariableDeclaration | declarations+=EsterelDeclaration)* 
+	 *         (
+	 *             statements+=EsterelParallel | 
+	 *             (statements+=InstructionStatement? (statements+=MetaStatement? statements+=InstructionStatement?)* statements+=Statement?)
+	 *         )?
 	 *     )
 	 */
-	protected void sequence_EsterelModule(ISerializationContext context, EsterelModule semanticObject) {
+	protected void sequence_EsterelModule(ISerializationContext context, Module semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -770,9 +806,39 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	/**
 	 * Contexts:
-	 *     AtomicStatement returns Set
+	 *     EsterelThread returns EsterelThread
+	 *     EsterelParallel returns EsterelThread
+	 *     EsterelParallel.EsterelParallel_1_0 returns EsterelThread
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             statements+=EsterelThread_EsterelThread_0_1_0 
+	 *             (statements+=InstructionStatement | statements+=MetaStatement)* 
+	 *             statements+=InstructionStatement?
+	 *         ) | 
+	 *         (
+	 *             statements+=EsterelThread_EsterelThread_1_1_0 
+	 *             (statements+=InstructionStatement | statements+=MetaStatement)* 
+	 *             statements+=InstructionStatement?
+	 *         )
+	 *     )
+	 */
+	protected void sequence_EsterelThread(ISerializationContext context, EsterelThread semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     MetaOrInstructionStatement returns Set
+	 *     InstructionStatement returns Set
+	 *     EsterelThread returns Set
+	 *     EsterelThread.EsterelThread_0_1_0 returns Set
 	 *     Set returns Set
-	 *     EsterelStatement returns Set
+	 *     EsterelParallel returns Set
+	 *     EsterelParallel.EsterelParallel_1_0 returns Set
+	 *     Statement returns Set
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* signal=[Signal|ID] expression=Expression)
@@ -784,9 +850,14 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	/**
 	 * Contexts:
-	 *     AtomicStatement returns UnEmit
+	 *     MetaOrInstructionStatement returns UnEmit
+	 *     InstructionStatement returns UnEmit
+	 *     EsterelThread returns UnEmit
+	 *     EsterelThread.EsterelThread_0_1_0 returns UnEmit
 	 *     UnEmit returns UnEmit
-	 *     EsterelStatement returns UnEmit
+	 *     EsterelParallel returns UnEmit
+	 *     EsterelParallel.EsterelParallel_1_0 returns UnEmit
+	 *     Statement returns UnEmit
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* signal=[Signal|ID])

@@ -90,16 +90,8 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl {
                 return createEsterelProgramAdapter();
             }
             @Override
-            public Adapter caseEsterelModule(EsterelModule object) {
-                return createEsterelModuleAdapter();
-            }
-            @Override
             public Adapter caseEsterelDeclaration(EsterelDeclaration object) {
                 return createEsterelDeclarationAdapter();
-            }
-            @Override
-            public Adapter caseEsterelDefinition(EsterelDefinition object) {
-                return createEsterelDefinitionAdapter();
             }
             @Override
             public Adapter caseTypeIdentifier(TypeIdentifier object) {
@@ -112,10 +104,6 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseTypeDefinition(TypeDefinition object) {
                 return createTypeDefinitionAdapter();
-            }
-            @Override
-            public Adapter caseConstantMultiDeclaration(ConstantMultiDeclaration object) {
-                return createConstantMultiDeclarationAdapter();
             }
             @Override
             public Adapter caseConstantDeclaration(ConstantDeclaration object) {
@@ -358,8 +346,8 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl {
                 return createDoAdapter();
             }
             @Override
-            public Adapter caseDelayExpr(DelayExpr object) {
-                return createDelayExprAdapter();
+            public Adapter caseDelayExpression(DelayExpression object) {
+                return createDelayExpressionAdapter();
             }
             @Override
             public Adapter caseTrapSignal(TrapSignal object) {
@@ -378,12 +366,12 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl {
                 return createConstantExpressionAdapter();
             }
             @Override
-            public Adapter caseTrapReferenceExpr(TrapReferenceExpr object) {
-                return createTrapReferenceExprAdapter();
+            public Adapter caseTrapReference(TrapReference object) {
+                return createTrapReferenceAdapter();
             }
             @Override
-            public Adapter caseSignalReferenceExpr(SignalReferenceExpr object) {
-                return createSignalReferenceExprAdapter();
+            public Adapter caseSignalReference(SignalReference object) {
+                return createSignalReferenceAdapter();
             }
             @Override
             public Adapter caseTickReference(TickReference object) {
@@ -410,28 +398,12 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl {
                 return createAnnotatableAdapter();
             }
             @Override
-            public Adapter caseDeclarationScope(DeclarationScope object) {
-                return createDeclarationScopeAdapter();
-            }
-            @Override
-            public Adapter caseStatementContainer(StatementContainer object) {
-                return createStatementContainerAdapter();
-            }
-            @Override
-            public Adapter caseScope(Scope object) {
-                return createScopeAdapter();
-            }
-            @Override
-            public Adapter caseModule(Module object) {
-                return createModuleAdapter();
+            public Adapter caseDeclaration(Declaration object) {
+                return createDeclarationAdapter();
             }
             @Override
             public Adapter caseNamedObject(NamedObject object) {
                 return createNamedObjectAdapter();
-            }
-            @Override
-            public Adapter caseDeclaration(Declaration object) {
-                return createDeclarationAdapter();
             }
             @Override
             public Adapter caseReferenceable(Referenceable object) {
@@ -444,6 +416,18 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseStatement(Statement object) {
                 return createStatementAdapter();
+            }
+            @Override
+            public Adapter caseStatementContainer(StatementContainer object) {
+                return createStatementContainerAdapter();
+            }
+            @Override
+            public Adapter caseDeclarationScope(DeclarationScope object) {
+                return createDeclarationScopeAdapter();
+            }
+            @Override
+            public Adapter caseScope(Scope object) {
+                return createScopeAdapter();
             }
             @Override
             public Adapter caseThread(de.cau.cs.kieler.scl.Thread object) {
@@ -496,20 +480,6 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.EsterelModule <em>Module</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.esterel.EsterelModule
-     * @generated
-     */
-    public Adapter createEsterelModuleAdapter() {
-        return null;
-    }
-
-    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.EsterelDeclaration <em>Declaration</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -520,20 +490,6 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createEsterelDeclarationAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.EsterelDefinition <em>Definition</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.esterel.EsterelDefinition
-     * @generated
-     */
-    public Adapter createEsterelDefinitionAdapter() {
         return null;
     }
 
@@ -576,20 +532,6 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createTypeDefinitionAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.ConstantMultiDeclaration <em>Constant Multi Declaration</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.esterel.ConstantMultiDeclaration
-     * @generated
-     */
-    public Adapter createConstantMultiDeclarationAdapter() {
         return null;
     }
 
@@ -1434,16 +1376,16 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.DelayExpr <em>Delay Expr</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.DelayExpression <em>Delay Expression</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.esterel.DelayExpr
+     * @see de.cau.cs.kieler.esterel.DelayExpression
      * @generated
      */
-    public Adapter createDelayExprAdapter() {
+    public Adapter createDelayExpressionAdapter() {
         return null;
     }
 
@@ -1504,30 +1446,30 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.TrapReferenceExpr <em>Trap Reference Expr</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.TrapReference <em>Trap Reference</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.esterel.TrapReferenceExpr
+     * @see de.cau.cs.kieler.esterel.TrapReference
      * @generated
      */
-    public Adapter createTrapReferenceExprAdapter() {
+    public Adapter createTrapReferenceAdapter() {
         return null;
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.SignalReferenceExpr <em>Signal Reference Expr</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.SignalReference <em>Signal Reference</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.esterel.SignalReferenceExpr
+     * @see de.cau.cs.kieler.esterel.SignalReference
      * @generated
      */
-    public Adapter createSignalReferenceExprAdapter() {
+    public Adapter createSignalReferenceAdapter() {
         return null;
     }
 
@@ -1654,20 +1596,6 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createScopeAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.Module <em>Module</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scl.Module
-     * @generated
-     */
-    public Adapter createModuleAdapter() {
         return null;
     }
 

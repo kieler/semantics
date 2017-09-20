@@ -17,12 +17,11 @@ import de.cau.cs.kieler.esterel.Abort
 import de.cau.cs.kieler.esterel.Await
 import de.cau.cs.kieler.esterel.Do
 import de.cau.cs.kieler.esterel.EsterelParallel
+import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.Exec
-import de.cau.cs.kieler.esterel.IfTest
-import de.cau.cs.kieler.esterel.Present
 import de.cau.cs.kieler.esterel.Run
 import de.cau.cs.kieler.esterel.Trap
-import de.cau.cs.kieler.esterel.EsterelProgram
+import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.esterel.processors.EsterelProcessor
 import de.cau.cs.kieler.scl.Conditional
@@ -58,6 +57,8 @@ class EsterelParallelTransformation extends EsterelProcessor {
     
     @Inject
     extension EsterelTransformationExtensions
+    @Inject
+    extension EsterelExtensions
     
     override EsterelProgram transform(EsterelProgram prog) {
         prog.modules.forEach [ m | transformStatements(m.statements)]

@@ -6,6 +6,7 @@ package de.cau.cs.kieler.esterel.scoping
 import de.cau.cs.kieler.esterel.ConstantExpression
 import de.cau.cs.kieler.esterel.ConstantRenaming
 import de.cau.cs.kieler.esterel.Emit
+import de.cau.cs.kieler.esterel.EsterelFunctionCall
 import de.cau.cs.kieler.esterel.Exit
 import de.cau.cs.kieler.esterel.FunctionRenaming
 import de.cau.cs.kieler.esterel.ModuleRenaming
@@ -15,7 +16,7 @@ import de.cau.cs.kieler.esterel.RelationIncompatibility
 import de.cau.cs.kieler.esterel.SignalRenaming
 import de.cau.cs.kieler.esterel.Sustain
 import de.cau.cs.kieler.esterel.TaskRenaming
-import de.cau.cs.kieler.esterel.TrapReferenceExpr
+import de.cau.cs.kieler.esterel.TrapReference
 import de.cau.cs.kieler.esterel.TypeRenaming
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.scl.scoping.SCLScopeProvider
@@ -27,7 +28,6 @@ import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.impl.SimpleScope
 
 import static de.cau.cs.kieler.esterel.scoping.EsterelScopeProviderUtil.*
-import de.cau.cs.kieler.esterel.EsterelFunctionCall
 
 /**
  * This class contains custom scoping description.
@@ -86,7 +86,7 @@ class EsterelScopeProvider extends SCLScopeProvider {
         return new SimpleScope(scopeElems);
     }
 
-    def IScope scope_TrapReferenceExpr_valuedObject(TrapReferenceExpr context, EReference ref) {
+    def IScope scope_TrapReferenceExpr_valuedObject(TrapReference context, EReference ref) {
         return new SimpleScope(getLocalTraps(context));
     }
 
@@ -160,7 +160,7 @@ class EsterelScopeProvider extends SCLScopeProvider {
     }
 
     def IScope scope_ModuleRenaming_module(ModuleRenaming context, EReference ref) {
-        return new SimpleScope(getAllEsterelModules(context));
+        return new SimpleScope(getAllModules(context));
     }
 
 }

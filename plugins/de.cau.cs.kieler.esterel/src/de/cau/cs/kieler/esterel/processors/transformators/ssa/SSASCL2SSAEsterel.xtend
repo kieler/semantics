@@ -12,44 +12,31 @@
  */
 package de.cau.cs.kieler.esterel.processors.transformators.ssa
 
-import com.google.common.collect.HashMultimap
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.esterel.EsterelFactory
-import de.cau.cs.kieler.esterel.EsterelModule
 import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.Signal
-import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.esterel.Trap
+import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.OperatorType
-import de.cau.cs.kieler.kexpressions.StringValue
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsSerializeHRExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.scl.Assignment
-import de.cau.cs.kieler.scl.Conditional
-import de.cau.cs.kieler.scl.Goto
 import de.cau.cs.kieler.scl.Label
 import de.cau.cs.kieler.scl.Module
-import de.cau.cs.kieler.scl.Parallel
-import de.cau.cs.kieler.scl.Pause
+import de.cau.cs.kieler.scl.SCLFactory
 import de.cau.cs.kieler.scl.SCLProgram
 import de.cau.cs.kieler.scl.Statement
 import de.cau.cs.kieler.scl.StatementContainer
 import java.util.List
 import java.util.Map
-import javax.sound.midi.Sequence
-import org.eclipse.emf.common.util.EList
 
-import static com.google.common.collect.Lists.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.esterel.Trap
 
 /**
  * @author als
@@ -91,8 +78,11 @@ class SSASCL2SSAEsterel extends Processor<SCLProgram, EsterelProgram> {
     extension AnnotationsExtensions
     @Inject
     extension KExpressionsDeclarationExtensions
+    @Inject
+    extension EsterelExtensions
 
     extension EsterelFactory = EsterelFactory::eINSTANCE
+    extension SCLFactory = SCLFactory::eINSTANCE
     extension KExpressionsFactory = KExpressionsFactory::eINSTANCE
 
     // -------------------------------------------------------------------------
@@ -104,11 +94,11 @@ class SSASCL2SSAEsterel extends Processor<SCLProgram, EsterelProgram> {
     var Pair<ValuedObject, Signal> error
     var Pair<ValuedObject, Signal> term
     
-    def EsterelModule transform(Module scl) {
+    def Module transform(Module scl) {
         voSigMap.clear
         labelsMap.clear
         
-        val module = createEsterelModule
+        val module = createModule
 
         module.name = scl.name
 
@@ -122,15 +112,15 @@ class SSASCL2SSAEsterel extends Processor<SCLProgram, EsterelProgram> {
                     ]
 
                     if (decl.isOutput && decl.isInput) {
-                        module.esterelDeclarations += createInputOutputDeclaration => [
+                        module.declarations += createInputOutputDeclaration => [
                             valuedObjects += signal
                         ]
                     } else if (decl.isInput) {
-                        module.esterelDeclarations += createInputDeclaration => [
+                        module.declarations += createInputDeclaration => [
                             valuedObjects += signal
                         ]
                     } else if (decl.isOutput) {
-                        module.esterelDeclarations += createOutputDeclaration => [
+                        module.declarations += createOutputDeclaration => [
                             valuedObjects += signal
                         ]
                     }
@@ -185,10 +175,10 @@ class SSASCL2SSAEsterel extends Processor<SCLProgram, EsterelProgram> {
         } else {
             // Parallel error thread
             signalNestingHead.statements += createEsterelParallel => [
-                threads += createEsterelThread => [
+                statements += createEsterelThread => [
                     scl.statements.translateStatements(it)
                 ]
-                threads += errorPattern
+                statements += errorPattern
             ]
             
         }

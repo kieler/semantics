@@ -2,15 +2,11 @@
  */
 package de.cau.cs.kieler.esterel.impl;
 
-import de.cau.cs.kieler.annotations.Annotatable;
-import de.cau.cs.kieler.annotations.Annotation;
-import de.cau.cs.kieler.annotations.AnnotationsPackage;
-
-import de.cau.cs.kieler.annotations.impl.NamedObjectImpl;
-
 import de.cau.cs.kieler.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.Function;
 import de.cau.cs.kieler.esterel.TypeIdentifier;
+
+import de.cau.cs.kieler.kexpressions.impl.ValuedObjectImpl;
 
 import java.util.Collection;
 
@@ -35,24 +31,13 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.impl.FunctionImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.impl.FunctionImpl#getParameterTypes <em>Parameter Types</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.impl.FunctionImpl#getReturnType <em>Return Type</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class FunctionImpl extends NamedObjectImpl implements Function {
-    /**
-     * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getAnnotations()
-     * @generated
-     * @ordered
-     */
-    protected EList<Annotation> annotations;
-
+public class FunctionImpl extends ValuedObjectImpl implements Function {
     /**
      * The cached value of the '{@link #getParameterTypes() <em>Parameter Types</em>}' containment reference list.
      * <!-- begin-user-doc -->
@@ -90,18 +75,6 @@ public class FunctionImpl extends NamedObjectImpl implements Function {
     @Override
     protected EClass eStaticClass() {
         return EsterelPackage.Literals.FUNCTION;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EList<Annotation> getAnnotations() {
-        if (annotations == null) {
-            annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.FUNCTION__ANNOTATIONS);
-        }
-        return annotations;
     }
 
     /**
@@ -167,8 +140,6 @@ public class FunctionImpl extends NamedObjectImpl implements Function {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case EsterelPackage.FUNCTION__ANNOTATIONS:
-                return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
             case EsterelPackage.FUNCTION__PARAMETER_TYPES:
                 return ((InternalEList<?>)getParameterTypes()).basicRemove(otherEnd, msgs);
             case EsterelPackage.FUNCTION__RETURN_TYPE:
@@ -185,8 +156,6 @@ public class FunctionImpl extends NamedObjectImpl implements Function {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case EsterelPackage.FUNCTION__ANNOTATIONS:
-                return getAnnotations();
             case EsterelPackage.FUNCTION__PARAMETER_TYPES:
                 return getParameterTypes();
             case EsterelPackage.FUNCTION__RETURN_TYPE:
@@ -204,10 +173,6 @@ public class FunctionImpl extends NamedObjectImpl implements Function {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case EsterelPackage.FUNCTION__ANNOTATIONS:
-                getAnnotations().clear();
-                getAnnotations().addAll((Collection<? extends Annotation>)newValue);
-                return;
             case EsterelPackage.FUNCTION__PARAMETER_TYPES:
                 getParameterTypes().clear();
                 getParameterTypes().addAll((Collection<? extends TypeIdentifier>)newValue);
@@ -227,9 +192,6 @@ public class FunctionImpl extends NamedObjectImpl implements Function {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case EsterelPackage.FUNCTION__ANNOTATIONS:
-                getAnnotations().clear();
-                return;
             case EsterelPackage.FUNCTION__PARAMETER_TYPES:
                 getParameterTypes().clear();
                 return;
@@ -248,46 +210,12 @@ public class FunctionImpl extends NamedObjectImpl implements Function {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case EsterelPackage.FUNCTION__ANNOTATIONS:
-                return annotations != null && !annotations.isEmpty();
             case EsterelPackage.FUNCTION__PARAMETER_TYPES:
                 return parameterTypes != null && !parameterTypes.isEmpty();
             case EsterelPackage.FUNCTION__RETURN_TYPE:
                 return returnType != null;
         }
         return super.eIsSet(featureID);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
-        if (baseClass == Annotatable.class) {
-            switch (derivedFeatureID) {
-                case EsterelPackage.FUNCTION__ANNOTATIONS: return AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
-                default: return -1;
-            }
-        }
-        return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
-        if (baseClass == Annotatable.class) {
-            switch (baseFeatureID) {
-                case AnnotationsPackage.ANNOTATABLE__ANNOTATIONS: return EsterelPackage.FUNCTION__ANNOTATIONS;
-                default: return -1;
-            }
-        }
-        return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
     }
 
 } //FunctionImpl

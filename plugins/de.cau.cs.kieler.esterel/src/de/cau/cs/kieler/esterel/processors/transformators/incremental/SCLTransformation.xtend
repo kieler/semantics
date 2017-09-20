@@ -14,7 +14,6 @@ package de.cau.cs.kieler.esterel.processors.transformators.incremental
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.Annotation
-import de.cau.cs.kieler.esterel.EsterelModule
 import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.LocalSignalDeclaration
 import de.cau.cs.kieler.esterel.LocalVariableDeclaration
@@ -83,7 +82,7 @@ class SCLTransformation extends Processor<EsterelProgram, SCLProgram> {
 
     def SCLProgram transform(EsterelProgram prog) {
         val sclProg = createSCLProg
-        for (m : prog.modules.filter(EsterelModule)) {
+        for (m : prog.modules.filter(Module)) {
             val module = createSCLModule
             sclProg.modules += module
             module.name = m.name
@@ -94,7 +93,7 @@ class SCLTransformation extends Processor<EsterelProgram, SCLProgram> {
         return sclProg
     }
     
-    def transformModule(EsterelModule module, Module prog) {
+    def transformModule(Module module, Module prog) {
         if (module.statements.length == 1 && module.statements.get(0).isInterfaceScope() ) {
             (module.statements.get(0) as ScopeStatement).renameIScope(module.name)
             prog.statements.add( module.statements.get(0) )

@@ -13,5 +13,5 @@ package de.cau.cs.kieler.esterel;
  * @model
  * @generated
  */
-public interface TickReference extends SignalReferenceExpr {
+public interface TickReference extends SignalReference {
 } // TickReference

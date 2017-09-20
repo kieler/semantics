@@ -14,22 +14,22 @@ package de.cau.cs.kieler.esterel.processors.transformators.incremental
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.esterel.Constant
+import de.cau.cs.kieler.esterel.ConstantDeclaration
 import de.cau.cs.kieler.esterel.ConstantExpression
-import de.cau.cs.kieler.esterel.EsterelModule
 import de.cau.cs.kieler.esterel.EsterelProgram
+import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.esterel.processors.EsterelProcessor
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.scl.Module
 import de.cau.cs.kieler.scl.ScopeStatement
 import de.cau.cs.kieler.scl.Statement
 import java.util.HashMap
 import java.util.Map
 import org.eclipse.emf.common.util.EList
-import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
-import de.cau.cs.kieler.esterel.ConstantMultiDeclaration
 
 /**
  * @author mrb
@@ -62,41 +62,35 @@ class ConstantTransformation extends EsterelProcessor {
     extension EsterelExtensions
     
     override EsterelProgram transform(EsterelProgram prog) {
-        prog.modules.filter(EsterelModule).forEach [transformConstants]
+        prog.modules.forEach [transformConstants]
         return prog
     }
     
-    def transformConstants(EsterelModule module) {
+    def transformConstants(Module module) {
         // this map combines an Esterel sensor with the new SCL variable
         var HashMap<Constant, ValuedObject> newVariables = new HashMap<Constant, ValuedObject>()
         var ScopeStatement scope = module.getIScope
         for (decl: module.constantDeclarations) {
-            if (decl.type != null) {
+            for (v : decl.constants) {
                 var ValueType newType
-                if (decl.type != ValueType.PURE) {
-                    newType = if (decl.type == ValueType.DOUBLE) ValueType.FLOAT else decl.type.type
+                if (v.type != ValueType.PURE) {
+                    newType = if (v.type == ValueType.DOUBLE) ValueType.FLOAT else v.type.type
                 }
                 else {
                     throw new UnsupportedOperationException(
                     "The following constant doesn't have a valid type for SCL! " + decl)
                 }
                 var newDecl = createDeclaration(newType, null)
-                for (v : decl.constants) {
-                    var c = v as Constant
-                    var variable = createNewUniqueVariable(if (c.initialValue!=null) c.initialValue else null)
-                    newVariables.put(c, variable)
-                    newDecl.valuedObjects.add(variable)
-                }
+                var c = v as Constant
+                var variable = createNewUniqueVariable(if (c.initialValue!=null) c.initialValue else null)
+                newVariables.put(c, variable)
+                newDecl.valuedObjects.add(variable)
                 scope.declarations.add(newDecl)
-            }
-            else { 
-                throw new UnsupportedOperationException(
-                    "The following constants don't have a valid type for SCL! " + decl)
             }
         }
         transformReferences(scope, newVariables)
         transformConstantExpressions(scope, newVariables)
-        module.declarations.removeIf[it instanceof ConstantMultiDeclaration]
+        module.declarations.removeIf[it instanceof ConstantDeclaration]
     }
     
     def transformReferences(Statement statement, Map<Constant, ValuedObject> newVariables) {

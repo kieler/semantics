@@ -17,12 +17,16 @@ EsterelProgram hidden(SL_COMMENT, ML_COMMENT, WS):
  * ###                 7.2 Modules                 ###
  * ###################################################
  */
-EsterelModule:
+EsterelModule returns scl::Module:
     (annotations += Annotation)*
     "module" name=ID ":"
-    (declarations+=VariableDeclaration)*
-    (esterelDeclarations+=EsterelDeclaration)*
-    ( (statements+=EsterelStatement ";")* statements+=EsterelStatement? )
+    (declarations+=VariableDeclaration | declarations+=EsterelDeclaration)*
+    (
+        ( statements+=EsterelParallel )
+    |   
+        (statements+=InstructionStatement ";" | statements+=MetaStatement)*
+        statements+=Statement?
+    )
     ("end" "module" | ".");
 
 /* ###################################################
@@ -30,16 +34,25 @@ EsterelModule:
  * ###################################################
  */
 
+MetaOrInstructionStatement returns scl::Statement:
+    MetaStatement | InstructionStatement
+;
+
 // Allow scl labels
 MetaStatement returns scl::Statement:
     SCL::MetaStatement
 ;
  
-// ==> Atomic Statements
-// -------------------------------------
-AtomicStatement returns scl::Statement:
-    super
-    | Goto | UnEmit | Set | Assignment | Parallel | Conditional ;
+InstructionStatement returns scl::Statement:
+	super
+	| UnEmit | Set | Assignment | Goto | Parallel | ModuleCall
+;
+
+EsterelThread returns scl::Statement:
+    InstructionStatement ({EsterelThread.statements+=current} (";" (statements+=InstructionStatement ";" | statements+=MetaStatement)* statements+=InstructionStatement?))?
+    |
+    MetaStatement ({EsterelThread.statements+=current} (statements+=InstructionStatement ";" | statements+=MetaStatement)* statements+=InstructionStatement?)?;
+    
 
 // ==> 7.5.2 Assignment
 // -------------------------------------

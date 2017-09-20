@@ -3,6 +3,137 @@
  */
 package de.cau.cs.kieler.esterel.serializer
 
+import com.google.inject.Inject
+import de.cau.cs.kieler.esterel.DelayExpression
+import de.cau.cs.kieler.esterel.EsterelParallel
+import de.cau.cs.kieler.esterel.EsterelThread
+import de.cau.cs.kieler.esterel.TickReference
+import de.cau.cs.kieler.esterel.services.EsterelGrammarAccess
+import org.eclipse.xtext.serializer.ISerializationContext
+import de.cau.cs.kieler.esterel.SignalReference
 
 class EsterelSemanticSequencer extends AbstractEsterelSemanticSequencer {
+
+    @Inject
+    private EsterelGrammarAccess grammarAccess;
+    
+    /**
+     * Contexts:
+     *     EsterelParallel returns EsterelParallel
+     *
+     * Constraint:
+     *     (threads+=EsterelParallel_EsterelParallel_1_0 threads+=EsterelThread+)
+     */
+    protected override sequence_EsterelParallel(ISerializationContext context, EsterelParallel semanticObject) {
+        val feeder = createSequencerFeeder(semanticObject, createNodeProvider(semanticObject))
+        val g = grammarAccess.esterelParallelAccess
+        
+        if (!semanticObject.statements.nullOrEmpty) {
+            for (idxStm : semanticObject.statements.indexed) {
+                // Do not serialize threads with only one statement
+                val stm = if (idxStm.value instanceof EsterelThread) {
+                    val thread = idxStm.value as EsterelThread
+                    if (thread.statements.size == 1) {
+                        thread.statements.head
+                    } else {
+                        thread
+                    }
+                } else {
+                    idxStm.value
+                }
+                
+                switch (idxStm.key) {
+                    case 0: feeder.accept(g.esterelParallelStatementsAction_1_0, stm, idxStm.key)
+                    default: feeder.accept(g.statementsEsterelThreadParserRuleCall_1_1_1_0, stm, idxStm.key)
+                }
+            }
+        }
+        
+        feeder.finish
+    }
+    
+    /**
+     * Contexts:
+     *     EsterelParallel returns EsterelThread
+     *     EsterelParallel.EsterelParallel_1_0 returns EsterelThread
+     *     Sequence returns EsterelThread
+     *
+     * Constraint:
+     *     (statements+=Sequence_EsterelThread_1_0 statements+=InstructionStatement+)
+     */
+    protected override sequence_EsterelThread(ISerializationContext context, EsterelThread semanticObject) {
+        if (!semanticObject.statements.nullOrEmpty) {
+            if (semanticObject.statements.size > 1) {
+                val feeder = createSequencerFeeder(semanticObject, createNodeProvider(semanticObject))
+                val g = grammarAccess.esterelThreadAccess
+                
+                for (idxStm : semanticObject.statements.indexed) {
+                    switch (idxStm.key) {
+                        case 0: {
+                            feeder.accept(g.esterelThreadStatementsAction_1_0, idxStm.value, idxStm.key)
+                        }
+                        default: feeder.accept(g.statementsInstructionStatementParserRuleCall_1_1_1_0, idxStm.value, idxStm.key)
+                    }
+                }
+                
+                feeder.finish
+            } else {
+                // Cannot occur due to EsterelParallel serialization
+            }
+        }
+        
+    }
+    
+    /**
+     * Contexts:
+     *     SignalExpression returns TickReference
+     *     SignalExpression.OperatorExpression_1_0 returns TickReference
+     *     SignalAndExpression returns TickReference
+     *     SignalAndExpression.OperatorExpression_1_0 returns TickReference
+     *     SignalNotExpression returns TickReference
+     *     SignalAtomicExpression returns TickReference
+     *     SignalReferenceExpr returns TickReference
+     *     TickSignalExpression returns TickReference
+     *
+     * Constraint:
+     *     {TickReference}
+     */
+    protected override sequence_TickSignalExpression(ISerializationContext context, TickReference semanticObject) {
+        val feeder = createSequencerFeeder(semanticObject, createNodeProvider(semanticObject))
+        feeder.finish
+    }
+    
+    /**
+     * Contexts:
+     *     DelayExpr returns DelayExpr
+     *
+     * Constraint:
+     *     ((delay=IntValue | immediate?='immediate')? (expression=SignalReferenceExpr | expression=SignalExpression))
+     */
+    protected override sequence_DelayExpression(ISerializationContext context, DelayExpression semanticObject) {
+        val feeder = createSequencerFeeder(semanticObject, createNodeProvider(semanticObject))
+        
+        val g = grammarAccess.delayExpressionAccess
+        
+        if (semanticObject.delay !== null) {
+            feeder.accept(g.getDelayIntValueParserRuleCall_0_0_0, semanticObject.delay)
+        }
+        
+        if (semanticObject.delay === null && semanticObject.immediate) {
+            feeder.accept(g.immediateImmediateKeyword_0_1_0)
+        }
+        
+        if (semanticObject.expression !== null) {
+            if (semanticObject.expression instanceof TickReference) {
+                feeder.accept(g.getExpressionSignalReferenceExprParserRuleCall_1_0_0, semanticObject.expression)
+            } else if (semanticObject.expression instanceof SignalReference) {
+                feeder.accept(g.getExpressionSignalReferenceExprParserRuleCall_1_0_0, semanticObject.expression)
+            } else {
+                feeder.accept(g.expressionSignalExpressionParserRuleCall_1_1_1_0, semanticObject.expression)
+            }
+            
+        }
+        
+        feeder.finish
+    }
 }

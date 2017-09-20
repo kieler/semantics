@@ -25,6 +25,7 @@ import de.cau.cs.kieler.esterel.ProcedureCall
 import de.cau.cs.kieler.esterel.ProcedureDeclaration
 import de.cau.cs.kieler.esterel.Run
 import de.cau.cs.kieler.esterel.Trap
+import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.esterel.processors.EsterelProcessor
 import de.cau.cs.kieler.kexpressions.ValueType
@@ -62,6 +63,8 @@ class ProcCallTransformation extends EsterelProcessor {
 
     @Inject
     extension EsterelTransformationExtensions
+    @Inject
+    extension EsterelExtensions
     
     override EsterelProgram transform(EsterelProgram prog) {
         prog.modules.forEach [ m | 
@@ -96,6 +99,11 @@ class ProcCallTransformation extends EsterelProcessor {
             }
             transformStatements((statement as IfTest).elseStatements)
         }
+        else if (statement instanceof EsterelParallel) {
+            (statement as EsterelParallel).threads.forEach [ t |
+                transformStatements(t.statements)
+            ]
+        }
         else if (statement instanceof StatementContainer) {
             
             transformStatements((statement as StatementContainer).statements)
@@ -119,11 +127,6 @@ class ProcCallTransformation extends EsterelProcessor {
             else if (statement instanceof Conditional) {
                 transformStatements((statement as Conditional).getElse()?.statements)
             }
-        }
-        else if (statement instanceof EsterelParallel) {
-            (statement as EsterelParallel).threads.forEach [ t |
-                transformStatements(t.statements)
-            ]
         }
         else if (statement instanceof Parallel) {
             (statement as Parallel).threads.forEach [ t |

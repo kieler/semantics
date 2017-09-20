@@ -2,11 +2,11 @@
  */
 package de.cau.cs.kieler.esterel.impl;
 
-import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
-
 import de.cau.cs.kieler.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.Task;
 import de.cau.cs.kieler.esterel.TaskDeclaration;
+
+import de.cau.cs.kieler.kexpressions.impl.DeclarationImpl;
 
 import java.util.Collection;
 
@@ -33,7 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class TaskDeclarationImpl extends AnnotatableImpl implements TaskDeclaration {
+public class TaskDeclarationImpl extends DeclarationImpl implements TaskDeclaration {
     /**
      * The cached value of the '{@link #getTasks() <em>Tasks</em>}' containment reference list.
      * <!-- begin-user-doc -->

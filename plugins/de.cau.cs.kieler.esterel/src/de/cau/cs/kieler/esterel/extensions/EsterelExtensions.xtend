@@ -12,20 +12,25 @@
  */
 package de.cau.cs.kieler.esterel.extensions
 
-import de.cau.cs.kieler.esterel.ConstantMultiDeclaration
-import de.cau.cs.kieler.esterel.EsterelModule
+import de.cau.cs.kieler.esterel.ConstantDeclaration
+import de.cau.cs.kieler.esterel.FunctionDeclaration
 import de.cau.cs.kieler.esterel.InputDeclaration
 import de.cau.cs.kieler.esterel.InputOutputDeclaration
 import de.cau.cs.kieler.esterel.OutputDeclaration
 import de.cau.cs.kieler.esterel.SensorDeclaration
 import de.cau.cs.kieler.esterel.Signal
 import de.cau.cs.kieler.esterel.SignalDeclaration
+import de.cau.cs.kieler.esterel.TypeDeclaration
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.scl.Module
-import de.cau.cs.kieler.esterel.TypeDeclaration
-import de.cau.cs.kieler.esterel.FunctionDeclaration
+import de.cau.cs.kieler.esterel.EsterelParallel
+import de.cau.cs.kieler.esterel.EsterelThread
+import de.cau.cs.kieler.esterel.Constant
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.esterel.Variable
+import de.cau.cs.kieler.esterel.Sensor
 
 /**
  * @author als
@@ -35,28 +40,19 @@ import de.cau.cs.kieler.esterel.FunctionDeclaration
 class EsterelExtensions {
     
     def sensorDeclarations(Module m) {
-        if (m instanceof EsterelModule) {
-            return m.esterelDeclarations.filter(SensorDeclaration)
-        }
-        return emptyList
+        return m.declarations.filter(SensorDeclaration)
     }
         
     def sensors(Declaration d) {
-        return d.valuedObjects.filter(SensorDeclaration)
+        return d.valuedObjects.filter(Sensor)
     }
     
     def constantDeclarations(Module m) {
-        if (m instanceof EsterelModule) {
-            return m.esterelDeclarations.filter(ConstantMultiDeclaration).map[constantDecalrations].flatten
-        }
-        return emptyList
+        return m.declarations.filter(ConstantDeclaration)
     }
     
     def signalDeclarations(Module m) {
-        if (m instanceof EsterelModule) {
-            return m.esterelDeclarations.filter(SignalDeclaration)
-        }
-        return emptyList
+        return m.declarations.filter(SignalDeclaration)
     }
     
     def signals(Declaration d) {
@@ -80,23 +76,22 @@ class EsterelExtensions {
     }
     
     def typeDeclarations(Module m) {
-        if (m instanceof EsterelModule) {
-            return m.esterelDeclarations.filter(TypeDeclaration)
-        }
-        return emptyList
+        return m.declarations.filter(TypeDeclaration)
     }
     
     def functionDeclarations(Module m) {
-        if (m instanceof EsterelModule) {
-            return m.esterelDeclarations.filter(FunctionDeclaration)
-        }
-        return emptyList
+        return m.declarations.filter(FunctionDeclaration)
     }
     
     def ValueType type(ValuedObject vo) {
         switch (vo) {
             Signal: return vo.type
+            Sensor: return vo.type.type
         }
+    }
+    
+    def threads(EsterelParallel par) {
+        return par.statements.filter(EsterelThread)
     }
     
 }

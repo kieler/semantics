@@ -4,7 +4,7 @@ package de.cau.cs.kieler.esterel.impl;
 
 import de.cau.cs.kieler.esterel.Await;
 import de.cau.cs.kieler.esterel.Case;
-import de.cau.cs.kieler.esterel.DelayExpr;
+import de.cau.cs.kieler.esterel.DelayExpression;
 import de.cau.cs.kieler.esterel.EsterelPackage;
 
 import de.cau.cs.kieler.scl.SCLPackage;
@@ -62,7 +62,7 @@ public class AwaitImpl extends StatementImpl implements Await {
      * @generated
      * @ordered
      */
-    protected DelayExpr delay;
+    protected DelayExpression delay;
 
     /**
      * The cached value of the '{@link #getCases() <em>Cases</em>}' containment reference list.
@@ -110,7 +110,7 @@ public class AwaitImpl extends StatementImpl implements Await {
      * <!-- end-user-doc -->
      * @generated
      */
-    public DelayExpr getDelay() {
+    public DelayExpression getDelay() {
         return delay;
     }
 
@@ -119,8 +119,8 @@ public class AwaitImpl extends StatementImpl implements Await {
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetDelay(DelayExpr newDelay, NotificationChain msgs) {
-        DelayExpr oldDelay = delay;
+    public NotificationChain basicSetDelay(DelayExpression newDelay, NotificationChain msgs) {
+        DelayExpression oldDelay = delay;
         delay = newDelay;
         if (eNotificationRequired()) {
             ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.AWAIT__DELAY, oldDelay, newDelay);
@@ -134,7 +134,7 @@ public class AwaitImpl extends StatementImpl implements Await {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setDelay(DelayExpr newDelay) {
+    public void setDelay(DelayExpression newDelay) {
         if (newDelay != delay) {
             NotificationChain msgs = null;
             if (delay != null)
@@ -210,7 +210,7 @@ public class AwaitImpl extends StatementImpl implements Await {
                 getStatements().addAll((Collection<? extends Statement>)newValue);
                 return;
             case EsterelPackage.AWAIT__DELAY:
-                setDelay((DelayExpr)newValue);
+                setDelay((DelayExpression)newValue);
                 return;
             case EsterelPackage.AWAIT__CASES:
                 getCases().clear();
@@ -232,7 +232,7 @@ public class AwaitImpl extends StatementImpl implements Await {
                 getStatements().clear();
                 return;
             case EsterelPackage.AWAIT__DELAY:
-                setDelay((DelayExpr)null);
+                setDelay((DelayExpression)null);
                 return;
             case EsterelPackage.AWAIT__CASES:
                 getCases().clear();

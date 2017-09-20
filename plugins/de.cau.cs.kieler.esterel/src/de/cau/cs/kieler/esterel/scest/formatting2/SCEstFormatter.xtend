@@ -3,20 +3,19 @@
  */
 package de.cau.cs.kieler.esterel.scest.formatting2;
 
-import com.google.inject.Inject;
-import de.cau.cs.kieler.annotations.Annotation;
-import de.cau.cs.kieler.esterel.EsterelDeclaration;
-import de.cau.cs.kieler.esterel.EsterelModule;
-import de.cau.cs.kieler.esterel.EsterelProgram;
-import de.cau.cs.kieler.esterel.Set;
-import de.cau.cs.kieler.esterel.UnEmit;
-import de.cau.cs.kieler.esterel.formatting2.EsterelFormatter;
-import de.cau.cs.kieler.esterel.scest.services.SCEstGrammarAccess;
-import de.cau.cs.kieler.kexpressions.Declaration;
-import de.cau.cs.kieler.scl.Assignment;
-import de.cau.cs.kieler.scl.Module;
-import de.cau.cs.kieler.scl.Statement;
-import org.eclipse.xtext.formatting2.IFormattableDocument;
+import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.Annotation
+import de.cau.cs.kieler.esterel.EsterelDeclaration
+import de.cau.cs.kieler.esterel.EsterelProgram
+import de.cau.cs.kieler.esterel.Set
+import de.cau.cs.kieler.esterel.UnEmit
+import de.cau.cs.kieler.esterel.formatting2.EsterelFormatter
+import de.cau.cs.kieler.esterel.scest.services.SCEstGrammarAccess
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.scl.Assignment
+import de.cau.cs.kieler.scl.Module
+import de.cau.cs.kieler.scl.Statement
+import org.eclipse.xtext.formatting2.IFormattableDocument
 
 class SCEstFormatter extends EsterelFormatter {
 	
@@ -29,21 +28,21 @@ class SCEstFormatter extends EsterelFormatter {
 		}
 	}
 
-	override dispatch void format(EsterelModule esterelmodule, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Annotation annotations : esterelmodule.getAnnotations()) {
-			format(annotations, document);
-		}
-		for (Declaration declarations : esterelmodule.getDeclarations()) {
-			format(declarations, document);
-		}
-		for (EsterelDeclaration esterelDeclarations : esterelmodule.getEsterelDeclarations()) {
-			format(esterelDeclarations, document);
-		}
-		for (Statement statements : esterelmodule.getStatements()) {
-			format(statements, document);
-		}
-	}
+//	override dispatch void format(EsterelModule esterelmodule, extension IFormattableDocument document) {
+//		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//		for (Annotation annotations : esterelmodule.getAnnotations()) {
+//			format(annotations, document);
+//		}
+//		for (Declaration declarations : esterelmodule.getDeclarations()) {
+//			format(declarations, document);
+//		}
+//		for (EsterelDeclaration esterelDeclarations : esterelmodule.getEsterelDeclarations()) {
+//			format(esterelDeclarations, document);
+//		}
+//		for (Statement statements : esterelmodule.getStatements()) {
+//			format(statements, document);
+//		}
+//	}
 
 	override dispatch void format(Assignment assignment, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 

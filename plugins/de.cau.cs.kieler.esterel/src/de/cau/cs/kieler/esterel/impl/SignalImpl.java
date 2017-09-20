@@ -6,13 +6,11 @@ import de.cau.cs.kieler.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.Function;
 import de.cau.cs.kieler.esterel.Signal;
 
-import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.ValueType;
 
 import de.cau.cs.kieler.kexpressions.impl.ValuedObjectImpl;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;

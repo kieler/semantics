@@ -14,5 +14,5 @@ import de.cau.cs.kieler.kexpressions.Declaration;
  * @model interface="true" abstract="true"
  * @generated
  */
-public interface SignalDeclaration extends EsterelDeclaration, Declaration {
+public interface SignalDeclaration extends EsterelDeclaration {
 } // SignalDeclaration

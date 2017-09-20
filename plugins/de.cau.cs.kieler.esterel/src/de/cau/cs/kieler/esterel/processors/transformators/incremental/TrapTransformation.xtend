@@ -26,6 +26,7 @@ import de.cau.cs.kieler.esterel.Run
 import de.cau.cs.kieler.esterel.Signal
 import de.cau.cs.kieler.esterel.Trap
 import de.cau.cs.kieler.esterel.TrapExpression
+import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.esterel.processors.EsterelProcessor
 import de.cau.cs.kieler.kexpressions.CombineOperator
@@ -77,6 +78,8 @@ class TrapTransformation extends EsterelProcessor {
 
     @Inject
     extension EsterelTransformationExtensions
+    @Inject
+    extension EsterelExtensions
         
     override EsterelProgram transform(EsterelProgram prog) {
         prog.modules.forEach [ m | transformStatements(m.statements)]
@@ -188,6 +191,11 @@ class TrapTransformation extends EsterelProcessor {
             }
             transformStatements((statement as IfTest).elseStatements)
         }
+        else if (statement instanceof EsterelParallel) {
+            (statement as EsterelParallel).threads.forEach [ t |
+                transformStatements(t.statements)
+            ]
+        }
         else if (statement instanceof StatementContainer) {
             
             transformStatements((statement as StatementContainer).statements)
@@ -208,11 +216,6 @@ class TrapTransformation extends EsterelProcessor {
             else if (statement instanceof Conditional) {
                 transformStatements((statement as Conditional).getElse()?.statements)
             }
-        }
-        else if (statement instanceof EsterelParallel) {
-            (statement as EsterelParallel).threads.forEach [ t |
-                transformStatements(t.statements)
-            ]
         }
         else if (statement instanceof Parallel) {
             (statement as Parallel).threads.forEach [ t |
@@ -481,6 +484,14 @@ class TrapTransformation extends EsterelProcessor {
                 criedWolf = new Pair(true, criedWolf.value && temp.value)
             }
         }
+        else if (statement instanceof EsterelParallel) {
+            for (t : (statement as EsterelParallel).threads) {
+                var temp = checkPotentiallyInstantaneous(t.statements)
+                if (temp.key == true) {
+                    criedWolf = new Pair(true, criedWolf.value && temp.value)
+                }
+            }
+        }
         else if (statement instanceof StatementContainer) {
             
             criedWolf = checkPotentiallyInstantaneous((statement as StatementContainer).statements)
@@ -530,14 +541,6 @@ class TrapTransformation extends EsterelProcessor {
             else if (statement instanceof Conditional) {
                 var temp = checkPotentiallyInstantaneous((statement as Conditional).getElse()?.statements)
                 if (temp.key) {
-                    criedWolf = new Pair(true, criedWolf.value && temp.value)
-                }
-            }
-        }
-        else if (statement instanceof EsterelParallel) {
-            for (t : (statement as EsterelParallel).threads) {
-                var temp = checkPotentiallyInstantaneous(t.statements)
-                if (temp.key == true) {
                     criedWolf = new Pair(true, criedWolf.value && temp.value)
                 }
             }

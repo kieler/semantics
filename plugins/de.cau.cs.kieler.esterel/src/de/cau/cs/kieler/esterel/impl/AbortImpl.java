@@ -4,7 +4,7 @@ package de.cau.cs.kieler.esterel.impl;
 
 import de.cau.cs.kieler.esterel.Abort;
 import de.cau.cs.kieler.esterel.Case;
-import de.cau.cs.kieler.esterel.DelayExpr;
+import de.cau.cs.kieler.esterel.DelayExpression;
 import de.cau.cs.kieler.esterel.EsterelPackage;
 
 import de.cau.cs.kieler.scl.SCLPackage;
@@ -84,7 +84,7 @@ public class AbortImpl extends StatementImpl implements Abort {
      * @generated
      * @ordered
      */
-    protected DelayExpr delay;
+    protected DelayExpression delay;
 
     /**
      * The cached value of the '{@link #getDoStatements() <em>Do Statements</em>}' containment reference list.
@@ -163,7 +163,7 @@ public class AbortImpl extends StatementImpl implements Abort {
      * <!-- end-user-doc -->
      * @generated
      */
-    public DelayExpr getDelay() {
+    public DelayExpression getDelay() {
         return delay;
     }
 
@@ -172,8 +172,8 @@ public class AbortImpl extends StatementImpl implements Abort {
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetDelay(DelayExpr newDelay, NotificationChain msgs) {
-        DelayExpr oldDelay = delay;
+    public NotificationChain basicSetDelay(DelayExpression newDelay, NotificationChain msgs) {
+        DelayExpression oldDelay = delay;
         delay = newDelay;
         if (eNotificationRequired()) {
             ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.ABORT__DELAY, oldDelay, newDelay);
@@ -187,7 +187,7 @@ public class AbortImpl extends StatementImpl implements Abort {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setDelay(DelayExpr newDelay) {
+    public void setDelay(DelayExpression newDelay) {
         if (newDelay != delay) {
             NotificationChain msgs = null;
             if (delay != null)
@@ -284,7 +284,7 @@ public class AbortImpl extends StatementImpl implements Abort {
                 setWeak((Boolean)newValue);
                 return;
             case EsterelPackage.ABORT__DELAY:
-                setDelay((DelayExpr)newValue);
+                setDelay((DelayExpression)newValue);
                 return;
             case EsterelPackage.ABORT__DO_STATEMENTS:
                 getDoStatements().clear();
@@ -313,7 +313,7 @@ public class AbortImpl extends StatementImpl implements Abort {
                 setWeak(WEAK_EDEFAULT);
                 return;
             case EsterelPackage.ABORT__DELAY:
-                setDelay((DelayExpr)null);
+                setDelay((DelayExpression)null);
                 return;
             case EsterelPackage.ABORT__DO_STATEMENTS:
                 getDoStatements().clear();

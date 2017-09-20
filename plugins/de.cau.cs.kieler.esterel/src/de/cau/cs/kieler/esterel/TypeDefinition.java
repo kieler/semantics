@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.esterel;
 
+import de.cau.cs.kieler.kexpressions.ValuedObject;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -13,5 +15,5 @@ package de.cau.cs.kieler.esterel;
  * @model
  * @generated
  */
-public interface TypeDefinition extends EsterelDefinition {
+public interface TypeDefinition extends ValuedObject {
 } // TypeDefinition

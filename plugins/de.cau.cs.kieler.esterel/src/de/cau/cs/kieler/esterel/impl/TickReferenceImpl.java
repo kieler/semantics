@@ -14,7 +14,7 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class TickReferenceImpl extends SignalReferenceExprImpl implements TickReference {
+public class TickReferenceImpl extends SignalReferenceImpl implements TickReference {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

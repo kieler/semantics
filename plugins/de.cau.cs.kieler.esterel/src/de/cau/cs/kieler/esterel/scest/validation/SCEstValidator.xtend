@@ -15,15 +15,21 @@ package de.cau.cs.kieler.esterel.scest.validation
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.esterel.Constant
-import de.cau.cs.kieler.esterel.DelayExpr
+import de.cau.cs.kieler.esterel.ConstantDeclaration
+import de.cau.cs.kieler.esterel.DelayExpression
 import de.cau.cs.kieler.esterel.ElsIf
 import de.cau.cs.kieler.esterel.Emit
+import de.cau.cs.kieler.esterel.EsterelFunctionCall
+import de.cau.cs.kieler.esterel.EsterelVariableDeclaration
 import de.cau.cs.kieler.esterel.Exit
 import de.cau.cs.kieler.esterel.IfTest
 import de.cau.cs.kieler.esterel.Repeat
+import de.cau.cs.kieler.esterel.Sensor
 import de.cau.cs.kieler.esterel.Set
+import de.cau.cs.kieler.esterel.Signal
 import de.cau.cs.kieler.esterel.Sustain
 import de.cau.cs.kieler.esterel.TrapSignal
+import de.cau.cs.kieler.esterel.Variable
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.CombineOperator
@@ -39,13 +45,6 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.scl.Assignment
 import de.cau.cs.kieler.scl.Conditional
 import org.eclipse.xtext.validation.Check
-import de.cau.cs.kieler.esterel.Signal
-import de.cau.cs.kieler.esterel.EsterelVariableDeclaration
-import de.cau.cs.kieler.esterel.ConstantDeclaration
-import de.cau.cs.kieler.esterel.SensorDeclaration
-import de.cau.cs.kieler.esterel.Sensor
-import de.cau.cs.kieler.esterel.EsterelFunctionCall
-import de.cau.cs.kieler.esterel.Variable
 import org.eclipse.xtext.validation.CheckType
 
 /**
@@ -109,8 +108,8 @@ class SCEstValidator extends AbstractSCEstValidator {
     @Check
     def void combineOperatorConstant(Constant constant) {
         var parent = constant.eContainer as ConstantDeclaration
-        if (!combineOperatorFitsType(parent.type?.type, parent.type?.operator)) {
-            error("The combine operator '" + parent.type?.operator + "' does not fit the constants type '" + parent.type?.type + "'!", constant, null, -1)
+        if (!combineOperatorFitsType(constant.type?.type, constant.type?.operator)) {
+            error("The combine operator '" + constant.type?.operator + "' does not fit the constants type '" + constant.type?.type + "'!", constant, null, -1)
         }
     }
     
@@ -214,7 +213,7 @@ class SCEstValidator extends AbstractSCEstValidator {
     }
     
     @Check(CheckType.EXPENSIVE)
-    def void expressionDelayExpr(DelayExpr delay) {
+    def void expressionDelayExpr(DelayExpression delay) {
         if (delay.expression != null && !delay.expression.isCalculationExpr) {
             warning(CALCULATION_EXPRESSION, null)
         }
@@ -417,9 +416,7 @@ class SCEstValidator extends AbstractSCEstValidator {
                 return vo.type.isBoolOrPure
             }
             Constant: {
-                if (parent instanceof ConstantDeclaration) {
-                   return parent.type?.type.isBoolOrPure
-                }
+                return vo.type.type.isBoolOrPure
             }
             Variable: {
                 if (parent instanceof EsterelVariableDeclaration) {
@@ -449,9 +446,7 @@ class SCEstValidator extends AbstractSCEstValidator {
                 return vo.type.isCalculationType 
             }
             Constant: {
-                if (parent instanceof ConstantDeclaration) {
-                   return parent.type?.type.isCalculationType
-                }
+                return vo.type?.type.isCalculationType
             }
             Variable: {
                 if (parent instanceof EsterelVariableDeclaration) {

@@ -12,9 +12,7 @@
  */
 package de.cau.cs.kieler.esterel.scoping
 
-import de.cau.cs.kieler.esterel.Constant
-import de.cau.cs.kieler.esterel.ConstantMultiDeclaration
-import de.cau.cs.kieler.esterel.EsterelModule
+import de.cau.cs.kieler.esterel.ConstantDeclaration
 import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.EsterelVariableDeclaration
 import de.cau.cs.kieler.esterel.Function
@@ -33,6 +31,7 @@ import de.cau.cs.kieler.esterel.Trap
 import de.cau.cs.kieler.esterel.TypeDeclaration
 import de.cau.cs.kieler.esterel.TypeDefinition
 import de.cau.cs.kieler.esterel.Variable
+import de.cau.cs.kieler.scl.Module
 import java.util.ArrayList
 import java.util.List
 import org.eclipse.emf.ecore.EObject
@@ -48,19 +47,19 @@ import org.eclipse.xtext.resource.IEObjectDescription
 class EsterelScopeProviderUtil {
     
     /** collecting all sensors of a passed module. */
-    public static val ScopeFunction<EsterelModule> COLLECT_SENSORS = new ScopeFunction<EsterelModule>() {
-        override collect(EsterelModule m, List<IEObjectDescription> scopeElems) {
-            for (s : m.esterelDeclarations.filter(SensorDeclaration).map[valuedObjects.filter(Sensor)].flatten) {
+    public static val ScopeFunction<Module> COLLECT_SENSORS = new ScopeFunction<Module>() {
+        override collect(Module m, List<IEObjectDescription> scopeElems) {
+            for (s : m.declarations.filter(SensorDeclaration).map[valuedObjects.filter(Sensor)].flatten) {
                 scopeElems.add(new EObjectDescription(QualifiedName.create(s.name), s, emptyMap));
             }
         }
     }
 
     /** collecting all constants of a passed module. */
-    public static val ScopeFunction<EsterelModule> COLLECT_CONSTANTS = new ScopeFunction<EsterelModule>() {
-        override collect(EsterelModule m, List<IEObjectDescription> scopeElems) {
-            for (d : m.esterelDeclarations.filter(ConstantMultiDeclaration)) {
-                for (s : d.constantDecalrations.map[constants.filter(Constant)].flatten) {
+    public static val ScopeFunction<Module> COLLECT_CONSTANTS = new ScopeFunction<Module>() {
+        override collect(Module m, List<IEObjectDescription> scopeElems) {
+            for (d : m.declarations.filter(ConstantDeclaration)) {
+                for (s : d.valuedObjects) {
                     scopeElems.add(new EObjectDescription(QualifiedName.create(s.name), s, emptyMap));
                 }
             }
@@ -68,43 +67,43 @@ class EsterelScopeProviderUtil {
     }
 
     /** collecting all functions of a passed module. */
-    public static val ScopeFunction<EsterelModule> COLLECT_FUNCTIONS = new ScopeFunction<EsterelModule>() {
-        override collect(EsterelModule m, List<IEObjectDescription> scopeElems) {
-            for (s : m.esterelDeclarations.filter(FunctionDeclaration).map[functions.filter(Function)].flatten) {
+    public static val ScopeFunction<Module> COLLECT_FUNCTIONS = new ScopeFunction<Module>() {
+        override collect(Module m, List<IEObjectDescription> scopeElems) {
+            for (s : m.declarations.filter(FunctionDeclaration).map[functions.filter(Function)].flatten) {
                 scopeElems.add(new EObjectDescription(QualifiedName.create(s.name), s, emptyMap));
             }
         }
     };
 
     /** collecting all procedures of a passed module. */
-    public static val ScopeFunction<EsterelModule> COLLECT_PROCEDURES = new ScopeFunction<EsterelModule>() {
-        override collect(EsterelModule m, List<IEObjectDescription> scopeElems) {
-            for (s : m.esterelDeclarations.filter(ProcedureDeclaration).map[procedures.filter(Procedure)].flatten) {
+    public static val ScopeFunction<Module> COLLECT_PROCEDURES = new ScopeFunction<Module>() {
+        override collect(Module m, List<IEObjectDescription> scopeElems) {
+            for (s : m.declarations.filter(ProcedureDeclaration).map[procedures.filter(Procedure)].flatten) {
                 scopeElems.add(new EObjectDescription(QualifiedName.create(s.name), s, emptyMap));
             }
         }
     };
 
     /** collecting all signals of a passed module. */
-    public static val ScopeFunction<EsterelModule> COLLECT_SIGNALS = new ScopeFunction<EsterelModule>() {
-        override collect(EsterelModule m, List<IEObjectDescription> scopeElems) {
-            for (s : m.esterelDeclarations.filter(SignalDeclaration).map[valuedObjects.filter(Signal)].flatten) {
+    public static val ScopeFunction<Module> COLLECT_SIGNALS = new ScopeFunction<Module>() {
+        override collect(Module m, List<IEObjectDescription> scopeElems) {
+            for (s : m.declarations.filter(SignalDeclaration).map[valuedObjects.filter(Signal)].flatten) {
                 scopeElems.add(new EObjectDescription(QualifiedName.create(s.name), s, emptyMap));
             }
         }
     };
     /** collecting all types of a passed module. */
-    public static val ScopeFunction<EsterelModule> COLLECT_TYPES = new ScopeFunction<EsterelModule>() {
-        override collect(EsterelModule m, List<IEObjectDescription> scopeElems) {
-            for (s : m.esterelDeclarations.filter(TypeDeclaration).map[types.filter(TypeDefinition)].flatten) {
+    public static val ScopeFunction<Module> COLLECT_TYPES = new ScopeFunction<Module>() {
+        override collect(Module m, List<IEObjectDescription> scopeElems) {
+            for (s : m.declarations.filter(TypeDeclaration).map[types.filter(TypeDefinition)].flatten) {
                 scopeElems.add(new EObjectDescription(QualifiedName.create(s.name), s, emptyMap));
             }
         }
     };
     /** collecting all tasks of a passed module. */
-    public static val ScopeFunction<EsterelModule> COLLECT_TASKS = new ScopeFunction<EsterelModule>() {
-        override collect(EsterelModule m, List<IEObjectDescription> scopeElems) {
-            for (s : m.esterelDeclarations.filter(TaskDeclaration).map[tasks.filter(Task)].flatten) {
+    public static val ScopeFunction<Module> COLLECT_TASKS = new ScopeFunction<Module>() {
+        override collect(Module m, List<IEObjectDescription> scopeElems) {
+            for (s : m.declarations.filter(TaskDeclaration).map[tasks.filter(Task)].flatten) {
                 scopeElems.add(new EObjectDescription(QualifiedName.create(s.name), s, emptyMap));
             }
         }
@@ -133,14 +132,14 @@ class EsterelScopeProviderUtil {
      *            function collecting scope elements
      * @return list with the according scope elements.
      */
-    public static def List<IEObjectDescription> getElements(EObject context, ScopeFunction<EsterelModule> function) {
+    public static def List<IEObjectDescription> getElements(EObject context, ScopeFunction<Module> function) {
         val scopeElems = new ArrayList<IEObjectDescription>();
         var parent = context.eContainer();
         // get this scope's module interface
-        while (!(parent instanceof EsterelModule) && parent != null) {
+        while (!(parent instanceof Module) && parent != null) {
             parent = parent.eContainer();
         }
-        if (parent != null) function.collect(parent as EsterelModule, scopeElems);
+        if (parent != null) function.collect(parent as Module, scopeElems);
         return scopeElems;
     }
 
@@ -154,19 +153,19 @@ class EsterelScopeProviderUtil {
      *            function collecting scope elements
      * @return list with the according scope elements.n
      */
-    public static def List<IEObjectDescription> getAllElements(EObject context, ScopeFunction<EsterelModule> function) {
+    public static def List<IEObjectDescription> getAllElements(EObject context, ScopeFunction<Module> function) {
 
         val scopeElems = new ArrayList<IEObjectDescription>();
         var parent = context.eContainer();
         // get this scope's module interface
-        while (!(parent instanceof EsterelModule) && parent != null) {
+        while (!(parent instanceof Module) && parent != null) {
             parent = parent.eContainer();
         }
         if (parent != null) {
-            function.collect(parent as EsterelModule, scopeElems);
+            function.collect(parent as Module, scopeElems);
             // collect from possible other modules
-            val p = (parent as EsterelModule).eContainer() as EsterelProgram;
-            for (EsterelModule m : p.modules.filter(EsterelModule)) {
+            val p = (parent as Module).eContainer() as EsterelProgram;
+            for (Module m : p.modules.filter(Module)) {
                 function.collect(m, scopeElems);
             }
         }
@@ -184,8 +183,8 @@ class EsterelScopeProviderUtil {
         val scopeElems = new ArrayList<IEObjectDescription>();
 
         var parent = context.eContainer();
-        // Go up in the Structure until EsterelModule/MainEsterelModule
-        while (!(parent instanceof EsterelModule) && parent != null) {
+        // Go up in the Structure until Module/MainModule
+        while (!(parent instanceof Module) && parent != null) {
             // Get the local signals into the scope
             if (parent instanceof LocalSignalDeclaration) {
                 val signals = (parent as LocalSignalDeclaration).getValuedObjects();
@@ -210,8 +209,8 @@ class EsterelScopeProviderUtil {
         val scopeElems = new ArrayList<IEObjectDescription>();
 
         var parent = context.eContainer();
-        // Go up in the Structure until EsterelModule/MainEsterelModule
-        while (!(parent instanceof EsterelModule) && parent != null) {
+        // Go up in the Structure until Module/MainModule
+        while (!(parent instanceof Module) && parent != null) {
             // Get the local variables into the scope
             if (parent instanceof LocalVariableDeclaration) {
                 val decl = (parent as LocalVariableDeclaration).getVariableDeclarations();
@@ -240,7 +239,7 @@ class EsterelScopeProviderUtil {
 
         var parent = context.eContainer();
         // find all Traps
-        while (!(parent instanceof EsterelModule) && parent != null) {
+        while (!(parent instanceof Module) && parent != null) {
             if (parent instanceof Trap) {
                 val trapDecl = (parent as Trap).getTrapSignals();
                 // add Trap to the scope
@@ -262,16 +261,16 @@ class EsterelScopeProviderUtil {
      *            context
      * @return list with scope elements
      */
-    public static def List<IEObjectDescription> getAllEsterelModules(EObject context) {
+    public static def List<IEObjectDescription> getAllModules(EObject context) {
         val scopeElems = new ArrayList<IEObjectDescription>();
 
         var parent = context.eContainer();
-        // find all EsterelModules
+        // find all Modules
         while (parent != null) {
             if (parent instanceof EsterelProgram) {
                 val p = parent;
                 // add Trap to the scope
-                for (m : p.modules.filter(EsterelModule)) {
+                for (m : p.modules.filter(Module)) {
                     scopeElems.add(new EObjectDescription(QualifiedName.create(m.getName()), m, emptyMap));
                 }
                 return scopeElems;

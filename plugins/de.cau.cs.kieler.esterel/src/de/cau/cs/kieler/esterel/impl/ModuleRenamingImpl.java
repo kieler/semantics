@@ -2,9 +2,10 @@
  */
 package de.cau.cs.kieler.esterel.impl;
 
-import de.cau.cs.kieler.esterel.EsterelModule;
 import de.cau.cs.kieler.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.ModuleRenaming;
+
+import de.cau.cs.kieler.scl.Module;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -37,7 +38,7 @@ public class ModuleRenamingImpl extends MinimalEObjectImpl.Container implements 
      * @generated
      * @ordered
      */
-    protected EsterelModule module;
+    protected Module module;
 
     /**
      * The default value of the '{@link #getNewName() <em>New Name</em>}' attribute.
@@ -83,10 +84,10 @@ public class ModuleRenamingImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
-    public EsterelModule getModule() {
+    public Module getModule() {
         if (module != null && module.eIsProxy()) {
             InternalEObject oldModule = (InternalEObject)module;
-            module = (EsterelModule)eResolveProxy(oldModule);
+            module = (Module)eResolveProxy(oldModule);
             if (module != oldModule) {
                 if (eNotificationRequired())
                     eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.MODULE_RENAMING__MODULE, oldModule, module));
@@ -100,7 +101,7 @@ public class ModuleRenamingImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
-    public EsterelModule basicGetModule() {
+    public Module basicGetModule() {
         return module;
     }
 
@@ -109,8 +110,8 @@ public class ModuleRenamingImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setModule(EsterelModule newModule) {
-        EsterelModule oldModule = module;
+    public void setModule(Module newModule) {
+        Module oldModule = module;
         module = newModule;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.MODULE_RENAMING__MODULE, oldModule, module));
@@ -163,7 +164,7 @@ public class ModuleRenamingImpl extends MinimalEObjectImpl.Container implements 
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case EsterelPackage.MODULE_RENAMING__MODULE:
-                setModule((EsterelModule)newValue);
+                setModule((Module)newValue);
                 return;
             case EsterelPackage.MODULE_RENAMING__NEW_NAME:
                 setNewName((String)newValue);
@@ -181,7 +182,7 @@ public class ModuleRenamingImpl extends MinimalEObjectImpl.Container implements 
     public void eUnset(int featureID) {
         switch (featureID) {
             case EsterelPackage.MODULE_RENAMING__MODULE:
-                setModule((EsterelModule)null);
+                setModule((Module)null);
                 return;
             case EsterelPackage.MODULE_RENAMING__NEW_NAME:
                 setNewName(NEW_NAME_EDEFAULT);

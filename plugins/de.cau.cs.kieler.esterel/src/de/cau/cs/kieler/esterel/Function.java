@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.esterel;
 
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -21,7 +22,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface Function extends EsterelDefinition {
+public interface Function extends ValuedObject {
     /**
      * Returns the value of the '<em><b>Parameter Types</b></em>' containment reference list.
      * The list contents are of type {@link de.cau.cs.kieler.esterel.TypeIdentifier}.

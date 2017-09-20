@@ -3,6 +3,7 @@
 package de.cau.cs.kieler.esterel;
 
 import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.kexpressions.Declaration;
 
 /**
  * <!-- begin-user-doc -->
@@ -14,5 +15,5 @@ import de.cau.cs.kieler.annotations.Annotatable;
  * @model interface="true" abstract="true"
  * @generated
  */
-public interface EsterelDeclaration extends Annotatable {
+public interface EsterelDeclaration extends Declaration {
 } // EsterelDeclaration

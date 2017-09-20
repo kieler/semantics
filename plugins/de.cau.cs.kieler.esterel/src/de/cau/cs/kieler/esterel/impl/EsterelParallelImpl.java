@@ -5,6 +5,10 @@ package de.cau.cs.kieler.esterel.impl;
 import de.cau.cs.kieler.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.EsterelParallel;
 
+import de.cau.cs.kieler.scl.SCLPackage;
+import de.cau.cs.kieler.scl.Statement;
+import de.cau.cs.kieler.scl.StatementContainer;
+
 import de.cau.cs.kieler.scl.impl.StatementImpl;
 
 import java.util.Collection;
@@ -27,21 +31,21 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.impl.EsterelParallelImpl#getThreads <em>Threads</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.impl.EsterelParallelImpl#getStatements <em>Statements</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class EsterelParallelImpl extends StatementImpl implements EsterelParallel {
     /**
-     * The cached value of the '{@link #getThreads() <em>Threads</em>}' containment reference list.
+     * The cached value of the '{@link #getStatements() <em>Statements</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getThreads()
+     * @see #getStatements()
      * @generated
      * @ordered
      */
-    protected EList<de.cau.cs.kieler.scl.Thread> threads;
+    protected EList<Statement> statements;
 
     /**
      * <!-- begin-user-doc -->
@@ -67,11 +71,11 @@ public class EsterelParallelImpl extends StatementImpl implements EsterelParalle
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<de.cau.cs.kieler.scl.Thread> getThreads() {
-        if (threads == null) {
-            threads = new EObjectContainmentEList<de.cau.cs.kieler.scl.Thread>(de.cau.cs.kieler.scl.Thread.class, this, EsterelPackage.ESTEREL_PARALLEL__THREADS);
+    public EList<Statement> getStatements() {
+        if (statements == null) {
+            statements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.ESTEREL_PARALLEL__STATEMENTS);
         }
-        return threads;
+        return statements;
     }
 
     /**
@@ -82,8 +86,8 @@ public class EsterelParallelImpl extends StatementImpl implements EsterelParalle
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case EsterelPackage.ESTEREL_PARALLEL__THREADS:
-                return ((InternalEList<?>)getThreads()).basicRemove(otherEnd, msgs);
+            case EsterelPackage.ESTEREL_PARALLEL__STATEMENTS:
+                return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -96,8 +100,8 @@ public class EsterelParallelImpl extends StatementImpl implements EsterelParalle
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case EsterelPackage.ESTEREL_PARALLEL__THREADS:
-                return getThreads();
+            case EsterelPackage.ESTEREL_PARALLEL__STATEMENTS:
+                return getStatements();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -111,9 +115,9 @@ public class EsterelParallelImpl extends StatementImpl implements EsterelParalle
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case EsterelPackage.ESTEREL_PARALLEL__THREADS:
-                getThreads().clear();
-                getThreads().addAll((Collection<? extends de.cau.cs.kieler.scl.Thread>)newValue);
+            case EsterelPackage.ESTEREL_PARALLEL__STATEMENTS:
+                getStatements().clear();
+                getStatements().addAll((Collection<? extends Statement>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -127,8 +131,8 @@ public class EsterelParallelImpl extends StatementImpl implements EsterelParalle
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case EsterelPackage.ESTEREL_PARALLEL__THREADS:
-                getThreads().clear();
+            case EsterelPackage.ESTEREL_PARALLEL__STATEMENTS:
+                getStatements().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -142,10 +146,42 @@ public class EsterelParallelImpl extends StatementImpl implements EsterelParalle
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case EsterelPackage.ESTEREL_PARALLEL__THREADS:
-                return threads != null && !threads.isEmpty();
+            case EsterelPackage.ESTEREL_PARALLEL__STATEMENTS:
+                return statements != null && !statements.isEmpty();
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+        if (baseClass == StatementContainer.class) {
+            switch (derivedFeatureID) {
+                case EsterelPackage.ESTEREL_PARALLEL__STATEMENTS: return SCLPackage.STATEMENT_CONTAINER__STATEMENTS;
+                default: return -1;
+            }
+        }
+        return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+        if (baseClass == StatementContainer.class) {
+            switch (baseFeatureID) {
+                case SCLPackage.STATEMENT_CONTAINER__STATEMENTS: return EsterelPackage.ESTEREL_PARALLEL__STATEMENTS;
+                default: return -1;
+            }
+        }
+        return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
     }
 
 } //EsterelParallelImpl

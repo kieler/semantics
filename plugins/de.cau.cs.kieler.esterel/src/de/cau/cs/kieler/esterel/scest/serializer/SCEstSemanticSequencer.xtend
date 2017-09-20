@@ -3,6 +3,73 @@
  */
 package de.cau.cs.kieler.esterel.scest.serializer
 
+import com.google.inject.Inject
+import de.cau.cs.kieler.esterel.EsterelThread
+import de.cau.cs.kieler.esterel.scest.services.SCEstGrammarAccess
+import org.eclipse.xtext.serializer.ISerializationContext
+import de.cau.cs.kieler.scl.Label
+import de.cau.cs.kieler.scl.Conditional
+import de.cau.cs.kieler.scl.Scope
+import de.cau.cs.kieler.scl.Statement
 
 class SCEstSemanticSequencer extends AbstractSCEstSemanticSequencer {
+
+    @Inject
+    private SCEstGrammarAccess grammarAccess;  
+      
+    /**
+     * Contexts:
+     *     EsterelThread returns EsterelThread
+     *     EsterelParallel returns EsterelThread
+     *     EsterelParallel.EsterelParallel_1_0 returns EsterelThread
+     *
+     * Constraint:
+     *     (
+     *         (
+     *             statements+=EsterelThread_EsterelThread_0_1_0 
+     *             (statements+=InstructionStatement | statements+=MetaStatement)* 
+     *             statements+=InstructionStatement?
+     *         ) | 
+     *         (
+     *             statements+=EsterelThread_EsterelThread_1_1_0 
+     *             (statements+=InstructionStatement | statements+=MetaStatement)* 
+     *             statements+=InstructionStatement?
+     *         )
+     *     )
+     */
+    protected override sequence_EsterelThread(ISerializationContext context, EsterelThread semanticObject) {
+        val feeder = createSequencerFeeder(semanticObject, createNodeProvider(semanticObject))
+        val g = grammarAccess.esterelThreadAccess
+        
+        if (!semanticObject.statements.nullOrEmpty) {
+            val firstIsMeta = semanticObject.statements.head.metaStatement
+            for (idxStm : semanticObject.statements.indexed) {
+                if (firstIsMeta) {
+                    switch (idxStm.key) {
+                        case 0: feeder.accept(g.getEsterelThreadStatementsAction_1_1_0, idxStm.value, idxStm.key)
+                        case idxStm.value.metaStatement: feeder.accept(g.statementsMetaStatementParserRuleCall_1_1_1_1_0, idxStm.value, idxStm.key)
+                        case semanticObject.statements.size -1: feeder.accept(g.statementsInstructionStatementParserRuleCall_1_1_2_0, idxStm.value, idxStm.key)
+                        default: feeder.accept(g.statementsInstructionStatementParserRuleCall_1_1_1_0_0_0, idxStm.value, idxStm.key)
+                    }
+                } else {
+                    switch (idxStm.key) {
+                        case 0: feeder.accept(g.getEsterelThreadStatementsAction_0_1_0, idxStm.value, idxStm.key)
+                        case idxStm.value.metaStatement: feeder.accept(g.statementsMetaStatementParserRuleCall_0_1_1_1_1_0, idxStm.value, idxStm.key)
+                        case semanticObject.statements.size -1: feeder.accept(g.statementsInstructionStatementParserRuleCall_0_1_1_2_0, idxStm.value, idxStm.key)
+                        default: feeder.accept(g.statementsInstructionStatementParserRuleCall_0_1_1_1_0_0_0, idxStm.value, idxStm.key)
+                    }
+                }
+
+            }
+        }
+        
+        feeder.finish
+    }
+    
+    private def isMetaStatement(Statement stm) {
+        return stm instanceof Label
+            || stm instanceof Conditional
+            || stm instanceof Scope
+    }
+    
 }

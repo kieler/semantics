@@ -3,7 +3,7 @@
 package de.cau.cs.kieler.esterel.impl;
 
 import de.cau.cs.kieler.esterel.Case;
-import de.cau.cs.kieler.esterel.DelayExpr;
+import de.cau.cs.kieler.esterel.DelayExpression;
 import de.cau.cs.kieler.esterel.EsterelPackage;
 
 import de.cau.cs.kieler.scl.impl.StatementContainerImpl;
@@ -38,7 +38,7 @@ public class CaseImpl extends StatementContainerImpl implements Case {
      * @generated
      * @ordered
      */
-    protected DelayExpr delay;
+    protected DelayExpression delay;
 
     /**
      * <!-- begin-user-doc -->
@@ -64,7 +64,7 @@ public class CaseImpl extends StatementContainerImpl implements Case {
      * <!-- end-user-doc -->
      * @generated
      */
-    public DelayExpr getDelay() {
+    public DelayExpression getDelay() {
         return delay;
     }
 
@@ -73,8 +73,8 @@ public class CaseImpl extends StatementContainerImpl implements Case {
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetDelay(DelayExpr newDelay, NotificationChain msgs) {
-        DelayExpr oldDelay = delay;
+    public NotificationChain basicSetDelay(DelayExpression newDelay, NotificationChain msgs) {
+        DelayExpression oldDelay = delay;
         delay = newDelay;
         if (eNotificationRequired()) {
             ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.CASE__DELAY, oldDelay, newDelay);
@@ -88,7 +88,7 @@ public class CaseImpl extends StatementContainerImpl implements Case {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setDelay(DelayExpr newDelay) {
+    public void setDelay(DelayExpression newDelay) {
         if (newDelay != delay) {
             NotificationChain msgs = null;
             if (delay != null)
@@ -139,7 +139,7 @@ public class CaseImpl extends StatementContainerImpl implements Case {
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case EsterelPackage.CASE__DELAY:
-                setDelay((DelayExpr)newValue);
+                setDelay((DelayExpression)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -154,7 +154,7 @@ public class CaseImpl extends StatementContainerImpl implements Case {
     public void eUnset(int featureID) {
         switch (featureID) {
             case EsterelPackage.CASE__DELAY:
-                setDelay((DelayExpr)null);
+                setDelay((DelayExpression)null);
                 return;
         }
         super.eUnset(featureID);

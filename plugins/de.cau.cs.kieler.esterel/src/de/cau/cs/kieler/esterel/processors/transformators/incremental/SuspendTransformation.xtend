@@ -15,16 +15,16 @@ package de.cau.cs.kieler.esterel.processors.transformators.incremental
 import com.google.inject.Inject
 import de.cau.cs.kieler.esterel.Abort
 import de.cau.cs.kieler.esterel.Await
-import de.cau.cs.kieler.esterel.DelayExpr
 import de.cau.cs.kieler.esterel.Do
 import de.cau.cs.kieler.esterel.EsterelParallel
+import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.Exec
 import de.cau.cs.kieler.esterel.IfTest
 import de.cau.cs.kieler.esterel.Present
 import de.cau.cs.kieler.esterel.Run
 import de.cau.cs.kieler.esterel.Suspend
 import de.cau.cs.kieler.esterel.Trap
-import de.cau.cs.kieler.esterel.EsterelProgram
+import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.esterel.processors.EsterelProcessor
 import de.cau.cs.kieler.kexpressions.ValueType
@@ -36,6 +36,7 @@ import de.cau.cs.kieler.scl.Statement
 import de.cau.cs.kieler.scl.StatementContainer
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.util.EcoreUtil
+import de.cau.cs.kieler.esterel.DelayExpression
 
 /**
  * @author mrb
@@ -71,6 +72,8 @@ class SuspendTransformation extends EsterelProcessor {
 
     @Inject
     extension EsterelTransformationExtensions
+    @Inject
+    extension EsterelExtensions
     
     override EsterelProgram transform(EsterelProgram prog) {
         prog.modules.forEach [ m | transformStatements(m.statements)]
@@ -166,6 +169,11 @@ class SuspendTransformation extends EsterelProcessor {
             }
             transformStatements((statement as IfTest).elseStatements)
         }
+        else if (statement instanceof EsterelParallel) {
+            (statement as EsterelParallel).threads.forEach [ t |
+                transformStatements(t.statements)
+            ]
+        }
         else if (statement instanceof StatementContainer) {
             
             transformStatements((statement as StatementContainer).statements)
@@ -190,11 +198,6 @@ class SuspendTransformation extends EsterelProcessor {
                 transformStatements((statement as Conditional).getElse()?.statements)
             }
         }
-        else if (statement instanceof EsterelParallel) {
-            (statement as EsterelParallel).threads.forEach [ t |
-                transformStatements(t.statements)
-            ]
-        }
         else if (statement instanceof Parallel) {
             (statement as Parallel).threads.forEach [ t |
                 transformStatements(t.statements)
@@ -206,7 +209,7 @@ class SuspendTransformation extends EsterelProcessor {
         return statement
     }
     
-    def void transformPauses(EList<Statement> statements, int depth, DelayExpr delay, ValuedObject variable) {
+    def void transformPauses(EList<Statement> statements, int depth, DelayExpression delay, ValuedObject variable) {
         for (var i=0; i<statements?.length; i++) {
             var statement = statements.get(i).transformPause(depth, delay, variable)
             if (statement instanceof Statement) {
@@ -220,7 +223,7 @@ class SuspendTransformation extends EsterelProcessor {
         }
     }
     
-    def Statement transformPause(Statement statement, int depth, DelayExpr delay, ValuedObject variable) {
+    def Statement transformPause(Statement statement, int depth, DelayExpression delay, ValuedObject variable) {
         if (statement instanceof Pause) {
             var statements = getContainingList(statement)
             var pos = statements.indexOf(statement)
@@ -246,6 +249,11 @@ class SuspendTransformation extends EsterelProcessor {
             transformPauses((statement as IfTest).statements, depth, delay, variable)
             (statement as IfTest).elseif?.forEach [ elsif | transformPauses(elsif.statements, depth, delay, variable)]
             transformPauses((statement as IfTest).elseStatements, depth, delay, variable)
+        }
+        else if (statement instanceof EsterelParallel) {
+            (statement as EsterelParallel).threads?.forEach [ t |
+                transformPauses(t.statements, depth, delay, variable)
+            ]
         }
         else if (statement instanceof StatementContainer) {
             if (!(statement instanceof Conditional)) {
@@ -273,11 +281,6 @@ class SuspendTransformation extends EsterelProcessor {
                     transformPauses((statement as Conditional).getElse()?.statements, depth, delay, variable)
                 }
             }
-        }
-        else if (statement instanceof EsterelParallel) {
-            (statement as EsterelParallel).threads?.forEach [ t |
-                transformPauses(t.statements, depth, delay, variable)
-            ]
         }
         else if (statement instanceof Parallel) {
             (statement as Parallel).threads?.forEach [ t |

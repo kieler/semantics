@@ -31,6 +31,7 @@ import de.cau.cs.kieler.esterel.Signal
 import de.cau.cs.kieler.esterel.Suspend
 import de.cau.cs.kieler.esterel.Trap
 import de.cau.cs.kieler.esterel.UnEmit
+import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.OperatorExpression
@@ -44,6 +45,7 @@ import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.scg.ssa.SSATransformationExtensions
 import de.cau.cs.kieler.scl.Assignment
 import de.cau.cs.kieler.scl.Goto
 import de.cau.cs.kieler.scl.Label
@@ -56,7 +58,6 @@ import de.cau.cs.kieler.scl.Thread
 import java.util.List
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.scg.ssa.SSATransformationExtensions
 
 /**
  * This class contains methods to transform an Kernel SC Esterel program to SCL using signal notation.
@@ -90,12 +91,12 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
     // -------------------------------------------------------------------------
     @Inject
     extension KExpressionsDeclarationExtensions
-
     @Inject
     extension KExpressionsValuedObjectExtensions
-
     @Inject
     extension KExpressionsCreateExtensions
+    @Inject
+    extension EsterelExtensions
     
     extension SCLFactory = SCLFactory.eINSTANCE
     extension AnnotationsFactory = AnnotationsFactory.eINSTANCE

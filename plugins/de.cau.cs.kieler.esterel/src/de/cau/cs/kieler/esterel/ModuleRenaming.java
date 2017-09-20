@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.esterel;
 
+import de.cau.cs.kieler.scl.Module;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -31,12 +32,12 @@ public interface ModuleRenaming extends EObject {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Module</em>' reference.
-     * @see #setModule(EsterelModule)
+     * @see #setModule(Module)
      * @see de.cau.cs.kieler.esterel.EsterelPackage#getModuleRenaming_Module()
      * @model
      * @generated
      */
-    EsterelModule getModule();
+    Module getModule();
 
     /**
      * Sets the value of the '{@link de.cau.cs.kieler.esterel.ModuleRenaming#getModule <em>Module</em>}' reference.
@@ -46,7 +47,7 @@ public interface ModuleRenaming extends EObject {
      * @see #getModule()
      * @generated
      */
-    void setModule(EsterelModule value);
+    void setModule(Module value);
 
     /**
      * Returns the value of the '<em><b>New Name</b></em>' attribute.

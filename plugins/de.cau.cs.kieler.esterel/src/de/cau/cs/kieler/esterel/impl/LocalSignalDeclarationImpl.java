@@ -2,10 +2,8 @@
  */
 package de.cau.cs.kieler.esterel.impl;
 
-import de.cau.cs.kieler.esterel.EsterelDeclaration;
 import de.cau.cs.kieler.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.LocalSignalDeclaration;
-import de.cau.cs.kieler.esterel.SignalDeclaration;
 
 import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;

@@ -57,11 +57,9 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
     public EObject create(EClass eClass) {
         switch (eClass.getClassifierID()) {
             case EsterelPackage.ESTEREL_PROGRAM: return createEsterelProgram();
-            case EsterelPackage.ESTEREL_MODULE: return createEsterelModule();
             case EsterelPackage.TYPE_IDENTIFIER: return createTypeIdentifier();
             case EsterelPackage.TYPE_DECLARATION: return createTypeDeclaration();
             case EsterelPackage.TYPE_DEFINITION: return createTypeDefinition();
-            case EsterelPackage.CONSTANT_MULTI_DECLARATION: return createConstantMultiDeclaration();
             case EsterelPackage.CONSTANT_DECLARATION: return createConstantDeclaration();
             case EsterelPackage.CONSTANT: return createConstant();
             case EsterelPackage.FUNCTION_DECLARATION: return createFunctionDeclaration();
@@ -119,13 +117,13 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
             case EsterelPackage.TASK_RENAMING: return createTaskRenaming();
             case EsterelPackage.SIGNAL_RENAMING: return createSignalRenaming();
             case EsterelPackage.DO: return createDo();
-            case EsterelPackage.DELAY_EXPR: return createDelayExpr();
+            case EsterelPackage.DELAY_EXPRESSION: return createDelayExpression();
             case EsterelPackage.TRAP_SIGNAL: return createTrapSignal();
             case EsterelPackage.TRAP_EXPRESSION: return createTrapExpression();
             case EsterelPackage.ESTEREL_FUNCTION_CALL: return createEsterelFunctionCall();
             case EsterelPackage.CONSTANT_EXPRESSION: return createConstantExpression();
-            case EsterelPackage.TRAP_REFERENCE_EXPR: return createTrapReferenceExpr();
-            case EsterelPackage.SIGNAL_REFERENCE_EXPR: return createSignalReferenceExpr();
+            case EsterelPackage.TRAP_REFERENCE: return createTrapReference();
+            case EsterelPackage.SIGNAL_REFERENCE: return createSignalReference();
             case EsterelPackage.TICK_REFERENCE: return createTickReference();
             case EsterelPackage.SC_EST_STATEMENT: return createSCEstStatement();
             case EsterelPackage.UN_EMIT: return createUnEmit();
@@ -143,16 +141,6 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
     public EsterelProgram createEsterelProgram() {
         EsterelProgramImpl esterelProgram = new EsterelProgramImpl();
         return esterelProgram;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EsterelModule createEsterelModule() {
-        EsterelModuleImpl esterelModule = new EsterelModuleImpl();
-        return esterelModule;
     }
 
     /**
@@ -183,16 +171,6 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
     public TypeDefinition createTypeDefinition() {
         TypeDefinitionImpl typeDefinition = new TypeDefinitionImpl();
         return typeDefinition;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public ConstantMultiDeclaration createConstantMultiDeclaration() {
-        ConstantMultiDeclarationImpl constantMultiDeclaration = new ConstantMultiDeclarationImpl();
-        return constantMultiDeclaration;
     }
 
     /**
@@ -770,9 +748,9 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public DelayExpr createDelayExpr() {
-        DelayExprImpl delayExpr = new DelayExprImpl();
-        return delayExpr;
+    public DelayExpression createDelayExpression() {
+        DelayExpressionImpl delayExpression = new DelayExpressionImpl();
+        return delayExpression;
     }
 
     /**
@@ -820,9 +798,9 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public TrapReferenceExpr createTrapReferenceExpr() {
-        TrapReferenceExprImpl trapReferenceExpr = new TrapReferenceExprImpl();
-        return trapReferenceExpr;
+    public TrapReference createTrapReference() {
+        TrapReferenceImpl trapReference = new TrapReferenceImpl();
+        return trapReference;
     }
 
     /**
@@ -830,9 +808,9 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public SignalReferenceExpr createSignalReferenceExpr() {
-        SignalReferenceExprImpl signalReferenceExpr = new SignalReferenceExprImpl();
-        return signalReferenceExpr;
+    public SignalReference createSignalReference() {
+        SignalReferenceImpl signalReference = new SignalReferenceImpl();
+        return signalReference;
     }
 
     /**

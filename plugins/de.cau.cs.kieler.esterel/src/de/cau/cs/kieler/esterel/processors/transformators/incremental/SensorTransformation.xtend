@@ -13,21 +13,20 @@
 package de.cau.cs.kieler.esterel.processors.transformators.incremental
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.esterel.EsterelModule
 import de.cau.cs.kieler.esterel.EsterelProgram
-import de.cau.cs.kieler.esterel.Signal
+import de.cau.cs.kieler.esterel.Sensor
+import de.cau.cs.kieler.esterel.SensorDeclaration
+import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.esterel.processors.EsterelProcessor
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.scl.Module
 import de.cau.cs.kieler.scl.ScopeStatement
 import de.cau.cs.kieler.scl.Statement
 import java.util.HashMap
 import java.util.Map
-import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
-import de.cau.cs.kieler.esterel.Sensor
-import de.cau.cs.kieler.esterel.SensorDeclaration
 
 /**
  * @author mrb
@@ -60,21 +59,21 @@ class SensorTransformation extends EsterelProcessor {
     extension EsterelExtensions
     
     override EsterelProgram transform(EsterelProgram prog) {
-        prog.modules.filter(EsterelModule).forEach [ m | m.transformSensors]
+        prog.modules.forEach [ m | m.transformSensors]
         return prog
     }
     
-    def transformSensors(EsterelModule module) {
+    def transformSensors(Module module) {
         // this map combines an Esterel sensor with the new SCL variable
         var HashMap<Sensor, ValuedObject> newVariables = new HashMap<Sensor, ValuedObject>()
         var ScopeStatement scope = module.getIScope
         for (decl: module.sensorDeclarations) {
-            for (s : decl.valuedObjects) {
-                if (s.type.type != null) {
+            for (s : decl.sensors) {
+                if (s.type != null) {
                     var variable = createNewUniqueVariable(null)
                     var ValueType newType
-                    if (s.type.type != ValueType.PURE) {
-                        newType = if (s.type.type == ValueType.DOUBLE) ValueType.FLOAT else s.type.type
+                    if (s.type != ValueType.PURE) {
+                        newType = if (s.type == ValueType.DOUBLE) ValueType.FLOAT else s.type.type
                         newVariables.put(s, variable)
                     }
                     else {

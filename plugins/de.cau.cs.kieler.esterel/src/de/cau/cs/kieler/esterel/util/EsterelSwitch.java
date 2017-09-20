@@ -91,29 +91,11 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case EsterelPackage.ESTEREL_MODULE: {
-                EsterelModule esterelModule = (EsterelModule)theEObject;
-                T result = caseEsterelModule(esterelModule);
-                if (result == null) result = caseModule(esterelModule);
-                if (result == null) result = caseScope(esterelModule);
-                if (result == null) result = caseDeclarationScope(esterelModule);
-                if (result == null) result = caseStatementContainer(esterelModule);
-                if (result == null) result = caseAnnotatable(esterelModule);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
             case EsterelPackage.ESTEREL_DECLARATION: {
                 EsterelDeclaration esterelDeclaration = (EsterelDeclaration)theEObject;
                 T result = caseEsterelDeclaration(esterelDeclaration);
+                if (result == null) result = caseDeclaration(esterelDeclaration);
                 if (result == null) result = caseAnnotatable(esterelDeclaration);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case EsterelPackage.ESTEREL_DEFINITION: {
-                EsterelDefinition esterelDefinition = (EsterelDefinition)theEObject;
-                T result = caseEsterelDefinition(esterelDefinition);
-                if (result == null) result = caseNamedObject(esterelDefinition);
-                if (result == null) result = caseAnnotatable(esterelDefinition);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -127,6 +109,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 TypeDeclaration typeDeclaration = (TypeDeclaration)theEObject;
                 T result = caseTypeDeclaration(typeDeclaration);
                 if (result == null) result = caseEsterelDeclaration(typeDeclaration);
+                if (result == null) result = caseDeclaration(typeDeclaration);
                 if (result == null) result = caseAnnotatable(typeDeclaration);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -134,17 +117,10 @@ public class EsterelSwitch<T> extends Switch<T> {
             case EsterelPackage.TYPE_DEFINITION: {
                 TypeDefinition typeDefinition = (TypeDefinition)theEObject;
                 T result = caseTypeDefinition(typeDefinition);
-                if (result == null) result = caseEsterelDefinition(typeDefinition);
+                if (result == null) result = caseValuedObject(typeDefinition);
                 if (result == null) result = caseNamedObject(typeDefinition);
                 if (result == null) result = caseAnnotatable(typeDefinition);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case EsterelPackage.CONSTANT_MULTI_DECLARATION: {
-                ConstantMultiDeclaration constantMultiDeclaration = (ConstantMultiDeclaration)theEObject;
-                T result = caseConstantMultiDeclaration(constantMultiDeclaration);
-                if (result == null) result = caseEsterelDeclaration(constantMultiDeclaration);
-                if (result == null) result = caseAnnotatable(constantMultiDeclaration);
+                if (result == null) result = caseReferenceable(typeDefinition);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -152,6 +128,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 ConstantDeclaration constantDeclaration = (ConstantDeclaration)theEObject;
                 T result = caseConstantDeclaration(constantDeclaration);
                 if (result == null) result = caseEsterelDeclaration(constantDeclaration);
+                if (result == null) result = caseDeclaration(constantDeclaration);
                 if (result == null) result = caseAnnotatable(constantDeclaration);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -159,9 +136,10 @@ public class EsterelSwitch<T> extends Switch<T> {
             case EsterelPackage.CONSTANT: {
                 Constant constant = (Constant)theEObject;
                 T result = caseConstant(constant);
-                if (result == null) result = caseEsterelDefinition(constant);
+                if (result == null) result = caseValuedObject(constant);
                 if (result == null) result = caseNamedObject(constant);
                 if (result == null) result = caseAnnotatable(constant);
+                if (result == null) result = caseReferenceable(constant);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -169,6 +147,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 FunctionDeclaration functionDeclaration = (FunctionDeclaration)theEObject;
                 T result = caseFunctionDeclaration(functionDeclaration);
                 if (result == null) result = caseEsterelDeclaration(functionDeclaration);
+                if (result == null) result = caseDeclaration(functionDeclaration);
                 if (result == null) result = caseAnnotatable(functionDeclaration);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -176,9 +155,10 @@ public class EsterelSwitch<T> extends Switch<T> {
             case EsterelPackage.FUNCTION: {
                 Function function = (Function)theEObject;
                 T result = caseFunction(function);
-                if (result == null) result = caseEsterelDefinition(function);
+                if (result == null) result = caseValuedObject(function);
                 if (result == null) result = caseNamedObject(function);
                 if (result == null) result = caseAnnotatable(function);
+                if (result == null) result = caseReferenceable(function);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -186,6 +166,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 ProcedureDeclaration procedureDeclaration = (ProcedureDeclaration)theEObject;
                 T result = caseProcedureDeclaration(procedureDeclaration);
                 if (result == null) result = caseEsterelDeclaration(procedureDeclaration);
+                if (result == null) result = caseDeclaration(procedureDeclaration);
                 if (result == null) result = caseAnnotatable(procedureDeclaration);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -193,9 +174,10 @@ public class EsterelSwitch<T> extends Switch<T> {
             case EsterelPackage.PROCEDURE: {
                 Procedure procedure = (Procedure)theEObject;
                 T result = caseProcedure(procedure);
-                if (result == null) result = caseEsterelDefinition(procedure);
+                if (result == null) result = caseValuedObject(procedure);
                 if (result == null) result = caseNamedObject(procedure);
                 if (result == null) result = caseAnnotatable(procedure);
+                if (result == null) result = caseReferenceable(procedure);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -203,6 +185,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 TaskDeclaration taskDeclaration = (TaskDeclaration)theEObject;
                 T result = caseTaskDeclaration(taskDeclaration);
                 if (result == null) result = caseEsterelDeclaration(taskDeclaration);
+                if (result == null) result = caseDeclaration(taskDeclaration);
                 if (result == null) result = caseAnnotatable(taskDeclaration);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -210,9 +193,10 @@ public class EsterelSwitch<T> extends Switch<T> {
             case EsterelPackage.TASK: {
                 Task task = (Task)theEObject;
                 T result = caseTask(task);
-                if (result == null) result = caseEsterelDefinition(task);
+                if (result == null) result = caseValuedObject(task);
                 if (result == null) result = caseNamedObject(task);
                 if (result == null) result = caseAnnotatable(task);
+                if (result == null) result = caseReferenceable(task);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -279,6 +263,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 SensorDeclaration sensorDeclaration = (SensorDeclaration)theEObject;
                 T result = caseSensorDeclaration(sensorDeclaration);
                 if (result == null) result = caseEsterelDeclaration(sensorDeclaration);
+                if (result == null) result = caseDeclaration(sensorDeclaration);
                 if (result == null) result = caseAnnotatable(sensorDeclaration);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -297,6 +282,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 RelationDeclaration relationDeclaration = (RelationDeclaration)theEObject;
                 T result = caseRelationDeclaration(relationDeclaration);
                 if (result == null) result = caseEsterelDeclaration(relationDeclaration);
+                if (result == null) result = caseDeclaration(relationDeclaration);
                 if (result == null) result = caseAnnotatable(relationDeclaration);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -333,6 +319,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 EsterelParallel esterelParallel = (EsterelParallel)theEObject;
                 T result = caseEsterelParallel(esterelParallel);
                 if (result == null) result = caseEsterelStatement(esterelParallel);
+                if (result == null) result = caseStatementContainer(esterelParallel);
                 if (result == null) result = caseStatement(esterelParallel);
                 if (result == null) result = caseAnnotatable(esterelParallel);
                 if (result == null) result = defaultCase(theEObject);
@@ -674,9 +661,9 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case EsterelPackage.DELAY_EXPR: {
-                DelayExpr delayExpr = (DelayExpr)theEObject;
-                T result = caseDelayExpr(delayExpr);
+            case EsterelPackage.DELAY_EXPRESSION: {
+                DelayExpression delayExpression = (DelayExpression)theEObject;
+                T result = caseDelayExpression(delayExpression);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -715,28 +702,28 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case EsterelPackage.TRAP_REFERENCE_EXPR: {
-                TrapReferenceExpr trapReferenceExpr = (TrapReferenceExpr)theEObject;
-                T result = caseTrapReferenceExpr(trapReferenceExpr);
-                if (result == null) result = caseValuedObjectReference(trapReferenceExpr);
-                if (result == null) result = caseExpression(trapReferenceExpr);
-                if (result == null) result = caseSchedulable(trapReferenceExpr);
+            case EsterelPackage.TRAP_REFERENCE: {
+                TrapReference trapReference = (TrapReference)theEObject;
+                T result = caseTrapReference(trapReference);
+                if (result == null) result = caseValuedObjectReference(trapReference);
+                if (result == null) result = caseExpression(trapReference);
+                if (result == null) result = caseSchedulable(trapReference);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case EsterelPackage.SIGNAL_REFERENCE_EXPR: {
-                SignalReferenceExpr signalReferenceExpr = (SignalReferenceExpr)theEObject;
-                T result = caseSignalReferenceExpr(signalReferenceExpr);
-                if (result == null) result = caseValuedObjectReference(signalReferenceExpr);
-                if (result == null) result = caseExpression(signalReferenceExpr);
-                if (result == null) result = caseSchedulable(signalReferenceExpr);
+            case EsterelPackage.SIGNAL_REFERENCE: {
+                SignalReference signalReference = (SignalReference)theEObject;
+                T result = caseSignalReference(signalReference);
+                if (result == null) result = caseValuedObjectReference(signalReference);
+                if (result == null) result = caseExpression(signalReference);
+                if (result == null) result = caseSchedulable(signalReference);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
             case EsterelPackage.TICK_REFERENCE: {
                 TickReference tickReference = (TickReference)theEObject;
                 T result = caseTickReference(tickReference);
-                if (result == null) result = caseSignalReferenceExpr(tickReference);
+                if (result == null) result = caseSignalReference(tickReference);
                 if (result == null) result = caseValuedObjectReference(tickReference);
                 if (result == null) result = caseExpression(tickReference);
                 if (result == null) result = caseSchedulable(tickReference);
@@ -789,21 +776,6 @@ public class EsterelSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Module</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Module</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseEsterelModule(EsterelModule object) {
-        return null;
-    }
-
-    /**
      * Returns the result of interpreting the object as an instance of '<em>Declaration</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -815,21 +787,6 @@ public class EsterelSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseEsterelDeclaration(EsterelDeclaration object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Definition</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Definition</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseEsterelDefinition(EsterelDefinition object) {
         return null;
     }
 
@@ -875,21 +832,6 @@ public class EsterelSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseTypeDefinition(TypeDefinition object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Constant Multi Declaration</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Constant Multi Declaration</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseConstantMultiDeclaration(ConstantMultiDeclaration object) {
         return null;
     }
 
@@ -1794,17 +1736,17 @@ public class EsterelSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Delay Expr</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Delay Expression</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Delay Expr</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Delay Expression</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseDelayExpr(DelayExpr object) {
+    public T caseDelayExpression(DelayExpression object) {
         return null;
     }
 
@@ -1869,32 +1811,32 @@ public class EsterelSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Trap Reference Expr</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Trap Reference</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Trap Reference Expr</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Trap Reference</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseTrapReferenceExpr(TrapReferenceExpr object) {
+    public T caseTrapReference(TrapReference object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Signal Reference Expr</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Signal Reference</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Signal Reference Expr</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Signal Reference</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseSignalReferenceExpr(SignalReferenceExpr object) {
+    public T caseSignalReference(SignalReference object) {
         return null;
     }
 
@@ -2030,21 +1972,6 @@ public class EsterelSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseScope(Scope object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Module</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Module</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseModule(Module object) {
         return null;
     }
 

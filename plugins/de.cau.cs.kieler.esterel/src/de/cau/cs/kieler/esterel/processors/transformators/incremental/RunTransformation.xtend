@@ -16,13 +16,11 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.esterel.Abort
 import de.cau.cs.kieler.esterel.Await
 import de.cau.cs.kieler.esterel.Constant
-import de.cau.cs.kieler.esterel.ConstantDeclaration
 import de.cau.cs.kieler.esterel.ConstantExpression
 import de.cau.cs.kieler.esterel.ConstantRenaming
 import de.cau.cs.kieler.esterel.Do
 import de.cau.cs.kieler.esterel.Emit
 import de.cau.cs.kieler.esterel.EsterelFunctionCall
-import de.cau.cs.kieler.esterel.EsterelModule
 import de.cau.cs.kieler.esterel.EsterelParallel
 import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.Exec
@@ -122,7 +120,7 @@ class RunTransformation extends EsterelProcessor {
     override EsterelProgram transform(EsterelProgram prog) {
         prog.moveGeneratedModulesToEnd
         for (var i=0; i<prog.modules.length; i++) {
-            var m = prog.modules.get(i) as EsterelModule
+            var m = prog.modules.get(i) as Module
             if (!m.annotations.generatedModule) {
                 m.startTransformation
             }
@@ -131,10 +129,10 @@ class RunTransformation extends EsterelProcessor {
     }
     
     /**
-     * Move all generated modules to the end of the EsterelModule list of a program
+     * Move all generated modules to the end of the Module list of a program
      * to avoid problems in "transform(SCEstProgram prog)" when a run 
      * transformation is completed and the used generated modules are deleted 
-     * of the EsterelModule list.
+     * of the Module list.
      * 
      * @param prog The program
      */
@@ -153,11 +151,11 @@ class RunTransformation extends EsterelProcessor {
     
     /**
      * Start looking for run statements.
-     * This method is used on the EsterelModule of a ModuleRenaming every time a run statement is found
+     * This method is used on the Module of a ModuleRenaming every time a run statement is found
      * 
-     * @param parentEsterelModule The closest surrounding module
+     * @param parentModule The closest surrounding module
      */
-    def startTransformation(EsterelModule parentModule) {
+    def startTransformation(Module parentModule) {
         parentModule.statements.transformStatements(parentModule)
         clearMapsLists
     }
@@ -165,9 +163,9 @@ class RunTransformation extends EsterelProcessor {
     /**
      * Get the interface signals of the surrounding module
      * 
-     * @param parentEsterelModule The surrounding module
+     * @param parentModule The surrounding module
      */
-    def void getSignals(EsterelModule parentModule) {
+    def void getSignals(Module parentModule) {
         for (signalDecl : parentModule.signalDeclarations) {
             for (signal : signalDecl.signals) {
                 parentSignals.put(signal.name, signal)
@@ -178,11 +176,11 @@ class RunTransformation extends EsterelProcessor {
     /**
      * Get the interface sensors of the surrounding module
      * 
-     * @param parentEsterelModule The surrounding module
+     * @param parentModule The surrounding module
      */
-    def void getSensors(EsterelModule parentModule) {
+    def void getSensors(Module parentModule) {
         for (decl : parentModule.sensorDeclarations) {
-            for (swt : decl.valuedObjects) {
+            for (swt : decl.sensors) {
                 parentSensors.put(swt.name, swt)
             }
         }
@@ -191,9 +189,9 @@ class RunTransformation extends EsterelProcessor {
     /**
      * Get the constants of the surrounding module
      * 
-     * @param parentEsterelModule The surrounding module
+     * @param parentModule The surrounding module
      */
-    def void getConstants(EsterelModule parentModule) {
+    def void getConstants(Module parentModule) {
         for (decls : parentModule.constantDeclarations) {
             for (constant : decls.constants) {
                 parentConstants.put(constant.name, constant)
@@ -205,9 +203,9 @@ class RunTransformation extends EsterelProcessor {
      * Search for run statements
      * 
      * @param statements The list of statements in which the search takes place
-     * @param parentEsterelModule The surrounding module
+     * @param parentModule The surrounding module
      */
-    def EList<Statement> transformStatements(EList<Statement> statements, EsterelModule parentModule) {
+    def EList<Statement> transformStatements(EList<Statement> statements, Module parentModule) {
         for (var i=0; i<statements?.length; i++) {
             statements.get(i).transformStatement(parentModule)
         }
@@ -218,9 +216,9 @@ class RunTransformation extends EsterelProcessor {
      * Find out if a specific statement is a run statement and if it is, transform it.
      * 
      * @param statement A specific statement
-     * @param parentEsterelModule The surrounding module
+     * @param parentModule The surrounding module
      */
-    def Statement transformStatement(Statement statement, EsterelModule parentModule) {
+    def Statement transformStatement(Statement statement, Module parentModule) {
         if (statement instanceof Run) {
             startTransformation(statement.module.module)
             transformRunStatement(statement, parentModule)
@@ -234,6 +232,11 @@ class RunTransformation extends EsterelProcessor {
             transformStatements((statement as IfTest).statements, parentModule)
             (statement as IfTest).elseif?.forEach [ elsif | transformStatements(elsif.statements, parentModule)]
             transformStatements((statement as IfTest).elseStatements, parentModule)
+        }
+        else if (statement instanceof EsterelParallel) {
+            (statement as EsterelParallel).threads.forEach [ t |
+                transformStatements(t.statements, parentModule)
+            ]
         }
         else if (statement instanceof StatementContainer) {
             
@@ -259,11 +262,6 @@ class RunTransformation extends EsterelProcessor {
                 transformStatements((statement as Conditional).getElse()?.statements, parentModule)
             }
         }
-        else if (statement instanceof EsterelParallel) {
-            (statement as EsterelParallel).threads.forEach [ t |
-                transformStatements(t.statements, parentModule)
-            ]
-        }
         else if (statement instanceof Parallel) {
             (statement as Parallel).threads.forEach [ t |
                 transformStatements(t.statements, parentModule)
@@ -276,9 +274,9 @@ class RunTransformation extends EsterelProcessor {
      * Set up a specific run statement transformation and then start transforming
      * 
      * @param run The run statement
-     * @param parentEsterelModule The surrounding Module
+     * @param parentModule The surrounding Module
      */
-    def transformRunStatement(Run run, EsterelModule parentModule) {
+    def transformRunStatement(Run run, Module parentModule) {
         parentModule.getSignals
         parentModule.getConstants
         parentModule.getSensors
@@ -428,7 +426,7 @@ class RunTransformation extends EsterelProcessor {
      * @param obj The given EObject
      */
     def filterAllObjectsInModule(EObject obj) {
-        // get everything of the run EsterelModule and filter it
+        // get everything of the run Module and filter it
         // so every reference to old objects can be transformed
         var everything = obj.eAllContents.toList
         for (o : everything) {
@@ -530,7 +528,7 @@ class RunTransformation extends EsterelProcessor {
                     }
                 }
                 else {
-                    throw new UnsupportedOperationException("There is no corresponding signal in the parent EsterelModule for " + signal.name + "!")
+                    throw new UnsupportedOperationException("There is no corresponding signal in the parent Module for " + signal.name + "!")
                 }
             }
         }
@@ -541,9 +539,9 @@ class RunTransformation extends EsterelProcessor {
      * Transform all renamings for the constants and all references from the old to the new constants
      * 
      * @param moduleRenaming ModuleRenaming of a run statement
-     * @param parentEsterelModule The parent EsterelModule where the constants will be copied to
+     * @param parentModule The parent Module where the constants will be copied to
      */
-    def ModuleRenaming transformConstants(ModuleRenaming moduleRenaming, EsterelModule parentModule) {
+    def ModuleRenaming transformConstants(ModuleRenaming moduleRenaming, Module parentModule) {
         for (decl : moduleRenaming.module.constantDeclarations) {
                 for (constant : decl.constants) {
                     var updateReferences = true
@@ -570,7 +568,7 @@ class RunTransformation extends EsterelProcessor {
                     }
                     else {
                         constant.name = createNewUniqueConstantName(constant.name)
-                        parentModule.esterelDeclarations.add(createConstantDecl(constant, (constant.eContainer as ConstantDeclaration).type))
+                        parentModule.declarations.add(createConstantDecl(constant, constant.type))
                     }
                     
                 }
@@ -582,9 +580,9 @@ class RunTransformation extends EsterelProcessor {
      * Transform all references from the old to the new sensor or just copy sensor to parent module
      * 
      * @param moduleRenaming ModuleRenaming of a run statement
-     * @param parentEsterelModule The parent EsterelModule where the sensors will be copied to
+     * @param parentModule The parent Module where the sensors will be copied to
      */
-    def transformSensors(ModuleRenaming moduleRenaming, EsterelModule parentModule) {
+    def transformSensors(ModuleRenaming moduleRenaming, Module parentModule) {
         for (decl : moduleRenaming.module.sensorDeclarations) {
             for (var i=0; i<decl.valuedObjects.size; i++) {
                 var sensorWType = decl.valuedObjects.get(i) as Sensor
@@ -598,7 +596,7 @@ class RunTransformation extends EsterelProcessor {
                 }
                 else {
                     sensorWType.name = sensorWType.name.createNewUniqueSensorName
-                    parentModule.esterelDeclarations.add(createSensorDecl(sensorWType))
+                    parentModule.declarations.add(createSensorDecl(sensorWType))
                     i-- // because the old sensor with type was removed of "decl.sensors"
                 }
             }
@@ -610,9 +608,9 @@ class RunTransformation extends EsterelProcessor {
      * Transform all references from the old to the new types or just copy types to parent module
      * 
      * @param moduleRenaming ModuleRenaming of a run statement
-     * @param parentEsterelModule The parent EsterelModule where the types will be copied to
+     * @param parentModule The parent Module where the types will be copied to
      */
-    def transformTypes(ModuleRenaming moduleRenaming, EsterelModule parentModule) {
+    def transformTypes(ModuleRenaming moduleRenaming, Module parentModule) {
         for (decl : moduleRenaming.module.typeDeclarations) {
             for (var i=0; i<decl.types.length; i++) {
                 var oldType = decl.types.get(i)
@@ -627,7 +625,7 @@ class RunTransformation extends EsterelProcessor {
                     }
                 } 
                 else {
-                    parentModule.esterelDeclarations += createTypeDecl(oldType)
+                    parentModule.declarations += createTypeDecl(oldType)
                     i-- // because the old type was removed of "decl.types"
                 }
             }
@@ -640,9 +638,9 @@ class RunTransformation extends EsterelProcessor {
      * Checks if a given type exists in the parent module
      * 
      * @param name The name of the type
-     * @param parentEsterelModule The parent module
+     * @param parentModule The parent module
      */
-    def checkIfTypeExistsByName(String name, EsterelModule parentModule) {
+    def checkIfTypeExistsByName(String name, Module parentModule) {
         for (decl : parentModule.typeDeclarations) {
             for (t : decl.types) {
                 if (t.name.equals(name)) {
@@ -657,9 +655,9 @@ class RunTransformation extends EsterelProcessor {
      * Transform all references from the old to the new functions or just copy functions to parent module
      * 
      * @param moduleRenaming ModuleRenaming of a run statement
-     * @param parentEsterelModule The parent EsterelModule where the functions will be copied to
+     * @param parentModule The parent Module where the functions will be copied to
      */
-    def transformFunctions(ModuleRenaming moduleRenaming, EsterelModule parentModule) {
+    def transformFunctions(ModuleRenaming moduleRenaming, Module parentModule) {
         for (decl : moduleRenaming.module.functionDeclarations) {
             for (var i=0; i<decl.functions.length; i++) {
                 var oldFunction = decl.functions.get(i)
@@ -678,7 +676,7 @@ class RunTransformation extends EsterelProcessor {
                     
                 }
                 else {
-                    parentModule.esterelDeclarations += createFunctionDecl(oldFunction)
+                    parentModule.declarations += createFunctionDecl(oldFunction)
                     i-- // because the old function was removed of "decl.functions"
                 }
             }
@@ -690,9 +688,9 @@ class RunTransformation extends EsterelProcessor {
      * Checks if a given function exists in the parent module
      * 
      * @param oldFunction The old function
-     * @param parentEsterelModule The parent module
+     * @param parentModule The parent module
      */
-    def checkIfFunctionExists(Function oldFunction, EsterelModule parentModule) {
+    def checkIfFunctionExists(Function oldFunction, Module parentModule) {
         for (decl : parentModule.functionDeclarations) {
             for (f : decl.functions) {
                 if (f.name.equals(oldFunction.name)) {

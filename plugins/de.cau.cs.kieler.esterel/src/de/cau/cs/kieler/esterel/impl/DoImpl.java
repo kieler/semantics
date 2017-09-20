@@ -4,7 +4,7 @@ package de.cau.cs.kieler.esterel.impl;
 
 import de.cau.cs.kieler.annotations.Annotation;
 
-import de.cau.cs.kieler.esterel.DelayExpr;
+import de.cau.cs.kieler.esterel.DelayExpression;
 import de.cau.cs.kieler.esterel.Do;
 import de.cau.cs.kieler.esterel.EsterelPackage;
 
@@ -75,7 +75,7 @@ public class DoImpl extends StatementImpl implements Do {
      * @generated
      * @ordered
      */
-    protected DelayExpr watching;
+    protected DelayExpression watching;
 
     /**
      * The cached value of the '{@link #getDelay() <em>Delay</em>}' containment reference.
@@ -85,7 +85,7 @@ public class DoImpl extends StatementImpl implements Do {
      * @generated
      * @ordered
      */
-    protected DelayExpr delay;
+    protected DelayExpression delay;
 
     /**
      * The cached value of the '{@link #getWatchingStatements() <em>Watching Statements</em>}' containment reference list.
@@ -145,7 +145,7 @@ public class DoImpl extends StatementImpl implements Do {
      * <!-- end-user-doc -->
      * @generated
      */
-    public DelayExpr getWatching() {
+    public DelayExpression getWatching() {
         return watching;
     }
 
@@ -154,8 +154,8 @@ public class DoImpl extends StatementImpl implements Do {
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetWatching(DelayExpr newWatching, NotificationChain msgs) {
-        DelayExpr oldWatching = watching;
+    public NotificationChain basicSetWatching(DelayExpression newWatching, NotificationChain msgs) {
+        DelayExpression oldWatching = watching;
         watching = newWatching;
         if (eNotificationRequired()) {
             ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.DO__WATCHING, oldWatching, newWatching);
@@ -169,7 +169,7 @@ public class DoImpl extends StatementImpl implements Do {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setWatching(DelayExpr newWatching) {
+    public void setWatching(DelayExpression newWatching) {
         if (newWatching != watching) {
             NotificationChain msgs = null;
             if (watching != null)
@@ -188,7 +188,7 @@ public class DoImpl extends StatementImpl implements Do {
      * <!-- end-user-doc -->
      * @generated
      */
-    public DelayExpr getDelay() {
+    public DelayExpression getDelay() {
         return delay;
     }
 
@@ -197,8 +197,8 @@ public class DoImpl extends StatementImpl implements Do {
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetDelay(DelayExpr newDelay, NotificationChain msgs) {
-        DelayExpr oldDelay = delay;
+    public NotificationChain basicSetDelay(DelayExpression newDelay, NotificationChain msgs) {
+        DelayExpression oldDelay = delay;
         delay = newDelay;
         if (eNotificationRequired()) {
             ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.DO__DELAY, oldDelay, newDelay);
@@ -212,7 +212,7 @@ public class DoImpl extends StatementImpl implements Do {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setDelay(DelayExpr newDelay) {
+    public void setDelay(DelayExpression newDelay) {
         if (newDelay != delay) {
             NotificationChain msgs = null;
             if (delay != null)
@@ -300,10 +300,10 @@ public class DoImpl extends StatementImpl implements Do {
                 getWatchingAnnotations().addAll((Collection<? extends Annotation>)newValue);
                 return;
             case EsterelPackage.DO__WATCHING:
-                setWatching((DelayExpr)newValue);
+                setWatching((DelayExpression)newValue);
                 return;
             case EsterelPackage.DO__DELAY:
-                setDelay((DelayExpr)newValue);
+                setDelay((DelayExpression)newValue);
                 return;
             case EsterelPackage.DO__WATCHING_STATEMENTS:
                 getWatchingStatements().clear();
@@ -328,10 +328,10 @@ public class DoImpl extends StatementImpl implements Do {
                 getWatchingAnnotations().clear();
                 return;
             case EsterelPackage.DO__WATCHING:
-                setWatching((DelayExpr)null);
+                setWatching((DelayExpression)null);
                 return;
             case EsterelPackage.DO__DELAY:
-                setDelay((DelayExpr)null);
+                setDelay((DelayExpression)null);
                 return;
             case EsterelPackage.DO__WATCHING_STATEMENTS:
                 getWatchingStatements().clear();

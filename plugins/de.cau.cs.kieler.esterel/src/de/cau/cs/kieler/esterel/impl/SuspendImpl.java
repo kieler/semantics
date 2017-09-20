@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.esterel.impl;
 
-import de.cau.cs.kieler.esterel.DelayExpr;
+import de.cau.cs.kieler.esterel.DelayExpression;
 import de.cau.cs.kieler.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.Suspend;
 
@@ -81,7 +81,7 @@ public class SuspendImpl extends StatementImpl implements Suspend {
      * @generated
      * @ordered
      */
-    protected DelayExpr delay;
+    protected DelayExpression delay;
 
     /**
      * <!-- begin-user-doc -->
@@ -140,7 +140,7 @@ public class SuspendImpl extends StatementImpl implements Suspend {
      * <!-- end-user-doc -->
      * @generated
      */
-    public DelayExpr getDelay() {
+    public DelayExpression getDelay() {
         return delay;
     }
 
@@ -149,8 +149,8 @@ public class SuspendImpl extends StatementImpl implements Suspend {
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetDelay(DelayExpr newDelay, NotificationChain msgs) {
-        DelayExpr oldDelay = delay;
+    public NotificationChain basicSetDelay(DelayExpression newDelay, NotificationChain msgs) {
+        DelayExpression oldDelay = delay;
         delay = newDelay;
         if (eNotificationRequired()) {
             ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.SUSPEND__DELAY, oldDelay, newDelay);
@@ -164,7 +164,7 @@ public class SuspendImpl extends StatementImpl implements Suspend {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setDelay(DelayExpr newDelay) {
+    public void setDelay(DelayExpression newDelay) {
         if (newDelay != delay) {
             NotificationChain msgs = null;
             if (delay != null)
@@ -229,7 +229,7 @@ public class SuspendImpl extends StatementImpl implements Suspend {
                 setWeak((Boolean)newValue);
                 return;
             case EsterelPackage.SUSPEND__DELAY:
-                setDelay((DelayExpr)newValue);
+                setDelay((DelayExpression)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -250,7 +250,7 @@ public class SuspendImpl extends StatementImpl implements Suspend {
                 setWeak(WEAK_EDEFAULT);
                 return;
             case EsterelPackage.SUSPEND__DELAY:
-                setDelay((DelayExpr)null);
+                setDelay((DelayExpression)null);
                 return;
         }
         super.eUnset(featureID);

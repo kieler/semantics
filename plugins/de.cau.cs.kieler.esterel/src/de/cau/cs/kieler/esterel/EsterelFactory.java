@@ -31,15 +31,6 @@ public interface EsterelFactory extends EFactory {
     EsterelProgram createEsterelProgram();
 
     /**
-     * Returns a new object of class '<em>Module</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Module</em>'.
-     * @generated
-     */
-    EsterelModule createEsterelModule();
-
-    /**
      * Returns a new object of class '<em>Type Identifier</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -65,15 +56,6 @@ public interface EsterelFactory extends EFactory {
      * @generated
      */
     TypeDefinition createTypeDefinition();
-
-    /**
-     * Returns a new object of class '<em>Constant Multi Declaration</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Constant Multi Declaration</em>'.
-     * @generated
-     */
-    ConstantMultiDeclaration createConstantMultiDeclaration();
 
     /**
      * Returns a new object of class '<em>Constant Declaration</em>'.
@@ -589,13 +571,13 @@ public interface EsterelFactory extends EFactory {
     Do createDo();
 
     /**
-     * Returns a new object of class '<em>Delay Expr</em>'.
+     * Returns a new object of class '<em>Delay Expression</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Delay Expr</em>'.
+     * @return a new object of class '<em>Delay Expression</em>'.
      * @generated
      */
-    DelayExpr createDelayExpr();
+    DelayExpression createDelayExpression();
 
     /**
      * Returns a new object of class '<em>Trap Signal</em>'.
@@ -634,22 +616,22 @@ public interface EsterelFactory extends EFactory {
     ConstantExpression createConstantExpression();
 
     /**
-     * Returns a new object of class '<em>Trap Reference Expr</em>'.
+     * Returns a new object of class '<em>Trap Reference</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Trap Reference Expr</em>'.
+     * @return a new object of class '<em>Trap Reference</em>'.
      * @generated
      */
-    TrapReferenceExpr createTrapReferenceExpr();
+    TrapReference createTrapReference();
 
     /**
-     * Returns a new object of class '<em>Signal Reference Expr</em>'.
+     * Returns a new object of class '<em>Signal Reference</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Signal Reference Expr</em>'.
+     * @return a new object of class '<em>Signal Reference</em>'.
      * @generated
      */
-    SignalReferenceExpr createSignalReferenceExpr();
+    SignalReference createSignalReference();
 
     /**
      * Returns a new object of class '<em>Tick Reference</em>'.

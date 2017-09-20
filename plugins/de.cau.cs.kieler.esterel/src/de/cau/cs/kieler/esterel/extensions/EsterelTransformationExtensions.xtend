@@ -20,9 +20,9 @@ import de.cau.cs.kieler.annotations.IntAnnotation
 import de.cau.cs.kieler.esterel.Abort
 import de.cau.cs.kieler.esterel.Await
 import de.cau.cs.kieler.esterel.Constant
-import de.cau.cs.kieler.esterel.ConstantMultiDeclaration
+import de.cau.cs.kieler.esterel.ConstantDeclaration
 import de.cau.cs.kieler.esterel.ConstantRenaming
-import de.cau.cs.kieler.esterel.DelayExpr
+import de.cau.cs.kieler.esterel.DelayExpression
 import de.cau.cs.kieler.esterel.Do
 import de.cau.cs.kieler.esterel.ElsIf
 import de.cau.cs.kieler.esterel.Emit
@@ -45,7 +45,7 @@ import de.cau.cs.kieler.esterel.Sensor
 import de.cau.cs.kieler.esterel.Set
 import de.cau.cs.kieler.esterel.Signal
 import de.cau.cs.kieler.esterel.SignalDeclaration
-import de.cau.cs.kieler.esterel.SignalReferenceExpr
+import de.cau.cs.kieler.esterel.SignalReference
 import de.cau.cs.kieler.esterel.SignalRenaming
 import de.cau.cs.kieler.esterel.Sustain
 import de.cau.cs.kieler.esterel.Task
@@ -96,6 +96,9 @@ class EsterelTransformationExtensions {
 
     @Inject
     extension KExpressionsValuedObjectExtensions
+    
+    @Inject
+    extension EsterelExtensions
 
     var static labelSuffix = 0;
     
@@ -951,7 +954,7 @@ class EsterelTransformationExtensions {
      * @param delay The delay expression for the abort statement
      * @return The newly created Esterel Abort
      */
-    def createAbort(DelayExpr delay) {
+    def createAbort(DelayExpression delay) {
         EsterelFactory::eINSTANCE.createAbort => [
             it.delay = EcoreUtil.copy(delay)
         ]
@@ -1302,6 +1305,11 @@ class EsterelTransformationExtensions {
             (statement as IfTest).elseif?.forEach [ elsif | checkGotos(elsif.statements)]
             checkGotos((statement as IfTest).elseStatements)
         }
+        else if (statement instanceof EsterelParallel) {
+            (statement as EsterelParallel).threads.forEach [ t |
+                checkGotos(t.statements)
+            ]
+        }
         else if (statement instanceof StatementContainer) {
             
             checkGotos((statement as StatementContainer).statements)
@@ -1325,11 +1333,6 @@ class EsterelTransformationExtensions {
             else if (statement instanceof Conditional) {
                 checkGotos((statement as Conditional).getElse()?.statements)
             }
-        }
-        else if (statement instanceof EsterelParallel) {
-            (statement as EsterelParallel).threads.forEach [ t |
-                checkGotos(t.statements)
-            ]
         }
         else if (statement instanceof Parallel) {
             (statement as Parallel).threads.forEach [ t |
@@ -1431,7 +1434,7 @@ class EsterelTransformationExtensions {
                             removeValueTestOperator(parent)
                         }
                         else if ( (parent as OperatorExpression).operator == OperatorType.PRE) { 
-                            if (ref instanceof SignalReferenceExpr){
+                            if (ref instanceof SignalReference){
                                 var list = ref.eContainer.eGet(ref.eContainingFeature) as EList<Expression>
                                 var pos = list.indexOf(ref)
                                 list.set(pos, createValuedObjectReference(newSignals.get(signal).s))
@@ -1453,7 +1456,7 @@ class EsterelTransformationExtensions {
                 }
             }
             // if "ref" is still a SignalReferenceExpr it must be transformed into a ValuedObjectReference
-            if (ref.eContainer != null && ref instanceof SignalReferenceExpr && ref.valuedObject != null) {
+            if (ref.eContainer != null && ref instanceof SignalReference && ref.valuedObject != null) {
                 if(ref.eContainer.eGet(ref.eContainingFeature) instanceof EList) {
                     var list = ref.eContainer.eGet(ref.eContainingFeature) as EList<Expression>
                     var pos = list.indexOf(ref)
@@ -1530,12 +1533,12 @@ class EsterelTransformationExtensions {
         else if (o instanceof Variable) {
             (o as Variable).initialValue = expr
         }
-        else if (o instanceof DelayExpr) {
+        else if (o instanceof DelayExpression) {
             if (signalExpr) {
-                (o as DelayExpr).expression = expr                
+                (o as DelayExpression).expression = expr                
             }
             else {
-                (o as DelayExpr).expression = expr
+                (o as DelayExpression).expression = expr
             }
         }
         else if (o instanceof Conditional) {
@@ -1681,11 +1684,9 @@ class EsterelTransformationExtensions {
      * @param type The TypeIdentifier
      */
     def createConstantDecl(Constant constant, TypeIdentifier type) {
-        EsterelFactory::eINSTANCE.createConstantMultiDeclaration => [
-            it.constantDecalrations.add(EsterelFactory::eINSTANCE.createConstantDeclaration => [
-                it.type = EcoreUtil.copy(type)
-                it.constants.add(constant)
-            ])
+        EsterelFactory::eINSTANCE.createConstantDeclaration => [
+            valuedObjects += constant
+            constant.type = EcoreUtil.copy(type)
         ]
     }
     
@@ -1731,33 +1732,33 @@ class EsterelTransformationExtensions {
     def transformRenamingsAfterModuleCopy(Run run) {
         // SIGNALS
         var signalList = new LinkedList<Signal>
-        for (d : run.module.module.esterelDeclarations.filter(SignalDeclaration)) {
+        for (d : run.module.module.declarations.filter(SignalDeclaration)) {
             signalList.addAll(d.eAllContents.filter(Signal).toList)
         }
         
         // CONSTANTS
         var constantList = new LinkedList<Constant>
-        for (d : run.module.module.esterelDeclarations.filter(ConstantMultiDeclaration)) {
+        for (d : run.module.module.declarations.filter(ConstantDeclaration)) {
             constantList.addAll(d.eAllContents.filter(Constant).toList)
         }
         // FUNCTIONS
         var functionList = new LinkedList<Function>
-        for (d : run.module.module.esterelDeclarations.filter(FunctionDeclaration)) {
+        for (d : run.module.module.declarations.filter(FunctionDeclaration)) {
             functionList.addAll(d.eAllContents.filter(Function).toList)
         }
         // PROCEDURE
         var procedureList = new LinkedList<Procedure>
-        for (d : run.module.module.esterelDeclarations.filter(ProcedureDeclaration)) {
+        for (d : run.module.module.declarations.filter(ProcedureDeclaration)) {
             procedureList.addAll(d.eAllContents.filter(Procedure).toList)
         }
         // TYPES
         var typeList = new LinkedList<TypeDefinition>
-        for (d : run.module.module.esterelDeclarations.filter(TypeDeclaration)) {
+        for (d : run.module.module.declarations.filter(TypeDeclaration)) {
             typeList.addAll(d.eAllContents.filter(TypeDefinition).toList)
         }
         // TASKS
         var taskList = new LinkedList<Task>
-        for (d : run.module.module.esterelDeclarations.filter(TaskDeclaration)) {
+        for (d : run.module.module.declarations.filter(TaskDeclaration)) {
             taskList.addAll(d.eAllContents.filter(Task).toList)
         }
         // update references of the renamings
@@ -1854,10 +1855,10 @@ class EsterelTransformationExtensions {
      * @param object The object containing an arbitrary number of SignalReferenceExpr
      */
     def changeSignalRefExprToVORef(EObject obj) {
-        var references = obj.eAllContents.filter(SignalReferenceExpr).toList
+        var references = obj.eAllContents.filter(SignalReference).toList
         for (ref : references) {
             // if "ref" is still a SignalReferenceExpr it must be transformed into a ValuedObjectReference
-            if (ref.eContainer != null && ref instanceof SignalReferenceExpr && ref.valuedObject != null) {
+            if (ref.eContainer != null && ref instanceof SignalReference && ref.valuedObject != null) {
                 if(ref.eContainer.eGet(ref.eContainingFeature) instanceof EList) {
                     var list = ref.eContainer.eGet(ref.eContainingFeature) as EList<Expression>
                     var pos = list.indexOf(ref)

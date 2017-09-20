@@ -2,11 +2,11 @@
  */
 package de.cau.cs.kieler.esterel.impl;
 
-import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
-
 import de.cau.cs.kieler.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.TypeDeclaration;
 import de.cau.cs.kieler.esterel.TypeDefinition;
+
+import de.cau.cs.kieler.kexpressions.impl.DeclarationImpl;
 
 import java.util.Collection;
 
@@ -33,7 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class TypeDeclarationImpl extends AnnotatableImpl implements TypeDeclaration {
+public class TypeDeclarationImpl extends DeclarationImpl implements TypeDeclaration {
     /**
      * The cached value of the '{@link #getTypes() <em>Types</em>}' containment reference list.
      * <!-- begin-user-doc -->

@@ -33,12 +33,12 @@ public interface Await extends EsterelStatement, StatementContainer {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Delay</em>' containment reference.
-     * @see #setDelay(DelayExpr)
+     * @see #setDelay(DelayExpression)
      * @see de.cau.cs.kieler.esterel.EsterelPackage#getAwait_Delay()
      * @model containment="true"
      * @generated
      */
-    DelayExpr getDelay();
+    DelayExpression getDelay();
 
     /**
      * Sets the value of the '{@link de.cau.cs.kieler.esterel.Await#getDelay <em>Delay</em>}' containment reference.
@@ -48,7 +48,7 @@ public interface Await extends EsterelStatement, StatementContainer {
      * @see #getDelay()
      * @generated
      */
-    void setDelay(DelayExpr value);
+    void setDelay(DelayExpression value);
 
     /**
      * Returns the value of the '<em><b>Cases</b></em>' containment reference list.
