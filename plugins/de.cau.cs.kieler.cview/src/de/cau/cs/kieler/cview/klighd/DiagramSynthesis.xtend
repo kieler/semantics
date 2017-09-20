@@ -78,8 +78,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
     public static int lastThread = 0
 
-    //extension KRenderingFactory = KRenderingFactory.eINSTANCE
-
+    // extension KRenderingFactory = KRenderingFactory.eINSTANCE
     public static final String SELECTION_CONNECTION_COLOR = "Red"
 
     public static final int DEFAULT_EXPANDED_VALUE = 2;
@@ -96,7 +95,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     public static final SynthesisOption FLATTEN_HIERARCHY = SynthesisOption.createCheckOption(
         "Flatten Hierarchy", false);
 
-    public static final SynthesisOption HIERARCHY_HANDLING = SynthesisOption.createCheckOption("Hierarchy Routing", false);
+    public static final SynthesisOption HIERARCHY_HANDLING = SynthesisOption.createCheckOption("Hierarchy Routing",
+        false);
 
     public static final SynthesisOption SKIP_FILE_CONTENT = SynthesisOption.createCheckOption("Skip File Content",
         false);
@@ -210,23 +210,21 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         val root = model.createNode().associateWith(model);
         if (HIERARCHY_HANDLING.booleanValue) {
             root.addLayoutParam(CoreOptions::HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN)
-            //root.addLayoutParam(LayeredOptions::CROSSING_MINIMIZATION_STRATEGY, LayeredMetaDataProvider.CROSSING_MINIMIZATION_HIERARCHICAL_SWEEPINESS)
-            //root.addLayoutParam(LayeredOptions.CROSSING_MINIMIZATION_STRATEGY, CrossingMinimizationStrategy.INTERACTIVE);
+            // root.addLayoutParam(LayeredOptions::CROSSING_MINIMIZATION_STRATEGY, LayeredMetaDataProvider.CROSSING_MINIMIZATION_HIERARCHICAL_SWEEPINESS)
+            // root.addLayoutParam(LayeredOptions.CROSSING_MINIMIZATION_STRATEGY, CrossingMinimizationStrategy.INTERACTIVE);
             root.addLayoutParam(LayeredOptions.CROSSING_MINIMIZATION_GREEDY_SWITCH_TYPE, GreedySwitchType.OFF);
-            
-            //root.addLayoutParam(CoreOptions::HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN)
+
+        // root.addLayoutParam(CoreOptions::HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN)
         }
         val depth = 1;
 
         printlnConsole("INFO: - Apply filter")
-        if (FilterDialog.valueTextFilter.nullOrEmpty || FilterDialog.valueCheckDisabled) {
+        if (FilterDialog.valueTextFilter.nullOrEmpty || FilterDialog.valueCheckDisabled || ANONYMIZE.booleanValue) {
+            // DO NOT apply filter if (1) empty filter text, (2) disabled, (3) anonymized is on 
             CViewPlugin.setTitle(AbstractKLighDController.CVIEW_KLIGHD_TITLE)
-            // Apply the filter here
-            if (!ANONYMIZE.booleanValue) {
-                // Only apply filter iff not anonymized
-                model.applyFilter
-            }
+            model.removeFilter
         } else {
+            model.applyFilter
             CViewPlugin.setTitle(AbstractKLighDController.CVIEW_KLIGHD_TITLE_FILTERED)
         }
 
@@ -296,7 +294,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 printlnConsole("INFO: No components")
             }
         }
-        
+
         return root;
     }
 
@@ -342,7 +340,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     }
 
     // ---------------------------------------------------------------------
-
     def KNode transformItemGeneral(
         Component item,
         int depth,
@@ -430,7 +427,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     }
 
     // ---------------------------------------------------------------------
-
     def KNode transformItemDir(Component item, int depth) {
         val childNodeOuter = item.createNode().associateWith(item);
 
@@ -499,7 +495,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     }
 
     // ---------------------------------------------------------------------
-
     def boolean sameParent(Component component1, Component component2) {
         if ((component1 != null) && (component2 != null)) {
             return component1.parent == component2.parent
@@ -510,7 +505,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     }
 
     // ---------------------------------------------------------------------
-
     def void addConnection(Connection connection, boolean interLevelConnections, KColor color) {
         if (interLevelConnections) {
             addSimpleConnection(connection, connection.src.node, connection.dst.node, false, color, true);
@@ -525,7 +519,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     }
 
     // ---------------------------------------------------------------------
-
     def void addPortbasedConnection(Connection connection, Component src, Component dst, KColor color) {
         var srcComponent = src
         var dstComponent = dst
@@ -633,7 +626,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     }
 
     // ---------------------------------------------------------------------
-
     def KPort addPort(KNode node, Connection connection, Object mapping, float x, float y, int size, PortSide side,
         KColor color) {
         val returnPort = node.createPort(mapping);
@@ -658,7 +650,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     }
 
     // ---------------------------------------------------------------------
-
     // Remember connected connected components
     def void addConnectedParents(Component component) {
         if (component.parent != null) {
@@ -681,7 +672,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     }
 
     // ---------------------------------------------------------------------
-
     def setGrayStyle(KEdge edge) {
         edge.line => [
             foreground = Colors.GRAY_50
@@ -689,7 +679,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     }
 
     // ---------------------------------------------------------------------
-
     def KSpline addConnectionSpline(KEdge edge) {
         edge.addSpline => [
             lineWidth = 4;
@@ -697,7 +686,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     }
 
     // ---------------------------------------------------------------------
-
     def setDashedStyle(KEdge edge) {
         edge.line => [
             lineStyle = LineStyle::CUSTOM;
@@ -707,7 +695,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     }
 
     // ---------------------------------------------------------------------
-
     def KLabel addLabel(KEdge edge, String text) {
         val label = edge.createLabel;
         label.configureCenterEdgeLabel(text); // Add text
@@ -748,6 +735,12 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     def void applyFilter(CViewModel model) {
         for (component : model.components) {
             component.filtered = !component.allowedByFilterComponent
+        }
+    }
+
+    def void removeFilter(CViewModel model) {
+        for (component : model.components) {
+            component.filtered = false
         }
     }
 
@@ -976,17 +969,19 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         //
         // Determine if the component is visible in the CView view
         def boolean visibleInView(Component component) {
+            val returnValue = component.visible || (SHOW_HIDDEN.booleanValue && !component.filtered)
 //            return true;
             // If it is visible anyway or if the user has choosen to show hidden
-            return component.visible || (SHOW_HIDDEN.booleanValue && !component.filtered)
+            return returnValue
         }
+
         def boolean visibleInView(Connection connection) {
 //            return true;
+            val returnValue = connection.visible || (SHOW_HIDDEN.booleanValue && !connection.filtered)
             // If it is visible anyway or if the user has choosen to show hidden
-            return connection.visible || (SHOW_HIDDEN.booleanValue && !connection.filtered)
+            return returnValue
         }
-        
-        
+
         //
         // The hash helps to detect if any reparsing option of any language is
         // toggled (or more).
