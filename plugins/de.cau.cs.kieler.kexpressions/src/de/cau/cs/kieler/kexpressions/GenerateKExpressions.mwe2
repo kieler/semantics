@@ -87,7 +87,7 @@ Workflow {
 			fragment = outline.QuickOutlineFragment {}
 
 			// java-based API for content assistance 
-			fragment = contentAssist.JavaBasedContentAssistFragment {}
+			fragment = contentAssist.ContentAssistFragment {}
 			
 			// antlr parser generator tailored for content assist 
 			fragment = org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment { 
@@ -96,17 +96,12 @@ Workflow {
 					backtrack = true
 				}
 			}
-
-			// fragment = builder.BuilderIntegrationFragment {}
-
-			// project wizard (optional) 
-			// fragment = projectWizard.SimpleProjectWizardFragment {
-			//	generatorProjectName = "${projectName}.generator" 
-			//	modelFileExtension = file.extensions
-			// }
 			
 			// quickfix API 
-			fragment = quickfix.QuickfixProviderFragment {}			
+			fragment = quickfix.QuickfixProviderFragment {}
+						
+			// rename refactoring
+            fragment = refactoring.RefactorElementNameFragment {}       
 		}
 	}
 }
