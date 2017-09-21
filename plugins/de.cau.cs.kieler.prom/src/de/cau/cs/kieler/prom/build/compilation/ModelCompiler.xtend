@@ -21,9 +21,11 @@ import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
 import java.util.List
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
+import org.eclipse.core.resources.IResource
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.JavaCore
 import org.eclipse.xtend.lib.annotations.Accessors
 
@@ -52,6 +54,11 @@ abstract class ModelCompiler extends Configurable {
      * The folder structure of models is retained in this directory, except for a starting java source directory.
      */
     public val outputFolder = new ConfigurableAttribute("outputFolder", "kieler-gen")
+    /**
+     * The file extension of generated output.
+     * Note that both '.c' and 'c' will be taken as '.c'
+     */
+    public val outputFileExtension = new ConfigurableAttribute("outputFileExtension", ".c")
     
     /**
      * Optional progess monitor to show the compilation state to the end user.
@@ -85,6 +92,11 @@ abstract class ModelCompiler extends Configurable {
     abstract public def void updateDependencies(DependencyGraph dependencies, List<IFile> files, ResourceSet resourceSet)
     
     /**
+     * The file handle of the model that is compiled.
+     */
+    protected var IFile compiledFile
+    
+    /**
      * Constructor
      */
     new() {
@@ -94,11 +106,17 @@ abstract class ModelCompiler extends Configurable {
     /**
      * Compiles the model.
      * 
-     * @param file The file handle of the model. It is only used for path operations
+     * @param file The file handle of the model.
+     *        It is only used for path operations and to add error/warning markers.
+     *        The output will be saved in the project of this file.
      * @param model The model
      * @return the compilation result
      */
     public def ModelCompilationResult compile(IFile file, EObject model) {
+        // Remember the file that should be compiled
+        compiledFile = file
+        
+        // Check if the file is filtered by some regex
         val whiteListRegex = whitelist.stringValue
         val blackListRegex = blacklist.stringValue
         if(!whiteListRegex.isNullOrEmpty && !file.location.toOSString.matches(".*("+whiteListRegex+").*")) {
@@ -109,7 +127,7 @@ abstract class ModelCompiler extends Configurable {
         }
         
         // Create folder for output
-        createOutputFolder(file.project, outputFolder.stringValue)
+        createOutputFolder()
         
         // Compile the model
         return doCompile(file, model)
@@ -153,11 +171,9 @@ abstract class ModelCompiler extends Configurable {
     
     /**
      * Creates the folder in which compilation results will be saved.
-     * 
-     * @param project The project
-     * @param folderPath The project relative path of the output folder to be created
      */
-    private static def void createOutputFolder(IProject project, String folderPath) {
+    protected def void createOutputFolder() {
+        val folderPath = outputFolder.stringValue
         if(!folderPath.isNullOrEmpty()) {
             val folder = project.getFolder(folderPath)
             if(!folder.exists) {
@@ -169,5 +185,50 @@ abstract class ModelCompiler extends Configurable {
                 }                
             }
         }
+    }
+    
+    /**
+     * Returns the file that will be created as compilation result.
+     * 
+     * @return the target file handle
+     */
+    protected def IFile getTargetFile() {
+        val targetBaseFolder = project.getFolder(outputFolder.stringValue)
+        // Remove leading java source folder if any
+        var sourceWithoutJavaFolders = compiledFile
+        if(project instanceof IJavaProject) {
+            val firstFolderOfSource = compiledFile.projectRelativePath.segment(0)
+            if(PromPlugin.isJavaSourceDirectory(project as IJavaProject, firstFolderOfSource)) {
+                val projectRelativePathWithoutSourceFolder = compiledFile.projectRelativePath.removeFirstSegments(1)
+                sourceWithoutJavaFolders = project.getFile(projectRelativePathWithoutSourceFolder)
+            }
+        }
+        // Compute target resource inside target directory but with same folder structure as before
+        var targetPath = sourceWithoutJavaFolders.projectRelativePath.removeFileExtension.addFileExtension(targetFileExtension)
+        val targetFile = targetBaseFolder.getFile(targetPath)
+        return targetFile
+    }
+    
+    /**
+     * Returns the file extension for the created file.
+     * 
+     * @return the file extension
+     */
+    protected def String getTargetFileExtension() {
+        // If the fileExtension starts with a letter, add a dot as prefix
+        var String fileExt = outputFileExtension.stringValue
+        if(fileExt.matches("^\\w.*")) {
+            fileExt = "."+fileExt
+        }
+        return fileExt
+    }
+    
+    /**
+     * Returns the project of the compiled file
+     * 
+     * @return the project
+     */
+    protected def IProject getProject() {
+        return compiledFile?.project
     }
 }

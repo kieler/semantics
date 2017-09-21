@@ -204,59 +204,6 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
     }
     
     /**
-     * Computes the fully qualified target path for a project relative file path.
-     * The target path will be in the target directory and in this directory
-     * has the same directory structure as the original file in the project.
-     * 
-     * @return the computed path
-     */
-    public static def IResource computeTargetResource(String projectRelativePath,
-        String targetDirectory, String targetFileExtension, IProject project) {
-        
-        var IPath projectRelativeTargetPath;
-        val projectRelativePathObject = new Path(projectRelativePath)
-        // Only append file extension if the input path does have one
-        val newFileExtension = if(projectRelativePathObject.fileExtension.isNullOrEmpty)
-                                   ""
-                               else
-                                   targetFileExtension?.replace(".", "")
-        if(targetDirectory.isNullOrEmpty()) {
-            // Compute path such that the target file will be in the same file as the source file.
-            projectRelativeTargetPath = projectRelativePathObject.removeFileExtension
-        } else {
-            // Compute path in the target directory
-            // such that the directory structure of the original file is retained.
-            var IPath projectRelativeRelevantPath = new Path(projectRelativePath)
-            // The source directories of a java project are not part of the relevant target path
-            // because output files will be saved to a java source folder as well.
-            // So we remove the first segment of the path if it is a java source directory.
-            val firstSegment = new Path(projectRelativePath).segment(0);
-            if(!firstSegment.isNullOrEmpty() && project.hasNature(JavaCore.NATURE_ID)) {
-                val javaProject = JavaCore.create(project)
-                if(isJavaSourceDirectory(javaProject, firstSegment)) {
-                    projectRelativeRelevantPath = projectRelativeRelevantPath.removeFirstSegments(1)
-                }
-            }
-            
-            // Remove extension
-            val projectRelativeRelevantPathWithoutExtension = projectRelativeRelevantPath.removeFileExtension        
-         
-            // Compute target path
-            projectRelativeTargetPath = new Path(targetDirectory).append(projectRelativeRelevantPathWithoutExtension)
-        }
-        // Add file extension
-        if(!newFileExtension.isNullOrEmpty) {
-           projectRelativeTargetPath = projectRelativeTargetPath.addFileExtension(newFileExtension)
-        }
-        // Create resource handle in project
-        if(projectRelativeTargetPath.fileExtension != null) {
-            return project.getFile(projectRelativeTargetPath)    
-        } else {
-            return project.getFolder(projectRelativeTargetPath)
-        }
-    }
-    
-    /**
      * Flag that is infered from the target language and determines
      * if the target is a single transformation for code generation (e.g. "s.java")
      * or a complex compile chain (e.g. "*T_ABORTWTO, T_EXIT").
@@ -483,7 +430,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
                 checkDependencies()
             } 
 
-            // Compile via KiCo
+            // Compile using the registered model compilers
             for(file : files) {
                 // Compile, generate simulation code, fetch wrapper code annotations
                 if(!monitor.isCanceled) {
@@ -582,7 +529,6 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
         this.updateConfigurableAttributes(buildConfig.attributes)
         
         // Create model compilers
-//            buildConfig.createModelCompilers
         modelCompilers = buildConfig.createModelCompilers
         for(modelCompiler : modelCompilers) {
             modelCompiler.monitor = monitor
@@ -619,7 +565,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      * @return true if it is a model file, false otherwise.
      */
     private static def boolean isModelFile(IFile file) {
-        return #["sctx", "strl"].contains(file.fileExtension.toLowerCase)
+        return #["sctx", "strl"].contains(file.fileExtension?.toLowerCase)
     }
     
     /**
@@ -629,7 +575,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      * @return true if it is a template file, false otherwise.
      */
     private static def boolean isTemplateFile(IFile file) {
-        return #["ftl"].contains(file.fileExtension.toLowerCase)
+        return #["ftl"].contains(file.fileExtension?.toLowerCase)
     }
     
     /**
@@ -639,7 +585,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      * @return true if the file contains a build configuration, false otherwise
      */
     private static def boolean isConfigurationFile(IFile file) {
-        return #["kibuild"].contains(file.fileExtension.toLowerCase)
+        return #["kibuild"].contains(file.fileExtension?.toLowerCase)
     }
     
     /**
@@ -670,26 +616,6 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
                 showBuildProblems(result.problems)
             }
         }
-    }
-    
-    /**
-     * Checks if the directory in the java project is configured as source directory.
-     * 
-     * @param javaProject A project with the java nature
-     * @param directory The directory
-     * @return true if the directory is a source directory. false otherwise.
-     */
-    private static def boolean isJavaSourceDirectory(IJavaProject javaProject, String directory) {
-        val classPathEntries = javaProject.getRawClasspath();
-        for(entry : classPathEntries) {
-            if(entry.entryKind == IClasspathEntry.CPE_SOURCE) {
-                val sourceFolderName = new Path(entry.path.toOSString).lastSegment
-                if(sourceFolderName.equals(directory)) {
-                    return true
-                }
-            } 
-        }
-        return false
     }
     
     /**

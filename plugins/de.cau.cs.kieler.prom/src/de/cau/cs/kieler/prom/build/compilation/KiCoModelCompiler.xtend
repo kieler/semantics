@@ -14,13 +14,11 @@ package de.cau.cs.kieler.prom.build.compilation
 
 import com.google.common.io.Files
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.kicool.compilation.observer.AbstractProcessorNotification
-import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
-import de.cau.cs.kieler.kicool.compilation.observer.ProcessorStart
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.environments.MessageObjectReferences
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
@@ -28,9 +26,7 @@ import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.build.BuildProblem
 import de.cau.cs.kieler.prom.build.DependencyGraph
-import de.cau.cs.kieler.prom.build.KielerModelingBuilder
 import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
-import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.prom.templates.TemplateManager
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.iterators.StateIterator
@@ -40,10 +36,8 @@ import java.io.PrintWriter
 import java.io.StringWriter
 import java.util.Collections
 import java.util.List
-import java.util.Observable
-import java.util.Observer
 import org.eclipse.core.resources.IFile
-import org.eclipse.core.resources.IProject
+import org.eclipse.core.runtime.Assert
 import org.eclipse.core.runtime.IPath
 import org.eclipse.core.runtime.Path
 import org.eclipse.emf.common.util.URI
@@ -51,7 +45,6 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.StringInputStream
-import org.eclipse.core.runtime.Assert
 
 /**
  * Model compiler that uses KiCo.
@@ -66,21 +59,10 @@ class KiCoModelCompiler extends ModelCompiler {
     public val outputTemplate = new ConfigurableAttribute("outputTemplate", "")
     
     /**
-     * The file extension of generated output.
-     * Note that both '.c' and 'c' will be taken as '.c'
-     */
-    public val outputFileExtension = new ConfigurableAttribute("outputFileExtension", ".c")
-    
-    /**
      * The KiCo compilation system to compile the model.
      * This can either be an id of a system, or a file path to a kico file. 
      */
     public val compilationSystem = new ConfigurableAttribute("compilationSystem", "de.cau.cs.kieler.sccharts.netlist.simple")
-    
-    /**
-     * The file handle of model that is compiled.
-     */
-    private var IFile compiledFile
     
     /**
      * {@inheritDoc}
@@ -89,19 +71,19 @@ class KiCoModelCompiler extends ModelCompiler {
         Assert.isNotNull(file)
         Assert.isNotNull(model)
         
-        // Save reference of the file that should be compiled
-        compiledFile = file
         // Prepare result
         val result = new ModelCompilationResult()
         // Compile with kico
         val context = compileWithKiCo(model)
+        
         // Check all intermediate results for errors and warnings
         var boolean noIssues = true
         var Processor<?,?> lastResult
         var takenTransitionArraySize = 0
         for (iResult : context.processorInstancesSequence) {
             // For diagram highlighting:
-            // In case the taken transition signaling was used, the created array has to be part of the simulation interface
+            // In case the taken transition signaling was used,
+            // the created array has to be added to the simulation interface as additional variable
             if(takenTransitionArraySize <= 0) {
                 takenTransitionArraySize = iResult.environment.getProperty(TakenTransitionSignaling.ARRAY_SIZE)
             }
@@ -131,17 +113,8 @@ class KiCoModelCompiler extends ModelCompiler {
         
         // Save result if no errors and warnings
         if(noIssues) {
-            // If fileExtension starts with a letter, add a dot as prefix
-            var String fileExt = outputFileExtension.stringValue
-            if(fileExt.matches("^\\w.*")) {
-                fileExt = "."+fileExt
-            }
             // Flush compilation result to target
-            val targetResource = KielerModelingBuilder.computeTargetResource(file.projectRelativePath.toOSString,
-                                                                   outputFolder.stringValue,
-                                                                   fileExt,
-                                                                   file.project)
-            val targetFile = targetResource as IFile
+            val targetFile = getTargetFile
             saveCompilationResult(resultModel, targetFile)
             
             // Add generated file to result
@@ -172,7 +145,7 @@ class KiCoModelCompiler extends ModelCompiler {
                     simulationTargetFolder = new Path(outputFolder.stringValue).append("sim").append("code")
                 }
                 val fileNameWithoutExtension = Files.getNameWithoutExtension(file.name)
-                val simulationFileName = "Sim_" + fileNameWithoutExtension + fileExt
+                val simulationFileName = "Sim_" + fileNameWithoutExtension + targetFileExtension
                 val simulationTarget = simulationTargetFolder.append(simulationFileName)
                 // Set model specific variables of simulation template processor
                 simulationProcessor.target.value = simulationTarget.toOSString
@@ -215,13 +188,6 @@ class KiCoModelCompiler extends ModelCompiler {
                 }
             }
         }
-    }
-    
-    /**
-     * Returns the project of the compiled file
-     */
-    private def IProject getProject() {
-        return compiledFile?.project
     }
     
     /**
@@ -272,12 +238,12 @@ class KiCoModelCompiler extends ModelCompiler {
     private def CompilationContext compileWithKiCo(EObject model) {
         // Get the compilation system
         val compilationSystemFile = project?.getFile(compilationSystem.stringValue)
-        var de.cau.cs.kieler.kicool.System system
+        var System system
         if(compilationSystemFile != null && compilationSystemFile.exists) {
             // Load from file
             val systemModel = ModelImporter.load(compilationSystemFile)
-            if(systemModel != null && systemModel instanceof de.cau.cs.kieler.kicool.System) {
-                system = systemModel as de.cau.cs.kieler.kicool.System
+            if(systemModel != null && systemModel instanceof System) {
+                system = systemModel as System
             } else {
                 throw new Exception("Compilation system could not be loaded from resource '"+compilationSystemFile+"'")
             }

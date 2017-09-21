@@ -30,6 +30,7 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.emf.ecore.EObject
 
 import static de.cau.cs.kieler.simulation.FileExtensions.*
+import java.io.File
 
 /**
  * @author aas
@@ -180,11 +181,18 @@ class SimulationUtil {
     }
     
     private static def boolean isExecutableFile(IFile file) {
-        if(file.fileExtension == null) {
-            return true
-        } else {
-            return #["", "exe", "jar"].contains(file.fileExtension)
-        }
+        val jFile = new File(file.location.toOSString)
+        try {
+            return jFile.canExecute
+        } catch(SecurityException e) {
+            // The access to the file was denied, thus it cannot be executed.
+            return false    
+        } 
+//        if(file.fileExtension == null) {
+//            return true
+//        } else {
+//            return #["", "exe", "jar"].contains(file.fileExtension)
+//        }
     }
     
     private static def boolean isTraceFile(IFile file) {

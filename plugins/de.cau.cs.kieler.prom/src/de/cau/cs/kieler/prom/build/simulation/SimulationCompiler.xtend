@@ -21,6 +21,7 @@ import de.cau.cs.kieler.prom.build.FileGenerationResult
 import de.cau.cs.kieler.prom.build.KielerModelingBuilder
 import de.cau.cs.kieler.prom.configurable.Configurable
 import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
+import de.cau.cs.kieler.prom.configurable.ResourceSubstitution
 import de.cau.cs.kieler.prom.console.PromConsole
 import java.io.File
 import java.io.InputStreamReader
@@ -34,48 +35,153 @@ import org.eclipse.core.runtime.Assert
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Path
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.prom.configurable.Substitution
 
 /**
+ * Compiles generated code to an executable for use in the simulation.
+ * The simulation communicates via JSON, thus a JSON library is typically required 
+ * and must be linked with the main file for simulation.
+ * 
  * @author aas
  *
  */
 abstract class SimulationCompiler extends Configurable {
     
+    /**
+     * The listeners that are notified before an old executable is deleted to be replaced with a new one. 
+     */
     private static val listeners = <SimulationCompilerListener> newArrayList
     
+    /**
+     * The command that is executed to compile the simulation code.
+     */
     public val command = new ConfigurableAttribute("command")
+    /**
+     * The output folder in which the simulation should be saved.
+     */
     public val outputFolder = new ConfigurableAttribute("outputFolder", "kieler-gen/sim/bin")
+    /**
+     * A library folder required for the simulation that must be created if it does not exist yet. 
+     */
     public val libFolder = new ConfigurableAttribute("libFolder", "kieler-gen/sim/lib")
+    /**
+     * The maximum allowed compilation time in seconds.
+     * If the compilation takes longer than this, the process is terminated and an exception is thrown. 
+     */
     public val timeout = new ConfigurableAttribute("timeout", 10)
     
+    /**
+     * Placeholder for the file to be compiled.
+     */
+    private val fileSubstitution = new ResourceSubstitution("file") {
+        override getValue() {
+            return file
+        }
+    }
+    /**
+     * Placeholder for the file to be created.
+     */
+    private val execFileSubstitution = new ResourceSubstitution("executable") {
+        override getValue() {
+            return executableFile
+        }
+    }
+    /**
+     * Placeholder for the output folder.
+     */
+    private val outputFolderSubstitution = new ResourceSubstitution("outputFolder") {
+        override getValue() {
+            return project.getFolder(outputFolder.stringValue)
+        }
+    }
+    /**
+     * Placeholder for the library folder.
+     */
+    private val libFolderSubstitution = new ResourceSubstitution("libFolder") {
+        override getValue() {
+            return project.getFolder(libFolder.stringValue)
+        }
+    }
+    /**
+     * A list of all placeholders
+     */
+    protected val substitutions = #[fileSubstitution, execFileSubstitution, outputFolderSubstitution, libFolderSubstitution]
+    
+    /**
+     * The result of the compilation.
+     */
     @Accessors(PUBLIC_GETTER)
     protected FileGenerationResult result
+    /**
+     * Optional monitor to show the progress of the compilation.
+     */
     @Accessors(PUBLIC_SETTER)
     protected var IProgressMonitor monitor
     
+    /**
+     * The file to be compiled.
+     */
     protected var IFile file
+    /**
+     * The output file that is created.
+     */
     protected var IFile executableFile
     
+    /**
+     * Returns the file extensions of compatible files that can be compiled.
+     * 
+     * @return the file extensions of compatible files.
+     */
     abstract public def String[] getSupportedFileExtensions()
     
-    new() {
-        super()
-    }
+    /**
+     * Returns the origin (a URI using the platform protocol of eclipse) for the library to be created.
+     * If null or an empty string is returned, then the lib folder will not be initialized.
+     * 
+     * @return the origin of the lib folder, e.g., "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/cJSON"
+     */
+    abstract protected def String getLibFolderOrigin()
     
-    new(IProgressMonitor monitor) {
-        this.monitor = monitor
-    }
-    
+    /** 
+     * Adds a listener
+     * 
+     * @param listener The listener
+     */
     public static def void addListener(SimulationCompilerListener listener) {
         if(!listeners.contains(listener)) {
             listeners.add(listener)    
         }
     }
     
+    /**
+     * Removes a listener
+     * @param listener The listener
+     */
     public static def void removeListener(SimulationCompilerListener listener) {
         listeners.remove(listener)
     }
     
+    /**
+     * Constructor
+     */
+    new() {
+        super()
+    }
+    
+    /**
+     * Constructor
+     * 
+     * @param monitor The monitor
+     */
+    new(IProgressMonitor monitor) {
+        this.monitor = monitor
+    }
+    
+    /**
+     * Compiles the given file
+     * 
+     * @param file The file to be compiled
+     */
     public def FileGenerationResult compile(IFile file) {
         this.file = file
         // Create libraries and files required for compilation
@@ -87,6 +193,30 @@ abstract class SimulationCompiler extends Configurable {
         return startProcess(processDirectory, processArguments)
     }
     
+    /**
+     * Configures this instance using the given configuration.
+     * 
+     * @param config The configuration
+     */
+    public def void initialize(de.cau.cs.kieler.prom.kibuild.SimulationCompiler config) {
+        this.updateConfigurableAttributes(config.attributes)
+    }
+    
+    /**
+     * Checks whether the file can be compiled using this instance.
+     * 
+     * @param file The file to be compiled
+     * @return true if the file can be compiled, false otherwise.
+     */
+    public def boolean canCompile(IFile file) {
+        return supportedFileExtensions.contains(file.fileExtension)
+    }
+    
+    /**
+     * Returns the executable file to be created
+     * 
+     * @param the executable to be created
+     */
     protected def IFile getExecutableFile() {
         val isWindows = System.getProperty("os.name").toLowerCase.contains("win")
         val executableName = Files.getNameWithoutExtension(file.name) + if(isWindows) ".exe" else ""
@@ -94,15 +224,28 @@ abstract class SimulationCompiler extends Configurable {
         executableFile = project.getFile(executablePath)
     }
     
+    /**
+     * Returns the working directory of the compilation process.
+     * 
+     * @return the working directory of the compilation process.
+     */
     protected def File getProcessDirectory() {
         return project.location.toFile
     }
     
+    /**
+     * Returns the single arguments for the compilation process.
+     * 
+     * @return the single arguments for the compilation process.
+     */
     protected def Iterable<String> getProcessArguments() {
-        val commandArguments = splitStringOnWhitespace(commandWithoutPlaceholders)
-        return commandArguments
+        val commandWithoutPlaceholders = Substitution.performSubstitutions(command.stringValue, substitutions)
+        return splitStringOnWhitespace(commandWithoutPlaceholders)
     }
     
+    /**
+     * Prepares the compilation.
+     */
     protected def void initializeCompilation() {
         Assert.isNotNull(command.stringValue)
         Assert.isNotNull(outputFolder.stringValue)
@@ -128,20 +271,43 @@ abstract class SimulationCompiler extends Configurable {
             val outputFolderResource = project.getFolder(outputFolder.stringValue)
             PromPlugin.createResource(outputFolderResource)
         }
+        
+        // Create lib folder
+        createLibrary(project)
     }
     
-    public def void initialize(de.cau.cs.kieler.prom.kibuild.SimulationCompiler config) {
-        this.updateConfigurableAttributes(config.attributes)
+    /**
+     * Initializes the lib folder by copying some origin
+     * @param project the project to copy the files into
+     */
+    protected def void createLibrary(IProject project) {
+        val libFolderOrigin = getLibFolderOrigin
+        if(!libFolderOrigin.isNullOrEmpty) {
+            val libPath = new Path(libFolder.stringValue)
+            val libFolder = project.getFolder(libPath)
+            if(!libFolder.exists) {
+                PromPlugin.initializeFolder(project, libPath.toOSString, libFolderOrigin)
+                libFolder.parent.refreshLocal(1, null)
+            }
+        }
     }
-    
-    public def boolean canCompile(IFile file) {
-        return supportedFileExtensions.contains(file.fileExtension)
-    }
-    
+        
+    /**
+     * Returns the project of the file to be compiled.
+     * 
+     * @return the project of the file to be compiled.
+     */
     protected def IProject getProject() {
         return file.project
     }
     
+    /**
+     * Starts the process in the given directory with the given arguments.
+     * 
+     * @param directory The working directory for the process
+     * @param arguments The arguments for the process
+     * @return The result of the compilation
+     */
     protected def FileGenerationResult startProcess(File directory, String... arguments) {
         result = new FileGenerationResult
         val pBuilder = new ProcessBuilder(arguments)
@@ -157,7 +323,14 @@ abstract class SimulationCompiler extends Configurable {
                                      + "in directory '" + pBuilder.directory + "')\n\n"
                               + "Please check the KIELER Console output.")
         }
-        
+        // Print output of process to eclipse console
+        if(p.inputStream.available > 0) {
+            PromConsole.print("Simulation compilation output for '" + file.name + "'")
+            PromConsole.print("(command:"+arguments.toList+", in directory:'"+directory.path+"')")
+            
+            PromConsole.copy(p.inputStream)
+            PromConsole.print("\n\n")
+        }
         // Check that there was no error
         if(exception == null && p.exitValue != 0) {
             exception = new Exception("Simulation compilation had issues: " + p.exitValue + "\n"
@@ -165,32 +338,16 @@ abstract class SimulationCompiler extends Configurable {
                               + "in directory '" + pBuilder.directory + "')\n",
                               new Exception(CharStreams.toString(new InputStreamReader(p.inputStream, Charsets.UTF_8))))
         }
-        if(p.inputStream.available > 0) {
-            // Print output of process to eclipse console
-            PromConsole.print("Simulation compilation output for '" + file.name + "':")
-            PromConsole.copy(p.inputStream)
-            PromConsole.print("\n\n")
-        }
-
         if(exception != null) {
+            // Create build problem for the exception
             val problem = BuildProblem.createError(file, exception)
             result.addProblem(problem)
         } else {
+            // Add the created file to the result
             result.addCreatedFile(executableFile)
             executableFile.refreshLocal(1, null)
         }
         return result
-    }
-    
-    protected def String getCommandWithoutPlaceholders() {
-        return command.stringValue
-            .replacePlaceholder("file_name", file.location.toOSString)
-            .replacePlaceholder("file_path", file.projectRelativePath.toOSString)
-            .replacePlaceholder("file_loc", file.location.toOSString)
-            .replacePlaceholder("executable_name", executableFile.name)
-            .replacePlaceholder("executable_path", executableFile.projectRelativePath.toOSString)
-            .replacePlaceholder("executable_loc", executableFile.location.toOSString)
-            .replacePlaceholder("outputFolder", executableFile.parent.projectRelativePath.toOSString, false)
     }
     
     /**
@@ -198,7 +355,7 @@ abstract class SimulationCompiler extends Configurable {
      * Surrounding double quotes are removed.
      * 
      * @param str The string to be splitted
-     * @return List<String> containing slices of the input string.
+     * @return the slices of the input string.
      */
     protected def List<String> splitStringOnWhitespace(String str) {
         // Code from
@@ -210,21 +367,5 @@ abstract class SimulationCompiler extends Configurable {
             list.add(m.group(1).replace("\"", ""))
         }
         return list
-    }
-    
-    protected def String replacePlaceholder(String text, String placeholder, String value) {
-        if(value.contains(' ')) {
-            return text.replacePlaceholder(placeholder, value, true)
-        } else {
-            return text.replacePlaceholder(placeholder, value, false)    
-        }
-    }
-    
-    protected def String replacePlaceholder(String text, String placeholder, String value, boolean quoted) {
-        var String replacement = value
-        if(quoted) {
-            replacement = '"'+replacement+'"'
-        }
-        return text.replace("${"+placeholder+"}", replacement)    
     }
 }

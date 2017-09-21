@@ -41,6 +41,7 @@ import org.eclipse.core.runtime.Platform
 import org.eclipse.core.runtime.QualifiedName
 import org.eclipse.core.variables.IStringVariableManager
 import org.eclipse.core.variables.VariablesPlugin
+import org.eclipse.jdt.core.IClasspathEntry
 import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.JavaCore
 import org.eclipse.jface.preference.IPreferenceStore
@@ -296,6 +297,26 @@ class PromPlugin implements BundleActivator  {
             }
         }
         return findings
+    }
+    
+    /**
+     * Checks if the directory in the java project is configured as source directory.
+     * 
+     * @param javaProject A project with the java nature
+     * @param directory The directory
+     * @return true if the directory is a source directory. false otherwise.
+     */
+    public static def boolean isJavaSourceDirectory(IJavaProject javaProject, String directory) {
+        val classPathEntries = javaProject.getRawClasspath();
+        for(entry : classPathEntries) {
+            if(entry.entryKind == IClasspathEntry.CPE_SOURCE) {
+                val sourceFolderName = new Path(entry.path.toOSString).lastSegment
+                if(sourceFolderName.equals(directory)) {
+                    return true
+                }
+            } 
+        }
+        return false
     }
     
     /**

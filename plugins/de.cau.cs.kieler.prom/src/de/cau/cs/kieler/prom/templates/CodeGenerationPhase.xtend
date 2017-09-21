@@ -101,6 +101,6 @@ class CodeGenerationPhase {
      * @return true if the snippet definition for the annotation should be inserted as part of this phase.
      */
     public def boolean isApplicable(MacroCallData data){
-        return data.phases.contains(name)
+        return data.phases.contains(this)
     }
 }

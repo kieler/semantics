@@ -55,6 +55,7 @@ class CompilationProgressObserver implements Observer {
      */
     new(IProgressMonitor monitor, IFile compiledFile) {
         this.monitor = monitor
+        this.compiledFile = compiledFile
     }
     
     /**
@@ -64,6 +65,7 @@ class CompilationProgressObserver implements Observer {
         val context = o as CompilationContext
         if(context == null
            || monitor == null
+           || compiledFile == null
            || !(arg instanceof AbstractProcessorNotification)) {
             return
         }

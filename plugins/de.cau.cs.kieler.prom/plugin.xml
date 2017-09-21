@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension-point id="de.cau.cs.kieler.prom.environmentInitializer" name="Environment Initializer" schema="schema/de.cau.cs.kieler.prom.environmentInitializer.exsd"/>
+   <extension-point id="de.cau.cs.kieler.prom.environmentInitializer" name="Environment Initializer" schema="schema/environmentInitializer.exsd"/>
    <extension-point id="modelAnalyzer" name="Model Analyzer" schema="schema/modelAnalyzer.exsd"/>
    <extension-point id="modelCompiler" name="ModelCompiler" schema="schema/modelCompiler.exsd"/>
    <extension-point id="simulationCompiler" name="SimulationCompiler" schema="schema/simulationCompiler.exsd"/>
@@ -91,18 +91,18 @@
    <extension
          point="de.cau.cs.kieler.prom.modelCompiler">
       <modelCompiler
-            class="de.cau.cs.kieler.prom.build.KiCoModelCompiler"
+            class="de.cau.cs.kieler.prom.build.compilation.KiCoModelCompiler"
             name="kico">
       </modelCompiler>
    </extension>
    <extension
          point="de.cau.cs.kieler.prom.simulationCompiler">
       <simulationCompiler
-            class="de.cau.cs.kieler.prom.build.CSimulationCompiler"
+            class="de.cau.cs.kieler.prom.build.simulation.CSimulationCompiler"
             name="c">
       </simulationCompiler>
       <simulationCompiler
-            class="de.cau.cs.kieler.prom.build.JavaSimulationCompiler"
+            class="de.cau.cs.kieler.prom.build.simulation.JavaSimulationCompiler"
             name="java">
       </simulationCompiler>
    </extension>

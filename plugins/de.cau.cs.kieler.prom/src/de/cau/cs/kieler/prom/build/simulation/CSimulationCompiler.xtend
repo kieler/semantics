@@ -12,56 +12,54 @@
  */
 package de.cau.cs.kieler.prom.build.simulation
 
-import de.cau.cs.kieler.prom.PromPlugin
-import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.IProgressMonitor
-import org.eclipse.core.runtime.Path
 
 /**
+ * Compiles C code for the simulation.
+ * 
  * @author aas
  *
  */
 class CSimulationCompiler extends SimulationCompiler {
     
-    private static val DEFAULT_COMMAND = "gcc -std=c99 -Werror=int-conversion -o \"./${outputFolder}/${executable_name}\""
+    /**
+     * The default command to compile C code using the gcc.
+     */
+    private static val DEFAULT_COMMAND = "gcc -std=c99 -Werror=int-conversion -o \"./${outputFolder}/${executable_name}\" \"${file_path}\" "
     
+    /**
+     * Constructor
+     */
     new() {
         command.value = DEFAULT_COMMAND
     }
     
+    /**
+     * Constructor
+     * 
+     * @param monitor The monitor
+     */
     new(IProgressMonitor monitor) {
         super(monitor)
     }
     
-    override initializeCompilation() {
-        super.initializeCompilation 
-        // Copy cJSON.c and cJSON.h to output directory of simulation
-        createCJsonLibrary(project)
-    }
-    
-    override getProcessArguments() {
-        // Example command to compile simulation code: "gcc -std=c99 -o SimulationCode SimulationCode.c"
-        val commandArguments = super.processArguments
-        return commandArguments + #[file.projectRelativePath.toOSString]
-    }
-    
+    /**
+     * {@inheritDoc}
+     */
     override getSupportedFileExtensions() {
         return #["c"]
     }
     
     /**
-     * Copies the cJSON.c and cJSON.h files from the plugin to the directory.
-     * @param project the project to copy the files into
+     * {@inheritDoc}
      */
-    private def void createCJsonLibrary(IProject project) {
-        val libPath = new Path(libFolder.stringValue)
-        val libFolder = project.getFolder(libPath)
-        if(!libFolder.exists) {
-            PromPlugin.initializeFolder(project, libPath.toOSString, "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/cJSON")
-            libFolder.parent.refreshLocal(1, null)
-        }
+    override getLibFolderOrigin() {
+        return "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/cJSON"
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override toString() {
         return "C Simulation compiler"
     }
