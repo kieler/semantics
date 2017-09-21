@@ -47,8 +47,6 @@
     <module>de.cau.cs.kieler.kicool.ui</module>
     <module>de.cau.cs.kieler.kico.server.ui</module>
     <module>de.cau.cs.kieler.kico.server</module>
-    <module>de.cau.cs.kieler.kitt.klighd</module>
-    <module>de.cau.cs.kieler.kitt</module>
     <module>de.cau.cs.kieler.klighd.server.ui</module>
     <module>de.cau.cs.kieler.klighd.server</module>
     <module>de.cau.cs.kieler.kivis</module>
