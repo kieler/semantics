@@ -28,7 +28,6 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kexpressions.OperatorType
 import java.util.HashMap
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import java.util.ArrayList
@@ -49,6 +48,7 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.railsl.railSL.ParallelStatement
 import de.cau.cs.kieler.railsl.railSL.TrackStatement
 import de.cau.cs.kieler.railsl.railSL.PointStatement
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 
 /**
  * Transforms a RailSL model to an SCChart.
@@ -230,6 +230,145 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
         chart.declarations.add(crossingDecl)
         valObjects.put("crossing", crossing);
 
+        // C O N S T A N T S
+        
+        // track name constants
+//        for (var i = 0; i < NUM_OF_SEGMENTS; i++) {
+//            val trackConstantDecl = createIntDeclaration
+//            trackConstantDecl.const = true
+//            val name = RailSLExtensions::constants.get(i)
+//            val valObject = createValuedObject(name)
+//            valObject.initialValue = createIntValue(i)
+//            trackConstantDecl.attach(valObject)
+//            
+//            chart.declarations.add(trackConstantDecl)
+//            valObjects.put(name, valObject)
+//        }
+        var i = 0
+        for (segment: RailSLExtensions::constants) {
+            val trackConstantDecl = createIntDeclaration
+            trackConstantDecl.const = true
+            val valObject = createValuedObject(segment)
+            valObject.initialValue = createIntValue(i)
+            trackConstantDecl.attach(valObject)
+            
+            chart.declarations.add(trackConstantDecl)
+            valObjects.put(segment, valObject)
+            i++
+        }
+        // speed constants
+        val stopDecl = createIntDeclaration
+        stopDecl.const = true
+        val stopValObject = createValuedObject("stop")
+        stopValObject.initialValue = createIntValue(0)
+        stopDecl.attach(stopValObject)
+        
+        chart.declarations.add(stopDecl)
+        valObjects.put("stop", stopValObject)
+        
+        val slowDecl = createIntDeclaration
+        slowDecl.const = true
+        val slowValObject = createValuedObject("slow")
+        slowValObject.initialValue = createIntValue(45)
+        slowDecl.attach(slowValObject)
+        
+        chart.declarations.add(slowDecl)
+        valObjects.put("slow", slowValObject)
+        
+        val fullDecl = createIntDeclaration
+        fullDecl.const = true
+        val fullValObject = createValuedObject("full")
+        fullValObject.initialValue = createIntValue(120)
+        fullDecl.attach(fullValObject)
+        
+        chart.declarations.add(fullDecl)
+        valObjects.put("full", fullValObject)
+        
+        // signal settings
+        val redDecl = createIntDeclaration
+        redDecl.const = true
+        val redValObject = createValuedObject("red")
+        redValObject.initialValue = createIntValue(1)
+        redDecl.attach(redValObject)
+        
+        chart.declarations.add(redDecl)
+        valObjects.put("red", redValObject)
+        
+        val yellowDecl = createIntDeclaration
+        yellowDecl.const = true
+        val yellowValObject = createValuedObject("yellow")
+        yellowValObject.initialValue = createIntValue(2)
+        yellowDecl.attach(yellowValObject)
+        
+        chart.declarations.add(yellowDecl)
+        valObjects.put("yellow", yellowValObject)
+        
+        val greenDecl = createIntDeclaration
+        greenDecl.const = true
+        val greenValObject = createValuedObject("green")
+        greenValObject.initialValue = createIntValue(4)
+        greenDecl.attach(greenValObject)
+        
+        chart.declarations.add(greenDecl)
+        valObjects.put("green", greenValObject)
+        
+        // Branch / Straight
+        val branchDecl = createIntDeclaration
+        branchDecl.const = true
+        val branchValObject = createValuedObject("branch")
+        branchValObject.initialValue = createIntValue(1)
+        branchDecl.attach(branchValObject)
+        
+        chart.declarations.add(branchDecl)
+        valObjects.put("branch", branchValObject)
+        
+        val straightDecl = createIntDeclaration
+        straightDecl.const = true
+        val straightValObject = createValuedObject("straight")
+        straightValObject.initialValue = createIntValue(0)
+        straightDecl.attach(straightValObject)
+        
+        chart.declarations.add(straightDecl)
+        valObjects.put("straight", straightValObject)
+        
+        // On / Off
+        val onDecl = createIntDeclaration
+        onDecl.const = true
+        val onValObject = createValuedObject("on")
+        onValObject.initialValue = createIntValue(1)
+        onDecl.attach(onValObject)
+        
+        chart.declarations.add(onDecl)
+        valObjects.put("on", onValObject)
+        
+        val offDecl = createIntDeclaration
+        offDecl.const = true
+        val offValObject = createValuedObject("off")
+        offValObject.initialValue = createIntValue(0)
+        offDecl.attach(offValObject)
+        
+        chart.declarations.add(offDecl)
+        valObjects.put("off", offValObject)
+
+        // first / second
+        val firstContactDecl = createIntDeclaration
+        firstContactDecl.const = true
+        val firstContactValObject = createValuedObject("firstContact")
+        firstContactValObject.initialValue = createIntValue(0)
+        firstContactDecl.attach(firstContactValObject)
+        
+        chart.declarations.add(firstContactDecl)
+        valObjects.put("firstContact", firstContactValObject)
+        
+        val secondContactDecl = createIntDeclaration
+        secondContactDecl.const = true
+        val secondContactValObject = createValuedObject("secondContact")
+        secondContactValObject.initialValue = createIntValue(1)
+        secondContactDecl.attach(secondContactValObject)
+        
+        chart.declarations.add(secondContactDecl)
+        valObjects.put("secondContact", secondContactValObject)
+    
         // A C T U A L   D I A G R A M   S Y N T H E S I S
         nextStateID = 0
         block.compile(chart)
@@ -256,9 +395,7 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
             var state = statement.compile(region)
             if (currentState != region.initialState) {
                 // Add tick boundary
-                var connectorState = region.createState("tick_" + getStateID)
-                var termTransition = currentState.createTransitionTo(connectorState)
-                connectorState.createTransitionTo(state)
+                var termTransition = currentState.createTransitionTo(state)
                 termTransition.setTypeTermination
             } else {
                 // Add immediate transition from initial state to next state
@@ -269,20 +406,21 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
             currentState = state
         }
 
-        // Create the last state of the region and connect it to
-        // the previous state with a normal termination transition 
-        var state = region.createState("tick_" + stateID)
-        var term = currentState.createTransitionTo(state)
-        term.setTypeTermination
-        currentState = state
-
         if (block.end.equals("End.")) {
             // Create final state
             val done = region.createFinalState("done")
-            currentState.createTransitionTo(done)
+            currentState.createImmediateTransitionTo(done).setTypeTermination
         } else {
             // Loop back to initial state
-            currentState.createTransitionTo(region.initialState)
+            // TODO this should work, but currently doesn't
+//            var loopbackTransition = currentState.createTransitionTo(region.initialState)
+//            loopbackTransition.setTypeTermination
+//            loopbackTransition.delay = DelayType.DELAYED
+
+            // Temporary fix
+            val helperState = region.createState("");
+            currentState.createTransitionTo(helperState).setTypeTermination
+            helperState.createTransitionTo(region.initialState).setNotImmediate
         }
     }
 
@@ -353,16 +491,10 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
 
         // create trigger expressions for each statement
         for (line : cStatement.lines) {
-            val contactIndex = if(line.contact.equals("first")) 0 else 1
-            val trackIndex = line.segName.parseTrackSegment
-
-            expressions.add(i, createOperatorExpression(OperatorType.EQ) => [
-                subExpressions += contacts.reference => [
-                    indices += createIntValue(trackIndex)
-                    indices += createIntValue(contactIndex)
-                ]
-                subExpressions += createBoolValue(true)
-            ])
+            expressions.add(contacts.reference => [
+                    indices += valObjects.get(line.segName).reference
+                    indices += valObjects.get(line.contact).reference
+                ])
             i++
         }
 
@@ -391,7 +523,6 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
         state.name = state.label
 
         val region = state.createControlflowRegion("Set_lights")
-        val setting = parseLightMode(lStatement)
         var currentState = region.createInitialState("init")
         var i = 0
 
@@ -403,7 +534,7 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
         for (light : lStatement.lights) {
             var nextState = region.createState("_S" + i)
             var transition = currentState.createImmediateTransitionTo(nextState)
-            transition.addEffect(lights.createAssignment(createIntValue(setting)) => [
+            transition.addEffect(lights.createAssignment(valObjects.get(lStatement.state).reference) => [
                 indices += createIntValue(light)
             ])
             currentState = nextState
@@ -422,7 +553,6 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
         state.label = "_" + getStateID() + "_SetPoint"
         state.name = state.label
         val region = state.createControlflowRegion("Set_points")
-        val direction = parsePointSetting(spStatement)
         var currentState = region.createInitialState("init")
         var i = 0
 
@@ -431,11 +561,11 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
 
         // Create a state for each segment to be set and connect them with immediate transitions
         // Each transition will trigger one row of the array to be set
-        for (segment : spStatement.points) {
+        for (point : spStatement.points) {
             var nextState = region.createState("_S" + i)
             var transition = currentState.createImmediateTransitionTo(nextState)
-            transition.addEffect(points.createAssignment(createIntValue(direction)) => [
-                indices += createIntValue(segment)
+            transition.addEffect(points.createAssignment(valObjects.get(spStatement.orientation).reference) => [
+                indices += createIntValue(point)
             ])
             currentState = nextState
             i++
@@ -454,7 +584,20 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
         state.name = state.label
         
         val region = state.createControlflowRegion("Set_tracks")
-        val speed = parseSpeed(stStatement)
+        
+        var speedString = ""
+        var signalString = ""
+        if (stStatement.mode.contains("full")) {
+            speedString = "full"
+            signalString = "green"
+        } else if (stStatement.mode.contains("slow")) {
+            speedString = "slow"
+            signalString = "yellow"
+        } else {
+            speedString = "stop"
+            signalString = "red"
+        }
+        
         val direction = parseDirection(stStatement)
         var currentState = region.createInitialState("init")
         var i = 0
@@ -468,34 +611,25 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
         for (segment : stStatement.segments) {
             var nextState = region.createState("_S" + i)
             var transition = currentState.createImmediateTransitionTo(nextState)
-
-            val trackIndex = segment.parseTrackSegment
-
-            val signalValue = if (speed == SPEED_FULL) {
-                    4 // green signal
-                } else if (speed == SPEED_SLOW) {
-                    2 // yellow signal
-                } else {
-                    1 // red signal
-                }
-
+            
+            println(segment)
             // Set the track speed and direction
-            transition.addEffect(tracks.createAssignment(createIntValue(speed)) => [
-                indices += createIntValue(trackIndex)
+            transition.addEffect(tracks.createAssignment(valObjects.get(speedString).reference) => [
+                indices += valObjects.get(segment).reference
                 indices += createIntValue(0)
             ])
             transition.addEffect(tracks.createAssignment(createIntValue(direction)) => [
-                indices += createIntValue(trackIndex)
+                indices += valObjects.get(segment).reference
                 indices += createIntValue(1)
             ])
 
             // Set the signals accordingly
-            transition.addEffect(signals.createAssignment(createIntValue(signalValue)) => [
-                indices += createIntValue(trackIndex)
+            transition.addEffect(signals.createAssignment(valObjects.get(signalString).reference) => [
+                indices += valObjects.get(segment).reference
                 indices += createIntValue(if(direction != 0) 1 else 0)
             ])
-            transition.addEffect(signals.createAssignment(createIntValue(1)) => [
-                indices += createIntValue(trackIndex)
+            transition.addEffect(signals.createAssignment(valObjects.get("red").reference) => [
+                indices += valObjects.get(segment).reference
                 indices += createIntValue(if(direction == 0) 1 else 0)
             ])
             currentState = nextState
@@ -514,7 +648,6 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
         state.name = state.label
         
         // Parse information from statement object 
-        val trackIndex = cwStatement.segName.parseTrackSegment
         val contactIndex = cwStatement.parseContactIndex
         val delay = (if(cwStatement.event.equals("Reach")) 1 else 2)
 
@@ -530,12 +663,9 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
         val contacts = valObjects.get("contacts")
 
         // Set the transition trigger to check for the contact 
-        transition.trigger = createOperatorExpression(OperatorType.EQ) => [
-            subExpressions += contacts.reference => [
-                indices += createIntValue(trackIndex)
-                indices += createIntValue(contactIndex)
-            ]
-            subExpressions += createBoolValue(true)
+        transition.trigger = contacts.reference => [
+            indices += valObjects.get(cwStatement.segName).reference
+            indices += valObjects.get(cwStatement.contact + "Contact").reference
         ]
     }
 
@@ -551,16 +681,14 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
         var region = state.createControlflowRegion("Wait_" + twStatement.time)
         var init = region.createInitialState("init")
         var done = region.createFinalState("done")
-        var transition = init.createImmediateTransitionTo(done)
+        var transition = init.createTransitionTo(done)
         transition.triggerDelay = twStatement.time
 
         // Fetch variable second from root SCChart
         val second = valObjects.get("second")
 
-        transition.trigger = createOperatorExpression(OperatorType.EQ) => [
-            subExpressions += second.reference
-            subExpressions += createBoolValue(true)
-        ]
+        transition.trigger = second.reference
+
     }
     
     /**

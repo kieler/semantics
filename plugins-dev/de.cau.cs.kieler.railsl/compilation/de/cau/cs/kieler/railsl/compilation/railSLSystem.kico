@@ -3,6 +3,7 @@ system de.cau.cs.kieler.railSL.railSLSystem
     label "RaiLSL"  
     
 de.cau.cs.kieler.railsl.railsl
+de.cau.cs.kieler.sccharts.processors.transformators.const
 [ label "SyncCharts"    
     de.cau.cs.kieler.sccharts.processors.transformators.signal
     de.cau.cs.kieler.sccharts.processors.transformators.countDelay

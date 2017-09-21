@@ -94,15 +94,6 @@ class Visualizer {
      */
     private val DataPool emptyPool = createEmptyPool()
 
-    /**
-     * All the track name constants
-     */
-    static val constants = #{"IC_JCT_0", "IC_LN_0", "IC_LN_1", "IC_LN_2", "IC_LN_3", "IC_LN_4", "IC_LN_5", "IC_ST_0",
-        "IC_ST_1", "IC_ST_2", "IC_ST_3", "IC_ST_4", "IO_LN_0", "IO_LN_1", "IO_LN_2", "KH_LN_0", "KH_LN_1", "KH_LN_2",
-        "KH_LN_3", "KH_LN_4", "KH_LN_5", "KH_LN_6", "KH_LN_7", "KH_LN_8", "KH_ST_0", "KH_ST_1", "KH_ST_2", "KH_ST_3",
-        "KH_ST_4", "KH_ST_5", "KH_ST_6", "KIO_LN_0", "KIO_LN_1", "OC_JCT_0", "OC_LN_0", "OC_LN_1", "OC_LN_2", "OC_LN_3",
-        "OC_LN_4", "OC_LN_5", "OC_ST_0", "OC_ST_1", "OC_ST_2", "OC_ST_3", "OC_ST_4", "OI_LN_0", "OI_LN_1", "OI_LN_2"}
-
     /*************************************************************************
      * C O N S T R U C T O R *************************************************
      *************************************************************************/
@@ -187,7 +178,7 @@ class Visualizer {
         pool.addModel(model)
 
         // Add tracks at speed 0
-        for (constant : constants) {
+        for (constant : RailSLExtensions::constants) {
             model.addVariable(new Variable(constant, 0))
             model.addVariable(new Variable("S0_" + constant, 4))
             model.addVariable(new Variable("S1_" + constant, 4))
