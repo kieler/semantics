@@ -26,6 +26,7 @@ import "http://kieler.cs.cau.de/annotations" as annotations
 System returns kicool::System:
     'system' id = QualifiedID 'version' version = INT 'label' label = EString
     ('input' inputClass = ID)?
+    ('set' startsets += KVPair)*
     (intermediates += IntermediateReference)*
     processors = ProcessorGroup
 ;

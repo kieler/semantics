@@ -121,13 +121,22 @@ public interface KiCoolPackage extends EPackage {
     int SYSTEM__INPUT_CLASS = 5;
 
     /**
+     * The feature id for the '<em><b>Startsets</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SYSTEM__STARTSETS = 6;
+
+    /**
      * The number of structural features of the '<em>System</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SYSTEM_FEATURE_COUNT = 6;
+    int SYSTEM_FEATURE_COUNT = 7;
 
     /**
      * The number of operations of the '<em>System</em>' class.
@@ -592,6 +601,17 @@ public interface KiCoolPackage extends EPackage {
     EAttribute getSystem_InputClass();
 
     /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kicool.System#getStartsets <em>Startsets</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Startsets</em>'.
+     * @see de.cau.cs.kieler.kicool.System#getStartsets()
+     * @see #getSystem()
+     * @generated
+     */
+    EReference getSystem_Startsets();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kicool.ProcessorEntry <em>Processor Entry</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -851,6 +871,14 @@ public interface KiCoolPackage extends EPackage {
          * @generated
          */
         EAttribute SYSTEM__INPUT_CLASS = eINSTANCE.getSystem_InputClass();
+
+        /**
+         * The meta object literal for the '<em><b>Startsets</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference SYSTEM__STARTSETS = eINSTANCE.getSystem_Startsets();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kicool.impl.ProcessorEntryImpl <em>Processor Entry</em>}' class.

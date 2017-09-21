@@ -22,6 +22,7 @@ import static extension de.cau.cs.kieler.kicool.compilation.internal.ContextPopu
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kicool.KiCoolFactory
 import de.cau.cs.kieler.kicool.ProcessorGroup
+import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
 
 /**
  * Class for preparing compilations programmatically through creating compilation contexts. 
@@ -44,6 +45,8 @@ class Compile {
             it.system = system
             it.originalModel = sourceModel
             it.populateContext
+            // configure start environment
+            EnvironmentPropertyHolder.processEnvironmentSetter(it.startEnvironment, system.startsets)
 //            RuntimeSystems.add(it.getSystem, it)
         ]
     }
