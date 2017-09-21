@@ -255,10 +255,7 @@
            system="system/de.cau.cs.kieler.esterel.scest.scl.netlist.kico">
      </TransformationSystem>
      <TransformationSystem
-           system="system/de.cau.cs.kieler.esterel.scl.kico">
-     </TransformationSystem>
-     <TransformationSystem
-           system="system/de.cau.cs.kieler.esterel.scl.netlist.kico">
+           system="system/de.cau.cs.kieler.esterel.scc.kico">
      </TransformationSystem>
   </extension>
   <extension

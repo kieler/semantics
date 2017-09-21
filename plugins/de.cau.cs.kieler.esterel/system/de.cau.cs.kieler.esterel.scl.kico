@@ -1,6 +1,0 @@
-system de.cau.cs.kieler.esterel.scl
-    version 1 
-    label "Esterel to SCL"
-   
-esterel.scest
-system de.cau.cs.kieler.esterel.scest.scl

@@ -21,7 +21,6 @@ import de.cau.cs.kieler.esterel.Block
 import de.cau.cs.kieler.esterel.Emit
 import de.cau.cs.kieler.esterel.EsterelParallel
 import de.cau.cs.kieler.esterel.EsterelProgram
-import de.cau.cs.kieler.esterel.EsterelThread
 import de.cau.cs.kieler.esterel.Exit
 import de.cau.cs.kieler.esterel.LocalSignalDeclaration
 import de.cau.cs.kieler.esterel.Loop
@@ -141,30 +140,26 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
         sclModule.name = module.name
 
         // Interface transformations
-//        if (module.interface != null) {
-//            if (!module.interface.intSensorDecls.nullOrEmpty) {
-//                throw new IllegalArgumentException("Cannot handle Esterel programs with sensors!")
-//            }
-//            if (!module.interface.intConstantDecls.nullOrEmpty) {
-//                throw new IllegalArgumentException("Cannot handle Esterel programs with constants!")
-//            }
-//            module.interface.intSignalDecls.forEach [ interfaceDecl |
-//                targetSclProgram.declarations += createDeclaration(ValueType.PURE) => [
-//                    it.trace(interfaceDecl)
-//                    for (sig : interfaceDecl.signals) {
-//                        input = interfaceDecl instanceof Input || interfaceDecl instanceof InputOutput
-//                        output = interfaceDecl instanceof Output || interfaceDecl instanceof InputOutput
-//                        if (sig.channelDescr != null) {
-//                            throw new IllegalArgumentException("Can only handle Esterel programs with pure signals!")
-//                        }
-//                        valuedObjects += createValuedObject(sig.name) => [
-//                            it.trace(sig)
-//                            signalVOMapping.put(sig, it)
-//                        ]
-//                    }
-//                ]
-//            ]
-//        }
+        if (module.signalDeclarations.size > module.declarations.size) {
+            throw new IllegalArgumentException("Can only handle Esterel programs with signal declarations!")
+        }
+        for (decl : module.signalDeclarations) {
+            sclModule.declarations += createVariableDeclaration(ValueType.PURE) => [
+                it.trace(decl)
+                input = decl.input
+                output = decl.output
+                for (sig : decl.signals) {
+                    if (sig.type !== ValueType.PURE) {
+                        throw new IllegalArgumentException("Can only handle Esterel programs with pure signals!")
+                    }
+                    valuedObjects += createValuedObject(sig.name) => [
+                        it.trace(sig)
+                        signalVOMapping.put(sig, it)
+                    ]
+                }
+            ]
+
+        }
 
         // Special Decl
         suspendDecl = createVariableDeclaration(ValueType.PURE) => [
@@ -321,9 +316,9 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
 
     def dispatch Scope translate(EsterelParallel parallel, Scope scope) {
         scope.statements += createParallel.trace(parallel) => [
-            for (esterelThread : parallel.threads.filter(EsterelThread)) {
-                threads += createThread.trace(parallel) => [
-                    esterelThread.translate(it)
+            for (esterelThread : parallel.threads) {
+                threads += createThread.trace(parallel) => [ t |
+                    esterelThread.statements.forEach[translate(t)]
                 ]
             }
         ]

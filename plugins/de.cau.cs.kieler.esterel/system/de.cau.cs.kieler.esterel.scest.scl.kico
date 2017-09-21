@@ -1,6 +1,6 @@
 system de.cau.cs.kieler.esterel.scest.scl
     version 1 
-    label "SCEst to SCL"
+    label "Esterel/SCEst to SCL"
     
 scest.initialization
 esterel.run

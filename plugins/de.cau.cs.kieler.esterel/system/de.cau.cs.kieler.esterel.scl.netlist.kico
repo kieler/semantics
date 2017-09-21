@@ -1,6 +1,0 @@
-system de.cau.cs.kieler.esterel.scl.netlist
-    version 1 
-    label "Esterel Netlist"
-    
-system de.cau.cs.kieler.esterel.scl
-system de.cau.cs.kieler.scl.netlist
