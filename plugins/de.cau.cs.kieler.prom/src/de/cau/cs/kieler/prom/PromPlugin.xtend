@@ -77,11 +77,6 @@ class PromPlugin implements BundleActivator  {
      */
     public static val ENVIRIONMENT_QUALIFIER = new QualifiedName(PromPlugin.PLUGIN_ID, "environment")
     
-    /**
-     * Qualifier used to set the main file of a project.
-     */
-    public static val MAIN_FILE_QUALIFIER = new QualifiedName(PromPlugin.PLUGIN_ID, "main.file")
-
     // Variable names
     public static val LAUNCHED_PROJECT_VARIABLE = "launched_project_loc"
 

@@ -1,14 +1,10 @@
 package de.cau.cs.kieler.prom.data
 
-import de.cau.cs.kieler.prom.launch.KiCoLaunchConfig
 import java.io.File
-import java.util.List
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.IPath
 import org.eclipse.core.runtime.Path
-import org.eclipse.debug.core.ILaunchConfiguration
-import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.xtend.lib.annotations.Accessors
 
 class FileData extends ConfigurationSerializable {
@@ -96,28 +92,6 @@ class FileData extends ConfigurationSerializable {
      */
     public def IFile getFile(IProject project) {
         return project.getFile(projectRelativePath)
-    }
-    
-    /**
-     * Loads all data objects from the given launch configuration.
-     * 
-     * @param configuration The launch configuration where the data should be loaded from
-     * @return list with the loaded compilation data objects.
-     */
-    static def List<FileData> loadAllFromConfiguration(ILaunchConfiguration configuration) {
-        return ConfigurationSerializable.loadAllFromConfiguration(configuration, KiCoLaunchConfig.ATTR_FILES,
-            FileData) as List<FileData>
-    }
-
-    /**
-     * Saves a list with data objects to the given launch configuration.
-     * All other file compilation data objects in the launch configuration are overwritten.
-     * 
-     * @param configuration The launch configuration where the data should be saved to
-     * @param datas The data objects to be saved
-     */
-    static def void saveAllToConfiguration(ILaunchConfigurationWorkingCopy configuration, List<FileData> datas) {
-        ConfigurationSerializable.saveAllToConfiguration(configuration, KiCoLaunchConfig.ATTR_FILES, datas)
     }
     
     /**

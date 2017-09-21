@@ -2,28 +2,6 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.debug.ui.launchConfigurationTypeImages">
-      <launchConfigurationTypeImage
-            configTypeID="de.cau.cs.kieler.prom.launch.kiCoLaunchConfig"
-            icon="icons/foerde-logo-16.png"
-            id="de.cau.cs.kieler.prom.launch.kiCoLaunchConfigImage">
-      </launchConfigurationTypeImage>
-   </extension>
-   <extension
-         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
-      <launchConfigurationTabGroup
-            class="de.cau.cs.kieler.prom.ui.launch.KiCoLaunchConfigTabGroup"
-            id="de.cau.cs.kieler.prom.ui.launch.kiCoLaunchConfigTabGroup"
-            type="de.cau.cs.kieler.prom.launch.kiCoLaunchConfig">
-         <launchMode
-               mode="run">
-         </launchMode>
-         <launchMode
-               mode="debug">
-         </launchMode>
-      </launchConfigurationTabGroup>
-   </extension>
-   <extension
          point="org.eclipse.ui.preferencePages">
       <page
             category="de.cau.cs.kieler.sccharts"

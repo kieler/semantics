@@ -17,7 +17,6 @@ import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.internal.Transformation
 import de.cau.cs.kieler.prom.IProjectHolder
 import de.cau.cs.kieler.prom.PromPlugin
-import de.cau.cs.kieler.prom.data.CommandData
 import de.cau.cs.kieler.prom.data.EnvironmentData
 import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 import java.util.ArrayList
@@ -35,19 +34,12 @@ import org.eclipse.debug.internal.ui.SWTFactory
 import org.eclipse.debug.ui.StringVariableSelectionDialog
 import org.eclipse.jface.util.LocalSelectionTransfer
 import org.eclipse.jface.viewers.ArrayContentProvider
-import org.eclipse.jface.viewers.CheckStateChangedEvent
-import org.eclipse.jface.viewers.CheckboxTableViewer
-import org.eclipse.jface.viewers.ColumnLabelProvider
 import org.eclipse.jface.viewers.ComboViewer
 import org.eclipse.jface.viewers.ContentViewer
-import org.eclipse.jface.viewers.ICellModifier
-import org.eclipse.jface.viewers.ICheckStateListener
-import org.eclipse.jface.viewers.ICheckStateProvider
 import org.eclipse.jface.viewers.LabelProvider
 import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.jface.viewers.TableViewerColumn
-import org.eclipse.jface.viewers.TextCellEditor
 import org.eclipse.swt.SWT
 import org.eclipse.swt.dnd.DND
 import org.eclipse.swt.dnd.DragSource
@@ -555,113 +547,6 @@ class UIUtil {
         })
 
         return combo
-    }
-
-    /**
-     * Creates a table viewer for command data objects optionally with or without checkboxes.
-     * 
-     * @param parent The parent composite
-     * @param checkboxes Flag to specify if the table should have checkboxes to enable / disable commands
-     * @return the created table viewer 
-     */
-    public static def CheckboxTableViewer createCommandTable(Composite parent) {
-        val table = new Table(parent, SWT.CHECK.bitwiseOr(SWT.BORDER).bitwiseOr(SWT.FULL_SELECTION))
-        table.setHeaderVisible(true);
-        table.setLinesVisible(true);
-        table.setLayoutData(new GridData(GridData.FILL_BOTH));
-
-        // Create viewer
-        val viewer = new CheckboxTableViewer(table)
-        // Checked state
-        viewer.checkStateProvider = new ICheckStateProvider {
-            override isChecked(Object element) {
-                val data = element as CommandData
-                return data.isEnabled()
-            }
-            override isGrayed(Object element) {
-                return false
-            }
-        }
-        viewer.addCheckStateListener(new ICheckStateListener {
-            
-            override checkStateChanged(CheckStateChangedEvent event) {
-                val data = viewer.structuredSelection?.firstElement as CommandData
-                data.enabled = event.checked
-            }
-        })
-        // Create columns
-        val checkColumn = createTableColumn(viewer, "Execute", 60)
-        checkColumn.labelProvider = new ColumnLabelProvider() {
-            override String getText(Object element) {
-                return "";
-            }
-        };
-        val nameColumn = createTableColumn(viewer, "Name", 120)
-        nameColumn.labelProvider = new ColumnLabelProvider() {
-            override String getText(Object element) {
-                val c = element as CommandData
-                return c.name;
-            }
-        };
-        val commandColumn = createTableColumn(viewer, "Command", 150)
-        commandColumn.labelProvider = new ColumnLabelProvider() {
-            override String getText(Object element) {
-                val c = element as CommandData
-                return c.command;
-            }
-        };
-
-        // Create content
-        viewer.setContentProvider(ArrayContentProvider.instance);
-        viewer.input = newArrayList()
-
-        // Add drag and drop support to change order of items
-        addDragAndDropSupportToChangeOrder(viewer)
-
-        // Create editable cells
-        val nameEditor = new TextCellEditor(table);
-        val commandEditor = new TextCellEditor(table);
-
-        // Assign the cell editors to the viewer 
-        viewer.setCellEditors(#[null, nameEditor, commandEditor]);
-        viewer.columnProperties = #["execute", "name", "command"]
-        viewer.setCellModifier(new ICellModifier{
-            
-            def int getColumnIndex(String property) {
-                switch(property) {
-                    case "execute" : return 0
-                    case "name" : return 1
-                    default : return 2
-                }
-            }
-            
-            override canModify(Object element, String property) {
-                return true
-            }
-            
-            override getValue(Object element, String property) {
-                val columnIndex = getColumnIndex(property)
-                val data = element as CommandData
-                switch (columnIndex) {
-                    case 1 : return data.name
-                    case 2 : return data.command
-                }
-                return null
-            }
-            
-            override modify(Object element, String property, Object value) {
-                val columnIndex = getColumnIndex(property)
-                val item = element as TableItem
-                val data = item.data as CommandData
-                switch (columnIndex) {
-                    case 1 : data.name = value as String
-                    case 2 : data.command = value as String
-                }
-                viewer.refresh()
-            }
-        })
-        
-        return viewer
     }
     
     /**

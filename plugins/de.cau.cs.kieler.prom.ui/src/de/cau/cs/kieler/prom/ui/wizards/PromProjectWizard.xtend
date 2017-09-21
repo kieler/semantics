@@ -27,7 +27,6 @@ import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.Path
 import org.eclipse.core.runtime.Platform
 import org.eclipse.core.runtime.Status
-import org.eclipse.jdt.core.JavaCore
 import org.eclipse.jface.dialogs.MessageDialog
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.jface.wizard.Wizard
@@ -312,22 +311,6 @@ class PromProjectWizard extends Wizard implements INewWizard {
         val env = mainPage.getSelectedEnvironment()
         newlyCreatedProject.setPersistentProperty(PromPlugin.ENVIRIONMENT_QUALIFIER, env.name)
         
-        // Remember created main file in project properties
-        if(!env.launchData.mainFile.isNullOrEmpty) {
-            var resolvedMainFilePath = ""
-            try {
-                resolvedMainFilePath = PromPlugin.performStringSubstitution(env.launchData.mainFile, newlyCreatedProject)
-            } catch (CoreException ce) {
-                MessageDialog.openError(shell, "Error", ce.message)
-                return false
-            }
-            newlyCreatedProject.setPersistentProperty(PromPlugin.MAIN_FILE_QUALIFIER, resolvedMainFilePath)
-        }
-        
-        // Add Xtext nature to project (e.g. for SCCharts with cross-references)
-        // Since the new sctx grammar, the Xtext nature is not longer required
-//        newlyCreatedProject.addNature("org.eclipse.xtext.ui.shared.xtextNature")
-        
         // Add KiCo nature to project (e.g. for builder)
         newlyCreatedProject.addNature(KielerModelingNature.NATURE_ID)
         
@@ -409,45 +392,13 @@ class PromProjectWizard extends Wizard implements INewWizard {
 
             // Find new project.
             newlyCreatedProject = findNewlyCreatedProject()
-            
-            // Initialize new project.
-            initializeNewProject()
         } else {
             newlyCreatedProject = null
-            
             // Output an error message
             MessageDialog.openError(shell, "Project Wizard Not Found", "The project wizard '"+fullyQualifiedClassName+"'\n"
                 + "of the selected environment could not be loaded.\n"
                 + "Please install all required plugins."
             )
-        }
-    }
-    
-    /**
-     * Add resources to the newly created project.
-     */
-    private def void initializeNewProject(){
-        if (newlyCreatedProject != null) {
-            createBuildDirectory()
-        }
-    }
-    
-    /**
-     * Creates the output folder for compiled files
-     */
-    private def void createBuildDirectory() {
-        val env = mainPage.selectedEnvironment
-        val targetDirectory = env.launchData.targetDirectory
-        if(!targetDirectory.isNullOrEmpty()) {
-            // Create folder for generated files
-            val sourceFolder = newlyCreatedProject.getFolder(targetDirectory);
-            sourceFolder.create(false, true, null);
-            
-            // Add folder to java class path if it is a java project
-            if (newlyCreatedProject.hasNature(JavaCore.NATURE_ID)) {
-                val javaProject = JavaCore.create(newlyCreatedProject);
-                PromPlugin.addFolderToJavaClasspath(javaProject, sourceFolder)
-            }
         }
     }
 }

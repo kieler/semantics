@@ -13,15 +13,12 @@
  */
 package de.cau.cs.kieler.prom.data
 
-import de.cau.cs.kieler.prom.launch.KiCoLaunchConfig
 import java.util.List
-import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.jface.preference.IPreferenceStore
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
- * Data container for default settings to use in KiCo compilation and execution
- * as well as creation of new projects.
+ * Data container for default settings to use in creation of new projects.
  * 
  * @author aas
  *
@@ -40,12 +37,6 @@ class EnvironmentData extends ConfigurationSerializable {
      */
     @Accessors
     protected String name = ""
-    
-    /**
-     * Data container with default values for a KiCo launch. 
-     */
-    @Accessors
-    protected KiCoLaunchData launchData = new KiCoLaunchData()
     
     /**
      * The class name of an implementation of the associated project wizard.
@@ -80,7 +71,6 @@ class EnvironmentData extends ConfigurationSerializable {
         this()
         this.name = name
     }
-    
     
     /**
      * {@inheritDoc}
@@ -134,28 +124,5 @@ class EnvironmentData extends ConfigurationSerializable {
             env.loadFromPreferenceStore(store)
             return env
         }
-    }
-    
-    /**
-     * Set this environment's values as values of the launch configuration. 
-     */
-    def void applyToLaunchConfiguration(ILaunchConfigurationWorkingCopy config){
-        // Save which environment was used to initialize this launch config
-        config.setAttribute(KiCoLaunchConfig.ATTR_ENVIRONMENT, name)
-        // Load data
-        val loadedLaunchData = KiCoLaunchData.loadFromConfiguration(config)
-        // Copy values of fields
-        loadedLaunchData.setTargetLanguage(launchData.targetLanguage)
-        loadedLaunchData.targetLanguageFileExtension = launchData.targetLanguageFileExtension
-        loadedLaunchData.targetTemplate = launchData.targetTemplate
-        loadedLaunchData.targetDirectory = launchData.targetDirectory
-        
-        loadedLaunchData.wrapperCodeTemplate = launchData.wrapperCodeTemplate
-        loadedLaunchData.wrapperCodeSnippetDirectory = launchData.wrapperCodeSnippetDirectory
-    
-        loadedLaunchData.commands = launchData.commands
-        loadedLaunchData.associatedLaunchShortcut = launchData.associatedLaunchShortcut
-        // Save data
-        KiCoLaunchData.saveToConfiguration(config, loadedLaunchData)
     }
 }

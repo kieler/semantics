@@ -16,7 +16,6 @@ package de.cau.cs.kieler.prom.environments
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.data.EnvironmentData
 import de.cau.cs.kieler.prom.data.FileData
-import de.cau.cs.kieler.prom.data.KiCoLaunchData
 import java.util.ArrayList
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IConfigurationElement
@@ -102,16 +101,7 @@ class PromEnvironmentsInitializer extends AbstractPreferenceInitializer implemen
         val buildConfigFile = new FileData("assets/BuildConfig.kibuild", "platform:/plugin/de.cau.cs.kieler.prom/resources/default.kibuild")
         val initialResources = #[simTemplateFile, simTemplateSnippet, buildConfigFile]
         
-        var launchData = new KiCoLaunchData()
-        
-        launchData.targetLanguage = "s.c"
-        launchData.targetLanguageFileExtension = ".c"
-        launchData.wrapperCodeSnippetDirectory = "snippets"
-        launchData.targetDirectory = PromPlugin.BUILD_DIRECTORY
-        
-        
         var env = new EnvironmentData("Generic")
-        env.launchData = launchData
         env.modelFile = "${project_name}"
         env.initialResources = initialResources
         env.associatedProjectWizardClass = "org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard"
@@ -129,15 +119,7 @@ class PromEnvironmentsInitializer extends AbstractPreferenceInitializer implemen
         val buildConfigFile = new FileData("assets/BuildConfig.kibuild", "platform:/plugin/de.cau.cs.kieler.prom/resources/default-java.kibuild") 
         val initialResources = #[simTemplateFile, simTemplateSnippet, targetTemplateFile, buildConfigFile]
 
-        var launchData = new KiCoLaunchData()
-        launchData.targetLanguage = "s.java"
-        launchData.targetLanguageFileExtension = ".java"
-        launchData.targetTemplate = targetTemplateFile.projectRelativePath
-        launchData.targetDirectory = PromPlugin.BUILD_DIRECTORY
-        launchData.wrapperCodeSnippetDirectory = "snippets"
-        
         var env = new EnvironmentData("Generic Java")
-        env.launchData = launchData
         env.modelFile = "src/model/${project_name}"
         env.initialResources = initialResources
         env.associatedProjectWizardClass = "org.eclipse.jdt.internal.ui.wizards.JavaProjectWizard"
