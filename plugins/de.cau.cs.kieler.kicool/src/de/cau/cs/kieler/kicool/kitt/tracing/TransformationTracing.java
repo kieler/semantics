@@ -31,7 +31,7 @@ import com.google.common.collect.Lists;
 
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingChain;
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingMapping;
-import de.cau.cs.kieler.kicool.kitt.KiTTPlugin;
+import de.cau.cs.kieler.kicool.kitt.KiTTConfig;
 import de.cau.cs.kieler.core.model.Pair;
 
 /**
@@ -242,9 +242,9 @@ public class TransformationTracing {
                     ((EObject) targetModel).eAdapters().remove(adapter);
                 }
                 // create report
-                if (KiTTPlugin.DEBUG || createReport) {
+                if (KiTTConfig.DEBUG || createReport) {
                     report = new TracingReport(tracing, sourceModel, targetModel, mapping);
-                    if (KiTTPlugin.DEBUG) {
+                    if (KiTTConfig.DEBUG) {
                         report.printReport();
                     }
                 }
