@@ -495,11 +495,6 @@ class UIUtil {
         input.add(StructuredSelection.EMPTY)
         input.addAll(UIExtensionLookupUtil.getLaunchShortcutConfigurationElements())
         viewer.input = input
-        
-        // Debug log, which launch shortcuts are currently installed 
-//        for (e : ExtensionLookupUtil.getLaunchShortcutConfigurationElements()){
-//            println(e.getAttribute("class"))
-//        }
 
         // Select first element as default 
         viewer.selection = new StructuredSelection(StructuredSelection.EMPTY)
@@ -691,6 +686,12 @@ class UIUtil {
         return SWTFactory.createLabel(parent, label, 1)
     }
     
+    /**
+     * Adds drag and drop support to a table viewer to change the order of its elements.
+     * Therefore the table viewer must have an array list as input.
+     * 
+     * @param viewer The table viewer
+     */
     public static def void addDragAndDropSupportToChangeOrder(TableViewer viewer) {
         val table = viewer.control as Table
         // Create transfer type

@@ -28,7 +28,7 @@
    <extension
          point="org.eclipse.ui.propertyPages">
       <page
-            class="de.cau.cs.kieler.prom.ui.build.PromProjectProperties"
+            class="de.cau.cs.kieler.prom.ui.build.KielerModelingProjectProperties"
             id="de.cau.cs.kieler.prom.projectProperties"
             name="KIELER Modeling Builder">
          <enabledWhen>

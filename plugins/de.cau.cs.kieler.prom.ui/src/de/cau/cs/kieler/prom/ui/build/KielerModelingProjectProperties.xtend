@@ -25,10 +25,12 @@ import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.dialogs.PropertyPage
 
 /**
+ * Property page for projects that have the KielerModelingNature.
+ * 
  * @author aas
  *
  */
-class PromProjectProperties extends PropertyPage {
+class KielerModelingProjectProperties extends PropertyPage {
     
     /**
      * Widget to select the build configuration
@@ -36,7 +38,7 @@ class PromProjectProperties extends PropertyPage {
     Text buildConfigFile;
     
     /**
-     * {@inheritDocs}
+     * {@inheritDoc}
      */
     override protected createContents(Composite parent) {
         val group = UIUtil.createGroup(parent, "kibuild file", 2)
@@ -56,6 +58,7 @@ class PromProjectProperties extends PropertyPage {
     
     /**
      * Return the element of this page as an IResource
+     * 
      * @return the element as IResource
      */
     def IResource getResource() {

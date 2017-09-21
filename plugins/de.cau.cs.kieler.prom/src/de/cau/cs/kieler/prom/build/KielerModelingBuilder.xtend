@@ -15,6 +15,7 @@ package de.cau.cs.kieler.prom.build
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.kico.internal.Transformation
+import de.cau.cs.kieler.prom.FileExtensions
 import de.cau.cs.kieler.prom.KiBuildExtensions
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
@@ -38,13 +39,8 @@ import org.eclipse.core.resources.IResourceDelta
 import org.eclipse.core.resources.IResourceDeltaVisitor
 import org.eclipse.core.resources.IncrementalProjectBuilder
 import org.eclipse.core.runtime.CoreException
-import org.eclipse.core.runtime.IPath
 import org.eclipse.core.runtime.IProgressMonitor
-import org.eclipse.core.runtime.Path
 import org.eclipse.emf.ecore.resource.ResourceSet
-import org.eclipse.jdt.core.IClasspathEntry
-import org.eclipse.jdt.core.IJavaProject
-import org.eclipse.jdt.core.JavaCore
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
@@ -565,7 +561,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      * @return true if it is a model file, false otherwise.
      */
     private static def boolean isModelFile(IFile file) {
-        return #["sctx", "strl"].contains(file.fileExtension?.toLowerCase)
+        return FileExtensions.matches(file, FileExtensions.MODELS)
     }
     
     /**
@@ -575,7 +571,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      * @return true if it is a template file, false otherwise.
      */
     private static def boolean isTemplateFile(IFile file) {
-        return #["ftl"].contains(file.fileExtension?.toLowerCase)
+        return FileExtensions.matches(file, FileExtensions.TEMPLATES)
     }
     
     /**
@@ -585,7 +581,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      * @return true if the file contains a build configuration, false otherwise
      */
     private static def boolean isConfigurationFile(IFile file) {
-        return #["kibuild"].contains(file.fileExtension?.toLowerCase)
+        return FileExtensions.matches(file, FileExtensions.BUILD_CONFIG)
     }
     
     /**

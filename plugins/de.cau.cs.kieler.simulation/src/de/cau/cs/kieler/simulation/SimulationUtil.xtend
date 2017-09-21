@@ -25,12 +25,11 @@ import de.cau.cs.kieler.simulation.handlers.Redirect
 import de.cau.cs.kieler.simulation.handlers.SimulationInputFileHandler
 import de.cau.cs.kieler.simulation.handlers.TraceHandler
 import de.cau.cs.kieler.simulation.kisim.SimulationConfiguration
+import java.io.File
 import java.util.List
 import org.eclipse.core.resources.IFile
 import org.eclipse.emf.ecore.EObject
-
-import static de.cau.cs.kieler.simulation.FileExtensions.*
-import java.io.File
+import de.cau.cs.kieler.prom.FileExtensions
 
 /**
  * @author aas
@@ -196,7 +195,7 @@ class SimulationUtil {
     }
     
     private static def boolean isTraceFile(IFile file) {
-        return TRACES.contains(file.fileExtension)
+        return FileExtensions.TRACES.contains(file.fileExtension)
     }
     
     private static def void startSimulationCompilationResult(FileGenerationResult result) {

@@ -29,8 +29,7 @@ import org.eclipse.swt.widgets.Composite
 
 /**
  * The main page for the project wizard.
- * It contains a control to select the environment to use
- * and the wrapper code snippets to import in the new project.
+ * It contains a control to select the environment to use.
  * 
  * @author aas
  */
@@ -52,7 +51,7 @@ class PromProjectWizardMainPage extends WizardPage {
     private Button createModelFileCheckbox
     
     /**
-     * Checkbox to specify the initial resources of the environment should be created.
+     * Checkbox to specify the initial resources of the environment that should be created.
      */
     private Button createInitialResourcesCheckbox
     

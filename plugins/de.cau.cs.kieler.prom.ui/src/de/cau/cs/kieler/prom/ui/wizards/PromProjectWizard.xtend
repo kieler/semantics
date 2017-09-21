@@ -34,11 +34,12 @@ import org.eclipse.jface.wizard.WizardDialog
 import org.eclipse.ui.INewWizard
 import org.eclipse.ui.IWorkbench
 
-/**op
- * Wizard implementation wich creates a project
+/**
+ * Wizard implementation, which creates a project
  * and optionally initializes it by using enviroments.
  * Shows a main page to set the environment and with which files the new project should be initialized.
- * Then the associated project wizard of the environment is run.
+ * When hitting finish, the associated project wizard of the environment is run
+ * and afterwards the newly created project is initialized according to the selected environment.
  * 
  * @author aas
  */
@@ -52,8 +53,6 @@ class PromProjectWizard extends Wizard implements INewWizard {
      * The selection set in the init(...) method.
      */
     protected var IStructuredSelection selection
-
-
 
     /**
      * The projects in the workspace before the associated wizard of the environment was run.
@@ -75,8 +74,6 @@ class PromProjectWizard extends Wizard implements INewWizard {
      */
     protected var String modelFileInitialContentURL
 
-
-    
     /**
      * The main page of the wizard.
      * It is the first page.
@@ -88,7 +85,6 @@ class PromProjectWizard extends Wizard implements INewWizard {
      * The main file that has been created as part of this wizard
      */
     private IFile createdMainFile;
-
 
     /**
      * @{inheritDoc}
@@ -146,6 +142,22 @@ class PromProjectWizard extends Wizard implements INewWizard {
         deleteCreatedProject()
         return true
     }
+
+    /**
+     * Implementation of IWorkbenchWizard. 
+     * 
+     * @param workbench The workbench
+     * @param selection The selection
+     */
+    override init(IWorkbench workbench, IStructuredSelection selection) {
+        this.workbench = workbench
+        this.selection = selection
+
+        windowTitle = "New Project"
+        helpAvailable = false
+
+        projectsBeforeWizard = ResourcesPlugin.workspace.root.projects
+    }
     
     /**
      * Deletes the newly created project.
@@ -192,44 +204,6 @@ class PromProjectWizard extends Wizard implements INewWizard {
 
             return false
         }
-    }
-    
-    /**
-     * Returns the model file path from the environment if it is not empty.
-     * Otherwise a suited value is infered from the project name.
-     * 
-     * @return the path without file extension for the model file  
-     */
-    private def String getModelFilePath() {
-        val env = mainPage.selectedEnvironment
-        var resolvedPath = ""
-        try {
-            resolvedPath = PromPlugin.performStringSubstitution(env.modelFile, newlyCreatedProject)
-        } catch (CoreException ce) {
-            MessageDialog.openError(shell, "Error", ce.message)
-            return "Model"
-        }
-        
-        var modelFilePathWithoutExtension = resolvedPath
-        if(modelFilePathWithoutExtension.isNullOrEmpty()) {
-            // Infere parent directory of file from main file directory.
-            // Therefore the main file has to be created before the model file.
-            var modelFileDirectory = ""
-            if(createdMainFile != null && createdMainFile.exists()){
-                modelFileDirectory = createdMainFile.parent.projectRelativePath.toOSString + File.separator
-            }
-            
-            // Infere file name from project name
-            var modelFileNameWithoutExtension = newlyCreatedProject.name
-            // We use only alphanumeric characters of the project name
-            modelFileNameWithoutExtension = modelFileNameWithoutExtension.replaceAll("[^\\w]", "")
-            // the file name may not begin with a number
-            modelFileNameWithoutExtension = modelFileNameWithoutExtension.replaceAll("^\\d*", "")
-            
-            // Cobine directory and name of file
-            modelFilePathWithoutExtension = modelFileDirectory + modelFileNameWithoutExtension
-        }
-        return modelFilePathWithoutExtension
     }
     
     /**
@@ -359,22 +333,6 @@ class PromProjectWizard extends Wizard implements INewWizard {
     }
 
     /**
-     * Implementation of IWorkbenchWizard. 
-     * 
-     * @param workbench The workbench
-     * @param selection The selection
-     */
-    override init(IWorkbench workbench, IStructuredSelection selection) {
-        this.workbench = workbench
-        this.selection = selection
-
-        windowTitle = "New Project"
-        helpAvailable = false
-
-        projectsBeforeWizard = ResourcesPlugin.workspace.root.projects
-    }
-
-    /**
      * Initializes and opens a project wizard which implemented by the fully qualified class name.
      * After the wizard has been finished the newly created project is set and initialized.
      * If there is no project wizard with the fully qualified class name,
@@ -400,5 +358,43 @@ class PromProjectWizard extends Wizard implements INewWizard {
                 + "Please install all required plugins."
             )
         }
+    }
+    
+    /**
+     * Returns the model file path from the environment if it is not empty.
+     * Otherwise a suited value is infered from the project name.
+     * 
+     * @return the path without file extension for the model file  
+     */
+    private def String getModelFilePath() {
+        val env = mainPage.selectedEnvironment
+        var resolvedPath = ""
+        try {
+            resolvedPath = PromPlugin.performStringSubstitution(env.modelFile, newlyCreatedProject)
+        } catch (CoreException ce) {
+            MessageDialog.openError(shell, "Error", ce.message)
+            return "Model"
+        }
+        
+        var modelFilePathWithoutExtension = resolvedPath
+        if(modelFilePathWithoutExtension.isNullOrEmpty()) {
+            // Infere parent directory of file from main file directory.
+            // Therefore the main file has to be created before the model file.
+            var modelFileDirectory = ""
+            if(createdMainFile != null && createdMainFile.exists()){
+                modelFileDirectory = createdMainFile.parent.projectRelativePath.toOSString + File.separator
+            }
+            
+            // Infere file name from project name
+            var modelFileNameWithoutExtension = newlyCreatedProject.name
+            // We use only alphanumeric characters of the project name
+            modelFileNameWithoutExtension = modelFileNameWithoutExtension.replaceAll("[^\\w]", "")
+            // the file name may not begin with a number
+            modelFileNameWithoutExtension = modelFileNameWithoutExtension.replaceAll("^\\d*", "")
+            
+            // Cobine directory and name of file
+            modelFilePathWithoutExtension = modelFileDirectory + modelFileNameWithoutExtension
+        }
+        return modelFilePathWithoutExtension
     }
 }

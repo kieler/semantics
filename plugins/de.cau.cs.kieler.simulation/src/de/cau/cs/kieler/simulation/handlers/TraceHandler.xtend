@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.simulation.handlers
 
+import de.cau.cs.kieler.prom.FileExtensions
 import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
@@ -22,8 +23,6 @@ import de.cau.cs.kieler.simulation.trace.ktrace.TraceFile
 import org.eclipse.core.runtime.IPath
 import org.eclipse.core.runtime.Path
 import org.eclipse.xtend.lib.annotations.Accessors
-
-import static de.cau.cs.kieler.simulation.FileExtensions.*
 
 /**
  * @author aas
@@ -179,7 +178,7 @@ class TraceHandler extends DefaultDataHandler {
             } else {
                 val path = new Path(tracePath.stringValue)
                 switch(path.fileExtension.toLowerCase) {
-                    case TRACES.contains(path.fileExtension.toLowerCase): loadTrace(path)
+                    case FileExtensions.TRACES.contains(path.fileExtension.toLowerCase): loadTrace(path)
 //                    case SIM_HISTORY: loadDataPoolHistory(path)
                     default:
                         throw new Exception("The file '"+path.toOSString+"' is not a supported trace format.")

@@ -21,6 +21,9 @@ import org.eclipse.ui.IWorkbenchWizard
 import java.util.List
 
 /**
+ * Auxilary class to search for installed ui extensions
+ * and instantiate classes using the fully qualified class name.
+ * 
  * @author aas
  *
  */

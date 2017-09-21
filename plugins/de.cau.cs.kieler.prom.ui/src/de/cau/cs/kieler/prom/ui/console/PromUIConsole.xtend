@@ -21,17 +21,30 @@ import org.eclipse.ui.console.MessageConsole
 import org.eclipse.ui.console.MessageConsoleStream
 
 /**
- * Dedecated console in the Console View of Eclipse for output about the simulation. 
+ * Dedicated console in the Console View of Eclipse to show information to the end user (e.g. about the simulation). 
  * 
  * @author aas
  *
  */
 class PromUIConsole implements IConsole {
-    // Message console
+    /**
+     * The name of the console
+     */
     private static val CONSOLE_NAME = "KIELER Project Management"
+    
+    /**
+     * The console
+     */
     private static MessageConsole console;
+    
+    /**
+     * The stream of the console to write to
+     */
     private static MessageConsoleStream consoleStream;
     
+    /**
+     * {@inheritDoc}
+     */
     override print(String message){
         // If there is nothing to write, we are done immediately.
         if(message.isNullOrEmpty())
@@ -44,6 +57,9 @@ class PromUIConsole implements IConsole {
         consoleStream.println(message)
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override print(Exception e) {
         // Write exception to console of running Eclipse
         var text = ""
@@ -60,17 +76,26 @@ class PromUIConsole implements IConsole {
         e.printStackTrace()
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override bringToFront() {
         initialize()
         val consoleManager = ConsolePlugin.getDefault().getConsoleManager();
         consoleManager.showConsoleView(console)
     }
 
+    /**
+     * {@inheritDoc}
+     */
     override clear() {
         initialize()
         console.clearConsole()
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override copy(InputStream from) {
         initialize()
         ByteStreams.copy(from, consoleStream)

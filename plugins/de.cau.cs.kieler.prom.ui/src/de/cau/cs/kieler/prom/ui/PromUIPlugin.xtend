@@ -13,7 +13,7 @@ import org.osgi.framework.BundleContext
 import static de.cau.cs.kieler.prom.console.PromConsole.*
 import de.cau.cs.kieler.prom.ui.internal.KiBuildActivator
 
-/** 
+/**
  * The activator class controls the plug-in life cycle
  */
 class PromUIPlugin extends KiBuildActivator {
@@ -62,6 +62,8 @@ class PromUIPlugin extends KiBuildActivator {
 
     /**
      * Executes a procedure (i.e. a method/function that returns nothing) in the UI thread.
+     * 
+     * @param procedure The procedure to execute in the UI thread
      */ 
     public static def void asyncExecInUI( ()=>void procedure ) {
         Display.getDefault().asyncExec(new Runnable() {
@@ -78,44 +80,62 @@ class PromUIPlugin extends KiBuildActivator {
     
     /** 
      * Log an information
+     * 
+     * @param msg The message
      */
     static def void log(String msg) {
-        log(Status.INFO, msg, null)
+        log(msg, null, Status.INFO)
     }
 
     /** 
      * Log an error
+     * 
+     * @param msg The message
+     * @param e The exception that caused the error
      */
     static def void log(String msg, Exception e) {
-        log(Status.ERROR, msg, e)
+        log(msg, e, Status.ERROR)
     }
 
     /** 
      * Log a message
+     * 
+     * @param msg The message
+     * @param e The exception that caused the message
+     * @param severity The severity of the message status
      */
-    private static def void log(int severity, String msg, Exception e) {
+    private static def void log(String msg, Exception e, int severity) {
         log(severity, msg, e, StatusManager.LOG)
     }
     
     /**
-     * Show a message to the user and also log that message to the console.
-     */
-    static def void showMessage(int severity, String msg, Exception e) {
-        log(severity, msg, e, StatusManager.LOG.bitwiseOr(StatusManager.SHOW))
-    }
-    
-    /**
      * Show an exception to the user.
-     */
-    static def void showError(String msg, Exception e) {
-        showMessage(Status.ERROR, msg, e)
-    }
-    
-    /**
-     * Show an exception to the user.
+     * 
+     * @param e The exception
      */
     static def void showError(Exception e) {
-        showMessage(Status.ERROR, e.message, e)
+        showMessage(e.message, e, Status.ERROR)
+    }
+    
+    /**
+     * Show an exception to the user.
+     * 
+     * @param msg The message
+     * @param e The exception that caused the message
+     */
+    static def void showError(String msg, Exception e) {
+        showMessage(msg, e, Status.ERROR)
+    }
+    
+    /**
+     * Show a message to the user and also log that message to the console.
+     * 
+     * @param msg The message
+     * @param e The exception that caused the message
+     * @param severity The severity of the message status
+     */
+    static def void showMessage(String msg, Exception e, int severity) {
+        log(severity, msg, e, StatusManager.LOG.bitwiseOr(StatusManager.SHOW))
     }
     
     /**

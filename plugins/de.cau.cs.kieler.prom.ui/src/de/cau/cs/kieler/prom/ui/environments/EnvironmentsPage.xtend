@@ -55,7 +55,6 @@ import org.eclipse.ui.IWorkbenchPreferencePage
 /**
  * Implementation of the preferences page for environments.
  * Contains controls to create, remove, update and show the environments in the plugin's preference store.
- * Environments contain defaults to create, initialize and launch a project.  
  * 
  * @author aas
  */
