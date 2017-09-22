@@ -305,10 +305,6 @@ litigation.
    
    <plugin id="de.cau.cs.kieler.sccharts.scg" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
-   <plugin id="de.cau.cs.kieler.sccharts.sim.c" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-   
-   <plugin id="de.cau.cs.kieler.sccharts.sim.java" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-   
    <plugin id="de.cau.cs.kieler.sccharts.timing" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="de.cau.cs.kieler.sccharts.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
@@ -320,8 +316,6 @@ litigation.
    <plugin id="de.cau.cs.kieler.scg.kivi" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="de.cau.cs.kieler.scg.klighd" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-   
-   <plugin id="de.cau.cs.kieler.scg.s" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="de.cau.cs.kieler.scl" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
