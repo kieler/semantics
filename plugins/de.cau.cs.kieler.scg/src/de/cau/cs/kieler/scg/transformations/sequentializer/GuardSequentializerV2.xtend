@@ -21,7 +21,6 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
@@ -80,13 +79,13 @@ class GuardSequentializerV2 extends AbstractSequentializer implements Traceable 
         return SCGTransformations::SEQUENTIALIZE_NAME
     }
 
-    override getProducedFeatureId() {
-        return SCGFeatures::SEQUENTIALIZE_ID
-    }
-
-    override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::SCHEDULING_ID)
-    }
+//    override getProducedFeatureId() {
+//        return SCGFeatures::SEQUENTIALIZE_ID
+//    }
+//
+//    override getRequiredFeatureIds() {
+//        return newHashSet(SCGFeatures::SCHEDULING_ID)
+//    }
 
     // -------------------------------------------------------------------------
     // -- Injections 
@@ -111,7 +110,6 @@ class GuardSequentializerV2 extends AbstractSequentializer implements Traceable 
     private static val String ANNOTATION_HOSTCODE = "hostcode"   
     
     protected val schedulingBlockCache = new HashMap<Node, SchedulingBlock>
-    protected var KielerCompilerContext compilerContext
 
     /** Caching for predecessors */
     protected val predecessorTwinCache = <Predecessor, Predecessor> newHashMap
@@ -146,14 +144,13 @@ class GuardSequentializerV2 extends AbstractSequentializer implements Traceable 
      * 			the source SCG with scheduling information
      * @return Returns a sequentialized standard SCG.
      */    
-     override SCGraph sequentialize(SCGraph scg, KielerCompilerContext context) {
+     override SCGraph sequentialize(SCGraph scg) {
         // KiCo does this check via feature isContained
         //if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)) {
         //    return scg
         //}
 
         val timestamp = System.currentTimeMillis
-        compilerContext = context
         
         /**
          * Since we want to build a new SCG, we cannot use the SCG copy extensions because it would 

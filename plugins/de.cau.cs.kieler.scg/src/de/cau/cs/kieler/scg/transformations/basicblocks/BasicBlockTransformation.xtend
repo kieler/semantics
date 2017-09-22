@@ -17,7 +17,9 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.BranchType
@@ -27,28 +29,27 @@ import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
+import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.Predecessor
+import de.cau.cs.kieler.scg.SCGPlugin
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.HashMap
 import java.util.List
+import java.util.logging.Level
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.scg.transformations.SCGTransformations
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.scg.Guard
-import de.cau.cs.kieler.scg.SCGPlugin
-import java.util.logging.Level
-import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.scg.Exit
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -69,27 +70,37 @@ import de.cau.cs.kieler.scg.Exit
  * @kieler.rating 2013-10-24 proposed yellow
  */
 
-class BasicBlockTransformation extends AbstractProductionTransformation implements Traceable {
+class BasicBlockTransformation extends Processor<SCGraphs, SCGraphs> implements Traceable {
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     
     override getId() {
-        return SCGTransformations::BASICBLOCK_ID
+        "de.cau.cs.kieler.scg.processors.transformators.basicBlocks"
     }
-
+    
     override getName() {
-        return SCGTransformations::BASICBLOCK_NAME
+        "Basic Blocks"
+    }
+    
+    override process() {
+        for (scg : model.scgs) {
+            scg.transform
+        }
+    }
+    
+    override getType() {
+        ProcessorType.TRANSFORMATOR
     }
 
-    override getProducedFeatureId() {
-        return SCGFeatures::BASICBLOCK_ID
-    }
-
-    override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::STRUCTURALDEPTHJOIN_ID)
-    }
+//    override getProducedFeatureId() {
+//        return SCGFeatures::BASICBLOCK_ID
+//    }
+//
+//    override getRequiredFeatureIds() {
+//        return newHashSet(SCGFeatures::STRUCTURALDEPTHJOIN_ID)
+//    }
     
     // -------------------------------------------------------------------------
     // -- Injections 

@@ -115,7 +115,8 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
         // to retrieve the scheduling block of the join node in question.
         val joinSB = join.getCachedSchedulingBlock
         
-        val pilData = compilerContext.compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head.criticalNodes.toSet
+// TODO kicool
+//        val pilData = compilerContext.compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head.criticalNodes.toSet
         
         // The valued object of the GuardExpression of the synchronizer is the guard of the
         // scheduling block of the join node. 
@@ -129,7 +130,8 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
         
         data.createEmptyExpressions(terminationExpression)
         data.createGuardExpression(terminationExpression)
-        data.guardExpression.expression = join.graph.fixSchizophrenicExpression(data.guardExpression.expression, pilData) 
+// TODO kicool
+//        data.guardExpression.expression = join.graph.fixSchizophrenicExpression(data.guardExpression.expression, pilData) 
         
 //        data.fixEmptyExpressions.fixSynchronizerExpression
         

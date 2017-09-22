@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.prom.ui.environments
 
-import de.cau.cs.kieler.kico.internal.Transformation
 import de.cau.cs.kieler.prom.ExtensionLookupUtil
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.data.CommandData
@@ -511,11 +510,11 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                     } else {
                         val selection = targetLanguage.selection as IStructuredSelection
                         if (selection != null) {
-                            val trans = selection.firstElement as Transformation
-                            if (trans != null) {
-                                currentData.launchData.targetLanguage = trans.id
-                                checkConsistency()
-                            }
+//                            val trans = selection.firstElement as Transformation
+//                            if (trans != null) {
+//                                currentData.launchData.targetLanguage = trans.id
+//                                checkConsistency()
+//                            }
                         }
                     }
                 }
@@ -534,11 +533,11 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 if(currentData != null && !useCompileChain.selection){
                     val selection = targetLanguage.selection as IStructuredSelection
                     if (selection != null) {
-                        val trans = selection.firstElement as Transformation
-                        if (trans != null) {
-                            currentData.launchData.targetLanguage = trans.id
-                            checkConsistency()
-                        }
+//                        val trans = selection.firstElement as Transformation
+//                        if (trans != null) {
+//                            currentData.launchData.targetLanguage = trans.id
+//                            checkConsistency()
+//                        }
                     }
                }
             }
@@ -832,12 +831,12 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             // Update target language / compile chain
             var isCompileChain = true
             if (targetLanguage.input != null) {
-                for (transformation : targetLanguage.input as Set<Transformation>) {
-                    if (transformation.id == data.launchData.targetLanguage) {
-                        targetLanguage.selection = new StructuredSelection(transformation)
-                        isCompileChain = false
-                    }
-                }
+//                for (transformation : targetLanguage.input as Set<Transformation>) {
+//                    if (transformation.id == data.launchData.targetLanguage) {
+//                        targetLanguage.selection = new StructuredSelection(transformation)
+//                        isCompileChain = false
+//                    }
+//                }
             }
             if(isCompileChain) {
                 compileChain.text = data.launchData.targetLanguage
@@ -888,9 +887,9 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      */
     private def String getSelectedTargetLanguageId(){
         if (targetLanguage.input != null) {
-            for (transformation : targetLanguage.input as Set<Transformation>) {
-                return transformation.id
-            }
+//            for (transformation : targetLanguage.input as Set<Transformation>) {
+//                return transformation.id
+//            }
         }
         return ""
     }

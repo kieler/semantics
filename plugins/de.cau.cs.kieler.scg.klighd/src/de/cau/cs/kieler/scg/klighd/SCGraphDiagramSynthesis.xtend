@@ -19,8 +19,6 @@ import com.google.common.collect.Multimap
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kico.CompilationResult
-import de.cau.cs.kieler.kico.KiCoProperties
 import de.cau.cs.kieler.klighd.IKlighdSelection
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
@@ -468,7 +466,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private KNode rootNode;
     private String mainEntry
     
-    private CompilationResult compilationResult;
+//    private CompilationResult compilationResult;
     private var Set<Node> PIL_Nodes = <Node> newHashSet
 
     /** The selected orientation */
@@ -494,11 +492,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 */
     override transform(SCGraph model) {
 
-        compilationResult = this.usedContext.getProperty(KiCoProperties.COMPILATION_RESULT)
-        if (compilationResult != null) {
-            val PILR = compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head
-            if (PILR != null) PIL_Nodes += PILR.criticalNodes
-        }
+//        compilationResult = this.usedContext.getProperty(KiCoProperties.COMPILATION_RESULT)
+//        if (compilationResult != null) {
+//            val PILR = compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head
+//            if (PILR != null) PIL_Nodes += PILR.criticalNodes
+//        }
 
         // Invoke the synthesis.
         SCGraph = model

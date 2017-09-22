@@ -22,7 +22,6 @@
 
 package de.cau.cs.kieler.scg.processors.optimizations;
 
-import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.processors.optimizations.features.OptimizerFeatures
 import de.cau.cs.kieler.scg.features.SCGFeatureGroups
 import de.cau.cs.kieler.scg.features.SCGFeatures
@@ -45,24 +44,24 @@ import java.util.HashMap
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.Value
 
-class CopyPropagation extends AbstractProductionTransformation {
+class CopyPropagation {
     // Inject from SCGDeclarations
     @Inject 
     extension SCGDeclarationExtensions
     // Set Feature ID
-    override getProducedFeatureId() {
+    def getProducedFeatureId() {
         return OptimizerFeatures::CP_ID
     }
     // Set Required Feature IDs
-    override getRequiredFeatureIds() {
+    def getRequiredFeatureIds() {
         return newHashSet(SCGFeatures::SEQUENTIALIZE_ID, SCGFeatureGroups::SCG_ID)
     }
     // Set Feature ID
-    override getId() {
+    def getId() {
         return OptimizerFeatures::CP_ID
     }
     // Set Feature Name
-    override getName() {
+    def getName() {
         return OptimizerFeatures::CP_NAME
     }
     /*

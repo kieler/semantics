@@ -12,14 +12,10 @@
  */
 package de.cau.cs.kieler.prom.build
 
-import de.cau.cs.kieler.kico.KielerCompiler
-import de.cau.cs.kieler.kico.features.Feature
-import de.cau.cs.kieler.kico.internal.Transformation
 import de.cau.cs.kieler.prom.KiBuildExtensions
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.kibuild.BuildConfiguration
-import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
@@ -61,13 +57,13 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      * The features of the KIELER Compiler that produces finished code.
      * The field is used to cache the features.
      */
-    private static var Feature codeGenerationFeatures
+//    private static var Feature codeGenerationFeatures
     
     /**
      * The trasnformations of the KIELER Compiler that produces finished code.
      * The field is used to cache the transformations.
      */
-    private static var Set<Transformation> codeGenerationTransformations
+//    private static var Set<Transformation> codeGenerationTransformations
 
     extension KiBuildExtensions kiBuildExtensions 
     extension AttributeExtensions attributeExtensions 
@@ -153,19 +149,19 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      */
     public static def boolean isCompileChain(String targetLanguage) {
         var isCompileChain = false
-        // Get code transformations of KiCo
-        if(codeGenerationFeatures == null) {
-            codeGenerationFeatures = KielerCompiler.getFeature(CodeGenerationFeatures.TARGET_ID)
-            if(codeGenerationFeatures != null) {
-                codeGenerationTransformations = codeGenerationFeatures.expandingTransformations
-            }
-        }
-        // Check if target matches a transformation
-        if(codeGenerationTransformations != null && !codeGenerationTransformations.isEmpty) {            
-            // There is no transformation with the given id
-            // => the target is a compile chain and not a transformation.
-            isCompileChain = codeGenerationTransformations.filter[it.id == targetLanguage].isEmpty    
-        }
+//        // Get code transformations of KiCo
+//        if(codeGenerationFeatures == null) {
+//            codeGenerationFeatures = KielerCompiler.getFeature(CodeGenerationFeatures.TARGET_ID)
+//            if(codeGenerationFeatures != null) {
+//                codeGenerationTransformations = codeGenerationFeatures.expandingTransformations
+//            }
+//        }
+//        // Check if target matches a transformation
+//        if(codeGenerationTransformations != null && !codeGenerationTransformations.isEmpty) {            
+//            // There is no transformation with the given id
+//            // => the target is a compile chain and not a transformation.
+//            isCompileChain = codeGenerationTransformations.filter[it.id == targetLanguage].isEmpty    
+//        }
         return isCompileChain
     }
     

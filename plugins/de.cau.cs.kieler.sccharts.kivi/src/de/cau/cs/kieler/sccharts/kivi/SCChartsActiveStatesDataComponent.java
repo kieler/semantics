@@ -35,8 +35,6 @@ import de.cau.cs.kieler.core.model.util.XtextModelingUtil;
 import org.eclipse.elk.core.util.Maybe;
 import org.eclipse.elk.core.util.Pair;
 
-import de.cau.cs.kieler.kico.KielerCompilerContext;
-import de.cau.cs.kieler.kico.internal.KiCoUtil;
 import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.view.DiagramView;
@@ -341,10 +339,10 @@ public class SCChartsActiveStatesDataComponent extends JSONObjectDataComponent
             // We try to create a dummy resource
             // Create a dummy resource by calling serialization (this creates a dummy
             // resource on the fly)
-            @SuppressWarnings("unused")
-            KielerCompilerContext context = new KielerCompilerContext("", null);
-            String discard = KiCoUtil.serialize(modelRoot, context, true);
-            resource = context.getMainResource();
+//            @SuppressWarnings("unused")
+//            KielerCompilerContext context = new KielerCompilerContext("", null);
+//            String discard = KiCoUtil.serialize(modelRoot, context, true);
+//            resource = context.getMainResource();
         }
         if (!norefresh) {
             refreshEObjectMap();

@@ -23,8 +23,6 @@ import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 
 import de.cau.cs.kieler.kexpressions.TextExpression;
-import de.cau.cs.kieler.kico.KiCoProperties;
-import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.klighd.SynthesisOption;
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties;
 import de.cau.cs.kieler.klighd.kgraph.KEdge;
@@ -96,13 +94,13 @@ public class TimingAnalysisHook extends SynthesisHook {
 			scchartDummyRegion.setName("SCChartDummyRegion");
 
 			Resource resource = null;
-            KielerCompilerContext context =
-                    getUsedContext().getProperty(KiCoProperties.COMPILATION_CONTEXT);
-			if (context != null) {
-				resource = context.getMainResource();
-			} else {
+//            KielerCompilerContext context =
+//                    getUsedContext().getProperty(KiCoProperties.COMPILATION_CONTEXT);
+//			if (context != null) {
+//				resource = context.getMainResource();
+//			} else {
 				resource = rootState.eResource();
-			}
+//			}
 
 			// Step 0: (Preprocessing)
 			// Add timing labels (while still in synthesis run)
@@ -181,15 +179,15 @@ public class TimingAnalysisHook extends SynthesisHook {
             String text = "";
             // Get the model resource
             Resource resource = null;
-            KielerCompilerContext context =
-                    getUsedContext().getProperty(KiCoProperties.COMPILATION_CONTEXT);
-            if (context != null) {
-                resource = context.getMainResource();
-            } else {
+//            KielerCompilerContext context =
+//                    getUsedContext().getProperty(KiCoProperties.COMPILATION_CONTEXT);
+//            if (context != null) {
+//                resource = context.getMainResource();
+//            } else {
                 if (transition != null) {
                     resource = transition.eResource();
                 }
-            }
+//            }
             // Get a map of all function wcet asumptions
             HashMap<String, String> functionAssumptions = null;
             String uriString = null;

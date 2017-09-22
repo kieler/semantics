@@ -37,8 +37,6 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 
-import de.cau.cs.kieler.kico.KielerCompilerContext;
-import de.cau.cs.kieler.kico.internal.KiCoUtil;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
 import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.kgraph.KEdge;
@@ -274,10 +272,10 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent
             // We try to create a dummy resource
             // Create a dummy resource by calling serialization (this creates a dummy
             // resource on the fly)
-            @SuppressWarnings("unused")
-            KielerCompilerContext context = new KielerCompilerContext("", null);
-            String discard = KiCoUtil.serialize(modelRoot, context, true);
-            resource = context.getMainResource();
+//            @SuppressWarnings("unused")
+//            KielerCompilerContext context = new KielerCompilerContext("", null);
+//            String discard = KiCoUtil.serialize(modelRoot, context, true);
+//            resource = context.getMainResource();
         }
         if (!norefresh) {
             refreshEObjectMap();

@@ -51,13 +51,13 @@ class BasicBlockTransformationSCplus extends BasicBlockTransformation {
         return SCGTransformations::BASICBLOCK_SCPLUS_NAME
     }
 
-    override getProducedFeatureId() {
-        return SCGFeatures::BASICBLOCK_ID
-    }
-
-    override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::DEPENDENCY_ID)
-    }
+//    override getProducedFeatureId() {
+//        return SCGFeatures::BASICBLOCK_ID
+//    }
+//
+//    override getRequiredFeatureIds() {
+//        return newHashSet(SCGFeatures::DEPENDENCY_ID)
+//    }
     
     // -------------------------------------------------------------------------
     // -- Transformation methods

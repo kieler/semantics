@@ -34,8 +34,6 @@ import com.google.inject.Guice;
 
 import de.cau.cs.kieler.core.model.codegeneration.SimpleCBeautifier;
 import de.cau.cs.kieler.core.model.util.ModelUtil;
-import de.cau.cs.kieler.kico.KielerCompilerContext;
-import de.cau.cs.kieler.kico.internal.KiCoUtil;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sc.xtend.S2Arduino;
 
@@ -60,7 +58,7 @@ public class ArduinoGenerator {
      * @param program
      *            the program
      */
-    public String transform(Program program, KielerCompilerContext context) {
+    public String transform(Program program) {
 
         String returnProgram = "";
         
@@ -70,7 +68,7 @@ public class ArduinoGenerator {
         }
         boolean previousFileExists = false;
 
-        URI modelURI = context.getMainResource().getURI();
+        URI modelURI = null;//context.getMainResource().getURI();
         URI inoURI = modelURI.trimFileExtension().appendFileExtension("ino");
         
         

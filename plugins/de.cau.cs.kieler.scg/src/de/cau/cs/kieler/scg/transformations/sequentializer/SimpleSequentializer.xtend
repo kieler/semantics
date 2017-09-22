@@ -24,7 +24,9 @@ import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.BranchType
@@ -39,8 +41,6 @@ import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
-import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
 import de.cau.cs.kieler.scg.transformations.synchronizer.DepthJoinSynchronizer
 import de.cau.cs.kieler.scg.transformations.synchronizer.SynchronizerData
 import java.util.HashMap
@@ -50,9 +50,6 @@ import java.util.Set
 import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -89,13 +86,13 @@ class SimpleSequentializer extends AbstractSequentializer {
         return null //SCGTransformations::SEQUENTIALIZE_NAME
     }
 
-    override getProducedFeatureId() {
-        return SCGFeatures::SEQUENTIALIZE_ID
-    }
-
-    override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::SCHEDULING_ID)
-    }
+//    override getProducedFeatureId() {
+//        return SCGFeatures::SEQUENTIALIZE_ID
+//    }
+//
+//    override getRequiredFeatureIds() {
+//        return newHashSet(SCGFeatures::SCHEDULING_ID)
+//    }
 
     // -------------------------------------------------------------------------
     // -- Injections 
@@ -124,7 +121,6 @@ class SimpleSequentializer extends AbstractSequentializer {
     // -------------------------------------------------------------------------
         
     protected val schedulingBlockCache = new HashMap<Node, SchedulingBlock>
-    protected var KielerCompilerContext compilerContext
 
     /** Caching for predecessors */
     protected val predecessorTwinCache = <Predecessor, Predecessor> newHashMap
@@ -156,12 +152,11 @@ class SimpleSequentializer extends AbstractSequentializer {
      * 			the source SCG with scheduling information
      * @return Returns a sequentialized standard SCG.
      */    
-     override SCGraph sequentialize(SCGraph scg, KielerCompilerContext context) {
+     override SCGraph sequentialize(SCGraph scg) {
 
         val timestamp = System.currentTimeMillis
-        compilerContext = context
         
-        val pilData = context.compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head.criticalNodes.toSet
+//        val pilData = context.compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head.criticalNodes.toSet
           
         /**
          * Since we want to build a new SCG, we cannot use the SCG copy extensions because it would 

@@ -20,7 +20,6 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
@@ -65,13 +64,13 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         return SCGTransformations::GUARDS_NAME
     }
 
-    override getProducedFeatureId() {
-        return SCGFeatures::GUARDS_ID
-    }
-
-    override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::GUARD_EXPRESSIONS_ID)
-    }
+//    override getProducedFeatureId() {
+//        return SCGFeatures::GUARDS_ID
+//    }
+//
+//    override getRequiredFeatureIds() {
+//        return newHashSet(SCGFeatures::GUARD_EXPRESSIONS_ID)
+//    }
 
 
     @Inject extension SCGCoreExtensions
@@ -83,7 +82,7 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
     @Inject extension AnnotationsExtensions
     
       
-    public def SCGraph transform(SCGraph scg, KielerCompilerContext context) {
+    override SCGraph transform(SCGraph scg) {
         
         /**
          * Since we want to build a new SCG, we cannot use the SCG copy extensions because it would 
