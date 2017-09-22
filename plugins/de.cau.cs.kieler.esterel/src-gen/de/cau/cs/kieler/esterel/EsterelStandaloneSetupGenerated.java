@@ -18,7 +18,7 @@ public class EsterelStandaloneSetupGenerated implements ISetup {
 
 	@Override
 	public Injector createInjectorAndDoEMFRegistration() {
-		de.cau.cs.kieler.esterel.kexpressions.KExpressionsStandaloneSetup.doSetup();
+		de.cau.cs.kieler.scl.SCLStandaloneSetup.doSetup();
 
 		Injector injector = createInjector();
 		register(injector);
@@ -30,9 +30,6 @@ public class EsterelStandaloneSetupGenerated implements ISetup {
 	}
 	
 	public void register(Injector injector) {
-	if (!EPackage.Registry.INSTANCE.containsKey("http://www.cau.de/cs/kieler/esterel/Esterel")) {
-		EPackage.Registry.INSTANCE.put("http://www.cau.de/cs/kieler/esterel/Esterel", de.cau.cs.kieler.esterel.esterel.EsterelPackage.eINSTANCE);
-	}
 
 		org.eclipse.xtext.resource.IResourceFactory resourceFactory = injector.getInstance(org.eclipse.xtext.resource.IResourceFactory.class);
 		org.eclipse.xtext.resource.IResourceServiceProvider serviceProvider = injector.getInstance(org.eclipse.xtext.resource.IResourceServiceProvider.class);

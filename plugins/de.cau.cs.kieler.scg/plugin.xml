@@ -38,99 +38,18 @@
       </package>
    </extension>
    <extension
-         point="de.cau.cs.kieler.kico.transformation">
-      <productionTransformationClass
-            class="de.cau.cs.kieler.scg.transformations.dependencies.DependencyTransformation">
-      </productionTransformationClass>
-      <productionTransformationClass
-            class="de.cau.cs.kieler.scg.transformations.basicblocks.BasicBlockTransformation">
-      </productionTransformationClass>
-      <productionTransformationClass
-            class="de.cau.cs.kieler.scg.transformations.guardExpressions.SimpleGuardExpressions">
-      </productionTransformationClass>
-      <productionTransformationClass
-            class="de.cau.cs.kieler.scg.transformations.guards.SimpleGuardTransformation">
-      </productionTransformationClass>
-      <productionTransformationClass
-            class="de.cau.cs.kieler.scg.transformations.schedulers.DCGuardScheduler">
-      </productionTransformationClass>
-      <productionTransformationClass
-            class="de.cau.cs.kieler.scg.transformations.guards.FlatThreadsGuardTransformation">
-      </productionTransformationClass>
-      <productionTransformationClass
-            class="de.cau.cs.kieler.scg.transformations.sequentializer.DCGuardSequentializer">
-      </productionTransformationClass>
-      <productionTransformationClass
-            class="de.cau.cs.kieler.scg.transformations.sequentializer.SimpleGuardSequentializer">
-      </productionTransformationClass>
-      <productionTransformationClass
-            class="de.cau.cs.kieler.scg.transformations.c.SCG2CTransformation">
-      </productionTransformationClass>
-      <productionTransformationClass
-            class="de.cau.cs.kieler.scg.transformations.StructuralDepthJoinTransformation">
-      </productionTransformationClass>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.kico.feature">
-      <featureClass
-            class="de.cau.cs.kieler.scg.features.Dependency">
-      </featureClass>
-      <featureClass
-            class="de.cau.cs.kieler.scg.features.BasicBlock">
-      </featureClass>
-      <featureClass
-            class="de.cau.cs.kieler.scg.features.Guards">
-      </featureClass>
-      <featureClass
-            class="de.cau.cs.kieler.scg.features.GuardExpressions">
-      </featureClass>
-      <featureClass
-            class="de.cau.cs.kieler.scg.features.Scheduling">
-      </featureClass>
-      <featureClass
-            class="de.cau.cs.kieler.scg.features.Sequentialize">
-      </featureClass>
-      <featureClass
-            class="de.cau.cs.kieler.scg.features.Basic">
-      </featureClass>
-      <featureGroupClass
-            class="de.cau.cs.kieler.scg.features.SCGraphGroup">
-      </featureGroupClass>
-      <featureClass 
-            class="de.cau.cs.kieler.scg.features.SCPDG">
-      </featureClass>
-      <featureClass
-            class="de.cau.cs.kieler.scg.features.DCSequentialize">
-      </featureClass>
-      <featureClass
-            class="de.cau.cs.kieler.scg.features.C">
-      </featureClass>
-      <featureClass
-            class="de.cau.cs.kieler.scg.features.StructuralDepthJoin">
-      </featureClass>
-   </extension>
-   <extension
          point="de.cau.cs.kieler.kicool.processor">
-      <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.DependencyWrapper">
-      </Processor>
       <Processor
             class="de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeGenerator">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.SequentializerWrapper">
+            class="de.cau.cs.kieler.scg.transformations.sequentializer.SimpleGuardSequentializer">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.SchedulerWrapper">
+            class="de.cau.cs.kieler.scg.transformations.guardExpressions.SimpleGuardExpressions">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.GuardsWrapper">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.ExpressionsWrapper">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.BasicBlocksWrapper">
+            class="de.cau.cs.kieler.scg.transformations.basicblocks.BasicBlockTransformation">
       </Processor>
       <Processor
             class="de.cau.cs.kieler.scg.processors.analyzer.ControlflowValidator">
@@ -142,10 +61,22 @@
             class="de.cau.cs.kieler.scg.processors.transformators.SimpleGuardTransformation">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.DependencyTransformation">
+            class="de.cau.cs.kieler.scg.processors.transformators.dependencies.DependencyTransformationV2">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.dependencies.DependencyTransformationV2">
+            class="de.cau.cs.kieler.scg.processors.transformators.ssa.RegularSSATransformation">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.ssa.CSSATransformation">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.ssa.SCSSATransformation">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.ssa.WeakUnemitSSATransformation">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.transformations.dependencies.DependencyTransformation">
       </Processor>
    </extension>
    <extension

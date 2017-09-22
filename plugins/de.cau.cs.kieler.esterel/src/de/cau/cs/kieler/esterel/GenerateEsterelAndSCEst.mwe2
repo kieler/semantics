@@ -1,0 +1,9 @@
+module de.cau.cs.kieler.esterel.Esterel.SCEst
+
+
+Workflow {
+	
+	component =  @de.cau.cs.kieler.esterel.Esterel auto-inject {}
+	
+	component =  @de.cau.cs.kieler.esterel.scest.SCEst auto-inject {}	
+}

@@ -226,43 +226,11 @@ litigation.
 
    <plugin id="de.cau.cs.kieler.core.model" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
-   <plugin id="de.cau.cs.kieler.kev" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-
    <plugin id="de.cau.cs.kieler.kex" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-
-   <plugin id="de.cau.cs.kieler.kico" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-
-   <plugin id="de.cau.cs.kieler.sim.kiem" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-
-   <plugin id="de.cau.cs.kieler.sim.kiem.config" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-
-   <plugin id="de.cau.cs.kieler.sim.kiem.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-
-   <plugin id="de.cau.cs.kieler.sim.kiem.ui.datacomponent" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-
-   <plugin id="de.cau.cs.kieler.sim.kiem.ui.launching" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-
-   <plugin id="de.cau.cs.kieler.sim.kivi" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-
-   <plugin id="de.cau.cs.kieler.sim.syncsignalreset" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-
-   <plugin id="de.cau.cs.kieler.sim.table" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-
-   <plugin id="org.json" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
    <plugin id="de.cau.cs.kieler.esterel.cec" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
-   <plugin id="de.cau.cs.kieler.esterel.cec.sim" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-
-   <plugin id="de.cau.cs.kieler.esterel.sim" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-
-  <plugin id="de.cau.cs.kieler.esterel.sim.kivi" download-size="0" install-size="0" version="0.0.0" unpack="false"/> 
-
    <plugin id="de.cau.cs.kieler.esterel" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-
-   <plugin id="de.cau.cs.kieler.esterel.kexpressions" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-
-   <plugin id="de.cau.cs.kieler.esterel.kexpressions.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
    <plugin id="de.cau.cs.kieler.esterel.cec.linux.x86" os="linux" arch="x86" download-size="0" install-size="0" version="0.0.0" fragment="true"/>
 
@@ -275,13 +243,5 @@ litigation.
    <plugin id="de.cau.cs.kieler.esterel.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
    <plugin id="de.cau.cs.kieler.esterel.examples" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-
-   <plugin id="de.cau.cs.kieler.sim.signals" download-size="0" install-size="0" version="0.0.0"/>
-
-   <plugin id="de.cau.cs.kieler.sim.signals.ui" download-size="0" install-size="0" version="0.0.0"/>
-
-   <plugin id="de.cau.cs.kieler.sim.eso" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-
-   <plugin id="de.cau.cs.kieler.sim.eso.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
 </feature>

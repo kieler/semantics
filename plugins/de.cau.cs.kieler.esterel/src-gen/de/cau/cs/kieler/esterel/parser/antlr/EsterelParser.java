@@ -25,7 +25,7 @@ public class EsterelParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrP
 	
 	@Override 
 	protected String getDefaultRuleName() {
-		return "Program";
+		return "EsterelProgram";
 	}
 	
 	public EsterelGrammarAccess getGrammarAccess() {

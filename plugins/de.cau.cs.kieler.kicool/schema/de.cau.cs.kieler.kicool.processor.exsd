@@ -42,8 +42,11 @@ This extension point allowes the contribution of a compiler transformation to th
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  
+                  The processor class
                </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.kicool.compilation.Processor:"/>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>

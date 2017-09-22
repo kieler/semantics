@@ -69,6 +69,12 @@ class AnnotationsExtensions {
             it.values += value
         ]
     }
+    
+    def Annotation createTagAnnotation(String name) {
+        AnnotationsFactory::eINSTANCE.createStringAnnotation => [
+            it.name = name
+        ]
+    }
 
 	def void copyAnnotations(Annotatable source, Annotatable target) {
 	    source.annotations.forEach[

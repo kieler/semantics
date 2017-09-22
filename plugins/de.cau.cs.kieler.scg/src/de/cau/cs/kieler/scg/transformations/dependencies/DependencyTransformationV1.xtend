@@ -22,7 +22,6 @@ import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
@@ -68,27 +67,27 @@ import de.cau.cs.kieler.scg.DataDependencyType
  * @kieler.rating 2013-10-23 proposed yellow
  */
 
-class DependencyTransformationV1 extends AbstractProductionTransformation implements Traceable {
+class DependencyTransformationV1 {//extends AbstractProductionTransformation implements Traceable {
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     
-    override getId() {
-        return SCGTransformations::DEPENDENCY_ID
-    }
-
-    override getName() {
-        return SCGTransformations::DEPENDENCY_ID
-    }
-
-    override getProducedFeatureId() {
-        return SCGFeatures::DEPENDENCY_ID
-    }
-
-    override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::BASIC_ID)
-    }
+//    override getId() {
+//        return SCGTransformations::DEPENDENCY_ID
+//    }
+//
+//    override getName() {
+//        return SCGTransformations::DEPENDENCY_ID
+//    }
+//
+//    override getProducedFeatureId() {
+//        return SCGFeatures::DEPENDENCY_ID
+//    }
+//
+//    override getRequiredFeatureIds() {
+//        return newHashSet(SCGFeatures::BASIC_ID)
+//    }
     
     // -------------------------------------------------------------------------
     // -- Injections 

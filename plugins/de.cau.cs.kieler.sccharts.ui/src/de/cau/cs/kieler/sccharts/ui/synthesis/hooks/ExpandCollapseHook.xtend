@@ -35,6 +35,10 @@ import static extension de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.Mem
  */
 @ViewSynthesisShared
 class ExpandCollapseHook extends SynthesisHook {
+    
+    /** The related synthesis actions */
+    public static val DisplayedActionData COLLAPSE_ALL = DisplayedActionData.create(CollapseAllRegionsAction.ID, "Collapse All Regions");
+    public static val DisplayedActionData EXPAND_ALL = DisplayedActionData.create(ExpandAllRegionsAction.ID, "Expand All Regions")  
 
     /** The related synthesis option */
     public static val SynthesisOption INITIALLY_COLLAPSE_ALL = SynthesisOption.createCheckOption("Initially collapse all regions", false)
@@ -43,10 +47,7 @@ class ExpandCollapseHook extends SynthesisHook {
     // ----------------------------------------------------------------------------------------------------------------
 
     override getDisplayedActions() {
-        return newLinkedList(
-            DisplayedActionData.create(ExpandAllRegionsAction.ID, "Expand All Regions"),
-            DisplayedActionData.create(CollapseAllRegionsAction.ID, "Collapse All Regions")
-        )
+        return newLinkedList(COLLAPSE_ALL, EXPAND_ALL)
     }
 
     override getDisplayedSynthesisOptions() {

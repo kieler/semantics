@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.kicool.System#getProcessors <em>Processors</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.System#getIntermediates <em>Intermediates</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.System#getInputClass <em>Input Class</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.System#getStartsets <em>Startsets</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.kicool.KiCoolPackage#getSystem()
@@ -172,5 +173,21 @@ public interface System extends EObject {
      * @generated
      */
     void setInputClass(String value);
+
+    /**
+     * Returns the value of the '<em><b>Startsets</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.kicool.KVPair}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Startsets</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Startsets</em>' containment reference list.
+     * @see de.cau.cs.kieler.kicool.KiCoolPackage#getSystem_Startsets()
+     * @model containment="true"
+     * @generated
+     */
+    EList<KVPair> getStartsets();
 
 } // System

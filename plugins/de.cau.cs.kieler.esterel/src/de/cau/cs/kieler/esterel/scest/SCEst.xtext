@@ -1,0 +1,124 @@
+grammar de.cau.cs.kieler.esterel.scest.SCEst with de.cau.cs.kieler.esterel.Esterel
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://kieler.cs.cau.de/annotations" as annotations
+import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions
+import "http://kieler.cs.cau.de/keffects/0.1.0" as keffects
+import "http://kieler.cs.cau.de/kext/0.1.0" as kext
+import "http://kieler.cs.cau.de/scl/0.2.0" as scl
+import "http://www.cau.de/cs/kieler/esterel/Esterel"
+
+//  root rule. a SCEst file can contain multiple modules
+EsterelProgram hidden(SL_COMMENT, ML_COMMENT, WS):
+    pragmas+=Pragma*
+    (modules+=EsterelModule)*;
+
+/* ###################################################
+ * ###                 7.2 Modules                 ###
+ * ###################################################
+ */
+EsterelModule returns scl::Module:
+    (annotations += Annotation)*
+    "module" name=ID ":"
+    (declarations+=VariableDeclaration | declarations+=EsterelDeclaration)*
+    (
+        ( statements+=EsterelParallel )
+    |   
+        (statements+=InstructionStatement ";" | statements+=MetaStatement)*
+        statements+=Statement?
+    )
+    ("end" "module" | ".");
+
+/* ###################################################
+ * ###               7.5 Statements                ###
+ * ###################################################
+ */
+
+MetaOrInstructionStatement returns scl::Statement:
+    MetaStatement | InstructionStatement
+;
+
+// Allow scl labels
+MetaStatement returns scl::Statement:
+    SCL::MetaStatement
+;
+ 
+InstructionStatement returns scl::Statement:
+	super
+	| UnEmit | Set | Assignment | Goto | Parallel | ModuleCall
+;
+
+EsterelThread returns scl::Statement:
+    InstructionStatement ({EsterelThread.statements+=current} (";" (statements+=InstructionStatement ";" | statements+=MetaStatement)* statements+=InstructionStatement?))?
+    |
+    MetaStatement ({EsterelThread.statements+=current} (statements+=InstructionStatement ";" | statements+=MetaStatement)* statements+=InstructionStatement?)?;
+    
+
+// ==> 7.5.2 Assignment
+// -------------------------------------
+Assignment returns scl::Assignment:
+    SCL::Assignment | // SCL is allowed again
+    valuedObject=[Variable|ID] ":=" expression=Expression;
+      
+/* ###################################################
+ * ###                   SCEst                     ###
+ * ###################################################
+ */
+
+// ==> unemit
+// -------------------------------------
+UnEmit:
+    (annotations += Annotation)*
+    "unemit" 
+    signal=[Signal|ID];
+
+// ==> reset: Signal value reset (absolute write)
+// -------------------------------------
+Set:
+    (annotations += Annotation)*
+    "set" 
+    signal=[Signal|ID] 
+    ("("expression=Expression")");
+    
+/* ###################################################
+ * ###                   Terminal                  ###
+ * ###################################################
+ */    
+    
+terminal ML_COMMENT: 
+    ('%' '{') -> ('}' '%')
+    |
+    ('/*'!'*') -> '*/';
+ 
+terminal SL_COMMENT: 
+    ( '//' | '%' ) !('\n'|'\r')* ('\r'? '\n')?;
+ 
+ 
+ /* ###################################################
+ * ###               Expressions                   ###
+ * ###################################################
+ */
+ 
+// Esterel is a bit richer than what is provided by kexpressions. 
+// These rules are introduced here.
+// Care about order of the rules! 
+AtomicExpression returns kexpressions::Expression:
+    EsterelFunctionCall
+    | TrapExpression
+    | BoolValue
+    | ValuedObjectTestExpression
+    | TextExpression
+    | '(' BooleanExpression ')'
+    | ConstantExpression
+    | FunctionCall;
+    
+    
+AtomicValuedExpression returns kexpressions::Expression:
+    IntValue
+    | FloatValue
+    | '(' ValuedExpression ')'
+    | AtomicExpression
+    | StringValue;
+    
+    
+    

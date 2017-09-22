@@ -5,3 +5,4 @@ bin/
 .svn/
 xtend-gen/
 target/
+**/.antlr-generator

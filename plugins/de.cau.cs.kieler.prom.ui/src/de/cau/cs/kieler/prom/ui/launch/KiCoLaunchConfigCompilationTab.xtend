@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.prom.ui.launch
 
-import de.cau.cs.kieler.kico.internal.Transformation
 import de.cau.cs.kieler.prom.IProjectHolder
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.data.FileData
@@ -379,12 +378,12 @@ class KiCoLaunchConfigCompilationTab extends AbstractKiCoLaunchConfigTab impleme
         // Set target language / compile chain
         var isCompileChain = true
         if (targetLanguage.input != null) {
-            for (trans : targetLanguage.input as Set<Transformation>) {
-                if (trans.id == launchData.targetLanguage) {
-                    targetLanguage.selection = new StructuredSelection(trans)
-                    isCompileChain = false
-                }
-            }
+//            for (trans : targetLanguage.input as Set<Transformation>) {
+//                if (trans.id == launchData.targetLanguage) {
+//                    targetLanguage.selection = new StructuredSelection(trans)
+//                    isCompileChain = false
+//                }
+//            }
         }
         if(isCompileChain) {
             compileChain.text = launchData.targetLanguage
@@ -431,10 +430,10 @@ class KiCoLaunchConfigCompilationTab extends AbstractKiCoLaunchConfigTab impleme
         } else {
             val selection = targetLanguage.selection as IStructuredSelection
             if (selection != null) {
-                val trans = selection.firstElement as Transformation
-                if (trans != null) {
-                    launchData.targetLanguage = trans.id
-                }
+//                val trans = selection.firstElement as Transformation
+//                if (trans != null) {
+//                    launchData.targetLanguage = trans.id
+//                }
             }
         }
         
