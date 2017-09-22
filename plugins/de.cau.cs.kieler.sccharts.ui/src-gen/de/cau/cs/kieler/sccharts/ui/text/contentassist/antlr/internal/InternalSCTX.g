@@ -9346,6 +9346,7 @@ rule__DuringAction__Group_3__1
     }
 :
 	rule__DuringAction__Group_3__1__Impl
+	rule__DuringAction__Group_3__2
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -9357,15 +9358,45 @@ rule__DuringAction__Group_3__1__Impl
     }
 :
 (
-{ before(grammarAccess.getDuringActionAccess().getTriggerAssignment_3_1()); }
-(rule__DuringAction__TriggerAssignment_3_1)
-{ after(grammarAccess.getDuringActionAccess().getTriggerAssignment_3_1()); }
+{ before(grammarAccess.getDuringActionAccess().getTriggerDelayAssignment_3_1()); }
+(rule__DuringAction__TriggerDelayAssignment_3_1)?
+{ after(grammarAccess.getDuringActionAccess().getTriggerDelayAssignment_3_1()); }
 )
 
 ;
 finally {
 	restoreStackSize(stackSize);
 }
+
+
+rule__DuringAction__Group_3__2
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__DuringAction__Group_3__2__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__DuringAction__Group_3__2__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getDuringActionAccess().getTriggerAssignment_3_2()); }
+(rule__DuringAction__TriggerAssignment_3_2)
+{ after(grammarAccess.getDuringActionAccess().getTriggerAssignment_3_2()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
 
 
 
@@ -26332,14 +26363,29 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__DuringAction__TriggerAssignment_3_1
+rule__DuringAction__TriggerDelayAssignment_3_1
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getDuringActionAccess().getTriggerBoolExpressionParserRuleCall_3_1_0()); }
-	ruleBoolExpression{ after(grammarAccess.getDuringActionAccess().getTriggerBoolExpressionParserRuleCall_3_1_0()); }
+{ before(grammarAccess.getDuringActionAccess().getTriggerDelayINTTerminalRuleCall_3_1_0()); }
+	RULE_INT{ after(grammarAccess.getDuringActionAccess().getTriggerDelayINTTerminalRuleCall_3_1_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__DuringAction__TriggerAssignment_3_2
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getDuringActionAccess().getTriggerBoolExpressionParserRuleCall_3_2_0()); }
+	ruleBoolExpression{ after(grammarAccess.getDuringActionAccess().getTriggerBoolExpressionParserRuleCall_3_2_0()); }
 )
 
 ;

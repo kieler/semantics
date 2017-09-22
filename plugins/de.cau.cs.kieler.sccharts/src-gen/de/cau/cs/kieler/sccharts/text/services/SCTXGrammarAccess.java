@@ -1199,8 +1199,10 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cDuringKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cIfKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cTriggerAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cTriggerBoolExpressionParserRuleCall_3_1_0 = (RuleCall)cTriggerAssignment_3_1.eContents().get(0);
+		private final Assignment cTriggerDelayAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cTriggerDelayINTTerminalRuleCall_3_1_0 = (RuleCall)cTriggerDelayAssignment_3_1.eContents().get(0);
+		private final Assignment cTriggerAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
+		private final RuleCall cTriggerBoolExpressionParserRuleCall_3_2_0 = (RuleCall)cTriggerAssignment_3_2.eContents().get(0);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
 		private final Keyword cDoKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
 		private final Assignment cEffectsAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
@@ -1215,12 +1217,12 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cLabelSTRINGTerminalRuleCall_5_1_0 = (RuleCall)cLabelAssignment_5_1.eContents().get(0);
 		
 		//DuringAction sccharts::DuringAction:
-		//	{sccharts::DuringAction} delay=DelayType? 'during' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';'
-		//	effects+=Effect)*)? ('label' label=STRING)?
+		//	{sccharts::DuringAction} delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolExpression)? ('do'
+		//	effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//{sccharts::DuringAction} delay=DelayType? 'during' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';'
-		//effects+=Effect)*)? ('label' label=STRING)?
+		//{sccharts::DuringAction} delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolExpression)? ('do'
+		//effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::DuringAction}
@@ -1235,17 +1237,23 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'during'
 		public Keyword getDuringKeyword_2() { return cDuringKeyword_2; }
 
-		//('if' trigger=BoolExpression)?
+		//('if' triggerDelay=INT? trigger=BoolExpression)?
 		public Group getGroup_3() { return cGroup_3; }
 
 		//'if'
 		public Keyword getIfKeyword_3_0() { return cIfKeyword_3_0; }
 
+		//triggerDelay=INT?
+		public Assignment getTriggerDelayAssignment_3_1() { return cTriggerDelayAssignment_3_1; }
+
+		//INT
+		public RuleCall getTriggerDelayINTTerminalRuleCall_3_1_0() { return cTriggerDelayINTTerminalRuleCall_3_1_0; }
+
 		//trigger=BoolExpression
-		public Assignment getTriggerAssignment_3_1() { return cTriggerAssignment_3_1; }
+		public Assignment getTriggerAssignment_3_2() { return cTriggerAssignment_3_2; }
 
 		//BoolExpression
-		public RuleCall getTriggerBoolExpressionParserRuleCall_3_1_0() { return cTriggerBoolExpressionParserRuleCall_3_1_0; }
+		public RuleCall getTriggerBoolExpressionParserRuleCall_3_2_0() { return cTriggerBoolExpressionParserRuleCall_3_2_0; }
 
 		//('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup_4() { return cGroup_4; }
@@ -2223,8 +2231,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//DuringAction sccharts::DuringAction:
-	//	{sccharts::DuringAction} delay=DelayType? 'during' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';'
-	//	effects+=Effect)*)? ('label' label=STRING)?
+	//	{sccharts::DuringAction} delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolExpression)? ('do'
+	//	effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
 	public DuringActionElements getDuringActionAccess() {
 		return pDuringAction;
 	}

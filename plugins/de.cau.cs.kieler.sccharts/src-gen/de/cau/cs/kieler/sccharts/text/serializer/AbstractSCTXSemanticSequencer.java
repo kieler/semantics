@@ -909,7 +909,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     DuringAction returns DuringAction
 	 *
 	 * Constraint:
-	 *     (delay=DelayType? trigger=BoolExpression? (effects+=Effect effects+=Effect*)? label=STRING?)
+	 *     (delay=DelayType? (triggerDelay=INT? trigger=BoolExpression)? (effects+=Effect effects+=Effect*)? label=STRING?)
 	 */
 	protected void sequence_DuringAction(ISerializationContext context, DuringAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

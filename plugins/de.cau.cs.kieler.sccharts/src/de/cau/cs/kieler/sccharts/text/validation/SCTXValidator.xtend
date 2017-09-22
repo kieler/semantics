@@ -38,6 +38,7 @@ import java.util.Set
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.validation.AbstractDeclarativeValidator
 import org.eclipse.xtext.validation.Check
+import de.cau.cs.kieler.sccharts.DuringAction
 
 //import org.eclipse.xtext.validation.Check
 
@@ -582,6 +583,14 @@ class SCTXValidator extends AbstractSCTXValidator {
                         action, 
                         SCChartsPackage.eINSTANCE.action_Effects)
             }
+        }
+    }
+    
+    @Check
+    def void checkCountDelayOnDuringAction(DuringAction action) {
+        if (action.triggerDelay > 1) {
+            warning("Count Delays on During Actions are not supported yet. The valued will be ignored by the transformation.",
+                action, SCChartsPackage.eINSTANCE.action_TriggerDelay);
         }
     }
     

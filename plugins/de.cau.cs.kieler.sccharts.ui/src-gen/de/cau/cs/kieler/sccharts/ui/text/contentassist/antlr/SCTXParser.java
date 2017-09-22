@@ -382,7 +382,8 @@ public class SCTXParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEntryActionAccess().getEffectsAssignment_3_2_1(), "rule__EntryAction__EffectsAssignment_3_2_1");
 					put(grammarAccess.getEntryActionAccess().getLabelAssignment_4_1(), "rule__EntryAction__LabelAssignment_4_1");
 					put(grammarAccess.getDuringActionAccess().getDelayAssignment_1(), "rule__DuringAction__DelayAssignment_1");
-					put(grammarAccess.getDuringActionAccess().getTriggerAssignment_3_1(), "rule__DuringAction__TriggerAssignment_3_1");
+					put(grammarAccess.getDuringActionAccess().getTriggerDelayAssignment_3_1(), "rule__DuringAction__TriggerDelayAssignment_3_1");
+					put(grammarAccess.getDuringActionAccess().getTriggerAssignment_3_2(), "rule__DuringAction__TriggerAssignment_3_2");
 					put(grammarAccess.getDuringActionAccess().getEffectsAssignment_4_1(), "rule__DuringAction__EffectsAssignment_4_1");
 					put(grammarAccess.getDuringActionAccess().getEffectsAssignment_4_2_1(), "rule__DuringAction__EffectsAssignment_4_2_1");
 					put(grammarAccess.getDuringActionAccess().getLabelAssignment_5_1(), "rule__DuringAction__LabelAssignment_5_1");
