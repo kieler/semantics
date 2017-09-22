@@ -243,6 +243,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             try {
                 res.load(newResourceSet.loadOptions)
                 val node = (res.getContents().get(0) as KNode).children.head
+                node.associateWith(vo)
                 vo.addNode(node)
                 result += node 
             
