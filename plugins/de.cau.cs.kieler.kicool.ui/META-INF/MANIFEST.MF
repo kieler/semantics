@@ -25,7 +25,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.ide,
  org.eclipse.xtext.xbase.ui,
  de.cau.cs.kieler.core.model,
- org.eclipse.emf.ecore.edit
+ org.eclipse.emf.ecore.edit,
+ de.cau.cs.kieler.kgraph.text
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.kicool.ui,
