@@ -59,8 +59,6 @@ import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.timing.transformation.TPPInformation;
 import de.cau.cs.kieler.scg.SCGraph;
-import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures;
-import de.cau.cs.kieler.scg.s.transformations.CodeGenerationTransformations;
 
 /**
  * Performs a timing analysis for an scchart with the help of the connected kta
