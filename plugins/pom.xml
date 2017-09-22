@@ -41,14 +41,8 @@
     <module>de.cau.cs.kieler.kev</module>
     <module>de.cau.cs.kieler.kex.ui</module>
     <module>de.cau.cs.kieler.kex</module>
-    <module>de.cau.cs.kieler.kico</module>
-    <module>de.cau.cs.kieler.kico.ui</module>
     <module>de.cau.cs.kieler.kicool</module>
     <module>de.cau.cs.kieler.kicool.ui</module>
-    <module>de.cau.cs.kieler.kico.server.ui</module>
-    <module>de.cau.cs.kieler.kico.server</module>
-    <module>de.cau.cs.kieler.klighd.server.ui</module>
-    <module>de.cau.cs.kieler.klighd.server</module>
     <module>de.cau.cs.kieler.kivis</module>
     <module>de.cau.cs.kieler.kivis.ui</module>
     <module>de.cau.cs.kieler.prom</module>
@@ -83,7 +77,6 @@
     <module>de.cau.cs.kieler.scg.s</module>
     <module>de.cau.cs.kieler.scl</module>
     <module>de.cau.cs.kieler.scl.ui</module>
-    <module>de.cau.cs.kieler.server</module>
     <module>de.cau.cs.kieler.sim.benchmark</module>
     <module>de.cau.cs.kieler.sim.eso.ui</module>
     <module>de.cau.cs.kieler.sim.eso</module>
