@@ -5,8 +5,7 @@ Bundle-SymbolicName: de.cau.cs.kieler.esterel.cec
 Bundle-Version: 0.13.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.esterel.cec.CECPlugin
 Bundle-Vendor: Kiel University
-Require-Bundle: org.eclipse.core.runtime,
- de.cau.cs.kieler.sim.kiem
+Require-Bundle: org.eclipse.core.runtime
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.esterel.cec
