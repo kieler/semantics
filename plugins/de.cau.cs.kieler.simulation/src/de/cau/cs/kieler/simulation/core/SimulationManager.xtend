@@ -206,14 +206,7 @@ class SimulationManager extends Configurable {
             for(action : config.execution.actions) {
                 val handler = action.findDataHandler
                 // Add step action with the corresponding method
-                switch(action.operation) {
-                    case ActionOperation.WRITE : {
-                        addAction(StepAction.Method.WRITE, handler)
-                    }
-                    case ActionOperation.READ : {
-                        addAction(StepAction.Method.READ, handler)
-                    }
-                }
+                addAction(action.operation, handler)
             }
         }
     }
@@ -291,7 +284,7 @@ class SimulationManager extends Configurable {
      * A step action to read a data handler should not be added, if that handler is updated after every step anyway. 
      * In this case it is sufficient to add this handler to the list of data handlers. 
      */
-    public def void addAction(StepAction.Method method, DataHandler handler) {
+    public def void addAction(String method, DataHandler handler) {
         addHandler(handler)
         actions.add(new StepAction(method, handler))
     }
@@ -318,16 +311,8 @@ class SimulationManager extends Configurable {
             for(action : usedConfiguration.initialization.actions) {
                 val handler = action.findDataHandler
                 // Add step action with the corresponding method
-                switch(action.operation) {
-                    case ActionOperation.WRITE : {
-                        val stepAction = new StepAction(StepAction.Method.WRITE, handler)
-                        stepAction.apply(currentPool)
-                    }
-                    case ActionOperation.READ : {
-                        val stepAction = new StepAction(StepAction.Method.READ, handler)
-                        stepAction.apply(currentPool)
-                    }
-                }
+                val stepAction = new StepAction(action.operation, handler)
+                stepAction.apply(currentPool)
             }
         }
         

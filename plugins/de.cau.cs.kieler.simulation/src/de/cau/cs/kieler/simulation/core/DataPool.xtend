@@ -16,8 +16,8 @@ import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
- * Central class of the simulation that holds all models and their variables at a given time.
- * A data pool consists of the models it contains.
+ * Central class of the simulation that holds all models and their variables for a given tick.
+ * A data pool consists of its models.
  * 
  * @author aas
  *
@@ -53,14 +53,35 @@ class DataPool implements Cloneable {
         return pool
     }
     
+    /**
+     * Returns first the model with the given name.
+     * 
+     * @param modelName The name of the model
+     * @return the first model with the given name, or null if none
+     */
     public def Model getModel(String modelName) {
         return models.findFirst[it.name == modelName]
     }
     
+    /**
+     * Returns the first variable with the given name.
+     * 
+     * @param modelName The name of the variable
+     * @return the first variable with the given name, or null if none
+     */
     public def Variable getVariable(String variableName) {
         return getVariable(variableName, true)
     }
     
+    /**
+     * Returns the first variable with the given name.
+     * If the name is fully qualified (e.g. MyModel.MyVar)
+     * then the variable is searched in the model with the corresponding name.
+     * 
+     * @param variableName The name of the variable
+     * @param isfullyQualified Determines whether it is a fully qualified variable name
+     * @return the first variable with the given name (possibly of the corresponding model), or null if none
+     */
     public def Variable getVariable(String variableName, boolean isFullyQualified) {
         if(!isFullyQualified) {
             // No model name specified, so search in the complete data pool for the variable
@@ -79,17 +100,29 @@ class DataPool implements Cloneable {
         }
     }
     
+    /**
+     * Returns the first variable with the given name of the model with the given name.
+     * 
+     * @param modelName The name of the model, or null if any variable with the given name should be returned
+     * @param variableName The name of the variable
+     * @return the first variable with the given name of the given model, or null if none
+     */
     public def Variable getVariable(String modelName, String variableName) {
         if(modelName != null) {
             val model = getModel(modelName)
-            return model.getVariable(variableName)
+            if(model != null) {
+                return model.getVariable(variableName)    
+            }
         } else {
             return getVariable(variableName)
         }
+        return null
     }
     
     /**
      * Returns the concatenation of all variables of all models.
+     * 
+     * @return the concatenation of all variables of all models.
      */
     public def List<Variable> getAllVariables() {
         val List<Variable> allVariables = newArrayList()
@@ -100,21 +133,27 @@ class DataPool implements Cloneable {
     }
     
     /**
-     * The models in this pool
+     * Returns the models in this pool.
+     * 
+     * @return the models in this pool
      */
     public def List<Model> getModels() {
         return models
     }
     
     /**
-     * Remove a model from the pool
+     * Remove a model from the pool.
+     * 
+     * @param m The model
      */
     public def void removeModel(Model m) {
         models.remove(m)
     }
     
     /**
-     * Add a model to the pool
+     * Add a model to the pool.
+     * 
+     * @param m The model
      */
     public def void addModel(Model m) {
         // Remove in old model
@@ -128,6 +167,9 @@ class DataPool implements Cloneable {
         }
     }
     
+    /**
+     * Returns a model name that is not yet used in this data pool
+     */
     public def String getUniqueModelName(String name, int suffix) {
         val uniqueName = if(suffix > 0)
                              name+"_"+suffix
@@ -143,10 +185,11 @@ class DataPool implements Cloneable {
     
     /**
      * Returns a list of all previous pools from old to new.
+     * 
+     * @return the list of previous data pools
      */
     public def List<DataPool> getHistory() {
         val List<DataPool> history = newArrayList()
-//        history.add(this)
         var next = this.previousPool
         while(next != null) {
             history.add(next)
@@ -155,10 +198,16 @@ class DataPool implements Cloneable {
         return history.reverse
     }
     
+    /**
+     * Sets the flag that a variable has been modified so that the variables have to be applied before the next tick.
+     */
     protected def void setModifiedVariable() {
         hasModifiedVariable = true
     }
     
+    /**
+     * Applies all user values.
+     */
     public def void applyUserValues() {
         // Apply user made changes to variable values
         for(m : models) {

@@ -27,23 +27,16 @@ class StepAction {
     @Accessors
     private var DataHandler handler
     /**
-     * The method to perform on the handler.
+     * The operation to perform by the handler.
      */
     @Accessors
-    private var Method method
-    
-    /**
-     * Possible methods to perform.
-     */
-    public enum Method {
-        READ, WRITE
-    }
+    private var String operation
     
     /**
      * Constructor
      */
-    new(Method method, DataHandler handler) {
-        this.method = method
+    new(String operation, DataHandler handler) {
+        this.operation = operation
         this.handler = handler
     }
     
@@ -51,10 +44,9 @@ class StepAction {
      * Performs the method on the data handler.
      */
     public def void apply(DataPool pool) {
-//        println("Performing "+method + " on "+handler)
-        switch(method) {
-            case StepAction.Method.READ : handler.read(pool)
-            case StepAction.Method.WRITE : handler.write(pool)    
+        val op = handler.getOperation(operation)
+        if(op != null) {
+            op.apply(pool)
         }
     }
 }
