@@ -16,7 +16,6 @@ import de.cau.cs.kieler.prom.ExtensionLookupUtil
 import de.cau.cs.kieler.prom.configurable.Configurable
 import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.kisim.Action
-import de.cau.cs.kieler.simulation.kisim.ActionOperation
 import de.cau.cs.kieler.simulation.kisim.SimulationConfiguration
 import java.util.List
 import java.util.Map
@@ -283,10 +282,27 @@ class SimulationManager extends Configurable {
      * Adds a step action.
      * A step action to read a data handler should not be added, if that handler is updated after every step anyway. 
      * In this case it is sufficient to add this handler to the list of data handlers. 
+     * 
+     * @param method The method to be performed. Can be null if the handler has only a single method.
+     * @param handler The handler that should perform the method
      */
     public def void addAction(String method, DataHandler handler) {
+        if(method == null) {
+            addAction(handler)
+        } else {
+            addHandler(handler)
+            actions.add(new StepAction(method, handler))    
+        }
+    }
+    
+    /**
+     * Adds a step action for a handler, which has only a single operation it can perform.
+     * 
+     * @param handler The handler that should perform its method
+     */
+    public def void addAction(DataHandler handler) {
         addHandler(handler)
-        actions.add(new StepAction(method, handler))
+        actions.add(new StepAction(handler))
     }
     
     /**
@@ -324,8 +340,9 @@ class SimulationManager extends Configurable {
      * Initializes all data handlers that have not been initialized yet
      */
     private def void initializeHandlers(List<DataHandler> handlers) {
-        // Initialize simulators
         for(handler : handlers) {
+            handler.initialize
+            // Initialize simulation handlers
             if(handler instanceof Simulator) {
                 if(!initializedHandlers.contains(handler)) {
                     initializedHandlers.add(handler)           

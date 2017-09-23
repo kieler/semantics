@@ -20,6 +20,7 @@ import de.cau.cs.kieler.simulation.core.Model
 import java.io.File
 import org.eclipse.core.resources.IFile
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.simulation.core.DataPoolOperation
 
 /**
  * @author aas
@@ -32,6 +33,16 @@ class SimulationInputFileHandler extends DefaultSimulator {
     
     @Accessors
     private var IFile file
+    
+    private val operation = new DataPoolOperation("write") {
+        override apply(DataPool pool) {
+            write(pool)
+        }
+    }
+    
+    override getOperations() {
+        return #[operation]
+    }
     
     override initialize(DataPool pool) {
         if(modelName.value == null) {
@@ -52,7 +63,7 @@ class SimulationInputFileHandler extends DefaultSimulator {
      * Reads the content of the file and parses it as JSON object.
      * Fills the data pool with the created objects.
      */
-    override write(DataPool pool) {
+    public def write(DataPool pool) {
         // Get model in pool
         val model = pool.models.findFirst[it.name == modelName]
         

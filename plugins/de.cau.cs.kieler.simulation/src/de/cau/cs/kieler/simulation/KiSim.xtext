@@ -34,9 +34,5 @@ Execution:
 ;
 
 Action:
-    operation=ActionOperation handler=ID (id=ID)
-;
-
-enum ActionOperation:
-    WRITE='write' | READ='read'
+    (operation=ID)? handler=ID (id=ID)?
 ;

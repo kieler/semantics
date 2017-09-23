@@ -5,7 +5,6 @@ package de.cau.cs.kieler.simulation.kisim.impl;
 import de.cau.cs.kieler.simulation.kisim.*;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -80,40 +79,6 @@ public class KisimFactoryImpl extends EFactoryImpl implements KisimFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  @Override
-  public Object createFromString(EDataType eDataType, String initialValue)
-  {
-    switch (eDataType.getClassifierID())
-    {
-      case KisimPackage.ACTION_OPERATION:
-        return createActionOperationFromString(eDataType, initialValue);
-      default:
-        throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
-    }
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String convertToString(EDataType eDataType, Object instanceValue)
-  {
-    switch (eDataType.getClassifierID())
-    {
-      case KisimPackage.ACTION_OPERATION:
-        return convertActionOperationToString(eDataType, instanceValue);
-      default:
-        throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
-    }
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public SimulationConfiguration createSimulationConfiguration()
   {
     SimulationConfigurationImpl simulationConfiguration = new SimulationConfigurationImpl();
@@ -162,28 +127,6 @@ public class KisimFactoryImpl extends EFactoryImpl implements KisimFactory
   {
     ActionImpl action = new ActionImpl();
     return action;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public ActionOperation createActionOperationFromString(EDataType eDataType, String initialValue)
-  {
-    ActionOperation result = ActionOperation.get(initialValue);
-    if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-    return result;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String convertActionOperationToString(EDataType eDataType, Object instanceValue)
-  {
-    return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**

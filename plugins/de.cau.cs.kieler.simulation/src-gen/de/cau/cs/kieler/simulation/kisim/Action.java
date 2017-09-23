@@ -26,7 +26,6 @@ public interface Action extends EObject
 {
   /**
    * Returns the value of the '<em><b>Operation</b></em>' attribute.
-   * The literals are from the enumeration {@link de.cau.cs.kieler.simulation.kisim.ActionOperation}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Operation</em>' attribute isn't clear,
@@ -34,24 +33,22 @@ public interface Action extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Operation</em>' attribute.
-   * @see de.cau.cs.kieler.simulation.kisim.ActionOperation
-   * @see #setOperation(ActionOperation)
+   * @see #setOperation(String)
    * @see de.cau.cs.kieler.simulation.kisim.KisimPackage#getAction_Operation()
    * @model
    * @generated
    */
-  ActionOperation getOperation();
+  String getOperation();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.simulation.kisim.Action#getOperation <em>Operation</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Operation</em>' attribute.
-   * @see de.cau.cs.kieler.simulation.kisim.ActionOperation
    * @see #getOperation()
    * @generated
    */
-  void setOperation(ActionOperation value);
+  void setOperation(String value);
 
   /**
    * Returns the value of the '<em><b>Handler</b></em>' attribute.

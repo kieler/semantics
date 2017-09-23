@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.simulation
 
+import de.cau.cs.kieler.prom.FileExtensions
 import de.cau.cs.kieler.prom.KiBuildExtensions
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
@@ -19,7 +20,6 @@ import de.cau.cs.kieler.prom.build.FileGenerationResult
 import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.Simulator
-import de.cau.cs.kieler.simulation.core.StepAction
 import de.cau.cs.kieler.simulation.handlers.ExecutableSimulator
 import de.cau.cs.kieler.simulation.handlers.Redirect
 import de.cau.cs.kieler.simulation.handlers.SimulationInputFileHandler
@@ -29,7 +29,6 @@ import java.io.File
 import java.util.List
 import org.eclipse.core.resources.IFile
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.prom.FileExtensions
 
 /**
  * @author aas
@@ -104,10 +103,10 @@ class SimulationUtil {
         redirectBA.to.value = fileA.name
         // Create simulation manager
         val simMan = new SimulationManager
-        simMan.addAction(StepAction.Method.WRITE, exeA)
-        simMan.addAction(StepAction.Method.WRITE, redirectAB)
-        simMan.addAction(StepAction.Method.WRITE, exeB)
-        simMan.addAction(StepAction.Method.WRITE, redirectBA)
+        simMan.addAction(exeA)
+        simMan.addAction(redirectAB)
+        simMan.addAction(exeB)
+        simMan.addAction(redirectBA)
         simMan.initializeSimulation
     }
     
@@ -122,9 +121,10 @@ class SimulationUtil {
         
         // Create new simulation with the trace
         val simMan = new SimulationManager
-        simMan.addAction(StepAction.Method.WRITE, traceHandler)
-        simMan.addAction(StepAction.Method.WRITE, exeSimulator)
-        simMan.addAction(StepAction.Method.READ, traceHandler)
+        simMan.addAction("write", traceHandler)
+        simMan.addAction(exeSimulator)
+        simMan.addAction("verify", traceHandler)
+        simMan.addAction("loadNextTick", traceHandler)
         simMan.initializeSimulation
     }
     
@@ -170,7 +170,7 @@ class SimulationUtil {
     
     private static def void startSimulator(Simulator simulator) {
         val simMan = new SimulationManager()
-        simMan.addAction(StepAction.Method.WRITE, simulator)
+        simMan.addAction(simulator)
         simMan.initializeSimulation
     }
     
@@ -186,12 +186,7 @@ class SimulationUtil {
         } catch(SecurityException e) {
             // The access to the file was denied, thus it cannot be executed.
             return false    
-        } 
-//        if(file.fileExtension == null) {
-//            return true
-//        } else {
-//            return #["", "exe", "jar"].contains(file.fileExtension)
-//        }
+        }
     }
     
     private static def boolean isTraceFile(IFile file) {

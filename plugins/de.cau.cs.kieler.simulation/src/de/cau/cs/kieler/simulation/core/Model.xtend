@@ -49,15 +49,25 @@ class Model implements Cloneable {
     @Accessors(PUBLIC_GETTER)
     private boolean hasModifiedVariable
 
+    /**
+     * Constructor
+     */
     new () {
     }
-
+    
+    /**
+     * Constructor
+     * 
+     * @param name The name
+     */
     new(String name) {
         this.name = name
     }
 
     /**
      * Convert this model to a json representation.
+     * 
+     * @return the JSON representation for this object
      */
     public def String toJson() {
         val json = JsonManager.GSON.toJson(this)
@@ -66,6 +76,10 @@ class Model implements Cloneable {
     
     /**
      * Creates a model from a json representation
+     * 
+     * @param name The name for the new model
+     * @param json The JSON representation to be loaded
+     * @return the loaded model
      */
     public static def Model createFromJson(String name, String json) {
         val m = JsonManager.GSON.fromJson(json, typeof(Model))
@@ -75,6 +89,8 @@ class Model implements Cloneable {
     
     /**
      * Returns a list of previous states of this model from old to new. 
+     * 
+     * @return the history of previous models
      */
     public def List<Model> getHistory() {
         val List<Model> history = newArrayList()
@@ -91,6 +107,9 @@ class Model implements Cloneable {
     
     /**
      * Returns the variable with the given name.
+     * 
+     * @param name The name
+     * @return the variable with the given name, or null if none
      */
     public def Variable getVariable(String name) {
         variables.findFirst[it.name == name]
@@ -98,6 +117,8 @@ class Model implements Cloneable {
     
     /**
      * Returns the variables.
+     * 
+     * @return the variables in this model
      */
     public def List<Variable> getVariables() {
         return variables
@@ -105,6 +126,8 @@ class Model implements Cloneable {
 
     /**
      * Adds a variables.
+     * 
+     * @param v The variable
      */
     public def void addVariable(Variable v) {
         // Remove in old model
@@ -118,6 +141,9 @@ class Model implements Cloneable {
         }
     }
     
+    /**
+     * Applies the user values of all variables
+     */
     public def void applyUserValues() {
         // Apply user made changes to variable values
         for(v : variables) {
@@ -125,6 +151,9 @@ class Model implements Cloneable {
         }
     }
     
+    /**
+     * Sets the flag to indicate that at least one variable has a user value
+     */
     protected def void setModifiedVariable() {
         hasModifiedVariable = true
         pool.setModifiedVariable

@@ -38,6 +38,11 @@ interface DataHandler {
     public def List<DataPoolOperation> getOperations()
     
     /**
+     * Initialize everything
+     */
+    public def void initialize()
+    
+    /**
      * Stop everything and clean up
      */
     public def void stop()
@@ -50,5 +55,9 @@ interface DataHandler {
      */
     public def DataPoolOperation getOperation(String operationName) {
         return operations.findFirst[it.name == operationName]
+    }
+    
+    public def String getOperationNames() {
+        return operations.map[it.name].join(", ")
     }
 }

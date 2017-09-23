@@ -58,12 +58,6 @@ class Variable implements Cloneable {
     private boolean isOutput = false
  
     /**
-     * Is this variable a signal?
-     */
-    @Accessors
-    private boolean isSignal = false
-    
-    /**
      * The model in which this variable is saved.
      */
     @Accessors
@@ -77,6 +71,8 @@ class Variable implements Cloneable {
     
     /**
      * Constructor
+     * 
+     * @param name The name
      */
     new(String name) {
         this.name = name
@@ -84,6 +80,9 @@ class Variable implements Cloneable {
     
     /**
      * Constructor
+     * 
+     * @param name the name
+     * @param value the value
      */
     new(String name, Object value) {
         this( name)
@@ -92,6 +91,9 @@ class Variable implements Cloneable {
     
     /**
      * Set the value and type of this variable.
+     * The type is infered from the value.
+     * 
+     * @param value The value
      */
     public def void setValue(Object value) {
         this.value = value
@@ -114,6 +116,8 @@ class Variable implements Cloneable {
     
     /**
      * Returns the type.
+     * 
+     * @return the type of the variable.
      */
     public def VariableType getType() {
         return type
@@ -121,6 +125,8 @@ class Variable implements Cloneable {
     
     /**
      * Returns a list with previous states of this variable from old to new.
+     * 
+     * @param the previous versions of this variable
      */
     public def List<Variable> getHistory() {
         val List<Variable> history = newArrayList()
@@ -138,15 +144,27 @@ class Variable implements Cloneable {
     /**
      * Returns true if the user has set a value for this variable,
      * and the user value differs from the actual value.
+     * 
+     * @return true if the variable has a user value that must be applied
      */
     public def boolean isDirty() {
         return userValue != null && !userValue.equals(value)
     }
     
+    /**
+     * Returns the user value
+     * 
+     * @return the user value
+     */
     public def Object getUserValue() {
         return userValue
     }
     
+    /**
+     * Sets the user value.
+     * 
+     * @param value The value
+     */
     public def void setUserValue(Object value) {
         // Mark the modification in the model
         model.setModifiedVariable
@@ -177,6 +195,9 @@ class Variable implements Cloneable {
         value = userValue
     }
     
+    /**
+     * Sets the value of the variable to represent a state of 'present' wrt. synchronous langugages
+     */
     public def void setPresent() {
         if(value instanceof Boolean) {
            value = true 
@@ -185,6 +206,9 @@ class Variable implements Cloneable {
         }
     }
     
+    /**
+     * Sets the value of the variable to represent a state of 'absent' wrt. synchronous langugages
+     */
     public def void setAbsent() {
         if(value instanceof Boolean) {
            value = false 
@@ -193,6 +217,9 @@ class Variable implements Cloneable {
         }
     }
     
+    /**
+     * Checks if the value of the variable represents a state of 'present' wrt. synchronous langugages
+     */
     public def boolean isPresent() {
         if(value instanceof Boolean) {
             return value
@@ -203,10 +230,18 @@ class Variable implements Cloneable {
         }
     }
     
+    /**
+     * Toggles the present state (present -> absent, absent -> present)
+     */
     public def void togglePresentState() {
         value = toggledPresentState
     }
     
+    /**
+     * Returns the present state, that this variable does NOT have at the moment.
+     * 
+     * @return the toggled present state.
+     */
     public def Object toggledPresentState() {
         if(value instanceof Boolean) {
             return !value
@@ -221,6 +256,12 @@ class Variable implements Cloneable {
         }
     }
     
+    /**
+     * Returns the fully qualified name of the variable.
+     * This is a concatenation of the model name and variable name.
+     * 
+     * @return the fully qualified name of the variable.
+     */
     public def String getFullyQualifiedName() {
         if(model != null)
             return model.name+"."+name
@@ -237,7 +278,6 @@ class Variable implements Cloneable {
         v.type = this.type
         v.isInput = this.isInput
         v.isOutput = this.isOutput
-        v.isSignal = this.isSignal
         v.value = this.value
         v.userValue = this.userValue
         return v

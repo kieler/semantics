@@ -17,6 +17,7 @@ import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
 import de.cau.cs.kieler.simulation.core.NDimensionalArray
 import java.util.Arrays
+import de.cau.cs.kieler.simulation.core.DataPoolOperation
 
 /**
  * Sets the value of input variables of one model (to)
@@ -36,11 +37,21 @@ class Redirect extends DefaultDataHandler {
      */
     public val to = new ConfigurableAttribute("to", null, true)
     
+    private val operation = new DataPoolOperation("write") {
+        override apply(DataPool pool) {
+            write(pool)
+        }
+    }
+    
+    override getOperations() {
+        return #[operation]
+    }
+    
     /**
      * Sets the value of input variables the to-model
      * to the value of output variables of the from-model.
      */
-    override write(DataPool pool) {
+    public def void write(DataPool pool) {
         val fromModel = findModel(pool, from.stringValue)
         val outputs = fromModel.variables.filter[it.isOutput]
         

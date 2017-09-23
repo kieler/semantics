@@ -26,7 +26,7 @@ class StepSimulationSubTick extends SimulationToolbarButton {
         super.execute(event)
         if(simulation != null && !justRestarted) {
             PromConsole.print("Step single (performing "
-                + simulation.currentAction.method + " on " + simulation.currentAction.handler + ")")
+                + simulation.currentAction.operation.name + " on " + simulation.currentAction.handler + ")")
             simulation.stepSubTick()
         }
         return null

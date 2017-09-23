@@ -32,6 +32,7 @@ import java.util.concurrent.TimeUnit
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.Path
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.simulation.core.DataPoolOperation
 
 /**
  * Creates a new process by starting an executable and sends / receives variables of this process using JSON.
@@ -54,6 +55,16 @@ class ExecutableSimulator extends DefaultSimulator {
     private val timeLimiter = new SimpleTimeLimiter()
     
     private var SimulationCompilerListener exeResourceListener
+    
+    public val operation = new DataPoolOperation("write") {
+        override apply(DataPool pool) {
+            write(pool)
+        }
+    }
+    
+    override getOperations() {
+        return #[operation]
+    }
     
     /**
      * Create new process and read it's first JSON object with variables to fill the data pool.
@@ -113,7 +124,7 @@ class ExecutableSimulator extends DefaultSimulator {
     /**
      * Send the variables in the pool of this simulator's model via JSON.
      */
-    override write(DataPool pool) {
+    protected def void write(DataPool pool) {
         // Create json for this model from data pool
         val model = pool.models.findFirst[it.name == modelName]
         val jsonInput = model.toJson

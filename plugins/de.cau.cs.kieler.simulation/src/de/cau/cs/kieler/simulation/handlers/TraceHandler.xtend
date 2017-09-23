@@ -23,6 +23,7 @@ import de.cau.cs.kieler.simulation.trace.ktrace.TraceFile
 import org.eclipse.core.runtime.IPath
 import org.eclipse.core.runtime.Path
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.simulation.core.DataPoolOperation
 
 /**
  * @author aas
@@ -34,8 +35,29 @@ class TraceHandler extends DefaultDataHandler {
     public val modelName = new ConfigurableAttribute("modelName")
     public val traceNumber = new ConfigurableAttribute("traceNumber", 0)
     public val tickNumber = new ConfigurableAttribute("tickNumber", 0)
-    public val checkOutputs = new ConfigurableAttribute("checkOutputs", true)
     public val checkInterface = new ConfigurableAttribute("checkInterface", true)
+    
+    private val writeOperation = new DataPoolOperation("write") {
+        override apply(DataPool pool) {
+            write(pool)
+        }
+    }
+    
+    private val verifyOperation = new DataPoolOperation("verify") {
+        override apply(DataPool pool) {
+            verify(pool)
+        }
+    }
+    
+    private val loadNextTickOperation = new DataPoolOperation("loadNextTick") {
+        override apply(DataPool pool) {
+            loadNextTick(pool)
+        }
+    }
+    
+    override getOperations() {
+        return #[writeOperation, verifyOperation, loadNextTickOperation]
+    }
     
     /**
      * The trace model that should be used to load the trace data.
@@ -46,8 +68,7 @@ class TraceHandler extends DefaultDataHandler {
         
     private var TraceDataProvider traceDataProvider;
     
-    override read(DataPool pool) {
-        initialize
+    public def void verify(DataPool pool) {
         if(isFinished) {
 //            System.err.println("Trace is finished already.")
             return;
@@ -114,9 +135,6 @@ class TraceHandler extends DefaultDataHandler {
                 }
             }
         }
-        
-        // Get next tick
-        loadNextTick
     }
     
     def match(Variable a, Variable b) {
@@ -129,8 +147,7 @@ class TraceHandler extends DefaultDataHandler {
         }
     }
     
-    override write(DataPool pool) {
-        initialize
+    public def void write(DataPool pool) {
         if(isFinished) {
 //            System.err.println("Trace is finished already.")
             return;
@@ -152,12 +169,14 @@ class TraceHandler extends DefaultDataHandler {
                 }   
             }    
         }
-        
-        // Don't compare outputs of the simulation with the trace.
-        // So only inputs should be set and we can get the next tick now.
-        if(!checkOutputs.boolValue) {
-            loadNextTick
-        }  
+    }
+    
+    public def void loadNextTick(DataPool pool) {
+        tickNumber.value = tickNumber.intValue+1
+        if(tickNumber.intValue >= traceDataProvider.traceLength) {
+            val event = createTraceFinishedEvent
+            SimulationManager.instance.fireEvent(event)
+        }
     }
     
     private def Variable getCorrespondingVariable(DataPool pool, Model model, Variable variable) {
@@ -171,7 +190,7 @@ class TraceHandler extends DefaultDataHandler {
         return correspondingVariable
     }
     
-    private def void initialize() {
+    override initialize() {
         if(traceDataProvider == null) {
             if(externalTraceModel != null) {
                 loadTrace(externalTraceModel)
@@ -264,14 +283,6 @@ class TraceHandler extends DefaultDataHandler {
                       + "from '"+traceDataProvider.filePath+"'\n"
                       + "The trace expects this output variable"
         return event
-    }
-    
-    private def void loadNextTick() {
-        tickNumber.value = tickNumber.intValue+1
-        if(tickNumber.intValue >= traceDataProvider.traceLength) {
-            val event = createTraceFinishedEvent
-            SimulationManager.instance.fireEvent(event)
-        }
     }
     
     private def boolean isFinished() {

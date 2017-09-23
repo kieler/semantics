@@ -15,7 +15,6 @@ package de.cau.cs.kieler.simulation.handlers
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.simulation.core.DataHandler
-import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.IPath
@@ -27,11 +26,7 @@ import org.eclipse.core.runtime.IPath
  *
  */
 abstract class DefaultDataHandler implements DataHandler {
-    
-    override read(DataPool pool) {
-    }
-    
-    override write(DataPool pool) {
+    override initialize() {
     }
     
     override stop() {

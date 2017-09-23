@@ -19,6 +19,7 @@ import de.cau.cs.kieler.simulation.core.DataPool
 import java.io.File
 import org.eclipse.core.resources.IFile
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.simulation.core.DataPoolOperation
 
 /**
  * @author aas
@@ -33,10 +34,20 @@ class SimulationOutputFileHandler extends DefaultDataHandler {
     
     private var String modelName
     
+    private val operation = new DataPoolOperation("write") {
+        override apply(DataPool pool) {
+            write(pool)
+        }
+    }
+    
+    override getOperations() {
+        return #[operation]
+    }
+    
     /**
      * Write a model in the data pool to the file system.
      */
-    override write(DataPool pool) {
+    public def write(DataPool pool) {
         val fileName = Files.getNameWithoutExtension(fileLocation)
         modelName = fileName
         
