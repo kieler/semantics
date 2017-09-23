@@ -15,7 +15,7 @@ package de.cau.cs.kieler.simulation.core
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
- * Combination of a data handler and a method (e.g. write / verify) to be performed by that handler.
+ * Combination of a data handler (e.g. a trace handler) and a method (e.g. write / verify) to be performed by that handler.
  * 
  * @author aas
  *

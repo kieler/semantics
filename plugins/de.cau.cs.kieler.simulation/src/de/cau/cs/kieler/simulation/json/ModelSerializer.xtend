@@ -25,11 +25,16 @@ import java.lang.reflect.Type
 import de.cau.cs.kieler.simulation.core.Variable
 
 /**
+ * (De-)Serializer for models in the data pool.
+ * 
  * @author aas
  *
  */
 class ModelSerializer implements JsonSerializer<Model>, JsonDeserializer<Model> {
     
+    /**
+     * {@inheritDoc}
+     */
     override serialize(Model src, Type typeOfSrc, JsonSerializationContext context) {
         val object = new JsonObject()
         // Add variables
@@ -42,6 +47,9 @@ class ModelSerializer implements JsonSerializer<Model>, JsonDeserializer<Model> 
         return object
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         val object = json.asJsonObject
         

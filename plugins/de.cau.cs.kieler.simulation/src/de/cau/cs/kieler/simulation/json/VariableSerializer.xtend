@@ -25,11 +25,15 @@ import com.google.gson.JsonPrimitive
 import de.cau.cs.kieler.simulation.core.NDimensionalArray
 
 /**
+ * (De-)Serializer for variables in the data pool
+ * 
  * @author aas
  *
  */
 class VariableSerializer implements JsonSerializer<Variable> , JsonDeserializer<Variable> {
-    
+    /**
+     * {@inheritDoc}
+     */
     override serialize(Variable src, Type typeOfSrc, JsonSerializationContext context) {
         val object = new JsonObject()
         object.addProperty("name", src.name)
@@ -40,6 +44,9 @@ class VariableSerializer implements JsonSerializer<Variable> , JsonDeserializer<
         return object
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         val object = json.asJsonObject
         

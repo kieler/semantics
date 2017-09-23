@@ -25,17 +25,22 @@ import com.google.gson.JsonParseException
 import java.util.List
 
 /**
+ * (De-)Serializer for NDimensionalArrays in the simulation.
+ * 
  * @author aas
  *
  */
 class NDimensionalArraySerializer implements JsonSerializer<NDimensionalArray>,
                                              JsonDeserializer<NDimensionalArray> {
     
+    /**
+     * {@inheritDoc}
+     */
     override serialize(NDimensionalArray src, Type typeOfSrc, JsonSerializationContext context) {
         val object = new JsonObject()
         // Add indices
         val indicesArray = new JsonArray()
-        for(i : src.indices) {
+        for(i : src.cardinalities) {
             indicesArray.add(i)    
         }
         object.add("indices", indicesArray)
@@ -55,6 +60,9 @@ class NDimensionalArraySerializer implements JsonSerializer<NDimensionalArray>,
         return object
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         val object = json.asJsonObject
         

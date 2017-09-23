@@ -64,8 +64,8 @@ class Redirect extends DefaultDataHandler {
             if(i != null) {
                 if(i.value.class.isAssignableFrom(o.value.class)) {
                     if(i.value instanceof NDimensionalArray && o.value instanceof NDimensionalArray) {
-                        val iIndices = (i.value as NDimensionalArray).indices
-                        val oIndices = (o.value as NDimensionalArray).indices
+                        val iIndices = (i.value as NDimensionalArray).getCardinalities
+                        val oIndices = (o.value as NDimensionalArray).getCardinalities
                         val boolean arraySizeMatches = Arrays.equals(iIndices, oIndices)
                         if(!arraySizeMatches) {
                             throw new Exception("Array size mismatch of '"+this+"'\n"
