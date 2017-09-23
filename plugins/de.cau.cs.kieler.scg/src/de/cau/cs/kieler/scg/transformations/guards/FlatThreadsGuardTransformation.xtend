@@ -18,11 +18,10 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsReplacementExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.ExpressionDependency
-import de.cau.cs.kieler.scg.SCGAnnotations
+import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
@@ -52,13 +51,13 @@ class FlatThreadsGuardTransformation extends AbstractGuardTransformation impleme
         return SCGTransformations::FT_GUARDS_NAME
     }
 
-    override getProducedFeatureId() {
-        return SCGFeatures::GUARDS_ID
-    }
-
-    override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::GUARD_EXPRESSIONS_ID)
-    }
+//    override getProducedFeatureId() {
+//        return SCGFeatures::GUARDS_ID
+//    }
+//
+//    override getRequiredFeatureIds() {
+//        return newHashSet(SCGFeatures::GUARD_EXPRESSIONS_ID)
+//    }
 
     // -------------------------------------------------------------------------
     // -- Injections 
@@ -85,11 +84,11 @@ class FlatThreadsGuardTransformation extends AbstractGuardTransformation impleme
       
     @Inject private Injector injector      
       
-    public def SCGraph transform(SCGraph scg, KielerCompilerContext context) {
+    override SCGraph transform(SCGraph scg) {
          
         val simpleGuardTransformation = injector.getInstance(SimpleGuardTransformation)
         
-        val mySCG = simpleGuardTransformation.transform(scg, context)    
+        val mySCG = simpleGuardTransformation.transform(scg)    
          
      	val go = mySCG.findValuedObjectByName("_GO")
      	

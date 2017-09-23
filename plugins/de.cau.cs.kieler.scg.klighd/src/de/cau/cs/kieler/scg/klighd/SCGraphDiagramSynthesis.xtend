@@ -19,8 +19,6 @@ import com.google.common.collect.Multimap
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kico.CompilationResult
-import de.cau.cs.kieler.kico.KiCoProperties
 import de.cau.cs.kieler.klighd.IKlighdSelection
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
@@ -59,7 +57,7 @@ import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.GuardDependency
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.SCGAnnotations
+import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScheduleDependency
 import de.cau.cs.kieler.scg.SchedulingBlock
@@ -95,8 +93,8 @@ import org.eclipse.xtext.serializer.ISerializer
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scg.SCGAnnotations
-import static extension de.cau.cs.kieler.scg.SCGAnnotations.*
+import de.cau.cs.kieler.scg.common.SCGAnnotations
+import static extension de.cau.cs.kieler.scg.common.SCGAnnotations.*
 import com.google.common.collect.Multimap
 import org.eclipse.elk.core.options.NodeLabelPlacement
 import de.cau.cs.kieler.klighd.internal.macrolayout.KlighdDiagramLayoutConnector
@@ -468,7 +466,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private KNode rootNode;
     private String mainEntry
     
-    private CompilationResult compilationResult;
+//    private CompilationResult compilationResult;
     private var Set<Node> PIL_Nodes = <Node> newHashSet
 
     /** The selected orientation */
@@ -494,11 +492,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 */
     override transform(SCGraph model) {
 
-        compilationResult = this.usedContext.getProperty(KiCoProperties.COMPILATION_RESULT)
-        if (compilationResult != null) {
-            val PILR = compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head
-            if (PILR != null) PIL_Nodes += PILR.criticalNodes
-        }
+//        compilationResult = this.usedContext.getProperty(KiCoProperties.COMPILATION_RESULT)
+//        if (compilationResult != null) {
+//            val PILR = compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head
+//            if (PILR != null) PIL_Nodes += PILR.criticalNodes
+//        }
 
         // Invoke the synthesis.
         SCGraph = model

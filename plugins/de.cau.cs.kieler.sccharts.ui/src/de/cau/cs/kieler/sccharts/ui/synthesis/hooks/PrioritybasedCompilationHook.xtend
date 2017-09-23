@@ -19,7 +19,6 @@ import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHook
-import de.cau.cs.kieler.sccharts.s.DependencyTransformation
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 
 /**
@@ -36,7 +35,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 class PrioritybasedCompilationHook extends SynthesisHook {
 
     @Inject extension SCChartsScopeExtensions
-    @Inject extension DependencyTransformation
+//    @Inject extension DependencyTransformation
 
     // Options
     public static final SynthesisOption SHOW_DEPENDENCIES = SynthesisOption.createCheckOption(
@@ -52,13 +51,13 @@ class PrioritybasedCompilationHook extends SynthesisHook {
     private var dependencyGraph = null;
 
     override processState(State state, KNode node) {
-        if (SHOW_ORDER.booleanValue || SHOW_DEPENDENCIES.booleanValue) {
-            if (dependencyGraph == null) {
-
-                // Calculate only once
-                dependencyGraph = state.getRootState.getDependencyGraph
-            }
-        }
+//        if (SHOW_ORDER.booleanValue || SHOW_DEPENDENCIES.booleanValue) {
+//            if (dependencyGraph == null) {
+//
+//                // Calculate only once
+//                dependencyGraph = state.getRootState.getDependencyGraph
+//            }
+//        }
 // general states
 //                var priority = ""
 //                if (SHOW_ORDER.booleanValue || SHOW_DEPENDENCIES.booleanValue) {

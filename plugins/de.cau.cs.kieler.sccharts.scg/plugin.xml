@@ -5,24 +5,9 @@
 
 
    <extension
-         point="de.cau.cs.kieler.kico.transformation">
-      <productionTransformationClass
-            class="de.cau.cs.kieler.sccharts.scg.SCGTransformation">
-      </productionTransformationClass>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.kico.extension">
-      <ExtensionInformation
-            ePackageName="scg"
-            editor_id="de.cau.cs.kieler.scg.presentation.ScgEditorID"
-            extensionName="scg"
-            isXMI="true">
-      </ExtensionInformation>
-   </extension>
-   <extension
          point="de.cau.cs.kieler.kicool.processor">
       <Processor
-            class="de.cau.cs.kieler.sccharts.scg.processors.transformators.SCGTransformationWrapper">
+            class="de.cau.cs.kieler.sccharts.scg.processors.transformators.SCGTransformation">
       </Processor>
    </extension>
 

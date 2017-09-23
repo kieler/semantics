@@ -17,9 +17,10 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
+import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -40,7 +41,7 @@ import de.cau.cs.kieler.scg.SCGraph
  * @kieler.rating 2013-01-21 proposed yellow
  */
 
-abstract class AbstractGuardExpressions extends AbstractProductionTransformation {
+abstract class AbstractGuardExpressions extends Processor<SCGraphs, SCGraphs> {
         
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions    
@@ -50,12 +51,22 @@ abstract class AbstractGuardExpressions extends AbstractProductionTransformation
     public static val String GO_GUARD_NAME = "_GO"
     public static val CONDITIONAL_EXPRESSION_PREFIX = "_c"
     
+
+    override process() {
+        for (scg : model.scgs) {
+            scg.transform
+        }
+    }
     
-    public def transform(SCGraph scg, KielerCompilerContext context) {
-        createGuards(scg , context)
+    override getType() {
+        ProcessorType.TRANSFORMATOR
+    }
+    
+    public def transform(SCGraph scg) {
+        createGuards(scg)
     }
 	
-	abstract def SCGraph createGuards(SCGraph scg, KielerCompilerContext context)
+	abstract def SCGraph createGuards(SCGraph scg)
 	
     /**
      * To form (circuit like) guard expression a GO signal must be created.  

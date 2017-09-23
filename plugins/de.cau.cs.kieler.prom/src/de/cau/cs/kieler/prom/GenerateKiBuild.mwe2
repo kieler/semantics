@@ -83,7 +83,7 @@ Workflow {
             fragment = outline.QuickOutlineFragment {}
 
             // java-based API for content assistance 
-            fragment = contentAssist.JavaBasedContentAssistFragment {}
+            fragment = contentAssist.ContentAssistFragment {}
             
             // antlr parser generator tailored for content assist 
             fragment = org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment { 

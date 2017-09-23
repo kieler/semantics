@@ -99,6 +99,7 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
             val node = (res.getContents().get(0) as KNode).children.head
             return node
         } catch (Exception e) {
+            e.printStackTrace
         }         
         return KGraphUtil::createInitializedNode
     }    

@@ -59,7 +59,7 @@ class SCGSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             }
             if (assignment.expression instanceof TextExpression) {
                 assignmentText = (assignment.expression as TextExpression).text
-            } 
+            }
             var assignmentStr = valuedObjectName + assignment.operator.serializeAssignOperator + assignmentText
             assignmentStr
         } else if (assignment.expression instanceof TextExpression) {
@@ -71,6 +71,31 @@ class SCGSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         } else if (assignment.expression instanceof PrintCall) {
             (assignment.expression as PrintCall).serializeHR
         }
+    }
+    
+    dispatch override CharSequence serialize(FunctionCall fc) {
+        var funcCall = fc.functionName + "("
+
+        var cnt = 0
+        for (par : fc.parameters) {
+            if (cnt > 0) {
+                funcCall = funcCall + ", "
+            }
+            if (par.pureOutput) {
+                funcCall = funcCall + "!"
+            }
+            if (par.callByReference) {
+                funcCall = funcCall + "&"
+            }
+            funcCall = funcCall + par.expression.serialize
+            cnt = cnt + 1
+        }
+        funcCall = funcCall + ")"
+        return funcCall
+    }
+    
+    dispatch override CharSequence serializeHR(FunctionCall fc) {
+        return fc.serialize
     }
     
     protected def CharSequence serializeIndices(List<Expression> indices) {

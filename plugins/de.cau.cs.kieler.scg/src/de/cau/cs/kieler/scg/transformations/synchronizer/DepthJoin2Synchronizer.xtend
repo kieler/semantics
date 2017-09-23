@@ -46,7 +46,7 @@ import de.cau.cs.kieler.scg.transformations.sequentializer.EmptyExpression
 import java.util.Set
 import de.cau.cs.kieler.scg.BranchType
 import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
-import de.cau.cs.kieler.scg.SCGAnnotations
+import de.cau.cs.kieler.scg.common.SCGAnnotations
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -143,8 +143,9 @@ class DepthJoin2Synchronizer extends IncrementalSurfaceSynchronizer {
 		join.getCachedSchedulingBlock
 
 		// Potentially instantaneous loop
-		val pilData = compilerContext.compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head.
-			criticalNodes.toSet
+		// TODO kicool
+//		val pilData = compilerContext.compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head.
+//			criticalNodes.toSet
 			
 		// Create a new expression that determines if at least on thread exits in this tick instance.
 		// At first this simple scheduler assumes that the fork node spawns more than one thread.
@@ -173,8 +174,8 @@ class DepthJoin2Synchronizer extends IncrementalSurfaceSynchronizer {
 			debug("Generated NEW guard " + newGuard.valuedObject.name + " with expression " +
 				newGuard.expression.serialize)
 		}
-		
-		fixSchizophrenicStatements(join, pilData, scg)
+		// TODO kicool
+//		fixSchizophrenicStatements(join, pilData, scg)
 	}
 
 	private def void fixSchizophrenicStatements(Join join, Set<Node> pilData, SCGraph scg) {

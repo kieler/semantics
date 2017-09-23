@@ -14,6 +14,7 @@ package de.cau.cs.kieler.kicool.processors
 
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import org.eclipse.emf.ecore.EObject
 
 /**
  * Test processor that does nothing.
@@ -22,7 +23,7 @@ import de.cau.cs.kieler.kicool.compilation.ProcessorType
  * @kieler.design 2017-02-19 proposed
  * @kieler.rating 2017-02-19 proposed yellow  
  */
-class Identity extends Processor {
+class Identity extends Processor<Object, Object> {
     
     override getId() {
         "de.cau.cs.kieler.kicool.processors.identity"

@@ -120,13 +120,22 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()
 						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSubExpressionRule()
@@ -138,24 +147,24 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getBoolValueRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()
 						|| rule == grammarAccess.getAnyValueRule()) {
 					sequence_BoolValue(context, (BoolValue) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_BoolValue_Expression(context, (BoolValue) semanticObject); 
 					return; 
 				}
 				else break;
 			case KExpressionsPackage.FLOAT_VALUE:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_Expression_FloatValue(context, (FloatValue) semanticObject); 
 					return; 
 				}
@@ -166,13 +175,22 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()
 						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSubExpressionRule()
@@ -184,9 +202,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getFloatValueRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()
 						|| rule == grammarAccess.getAnyValueRule()) {
 					sequence_FloatValue(context, (FloatValue) semanticObject); 
 					return; 
@@ -194,8 +214,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				else break;
 			case KExpressionsPackage.FUNCTION_CALL:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_Expression_FunctionCall(context, (FunctionCall) semanticObject); 
 					return; 
 				}
@@ -206,13 +225,22 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()
 						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSubExpressionRule()
@@ -224,9 +252,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
-						|| rule == grammarAccess.getFunctionCallRule()) {
+						|| rule == grammarAccess.getFunctionCallRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_FunctionCall(context, (FunctionCall) semanticObject); 
 					return; 
 				}
@@ -236,8 +266,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				return; 
 			case KExpressionsPackage.INT_VALUE:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_Expression_IntValue(context, (IntValue) semanticObject); 
 					return; 
 				}
@@ -248,13 +277,22 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()
 						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSubExpressionRule()
@@ -266,9 +304,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getIntValueRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()
 						|| rule == grammarAccess.getAnyValueRule()) {
 					sequence_IntValue(context, (IntValue) semanticObject); 
 					return; 
@@ -276,9 +316,8 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				else break;
 			case KExpressionsPackage.OPERATOR_EXPRESSION:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
-					sequence_AddExpression_BitwiseAndExpression_BitwiseOrExpression_CompareOperation_DivExpression_Expression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+						|| rule == grammarAccess.getExpressionRule()) {
+					sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_Expression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getBoolExpressionRule()
@@ -288,13 +327,22 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()
 						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSubExpressionRule()
@@ -306,9 +354,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
-						|| rule == grammarAccess.getAtomicValuedExpressionRule()) {
-					sequence_AddExpression_BitwiseAndExpression_BitwiseOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
+					sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getValuedObjectTestExpressionRule()) {
@@ -321,8 +371,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				return; 
 			case KExpressionsPackage.REFERENCE_CALL:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_Expression_ReferenceCall(context, (ReferenceCall) semanticObject); 
 					return; 
 				}
@@ -333,13 +382,22 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()
 						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSubExpressionRule()
@@ -351,9 +409,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
-						|| rule == grammarAccess.getReferenceCallRule()) {
+						|| rule == grammarAccess.getReferenceCallRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_ReferenceCall(context, (ReferenceCall) semanticObject); 
 					return; 
 				}
@@ -363,8 +423,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				return; 
 			case KExpressionsPackage.STRING_VALUE:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_Expression_StringValue(context, (StringValue) semanticObject); 
 					return; 
 				}
@@ -375,13 +434,22 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()
 						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSubExpressionRule()
@@ -393,9 +461,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getStringValueRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()
 						|| rule == grammarAccess.getAnyValueRule()) {
 					sequence_StringValue(context, (StringValue) semanticObject); 
 					return; 
@@ -403,8 +473,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				else break;
 			case KExpressionsPackage.TEXT_EXPRESSION:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_Expression_TextExpression(context, (TextExpression) semanticObject); 
 					return; 
 				}
@@ -415,13 +484,22 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()
 						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSubExpressionRule()
@@ -433,17 +511,18 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
-						|| rule == grammarAccess.getTextExpressionRule()) {
+						|| rule == grammarAccess.getTextExpressionRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_TextExpression(context, (TextExpression) semanticObject); 
 					return; 
 				}
 				else break;
 			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_Expression_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
 					return; 
 				}
@@ -454,13 +533,22 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()
 						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSubExpressionRule()
@@ -472,18 +560,19 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getValuedObjectTestExpressionRule()
-						|| rule == grammarAccess.getValuedObjectReferenceRule()) {
+						|| rule == grammarAccess.getValuedObjectReferenceRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
 					return; 
 				}
 				else break;
 			case KExpressionsPackage.VECTOR_VALUE:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
+						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_Expression_VectorValue(context, (VectorValue) semanticObject); 
 					return; 
 				}
@@ -494,13 +583,22 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()
 						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSubExpressionRule()
@@ -512,9 +610,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
-						|| rule == grammarAccess.getVectorValueRule()) {
+						|| rule == grammarAccess.getVectorValueRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_VectorValue(context, (VectorValue) semanticObject); 
 					return; 
 				}
@@ -528,7 +628,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 * Contexts:
 	 *     Root returns OperatorExpression
 	 *     Expression returns OperatorExpression
-	 *     VectorValueMember returns OperatorExpression
 	 *
 	 * Constraint:
 	 *     (
@@ -548,6 +647,12 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *             (
 	 *                 subExpressions+=BitwiseOrExpression_OperatorExpression_1_0 
 	 *                 operator=BitwiseOrOperator 
+	 *                 subExpressions+=BitwiseXOrExpression 
+	 *                 subExpressions+=BitwiseXOrExpression*
+	 *             ) | 
+	 *             (
+	 *                 subExpressions+=BitwiseXOrExpression_OperatorExpression_1_0 
+	 *                 operator=BitwiseXOrOperator 
 	 *                 subExpressions+=BitwiseAndExpression 
 	 *                 subExpressions+=BitwiseAndExpression*
 	 *             ) | 
@@ -558,7 +663,26 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *                 subExpressions+=CompareOperation*
 	 *             ) | 
 	 *             (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *             (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
 	 *             (operator=NotOperator subExpressions+=NotExpression) | 
+	 *             (
+	 *                 subExpressions+=ShiftLeftExpression_OperatorExpression_1_0 
+	 *                 operator=ShiftLeftOperator 
+	 *                 subExpressions+=ShiftRightExpression 
+	 *                 subExpressions+=ShiftRightExpression*
+	 *             ) | 
+	 *             (
+	 *                 subExpressions+=ShiftRightExpression_OperatorExpression_1_0 
+	 *                 operator=ShiftRightOperator 
+	 *                 subExpressions+=ShiftRightUnsignedExpression 
+	 *                 subExpressions+=ShiftRightUnsignedExpression*
+	 *             ) | 
+	 *             (
+	 *                 subExpressions+=ShiftRightUnsignedExpression_OperatorExpression_1_0 
+	 *                 operator=ShiftRightUnsignedOperator 
+	 *                 subExpressions+=AddExpression 
+	 *                 subExpressions+=AddExpression*
+	 *             ) | 
 	 *             (subExpressions+=AddExpression_OperatorExpression_1_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
 	 *             (subExpressions+=SubExpression_OperatorExpression_1_0 operator=SubOperator subExpressions+=MultExpression subExpressions+=MultExpression*) | 
 	 *             (subExpressions+=MultExpression_OperatorExpression_1_0 operator=MultOperator subExpressions+=DivExpression subExpressions+=DivExpression*) | 
@@ -570,12 +694,18 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *                 subExpressions+=AtomicValuedExpression*
 	 *             ) | 
 	 *             (operator=SubOperator subExpressions+=NegExpression) | 
+	 *             (
+	 *                 subExpressions+=AtomicValuedExpression 
+	 *                 operator=ConditionalOperator 
+	 *                 subExpressions+=AtomicValuedExpression 
+	 *                 subExpressions+=AtomicValuedExpression
+	 *             ) | 
 	 *             ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
 	 *         ) 
 	 *         schedule+=ScheduleObjectReference*
 	 *     )
 	 */
-	protected void sequence_AddExpression_BitwiseAndExpression_BitwiseOrExpression_CompareOperation_DivExpression_Expression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_SubExpression_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_Expression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -589,13 +719,22 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     LogicalAndExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     BitwiseOrExpression returns OperatorExpression
 	 *     BitwiseOrExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     BitwiseXOrExpression returns OperatorExpression
+	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     BitwiseAndExpression returns OperatorExpression
 	 *     BitwiseAndExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     CompareOperation returns OperatorExpression
 	 *     CompareOperation.OperatorExpression_1_0 returns OperatorExpression
 	 *     NotOrValuedExpression returns OperatorExpression
+	 *     BitwiseNotExpression returns OperatorExpression
 	 *     NotExpression returns OperatorExpression
 	 *     ValuedExpression returns OperatorExpression
+	 *     ShiftLeftExpression returns OperatorExpression
+	 *     ShiftLeftExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     ShiftRightExpression returns OperatorExpression
+	 *     ShiftRightExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     ShiftRightUnsignedExpression returns OperatorExpression
+	 *     ShiftRightUnsignedExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     AddExpression returns OperatorExpression
 	 *     AddExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     SubExpression returns OperatorExpression
@@ -607,8 +746,10 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression returns OperatorExpression
 	 *     ModExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     NegExpression returns OperatorExpression
+	 *     TernaryOperation returns OperatorExpression
 	 *     AtomicExpression returns OperatorExpression
 	 *     AtomicValuedExpression returns OperatorExpression
+	 *     VectorValueMember returns OperatorExpression
 	 *
 	 * Constraint:
 	 *     (
@@ -627,6 +768,12 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *         (
 	 *             subExpressions+=BitwiseOrExpression_OperatorExpression_1_0 
 	 *             operator=BitwiseOrOperator 
+	 *             subExpressions+=BitwiseXOrExpression 
+	 *             subExpressions+=BitwiseXOrExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=BitwiseXOrExpression_OperatorExpression_1_0 
+	 *             operator=BitwiseXOrOperator 
 	 *             subExpressions+=BitwiseAndExpression 
 	 *             subExpressions+=BitwiseAndExpression*
 	 *         ) | 
@@ -637,7 +784,26 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *             subExpressions+=CompareOperation*
 	 *         ) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
+	 *         (
+	 *             subExpressions+=ShiftLeftExpression_OperatorExpression_1_0 
+	 *             operator=ShiftLeftOperator 
+	 *             subExpressions+=ShiftRightExpression 
+	 *             subExpressions+=ShiftRightExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ShiftRightExpression_OperatorExpression_1_0 
+	 *             operator=ShiftRightOperator 
+	 *             subExpressions+=ShiftRightUnsignedExpression 
+	 *             subExpressions+=ShiftRightUnsignedExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ShiftRightUnsignedExpression_OperatorExpression_1_0 
+	 *             operator=ShiftRightUnsignedOperator 
+	 *             subExpressions+=AddExpression 
+	 *             subExpressions+=AddExpression*
+	 *         ) | 
 	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
 	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 operator=SubOperator subExpressions+=MultExpression subExpressions+=MultExpression*) | 
 	 *         (subExpressions+=MultExpression_OperatorExpression_1_0 operator=MultOperator subExpressions+=DivExpression subExpressions+=DivExpression*) | 
@@ -649,10 +815,16 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         ) | 
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
+	 *         (
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             operator=ConditionalOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression
+	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
 	 *     )
 	 */
-	protected void sequence_AddExpression_BitwiseAndExpression_BitwiseOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_SubExpression_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -666,13 +838,22 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     LogicalAndExpression.OperatorExpression_1_0 returns BoolValue
 	 *     BitwiseOrExpression returns BoolValue
 	 *     BitwiseOrExpression.OperatorExpression_1_0 returns BoolValue
+	 *     BitwiseXOrExpression returns BoolValue
+	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns BoolValue
 	 *     BitwiseAndExpression returns BoolValue
 	 *     BitwiseAndExpression.OperatorExpression_1_0 returns BoolValue
 	 *     CompareOperation returns BoolValue
 	 *     CompareOperation.OperatorExpression_1_0 returns BoolValue
 	 *     NotOrValuedExpression returns BoolValue
+	 *     BitwiseNotExpression returns BoolValue
 	 *     NotExpression returns BoolValue
 	 *     ValuedExpression returns BoolValue
+	 *     ShiftLeftExpression returns BoolValue
+	 *     ShiftLeftExpression.OperatorExpression_1_0 returns BoolValue
+	 *     ShiftRightExpression returns BoolValue
+	 *     ShiftRightExpression.OperatorExpression_1_0 returns BoolValue
+	 *     ShiftRightUnsignedExpression returns BoolValue
+	 *     ShiftRightUnsignedExpression.OperatorExpression_1_0 returns BoolValue
 	 *     AddExpression returns BoolValue
 	 *     AddExpression.OperatorExpression_1_0 returns BoolValue
 	 *     SubExpression returns BoolValue
@@ -684,9 +865,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression returns BoolValue
 	 *     ModExpression.OperatorExpression_1_0 returns BoolValue
 	 *     NegExpression returns BoolValue
+	 *     TernaryOperation returns BoolValue
 	 *     AtomicExpression returns BoolValue
 	 *     AtomicValuedExpression returns BoolValue
 	 *     BoolValue returns BoolValue
+	 *     VectorValueMember returns BoolValue
 	 *     AnyValue returns BoolValue
 	 *
 	 * Constraint:
@@ -707,7 +890,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 * Contexts:
 	 *     Root returns BoolValue
 	 *     Expression returns BoolValue
-	 *     VectorValueMember returns BoolValue
 	 *
 	 * Constraint:
 	 *     (value=BOOLEAN schedule+=ScheduleObjectReference*)
@@ -721,7 +903,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 * Contexts:
 	 *     Root returns FloatValue
 	 *     Expression returns FloatValue
-	 *     VectorValueMember returns FloatValue
 	 *
 	 * Constraint:
 	 *     (value=FLOAT schedule+=ScheduleObjectReference*)
@@ -735,7 +916,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 * Contexts:
 	 *     Root returns FunctionCall
 	 *     Expression returns FunctionCall
-	 *     VectorValueMember returns FunctionCall
 	 *
 	 * Constraint:
 	 *     (functionName=ID (parameters+=Parameter parameters+=Parameter*)? schedule+=ScheduleObjectReference*)
@@ -749,7 +929,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 * Contexts:
 	 *     Root returns IntValue
 	 *     Expression returns IntValue
-	 *     VectorValueMember returns IntValue
 	 *
 	 * Constraint:
 	 *     (value=INT schedule+=ScheduleObjectReference*)
@@ -763,7 +942,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 * Contexts:
 	 *     Root returns ReferenceCall
 	 *     Expression returns ReferenceCall
-	 *     VectorValueMember returns ReferenceCall
 	 *
 	 * Constraint:
 	 *     (valuedObject=[ValuedObject|PrimeID] (parameters+=Parameter parameters+=Parameter*)? schedule+=ScheduleObjectReference*)
@@ -777,7 +955,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 * Contexts:
 	 *     Root returns StringValue
 	 *     Expression returns StringValue
-	 *     VectorValueMember returns StringValue
 	 *
 	 * Constraint:
 	 *     (value=STRING schedule+=ScheduleObjectReference*)
@@ -791,7 +968,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 * Contexts:
 	 *     Root returns TextExpression
 	 *     Expression returns TextExpression
-	 *     VectorValueMember returns TextExpression
 	 *
 	 * Constraint:
 	 *     (text=HOSTCODE schedule+=ScheduleObjectReference*)
@@ -805,7 +981,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 * Contexts:
 	 *     Root returns ValuedObjectReference
 	 *     Expression returns ValuedObjectReference
-	 *     VectorValueMember returns ValuedObjectReference
 	 *
 	 * Constraint:
 	 *     (valuedObject=[ValuedObject|PrimeID] indices+=Expression* subReference=ValuedObjectReference? schedule+=ScheduleObjectReference*)
@@ -819,7 +994,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 * Contexts:
 	 *     Root returns VectorValue
 	 *     Expression returns VectorValue
-	 *     VectorValueMember returns VectorValue
 	 *
 	 * Constraint:
 	 *     (values+=VectorValueMember values+=VectorValueMember* schedule+=ScheduleObjectReference*)
@@ -838,13 +1012,22 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     LogicalAndExpression.OperatorExpression_1_0 returns FloatValue
 	 *     BitwiseOrExpression returns FloatValue
 	 *     BitwiseOrExpression.OperatorExpression_1_0 returns FloatValue
+	 *     BitwiseXOrExpression returns FloatValue
+	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns FloatValue
 	 *     BitwiseAndExpression returns FloatValue
 	 *     BitwiseAndExpression.OperatorExpression_1_0 returns FloatValue
 	 *     CompareOperation returns FloatValue
 	 *     CompareOperation.OperatorExpression_1_0 returns FloatValue
 	 *     NotOrValuedExpression returns FloatValue
+	 *     BitwiseNotExpression returns FloatValue
 	 *     NotExpression returns FloatValue
 	 *     ValuedExpression returns FloatValue
+	 *     ShiftLeftExpression returns FloatValue
+	 *     ShiftLeftExpression.OperatorExpression_1_0 returns FloatValue
+	 *     ShiftRightExpression returns FloatValue
+	 *     ShiftRightExpression.OperatorExpression_1_0 returns FloatValue
+	 *     ShiftRightUnsignedExpression returns FloatValue
+	 *     ShiftRightUnsignedExpression.OperatorExpression_1_0 returns FloatValue
 	 *     AddExpression returns FloatValue
 	 *     AddExpression.OperatorExpression_1_0 returns FloatValue
 	 *     SubExpression returns FloatValue
@@ -856,9 +1039,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression returns FloatValue
 	 *     ModExpression.OperatorExpression_1_0 returns FloatValue
 	 *     NegExpression returns FloatValue
+	 *     TernaryOperation returns FloatValue
 	 *     AtomicExpression returns FloatValue
 	 *     AtomicValuedExpression returns FloatValue
 	 *     FloatValue returns FloatValue
+	 *     VectorValueMember returns FloatValue
 	 *     AnyValue returns FloatValue
 	 *
 	 * Constraint:
@@ -884,13 +1069,22 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     LogicalAndExpression.OperatorExpression_1_0 returns FunctionCall
 	 *     BitwiseOrExpression returns FunctionCall
 	 *     BitwiseOrExpression.OperatorExpression_1_0 returns FunctionCall
+	 *     BitwiseXOrExpression returns FunctionCall
+	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns FunctionCall
 	 *     BitwiseAndExpression returns FunctionCall
 	 *     BitwiseAndExpression.OperatorExpression_1_0 returns FunctionCall
 	 *     CompareOperation returns FunctionCall
 	 *     CompareOperation.OperatorExpression_1_0 returns FunctionCall
 	 *     NotOrValuedExpression returns FunctionCall
+	 *     BitwiseNotExpression returns FunctionCall
 	 *     NotExpression returns FunctionCall
 	 *     ValuedExpression returns FunctionCall
+	 *     ShiftLeftExpression returns FunctionCall
+	 *     ShiftLeftExpression.OperatorExpression_1_0 returns FunctionCall
+	 *     ShiftRightExpression returns FunctionCall
+	 *     ShiftRightExpression.OperatorExpression_1_0 returns FunctionCall
+	 *     ShiftRightUnsignedExpression returns FunctionCall
+	 *     ShiftRightUnsignedExpression.OperatorExpression_1_0 returns FunctionCall
 	 *     AddExpression returns FunctionCall
 	 *     AddExpression.OperatorExpression_1_0 returns FunctionCall
 	 *     SubExpression returns FunctionCall
@@ -902,9 +1096,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression returns FunctionCall
 	 *     ModExpression.OperatorExpression_1_0 returns FunctionCall
 	 *     NegExpression returns FunctionCall
+	 *     TernaryOperation returns FunctionCall
 	 *     AtomicExpression returns FunctionCall
 	 *     AtomicValuedExpression returns FunctionCall
 	 *     FunctionCall returns FunctionCall
+	 *     VectorValueMember returns FunctionCall
 	 *
 	 * Constraint:
 	 *     (functionName=ID (parameters+=Parameter parameters+=Parameter*)?)
@@ -936,13 +1132,22 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     LogicalAndExpression.OperatorExpression_1_0 returns IntValue
 	 *     BitwiseOrExpression returns IntValue
 	 *     BitwiseOrExpression.OperatorExpression_1_0 returns IntValue
+	 *     BitwiseXOrExpression returns IntValue
+	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns IntValue
 	 *     BitwiseAndExpression returns IntValue
 	 *     BitwiseAndExpression.OperatorExpression_1_0 returns IntValue
 	 *     CompareOperation returns IntValue
 	 *     CompareOperation.OperatorExpression_1_0 returns IntValue
 	 *     NotOrValuedExpression returns IntValue
+	 *     BitwiseNotExpression returns IntValue
 	 *     NotExpression returns IntValue
 	 *     ValuedExpression returns IntValue
+	 *     ShiftLeftExpression returns IntValue
+	 *     ShiftLeftExpression.OperatorExpression_1_0 returns IntValue
+	 *     ShiftRightExpression returns IntValue
+	 *     ShiftRightExpression.OperatorExpression_1_0 returns IntValue
+	 *     ShiftRightUnsignedExpression returns IntValue
+	 *     ShiftRightUnsignedExpression.OperatorExpression_1_0 returns IntValue
 	 *     AddExpression returns IntValue
 	 *     AddExpression.OperatorExpression_1_0 returns IntValue
 	 *     SubExpression returns IntValue
@@ -954,9 +1159,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression returns IntValue
 	 *     ModExpression.OperatorExpression_1_0 returns IntValue
 	 *     NegExpression returns IntValue
+	 *     TernaryOperation returns IntValue
 	 *     AtomicExpression returns IntValue
 	 *     AtomicValuedExpression returns IntValue
 	 *     IntValue returns IntValue
+	 *     VectorValueMember returns IntValue
 	 *     AnyValue returns IntValue
 	 *
 	 * Constraint:
@@ -994,13 +1201,22 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     LogicalAndExpression.OperatorExpression_1_0 returns ReferenceCall
 	 *     BitwiseOrExpression returns ReferenceCall
 	 *     BitwiseOrExpression.OperatorExpression_1_0 returns ReferenceCall
+	 *     BitwiseXOrExpression returns ReferenceCall
+	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns ReferenceCall
 	 *     BitwiseAndExpression returns ReferenceCall
 	 *     BitwiseAndExpression.OperatorExpression_1_0 returns ReferenceCall
 	 *     CompareOperation returns ReferenceCall
 	 *     CompareOperation.OperatorExpression_1_0 returns ReferenceCall
 	 *     NotOrValuedExpression returns ReferenceCall
+	 *     BitwiseNotExpression returns ReferenceCall
 	 *     NotExpression returns ReferenceCall
 	 *     ValuedExpression returns ReferenceCall
+	 *     ShiftLeftExpression returns ReferenceCall
+	 *     ShiftLeftExpression.OperatorExpression_1_0 returns ReferenceCall
+	 *     ShiftRightExpression returns ReferenceCall
+	 *     ShiftRightExpression.OperatorExpression_1_0 returns ReferenceCall
+	 *     ShiftRightUnsignedExpression returns ReferenceCall
+	 *     ShiftRightUnsignedExpression.OperatorExpression_1_0 returns ReferenceCall
 	 *     AddExpression returns ReferenceCall
 	 *     AddExpression.OperatorExpression_1_0 returns ReferenceCall
 	 *     SubExpression returns ReferenceCall
@@ -1012,9 +1228,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression returns ReferenceCall
 	 *     ModExpression.OperatorExpression_1_0 returns ReferenceCall
 	 *     NegExpression returns ReferenceCall
+	 *     TernaryOperation returns ReferenceCall
 	 *     AtomicExpression returns ReferenceCall
 	 *     AtomicValuedExpression returns ReferenceCall
 	 *     ReferenceCall returns ReferenceCall
+	 *     VectorValueMember returns ReferenceCall
 	 *
 	 * Constraint:
 	 *     (valuedObject=[ValuedObject|PrimeID] (parameters+=Parameter parameters+=Parameter*)?)
@@ -1054,13 +1272,22 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     LogicalAndExpression.OperatorExpression_1_0 returns StringValue
 	 *     BitwiseOrExpression returns StringValue
 	 *     BitwiseOrExpression.OperatorExpression_1_0 returns StringValue
+	 *     BitwiseXOrExpression returns StringValue
+	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns StringValue
 	 *     BitwiseAndExpression returns StringValue
 	 *     BitwiseAndExpression.OperatorExpression_1_0 returns StringValue
 	 *     CompareOperation returns StringValue
 	 *     CompareOperation.OperatorExpression_1_0 returns StringValue
 	 *     NotOrValuedExpression returns StringValue
+	 *     BitwiseNotExpression returns StringValue
 	 *     NotExpression returns StringValue
 	 *     ValuedExpression returns StringValue
+	 *     ShiftLeftExpression returns StringValue
+	 *     ShiftLeftExpression.OperatorExpression_1_0 returns StringValue
+	 *     ShiftRightExpression returns StringValue
+	 *     ShiftRightExpression.OperatorExpression_1_0 returns StringValue
+	 *     ShiftRightUnsignedExpression returns StringValue
+	 *     ShiftRightUnsignedExpression.OperatorExpression_1_0 returns StringValue
 	 *     AddExpression returns StringValue
 	 *     AddExpression.OperatorExpression_1_0 returns StringValue
 	 *     SubExpression returns StringValue
@@ -1072,9 +1299,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression returns StringValue
 	 *     ModExpression.OperatorExpression_1_0 returns StringValue
 	 *     NegExpression returns StringValue
+	 *     TernaryOperation returns StringValue
 	 *     AtomicExpression returns StringValue
 	 *     AtomicValuedExpression returns StringValue
 	 *     StringValue returns StringValue
+	 *     VectorValueMember returns StringValue
 	 *     AnyValue returns StringValue
 	 *
 	 * Constraint:
@@ -1100,13 +1329,22 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     LogicalAndExpression.OperatorExpression_1_0 returns TextExpression
 	 *     BitwiseOrExpression returns TextExpression
 	 *     BitwiseOrExpression.OperatorExpression_1_0 returns TextExpression
+	 *     BitwiseXOrExpression returns TextExpression
+	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns TextExpression
 	 *     BitwiseAndExpression returns TextExpression
 	 *     BitwiseAndExpression.OperatorExpression_1_0 returns TextExpression
 	 *     CompareOperation returns TextExpression
 	 *     CompareOperation.OperatorExpression_1_0 returns TextExpression
 	 *     NotOrValuedExpression returns TextExpression
+	 *     BitwiseNotExpression returns TextExpression
 	 *     NotExpression returns TextExpression
 	 *     ValuedExpression returns TextExpression
+	 *     ShiftLeftExpression returns TextExpression
+	 *     ShiftLeftExpression.OperatorExpression_1_0 returns TextExpression
+	 *     ShiftRightExpression returns TextExpression
+	 *     ShiftRightExpression.OperatorExpression_1_0 returns TextExpression
+	 *     ShiftRightUnsignedExpression returns TextExpression
+	 *     ShiftRightUnsignedExpression.OperatorExpression_1_0 returns TextExpression
 	 *     AddExpression returns TextExpression
 	 *     AddExpression.OperatorExpression_1_0 returns TextExpression
 	 *     SubExpression returns TextExpression
@@ -1118,9 +1356,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression returns TextExpression
 	 *     ModExpression.OperatorExpression_1_0 returns TextExpression
 	 *     NegExpression returns TextExpression
+	 *     TernaryOperation returns TextExpression
 	 *     AtomicExpression returns TextExpression
 	 *     AtomicValuedExpression returns TextExpression
 	 *     TextExpression returns TextExpression
+	 *     VectorValueMember returns TextExpression
 	 *
 	 * Constraint:
 	 *     text=HOSTCODE
@@ -1145,13 +1385,22 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     LogicalAndExpression.OperatorExpression_1_0 returns ValuedObjectReference
 	 *     BitwiseOrExpression returns ValuedObjectReference
 	 *     BitwiseOrExpression.OperatorExpression_1_0 returns ValuedObjectReference
+	 *     BitwiseXOrExpression returns ValuedObjectReference
+	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns ValuedObjectReference
 	 *     BitwiseAndExpression returns ValuedObjectReference
 	 *     BitwiseAndExpression.OperatorExpression_1_0 returns ValuedObjectReference
 	 *     CompareOperation returns ValuedObjectReference
 	 *     CompareOperation.OperatorExpression_1_0 returns ValuedObjectReference
 	 *     NotOrValuedExpression returns ValuedObjectReference
+	 *     BitwiseNotExpression returns ValuedObjectReference
 	 *     NotExpression returns ValuedObjectReference
 	 *     ValuedExpression returns ValuedObjectReference
+	 *     ShiftLeftExpression returns ValuedObjectReference
+	 *     ShiftLeftExpression.OperatorExpression_1_0 returns ValuedObjectReference
+	 *     ShiftRightExpression returns ValuedObjectReference
+	 *     ShiftRightExpression.OperatorExpression_1_0 returns ValuedObjectReference
+	 *     ShiftRightUnsignedExpression returns ValuedObjectReference
+	 *     ShiftRightUnsignedExpression.OperatorExpression_1_0 returns ValuedObjectReference
 	 *     AddExpression returns ValuedObjectReference
 	 *     AddExpression.OperatorExpression_1_0 returns ValuedObjectReference
 	 *     SubExpression returns ValuedObjectReference
@@ -1163,10 +1412,12 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression returns ValuedObjectReference
 	 *     ModExpression.OperatorExpression_1_0 returns ValuedObjectReference
 	 *     NegExpression returns ValuedObjectReference
+	 *     TernaryOperation returns ValuedObjectReference
 	 *     AtomicExpression returns ValuedObjectReference
 	 *     AtomicValuedExpression returns ValuedObjectReference
 	 *     ValuedObjectTestExpression returns ValuedObjectReference
 	 *     ValuedObjectReference returns ValuedObjectReference
+	 *     VectorValueMember returns ValuedObjectReference
 	 *
 	 * Constraint:
 	 *     (valuedObject=[ValuedObject|PrimeID] indices+=Expression* subReference=ValuedObjectReference?)
@@ -1197,13 +1448,22 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     LogicalAndExpression.OperatorExpression_1_0 returns VectorValue
 	 *     BitwiseOrExpression returns VectorValue
 	 *     BitwiseOrExpression.OperatorExpression_1_0 returns VectorValue
+	 *     BitwiseXOrExpression returns VectorValue
+	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns VectorValue
 	 *     BitwiseAndExpression returns VectorValue
 	 *     BitwiseAndExpression.OperatorExpression_1_0 returns VectorValue
 	 *     CompareOperation returns VectorValue
 	 *     CompareOperation.OperatorExpression_1_0 returns VectorValue
 	 *     NotOrValuedExpression returns VectorValue
+	 *     BitwiseNotExpression returns VectorValue
 	 *     NotExpression returns VectorValue
 	 *     ValuedExpression returns VectorValue
+	 *     ShiftLeftExpression returns VectorValue
+	 *     ShiftLeftExpression.OperatorExpression_1_0 returns VectorValue
+	 *     ShiftRightExpression returns VectorValue
+	 *     ShiftRightExpression.OperatorExpression_1_0 returns VectorValue
+	 *     ShiftRightUnsignedExpression returns VectorValue
+	 *     ShiftRightUnsignedExpression.OperatorExpression_1_0 returns VectorValue
 	 *     AddExpression returns VectorValue
 	 *     AddExpression.OperatorExpression_1_0 returns VectorValue
 	 *     SubExpression returns VectorValue
@@ -1215,9 +1475,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression returns VectorValue
 	 *     ModExpression.OperatorExpression_1_0 returns VectorValue
 	 *     NegExpression returns VectorValue
+	 *     TernaryOperation returns VectorValue
 	 *     AtomicExpression returns VectorValue
 	 *     AtomicValuedExpression returns VectorValue
 	 *     VectorValue returns VectorValue
+	 *     VectorValueMember returns VectorValue
 	 *
 	 * Constraint:
 	 *     (values+=VectorValueMember values+=VectorValueMember*)

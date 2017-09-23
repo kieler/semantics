@@ -2,6 +2,7 @@
 <?eclipse version="3.0"?>
 
 <plugin>
+   <extension-point id="system" name="System Configuation" schema="schema/de.cau.cs.kieler.kicool.ui.system.exsd"/>
 
     <extension
             point="org.eclipse.ui.editors">

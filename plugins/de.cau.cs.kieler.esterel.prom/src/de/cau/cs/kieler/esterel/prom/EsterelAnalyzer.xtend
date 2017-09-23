@@ -15,8 +15,7 @@ package de.cau.cs.kieler.esterel.prom
 
 import com.google.common.base.Charsets
 import com.google.common.io.Files
-import de.cau.cs.kieler.esterel.esterel.Program
-import de.cau.cs.kieler.esterel.esterel.impl.ProgramImpl
+import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.prom.data.MacroCallData
 import de.cau.cs.kieler.prom.templates.ModelAnalyzer
 import java.io.File
@@ -35,9 +34,9 @@ class EsterelAnalyzer implements ModelAnalyzer {
      * {@inheritDoc}
      */
     override getModelName(EObject model) {
-        if (model instanceof Program) {
+        if (model instanceof EsterelProgram) {
             if(!model.modules.isNullOrEmpty) {
-                return model.modules.get(0).name    
+                return model.modules.head.name
             }
         }
     }
@@ -82,10 +81,9 @@ class EsterelAnalyzer implements ModelAnalyzer {
         
         // Get model name
         var modelName = ""
-        if (model instanceof ProgramImpl) {
-            val modules = model.modules
-            if(!modules.isNullOrEmpty)
-                modelName = modules.get(0).name
+        if (model instanceof EsterelProgram) {
+            if(!model.modules.isNullOrEmpty)
+                modelName = model.modules.head.name
         }
         
         // Load text from model

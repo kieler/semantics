@@ -13,8 +13,6 @@
  */
 package de.cau.cs.kieler.scg.processors.optimizations
 
-import de.cau.cs.kieler.kico.transformation.ITransformation
-import de.cau.cs.kieler.kico.transformation.ProcessorOption
 import de.cau.cs.kieler.scg.processors.SCGProcessors
 
 /**
@@ -26,25 +24,25 @@ import de.cau.cs.kieler.scg.processors.SCGProcessors
  * @kieler.rating 2015-05-25 proposed yellow
  *
  */
-class Optimize implements ITransformation {
+class Optimize {
     
-    override getId() {
+    def getId() {
         return "scg.optimizations.esterel.all"
     }
     
-    override getName() {
+    def getName() {
         return "Esterel Optimizations"
     }
     
-    override getProcessorOptions() {
-        <ProcessorOption>newArrayList => [
-            it += new ProcessorOption(SCGProcessors.REPLACEUNUSEDVARIABLES_ID)
-            it += new ProcessorOption(SCGProcessors.CONSTANTCONDITIONALS_ID)
-            it += new ProcessorOption(SCGProcessors.UNREACHABLENODES_ID)
-        ]
+    def getProcessorOptions() {
+//        <ProcessorOption>newArrayList => [
+//            it += new ProcessorOption(SCGProcessors.REPLACEUNUSEDVARIABLES_ID)
+//            it += new ProcessorOption(SCGProcessors.CONSTANTCONDITIONALS_ID)
+//            it += new ProcessorOption(SCGProcessors.UNREACHABLENODES_ID)
+//        ]
     }
     
-    override isInplace() {
+    def isInplace() {
         true
     }
     

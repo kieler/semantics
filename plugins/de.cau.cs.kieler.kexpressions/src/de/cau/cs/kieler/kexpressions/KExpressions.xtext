@@ -101,11 +101,18 @@ LogicalAndExpression returns Expression:
 // Directs to the 'bitwise and' rule and may create an operator expression for 'bitwise or' operations
 // if necessary. The warning can be ignored since the operator will only override itself in this loop.
 BitwiseOrExpression returns Expression:
-	BitwiseAndExpression 
+	BitwiseXOrExpression 
 	({OperatorExpression.subExpressions+=current} 
-	    (operator=BitwiseOrOperator subExpressions+=BitwiseAndExpression)
-	    ('|' subExpressions+=BitwiseAndExpression)*
+	    (operator=BitwiseOrOperator subExpressions+=BitwiseXOrExpression)
+	    ('|' subExpressions+=BitwiseXOrExpression)*
 	)?;
+
+BitwiseXOrExpression returns Expression:
+    BitwiseAndExpression 
+    ({OperatorExpression.subExpressions+=current} 
+        (operator=BitwiseXOrOperator subExpressions+=BitwiseAndExpression)
+        ('^' subExpressions+=BitwiseAndExpression)*
+    )?;
 
 // Bitwise And Expression Rule
 // Directs to the compare rule and may create an operator expression for 'bitwise and' operations
@@ -132,19 +139,44 @@ NotOrValuedExpression returns Expression:
 	ValuedExpression
 	| NotExpression;
 
+BitwiseNotExpression returns Expression:
+    {OperatorExpression} operator=BitwiseNotOperator subExpressions+=(BitwiseNotExpression)
+    | AtomicExpression;
+    
 // Not Expression Rule
 // Example: !A, !false, !(A or B)
 // At the latter we need the parents to indicate the right binding.
 // A 'not expression' can also redirect to an 'atomic expression' to maintain the rule chain.
 NotExpression returns Expression:
 	{OperatorExpression} operator=NotOperator subExpressions+=(NotExpression)
-    | AtomicExpression;
+    | BitwiseNotExpression;
   
 // Valued Expression Rule    
 // Everything that evaluates to a primitive number value.
 // Similar to the boolean rule this rule is there for overview reasons.
 ValuedExpression returns Expression:
-	AddExpression;
+	ShiftLeftExpression;
+	
+ShiftLeftExpression returns Expression:
+    ShiftRightExpression
+    ({OperatorExpression.subExpressions+=current} 
+        (operator=ShiftLeftOperator subExpressions+=ShiftRightExpression)
+        ('<<' subExpressions+=ShiftRightExpression)*
+    )?;
+    
+ShiftRightExpression returns Expression:
+    ShiftRightUnsignedExpression
+    ({OperatorExpression.subExpressions+=current} 
+        (operator=ShiftRightOperator subExpressions+=ShiftRightUnsignedExpression)
+        ('>>' subExpressions+=ShiftRightUnsignedExpression)*
+    )?;
+    
+ShiftRightUnsignedExpression returns Expression:
+    AddExpression
+    ({OperatorExpression.subExpressions+=current} 
+        (operator=ShiftRightUnsignedOperator subExpressions+=AddExpression)
+        ('>>>' subExpressions+=AddExpression)*
+    )?;
 	
 // Add Expression Rule
 // The rule directs the 'sub expression' rule and creates an operator expression for additions
@@ -206,8 +238,13 @@ ModExpression returns Expression:
 // Example: -i, -2
 NegExpression returns Expression:
 	{OperatorExpression} operator=SubOperator subExpressions+=(NegExpression)
-    | AtomicValuedExpression;
+    | TernaryOperation;
 
+TernaryOperation returns Expression:
+    {OperatorExpression} 
+    subExpressions += AtomicValuedExpression operator=ConditionalOperator subExpressions += AtomicValuedExpression ':' subExpressions += AtomicValuedExpression
+    | AtomicValuedExpression;
+    
 // Atomic Expression Rule
 // An atomic expression is either a simple boolean value, a test expression, another boolean expression
 // encapsulated in braces, a function call or a text expression.
@@ -231,6 +268,8 @@ AtomicValuedExpression returns Expression:
     | VectorValue
     | '(' ValuedExpression ')'
     | AtomicExpression;
+    
+    
 
 // Valued Object Test Expression Rule
 // This rules creates an operator expression for pre or val tests. Alternatively, it directs to a
@@ -313,7 +352,7 @@ VectorValue returns VectorValue:
     '{' values+=VectorValueMember (',' values+=VectorValueMember)* '}';
     
 VectorValueMember returns Expression:
-    Expression | IgnoreValue;
+    BoolExpression | ValuedExpression | IgnoreValue;
     
 IgnoreValue returns IgnoreValue:
     {IgnoreValue} '_';
@@ -337,8 +376,8 @@ enum CompareOperator returns OperatorType:
 enum PreOperator returns OperatorType:
     PRE="pre";
 
-enum BitwiseNegOperator returns OperatorType:
-    BITWISE_NEG="~";
+enum BitwiseNotOperator returns OperatorType:
+    BITWISE_NOT="~";
     
 enum BitwiseXOrOperator returns OperatorType:
     BITWISE_XOR="^";
@@ -376,14 +415,14 @@ enum LogicalOrOperator returns OperatorType:
 enum LogicalAndOperator returns OperatorType:
 	LOGICAL_AND="&&";
 	
-enum ShiftLeft returns OperatorType:
+enum ShiftLeftOperator returns OperatorType:
     SHIFT_LEFT="<<";
 
-enum ShiftRight returns OperatorType:
+enum ShiftRightOperator returns OperatorType:
     SHIFT_RIGHT=">>";
     
-enum ShiftRightUnsigned returns OperatorType:
-    SHIFT_RIGHT=">>>";
+enum ShiftRightUnsignedOperator returns OperatorType:
+    SHIFT_RIGHT_UNSIGNED=">>>";
 	
 enum PostfixAdd returns OperatorType:
     POSTFIX_ADD="++";
@@ -391,8 +430,8 @@ enum PostfixAdd returns OperatorType:
 enum PostfixSub returns OperatorType:
     POSTFIX_SUB="--";
     
-enum ConditionalType returns OperatorType:
-    CONDITIONAL;        
+enum ConditionalOperator returns OperatorType:
+    CONDITIONAL = "?";        
 
 enum ValueType returns ValueType:
 	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned"	| 

@@ -33,6 +33,15 @@ A |= true
 @check "assignment.assign.xor.literal"
 A ^= true
 
+@check "assignment.assign.shiftleft.literal"
+A <<= 1
+
+@check "assignment.assign.shiftright.literal"
+A >>= 2
+
+@check "assignment.assign.shiftrightunsigned.literal"
+A >>>= 3
+
 
 
 @check "assignment.assign.add.reference"
@@ -58,6 +67,15 @@ A |= A
 
 @check "assignment.assign.xor.reference"
 A ^= A
+
+@check "assignment.assign.shiftleft.reference"
+A <<= I
+
+@check "assignment.assign.shiftright.reference"
+A >>= I
+
+@check "assignment.assign.shiftrightunsigned.reference"
+A >>>= I
 
 
 @check "assignment.assign.add.operator.unary.reference"
@@ -92,6 +110,18 @@ A |= pre(A)
 @strict
 A ^= pre(A)
 
+@check "assignment.assign.shiftleft.operator.unary.reference"
+@strict
+A <<= pre(I)
+
+@check "assignment.assign.shiftright.operator.unary.reference"
+@strict
+A >>= pre(I)
+
+@check "assignment.assign.shiftrightunsigned.operator.unary.reference"
+@strict
+A >>>= pre(I)
+
 
 
 @check "assignment.assign.add.operator.binary.reference"
@@ -117,3 +147,12 @@ A |= A & A
 
 @check "assignment.assign.xor.operator.binary.reference"
 A ^= A & A
+
+@check "assignment.assign.shiftleft.operator.binary.reference"
+A <<= I + I
+
+@check "assignment.assign.shiftright.operator.binary.reference"
+A >>= I + I
+
+@check "assignment.assign.shiftrightunsigned.operator.binary.reference"
+A >>>= I + I

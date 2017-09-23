@@ -13,15 +13,13 @@
  */
 package de.cau.cs.kieler.scg.processors.analyzer
 
-import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData
-
 /**
  * @author ssm
  * @kieler.design 2013-12-02 proposed 
  * @kieler.rating 2013-12-02 proposed yellow
  */
  
-abstract class AbstractAnalyzerResult extends AbstractKielerCompilerAuxiliaryData {
+abstract class AbstractAnalyzerResult {
 	
 }
 

@@ -9,13 +9,16 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.xtext.validation.ComposedChecks;
 
 @ComposedChecks(validators= {org.eclipse.xtext.validation.ImportUriValidator.class})
-public class AbstractEsterelValidator extends de.cau.cs.kieler.esterel.kexpressions.validation.KExpressionsValidator {
+public class AbstractEsterelValidator extends de.cau.cs.kieler.scl.validation.SCLValidator {
 
 	@Override
 	protected List<EPackage> getEPackages() {
 	    List<EPackage> result = new ArrayList<EPackage>(super.getEPackages());
-	    result.add(de.cau.cs.kieler.esterel.esterel.EsterelPackage.eINSTANCE);
-	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/esterel/kexpressions/0.1.2"));
+	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.cau.de/cs/kieler/esterel/Esterel"));
+	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/scl/0.2.0"));
+	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/kexpressions/0.1.2"));
+	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/kext/0.1.0"));
+	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/keffects/0.1.0"));
 	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.eclipse.org/emf/2002/Ecore"));
 	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/annotations"));
 		return result;

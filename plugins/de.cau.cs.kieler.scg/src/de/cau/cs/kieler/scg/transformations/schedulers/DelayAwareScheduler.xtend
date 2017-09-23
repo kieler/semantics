@@ -62,13 +62,13 @@ class DelayAwareScheduler extends SimpleScheduler {
         return null //SCGTransformations::SCHEDULING_NAME
     }
 
-    override getProducedFeatureId() {
-        return SCGFeatures::SCHEDULING_ID
-    }
-
-    override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::GUARD_EXPRESSIONS_ID)
-    }
+//    override getProducedFeatureId() {
+//        return SCGFeatures::SCHEDULING_ID
+//    }
+//
+//    override getRequiredFeatureIds() {
+//        return newHashSet(SCGFeatures::GUARD_EXPRESSIONS_ID)
+//    }
     
     // -------------------------------------------------------------------------
     // -- Injections 

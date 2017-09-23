@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.scg.processors.optimizations
 
-import de.cau.cs.kieler.kico.transformation.Processor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
@@ -38,13 +37,13 @@ import org.eclipse.emf.ecore.EObject
  * @kieler.rating 2015-05-25 proposed yellow
  *
  */
-class UnreachableNodes extends Processor implements Traceable {
+class UnreachableNodes implements Traceable {
     
-     override getId() {
+     def getId() {
         return SCGProcessors::UNREACHABLENODES_ID
     }
     
-    override process(EObject eObject) {
+    def process(EObject eObject) {
         val scg = eObject as SCGraph
         val deleteNodes = <Node> newLinkedList
         val removeControlFlows = <ControlFlow> newLinkedList

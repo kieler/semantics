@@ -106,6 +106,7 @@ class SCGCoreExtensions {
 	 */
     def SchedulingBlock schedulingBlock(Node node) {
         val scg = node.graph
+        if (scg == null) return null
         var SchedulingBlock myBlock = null
         for (block : scg.schedulingBlocks ) {
             if (block.nodes.contains(node)) { myBlock = block }
@@ -150,6 +151,18 @@ class SCGCoreExtensions {
         node.schedulingBlock?.basicBlock
     }
 
+    /**
+     * Retrieves the nodes of a basic block.
+     * 
+     * @param node
+     *          the basic block
+     * @return Returns a list of nodes. May return null.
+     */
+    def List<Node> nodes(BasicBlock bb) {
+        val list = newArrayList
+        bb.schedulingBlocks.forEach[list.addAll(nodes)]
+        return list
+    }
 
 	/**
 	 * Retrieves all nodes of a schedule.

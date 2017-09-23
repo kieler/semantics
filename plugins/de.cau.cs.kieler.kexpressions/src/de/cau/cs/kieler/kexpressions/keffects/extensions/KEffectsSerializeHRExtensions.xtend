@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.kexpressions.keffects.extensions
 
-import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Effect

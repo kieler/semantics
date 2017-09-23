@@ -41,7 +41,6 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.CommentAnnotation
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.CommentStyles
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.sccharts.featuregroups.Core
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.

@@ -1,6 +1,0 @@
-module fail_type2:
-type integer; % Redefinition of predefined type
-
-nothing
-
-end module
