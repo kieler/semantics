@@ -39,15 +39,29 @@ abstract class ResourceSubstitution extends Substitution {
         super(name)
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override getVariableMappings() {
-        return #{locationVariable -> resource.location.toOSString,
-                 pathVariable -> resource.projectRelativePath.toOSString,
-                 fullPathVariable -> resource.fullPath.toOSString,
-                 nameVariable -> resource.name,
-                 nameWithoutExtensionVariable -> Files.getNameWithoutExtension(resource.name),
-                 fileExtensionVariable -> Files.getFileExtension(resource.name),
-                 variableName -> resource.projectRelativePath.toOSString
-                }
+        if(resource == null) {
+            return #{locationVariable -> "",
+                     pathVariable -> "",
+                     fullPathVariable -> "",
+                     nameVariable -> "",
+                     nameWithoutExtensionVariable -> "",
+                     fileExtensionVariable -> "",
+                     variableName -> ""
+                    }
+        } else {
+            return #{locationVariable -> resource.location.toOSString,
+                     pathVariable -> resource.projectRelativePath.toOSString,
+                     fullPathVariable -> resource.fullPath.toOSString,
+                     nameVariable -> resource.name,
+                     nameWithoutExtensionVariable -> Files.getNameWithoutExtension(resource.name),
+                     fileExtensionVariable -> Files.getFileExtension(resource.name),
+                     variableName -> resource.projectRelativePath.toOSString
+                    }
+        }
     }
     
     /**

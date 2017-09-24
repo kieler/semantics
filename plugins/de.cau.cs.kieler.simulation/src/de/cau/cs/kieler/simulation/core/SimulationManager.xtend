@@ -20,11 +20,13 @@ import de.cau.cs.kieler.simulation.kisim.SimulationConfiguration
 import java.util.List
 import java.util.Map
 import java.util.Set
+import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.prom.ModelImporter
 
 /**
  * The simulation manager holds a configuration of a simulation and takes care of its execution.
@@ -115,9 +117,17 @@ class SimulationManager extends Configurable {
     
     /**
      * The configuration that has been used to create the simulation.
+     * May be null if the simulation was started programatically.
      */
-    @Accessors
+    @Accessors(PUBLIC_GETTER)
     private var SimulationConfiguration usedConfiguration
+    
+    /**
+     * The file handle of the used configuration.
+     * May be null if the simulation was started programatically.
+     */
+    @Accessors(PUBLIC_GETTER)
+    private var IFile usedConfigurationFile
     
     /**
      * Instances of the data handlers in the step actions without duplicates.
@@ -167,6 +177,8 @@ class SimulationManager extends Configurable {
     new(SimulationConfiguration config) {
         this()
         usedConfiguration = config
+        usedConfigurationFile = ModelImporter.toPlatformResource(config?.eResource)
+        
         // Load attributes
         this.updateConfigurableAttributes(config.attributes)
         // Load data handlers

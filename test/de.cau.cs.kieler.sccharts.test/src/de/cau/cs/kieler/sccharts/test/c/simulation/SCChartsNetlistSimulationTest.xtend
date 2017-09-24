@@ -121,9 +121,10 @@ class SCChartsNetlistSimulationTest extends AbstractXTextModelRepositoryTest<SCC
                     
                     // Create new simulation with the trace
                     val sim = new SimulationManager
-                    sim.addAction(StepAction.Method.WRITE, traceHandler)
-                    sim.addAction(StepAction.Method.WRITE, exeSimulator)
-                    sim.addAction(StepAction.Method.READ, traceHandler)
+                    sim.addAction("write", traceHandler)
+                    sim.addAction(exeSimulator)
+                    sim.addAction("check", traceHandler)
+                    sim.addAction("loadNextTick", traceHandler)
                     sim.initialize
                     
                     // Run simulation until end of trace

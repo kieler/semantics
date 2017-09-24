@@ -13,11 +13,12 @@
 package de.cau.cs.kieler.prom.build.simulation
 
 import com.google.common.io.Files
+import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
+import de.cau.cs.kieler.prom.configurable.Substitution
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Path
-import de.cau.cs.kieler.prom.configurable.Substitution
 
 /**
  * Compiles Java code for the simulation.
@@ -71,14 +72,14 @@ class JavaSimulationCompiler extends SimulationCompiler {
         // Run command on simulation code to create class files
         val processDirectory = getProcessDirectory
         val commandWithoutSubstitutions = Substitution.performSubstitutions(command.stringValue, substitutions)
-        val compilationArguments = splitStringOnWhitespace(commandWithoutSubstitutions)
+        val compilationArguments = PromPlugin.splitStringOnWhitespace(commandWithoutSubstitutions)
         var result = startProcess(processDirectory, compilationArguments)
         println("javac:"+compilationArguments)
         
         // Run command to create executable jar file from class files
         if(result.problems.isNullOrEmpty) {
             val jarCommandWithoutSubstitutions = Substitution.performSubstitutions(jarCommand.stringValue, substitutions)
-            val jarArguments = splitStringOnWhitespace(jarCommandWithoutSubstitutions)
+            val jarArguments = PromPlugin.splitStringOnWhitespace(jarCommandWithoutSubstitutions)
             result = startProcess(processDirectory, jarArguments)
             println("jar:"+jarArguments)
         }

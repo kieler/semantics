@@ -14,6 +14,7 @@ package de.cau.cs.kieler.prom
 
 import java.util.List
 import org.eclipse.core.resources.IFile
+import java.io.File
 
 /**
  * Central place to register and categorize file extensions within the KIELER semantics universe.
@@ -47,6 +48,8 @@ class FileExtensions {
     public static val FREEMARKER_TEMPLATE = "ftl"
     public static val TEMPLATES = #[FREEMARKER_TEMPLATE]
     
+    public static val JAVA_ARCHIVE = "jar"
+    
     /**
      * Checks if the given extension of the given file matches the allowed extension.
      * 
@@ -69,5 +72,125 @@ class FileExtensions {
     public static def boolean matches(IFile file, List<String> allowedExtensions) {
         val ext = file.fileExtension
         return ext != null && allowedExtensions.contains(ext.toLowerCase)
+    }
+    
+    /**
+     * Checks whether the file is an executable on the current OS.
+     * If the file does not exist, false is returned.
+     * 
+     * @param file The potential executable
+     * @return true if the file is an executable, false otherwise
+     */
+    public static def boolean isExecutable(IFile file) {
+        if(file == null || !file.exists) {
+            return false
+        }
+        val jFile = new File(file.location.toOSString)
+        try {
+            return jFile.canExecute
+        } catch(SecurityException e) {
+            // The access to the file was denied, thus it cannot be executed.
+            return false    
+        }
+    }
+    
+    /**
+     * Checks whether the file is a jar file.
+     * 
+     * @param file The file
+     * @return true is the file is a jar file, false otherw
+     */
+    public static def boolean isJavaArchive(IFile file) {
+        return matches(file, JAVA_ARCHIVE)
+    }
+    
+    /**
+     * Checks whether the file is a trace file.
+     * 
+     * @param file The file
+     * @return true is the file is a trace file, false otherw
+     */
+    public static def boolean isTrace(IFile file) {
+        return matches(file, TRACES)
+    }
+    
+    /**
+     * Checks if the file is a model file.
+     * 
+     * @param file The file
+     * @return true if it is a model file, false otherwise.
+     */
+    public static def boolean isModel(IFile file) {
+        return matches(file, MODELS)
+    }
+    
+    /**
+     * Checks if the file is a template file.
+     * 
+     * @param file The file
+     * @return true if it is a template file, false otherwise.
+     */
+    public static def boolean isTemplate(IFile file) {
+        return matches(file, TEMPLATES)
+    }
+    
+    /**
+     * Checks if the file contains a build configuration.
+     * 
+     * @param file The file
+     * @return true if the file contains a build configuration, false otherwise
+     */
+    public static def boolean isBuildConfiguration(IFile file) {
+        return matches(file, BUILD_CONFIG)
+    }
+    
+    /**
+     * Checks if the file contains a simulation configuration.
+     * 
+     * @param file The file
+     * @return true if the file contains a simulation configuration, false otherwise
+     */
+    public static def boolean isSimulationConfiguration(IFile file) {
+        return matches(file, SIM_CONFIG)
+    }
+    
+    /**
+     * Checks if the file contains a simulation visualization configuration.
+     * 
+     * @param file The file
+     * @return true if the file contains a simulation visualization, false otherwise
+     */
+    public static def boolean isVisualizationConfiguration(IFile file) {
+        return matches(file, SIM_VISUALIZATION)
+    }
+    
+    /**
+     * Checks if the file contains a simulation input for a model.
+     * 
+     * @param file The file
+     * @return true if the file contains a simulation input, false otherwise
+     */
+    public static def boolean isSimulationInput(IFile file) {
+        return matches(file, SIM_INPUT)
+    }
+    
+    /**
+     * Checks if the file is for simulation output of a model.
+     * 
+     * @param file The file
+     * @return true if the file is for simulation output, false otherwise
+     */
+    public static def boolean isSimulationOutput(IFile file) {
+        return matches(file, SIM_OUTPUT)
+    }
+    
+     /**
+     * Checks if the file is for a simulation history.
+     * 
+     * @param file The file
+     * @return true if the file is for a simulation history, false otherwise
+     */
+    public static def boolean isSimulationHistory(IFile file) {
+        return matches(file, SIM_HISTORY)
     }
 }

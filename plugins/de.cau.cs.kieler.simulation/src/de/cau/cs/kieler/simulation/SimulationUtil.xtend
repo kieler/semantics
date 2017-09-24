@@ -25,10 +25,12 @@ import de.cau.cs.kieler.simulation.handlers.Redirect
 import de.cau.cs.kieler.simulation.handlers.SimulationInputFileHandler
 import de.cau.cs.kieler.simulation.handlers.TraceHandler
 import de.cau.cs.kieler.simulation.kisim.SimulationConfiguration
-import java.io.File
 import java.util.List
 import org.eclipse.core.resources.IFile
 import org.eclipse.emf.ecore.EObject
+
+import static de.cau.cs.kieler.prom.FileExtensions.isExecutable
+import static de.cau.cs.kieler.prom.FileExtensions.isTrace
 
 /**
  * @author aas
@@ -66,13 +68,13 @@ class SimulationUtil {
         } else if(files.size == 2) {
             val fileA = files.get(0)
             val fileB = files.get(1)
-            if(fileA.isExecutableFile && fileB.isExecutableFile) {
+            if(FileExtensions.isExecutable(fileA) && FileExtensions.isExecutable(fileB)) {
                 startExecutablesWithRedirect(fileA, fileB)
-            } else if(fileA.isExecutableFile && fileB.isTraceFile
-                   || fileB.isExecutableFile && fileA.isTraceFile) {
+            } else if(isExecutable(fileA) && isTrace(fileB)
+                   || isExecutable(fileB) && isTrace(fileA)) {
                 // Start executable with trace
-                var IFile execFile = files.findFirst[it.isExecutableFile]
-                var IFile traceFile = files.findFirst[it.isTraceFile]
+                var IFile execFile = files.findFirst[isExecutable(it)]
+                var IFile traceFile = files.findFirst[isTrace(it)]
                 if(execFile != null && traceFile != null) {
                     startExecutableWithTraceFile(execFile, traceFile)
                 }
@@ -123,7 +125,7 @@ class SimulationUtil {
         val simMan = new SimulationManager
         simMan.addAction("write", traceHandler)
         simMan.addAction(exeSimulator)
-        simMan.addAction("verify", traceHandler)
+        simMan.addAction("check", traceHandler)
         simMan.addAction("loadNextTick", traceHandler)
         simMan.initializeSimulation
     }
@@ -177,20 +179,6 @@ class SimulationUtil {
     private static def void initializeSimulation(SimulationManager simMan) {
         simMan.initialize()
         PromConsole.print("\n\nNew simulation")
-    }
-    
-    private static def boolean isExecutableFile(IFile file) {
-        val jFile = new File(file.location.toOSString)
-        try {
-            return jFile.canExecute
-        } catch(SecurityException e) {
-            // The access to the file was denied, thus it cannot be executed.
-            return false    
-        }
-    }
-    
-    private static def boolean isTraceFile(IFile file) {
-        return FileExtensions.TRACES.contains(file.fileExtension)
     }
     
     private static def void startSimulationCompilationResult(FileGenerationResult result) {

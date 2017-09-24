@@ -52,6 +52,7 @@ import org.osgi.framework.BundleContext
 
 /**
  * The activator class controls the plug-in life cycle.
+ * Contains util methods to work with Eclipse resources (IResource, IProject, etc.) 
  * 
  * @author aas
  */
@@ -118,9 +119,6 @@ class PromPlugin implements BundleActivator  {
      */
     override void start(BundleContext context) throws Exception {
         PromPlugin.context = context
-        
-        // Initialize the variables that can be used in the launch configuration
-        initializeVariables
     }
 
     /*
@@ -312,98 +310,6 @@ class PromPlugin implements BundleActivator  {
             } 
         }
         return false
-    }
-    
-    /**
-     * Sets several eclipse string variables (e.g. ${main_name}, ${compiled_main_name}).
-     * The variables can be used for example in the commands and file paths.
-     */
-    public static def void setVariables(String projectLocation, String mainFilePath, String compiledMainFilePath) {
-        // Set project
-        setVariable(LAUNCHED_PROJECT_VARIABLE, projectLocation)
-
-        // Set main file
-        val mainFileName = new File(mainFilePath).name
-        val mainFileLocation = if(mainFileName != "")
-                                   new File(projectLocation + File.separator + mainFilePath).absolutePath
-                               else
-                                   ""
-        val mainFileWithoutExtension = new Path(mainFileName).removeFileExtension.toOSString
-        setVariable(MAIN_FILE_NAME_VARIABLE, mainFileName)
-        setVariable(MAIN_FILE_LOCATION_VARIABLE, mainFileLocation)
-        setVariable(MAIN_FILE_PATH_VARIABLE, mainFilePath)
-        setVariable(MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE, mainFileWithoutExtension)
-
-        // Set compiled main file
-        val mainTargetName = new File(compiledMainFilePath).name
-        val mainTargetLocation = if(mainTargetName != "")
-                                     new File(projectLocation + File.separator + compiledMainFilePath).absolutePath
-                                 else
-                                    ""
-        val mainTargetWithoutExtension = new Path(mainTargetName).removeFileExtension.toOSString
-        setVariable(COMPILED_MAIN_FILE_NAME_VARIABLE, mainTargetName)
-        setVariable(COMPILED_MAIN_FILE_LOCATION_VARIABLE, mainTargetLocation)
-        setVariable(COMPILED_MAIN_FILE_PATH_VARIABLE, compiledMainFilePath)
-        setVariable(COMPILED_MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE, mainTargetWithoutExtension)
-    }
-
-    /**
-     * Creates or modifies the variable with the given name and data.
-     * 
-     * @param name The variable's name
-     * @param value The variable's value
-     * @param description The variable's description 
-     */
-    public static def void setVariable(String name, String value) {
-        val variableManager = VariablesPlugin.getDefault.stringVariableManager
-        val variable = variableManager.getValueVariable(name)
-        variable?.setValue(value)
-    }
-    
-    /**
-     * Registers a string variable at the string variable manager.
-     * 
-     * @param name The name of the variable
-     * @param description A short description for the variable
-     */
-    public static def void initializeVariable(String name, String description) {
-        val variable = variableManager.newValueVariable(name, description, false, "")
-        variable.description = description
-        variableManager.addVariables(#[variable])
-    }
-    
-    /**
-     * Initializes all variables if they have not been initialized yet.
-     */
-    public static def void initializeVariables() {
-        // Check if variables have been initialized already
-        var variable = variableManager.getValueVariable(MAIN_FILE_NAME_VARIABLE)
-        // Instantiate all variables if none yet
-        if (variable == null) {
-            // Project
-            initializeVariable(LAUNCHED_PROJECT_VARIABLE,
-            "Fully qualified path to the launched application")
-    
-            // Main file
-            initializeVariable(MAIN_FILE_NAME_VARIABLE,
-                "Name of the main file of the launched application")
-            initializeVariable(MAIN_FILE_LOCATION_VARIABLE,
-                "Fully qualified location of the main file of the launched application")
-            initializeVariable(MAIN_FILE_PATH_VARIABLE,
-                "Project relative path of the main file of the launched application")
-            initializeVariable(MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE,
-                "Project relative path of the main file of the launched application without file extension")
-            
-            // Compiled main file
-            initializeVariable(COMPILED_MAIN_FILE_NAME_VARIABLE,
-                "Name of the compiled main file of the launched application")
-            initializeVariable(COMPILED_MAIN_FILE_LOCATION_VARIABLE,
-                "Fully qualified location of the compiled main file of the launched application")
-            initializeVariable(COMPILED_MAIN_FILE_PATH_VARIABLE,
-                "Project relative path of the compiled main file of the launched application")
-            initializeVariable(COMPILED_MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE,
-                "Project relative path of the compiled main file of the launched application without file extension")
-        }
     }
     
     /**
@@ -711,5 +617,24 @@ class PromPlugin implements BundleActivator  {
                 }
             }
         }
+    }
+    
+    /**
+     * Split input string on spaces, except if between double quotes (e.g. "hello world" would be one token.)
+     * Surrounding double quotes are removed.
+     * 
+     * @param str The string to be splitted
+     * @return the slices of the input string.
+     */
+    public static def List<String> splitStringOnWhitespace(String str) {
+        // Code from
+        // http://stackoverflow.com/questions/7804335/split-string-on-spaces-except-if-between-quotes-i-e-treat-hello-world-as
+        val list = new ArrayList<String>();
+        val m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(str);
+        while (m.find()) {
+            // .replace(...) is to remove surrounding qoutes
+            list.add(m.group(1).replace("\"", ""))
+        }
+        return list
     }
 }

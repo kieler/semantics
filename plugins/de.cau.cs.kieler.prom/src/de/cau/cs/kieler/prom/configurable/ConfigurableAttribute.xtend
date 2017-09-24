@@ -131,6 +131,15 @@ class ConfigurableAttribute {
     }
     
     /**
+     * Returns true if the value is not null.
+     * 
+     * @return true if the value is not null, false otherwise
+     */
+    public def boolean isDefined() {
+        return value != null
+    }
+    
+    /**
      * {@inheritDoc}
      */
     override toString() {

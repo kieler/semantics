@@ -22,20 +22,18 @@ import de.cau.cs.kieler.prom.build.KielerModelingBuilder
 import de.cau.cs.kieler.prom.configurable.Configurable
 import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
 import de.cau.cs.kieler.prom.configurable.ResourceSubstitution
+import de.cau.cs.kieler.prom.configurable.Substitution
 import de.cau.cs.kieler.prom.console.PromConsole
 import java.io.File
 import java.io.InputStreamReader
-import java.util.ArrayList
 import java.util.List
 import java.util.concurrent.TimeUnit
-import java.util.regex.Pattern
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.Assert
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Path
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.prom.configurable.Substitution
 
 /**
  * Compiles generated code to an executable for use in the simulation.
@@ -240,7 +238,7 @@ abstract class SimulationCompiler extends Configurable {
      */
     protected def Iterable<String> getProcessArguments() {
         val commandWithoutPlaceholders = Substitution.performSubstitutions(command.stringValue, substitutions)
-        return splitStringOnWhitespace(commandWithoutPlaceholders)
+        return PromPlugin.splitStringOnWhitespace(commandWithoutPlaceholders)
     }
     
     /**
@@ -348,24 +346,5 @@ abstract class SimulationCompiler extends Configurable {
             executableFile.refreshLocal(1, null)
         }
         return result
-    }
-    
-    /**
-     * Split input string on spaces, except if between double quotes (e.g. "hello world" would be one token.)
-     * Surrounding double quotes are removed.
-     * 
-     * @param str The string to be splitted
-     * @return the slices of the input string.
-     */
-    protected def List<String> splitStringOnWhitespace(String str) {
-        // Code from
-        // http://stackoverflow.com/questions/7804335/split-string-on-spaces-except-if-between-quotes-i-e-treat-hello-world-as
-        val list = new ArrayList<String>();
-        val m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(str);
-        while (m.find()) {
-            // .replace(...) is to remove surrounding qoutes
-            list.add(m.group(1).replace("\"", ""))
-        }
-        return list
     }
 }

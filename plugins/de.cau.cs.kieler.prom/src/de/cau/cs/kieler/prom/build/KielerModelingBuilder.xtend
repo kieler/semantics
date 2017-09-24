@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.prom.build
 
-import de.cau.cs.kieler.prom.FileExtensions
 import de.cau.cs.kieler.prom.KiBuildExtensions
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
@@ -39,6 +38,8 @@ import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
+
+import static de.cau.cs.kieler.prom.FileExtensions.*
 
 /**
  * The kieler modeling builder has three main tasks:
@@ -274,11 +275,11 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
                     val res = delta.getResource()
                     if(res.type == IResource.FILE && res.fileExtension != null && res.exists) {
                         val file = res as IFile
-                        if(isModelFile(file)) {
+                        if(isModel(file)) {
                             changedModels.add(file)    
-                        } else if(isTemplateFile(file)) {
+                        } else if(isTemplate(file)) {
                             changedTemplates.add(file)
-                        } else if(isConfigurationFile(file)) {
+                        } else if(isBuildConfiguration(file)) {
                             // The configuration changed: Do a full build instead of an incremental build
                             abortIncrementalBuild = true
                             fullBuild
@@ -534,38 +535,10 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
         // TODO: Check if this can be removed
         // Search for models in project
         val membersWithoutBinDirectory = project.members.filter[it.name != "bin"]
-        return PromPlugin.findFiles(membersWithoutBinDirectory, null as List<String>).filter[it.isModelFile].toList
+        return PromPlugin.findFiles(membersWithoutBinDirectory, null as List<String>).filter[isModel(it)].toList
     }
     
-    /**
-     * Checks if the file is a model file.
-     * 
-     * @param file The file
-     * @return true if it is a model file, false otherwise.
-     */
-    private static def boolean isModelFile(IFile file) {
-        return FileExtensions.matches(file, FileExtensions.MODELS)
-    }
     
-    /**
-     * Checks if the file is a template file.
-     * 
-     * @param file The file
-     * @return true if it is a template file, false otherwise.
-     */
-    private static def boolean isTemplateFile(IFile file) {
-        return FileExtensions.matches(file, FileExtensions.TEMPLATES)
-    }
-    
-    /**
-     * Checks if the file contains a build configuration.
-     * 
-     * @param file The file
-     * @return true if the file contains a build configuration, false otherwise
-     */
-    private static def boolean isConfigurationFile(IFile file) {
-        return FileExtensions.matches(file, FileExtensions.BUILD_CONFIG)
-    }
     
     /**
      * Deletes all kieler modeling builder problems from the given resource and all its contained resources.
