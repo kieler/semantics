@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.JavaCore
 import org.eclipse.xtend.lib.annotations.Accessors
+import com.google.common.io.Files
 
 /**
  * Compiles a models (EObjects) to target code.
@@ -204,7 +205,8 @@ abstract class ModelCompiler extends Configurable {
             }
         }
         // Compute target resource inside target directory but with same folder structure as before
-        var targetPath = sourceWithoutJavaFolders.projectRelativePath.removeFileExtension.addFileExtension(targetFileExtension)
+        val nameWithoutExtension = Files.getNameWithoutExtension(sourceWithoutJavaFolders.name)
+        var targetPath = sourceWithoutJavaFolders.projectRelativePath.removeLastSegments(1).append(nameWithoutExtension+targetFileExtension)
         val targetFile = targetBaseFolder.getFile(targetPath)
         return targetFile
     }

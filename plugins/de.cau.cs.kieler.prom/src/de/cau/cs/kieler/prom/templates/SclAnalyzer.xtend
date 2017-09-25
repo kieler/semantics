@@ -10,25 +10,24 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.prom
+package de.cau.cs.kieler.prom.templates
 
-import de.cau.cs.kieler.prom.templates.DeclarationAnalyzer
-import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.scl.SCLProgram
 import org.eclipse.emf.ecore.EObject
 
 /**
  * @author aas
  *
  */
-class SCChartsAnalyzer extends DeclarationAnalyzer {
+class SclAnalyzer extends DeclarationAnalyzer {
     /**
      * {@inheritDoc}
      */
     override getDeclarations(EObject model) {
-        if(model instanceof SCCharts) {
-            val rootState = model.rootStates.get(0)
-            if(rootState != null) {
-                return rootState.declarations
+        if(model instanceof SCLProgram) {
+            val rootModule = model.modules.get(0)
+            if(rootModule != null) {
+                return rootModule.declarations
             }
         }
     }
@@ -37,9 +36,10 @@ class SCChartsAnalyzer extends DeclarationAnalyzer {
      * {@inheritDoc}
      */
     override getModelName(EObject model) {
-        if (model instanceof SCCharts) {
-            if(!model.rootStates.isNullOrEmpty) {
-                return model.rootStates.get(0).name
+        if(model instanceof SCLProgram) {
+            val module = model.modules.get(0)
+            if(module != null) {
+                return module.name    
             }
         }
     }

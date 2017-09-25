@@ -184,33 +184,6 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
     }
     
     /**
-     * Flag that is infered from the target language and determines
-     * if the target is a single transformation for code generation (e.g. "s.java")
-     * or a complex compile chain (e.g. "*T_ABORTWTO, T_EXIT").
-     * 
-     * @param targetLanguage The compile chain to the target language
-     * @deprecated
-     */
-    public static def boolean isCompileChain(String targetLanguage) {
-        //TODO: Remove this method after the kico launch config has been removed
-        var isCompileChain = false
-//        // Get code transformations of KiCo
-//        if(codeGenerationFeatures == null) {
-//            codeGenerationFeatures = KielerCompiler.getFeature(CodeGenerationFeatures.TARGET_ID)
-//            if(codeGenerationFeatures != null) {
-//                codeGenerationTransformations = codeGenerationFeatures.expandingTransformations
-//            }
-//        }
-//        // Check if target matches a transformation
-//        if(codeGenerationTransformations != null && !codeGenerationTransformations.isEmpty) {            
-//            // There is no transformation with the given id
-//            // => the target is a compile chain and not a transformation.
-//            isCompileChain = codeGenerationTransformations.filter[it.id == targetLanguage].isEmpty    
-//        }
-        return isCompileChain
-    }
-    
-    /**
      * Constructor
      */
     new() {

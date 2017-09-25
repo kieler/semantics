@@ -3,8 +3,8 @@
 <plugin>
    <extension-point id="de.cau.cs.kieler.prom.environmentInitializer" name="Environment Initializer" schema="schema/environmentInitializer.exsd"/>
    <extension-point id="modelAnalyzer" name="Model Analyzer" schema="schema/modelAnalyzer.exsd"/>
-   <extension-point id="modelCompiler" name="ModelCompiler" schema="schema/modelCompiler.exsd"/>
-   <extension-point id="simulationCompiler" name="SimulationCompiler" schema="schema/simulationCompiler.exsd"/>
+   <extension-point id="de.cau.cs.kieler.prom.modelCompiler" name="ModelCompiler" schema="schema/modelCompiler.exsd"/>
+   <extension-point id="de.cau.cs.kieler.prom.simulationCompiler" name="SimulationCompiler" schema="schema/simulationCompiler.exsd"/>
    
    <extension point="org.eclipse.emf.ecore.generated_package">
      <package 
@@ -70,6 +70,12 @@
             class="de.cau.cs.kieler.prom.build.simulation.JavaSimulationCompiler"
             name="java">
       </simulationCompiler>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.prom.modelAnalyzer">
+      <analyzer
+            class="de.cau.cs.kieler.prom.templates.SclAnalyzer">
+      </analyzer>
    </extension>
 
 </plugin>

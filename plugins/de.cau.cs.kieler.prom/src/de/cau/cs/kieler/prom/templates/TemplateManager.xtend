@@ -30,6 +30,7 @@ import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.Platform
 import org.eclipse.emf.ecore.EObject
+import javax.xml.ws.soap.AddressingFeature.Responses
 
 /**
  * This class generates wrapper code for models.
@@ -85,10 +86,14 @@ class TemplateManager {
         var Template template
         // The variables that are set in the template
         val map = newHashMap
-        map.putAll(config.additionalMappings)
+        
+        // Add additional mappings from configuration
+        if(config.additionalMappings != null) {
+            map.putAll(config.additionalMappings)
+        }
         
         // Get mapping of macro calls
-        if(!config.macroCallDatas.isNullOrEmpty) {
+        if(config.macroCallDatas != null) {
             val templateCodeWithMacroCalls = getTemplateCodeWithMacroCalls(config.templateFile, config.macroCallDatas)
 
             // Debug log macro calls
@@ -134,7 +139,6 @@ class TemplateManager {
     private static def String getTemplateCodeWithMacroCalls(IFile templateFile, List<MacroCallData> macroCallDatas) {
         // Create macro calls from annotations
         val map = getMappingOfPhasePlaceholders(macroCallDatas)
-        
         // Processor that injects macro calls in input template
         val lineProcessor = new LineProcessor<String>() {
             String text = ""

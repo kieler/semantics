@@ -38,13 +38,13 @@ class TemplateContext {
      * A variable can have a numeric or text value. Furthermore a variable's value can be a list or another map.
      */
     @Accessors
-    private var Map<String, Object> additionalMappings = newHashMap
+    private var Map<String, Object> additionalMappings
     
     /**
      * Macro call datas that should be injected into the template before it is processed.
      */
     @Accessors
-    private var List<MacroCallData> macroCallDatas = newArrayList
+    private var List<MacroCallData> macroCallDatas
     
     /**
      * Constructor

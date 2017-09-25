@@ -595,7 +595,9 @@ class DataPoolView extends ViewPart {
                 PromUIPlugin.asyncExecInUI[
                     // Highlight the simulation control flow in the diagram
                     dataPoolView.unhighlightDiagram
-                    if(e.operation != SimulationOperation.STOP) {
+                    if(e.operation == SimulationOperation.STOP) {
+                        // Nothing to do, because we unhighlighted the diagram already
+                    } else {
                         if(e.operation == SimulationOperation.INITIALIZED) {
                             dataPoolView.currentStates = null
                         } else {
