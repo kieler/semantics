@@ -12,11 +12,14 @@
  */
 package de.cau.cs.kieler.kicool.ui.view
 
+import org.eclipse.swt.events.DisposeEvent
+import org.eclipse.swt.events.DisposeListener
+import org.eclipse.swt.widgets.Composite
+import org.eclipse.ui.IEditorPart
+import org.eclipse.ui.IEditorReference
 import org.eclipse.ui.IPartListener2
 import org.eclipse.ui.IWorkbenchPartReference
-import org.eclipse.swt.widgets.Composite
-import org.eclipse.swt.events.DisposeListener
-import org.eclipse.swt.events.DisposeEvent
+import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.part.EditorPart
 
 /**
@@ -51,6 +54,7 @@ class CompilerViewPartListener implements IPartListener2 {
                system = view.systemSelectionManager.selectedSystem 
                view.editPartSystemManager.attachSystemToEditPart(part, system)
             }
+            view.editPartSystemManager.activeEditor = part
             view.activeSystem = system
                 
             view.updateView
@@ -86,17 +90,29 @@ class CompilerViewPartListener implements IPartListener2 {
         val part = partRef.getPart(false)
         if (part == null) return;
         if (part instanceof CompilerView) {
-            val activePartRef = CompilerView.getActiveEditorReference
+            val activePartRef = activeEditorReference
             if (activePartRef != null) {
                 updateCompilerView(activePartRef)
             }
             view.updateView
-        } else if (part instanceof EditorPart) {
-            updateCompilerView(partRef)
         }
     }
     
     override partVisible(IWorkbenchPartReference partRef) {
+    }
+    
+    public static def IEditorPart getActiveEditor() {
+        PlatformUI.getWorkbench.getActiveWorkbenchWindow.getActivePage.getActiveEditor
+    }
+    
+    public static def IEditorReference getActiveEditorReference() {
+        val activePage = PlatformUI.getWorkbench.getActiveWorkbenchWindow.getActivePage
+        val activeEditor = activePage.activeEditor
+        for(reference : activePage.editorReferences) {
+            val editor = reference.getEditor(false)
+            if (editor?.equals(activeEditor)) return reference
+        }
+        return null
     }
     
 }

@@ -125,8 +125,8 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
                 }
             } else {
                 target.propertyMap.put(k, v)
-                    System.err.println("Prime environment wants to copy value of key \"" + k + "\", but the value "+ 
-                        "does not seem to be cloneable. This might be ok, but you should resolve this.");
+//                    System.err.println("Prime environment wants to copy value of key \"" + k + "\", but the value "+ 
+//                        "does not seem to be cloneable. This might be ok, but you should resolve this.");
             }
         }  
     }

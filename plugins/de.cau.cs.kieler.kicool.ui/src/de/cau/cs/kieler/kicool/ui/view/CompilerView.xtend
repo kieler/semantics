@@ -209,17 +209,4 @@ class CompilerView extends DiagramViewPart {
         memento?.putString(action.action.id, action.action.checked.toString)
     }
 
-    public static def IEditorPart getActiveEditor() {
-        PlatformUI.getWorkbench.getActiveWorkbenchWindow.getActivePage.getActiveEditor
-    } 
-    
-    public static def IEditorReference getActiveEditorReference() {
-        val activePage = PlatformUI.getWorkbench.getActiveWorkbenchWindow.getActivePage
-        val activeEditor = activePage.activeEditor
-        for(reference : activePage.editorReferences) {
-            val editor = reference.getEditor(false)
-            if (editor?.equals(activeEditor)) return reference
-        }
-        return null
-    }     
 }

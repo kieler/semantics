@@ -15,6 +15,8 @@ package de.cau.cs.kieler.kicool.ui.view
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import org.eclipse.ui.IEditorPart
+import de.cau.cs.kieler.core.model.properties.Property
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * The EditPartSystemManager keeps track of the active editors and associated systems. 
@@ -27,9 +29,11 @@ import org.eclipse.ui.IEditorPart
 class EditPartSystemManager implements EditorActionAdapter.EditorSaveListener, 
     EditorActionAdapter.EditorCloseListener {
     
+    private static val EDITOR = new Property<IEditorPart>("de.cau.cs.kieler.kicool.ui.view.editor", null)
     private val editPartSystemMap = <IEditorPart, System> newHashMap
     private val editPartCompilationContextMap = <IEditorPart, CompilationContext> newHashMap
     private val editorActionAdapters = <IEditorPart, EditorActionAdapter> newHashMap
+    @Accessors IEditorPart activeEditor = null
     
     private var CompilerView view
     
@@ -49,12 +53,12 @@ class EditPartSystemManager implements EditorActionAdapter.EditorSaveListener,
         editPartSystemMap.remove(part)
     }
     
-    def findEditorForSystem(System system) {
-        for(key : editPartSystemMap.keySet) {
-            if (editPartSystemMap.get(key).equals(system)) return key
-        }
-        
-        return null
+    def static getInputEditor(CompilationContext context) {
+        context.startEnvironment.getProperty(EDITOR)
+    }
+    
+    def static setInputEditor(CompilationContext context, IEditorPart part) {
+        context.startEnvironment.setProperty(EDITOR, part)
     }
     
     def attachCompilationContextToEditorPart(IEditorPart part, CompilationContext context) {
