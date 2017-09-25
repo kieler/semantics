@@ -148,7 +148,6 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         
         environment.setProperty(INPLACE_VALID, processorInstance.validateInplaceType)
         val environmentPrime = environment.preparePrimeEnvironment
-        environmentPrime.setProperty(SOURCE_MODEL, environmentPrime.getProperty(MODEL))
         
         processorInstance.setEnvironment(environment, environmentPrime)
         

@@ -40,6 +40,8 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
     static def Environment preparePrimeEnvironment(Environment environment) {
         val prime = new Environment()
         environment.copyEnvironment(prime)
+        
+        return prime
     }   
     
     static def <T extends EnvironmentPropertyHolder> T copyEnvironment(T source, T target) {
@@ -67,6 +69,9 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
         } else {
             copyValue(target, MODEL, model)
         }
+        
+        // set source model
+        target.propertyMap.put(SOURCE_MODEL, model)
 
         for(k : source.propertyMap.keySet.immutableCopy) {
             if (k != MODEL && k != SOURCE_MODEL) {
