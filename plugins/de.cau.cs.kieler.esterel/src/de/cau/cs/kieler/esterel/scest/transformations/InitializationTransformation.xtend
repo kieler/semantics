@@ -77,12 +77,12 @@ class InitializationTransformation extends AbstractExpansionTransformation imple
         resetModuleSuffix
         clearNewSignalsMap
         for (var i=0; i<prog.modules.length; i++) {
-            var m = prog.modules.get(i)
+            var m = scestProgram.modules.get(i)
             if (!m.annotations.isGeneratedModule) {
                 transformStatements(m.statements, 1)
             }
         } 
-        return prog
+        return scestProgram
     }
     
     def void transformStatements(EList<Statement> statements, int depth) {

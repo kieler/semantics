@@ -1206,6 +1206,12 @@ class SCEstExtension {
                 module.statements.add(newLabel)
                 return newLabel 
             }
+            else if (parent instanceof Module) {
+                var module = parent as Module
+                var newLabel = createLabel
+                module.statements.add(newLabel)
+                return newLabel 
+            }
             parent = parent.eContainer
         }
     }

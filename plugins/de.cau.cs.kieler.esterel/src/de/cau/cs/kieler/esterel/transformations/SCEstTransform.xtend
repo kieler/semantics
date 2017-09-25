@@ -75,6 +75,9 @@ class SCEstTransform extends AbstractExpansionTransformation {
     var SCEstProgram scestProgram
     
     def SCEstProgram transform(Program prog) {
+        if (prog instanceof SCEstProgram) {
+            return prog
+        }
         scestProgram = createSCEstProgram
         for (var i=0; i<prog.modules.length; i++) {
             var m = prog.modules.get(i)

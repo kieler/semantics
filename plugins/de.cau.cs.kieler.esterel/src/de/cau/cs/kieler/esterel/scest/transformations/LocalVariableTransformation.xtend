@@ -43,6 +43,7 @@ import de.cau.cs.kieler.scl.scl.Assignment
 import org.eclipse.emf.ecore.util.EcoreUtil
 import de.cau.cs.kieler.esterel.esterel.Await
 import de.cau.cs.kieler.esterel.esterel.Run
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author mrb
@@ -74,8 +75,16 @@ class LocalVariableTransformation extends AbstractExpansionTransformation implem
     @Inject
     extension SCEstExtension
     
+    // this map combines an Esterel variable with the new SCL variable
+    var HashMap<IVariable, ValuedObject> newVariables = new HashMap<IVariable, ValuedObject>()
+    
     def SCEstProgram transform(SCEstProgram prog) {
-        prog.modules.forEach [ m | transformStatements(m.statements)]
+        prog.modules.forEach [ m | 
+            transformStatements(m.statements)
+            transformReferences(m)
+            transformAssignments(m)
+            newVariables.clear
+        ]
         return prog
     }
     
@@ -144,9 +153,9 @@ class LocalVariableTransformation extends AbstractExpansionTransformation implem
         var statements = statement.getContainingList
         var pos = statements.indexOf(statement)
         var scope = createScopeStatement
-        scope.statements.add(variables.statements)
-        // this map combines an Esterel variable with the new SCL variable
-        var HashMap<IVariable, ValuedObject> newVariables = new HashMap<IVariable, ValuedObject>()
+        variables.statements.transformStatements
+        scope.statements.addAll(variables.statements)
+
         // go through all declarations
         for (decl : variables.varDecls) {
             if (decl.type.type != null) {
@@ -192,11 +201,9 @@ class LocalVariableTransformation extends AbstractExpansionTransformation implem
                 
         }
         // the esterel IVariables are not deleted yet
-        variables.statements.add(scope)
+//        variables.statements.add(scope)
 //        // IVariables are gone
-//        statements.set(pos, scope)
-        transformReferences(scope, newVariables)
-        transformAssignments(scope, newVariables)
+        statements.set(pos, scope)
         
         // TODO EXEC STATEMENT TRANSFORMATION
         
@@ -217,9 +224,9 @@ class LocalVariableTransformation extends AbstractExpansionTransformation implem
         }
     }
     
-    def transformAssignments(Statement statement, Map<IVariable, ValuedObject> newVariables) {
+    def transformAssignments(EObject obj) {
         // iterate over all Esterel assignments in the scope
-        var assignmentsEst = statement.eAllContents.filter(EsterelAssignment).toList
+        var assignmentsEst = obj.eAllContents.filter(EsterelAssignment).toList
         for (a : assignmentsEst) {
             if (newVariables.containsKey(a.getVar())) {
                 var statements = a.getContainingList
@@ -229,7 +236,7 @@ class LocalVariableTransformation extends AbstractExpansionTransformation implem
             }
         }
         // iterate over all SCL assignments in the scope
-        var assignmentsSCL = statement.eAllContents.filter(Assignment).toList
+        var assignmentsSCL = obj.eAllContents.filter(Assignment).toList
         for (a : assignmentsSCL) {
             if (newVariables.containsKey(a.valuedObject)) {
                 a.valuedObject = newVariables.get(a.valuedObject)
