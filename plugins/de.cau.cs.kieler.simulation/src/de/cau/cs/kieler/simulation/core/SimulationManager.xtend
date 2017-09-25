@@ -27,6 +27,11 @@ import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.prom.ModelImporter
+import de.cau.cs.kieler.simulation.core.events.SimulationEvent
+import de.cau.cs.kieler.simulation.core.events.SimulationListener
+import de.cau.cs.kieler.simulation.core.events.ErrorEvent
+import de.cau.cs.kieler.simulation.core.events.SimulationOperation
+import de.cau.cs.kieler.simulation.core.events.SimulationControlEvent
 
 /**
  * The simulation manager holds a configuration of a simulation and takes care of its execution.
@@ -112,6 +117,10 @@ class SimulationManager extends Configurable {
      @Accessors(PUBLIC_GETTER)
     private var boolean isStopped
     
+    /**
+     * The position when scrolling through the history.
+     * 0 is the current data pool, 1 is the previous data pool, 2 is two data pools ago, etc.
+     */
     @Accessors(PUBLIC_GETTER)
     private var int positionInHistory;
     
@@ -323,7 +332,7 @@ class SimulationManager extends Configurable {
     public def void append(Simulator simulator) {
         simulator.initialize(currentPool)
 //        println("Appended simulator")
-        fireEvent(SimulationEventType.INITIALIZED)
+        fireEvent(SimulationOperation.INITIALIZED)
     }
     
     /**
@@ -345,7 +354,7 @@ class SimulationManager extends Configurable {
         }
         
 //        println("Initilized simulation")
-        fireEvent(SimulationEventType.INITIALIZED)
+        fireEvent(SimulationOperation.INITIALIZED)
     }
     
     /**
@@ -384,7 +393,7 @@ class SimulationManager extends Configurable {
         setNewState(pool, currentState.actionIndex + 1)
         
 //        println("Sub Stepped simulation")
-        fireEvent(SimulationEventType.SUB_STEP)
+        fireEvent(SimulationOperation.SUB_STEP)
     }
     
     /**
@@ -406,7 +415,7 @@ class SimulationManager extends Configurable {
         // Save new state
         setNewState(pool, nextActionIndex)
 //        println("Stepped simulation macro tick")
-        fireEvent(SimulationEventType.MACRO_STEP)
+        fireEvent(SimulationOperation.MACRO_STEP)
     }
     
     /**
@@ -426,7 +435,7 @@ class SimulationManager extends Configurable {
         }
         loadStateFromHistory
         
-        fireEvent(SimulationEventType.STEP_HISTORY)
+        fireEvent(SimulationOperation.STEP_HISTORY_FORWARD)
     }
     
     /**
@@ -446,7 +455,7 @@ class SimulationManager extends Configurable {
         }
         loadStateFromHistory
         
-        fireEvent(SimulationEventType.STEP_HISTORY)
+        fireEvent(SimulationOperation.STEP_HISTORY_BACK)
     }
 
     private def void loadStateFromHistory() {
@@ -499,7 +508,7 @@ class SimulationManager extends Configurable {
                         val int timeBeforeTick = System.currentTimeMillis.intValue
                         
                         // Notify listeners of new state
-                        fireEvent(SimulationEventType.PLAYING)
+                        fireEvent(SimulationOperation.PLAYING)
                         
                         // Create following state
                         val DataPool pool = createNextPool()
@@ -535,16 +544,15 @@ class SimulationManager extends Configurable {
                         // If the nextTickTime is already smaller than the currentTime,
                         // the tick took more time than the play delay. Thus it is too slow
                         if(nextTickTime < currentTime) {
-                            val event = new SimulationEvent
-                            event.type = SimulationEventType.ERROR
-                            event.message = "Tick needed longer than desired. "
+                            val message = "Tick needed longer than desired. "
                                           + "(needed: "+(currentTime-timeBeforeTick)+" ms, "
                                           + "desired: "+(nextTickTime-timeBeforeTick)+ " ms)"
-                            System.err.println(event.message)
+                            val event = new ErrorEvent(message)
+                            System.err.println(message)
                             fireEvent(event)
                         }
                     }
-                    fireEvent(SimulationEventType.MACRO_STEP)
+                    fireEvent(SimulationOperation.MACRO_STEP)
                     return Status.OK_STATUS
                 }
             }
@@ -563,7 +571,7 @@ class SimulationManager extends Configurable {
             isPlaying = false
         }
         
-        fireEvent(SimulationEventType.PAUSE)
+        fireEvent(SimulationOperation.PAUSE)
     }
     
     /**
@@ -591,7 +599,7 @@ class SimulationManager extends Configurable {
         }
         currentState = null
         
-        fireEvent(SimulationEventType.STOP)
+        fireEvent(SimulationOperation.STOP)
     }
     
     /**
@@ -685,35 +693,31 @@ class SimulationManager extends Configurable {
              l.update(event)
          }
      }
-    
-    /**
-     * Notifies all listeners about an event.
+     
+     /**
+     * Notifies all listeners about handling the simulation.
      */
-     protected def void fireEvent(SimulationEventType type, Variable variable) {
-         val e = new SimulationEvent()
-         e.type = type
-         e.pool = currentPool
-         e.variable = variable
+     public def void fireEvent(SimulationOperation operation) {
+         val e = new SimulationControlEvent(operation, currentPool)
          fireEvent(e)
      }
      
      /**
-     * Notifies all listeners about an event.
-     * The pool is set to the current pool in the simulation.
-     */
-     public def void fireEvent(SimulationEventType type) {
-         val e = new SimulationEvent()
-         e.type = type
-         e.pool = currentPool
-         fireEvent(e)
-     }
-     
+      * Adds the listener to be notified about events
+      * 
+      * @param listener The listener
+      */
      public static def void addListener(SimulationListener listener) {
          if(!listeners.contains(listener)) {
              listeners.add(listener)
          }
      }
      
+     /**
+      * Removes the listener.
+      * 
+      * @param listener The listener
+      */
      public static def void removeListener(SimulationListener listener) {
          listeners.remove(listener)
      }

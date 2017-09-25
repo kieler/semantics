@@ -24,11 +24,10 @@ import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.ui.PromUIPlugin
 import de.cau.cs.kieler.prom.ui.views.LabelContribution
 import de.cau.cs.kieler.simulation.core.DataPool
-import de.cau.cs.kieler.simulation.core.SimulationEvent
-import de.cau.cs.kieler.simulation.core.SimulationEventType
-import de.cau.cs.kieler.simulation.core.SimulationListener
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.Variable
+import de.cau.cs.kieler.simulation.core.events.SimulationEvent
+import de.cau.cs.kieler.simulation.core.events.SimulationListener
 import java.awt.event.MouseWheelEvent
 import java.awt.event.MouseWheelListener
 import java.awt.geom.AffineTransform
@@ -69,6 +68,9 @@ import org.w3c.dom.Element
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.EventListener
 import org.w3c.dom.svg.SVGDocument
+import de.cau.cs.kieler.simulation.core.events.SimulationAdapter
+import de.cau.cs.kieler.simulation.core.events.VariableUserValueEvent
+import de.cau.cs.kieler.simulation.core.events.DataPoolEvent
 
 /**
  * The KiVis View.
@@ -635,19 +637,31 @@ class KiVisView extends ViewPart {
      * @return The simulation listener
      */
     private static def SimulationListener createSimulationListener() {
-        val listener = new SimulationListener() {
+        val listener = new SimulationAdapter() {
+            var KiVisView kiVisView 
             override update(SimulationEvent e) {
-                val kiVisView = KiVisView.instance 
-                if(kiVisView != null) {
-                    if(e.type == SimulationEventType.VARIABLE_CHANGE
-                        && !kiVisView.ignoreVariableEvents) {
-                        PromUIPlugin.asyncExecInUI[kiVisView.update(e.variable)]
-                    } else if(e.type != SimulationEventType.TRACE
-                           && e.type != SimulationEventType.INITIALIZED) {
-                        // Update the view in the UI thread
-                        PromUIPlugin.asyncExecInUI[kiVisView.update(SimulationManager.instance?.currentPool, false)]
-                    }
+                kiVisView = KiVisView.instance
+                if(kiVisView == null) {
+                    return
                 }
+                super.update(e)
+            }
+            
+            override onUserValueChanged(VariableUserValueEvent e) {
+                if(!kiVisView.ignoreVariableEvents) {
+                    PromUIPlugin.asyncExecInUI[
+                        kiVisView.update(e.variable)
+                    ]
+                }
+            }
+            
+            override onDataPoolEvent(DataPoolEvent e) {
+                PromUIPlugin.asyncExecInUI[
+                    val simMan = SimulationManager.instance
+                    if(simMan != null && kiVisView != null) {
+                        kiVisView.update(simMan.currentPool, false)    
+                    }
+                ]
             }
         }
         return listener

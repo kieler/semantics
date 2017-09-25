@@ -28,15 +28,19 @@ import de.cau.cs.kieler.prom.ui.PromUIPlugin
 import de.cau.cs.kieler.prom.ui.views.LabelContribution
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.iterators.StateIterator
 import de.cau.cs.kieler.sccharts.processors.transformators.TakenTransitionSignaling
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
 import de.cau.cs.kieler.simulation.core.NDimensionalArray
-import de.cau.cs.kieler.simulation.core.SimulationEvent
-import de.cau.cs.kieler.simulation.core.SimulationEventType
-import de.cau.cs.kieler.simulation.core.SimulationListener
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.Variable
+import de.cau.cs.kieler.simulation.core.events.ErrorEvent
+import de.cau.cs.kieler.simulation.core.events.SimulationAdapter
+import de.cau.cs.kieler.simulation.core.events.SimulationEvent
+import de.cau.cs.kieler.simulation.core.events.SimulationListener
 import de.cau.cs.kieler.simulation.handlers.TraceMismatchEvent
 import de.cau.cs.kieler.simulation.ui.SimulationUiPlugin
 import de.cau.cs.kieler.simulation.ui.toolbar.SubTicksEnabledPropertyTester
@@ -67,10 +71,10 @@ import org.eclipse.swt.widgets.Table
 import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.State
-import java.util.Iterator
-import de.cau.cs.kieler.sccharts.iterators.StateIterator
+import de.cau.cs.kieler.simulation.core.events.VariableUserValueEvent
+import de.cau.cs.kieler.simulation.core.events.DataPoolEvent
+import de.cau.cs.kieler.simulation.core.events.SimulationControlEvent
+import de.cau.cs.kieler.simulation.core.events.SimulationOperation
 
 /**
  * @author aas
@@ -518,8 +522,8 @@ class DataPoolView extends ViewPart {
     
     private def void updateTickInfo(SimulationEvent e) {
         var String txt = null
-        if(e.type != SimulationEventType.STOP) {
-            val simMan = SimulationManager.instance
+        val simMan = SimulationManager.instance
+        if(!simMan.isStopped) {
             val macroTick = simMan.currentMacroTickNumber
             val subTick = simMan.currentSubTickNumber
             txt = "Tick #"+macroTick
@@ -547,47 +551,58 @@ class DataPoolView extends ViewPart {
     }
     
     private static def SimulationListener createSimulationListener() {
-        val listener = new SimulationListener() {
+        val listener = new SimulationAdapter() {
+            var DataPoolView dataPoolView
             override update(SimulationEvent e) {
-                val dataPoolView = DataPoolView.instance
+                dataPoolView = DataPoolView.instance
                 if(dataPoolView == null) {
                     return;
                 }
-                if(e.type == SimulationEventType.ERROR) {
-                    PromUIPlugin.asyncExecInUI[
-                        dataPoolView.setStatusLineText(e.message)    
-                    ]
-                }else if(e.type == SimulationEventType.VARIABLE_CHANGE) {
-                    PromUIPlugin.asyncExecInUI[
-                        dataPoolView.viewer.update(e.variable, null)    
-                    ]
-                } else if(e.type == SimulationEventType.TRACE) {
-                    if(e instanceof TraceMismatchEvent) {
-                        dataPoolView.registerTraceMismatch(e.variable, e)
-                        dataPoolView.viewer.update(e.variable, null)
+                super.update(e)
+            }
+            
+            override onErrorEvent(ErrorEvent e) {
+                PromUIPlugin.asyncExecInUI[
+                    dataPoolView.setStatusLineText(e.message)    
+                ]
+            }
+            
+            override onUserValueChanged(VariableUserValueEvent e) {
+                PromUIPlugin.asyncExecInUI[
+                    dataPoolView.viewer.update(e.variable, null)    
+                ]
+            }
+            
+            override onTraceMismatch(TraceMismatchEvent e) {
+                dataPoolView.registerTraceMismatch(e.variable, e)
+                dataPoolView.viewer.update(e.variable, null)
+            }
+            
+            override onDataPoolEvent(DataPoolEvent e) {
+                PromUIPlugin.asyncExecInUI[
+                    // Update data pool view
+                    if(e.pool == SimulationManager.instance?.currentPool) {
+                        // Update tick info
+                        dataPoolView.updateTickInfo(e)
+                        // Set pool data
+                        dataPoolView.setDataPool(e.pool)
                     }
-                } else {
-                    // Execute in UI thread
-                    PromUIPlugin.asyncExecInUI[
-                        val pool = e.pool
-                        // Update data pool view
-                        if(pool == SimulationManager.instance?.currentPool) {
-	                        // Update tick info
-	                        dataPoolView.updateTickInfo(e)
-	                        // Set pool data
-	                        dataPoolView.setDataPool(pool)
+                    
+                ]
+            }
+            
+            override onSimulationControlEvent(SimulationControlEvent e) {
+                PromUIPlugin.asyncExecInUI[
+                    // Highlight the simulation control flow in the diagram
+                    dataPoolView.unhighlightDiagram
+                    if(e.operation != SimulationOperation.STOP) {
+                        if(e.operation == SimulationOperation.INITIALIZED) {
+                            dataPoolView.currentStates = null
+                        } else {
+                            dataPoolView.highlightDiagram(e.pool)
                         }
-                        // Highlight the simulation control flow in the diagram
-                        dataPoolView.unhighlightDiagram
-                        if(e.type != SimulationEventType.STOP) {
-                            if(e.type == SimulationEventType.INITIALIZED) {
-                                dataPoolView.currentStates = null
-                            } else {
-                                dataPoolView.highlightDiagram(pool)
-                            }
-                        }
-                    ]
-                }
+                    }
+                ]
             }
         }
         return listener

@@ -12,8 +12,7 @@
  */
 package de.cau.cs.kieler.simulation.handlers
 
-import de.cau.cs.kieler.simulation.core.SimulationEvent
-import de.cau.cs.kieler.simulation.core.SimulationEventType
+import de.cau.cs.kieler.simulation.core.events.VariableEvent
 import org.eclipse.core.resources.IFile
 
 /**
@@ -22,7 +21,7 @@ import org.eclipse.core.resources.IFile
  * @author aas
  *
  */
-abstract class TraceEvent extends SimulationEvent {
+abstract class TraceEvent extends VariableEvent {
     /**
      * The file from which the trace was loaded
      */
@@ -40,6 +39,14 @@ abstract class TraceEvent extends SimulationEvent {
      * Constructor
      */
     new() {
-        type = SimulationEventType.TRACE
+    }
+    
+    /**
+     * Constructor
+     */
+    new(IFile traceFile, int traceNumber, int tickNumber) {
+        this.traceFile = traceFile
+        this.traceNumber = traceNumber
+        this.tickNumber = tickNumber
     }
 }

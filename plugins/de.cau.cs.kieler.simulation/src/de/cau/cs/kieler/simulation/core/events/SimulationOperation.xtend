@@ -10,23 +10,22 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.simulation.core
+package de.cau.cs.kieler.simulation.core.events
 
 /**
+ * The operations to control the simulation.
+ * 
  * @author aas
  *
  */
-enum SimulationEventType {
-    ERROR,
-    TRACE,
-    VARIABLE_CHANGE,
-    
+enum SimulationOperation {
     SUB_STEP,
-    STEP_HISTORY,
+    MACRO_STEP,
+    STEP_HISTORY_BACK,
+    STEP_HISTORY_FORWARD,
     STOP,
     PLAY,
     PAUSE,
     PLAYING,
-    MACRO_STEP,
     INITIALIZED
 }

@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.simulation.core
 
+import de.cau.cs.kieler.simulation.core.events.VariableUserValueEvent
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
@@ -169,9 +170,10 @@ class Variable implements Cloneable {
         // Mark the modification in the model
         model.setModifiedVariable
         // Set the user value
+        val oldValue = userValue 
         userValue = value
         // Notify simulation listeners that value changed
-        SimulationManager.instance?.fireEvent(SimulationEventType.VARIABLE_CHANGE, this) 
+        SimulationManager.instance?.fireEvent(new VariableUserValueEvent(this, oldValue, value))
     }
     
     /**

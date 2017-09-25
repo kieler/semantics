@@ -14,11 +14,9 @@ package de.cau.cs.kieler.sccharts.test.c.simulation
 
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
-import de.cau.cs.kieler.simulation.core.SimulationEvent
-import de.cau.cs.kieler.simulation.core.SimulationEventType
-import de.cau.cs.kieler.simulation.core.SimulationListener
 import de.cau.cs.kieler.simulation.core.SimulationManager
-import de.cau.cs.kieler.simulation.core.StepAction
+import de.cau.cs.kieler.simulation.core.events.SimulationEvent
+import de.cau.cs.kieler.simulation.core.events.SimulationListener
 import de.cau.cs.kieler.simulation.handlers.ExecutableSimulator
 import de.cau.cs.kieler.simulation.handlers.TraceFinishedEvent
 import de.cau.cs.kieler.simulation.handlers.TraceHandler
@@ -147,14 +145,11 @@ class SCChartsNetlistSimulationTest extends AbstractXTextModelRepositoryTest<SCC
     }
     
     override update(SimulationEvent e) {
-        if (e.type == SimulationEventType.TRACE) {
-            if (e instanceof TraceMismatchEvent) {
-                traceError = e
-            } else if (e instanceof TraceFinishedEvent) {
-                traceFinished = true
-            }
+        if (e instanceof TraceMismatchEvent) {
+            traceError = e
+        } else if (e instanceof TraceFinishedEvent) {
+            traceFinished = true
         }
     }
-      
 }
 				
