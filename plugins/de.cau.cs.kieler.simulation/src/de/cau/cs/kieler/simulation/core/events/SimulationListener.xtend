@@ -13,7 +13,7 @@
 package de.cau.cs.kieler.simulation.core.events
 
 /**
- * Interface that notifies about a simulation.
+ * Interface that notifies about the simulation.
  * 
  * @author aas
  *

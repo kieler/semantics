@@ -20,6 +20,8 @@ import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.ui.PlatformUI
 
 /**
+ * The launch shortcut to start a simulation from selected files.
+ * 
  * @author aas
  *
  */

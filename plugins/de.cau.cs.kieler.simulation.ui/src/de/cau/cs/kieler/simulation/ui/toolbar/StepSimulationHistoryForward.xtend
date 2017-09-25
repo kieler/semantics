@@ -17,11 +17,15 @@ import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
 
 /**
+ * Button to step forward in the simulation history.
  * @author aas
  *
  */
 class StepSimulationHistoryForward extends SimulationToolbarButton {
     
+    /**
+     * Steps forward in the simulation history.
+     */
     override execute(ExecutionEvent event) throws ExecutionException {
         super.execute(event)
         if(simulation != null && !justRestarted) {

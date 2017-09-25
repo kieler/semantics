@@ -17,11 +17,16 @@ import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
 
 /**
+ * Button to step back in the simulation history.
+ * 
  * @author aas
  *
  */
 class StepSimulationHistoryBack extends SimulationToolbarButton {
     
+    /**
+     * Steps back in the simulation history.
+     */
     override execute(ExecutionEvent event) throws ExecutionException {
         super.execute(event)
         if(simulation != null && !justRestarted) {

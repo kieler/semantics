@@ -16,6 +16,9 @@ import de.cau.cs.kieler.simulation.handlers.TraceEvent
 import de.cau.cs.kieler.simulation.handlers.TraceMismatchEvent
 
 /**
+ * Base implementation structure for a simulation listener.
+ * Implementing classes can easily overwrite the methods to react to the simulation.
+ * 
  * @author aas
  *
  */
@@ -42,24 +45,62 @@ class SimulationAdapter implements SimulationListener {
             onDataPoolEvent(e)
     }
 
+    /**
+     * Callback for error events.
+     * 
+     * @param e The event
+     */
     protected def void onErrorEvent(ErrorEvent e) {
     }
     
+    /**
+     * Callback for trace mismatch events.
+     * 
+     * @param e The event
+     */
     protected def void onTraceMismatch(TraceMismatchEvent e) {
     }
     
+    /**
+     * Callback for trace events in general.
+     * This is also fired for trace mismatch events.
+     * 
+     * @param e The event
+     */
     protected def void onTraceEvent(TraceEvent e) {
     }
     
+    /**
+     * Callback for simulation control events.
+     * 
+     * @param e The event
+     */
     protected def void onSimulationControlEvent(SimulationControlEvent e) {
     }
     
+    /**
+     * Callback for a changed user value in a variable.
+     * 
+     * @param e The event
+     */
     protected def void onUserValueChanged(VariableUserValueEvent e) {
     }
     
+    /**
+     * Callback for variable events in general.
+     * This is also fired for a VariableUserValueEvent and TraceEvent.
+     * 
+     * @param e The event
+     */
     protected def void onVariableEvent(VariableEvent e) {
     }
     
+    /**
+     * Callback for data pool events in general.
+     * This is also fired for simulation control events.
+     * 
+     * @param e The event
+     */
     protected def void onDataPoolEvent(DataPoolEvent e) {
     }
 }

@@ -16,13 +16,11 @@ import de.cau.cs.kieler.simulation.core.NDimensionalArray
 import de.cau.cs.kieler.simulation.core.NDimensionalArrayElement
 import de.cau.cs.kieler.simulation.core.Variable
 import java.util.Collections
-import java.util.EventObject
 import java.util.List
 import org.eclipse.core.runtime.Assert
 import org.eclipse.jface.viewers.ArrayContentProvider
 import org.eclipse.jface.viewers.CellEditor
 import org.eclipse.jface.viewers.ColumnViewerEditor
-import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy
 import org.eclipse.jface.viewers.FocusCellOwnerDrawHighlighter
 import org.eclipse.jface.viewers.TableViewer
@@ -34,56 +32,83 @@ import org.eclipse.swt.events.FocusAdapter
 import org.eclipse.swt.events.FocusEvent
 import org.eclipse.swt.events.KeyAdapter
 import org.eclipse.swt.events.KeyEvent
-import org.eclipse.swt.events.MouseEvent
 import org.eclipse.swt.graphics.Image
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Table
 
 /**
+ * Cell editor for NDimensionalArrays
+ * 
  * @author aas
  *
  */
 class ArrayCellEditor extends CellEditor {
     
+    /**
+     * The table in which the elements of the array are displayed.
+     */
     var TableViewer viewer;
     
+    /**
+     * The index column of the table
+     */
     var TableViewerColumn indexColumn
+    /**
+     * The value column of the table
+     */
     var TableViewerColumn valueColumn
+    /**
+     * The user value column of the table
+     */
     var TableViewerColumn userValueColumn
+    /**
+     * The history column of the table
+     */
     var TableViewerColumn historyColumn
     
+    /**
+     * The array that is beeing edited
+     */
     var NDimensionalArray array
     
+    /**
+     * The parent composite of this cell editor
+     */
     var Composite parent
     
-    var int alignment
+    /**
+     * The alignment for the table in the parent.
+     * This is choosen depending on the position of the variable that holds this array.
+     */
+    var int verticalAlignment
     
+    /**
+     * The variable that holds the array to be edited
+     */
     var Variable variable
     
     /**
-     * Default ArrayCellEditor style
-     */
-    private static final int defaultStyle = SWT.NONE;
-    
-    /**
-     * Creates a new array cell editor parented under the given control.
+     * Constructor
      *
-     * @param parent the parent control
-     * @param style the style bits
+     * @param parent The parent control
+     * @param style The style bits
      */
     new(Composite parent, int style) {
         super(parent, style);
     }
     
     /**
-     * Creates a new array cell editor parented under the given control.
+     * Constructor
      *
-     * @param parent the parent control
+     * @param parent The parent control
      */
     new(Composite parent) {
-        this(parent, defaultStyle);
+        this(parent, SWT.NONE);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override protected createControl(Composite parent) {
         this.parent = parent.parent
         viewer = createTable(parent)
@@ -96,7 +121,11 @@ class ArrayCellEditor extends CellEditor {
         return viewer.control
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override getLayoutData() {
+        // Try to fit inside the parent control to have everything visible.
         val result = new LayoutData();
         if (control != null) {
             val preferredSize = control.computeSize(SWT.DEFAULT, SWT.DEFAULT, true)
@@ -104,27 +133,44 @@ class ArrayCellEditor extends CellEditor {
             val parentHeight = (parent.size.y*0.6f) as int
             result.minimumHeight = Math.min(preferredSize.y, parentHeight);
             
-            result.verticalAlignment = alignment
+            result.verticalAlignment = verticalAlignment
         }
         return result
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override protected doGetValue() {
         return array
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override protected doSetFocus() {
         viewer.control.setFocus
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override protected focusLost() {
         // Do nothing
     }
     
+    /**
+     * This cell editor does not depend on external focus listeners, because to edit an array element,
+     * the parent table (the data pool view) loses focus.
+     * However, this editor should still be active to edit the array element.
+     */
     override protected dependsOnExternalFocusListener() {
         return false
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override protected doSetValue(Object value) {
         Assert.isTrue(value != null && (value instanceof NDimensionalArray))
         array = (value as NDimensionalArray).clone
@@ -141,19 +187,25 @@ class ArrayCellEditor extends CellEditor {
         // (Variable at beginning of list -> top alignment,
         // at end of list -> bottom alignment,
         // in middle of list -> center alignment)
-        alignment = SWT.TOP
+        verticalAlignment = SWT.TOP
         if(variable != null && !parentInputList.isNullOrEmpty) {
             val pos = parentInputList.indexOf(variable)
             if(pos > 10) 
-                alignment = SWT.BOTTOM
+                verticalAlignment = SWT.BOTTOM
             else if(pos > 5)
-                alignment = SWT.CENTER
+                verticalAlignment = SWT.CENTER
         }
 
         // Set input        
         viewer.input = array.elements
     }
     
+    /**
+     * Creates the table in which the array elements are displayed and can be modified.
+     * 
+     * @param parent The parent composite
+     * @return the table for the array elements
+     */
     private def TableViewer createTable(Composite parent) {
         val style = getStyle().bitwiseOr(SWT.BORDER.bitwiseOr(SWT.FULL_SELECTION))
         val table = new Table(parent, style)

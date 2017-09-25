@@ -17,11 +17,15 @@ import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
 
 /**
+ * Button to start the play mode of the simulation.
+ * 
  * @author aas
  *
  */
 class PlaySimulation extends SimulationToolbarButton {
-    
+    /**
+     * Starts the automatic play mode of the simulation.
+     */
     override execute(ExecutionEvent event) throws ExecutionException {
         super.execute(event)
         if(simulation != null && !justRestarted) {

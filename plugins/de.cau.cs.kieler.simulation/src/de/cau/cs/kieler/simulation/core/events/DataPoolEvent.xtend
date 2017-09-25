@@ -15,6 +15,8 @@ package de.cau.cs.kieler.simulation.core.events
 import de.cau.cs.kieler.simulation.core.DataPool
 
 /**
+ * Simulation event with a data pool.
+ * 
  * @author aas
  *
  */

@@ -184,7 +184,7 @@ class DataPoolView extends ViewPart {
         val mgr = getViewSite().getActionBars().getMenuManager();
         mgr.add(new ToggleColumnVisibleAction(historyColumn));
         mgr.add(new ToggleColumnVisibleAction(inputOutputColumn));
-        mgr.add(new Action("Show Internal Variables") {
+        mgr.add(new Action("Show/Hide Internal Variables") {
             override run() {
                 filter.internalVariables = !filter.internalVariables
                 viewer.refresh

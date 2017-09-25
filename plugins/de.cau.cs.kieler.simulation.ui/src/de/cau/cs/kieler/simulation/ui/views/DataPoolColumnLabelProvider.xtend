@@ -23,16 +23,31 @@ import org.eclipse.swt.graphics.Font
 import org.eclipse.swt.widgets.Display
 
 /**
+ * Label provider for the columns in the data pool view.
+ * 
  * @author aas
  *
  */
 class DataPoolColumnLabelProvider extends ColumnLabelProvider{
     
+    /**
+     * Color for errors.
+     */
     private var Color lightRed
     
+    /**
+     * Constructor
+     */
     new() {
     }
     
+    /**
+     * Cells for models get a color that is readable with their dark background.
+     * Cells for variables with user values get a highlighting color.
+     * Otherwise the normal color is returned.
+     * 
+     * @param element The element in the cell
+     */
     override Color getForeground(Object element) {
         if(element.isDirty) {
             return Display.getDefault().getSystemColor(SWT.COLOR_DARK_MAGENTA)
@@ -42,6 +57,13 @@ class DataPoolColumnLabelProvider extends ColumnLabelProvider{
         return super.getForeground(element)
     }
     
+    /**
+     * Cells for models get a dark color so that they clearly separate the variables of the different models.
+     * Cells for variables with user values get a highlighting color.
+     * Otherwise the normal color is returned.
+     * 
+     * @param element The element in the cell
+     */
     override Color getBackground(Object element) {
         if(element instanceof Model) {
             return Display.getDefault().getSystemColor(SWT.COLOR_DARK_GRAY)
@@ -58,6 +80,11 @@ class DataPoolColumnLabelProvider extends ColumnLabelProvider{
         return super.getBackground(element)
     }
     
+    /**
+     * Cells with a user value get a highlighting font.
+     * 
+     * @param element The element in the cell
+     */
     override getFont(Object element) {
         if(element.isDirty) {
             return boldFont
@@ -65,10 +92,21 @@ class DataPoolColumnLabelProvider extends ColumnLabelProvider{
         return super.getFont(element)
     }
     
+    /**
+     * Returns the bold system font.
+     * 
+     * @return the bold system font
+     */
     private def Font getBoldFont() {
         return JFaceResources.getFontRegistry().getBold(JFaceResources.DIALOG_FONT)
     }
     
+    /**
+     * Checks whether an element has a user value (only for Variables / NDimensionalArrayElements).
+     * 
+     * @param element The element in the cell
+     * @return true if the element has a user value
+     */
     private def boolean isDirty(Object element) {
         if(element instanceof Variable) {
             return element.isDirty
