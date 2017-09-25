@@ -19,6 +19,10 @@ import de.cau.cs.kieler.prom.build.BuildProblem
 import de.cau.cs.kieler.prom.build.FileGenerationResult
 import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
 import de.cau.cs.kieler.prom.templates.TemplateManager
+import de.cau.cs.kieler.prom.templates.TemplateContext
+import com.google.common.base.Strings
+import java.io.File
+import java.nio.file.Paths
 
 /**
  * Template processor that injects additional macro calls into the template before it is processed.
@@ -54,20 +58,23 @@ class WrapperCodeTemplateProcessor extends TemplateProcessor {
         val targetFile = project.getFile(target.stringValue)
         val modelFile = project.getFile(modelPath.stringValue)
         // Get annotations in model
-        val macroCallDatas = newArrayList()
         val model = ModelImporter.load(modelFile)
         if(model == null) {
             val problem = BuildProblem.createError(modelFile.project, "Model file '"+modelFile.projectRelativePath+"' "
                                                                     + "could not be loaded.")
             result.addProblem(problem)
         }
-        TemplateManager.getAnnotationInterface(model, macroCallDatas)
+        val macroCallDatas = TemplateManager.getAnnotationInterface(model)
         
         // Create wrapper code
-        val name = Files.getNameWithoutExtension(templateFile.name)
-        val generator = new TemplateManager(project)
-        val wrapperCode = generator.generateWrapperCode(templateFile.projectRelativePath.toOSString, macroCallDatas,
-            #{TemplateManager.MODEL_NAME_VARIABLE -> name} )
+        var modelName = TemplateManager.getModelName(model)
+        if(modelName == null) {
+            modelName = Files.getNameWithoutExtension(modelFile.name)
+        }
+        val context = new TemplateContext(templateFile)
+        context.additionalMappings = #{TemplateManager.MODEL_NAME_VARIABLE -> Strings.nullToEmpty(modelName)}
+        context.macroCallDatas = macroCallDatas
+        val wrapperCode = TemplateManager.process(context)
         
         // Save output
         PromPlugin.createResource(targetFile, wrapperCode, true)

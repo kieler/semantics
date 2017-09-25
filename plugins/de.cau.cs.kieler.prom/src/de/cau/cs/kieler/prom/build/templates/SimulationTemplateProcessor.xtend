@@ -12,13 +12,15 @@
  */
 package de.cau.cs.kieler.prom.build.templates
 
-import com.google.common.io.Files
+import com.google.common.base.Strings
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.build.FileGenerationResult
 import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
 import de.cau.cs.kieler.prom.data.MacroCallData
+import de.cau.cs.kieler.prom.templates.TemplateContext
 import de.cau.cs.kieler.prom.templates.TemplateManager
+import de.cau.cs.kieler.prom.templates.VariableInterfaceType
 import java.util.List
 import java.util.Map
 import java.util.Map.Entry
@@ -27,7 +29,7 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.Assert
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.prom.templates.VariableInterfaceType
+import com.google.common.io.Files
 
 /**
  * Template processor that injects additional macro calls into the template before it is processed.
@@ -104,8 +106,10 @@ class SimulationTemplateProcessor extends TemplateProcessor {
         val templateFile = project.getFile(template.stringValue)
         val targetFile = project.getFile(target.stringValue)
         
-        // Get annotations in model
-        var List<MacroCallData> annotationDatas = newArrayList()
+        // Prepare the macro calls to be injected in the template
+        var List<MacroCallData> macroCallDatas = newArrayList()
+        
+        // Get simulation interface from model
         var IFile modelFile
         if(!modelPath.stringValue.isNullOrEmpty) {
             modelFile = project.getFile(modelPath.stringValue)
@@ -114,7 +118,7 @@ class SimulationTemplateProcessor extends TemplateProcessor {
             model = ModelImporter.load(modelFile)
         }
         if(model != null) {
-            TemplateManager.getSimulationInterfaceData(model, annotationDatas)
+            macroCallDatas = TemplateManager.getSimulationInterface(model)
         }
         
         // Get additional annotations from configuration
@@ -123,38 +127,38 @@ class SimulationTemplateProcessor extends TemplateProcessor {
             for(entry : variablesMap.entrySet) {
                 val datas = createDataFromVariablesMapping(entry)
                 if(!datas.isNullOrEmpty) {
-                    annotationDatas.addAll(datas)
+                    macroCallDatas.addAll(datas)
                 }
             }
         }
         
         // Set additional placeholder variables
-        val targetName = Files.getNameWithoutExtension(targetFile.name)
         var String compiledModelFileLocation = ""
         if(!compiledModelPath.stringValue.isNullOrEmpty) {
             val compiledModelFile = project.getFile(compiledModelPath.stringValue)
             compiledModelFileLocation = compiledModelFile.location.toOSString
         }
-        var String modelName = ""
-        if(modelFile != null) {
-            modelName = Files.getNameWithoutExtension(modelFile.name)
-        }
         
-        // Filter annotation datas based on the interface types that should be inclueded (e.g. input/output/internal)
+        // Filter annotation datas based on the interface types that should be included (e.g. input/output/internal)
         if(interfaceTypes.value != null) {
             if(interfaceTypes.value instanceof List) {
-                annotationDatas = annotationDatas.filter[it.matches(interfaceTypes.value as List)].toList
+                macroCallDatas = macroCallDatas.filter[it.matches(interfaceTypes.value as List)].toList
             } else {
-                annotationDatas = annotationDatas.filter[it.matches(interfaceTypes.stringValue)].toList
+                macroCallDatas = macroCallDatas.filter[it.matches(interfaceTypes.stringValue)].toList
             }
         }
         
         // Create simulation code
-        val generator = new TemplateManager(project)
-        val wrapperCode = generator.generateWrapperCode(templateFile.projectRelativePath.toOSString, annotationDatas,
-            #{TemplateManager.MODEL_NAME_VARIABLE -> modelName,
-              TemplateManager.FILE_NAME_VARIABLE -> targetName, 
-              "compiled_model_loc" -> compiledModelFileLocation} )
+        var modelName = TemplateManager.getModelName(model)
+        if(modelName == null) {
+            modelName = Files.getNameWithoutExtension(modelFile.name)
+        }
+        val context = new TemplateContext(templateFile)
+        context.additionalMappings = #{"compiled_model_loc" -> compiledModelFileLocation,
+                                       TemplateManager.MODEL_NAME_VARIABLE -> Strings.nullToEmpty(modelName)}
+                                       
+        context.macroCallDatas = macroCallDatas
+        val wrapperCode = TemplateManager.process(context)
         
         // Save output
         val result = new FileGenerationResult

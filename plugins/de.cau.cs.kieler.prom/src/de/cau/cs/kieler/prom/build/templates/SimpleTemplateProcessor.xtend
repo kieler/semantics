@@ -12,9 +12,9 @@
  */
 package de.cau.cs.kieler.prom.build.templates
 
-import com.google.common.io.Files
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.build.FileGenerationResult
+import de.cau.cs.kieler.prom.templates.TemplateContext
 import de.cau.cs.kieler.prom.templates.TemplateManager
 
 /**
@@ -46,10 +46,8 @@ class SimpleTemplateProcessor extends TemplateProcessor {
         val targetFile = project.getFile(target.stringValue)
         
         // Process the template
-        val name = Files.getNameWithoutExtension(templateFile.name)
-        val generator = new TemplateManager(project)
-        val generatedCode = generator.processTemplate(templateFile.projectRelativePath.toOSString, 
-                #{TemplateManager.FILE_NAME_VARIABLE -> name} )
+        val context = new TemplateContext(templateFile)
+        val generatedCode = TemplateManager.process(context)
         
         // Save output
         val result = new FileGenerationResult

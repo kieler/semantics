@@ -27,6 +27,7 @@ import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.build.BuildProblem
 import de.cau.cs.kieler.prom.build.DependencyGraph
 import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
+import de.cau.cs.kieler.prom.templates.TemplateContext
 import de.cau.cs.kieler.prom.templates.TemplateManager
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.iterators.StateIterator
@@ -65,11 +66,17 @@ class KiCoModelCompiler extends ModelCompiler {
     public val compilationSystem = new ConfigurableAttribute("compilationSystem", "de.cau.cs.kieler.sccharts.netlist.simple")
     
     /**
+     * The model that is compiled
+     */
+    private var EObject model
+    
+    /**
      * {@inheritDoc}
      */
     override doCompile(IFile file, EObject model) {
         Assert.isNotNull(file)
         Assert.isNotNull(model)
+        this.model = model
         
         // Prepare result
         val result = new ModelCompilationResult()
@@ -299,11 +306,15 @@ class KiCoModelCompiler extends ModelCompiler {
             PromPlugin.createResource(targetFile, inputStream, true)
         } else {
             // Inject compilation result into target template
-            val modelName = Files.getNameWithoutExtension(compiledFile.name)
-            val generator = new TemplateManager(project)
-            val wrapperCode = generator.processTemplate(resolvedTargetTemplate, 
-                #{TemplateManager.KICO_GENERATED_CODE_VARIABLE -> code,
-                  TemplateManager.MODEL_NAME_VARIABLE -> modelName})
+            var modelName = TemplateManager.getModelName(model)
+            if(modelName == null) {
+                modelName = Files.getNameWithoutExtension(compiledFile.name)
+            }
+            val templateFile = project.getFile(resolvedTargetTemplate)
+            val context = new TemplateContext(templateFile)
+            context.additionalMappings = #{TemplateManager.KICO_GENERATED_CODE_VARIABLE -> code,
+                                           TemplateManager.MODEL_NAME_VARIABLE -> modelName}
+            val wrapperCode = TemplateManager.process(context)
             // Save output
             val inputStream = new StringInputStream(wrapperCode)
             PromPlugin.createResource(targetFile, inputStream, true)

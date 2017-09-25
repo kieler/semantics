@@ -16,18 +16,16 @@ package de.cau.cs.kieler.prom.templates
 import com.google.common.base.Charsets
 import com.google.common.io.Files
 import com.google.common.io.LineProcessor
-import de.cau.cs.kieler.prom.ModelImporter
-import de.cau.cs.kieler.prom.data.FileData
+import de.cau.cs.kieler.prom.configurable.ResourceSubstitution
 import de.cau.cs.kieler.prom.data.MacroCallData
 import freemarker.template.Template
 import java.io.File
-import java.io.FileFilter
 import java.io.IOException
 import java.io.StringWriter
 import java.util.List
 import java.util.Map
 import java.util.regex.Pattern
-import org.eclipse.core.resources.IProject
+import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.Platform
@@ -43,28 +41,9 @@ import org.eclipse.emf.ecore.EObject
 class TemplateManager {
 
     /**
-     * The id of the extension point for wrapper code annotation analyzers.
-     */
-    private static val MODEL_ANALYZER_EXTENSION_POINT_ID = "de.cau.cs.kieler.prom.modelAnalyzer"
-
-    /**
-     * List with all wrapper code annotation analyzers loaded from extensions.
-     */
-    private static var List<ModelAnalyzer> modelAnalyzers
-
-    /**
      * A template variable which is replaced with the name of the last analyzed model.
      */
     public static val MODEL_NAME_VARIABLE = "model_name"
-    /**
-     * A template variable which is replaced with the names of the models.
-     */
-    public static val MODEL_NAMES_VARIABLE = "model_names"
-    
-    /**
-     * A template variable which is replaced with the name of the template file (without file extension).
-     */
-    public static val FILE_NAME_VARIABLE = "file_name"
     
     /**
      * The variable name in the target template
@@ -73,123 +52,72 @@ class TemplateManager {
     public static val KICO_GENERATED_CODE_VARIABLE = "kico_code"
     
     /**
+     * The id of the extension point for wrapper code annotation analyzers.
+     */
+    private static val MODEL_ANALYZER_EXTENSION_POINT_ID = "de.cau.cs.kieler.prom.modelAnalyzer"
+
+    /**
+     * List with all wrapper code annotation analyzers loaded from extensions.
+     */
+    private static var List<ModelAnalyzer> modelAnalyzers
+    
+    /**
      * Macro definitions to use <@init>, <@input>, <@output> in wrapper code snippets.
      */
-    public static var String macroDefinitions = null
+    private static var String macroDefinitions = null
     
     /**
-     * The project
-     */
-    private IProject project
-
-    /**
-     * Constructor
-     */
-    new(IProject project) {
-        this.project = project
-    }
-    
-    /**
-     * Generates wrapper code for a list of annotated model files.
+     * Processes the template context.
      * 
-     * @param templatePath The project relative path to the wrapper code template
-     * @param datas The model files to generate wrapper code for
-     * @return the generated wrapper code
+     * @param config The template context
+     * @return the code after the template has been processed
      */
-    def public String generateWrapperCode(String templatePath, FileData... datas) {
-        val List<MacroCallData> annotationDatas = newArrayList()
-        var List<String> modelNames = newArrayList()
-        var String modelName = ""
-        for(data : datas) {
-            val model = ModelImporter.load(data.getFile(project))
-            getAnnotationInterface(model, annotationDatas)
-            modelName = Files.getNameWithoutExtension(datas.get(0).name)
-            modelNames += modelName
+    public static def String process(TemplateContext config) {
+        if(config.templateFile == null) {
+            return ""
         }
-
-        // Set model names
-        val mapping = #{MODEL_NAME_VARIABLE -> modelName,
-                        MODEL_NAMES_VARIABLE -> modelNames}
-        return generateWrapperCode(templatePath, annotationDatas, mapping)
-    }
-    
-    /**
-     * Generates wrapper code using the given macro call datas.
-     * 
-     * @param templatePath The project relative path to the wrapper code template
-     * @param macroCallDatas The macro calls to be injected in the template
-     * @return the generated wrapper code
-     */
-    def public String generateWrapperCode(String templatePath, List<MacroCallData> macroCallDatas) {
-        generateWrapperCode(templatePath, macroCallDatas, #{})
-    }
-    
-    /**
-     * Generates code by running the template engine on a template file.
-     * 
-     * @param templatePath The project relative path to the template
-     * @param additionalMappings Additional mappings of placeholder variables to their corresponding values
-     */
-    def public String processTemplate(String templatePath, Map<String, Object> additionalMappings) {
         
-        // Check consistency of path
-        if (!templatePath.isNullOrEmpty()) {
-            FreemarkerConfiguration.newConfiguration(project.location.toOSString)
-            
-            val template = FreemarkerConfiguration.configuration.getTemplate(templatePath)
+        // Prepare template engine
+        val project = config.templateFile.project
+        val templatePath = config.templateFile.projectRelativePath.toOSString
+        FreemarkerConfiguration.newConfiguration(project.location.toOSString)
+        // The Freemarker template that will be processed 
+        var Template template
+        // The variables that are set in the template
+        val map = newHashMap
+        map.putAll(config.additionalMappings)
+        
+        // Get mapping of macro calls
+        if(!config.macroCallDatas.isNullOrEmpty) {
+            val templateCodeWithMacroCalls = getTemplateCodeWithMacroCalls(config.templateFile, config.macroCallDatas)
 
-            val writer = new StringWriter()
-            template.process(additionalMappings, writer)
-    
-            return writer.toString()
-        }
-        return ""
-    }
-    
-    /**
-     * Generates wrapper code with the given macro call datas and additional mappings.
-     * 
-     * @param templatePath The project relative path to the wrapper code template
-     * @param macroCallDatas The macro calls to be injected in the template
-     * @param additionalMappings Additional mappings of placeholder variables to their corresponding values
-     * @return the generated wrapper code
-     */
-    def public String generateWrapperCode(String templatePath, List<MacroCallData> macroCallDatas, Map<String, Object> additionalMappings) {
-
-        // Check consistency of path
-        if (!templatePath.isNullOrEmpty()) {
-            val templateWithMacroCalls = getTemplateWithMacroCalls(templatePath, macroCallDatas)
-            
             // Debug log macro calls
-//            System.err.println(templateWithMacroCalls)
+//            System.err.println(templateCodeWithMacroCalls)
 
-            // Create mappings
-            val map = <String, Object> newHashMap
-            
-            // Add name of model 
-            if(!map.containsKey(MODEL_NAME_VARIABLE) && !macroCallDatas.isEmpty) {
-                val modelName = macroCallDatas.get(0).modelName
-                map.put(MODEL_NAME_VARIABLE, modelName)
-                map.put(MODEL_NAMES_VARIABLE, #[modelName])
-            }
-            
-            // Add name of output file 
-            if(!map.containsKey(FILE_NAME_VARIABLE)) {
-                val fileName = new File(templatePath).name
-                val fileNameWithoutExtension = Files.getNameWithoutExtension(fileName)
-                map.put(FILE_NAME_VARIABLE, fileNameWithoutExtension)
-            }
-            
-            // Add additional mappings
-            if(additionalMappings != null) {
-                map.putAll(additionalMappings)
-            }
-        
-            // Process template with macro calls and the mappings created above
-            val wrapperCode = processTemplateWithSnippetDefinitions(templateWithMacroCalls, map)
-            return wrapperCode
+            // Add implicit include of assignment macros such as <@init> and <@output>
+            FreemarkerConfiguration.stringTemplateLoader.putTemplate("injectionMacros", getOrInitializeMacroDefinitions )
+            FreemarkerConfiguration.configuration.addAutoInclude("injectionMacros")
+            // Get template with macro calls and now implicitly loaded snippet definitions.
+            template = new Template("templateWithMacroCalls", templateCodeWithMacroCalls, FreemarkerConfiguration.configuration)
+        } else {
+            template = FreemarkerConfiguration.configuration.getTemplate(templatePath)
         }
-        return ""
+        
+        // Add the template name, path, location, etc. to the mapping
+        var templateFileSubstitution = new ResourceSubstitution("template") {
+            override getValue() {
+                config.templateFile
+            }
+        }
+        map.putAll(templateFileSubstitution.variableMappings)
+        
+        // Process the template with the all mappings
+        val writer = new StringWriter()
+        template.process(map, writer)
+        // Return the result
+        val text = writer.toString()
+        writer.close
+        return text
     }
 
     /**
@@ -203,12 +131,11 @@ class TemplateManager {
      *         where placeholders for the different phases are replaced with the corresponding macro calls
      *         that have been injected.
      */
-    private def String getTemplateWithMacroCalls(String templatePath, List<MacroCallData> annotationDatas) {
-        
+    private static def String getTemplateCodeWithMacroCalls(IFile templateFile, List<MacroCallData> macroCallDatas) {
         // Create macro calls from annotations
-        val map = getMacroCalls(annotationDatas)
+        val map = getMappingOfPhasePlaceholders(macroCallDatas)
         
-        // Inject macro calls in input template
+        // Processor that injects macro calls in input template
         val lineProcessor = new LineProcessor<String>() {
             String text = ""
             
@@ -232,38 +159,10 @@ class TemplateManager {
                 return true
             }
         }
-        val templateText = Files.readLines(new File(project.location.append(templatePath).toOSString),
-                                           Charsets.UTF_8,
-                                           lineProcessor)
-        return templateText
-    }
-
-    /**
-     * Processes the given template and saves the output to the target location of this generator.
-     * The template is processed using all macro definitions from the wrapper code snippet directory.
-     * 
-     * @param templateWithMacroCalls The template text to be processed 
-     */
-    private def String processTemplateWithSnippetDefinitions(String templateWithMacroCalls, Map<String, Object> additionalMappings) {
-        
-        FreemarkerConfiguration.newConfiguration(project.location.toOSString)
-        
-        // Add implicit include of assignment macros such as <@init> and <@output>
-        FreemarkerConfiguration.stringTemplateLoader.putTemplate("injectionMacros", getOrInitializeMacroDefinitions )
-        FreemarkerConfiguration.configuration.addAutoInclude("injectionMacros")
-        
-        // Process template with macro calls and now implicitly loaded snippet definitions.
-        val template = new Template("templateWithMacroCalls", templateWithMacroCalls, FreemarkerConfiguration.configuration)
-
-        // Process template and write output in string
-        val map = if(additionalMappings != null)
-                      additionalMappings
-                  else
-                    newHashMap
-        val writer = new StringWriter()
-        template.process(map, writer)
-        writer.close()
-        return writer.toString
+        val code = Files.readLines(new File(templateFile.location.toOSString),
+                                   Charsets.UTF_8,
+                                   lineProcessor)
+        return code
     }
 
     /**
@@ -272,7 +171,7 @@ class TemplateManager {
      * 
      * @return the macro definitions of assignment macros such as <@input>
      */
-    private def String getOrInitializeMacroDefinitions() {
+    private static def String getOrInitializeMacroDefinitions() {
         // Initialize if not done yet
         if(macroDefinitions == null){
             macroDefinitions = ""
@@ -294,7 +193,7 @@ class TemplateManager {
      * @return a map where the keys 'inits', 'inputs' and 'outputs'
      *         are mapped to the corresponding macro calls for the given annotations.
      */
-    private def Map<String, String> getMacroCalls(MacroCallData... annotationDatas) {
+    private static def Map<String, String> getMappingOfPhasePlaceholders(MacroCallData... macroCallDatas) {
         val Map<String, String> map = newHashMap
         
         // The assignment macros such as <@init> and <@output> use a variable
@@ -309,7 +208,7 @@ class TemplateManager {
         
         // Add macro calls for annotations to the different phases
         var MacroCallData prev = null; 
-        for (data : annotationDatas) {
+        for (data : macroCallDatas) {
             
             isDoneAlready = true
             if (!doneDatas.contains(data)) {
@@ -324,7 +223,7 @@ class TemplateManager {
                     // Use input annotations on inputs only, and output annotations on outputs only
                     if(phase.isApplicable(data)) {
                         // The macro of this annotation should be called in this phase
-                        phase.codeToInject = phase.codeToInject + getTemplateCodeForAnnotation(data)
+                        phase.codeToInject = phase.codeToInject + getTemplateCode(data)
                     }
                 }
             }
@@ -345,7 +244,7 @@ class TemplateManager {
      * @return a string to set information about the variable which the annotation is used for.
      *         as well as the macro call for the annotation.    
      */
-    private static def String getTemplateCodeForAnnotation(MacroCallData data) {
+    private static def String getTemplateCode(MacroCallData data) {
         return getMetaAssignments(data) + getMacroCall(data);
     }
 
@@ -400,47 +299,6 @@ class TemplateManager {
 
         return txt
     }
-    
-    /**
-     * Auxilary method for getFilesRecursive(...).
-     * Searches for files in the given folder and recursive in all sub folders.
-     * Each file which is not filtered is added to the list.
-     * 
-     * @param folder the current folder to be searched for files
-     * @param list A list of found files
-     * @param filter A filter that found files must match
-     */
-    private def void getFilesRecursiveHelper(File folder, List<File> list, FileFilter filter) {
-        // Iterate over files in the folder.
-        // Add found files and remember folders for later.
-        val subFolders = newArrayList()
-        for (fileEntry : folder.listFiles(filter)) {
-            if (fileEntry.isDirectory()) {
-                subFolders += fileEntry
-            } else {
-                list.add(fileEntry)
-            }
-        }
-        
-        // Go into next folder level
-        for (subFolder : subFolders) {
-            getFilesRecursiveHelper(subFolder, list, filter);
-        }
-    }
-
-    /**
-     * Fetches all annotation datas from the file data in the given project
-     * 
-     * @param project the project
-     * @param data the FileData with information which model file will be analyzed
-     * @return the annotation datas
-     */
-    public static def List<MacroCallData> getAnnotationInterface(IProject project, FileData data) {
-        val List<MacroCallData> annotationDatas = newArrayList()
-        val model = ModelImporter.load(data.getFile(project))
-        getAnnotationInterface(model, annotationDatas)
-        return annotationDatas
-    }
 
     /**
      * Adds wrapper code data objects to the annotationDatas list,
@@ -449,21 +307,20 @@ class TemplateManager {
      * @param data File data holding a path to a model file
      * @param annotationDatas List to add found annotation datas to
      */
-    public static def void getAnnotationInterface(EObject model,
-        List<MacroCallData> annotationDatas) {
-
+    public static def List<MacroCallData> getAnnotationInterface(EObject model) {
+        val allDatas = <MacroCallData> newArrayList
         // Load EObject from file
         if (model != null) {
             initAnalyzers()
             // Analyze the model with all wrapper code annotation analyzers
             for (analyzer : TemplateManager.modelAnalyzers) {
-                val annotations = analyzer.getAnnotationInterface(model)
-                if (annotations != null) {
-                    annotationDatas.addAll(annotations)    
+                val datas = analyzer.getAnnotationInterface(model)
+                if (datas != null) {
+                    allDatas.addAll(datas)    
                 }
             }
-
         }
+        return allDatas
     }
 
     /**
@@ -473,22 +330,20 @@ class TemplateManager {
      * @param model The model
      * @param datas List to add found datas objects to
      */
-    public static def void getSimulationInterfaceData(EObject model,
-        List<MacroCallData> simulationDatas) {
-
+    public static def List<MacroCallData> getSimulationInterface(EObject model) {
+        val allDatas = <MacroCallData> newArrayList
         // Load EObject from file
         if (model != null) {
             initAnalyzers()
-            
             // Analyze the model with all wrapper code annotation analyzers
             for (analyzer : TemplateManager.modelAnalyzers) {
                 val datas = analyzer.getSimulationInterface(model)
                 if (!datas.isNullOrEmpty) {
-                    simulationDatas.addAll(datas)    
+                    allDatas.addAll(datas)    
                 }
             }
-
         }
+        return allDatas
     }
     
     /**
@@ -502,7 +357,6 @@ class TemplateManager {
         // Load EObject from file
         if (model != null) {
             initAnalyzers()
-            
             // Analyze the model with all wrapper code annotation analyzers
             for (analyzer : TemplateManager.modelAnalyzers) {
                 val modelName = analyzer.getModelName(model)
@@ -510,7 +364,6 @@ class TemplateManager {
                     return modelName
                 }
             }
-
         }
     }
     
