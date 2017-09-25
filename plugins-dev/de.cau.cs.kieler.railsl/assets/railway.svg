@@ -16,8 +16,8 @@
    viewBox="0 0 1040 800"
    id="svg1"
    sodipodi:version="0.32"
-   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
-   sodipodi:docname="plugins_de.cau.cs.kieler.kev_examples_railway.svg"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="railway.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <metadata
      id="metadata800">
@@ -31,7 +31,7 @@
     </rdf:RDF>
   </metadata>
   <sodipodi:namedview
-     inkscape:window-height="1017"
+     inkscape:window-height="1155"
      inkscape:window-width="1920"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -44,10 +44,10 @@
      id="base"
      showgrid="false"
      inkscape:zoom="2.125"
-     inkscape:cx="373.17107"
-     inkscape:cy="518.8917"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:cx="474.74552"
+     inkscape:cy="180.06817"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:current-layer="svg1"
      inkscape:window-maximized="1" />
   <defs
@@ -4021,9 +4021,9 @@
        x="292.85178"
        height="30.317059"
        width="14.949032"
-       id="b_c0_KH_LN_3-7"
+       id="b_c0_KH_LN_6"
        style="fill:#00fe00;fill-opacity:1;stroke:none;stroke-width:1.55711865;stroke-opacity:1"
-       inkscape:label="#b_c0_KH_LN_5" />
+       inkscape:label="#b_c0_KH_LN_6" />
     <rect
        ry="4.7196608"
        rx="1.8818915"
@@ -4031,9 +4031,9 @@
        x="297.15991"
        height="18.639681"
        width="6.4521909"
-       id="c0_KH_LN_3-6"
+       id="c0_KH_LN_6"
        style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.07723033;stroke-opacity:1"
-       inkscape:label="#c0_KH_LN_5" />
+       inkscape:label="#c0_KH_LN_6" />
   </g>
   <g
      id="g6244-7-2-1-9-9-09"

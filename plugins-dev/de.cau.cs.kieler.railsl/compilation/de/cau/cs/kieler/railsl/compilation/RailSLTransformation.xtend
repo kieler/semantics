@@ -493,7 +493,7 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
         for (line : cStatement.lines) {
             expressions.add(contacts.reference => [
                     indices += valObjects.get(line.segName).reference
-                    indices += valObjects.get(line.contact).reference
+                    indices += valObjects.get(line.contact + "Contact").reference
                 ])
             i++
         }
