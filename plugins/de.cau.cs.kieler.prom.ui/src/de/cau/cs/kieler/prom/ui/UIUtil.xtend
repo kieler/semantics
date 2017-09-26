@@ -550,12 +550,30 @@ class UIUtil {
      * @return the created column.
      */
     public static def TableViewerColumn createTableColumn(TableViewer viewer, String title, int width) {
-        val viewerColumn = new TableViewerColumn(viewer, SWT.NONE);
-        val column = viewerColumn.getColumn()
-        column.setText(title);
-        column.setWidth(width);
-        column.setResizable(true);
-        column.setMoveable(false);
+        return createTableColumn(viewer, title, width, true)
+    }
+    
+    /**
+     * Creates a column for a table viewer with the given title and width.
+     * 
+     * @param viewer The TableViewer this column is added to
+     * @param title The title for this column
+     * @param width The width of this column
+     * @return the created column.
+     */
+    public static def TableViewerColumn createTableColumn(TableViewer viewer, String title, int width, boolean visible) {
+        val viewerColumn = new TableViewerColumn(viewer, SWT.NONE)
+        val column = viewerColumn.column
+        column.text = title
+        column.moveable = true
+        
+        if(visible) {
+            column.width = width
+            column.resizable = true
+        } else {
+            column.width = 0
+            column.resizable = false
+        }
         return viewerColumn
     }
     

@@ -13,43 +13,26 @@
 package de.cau.cs.kieler.simulation.ui.views
 
 import com.google.common.base.Strings
-import com.google.common.collect.Iterables
-import de.cau.cs.kieler.klighd.ViewContext
-import de.cau.cs.kieler.klighd.kgraph.KLabeledGraphElement
-import de.cau.cs.kieler.klighd.krendering.Colors
-import de.cau.cs.kieler.klighd.krendering.KContainerRendering
-import de.cau.cs.kieler.klighd.krendering.KForeground
-import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
-import de.cau.cs.kieler.klighd.krendering.KStyle
-import de.cau.cs.kieler.klighd.krendering.KText
-import de.cau.cs.kieler.klighd.ui.view.DiagramView
 import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.prom.ui.PromUIPlugin
+import de.cau.cs.kieler.prom.ui.UIUtil
 import de.cau.cs.kieler.prom.ui.views.LabelContribution
-import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.iterators.StateIterator
-import de.cau.cs.kieler.sccharts.processors.transformators.TakenTransitionSignaling
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
-import de.cau.cs.kieler.simulation.core.NDimensionalArray
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.Variable
 import de.cau.cs.kieler.simulation.core.events.ErrorEvent
 import de.cau.cs.kieler.simulation.core.events.SimulationAdapter
+import de.cau.cs.kieler.simulation.core.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.core.events.SimulationEvent
 import de.cau.cs.kieler.simulation.core.events.SimulationListener
+import de.cau.cs.kieler.simulation.core.events.VariableUserValueEvent
 import de.cau.cs.kieler.simulation.handlers.TraceMismatchEvent
 import de.cau.cs.kieler.simulation.ui.SimulationUiPlugin
 import de.cau.cs.kieler.simulation.ui.toolbar.SubTicksEnabledPropertyTester
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
-import org.eclipse.elk.graph.properties.Property
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.Separator
 import org.eclipse.jface.dialogs.MessageDialog
@@ -71,49 +54,78 @@ import org.eclipse.swt.widgets.Table
 import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.simulation.core.events.VariableUserValueEvent
-import de.cau.cs.kieler.simulation.core.events.DataPoolEvent
-import de.cau.cs.kieler.simulation.core.events.SimulationControlEvent
-import de.cau.cs.kieler.simulation.core.events.SimulationOperation
 
 /**
+ * Displays the data of a running simulation.
+ * 
  * @author aas
  *
  */
 class DataPoolView extends ViewPart {
     
+    /**
+     * The id of the view from the plugin.xml
+     */
     public static val VIEW_ID = "de.cau.cs.kieler.simulation.ui.dataPoolView"
     
+    /**
+     * The single instance
+     */
     public static var DataPoolView instance
     
+    /**
+     * The simulation listener that updates this view
+     */
     public static val simulationListener = createSimulationListener
     
+    /**
+     * Determines if the "step sub tick" button in the toolbar is visible or not.
+     */
     @Accessors(PUBLIC_GETTER)
     static var boolean subTicksEnabled
     
+    /**
+     * The table that shows the data pool view of the simulation.
+     */
     @Accessors(PUBLIC_GETTER)
     private var TableViewer viewer
-    
+    /**
+     * The variable column of the table
+     */
     private var TableViewerColumn variableColumn
+    /**
+     * The value column of the table
+     */
     private var TableViewerColumn valueColumn
+    /**
+     * Theuser value column of the table
+     */
     private var TableViewerColumn userValueColumn
+    /**
+     * The history column of the table
+     */
     private var TableViewerColumn historyColumn
+    /**
+     * The isInput / isOutput column of the table
+     */
     private var TableViewerColumn inputOutputColumn
     
+    /**
+     * The label to display the tick count
+     */
     private var LabelContribution tickInfo
-    
+
+    /**
+     * A filter for the table to control which items are visible, e.g., to search for items
+     */    
     private var DataPoolFilter filter
     
+    /**
+     * Container for the trace mismatches and where they occured.
+     * The key is the fully qualified name of a variables.
+     * The value is the trace mismatch that occured on this variable.
+     */
     private var Map<String, TraceMismatchEvent> traceMismatches = newHashMap
-    
-    // Diagram highlighting
-    private val HIGHLIGHTING_MARKER = new Property<Object>("highlighting");
-    private var ViewContext diagramViewContext
-    private var List<KLabeledGraphElement> lastHighlighting = newArrayList
-    
-    private var List<Transition> traversedTransitions = <Transition> newArrayList
-    private var List<State> traversedStates = <State> newArrayList
-    private var List<State> currentStates = <State> newArrayList
     
     /**
      * @see IWorkbenchPart#createPartControl(Composite)
@@ -125,7 +137,7 @@ class DataPoolView extends ViewPart {
         
         // Create viewer.
         viewer = createTable(parent);
-                                         
+        
         // Create menu and toolbars.
         createMenu
         createToolbar
@@ -154,8 +166,8 @@ class DataPoolView extends ViewPart {
      * Set the data pool to be displayed.
      */
     public def void setDataPool(DataPool pool) {
-        // Remove all trace mismatches of last tick
         if(pool == null) {
+            // The simulation stopped. Thus variables are reset.
             viewer.input = null
             traceMismatches = newHashMap
             statusLineText = ""
@@ -178,7 +190,7 @@ class DataPoolView extends ViewPart {
     }
     
     /**
-     * Create menu.
+     * Creates the menu.
      */
     private def void createMenu() {
         val mgr = getViewSite().getActionBars().getMenuManager();
@@ -214,8 +226,12 @@ class DataPoolView extends ViewPart {
         })
     }
     
+    /**
+     * Creates the toolbar.
+     */
     private def void createToolbar() {
         val mgr = getViewSite().getActionBars().getToolBarManager()
+        // The toolbar items are ordered from left to right in the order that they are added
         tickInfo = new LabelContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.tickInfo",
                                          "Tick #0000 (-000)",
                                          "Last executed macro tick")
@@ -223,7 +239,7 @@ class DataPoolView extends ViewPart {
         mgr.add(new Separator())
         mgr.add(new SearchFieldContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.searchField"))
         mgr.add(new Separator())
-        mgr.add(new SimulationDelayContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.delay"))
+        mgr.add(new SimulationDelayContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.desiredPause"))
         mgr.add(new Separator())
         mgr.add(new SaveSimulationAction("Save Data Pool History", "saveFile.png") {
             override getFileExtension() {
@@ -239,7 +255,7 @@ class DataPoolView extends ViewPart {
                 return content
             }
         });
-        mgr.add(new SaveSimulationAction("Save Eso trace", "saveEsoFile.png") {
+        mgr.add(new SaveSimulationAction("Save Eso Trace", "saveEsoFile.png") {
             override getFileExtension() {
                 return ".eso"
             }
@@ -308,8 +324,10 @@ class DataPoolView extends ViewPart {
         })
     }
     
+    /**
+     * Adds key listeners to the table for easy control of the simulation.
+     */
     private def void addKeyListeners() {
-        // Step through simulation via ARROW_RIGHT.
         viewer.control.addKeyListener(new KeyAdapter() {
             override keyPressed(KeyEvent e) {
                 val manager = SimulationManager.instance
@@ -341,10 +359,20 @@ class DataPoolView extends ViewPart {
         })
     }
     
+    /**
+     * Determines if the given bit is set in the bit mask.
+     * 
+     * @param bitMask The bit mask
+     * @param bit The bit
+     * @returns true if the bit is set, false otherwise
+     */
     private def boolean hasBit(int bitMask, int bit) {
         return bitMask.bitwiseAnd(bit) != 0
     }
     
+    /**
+     * Creates the table to show and edit data pools.
+     */
     private def TableViewer createTable(Composite parent) {
         val table = new Table(parent, SWT.BORDER.bitwiseOr(SWT.FULL_SELECTION))
         table.setHeaderVisible(true);
@@ -359,7 +387,7 @@ class DataPoolView extends ViewPart {
         viewer.addFilter(filter)
         
         // Create columns
-        variableColumn = createTableColumn(viewer, "Variable", 120, true)
+        variableColumn = UIUtil.createTableColumn(viewer, "Variable", 120, true)
         variableColumn.labelProvider = new DataPoolColumnLabelProvider() {
             override String getText(Object element) {
                 if(element instanceof Variable) {
@@ -372,7 +400,7 @@ class DataPoolView extends ViewPart {
                 }
             }
         };
-        valueColumn = createTableColumn(viewer, "Current Value", 100, true)
+        valueColumn = UIUtil.createTableColumn(viewer, "Current Value", 100, true)
         valueColumn.labelProvider = new DataPoolColumnLabelProvider() {
             override String getToolTipText(Object element) {
                 if(element instanceof Variable) {
@@ -392,7 +420,7 @@ class DataPoolView extends ViewPart {
                 return ""
             }
         };
-        userValueColumn = createTableColumn(viewer, "User Value", 100, true)
+        userValueColumn = UIUtil.createTableColumn(viewer, "User Value", 100, true)
         userValueColumn.labelProvider = new DataPoolColumnLabelProvider() {
             override String getText(Object element) {
                  if(element instanceof Variable) {
@@ -403,10 +431,10 @@ class DataPoolView extends ViewPart {
                 return ""
             }
         };
-        historyColumn = createTableColumn(viewer, "History", 200, true)
+        historyColumn = UIUtil.createTableColumn(viewer, "History", 200, true)
         historyColumn.labelProvider = new HistoryColumnLabelProvider()
         
-        inputOutputColumn = createTableColumn(viewer, "In Out", 32, false)
+        inputOutputColumn = UIUtil.createTableColumn(viewer, "In Out", 32, false)
         inputOutputColumn.labelProvider = new DataPoolColumnLabelProvider() {
             private val inputImageDescriptor = SimulationUiPlugin.imageDescriptorFromPlugin(SimulationUiPlugin.PLUGIN_ID, "icons/input.png");
             private val outputImageDescriptor = SimulationUiPlugin.imageDescriptorFromPlugin(SimulationUiPlugin.PLUGIN_ID, "icons/output.png");
@@ -480,7 +508,8 @@ class DataPoolView extends ViewPart {
         val focusCellManager = new TableViewerFocusCellManager(viewer, new FocusCellOwnerDrawHighlighter(viewer));
         val activationSupport = new ColumnViewerEditorActivationStrategy(viewer)
         activationSupport.enableEditorActivationWithKeyboard = true
-        TableViewerEditor.create(viewer, focusCellManager, activationSupport, ColumnViewerEditor.TABBING_HORIZONTAL.bitwiseOr(
+        TableViewerEditor.create(viewer, focusCellManager, activationSupport, 
+            ColumnViewerEditor.TABBING_HORIZONTAL.bitwiseOr(
             ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR).bitwiseOr(
             ColumnViewerEditor.TABBING_VERTICAL).bitwiseOr(
             ColumnViewerEditor.KEYBOARD_ACTIVATION))
@@ -489,38 +518,29 @@ class DataPoolView extends ViewPart {
     }
     
     /**
-     * Creates a column for a table viewer with the given title and width.
+     * Adds a trace mismatch for the given variable, so that this variable will be highlighted in the table.
      * 
-     * @param viewer The TableViewer this column is added to
-     * @param title The title for this column
-     * @param width The width of this column
-     * @return the created column.
+     * @param variable The variable
+     * @param e The trace mismatch event
      */
-    public static def TableViewerColumn createTableColumn(TableViewer viewer, String title, int width, boolean visible) {
-        val viewerColumn = new TableViewerColumn(viewer, SWT.NONE);
-        val column = viewerColumn.getColumn()
-        column.setText(title);
-        column.setMoveable(true);
-        
-        if(visible) {
-            column.width = width
-            column.resizable = true
-        } else {
-            column.width = 0
-            column.resizable = false
-        }
-        return viewerColumn
-    }
-    
     public def void registerTraceMismatch(Variable variable, TraceMismatchEvent e) {
         traceMismatches.put(variable.fullyQualifiedName, e)
     }
     
+    /**
+     * Returns the trace mismatch for the given variable.
+     * 
+     * @param variable The variable
+     * @return the trace mismatch for the given variable, or null if none
+     */
     public def TraceMismatchEvent getTraceMismatch(Variable variable) {
         return traceMismatches.getOrDefault(variable.fullyQualifiedName, null)
     }
     
-    private def void updateTickInfo(SimulationEvent e) {
+    /**
+     * Updates the info label with the current tick count.
+     */
+    private def void updateTickInfo() {
         var String txt = null
         val simMan = SimulationManager.instance
         if(!simMan.isStopped) {
@@ -537,6 +557,11 @@ class DataPoolView extends ViewPart {
         tickInfo?.setText(Strings.nullToEmpty(txt))
     }
     
+    /**
+     * Sets the text of this view's status line.
+     * 
+     * @param value The new status line text
+     */
     private def void setStatusLineText(String value) {
         val bars = getViewSite().getActionBars();
         if(bars != null) {
@@ -545,14 +570,26 @@ class DataPoolView extends ViewPart {
         }
     }
     
+    /**
+     * Sets the search term to filter the table.
+     * 
+     * @param text The search term
+     */
     public def void setFilterText(String text) {
         filter.searchString = text
         viewer.refresh
     }
     
+    /**
+     * Creates a simulation listener that updates this view with the simulation.
+     */
     private static def SimulationListener createSimulationListener() {
         val listener = new SimulationAdapter() {
             var DataPoolView dataPoolView
+            
+            /**
+             * {@inheritDoc}
+             */
             override update(SimulationEvent e) {
                 dataPoolView = DataPoolView.instance
                 if(dataPoolView == null) {
@@ -561,298 +598,55 @@ class DataPoolView extends ViewPart {
                 super.update(e)
             }
             
+            /**
+             * Shows errors in the status line.
+             * 
+             * @param e The event
+             */
             override onErrorEvent(ErrorEvent e) {
                 PromUIPlugin.asyncExecInUI[
                     dataPoolView.setStatusLineText(e.message)    
                 ]
             }
             
+            /**
+             * Updates the row of the changed variable.
+             * 
+             * @param e The event
+             */
             override onUserValueChanged(VariableUserValueEvent e) {
                 PromUIPlugin.asyncExecInUI[
                     dataPoolView.viewer.update(e.variable, null)    
                 ]
             }
             
+            /**
+             * Registers a trace mismatch.
+             * 
+             * @param e The event
+             */
             override onTraceMismatch(TraceMismatchEvent e) {
                 dataPoolView.registerTraceMismatch(e.variable, e)
                 dataPoolView.viewer.update(e.variable, null)
             }
             
-            override onDataPoolEvent(DataPoolEvent e) {
+            /**
+             * Updates the view with the new data pool from the simulation.
+             * 
+             * @param e The event
+             */
+            override onSimulationControlEvent(SimulationControlEvent e) {
                 PromUIPlugin.asyncExecInUI[
                     // Update data pool view
                     if(e.pool == SimulationManager.instance?.currentPool) {
                         // Update tick info
-                        dataPoolView.updateTickInfo(e)
+                        dataPoolView.updateTickInfo
                         // Set pool data
                         dataPoolView.setDataPool(e.pool)
-                    }
-                    
-                ]
-            }
-            
-            override onSimulationControlEvent(SimulationControlEvent e) {
-                PromUIPlugin.asyncExecInUI[
-                    // Highlight the simulation control flow in the diagram
-                    dataPoolView.unhighlightDiagram
-                    if(e.operation == SimulationOperation.STOP) {
-                        // Nothing to do, because we unhighlighted the diagram already
-                    } else {
-                        if(e.operation == SimulationOperation.INITIALIZED) {
-                            dataPoolView.currentStates = null
-                        } else {
-                            dataPoolView.highlightDiagram(e.pool)
-                        }
                     }
                 ]
             }
         }
         return listener
-    }
-    
-    private def void calculateSimulationControlFlow(DataPool pool) {
-        traversedTransitions.clear
-        traversedStates.clear
-        if(pool == null) {
-            return
-        }
-        val transitionArrayVariable = pool.getVariable(TakenTransitionSignaling.transitionArrayName)
-        if(transitionArrayVariable == null || !(transitionArrayVariable.value instanceof NDimensionalArray)) {
-            return
-        }
-        val transitionArray = transitionArrayVariable.value as NDimensionalArray
-        
-        // Calculate traversed transitions
-        var State rootState
-        val currentDiagramModel = diagramViewContext.inputModel
-        if(currentDiagramModel instanceof SCCharts) {
-            if(!currentDiagramModel.rootStates.isEmpty) {
-                rootState = currentDiagramModel.rootStates.get(0)
-            }            
-        }
-        if(rootState == null) {
-            return
-        }
-        
-        val transitions = TakenTransitionSignaling.getTransitions(rootState)
-        // For an emitted transition in the transition array,
-        // look for the transition in the model with the corresponding index.
-        var index = 0
-        for(transitionArrayElement : transitionArray.elements) {
-            // The array contains the number of times that the transition has been taken in this tick
-            val value = transitionArrayElement.value
-            if(value instanceof Integer) {
-                if(value > 0) {
-                    // The transition has been taken at least once
-                    try {
-                        val traversedTransition = transitions.get(index)
-                        traversedTransitions.add(traversedTransition)
-                    } catch(IndexOutOfBoundsException e) {
-                        throw new Exception("Could not acccess the 'taken transition array'. Please check that the shown diagram is for the simulated model.", e)
-                    }
-                }
-            } else {
-                throw new Exception("The 'taken transition array' has a incompatible type for diagram highlighting")
-            }
-            index++
-        }
-        
-        // Calculate traversed states
-        for(traversedTransition : traversedTransitions) {
-            traversedStates.add(traversedTransition.sourceState)
-        }
-        
-        // Calculate current states
-        if(currentStates == null) {
-            currentStates = getInitialStates(rootState)    
-        }
-        currentStates = calculateNewCurrentStates(currentStates, traversedTransitions)
-    }
-    
-    private def List<State> calculateNewCurrentStates(List<State> oldCurrentStates, List<Transition> takenTransitions) {
-        val newCurrentStates = <State> newArrayList
-        
-        // Preprocessing for better performance of lookup
-        val seenStates = <State> newHashSet
-        val outgoingTransitionsForState = <State, List<Transition>> newHashMap
-        for(trans : takenTransitions) {
-            val source = trans.sourceState
-            val outgoingTransitionsOfSource = outgoingTransitionsForState.getOrDefault(source, newArrayList)
-            outgoingTransitionsOfSource.add(trans)
-            outgoingTransitionsForState.put(trans.sourceState, outgoingTransitionsOfSource)
-        }
-        
-        // Follow path of transitions from current states to the ending state, which is the new current state.
-        // NOTE: This only works if the used transition for a state is unambiguous, i.e.,
-        // there is at most one outgoing transition per state in this tick. 
-        val states = oldCurrentStates
-        while(!states.isNullOrEmpty) {
-            val state = states.get(0)
-            seenStates.add(state)
-            val outgoingTransitions = outgoingTransitionsForState.getOrDefault(state, newArrayList)
-            if(outgoingTransitions.size == 0) {
-                // No outgoing transitions, thus the control flow stays here
-                newCurrentStates.add(state)
-                // This state is done
-                states.remove(state)
-            } else if(outgoingTransitions.size == 1) {
-                // Exactly one outgoing transition, thus the next state is unambiguous
-                val transition = outgoingTransitions.get(0)
-                val next = transition.targetState
-                
-                // Leave state
-                states.leaveState(state)
-                
-                // Enter next state
-                states.enterState(next)
-                
-                // This transition is done
-                outgoingTransitions.remove(transition)
-            } else {
-                // More than one outgoing state. It is not clear which path has been taken.
-                System.err.println("The used control flow cannot be clearly determined for this tick. Diagram highlighting of current state will not work.")
-                return newCurrentStates
-            }
-        }
-        
-        return newCurrentStates
-    }
-    
-    private def void leaveState(List<State> states, State state) {
-        states.remove(state)
-        // Also leave all child states
-        val children = StateIterator.sccAllContainedStates(state)
-        states.removeAll(children.toList)
-    }
-    
-    private def void enterState(List<State> states, State state) {
-        states.add(state)
-        // Also enter all initial child states, and their initial child states recursively
-        val statesToCheck = <State> newArrayList
-        statesToCheck.add(state)
-        while(!statesToCheck.isNullOrEmpty) {
-            // Pop top of list
-            val s = statesToCheck.get(0)
-            statesToCheck.remove(0)
-            // Get and add initial states
-            val initialStates = getInitialStates(s)
-            states.addAll(initialStates)
-            // Also add the initial states of these initial states recursively
-            statesToCheck.addAll(initialStates)
-        }
-    }
-    
-    private def ViewContext getDiagramViewContext() {
-        val diagramViews = DiagramView.getAllDiagramViews
-        if (!diagramViews.isNullOrEmpty) {
-            val DiagramView viewPart = diagramViews.get(0);
-            val viewer = viewPart.getViewer() 
-            return viewer.getViewContext();
-        }
-    }
-    
-    private def void unhighlightDiagram() {
-        if(!lastHighlighting.isNullOrEmpty) {
-            for (graphElement : lastHighlighting) {
-                unhighlightElement(graphElement)
-            }
-        }
-    }
-    
-    private def void highlightDiagram(DataPool pool) {
-        if(diagramViewContext == null) {
-            diagramViewContext = getDiagramViewContext
-            // If there is no diagram, then there is nothing to highlight
-            if(diagramViewContext == null) {
-                return;
-            }
-        }
-        // Calculate the simulation controlflow to determine what must be highlighted
-        calculateSimulationControlFlow(pool)
-        
-        if(traversedTransitions.isNullOrEmpty && traversedStates.isNullOrEmpty && currentStates.isNullOrEmpty) {
-            return
-        }
-        
-        // Find the graph elements in the diagram for the EObjects that should be highlighted
-        val traversedGraphElements = getGraphElements(traversedTransitions + traversedStates)
-        val currentGraphElements = if(currentStates.isNullOrEmpty)
-                                       newArrayList
-                                   else
-                                       getGraphElements(#[] + currentStates)
-        lastHighlighting = (traversedGraphElements + currentGraphElements).toList
-
-        // Add new highlighting
-        val traversedStyle = KRenderingFactory.eINSTANCE.createKForeground()
-        traversedStyle.setColor(Colors.DODGER_BLUE)
-        traversedStyle.setPropagateToChildren(true)
-        
-        val currentStyle = KRenderingFactory.eINSTANCE.createKForeground()
-        currentStyle.setColor(Colors.RED)
-        currentStyle.setPropagateToChildren(true)
-        
-        // Highlight traversed elements
-        for (graphElement : traversedGraphElements) {
-            highlightElement(graphElement, traversedStyle)
-        }
-        // Highlight current elements
-        for (graphElement : currentGraphElements) {
-            highlightElement(graphElement, currentStyle)
-        }
-    }
-    
-    private def void highlightElement(KLabeledGraphElement elem, KForeground style) {
-        // Remember that this style is to highlight the diagram.
-        // This is used to filter for highlighting styles when they should be removed.
-        style.setProperty(HIGHLIGHTING_MARKER, DataPoolView.this)
-        // Highlight container of this element
-        val ren = elem.getData(typeof(KContainerRendering))
-        ren.styles.add(EcoreUtil.copy(style))
-        // Highlight label of this element
-        if (!elem.labels.isNullOrEmpty) {
-            val label = elem.labels.get(0)
-            val ren2 = label.getData(typeof(KText))
-            ren2.styles.add(EcoreUtil.copy(style))
-        }
-    }
-    
-    private def void unhighlightElement(KLabeledGraphElement elem) {
-        // Remove highlighting from container of this element
-        val ren = elem.getData(typeof(KContainerRendering));
-        Iterables.removeIf(ren.styles, [it.isHighlighting]);
-        // Remove highlighting from label of this element
-        if (!elem.labels.isNullOrEmpty) {
-            val label = elem.labels.get(0)
-            val ren2 = label.getData(typeof(KText));
-            Iterables.removeIf(ren2.styles, [it.isHighlighting]);
-        }
-    }
-    
-    private def boolean isHighlighting(KStyle style) {
-        return style.getProperty(HIGHLIGHTING_MARKER) == DataPoolView.this
-    }
-    
-    private def List<KLabeledGraphElement> getGraphElements(Iterable<EObject> eObjects) {
-        val elements = <KLabeledGraphElement> newArrayList
-        for (eObject : eObjects) {
-            val element = diagramViewContext.getTargetElement(eObject, typeof(KLabeledGraphElement));
-            if (element != null) {
-                elements.add(element);
-            }
-        }
-        return elements
-    }
-    
-    private def List<State> getInitialStates(State rootState) {
-        val initialStates = <State> newArrayList
-        for(region : rootState.regions) {
-            if(region instanceof ControlflowRegion) {
-                val initState = region.states.findFirst[it.isInitial]
-                if(initState != null) {
-                    initialStates.add(initState)
-                }
-            }
-        }
-        return initialStates
     }
 }

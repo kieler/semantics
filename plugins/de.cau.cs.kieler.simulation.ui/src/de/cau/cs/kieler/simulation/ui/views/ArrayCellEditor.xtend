@@ -35,6 +35,7 @@ import org.eclipse.swt.events.KeyEvent
 import org.eclipse.swt.graphics.Image
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Table
+import de.cau.cs.kieler.prom.ui.UIUtil
 
 /**
  * Cell editor for NDimensionalArrays
@@ -219,7 +220,7 @@ class ArrayCellEditor extends CellEditor {
         viewer.comparer = new IdentityComparer()
         
         // Create columns
-        indexColumn = DataPoolView.createTableColumn(viewer, "Index", 50, true)
+        indexColumn = UIUtil.createTableColumn(viewer, "Index", 50, true)
         indexColumn.labelProvider = new DataPoolColumnLabelProvider() {
             override String getText(Object element) {
                 if(element instanceof NDimensionalArrayElement) {
@@ -233,7 +234,7 @@ class ArrayCellEditor extends CellEditor {
                 }
             }
         };
-        valueColumn = DataPoolView.createTableColumn(viewer, "Current Value", 100, true)
+        valueColumn = UIUtil.createTableColumn(viewer, "Current Value", 100, true)
         valueColumn.labelProvider = new DataPoolColumnLabelProvider() {
             override String getText(Object element) {
                 if(element instanceof NDimensionalArrayElement) {
@@ -242,7 +243,7 @@ class ArrayCellEditor extends CellEditor {
                 return ""
             }
         };
-        userValueColumn = DataPoolView.createTableColumn(viewer, "User Value", 100, true)
+        userValueColumn = UIUtil.createTableColumn(viewer, "User Value", 100, true)
         userValueColumn.labelProvider = new DataPoolColumnLabelProvider() {
             override String getText(Object element) {
                 if(element instanceof NDimensionalArrayElement) {
@@ -253,7 +254,7 @@ class ArrayCellEditor extends CellEditor {
                 return ""
             }
         };
-        historyColumn = DataPoolView.createTableColumn(viewer, "History", 200, true)
+        historyColumn = UIUtil.createTableColumn(viewer, "History", 200, true)
         historyColumn.labelProvider = new HistoryColumnLabelProvider() {
             override String getText(Object element) {
                 if(element instanceof NDimensionalArrayElement) {
