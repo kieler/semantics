@@ -14,6 +14,7 @@ package de.cau.cs.kieler.simulation.core
 
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
+import java.util.regex.Pattern
 
 /**
  * Central class of the simulation that holds all models and their variables for a given tick.
@@ -99,6 +100,80 @@ class DataPool implements Cloneable {
             }
         }
     }
+    
+    /**
+     * Sets the value of a variable, or of an array element of a variable.
+     * 
+     * @param variableQualifer The (possibly fully qualified) name of the variable and optional array indices (e.g. MayVar[1][2])
+     * @param userValue Determines if the user value should be set instead of the 'real' value
+     * @return the first variable with the given name (possibly of the corresponding model), or null if none
+     */
+    public def void setVariableValue(String variableQualifer, Object newValue, boolean userValue) {
+        // Separate variable name and array index part
+        val variablePart = getVariableName(variableQualifer)
+        val arrayIndices = getArrayIndices(variableQualifer)
+        
+        val variable = getVariable(variablePart, true)
+        if(variable != null) {
+            if(arrayIndices.isNullOrEmpty) {
+                if(userValue) {
+                    variable.userValue = newValue
+                } else {
+                    variable.value = newValue
+                }
+            } else {
+                val array = variable.value as NDimensionalArray
+                val arrayElement = array.getElement(arrayIndices)
+                if(arrayElement != null) {
+                    if(userValue) {
+                        arrayElement.userValue = newValue
+                        variable.model.setModifiedVariable    
+                    } else {
+                        arrayElement.value = newValue
+                    }
+                } else {
+                    throw new Exception("Could not find array element with indices "+arrayIndices)
+                }
+            }
+        } else {
+            throw new Exception("Could not find variable with name '"+variablePart+"'")
+        }
+    }
+    
+    /**
+     * Returns the variable name part of a variable qualifier.
+     * 
+     * @param variableQualifier The variable qualifier (e.g. MyModel.MyVar[1][2])
+     * @return the variable name part of the qualifier (e.g. MyModel.MyVar)
+     */
+    public static def String getVariableName(String variableQualifier) {
+        val i = variableQualifier.indexOf("[")
+        if(i >= 0) {
+            return variableQualifier.substring(0, i)
+        }
+        return variableQualifier
+    }
+    
+    /**
+     * Returns the array indices of a variable qualifier.
+     * 
+     * @param variableQualifier The variable qualified (e.g. MyModel.MyVar[1][2])
+     * @return the array indices of the qualifier (e.g. #[1,2])
+     */
+    public static def List<Integer> getArrayIndices(String variableQualifier) {
+        val indices = <Integer> newArrayList
+        val i = variableQualifier.indexOf("[")
+        if(i >= 0) {
+            val arrayIndexPart = variableQualifier.substring(i+1) 
+            val numberPattern = Pattern.compile("\\d+")
+            val matcher = numberPattern.matcher(arrayIndexPart)
+            while (matcher.find()) {
+                val numberText = matcher.group()
+                indices.add(Integer.valueOf(numberText))
+            }
+        }
+        return indices
+    } 
     
     /**
      * Returns the first variable with the given name of the model with the given name.

@@ -62,10 +62,7 @@ class SetterHandler extends DefaultDataHandler {
         }
         val entries = variablesMapping.mapValue.entrySet
         for (entry : entries) {
-            val variable = pool.getVariable(entry.key, true)
-            if(variable != null) {
-                variable.userValue = entry.value
-            }
+            pool.setVariableValue(entry.key, entry.value, false)
         }
     }
 }

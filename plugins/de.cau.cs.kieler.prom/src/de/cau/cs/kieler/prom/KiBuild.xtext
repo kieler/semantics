@@ -86,5 +86,5 @@ terminal BOOLEAN returns ecore::EBooleanObject :
     'true' | 'false';
 
 terminal ID returns ecore::EString:
-    '^'?('a'..'z'|'A'..'Z'|'_'|'/'|'\\') ('a'..'z'|'A'..'Z'|'_'|'-'|'.'|'/'|'\\'|'0'..'9')*
+    '^'?('a'..'z'|'A'..'Z'|'_'|'/'|'\\') ('a'..'z'|'A'..'Z'|'_'|'-'|'.'|'/'|'\\'|'0'..'9'|'['|']')*
 ;
