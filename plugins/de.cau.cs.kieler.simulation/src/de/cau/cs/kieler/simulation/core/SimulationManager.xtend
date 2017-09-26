@@ -233,9 +233,6 @@ class SimulationManager extends Configurable {
                 addAction(action.operation, handler)
             }
         }
-        
-        // Initialize
-        initialize
     }
     
     /**

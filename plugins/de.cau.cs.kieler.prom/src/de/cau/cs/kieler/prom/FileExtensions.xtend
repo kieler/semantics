@@ -59,6 +59,9 @@ class FileExtensions {
      * @return true if the file has the allowed extension
      */
     public static def boolean matches(IFile file, String allowedExtension) {
+        if(file == null) {
+            return false
+        }
         val ext = file.fileExtension
         return ext != null && allowedExtension == ext.toLowerCase
     }

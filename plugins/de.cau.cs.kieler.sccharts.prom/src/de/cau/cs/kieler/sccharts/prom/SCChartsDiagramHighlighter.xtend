@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.sccharts.prom
 
 import de.cau.cs.kieler.klighd.krendering.Colors
+import de.cau.cs.kieler.klighd.krendering.KForeground
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.SCCharts
@@ -24,6 +25,7 @@ import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.NDimensionalArray
 import de.cau.cs.kieler.simulation.ui.highlighting.DiagramHighlighter
 import java.util.List
+import de.cau.cs.kieler.simulation.core.SimulationManager
 
 /**
  * Highlighter for SCCharts diagrams.
@@ -33,10 +35,17 @@ import java.util.List
  * These states are called "current states" in the context of this highlighter.
  * Note however, that their content might not have been executed, for instance because the state was suspended in this tick.
  * 
+ * This class is instantiated via the simulationVisualizer extension point.
+ * 
  * @author aas
  *
  */
 class SCChartsDiagramHighlighter extends DiagramHighlighter {
+    
+    /**
+     * Single instance.
+     */
+    private static var SCChartsDiagramHighlighter instance
     
     /**
      * The traversed transitions.
@@ -68,10 +77,23 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
     private static val KForeground currentStateStyle = createCurrentStateStyle
 
     /**
+     * Constructor
+     */
+    new() {
+        super()
+        // Remove old instance if any
+        if(instance != null) {
+            SimulationManager.removeListener(instance.simulationListener)
+        }
+        // Remember single instance
+        instance = this
+    }
+
+    /**
      * {@inheritDoc}
      */    
-    override getSupportedModelTypes() {
-        return #[SCCharts]
+    override isSupported(Object model) {
+        return model instanceof SCCharts
     }
     
     /**

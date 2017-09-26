@@ -113,7 +113,7 @@ class ExecutableSimulator extends DefaultSimulator {
     
     public val exeSubstitution = new ResourceSubstitution("executable") {
         override getValue() {
-            return executableFile
+            return executable
         }
     }
     
@@ -142,7 +142,7 @@ class ExecutableSimulator extends DefaultSimulator {
         // Read json data
         var String line = waitForJSONOutput(processReader)
     
-        modelName = getUniqueModelName(pool, Files.getNameWithoutExtension(executableFile.name))
+        modelName = getUniqueModelName(pool, Files.getNameWithoutExtension(executable.name))
         val model = Model.createFromJson(modelName, line)
         pool.addModel(model)
         
@@ -163,13 +163,16 @@ class ExecutableSimulator extends DefaultSimulator {
             val commandList = PromPlugin.splitStringOnWhitespace(commandWithoutPlaceholders)
             pBuilder = new ProcessBuilder(commandList)
         } else {
+            if(executable == null) {
+                throw new IllegalArgumentException("Could not load the executable file '"+executablePath.stringValue+"'")
+            }
             // Create suited command for the executable
-            if(isJavaArchive(executableFile)) {
+            if(isJavaArchive(executable)) {
                 // Create process builder for java
                 val currentDir = "." + File.separator
                 pBuilder = new ProcessBuilder(#["java", "-jar", currentDir+executable.name])
                 pBuilder.directory(new File(executable.location.removeLastSegments(1).toOSString))
-            } else if (isExecutable(executableFile)) {
+            } else if (isExecutable(executable)) {
                 // Create process builder for executable
                 pBuilder = new ProcessBuilder(#[executable.location.toOSString])    
             } else {
@@ -192,11 +195,11 @@ class ExecutableSimulator extends DefaultSimulator {
         // Create new listener
         exeResourceListener = new SimulationCompilerListener() {
             override preDelete(IFile oldExecutable) {
-                if(executableFile.fullPath == oldExecutable.fullPath) {
+                if(executable.fullPath == oldExecutable.fullPath) {
                     // Stop simulation
                     SimulationManager.instance.stop
                     // Notify user why simulation stopped
-                    PromConsole.print("Stopped simulation because the executable '"+executableFile.fullPath+"' changed")
+                    PromConsole.print("Stopped simulation because the executable '"+executable.fullPath+"' changed")
                 }
             }
         }

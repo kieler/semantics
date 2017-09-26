@@ -25,8 +25,8 @@ import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.events.SimulationAdapter
 import de.cau.cs.kieler.simulation.core.events.SimulationControlEvent
+import de.cau.cs.kieler.simulation.core.events.SimulationEvent
 import de.cau.cs.kieler.simulation.core.events.SimulationListener
-import de.cau.cs.kieler.simulation.core.events.SimulationOperation
 import java.util.List
 import org.eclipse.elk.graph.properties.Property
 import org.eclipse.emf.ecore.EObject
@@ -67,9 +67,11 @@ abstract class DiagramHighlighter {
 
     /**
      * Constructor
+     * 
+     * Registers the simulation listener for this instance.
      */
     new() {
-        SimulationManager.removeListener(simulationListener)
+        SimulationManager.addListener(simulationListener)
     }
 
     /**
@@ -94,45 +96,50 @@ abstract class DiagramHighlighter {
     }
     
     /**
-     * The types of models that can be highlighted by this instance.
+     * Determines if the model can be highlighted by this instance.
      * 
-     * @return the types of models that can be highlighted by this instance.
+     * @param model The model
+     * @return true if the model can be highlighted, false otherwise.
      */
-    abstract protected def List<Class<?>> getSupportedModelTypes()
+    abstract protected def boolean isSupported(Object model)
     
     /**
      * Creates a simulation listener to update this instance with the simulation.
      */
     protected def SimulationListener createSimulationListener() {
         val listener = new SimulationAdapter() {
-            /**
-             * Updates the view with the new data pool from the simulation.
-             * 
-             * @param e The event
-             */
-            override onSimulationControlEvent(SimulationControlEvent e) {
-                diagramModel = getDiagramModel
-                // If there is no model in the diagram, then there is nothing to highlight
-                if(diagramModel == null) {
-                    
-                    return;
-                }
-                // If the type of the model is not supported, then there is nothing to do
-                if(!supportedModelTypes.isNullOrEmpty && !supportedModelTypes.contains(diagramModel.class)) {
-                    return
-                }
-                
-                PromUIPlugin.asyncExecInUI [
-                    // Highlight the simulation control flow in the diagram
-                    if(e.operation == SimulationOperation.STOP) {
-                        stop
-                    } else {
-                        if(e.operation == SimulationOperation.INITIALIZED) {
-                            initialize(e.pool)
-                        } else {
-                            update(e.pool)
-                        }
+            
+            override update(SimulationEvent e) {
+                if(e instanceof SimulationControlEvent) { 
+                    diagramModel = getDiagramModel
+                    // If there is no model in the diagram, then there is nothing to highlight
+                    if(diagramModel == null) {
+                        return;
                     }
+                    // If the type of the model is not supported, then there is nothing to do
+                    if(!isSupported(diagramModel)) {
+                        return
+                    }
+                    
+                    super.update(e)
+                }
+            }
+            
+            override onSimulationStopped(SimulationControlEvent e) {
+                PromUIPlugin.asyncExecInUI [
+                    stop
+                ]
+            }
+            
+            override onSimulationStepped(SimulationControlEvent e) {
+                PromUIPlugin.asyncExecInUI [
+                    update(e.pool)
+                ]
+            }
+            
+            override onSimulationInitialized(SimulationControlEvent e) {
+                PromUIPlugin.asyncExecInUI [
+                    initialize(e.pool)
                 ]
             }
         }
@@ -177,7 +184,6 @@ abstract class DiagramHighlighter {
             lastHighlighting.clear
         }
     }
-    
     
     /**
      * Highlights the element with the given style.

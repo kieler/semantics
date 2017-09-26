@@ -33,6 +33,10 @@
            class="de.cau.cs.kieler.simulation.handlers.TraceHandler"
            name="trace">
      </dataHandler>
+     <dataHandler
+           class="de.cau.cs.kieler.simulation.handlers.SetterHandler"
+           name="setter">
+     </dataHandler>
   </extension>
   <extension
         point="org.eclipse.debug.core.launchConfigurationTypes">

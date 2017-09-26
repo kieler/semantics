@@ -26,8 +26,11 @@ import de.cau.cs.kieler.prom.ui.views.LabelContribution
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.Variable
+import de.cau.cs.kieler.simulation.core.events.SimulationAdapter
+import de.cau.cs.kieler.simulation.core.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.core.events.SimulationEvent
 import de.cau.cs.kieler.simulation.core.events.SimulationListener
+import de.cau.cs.kieler.simulation.core.events.VariableUserValueEvent
 import java.awt.event.MouseWheelEvent
 import java.awt.event.MouseWheelListener
 import java.awt.geom.AffineTransform
@@ -68,9 +71,6 @@ import org.w3c.dom.Element
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.EventListener
 import org.w3c.dom.svg.SVGDocument
-import de.cau.cs.kieler.simulation.core.events.SimulationAdapter
-import de.cau.cs.kieler.simulation.core.events.VariableUserValueEvent
-import de.cau.cs.kieler.simulation.core.events.DataPoolEvent
 
 /**
  * The KiVis View.
@@ -655,7 +655,7 @@ class KiVisView extends ViewPart {
                 }
             }
             
-            override onDataPoolEvent(DataPoolEvent e) {
+            override onSimulationControlEvent(SimulationControlEvent e) {
                 PromUIPlugin.asyncExecInUI[
                     val simMan = SimulationManager.instance
                     if(simMan != null && kiVisView != null) {

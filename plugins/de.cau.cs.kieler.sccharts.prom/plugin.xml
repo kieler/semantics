@@ -77,5 +77,11 @@
             class="de.cau.cs.kieler.sccharts.prom.SCChartsAnalyzer">
       </analyzer>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.simulation.ui.simulationVisualizer">
+      <simulationVisualizer
+            class="de.cau.cs.kieler.sccharts.prom.SCChartsDiagramHighlighter">
+      </simulationVisualizer>
+   </extension>
 
 </plugin>

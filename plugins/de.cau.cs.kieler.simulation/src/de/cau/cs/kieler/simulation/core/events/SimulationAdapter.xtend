@@ -35,8 +35,18 @@ class SimulationAdapter implements SimulationListener {
             onTraceMismatch(e)
         if(e instanceof TraceEvent)
             onTraceEvent(e)
-        if(e instanceof SimulationControlEvent)
+        if(e instanceof SimulationControlEvent) {
             onSimulationControlEvent(e)
+            switch(e.operation) {
+                case INITIALIZED :
+                    onSimulationInitialized(e)
+                case STOP : 
+                    onSimulationStopped(e)
+                default : { 
+                    onSimulationStepped(e)    
+                }
+            }
+        }
         if(e instanceof VariableUserValueEvent)
             onUserValueChanged(e)
         if(e instanceof VariableEvent)
@@ -102,5 +112,29 @@ class SimulationAdapter implements SimulationListener {
      * @param e The event
      */
     protected def void onDataPoolEvent(DataPoolEvent e) {
+    }
+    
+    /**
+     * This is fired when a new simulation has been initialized.
+     * 
+     * @param e The event
+     */
+    protected def void onSimulationInitialized(SimulationControlEvent e) {
+    }
+    
+    /**
+     * This is fired when a simulation has been stopped.
+     * 
+     * @param e The event
+     */
+    protected def void onSimulationStopped(SimulationControlEvent e) {
+    }
+    
+    /**
+     * This is fired when a new simulation has is performing a step.
+     * 
+     * @param e The event
+     */
+    protected def void onSimulationStepped(SimulationControlEvent e) {
     }
 }

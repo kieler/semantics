@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Label
 import org.eclipse.ui.dialogs.WizardNewFileCreationPage
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.swt.widgets.Text
+import com.google.common.base.Strings
 
 /**
  * Implementation of an IWizardPage
@@ -135,6 +136,7 @@ class AdvancedNewFileCreationPage extends WizardNewFileCreationPage {
         // Text field for the origin of the initial contents
         val hgroup = UIUtil.createComposite(comp, 2)
         originTextField = UIUtil.createTextField(hgroup, "Initial content origin:")
+        originTextField.text = Strings.nullToEmpty(initialContentsURL)
        
         // The controls for this wizard is the composite for this class as well as for the super class.
         // Therefore setControl(...) has to be called after super.createControl(...)
@@ -229,6 +231,8 @@ class AdvancedNewFileCreationPage extends WizardNewFileCreationPage {
      */
     public def setInitialContentsURL(String value) {
         initialContentsURL = value
-        originTextField.text = initialContentsURL
+        if(originTextField != null) {
+            originTextField.text = initialContentsURL    
+        }
     }
 }
