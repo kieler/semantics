@@ -86,10 +86,11 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
      * Load a KGT from a bundle.
      */
     def static getKGTFromBundle(String bundleId, String resourceLocation) {
-        val Bundle bundle = Platform.getBundle(bundleId)
-        val URL fileURL = bundle.getEntry(SkinSelector.skinPrefix + resourceLocation)
-        val absFile = FileLocator.resolve(fileURL)
-        val newURI = URI.createFileURI(absFile.getFile)
+//        val Bundle bundle = Platform.getBundle(bundleId)
+//        val URL fileURL = bundle.getEntry(SkinSelector.skinPrefix + resourceLocation)
+//        val absFile = FileLocator.resolve(fileURL)
+//        val newURI = URI.createFileURI(absFile.getFile)
+        val newURI = URI.createPlatformPluginURI("/" + bundleId + "/" + SkinSelector.skinPrefix + resourceLocation, true)
         val provider = IResourceServiceProvider.Registry.INSTANCE.getResourceServiceProvider(newURI)
         val newResourceSet = provider.get(XtextResourceSet)
         newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
@@ -99,6 +100,7 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
             val node = (res.getContents().get(0) as KNode).children.head
             return node
         } catch (Exception e) {
+            e.printStackTrace
         }         
         return KGraphUtil::createInitializedNode
     }    

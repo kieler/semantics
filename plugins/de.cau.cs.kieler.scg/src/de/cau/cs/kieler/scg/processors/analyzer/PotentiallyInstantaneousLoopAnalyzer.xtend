@@ -22,7 +22,6 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.DataDependency
-import de.cau.cs.kieler.kico.KielerCompilerContext
 import com.google.inject.Guice
 
 /** 
@@ -148,9 +147,9 @@ class PotentiallyInstantaneousLoopAnalyzer extends AbstractAnalyzer {
         result
     }
     
-    static def createPotentiallyInstantaneousLoopData(SCGraph scg, KielerCompilerContext context) {
-        var pilData = if (context != null) context.compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult)?.head?.
-                criticalNodes?.toSet else null
+    static def createPotentiallyInstantaneousLoopData(SCGraph scg) {
+        var pilData = emptySet//if (context != null) context.compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult)?.head?.
+                //criticalNodes?.toSet else null
         
         if (pilData == null) {
             val PotentiallyInstantaneousLoopAnalyzer potentialInstantaneousLoopAnalyzer = 
@@ -158,13 +157,13 @@ class PotentiallyInstantaneousLoopAnalyzer extends AbstractAnalyzer {
             val p = potentialInstantaneousLoopAnalyzer.analyze(scg) as PotentialInstantaneousLoopResult
             
             
-            if (context != null) { 
-                context.compilationResult.addAuxiliaryData(p)
-                pilData = context.compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head.
-                    criticalNodes.toSet
-            } else {
+//            if (context != null) { 
+//                context.compilationResult.addAuxiliaryData(p)
+//                pilData = context.compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head.
+//                    criticalNodes.toSet
+//            } else {
                 pilData = p.criticalNodes.toSet
-            }
+//            }
         }       
         
         return pilData         

@@ -10,6 +10,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="intermediates" upperBound="-1"
         eType="#//IntermediateReference" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="inputClass" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="startsets" upperBound="-1"
+        eType="#//KVPair" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ProcessorEntry" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

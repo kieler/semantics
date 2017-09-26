@@ -12,14 +12,12 @@
  */
 package de.cau.cs.kieler.scg.transformations.sequentializer
 
-import de.cau.cs.kieler.scg.transformations.sequentializer.SimpleGuardSequentializer
-import de.cau.cs.kieler.scg.transformations.SCGTransformations
-import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.scg.ScgFactory
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.features.SCGFeatures
+import de.cau.cs.kieler.scg.transformations.SCGTransformations
 
 /**
  * @author ssm
@@ -39,15 +37,15 @@ class DCGuardSequentializer extends SimpleGuardSequentializer {
         return SCGTransformations::DC_SEQUENTIALIZE_ID
     }
 
-    override getProducedFeatureId() {
-        return SCGFeatures::DC_SEQUENTIALIZE_ID
-    }
-
-    override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::SCHEDULING_ID)
-    }
+//    override getProducedFeatureId() {
+//        return SCGFeatures::DC_SEQUENTIALIZE_ID
+//    }
+//
+//    override getRequiredFeatureIds() {
+//        return newHashSet(SCGFeatures::SCHEDULING_ID)
+//    }
     
-     override def SCGraph transform(SCGraph scg, KielerCompilerContext context) {
+     override def SCGraph transform(SCGraph scg) {
         val newSCG = ScgFactory::eINSTANCE.createSCGraph => [
             annotations += createStringAnnotation(SCGFeatures.SEQUENTIALIZE_ID, SCGFeatures.SEQUENTIALIZE_NAME)
             label = scg.label

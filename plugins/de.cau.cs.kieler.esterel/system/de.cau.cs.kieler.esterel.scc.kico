@@ -1,0 +1,11 @@
+system de.cau.cs.kieler.esterel.scc
+    version 1 
+    label "Esterel SCC"
+    set de.cau.cs.kieler.kicool.kitt.tracingActive true
+    
+de.cau.cs.kieler.esterel.processors.transformators.ssa.ssc.scest2scl
+de.cau.cs.kieler.scl.processors.transformators.scl2scg
+de.cau.cs.kieler.scg.processors.transformators.dependency
+de.cau.cs.kieler.scg.processors.transformators.basicBlocks
+de.cau.cs.kieler.scg.processors.transformators.ssa.wuscc
+de.cau.cs.kieler.esterel.processors.transformators.ssa.ssc.scg2esterel

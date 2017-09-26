@@ -15,7 +15,6 @@ package de.cau.cs.kieler.scg.transformations.dependencies
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
@@ -30,7 +29,6 @@ import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
-import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.transformations.SCGTransformations
 
@@ -41,7 +39,7 @@ import de.cau.cs.kieler.scg.transformations.SCGTransformations
  * @kieler.rating 2015-05-03 proposed yellow
  */
 
-class SCPDGTransformation extends AbstractProductionTransformation implements Traceable {
+class SCPDGTransformation {//extends AbstractProductionTransformation implements Traceable {
     
     // -------------------------------------------------------------------------
     // -- Injections 
@@ -65,21 +63,21 @@ class SCPDGTransformation extends AbstractProductionTransformation implements Tr
     
     var Entry programEntry;
     
-    override getId() {
-        return SCGTransformations::SCPDG_ID
-    }
-
-    override getName() {
-        return SCGTransformations::SCPDG_NAME
-    }    
-        
-    override getProducedFeatureId() {
-        return SCGFeatures::SCPDG_ID
-    }
-    
-    override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::DEPENDENCY_ID)
-    }
+//    override getId() {
+//        return SCGTransformations::SCPDG_ID
+//    }
+//
+//    override getName() {
+//        return SCGTransformations::SCPDG_NAME
+//    }    
+//        
+//    override getProducedFeatureId() {
+//        return SCGFeatures::SCPDG_ID
+//    }
+//    
+//    override getRequiredFeatureIds() {
+//        return newHashSet(SCGFeatures::DEPENDENCY_ID)
+//    }
 
     
     // -------------------------------------------------------------------------
@@ -93,11 +91,11 @@ class SCPDGTransformation extends AbstractProductionTransformation implements Tr
      *          the root element of the input model
      * @return Returns the root element of the transformed model.
      */    
-    override transform(EObject eObject, KielerCompilerContext context) {
-        return transformSCGToSCPDG(eObject as SCGraph, context)
+    def transform(EObject eObject) {
+        return transformSCGToSCPDG(eObject as SCGraph)
     }
     
-    def SCGraph transformSCGToSCPDG(SCGraph scg, KielerCompilerContext context) {
+    def SCGraph transformSCGToSCPDG(SCGraph scg) {
 
 //        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)
 //            || scg.hasAnnotation(ANNOTATION_SCPDGTRANSFORMATION)
@@ -107,14 +105,14 @@ class SCPDGTransformation extends AbstractProductionTransformation implements Tr
 
     	val cfs = <ControlFlow> newHashSet;
     	programEntry = (scg.nodes.head as Entry)
-        programEntry.transformSCPDG(cfs, scg, context)
+        programEntry.transformSCPDG(cfs, scg)
         
         scg.createStringAnnotation(SCGFeatures.SCPDG_ID, SCGFeatures.SCPDG_NAME)   
 
         scg
     }
     
-    private def dispatch transformSCPDG(Entry entry, Set<ControlFlow> controlFlows, SCGraph scg, KielerCompilerContext context) {
+    private def dispatch transformSCPDG(Entry entry, Set<ControlFlow> controlFlows, SCGraph scg) {
     	controlFlows += entry.allNext
     	entry.next = null
     	val exitNode = entry.exit
@@ -124,7 +122,7 @@ class SCPDGTransformation extends AbstractProductionTransformation implements Tr
     		val node = cf.target
     		controlFlows.remove(cf)
     		
-    		val cdTarget = node.transformSCPDG(controlFlows, scg, context)
+    		val cdTarget = node.transformSCPDG(controlFlows, scg)
     		
     		if ((cdTarget != null) && !(cdTarget instanceof Exit)) {
 				ScgFactory::eINSTANCE.createControlDependency => [
@@ -140,7 +138,7 @@ class SCPDGTransformation extends AbstractProductionTransformation implements Tr
     	}	
     }
     
-    private def dispatch Node transformSCPDG(Exit exit, Set<ControlFlow> controlFlows, SCGraph scg, KielerCompilerContext context) {
+    private def dispatch Node transformSCPDG(Exit exit, Set<ControlFlow> controlFlows, SCGraph scg) {
     	controlFlows += exit.allNext
     	exit.next = null    
     	if (exit.entry != programEntry) {
@@ -150,13 +148,13 @@ class SCPDGTransformation extends AbstractProductionTransformation implements Tr
     	exit	
     }
 
-    private def dispatch Node transformSCPDG(Assignment assignment, Set<ControlFlow> controlFlows, SCGraph scg, KielerCompilerContext context) {
+    private def dispatch Node transformSCPDG(Assignment assignment, Set<ControlFlow> controlFlows, SCGraph scg) {
     	controlFlows += assignment.allNext
     	assignment.next = null
     	assignment
     }
 
-    private def dispatch Node transformSCPDG(Fork fork, Set<ControlFlow> controlFlows, SCGraph scg, KielerCompilerContext context) {
+    private def dispatch Node transformSCPDG(Fork fork, Set<ControlFlow> controlFlows, SCGraph scg) {
     	fork.allNext.map[target].forEach[controlFlows += allNext]
     	fork.allNext.map[target].forEach[ e |
     		(e as Entry).next = null
@@ -167,7 +165,7 @@ class SCPDGTransformation extends AbstractProductionTransformation implements Tr
     	null
     }
 
-    private def dispatch Node transformSCPDG(Join join, Set<ControlFlow> controlFlows, SCGraph scg, KielerCompilerContext context) {
+    private def dispatch Node transformSCPDG(Join join, Set<ControlFlow> controlFlows, SCGraph scg) {
     	controlFlows += join.allNext
     	join.next = null    	
     	scg.nodes.remove(join)

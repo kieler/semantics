@@ -800,8 +800,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 		//{sccharts::ControlflowRegion} annotations+=Annotation* 'region' name=ExtendedID? label=STRING? ('for'
 		//counterVariable=CounterVariable ':' forStart=IntOrReference ('..' forEnd=IntOrReference)?)? (':'
-		//declarations+=DeclarationWOSemicolon* states+=State* | '{' declarations+=DeclarationWOSemicolon*
-		//(states+=ImplicitState | states+=State+) '}')
+		//declarations+=DeclarationWOSemicolon* states+=State* | '{' declarations+=DeclarationWOSemicolon* (states+=ImplicitState
+		//| states+=State+) '}')
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::ControlflowRegion}
@@ -3061,8 +3061,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)
-	//	('*' subExpressions+=DivExpression)*)?
+	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression) ('*'
+	//	subExpressions+=DivExpression)*)?
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}

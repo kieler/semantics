@@ -48,12 +48,7 @@ public class MapPropertyHolder implements IPropertyHolder, Serializable {
     }
     
     def protected void setPropertyById(String id, Object value) {
-        for (property : propertyMap.keySet) {
-            if (property.id.equals(id)) {
-                propertyMap.put(property, value)
-                return
-            } 
-        }
+        propertyMap.put(new Property(id), value)
     }
     
     /**

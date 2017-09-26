@@ -22,7 +22,6 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
-import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
@@ -44,7 +43,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class EnforcerTransformation extends AbstractExpansionTransformation implements Traceable {
+class EnforcerTransformation { //extends AbstractExpansionTransformation implements Traceable {
 
     public static val ENFORCER_TRANSFORMATION_ID = "sccharts.enforcer"
     public static val ENFORCER_TRANSFORMATION_NAME = "Enforcer"
@@ -57,25 +56,25 @@ class EnforcerTransformation extends AbstractExpansionTransformation implements 
     @Inject extension SCChartsTransitionExtensions
     
     //--                 K I C O      C O N F I G U R A T I O N              --
-    override getId() {
+    def getId() {
         return ENFORCER_TRANSFORMATION_ID
     }
 
-    override getName() {
+    def getName() {
         return ENFORCER_TRANSFORMATION_NAME
     }
 
-    override getExpandsFeatureId() {
-        return EnforcerFeature.ENFORCER_FEATURE_ID
-    }
-
-    override getProducesFeatureIds() {
-        return Sets.newHashSet()
-    }
-
-    override getNotHandlesFeatureIds() {
-        return Sets.newHashSet()
-    }
+//    override getExpandsFeatureId() {
+//        return EnforcerFeature.ENFORCER_FEATURE_ID
+//    }
+//
+//    override getProducesFeatureIds() {
+//        return Sets.newHashSet()
+//    }
+//
+//    override getNotHandlesFeatureIds() {
+//        return Sets.newHashSet()
+//    }
 
 
     /**

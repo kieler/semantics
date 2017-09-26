@@ -33,18 +33,6 @@
       </handler>
    </extension>
    <extension
-         point="de.cau.cs.kieler.kico.feature">
-      <featureClass
-            class="de.cau.cs.kieler.sccharts.timing.transformation.TPPFeature">
-      </featureClass>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.kico.transformation">
-      <productionTransformationClass
-            class="de.cau.cs.kieler.sccharts.timing.transformation.TPPTransformation">
-      </productionTransformationClass>
-   </extension>
-   <extension
          point="de.cau.cs.kieler.sccharts.ui.synthesis.hooks">
       <hook
             class="de.cau.cs.kieler.sccharts.timing.TimingAnalysisHook">

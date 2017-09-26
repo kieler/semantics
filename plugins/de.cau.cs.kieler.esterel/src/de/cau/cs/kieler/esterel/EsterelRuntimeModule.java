@@ -4,6 +4,8 @@
 package de.cau.cs.kieler.esterel;
 
 import org.eclipse.xtext.conversion.IValueConverterService;
+import org.eclipse.xtext.linking.lazy.LazyLinkingResource;
+import org.eclipse.xtext.resource.XtextResource;
 
 import de.cau.cs.kieler.esterel.formatting.EsterelValueConverter;
 
@@ -27,6 +29,10 @@ public class EsterelRuntimeModule extends de.cau.cs.kieler.esterel.AbstractEster
     public void configureIResourceDescriptions(com.google.inject.Binder binder) {
         binder.bind(org.eclipse.xtext.resource.IResourceDescriptions.class).to(
                 org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions.class);
+    }
+    
+    public Class<? extends XtextResource> bindXtextResource() {
+        return EsterelResource.class;
     }
     
 }

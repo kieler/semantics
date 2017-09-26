@@ -167,23 +167,45 @@ ruleSystem returns [EObject current=null]
        			$current, 
        			"inputClass",
         		lv_inputClass_7_0, 
-        		"org.eclipse.xtext.common.Terminals.ID");
+        		"de.cau.cs.kieler.annotations.Annotations.ID");
 	    }
 
 )
-))?(
+))?(	otherlv_8='set' 
+    {
+    	newLeafNode(otherlv_8, grammarAccess.getSystemAccess().getSetKeyword_7_0());
+    }
+(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSystemAccess().getIntermediatesIntermediateReferenceParserRuleCall_7_0()); 
+	        newCompositeNode(grammarAccess.getSystemAccess().getStartsetsKVPairParserRuleCall_7_1_0()); 
 	    }
-		lv_intermediates_8_0=ruleIntermediateReference		{
+		lv_startsets_9_0=ruleKVPair		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getSystemRule());
+	        }
+       		add(
+       			$current, 
+       			"startsets",
+        		lv_startsets_9_0, 
+        		"de.cau.cs.kieler.kicool.KiCool.KVPair");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))*(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getSystemAccess().getIntermediatesIntermediateReferenceParserRuleCall_8_0()); 
+	    }
+		lv_intermediates_10_0=ruleIntermediateReference		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getSystemRule());
 	        }
        		add(
        			$current, 
        			"intermediates",
-        		lv_intermediates_8_0, 
+        		lv_intermediates_10_0, 
         		"de.cau.cs.kieler.kicool.KiCool.IntermediateReference");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -192,16 +214,16 @@ ruleSystem returns [EObject current=null]
 )*(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSystemAccess().getProcessorsProcessorGroupParserRuleCall_8_0()); 
+	        newCompositeNode(grammarAccess.getSystemAccess().getProcessorsProcessorGroupParserRuleCall_9_0()); 
 	    }
-		lv_processors_9_0=ruleProcessorGroup		{
+		lv_processors_11_0=ruleProcessorGroup		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getSystemRule());
 	        }
        		set(
        			$current, 
        			"processors",
-        		lv_processors_9_0, 
+        		lv_processors_11_0, 
         		"de.cau.cs.kieler.kicool.KiCool.ProcessorGroup");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -1868,7 +1890,7 @@ RULE_BOOLEAN : ('true'|'false');
 
 RULE_STRING : '"' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'"')))* '"';
 
-RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
+RULE_ID : '^'? (('_'? 'a'..'z'|'_'? 'A'..'Z')|'_' '0'..'9'|'__') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 
 RULE_WS : (' '|'\t'|'\r'|'\n')+;
 

@@ -23,9 +23,11 @@ import de.cau.cs.kieler.core.model.Pair
 
 import static extension com.google.common.base.Preconditions.checkNotNull
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
+import static de.cau.cs.kieler.kicool.environments.Environment.*
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 
 /**
- * This class integrates Tracing into KiCo. It is registered as hook via extension point.
+ * This class integrates Tracing into KiCo.
  * 
  * @author als ssm
  * @kieler.design 2015-04-27 proposed
@@ -62,7 +64,11 @@ public class TracingIntegration extends IntermediateProcessor<EObject, EObject> 
         val tracing = environment.getProperty(Tracing.TRACING_DATA)
         checkNotNull(Tracing)
         
-        tracing.startTransformationTracing(getModel, environment.getProperty(Environment.INPLACE))
+        if (environment.getProperty(PROCESSOR_INSTANCE) instanceof Traceable) {
+            tracing.startTransformationTracing(getModel, environment.getProperty(Environment.INPLACE))
+        } else {
+            environment.warnings.add("This processor does not support tracing. Resulting tracing chain may be incomplete!")
+        }
     }
     
     override void process() {
@@ -71,7 +77,9 @@ public class TracingIntegration extends IntermediateProcessor<EObject, EObject> 
         val tracing = environment.getProperty(Tracing.TRACING_DATA)
         checkNotNull(Tracing)
         
-        tracing.finishTransformationTracing(getSourceModel, getTargetModel)
+        if (environment.getProperty(PROCESSOR_INSTANCE) instanceof Traceable) {
+            tracing.finishTransformationTracing(getSourceModel, getTargetModel)
+        }
     }
     
     

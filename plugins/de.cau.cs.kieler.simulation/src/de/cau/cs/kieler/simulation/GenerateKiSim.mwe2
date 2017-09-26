@@ -1,4 +1,4 @@
-module de.cau.cs.kieler.prom.GenerateKiSim
+module de.cau.cs.kieler.simulation.GenerateKiSim
 
 import org.eclipse.emf.mwe.utils.*
 import org.eclipse.xtext.generator.*
@@ -26,7 +26,7 @@ Workflow {
     component = DirectoryCleaner {
         directory = "${runtimeProject}.ui/src-gen"
     }
-    
+
     component = Generator {
         pathRtProject = runtimeProject
         pathUiProject = "${runtimeProject}.ui"
@@ -65,11 +65,9 @@ Workflow {
             fragment = validation.ValidatorFragment {}
             
             // scoping and exporting API
-            fragment = scoping.ImportURIScopingFragment {}
-            // fragment = exporting.SimpleNamesFragment {} -- chsch: seems to be abolished
-            
-            // scoping and exporting API 
-
+            fragment = scoping.ImportURIScopingFragment {
+                generateXtendStub = true
+            }
             // fragment = scoping.ImportNamespacesScopingFragment {}
             // fragment = exporting.QualifiedNamesFragment {}
 
@@ -84,7 +82,7 @@ Workflow {
             fragment = outline.QuickOutlineFragment {}
 
             // java-based API for content assistance 
-            fragment = contentAssist.JavaBasedContentAssistFragment {}
+            fragment = contentAssist.ContentAssistFragment {}
             
             // antlr parser generator tailored for content assist 
             fragment = org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment { 

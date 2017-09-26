@@ -57,7 +57,7 @@ public abstract class AbstractKiBuildUiModule extends org.eclipse.xtext.ui.Defau
 		return de.cau.cs.kieler.prom.ui.outline.KiBuildOutlineTreeProvider.class;
 	}
 
-	// contributed by org.eclipse.xtext.ui.generator.contentAssist.JavaBasedContentAssistFragment
+	// contributed by org.eclipse.xtext.ui.generator.contentAssist.ContentAssistFragment
 	public Class<? extends org.eclipse.xtext.ui.editor.contentassist.IContentProposalProvider> bindIContentProposalProvider() {
 		return de.cau.cs.kieler.prom.ui.contentassist.KiBuildProposalProvider.class;
 	}

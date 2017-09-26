@@ -15,7 +15,6 @@ package de.cau.cs.kieler.sccharts.timing.transformation;
 
 import java.util.HashMap;
 
-import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData;
 import de.cau.cs.kieler.sccharts.Region;
 
 /**
@@ -25,7 +24,7 @@ import de.cau.cs.kieler.sccharts.Region;
  * @author ima
  *
  */
-public class TPPInformation extends AbstractKielerCompilerAuxiliaryData {
+public class TPPInformation {//xtends AbstractKielerCompilerAuxiliaryData {
     
     private final int highestInsertedTPPNumber;
     private final HashMap<String, Region> tppRegionMapping;

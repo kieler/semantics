@@ -38,7 +38,7 @@ import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.scg.transformations.sequentializer.EmptyExpression
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 
-import static de.cau.cs.kieler.scg.SCGAnnotations.*
+import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler

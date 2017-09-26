@@ -19,6 +19,12 @@ import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kicool.KiCoolActivator
+import org.eclipse.xtext.resource.XtextResource
+import java.io.ByteArrayOutputStream
+import org.eclipse.xtext.resource.XtextResourceSet
+import org.eclipse.emf.common.util.URI
+import com.google.inject.Inject
+import org.eclipse.xtext.resource.IResourceServiceProvider
 
 /**
  * Diagram synthesis for Ecore models based on a XText grammar.
@@ -29,6 +35,9 @@ import de.cau.cs.kieler.kicool.KiCoolActivator
  * 
  */
 class XtextSerializationSynthesis extends AbstractDiagramSynthesis<EObject> {
+    
+    @Inject
+    IResourceServiceProvider.Registry xtextRegistry;
 
     // -------------------------------------------------------------------------
     // Constants
@@ -39,7 +48,27 @@ class XtextSerializationSynthesis extends AbstractDiagramSynthesis<EObject> {
     override KNode transform(EObject model) {
         // TODO adapt to kicool
         // btw, kicoUtil.serialize is too unstructured. Redo for this purpose.
-        val serialized = "" //KiCoUtil.serialize(model, null, false);
+        var String serialized = null
+        
+        if (model.eResource !== null) {
+            val outputStream = new ByteArrayOutputStream
+            model.eResource?.save(outputStream, emptyMap)
+            serialized = outputStream.toString
+        } else if (KiCoolActivator.instance.getResourceExtension(model) !== null){
+            val outputStream = new ByteArrayOutputStream
+            val ext = KiCoolActivator.instance.getResourceExtension(model).extension
+            val uri = URI.createURI(#["inmemory:/", model.hashCode, ".", ext].join)
+            val provider = xtextRegistry.getResourceServiceProvider(uri)
+            val rset = provider.get(XtextResourceSet)
+            var res = rset.createResource(uri)
+            if (res !== null) {
+                res.contents += model
+                res.save(outputStream, emptyMap)
+                serialized = outputStream.toString
+            }
+        }
+        
+        
         if (serialized.nullOrEmpty) {
             return LightDiagramServices::translateModel(
                 new MessageModel("Xtext Serialization Synthesis",

@@ -49,10 +49,6 @@ import com.google.common.collect.Iterators;
 import de.cau.cs.kieler.kexpressions.ValueType;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
-import de.cau.cs.kieler.kico.CompilationResult;
-import de.cau.cs.kieler.kico.KielerCompiler;
-import de.cau.cs.kieler.kico.KielerCompilerContext;
-import de.cau.cs.kieler.kicool.kitt.tracing.Tracing;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
 import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.krendering.KRectangle;
@@ -61,11 +57,8 @@ import de.cau.cs.kieler.klighd.krendering.KText;
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.State;
-import de.cau.cs.kieler.sccharts.scg.SCGTransformation;
 import de.cau.cs.kieler.sccharts.timing.transformation.TPPInformation;
 import de.cau.cs.kieler.scg.SCGraph;
-import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures;
-import de.cau.cs.kieler.scg.s.transformations.CodeGenerationTransformations;
 
 /**
  * Performs a timing analysis for an scchart with the help of the connected kta
@@ -189,30 +182,30 @@ public class TimingAnalysis extends Job {
 			// Stop as soon as possible when job canceled
 			return Status.CANCEL_STATUS;
 		}
-        KielerCompilerContext context = new KielerCompilerContext(
-                "*T_ABORT, *T_INITIALIZATION, *T_scg.basicblock.sc, *T_s.c, "
-                + "*T_sccharts.scg, *T_NOSIMULATIONVISUALIZATION, *T_scg.guards, "
-                + "*T_scg.scheduling, T_scg.tpp", scchart);
-        // TODO: adapt to kicool
+		// TODO: adapt to kicool
+//        KielerCompilerContext context = new KielerCompilerContext(
+//                "*T_ABORT, *T_INITIALIZATION, *T_scg.basicblock.sc, *T_s.c, "
+//                + "*T_sccharts.scg, *T_NOSIMULATIONVISUALIZATION, *T_scg.guards, "
+//                + "*T_scg.scheduling, T_scg.tpp", scchart);
 //		context.setProperty(Tracing.ACTIVE_TRACING, true);
-		context.setProperty(SCGTransformation.ENABLE_SFR, true);
-		context.setAdvancedSelect(true);
-		CompilationResult compilationResult = KielerCompiler.compile(context);
+//		context.setProperty(SCGTransformation.ENABLE_SFR, true);
+//		context.setAdvancedSelect(true);
+//		CompilationResult compilationResult = KielerCompiler.compile(context);
+//
+//		if (!(compilationResult.getEObject() instanceof SCGraph) || compilationResult
+//				.getPostponedErrors().size() > 0) {
+//			return new Status(IStatus.ERROR, pluginId, "SCG sequentialization failed in the "
+//			        + "interactive timing analysis.");
+//		}
 
-		if (!(compilationResult.getEObject() instanceof SCGraph) || compilationResult
-				.getPostponedErrors().size() > 0) {
-			return new Status(IStatus.ERROR, pluginId, "SCG sequentialization failed in the "
-			        + "interactive timing analysis.");
-		}
-
-		SCGraph scg = (SCGraph) compilationResult.getEObject();
+//		SCGraph scg = (SCGraph) compilationResult.getEObject();
         
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		// Step 2: Retrieve the auxiliary data produced by the TPPTransformation
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		int highestInsertedTPPNumber = -1;
 		HashMap<String, Region> tppRegionMap = null;
-		List<TPPInformation> tppInformations = compilationResult.getAuxiliaryData(TPPInformation.class);
+		List<TPPInformation> tppInformations = new LinkedList();//compilationResult.getAuxiliaryData(TPPInformation.class);
 		TPPInformation tppInformation = tppInformations.isEmpty() ? null : tppInformations.get(0);
 		if (tppInformation != null) {
 			highestInsertedTPPNumber = tppInformation.getHighestInsertedTPPNumber();
@@ -239,16 +232,16 @@ public class TimingAnalysis extends Job {
         ////////////////////////////////////////////////////////////////////////////////////////////////
 		// Step 3: Generate Code from the Sequentialized SCG with TPP
 		////////////////////////////////////////////////////////////////////////////////////////////////
-		context = new KielerCompilerContext(CodeGenerationFeatures.S_CODE_ID + "," 
-		        + CodeGenerationFeatures.TARGET_ID + ",T_" + CodeGenerationTransformations.S2C_ID, scg);
-		compilationResult = KielerCompiler.compile(context);
-
-		if (compilationResult.getString() == null || compilationResult.getPostponedErrors().size() > 0) {
-			return new Status(IStatus.ERROR, pluginId, "The code generation failed in the context "
-			        + "of the interactive timing analysis.");
-		}
-
-		String code = compilationResult.getString();
+//		context = new KielerCompilerContext(CodeGenerationFeatures.S_CODE_ID + "," 
+//		        + CodeGenerationFeatures.TARGET_ID + ",T_" + CodeGenerationTransformations.S2C_ID, scg);
+//		compilationResult = KielerCompiler.compile(context);
+//
+//		if (compilationResult.getString() == null || compilationResult.getPostponedErrors().size() > 0) {
+//			return new Status(IStatus.ERROR, pluginId, "The code generation failed in the context "
+//			        + "of the interactive timing analysis.");
+//		}
+//
+		String code = "";//compilationResult.getString();
          
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		// Step 4: Prepare file locations, cleanup of outdated files

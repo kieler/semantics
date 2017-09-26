@@ -81,7 +81,7 @@ public class KiCoolActivator implements BundleActivator {
                 KiCoolActivator.getRegisteredResourceExtensions(false);
         ResourceExtension specificExtension = null;
         if (model instanceof EObject) {
-            specificExtension = resourceExtensionMap.get(((EObject) model).eClass().getName());
+            specificExtension = resourceExtensionMap.get(((EObject) model).eClass().getEPackage().getName());
         } else {
             specificExtension = resourceExtensionMap.get(model.getClass().getSimpleName());
         }

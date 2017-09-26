@@ -6,33 +6,146 @@
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package 
        uri = "http://www.cau.de/cs/kieler/esterel/Esterel" 
-       class = "de.cau.cs.kieler.esterel.esterel.EsterelPackage"
-       genModel = "de/cau/cs/kieler/esterel/Esterel.genmodel" /> 
+       class = "de.cau.cs.kieler.esterel.EsterelPackage"
+       genModel = "de/cau/cs/kieler/esterel/model/generated/Esterel.genmodel" />
+    <package
+          class="de.cau.cs.kieler.esterel.scest.ScestPackage"
+          genModel="de/cau/cs/kieler/esterel/model/generated/SCEst.genmodel"
+          uri="http://www.cau.de/cs/kieler/esterel/scest/SCEst">
+    </package> 
 	
   </extension>
   <extension
-        point="de.cau.cs.kieler.kico.extension">
+        point="de.cau.cs.kieler.kicool.processor">
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.AbortTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.AwaitTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.BlockTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.ConstantTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.DoTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.EmitTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.EsterelParallelTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.EveryDoTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.ExecTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.FunctionTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.IfTestTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.InitializationTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.LocalSignalDeclTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.LocalVariableTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.NothingTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.OptimizationLabelRenamingTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.PresentTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.ProcCallTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.RepeatTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.RunTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.SCLTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.SensorTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.SetTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.SignalTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.SuspendTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.SustainTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.TrapTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.UnEmitTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.LoopTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.incremental.HaltTransformation">
+     </Processor>
+  </extension>
+  <extension
+        point="de.cau.cs.kieler.kicool.system">
+     <TransformationSystem
+           system="system/de.cau.cs.kieler.esterel.scest.scl.kico">
+     </TransformationSystem>
+     <TransformationSystem
+           system="system/de.cau.cs.kieler.esterel.scest.scl.netlist.kico">
+     </TransformationSystem>
+     <TransformationSystem
+           system="system/de.cau.cs.kieler.esterel.scc.kico">
+     </TransformationSystem>
+  </extension>
+  <extension
+        point="de.cau.cs.kieler.kicool.resource.extension">
      <ExtensionInformation
            ePackageName="esterel"
            editor_id="de.cau.cs.kieler.esterel.Esterel"
            extensionName="strl"
            isXMI="false">
      </ExtensionInformation>
+     <ExtensionInformation
+           ePackageName="scest"
+           editor_id="de.cau.cs.kieler.esterel.scest.SCEst"
+           extensionName="scest"
+           isXMI="false">
+     </ExtensionInformation>
   </extension>
   <extension
-        point="de.cau.cs.kieler.kico.feature">
-     <featureClass
-           class="de.cau.cs.kieler.esterel.features.Esterel">
-     </featureClass>
-     <featureClass
-           class="de.cau.cs.kieler.esterel.features.SimulationVisualization">
-     </featureClass>
-  </extension>
-  <extension
-        point="de.cau.cs.kieler.kico.transformation">
-     <expansionTransformationClass
-           class="de.cau.cs.kieler.esterel.transformations.EsterelDummy">
-     </expansionTransformationClass>
+        point="de.cau.cs.kieler.kicool.processor">
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.ssa.SCEstToSSCSCLTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.ssa.SSASCL2SSAEsterel">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.ssa.SSCEsterelReconstruction">
+     </Processor>
   </extension>
   <!--extension
         point="org.eclipse.ui.menus">

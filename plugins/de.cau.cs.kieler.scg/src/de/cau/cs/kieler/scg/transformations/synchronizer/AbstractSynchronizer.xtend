@@ -15,7 +15,6 @@ package de.cau.cs.kieler.scg.transformations.synchronizer
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
@@ -32,7 +31,7 @@ import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpres
 import java.util.Map
 import java.util.Set
 
-import static de.cau.cs.kieler.scg.SCGAnnotations.*
+import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -77,7 +76,7 @@ abstract class AbstractSynchronizer {
     @Inject
     extension AnnotationsExtensions	
     	
-	protected var KielerCompilerContext compilerContext = null
+//	protected var KielerCompilerContext compilerContext = null
 	protected var Map<Node, SchedulingBlock> schedulingCache = null
 	
 	protected val newGuards = <Guard> newHashSet
@@ -116,10 +115,10 @@ abstract class AbstractSynchronizer {
      */
     public def void synchronize(Join join, Guard guard, SchedulingBlock schedulingBlock, SCGraph scg, 
     	AbstractGuardExpressions guardCreator, 
-    	KielerCompilerContext context, Map<Node, SchedulingBlock> schedulingBlockCache
+    	Map<Node, SchedulingBlock> schedulingBlockCache
     ) {
         schedulingCache = schedulingBlockCache
-        compilerContext = context
+//        compilerContext = context
         newGuards.clear
         build(join, guard, schedulingBlock, scg) 
     }    

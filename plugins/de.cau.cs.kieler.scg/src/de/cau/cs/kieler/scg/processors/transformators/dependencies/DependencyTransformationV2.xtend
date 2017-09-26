@@ -43,6 +43,7 @@ import static extension de.cau.cs.kieler.scg.DataDependencyType.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
 import java.util.Deque
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -63,7 +64,7 @@ import java.util.Deque
  * @kieler.rating 2017-08-18 proposed yellow
  */
 
-class DependencyTransformationV2 extends Processor<SCGraphs, SCGraphs> {
+class DependencyTransformationV2 extends Processor<SCGraphs, SCGraphs> implements Traceable {
     
     @Inject extension SCGCoreExtensions
     @Inject extension SCGDependencyExtensions

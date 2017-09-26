@@ -37,7 +37,7 @@ import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.scg.transformations.sequentializer.EmptyExpression
 
-import static de.cau.cs.kieler.scg.SCGAnnotations.*
+import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
 import java.util.logging.Level
 import de.cau.cs.kieler.scg.SCGPlugin
 
