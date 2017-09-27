@@ -62,7 +62,11 @@ class SCChartsStateExtensions {
     
     def boolean isHierarchical(State state) {
         state.regions.size > 0
-    }    
+    }
+       
+    def boolean isSimple(State state) {
+        !state.isHierarchical && state.actions.size == 0
+    }
     
     def State setInitial(State state) {
         state => [ initial = true ] 

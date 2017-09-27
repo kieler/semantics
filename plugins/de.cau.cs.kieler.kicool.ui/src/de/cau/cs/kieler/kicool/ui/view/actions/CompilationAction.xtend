@@ -92,6 +92,7 @@ class CompilationAction {
         val doc = editor.getDocument
         var EObject m = doc.readOnly(new IUnitOfWork<EObject, XtextResource>() {
             override exec(XtextResource state) throws Exception {
+                state.relink
                 state.contents.head
             }
         });   
