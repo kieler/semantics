@@ -68,7 +68,7 @@ class SimulationTemplateProcessor extends TemplateProcessor {
      *    }
      *  }
      */
-    public val additionalVariables = new ConfigurableAttribute("variables")
+    public val additionalVariables = new ConfigurableAttribute("variables", null, #[Map])
     
      /**
       * The interface types that should be included in the simulation generation.
@@ -78,7 +78,7 @@ class SimulationTemplateProcessor extends TemplateProcessor {
       * 
       * 
       */
-    public val interfaceTypes = new ConfigurableAttribute("interfaceTypes")
+    public val interfaceTypes = new ConfigurableAttribute("interfaceTypes", null, #[String, List])
     
     /**
      * 
@@ -239,11 +239,11 @@ class SimulationTemplateProcessor extends TemplateProcessor {
      * Checks whether the data should be used given the interface types.
      * 
      * @param data The macro call data
-     * @param interfaceTypes List of the allowed interface types
+     * @param allowedInterfaceTypes List of the allowed interface types
      * @return true if the interface type of the data occurs in the list of allowed interface types.
      */
-    private def boolean matches(MacroCallData data, List<String> interfaceTypes) {
-        for(interfaceType : interfaceTypes) {
+    private def boolean matches(MacroCallData data, List<String> allowedInterfaceTypes) {
+        for(interfaceType : allowedInterfaceTypes) {
             if(data.matches(interfaceType)) {
                 return true
             }
@@ -251,7 +251,19 @@ class SimulationTemplateProcessor extends TemplateProcessor {
         return false
     }
     
-    private def boolean matches(MacroCallData data, String interfaceType) {
-        return (data.interfaceTypes.contains(interfaceType))
+    /**
+     * Checks whether the data should be used given the interface types.
+     * 
+     * @param data The macro call data
+     * @param allowedInterfaceType The allowed interface type
+     * @return true if the interface type of the data contains the allowed interface type.
+     */
+    private def boolean matches(MacroCallData data, String allowedInterfaceType) {
+        for(interfaceType : data.interfaceTypes) {
+            if(interfaceType.name == allowedInterfaceType) {
+                return true
+            }
+        }
+        return false
     }
 }
