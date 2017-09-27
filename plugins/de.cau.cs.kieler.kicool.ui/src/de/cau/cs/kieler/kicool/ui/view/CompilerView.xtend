@@ -54,8 +54,6 @@ class CompilerView extends DiagramViewPart {
     
     @Accessors private CompilerViewPartListener partListener
     @Accessors private IMemento memento
-    @Accessors private ToolbarSystemCombo combo
-    @Accessors private System activeSystem = null 
     @Accessors private EditPartSystemManager editPartSystemManager = null
     
     private var addButtonsDelay = true
@@ -84,7 +82,6 @@ class CompilerView extends DiagramViewPart {
         val menuManager = getViewSite.getActionBars.getMenuManager
         
         addContributions(toolBarManager, menuManager)
-        systemSelectionManager.createSystemComboList
         addButtons()
 
         partListener = new CompilerViewPartListener(this, parent)
@@ -107,10 +104,7 @@ class CompilerView extends DiagramViewPart {
         // Compile
         compilationAction = new CompilationAction(this) 
         toolBar.add(compilationAction.action)        
-       
-        combo = new ToolbarSystemCombo("System Combo")
-        toolBar.add(combo)
-        combo.systemSelectionManager = systemSelectionManager
+        toolBar.add(systemSelectionManager.contribution)
         
         forwardResultToggle = new ForwardResultToggle(this)
         autoCompileToggle = new AutoCompileToggle(this)
@@ -162,7 +156,7 @@ class CompilerView extends DiagramViewPart {
     }
     
     def void updateView() {
-        if (activeSystem == null) return
+        if (editPartSystemManager.activeSystem == null) return
         
         val properties = new KlighdSynthesisProperties
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
@@ -170,7 +164,7 @@ class CompilerView extends DiagramViewPart {
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_ZOOM_CONFIG_BUTTONS_HANDLING,
                 ZoomConfigButtonsHandling.HIDE)
                                 
-        updateDiagram(activeSystem, properties)
+        updateDiagram(editPartSystemManager.activeSystem, properties)
     }
     
     def void updateToolbar() {

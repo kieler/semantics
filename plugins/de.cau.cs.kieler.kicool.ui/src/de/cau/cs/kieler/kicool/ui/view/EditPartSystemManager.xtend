@@ -41,12 +41,14 @@ class EditPartSystemManager implements EditorActionAdapter.EditorSaveListener,
         this.view = view
     }
     
-    def attachSystemToEditPart(IEditorPart part, System system) {
-        editPartSystemMap.put(part, system)
+    def getActiveSystem() {
+        editPartSystemMap.get(activeEditor)
     }
-    
-    def System getSystem(IEditorPart part) {
-        editPartSystemMap.get(part)
+
+    def setActiveSystem(System sys) {
+        if (activeEditor !== null) {
+            editPartSystemMap.put(activeEditor, sys)
+        }
     }
     
     def removeSystem(IEditorPart part) {

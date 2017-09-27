@@ -23,6 +23,7 @@ import static extension de.cau.cs.kieler.kicool.environments.Environment.*
 import java.lang.reflect.ParameterizedType
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.annotations.NamedObject
+import de.cau.cs.kieler.kicool.classes.SourceTargetPair
 
 /**
  * The abstract class of a processor. Every invokable unit in kico is a processor.
@@ -183,6 +184,11 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
         val c1 = pt.getActualTypeArguments.get(0)
         val c2 = pt.getActualTypeArguments.get(1)
         c1 == c2
+    }
+    
+    def SourceTargetPair<Class<?>, Class<?>> getSourceTargetTypes() {
+        val ParameterizedType pt = this.getProcessorSubClass.getGenericSuperclass as ParameterizedType;
+        return new SourceTargetPair<Class<?>, Class<?>>(pt.getActualTypeArguments.get(0) as Class<Source>, pt.getActualTypeArguments.get(1) as Class<Target>)
     }
     
     private def Class<?> getProcessorSubClass() {

@@ -64,7 +64,7 @@ class CompilationAction {
             model = CompilationActionSimSalabim.SIM_MODEL
         }
         
-        val cc = Compile.createCompilationContext(view.activeSystem, model)
+        val cc = Compile.createCompilationContext(view.editPartSystemManager.activeSystem, model)
         cc.inputEditor = editor
         
         if (view.compileInplaceToggle.checked) {
