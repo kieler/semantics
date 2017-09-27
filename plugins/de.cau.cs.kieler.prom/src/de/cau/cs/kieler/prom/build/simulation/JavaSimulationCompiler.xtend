@@ -40,7 +40,7 @@ class JavaSimulationCompiler extends SimulationCompiler {
     /**
      * The command that is executed to create an executable jar file from the class files.
      */
-    public val jarCommand = new ConfigurableAttribute("jarCommand")
+    public val jarCommand = new ConfigurableAttribute("jarCommand", null, #[String])
     
     /**
      * Constructor

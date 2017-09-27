@@ -57,7 +57,7 @@ class KiCoModelCompiler extends ModelCompiler {
     /**
      * Optional template file in that is used to surround the generated output.
      */
-    public val outputTemplate = new ConfigurableAttribute("outputTemplate", "")
+    public val outputTemplate = new ConfigurableAttribute("outputTemplate", "", #[String])
     
     /**
      * The KiCo compilation system to compile the model.

@@ -53,20 +53,20 @@ abstract class SimulationCompiler extends Configurable {
     /**
      * The command that is executed to compile the simulation code.
      */
-    public val command = new ConfigurableAttribute("command")
+    public val command = new ConfigurableAttribute("command", null, #[String])
     /**
      * The output folder in which the simulation should be saved.
      */
-    public val outputFolder = new ConfigurableAttribute("outputFolder", "kieler-gen/sim/bin")
+    public val outputFolder = new ConfigurableAttribute("outputFolder", "kieler-gen/sim/bin", #[String])
     /**
      * A library folder required for the simulation that must be created if it does not exist yet. 
      */
-    public val libFolder = new ConfigurableAttribute("libFolder", "kieler-gen/sim/lib")
+    public val libFolder = new ConfigurableAttribute("libFolder", "kieler-gen/sim/lib", #[String])
     /**
      * The maximum allowed compilation time in seconds.
      * If the compilation takes longer than this, the process is terminated and an exception is thrown. 
      */
-    public val timeout = new ConfigurableAttribute("timeout", 10)
+    public val timeout = new ConfigurableAttribute("timeout", 10, #[Integer])
     
     /**
      * Placeholder for the file to be compiled.

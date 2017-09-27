@@ -29,17 +29,22 @@ class ConfigurableAttribute {
      * The name of the attribute.
      */
     @Accessors
-    protected var String name
+    private var String name
     /**
      * The value of the attribute.
      */
-    @Accessors
-    protected var Object value
+    @Accessors(PUBLIC_GETTER)
+    private var Object value
     /**
      * Defines whether the attribute must have a value different than null.
      */
     @Accessors
-    protected var boolean mandatory
+    private var boolean mandatory
+    /**
+     * The types that the value can have.
+     * This is null to indicate that all values are allowed.
+     */
+    private var List<Class<?>> supportedTypes
     
     /**
      * Constructor
@@ -59,6 +64,9 @@ class ConfigurableAttribute {
     new(String name, Object defaultValue) {
         this(name)
         this.value = defaultValue
+        if(defaultValue != null) {
+            this.supportedTypes = #[defaultValue.class]    
+        }
     }
     
     /**
@@ -71,6 +79,30 @@ class ConfigurableAttribute {
     new(String name, Object defaultValue, boolean isMandatory) {
         this(name, defaultValue)
         this.mandatory = isMandatory
+    }
+    
+    /**
+     * Constructor
+     * 
+     * @param name The name
+     * @param defaultValue The initial value for the attribute
+     * @param supportedTypes Defines the types for values that are suited for the attribute
+     */
+    new(String name, Object defaultValue, List<Class<?>> supportedTypes) {
+        this(name, defaultValue)
+        this.supportedTypes = supportedTypes
+    }
+    
+    /**
+     * Constructor
+     * 
+     * @param name The name
+     * @param defaultValue The initial value for the attribute
+     * @param isMandatory Defines whether the attribute must have a value different than null
+     */
+    new(String name, Object defaultValue, boolean isMandatory, List<Class<?>> supportedTypes) {
+        this(name, defaultValue, isMandatory)
+        this.supportedTypes = supportedTypes
     }
     
     /**
@@ -137,6 +169,41 @@ class ConfigurableAttribute {
      */
     public def boolean isDefined() {
         return value != null
+    }
+    
+    /**
+     * Sets the value of this attribute.
+     */
+    public def void setValue(Object newValue) {
+        if(isSupportedType(newValue)) {
+            value = newValue
+        } else {
+            throw new Exception("Cannot set the attribute '"+name+"' to '"+newValue+"'.\n"
+                              + "Supported types for this attribute are: "+supportedTypes.map[it.simpleName].join(", "))
+        }
+    }
+    
+    /**
+     * Determines if the new value is supported by this attribute.
+     * The default implementation checks that the type of the value matches one of the supported types.
+     * 
+     * @param newValue A potential value for this attribute
+     * @return true if the value is OK, false otherwise
+     */
+    public def boolean isSupportedType(Object newValue) {
+        if(name == "whitelist") {
+            println("hi")
+        }
+        if(supportedTypes.isNullOrEmpty) {
+            return true
+        }
+        var isOk = false
+        for(supportedType : supportedTypes) {
+            if(newValue.class.isAssignableFrom(supportedType)) {
+                isOk = true
+            }    
+        }
+        return isOk
     }
     
     /**

@@ -29,7 +29,7 @@ abstract class SimulationInputOutputFileHandlerBase extends DefaultSimulator {
      * The path can be an absolute file system path, or an absolute workspace path, or a project relative path.
      * If it is project relative, the file must be in the same project as the configuration file.
      */
-    public val filePath = new ConfigurableAttribute("file", null, true)
+    public val filePath = new ConfigurableAttribute("file", null, true, #[String])
     
     /**
      * Optional name of the model of which the variables should be set.

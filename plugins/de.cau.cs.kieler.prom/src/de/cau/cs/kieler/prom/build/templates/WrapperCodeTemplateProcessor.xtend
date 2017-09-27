@@ -35,7 +35,7 @@ class WrapperCodeTemplateProcessor extends TemplateProcessor {
     /**
      * The model path with annotations to create wrapper code.
      */
-    public val modelPath = new ConfigurableAttribute("modelFile")
+    public val modelPath = new ConfigurableAttribute("modelFile", null, #[String])
     
     /**
      * Constructor

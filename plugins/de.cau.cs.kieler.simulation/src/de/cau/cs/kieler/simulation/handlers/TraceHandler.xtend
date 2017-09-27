@@ -38,24 +38,24 @@ class TraceHandler extends DefaultDataHandler {
      * The path must be either an absolute path in the workspace (i.e. /Project/Some/Folders/MyFile.txt)
      * or a project relative path in the project of the currently running simulation configuration file.
      */
-    public val tracePath = new ConfigurableAttribute("file")
+    public val tracePath = new ConfigurableAttribute("file", null, #[String])
     /**
      * The name of the model of which the inputs should be set and outputs should be checked
      */
-    public val modelName = new ConfigurableAttribute("modelName")
+    public val modelName = new ConfigurableAttribute("modelName", null, #[String])
     /**
      * The number of the trace to use (in case there are multiple traces in the file) 
      */
-    public val traceNumber = new ConfigurableAttribute("traceNumber", 0)
+    public val traceNumber = new ConfigurableAttribute("traceNumber", 0, #[Integer])
     /**
      * The current tick of the loaded trace that is used
      */
-    public val tickNumber = new ConfigurableAttribute("tickNumber", 0)
+    public val tickNumber = new ConfigurableAttribute("tickNumber", 0, #[Integer])
     /**
      * Determines if the interface should be checked.
      * For instance an additional output can cause a trace mismatch if the interface is checked.
      */
-    public val checkInterface = new ConfigurableAttribute("checkInterface", true)
+    public val checkInterface = new ConfigurableAttribute("checkInterface", true, #[Boolean])
     
     /**
      * The operation that sets the inputs of the model to the inputs from the trace.

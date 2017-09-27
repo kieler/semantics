@@ -91,19 +91,19 @@ class SimulationManager extends Configurable {
      * If set to a value less than 0, the history is unbound.
      * 
      */
-    public val maxHistoryLength = new ConfigurableAttribute("historyLength", -1)
+    public val maxHistoryLength = new ConfigurableAttribute("historyLength", -1, #[Integer])
     
     /**
      * The name of an input variable in the data pool,
      * which should receive the current system time as value.
      */
-    public val currentTimeVariable = new ConfigurableAttribute("currentTimeVariable")
+    public val currentTimeVariable = new ConfigurableAttribute("currentTimeVariable", null, #[String])
     
     /**
      * The name of an output variable in the data pool,
      * that determines the next time the tick function should be called.
      */
-    public val nextTickTimeVariable = new ConfigurableAttribute("nextTickTimeVariable")
+    public val nextTickTimeVariable = new ConfigurableAttribute("nextTickTimeVariable",null, #[String])
     
     /**
      * The job that executes the step actions concurrently when playing.

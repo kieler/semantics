@@ -44,22 +44,22 @@ abstract class ModelCompiler extends Configurable {
      * Regex to filter models that should be compiled.
      * The regex is matched against the location of a model. If it does not match then it is not compiled.
      */
-    public val whitelist = new ConfigurableAttribute("whitelist", null)
+    public val whitelist = new ConfigurableAttribute("whitelist", null, #[String])
     /**
      * Regex to filter models that should be compiled
      * The regex is matched against the location of a model. If it does match then it is not compiled.
      */
-    public val blacklist = new ConfigurableAttribute("blacklist", null)
+    public val blacklist = new ConfigurableAttribute("blacklist", null, #[String])
     /**
      * The name of the folder in which the generated files are saved.
      * The folder structure of models is retained in this directory, except for a starting java source directory.
      */
-    public val outputFolder = new ConfigurableAttribute("outputFolder", "kieler-gen")
+    public val outputFolder = new ConfigurableAttribute("outputFolder", "kieler-gen", #[String])
     /**
      * The file extension of generated output.
      * Note that both '.c' and 'c' will be taken as '.c'
      */
-    public val outputFileExtension = new ConfigurableAttribute("outputFileExtension", ".c")
+    public val outputFileExtension = new ConfigurableAttribute("outputFileExtension", "c", #[String])
     
     /**
      * Optional progess monitor to show the compilation state to the end user.

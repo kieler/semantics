@@ -19,6 +19,7 @@ import de.cau.cs.kieler.simulation.core.Model
 import de.cau.cs.kieler.simulation.core.NDimensionalArray
 import de.cau.cs.kieler.simulation.core.Variable
 import java.util.Arrays
+import java.util.Map
 
 /**
  * Sets the value of input variables of one model (to)
@@ -32,17 +33,17 @@ class Redirect extends DefaultDataHandler {
     /**
      * The name of the model of which the outputs should be read.
      */
-    public val from = new ConfigurableAttribute("from", null, true)
+    public val from = new ConfigurableAttribute("from", null, true, #[String])
     /**
      * The name of the model of which the inputs should be set.
      */
-    public val to = new ConfigurableAttribute("to", null, true)
+    public val to = new ConfigurableAttribute("to", null, true, #[String])
     
     /**
      * Optional mapping of output variables to input variables, in case not all inputs should be set,
      * or to create a mapping without matching names of inputs and outputs.
      */
-    public val mapping = new ConfigurableAttribute("mapping")
+    public val mapping = new ConfigurableAttribute("mapping", null, #[Map])
     
     /**
      * The operation of this data handler
@@ -75,7 +76,7 @@ class Redirect extends DefaultDataHandler {
         // Read outputs and set corresponding inputs (corresponding here means "with same name") 
         for(i : inputs) {
             val o = outputs.findFirst[it.isMappingFor(i)]
-            if(i != null) {
+            if(i != null && o != null) {
                 if(i.value.class.isAssignableFrom(o.value.class)) {
                     if(i.value instanceof NDimensionalArray && o.value instanceof NDimensionalArray) {
                         val iIndices = (i.value as NDimensionalArray).getCardinalities

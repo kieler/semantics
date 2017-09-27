@@ -48,13 +48,13 @@ class SimulationTemplateProcessor extends TemplateProcessor {
     /**
      * The model file with the simulation interface.
      */
-    public val modelPath = new ConfigurableAttribute("modelFile")
+    public val modelPath = new ConfigurableAttribute("modelFile", null, #[String])
     
     /**
      * The location of the compiled model.
      * It is used for additional variable replacements in the template.
      */
-    public val compiledModelPath = new ConfigurableAttribute("compiledModelFile", "")
+    public val compiledModelPath = new ConfigurableAttribute("compiledModelFile", "", #[String])
     
     /**
      * Additional variables that should be included in the simulation generation.

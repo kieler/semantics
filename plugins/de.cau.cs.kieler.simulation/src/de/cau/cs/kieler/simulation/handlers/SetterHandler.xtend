@@ -15,6 +15,7 @@ package de.cau.cs.kieler.simulation.handlers
 import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.DataPoolOperation
+import java.util.Map
 
 /**
  * Sets variables in models to constant values.
@@ -28,7 +29,7 @@ class SetterHandler extends DefaultDataHandler {
      * Optional name of the model of which the variables should be set.
      * If no model is specified, the first matching variable is used.
      */
-    public val variablesMapping = new ConfigurableAttribute("variables")
+    public val variablesMapping = new ConfigurableAttribute("variables", null, #[Map])
     
     /**
      * The operation of this data handler

@@ -51,7 +51,7 @@ class ExecutableSimulator extends DefaultSimulator {
      * This can be an absolute file system path, an absolute path in the workspace
      * or a project relative path. For a project relative path, the configuration file must be in the same project as the executable. 
      */
-    public val executablePath = new ConfigurableAttribute("executable")
+    public val executablePath = new ConfigurableAttribute("executable", null, #[String])
     
     /**
      * Optional shell command that is executed to start the process.
@@ -59,7 +59,7 @@ class ExecutableSimulator extends DefaultSimulator {
      * However, this is available only for executables and jar files at the moment.
      * In other cases (e.g. to start a python script) the shell command must be specified here.
      */
-    public val shellCommand = new ConfigurableAttribute("command")
+    public val shellCommand = new ConfigurableAttribute("command", null, #[String])
     
     /**
      * The loaded file handle of the executable.
