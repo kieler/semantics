@@ -46,6 +46,8 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.StringInputStream
+import de.cau.cs.kieler.kicool.impl.KiCoolPackageImpl
+import de.cau.cs.kieler.kicool.compilation.CompilationSystem
 
 /**
  * Model compiler that uses KiCo.
@@ -63,12 +65,23 @@ class KiCoModelCompiler extends ModelCompiler {
      * The KiCo compilation system to compile the model.
      * This can either be an id of a system, or a file path to a kico file. 
      */
-    public val compilationSystem = new ConfigurableAttribute("compilationSystem", "de.cau.cs.kieler.sccharts.netlist.simple")
+    public val compilationSystem = new ConfigurableAttribute("compilationSystem", "de.cau.cs.kieler.sccharts.netlist.simple", #[String, List])
     
     /**
      * The model that is compiled
      */
     private var EObject model
+    /**
+     * The file of the model that is compiled
+     */
+    private var IFile file
+    
+    /**
+     * The result of the compilation
+     */
+    private var ModelCompilationResult compilationResult
+    
+    private var List<ValuedObject> registerVariables
     
     /**
      * {@inheritDoc}
@@ -77,55 +90,23 @@ class KiCoModelCompiler extends ModelCompiler {
         Assert.isNotNull(file)
         Assert.isNotNull(model)
         this.model = model
+        this.file = file
         
         // Prepare result
-        val result = new ModelCompilationResult()
-        // Compile with kico
-        val context = compileWithKiCo(model)
+        compilationResult = new ModelCompilationResult
+        registerVariables = newArrayList
         
-        // Check all intermediate results for errors and warnings
-        var boolean noIssues = true
-        var Processor<?,?> lastResult
-        var takenTransitionArraySize = 0
-        for (iResult : context.processorInstancesSequence) {
-            // For diagram highlighting:
-            // In case the taken transition signaling was used,
-            // the created array has to be added to the simulation interface as additional variable
-            if(takenTransitionArraySize <= 0) {
-                takenTransitionArraySize = iResult.environment.getProperty(TakenTransitionSignaling.ARRAY_SIZE)
-            }
-            
-            lastResult = iResult
-            val errors = iResult.environment.errors
-            val warnings = iResult.environment.warnings
-            // Add build problems to result
-            if(!errors.get(Environment.REPORT_ROOT).isNullOrEmpty) {
-                noIssues = false
-                var thrownError = errors.messages
-                if(thrownError.contains("The SCG is NOT asc-schedulable!")) {
-                    thrownError = "The SCG is NOT asc-schedulable!"
-                } 
-                val errorMessage = "Error in '"+iResult.id+"':\n"+thrownError
-                result.addProblem(BuildProblem.createError(file, errorMessage))
-            }
-            if(!warnings.get(Environment.REPORT_ROOT).isNullOrEmpty) {
-                noIssues = false
-                // Add build problem to result
-                val warningMessage = "Warning in '"+iResult.id+"':"+warnings.messages
-                result.addProblem(BuildProblem.createWarning(file, warningMessage))
-            }
-        }
-        // Get final result of compilation
-        val resultModel = lastResult.environment.getProperty(Environment.MODEL)
+        // Compile with kico
+        val resultModel = compileWithKiCo
         
         // Save result if no errors and warnings
-        if(noIssues) {
+        if(compilationResult.problems.isNullOrEmpty) {
             // Flush compilation result to target
             val targetFile = getTargetFile
             saveCompilationResult(resultModel, targetFile)
             
             // Add generated file to result
-            result.addCreatedFile(targetFile)
+            compilationResult.addCreatedFile(targetFile)
             
             // Create simulation code
             if(simulationProcessor != null) {
@@ -133,18 +114,19 @@ class KiCoModelCompiler extends ModelCompiler {
                 val additionalVariables = newHashMap
                 // For diagram highlighting:
                 // Add the taken transition array to the simulation interface
-                if(takenTransitionArraySize > 0) {
-                    additionalVariables.put("other", "_taken_transitions["+takenTransitionArraySize+"]")
-                }
+//                if(takenTransitionArraySize > 0) {
+//                    additionalVariables.put("other", "_taken_transitions["+takenTransitionArraySize+"]")
+//                }
                 // Get all variables that make up the current state of the model
                 // to add them to the simulation data pool.
                 // These are the variables in the model, as well as the PRE_XXX variables
-                val interfaceTypes = (simulationProcessor.interfaceTypes.value as List)
-                if(!interfaceTypes.isNullOrEmpty && interfaceTypes.contains("other")) {
-                    val registerVariables = context.getRegisterVariables
-                    additionalVariables.put("other", registerVariables.map[it.name])
+                if(!registerVariables.isNullOrEmpty) {
+                    val interfaceTypes = (simulationProcessor.interfaceTypes.value as List)
+                    if(!interfaceTypes.isNullOrEmpty && interfaceTypes.contains("other")) {
+                        additionalVariables.put("other", registerVariables.map[it.name])
+                    }
+                    simulationProcessor.additionalVariables.value = additionalVariables
                 }
-                simulationProcessor.additionalVariables.value = additionalVariables
                 
                 // Compute output file of simulation generation
                 var IPath simulationTargetFolder = new Path("")
@@ -162,11 +144,11 @@ class KiCoModelCompiler extends ModelCompiler {
                 simulationProcessor.project = file.project
                 simulationProcessor.model = model
                 // Run processor
-                result.simulationGenerationResult = simulationProcessor.process
+                compilationResult.simulationGenerationResult = simulationProcessor.process
             }    
         }
         
-        return result
+        return compilationResult
     }
     
     /**
@@ -242,34 +224,112 @@ class KiCoModelCompiler extends ModelCompiler {
      * 
      * @param model The model
      */
-    private def CompilationContext compileWithKiCo(EObject model) {
-        // Get the compilation system
-        val compilationSystemFile = project?.getFile(compilationSystem.stringValue)
+    private def Object compileWithKiCo() {
+        // Prepare systems from attribute
+        var List<String> systemPathsOrIds
+        if(compilationSystem.value instanceof String) {
+            systemPathsOrIds = #[compilationSystem.stringValue]
+        } else if(compilationSystem.value instanceof List) {
+            systemPathsOrIds = compilationSystem.listValue.map[it.toString]
+        }
+        // Compile the model using all given compilation systems.
+        var CompilationContext context
+        var Object nextModel = model
+        for(systemPathOrId : systemPathsOrIds) {
+            // Get the compilation system
+            val system = getCompilationSystem(systemPathOrId)
+            // Create the compilation context
+            context = Compile.createCompilationContext(system, nextModel)
+            context.startEnvironment.setProperty(Environment.INPLACE, true)
+            // Add observer to update the progress monitor
+            if(monitor != null) {
+                context.addObserver(new CompilationProgressObserver(monitor, compiledFile))
+            }
+            // Compile the model
+            context.compile
+            val lastResult = checkResults(context)
+            // Get final result model of compilation
+            nextModel = lastResult.environment.getProperty(Environment.MODEL)
+        }
+        return nextModel
+    }
+    
+    /**
+     * Checks the result of the compilation context (after it has been compiled) and adds problems to the result if any.
+     * 
+     * @param context The context that has been compiled
+     * @return the last processor that holds the resulting model
+     */
+    private def Processor<?,?> checkResults(CompilationContext context) {
+        // Check all intermediate results for errors and warnings
+        var Processor<?,?> lastResult
+        var takenTransitionArraySize = 0
+        for (iResult : context.processorInstancesSequence) {
+            lastResult = iResult
+            
+            // For diagram highlighting:
+            // In case the taken transition signaling was used,
+            // the created array has to be added to the simulation interface as additional variable
+            if(takenTransitionArraySize <= 0) {
+                takenTransitionArraySize = iResult.environment.getProperty(TakenTransitionSignaling.ARRAY_SIZE)
+            }
+            
+            // Check errors and warning
+            val errors = iResult.environment.errors
+            val warnings = iResult.environment.warnings
+            // Add build problems to result
+            if(!errors.get(Environment.REPORT_ROOT).isNullOrEmpty) {
+                var thrownError = errors.messages
+                if(thrownError.contains("The SCG is NOT asc-schedulable!")) {
+                    thrownError = "The SCG is NOT asc-schedulable!"
+                } 
+                val errorMessage = "Error in '"+iResult.id+"':\n"+thrownError
+                compilationResult.addProblem(BuildProblem.createError(file, errorMessage))
+            }
+            if(!warnings.get(Environment.REPORT_ROOT).isNullOrEmpty) {
+                // Add build problem to result
+                val warningMessage = "Warning in '"+iResult.id+"':"+warnings.messages
+                compilationResult.addProblem(BuildProblem.createWarning(file, warningMessage))
+            }
+            
+            // Get guard registers if any in this processor
+        }
+        return lastResult
+    }
+    
+    /**
+     * Loads a compilation system from an id or file path.
+     * 
+     * @param pathOrId The id of the system or a path to a file that contains a compilation system
+     * @return the loaded system
+     */
+    private def System getCompilationSystem(String pathOrId) {
         var System system
-        if(compilationSystemFile != null && compilationSystemFile.exists) {
+        val file = project?.getFile(pathOrId)
+        if(file != null && file.exists) {
             // Load from file
-            val systemModel = ModelImporter.load(compilationSystemFile)
+            val systemModel = ModelImporter.load(file)
             if(systemModel != null && systemModel instanceof System) {
                 system = systemModel as System
             } else {
-                throw new Exception("Compilation system could not be loaded from resource '"+compilationSystemFile+"'")
+                throw new Exception("Compilation system could not be loaded from resource '"+file+"'")
             }
         } else {
             // Load from system id
-            val compilationSystemID = compilationSystem.stringValue
-            system = KiCoolRegistration.getSystemById(compilationSystemID)
+            try {
+                val compilationSystemID = pathOrId
+                system = KiCoolRegistration.getSystemById(compilationSystemID)    
+            } catch (Exception e) {
+                val processor = KiCoolRegistration.getProcessorClass(pathOrId)
+                if(processor != null) {
+                    // The system with this id does not exist, so it is assumed to be the id of a processor
+                    system = CompilationSystem.createCompilationSystem(pathOrId+"."+system, #[pathOrId])    
+                } else { 
+                    throw new Exception("Neither a compilation system nor a processor could be created for the path or id '"+pathOrId+"'")
+                }
+            }
         }
-        // Create the compilation context
-        val context = Compile.createCompilationContext(system, model)
-        context.startEnvironment.setProperty(Environment.INPLACE, true)
-        // Add observer to update the progress monitor
-        if(monitor != null) {
-            context.addObserver(new CompilationProgressObserver(monitor, compiledFile))
-        }
-        // Compile the model
-        context.compile
-
-        return context
+        return system
     }
     
     /**
@@ -296,6 +356,9 @@ class KiCoModelCompiler extends ModelCompiler {
 
     /**
      * Saves the code to the given target file possibly using the output file template.
+     * 
+     * @param code The code
+     * @param targetFile The target file
      */
     private def void saveCode(String code, IFile targetFile) {
         // Save generated code to file, possibly using a target template

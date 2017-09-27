@@ -199,7 +199,7 @@ class ConfigurableAttribute {
         }
         var isOk = false
         for(supportedType : supportedTypes) {
-            if(newValue.class.isAssignableFrom(supportedType)) {
+            if(supportedType.isAssignableFrom(newValue.class)) {
                 isOk = true
             }    
         }
