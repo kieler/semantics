@@ -55,7 +55,7 @@ class KExtValidator extends AbstractKExtValidator {
     
     @Check
     public def void checkCheckAliasAnnotation(StringAnnotation stringAnnotation) {
-        if (!stringAnnotation.name.equals(CHECKALIAS_ANNOTATION_NAME)) { return; }
+        if (!CHECKALIAS_ANNOTATION_NAME.equals(stringAnnotation.name)) { return; }
         val parent = stringAnnotation.eContainer
         val VOs = <ValuedObject> newArrayList
         if (parent instanceof Assignment) {
