@@ -46,8 +46,15 @@ class SimpleTemplateProcessor extends TemplateProcessor {
         val targetFile = project.getFile(target.stringValue)
         
         // Process the template
-        val context = new TemplateContext(templateFile)
-        val generatedCode = TemplateManager.process(context)
+        context = new TemplateContext(templateFile)
+        // Notify listeners
+        for(l : listeners)
+            l.beforeProcessing(this)
+        // Process
+        generatedCode = TemplateManager.process(context)
+        // Notify listeners
+        for(l : listeners)
+            l.afterProcessing(this)
         
         // Save output
         val result = new FileGenerationResult

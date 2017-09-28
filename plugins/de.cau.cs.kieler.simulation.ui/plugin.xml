@@ -3,6 +3,12 @@
 <plugin>
    <extension-point id="simulationVisualizer" name="SimulationVisualizer" schema="schema/simulationVisualizer.exsd"/>
    <extension
+         point="de.cau.cs.kieler.simulation.ui.simulationVisualizer">
+         <simulationVisualizer
+            class="de.cau.cs.kieler.simulation.ui.RegisterVariablesFinder">
+         </simulationVisualizer>
+   </extension>
+   <extension
          point="org.eclipse.debug.ui.launchShortcuts">
       <shortcut
             class="de.cau.cs.kieler.simulation.ui.launch.SimulationLaunchShortcut"

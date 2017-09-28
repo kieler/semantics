@@ -15,6 +15,8 @@ package de.cau.cs.kieler.prom.build.templates
 import de.cau.cs.kieler.prom.build.FileGenerationResult
 import de.cau.cs.kieler.prom.configurable.Configurable
 import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
+import de.cau.cs.kieler.prom.templates.TemplateContext
+import de.cau.cs.kieler.prom.templates.TemplateManager
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -26,6 +28,11 @@ import org.eclipse.xtend.lib.annotations.Accessors
  *
  */
 abstract class TemplateProcessor extends Configurable {
+    /**
+     * The listeners
+     */
+    protected static val listeners = <TemplateProcessorListener> newArrayList
+    
     /**
      * The input template file. 
      */
@@ -48,11 +55,41 @@ abstract class TemplateProcessor extends Configurable {
     @Accessors
     protected IProject project
     
+    /**
+     * The context that is used for template processing
+     */
+    @Accessors
+    protected var TemplateContext context
+    
+    /**
+     * The generated code from template processing
+     */
+    @Accessors
+    protected var String generatedCode
     
     /**
      * The main method that takes care of actual processing of the input template.
      */
     abstract public def FileGenerationResult process()
+    
+    /**
+     * Adds the listener.
+     * 
+     * @param listener The listener
+     */
+    public static def void registerListener(TemplateProcessorListener listener) {
+        if(!listeners.contains(listener))
+            listeners.add(listener)
+    }
+    
+    /**
+     * Removes the listener.
+     * 
+     * @param listener The listener
+     */
+    public static def void removeListener(TemplateProcessorListener listener) {
+        listeners.remove(listener)
+    }
     
     /**
      * Constructor
@@ -70,4 +107,18 @@ abstract class TemplateProcessor extends Configurable {
     public def void initialize(de.cau.cs.kieler.prom.kibuild.TemplateProcessor config) {
         this.updateConfigurableAttributes(config.attributes)
     }
+    
+    /**
+     * Processes the template context and notifies listeners. 
+     */
+    protected def void processContext() {
+        // Notify listeners
+        for(l : listeners)
+            l.beforeProcessing(this)
+        // Process
+        generatedCode = TemplateManager.process(context)
+        // Notify listeners
+        for(l : listeners)
+            l.afterProcessing(this)
+    } 
 }

@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.prom.build.compilation
 
+import com.google.common.io.Files
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.build.DependencyGraph
@@ -21,14 +22,13 @@ import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
 import java.util.List
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
-import org.eclipse.core.resources.IResource
+import org.eclipse.core.runtime.Assert
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.JavaCore
 import org.eclipse.xtend.lib.annotations.Accessors
-import com.google.common.io.Files
 
 /**
  * Compiles a models (EObjects) to target code.
@@ -39,6 +39,10 @@ import com.google.common.io.Files
  *
  */
 abstract class ModelCompiler extends Configurable {
+    /**
+     * The listeners
+     */
+    protected static val listeners = <ModelCompilerListener> newArrayList
     
     /**
      * Regex to filter models that should be compiled.
@@ -93,9 +97,33 @@ abstract class ModelCompiler extends Configurable {
     abstract public def void updateDependencies(DependencyGraph dependencies, List<IFile> files, ResourceSet resourceSet)
     
     /**
+     * The model that is compiled
+     */
+    protected var EObject model
+    
+    /**
      * The file handle of the model that is compiled.
      */
-    protected var IFile compiledFile
+    protected var IFile file
+    
+    /**
+     * Adds the listener.
+     * 
+     * @param listener The listener
+     */
+    public static def void registerListener(ModelCompilerListener listener) {
+        if(!listeners.contains(listener))
+            listeners.add(listener)
+    }
+    
+    /**
+     * Removes the listener.
+     * 
+     * @param listener The listener
+     */
+    public static def void removeListener(ModelCompilerListener listener) {
+        listeners.remove(listener)
+    }
     
     /**
      * Constructor
@@ -114,8 +142,11 @@ abstract class ModelCompiler extends Configurable {
      * @return the compilation result
      */
     public def ModelCompilationResult compile(IFile file, EObject model) {
+        Assert.isNotNull(file)
+        Assert.isNotNull(model)
         // Remember the file that should be compiled
-        compiledFile = file
+        this.file = file
+        this.model = model
         
         // Check if the file is filtered by some regex
         val whiteListRegex = whitelist.stringValue
@@ -193,14 +224,14 @@ abstract class ModelCompiler extends Configurable {
      * 
      * @return the target file handle
      */
-    protected def IFile getTargetFile() {
+    protected def IFile computeTargetFile() {
         val targetBaseFolder = project.getFolder(outputFolder.stringValue)
         // Remove leading java source folder if any
-        var sourceWithoutJavaFolders = compiledFile
+        var sourceWithoutJavaFolders = file
         if(project instanceof IJavaProject) {
-            val firstFolderOfSource = compiledFile.projectRelativePath.segment(0)
+            val firstFolderOfSource = file.projectRelativePath.segment(0)
             if(PromPlugin.isJavaSourceDirectory(project as IJavaProject, firstFolderOfSource)) {
-                val projectRelativePathWithoutSourceFolder = compiledFile.projectRelativePath.removeFirstSegments(1)
+                val projectRelativePathWithoutSourceFolder = file.projectRelativePath.removeFirstSegments(1)
                 sourceWithoutJavaFolders = project.getFile(projectRelativePathWithoutSourceFolder)
             }
         }
@@ -231,6 +262,6 @@ abstract class ModelCompiler extends Configurable {
      * @return the project
      */
     protected def IProject getProject() {
-        return compiledFile?.project
+        return file?.project
     }
 }

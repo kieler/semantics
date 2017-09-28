@@ -13,9 +13,6 @@
 package de.cau.cs.kieler.prom.build.compilation
 
 import com.google.common.io.Files
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
@@ -31,9 +28,6 @@ import de.cau.cs.kieler.prom.build.DependencyGraph
 import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
 import de.cau.cs.kieler.prom.templates.TemplateContext
 import de.cau.cs.kieler.prom.templates.TemplateManager
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.iterators.StateIterator
-import de.cau.cs.kieler.sccharts.processors.transformators.TakenTransitionSignaling
 import de.cau.cs.kieler.scg.SCGraphs
 import java.io.IOException
 import java.io.PrintWriter
@@ -41,17 +35,14 @@ import java.io.StringWriter
 import java.util.Collections
 import java.util.List
 import org.eclipse.core.resources.IFile
-import org.eclipse.core.runtime.Assert
 import org.eclipse.core.runtime.IPath
 import org.eclipse.core.runtime.Path
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.StringInputStream
-import de.cau.cs.kieler.kexpressions.OperatorType
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.prom.templates.VariableInterfaceType
 
 /**
  * Model compiler that uses KiCo.
@@ -60,6 +51,7 @@ import de.cau.cs.kieler.prom.templates.VariableInterfaceType
  *
  */
 class KiCoModelCompiler extends ModelCompiler {
+    
     /**
      * Optional template file in that is used to surround the generated output.
      */
@@ -72,40 +64,43 @@ class KiCoModelCompiler extends ModelCompiler {
     public val compilationSystem = new ConfigurableAttribute("compilationSystem", "de.cau.cs.kieler.sccharts.netlist.simple", #[String, List])
     
     /**
-     * The model that is compiled
+     * The file in which the compilation result will be saved
      */
-    private var EObject model
-    /**
-     * The file of the model that is compiled
-     */
-    private var IFile file
+    @Accessors
+    private var IFile targetFile
     
     /**
      * The result of the compilation
      */
+    @Accessors
     private var ModelCompilationResult compilationResult
     
-    private var List<String> registerVariables
+    /** 
+     * The context that is used to compile models via kico.
+     */
+    @Accessors(PUBLIC_GETTER)
+    private CompilationContext context
+    
+    /**
+     * The result model of the compilation.
+     */
+    @Accessors(PUBLIC_GETTER)
+    private Object resultModel
     
     /**
      * {@inheritDoc}
      */
     override doCompile(IFile file, EObject model) {
-        Assert.isNotNull(file)
-        Assert.isNotNull(model)
-        this.model = model
-        this.file = file
-        
         // Prepare result
         compilationResult = new ModelCompilationResult
         
         // Compile with kico
-        val resultModel = compileWithKiCo
+        compileWithKiCo
         
         // Save result if no errors and warnings
         if(compilationResult.problems.isNullOrEmpty) {
             // Flush compilation result to target
-            val targetFile = getTargetFile
+            targetFile = computeTargetFile
             saveCompilationResult(resultModel, targetFile)
             
             // Add generated file to result
@@ -113,24 +108,6 @@ class KiCoModelCompiler extends ModelCompiler {
             
             // Create simulation code
             if(simulationProcessor != null) {
-                // Create additional variables for the simulation code generation
-                val additionalVariables = newHashMap
-                // For diagram highlighting:
-                // Add the taken transition array to the simulation interface
-//                if(takenTransitionArraySize > 0) {
-//                    additionalVariables.put(VariableInterfaceType.INTERNAL.name, "_taken_transitions["+takenTransitionArraySize+"]")
-//                }
-                // Get all variables that make up the current state of the model
-                // to add them to the simulation data pool.
-                // These are the variables in the model, as well as the PRE_XXX variables
-                if(!registerVariables.isNullOrEmpty) {
-                    val interfaceTypes = (simulationProcessor.interfaceTypes.value as List)
-//                    if(!interfaceTypes.isNullOrEmpty && interfaceTypes.contains(VariableInterfaceType.OTHER.name)) {
-                        additionalVariables.put("other", registerVariables)
-//                    }
-                    simulationProcessor.additionalVariables.value = additionalVariables
-                }
-                
                 // Compute output file of simulation generation
                 var IPath simulationTargetFolder = new Path("")
                 if(!outputFolder.stringValue.isNullOrEmpty) {
@@ -158,28 +135,7 @@ class KiCoModelCompiler extends ModelCompiler {
      * {@inheritDoc}
      */
     override updateDependencies(DependencyGraph dependencies, List<IFile> files, ResourceSet resourceSet) {
-        for(f : files) {
-            if(f.fileExtension.equalsIgnoreCase("sct")) {
-                val node = dependencies.getOrCreate(f)
-                // Remove old dependencies
-                node.removeAllDependencies()
-                // Add new dependencies
-                val model = ModelImporter.getEObject(f, resourceSet)
-                if(model instanceof State && model != null) {
-                    val state = model as State
-                    val iter = StateIterator.sccAllStates(state)
-                    while(iter.hasNext) {
-                        val s = iter.next
-                        if(s.reference != null && s.reference.scope != null) {
-                            val refResource = s.reference.scope.eResource
-                            val refFile = ModelImporter.toPlatformResource(refResource)
-                            val refNode = dependencies.getOrCreate(refFile)
-                            node.addDependency(refNode)
-                        }
-                    }
-                }
-            }
-        }
+        
     }
     
     /**
@@ -212,60 +168,14 @@ class KiCoModelCompiler extends ModelCompiler {
     }
     
     /**
-     * Returns the variables that have been generated to save the current state of the model.
-     * 
-     * @param scGraphs The SCGraphs
-     * @return the names of variables that save the state of the model
-     */
-    private def void updateRegisterVariables(SCGraphs scGraphs) {
-        registerVariables = newArrayList
-        if(scGraphs == null) {
-            return
-        }
-        for(scg : scGraphs.scgs) {
-            for(node : scg.nodes) {
-                if(node instanceof Assignment) {
-                    val exp = node.expression
-                    if(exp != null && exp instanceof OperatorExpression) {
-                        val opExp = exp as OperatorExpression
-                        if(opExp.operator == OperatorType.PRE) {
-                            
-                            for(subExp : opExp.subExpressions) {
-                                if(subExp instanceof ValuedObjectReference) {
-                                    val operand = subExp.valuedObject.name
-//                                    println(node.valuedObject.name + " = " + opExp.operator+"("+operand+")")
-                                    val registerVariable = getRegisterVariable(operand)
-                                    if(registerVariable != null) {
-                                        registerVariables.add(registerVariable)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    /**
-     * Returns the name of the register variable that is created for the given operand in a pre statement of an SCG.
-     * 
-     * @param preOperand The operand of a pre statement (for instance '_g3' in the statement 'pre(_g3)' )
-     * @return the name of the variable that is generated in the code generation for the pre statement. 
-     */
-    private def String getRegisterVariable(String preOperand) {
-        if(preOperand.startsWith("_g")) {
-            return "_pg"+preOperand.substring(2)
-        }
-        return null
-    }
-    
-    /**
      * Compiles the model.
      * 
      * @param model The model
      */
-    private def Object compileWithKiCo() {
+    private def void compileWithKiCo() {
+        // Notify listeners
+        for(l : listeners)
+            l.beforeCompilation(this)
         // Prepare systems from attribute
         var List<String> systemPathsOrIds
         if(compilationSystem.value instanceof String) {
@@ -274,23 +184,40 @@ class KiCoModelCompiler extends ModelCompiler {
             systemPathsOrIds = compilationSystem.listValue.map[it.toString]
         }
         // Compile the model using all given compilation systems.
-        var CompilationContext context
-        var Object nextModel = model
+        resultModel = model
         for(systemPathOrId : systemPathsOrIds) {
             // Get the compilation system
             val system = getCompilationSystem(systemPathOrId)
             // Create the compilation context
-            context = Compile.createCompilationContext(system, nextModel)
+            context = Compile.createCompilationContext(system, resultModel)
             context.startEnvironment.setProperty(Environment.INPLACE, true)
             // Add observer to update the progress monitor
             if(monitor != null) {
-                context.addObserver(new CompilationProgressObserver(monitor, compiledFile))
+                context.addObserver(new CompilationProgressObserver(monitor, file))
             }
             // Compile the model
-            context.compile
-            nextModel = checkResults(context)
-        } 
-        return nextModel
+            compileContext
+        }
+        // Notify listeners
+        for(l : listeners)
+            l.afterCompilation(this)
+    }
+    
+    /**
+     * Compiles the context for kico compilation.
+     * 
+     * @return The result of the compilation 
+     */
+    private def void compileContext() {
+        // Notify listeners
+        for(l : listeners)
+            l.beforeIntermediateCompilation(this)
+        // Compile and check results
+        context.compile
+        resultModel = checkResults(context)
+        // Notify listeners
+        for(l : listeners)
+            l.afterIntermediateCompilation(this)
     }
     
     /**
@@ -303,15 +230,7 @@ class KiCoModelCompiler extends ModelCompiler {
         // Check all intermediate results for errors and warnings
         var Object resultModel
         var SCGraphs lastSCGraphs
-        var takenTransitionArraySize = 0
         for (iResult : context.processorInstancesSequence) {
-            // For diagram highlighting:
-            // In case the taken transition signaling was used,
-            // the created array has to be added to the simulation interface as additional variable
-            if(takenTransitionArraySize <= 0) {
-                takenTransitionArraySize = iResult.environment.getProperty(TakenTransitionSignaling.ARRAY_SIZE)
-            }
-            
             // Check errors and warning
             val errors = iResult.environment.errors
             val warnings = iResult.environment.warnings
@@ -330,13 +249,11 @@ class KiCoModelCompiler extends ModelCompiler {
                 compilationResult.addProblem(BuildProblem.createWarning(file, warningMessage))
             }
             
-            // Get guard registers if any in this processor
             resultModel = iResult.environment.getProperty(Environment.MODEL)
             if(resultModel instanceof SCGraphs) {
                 lastSCGraphs = resultModel
             }
         }
-        updateRegisterVariables(lastSCGraphs)
         return resultModel
     }
     
@@ -414,7 +331,7 @@ class KiCoModelCompiler extends ModelCompiler {
             // Inject compilation result into target template
             var modelName = TemplateManager.getModelName(model)
             if(modelName == null) {
-                modelName = Files.getNameWithoutExtension(compiledFile.name)
+                modelName = Files.getNameWithoutExtension(file.name)
             }
             val templateFile = project.getFile(resolvedTargetTemplate)
             val context = new TemplateContext(templateFile)

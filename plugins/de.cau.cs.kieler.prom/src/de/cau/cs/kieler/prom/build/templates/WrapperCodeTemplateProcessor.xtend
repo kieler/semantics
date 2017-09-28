@@ -12,17 +12,15 @@
  */
 package de.cau.cs.kieler.prom.build.templates
 
+import com.google.common.base.Strings
 import com.google.common.io.Files
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.build.BuildProblem
 import de.cau.cs.kieler.prom.build.FileGenerationResult
 import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
-import de.cau.cs.kieler.prom.templates.TemplateManager
 import de.cau.cs.kieler.prom.templates.TemplateContext
-import com.google.common.base.Strings
-import java.io.File
-import java.nio.file.Paths
+import de.cau.cs.kieler.prom.templates.TemplateManager
 
 /**
  * Template processor that injects additional macro calls into the template before it is processed.
@@ -51,6 +49,9 @@ class WrapperCodeTemplateProcessor extends TemplateProcessor {
         if(monitor != null) {
             monitor.subTask("Processing wrapper code template '"+template.stringValue+"'")
         }
+        // Notify listeners
+        for(l : listeners)
+            l.beforeProcessing(this)
         // Prepare result
         val result = new FileGenerationResult
         // Get file handles
@@ -71,13 +72,17 @@ class WrapperCodeTemplateProcessor extends TemplateProcessor {
         if(modelName == null) {
             modelName = Files.getNameWithoutExtension(modelFile.name)
         }
-        val context = new TemplateContext(templateFile)
+        context = new TemplateContext(templateFile)
         context.additionalMappings = #{TemplateManager.MODEL_NAME_VARIABLE -> Strings.nullToEmpty(modelName)}
         context.macroCallDatas = macroCallDatas
-        val wrapperCode = TemplateManager.process(context)
+        // Process the context and notify listeners
+        generatedCode = TemplateManager.process(context)
+        // Notify listeners
+        for(l : listeners)
+            l.afterProcessing(this)
         
         // Save output
-        PromPlugin.createResource(targetFile, wrapperCode, true)
+        PromPlugin.createResource(targetFile, generatedCode, true)
         result.addCreatedFile(targetFile)
         return result
     }

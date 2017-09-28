@@ -24,7 +24,6 @@ import org.eclipse.core.resources.IFile
  *
  */
 abstract class SimulationCompilerListener {
-    
     /**
      * Fired before the given executable file is deleted to be replaced by a new one.
      */  

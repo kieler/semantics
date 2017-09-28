@@ -15,6 +15,12 @@ package de.cau.cs.kieler.sccharts.prom
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KForeground
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
+import de.cau.cs.kieler.prom.build.PromBuildAdapter
+import de.cau.cs.kieler.prom.build.compilation.KiCoModelCompiler
+import de.cau.cs.kieler.prom.build.compilation.ModelCompiler
+import de.cau.cs.kieler.prom.build.templates.SimulationTemplateProcessor
+import de.cau.cs.kieler.prom.build.templates.TemplateProcessor
+import de.cau.cs.kieler.prom.templates.VariableInterfaceType
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
@@ -23,9 +29,9 @@ import de.cau.cs.kieler.sccharts.iterators.StateIterator
 import de.cau.cs.kieler.sccharts.processors.transformators.TakenTransitionSignaling
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.NDimensionalArray
+import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.ui.highlighting.DiagramHighlighter
 import java.util.List
-import de.cau.cs.kieler.simulation.core.SimulationManager
 
 /**
  * Highlighter for SCCharts diagrams.
@@ -75,6 +81,58 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
      * The highlighting style for current states
      */
     private static val KForeground currentStateStyle = createCurrentStateStyle
+
+    /**
+     * The size of the taken transitions signaling array.
+     */
+    private var takenTransitionArraySize = 0
+
+    /**
+     * The model compilation and template processing listener
+     * that adds the internal variable for the taken transition signaling, which is created during compilation.
+     */
+    private val buildListener = new PromBuildAdapter() {
+        /**
+         * Add the taken transition array to the simulation interface.
+         * 
+         * @param processor The potential simulation template processor
+         */
+        override beforeProcessing(TemplateProcessor processor) {
+            if(takenTransitionArraySize > 0) {
+                if(processor instanceof SimulationTemplateProcessor) {
+                    // Add the variables to the simulation template processor
+                    if(processor.additionalVariables.value == null) {
+                        processor.additionalVariables.value = newHashMap
+                    }
+                    processor.additionalVariables.mapValue.put(VariableInterfaceType.INTERNAL.name, "_taken_transitions["+takenTransitionArraySize+"]")    
+                }
+            }
+        }
+        
+        /**
+         * Resets the taken transition array size.
+         */
+        override beforeCompilation(ModelCompiler compiler) {
+            takenTransitionArraySize = 0
+        }
+        
+        /**
+         * Searches for register variables in the compilation result of the context.
+         * 
+         * @param compiler The potential KiCoModelCompiler
+         */
+        override afterIntermediateCompilation(ModelCompiler compiler) {
+            if(compiler instanceof KiCoModelCompiler) {
+                for (iResult : compiler.context.processorInstancesSequence) {
+                    // In case the taken transition signaling was used,
+                    // the created array has to be added to the simulation interface as additional variable
+                    if(takenTransitionArraySize <= 0) {
+                        takenTransitionArraySize = iResult.environment.getProperty(TakenTransitionSignaling.ARRAY_SIZE)
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * Constructor

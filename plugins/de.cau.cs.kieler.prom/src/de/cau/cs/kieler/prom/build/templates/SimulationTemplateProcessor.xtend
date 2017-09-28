@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.prom.build.templates
 
 import com.google.common.base.Strings
+import com.google.common.io.Files
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.build.FileGenerationResult
@@ -29,7 +30,6 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.Assert
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
-import com.google.common.io.Files
 
 /**
  * Template processor that injects additional macro calls into the template before it is processed.
@@ -39,7 +39,6 @@ import com.google.common.io.Files
  *
  */
 class SimulationTemplateProcessor extends TemplateProcessor {
-    
     /**
      * The default variable type for additional variables.
      */
@@ -81,7 +80,7 @@ class SimulationTemplateProcessor extends TemplateProcessor {
     public val interfaceTypes = new ConfigurableAttribute("interfaceTypes", null, #[String, List])
     
     /**
-     * 
+     * The model of which the simulation interface is used.
      */
     @Accessors
     private var EObject model
@@ -102,6 +101,10 @@ class SimulationTemplateProcessor extends TemplateProcessor {
         if(monitor != null) {
             monitor.subTask("Processing simulation template '"+template.stringValue+"'")
         }
+        // Notify listeners
+        for(l : listeners)
+            l.beforeProcessing(this)
+            
         // Get file handles
         val templateFile = project.getFile(template.stringValue)
         val targetFile = project.getFile(target.stringValue)
@@ -153,16 +156,19 @@ class SimulationTemplateProcessor extends TemplateProcessor {
         if(modelName == null) {
             modelName = Files.getNameWithoutExtension(modelFile.name)
         }
-        val context = new TemplateContext(templateFile)
+        context = new TemplateContext(templateFile)
         context.additionalMappings = #{"compiled_model_loc" -> compiledModelFileLocation,
                                        TemplateManager.MODEL_NAME_VARIABLE -> Strings.nullToEmpty(modelName)}
-                                       
         context.macroCallDatas = macroCallDatas
-        val wrapperCode = TemplateManager.process(context)
+        // Process
+        generatedCode = TemplateManager.process(context)
+        // Notify listeners
+        for(l : listeners)
+            l.afterProcessing(this)
         
         // Save output
         val result = new FileGenerationResult
-        PromPlugin.createResource(targetFile, wrapperCode, true)
+        PromPlugin.createResource(targetFile, generatedCode, true)
         result.addCreatedFile(targetFile)
         return result
     }
@@ -266,4 +272,8 @@ class SimulationTemplateProcessor extends TemplateProcessor {
         }
         return false
     }
+    
+    /**
+     * 
+     */
 }
