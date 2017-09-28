@@ -95,7 +95,7 @@ class PromEnvironmentsInitializer extends AbstractPreferenceInitializer implemen
      * Creates a default environment for general projects.
      * @return the created environment
      */
-    private static def EnvironmentData getGenericEnvironment() {
+    public static def EnvironmentData getGenericEnvironment() {
         val simTemplateFile = new FileData("assets/CSimulation.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/CSimulation.ftl") 
         val simTemplateSnippet = new FileData("assets/CSimulationSnippets.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/CSimulationSnippets.ftl")
         val buildConfigFile = new FileData("assets/BuildConfig.kibuild", "platform:/plugin/de.cau.cs.kieler.prom/resources/default.kibuild")
@@ -112,7 +112,7 @@ class PromEnvironmentsInitializer extends AbstractPreferenceInitializer implemen
      * Creates a default environment for Java projects.
      * @return the created environment
      */
-    private static def EnvironmentData getGenericJavaEnvironment() {
+    public static def EnvironmentData getGenericJavaEnvironment() {
         val targetTemplateFile = new FileData("assets/OutputTemplate.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/java/OutputTemplate.ftl")
         val simTemplateFile = new FileData("assets/JavaSimulation.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/java/JavaSimulation.ftl") 
         val simTemplateSnippet = new FileData("assets/JavaSimulationSnippets.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/java/JavaSimulationSnippets.ftl")
@@ -130,7 +130,7 @@ class PromEnvironmentsInitializer extends AbstractPreferenceInitializer implemen
      * Creates a default environment for CDT projects.
      * @return the created environment
      */
-    private static def EnvironmentData getGenericCEnvironment() {
+    public static def EnvironmentData getGenericCEnvironment() {
         val env = getGenericEnvironment
         env.name = "Generic C"
         env.associatedProjectWizardClass = "org.eclipse.cdt.ui.wizards.CProjectWizard"

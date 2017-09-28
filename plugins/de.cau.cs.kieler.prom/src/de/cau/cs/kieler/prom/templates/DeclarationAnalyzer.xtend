@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.EObject
  * @author aas
  *
  */
-abstract class DeclarationAnalyzer implements ModelAnalyzer {
+abstract class DeclarationAnalyzer extends ModelAnalyzer {
     
     private static val EXPLICIT_WRAPPER_CODE_ANNOTATION_NAME = "Wrapper"
     

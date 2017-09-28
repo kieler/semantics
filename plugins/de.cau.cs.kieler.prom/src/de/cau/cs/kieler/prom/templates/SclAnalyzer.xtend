@@ -14,6 +14,7 @@ package de.cau.cs.kieler.prom.templates
 
 import de.cau.cs.kieler.scl.SCLProgram
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.prom.FileExtensions
 
 /**
  * @author aas
@@ -42,5 +43,26 @@ class SclAnalyzer extends DeclarationAnalyzer {
                 return module.name    
             }
         }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override getSupportedFileExtensions() {
+        return #[FileExtensions.SCL]
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override getSupportedModelTypes() {
+        return #[SCLProgram]
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override protected getDefaultSimulationFrontend() {
+        return "de.cau.cs.kieler.scl.processors.transformators.scl2scg"
     }
 }

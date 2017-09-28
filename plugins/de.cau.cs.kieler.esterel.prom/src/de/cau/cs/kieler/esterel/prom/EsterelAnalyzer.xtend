@@ -23,12 +23,13 @@ import java.util.List
 import java.util.regex.Pattern
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.prom.FileExtensions
 
 /** 
  * An analyzer for wrapper code annotations in Esterel files.
  * @author aas
  */
-class EsterelAnalyzer implements ModelAnalyzer {
+class EsterelAnalyzer extends ModelAnalyzer {
     
     /**
      * {@inheritDoc}
@@ -40,11 +41,38 @@ class EsterelAnalyzer implements ModelAnalyzer {
             }
         }
     }
-    
+    /**
+     * {@inheritDoc}
+     */
     override getSimulationInterface(EObject model) {
         return null
     }
     
+    /**
+     * {@inheritDoc}
+     */
+    override getSupportedFileExtensions() {
+        return #[FileExtensions.ESTEREL]
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override getSupportedModelTypes() {
+        return #[EsterelProgram]
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override protected getDefaultSimulationFrontend() {
+        // TODO: Add a compile chain that compiles strl files to scgs
+        return ""
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
     override getAnnotationInterface(EObject model) {
         // At the moment there are no annotations for inputs/outputs in the esterel grammar.
         // So instead we parse the text file manually and search for special comments.

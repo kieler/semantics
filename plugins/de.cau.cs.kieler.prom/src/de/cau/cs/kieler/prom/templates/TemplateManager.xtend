@@ -53,16 +53,6 @@ class TemplateManager {
     public static val KICO_GENERATED_CODE_VARIABLE = "kico_code"
     
     /**
-     * The id of the extension point for wrapper code annotation analyzers.
-     */
-    private static val MODEL_ANALYZER_EXTENSION_POINT_ID = "de.cau.cs.kieler.prom.modelAnalyzer"
-
-    /**
-     * List with all wrapper code annotation analyzers loaded from extensions.
-     */
-    private static var List<ModelAnalyzer> modelAnalyzers
-    
-    /**
      * Macro definitions to use <@init>, <@input>, <@output> in wrapper code snippets.
      */
     private static var String macroDefinitions = null
@@ -315,9 +305,8 @@ class TemplateManager {
         val allDatas = <MacroCallData> newArrayList
         // Load EObject from file
         if (model != null) {
-            initAnalyzers()
             // Analyze the model with all wrapper code annotation analyzers
-            for (analyzer : TemplateManager.modelAnalyzers) {
+            for (analyzer : ModelAnalyzer.analyzers) {
                 val datas = analyzer.getAnnotationInterface(model)
                 if (datas != null) {
                     allDatas.addAll(datas)    
@@ -338,9 +327,8 @@ class TemplateManager {
         val allDatas = <MacroCallData> newArrayList
         // Load EObject from file
         if (model != null) {
-            initAnalyzers()
             // Analyze the model with all wrapper code annotation analyzers
-            for (analyzer : TemplateManager.modelAnalyzers) {
+            for (analyzer : ModelAnalyzer.analyzers) {
                 val datas = analyzer.getSimulationInterface(model)
                 if (!datas.isNullOrEmpty) {
                     allDatas.addAll(datas)    
@@ -360,37 +348,12 @@ class TemplateManager {
     public static def String getModelName(EObject model) {
         // Load EObject from file
         if (model != null) {
-            initAnalyzers()
             // Analyze the model with all wrapper code annotation analyzers
-            for (analyzer : TemplateManager.modelAnalyzers) {
+            for (analyzer : ModelAnalyzer.analyzers) {
                 val modelName = analyzer.getModelName(model)
                 if(modelName != null) {
                     return modelName
                 }
-            }
-        }
-    }
-    
-    /**
-     * Load and initialize wrapper code annotation analyzers from all implementing extensions
-     * if not yet done.
-     */
-    private static def void initAnalyzers(){
-        if(TemplateManager.modelAnalyzers == null){
-            // Initialize list
-            TemplateManager.modelAnalyzers = newArrayList()
-            
-            // Fill list with wrapper code annotation analyzers from extensions.
-            val config = Platform.getExtensionRegistry().getConfigurationElementsFor(TemplateManager.MODEL_ANALYZER_EXTENSION_POINT_ID);
-            try {
-                for (IConfigurationElement e : config) {
-                    val o = e.createExecutableExtension("class");
-                    if (o instanceof ModelAnalyzer) {
-                        TemplateManager.modelAnalyzers += o
-                    }
-                }
-            } catch (CoreException ex) {
-                System.err.println(ex.getMessage());
             }
         }
     }

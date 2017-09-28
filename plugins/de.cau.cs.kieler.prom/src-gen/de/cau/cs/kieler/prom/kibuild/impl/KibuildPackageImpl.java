@@ -2,6 +2,13 @@
  */
 package de.cau.cs.kieler.prom.kibuild.impl;
 
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.impl.EPackageImpl;
+
 import de.cau.cs.kieler.prom.kibuild.AttributeMapping;
 import de.cau.cs.kieler.prom.kibuild.BuildConfiguration;
 import de.cau.cs.kieler.prom.kibuild.KibuildFactory;
@@ -17,14 +24,6 @@ import de.cau.cs.kieler.prom.kibuild.SimulationTemplateProcessor;
 import de.cau.cs.kieler.prom.kibuild.TemplateProcessor;
 import de.cau.cs.kieler.prom.kibuild.TextValue;
 import de.cau.cs.kieler.prom.kibuild.WrapperCodeTemplateProcessor;
-
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EEnum;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
-
-import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * <!-- begin-user-doc -->

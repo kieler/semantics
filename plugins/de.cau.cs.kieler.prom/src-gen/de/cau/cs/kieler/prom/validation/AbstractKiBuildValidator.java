@@ -5,6 +5,7 @@ package de.cau.cs.kieler.prom.validation;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.eclipse.emf.ecore.EPackage;
 
 public class AbstractKiBuildValidator extends de.cau.cs.kieler.kexpressions.validation.KExpressionsValidator {

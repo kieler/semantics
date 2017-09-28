@@ -264,6 +264,7 @@ class KiCoModelCompiler extends ModelCompiler {
      * @return the loaded system
      */
     private def System getCompilationSystem(String pathOrId) {
+        val trimmedPathOrId = pathOrId.replaceAll("\\s", "")
         var System system
         val file = project?.getFile(pathOrId)
         if(file != null && file.exists) {
@@ -277,15 +278,14 @@ class KiCoModelCompiler extends ModelCompiler {
         } else {
             // Load from system id
             try {
-                val compilationSystemID = pathOrId
-                system = KiCoolRegistration.getSystemById(compilationSystemID)    
+                system = KiCoolRegistration.getSystemById(trimmedPathOrId)    
             } catch (Exception e) {
-                val processor = KiCoolRegistration.getProcessorClass(pathOrId)
+                val processor = KiCoolRegistration.getProcessorClass(trimmedPathOrId)
                 if(processor != null) {
                     // The system with this id does not exist, so it is assumed to be the id of a processor
-                    system = CompilationSystem.createCompilationSystem(pathOrId+"."+system, #[pathOrId])    
+                    system = CompilationSystem.createCompilationSystem(trimmedPathOrId+"."+system, #[trimmedPathOrId])    
                 } else { 
-                    throw new Exception("Neither a compilation system nor a processor could be created for the path or id '"+pathOrId+"'")
+                    throw new Exception("Neither a compilation system nor a processor could be created for the path or id '"+trimmedPathOrId+"'")
                 }
             }
         }

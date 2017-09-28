@@ -33,6 +33,7 @@ import org.eclipse.jface.wizard.Wizard
 import org.eclipse.jface.wizard.WizardDialog
 import org.eclipse.ui.INewWizard
 import org.eclipse.ui.IWorkbench
+import de.cau.cs.kieler.prom.configurable.ResourceSubstitution
 
 /**
  * Wizard implementation, which creates a project
@@ -174,7 +175,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
      * 
      * @return true if the creation ended sucessfully. false otherwise.
      */
-    protected def boolean createModelFile(){
+    protected def boolean createModelFile() {
         // If the file should not be created, we are done immediately
         if(!mainPage.isCreateModelFile)
             return true
@@ -182,20 +183,19 @@ class PromProjectWizard extends Wizard implements INewWizard {
         // Load path of model file
         val modelFilePath = getModelFilePath()
         val modelFilePathWithoutExtension = new Path(modelFilePath).removeFileExtension
-        val modelFileNameWithoutExtension = modelFilePathWithoutExtension.lastSegment
- 
+        val projectRelativePath = modelFilePathWithoutExtension + modelFileExtension
         try {
-            // Open initial content stream
-            var InputStream initialContentStream = null
-            if(!modelFileInitialContentURL.isNullOrEmpty()){
-                initialContentStream = PromPlugin.getInputStream(modelFileInitialContentURL, #{"${name}" -> modelFileNameWithoutExtension})
+            val fileSubstitution = new ResourceSubstitution("file") {
+                override getValue() {
+                    return newlyCreatedProject.getFile(modelFilePath)
+                }
             }
-            
             // Create file
-            val fileHandle = newlyCreatedProject.getFile(modelFilePathWithoutExtension + modelFileExtension)
-            PromPlugin.createResource(fileHandle, initialContentStream)
-            UIUtil.openFileInEditor(fileHandle)
-
+            val file = PromPlugin.initializeFile(newlyCreatedProject,
+                                                 projectRelativePath,
+                                                 modelFileInitialContentURL,
+                                                 fileSubstitution.variableMappings)
+            UIUtil.openFileInEditor(file)
             return true
             
         } catch (Exception e) {
@@ -217,58 +217,16 @@ class PromProjectWizard extends Wizard implements INewWizard {
             return true
         
         val env = mainPage.selectedEnvironment
-        for(data : env.initialResources) {
-            var resolvedProjectRelativePath = data.projectRelativePath
-            try {
-                if(!data.projectRelativePath.trim.isNullOrEmpty) {
-                    try {
-                        resolvedProjectRelativePath = PromPlugin.performStringSubstitution(data.projectRelativePath.trim, newlyCreatedProject)
-                    } catch (CoreException ce) {
-                        MessageDialog.openError(shell, "Error", ce.message)
-                        return false
-                    }
-                    val path = new Path(resolvedProjectRelativePath)
-                    val isFile = (path.fileExtension != null)
-                    
-                    if(isFile) {
-                        // Setup placeholders
-                        // Load path of model file
-                        val modelFilePath = getModelFilePath()
-                        val modelFilePathWithoutExtension = new Path(modelFilePath).removeFileExtension
-                        val modelFileNameWithoutExtension = modelFilePathWithoutExtension.lastSegment
-                        val placeholderReplacements = #{"${project_name}" -> newlyCreatedProject.name,
-                                                        "${model_name}" -> modelFileNameWithoutExtension}
-                        // Create file
-                        PromPlugin.initializeFile(newlyCreatedProject, resolvedProjectRelativePath,
-                                                  data.origin, placeholderReplacements)
-                        
-                        // Remember kibuild file in project preferences
-                        if(Files.getFileExtension(resolvedProjectRelativePath) == "kibuild") {
-                            newlyCreatedProject.setPersistentProperty(PromPlugin.BUILD_CONFIGURATION_QUALIFIER,
-                                                                      resolvedProjectRelativePath)
-                        }
-                    } else {
-                        // Create folder
-                        PromPlugin.initializeFolder(newlyCreatedProject, resolvedProjectRelativePath, data.origin)
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace()                
-                
-                var msg = "Could not initialize '" + resolvedProjectRelativePath +"'\n" 
-                    + "with '" + data.origin + "'.\n"
-                    + "Please make sure that all paths are valid."
-                
-                // Log error
-                val bundle = Platform.getBundle(PromPlugin.PLUGIN_ID)
-                val log = Platform.getLog(bundle)
-                log.log(new Status(Status.ERROR, PromPlugin.PLUGIN_ID, msg, e))
-                
-                // Open dialog
-                MessageDialog.openError(shell, "Error", msg)
-                
-                return false
-            }
+        try {
+            env.createInitialResources(newlyCreatedProject)
+        } catch (Exception e) {
+            // Log error
+            val bundle = Platform.getBundle(PromPlugin.PLUGIN_ID)
+            val log = Platform.getLog(bundle)
+            log.log(new Status(Status.ERROR, PromPlugin.PLUGIN_ID, e.message, e))
+            // Open dialog
+            MessageDialog.openError(shell, "Error", e.message)
+            return false
         }
         return true
     }

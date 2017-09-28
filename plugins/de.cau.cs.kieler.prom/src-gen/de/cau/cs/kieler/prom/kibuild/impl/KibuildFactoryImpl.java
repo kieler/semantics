@@ -2,16 +2,28 @@
  */
 package de.cau.cs.kieler.prom.kibuild.impl;
 
-import de.cau.cs.kieler.prom.kibuild.*;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+
+import de.cau.cs.kieler.prom.kibuild.AttributeMapping;
+import de.cau.cs.kieler.prom.kibuild.BuildConfiguration;
+import de.cau.cs.kieler.prom.kibuild.KibuildFactory;
+import de.cau.cs.kieler.prom.kibuild.KibuildPackage;
+import de.cau.cs.kieler.prom.kibuild.Literal;
+import de.cau.cs.kieler.prom.kibuild.ModelCompiler;
+import de.cau.cs.kieler.prom.kibuild.NormalTemplateProcessor;
+import de.cau.cs.kieler.prom.kibuild.Sign;
+import de.cau.cs.kieler.prom.kibuild.SignedFloat;
+import de.cau.cs.kieler.prom.kibuild.SignedInt;
+import de.cau.cs.kieler.prom.kibuild.SimulationCompiler;
+import de.cau.cs.kieler.prom.kibuild.SimulationTemplateProcessor;
+import de.cau.cs.kieler.prom.kibuild.TemplateProcessor;
+import de.cau.cs.kieler.prom.kibuild.TextValue;
+import de.cau.cs.kieler.prom.kibuild.WrapperCodeTemplateProcessor;
 
 /**
  * <!-- begin-user-doc -->

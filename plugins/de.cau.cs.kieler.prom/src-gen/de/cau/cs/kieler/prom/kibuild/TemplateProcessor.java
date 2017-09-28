@@ -3,7 +3,6 @@
 package de.cau.cs.kieler.prom.kibuild;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**

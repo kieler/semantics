@@ -13,7 +13,15 @@
  */
 package de.cau.cs.kieler.prom.data
 
+import com.google.common.io.Files
+import de.cau.cs.kieler.prom.PromPlugin
 import java.util.List
+import org.eclipse.core.resources.IProject
+import org.eclipse.core.runtime.CoreException
+import org.eclipse.core.runtime.Path
+import org.eclipse.core.runtime.Platform
+import org.eclipse.core.runtime.Status
+import org.eclipse.jface.dialogs.MessageDialog
 import org.eclipse.jface.preference.IPreferenceStore
 import org.eclipse.xtend.lib.annotations.Accessors
 
@@ -123,6 +131,44 @@ class EnvironmentData extends ConfigurationSerializable {
             var env = new EnvironmentData(environmentName)
             env.loadFromPreferenceStore(store)
             return env
+        }
+    }
+    
+    public def void createInitialResources(IProject project) {
+        for(data : initialResources) {
+            var resolvedProjectRelativePath = data.projectRelativePath
+            try {
+                if(!data.projectRelativePath.trim.isNullOrEmpty) {
+                    resolvedProjectRelativePath = PromPlugin.performStringSubstitution(data.projectRelativePath.trim, project)
+                    
+                    val path = new Path(resolvedProjectRelativePath)
+                    val isFile = (path.fileExtension != null)
+                    
+                    if(isFile) {
+                        // Setup placeholders
+                        // Load path of model file
+                        val modelFilePathWithoutExtension = new Path(modelFile).removeFileExtension
+                        val modelFileNameWithoutExtension = modelFilePathWithoutExtension.lastSegment
+                        val placeholderReplacements = #{"${project_name}" -> project.name,
+                                                        "${model_name}" -> modelFileNameWithoutExtension}
+                        // Create file
+                        PromPlugin.initializeFile(project, resolvedProjectRelativePath,
+                                                  data.origin, placeholderReplacements)
+                        
+                        // Remember kibuild file in project preferences
+                        if(Files.getFileExtension(resolvedProjectRelativePath) == "kibuild") {
+                            project.setPersistentProperty(PromPlugin.BUILD_CONFIGURATION_QUALIFIER, resolvedProjectRelativePath)
+                        }
+                    } else {
+                        // Create folder
+                        PromPlugin.initializeFolder(project, resolvedProjectRelativePath, data.origin)
+                    }
+                }    
+            } catch (Exception e) {
+                throw new Exception("Could not initialize '" + resolvedProjectRelativePath +"'\n" 
+                                  + "with '" + data.origin + "'.\n"
+                                  + "Please make sure that all paths are valid.", e)
+            }
         }
     }
 }

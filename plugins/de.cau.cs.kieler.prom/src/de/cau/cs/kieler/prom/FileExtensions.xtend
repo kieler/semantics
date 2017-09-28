@@ -15,6 +15,7 @@ package de.cau.cs.kieler.prom
 import java.util.List
 import org.eclipse.core.resources.IFile
 import java.io.File
+import de.cau.cs.kieler.prom.templates.ModelAnalyzer
 
 /**
  * Central place to register and categorize file extensions within the KIELER semantics universe.
@@ -50,6 +51,10 @@ class FileExtensions {
     public static val TEMPLATES = #[FREEMARKER_TEMPLATE]
     
     public static val JAVA_ARCHIVE = "jar"
+    
+    // Executables for the simulation
+    public static val EXE = "exe"
+    public static val EXECUTABLES = #[EXE, JAVA_ARCHIVE]
     
     /**
      * Checks if the given extension of the given file matches the allowed extension.
@@ -89,6 +94,10 @@ class FileExtensions {
         if(file == null || !file.exists) {
             return false
         }
+        if(matches(file, EXECUTABLES)) {
+            return true
+        }
+        // Check if the OS can execute the file
         val jFile = new File(file.location.toOSString)
         try {
             return jFile.canExecute
@@ -125,7 +134,7 @@ class FileExtensions {
      * @return true if it is a model file, false otherwise.
      */
     public static def boolean isModel(IFile file) {
-        return matches(file, MODELS)
+        return ModelAnalyzer.analyzers.exists[it.isSupported(file)]
     }
     
     /**
