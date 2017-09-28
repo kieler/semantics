@@ -320,13 +320,25 @@ class SCLSemanticSequencer extends AbstractSCLSemanticSequencer {
         }        
         
         if (!semanticObject.statements.nullOrEmpty) {
-            for (idxStm : semanticObject.statements.indexed) {
-                switch (idxStm.value) {
-                    Label,
-                    Conditional,
-                    ScopeStatement: feeder.accept(g.statementsMetaStatementParserRuleCall_1_0_3_1_0, idxStm.value, idxStm.key)
-                    case idxStm.key == semanticObject.statements.size - 1: feeder.accept(g.statementsStatementParserRuleCall_1_0_4_0, idxStm.value, idxStm.key)
-                    default: feeder.accept(g.statementsInstructionStatementParserRuleCall_1_0_3_0_0_0, idxStm.value, idxStm.key)
+            if (!semanticObject.declarations.empty){
+                for (idxStm : semanticObject.statements.indexed) {
+                    switch (idxStm.value) {
+                        Label,
+                        Conditional,
+                        ScopeStatement: feeder.accept(g.statementsMetaStatementParserRuleCall_1_0_3_1_0, idxStm.value, idxStm.key)
+                        case idxStm.key == semanticObject.statements.size - 1: feeder.accept(g.statementsStatementParserRuleCall_1_0_4_0, idxStm.value, idxStm.key)
+                        default: feeder.accept(g.statementsInstructionStatementParserRuleCall_1_0_3_0_0_0, idxStm.value, idxStm.key)
+                    }
+                }
+            } else {
+                for (idxStm : semanticObject.statements.indexed) {
+                    switch (idxStm.value) {
+                        Label,
+                        Conditional,
+                        ScopeStatement: feeder.accept(g.statementsMetaStatementParserRuleCall_1_1_0_1_0, idxStm.value, idxStm.key)
+                        case idxStm.key == semanticObject.statements.size - 1: feeder.accept(g.statementsStatementParserRuleCall_1_1_1_0, idxStm.value, idxStm.key)
+                        default: feeder.accept(g.statementsInstructionStatementParserRuleCall_1_1_0_0_0_0, idxStm.value, idxStm.key)
+                    }
                 }
             }
         }
