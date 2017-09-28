@@ -42,6 +42,7 @@ import de.cau.cs.kieler.kicool.ui.view.actions.SkinSelectionActions
 import com.google.inject.Inject
 import com.google.inject.Injector
 import de.cau.cs.kieler.kicool.ui.view.actions.CompileInplaceToggle
+import java.util.List
 
 /**
  * The IMB Compiler View
@@ -51,6 +52,8 @@ import de.cau.cs.kieler.kicool.ui.view.actions.CompileInplaceToggle
  * @kieler.rating 2016-11-04 proposed yellow 
  */
 class CompilerView extends DiagramViewPart {
+    
+    @Accessors private static val List<CompilerView> VIEWS = newLinkedList
     
     @Accessors private CompilerViewPartListener partListener
     @Accessors private IMemento memento
@@ -85,7 +88,16 @@ class CompilerView extends DiagramViewPart {
         addButtons()
 
         partListener = new CompilerViewPartListener(this, parent)
+        VIEWS.add(this)
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override dispose() {    
+        VIEWS.remove(this)
+    }
+    
     
     /* Workaround for the creation order of the DiagramViewPart */
     protected override addButtons() {
@@ -156,7 +168,7 @@ class CompilerView extends DiagramViewPart {
     }
     
     def void updateView() {
-        if (editPartSystemManager.activeSystem == null) return
+        if (editPartSystemManager.activeSystemId == null) return
         
         val properties = new KlighdSynthesisProperties
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,

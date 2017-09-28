@@ -55,9 +55,9 @@ class SystemSelectionManager implements SelectionListener {
         
         override protected int computeWidth(Control control) {
             // This is only performed once
-            updateSystemList(false)
+            updateSystemList(false, false)
             val width = super.computeWidth(control)
-            updateSystemList(true)
+            updateSystemList(true, false)
             return width
         }
 
@@ -73,10 +73,10 @@ class SystemSelectionManager implements SelectionListener {
     }
 
     def updateSystemList() {  
-        updateSystemList(true)
+        updateSystemList(true, false)
     }
     
-    private def updateSystemList(boolean filter) {
+    private def updateSystemList(boolean filter, boolean updateView) {
         if (combo == null || combo.disposed) return;
         combo.removeAll
         index.clear
@@ -110,17 +110,17 @@ class SystemSelectionManager implements SelectionListener {
         }
         
         // Previously selected
-        val activeSystem = view.editPartSystemManager.activeSystem
-        if (activeSystem !== null && index.contains(activeSystem.id)) {
-            defaultIndex = index.indexOf(activeSystem.id)
+        val activeSystem = view.editPartSystemManager.activeSystemId
+        if (activeSystem !== null && index.contains(activeSystem)) {
+            defaultIndex = index.indexOf(activeSystem)
         } else {
-            view.editPartSystemManager.activeSystem = KiCoolRegistration.getSystemById(index.get(defaultIndex))
+            view.editPartSystemManager.activeSystem = index.get(defaultIndex)
         }
 
         combo.setTextLimit(36)
         combo.select(defaultIndex)
         combo.pack()
-        view.updateToolbar()
+        if (updateView) view.updateToolbar() // Prevent infinite invocation loops
     }
     
     private def hasInput(System sys, Class<?> modelClass) {
@@ -168,7 +168,7 @@ class SystemSelectionManager implements SelectionListener {
         if (combo.selectionIndex != -1) {
             val id = index.get(combo.selectionIndex)
             if (!id.nullOrEmpty) {
-                view.editPartSystemManager.setActiveSystem(KiCoolRegistration.getSystemById(id))
+                view.editPartSystemManager.setActiveSystem(id)
                 view.updateView
             }
         }

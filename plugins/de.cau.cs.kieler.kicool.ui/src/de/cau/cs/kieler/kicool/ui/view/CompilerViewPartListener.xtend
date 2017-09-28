@@ -66,9 +66,9 @@ class CompilerViewPartListener implements IPartListener2 {
         if (partRef == null) return
         val part = partRef.getPart(true)
         if (part instanceof EditorPart) {
-            view.editPartSystemManager.removeSystem(part)
+            // view.editPartSystemManager.removeSystem(part)
             view.editPartSystemManager.removeAttachedContextFromEditor(part)
-        } 
+        }
     }
     
     override partDeactivated(IWorkbenchPartReference partRef) {

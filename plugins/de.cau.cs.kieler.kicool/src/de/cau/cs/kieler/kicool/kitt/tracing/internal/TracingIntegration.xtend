@@ -65,7 +65,7 @@ public class TracingIntegration extends IntermediateProcessor<EObject, EObject> 
         checkNotNull(Tracing)
         
         if (environment.getProperty(PROCESSOR_INSTANCE) instanceof Traceable) {
-            tracing.startTransformationTracing(getModel, environment.getProperty(Environment.INPLACE))
+            tracing.startTransformationTracing(getModel, null, environment.getProperty(PROCESSOR_INSTANCE).id, environment.getProperty(Environment.INPLACE))
         } else {
             environment.warnings.add("This processor does not support tracing. Resulting tracing chain may be incomplete!")
         }
@@ -89,7 +89,7 @@ public class TracingIntegration extends IntermediateProcessor<EObject, EObject> 
         val tracing = environment.getProperty(Tracing.TRACING_DATA)
         checkNotNull(Tracing)
         
-        tracing.startTransformationTracing(model, false)
+        tracing.startTransformationTracing(model, null, "copy", false)
         val EObject copy = TransformationTracing.tracedCopy(model)
         tracing.finishTransformationTracing(model, copy)
         
@@ -102,7 +102,7 @@ public class TracingIntegration extends IntermediateProcessor<EObject, EObject> 
         val tracing = environment.getProperty(Tracing.TRACING_DATA)
         checkNotNull(Tracing)
         
-        tracing.startTransformationTracing(model, false)
+        tracing.startTransformationTracing(model, null, "copy environment", false)
         val copy = TransformationTracing.tracedCopyAndReturnCopier(model)
         tracing.finishTransformationTracing(model, copy.first)
         
