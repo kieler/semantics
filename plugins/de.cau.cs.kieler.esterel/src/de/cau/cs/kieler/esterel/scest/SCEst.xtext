@@ -58,7 +58,7 @@ EsterelThread returns scl::Statement:
 // -------------------------------------
 Assignment returns scl::Assignment:
     SCL::Assignment | // SCL is allowed again
-    valuedObject=[Variable|ID] ":=" expression=Expression;
+    reference=VariableReference ":=" expression=Expression;
       
 /* ###################################################
  * ###                   SCEst                     ###

@@ -135,7 +135,6 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         isInited = true;
 
         // Initialize simple dependencies
-        AnnotationsPackage.eINSTANCE.eClass();
         KExpressionsPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
@@ -176,7 +175,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getAssignment_ValuedObject() {
+    public EReference getAssignment_Reference() {
         return (EReference)assignmentEClass.getEStructuralFeatures().get(0);
     }
 
@@ -194,17 +193,8 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getAssignment_Indices() {
-        return (EReference)assignmentEClass.getEStructuralFeatures().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EAttribute getAssignment_Operator() {
-        return (EAttribute)assignmentEClass.getEStructuralFeatures().get(3);
+        return (EAttribute)assignmentEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -213,7 +203,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * @generated
      */
     public EReference getAssignment_SubReference() {
-        return (EReference)assignmentEClass.getEStructuralFeatures().get(4);
+        return (EReference)assignmentEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -230,7 +220,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getEmission_ValuedObject() {
+    public EReference getEmission_Reference() {
         return (EReference)emissionEClass.getEStructuralFeatures().get(0);
     }
 
@@ -319,14 +309,13 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         effectEClass = createEClass(EFFECT);
 
         assignmentEClass = createEClass(ASSIGNMENT);
-        createEReference(assignmentEClass, ASSIGNMENT__VALUED_OBJECT);
+        createEReference(assignmentEClass, ASSIGNMENT__REFERENCE);
         createEReference(assignmentEClass, ASSIGNMENT__EXPRESSION);
-        createEReference(assignmentEClass, ASSIGNMENT__INDICES);
         createEAttribute(assignmentEClass, ASSIGNMENT__OPERATOR);
         createEReference(assignmentEClass, ASSIGNMENT__SUB_REFERENCE);
 
         emissionEClass = createEClass(EMISSION);
-        createEReference(emissionEClass, EMISSION__VALUED_OBJECT);
+        createEReference(emissionEClass, EMISSION__REFERENCE);
         createEReference(emissionEClass, EMISSION__NEW_VALUE);
 
         hostcodeEffectEClass = createEClass(HOSTCODE_EFFECT);
@@ -390,14 +379,13 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         initEClass(effectEClass, Effect.class, "Effect", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(assignmentEClass, Assignment.class, "Assignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getAssignment_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getAssignment_Reference(), theKExpressionsPackage.getValuedObjectReference(), null, "reference", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getAssignment_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getAssignment_Indices(), theKExpressionsPackage.getExpression(), null, "indices", null, 0, -1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getAssignment_Operator(), this.getAssignOperator(), "operator", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getAssignment_SubReference(), theKExpressionsPackage.getValuedObjectReference(), null, "subReference", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(emissionEClass, Emission.class, "Emission", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getEmission_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 1, 1, Emission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getEmission_Reference(), theKExpressionsPackage.getValuedObjectReference(), null, "reference", null, 1, 1, Emission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getEmission_NewValue(), theKExpressionsPackage.getExpression(), null, "newValue", null, 0, 1, Emission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(hostcodeEffectEClass, HostcodeEffect.class, "HostcodeEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

@@ -47,6 +47,7 @@ import de.cau.cs.kieler.kexpressions.OperatorType
 import java.util.HashMap
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * @author ssm
@@ -62,6 +63,7 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> {
     @Inject extension KExpressionsDeclarationExtensions       
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsComplexCreateExtensions 
+    @Inject extension KEffectsExtensions
     @Inject extension AnnotationsExtensions    
     
     /** Name of the term signal. */

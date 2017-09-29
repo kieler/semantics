@@ -66,6 +66,7 @@ import org.eclipse.elk.core.options.SizeConstraint
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 import de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * Visualizes the dataflow between SCChart regions.
@@ -87,6 +88,7 @@ class InducedDataflowHook extends SynthesisHook {
     @Inject extension KPolylineExtensions
     @Inject extension KNodeExtensions
     @Inject extension KContainerRenderingExtensions
+    @Inject extension KEffectsExtensions
 
     /** Action ID */
     public static final String ID = "de.cau.cs.kieler.sccharts.ui.synthesis.hooks.InducedDataflowHook";

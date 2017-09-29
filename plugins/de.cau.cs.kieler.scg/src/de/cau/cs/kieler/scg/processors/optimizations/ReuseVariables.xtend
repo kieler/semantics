@@ -36,8 +36,13 @@ import de.cau.cs.kieler.scg.impl.ConditionalImpl
 import de.cau.cs.kieler.kexpressions.impl.ValuedObjectImpl
 import de.cau.cs.kieler.kexpressions.Declaration
 import java.util.Map.Entry
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 class ReuseVariables {
+    
+    @Inject extension KEffectsExtensions    
+    
     ArrayList<Node> visited = new ArrayList() 
     Iterable<AssignmentImpl> assignments;
     private static final val MAX_SEARCH_DEPTH = 100 // maximum search depth for next pointer search

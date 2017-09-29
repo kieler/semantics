@@ -40,15 +40,15 @@ class KEffectsSerializeHRExtensions extends KEffectsSerializeExtensions {
     }
     
     def dispatch CharSequence serializeHR(Emission emission) {
-        val objectContainer = emission.valuedObject.eContainer
+        val objectContainer = emission.reference.eContainer
         if (objectContainer instanceof VariableDeclaration) {
             if (objectContainer.type != ValueType::PURE) {
-                return (emission.valuedObject.name + "(" + emission.newValue.serializeHR + ")")             
+                return (emission.reference.valuedObject.name + "(" + emission.newValue.serializeHR + ")")             
             } else {
-                return emission.valuedObject.name
+                return emission.reference.valuedObject.name
             }
         } else {
-            return emission.valuedObject.name
+            return emission.reference.valuedObject.name
         }
     }
     

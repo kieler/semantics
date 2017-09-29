@@ -26,6 +26,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensio
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.scg.Fork
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -76,6 +77,8 @@ class HybridSynchronizer extends AbstractSynchronizer {
     
     @Inject
     extension KExpressionsComplexCreateExtensions 
+    
+    @Inject extension KEffectsExtensions
 	
     // -------------------------------------------------------------------------
     // -- Constants

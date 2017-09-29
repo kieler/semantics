@@ -37,6 +37,7 @@ import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpres
 import java.util.List
 import java.util.Map
 import java.util.Set
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -111,6 +112,8 @@ class GuardSchedulerV2 extends AbstractScheduler implements Traceable {
 
     @Inject
     extension KExpressionsValuedObjectExtensions
+    
+    @Inject extension KEffectsExtensions
 
     // -------------------------------------------------------------------------
     // -- Globals 

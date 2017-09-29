@@ -139,16 +139,8 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 		else if (epackage == KEffectsPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case KEffectsPackage.ASSIGNMENT:
-				if (rule == grammarAccess.getEffectRule()
-						|| rule == grammarAccess.getPostfixEffectRule()) {
-					sequence_PostfixEffect(context, (Assignment) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getSubReferenceAssignmentRule()) {
-					sequence_SubReferenceAssignment(context, (Assignment) semanticObject); 
-					return; 
-				}
-				else break;
+				sequence_PostfixEffect(context, (Assignment) semanticObject); 
+				return; 
 			case KEffectsPackage.EMISSION:
 				sequence_Emission(context, (Emission) semanticObject); 
 				return; 
@@ -810,14 +802,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *     Effect returns Assignment
 	 *
 	 * Constraint:
-	 *     (
-	 *         annotations+=Annotation* 
-	 *         valuedObject=[ValuedObject|ID] 
-	 *         indices+=Expression* 
-	 *         operator=AssignOperator 
-	 *         expression=Expression 
-	 *         schedule+=ScheduleObjectReference*
-	 *     )
+	 *     (annotations+=Annotation* reference=ValuedObjectReference operator=AssignOperator expression=Expression schedule+=ScheduleObjectReference*)
 	 */
 	protected void sequence_Assignment(ISerializationContext context, de.cau.cs.kieler.scl.Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

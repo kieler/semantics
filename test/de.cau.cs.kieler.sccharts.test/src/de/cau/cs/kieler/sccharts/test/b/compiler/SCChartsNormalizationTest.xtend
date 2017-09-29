@@ -125,7 +125,7 @@ class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<SCChart
         for (iResult : result.processorInstancesSequence) {
             val name = "intermediate result of transformation " + iResult.id
             
-            assertNotNull("The %s is null".format(name), iResult.model)
+            assertNotNull("The %s is null".format(name), iResult.targetModel)
             assertTrue("The %s is not an SCChart".format(name), iResult.model instanceof SCCharts)
 
             try {

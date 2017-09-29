@@ -33,6 +33,7 @@ import java.util.HashMap
 import java.util.LinkedList
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * @author fry
@@ -65,8 +66,8 @@ class SSA_SCG2CircuitTransformation {// extends AbstractProductionTransformation
 	// --                             INJECTIONS                              --
 	// -------------------------------------------------------------------------
 	
-	@Inject
-	extension KEffectsSerializeExtensions
+	@Inject extension KEffectsSerializeExtensions
+	@Inject extension KEffectsExtensions
 
 	@Inject
 	LinkCreator linkCreator

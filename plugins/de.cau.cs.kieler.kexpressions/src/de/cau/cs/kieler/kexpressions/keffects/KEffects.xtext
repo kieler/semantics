@@ -55,7 +55,7 @@ Effect returns keffects::Effect:
 // annotations defined in the annotations grammar.		
 Emission returns keffects::Emission:
     (annotations+=QuotedStringAnnotation)*    
-	valuedObject=[kexpressions::ValuedObject|PrimeID] ( "(" newValue = Expression ")" )?
+	reference=ValuedObjectReference ( "(" newValue = Expression ")" )?
 	('schedule' schedule+=ScheduleObjectReference+)?;
 
 // Assignment Rule
@@ -65,18 +65,15 @@ Emission returns keffects::Emission:
 // Example: A = true, I[0] = I[1], I += 1     
 Assignment returns keffects::Assignment:
     (annotations+=Annotation)*    
-	valuedObject=[kexpressions::ValuedObject|PrimeID]
-	('[' indices+=Expression ']')*
+	reference=ValuedObjectReference
 	 operator=AssignOperator expression = Expression
 	 ('schedule' schedule+=ScheduleObjectReference+)?;
 	 
-SubReferenceAssignment returns keffects::Assignment:
-    (annotations+=Annotation)*    
-    valuedObject=[kexpressions::ValuedObject|PrimeID]
-    ('[' indices+=Expression ']')*
-    ('.' subReference=ValuedObjectReference)?
-     operator=AssignOperator expression = Expression
-     ('schedule' schedule+=ScheduleObjectReference+)?;	 
+//SubReferenceAssignment returns keffects::Assignment:
+//    (annotations+=Annotation)*    
+//    valuedObject=ValuedObjectReference
+//     operator=AssignOperator expression = Expression
+//     ('schedule' schedule+=ScheduleObjectReference+)?;	 
 	 
 // Postfix Effect
 // A postfix effect is an assignment missing the part beyond the operator. In this case the operator type
@@ -84,8 +81,7 @@ SubReferenceAssignment returns keffects::Assignment:
 // Example: I++, I-- 
 PostfixEffect returns keffects::Assignment:
     (annotations+=Annotation)*    
-    valuedObject=[kexpressions::ValuedObject|PrimeID]
-    ('[' indices+=Expression ']')*
+    reference=ValuedObjectReference
      operator=PostfixOperator
      ('schedule' schedule+=ScheduleObjectReference+)?;
 

@@ -43,11 +43,12 @@ import de.cau.cs.kieler.kexpressions.Declaration
 import java.util.HashMap
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 class CopyPropagation {
     // Inject from SCGDeclarations
-    @Inject 
-    extension SCGDeclarationExtensions
+    @Inject extension KEffectsExtensions
+    @Inject extension SCGDeclarationExtensions
     // Set Feature ID
     def getProducedFeatureId() {
         return OptimizerFeatures::CP_ID

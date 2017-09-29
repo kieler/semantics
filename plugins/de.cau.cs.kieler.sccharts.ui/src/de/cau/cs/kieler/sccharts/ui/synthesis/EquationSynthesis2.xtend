@@ -61,6 +61,7 @@ import de.cau.cs.kieler.klighd.kgraph.KPort
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier
 import org.eclipse.elk.core.math.ElkPadding
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * @author ssm
@@ -81,6 +82,7 @@ class EquationSynthesis2 extends SubSynthesis<Assignment, KNode> {
     @Inject extension DataflowRegionSynthesis
     @Inject extension SCChartsSynthesis
     @Inject extension KRenderingExtensions
+    @Inject extension KEffectsExtensions
     @Inject IResourceServiceProvider.Registry regXtext;    
     
     

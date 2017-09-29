@@ -64,6 +64,7 @@ import org.eclipse.elk.core.math.ElkPadding
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.KlighdConstants
 import org.eclipse.xtext.xbase.lib.Functions.Function1
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * @author ssm
@@ -89,6 +90,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject extension DataflowRegionSynthesis
     @Inject extension SCChartsSynthesis
     @Inject extension KRenderingExtensions
+    @Inject extension KEffectsExtensions
     @Inject IResourceServiceProvider.Registry regXtext;
     
     private val PORT_LABEL_FONT_SIZE = 6

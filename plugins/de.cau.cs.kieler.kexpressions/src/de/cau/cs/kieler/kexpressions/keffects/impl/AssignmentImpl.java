@@ -7,8 +7,6 @@ import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
-import de.cau.cs.kieler.kexpressions.ValuedObject;
-
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator;
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
@@ -38,9 +36,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.AssignmentImpl#getSchedule <em>Schedule</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.AssignmentImpl#getValuedObject <em>Valued Object</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.AssignmentImpl#getReference <em>Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.AssignmentImpl#getExpression <em>Expression</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.AssignmentImpl#getIndices <em>Indices</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.AssignmentImpl#getOperator <em>Operator</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.AssignmentImpl#getSubReference <em>Sub Reference</em>}</li>
  * </ul>
@@ -59,14 +56,14 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
     protected EList<ScheduleObjectReference> schedule;
 
     /**
-     * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
+     * The cached value of the '{@link #getReference() <em>Reference</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getValuedObject()
+     * @see #getReference()
      * @generated
      * @ordered
      */
-    protected ValuedObject valuedObject;
+    protected ValuedObjectReference reference;
 
     /**
      * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
@@ -77,16 +74,6 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
      * @ordered
      */
     protected Expression expression;
-
-    /**
-     * The cached value of the '{@link #getIndices() <em>Indices</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getIndices()
-     * @generated
-     * @ordered
-     */
-    protected EList<Expression> indices;
 
     /**
      * The default value of the '{@link #getOperator() <em>Operator</em>}' attribute.
@@ -154,16 +141,23 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
-    public ValuedObject getValuedObject() {
-        if (valuedObject != null && valuedObject.eIsProxy()) {
-            InternalEObject oldValuedObject = (InternalEObject)valuedObject;
-            valuedObject = (ValuedObject)eResolveProxy(oldValuedObject);
-            if (valuedObject != oldValuedObject) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, KEffectsPackage.ASSIGNMENT__VALUED_OBJECT, oldValuedObject, valuedObject));
-            }
+    public ValuedObjectReference getReference() {
+        return reference;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetReference(ValuedObjectReference newReference, NotificationChain msgs) {
+        ValuedObjectReference oldReference = reference;
+        reference = newReference;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KEffectsPackage.ASSIGNMENT__REFERENCE, oldReference, newReference);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
         }
-        return valuedObject;
+        return msgs;
     }
 
     /**
@@ -171,20 +165,18 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
-    public ValuedObject basicGetValuedObject() {
-        return valuedObject;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setValuedObject(ValuedObject newValuedObject) {
-        ValuedObject oldValuedObject = valuedObject;
-        valuedObject = newValuedObject;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KEffectsPackage.ASSIGNMENT__VALUED_OBJECT, oldValuedObject, valuedObject));
+    public void setReference(ValuedObjectReference newReference) {
+        if (newReference != reference) {
+            NotificationChain msgs = null;
+            if (reference != null)
+                msgs = ((InternalEObject)reference).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KEffectsPackage.ASSIGNMENT__REFERENCE, null, msgs);
+            if (newReference != null)
+                msgs = ((InternalEObject)newReference).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KEffectsPackage.ASSIGNMENT__REFERENCE, null, msgs);
+            msgs = basicSetReference(newReference, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KEffectsPackage.ASSIGNMENT__REFERENCE, newReference, newReference));
     }
 
     /**
@@ -228,18 +220,6 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
         }
         else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, KEffectsPackage.ASSIGNMENT__EXPRESSION, newExpression, newExpression));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EList<Expression> getIndices() {
-        if (indices == null) {
-            indices = new EObjectContainmentEList<Expression>(Expression.class, this, KEffectsPackage.ASSIGNMENT__INDICES);
-        }
-        return indices;
     }
 
     /**
@@ -316,10 +296,10 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
         switch (featureID) {
             case KEffectsPackage.ASSIGNMENT__SCHEDULE:
                 return ((InternalEList<?>)getSchedule()).basicRemove(otherEnd, msgs);
+            case KEffectsPackage.ASSIGNMENT__REFERENCE:
+                return basicSetReference(null, msgs);
             case KEffectsPackage.ASSIGNMENT__EXPRESSION:
                 return basicSetExpression(null, msgs);
-            case KEffectsPackage.ASSIGNMENT__INDICES:
-                return ((InternalEList<?>)getIndices()).basicRemove(otherEnd, msgs);
             case KEffectsPackage.ASSIGNMENT__SUB_REFERENCE:
                 return basicSetSubReference(null, msgs);
         }
@@ -336,13 +316,10 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
         switch (featureID) {
             case KEffectsPackage.ASSIGNMENT__SCHEDULE:
                 return getSchedule();
-            case KEffectsPackage.ASSIGNMENT__VALUED_OBJECT:
-                if (resolve) return getValuedObject();
-                return basicGetValuedObject();
+            case KEffectsPackage.ASSIGNMENT__REFERENCE:
+                return getReference();
             case KEffectsPackage.ASSIGNMENT__EXPRESSION:
                 return getExpression();
-            case KEffectsPackage.ASSIGNMENT__INDICES:
-                return getIndices();
             case KEffectsPackage.ASSIGNMENT__OPERATOR:
                 return getOperator();
             case KEffectsPackage.ASSIGNMENT__SUB_REFERENCE:
@@ -364,15 +341,11 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
                 getSchedule().clear();
                 getSchedule().addAll((Collection<? extends ScheduleObjectReference>)newValue);
                 return;
-            case KEffectsPackage.ASSIGNMENT__VALUED_OBJECT:
-                setValuedObject((ValuedObject)newValue);
+            case KEffectsPackage.ASSIGNMENT__REFERENCE:
+                setReference((ValuedObjectReference)newValue);
                 return;
             case KEffectsPackage.ASSIGNMENT__EXPRESSION:
                 setExpression((Expression)newValue);
-                return;
-            case KEffectsPackage.ASSIGNMENT__INDICES:
-                getIndices().clear();
-                getIndices().addAll((Collection<? extends Expression>)newValue);
                 return;
             case KEffectsPackage.ASSIGNMENT__OPERATOR:
                 setOperator((AssignOperator)newValue);
@@ -395,14 +368,11 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
             case KEffectsPackage.ASSIGNMENT__SCHEDULE:
                 getSchedule().clear();
                 return;
-            case KEffectsPackage.ASSIGNMENT__VALUED_OBJECT:
-                setValuedObject((ValuedObject)null);
+            case KEffectsPackage.ASSIGNMENT__REFERENCE:
+                setReference((ValuedObjectReference)null);
                 return;
             case KEffectsPackage.ASSIGNMENT__EXPRESSION:
                 setExpression((Expression)null);
-                return;
-            case KEffectsPackage.ASSIGNMENT__INDICES:
-                getIndices().clear();
                 return;
             case KEffectsPackage.ASSIGNMENT__OPERATOR:
                 setOperator(OPERATOR_EDEFAULT);
@@ -424,12 +394,10 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
         switch (featureID) {
             case KEffectsPackage.ASSIGNMENT__SCHEDULE:
                 return schedule != null && !schedule.isEmpty();
-            case KEffectsPackage.ASSIGNMENT__VALUED_OBJECT:
-                return valuedObject != null;
+            case KEffectsPackage.ASSIGNMENT__REFERENCE:
+                return reference != null;
             case KEffectsPackage.ASSIGNMENT__EXPRESSION:
                 return expression != null;
-            case KEffectsPackage.ASSIGNMENT__INDICES:
-                return indices != null && !indices.isEmpty();
             case KEffectsPackage.ASSIGNMENT__OPERATOR:
                 return operator != OPERATOR_EDEFAULT;
             case KEffectsPackage.ASSIGNMENT__SUB_REFERENCE:

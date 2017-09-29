@@ -50,8 +50,7 @@ Goto returns Goto:
 
 Assignment returns Assignment:
     (annotations += Annotation)*
-    valuedObject = [kexpressions::ValuedObject] 
-    ('[' indices += Expression ']')*
+    reference = ValuedObjectReference
     operator = AssignOperator
     expression = Expression
     (=>'schedule' schedule+=ScheduleObjectReference+)?

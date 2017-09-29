@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.scg.processors.SCGProcessors
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * Replaces only initialized but never rewritten variables by constants
@@ -41,8 +42,8 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
  */
 class ReplaceUnusedVariables implements Traceable {
     
-    @Inject
-    extension KExpressionsDeclarationExtensions       
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KEffectsExtensions       
 
     def getId() {
         return SCGProcessors::REPLACEUNUSEDVARIABLES_ID

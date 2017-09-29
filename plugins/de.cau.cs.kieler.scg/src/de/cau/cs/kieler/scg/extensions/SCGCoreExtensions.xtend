@@ -39,6 +39,8 @@ import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.DataDependency
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -62,6 +64,8 @@ import de.cau.cs.kieler.scg.DataDependency
  * @kieler.rating 2013-08-20 proposed yellow
  */
 class SCGCoreExtensions { 
+    
+    @Inject extension KEffectsExtensions
     
     // -------------------------------------------------------------------------
     // -- Block queries

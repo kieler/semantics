@@ -3,7 +3,7 @@
 package de.cau.cs.kieler.kexpressions.keffects;
 
 import de.cau.cs.kieler.kexpressions.Expression;
-import de.cau.cs.kieler.kexpressions.ValuedObject;
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 
 /**
  * <!-- begin-user-doc -->
@@ -14,7 +14,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.Emission#getValuedObject <em>Valued Object</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.Emission#getReference <em>Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.Emission#getNewValue <em>New Value</em>}</li>
  * </ul>
  *
@@ -24,27 +24,32 @@ import de.cau.cs.kieler.kexpressions.ValuedObject;
  */
 public interface Emission extends Effect {
 	/**
-     * Returns the value of the '<em><b>Valued Object</b></em>' reference.
+     * Returns the value of the '<em><b>Reference</b></em>' containment reference.
      * <!-- begin-user-doc -->
-     * @return the value of the '<em>Valued Object</em>' reference.
-     * @see #setValuedObject(ValuedObject)
-     * @see de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage#getEmission_ValuedObject()
-     * @model required="true"
+     * <p>
+     * If the meaning of the '<em>Reference</em>' containment reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Reference</em>' containment reference.
+     * @see #setReference(ValuedObjectReference)
+     * @see de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage#getEmission_Reference()
+     * @model containment="true" required="true"
      * @generated
      */
-	ValuedObject getValuedObject();
+    ValuedObjectReference getReference();
 
-	/**
-     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.keffects.Emission#getValuedObject <em>Valued Object</em>}' reference.
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.keffects.Emission#getReference <em>Reference</em>}' containment reference.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Valued Object</em>' reference.
-     * @see #getValuedObject()
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Reference</em>' containment reference.
+     * @see #getReference()
      * @generated
      */
-	void setValuedObject(ValuedObject value);
+    void setReference(ValuedObjectReference value);
 
-	/**
+    /**
      * Returns the value of the '<em><b>New Value</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * @return the value of the '<em>New Value</em>' containment reference.

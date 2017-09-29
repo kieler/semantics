@@ -151,17 +151,8 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 					sequence_Assignment_PostfixEffect(context, (Assignment) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getDFAssignmentRule()) {
-					sequence_DFAssignment(context, (Assignment) semanticObject); 
-					return; 
-				}
 				else if (rule == grammarAccess.getPostfixEffectRule()) {
 					sequence_PostfixEffect(context, (Assignment) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getEquationRule()
-						|| rule == grammarAccess.getSubReferenceAssignmentRule()) {
-					sequence_SubReferenceAssignment(context, (Assignment) semanticObject); 
 					return; 
 				}
 				else break;
@@ -778,16 +769,8 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 				}
 				else break;
 			case SCChartsPackage.DATAFLOW_REGION:
-				if (rule == grammarAccess.getRegionRule()
-						|| rule == grammarAccess.getDataflowRegionRule()) {
-					sequence_DataflowRegion(context, (DataflowRegion) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getImplicitDataflowRegionRule()) {
-					sequence_ImplicitDataflowRegion(context, (DataflowRegion) semanticObject); 
-					return; 
-				}
-				else break;
+				sequence_DataflowRegion(context, (DataflowRegion) semanticObject); 
+				return; 
 			case SCChartsPackage.DURING_ACTION:
 				sequence_DuringAction(context, (DuringAction) semanticObject); 
 				return; 
@@ -873,18 +856,6 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	
 	/**
 	 * Contexts:
-	 *     DFAssignment returns Assignment
-	 *
-	 * Constraint:
-	 *     (annotations+=Annotation* valuedObject=[ValuedObject|ID] indices+=Expression* operator=AssignOperator expression=Expression)
-	 */
-	protected void sequence_DFAssignment(ISerializationContext context, Assignment semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     Region returns DataflowRegion
 	 *     DataflowRegion returns DataflowRegion
 	 *
@@ -895,7 +866,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *         label=STRING? 
 	 *         (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
 	 *         declarations+=DeclarationWOSemicolon* 
-	 *         equations+=Equation*
+	 *         equations+=Assignment*
 	 *     )
 	 */
 	protected void sequence_DataflowRegion(ISerializationContext context, DataflowRegion semanticObject) {
@@ -956,18 +927,6 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	
 	/**
 	 * Contexts:
-	 *     ImplicitDataflowRegion returns DataflowRegion
-	 *
-	 * Constraint:
-	 *     equations+=Equation+
-	 */
-	protected void sequence_ImplicitDataflowRegion(ISerializationContext context, DataflowRegion semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     ImplicitState returns State
 	 *
 	 * Constraint:
@@ -1014,7 +973,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *         label=STRING? 
 	 *         declarations+=DeclarationWOSemicolon* 
 	 *         actions+=LocalAction* 
-	 *         (regions+=ImplicitControlflowRegion | regions+=ImplicitDataflowRegion | regions+=Region+)?
+	 *         (regions+=ImplicitControlflowRegion | regions+=Region+)?
 	 *     )
 	 */
 	protected void sequence_RootState(ISerializationContext context, State semanticObject) {
@@ -1059,14 +1018,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *         connector?='connector'? 
 	 *         name=ID 
 	 *         label=STRING? 
-	 *         (
-	 *             reference=ScopeCall | 
-	 *             (
-	 *                 declarations+=DeclarationWOSemicolon* 
-	 *                 actions+=LocalAction* 
-	 *                 (regions+=ImplicitControlflowRegion | regions+=ImplicitDataflowRegion | regions+=Region+)?
-	 *             )
-	 *         )? 
+	 *         (reference=ScopeCall | (declarations+=DeclarationWOSemicolon* actions+=LocalAction* (regions+=ImplicitControlflowRegion | regions+=Region+)?))? 
 	 *         outgoingTransitions+=Transition*
 	 *     )
 	 */

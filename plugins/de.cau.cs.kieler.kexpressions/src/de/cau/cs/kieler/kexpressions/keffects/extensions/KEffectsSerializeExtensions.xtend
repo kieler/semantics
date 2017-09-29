@@ -86,10 +86,10 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
     
     public def CharSequence serializeAssignmentRoot(Assignment assignment) {
         var String res = ""
-        if (assignment.valuedObject != null) {
-            res = res + assignment.valuedObject.name
-            if (!assignment.indices.nullOrEmpty) {
-                for(index : assignment.indices) {
+        if (assignment.reference != null) {
+            res = res + assignment.reference.valuedObject.name
+            if (!assignment.reference.indices.nullOrEmpty) {
+                for(index : assignment.reference.indices) {
                     res = res + "[" + index.serialize + "]"
                 }
             }
@@ -116,15 +116,15 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
     }
     
     def dispatch CharSequence serialize(Emission emission) {
-        val objectContainer = emission.valuedObject.eContainer
+        val objectContainer = emission.reference.eContainer
         if (objectContainer instanceof VariableDeclaration) {
             if (objectContainer.type != ValueType::PURE) {
-                return (emission.valuedObject.name + "(" + emission.newValue.serialize + ")")             
+                return (emission.reference.valuedObject.name + "(" + emission.newValue.serialize + ")")             
             } else {
-                return emission.valuedObject.name
+                return emission.reference.valuedObject.name
             }
         } else {
-            return emission.valuedObject.name
+            return emission.reference.valuedObject.name
         }
     }
     

@@ -33,6 +33,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import java.util.List
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * @author ssm
@@ -41,6 +42,7 @@ import java.util.List
  */
 class SimpleGuardScheduler extends Processor<SCGraphs, SCGraphs> {
         
+    @Inject extension KEffectsExtensions
     @Inject extension SCGDependencyExtensions
     @Inject extension SCGCoreExtensions
     

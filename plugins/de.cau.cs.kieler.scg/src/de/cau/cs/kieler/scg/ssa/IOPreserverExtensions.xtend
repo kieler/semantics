@@ -38,6 +38,7 @@ import javax.inject.Inject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * The SSA transformation for SCGs
@@ -60,6 +61,8 @@ class IOPreserverExtensions {
     @Inject extension MergeExpressionExtension
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsCreateExtensions   
+    @Inject extension KEffectsExtensions
+    static val sCGFactory = ScgFactory.eINSTANCE
 
     // -------------------------------------------------------------------------
     
@@ -116,7 +119,7 @@ class IOPreserverExtensions {
                 
                 // Add program
                 fork.createControlFlow.target = entryNode
-                val termExitAsm = createAssignment => [
+                val termExitAsm = sCGFactory.createAssignment => [
                     valuedObject = term
                     expression = createBoolValue(true)
                 ]
@@ -193,12 +196,12 @@ class IOPreserverExtensions {
                 val vo = entry.key
                 val nodes = scg.nodes.filter(Assignment).filter[valuedObject == vo].map[it as Node].toList
                 if (!nodes.empty) {
-                    map.put(vo, createAssignment => [
+                    map.put(vo, sCGFactory.createAssignment => [
                         valuedObject = entry.value.valuedObjects.findFirst[isRegister]
                         expression = nodes.head.createMergeExpression(nodes, vo, ssaReferences, ssaDecl, dt)
                     ])
                 } else {
-                    map.put(vo, createAssignment => [
+                    map.put(vo, sCGFactory.createAssignment => [
                         val reg = entry.value.valuedObjects.findFirst[isRegister]
                         valuedObject = reg
                         expression = createOperatorExpression => [
@@ -209,7 +212,7 @@ class IOPreserverExtensions {
                 }
             }
             for (iovo : ssaDecl.entrySet.filter[key.variableDeclaration.input && key.variableDeclaration.output].sortBy[(value.eContainer as SCGraph).declarations.indexOf(value)].map[key]) {
-                map.put(iovo, createAssignment => [
+                map.put(iovo, sCGFactory.createAssignment => [
                     valuedObject = iovo
                     val nodes = scg.nodes.filter(Assignment).filter[valuedObject == iovo].map[it as Node].toList
                     if (nodes.empty) {
@@ -220,7 +223,7 @@ class IOPreserverExtensions {
                 ])
             }
             for (entry : ssaDecl.entrySet.filter[!key.variableDeclaration.input && key.variableDeclaration.output && value.valuedObjects.exists[isRegister]].sortBy[(value.eContainer as SCGraph).declarations.indexOf(value)]) {
-                map.put(entry.key, createAssignment => [
+                map.put(entry.key, sCGFactory.createAssignment => [
                     valuedObject = entry.key
                     expression = entry.value.valuedObjects.findFirst[isRegister].reference
                 ])
@@ -234,7 +237,7 @@ class IOPreserverExtensions {
             for (decl : scg.variableDeclarations.reverseView.filter[output]) {
                 for (vo : decl.valuedObjects.reverseView) {
                     // Create self assignment which will not be renamed
-                    val asm = createAssignment => [
+                    val asm = sCGFactory.createAssignment => [
                         valuedObject = vo
                         expression = vo.reference
                         markOutputPreserver

@@ -28,9 +28,7 @@ import java.util.Set
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
-import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.scg.transformations.SCGTransformations
 
 /** 
  * 
@@ -45,15 +43,8 @@ class SCPDGTransformation {//extends AbstractProductionTransformation implements
     // -- Injections 
     // -------------------------------------------------------------------------
        
-    @Inject
-    extension SCGControlFlowExtensions
-    
-    @Inject
-    extension SCGThreadExtensions
-    
-    @Inject
-    extension AnnotationsExtensions    
-
+    @Inject extension SCGControlFlowExtensions
+    @Inject extension AnnotationsExtensions    
 
     // -------------------------------------------------------------------------
     // -- Globals 

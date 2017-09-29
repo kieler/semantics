@@ -47,9 +47,9 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 		    Assignment: return getScopeForAssignment(context, reference) 
 		}
 		
-		if (reference == KEffectsPackage.Literals.ASSIGNMENT__VALUED_OBJECT) {
+		if (reference == KEffectsPackage.Literals.ASSIGNMENT__REFERENCE) {
 			return getScopeForValuedObject(context, reference)
-		} else if (reference == KEffectsPackage.Literals.EMISSION__VALUED_OBJECT) {
+		} else if (reference == KEffectsPackage.Literals.EMISSION__REFERENCE) {
 			return getScopeForValuedObject(context, reference)
 		}
 		
@@ -92,10 +92,10 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 	
 	 protected def IScope getScopeForReferencedDeclarationFromAssignment(EObject context, EReference reference) {
         if (context instanceof Assignment) {
-            if (context.valuedObject != null) {
-                if (context.valuedObject.eContainer != null) {
-                    if (context.valuedObject.eContainer instanceof ReferenceDeclaration) {
-                        return (context.valuedObject.eContainer as ReferenceDeclaration).
+            if (context.reference.valuedObject != null) {
+                if (context.reference.valuedObject.eContainer != null) {
+                    if (context.reference.valuedObject.eContainer instanceof ReferenceDeclaration) {
+                        return (context.reference.valuedObject.eContainer as ReferenceDeclaration).
                             getScopeForReferencedDeclarationObject[ input ]
                     }
                 }

@@ -45,6 +45,7 @@ import java.util.Set
 import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -91,17 +92,11 @@ class GuardSequentializerV2 extends AbstractSequentializer implements Traceable 
     // -- Injections 
     // -------------------------------------------------------------------------
     
-    @Inject 
-    extension SCGDeclarationExtensions
-         
-    @Inject 
-    extension KExpressionsDeclarationExtensions	
-
-    @Inject 
-    extension KExpressionsValuedObjectExtensions 
-    
-    @Inject
-    extension AnnotationsExtensions
+    @Inject extension SCGDeclarationExtensions
+    @Inject extension KExpressionsDeclarationExtensions	
+    @Inject extension KExpressionsValuedObjectExtensions 
+    @Inject extension AnnotationsExtensions
+    @Inject extension KEffectsExtensions
 
     // -------------------------------------------------------------------------
     // -- Globals

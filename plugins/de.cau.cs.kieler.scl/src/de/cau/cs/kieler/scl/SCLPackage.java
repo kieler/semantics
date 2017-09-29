@@ -5,9 +5,9 @@ package de.cau.cs.kieler.scl;
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
 
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -61,26 +61,6 @@ public interface SCLPackage extends EPackage {
     SCLPackage eINSTANCE = de.cau.cs.kieler.scl.impl.SCLPackageImpl.init();
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.scl.impl.ScopeImpl <em>Scope</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.scl.impl.ScopeImpl
-     * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getScope()
-     * @generated
-     */
-    int SCOPE = 4;
-
-    /**
-     * The meta object id for the '{@link de.cau.cs.kieler.scl.impl.ModuleImpl <em>Module</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.scl.impl.ModuleImpl
-     * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getModule()
-     * @generated
-     */
-    int MODULE = 1;
-
-    /**
      * The meta object id for the '{@link de.cau.cs.kieler.scl.impl.SCLProgramImpl <em>Program</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -118,6 +98,16 @@ public interface SCLPackage extends EPackage {
     int SCL_PROGRAM_FEATURE_COUNT = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 1;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scl.impl.ScopeImpl <em>Scope</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scl.impl.ScopeImpl
+     * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getScope()
+     * @generated
+     */
+    int SCOPE = 4;
+
+    /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -152,6 +142,16 @@ public interface SCLPackage extends EPackage {
      * @ordered
      */
     int SCOPE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scl.impl.ModuleImpl <em>Module</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scl.impl.ModuleImpl
+     * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getModule()
+     * @generated
+     */
+    int MODULE = 1;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -394,13 +394,13 @@ public interface SCLPackage extends EPackage {
     int ASSIGNMENT__SCHEDULE = KEffectsPackage.ASSIGNMENT__SCHEDULE;
 
     /**
-     * The feature id for the '<em><b>Valued Object</b></em>' reference.
+     * The feature id for the '<em><b>Reference</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ASSIGNMENT__VALUED_OBJECT = KEffectsPackage.ASSIGNMENT__VALUED_OBJECT;
+    int ASSIGNMENT__REFERENCE = KEffectsPackage.ASSIGNMENT__REFERENCE;
 
     /**
      * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -410,15 +410,6 @@ public interface SCLPackage extends EPackage {
      * @ordered
      */
     int ASSIGNMENT__EXPRESSION = KEffectsPackage.ASSIGNMENT__EXPRESSION;
-
-    /**
-     * The feature id for the '<em><b>Indices</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ASSIGNMENT__INDICES = KEffectsPackage.ASSIGNMENT__INDICES;
 
     /**
      * The feature id for the '<em><b>Operator</b></em>' attribute.
