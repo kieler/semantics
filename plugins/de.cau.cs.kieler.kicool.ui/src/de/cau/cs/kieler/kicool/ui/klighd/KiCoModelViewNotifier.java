@@ -41,8 +41,7 @@ public class KiCoModelViewNotifier {
      * @param controller
      *            the update controller
      */
-    // package protected
-    static void register(final KiCoModelUpdateController controller) {
+    public static void register(final KiCoModelUpdateController controller) {
         CONTROLLERS.add(controller);
     }
 
@@ -52,8 +51,7 @@ public class KiCoModelViewNotifier {
      * @param controller
      *            the update controller
      */
-    // package protected
-    static void unregister(final KiCoModelUpdateController controller) {
+    public static void unregister(final KiCoModelUpdateController controller) {
         CONTROLLERS.remove(controller);
     }
 

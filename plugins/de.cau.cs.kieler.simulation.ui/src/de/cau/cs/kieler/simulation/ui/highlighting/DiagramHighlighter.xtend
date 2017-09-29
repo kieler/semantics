@@ -168,7 +168,7 @@ abstract class DiagramHighlighter {
         val diagramViews = DiagramView.getAllDiagramViews
         if (!diagramViews.isNullOrEmpty) {
             val DiagramView viewPart = diagramViews.last
-            val viewer = viewPart.getViewer() 
+            val viewer = viewPart.getViewer()
             return viewer.getViewContext();
         }
     }

@@ -934,4 +934,10 @@
             </attribute>
         </markerResolutionGenerator>
     </extension>
+    <extension
+          point="de.cau.cs.kieler.klighd.ui.view.controller">
+       <controller
+             class="de.cau.cs.kieler.simulation.ui.SimulateModelInDiagramView">
+       </controller>
+    </extension>
 </plugin>
