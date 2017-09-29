@@ -64,9 +64,11 @@ public class TracingIntegration extends IntermediateProcessor<EObject, EObject> 
         
         val tracing = environment.getProperty(Tracing.TRACING_DATA)
         checkNotNull(Tracing)
+        val processor = environment.getProperty(PROCESSOR_INSTANCE)
+        val exogenous = processor.type == ProcessorType.EXOGENOUS_TRANSFORMATOR
         
-        if (environment.getProperty(PROCESSOR_INSTANCE) instanceof Traceable) {
-            tracing.startTransformationTracing(getModel, null, environment.getProperty(PROCESSOR_INSTANCE).id, environment.getProperty(Environment.INPLACE))
+        if (processor instanceof Traceable) {
+            tracing.startTransformationTracing(getModel, null, processor.id, !exogenous)
         } else {
             environment.warnings.add("This processor does not support tracing. Resulting tracing chain may be incomplete!")
         }
@@ -77,9 +79,11 @@ public class TracingIntegration extends IntermediateProcessor<EObject, EObject> 
         
         val tracing = environment.getProperty(Tracing.TRACING_DATA)
         checkNotNull(Tracing)
+        val processor = environment.getProperty(PROCESSOR_INSTANCE)
+        val exogenous = processor.type == ProcessorType.EXOGENOUS_TRANSFORMATOR
         
-        if (environment.getProperty(PROCESSOR_INSTANCE) instanceof Traceable) {
-            tracing.finishTransformationTracing(getSourceModel, getTargetModel)
+        if (processor instanceof Traceable) {
+            tracing.finishTransformationTracing(if (exogenous) getSourceModel else getTargetModel, getTargetModel)
         }
     }
     
@@ -87,7 +91,7 @@ public class TracingIntegration extends IntermediateProcessor<EObject, EObject> 
     static def EObject copy(EObject model, Environment environment) {
         if (!environment.isTracingActive || environment.getProperty(ONGOING_WORKING_COPY)) {
             if (environment.getProperty(ONGOING_WORKING_COPY)) {
-                environment.errors.add("Tracing is not supported in combination with 'ongoing working copy' option!")
+                environment.warnings.add("Tracing is not supported in combination with 'ongoing working copy' option!")
             }
             return EcoreUtil.copy(model)
         }
@@ -105,7 +109,7 @@ public class TracingIntegration extends IntermediateProcessor<EObject, EObject> 
     static def <T extends EObject> Pair<T, Copier> copyAndReturnCopier(T model, Environment environment) {
         if (!environment.isTracingActive || environment.getProperty(ONGOING_WORKING_COPY)) {
             if (environment.getProperty(ONGOING_WORKING_COPY)) {
-                environment.errors.add("Tracing is not supported in combination with 'ongoing working copy' option!")
+                environment.warnings.add("Tracing is not supported in combination with 'ongoing working copy' option!")
             }
             val copier = new Copier()
             val EObject result = copier.copy(model)
