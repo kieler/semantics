@@ -41,6 +41,7 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension java.lang.Character.*
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.scg.common.SCGAnnotations
 
 /**
  * @author als
@@ -51,7 +52,7 @@ class SSACoreExtensions {
 
     // -------------------------------------------------------------------------
     
-    public static val SSA = "de.cau.cs.kieler.scg.ssa"
+    public static val SSA = SCGAnnotations.ANNOTATION_SSA //"de.cau.cs.kieler.scg.ssa"
     
     // -------------------------------------------------------------------------
     

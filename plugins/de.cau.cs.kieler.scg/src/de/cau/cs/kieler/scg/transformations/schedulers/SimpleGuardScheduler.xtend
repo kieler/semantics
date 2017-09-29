@@ -14,8 +14,7 @@
 package de.cau.cs.kieler.scg.transformations.schedulers
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.ControlDependency
@@ -54,7 +53,7 @@ import java.util.logging.Level
  * @kieler.design 2016-02-24 proposed 
  * @kieler.rating 2016-02-24 proposed yellow
  */
-class SimpleGuardScheduler extends Processor<SCGraphs, SCGraphs> implements Traceable {
+class SimpleGuardScheduler extends InplaceProcessor<SCGraphs> implements Traceable {
         
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
@@ -72,10 +71,6 @@ class SimpleGuardScheduler extends Processor<SCGraphs, SCGraphs> implements Trac
         for (scg : model.scgs) {
             scg.transform
         }
-    }
-    
-    override getType() {
-        ProcessorType.TRANSFORMATOR
     }
 
 //    override getProducedFeatureId() {

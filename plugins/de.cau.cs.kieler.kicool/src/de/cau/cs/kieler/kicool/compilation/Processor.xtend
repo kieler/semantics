@@ -12,18 +12,20 @@
  */
 package de.cau.cs.kieler.kicool.compilation
 
+import com.google.common.reflect.TypeToken
+import de.cau.cs.kieler.annotations.NamedObject
+import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
+import de.cau.cs.kieler.kicool.classes.SourceTargetPair
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorProgress
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorSnapshot
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.kicool.environments.EnvironmentPair
-import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
-
-import static extension org.eclipse.xtext.EcoreUtil2.*
-import static extension de.cau.cs.kieler.kicool.environments.Environment.*
-import java.lang.reflect.ParameterizedType
 import de.cau.cs.kieler.kicool.environments.Environment
-import de.cau.cs.kieler.annotations.NamedObject
-import de.cau.cs.kieler.kicool.classes.SourceTargetPair
+import de.cau.cs.kieler.kicool.environments.EnvironmentPair
+import java.lang.reflect.Type
+import org.eclipse.emf.ecore.EObject
+
+import static de.cau.cs.kieler.kicool.environments.Environment.*
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * The abstract class of a processor. Every invokable unit in kico is a processor.
@@ -108,7 +110,7 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
     protected def void updateProgress(double progress) {
         // Set the actual pTime before triggering the notification.
         val startTimestamp = environments.target.getProperty(START_TIMESTAMP).longValue
-        val intermediateTimestamp = java.lang.System.nanoTime
+        val intermediateTimestamp = System.nanoTime
         environments.target.setProperty(PTIME, (intermediateTimestamp - startTimestamp) / 1000_000)
         
         // Create the notification.
@@ -144,17 +146,15 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
      * Protected convenient method to trigger a snapshot of the actual model.
      */
     protected def void snapshot() {
-        getModel.snapshot
+        targetModel?.snapshot
     }
     
-    
     def Source getModel() {
-//        try {
-            val model = environment.getProperty(MODEL) as Source
-            return model
-//        } catch (ClassCastException e) {
-//            return null
-//        }
+        if (type == ProcessorType.EXOGENOUS_TRANSFORMATOR) {
+            return sourceModel
+        } else {
+            return environment.getProperty(MODEL) as Source
+        }
     }
     
     def Source getSourceModel() {
@@ -170,35 +170,16 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
         model
     }    
     
-    def boolean validateType() {
-        val ParameterizedType pt = this.getClass.getGenericSuperclass as ParameterizedType;
-        val c = pt.getActualTypeArguments.get(0) as Class<?>
+    def boolean validateInputType() {
         val model = environment.getProperty(MODEL)
-        val castable = c.isInstance(model)
-        castable
-    }
-    
-    def boolean validateInplaceType() {
-        val myC = getProcessorSubClass
-        val ParameterizedType pt = myC.getGenericSuperclass as ParameterizedType;
-        val c1 = pt.getActualTypeArguments.get(0)
-        val c2 = pt.getActualTypeArguments.get(1)
-        c1 == c2
+        return sourceTargetTypes.source.isInstance(model)
     }
     
     def SourceTargetPair<Class<?>, Class<?>> getSourceTargetTypes() {
-        val ParameterizedType pt = this.getProcessorSubClass.getGenericSuperclass as ParameterizedType;
-        return new SourceTargetPair<Class<?>, Class<?>>(pt.getActualTypeArguments.get(0) as Class<Source>, pt.getActualTypeArguments.get(1) as Class<Target>)
-    }
-    
-    private def Class<?> getProcessorSubClass() {
-        var Class<?> c = this.getClass
-        while(!c.superclass.name.equals("de.cau.cs.kieler.kicool.compilation.Processor")) {
-            c = c.superclass
-        }
-        c
-    }
-    
+        val source = new TypeToken<Source>(this.class) {}
+        val target = new TypeToken<Target>(this.class) {}
+        return new SourceTargetPair<Class<?>, Class<?>>(source.rawType, target.rawType)
+    }    
     
     /**  
      *  Convenient method to cancel the ongoing compilation. 

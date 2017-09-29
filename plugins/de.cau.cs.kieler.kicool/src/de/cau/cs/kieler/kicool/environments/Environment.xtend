@@ -38,9 +38,6 @@ class Environment extends EnvironmentPropertyHolder {
 
     public static val IProperty<Boolean> ONGOING_WORKING_COPY = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.ongoingWorkingCopy", true)
-        
-    public static val IProperty<Boolean> INPLACE_VALID = 
-        new Property<Boolean>("de.cau.cs.kieler.kicool.inplaceValid", true) 
     
     public static val IProperty<Object> MODEL = 
         new Property<Object>("de.cau.cs.kieler.kicool.model")

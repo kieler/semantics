@@ -12,35 +12,34 @@
  */
 package de.cau.cs.kieler.kicool.compilation
 
-import de.cau.cs.kieler.kicool.System
-import org.eclipse.xtend.lib.annotations.Accessors
-import java.util.Observable
-import java.util.Map
-import java.util.HashMap
-import de.cau.cs.kieler.kicool.compilation.observer.CompilationStart
-import de.cau.cs.kieler.kicool.compilation.observer.ProcessorStart
-import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
-import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
-import java.util.Observer
-import de.cau.cs.kieler.kicool.compilation.observer.ProcessorError
-import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
-
-import static extension de.cau.cs.kieler.kicool.environments.Environment.*
-import static extension org.eclipse.xtext.EcoreUtil2.*
-import org.eclipse.emf.ecore.EObject
+import com.google.inject.Inject
+import de.cau.cs.kieler.kicool.ProcessorAlternativeGroup
+import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kicool.ProcessorReference
 import de.cau.cs.kieler.kicool.ProcessorSystem
-import java.util.List
-import java.util.ArrayList
+import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
+import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
+import de.cau.cs.kieler.kicool.compilation.observer.CompilationStart
+import de.cau.cs.kieler.kicool.compilation.observer.ProcessorError
+import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
+import de.cau.cs.kieler.kicool.compilation.observer.ProcessorStart
 import de.cau.cs.kieler.kicool.environments.Environment
-import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration
-import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
+import java.util.ArrayList
+import java.util.HashMap
+import java.util.List
+import java.util.Map
+import java.util.Observable
+import java.util.Observer
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtend.lib.annotations.Accessors
 
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration.isTracingActive
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration.addTracingProperty
+import static de.cau.cs.kieler.kicool.environments.Environment.*
+
+import static extension de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder.*
 import static extension de.cau.cs.kieler.kicool.compilation.internal.UniqueNameCachePopulation.populateNameCache
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration.addTracingProperty
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration.isTracingActive
 
 /**
  * @author ssm
@@ -50,7 +49,7 @@ import static extension de.cau.cs.kieler.kicool.compilation.internal.UniqueNameC
 class CompilationContext extends Observable implements IKiCoolCloneable {
     
     // Minimal requirements for compilation
-    @Accessors System system
+    @Accessors de.cau.cs.kieler.kicool.System system
     @Accessors(PUBLIC_GETTER) Object originalModel
     @Accessors Map<ProcessorReference, Processor<?,?>> processorMap
     @Accessors List<Processor<?,?>> processorInstancesSequence 
@@ -78,11 +77,11 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         processorMap.values.toList
     }
     
-    def de.cau.cs.kieler.kicool.compilation.Processor<?,?> getProcessorInstance(ProcessorReference processorReference) {
+    def Processor<?,?> getProcessorInstance(ProcessorReference processorReference) {
         processorMap.get(processorReference)
     }
     
-    def de.cau.cs.kieler.kicool.compilation.Processor<?,?> getFirstProcessorInstance() {
+    def Processor<?,?> getFirstProcessorInstance() {
         processorInstancesSequence.head
     }
     
@@ -103,7 +102,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     def Environment compile() {
         startEnvironment.addTracingProperty
         
-        val modelCopy = EnvironmentPropertyHolder.tracingCopy((originalModel as EObject), startEnvironment)
+        val modelCopy = TracingIntegration.copy((originalModel as EObject), startEnvironment)
         startEnvironment.setProperty(MODEL, modelCopy)
         
         if (startEnvironment.getProperty(UNIQUE_NAME_CACHE_ENABLED) == true) {
@@ -112,7 +111,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         
         for(intermediateProcessor : getIntermediateProcessors) {
             intermediateProcessor.setEnvironment(startEnvironment, startEnvironment)
-            if (intermediateProcessor.validateType) {
+            if (intermediateProcessor.validateInputType) {
                 if (intermediateProcessor instanceof Metric<?,?>) {
                     intermediateProcessor.setMetricSourceEntity
                     intermediateProcessor.process
@@ -142,11 +141,10 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         environment.setProperty(PROCESSOR_REFERENCE, processorReference)
         environment.setProperty(PROCESSOR_INSTANCE, processorInstance)
         if (processorInstance == null) {
-            java.lang.System.err.println("An instance for processor reference " + processorReference + " was not found!")
+            System.err.println("An instance for processor reference " + processorReference + " was not found!")
             return environment;    
         }
         
-        environment.setProperty(INPLACE_VALID, processorInstance.validateInplaceType)
         val environmentPrime = environment.preparePrimeEnvironment
         
         processorInstance.setEnvironment(environment, environmentPrime)
@@ -157,10 +155,10 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         
         for(intermediateProcessor : getIntermediateProcessors(processorReference)) {
             intermediateProcessor.setEnvironment(environment, environmentPrime)
-            if (intermediateProcessor.validateType) intermediateProcessor.processBefore
+            if (intermediateProcessor.validateInputType) intermediateProcessor.processBefore
         }
         
-        val startTimestamp = java.lang.System.nanoTime
+        val startTimestamp = System.nanoTime
         environmentPrime.setProperty(START_TIMESTAMP, startTimestamp)
         try {
             if (processorInstance.sourceEnvironment.getProperty(ENABLED)) { 
@@ -169,19 +167,19 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         } catch (Exception e) {
             processorInstance.environment.errors.add(e)
             notify(new ProcessorError(e.message, this, processorReference, processorInstance))
-            java.lang.System.err.println("Error in processor " + processorReference)
+            System.err.println("Error in processor " + processorReference)
             e.printStackTrace
         }
-        val stopTimestamp = java.lang.System.nanoTime
+        val stopTimestamp = System.nanoTime
         environmentPrime.setProperty(STOP_TIMESTAMP, stopTimestamp)
         environmentPrime.setProperty(PTIME, (stopTimestamp - startTimestamp) / 1000_000)
         
         for(intermediateProcessor : getIntermediateProcessors(processorReference)) {
             intermediateProcessor.setEnvironment(environmentPrime, environmentPrime)
-            if (intermediateProcessor.validateType) intermediateProcessor.process
+            if (intermediateProcessor.validateInputType) intermediateProcessor.process
         }
         
-        val overallTimestamp = java.lang.System.nanoTime
+        val overallTimestamp = System.nanoTime
         environmentPrime.setProperty(OVERALL_TIMESTAMP, overallTimestamp)
         environmentPrime.setProperty(OVERALL_PTIME, (overallTimestamp - startTimestamp) / 1000_000)
         
@@ -192,7 +190,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         environmentPrime
     }
     
-    protected dispatch def Environment compileEntry(de.cau.cs.kieler.kicool.ProcessorGroup processorGroup, Environment environment) {
+    protected dispatch def Environment compileEntry(ProcessorGroup processorGroup, Environment environment) {
         var Environment environmentPrime = environment
         var cancel = false
         for(processor : processorGroup.processors) {
@@ -204,7 +202,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         environmentPrime
     }
 
-    protected dispatch def Environment compileEntry(de.cau.cs.kieler.kicool.ProcessorAlternativeGroup processorAlternativeGroup, Environment environment) {
+    protected dispatch def Environment compileEntry(ProcessorAlternativeGroup processorAlternativeGroup, Environment environment) {
         val environmentList = <Environment> newArrayList
         for(processor : processorAlternativeGroup.processors) {
             environmentList += processor.compileEntry(environment)
@@ -220,7 +218,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         selectedEnvironment
     }
     
-    protected dispatch def Environment compileEntry(de.cau.cs.kieler.kicool.ProcessorSystem processorSystem, Environment environment) {
+    protected dispatch def Environment compileEntry(ProcessorSystem processorSystem, Environment environment) {
         val subContext = subContexts.get(processorSystem)
         subContext.compile(environment)
     }

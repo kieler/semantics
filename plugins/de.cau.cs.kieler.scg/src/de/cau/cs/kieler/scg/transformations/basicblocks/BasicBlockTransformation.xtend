@@ -18,8 +18,7 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.BranchType
@@ -70,7 +69,7 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTraci
  * @kieler.rating 2013-10-24 proposed yellow
  */
 
-class BasicBlockTransformation extends Processor<SCGraphs, SCGraphs> implements Traceable {
+class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Traceable {
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
@@ -88,10 +87,6 @@ class BasicBlockTransformation extends Processor<SCGraphs, SCGraphs> implements 
         for (scg : model.scgs) {
             scg.transform
         }
-    }
-    
-    override getType() {
-        ProcessorType.TRANSFORMATOR
     }
 
 //    override getProducedFeatureId() {

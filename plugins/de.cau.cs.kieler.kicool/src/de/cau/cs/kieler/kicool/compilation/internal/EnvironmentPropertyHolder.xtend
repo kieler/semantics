@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.Pair
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
 
 /**
  * Internal class for handling the processor environments.
@@ -47,24 +48,24 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
     static def <T extends EnvironmentPropertyHolder> T copyEnvironment(T source, T target) {
         val inplace = source.getProperty(INPLACE)
         val ongoingWorkingCopy = source.getProperty(ONGOING_WORKING_COPY)
-        val inplaceValid = source.getProperty(INPLACE_VALID)
+        val endogenous = source.getProperty(PROCESSOR_INSTANCE)?.type == ProcessorType.ENDOGENOUS_TRANSFORMATOR
      
         val model = source.getProperty(MODEL)
         var Copier modelCopier = null
         if (model instanceof EObject) {
-            if (inplace && inplaceValid) {
-                target.propertyMap.put(MODEL, model)
-            } else {
-                if (ongoingWorkingCopy && inplaceValid) {
-                    val copyResult = model.tracingCopyAndReturnCopier(source)
+            if (endogenous && !inplace) {
+                if (ongoingWorkingCopy) {
+                    val copyResult = model.copyAndReturnCopier(source)
                     modelCopier = copyResult.second
                     source.propertyMap.put(MODEL, copyResult.first)
-                    target.propertyMap.put(MODEL, model)    
+                    target.propertyMap.put(MODEL, model)
                 } else {
-                    val copyResult = model.tracingCopyAndReturnCopier(source)
+                    val copyResult = model.copyAndReturnCopier(source)
                     modelCopier = copyResult.second
                     target.propertyMap.put(MODEL, copyResult.first)
                 }
+            } else {
+                target.propertyMap.put(MODEL, model)
             }
         } else {
             copyValue(target, MODEL, model)
@@ -85,7 +86,7 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
                 
                 if (modelCopier != null) {
                     if (v instanceof IKiCoolCloneable) {
-                        if (ongoingWorkingCopy && inplaceValid) {
+                        if (ongoingWorkingCopy) {
                             (source.getProperty(k) as IKiCoolCloneable).resolveCopiedObjects(modelCopier)    
                         } else {
                             if (!v.volatile) {
@@ -93,7 +94,7 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
 //                                (target.getProperty(k) as IKiCoolCloneable).resolveCopiedObjects(v, copyResult.second)
                             }
                         }
-                }
+                    }
                 }
             }
         }
@@ -158,23 +159,8 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
         }
     }
     
-    static def <T extends EObject> T tracingCopy(T eObject, EnvironmentPropertyHolder eph) {
-        if (TracingIntegration.isTracingActive(eph as Environment)) {
-            return TracingIntegration.copy(eObject, eph as Environment) as T
-        } else {
-            return eObject.copy
-        }
-    }
-    
-    static def <T extends EObject> Pair<T, Copier> tracingCopyAndReturnCopier(T eObject, EnvironmentPropertyHolder eph) {
-        if (TracingIntegration.isTracingActive(eph as Environment)) {
-            return TracingIntegration.copyAndReturnCopier(eObject, eph as Environment)
-        } else {
-            val copier = new Copier()
-            val EObject result = copier.copy(eObject)
-            copier.copyReferences
-            return new Pair(result as T, copier)
-        }
+    static def <T extends EObject> Pair<T, Copier> copyAndReturnCopier(T eObject, EnvironmentPropertyHolder eph) {
+        return TracingIntegration.copyAndReturnCopier(eObject, eph as Environment)
     }
     
 }

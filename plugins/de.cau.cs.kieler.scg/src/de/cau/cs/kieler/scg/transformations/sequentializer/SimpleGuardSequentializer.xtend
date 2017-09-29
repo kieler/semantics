@@ -71,9 +71,9 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
     }
     
     override getType() {
-        ProcessorType.TRANSFORMATOR
+        ProcessorType.EXOGENOUS_TRANSFORMATOR
     }
-
+    
 //    override getProducedFeatureId() {
 //        return SCGFeatures::SEQUENTIALIZE_ID
 //    }

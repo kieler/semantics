@@ -54,10 +54,7 @@ class TriggerEffect extends SCChartsProcessor implements Traceable {
     override process() {
         setModel(model.transform)
     }
-    
-    override getType() {
-        ProcessorType.TRANSFORMATOR
-    }
+
 
 //    override getExpandsFeatureId() {
 //        return SCChartsFeature::TRIGGEREFFECT_ID

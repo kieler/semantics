@@ -66,10 +66,6 @@ class SSASCG2SSASCL extends RestrictedSCG2SCL {
     override getName() {
         return "SSA-SCL"
     }
-
-    override getType() {
-        return ProcessorType.TRANSFORMATOR
-    }
     
     override process() {
         val scl = createSCLProgram
