@@ -60,6 +60,7 @@ import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
 
 import static extension com.google.common.collect.Sets.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.scg.common.SCGAnnotations
 
 /**
  * The SSA transformation for SCGs
@@ -138,12 +139,12 @@ class WeakUnemitSSATransformation extends Processor<SCGraphs, SCGraphs> implemen
             
             return asm
         ]
-        scg.snapshot
         
         // ---------------
         // 2. Renaming
         // ---------------
         bbVersion = dt.rename(entryBB, ssaDecl)
+        scg.annotations += createStringAnnotation(SCGAnnotations.ANNOTATION_SSA, id)
         scg.snapshot
         
         // Transform phi node into assignments in each branch
@@ -158,8 +159,8 @@ class WeakUnemitSSATransformation extends Processor<SCGraphs, SCGraphs> implemen
         scg.snapshot
         
         // Removes all references to signals that are never emitted
-        scg.removeAbsentReads  
-        scg.snapshot
+//        scg.removeAbsentReads  
+//        scg.snapshot
               
         // Removes assignments to signals which are never read
         scg.removePhiWritesWithoutRead
@@ -176,8 +177,8 @@ class WeakUnemitSSATransformation extends Processor<SCGraphs, SCGraphs> implemen
         // ---------------
         
         // Removes conditional with constant conditions
-        scg.removeDeadCodeSimple
-        scg.snapshot
+//        scg.removeDeadCodeSimple
+//        scg.snapshot
         // Removes all ssa versions which are not read
         scg.removeUnusedSSAVersions
         // Merges ssa version which are always used together (in OR expressions)
