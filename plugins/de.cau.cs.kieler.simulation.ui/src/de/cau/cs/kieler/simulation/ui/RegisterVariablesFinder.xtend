@@ -64,6 +64,7 @@ class RegisterVariablesFinder extends PromBuildAdapter {
         if(processor instanceof SimulationTemplateProcessor) {
             // Add the variables to the simulation template processor
             if(!registerVariables.isNullOrEmpty) {
+                registerVariables.add("_GO")
                 if(processor.additionalVariables.value == null) {
                     processor.additionalVariables.value = newHashMap
                 }

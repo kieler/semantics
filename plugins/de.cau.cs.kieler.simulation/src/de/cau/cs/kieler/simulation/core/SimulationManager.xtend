@@ -60,7 +60,7 @@ class SimulationManager extends Configurable {
     /**
      * Default pause in milliseconds when playing the simulation
      */
-    public static val DEFAULT_PAUSE = 200;
+    public static val DEFAULT_PAUSE = 500;
     
     /**
      * Minimum pause in milliseconds when playing the simulation
@@ -161,6 +161,7 @@ class SimulationManager extends Configurable {
     /**
      * The history of step states of this simulation run from old to new.
      */
+    @Accessors(PUBLIC_GETTER)
     private var List<StepState> history = newArrayList()
     
     /**
@@ -430,16 +431,19 @@ class SimulationManager extends Configurable {
         if(isStopped) {
             return
         } else if(isPlaying) {
-            pause()
+            pause
         }
         // Load state from history
+        val lastPositionInHistory = positionInHistory
         positionInHistory--;
         if(positionInHistory < 0) {
             positionInHistory = history.size;
         }
-        loadStateFromHistory
-        // Fire event
-        fireEvent(SimulationOperation.STEP_HISTORY_FORWARD)
+        if(lastPositionInHistory != positionInHistory) {
+            loadStateFromHistory
+            // Fire event
+            fireEvent(SimulationOperation.STEP_HISTORY_FORWARD)
+        }
     }
     
     /**
@@ -449,16 +453,21 @@ class SimulationManager extends Configurable {
         if(isStopped) {
             return
         } else if(isPlaying) {
-            pause()
+            pause
         }
         // Load state from history
+        val lastPositionInHistory = positionInHistory
         positionInHistory++;
         if(positionInHistory > history.size) {
             positionInHistory = 0;
         }
-        loadStateFromHistory
-        // Fire event
-        fireEvent(SimulationOperation.STEP_HISTORY_BACK)
+        if(lastPositionInHistory != positionInHistory) {
+            loadStateFromHistory
+            println(history)
+            println(positionInHistory)
+            // Fire event
+            fireEvent(SimulationOperation.STEP_HISTORY_BACK)
+        }
     }
 
     /**
@@ -650,14 +659,17 @@ class SimulationManager extends Configurable {
      * @param newActionIndex The action index of the new state
      */
     private def void setNewState(DataPool newPool, int newActionIndex) {
+        // Add current state to history
         if(currentState != null) {
             history.add(currentState)
         }
         // Remove oldest states if history is too long
-        if(maxHistoryLength.intValue >= 0 && history.size >= maxHistoryLength.intValue) {
-            val oldState = history.get(0)
-            oldState.pool.previousPool = null
+        if(maxHistoryLength.intValue >= 0 && history.size > maxHistoryLength.intValue) {
             history.remove(0)
+            if(!history.isEmpty) {
+                val newOldestState = history.get(0)
+                newOldestState.pool.previousPool = null    
+            }
         }
         currentState = new StepState(newPool, newActionIndex)
     }
@@ -668,17 +680,36 @@ class SimulationManager extends Configurable {
      * @return The data pool for the following state
      */
     private def DataPool createNextPool() {
-        positionInHistory = 0
-        val pool = currentPool.clone()
-        // Apply user values to next tick
-        if(currentPool.hasModifiedVariable) {
-            pool.applyUserValues
+        // Drop states in history if a former state was loaded
+        if(positionInHistory > 0) {
+            val loadedState = historyState
+            for(var i = 1; i <= positionInHistory; i++) {
+                history.remove(history.size - 1)    
+            }
+            positionInHistory = 0
+            // The current state replaces the loaded state
+            currentState.pool.previousPool = loadedState.pool.previousPool
+            currentState.actionIndex = loadedState.actionIndex
         }
-        // Set history
+        // Apply user values
+        if(currentPool.hasModifiedVariable) {
+            currentPool.applyUserValues
+        }
+        // Clone pool for next tick
+        val pool = currentPool.clone()
+        // Set history of new pool
         if(maxHistoryLength.intValue != 0) {
             pool.previousPool = currentPool
         }
         return pool
+    }
+    
+    public def StepState getHistoryState() {
+        if(positionInHistory > 0) {
+            return history.get(history.size - positionInHistory)
+        } else {
+            return null
+        }
     }
     
     /**

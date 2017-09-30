@@ -30,6 +30,7 @@ import de.cau.cs.kieler.sccharts.processors.transformators.TakenTransitionSignal
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.NDimensionalArray
 import de.cau.cs.kieler.simulation.core.SimulationManager
+import de.cau.cs.kieler.simulation.core.StepState
 import de.cau.cs.kieler.simulation.ui.highlighting.DiagramHighlighter
 import java.util.List
 
@@ -75,12 +76,12 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
     /**
      * The highlighting style for traversed states and transitions
      */
-    private static val KForeground traversedElementStyle = createTraversedElementStyle
+    private static val KForeground TRAVERSED_ELEMENT_STYLE = createTraversedElementStyle
     
     /**
      * The highlighting style for current states
      */
-    private static val KForeground currentStateStyle = createCurrentStateStyle
+    private static val KForeground CURRENT_ELEMENT_STYLE = createCurrentStateStyle
 
     /**
      * The size of the taken transitions signaling array.
@@ -158,6 +159,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
      * {@inheritDoc}
      */
     override initialize(DataPool pool) {
+        super.initialize(pool)
         currentStates = null
     }
     
@@ -165,6 +167,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
      * {@inheritDoc}
      */
     override stop() {
+        super.stop()
         unhighlightDiagram
     }
     
@@ -172,6 +175,8 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
      * {@inheritDoc}
      */
     override update(DataPool pool) {
+        super.update(pool)
+        
         // Remove highlighting
         unhighlightDiagram        
         // Calculate the simulation controlflow to determine what must be highlighted
@@ -181,18 +186,26 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
             return
         }
         // Find the graph elements in the diagram for the EObjects that should be highlighted
-        val traversedGraphElements = getGraphElements(traversedTransitions + traversedStates)
-        val currentGraphElements = if(currentStates.isNullOrEmpty)
-                                       newArrayList
-                                   else
-                                       getGraphElements(#[] + currentStates)
-        // Highlight traversed elements
-        for (graphElement : traversedGraphElements) {
-            highlightElement(graphElement, traversedElementStyle)
-        }
-        // Highlight current elements
-        for (graphElement : currentGraphElements) {
-            highlightElement(graphElement, currentStateStyle)
+        val traversedGraphHighlighting = getHighlighting(traversedTransitions + traversedStates, TRAVERSED_ELEMENT_STYLE)
+        val currentGraphHighlighting = if(!currentStates.isNullOrEmpty)
+                                           getHighlighting(#[] + currentStates, CURRENT_ELEMENT_STYLE)
+                                       else
+                                           newArrayList
+        // Create highlighting with the corresponding styles
+        val highlighting = traversedGraphHighlighting + currentGraphHighlighting
+        highlightDiagram(highlighting)
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override loadFormerState(StepState state) {
+        super.loadFormerState(state)
+        
+        // Fetch old current states from highlighting history
+        val oldHighlighting = highlightingHistory.get(state.actionIndex)
+        if(oldHighlighting != null) {
+            currentStates = oldHighlighting.filter[it.foreground == CURRENT_ELEMENT_STYLE && it.eObject instanceof State].map[it.eObject as State].toList
         }
     }
     
@@ -275,7 +288,8 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
         }
         
         // Calculate current states
-        if(currentStates == null) {
+        val isInitialTickDone = SimulationManager.instance.currentMacroTickNumber == 1 && SimulationManager.instance.currentSubTickNumber == 0
+        if(isInitialTickDone) {
             currentStates = getInitialStates(rootState)    
         }
         currentStates = calculateNewCurrentStates(currentStates, traversedTransitions)

@@ -12,25 +12,22 @@
  */
 package de.cau.cs.kieler.simulation.ui.highlighting
 
-import com.google.common.collect.Iterables
 import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.kgraph.KLabeledGraphElement
-import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KForeground
-import de.cau.cs.kieler.klighd.krendering.KStyle
-import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.ui.view.DiagramView
 import de.cau.cs.kieler.prom.ui.PromUIPlugin
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.SimulationManager
+import de.cau.cs.kieler.simulation.core.StepState
 import de.cau.cs.kieler.simulation.core.events.SimulationAdapter
 import de.cau.cs.kieler.simulation.core.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.core.events.SimulationEvent
 import de.cau.cs.kieler.simulation.core.events.SimulationListener
+import de.cau.cs.kieler.simulation.core.events.SimulationOperation
 import java.util.List
-import org.eclipse.elk.graph.properties.Property
+import java.util.Map
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.util.EcoreUtil
 
 /**
  * Base class to highlight a model in the diagram view with a running simulation.
@@ -39,16 +36,14 @@ import org.eclipse.emf.ecore.util.EcoreUtil
  *
  */
 abstract class DiagramHighlighter {
-    
-    /**
-     * A property to mark that a style is used for highlighting.
-     */
-    protected val HIGHLIGHTING_MARKER = new Property<Object>("highlighting");
-    
     /**
      * The elements that have been highlighted scince the last call of unhighlightDiagram.
      */
-    protected var List<KLabeledGraphElement> lastHighlighting = newArrayList
+    protected var List<Highlight> lastHighlighting = newArrayList
+    
+    protected var Map<Integer, List<Highlight>> highlightingHistory = newHashMap
+    
+    protected var int lastPositionInHistory
     
     /**
      * The diagram view context
@@ -79,14 +74,19 @@ abstract class DiagramHighlighter {
      * The pool is the initial pool before the first tick.
      * Typically this should not be highlighted because variables may not have been initialized yet.
      */    
-    abstract protected def void initialize(DataPool pool)
+    protected def void initialize(DataPool pool) {
+        lastPositionInHistory = 0
+        highlightingHistory.clear
+    }
     
     /**
-     * Update the highlighting with.
+     * Update the highlighting.
      * 
      * @param pool The pool from the simulation
      */
-    abstract protected def void update(DataPool pool)
+    protected def void update(DataPool pool) {
+        updateHistory
+    }
     
     /**
      * Stop and remove all highlighting.
@@ -125,25 +125,54 @@ abstract class DiagramHighlighter {
                 }
             }
             
-            override onSimulationStopped(SimulationControlEvent e) {
-                PromUIPlugin.asyncExecInUI [
-                    stop
-                ]
-            }
-            
-            override onSimulationStepped(SimulationControlEvent e) {
-                PromUIPlugin.asyncExecInUI [
-                    update(e.pool)
-                ]
-            }
-            
-            override onSimulationInitialized(SimulationControlEvent e) {
-                PromUIPlugin.asyncExecInUI [
-                    initialize(e.pool)
-                ]
+            override onSimulationControlEvent(SimulationControlEvent e) {
+                switch(e.operation) {
+                    case SimulationOperation.INITIALIZED : {
+                        PromUIPlugin.asyncExecInUI [
+                            initialize(e.pool)
+                        ]
+                    }
+                    case SimulationOperation.STOP : {
+                        PromUIPlugin.asyncExecInUI [
+                            stop
+                        ]
+                    }
+                    case SimulationOperation.STEP_HISTORY_BACK,
+                    case SimulationOperation.STEP_HISTORY_FORWARD : {
+                        val simMan = SimulationManager.instance
+                        val historyPos = simMan.positionInHistory
+                        // Save current state to come back to this if not currently viewing some former highlighting already
+                        if(lastPositionInHistory == 0) {
+                            highlightingHistory.put(SimulationManager.instance.currentState.actionIndex, lastHighlighting.clone)    
+                        }
+                        lastPositionInHistory = historyPos
+                        // Load old state
+                        if(historyPos > 0) {
+                            loadFormerState(simMan.historyState)
+                        } else {
+                            loadFormerState(simMan.currentState)
+                        }
+                    }
+                    default : {
+                        update(e.pool)
+                    }
+                }
             }
         }
         return listener
+    }
+    
+    /**
+     * Re-applies the highlighting of the given former state.
+     */
+    protected def void loadFormerState(StepState state) {
+        val oldHighlighting = highlightingHistory.get(state.actionIndex)
+        if(oldHighlighting != null) {
+            unhighlightDiagram
+            highlightDiagram(oldHighlighting)
+        } else {
+            throw new Exception("Cannot revert highlighting to former state. No highlighting was found for the action index "+state.actionIndex)
+        }
     }
     
     /**
@@ -174,78 +203,65 @@ abstract class DiagramHighlighter {
     }
     
     /**
-     * Removes the highlighting from the highlighted elements.
+     * Removes all highlights.
      */
     protected def void unhighlightDiagram() {
         if(!lastHighlighting.isNullOrEmpty) {
-            for (graphElement : lastHighlighting) {
-                unhighlightElement(graphElement)
+            for (highlight : lastHighlighting) {
+                highlight.remove
             }
             lastHighlighting.clear
         }
     }
     
     /**
-     * Highlights the element with the given style.
-     * 
-     * @param elem The element
-     * @param style The style
+     * Highlights the diagram.
      */
-    protected def void highlightElement(KLabeledGraphElement elem, KForeground style) {
-        // Remember that this style is to highlight the diagram.
-        // This is used to filter for highlighting styles when they should be removed.
-        style.setProperty(HIGHLIGHTING_MARKER, this)
-        // Highlight container of this element
-        val ren = elem.getData(typeof(KContainerRendering))
-        ren.styles.add(EcoreUtil.copy(style))
-        // Highlight label of this element
-        if (!elem.labels.isNullOrEmpty) {
-            val label = elem.labels.get(0)
-            val ren2 = label.getData(typeof(KText))
-            ren2.styles.add(EcoreUtil.copy(style))
-        }
-        // Remember that this element has been highlighted
-        lastHighlighting.add(elem)
-    }
-    
-    /**
-     * Removes highlighting from the given element.
-     * 
-     * @param elem The element
-     */
-    protected def void unhighlightElement(KLabeledGraphElement elem) {
-        // Remove highlighting from container of this element
-        val ren = elem.getData(typeof(KContainerRendering));
-        Iterables.removeIf(ren.styles, [it.isHighlighting]);
-        // Remove highlighting from label of this element
-        if (!elem.labels.isNullOrEmpty) {
-            val label = elem.labels.get(0)
-            val ren2 = label.getData(typeof(KText));
-            Iterables.removeIf(ren2.styles, [it.isHighlighting]);
+    protected def highlightDiagram(Iterable<Highlight> highlighting) {
+        for(highlight : highlighting) {
+            highlight.apply
+            // Remember that this element has been highlighted
+            lastHighlighting.add(highlight)
         }
     }
     
     /**
-     * Checks if the given style has been used to highlight the diagram. 
-     */
-    protected def boolean isHighlighting(KStyle style) {
-        return style.getProperty(HIGHLIGHTING_MARKER) == this
-    }
-    
-    /**
-     * Returns the graph elements that represent the given objects.
+     * Returns the highlighting of the given EObjects with the given style.
      * 
      * @param eObjects The objects
      * @return the graph elements that represent the given objects.
      */
-    protected def List<KLabeledGraphElement> getGraphElements(Iterable<EObject> eObjects) {
-        val elements = <KLabeledGraphElement> newArrayList
+    protected def List<Highlight> getHighlighting(Iterable<EObject> eObjects, KForeground style) {
+        val highlighting = <Highlight> newArrayList
         for (eObject : eObjects) {
             val element = diagramViewContext.getTargetElement(eObject, typeof(KLabeledGraphElement));
             if (element != null) {
-                elements.add(element);
+                highlighting.add(new Highlight(element, style, eObject))
             }
         }
-        return elements
+        return highlighting
+    }
+    
+    private def void updateHistory() {
+        val simMan = SimulationManager.instance
+        val maxHistoryLength = simMan.maxHistoryLength.intValue
+        if(maxHistoryLength != 0) {
+            val lastState = simMan.history.last
+            if(lastState != null) {
+                val actionIndex = lastState.actionIndex
+                highlightingHistory.put(actionIndex, lastHighlighting.clone)
+                // Remove oldest highlighting if above simulation history upper bound + 1.
+                // The +1 is because there can be one entry for the current highlighting as well.
+                if(maxHistoryLength > 0 && highlightingHistory.size > maxHistoryLength + 1) {
+                    var Integer oldest = null
+                    for(key : highlightingHistory.keySet) {
+                        if(oldest == null || oldest > key) {
+                            oldest = key
+                        }
+                    }
+                    highlightingHistory.remove(oldest)
+                }
+            }
+        }
     }
 }
