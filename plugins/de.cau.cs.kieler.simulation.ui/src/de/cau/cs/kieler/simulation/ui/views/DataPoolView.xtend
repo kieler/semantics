@@ -290,6 +290,7 @@ class DataPoolView extends ViewPart {
                 return content
             }
         });
+        mgr.add(new OpenSimulationAction("Open Data Pool", "openFile.png"));
         mgr.add(new Separator())
         mgr.add(new Action("Reset All"){
             override run(){

@@ -134,6 +134,11 @@ class EnvironmentData extends ConfigurationSerializable {
         }
     }
     
+    /**
+     * Creates this instance's initial resources in the given project.
+     * 
+     * @param project The project
+     */
     public def void createInitialResources(IProject project) {
         for(data : initialResources) {
             var resolvedProjectRelativePath = data.projectRelativePath
