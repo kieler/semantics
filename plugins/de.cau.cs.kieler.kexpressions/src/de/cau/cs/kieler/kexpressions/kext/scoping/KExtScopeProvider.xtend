@@ -30,6 +30,7 @@ import de.cau.cs.kieler.kexpressions.Referenceable
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import org.eclipse.xtext.xbase.lib.Functions.Function1
+import de.cau.cs.kieler.kexpressions.keffects.Emission
 
 /**
  * @author ssm
@@ -66,26 +67,36 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 	}
 	
 	protected def IScope getScopeForValuedObjectReference(EObject context, EReference reference) {
+	    val contextContainer = context.eContainer
         if (reference.eContainer instanceof ValuedObjectReference) {
 			val parentVOR = reference.eContainer as ValuedObjectReference
 			val declaration = parentVOR.valuedObject.eContainer as Declaration
 			if (declaration instanceof ReferenceDeclaration) {
 				return Scopes.scopeFor(<ValuedObject> newArrayList(declaration.valuedObjects))
 			}
-		} else if (context.eContainer instanceof ValuedObjectReference) {
+		} else if (contextContainer instanceof ValuedObjectReference) {
 		    // The context is a subreference!
-		    var parentVO = context.eContainer as ValuedObjectReference
-		    return parentVO.getScopeForReferencedDeclarationFromSubReference(reference)
+		    return contextContainer.getScopeForReferencedDeclarationFromSubReference(reference)
 		} else if (context instanceof ValuedObjectReference) {
-		    if (context.eContainer instanceof Assignment) {
-		        // The context is a subreference inside of an assignment!
-		        if (context != context.eContainer.asAssignment.expression) {
-		          return context.eContainer.getScopeForReferencedDeclarationFromAssignment(reference)
+		    if (contextContainer instanceof Assignment) {
+		        if (context === contextContainer.reference) {
+		            // The context is the reference of a standard assignment.
+		            return context.getScopeHierarchical(reference)    
 		        }
+		        
+		        // The context is a subreference inside of an assignment!
+		        if (context != contextContainer.expression) {
+		            return context.eContainer.getScopeForReferencedDeclarationFromAssignment(reference)
+		        }
+            } else if (contextContainer instanceof Emission) {
+                if (context === contextContainer.reference) {
+                    // The context is the reference of a standard emission.
+                    return context.getScopeHierarchical(reference)    
+                }
 	       	} else if (context.subReference != null && context.subReference.valuedObject == null) {
 		        var parentVO = context as ValuedObjectReference
 		        return parentVO.getScopeForReferencedDeclarationFromSubReference(reference)
-		    }
+            }
         }
 		return context.getScopeHierarchical(reference)
 	}
