@@ -290,8 +290,10 @@ class KiCoModelCompiler extends ModelCompiler {
         if(result == null) {
             return;
         } else if(result instanceof CodeContainer) {
-            val String resultCode = result?.get(0)
-            saveCode(resultCode, targetFile)
+            for (file : result.files.keySet) {
+                val String resultCode = result.get(file)
+                saveCode(resultCode, targetFile)
+            }
         } else if(result instanceof EObject) {
             // Serialize EObject
             saveEObject(result, targetFile)

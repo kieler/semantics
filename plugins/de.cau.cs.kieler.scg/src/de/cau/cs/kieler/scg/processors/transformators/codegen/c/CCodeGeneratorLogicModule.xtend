@@ -69,9 +69,9 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     protected val conditionalStack = <Conditional> newLinkedList
     
     override configure(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
-        Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, SCGCodeGeneratorModule parent
+        Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, String codeFilename, SCGCodeGeneratorModule parent
     ) {
-        super.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, parent)
+        super.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename, parent)
         
         struct = (parent as CCodeGeneratorModule).struct
         reset = (parent as CCodeGeneratorModule).reset

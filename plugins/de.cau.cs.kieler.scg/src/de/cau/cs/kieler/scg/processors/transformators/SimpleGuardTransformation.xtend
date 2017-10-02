@@ -91,7 +91,12 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> {
             }              
         ] 
         for (scg : model.scgs) {
-           SCGGraphs.scgs += scg.createGuards
+            SCGGraphs.scgs += 
+            scg.createGuards => [
+                label = scg.label
+                name = scg.name
+                SCGGraphs.scgs += it    
+            ]
         }        
         setModel(SCGGraphs)
     }    

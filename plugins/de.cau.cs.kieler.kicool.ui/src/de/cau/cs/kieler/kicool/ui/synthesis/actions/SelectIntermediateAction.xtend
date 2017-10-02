@@ -46,7 +46,7 @@ class SelectIntermediateAction implements IAction {
 //            model = new Container<String>(model)
             model = new CodePlaceHolder(editor.title + ".c", model)
         } else if (model instanceof CodeContainer) {
-            model = new CodePlaceHolder(editor.title + ".c", model.join("\n")) 
+//            model = new CodePlaceHolder(editor.title + ".c", model.head) 
         } else if (model instanceof MessageObjectReferences) {
             model = new Container<String>(model.get(null).join("\n"))
         }

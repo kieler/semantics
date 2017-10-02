@@ -44,6 +44,8 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
     @Inject Injector injector
     
     static val HOSTCODE = PragmaRegistry.register("hostcode", StringPragma, "Allows additional hostcode to be included (e.g. includes).")
+    static val C_EXTENSION = ".c"
+    static val H_EXTENSION = ".h"
     
     @Accessors var CCodeGeneratorStructModule struct
     @Accessors var CCodeGeneratorResetModule reset 
@@ -51,19 +53,19 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
     @Accessors var CCodeGeneratorLogicModule logic
     
     override configure(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
-        Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, SCGCodeGeneratorModule parent
+        Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, String codeFilename, SCGCodeGeneratorModule parent
     ) {
-        super.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, parent)
+        super.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename, parent)
         
         struct = injector.getInstance(CCodeGeneratorStructModule)
         reset = injector.getInstance(CCodeGeneratorResetModule)
         tick = injector.getInstance(CCodeGeneratorTickModule)
         logic = injector.getInstance(CCodeGeneratorLogicModule)
             
-        struct.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, this)
-        reset.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, this)
-        tick.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, this)
-        logic.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, this)
+        struct.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + H_EXTENSION, this)
+        reset.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + C_EXTENSION, this)
+        tick.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + C_EXTENSION, this)
+        logic.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + C_EXTENSION, this)
             
         return this
     }
@@ -96,6 +98,26 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
         code.append(logic.code).append("\n")
         code.append(tick.code)
     }
+    
+    override generateWrite(CodeContainer codeContainer) {
+        val hFilename = codeFilename + H_EXTENSION
+        val cFilename = codeFilename + C_EXTENSION
+        val hFile = new StringBuilder
+        val cFile = new StringBuilder
+
+        hFile.addHeader
+        hFile.append(struct.code)
+        
+        cFile.addHeader
+        cFile.hostcodeAdditions
+        cFile.append("#include \"" + hFilename + "\"\n\n")        
+        cFile.append(reset.code).append("\n")
+        cFile.append(logic.code).append("\n")
+        cFile.append(tick.code)
+
+        codeContainer.add(cFilename, cFile.toString)         
+        codeContainer.add(hFilename, hFile.toString)
+    }    
     
     protected def void addHeader(StringBuilder sb) {
         sb.append(

@@ -55,7 +55,6 @@ class CCodeGenerator extends Processor<SCGraphs, CodeContainer> {
     override process() {
         val graphs = getModel
         val result = new CodeContainer
-        
         if (graphs.hasPragma("debug")) {
             environment.setProperty(DEBUG_COMMENTS, true)
         }
@@ -63,7 +62,7 @@ class CCodeGenerator extends Processor<SCGraphs, CodeContainer> {
         // Create a c code generator module for each SCG.
         val scgModuleMap = <SCGraph, SCGCodeGeneratorModule> newHashMap
         for (scg : graphs.scgs) {
-            val generatorModule = injector.getInstance(CCodeGeneratorModule).configure("", graphs, scg, this, scgModuleMap, null)
+            val generatorModule = injector.getInstance(CCodeGeneratorModule).configure("", graphs, scg, this, scgModuleMap, scg.name, null)
             scgModuleMap.put(scg, generatorModule)
             generatorModule.suffix = hostcodeSafeName(scg.name)
         }
@@ -81,7 +80,11 @@ class CCodeGenerator extends Processor<SCGraphs, CodeContainer> {
         for (scg : graphs.scgs) {
             scgModuleMap.get(scg) => [
                 generateDone
-                result.add(code.toString)
+            ]
+        }
+        for (scg : graphs.scgs) {
+            scgModuleMap.get(scg) => [
+                generateWrite(result)
             ]
         }
         
