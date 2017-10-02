@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.sccharts.processors.transformators
 
 import com.google.inject.Inject
-import com.google.inject.Injector
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
@@ -27,7 +26,6 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
@@ -35,6 +33,7 @@ import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * Give me a state, Vasili. One state only please.
@@ -50,9 +49,8 @@ class Reference extends SCChartsProcessor {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExtDeclarationExtensions    
     @Inject extension SCChartsScopeExtensions
-    @Inject extension SCChartsStateExtensions
+    @Inject extension KEffectsExtensions
     @Inject extension SCChartsReferenceExtensions
-    @Inject Injector injector
     
     protected val replacedWithLiterals = <ValuedObject> newHashSet
     
@@ -80,7 +78,7 @@ class Reference extends SCChartsProcessor {
         
     }   
     
-    protected def expandReferencedState(State stateWithReference, Replacements replacements) {
+    protected def void expandReferencedState(State stateWithReference, Replacements replacements) {
         val newState = stateWithReference.reference.scope.copy as State => [ 
             name = stateWithReference.name 
             label = stateWithReference.label
@@ -233,7 +231,7 @@ class Reference extends SCChartsProcessor {
         val newRef = replacements.peek(assignment.valuedObject)
         if (newRef != null) {
             if (newRef instanceof ValuedObjectReference) { 
-                assignment.valuedObject = (newRef as ValuedObjectReference).valuedObject
+                assignment.valuedObject = newRef.valuedObject
                 if (assignment.indices.empty && !newRef.indices.empty) {
                     // Array indices were bound to a scalar. Add the right indices.
                     for (index : newRef.indices) {

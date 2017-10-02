@@ -36,6 +36,7 @@ import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * @author fry
@@ -68,11 +69,9 @@ class SeqSCG2SSA_SCGTransformation {// extends AbstractProductionTransformation 
 	// --                             INJECTIONS                              --
 	// -------------------------------------------------------------------------
 
-	@Inject
-	extension KExpressionsDeclarationExtensions
-
-	@Inject
-	extension KExpressionsValuedObjectExtensions
+	@Inject	extension KExpressionsDeclarationExtensions
+	@Inject	extension KExpressionsValuedObjectExtensions
+	@Inject extension KEffectsExtensions
 	
 	
 	// -------------------------------------------------------------------------

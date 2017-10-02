@@ -38,6 +38,7 @@ import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import java.util.Map
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * @author ssm
@@ -50,6 +51,7 @@ class SCChartsScopeExtensions {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExtDeclarationExtensions
     @Inject extension SCChartsStateExtensions
+    @Inject extension KEffectsExtensions
     
     def Iterator<State> getAllContainedStates(Scope scope) {
         scope.sccAllContainedStates 

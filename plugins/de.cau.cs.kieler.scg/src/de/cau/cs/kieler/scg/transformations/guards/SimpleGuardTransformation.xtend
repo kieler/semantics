@@ -44,8 +44,8 @@ import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Exit
-import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * @author ssm
@@ -80,6 +80,7 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsComplexCreateExtensions 
     @Inject extension AnnotationsExtensions
+    @Inject extension KEffectsExtensions
     
       
     override SCGraph transform(SCGraph scg) {

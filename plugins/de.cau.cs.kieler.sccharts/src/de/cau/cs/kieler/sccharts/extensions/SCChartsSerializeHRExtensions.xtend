@@ -443,9 +443,9 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     }   
     
     override def CharSequence serializeAssignment(Assignment assignment, CharSequence expressionStr) {
-        var res = assignment.valuedObject.name.applySymbolTable
-        if (!assignment.indices.nullOrEmpty) {
-            for(index : assignment.indices) {
+        var res = assignment.reference.valuedObject.name.applySymbolTable
+        if (!assignment.reference.indices.nullOrEmpty) {
+            for(index : assignment.reference.indices) {
                 res = res + "[" + index.serialize + "]"
             }
         }
@@ -459,15 +459,15 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     }    
     
     override dispatch CharSequence serialize(Emission emission) {
-        val objectContainer = emission.valuedObject.eContainer
+        val objectContainer = emission.reference.valuedObject.eContainer
         if (objectContainer instanceof VariableDeclaration) {
             if (objectContainer.type != ValueType::PURE) {
-                return (emission.valuedObject.name + "(" + emission.newValue.serialize + ")")             
+                return (emission.reference.valuedObject.name + "(" + emission.newValue.serialize + ")")             
             } else {
-                return emission.valuedObject.name.applySymbolTable
+                return emission.reference.valuedObject.name.applySymbolTable
             }
         } else {
-            return emission.valuedObject.name.applySymbolTable
+            return emission.reference.valuedObject.name.applySymbolTable
         }
     }    
      

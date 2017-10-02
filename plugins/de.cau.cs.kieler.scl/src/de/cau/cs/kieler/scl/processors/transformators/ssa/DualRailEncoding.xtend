@@ -38,6 +38,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.scl.Module
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * BROKEN!
@@ -77,6 +78,8 @@ class DualRailEncoding extends Processor<SCLProgram, SCLProgram> {
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
+    @Inject extension KEffectsExtensions
+    static val sCLFactory = SCLFactory.eINSTANCE
 
     // -------------------------------------------------------------------------
     // -- Transformation 
@@ -136,7 +139,7 @@ class DualRailEncoding extends Processor<SCLProgram, SCLProgram> {
                         statements += createConditional => [
                             expression = asm.expression.valExpression
                             // then
-                            it.statements += createAssignment => [
+                            it.statements += sCLFactory.createAssignment => [
                                 valuedObject = asm.valuedObject
                                 expression = createBoolValue(true)
                             ]
@@ -147,7 +150,7 @@ class DualRailEncoding extends Processor<SCLProgram, SCLProgram> {
                         statements += createConditional => [
                             expression = asm.expression.notvalExpression
                             // then
-                            it.statements += createAssignment => [
+                            it.statements += sCLFactory.createAssignment => [
                                 valuedObject = duals.get(asm.valuedObject)
                                 expression = createBoolValue(true)
                             ]
@@ -159,7 +162,7 @@ class DualRailEncoding extends Processor<SCLProgram, SCLProgram> {
                     instr.replace(createConditional => [
                         expression = asm.expression.errorExpression
                         // then
-                        it.statements += createAssignment => [
+                        it.statements += sCLFactory.createAssignment => [
                             valuedObject = error
                             expression = createBoolValue(true)
                         ]

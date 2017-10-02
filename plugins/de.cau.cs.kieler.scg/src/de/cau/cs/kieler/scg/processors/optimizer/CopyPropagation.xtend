@@ -24,6 +24,7 @@ import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
 import java.util.List
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * @author ssm
@@ -32,11 +33,9 @@ import java.util.List
  
 class CopyPropagation extends AbstractOptimizer {
     
-    @Inject
-    extension SCGCoreExtensions
-    
-    @Inject 
-    extension SCGDeclarationExtensions
+    @Inject extension SCGCoreExtensions
+    @Inject extension SCGDeclarationExtensions
+    @Inject extension KEffectsExtensions
     
     static final boolean DEBUG = false;
 

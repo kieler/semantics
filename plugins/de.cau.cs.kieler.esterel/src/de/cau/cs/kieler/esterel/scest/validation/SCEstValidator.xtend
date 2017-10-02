@@ -46,6 +46,7 @@ import de.cau.cs.kieler.scl.Assignment
 import de.cau.cs.kieler.scl.Conditional
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.CheckType
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * @author mrb
@@ -53,8 +54,8 @@ import org.eclipse.xtext.validation.CheckType
  */
 class SCEstValidator extends AbstractSCEstValidator {
     
-    @Inject
-    extension EsterelTransformationExtensions
+    @Inject extension EsterelTransformationExtensions
+    @Inject extension KEffectsExtensions
     
     final String CALCULATION_EXPRESSION = "The expression should be of type INT/FLOAT/DOUBLE/UNSIGNED."
     final String BOOLEAN_EXPRESSION = "The expression should be of type BOOL."

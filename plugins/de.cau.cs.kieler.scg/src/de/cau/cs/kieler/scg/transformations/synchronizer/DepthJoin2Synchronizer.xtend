@@ -47,6 +47,7 @@ import java.util.Set
 import de.cau.cs.kieler.scg.BranchType
 import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
 import de.cau.cs.kieler.scg.common.SCGAnnotations
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -106,7 +107,7 @@ class DepthJoin2Synchronizer extends IncrementalSurfaceSynchronizer {
 	@Inject	extension SCGCoreExtensions
 	@Inject	extension SCGControlFlowExtensions
 	@Inject	extension SCGThreadExtensions
-
+	@Inject extension KEffectsExtensions
 
 	protected val OPERATOREXPRESSION_DEPTHLIMIT = 16
 	protected val OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER = 8

@@ -100,7 +100,7 @@ class TraceDataProvider {
     private def Variable convert(Effect e) {
         switch(e) {
             Emission: {
-                val v = new Variable(e.valuedObject.name)
+                val v = new Variable(e.reference.valuedObject.name)
                 if (e.newValue !== null) {
                     v.setValue(e.newValue.convert)
                 } else {

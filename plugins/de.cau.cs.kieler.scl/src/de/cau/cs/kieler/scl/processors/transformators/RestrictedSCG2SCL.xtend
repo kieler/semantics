@@ -40,12 +40,13 @@ import de.cau.cs.kieler.scl.Label
 import de.cau.cs.kieler.scl.Scope
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.scl.SCLProgram
 import de.cau.cs.kieler.scl.SCLFactory
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.scl.Module
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+
 /**
  * This class transforms SCGs into SCL program in a more natural way (especially if-else branches) than the regular SCG to SCL transformation.
  * However, it cannot handle jumps into/outof branches!
@@ -84,6 +85,8 @@ class RestrictedSCG2SCL extends Processor<SCGraphs, SCLProgram> {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCLExtensions
     @Inject extension AnnotationsExtensions
+    @Inject extension KEffectsExtensions
+    static val sCLFactory = SCLFactory.eINSTANCE
 
     val labels = <Node, Label>newLinkedHashMap
     val gotos = <Goto, Node>newLinkedHashMap
@@ -221,7 +224,7 @@ class RestrictedSCG2SCL extends Processor<SCGraphs, SCLProgram> {
             scope.createLabel(assignment)
         }
         val next = assignment.next?.target
-        val statement = createAssignment => [
+        val statement = sCLFactory.createAssignment => [
             valuedObject = assignment.valuedObject.copyValuedObject
             expression = assignment.expression.copyExpression
         ]

@@ -2,10 +2,7 @@
  */
 package de.cau.cs.kieler.kexpressions.keffects;
 
-import org.eclipse.emf.common.util.EList;
-
 import de.cau.cs.kieler.kexpressions.Expression;
-import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
 
@@ -18,9 +15,8 @@ import de.cau.cs.kieler.kexpressions.keffects.Assignment;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.Assignment#getValuedObject <em>Valued Object</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.Assignment#getReference <em>Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.Assignment#getExpression <em>Expression</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.Assignment#getIndices <em>Indices</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.Assignment#getOperator <em>Operator</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.Assignment#getSubReference <em>Sub Reference</em>}</li>
  * </ul>
@@ -31,32 +27,32 @@ import de.cau.cs.kieler.kexpressions.keffects.Assignment;
  */
 public interface Assignment extends Effect {
 	/**
-     * Returns the value of the '<em><b>Valued Object</b></em>' reference.
+     * Returns the value of the '<em><b>Reference</b></em>' containment reference.
      * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Valued Object</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-     * @return the value of the '<em>Valued Object</em>' reference.
-     * @see #setValuedObject(ValuedObject)
-     * @see de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage#getAssignment_ValuedObject()
-     * @model
+     * <p>
+     * If the meaning of the '<em>Reference</em>' containment reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Reference</em>' containment reference.
+     * @see #setReference(ValuedObjectReference)
+     * @see de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage#getAssignment_Reference()
+     * @model containment="true"
      * @generated
      */
-	ValuedObject getValuedObject();
+    ValuedObjectReference getReference();
 
-	/**
-     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.keffects.Assignment#getValuedObject <em>Valued Object</em>}' reference.
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.keffects.Assignment#getReference <em>Reference</em>}' containment reference.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Valued Object</em>' reference.
-     * @see #getValuedObject()
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Reference</em>' containment reference.
+     * @see #getReference()
      * @generated
      */
-	void setValuedObject(ValuedObject value);
+    void setReference(ValuedObjectReference value);
 
-	/**
+    /**
      * Returns the value of the '<em><b>Expression</b></em>' containment reference.
      * <!-- begin-user-doc -->
 	 * <p>
@@ -83,22 +79,6 @@ public interface Assignment extends Effect {
 	void setExpression(Expression value);
 
 	/**
-     * Returns the value of the '<em><b>Indices</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Expression}.
-     * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Indices</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-     * @return the value of the '<em>Indices</em>' containment reference list.
-     * @see de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage#getAssignment_Indices()
-     * @model containment="true"
-     * @generated
-     */
-	EList<Expression> getIndices();
-
-    /**
      * Returns the value of the '<em><b>Operator</b></em>' attribute.
      * The literals are from the enumeration {@link de.cau.cs.kieler.kexpressions.keffects.AssignOperator}.
      * <!-- begin-user-doc -->

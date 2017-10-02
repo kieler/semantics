@@ -21,6 +21,8 @@ import de.cau.cs.kieler.simulation.trace.ktrace.TraceFile
 import org.eclipse.xtext.CrossReference
 import org.eclipse.xtext.linking.lazy.LazyLinkingResource
 import org.eclipse.xtext.parser.IParseResult
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * @author als
@@ -30,6 +32,7 @@ import org.eclipse.xtext.parser.IParseResult
 class KTraceResource extends LazyLinkingResource {
     
     extension KExpressionsFactory kExpressionsFactory = KExpressionsFactory.eINSTANCE
+    @Inject extension KEffectsExtensions
     
     override updateInternalState(IParseResult newParseResult) {
         val voMap = <String, ValuedObject>newHashMap

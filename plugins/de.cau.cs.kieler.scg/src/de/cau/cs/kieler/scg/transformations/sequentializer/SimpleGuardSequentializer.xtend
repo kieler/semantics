@@ -37,6 +37,7 @@ import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * @author ssm
@@ -86,23 +87,13 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
     // -- Injections 
     // -------------------------------------------------------------------------
     
-    @Inject 
-    extension SCGCoreExtensions
-    
-    @Inject 
-    extension SCGDeclarationExtensions
-         
-    @Inject 
-    extension SCGControlFlowExtensions	
-    
-    @Inject
-    extension AnnotationsExtensions
-
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-    
-    @Inject
-    extension SCGDependencyExtensions
+    @Inject extension SCGCoreExtensions
+    @Inject extension SCGDeclarationExtensions
+    @Inject extension SCGControlFlowExtensions	
+    @Inject extension AnnotationsExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension SCGDependencyExtensions
+    @Inject extension KEffectsExtensions
 
     // -------------------------------------------------------------------------
     // -- Globals

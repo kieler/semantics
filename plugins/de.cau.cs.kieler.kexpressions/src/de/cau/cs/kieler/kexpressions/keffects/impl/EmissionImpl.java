@@ -7,8 +7,7 @@ import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
-import de.cau.cs.kieler.kexpressions.ValuedObject;
-
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.keffects.Emission;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
@@ -33,7 +32,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.EmissionImpl#getSchedule <em>Schedule</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.EmissionImpl#getValuedObject <em>Valued Object</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.EmissionImpl#getReference <em>Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.EmissionImpl#getNewValue <em>New Value</em>}</li>
  * </ul>
  *
@@ -51,14 +50,14 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
     protected EList<ScheduleObjectReference> schedule;
 
     /**
-     * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
+     * The cached value of the '{@link #getReference() <em>Reference</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getValuedObject()
+     * @see #getReference()
      * @generated
      * @ordered
      */
-    protected ValuedObject valuedObject;
+    protected ValuedObjectReference reference;
 
     /**
      * The cached value of the '{@link #getNewValue() <em>New Value</em>}' containment reference.
@@ -106,16 +105,23 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
      * <!-- end-user-doc -->
      * @generated
      */
-    public ValuedObject getValuedObject() {
-        if (valuedObject != null && valuedObject.eIsProxy()) {
-            InternalEObject oldValuedObject = (InternalEObject)valuedObject;
-            valuedObject = (ValuedObject)eResolveProxy(oldValuedObject);
-            if (valuedObject != oldValuedObject) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, KEffectsPackage.EMISSION__VALUED_OBJECT, oldValuedObject, valuedObject));
-            }
+    public ValuedObjectReference getReference() {
+        return reference;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetReference(ValuedObjectReference newReference, NotificationChain msgs) {
+        ValuedObjectReference oldReference = reference;
+        reference = newReference;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KEffectsPackage.EMISSION__REFERENCE, oldReference, newReference);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
         }
-        return valuedObject;
+        return msgs;
     }
 
     /**
@@ -123,20 +129,18 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
      * <!-- end-user-doc -->
      * @generated
      */
-    public ValuedObject basicGetValuedObject() {
-        return valuedObject;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setValuedObject(ValuedObject newValuedObject) {
-        ValuedObject oldValuedObject = valuedObject;
-        valuedObject = newValuedObject;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KEffectsPackage.EMISSION__VALUED_OBJECT, oldValuedObject, valuedObject));
+    public void setReference(ValuedObjectReference newReference) {
+        if (newReference != reference) {
+            NotificationChain msgs = null;
+            if (reference != null)
+                msgs = ((InternalEObject)reference).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KEffectsPackage.EMISSION__REFERENCE, null, msgs);
+            if (newReference != null)
+                msgs = ((InternalEObject)newReference).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KEffectsPackage.EMISSION__REFERENCE, null, msgs);
+            msgs = basicSetReference(newReference, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KEffectsPackage.EMISSION__REFERENCE, newReference, newReference));
     }
 
     /**
@@ -192,6 +196,8 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
         switch (featureID) {
             case KEffectsPackage.EMISSION__SCHEDULE:
                 return ((InternalEList<?>)getSchedule()).basicRemove(otherEnd, msgs);
+            case KEffectsPackage.EMISSION__REFERENCE:
+                return basicSetReference(null, msgs);
             case KEffectsPackage.EMISSION__NEW_VALUE:
                 return basicSetNewValue(null, msgs);
         }
@@ -208,9 +214,8 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
         switch (featureID) {
             case KEffectsPackage.EMISSION__SCHEDULE:
                 return getSchedule();
-            case KEffectsPackage.EMISSION__VALUED_OBJECT:
-                if (resolve) return getValuedObject();
-                return basicGetValuedObject();
+            case KEffectsPackage.EMISSION__REFERENCE:
+                return getReference();
             case KEffectsPackage.EMISSION__NEW_VALUE:
                 return getNewValue();
         }
@@ -230,8 +235,8 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
                 getSchedule().clear();
                 getSchedule().addAll((Collection<? extends ScheduleObjectReference>)newValue);
                 return;
-            case KEffectsPackage.EMISSION__VALUED_OBJECT:
-                setValuedObject((ValuedObject)newValue);
+            case KEffectsPackage.EMISSION__REFERENCE:
+                setReference((ValuedObjectReference)newValue);
                 return;
             case KEffectsPackage.EMISSION__NEW_VALUE:
                 setNewValue((Expression)newValue);
@@ -251,8 +256,8 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
             case KEffectsPackage.EMISSION__SCHEDULE:
                 getSchedule().clear();
                 return;
-            case KEffectsPackage.EMISSION__VALUED_OBJECT:
-                setValuedObject((ValuedObject)null);
+            case KEffectsPackage.EMISSION__REFERENCE:
+                setReference((ValuedObjectReference)null);
                 return;
             case KEffectsPackage.EMISSION__NEW_VALUE:
                 setNewValue((Expression)null);
@@ -271,8 +276,8 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
         switch (featureID) {
             case KEffectsPackage.EMISSION__SCHEDULE:
                 return schedule != null && !schedule.isEmpty();
-            case KEffectsPackage.EMISSION__VALUED_OBJECT:
-                return valuedObject != null;
+            case KEffectsPackage.EMISSION__REFERENCE:
+                return reference != null;
             case KEffectsPackage.EMISSION__NEW_VALUE:
                 return newValue != null;
         }

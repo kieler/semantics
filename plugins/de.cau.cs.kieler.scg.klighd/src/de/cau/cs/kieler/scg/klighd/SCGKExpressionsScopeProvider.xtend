@@ -52,7 +52,7 @@ class SCGKExpressionsScopeProvider extends KExpressionsScopeProvider {
         	valuedObjects.addAll(tg.valuedObjects)
         }
         for(g : parent.guards) {
-        	valuedObjects += g.valuedObject
+        	valuedObjects += g.reference.valuedObject
         }
     }
     
@@ -81,7 +81,7 @@ class SCGKExpressionsScopeProvider extends KExpressionsScopeProvider {
     	if (parent instanceof SCGraph) {
     		(parent as SCGraph).getBasicBlocks.forEach[
     		    schedulingBlocks.forEach[
-                    scopeObjects += guards.head.valuedObject
+                    scopeObjects += guards.head.reference.valuedObject
     		    ]
     		]
     	}

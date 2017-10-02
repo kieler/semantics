@@ -39,6 +39,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.validation.AbstractDeclarativeValidator
 import org.eclipse.xtext.validation.Check
 import de.cau.cs.kieler.sccharts.DuringAction
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 //import org.eclipse.xtext.validation.Check
 
@@ -59,6 +60,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KEffectsExtensions
     
     static val INFOS_PRAGMA = PragmaRegistry.register("infos", StringPragma, "off: Disables infos in editor.")
         

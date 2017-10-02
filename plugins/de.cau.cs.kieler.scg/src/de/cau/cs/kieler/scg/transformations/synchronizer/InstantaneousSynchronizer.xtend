@@ -23,6 +23,7 @@ import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.scg.Fork
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -64,6 +65,8 @@ class InstantaneousSynchronizer extends AbstractSynchronizer {
     
     @Inject
     extension SCGControlFlowExtensions
+    
+    @Inject extension KEffectsExtensions
 
     public static val SYNCHRONIZER_ID = "de.cau.cs.kieler.scg.synchronizer.instantaneous"
 

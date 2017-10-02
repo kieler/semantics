@@ -50,6 +50,7 @@ import java.util.Set
 import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -98,23 +99,13 @@ class SimpleSequentializer extends AbstractSequentializer {
     // -- Injections 
     // -------------------------------------------------------------------------
     
-    @Inject
-    extension SCGCoreExtensions
-    
-    @Inject 
-    extension SCGDeclarationExtensions
-         
-    @Inject 
-    extension KExpressionsDeclarationExtensions	
-    
-    @Inject 
-    extension KExpressionsValuedObjectExtensions     
-    
-    @Inject 
-    extension KExpressionsCreateExtensions 
-
-    @Inject
-    extension AnnotationsExtensions
+    @Inject extension SCGCoreExtensions
+    @Inject extension SCGDeclarationExtensions
+    @Inject extension KExpressionsDeclarationExtensions	
+    @Inject extension KExpressionsValuedObjectExtensions     
+    @Inject extension KExpressionsCreateExtensions 
+    @Inject extension AnnotationsExtensions
+    @Inject extension KEffectsExtensions
 
     // -------------------------------------------------------------------------
     // -- Globals

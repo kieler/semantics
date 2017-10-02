@@ -294,7 +294,10 @@ Sustain:
 // = 7.5.2 Assignment and Procedure Call
 // -------------------------------------
 Assignment returns scl::Assignment:
-    valuedObject=[Variable|ID] ":=" expression=Expression;
+    reference=VariableReference ":=" expression=Expression;
+    
+VariableReference returns kexpressions::ValuedObjectReference:
+    valuedObject=[Variable|ID];
     
 ProcedureCall:
     (annotations += Annotation)*

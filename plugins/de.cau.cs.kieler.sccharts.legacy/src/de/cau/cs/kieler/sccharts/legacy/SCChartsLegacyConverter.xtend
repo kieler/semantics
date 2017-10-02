@@ -348,13 +348,19 @@ class SCChartsLegacyConverter {
     
     // KEffects
     
+    private def  de.cau.cs.kieler.kexpressions.ValuedObjectReference reference( de.cau.cs.kieler.kexpressions.ValuedObject valuedObject) {
+        createValuedObjectReference => [
+            setValuedObject(valuedObject)
+        ]
+    }      
+    
     def dispatch convert(Assignment asm) {
         return createAssignment => [
             annotations.addAll(asm.annotations.map[convert as Annotation])
             
-            valuedObject = asm.valuedObject.convert as de.cau.cs.kieler.kexpressions.ValuedObject
+            reference = (asm.valuedObject.convert as de.cau.cs.kieler.kexpressions.ValuedObject).reference
             expression = asm.expression.convert as Expression
-            indices.addAll(asm.indices.map[convert as Expression])
+            reference.indices.addAll(asm.indices.map[convert as Expression])
             operator = AssignOperator.getByName(asm.operator.getName)
         ]
     } 
@@ -363,7 +369,7 @@ class SCChartsLegacyConverter {
         return createEmission => [
             annotations.addAll(emit.annotations.map[convert as Annotation])
             
-            valuedObject = emit.valuedObject.convert as de.cau.cs.kieler.kexpressions.ValuedObject
+            reference = (emit.valuedObject.convert as de.cau.cs.kieler.kexpressions.ValuedObject).reference
             newValue = emit.newValue.convert as Expression
         ]
     }

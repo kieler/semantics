@@ -15,7 +15,6 @@ package de.cau.cs.kieler.scg.transformations.basicblocks
 
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.transformations.SCGTransformations
 
 /** 

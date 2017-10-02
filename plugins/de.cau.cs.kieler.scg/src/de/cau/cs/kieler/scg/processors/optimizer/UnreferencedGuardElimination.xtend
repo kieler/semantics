@@ -22,6 +22,7 @@ import de.cau.cs.kieler.scg.SCGraph
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import com.google.common.collect.ImmutableList
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * @author ssm
@@ -30,8 +31,8 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensio
  
 class UnreferencedGuardElimination extends AbstractOptimizer {
     
-    @Inject
-    extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KEffectsExtensions
     
     private static val GUARDNAME = "guard" 
     

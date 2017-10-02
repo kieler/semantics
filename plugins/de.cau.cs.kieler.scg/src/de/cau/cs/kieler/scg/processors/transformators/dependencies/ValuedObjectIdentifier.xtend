@@ -39,8 +39,8 @@ class ValuedObjectIdentifier {
     static val KExpressionsCompareExtensions compare = new KExpressionsCompareExtensions
     
     new(Assignment assignment) {
-        this.valuedObject = assignment.valuedObject
-        this.indices = assignment.indices.removeDynamicIndices
+        this.valuedObject = assignment.reference.valuedObject
+        this.indices = assignment.reference.indices.removeDynamicIndices
     }
     
     new(ValuedObjectReference valuedObjectReference) {

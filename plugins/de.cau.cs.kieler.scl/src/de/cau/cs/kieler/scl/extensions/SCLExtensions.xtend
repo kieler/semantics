@@ -31,6 +31,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import com.google.inject.Inject
 
 /**
  * @author ssm, krat
@@ -42,6 +44,8 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 class SCLExtensions {
     
     extension SCLFactory = SCLFactory.eINSTANCE
+    @Inject extension KEffectsExtensions
+    static val sCLFactory = SCLFactory.eINSTANCE
     
     /**
      * Removes all goto instructions, that target a label, that follows that goto.
@@ -314,7 +318,7 @@ class SCLExtensions {
 
                     // Add explicit assignment if initial value is given
                     if (valObj.initialValue != null) {
-                        subScope.statements.add(0, createAssignment => [
+                        subScope.statements.add(0, sCLFactory.createAssignment => [
                             it.trace(valObj)
                             valuedObject = valObj
                             expression = valObj.initialValue

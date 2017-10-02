@@ -44,6 +44,7 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTraci
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
 import java.util.Deque
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -70,6 +71,7 @@ class DependencyTransformationV2 extends Processor<SCGraphs, SCGraphs> implement
     @Inject extension SCGDependencyExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsValueExtensions
+    @Inject extension KEffectsExtensions
     
     /** Only save conflicting dependencies in the model. */
     public static val IProperty<Boolean> SAVE_ONLY_CONFLICTING_DEPENDENCIES = 

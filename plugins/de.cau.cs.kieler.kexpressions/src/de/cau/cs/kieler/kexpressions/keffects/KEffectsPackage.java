@@ -124,13 +124,13 @@ public interface KEffectsPackage extends EPackage {
     int ASSIGNMENT__SCHEDULE = EFFECT__SCHEDULE;
 
     /**
-     * The feature id for the '<em><b>Valued Object</b></em>' reference.
+     * The feature id for the '<em><b>Reference</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ASSIGNMENT__VALUED_OBJECT = EFFECT_FEATURE_COUNT + 0;
+    int ASSIGNMENT__REFERENCE = EFFECT_FEATURE_COUNT + 0;
 
     /**
      * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -142,22 +142,13 @@ public interface KEffectsPackage extends EPackage {
     int ASSIGNMENT__EXPRESSION = EFFECT_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Indices</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ASSIGNMENT__INDICES = EFFECT_FEATURE_COUNT + 2;
-
-    /**
      * The feature id for the '<em><b>Operator</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ASSIGNMENT__OPERATOR = EFFECT_FEATURE_COUNT + 3;
+    int ASSIGNMENT__OPERATOR = EFFECT_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Sub Reference</b></em>' containment reference.
@@ -166,7 +157,7 @@ public interface KEffectsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ASSIGNMENT__SUB_REFERENCE = EFFECT_FEATURE_COUNT + 4;
+    int ASSIGNMENT__SUB_REFERENCE = EFFECT_FEATURE_COUNT + 3;
 
     /**
      * The number of structural features of the '<em>Assignment</em>' class.
@@ -175,7 +166,7 @@ public interface KEffectsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ASSIGNMENT_FEATURE_COUNT = EFFECT_FEATURE_COUNT + 5;
+    int ASSIGNMENT_FEATURE_COUNT = EFFECT_FEATURE_COUNT + 4;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.EmissionImpl <em>Emission</em>}' class.
@@ -206,13 +197,13 @@ public interface KEffectsPackage extends EPackage {
     int EMISSION__SCHEDULE = EFFECT__SCHEDULE;
 
     /**
-     * The feature id for the '<em><b>Valued Object</b></em>' reference.
+     * The feature id for the '<em><b>Reference</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int EMISSION__VALUED_OBJECT = EFFECT_FEATURE_COUNT + 0;
+    int EMISSION__REFERENCE = EFFECT_FEATURE_COUNT + 0;
 
     /**
      * The feature id for the '<em><b>New Value</b></em>' containment reference.
@@ -484,15 +475,15 @@ public interface KEffectsPackage extends EPackage {
     EClass getAssignment();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.kexpressions.keffects.Assignment#getValuedObject <em>Valued Object</em>}'.
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kexpressions.keffects.Assignment#getReference <em>Reference</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Valued Object</em>'.
-     * @see de.cau.cs.kieler.kexpressions.keffects.Assignment#getValuedObject()
+     * @return the meta object for the containment reference '<em>Reference</em>'.
+     * @see de.cau.cs.kieler.kexpressions.keffects.Assignment#getReference()
      * @see #getAssignment()
      * @generated
      */
-    EReference getAssignment_ValuedObject();
+    EReference getAssignment_Reference();
 
     /**
      * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kexpressions.keffects.Assignment#getExpression <em>Expression</em>}'.
@@ -504,17 +495,6 @@ public interface KEffectsPackage extends EPackage {
      * @generated
      */
     EReference getAssignment_Expression();
-
-    /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kexpressions.keffects.Assignment#getIndices <em>Indices</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Indices</em>'.
-     * @see de.cau.cs.kieler.kexpressions.keffects.Assignment#getIndices()
-     * @see #getAssignment()
-     * @generated
-     */
-    EReference getAssignment_Indices();
 
     /**
      * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.keffects.Assignment#getOperator <em>Operator</em>}'.
@@ -549,15 +529,15 @@ public interface KEffectsPackage extends EPackage {
     EClass getEmission();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.kexpressions.keffects.Emission#getValuedObject <em>Valued Object</em>}'.
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kexpressions.keffects.Emission#getReference <em>Reference</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Valued Object</em>'.
-     * @see de.cau.cs.kieler.kexpressions.keffects.Emission#getValuedObject()
+     * @return the meta object for the containment reference '<em>Reference</em>'.
+     * @see de.cau.cs.kieler.kexpressions.keffects.Emission#getReference()
      * @see #getEmission()
      * @generated
      */
-    EReference getEmission_ValuedObject();
+    EReference getEmission_Reference();
 
     /**
      * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kexpressions.keffects.Emission#getNewValue <em>New Value</em>}'.
@@ -663,12 +643,12 @@ public interface KEffectsPackage extends EPackage {
         EClass ASSIGNMENT = eINSTANCE.getAssignment();
 
         /**
-         * The meta object literal for the '<em><b>Valued Object</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Reference</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference ASSIGNMENT__VALUED_OBJECT = eINSTANCE.getAssignment_ValuedObject();
+        EReference ASSIGNMENT__REFERENCE = eINSTANCE.getAssignment_Reference();
 
         /**
          * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
@@ -677,14 +657,6 @@ public interface KEffectsPackage extends EPackage {
          * @generated
          */
         EReference ASSIGNMENT__EXPRESSION = eINSTANCE.getAssignment_Expression();
-
-        /**
-         * The meta object literal for the '<em><b>Indices</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference ASSIGNMENT__INDICES = eINSTANCE.getAssignment_Indices();
 
         /**
          * The meta object literal for the '<em><b>Operator</b></em>' attribute feature.
@@ -713,12 +685,12 @@ public interface KEffectsPackage extends EPackage {
         EClass EMISSION = eINSTANCE.getEmission();
 
         /**
-         * The meta object literal for the '<em><b>Valued Object</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Reference</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference EMISSION__VALUED_OBJECT = eINSTANCE.getEmission_ValuedObject();
+        EReference EMISSION__REFERENCE = eINSTANCE.getEmission_Reference();
 
         /**
          * The meta object literal for the '<em><b>New Value</b></em>' containment reference feature.
