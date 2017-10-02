@@ -120,5 +120,12 @@ abstract class TemplateProcessor extends Configurable {
         // Notify listeners
         for(l : listeners)
             l.afterProcessing(this)
-    } 
+    }
+    
+    /**
+     * Returns true if the monitor was canceled.
+     */
+    protected def boolean isCanceled() {
+        return monitor != null && monitor.isCanceled
+    }
 }

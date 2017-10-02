@@ -40,6 +40,9 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.osgi.service.prefs.Preferences
 import de.cau.cs.kieler.prom.PromPlugin
+import org.eclipse.core.runtime.IProgressMonitor
+import de.cau.cs.kieler.prom.build.compilation.ModelCompiler
+import de.cau.cs.kieler.prom.build.simulation.SimulationCompiler
 
 /**
  * @author aas
@@ -62,6 +65,7 @@ class SimulationContext {
     public var List<IFile> executableFiles = newArrayList
     
     // Fields for model compilation to executables, which are used to start the simulation afterwards
+    public var IProgressMonitor monitor 
     @Accessors(PUBLIC_GETTER)
     private var EObject model
     @Accessors(PUBLIC_GETTER)
@@ -113,6 +117,10 @@ class SimulationContext {
         SimulationManager.addListener(listener)
         // Compile models if required
         compileModels
+        // In case compilation was canceled, don't start simulation
+        if(isCanceled) {
+            return
+        }
         startSimulation
     }
     
@@ -209,6 +217,10 @@ class SimulationContext {
             }
         }
         // Initialize simulation
+        if(isCanceled) {
+            sim.stop
+            return
+        }
         sim.initialize
         PromConsole.print("\n\nNew Simulation")
     }
@@ -233,7 +245,9 @@ class SimulationContext {
         // Prepare build configuration
         val buildConfig = simulationBackend.buildConfig
         val modelCompilers = buildConfig.createModelCompilers
+        modelCompilers.setProgressMonitor
         val simulationCompilers = buildConfig.createSimulationCompilers
+        simulationCompilers.setProgressMonitor
         // Add frontend to model compiler
         if(!modelAnalyzer.simulationFrontend.isNullOrEmpty) {
             for(modelCompiler : modelCompilers) {
@@ -256,6 +270,9 @@ class SimulationContext {
         // Compile model
         for (modelCompiler : modelCompilers) {
             val modelCompilationResult = modelCompiler.compile(modelFile, model)
+            if(isCanceled) {
+                return
+            }
             // Check result for errors
             checkErrors(modelCompilationResult.problems)
             
@@ -263,12 +280,31 @@ class SimulationContext {
             for (simulationCompiler : simulationCompilers) {
                 for (simFile : modelCompilationResult.createdSimulationFiles) {
                     val simCompilationResult = simulationCompiler.compile(simFile)
+                    if(isCanceled) {
+                        return
+                    }
                     // Check result for errors
                     checkErrors(simCompilationResult.problems)
                     
                     // Add the created executables to the executables that should be simulated
                     executableFiles.addAll(simCompilationResult.createdFiles)
                 }
+            }
+        }
+    }
+    
+    private def boolean isCanceled() {
+        return monitor != null && monitor.isCanceled
+    }
+    
+    /**
+     * Sets the monitor of this context as the monitor of the compilers in the list.
+     */
+    private def void setProgressMonitor(List<?> compilers) {
+        for(c : compilers) {
+            switch(c) {
+                ModelCompiler : c.monitor = monitor
+                SimulationCompiler : c.monitor = monitor
             }
         }
     }

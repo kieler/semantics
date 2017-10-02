@@ -12,15 +12,15 @@
  */
 package de.cau.cs.kieler.simulation.ui.highlighting
 
-import com.google.common.collect.Iterables
 import de.cau.cs.kieler.klighd.kgraph.KLabeledGraphElement
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KForeground
 import de.cau.cs.kieler.klighd.krendering.KStyle
 import de.cau.cs.kieler.klighd.krendering.KText
+import java.util.List
 import org.eclipse.elk.graph.properties.Property
-import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.util.EcoreUtil
 
 /**
  * @author aas
@@ -79,12 +79,23 @@ class Highlight {
     public def void remove() {
         // Remove highlighting from container of this element
         val ren = element.getData(typeof(KContainerRendering));
-        Iterables.removeIf(ren.styles, [it.isHighlighting]);
+        removeHighlighting(ren.styles)
         // Remove highlighting from label of this element
         if (!element.labels.isNullOrEmpty) {
             val label = element.labels.get(0)
             val ren2 = label.getData(typeof(KText));
-            Iterables.removeIf(ren2.styles, [it.isHighlighting]);
+            removeHighlighting(ren2.styles)
+        }
+    }
+    
+    /**
+     * Removes all highlighting styles from the list.
+     */
+    private def void removeHighlighting(List<KStyle> styles) {
+        for(s : styles.clone) {
+            if(s.isHighlighting) {
+                styles.remove(s)    
+            }
         }
     }
     

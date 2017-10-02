@@ -202,6 +202,13 @@ abstract class ModelCompiler extends Configurable {
     }
     
     /**
+     * Returns true if the monitor was canceled.
+     */
+    protected def boolean isCanceled() {
+        return monitor != null && monitor.isCanceled
+    }
+    
+    /**
      * Creates the folder in which compilation results will be saved.
      */
     protected def void createOutputFolder() {

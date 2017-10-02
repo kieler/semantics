@@ -36,9 +36,13 @@ import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.FileLocator
 import org.eclipse.core.runtime.IPath
+import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Path
 import org.eclipse.core.runtime.Platform
 import org.eclipse.core.runtime.QualifiedName
+import org.eclipse.core.runtime.Status
+import org.eclipse.core.runtime.SubMonitor
+import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.core.variables.IStringVariableManager
 import org.eclipse.core.variables.VariablesPlugin
 import org.eclipse.jdt.core.IClasspathEntry
@@ -617,6 +621,21 @@ class PromPlugin implements BundleActivator  {
                 }
             }
         }
+    }
+    
+    /**
+     * Starts the procedure in a new job with a progress monitor.
+     */
+    public static def void execInJob(String jobName, (SubMonitor) => void procedure) {
+        val job = new Job(jobName) {
+            override protected run(IProgressMonitor monitor) {
+                val subMonitor = SubMonitor.convert(monitor)
+                procedure.apply(subMonitor)
+                subMonitor.done
+                return Status.OK_STATUS
+            }
+        }
+        job.schedule
     }
     
     /**

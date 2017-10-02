@@ -3,15 +3,19 @@ package de.cau.cs.kieler.prom.ui
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.prom.ui.console.PromUIConsole
+import de.cau.cs.kieler.prom.ui.internal.KiBuildActivator
+import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Status
+import org.eclipse.core.runtime.SubMonitor
+import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.swt.widgets.Display
 import org.eclipse.ui.plugin.AbstractUIPlugin
 import org.eclipse.ui.statushandlers.StatusAdapter
 import org.eclipse.ui.statushandlers.StatusManager
 import org.osgi.framework.BundleContext
 
+import static de.cau.cs.kieler.prom.PromPlugin.*
 import static de.cau.cs.kieler.prom.console.PromConsole.*
-import de.cau.cs.kieler.prom.ui.internal.KiBuildActivator
 
 /**
  * The activator class controls the plug-in life cycle
@@ -76,7 +80,7 @@ class PromUIPlugin extends KiBuildActivator {
                 }
             }
         });
-    } 
+    }
     
     /** 
      * Log an information

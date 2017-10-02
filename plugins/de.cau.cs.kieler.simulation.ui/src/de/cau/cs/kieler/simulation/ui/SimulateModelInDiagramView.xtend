@@ -14,9 +14,10 @@ package de.cau.cs.kieler.simulation.ui
 
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelViewNotifier
-import de.cau.cs.kieler.simulation.SimulationContext
-import de.cau.cs.kieler.simulation.backends.SimulationBackend
+import de.cau.cs.kieler.prom.PromPlugin
+import de.cau.cs.kieler.simulation.SimulationUtil
 import de.cau.cs.kieler.simulation.ui.views.DataPoolViewToolbarAction
+import org.eclipse.core.runtime.SubMonitor
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.jface.action.IAction
 import org.eclipse.jface.action.IMenuManager
@@ -38,18 +39,17 @@ class SimulateModelInDiagramView extends KiCoModelUpdateController {
         
         simulateAction = new DataPoolViewToolbarAction("Simulate model", "runIcon.png") {
             override run() {
-                val model = getModel
-                if(model != null && model instanceof EObject) {
-                    // Start simulation with the model
-                    val context = new SimulationContext
-                    context.simulationBackend = SimulationBackend.currentBackend
-                    context.model = model as EObject
-                    context.start
-                }
+                PromPlugin.execInJob("Starting simulation",
+                                     [SubMonitor monitor |
+                                         val model = getModel
+                                         if(model != null && model instanceof EObject) {
+                                             SimulationUtil.startSimulation(model as EObject, monitor)
+                                         }
+                                     ])
             }
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */

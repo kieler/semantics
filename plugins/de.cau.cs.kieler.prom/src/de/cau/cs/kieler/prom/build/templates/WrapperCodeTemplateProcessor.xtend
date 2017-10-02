@@ -59,6 +59,9 @@ class WrapperCodeTemplateProcessor extends TemplateProcessor {
         val targetFile = project.getFile(target.stringValue)
         val modelFile = project.getFile(modelPath.stringValue)
         // Get annotations in model
+        if(isCanceled) {
+            return result
+        }
         val model = ModelImporter.load(modelFile)
         if(model == null) {
             val problem = BuildProblem.createError(modelFile.project, "Model file '"+modelFile.projectRelativePath+"' "
@@ -68,6 +71,9 @@ class WrapperCodeTemplateProcessor extends TemplateProcessor {
         val macroCallDatas = TemplateManager.getAnnotationInterface(model)
         
         // Create wrapper code
+        if(isCanceled) {
+            return result
+        }
         var modelName = TemplateManager.getModelName(model)
         if(modelName == null) {
             modelName = Files.getNameWithoutExtension(modelFile.name)
@@ -82,6 +88,9 @@ class WrapperCodeTemplateProcessor extends TemplateProcessor {
             l.afterProcessing(this)
         
         // Save output
+        if(isCanceled) {
+            return result
+        }
         PromPlugin.createResource(targetFile, generatedCode, true)
         result.addCreatedFile(targetFile)
         return result

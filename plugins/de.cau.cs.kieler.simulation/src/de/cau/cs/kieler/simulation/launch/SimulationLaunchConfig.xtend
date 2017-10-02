@@ -19,6 +19,7 @@ import java.util.List
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IProgressMonitor
+import org.eclipse.core.runtime.SubMonitor
 import org.eclipse.debug.core.ILaunch
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate
@@ -57,7 +58,11 @@ class SimulationLaunchConfig implements ILaunchConfigurationDelegate  {
      * Launches the last used configuration.
      */
     public static def void launchLastSelection() {
-        SimulationUtil.startSimulation(lastFiles)
+        PromPlugin.execInJob("Starting simulation",
+                             [SubMonitor monitor |
+                                 val childMonitor = monitor.newChild(1)
+                                 SimulationUtil.startSimulation(lastFiles, childMonitor)
+                             ])
     }
     
     /**
@@ -68,8 +73,8 @@ class SimulationLaunchConfig implements ILaunchConfigurationDelegate  {
         loadSettings(configuration)
         
         // Create simulation based on the loaded files
-        SimulationUtil.startSimulation(files)
         lastFiles = files
+        SimulationUtil.startSimulation(files, monitor)
     }
     
     /**

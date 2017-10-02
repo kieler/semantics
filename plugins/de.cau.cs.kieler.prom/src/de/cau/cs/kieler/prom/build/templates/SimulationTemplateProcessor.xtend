@@ -101,6 +101,7 @@ class SimulationTemplateProcessor extends TemplateProcessor {
         if(monitor != null) {
             monitor.subTask("Processing simulation template '"+template.stringValue+"'")
         }
+        val result = new FileGenerationResult
         // Notify listeners
         for(l : listeners)
             l.beforeProcessing(this)
@@ -113,6 +114,9 @@ class SimulationTemplateProcessor extends TemplateProcessor {
         var List<MacroCallData> macroCallDatas = newArrayList()
         
         // Get simulation interface from model
+        if(isCanceled) {
+            return result
+        }
         var IFile modelFile
         if(!modelPath.stringValue.isNullOrEmpty) {
             modelFile = project.getFile(modelPath.stringValue)
@@ -125,6 +129,9 @@ class SimulationTemplateProcessor extends TemplateProcessor {
         }
         
         // Get additional annotations from configuration
+        if(isCanceled) {
+            return result
+        }
         if(additionalVariables.value != null && additionalVariables.value instanceof Map) {
             val variablesMap = additionalVariables.mapValue
             for(entry : variablesMap.entrySet) {
@@ -136,6 +143,9 @@ class SimulationTemplateProcessor extends TemplateProcessor {
         }
         
         // Set additional placeholder variables
+        if(isCanceled) {
+            return result
+        }
         var String compiledModelFileLocation = ""
         if(!compiledModelPath.stringValue.isNullOrEmpty) {
             val compiledModelFile = project.getFile(compiledModelPath.stringValue)
@@ -143,6 +153,9 @@ class SimulationTemplateProcessor extends TemplateProcessor {
         }
         
         // Filter annotation datas based on the interface types that should be included (e.g. input/output/internal)
+        if(isCanceled) {
+            return result
+        }
         if(interfaceTypes.value != null) {
             if(interfaceTypes.value instanceof List) {
                 macroCallDatas = macroCallDatas.filter[it.matches(interfaceTypes.value as List)].toList
@@ -152,6 +165,9 @@ class SimulationTemplateProcessor extends TemplateProcessor {
         }
         
         // Create simulation code
+        if(isCanceled) {
+            return result
+        }
         var modelName = TemplateManager.getModelName(model)
         if(modelName == null) {
             modelName = Files.getNameWithoutExtension(modelFile.name)
@@ -167,7 +183,9 @@ class SimulationTemplateProcessor extends TemplateProcessor {
             l.afterProcessing(this)
         
         // Save output
-        val result = new FileGenerationResult
+        if(isCanceled) {
+            return result
+        }
         PromPlugin.createResource(targetFile, generatedCode, true)
         result.addCreatedFile(targetFile)
         return result

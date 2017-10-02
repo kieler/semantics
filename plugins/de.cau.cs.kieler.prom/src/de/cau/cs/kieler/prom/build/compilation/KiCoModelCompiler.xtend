@@ -97,6 +97,10 @@ class KiCoModelCompiler extends ModelCompiler {
         // Compile with kico
         compileWithKiCo
         
+        if(isCanceled) {
+            return compilationResult
+        }
+        
         // Save result if no errors and warnings
         if(compilationResult.problems.isNullOrEmpty) {
             // Flush compilation result to target
@@ -155,16 +159,16 @@ class KiCoModelCompiler extends ModelCompiler {
      */
     private def String getMessages(MessageObjectReferences messageObjectReferences, boolean includeStackTrace) {
         return messageObjectReferences.get(Environment.REPORT_ROOT).map[messageObject |
-                     if (messageObject.exception != null) {
-                         if(includeStackTrace) {
-                             ((new StringWriter) => [messageObject.exception.printStackTrace(new PrintWriter(it))]).toString()
-                         } else {
-                            messageObject.exception.toString    
-                         }
-                     } else {
-                        messageObject.message
-                     }
-                ].join("\n- ")
+             if (messageObject.exception != null) {
+                 if(includeStackTrace) {
+                     ((new StringWriter) => [messageObject.exception.printStackTrace(new PrintWriter(it))]).toString()
+                 } else {
+                    messageObject.exception.toString    
+                 }
+             } else {
+                messageObject.message
+             }
+        ].join("\n- ")
     }
     
     /**
@@ -186,6 +190,9 @@ class KiCoModelCompiler extends ModelCompiler {
         // Compile the model using all given compilation systems.
         resultModel = model
         for(systemPathOrId : systemPathsOrIds) {
+            if(isCanceled) {
+                return
+            }
             // Get the compilation system
             val system = getCompilationSystem(systemPathOrId)
             // Create the compilation context

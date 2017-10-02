@@ -15,6 +15,9 @@ package de.cau.cs.kieler.simulation
 import de.cau.cs.kieler.simulation.backends.SimulationBackend
 import java.util.List
 import org.eclipse.core.resources.IFile
+import org.eclipse.core.runtime.IProgressMonitor
+import org.eclipse.core.runtime.SubMonitor
+import org.eclipse.emf.ecore.EObject
 
 import static de.cau.cs.kieler.prom.FileExtensions.*
 
@@ -23,13 +26,17 @@ import static de.cau.cs.kieler.prom.FileExtensions.*
  *
  */
 class SimulationUtil {
-    
-    public static def void startSimulation(List<IFile> files) {
+    /**
+     * Starts a simulation from the given files.
+     * The files can contain a kisim file, simin file, trace file or executables.
+     */
+    public static def void startSimulation(List<IFile> files, IProgressMonitor monitor) {
         if(files.isNullOrEmpty) {
             return
         }
         val context = new SimulationContext
         context.simulationBackend = SimulationBackend.currentBackend
+        context.monitor = monitor
         for(file : files) {
             if(isSimulationConfiguration(file)) {
                 context.kisimFile = file
@@ -41,6 +48,24 @@ class SimulationUtil {
                 context.modelFile = file
             }
         }
+        context.start
+    }
+    
+    /**
+     * Starts a simulation by compiling an EObject using a suited frontend and backend
+     * and afterwards starting the executable result.
+     */
+    public static def void startSimulation(EObject model, SubMonitor monitor) {
+        // Prepare monitor
+        val childMonitor = if(monitor != null)
+                               monitor.newChild(1)
+                           else
+                               null
+        // Start simulation with the model
+        val context = new SimulationContext
+        context.simulationBackend = SimulationBackend.currentBackend
+        context.model = model as EObject
+        context.monitor = childMonitor
         context.start
     }
 }

@@ -41,6 +41,7 @@ class SimpleTemplateProcessor extends TemplateProcessor {
         if(monitor != null) {
             monitor.subTask("Processing template '"+template.stringValue+"'")
         }
+        val result = new FileGenerationResult
         // Get file handles
         val templateFile = project.getFile(template.stringValue)
         val targetFile = project.getFile(target.stringValue)
@@ -57,7 +58,9 @@ class SimpleTemplateProcessor extends TemplateProcessor {
             l.afterProcessing(this)
         
         // Save output
-        val result = new FileGenerationResult
+        if(isCanceled) {
+            return result
+        }
         if(!generatedCode.isNullOrEmpty) {
             PromPlugin.createResource(targetFile, generatedCode, true)
             result.addCreatedFile(targetFile)
