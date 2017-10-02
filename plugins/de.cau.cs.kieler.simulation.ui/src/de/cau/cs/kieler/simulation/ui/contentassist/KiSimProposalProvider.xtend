@@ -13,6 +13,8 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.RuleCall
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
+import de.cau.cs.kieler.simulation.kisim.SimulationConfiguration
+import de.cau.cs.kieler.simulation.core.SimulationManager
 
 /** 
  * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#content-assist
@@ -49,8 +51,17 @@ class KiSimProposalProvider extends AbstractKiSimProposalProvider {
                     }
                 }
             }
+            SimulationConfiguration : {
+                // Load attributes from simulation manager and add them as proposals
+                var simMan = SimulationManager.instance 
+                if(simMan == null) {
+                    simMan = new SimulationManager()
+                }
+                val attributeNames = simMan.configurableAttributes.map[it.name]
+                proposals.addAll(attributeNames)
+            }
         }
-     
+        
         // Create and register the completion proposal
         for(proposal : proposals) {
             acceptor.accept(createCompletionProposal(proposal, context))

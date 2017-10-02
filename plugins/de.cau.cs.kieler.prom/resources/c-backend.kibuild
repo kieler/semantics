@@ -2,7 +2,7 @@
 model compiler kico {
   outputFolder: kieler-gen
   outputFileExtension: c
-  compilationSystem: de.cau.cs.kieler.scg.netlist
+  compileChain: de.cau.cs.kieler.scg.processors.codegen.c
   
   // Generate simulation from output of compilation
   process simulation template {

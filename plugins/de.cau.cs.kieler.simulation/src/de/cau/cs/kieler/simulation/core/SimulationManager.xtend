@@ -463,8 +463,6 @@ class SimulationManager extends Configurable {
         }
         if(lastPositionInHistory != positionInHistory) {
             loadStateFromHistory
-            println(history)
-            println(positionInHistory)
             // Fire event
             fireEvent(SimulationOperation.STEP_HISTORY_BACK)
         }

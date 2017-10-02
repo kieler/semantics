@@ -16,9 +16,9 @@ class SimulationUiPlugin extends KiSimActivator {
     public static val PLUGIN_ID = "de.cau.cs.kieler.simulation.ui"
     
     /**
-     * The extension point id of simulation visualizers
+     * The extension point id of simulation participants
      */
-    public static val SIMULATION_VISUALIZER_EXTENSION_POINT = "de.cau.cs.kieler.simulation.ui.simulationVisualizer"
+    public static val SIMULATION_PARTICIPANT_EXTENSION_POINT = "de.cau.cs.kieler.simulation.ui.simulationParticipant"
     
     /**
      *  The shared instance
@@ -37,7 +37,7 @@ class SimulationUiPlugin extends KiSimActivator {
         ktraceDelegate = new KTraceActivator()
         
         // Create registered simulation visualizers
-        val configElements = ExtensionLookupUtil.getConfigurationElements(SIMULATION_VISUALIZER_EXTENSION_POINT)
+        val configElements = ExtensionLookupUtil.getConfigurationElements(SIMULATION_PARTICIPANT_EXTENSION_POINT)
         if(!configElements.isNullOrEmpty) {
             for(configElement : configElements) {
                 ExtensionLookupUtil.instantiateClassFromConfiguration(configElement)

@@ -34,6 +34,7 @@ import java.io.PrintWriter
 import java.io.StringWriter
 import java.util.Collections
 import java.util.List
+import java.util.Map
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.IPath
 import org.eclipse.core.runtime.Path
@@ -59,9 +60,23 @@ class KiCoModelCompiler extends ModelCompiler {
     
     /**
      * The KiCo compilation system to compile the model.
-     * This can either be an id of a system, or a file path to a kico file. 
+     * This can either be an id of a system or processor, or a file path to a kico file.
+     * Further it is possible to provide a list of these, which are compiled one after another.
+     * For more complex setups it is also possible to provide a map,
+     * where the key is the file extension for models and the value is the compile chain to apply.
      */
-    public val compilationSystem = new ConfigurableAttribute("compilationSystem", "de.cau.cs.kieler.sccharts.netlist.simple", #[String, List])
+    public val compileChain = new ConfigurableAttribute("compileChain", "de.cau.cs.kieler.sccharts.netlist.simple", #[String, List, Map])
+    
+    /**
+     * Optional frontend compile chain that is added before any other compile chain.
+     * May contain the same values as compileChain.
+     */
+    public val frontend = new ConfigurableAttribute("frontend", null, #[String, List])
+    
+    /**
+     * Determines whether register variables should be communicated to the simulation.
+     */
+    public val communicateRegisterVariables = new ConfigurableAttribute("communicateRegisterVariables", true, #[Boolean])
     
     /**
      * The file in which the compilation result will be saved
@@ -181,12 +196,13 @@ class KiCoModelCompiler extends ModelCompiler {
         for(l : listeners)
             l.beforeCompilation(this)
         // Prepare systems from attribute
-        var List<String> systemPathsOrIds
-        if(compilationSystem.value instanceof String) {
-            systemPathsOrIds = #[compilationSystem.stringValue]
-        } else if(compilationSystem.value instanceof List) {
-            systemPathsOrIds = compilationSystem.listValue.map[it.toString]
+        var Iterable<String> systemPathsOrIds = getCompileChain(compileChain.value)
+        // Add frontend to compile chain
+        if(frontend.isDefined) {
+            val frontEndSystemPathsOrIds = getCompileChain(frontend.value)
+            systemPathsOrIds = (frontEndSystemPathsOrIds + systemPathsOrIds)
         }
+        
         // Compile the model using all given compilation systems.
         resultModel = model
         for(systemPathOrId : systemPathsOrIds) {
@@ -208,6 +224,20 @@ class KiCoModelCompiler extends ModelCompiler {
         // Notify listeners
         for(l : listeners)
             l.afterCompilation(this)
+    }
+    
+    private def List<String> getCompileChain(Object value) {
+        if(value instanceof String) {
+            return #[value]
+        } else if(value instanceof List) {
+            return value.map[it.toString]
+        } else if(value instanceof Map) {
+            // When providing a map of compile chains,
+            // the key is the file extension of models and the value the corresponding compile chain. 
+            val mappedValue = compileChain.mapValue.get(file.fileExtension)
+            return getCompileChain(mappedValue)
+        }
+        throw new IllegalArgumentException("Could not determine compile chain from given input: "+value)
     }
     
     /**

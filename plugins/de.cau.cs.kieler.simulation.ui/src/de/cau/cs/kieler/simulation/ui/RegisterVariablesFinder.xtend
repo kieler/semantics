@@ -24,7 +24,7 @@ import de.cau.cs.kieler.prom.build.templates.SimulationTemplateProcessor
 import de.cau.cs.kieler.prom.build.templates.TemplateProcessor
 import de.cau.cs.kieler.prom.templates.VariableInterfaceType
 import de.cau.cs.kieler.scg.SCGraphs
-import java.util.List
+import java.util.Set
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
@@ -53,7 +53,7 @@ class RegisterVariablesFinder extends PromBuildAdapter {
      * The variables that are created during compilation and save the state of the model (the _pgXXXX variables)
      */
     @Accessors
-    private var List<String> registerVariables
+    private var Set<String> registerVariables
     
     /**
      * Adds the register variables to the additional variables of a simulation template processor.
@@ -65,12 +65,18 @@ class RegisterVariablesFinder extends PromBuildAdapter {
             // Add the variables to the simulation template processor
             if(!registerVariables.isNullOrEmpty) {
                 registerVariables.add("_GO")
-                if(processor.additionalVariables.value == null) {
-                    processor.additionalVariables.value = newHashMap
-                }
-                processor.additionalVariables.mapValue.put(VariableInterfaceType.OTHER.name, registerVariables)
+                processor.putAdditionalVariables(VariableInterfaceType.OTHER.name, registerVariables.toList)
             }
         }
+    }
+    
+    /**
+     * Reset the register variables.
+     * 
+     * @param compiler The potential KiCoModelCompiler
+     */
+    override beforeCompilation(ModelCompiler compiler) {
+        registerVariables = newHashSet
     }
     
     /**
@@ -82,14 +88,25 @@ class RegisterVariablesFinder extends PromBuildAdapter {
         // Get guard registers if any in the intermediate results of this processor
         var SCGraphs lastSCGraphs
         if(compiler instanceof KiCoModelCompiler) {
-            for (iResult : compiler.context.processorInstancesSequence) {
-                val intermediateResultModel = iResult.environment.getProperty(Environment.MODEL)
-                if(intermediateResultModel instanceof SCGraphs) {
-                    lastSCGraphs = intermediateResultModel
+            if(compiler.communicateRegisterVariables.boolValue) {
+                for (iResult : compiler.context.processorInstancesSequence) {
+                    val intermediateResultModel = iResult.environment.getProperty(Environment.MODEL)
+                    if(intermediateResultModel instanceof SCGraphs) {
+                        lastSCGraphs = intermediateResultModel
+                    }
                 }
             }
         }
-        updateRegisterVariables(lastSCGraphs)
+        if(lastSCGraphs != null) {
+            // Only look for register variables once
+            if(registerVariables.isNullOrEmpty) {
+                val monitor = compiler.monitor
+                if(monitor != null) {
+                    monitor.subTask("Searching register variables in SCG.")    
+                }
+                updateRegisterVariables(lastSCGraphs)
+            }    
+        }
     }
     
     /**
@@ -99,10 +116,6 @@ class RegisterVariablesFinder extends PromBuildAdapter {
      * @return the names of variables that save the state of the model
      */
     private def void updateRegisterVariables(SCGraphs scGraphs) {
-        registerVariables = newArrayList
-        if(scGraphs == null) {
-            return
-        }
         for(scg : scGraphs.scgs) {
             for(node : scg.nodes) {
                 if(node instanceof Assignment) {

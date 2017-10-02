@@ -86,5 +86,12 @@ class SCChartsAnalyzer extends DeclarationAnalyzer {
              + ", de.cau.cs.kieler.sccharts.processors.transformators.triggerEffect"
              + ", de.cau.cs.kieler.sccharts.processors.transformators.surfaceDepth" 
              + ", de.cau.cs.kieler.sccharts.scg.processors.transformators.SCG"
+             // SCG transformations
+             + ", de.cau.cs.kieler.scg.processors.transformators.dependency"
+             + ", de.cau.cs.kieler.scg.processors.transformators.basicBlocks"
+             + ", de.cau.cs.kieler.scg.processors.transformators.expressions"
+             + ", de.cau.cs.kieler.scg.processors.transformators.guards"
+             + ", de.cau.cs.kieler.scg.processors.transformators.scheduler"
+             + ", de.cau.cs.kieler.scg.processors.transformators.sequentializer"
     }
 }

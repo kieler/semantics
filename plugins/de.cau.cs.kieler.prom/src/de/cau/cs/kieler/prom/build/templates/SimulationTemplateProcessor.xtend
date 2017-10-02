@@ -292,6 +292,12 @@ class SimulationTemplateProcessor extends TemplateProcessor {
     }
     
     /**
-     * 
+     * Adds variables to the simulation interface.
      */
+     public def void putAdditionalVariables(String interfaceType, List<String> variables) {
+         if(additionalVariables.value == null) {
+            additionalVariables.value = newHashMap
+        }
+        additionalVariables.mapValue.put(interfaceType, variables)
+     }
 }

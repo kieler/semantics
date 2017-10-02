@@ -252,17 +252,11 @@ class SimulationContext {
         if(!modelAnalyzer.simulationFrontend.isNullOrEmpty) {
             for(modelCompiler : modelCompilers) {
                 if(modelCompiler instanceof KiCoModelCompiler) {
-                    val oldCompileChain = modelCompiler.compilationSystem.value
                     // Create list from CSV of compilation system ids / processor ids
                     val frontend = newArrayList
                     frontend.addAll(modelAnalyzer.simulationFrontend.split(","))
-                    if(oldCompileChain instanceof List) {
-                        frontend.addAll(oldCompileChain)
-                    } else if(oldCompileChain instanceof String) {
-                        frontend.add(oldCompileChain)
-                    }
-                    // Set new compile chain
-                    modelCompiler.compilationSystem.value = frontend 
+                    // Set frontend in model compiled
+                    modelCompiler.frontend.value = frontend
                 }
             }
         }

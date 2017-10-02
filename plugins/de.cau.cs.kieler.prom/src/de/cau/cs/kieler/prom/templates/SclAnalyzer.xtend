@@ -64,5 +64,12 @@ class SclAnalyzer extends DeclarationAnalyzer {
      */
     override protected getDefaultSimulationFrontend() {
         return "de.cau.cs.kieler.scl.processors.transformators.scl2scg"
+             // SCG transformations
+             + ", de.cau.cs.kieler.scg.processors.transformators.dependency"
+             + ", de.cau.cs.kieler.scg.processors.transformators.basicBlocks"
+             + ", de.cau.cs.kieler.scg.processors.transformators.expressions"
+             + ", de.cau.cs.kieler.scg.processors.transformators.guards"
+             + ", de.cau.cs.kieler.scg.processors.transformators.scheduler"
+             + ", de.cau.cs.kieler.scg.processors.transformators.sequentializer"
     }
 }

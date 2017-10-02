@@ -78,10 +78,10 @@
       </analyzer>
    </extension>
    <extension
-         point="de.cau.cs.kieler.simulation.ui.simulationVisualizer">
-      <simulationVisualizer
+         point="de.cau.cs.kieler.simulation.ui.simulationParticipant">
+      <simulationParticipant
             class="de.cau.cs.kieler.sccharts.prom.SCChartsDiagramHighlighter">
-      </simulationVisualizer>
+      </simulationParticipant>
    </extension>
 
 </plugin>

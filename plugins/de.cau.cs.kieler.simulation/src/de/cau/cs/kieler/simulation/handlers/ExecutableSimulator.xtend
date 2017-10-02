@@ -268,6 +268,7 @@ class ExecutableSimulator extends DefaultSimulator {
     private def String waitForJSONOutput(BufferedReader br) {
         // Wait until output has been generated
         var String line
+        var startTime = System.currentTimeMillis
         do {
             // Call readLine with a timeout of 1 second
             val callable = new Callable<String>(){ 
@@ -279,13 +280,17 @@ class ExecutableSimulator extends DefaultSimulator {
                 line = timeLimiter.callWithTimeout(callable, 1, TimeUnit.SECONDS, true)
             } catch(UncheckedTimeoutException e) {
                 // If the process is null, the simulation was stopped already
-                if(process != null) {
-                    stop();
-                    throw new IOException("Process of simulation '" + executable.name + "' is not responding", e)    
-                }
+                SimulationManager.instance.stop
+                throw new IOException("Process of simulation '" + executable.name + "' is not responding", e)    
             }
             
             Thread.sleep(1);
+            // Check error timeout
+            val time = System.currentTimeMillis 
+            if(time-startTime < 0 || time-startTime > 1000) {
+                SimulationManager.instance.stop
+                throw new IOException("Process of simulation '" + executable.name + "' is not responding with a JSON object.")
+            }
         } while(line == null || !line.startsWith("{") || !line.endsWith("}"))
         
         return line

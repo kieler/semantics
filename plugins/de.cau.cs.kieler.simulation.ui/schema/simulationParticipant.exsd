@@ -18,7 +18,7 @@
       </annotation>
       <complexType>
          <sequence minOccurs="1" maxOccurs="unbounded">
-            <element ref="simulationVisualizer"/>
+            <element ref="simulationParticipant"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -47,7 +47,7 @@
       </complexType>
    </element>
 
-   <element name="simulationVisualizer">
+   <element name="simulationParticipant">
       <complexType>
          <attribute name="class" type="string">
             <annotation>

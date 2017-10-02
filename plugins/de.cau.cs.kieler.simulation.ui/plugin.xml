@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension-point id="simulationVisualizer" name="SimulationVisualizer" schema="schema/simulationVisualizer.exsd"/>
+   <extension-point id="simulationParticipant" name="Simulation Participant" schema="schema/simulationParticipant.exsd"/>
    <extension
-         point="de.cau.cs.kieler.simulation.ui.simulationVisualizer">
-         <simulationVisualizer
-            class="de.cau.cs.kieler.simulation.ui.RegisterVariablesFinder">
-         </simulationVisualizer>
+         point="de.cau.cs.kieler.simulation.ui.simulationParticipant">
+         <simulationParticipant
+            class="de.cau.cs.kieler.simulation.ui.RegisterVariablesFinder" />
    </extension>
    <extension
          point="org.eclipse.debug.ui.launchShortcuts">

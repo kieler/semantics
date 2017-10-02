@@ -68,7 +68,7 @@ abstract class ModelCompiler extends Configurable {
     /**
      * Optional progess monitor to show the compilation state to the end user.
      */
-    @Accessors(PUBLIC_SETTER)
+    @Accessors(PUBLIC_SETTER, PUBLIC_GETTER)
     protected var IProgressMonitor monitor
     
     /**

@@ -191,9 +191,6 @@ class ConfigurableAttribute {
      * @return true if the value is OK, false otherwise
      */
     public def boolean isSupportedType(Object newValue) {
-        if(name == "whitelist") {
-            println("hi")
-        }
         if(supportedTypes.isNullOrEmpty) {
             return true
         }
