@@ -18,8 +18,8 @@ import freemarker.cache.StringTemplateLoader
 import freemarker.template.Configuration
 import freemarker.template.TemplateExceptionHandler
 import freemarker.template.Version
-import java.util.Locale
 import java.io.File
+import java.util.Locale
 
 /**
  * @author als

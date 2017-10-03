@@ -1,8 +1,8 @@
-<#include "/assets/read_and_write.ftl">
-<#include "/assets/serial.ftl">
-<#include "/assets/timing.ftl">
+<#include "/assets/snippets/read_and_write.ftl">
+<#include "/assets/snippets/serial.ftl">
+<#include "/assets/snippets/timing.ftl">
 #include "Arduino.h"
-#include "kieler-gen/${model_name}.c"
+#import "kieler-gen/${model_name}.c"
 
 // The data for the model
 TickData tickData;

@@ -23,7 +23,6 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.prom.console.PromConsole
-import de.cau.cs.kieler.prom.data.MacroCallData
 import java.util.List
 import org.eclipse.emf.ecore.EObject
 

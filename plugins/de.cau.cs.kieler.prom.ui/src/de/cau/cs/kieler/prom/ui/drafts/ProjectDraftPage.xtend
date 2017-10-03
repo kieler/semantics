@@ -11,13 +11,13 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.prom.ui.environments
+package de.cau.cs.kieler.prom.ui.drafts
 
 import de.cau.cs.kieler.prom.ExtensionLookupUtil
 import de.cau.cs.kieler.prom.PromPlugin
-import de.cau.cs.kieler.prom.data.EnvironmentData
 import de.cau.cs.kieler.prom.data.FileData
-import de.cau.cs.kieler.prom.environments.PromEnvironmentsInitializer
+import de.cau.cs.kieler.prom.drafts.ProjectDraftData
+import de.cau.cs.kieler.prom.drafts.PromProjectDrafts
 import de.cau.cs.kieler.prom.ui.UIExtensionLookupUtil
 import de.cau.cs.kieler.prom.ui.UIUtil
 import java.util.ArrayList
@@ -53,13 +53,12 @@ import org.eclipse.ui.IWorkbench
 import org.eclipse.ui.IWorkbenchPreferencePage
 
 /**
- * Implementation of the preferences page for environments.
- * Contains controls to create, remove, update and show the environments in the plugin's preference store.
- * Environments contain defaults to create, initialize and launch a project.  
+ * Implementation of the preferences page for project drafts.
+ * Contains controls to create, remove, update and show the project drafts in the plugin's preference store.
  * 
  * @author aas
  */
-class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePage {
+class ProjectDraftPage extends PreferencePage implements IWorkbenchPreferencePage {
 
     /**
      * The workbench from the init(...) method.
@@ -67,41 +66,41 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     private var IWorkbench workbench
     
     /**
-     * The preferences store which contains the environments.
+     * The preferences store which contains the project drafts.
      * This is the plugin's preference store.
      */
     private var IPreferenceStore store
 
     /**
-     * The list control to show the environments.
+     * The list control to show the project drafts.
      */
     private var TableViewer list
 
     /**
-     * The currently selected EnvironmentData of the list
-     * or null if there is no environment selected.
+     * The currently selected ProjectDraftData of the list
+     * or null if there is no project draft selected.
      */
-    private var EnvironmentData currentData
+    private var ProjectDraftData currentData
 
     /**
      * The tab folder which contains the tabs with
-     * the controls to modify the values of the selected environment.
+     * the controls to modify the values of the selected project drafts.
      */
     private var TabFolder tabFolder
 
     /**
-     * The input field for the environment name.
+     * The input field for the project drafts name.
      */
     private var Text name
     
     /**
-     * The combobox with the associated project wizard class name of the environment.
+     * The combobox with the associated project wizard class name of the project draft.
      * The combobox is filled with the extensions of 'org.eclipse.ui.newWizards' that create projects.
      */
     private var ComboViewer associatedProjectWizard
     
     /**
-     * The input field for the default model file of the environment.
+     * The input field for the default model file of the project draft.
      */
     private var Text modelFile
 
@@ -119,7 +118,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         comp.setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
         comp.setLayout(new GridLayout())
 
-        createEnvironmentsComponent(comp)
+        createTable(comp)
         createTabFolder(comp)
 
         loadSettings()
@@ -131,7 +130,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
 
     /**
      * Creates the tab folder and tabs with the controls
-     * to show and modify the data of the currently selected environment.
+     * to show and modify the data of the currently selected project draft.
      * 
      * @param parent The parent composite
      */
@@ -170,7 +169,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     }
 
     /**
-     * Creates the tab with the controls of the general settings of the current environment.
+     * Creates the tab with the controls of the general settings.
      * 
      * @param folder The TabFolder where the tab will be added to  
      */
@@ -300,7 +299,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     }
     
     /**
-     * Creates the controls for the name of the current environment.
+     * Creates the controls for the name.
      */
     private def void createNameComponent(Composite parent){
         val group = UIUtil.createGroup(parent, "Name", 1)
@@ -315,11 +314,11 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 checkConsistency()
             }
         })
-        name.toolTipText = "Unique name of the environment"
+        name.toolTipText = "Unique name of the project draft"
     }
     
     /**
-     * Creates the controls for the associated project wizard of the current environment.
+     * Creates the controls for the associated project wizard.
      */
     private def void createWizardComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Project wizard", 2)
@@ -372,7 +371,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     }
     
     /**
-     * Creates the controls for the model file of the current environment.
+     * Creates the controls for the model file.
      */
     private def void createModelFileComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Model file", 2)
@@ -393,12 +392,12 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     }
     
     /**
-     * Creates the list with environments and buttons to modify the list.
+     * Creates the list with project drafts and buttons to modify the list.
      * 
      * @param parent The parent composite 
      */
-    private def void createEnvironmentsComponent(Composite parent) {
-        val group = UIUtil.createGroup(parent, "Environments", 2)
+    private def void createTable(Composite parent) {
+        val group = UIUtil.createGroup(parent, "Project Drafts", 2)
 
         // Create table
         val table = new Table(group, SWT.BORDER.bitwiseOr(SWT.FULL_SELECTION))
@@ -415,7 +414,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         val pathColumn = UIUtil.createTableColumn(viewer, "Name", 200)
         pathColumn.labelProvider = new ColumnLabelProvider() {
             override String getText(Object element) {
-                val d = element as EnvironmentData
+                val d = element as ProjectDraftData
                 return d.name;
             }
         };
@@ -426,7 +425,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         list.addSelectionChangedListener(new ISelectionChangedListener() {
             override void selectionChanged(SelectionChangedEvent event) {
                 val selection = event.selection as IStructuredSelection
-                currentData = selection.firstElement as EnvironmentData
+                currentData = selection.firstElement as ProjectDraftData
                 updateControls(currentData)
                 updateEnabled()
                 checkConsistency()
@@ -439,15 +438,15 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         val addButton = UIUtil.createButton(bcomp, "Add")
         addButton.addSelectionListener(new SelectionAdapter(){
             override widgetSelected(SelectionEvent e) {
-                val env = new EnvironmentData("New Environment")
+                val env = new ProjectDraftData("New Project Draft")
                 
                 // Get first project wizard in combo box
                 val input = associatedProjectWizard.input as ArrayList<IConfigurationElement> 
                 if(!input.isEmpty)
                     env.associatedProjectWizardClass = input.get(0).getAttribute("class")
                 
-                // Add environment to list
-                val inputArray = (list.input as ArrayList<EnvironmentData>)
+                // Add project draft to list
+                val inputArray = (list.input as ArrayList<ProjectDraftData>)
                 inputArray.add(env)
                 list.refresh()
                 checkConsistency()
@@ -470,11 +469,11 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     }
 
     /**
-     * Updates the value of all controls with the values from the environment.
+     * Updates the value of all controls with the values from the project draft.
      * 
-     * @param data The environment to be displayed in the controls
+     * @param data The project draft to be displayed in the controls
      */
-    private def void updateControls(EnvironmentData data) {
+    private def void updateControls(ProjectDraftData data) {
         var String warning = null;
         if(data != null) {
             // Update name
@@ -546,7 +545,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      * The method is run if the 'Restore Defaults' button is clicked.
      */
     override void performDefaults() {
-        list.input = PromEnvironmentsInitializer.getAllDefaultEnvironments()
+        list.input = PromProjectDrafts.getAllDefaults()
         checkConsistency()
         super.performDefaults()
     }
@@ -555,18 +554,18 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      * Loads the relevant data for this page from the preference store. 
      */
     private def void loadSettings(){
-        if(EnvironmentData.isPreferenceStoreEmpty(store))
-            list.input = PromEnvironmentsInitializer.getAllDefaultEnvironments()
+        if(ProjectDraftData.isPreferenceStoreEmpty(store))
+            list.input = PromProjectDrafts.getAllDefaults()
         else
-            list.input = EnvironmentData.loadAllFromPreferenceStore(store)
+            list.input = ProjectDraftData.loadAllFromPreferenceStore(store)
     }
     
     /**
      * Saves the relevant data from this page from the preference store. 
      */
     private def void saveSettings(){
-        val environments = list.input as ArrayList<EnvironmentData> 
-        EnvironmentData.saveAllToPreferenceStore(store, environments)
+        val drafts = list.input as ArrayList<ProjectDraftData> 
+        ProjectDraftData.saveAllToPreferenceStore(store, drafts)
     }
     
     /**
@@ -587,23 +586,23 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      * @return A string with an error message or null if the input is valid.
      */
     private def String checkErrors(){
-        val environments = list.input as ArrayList<EnvironmentData>
+        val drafts = list.input as ArrayList<ProjectDraftData>
         
-        for(env : environments){
+        for(d : drafts){
             // Check for unique names
-            for(env2 : environments){
-                if(env != env2&& env.name == env2.name){
-                    return "Environment names must be unique."
+            for(d2 : drafts){
+                if(d != d2 && d.name == d2.name){
+                    return "Names must be unique."
                 }    
             }
             
             // Check for a non empty name
-            if(env.name == "")
-                return "Environment name must not be empty."
+            if(d.name == "")
+                return "Name must not be empty."
             
             // Check for no comma in names
-            if(env.name.contains(","))
-                return "Environment names must not contain a comma."
+            if(d.name.contains(","))
+                return "Names must not contain a comma."
         }
         
         return null
@@ -636,7 +635,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     }
     
     /**
-     * Enables the controls of the tab folder if an environment is selected.
+     * Enables the controls of the tab folder if an project draft is selected.
      * Disables the controls otherwise.
      */
     private def void updateEnabled(){

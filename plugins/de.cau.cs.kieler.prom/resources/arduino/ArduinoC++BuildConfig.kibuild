@@ -2,7 +2,8 @@
 model compiler kico {
   outputFolder: kieler-gen
   outputFileExtension: c
-  compilationSystem: de.cau.cs.kieler.sccharts.netlist.simple
+  compileChain: de.cau.cs.kieler.scg.processors.codegen.c
+  ${frontend}
   
   // Generate C simulation from output of compilation
   process simulation template {
@@ -21,5 +22,5 @@ simulation compiler c {
 process wrapper template {
   file: assets/main.ftl
   target: ${project_name}.cpp
-  modelFile: ${model_name}.sctx
+  modelFile: ${model_path}
 }

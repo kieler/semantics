@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.prom.templates
 
-import de.cau.cs.kieler.prom.data.MacroCallData
 import java.util.List
 import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors

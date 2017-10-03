@@ -157,8 +157,6 @@ abstract class PromLaunchShortcut implements ILaunchShortcut {
     
     /**
      * Initializes a new launch config for the project.
-     * The main file and environment used are loaded from the project's properties
-     * if possible or from dialogs if not.
      * 
      * @param config The launch configuration to be initialized
      */

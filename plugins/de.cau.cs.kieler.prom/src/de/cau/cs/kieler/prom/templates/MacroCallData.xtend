@@ -11,10 +11,8 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.prom.data
+package de.cau.cs.kieler.prom.templates
 
-import de.cau.cs.kieler.prom.templates.CodeGenerationPhase
-import de.cau.cs.kieler.prom.templates.VariableInterfaceType
 import java.util.HashSet
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors

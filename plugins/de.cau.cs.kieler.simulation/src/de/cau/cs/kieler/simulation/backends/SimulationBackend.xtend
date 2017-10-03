@@ -14,7 +14,7 @@ package de.cau.cs.kieler.simulation.backends
 
 import de.cau.cs.kieler.prom.ExtensionLookupUtil
 import de.cau.cs.kieler.prom.PromPlugin
-import de.cau.cs.kieler.prom.data.EnvironmentData
+import de.cau.cs.kieler.prom.drafts.ProjectDraftData
 import de.cau.cs.kieler.prom.kibuild.BuildConfiguration
 import java.util.List
 import org.eclipse.core.runtime.CoreException
@@ -52,7 +52,7 @@ abstract class SimulationBackend {
     
     public def String getName()
     public def BuildConfiguration getBuildConfig()
-    public def EnvironmentData getProjectDraft()
+    public def ProjectDraftData getProjectDraft()
     
     public static def void setCurrentBackend(SimulationBackend value) {
         preferences.put(CURRENT_BACKEND_ATTR, value.name)

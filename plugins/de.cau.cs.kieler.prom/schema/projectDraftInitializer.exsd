@@ -3,11 +3,10 @@
 <schema targetNamespace="de.cau.cs.kieler.prom" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="de.cau.cs.kieler.prom" id="environmentInitializer" name="EnvironmentInitializer"/>
+         <meta.schema plugin="de.cau.cs.kieler.prom" id="projectDraftInitializer" name="Project Draft Initializer"/>
       </appinfo>
       <documentation>
-         This extension point can be used to add default environments to use for KiCo compilation and project creation.
-The environments are restored when there are no environments in the preference store.
+         This extension point can be used to add default project drafts to use for project creation and initialization.
       </documentation>
    </annotation>
 
@@ -61,7 +60,7 @@ The environments are restored when there are no environments in the preference s
                   A fully qualified name of the java class implementing de.cau.cs.kieler.prom.environments.IEnvironmentsInitializer
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":de.cau.cs.kieler.prom.environments.IEnvironmentsInitializer"/>
+                  <meta.attribute kind="java" basedOn=":de.cau.cs.kieler.prom.drafts.IProjectDraftInitializer"/>
                </appinfo>
             </annotation>
          </attribute>

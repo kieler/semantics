@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.simulation.backends
 
-import de.cau.cs.kieler.prom.environments.PromEnvironmentsInitializer
+import de.cau.cs.kieler.prom.drafts.PromProjectDrafts
 
 /**
  * @author aas
@@ -24,7 +24,7 @@ class CSimulationBackend extends AbstractSimulationBackend {
      * {@inheritDoc}
      */
     override getBuildConfigOrigin() {
-        "platform:/plugin/de.cau.cs.kieler.prom/resources/c-backend.kibuild"
+        "platform:/plugin/de.cau.cs.kieler.prom/resources/c/c-backend.kibuild"
     }
     
     /**
@@ -38,6 +38,6 @@ class CSimulationBackend extends AbstractSimulationBackend {
      * {@inheritDoc}
      */
     override getProjectDraft() {
-        return PromEnvironmentsInitializer.genericCEnvironment
+        return PromProjectDrafts.genericC
     }
 }

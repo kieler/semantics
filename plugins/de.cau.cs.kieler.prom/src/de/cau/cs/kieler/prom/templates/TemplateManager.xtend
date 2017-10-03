@@ -17,7 +17,6 @@ import com.google.common.base.Charsets
 import com.google.common.io.Files
 import com.google.common.io.LineProcessor
 import de.cau.cs.kieler.prom.configurable.ResourceSubstitution
-import de.cau.cs.kieler.prom.data.MacroCallData
 import freemarker.template.Template
 import java.io.File
 import java.io.IOException
@@ -26,11 +25,7 @@ import java.util.List
 import java.util.Map
 import java.util.regex.Pattern
 import org.eclipse.core.resources.IFile
-import org.eclipse.core.runtime.CoreException
-import org.eclipse.core.runtime.IConfigurationElement
-import org.eclipse.core.runtime.Platform
 import org.eclipse.emf.ecore.EObject
-import javax.xml.ws.soap.AddressingFeature.Responses
 
 /**
  * This class generates wrapper code for models.

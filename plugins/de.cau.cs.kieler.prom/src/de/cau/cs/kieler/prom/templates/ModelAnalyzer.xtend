@@ -16,7 +16,6 @@ package de.cau.cs.kieler.prom.templates
 import com.google.common.base.Strings
 import de.cau.cs.kieler.prom.ExtensionLookupUtil
 import de.cau.cs.kieler.prom.PromPlugin
-import de.cau.cs.kieler.prom.data.MacroCallData
 import java.util.List
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.CoreException

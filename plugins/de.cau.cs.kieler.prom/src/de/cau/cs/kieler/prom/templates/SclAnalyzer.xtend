@@ -12,9 +12,9 @@
  */
 package de.cau.cs.kieler.prom.templates
 
+import de.cau.cs.kieler.prom.FileExtensions
 import de.cau.cs.kieler.scl.SCLProgram
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.prom.FileExtensions
 
 /**
  * @author aas
@@ -63,13 +63,13 @@ class SclAnalyzer extends DeclarationAnalyzer {
      * {@inheritDoc}
      */
     override protected getDefaultSimulationFrontend() {
-        return "de.cau.cs.kieler.scl.processors.transformators.scl2scg"
+        return "de.cau.cs.kieler.scl.processors.transformators.scl2scg, \n"
              // SCG transformations
-             + ", de.cau.cs.kieler.scg.processors.transformators.dependency"
-             + ", de.cau.cs.kieler.scg.processors.transformators.basicBlocks"
-             + ", de.cau.cs.kieler.scg.processors.transformators.expressions"
-             + ", de.cau.cs.kieler.scg.processors.transformators.guards"
-             + ", de.cau.cs.kieler.scg.processors.transformators.scheduler"
-             + ", de.cau.cs.kieler.scg.processors.transformators.sequentializer"
+             + "de.cau.cs.kieler.scg.processors.transformators.dependency, \n"
+             + "de.cau.cs.kieler.scg.processors.transformators.basicBlocks, \n"
+             + "de.cau.cs.kieler.scg.processors.transformators.expressions, \n"
+             + "de.cau.cs.kieler.scg.processors.transformators.guards, \n"
+             + "de.cau.cs.kieler.scg.processors.transformators.scheduler, \n"
+             + "de.cau.cs.kieler.scg.processors.transformators.sequentializer"
     }
 }

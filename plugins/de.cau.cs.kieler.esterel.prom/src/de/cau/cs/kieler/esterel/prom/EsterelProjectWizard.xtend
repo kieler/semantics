@@ -16,8 +16,7 @@ package de.cau.cs.kieler.esterel.prom
 import de.cau.cs.kieler.prom.ui.wizards.PromProjectWizard
 
 /**
- * Implementation of a project wizard that creates a project via environments
- * and initializes it with an Esterel file. 
+ * Implementation of a project wizard for esterel modeling.
  * 
  * @author aas
  */
@@ -26,7 +25,7 @@ class EsterelProjectWizard extends PromProjectWizard {
     override addPages(){
         super.addPages()
         
-        modelFileExtension = ".strl"
+        modelFileExtension = "strl"
         modelFileInitialContentURL = "platform:/plugin/de.cau.cs.kieler.esterel.prom/resources/default.strl"
     }
     

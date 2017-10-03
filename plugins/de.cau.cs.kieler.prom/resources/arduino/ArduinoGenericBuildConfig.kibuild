@@ -7,7 +7,8 @@
 model compiler kico {
   outputFolder: kieler-gen
   outputFileExtension: c
-  compilationSystem: de.cau.cs.kieler.sccharts.netlist.simple
+  compileChain: de.cau.cs.kieler.scg.processors.codegen.c
+  ${frontend}
   
   // Generate C simulation from output of compilation
 //  process simulation template {
@@ -19,12 +20,12 @@ model compiler kico {
 //simulation compiler c {
 //  libFolder: kieler-gen/sim/lib
 //  outputFolder: kieler-gen/sim/bin
-//  command: "gcc -std=c99 -o ./${outputFolder}/${executable_name}"
+//  command: "gcc -std=c99 -o \"./${outputFolder}/${executable_name}\" \"${file_path}\" "
 //}
 
 // Create wrapper code that can be deployed
 process wrapper template {
   file: assets/main.ftl
   target: ${project_name}.ino
-  modelFile: ${model_name}.sctx
+  modelFile: ${model_path}
 }

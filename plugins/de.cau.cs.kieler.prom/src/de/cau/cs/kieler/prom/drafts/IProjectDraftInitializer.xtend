@@ -11,20 +11,20 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.prom.environments
+package de.cau.cs.kieler.prom.drafts
 
-import de.cau.cs.kieler.prom.data.EnvironmentData
+import de.cau.cs.kieler.prom.drafts.ProjectDraftData
 import java.util.List
 
 /**
- * Interface which can be implemented by extensions to add new default environments.
+ * Interface which can be implemented by extensions to add new default project drafts.
  * 
  * @author aas
  */
-interface IEnvironmentsInitializer {
+interface IProjectDraftInitializer {
     
     /**
-     * Returns a list with default environments ready to use.
+     * Returns a list with default project drafts ready to use.
      */
-    public def List<EnvironmentData> getDefaultEnvironments()
+    public def List<ProjectDraftData> getProjectDrafts()
 }

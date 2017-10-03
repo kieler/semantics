@@ -16,8 +16,7 @@ package de.cau.cs.kieler.sccharts.prom
 import de.cau.cs.kieler.prom.ui.wizards.PromProjectWizard
 
 /**
- * Implementation of a project wizard that creates a project via environments
- * and initializes it with an SCCharts file. 
+ * Implementation of a project wizard for SCCharts projects. 
  * 
  * @author aas
  */
@@ -26,7 +25,7 @@ class SCChartsProjectWizard extends PromProjectWizard {
     override addPages(){
         super.addPages()
         
-        modelFileExtension = ".sctx"
+        modelFileExtension = "sctx"
         modelFileInitialContentURL = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/resources/default.sctx"
     }
 }

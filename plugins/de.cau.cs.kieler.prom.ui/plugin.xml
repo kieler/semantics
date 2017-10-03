@@ -5,9 +5,9 @@
          point="org.eclipse.ui.preferencePages">
       <page
             category="de.cau.cs.kieler.sccharts"
-            class="de.cau.cs.kieler.prom.ui.environments.EnvironmentsPage"
-            id="de.cau.cs.kieler.prom.environmentsPreferencePage"
-            name="Execution Environments">
+            class="de.cau.cs.kieler.prom.ui.drafts.ProjectDraftPage"
+            id="de.cau.cs.kieler.prom.projectDraftPreferencePage"
+            name="Project Drafts">
       </page>
    </extension>
    <extension

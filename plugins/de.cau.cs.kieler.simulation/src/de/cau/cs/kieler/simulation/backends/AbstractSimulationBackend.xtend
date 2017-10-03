@@ -36,6 +36,12 @@ abstract class AbstractSimulationBackend extends SimulationBackend {
     }
     
     private def BuildConfiguration loadBuildConfig(String origin) {
+//        val stream = PromPlugin.getInputStream(origin, #{"frontend" -> ""})
+//        val resourceSet = KiBuildStandaloneSetup.doSetup.getInstance(XtextResourceSet)
+//        val resource = resourceSet.createResource(URI.createURI("dummy:/dummy."+FileExtensions.BUILD_CONFIG));
+//        resource.load(stream, resourceSet.getLoadOptions());
+//        stream.close
+//        buildConfig = resource.contents.get(0) as BuildConfiguration
         val resourceSet = KiBuildStandaloneSetup.doSetup.getInstance(XtextResourceSet)
         val buildDefinitionFile = URI.createURI(origin)
         val resource = resourceSet.getResource(buildDefinitionFile, true)

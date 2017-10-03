@@ -15,12 +15,11 @@ package de.cau.cs.kieler.prom.ui
 
 import de.cau.cs.kieler.prom.IProjectHolder
 import de.cau.cs.kieler.prom.PromPlugin
-import de.cau.cs.kieler.prom.data.EnvironmentData
+import de.cau.cs.kieler.prom.drafts.ProjectDraftData
 import java.util.ArrayList
 import java.util.Collections
 import java.util.EnumSet
 import java.util.List
-import java.util.Set
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
@@ -509,28 +508,28 @@ class UIUtil {
     }
     
     /**
-     * Creates a combobox with the environments.
+     * Creates a combobox with the given project drafts.
      * 
      * @param parent The parent composite
-     * @parem environments A list with the environments which can be selected via this combobox
+     * @parem drafts A list with the project drafts which can be selected via this combobox
      * @return the new combobox.
      */
-    public static def ComboViewer createEnvironmentsCombo(Composite parent, List<EnvironmentData> environments) {
+    public static def ComboViewer createProjectDraftCombo(Composite parent, List<ProjectDraftData> drafts) {
         // Create combo
         val combo = new ComboViewer(parent, SWT.DEFAULT)
         combo.getControl().setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
 
         // Create content provider
         combo.setContentProvider(ArrayContentProvider.instance)
-        combo.input = environments
+        combo.input = drafts
 
-        if (!environments.isEmpty)
-            combo.selection = new StructuredSelection(environments.get(0))
+        if (!drafts.isEmpty)
+            combo.selection = new StructuredSelection(drafts.get(0))
 
         // Create label provider
         combo.setLabelProvider(new LabelProvider() {
             override String getText(Object element) {
-                val data = (element as EnvironmentData)
+                val data = (element as ProjectDraftData)
                 if (data != null)
                     return data.name
                 else

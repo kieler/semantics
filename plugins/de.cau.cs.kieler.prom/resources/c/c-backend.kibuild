@@ -1,8 +1,9 @@
-// Compile SCG to C code
+// Compile models to C code
 model compiler kico {
   outputFolder: kieler-gen
   outputFileExtension: c
   compileChain: de.cau.cs.kieler.scg.processors.codegen.c
+  ${frontend}
   
   // Generate simulation from output of compilation
   process simulation template {

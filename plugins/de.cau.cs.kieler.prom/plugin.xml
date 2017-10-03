@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension-point id="de.cau.cs.kieler.prom.environmentInitializer" name="Environment Initializer" schema="schema/environmentInitializer.exsd"/>
+   <extension-point id="de.cau.cs.kieler.prom.projectDraftInitializer" name="Project Draft Initializer" schema="schema/projectDraftInitializer.exsd"/>
    <extension-point id="modelAnalyzer" name="Model Analyzer" schema="schema/modelAnalyzer.exsd"/>
    <extension-point id="de.cau.cs.kieler.prom.modelCompiler" name="ModelCompiler" schema="schema/modelCompiler.exsd"/>
    <extension-point id="de.cau.cs.kieler.prom.simulationCompiler" name="SimulationCompiler" schema="schema/simulationCompiler.exsd"/>
@@ -12,12 +12,6 @@
        class = "de.cau.cs.kieler.prom.kibuild.KibuildPackage"
        genModel = "model/generated/KiBuild.genmodel" /> 
     
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.prom.environmentInitializer">
-      <initializer
-            class="de.cau.cs.kieler.prom.environments.PromEnvironmentsInitializer">
-      </initializer>
    </extension>
    <extension
          id="KielerModelingBuilder"
@@ -76,6 +70,12 @@
       <analyzer
             class="de.cau.cs.kieler.prom.templates.SclAnalyzer">
       </analyzer>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.prom.projectDraftInitializer">
+      <initializer
+            class="de.cau.cs.kieler.prom.drafts.PromProjectDrafts">
+      </initializer>
    </extension>
 
 </plugin>

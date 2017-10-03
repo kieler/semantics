@@ -16,14 +16,14 @@ package de.cau.cs.kieler.esterel.prom
 import com.google.common.base.Charsets
 import com.google.common.io.Files
 import de.cau.cs.kieler.esterel.EsterelProgram
-import de.cau.cs.kieler.prom.data.MacroCallData
+import de.cau.cs.kieler.prom.FileExtensions
+import de.cau.cs.kieler.prom.templates.MacroCallData
 import de.cau.cs.kieler.prom.templates.ModelAnalyzer
 import java.io.File
 import java.util.List
 import java.util.regex.Pattern
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.prom.FileExtensions
 
 /** 
  * An analyzer for wrapper code annotations in Esterel files.

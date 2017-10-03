@@ -77,11 +77,6 @@ class PromPlugin implements BundleActivator  {
      */
     public static val BUILD_CONFIGURATION_QUALIFIER = new QualifiedName(PromPlugin.PLUGIN_ID, "build.configuration")
     
-    /**
-     * Qualifier used to set the environment name of a project.
-     */
-    public static val ENVIRIONMENT_QUALIFIER = new QualifiedName(PromPlugin.PLUGIN_ID, "environment")
-    
     // Variable names
     public static val LAUNCHED_PROJECT_VARIABLE = "launched_project_loc"
 
@@ -149,11 +144,11 @@ class PromPlugin implements BundleActivator  {
      * The contents of the returned input stream optionally may have placeholders which can be directly replaced in this method.
      * 
      * @param filePathOrURL The file path or an URL with the platform protocol
-     * @param placeholderReplacement A map where the keys are placeholders in the stream and the values are the values for the placeholders. 
+     * @param variableMappings A map where the keys are variables in the stream and the values are the values for the placeholders (e.g. a value for ${project_name}). 
      *
      * @return the loaded input stream
      */
-    public static def InputStream getInputStream(String filePathOrURL, Map<String, String> placeholderReplacement) {
+    public static def InputStream getInputStream(String filePathOrURL, Map<String, String> variableMappings) {
         // Get input stream from url
         var InputStream inputStream= null
         if(!filePathOrURL.isNullOrEmpty){
@@ -171,14 +166,14 @@ class PromPlugin implements BundleActivator  {
         if(inputStream != null){
             
             // Return stream of content where all placeholders are replaced with actual values.
-            if(placeholderReplacement != null){
+            if(variableMappings != null){
                 val contents = streamToString(inputStream)
                 inputStream.close
                 
                 // Replace placeholders
                 var contentsWithoutPlaceholders = contents
-                for(placeholder : placeholderReplacement.keySet) {
-                    contentsWithoutPlaceholders = contentsWithoutPlaceholders.replace(placeholder, placeholderReplacement.get(placeholder))
+                for(entry : variableMappings.entrySet) {
+                    contentsWithoutPlaceholders = contentsWithoutPlaceholders.replace("${"+entry.key+"}", entry.value)
                 }
                 val stream = stringToStream(contentsWithoutPlaceholders)
                 return stream
@@ -263,7 +258,23 @@ class PromPlugin implements BundleActivator  {
         val path = new Path(fullPath)
         return findFile(path)
     }
-
+    
+    /**
+     * Find a folder via its full path in the workspace.
+     */
+    public static def IFolder findFolder(IPath fullPath) {
+        val folder = ResourcesPlugin.workspace.root.getFolder(fullPath)
+        return folder
+    }
+    
+    /**
+     * Find a folder via its full path in the workspace.
+     */
+    public static def IFolder findFolder(String fullPath) {
+        val path = new Path(fullPath)
+        return findFolder(path)
+    }
+    
     /**
      * Searches recursively for resources with the same file extension.
      * 
@@ -480,17 +491,17 @@ class PromPlugin implements BundleActivator  {
      * 
      * @param projectRelativePath The project relative path of the resource to create
      * @param origin Optional path to initial content for the new file
-     * @param placeholderReplacement A map with optional placeholder replacements, e.g., a value for ${project_name}
+     * @param variableMappings A map with optional variable mappings, e.g., a value for ${project_name}
      */
     public static def IFile initializeFile(IProject project, String projectRelativePath, String origin,
-                                           Map<String, String> placeholderReplacement) {
+                                           Map<String, String> variableMappings) {
        val resource = project.getFile(projectRelativePath)
        // Create empty file
        if(origin.trim.isNullOrEmpty) {
            PromPlugin.createResource(resource)
        } else {
            // Create file with initial content from origin
-           val initialContentStream = PromPlugin.getInputStream(origin, placeholderReplacement)
+           val initialContentStream = PromPlugin.getInputStream(origin, variableMappings)
            PromPlugin.createResource(resource, initialContentStream, true)
        }
        return resource

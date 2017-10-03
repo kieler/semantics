@@ -32,12 +32,6 @@
       </wizard>
    </extension>
    <extension
-         point="de.cau.cs.kieler.prom.environmentInitializer">
-      <initializer
-            class="de.cau.cs.kieler.sccharts.prom.SCChartsEnvironmentInitializer">
-      </initializer>
-   </extension>
-   <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
             targetID="de.cau.cs.kieler.Modeling">

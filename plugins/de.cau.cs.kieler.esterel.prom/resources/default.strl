@@ -1,4 +1,4 @@
-module ${name}:
+module ${file_basename}:
 
 pause;
 

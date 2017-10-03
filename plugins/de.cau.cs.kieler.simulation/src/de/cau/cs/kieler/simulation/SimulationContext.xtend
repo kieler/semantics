@@ -14,11 +14,14 @@ package de.cau.cs.kieler.simulation
 
 import de.cau.cs.kieler.prom.KiBuildExtensions
 import de.cau.cs.kieler.prom.ModelImporter
+import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.build.BuildProblem
 import de.cau.cs.kieler.prom.build.KielerModelingBuilder
 import de.cau.cs.kieler.prom.build.compilation.KiCoModelCompiler
+import de.cau.cs.kieler.prom.build.compilation.ModelCompiler
+import de.cau.cs.kieler.prom.build.simulation.SimulationCompiler
 import de.cau.cs.kieler.prom.console.PromConsole
-import de.cau.cs.kieler.prom.data.EnvironmentData
+import de.cau.cs.kieler.prom.drafts.ProjectDraftData
 import de.cau.cs.kieler.prom.templates.ModelAnalyzer
 import de.cau.cs.kieler.simulation.backends.SimulationBackend
 import de.cau.cs.kieler.simulation.core.SimulationManager
@@ -35,14 +38,11 @@ import java.util.List
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.preferences.InstanceScope
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.osgi.service.prefs.Preferences
-import de.cau.cs.kieler.prom.PromPlugin
-import org.eclipse.core.runtime.IProgressMonitor
-import de.cau.cs.kieler.prom.build.compilation.ModelCompiler
-import de.cau.cs.kieler.prom.build.simulation.SimulationCompiler
 
 /**
  * @author aas
@@ -97,10 +97,16 @@ class SimulationContext {
         }
     }
     
+    /**
+     * Defines if the temporary simulation project should be deleted after the simulation is done.
+     */
     public static def setDeleteTemporaryProject(boolean value) {
         preferences.putBoolean(DELETE_TEMPORARY_PROJECT_ATTR, value)
     }
     
+    /**
+     * Returns true if the temporary simulation project should be deleted after the simulation is done.
+     */
     public static def getDeleteTemporaryProject() {
         preferences.getBoolean(DELETE_TEMPORARY_PROJECT_ATTR, true)
     }
@@ -112,11 +118,15 @@ class SimulationContext {
         SimulationManager.instance?.stop
     }
     
+    /**
+     * Starts the simulation.
+     * If required, a specified model is compiled beforehand.
+     */
     public def void start() {
         // Add simulation listener if not done yet
         SimulationManager.addListener(listener)
-        // Compile models if required
-        compileModels
+        // Compile the model if required
+        compileModel
         // In case compilation was canceled, don't start simulation
         if(isCanceled) {
             return
@@ -124,11 +134,18 @@ class SimulationContext {
         startSimulation
     }
     
+    /**
+     * Sets the simulation backend.
+     */
     public def void setSimulationBackend(SimulationBackend simulationBackend) {
         this.simulationBackend = simulationBackend
+        // If the backend changes, the temporary project needs to be re-initialized
         initializedProject = false
     }
     
+    /**
+     * Sets the model by using an EObject.
+     */
     public def void setModel(EObject value) {
         if(value == null) {
             model = null
@@ -147,6 +164,9 @@ class SimulationContext {
         }
     }
     
+    /**
+     * Sets the model by using a file handle.
+     */
     public def void setModelFile(IFile value) {
         if(value == null) {
             model = null
@@ -157,6 +177,9 @@ class SimulationContext {
         setModel(loadedModel)
     }
     
+    /**
+     * Creates a new simulation with the current configuration.
+     */
     private def void startSimulation() {
         // Check consistency
         if(kisimFile == null && executableFiles.isNullOrEmpty) {
@@ -225,7 +248,10 @@ class SimulationContext {
         PromConsole.print("\n\nNew Simulation")
     }
     
-    private def void compileModels() {
+    /**
+     * Compiles the model to an executables that is ready for simulation.
+     */
+    private def void compileModel() {
         if(model == null) { 
             return    
         }
@@ -237,29 +263,30 @@ class SimulationContext {
         // Initialize project
         if(!initializedProject) {
             if(projectDraft != null) {
-                projectDraft.createInitialResources(modelFile.project)
+                // Replace frontend placeholder in build config
+                var String frontendReplacement = ""
+                if(modelAnalyzer != null && !modelAnalyzer.simulationFrontend.isNullOrEmpty) {
+                    frontendReplacement = "frontend: "+modelAnalyzer.simulationFrontend
+                }
+                projectDraft.createInitialResources(modelFile.project, #{"frontend" -> frontendReplacement})
                 initializedProject = true
             }
         }
         
         // Prepare build configuration
         val buildConfig = simulationBackend.buildConfig
+        // Set frontend of model compilers
         val modelCompilers = buildConfig.createModelCompilers
-        modelCompilers.setProgressMonitor
-        val simulationCompilers = buildConfig.createSimulationCompilers
-        simulationCompilers.setProgressMonitor
-        // Add frontend to model compiler
         if(!modelAnalyzer.simulationFrontend.isNullOrEmpty) {
-            for(modelCompiler : modelCompilers) {
-                if(modelCompiler instanceof KiCoModelCompiler) {
-                    // Create list from CSV of compilation system ids / processor ids
-                    val frontend = newArrayList
-                    frontend.addAll(modelAnalyzer.simulationFrontend.split(","))
-                    // Set frontend in model compiled
-                    modelCompiler.frontend.value = frontend
+            for(m : modelCompilers) {
+                if(m instanceof KiCoModelCompiler) {
+                    m.frontend.value = modelAnalyzer.simulationFrontend.replaceAll("\\s", "").split(",").toList
                 }
             }
         }
+        modelCompilers.setProgressMonitor
+        val simulationCompilers = buildConfig.createSimulationCompilers
+        simulationCompilers.setProgressMonitor
         
         // Compile model
         for (modelCompiler : modelCompilers) {
@@ -287,6 +314,9 @@ class SimulationContext {
         }
     }
     
+    /**
+     * Returns true if the progress monitor was canceled.
+     */
     private def boolean isCanceled() {
         return monitor != null && monitor.isCanceled
     }
@@ -344,7 +374,7 @@ class SimulationContext {
      * Returns the project draft from the simulation backend,
      * which is used to initialize the temporary simulation project with resources required for simulation compilation.
      */
-    private def EnvironmentData getProjectDraft() {
+    private def ProjectDraftData getProjectDraft() {
         return simulationBackend?.projectDraft
     }
 }

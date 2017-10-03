@@ -18,7 +18,7 @@ import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.build.FileGenerationResult
 import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
-import de.cau.cs.kieler.prom.data.MacroCallData
+import de.cau.cs.kieler.prom.templates.MacroCallData
 import de.cau.cs.kieler.prom.templates.TemplateContext
 import de.cau.cs.kieler.prom.templates.TemplateManager
 import de.cau.cs.kieler.prom.templates.VariableInterfaceType

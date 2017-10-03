@@ -4,10 +4,7 @@ import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.prom.ui.console.PromUIConsole
 import de.cau.cs.kieler.prom.ui.internal.KiBuildActivator
-import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Status
-import org.eclipse.core.runtime.SubMonitor
-import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.swt.widgets.Display
 import org.eclipse.ui.plugin.AbstractUIPlugin
 import org.eclipse.ui.statushandlers.StatusAdapter

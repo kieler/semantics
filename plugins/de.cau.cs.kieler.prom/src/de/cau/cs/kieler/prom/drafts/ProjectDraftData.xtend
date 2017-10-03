@@ -11,19 +11,17 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.prom.data
+package de.cau.cs.kieler.prom.drafts
 
 import com.google.common.io.Files
 import de.cau.cs.kieler.prom.PromPlugin
+import de.cau.cs.kieler.prom.data.ConfigurationSerializable
+import de.cau.cs.kieler.prom.data.FileData
 import java.util.List
+import java.util.Map
 import org.eclipse.core.resources.IProject
-import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.Path
-import org.eclipse.core.runtime.Platform
-import org.eclipse.core.runtime.Status
-import org.eclipse.jface.dialogs.MessageDialog
 import org.eclipse.jface.preference.IPreferenceStore
-import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * Data container for default settings to use in creation of new projects.
@@ -31,38 +29,32 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author aas
  *
  */
-class EnvironmentData extends ConfigurationSerializable {
-    // Attribute names for the preference store.
+class ProjectDraftData extends ConfigurationSerializable {
     /**
-     * Key for the attribute which holds a comma separated string of environment names.
+     * Key for the attribute which holds a comma separated string of project draft names.
      */
-    private static val ENVIRONMENT_IDENTIFIERS_ATTR = "environments"
+    private static val PROJECT_DRAFT_IDENTIFIERS_ATTR = "drafts"
     
-    // Fields
     /**
-     * The unique name of the environment.
-     * It is used to unambiguously store this environment's data. 
+     * The unique name of the project draft.
+     * It is used to unambiguously store its data. 
      */
-    @Accessors
-    protected String name = ""
+    public String name = ""
     
     /**
      * The class name of an implementation of the associated project wizard.
      */
-    @Accessors
-    protected String associatedProjectWizardClass = ""
+    public String associatedProjectWizardClass = ""
     
     /**
      * The project relative path to the initial model file. 
      */
-    @Accessors
-    protected String modelFile = ""
+    public String modelFile = ""
 
     /**
      * The files and folders that should be created at project setup.
      */
-    @Accessors
-    protected List<FileData> initialResources = newArrayList()
+    public List<FileData> initialResources = newArrayList()
     
     /**
      * Creates a new instance of the class.
@@ -95,40 +87,72 @@ class EnvironmentData extends ConfigurationSerializable {
     }
     
     /**
-     * @return true if the preference store does not contain any environment definitions.<br />
+     * Adds an initial resource for the project.
+     * If there is already an inital resource with the given project relative path, it is updated.
+     */
+    public def void addInitialResource(String projectRelativePath, String origin) {
+        addInitialResource(new FileData(projectRelativePath, origin))
+    }
+    
+    /**
+     * Adds an initial resource for the project.
+     * Possible duplicates of this resource are removed.
+     */
+    public def void addInitialResource(FileData data) {
+        if(!initialResources.isNullOrEmpty) {
+            val duplicates = initialResources.filter[it.projectRelativePath == data.projectRelativePath]
+            if(!duplicates.isNullOrEmpty) {
+                initialResources.removeAll(duplicates)
+            }
+        }
+        initialResources.add(data)
+    }
+    
+    /**
+     * Adds initial resources for the project.
+     * Possible duplicates of the resources are removed.
+     */
+    public def void addInitialResources(FileData... datas) {
+        for(d : datas) {
+            addInitialResource(d)
+        }
+    }
+    
+    /**
+     * @return true if the preference store does not contain any project draft definitions.<br />
      *         false otherwise.
      */
     public static def boolean isPreferenceStoreEmpty(IPreferenceStore store){
-        return store.getString(EnvironmentData.ENVIRONMENT_IDENTIFIERS_ATTR) == ""
+        return store.getString(ProjectDraftData.PROJECT_DRAFT_IDENTIFIERS_ATTR) == ""
     }
     
     /**
-     * Saves the environments to the preference store.
+     * Saves the project drafts to the preference store.
      * They can be retrieved by using loadAllFromPreferenceStore(...)
      */
-    public static def void saveAllToPreferenceStore(IPreferenceStore store, List<EnvironmentData> environments){
-        ConfigurationSerializable.saveAllToPreferenceStore(store, EnvironmentData.ENVIRONMENT_IDENTIFIERS_ATTR, environments)
+    public static def void saveAllToPreferenceStore(IPreferenceStore store, List<ProjectDraftData> drafts){
+        ConfigurationSerializable.saveAllToPreferenceStore(store, ProjectDraftData.PROJECT_DRAFT_IDENTIFIERS_ATTR, drafts)
     }
     
     /**
-     * Loads all environments from the preference store
+     * Loads all project drafts from the preference store
      * which have been saved using saveAllToPreferenceStore(...).
-     * @return list with the environments from the preference store.
+     * @return list with the project drafts from the preference store.
      */
-    public static def List<EnvironmentData> loadAllFromPreferenceStore(IPreferenceStore store){
-        return ConfigurationSerializable.loadAllFromPreferenceStore(store, EnvironmentData.ENVIRONMENT_IDENTIFIERS_ATTR, EnvironmentData)
-                as List<EnvironmentData>
+    public static def List<ProjectDraftData> loadAllFromPreferenceStore(IPreferenceStore store){
+        return ConfigurationSerializable.loadAllFromPreferenceStore(store, ProjectDraftData.PROJECT_DRAFT_IDENTIFIERS_ATTR, ProjectDraftData)
+                as List<ProjectDraftData>
     }
     
     /**
-     * Creates an environment with the name and loads its settings from the preference store.
-     * @return the created environment.
+     * Creates an project draft with the name and loads its settings from the preference store.
+     * @return the created project draft.
      */
-    public static def EnvironmentData loadInstanceFromPreferenceStore(IPreferenceStore store, String environmentName) {
+    public static def ProjectDraftData loadInstanceFromPreferenceStore(IPreferenceStore store, String name) {
         if(store == null) {
             return null
         } else {
-            var env = new EnvironmentData(environmentName)
+            var env = new ProjectDraftData(name)
             env.loadFromPreferenceStore(store)
             return env
         }
@@ -139,7 +163,7 @@ class EnvironmentData extends ConfigurationSerializable {
      * 
      * @param project The project
      */
-    public def void createInitialResources(IProject project) {
+    public def void createInitialResources(IProject project, Map<String, String> additionalReplacements) {
         for(data : initialResources) {
             var resolvedProjectRelativePath = data.projectRelativePath
             try {
@@ -150,12 +174,17 @@ class EnvironmentData extends ConfigurationSerializable {
                     val isFile = (path.fileExtension != null)
                     
                     if(isFile) {
-                        // Setup placeholders
-                        // Load path of model file
+                        // Setup placeholder replacements
                         val modelFilePathWithoutExtension = new Path(modelFile).removeFileExtension
                         val modelFileNameWithoutExtension = modelFilePathWithoutExtension.lastSegment
-                        val placeholderReplacements = #{"${project_name}" -> project.name,
-                                                        "${model_name}" -> modelFileNameWithoutExtension}
+                        
+                        val placeholderReplacements = newHashMap
+                        placeholderReplacements.put("project_name", project.name)
+                        placeholderReplacements.put("model_name", modelFileNameWithoutExtension)
+                        if(additionalReplacements != null) {
+                            placeholderReplacements.putAll(additionalReplacements)
+                        }
+                        
                         // Create file
                         PromPlugin.initializeFile(project, resolvedProjectRelativePath,
                                                   data.origin, placeholderReplacements)

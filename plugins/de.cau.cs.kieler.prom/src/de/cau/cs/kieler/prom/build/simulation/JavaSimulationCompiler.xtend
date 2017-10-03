@@ -104,7 +104,7 @@ class JavaSimulationCompiler extends SimulationCompiler {
      * {@inheritDoc}
      */
     override getLibFolderOrigin() {
-        return "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/java/json"
+        return "platform:/plugin/de.cau.cs.kieler.prom/resources/java/org/json"
     }
     
     /**

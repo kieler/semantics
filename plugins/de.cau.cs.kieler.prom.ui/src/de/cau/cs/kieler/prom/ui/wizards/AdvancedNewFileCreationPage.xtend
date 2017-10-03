@@ -13,10 +13,11 @@
  */
 package de.cau.cs.kieler.prom.ui.wizards
 
+import com.google.common.base.Strings
 import de.cau.cs.kieler.prom.PromPlugin
+import de.cau.cs.kieler.prom.configurable.ResourceSubstitution
 import de.cau.cs.kieler.prom.ui.UIUtil
 import org.eclipse.core.resources.IFile
-import org.eclipse.core.runtime.Path
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.swt.SWT
 import org.eclipse.swt.events.SelectionAdapter
@@ -25,10 +26,9 @@ import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.widgets.Button
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Label
+import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.dialogs.WizardNewFileCreationPage
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.eclipse.swt.widgets.Text
-import com.google.common.base.Strings
 
 /**
  * Implementation of an IWizardPage
@@ -219,9 +219,21 @@ class AdvancedNewFileCreationPage extends WizardNewFileCreationPage {
      * @return an input stream with initial contents for the new file
      */
     protected override getInitialContents() {
-        val fileNameWithoutExtension = new Path(fileName).removeFileExtension.toOSString
-        val placeholderMap = #{"${name}" -> fileNameWithoutExtension}
-        return PromPlugin.getInputStream(originTextField.text, placeholderMap)
+        val substitution = new ResourceSubstitution("file") {
+            override getValue() {
+                val projectName = containerFullPath.segment(0)
+                val folderPath = containerFullPath.removeFirstSegments(0)
+                val project = PromPlugin.findProject(projectName)
+                if(folderPath != null) {
+                    val folder = project.getFolder(folderPath)
+                    return folder.getFile(fileName)    
+                } else {
+                    return project.getFile(fileName)
+                }
+            }
+        }
+        val mappings = substitution.variableMappings
+        return PromPlugin.getInputStream(originTextField.text, mappings)
     }
     
     /**
