@@ -23,7 +23,7 @@ import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeGeneratorLo
 import java.util.Map
 
 /**
- * C Code Generator Logic Module
+ * Java Code Generator Logic Module
  * 
  * Handles the creation of the tick logic function.
  * 
