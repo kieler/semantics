@@ -56,7 +56,11 @@ class CCodeGeneratorTickModule extends SCGCodeGeneratorModule {
         code.append("void ").append(getName)
         code.append("(")
         code.append(struct.getName).append("* ").append(struct.getVariableName)
-        code.append(") {\n")
+        code.append(")")
+        
+        struct.forwardDeclarations.append(code).append(";\n")
+        
+        code.append(" {\n")
         code.append(indentation).append(logic.getName).append("(").append(struct.getVariableName).append(");\n")
         code.append("\n")
     }

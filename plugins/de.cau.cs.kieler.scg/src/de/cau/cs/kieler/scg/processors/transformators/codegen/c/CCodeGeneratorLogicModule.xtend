@@ -91,7 +91,11 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         code.append("void ").append(getName)
         code.append("(")
         code.append(struct.getName).append("* ").append(struct.getVariableName)
-        code.append(") {\n")
+        code.append(")")
+        
+        struct.forwardDeclarations.append(code).append(";\n")
+        
+        code.append(" {\n")
     }
     
     override generate() {
