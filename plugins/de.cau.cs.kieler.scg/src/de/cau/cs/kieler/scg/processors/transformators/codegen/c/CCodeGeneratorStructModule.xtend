@@ -47,6 +47,10 @@ class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
         STRUCT_VARIABLE_NAME
     }
     
+    def protected separator() {
+        "->"
+    }    
+    
     override generateInit() {
         code.append("typedef struct {\n")
     }

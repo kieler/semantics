@@ -52,6 +52,10 @@ class CCodeGenerator extends Processor<SCGraphs, CodeContainer> {
         ProcessorType.TRANSFORMATOR
     }
     
+    protected def SCGCodeGeneratorModule createCodeGenetatorModule() {
+        return injector.getInstance(CCodeGeneratorModule)
+    }
+    
     override process() {
         val graphs = getModel
         val result = new CodeContainer
@@ -62,7 +66,7 @@ class CCodeGenerator extends Processor<SCGraphs, CodeContainer> {
         // Create a c code generator module for each SCG.
         val scgModuleMap = <SCGraph, SCGCodeGeneratorModule> newHashMap
         for (scg : graphs.scgs) {
-            val generatorModule = injector.getInstance(CCodeGeneratorModule).configure("", graphs, scg, this, scgModuleMap, scg.name, null)
+            val generatorModule = createCodeGenetatorModule.configure("", graphs, scg, this, scgModuleMap, scg.name, null)
             scgModuleMap.put(scg, generatorModule)
             generatorModule.suffix = hostcodeSafeName(scg.name)
         }

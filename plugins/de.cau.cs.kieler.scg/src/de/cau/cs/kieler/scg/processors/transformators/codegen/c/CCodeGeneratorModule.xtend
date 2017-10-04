@@ -43,14 +43,14 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
     
     @Inject Injector injector
     
-    static val HOSTCODE = PragmaRegistry.register("hostcode", StringPragma, "Allows additional hostcode to be included (e.g. includes).")
-    static val C_EXTENSION = ".c"
-    static val H_EXTENSION = ".h"
+    protected static val HOSTCODE = PragmaRegistry.register("hostcode", StringPragma, "Allows additional hostcode to be included (e.g. includes).")
+    public static val C_EXTENSION = ".c"
+    public static val H_EXTENSION = ".h"
     
-    @Accessors var CCodeGeneratorStructModule struct
-    @Accessors var CCodeGeneratorResetModule reset 
-    @Accessors var CCodeGeneratorTickModule tick
-    @Accessors var CCodeGeneratorLogicModule logic
+    @Accessors var SCGCodeGeneratorModule struct
+    @Accessors var SCGCodeGeneratorModule reset 
+    @Accessors var SCGCodeGeneratorModule tick
+    @Accessors var SCGCodeGeneratorModule logic
     
     override configure(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
         Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, String codeFilename, SCGCodeGeneratorModule parent
@@ -90,13 +90,6 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
         reset.generateDone
         logic.generateDone
         tick.generateDone
-        
-        code.addHeader
-        code.hostcodeAdditions
-        code.append(struct.code).append("\n")
-        code.append(reset.code).append("\n")
-        code.append(logic.code).append("\n")
-        code.append(tick.code)
     }
     
     override generateWrite(CodeContainer codeContainer) {

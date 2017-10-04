@@ -78,6 +78,9 @@
       <Processor
             class="de.cau.cs.kieler.scg.transformations.dependencies.DependencyTransformation">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.codegen.java.JavaCodeGenerator">
+      </Processor>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.system">
@@ -101,6 +104,9 @@
       </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.scg.dependency.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.netlist.java.kico">
       </TransformationSystem>
    </extension>
 

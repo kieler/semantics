@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.processors.transformators.codegen.c
+package de.cau.cs.kieler.scg.processors.transformators.codegen.java
 
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.kicool.compilation.Processor
@@ -19,9 +19,10 @@ import java.util.Map
 import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
+import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeGeneratorTickModule
 
 /**
- * C Code Generator Tick Module
+ * Java Code Generator Tick Module
  * 
  * Handles the creation of the tick function.
  * 
@@ -30,48 +31,38 @@ import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpres
  * @kieler.rating 2017-07-21 proposed yellow 
  * 
  */
-class CCodeGeneratorTickModule extends SCGCodeGeneratorModule {
+class JavaCodeGeneratorTickModule extends CCodeGeneratorTickModule {
     
-    protected static val TICK_NAME = "tick"
-    
-    var CCodeGeneratorStructModule struct
-    var CCodeGeneratorLogicModule logic
+    var JavaCodeGeneratorStructModule struct
+    var JavaCodeGeneratorLogicModule logic
     
     override configure(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
         Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, String codeFilename, SCGCodeGeneratorModule parent
     ) {
         super.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename, parent)
         
-        struct = (parent as CCodeGeneratorModule).struct as CCodeGeneratorStructModule
-        logic = (parent as CCodeGeneratorModule).logic as CCodeGeneratorLogicModule
+        struct = (parent as JavaCodeGeneratorModule).struct as JavaCodeGeneratorStructModule
+        logic = (parent as JavaCodeGeneratorModule).logic as JavaCodeGeneratorLogicModule
         
         return this
     }
     
-    def getName() {
-        TICK_NAME + baseName + suffix
-    }
-    
     override generateInit() {
-        code.append("void ").append(getName)
+        indent(1)
+        code.append("public static void ").append(getName)
         code.append("(")
-        code.append(struct.getName).append("* ").append(struct.getVariableName)
+        code.append(struct.getName).append(" ").append(struct.getVariableName)
         code.append(")")
-        
-        struct.forwardDeclarations.append(code).append(";\n")
-        
         code.append(" {\n")
-        code.append(indentation).append(logic.getName).append("(").append(struct.getVariableName).append(");\n")
+        indent(2)
+        code.append(logic.getName).append("(").append(struct.getVariableName).append(");\n")
         code.append("\n")
     }
     
-    override generate() {
-
-    }
-    
     override generateDone() {
-        indent 
-        code.append(struct.getVariableName).append("->").append(AbstractGuardExpressions.GO_GUARD_NAME).append(" = 0;\n")
+        indent(2) 
+        code.append(struct.getVariableName).append(struct.separator).append(AbstractGuardExpressions.GO_GUARD_NAME).append(" = false;\n")
+        indent(1);
         code.append("}\n")
     }
     
