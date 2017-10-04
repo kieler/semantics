@@ -59,16 +59,14 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
     }
     
     override getVariableName() {
-        STRUCT_VARIABLE_NAME
+        ""
     }
     
     override protected separator() {
-        "."
+        ""
     }    
     
     override generateInit() {
-        code.append("public class ").append(className)
-        code.append(" {\n")
     }
     
     override generate() {
@@ -94,8 +92,6 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
     
     override generateDone() {
         if (hasArrays) createConstructor
-        
-        code.append("}").append("\n")
     }
     
     protected def createConstructor() {

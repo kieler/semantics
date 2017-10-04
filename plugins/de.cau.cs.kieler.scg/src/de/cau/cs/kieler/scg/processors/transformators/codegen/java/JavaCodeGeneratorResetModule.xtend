@@ -49,17 +49,16 @@ class JavaCodeGeneratorResetModule extends CCodeGeneratorResetModule {
     
     override generateInit() {
         indent
-        code.append("public static void ").append(getName)
+        code.append("public void ").append(getName)
         code.append("(")
-        code.append(struct.getName).append(" ").append(struct.getVariableName)
         code.append(")")
         
         code.append(" {\n")
         
         indent(2) 
-        code.append(struct.getVariableName).append(".").append(AbstractGuardExpressions.GO_GUARD_NAME).append(" = 1;\n")
+        code.append(struct.getVariableName).append(struct.separator).append(AbstractGuardExpressions.GO_GUARD_NAME).append(" = true;\n")
         indent(2)
-        code.append(struct.getVariableName).append(".").append(AbstractGuardTransformation.TERM_GUARD_NAME).append(" = 0;\n")
+        code.append(struct.getVariableName).append(struct.separator).append(AbstractGuardTransformation.TERM_GUARD_NAME).append(" = false;\n")
     }
     
     override generateDone() {

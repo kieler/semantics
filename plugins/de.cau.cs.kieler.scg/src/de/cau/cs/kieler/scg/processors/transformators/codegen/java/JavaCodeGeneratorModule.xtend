@@ -53,8 +53,7 @@ class JavaCodeGeneratorModule extends CCodeGeneratorModule {
         tick = injector.getInstance(JavaCodeGeneratorTickModule)
         logic = injector.getInstance(JavaCodeGeneratorLogicModule)
             
-        struct.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, 
-            codeFilename + JavaCodeGeneratorStructModule.STRUCT_NAME + JAVA_EXTENSION, this)
+        struct.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + JAVA_EXTENSION, this)
         reset.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + JAVA_EXTENSION, this)
         tick.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + JAVA_EXTENSION, this)
         logic.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + JAVA_EXTENSION, this)
@@ -63,19 +62,15 @@ class JavaCodeGeneratorModule extends CCodeGeneratorModule {
     }
     
     override generateWrite(CodeContainer codeContainer) {
-        val hFilename = struct.codeFilename
         val cFilename = codeFilename + JAVA_EXTENSION
-        val hFile = new StringBuilder
         val cFile = new StringBuilder
 
-        hFile.addHeader
-        hFile.append(struct.code)
-        
         cFile.addHeader
         cFile.hostcodeAdditions
         
         cFile.append("public class " + codeFilename + " {\n\n")
-        
+
+        cFile.append(struct.code).append("\n")        
         cFile.append(reset.code).append("\n")
         cFile.append(logic.code).append("\n")
         cFile.append(tick.code)
@@ -83,7 +78,6 @@ class JavaCodeGeneratorModule extends CCodeGeneratorModule {
         cFile.append("}\n")
 
         codeContainer.add(cFilename, cFile.toString)         
-        codeContainer.add(hFilename, hFile.toString)
     }    
     
     override def void addHeader(StringBuilder sb) {

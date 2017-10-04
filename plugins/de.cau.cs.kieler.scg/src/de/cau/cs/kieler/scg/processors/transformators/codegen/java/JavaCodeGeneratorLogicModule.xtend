@@ -58,9 +58,8 @@ class JavaCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
         preVariables.clear
         
         indent(0)
-        code.append("public static void ").append(getName)
+        code.append("public void ").append(getName)
         code.append("(")
-        code.append(struct.getName).append(" ").append(struct.getVariableName)
         code.append(")")
         
         code.append(" {\n")
