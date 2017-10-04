@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.simulation.core
 
+import de.cau.cs.kieler.simulation.json.JsonManager
 import java.util.List
 import java.util.Map
 import java.util.regex.Pattern
@@ -65,6 +66,27 @@ class DataPool implements Cloneable {
             pool.addModel(m.clone())            
         }
         return pool
+    }
+    
+    /**
+     * Convert this instance to a json representation.
+     * 
+     * @return the JSON representation for this object
+     */
+    public def String toJson() {
+        val json = JsonManager.GSON.toJson(this)
+        return json
+    }
+    
+    /**
+     * Creates a data pool from a json representation
+     * 
+     * @param json The JSON representation to be loaded
+     * @return the loaded data pool
+     */
+    public static def DataPool createFromJson(String json) {
+        val m = JsonManager.GSON.fromJson(json, typeof(DataPool))
+        return m
     }
     
     /**

@@ -253,10 +253,10 @@ class DataPoolView extends ViewPart {
             }
             
             override getFileContent(List<DataPool> history) {
-                // Turn models of data pool history to json objects
+                // Turn data pools history to json objects
                 var String content = ""
                 for(pool : history) {
-                    content += pool.models.get(0).toJson+"\n"
+                    content += pool.toJson
                 }
                 return content
             }
