@@ -14,6 +14,7 @@ import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.SCGPlugin
 import java.util.logging.Level
 import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * @author ssm
@@ -46,14 +47,10 @@ class DCGuardScheduler extends SimpleGuardScheduler {
     // -- Injections 
     // -------------------------------------------------------------------------
     
-    @Inject
-    extension SCGCoreExtensions
-    	
-    @Inject
-    extension SCGDependencyExtensions	
-    
-    @Inject
-    extension AnnotationsExtensions
+    @Inject extension SCGCoreExtensions
+    @Inject extension SCGDependencyExtensions	
+    @Inject extension AnnotationsExtensions
+    @Inject extension KEffectsExtensions
     
 	/**
 	 * {@inherited}

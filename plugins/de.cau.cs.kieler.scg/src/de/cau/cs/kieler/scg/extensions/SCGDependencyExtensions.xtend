@@ -28,15 +28,13 @@ import java.util.List
 import de.cau.cs.kieler.scg.Entry
 import java.util.Map
 import de.cau.cs.kieler.scg.Fork
-import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.OperatorExpression
-import java.lang.management.OperatingSystemMXBean
-import javax.management.OperationsException
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.OperatorType
 import java.util.EnumSet
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -60,14 +58,9 @@ import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
  */
 class SCGDependencyExtensions { 
 	
-	@Inject
-	extension SCGCoreExtensions
-	
-	@Inject
-	extension SCGControlFlowExtensions
-	
-	@Inject
-	extension KExpressionsValueExtensions
+	@Inject extension SCGControlFlowExtensions
+	@Inject extension KExpressionsValueExtensions
+	@Inject extension KEffectsExtensions
 	
 	 def DataDependency createDataDependency(DataDependencyType type) {
 	 	ScgFactory::eINSTANCE.createDataDependency => [ 

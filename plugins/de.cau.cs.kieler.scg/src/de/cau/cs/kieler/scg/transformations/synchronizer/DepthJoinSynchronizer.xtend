@@ -35,6 +35,7 @@ import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
 import java.util.Set
 import de.cau.cs.kieler.scg.SCGPlugin
 import java.util.logging.Level
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -71,11 +72,9 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
     // -- Injections 
     // -------------------------------------------------------------------------
     
-    @Inject
-    extension SCGCoreExtensions    
-    
-    @Inject
-    extension KEffectsSerializeExtensions   
+    @Inject extension SCGCoreExtensions    
+    @Inject extension KEffectsSerializeExtensions   
+    @Inject extension KEffectsExtensions
     
     public var Declaration schizophrenicDeclaration = null
    

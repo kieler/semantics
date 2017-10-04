@@ -17,7 +17,6 @@ import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
-import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator;
@@ -51,9 +50,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getSchedule <em>Schedule</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getValuedObject <em>Valued Object</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getReference <em>Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getExpression <em>Expression</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getIndices <em>Indices</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getOperator <em>Operator</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getSubReference <em>Sub Reference</em>}</li>
  * </ul>
@@ -72,14 +70,14 @@ public class GuardImpl extends NodeImpl implements Guard {
     protected EList<ScheduleObjectReference> schedule;
 
     /**
-     * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
+     * The cached value of the '{@link #getReference() <em>Reference</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getValuedObject()
+     * @see #getReference()
      * @generated
      * @ordered
      */
-    protected ValuedObject valuedObject;
+    protected ValuedObjectReference reference;
 
     /**
      * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
@@ -90,16 +88,6 @@ public class GuardImpl extends NodeImpl implements Guard {
      * @ordered
      */
     protected Expression expression;
-
-    /**
-     * The cached value of the '{@link #getIndices() <em>Indices</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getIndices()
-     * @generated
-     * @ordered
-     */
-    protected EList<Expression> indices;
 
     /**
      * The default value of the '{@link #getOperator() <em>Operator</em>}' attribute.
@@ -167,16 +155,23 @@ public class GuardImpl extends NodeImpl implements Guard {
      * <!-- end-user-doc -->
      * @generated
      */
-    public ValuedObject getValuedObject() {
-        if (valuedObject != null && valuedObject.eIsProxy()) {
-            InternalEObject oldValuedObject = (InternalEObject)valuedObject;
-            valuedObject = (ValuedObject)eResolveProxy(oldValuedObject);
-            if (valuedObject != oldValuedObject) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgPackage.GUARD__VALUED_OBJECT, oldValuedObject, valuedObject));
-            }
+    public ValuedObjectReference getReference() {
+        return reference;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetReference(ValuedObjectReference newReference, NotificationChain msgs) {
+        ValuedObjectReference oldReference = reference;
+        reference = newReference;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.GUARD__REFERENCE, oldReference, newReference);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
         }
-        return valuedObject;
+        return msgs;
     }
 
     /**
@@ -184,20 +179,18 @@ public class GuardImpl extends NodeImpl implements Guard {
      * <!-- end-user-doc -->
      * @generated
      */
-    public ValuedObject basicGetValuedObject() {
-        return valuedObject;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setValuedObject(ValuedObject newValuedObject) {
-        ValuedObject oldValuedObject = valuedObject;
-        valuedObject = newValuedObject;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.GUARD__VALUED_OBJECT, oldValuedObject, valuedObject));
+    public void setReference(ValuedObjectReference newReference) {
+        if (newReference != reference) {
+            NotificationChain msgs = null;
+            if (reference != null)
+                msgs = ((InternalEObject)reference).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgPackage.GUARD__REFERENCE, null, msgs);
+            if (newReference != null)
+                msgs = ((InternalEObject)newReference).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgPackage.GUARD__REFERENCE, null, msgs);
+            msgs = basicSetReference(newReference, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.GUARD__REFERENCE, newReference, newReference));
     }
 
     /**
@@ -241,18 +234,6 @@ public class GuardImpl extends NodeImpl implements Guard {
         }
         else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.GUARD__EXPRESSION, newExpression, newExpression));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EList<Expression> getIndices() {
-        if (indices == null) {
-            indices = new EObjectContainmentEList<Expression>(Expression.class, this, ScgPackage.GUARD__INDICES);
-        }
-        return indices;
     }
 
     /**
@@ -329,10 +310,10 @@ public class GuardImpl extends NodeImpl implements Guard {
         switch (featureID) {
             case ScgPackage.GUARD__SCHEDULE:
                 return ((InternalEList<?>)getSchedule()).basicRemove(otherEnd, msgs);
+            case ScgPackage.GUARD__REFERENCE:
+                return basicSetReference(null, msgs);
             case ScgPackage.GUARD__EXPRESSION:
                 return basicSetExpression(null, msgs);
-            case ScgPackage.GUARD__INDICES:
-                return ((InternalEList<?>)getIndices()).basicRemove(otherEnd, msgs);
             case ScgPackage.GUARD__SUB_REFERENCE:
                 return basicSetSubReference(null, msgs);
         }
@@ -349,13 +330,10 @@ public class GuardImpl extends NodeImpl implements Guard {
         switch (featureID) {
             case ScgPackage.GUARD__SCHEDULE:
                 return getSchedule();
-            case ScgPackage.GUARD__VALUED_OBJECT:
-                if (resolve) return getValuedObject();
-                return basicGetValuedObject();
+            case ScgPackage.GUARD__REFERENCE:
+                return getReference();
             case ScgPackage.GUARD__EXPRESSION:
                 return getExpression();
-            case ScgPackage.GUARD__INDICES:
-                return getIndices();
             case ScgPackage.GUARD__OPERATOR:
                 return getOperator();
             case ScgPackage.GUARD__SUB_REFERENCE:
@@ -377,15 +355,11 @@ public class GuardImpl extends NodeImpl implements Guard {
                 getSchedule().clear();
                 getSchedule().addAll((Collection<? extends ScheduleObjectReference>)newValue);
                 return;
-            case ScgPackage.GUARD__VALUED_OBJECT:
-                setValuedObject((ValuedObject)newValue);
+            case ScgPackage.GUARD__REFERENCE:
+                setReference((ValuedObjectReference)newValue);
                 return;
             case ScgPackage.GUARD__EXPRESSION:
                 setExpression((Expression)newValue);
-                return;
-            case ScgPackage.GUARD__INDICES:
-                getIndices().clear();
-                getIndices().addAll((Collection<? extends Expression>)newValue);
                 return;
             case ScgPackage.GUARD__OPERATOR:
                 setOperator((AssignOperator)newValue);
@@ -408,14 +382,11 @@ public class GuardImpl extends NodeImpl implements Guard {
             case ScgPackage.GUARD__SCHEDULE:
                 getSchedule().clear();
                 return;
-            case ScgPackage.GUARD__VALUED_OBJECT:
-                setValuedObject((ValuedObject)null);
+            case ScgPackage.GUARD__REFERENCE:
+                setReference((ValuedObjectReference)null);
                 return;
             case ScgPackage.GUARD__EXPRESSION:
                 setExpression((Expression)null);
-                return;
-            case ScgPackage.GUARD__INDICES:
-                getIndices().clear();
                 return;
             case ScgPackage.GUARD__OPERATOR:
                 setOperator(OPERATOR_EDEFAULT);
@@ -437,12 +408,10 @@ public class GuardImpl extends NodeImpl implements Guard {
         switch (featureID) {
             case ScgPackage.GUARD__SCHEDULE:
                 return schedule != null && !schedule.isEmpty();
-            case ScgPackage.GUARD__VALUED_OBJECT:
-                return valuedObject != null;
+            case ScgPackage.GUARD__REFERENCE:
+                return reference != null;
             case ScgPackage.GUARD__EXPRESSION:
                 return expression != null;
-            case ScgPackage.GUARD__INDICES:
-                return indices != null && !indices.isEmpty();
             case ScgPackage.GUARD__OPERATOR:
                 return operator != OPERATOR_EDEFAULT;
             case ScgPackage.GUARD__SUB_REFERENCE:
@@ -471,9 +440,8 @@ public class GuardImpl extends NodeImpl implements Guard {
         }
         if (baseClass == Assignment.class) {
             switch (derivedFeatureID) {
-                case ScgPackage.GUARD__VALUED_OBJECT: return KEffectsPackage.ASSIGNMENT__VALUED_OBJECT;
+                case ScgPackage.GUARD__REFERENCE: return KEffectsPackage.ASSIGNMENT__REFERENCE;
                 case ScgPackage.GUARD__EXPRESSION: return KEffectsPackage.ASSIGNMENT__EXPRESSION;
-                case ScgPackage.GUARD__INDICES: return KEffectsPackage.ASSIGNMENT__INDICES;
                 case ScgPackage.GUARD__OPERATOR: return KEffectsPackage.ASSIGNMENT__OPERATOR;
                 case ScgPackage.GUARD__SUB_REFERENCE: return KEffectsPackage.ASSIGNMENT__SUB_REFERENCE;
                 default: return -1;
@@ -502,9 +470,8 @@ public class GuardImpl extends NodeImpl implements Guard {
         }
         if (baseClass == Assignment.class) {
             switch (baseFeatureID) {
-                case KEffectsPackage.ASSIGNMENT__VALUED_OBJECT: return ScgPackage.GUARD__VALUED_OBJECT;
+                case KEffectsPackage.ASSIGNMENT__REFERENCE: return ScgPackage.GUARD__REFERENCE;
                 case KEffectsPackage.ASSIGNMENT__EXPRESSION: return ScgPackage.GUARD__EXPRESSION;
-                case KEffectsPackage.ASSIGNMENT__INDICES: return ScgPackage.GUARD__INDICES;
                 case KEffectsPackage.ASSIGNMENT__OPERATOR: return ScgPackage.GUARD__OPERATOR;
                 case KEffectsPackage.ASSIGNMENT__SUB_REFERENCE: return ScgPackage.GUARD__SUB_REFERENCE;
                 default: return -1;

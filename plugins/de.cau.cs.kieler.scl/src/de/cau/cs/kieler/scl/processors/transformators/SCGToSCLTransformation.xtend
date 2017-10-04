@@ -47,6 +47,7 @@ import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * SCG to SCL Transformation 
@@ -58,29 +59,16 @@ import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
 
 class SCGToSCLTransformation extends Processor<SCGraphs, SCLProgram> {
     
-    @Inject
-    extension SCGControlFlowExtensions
-
-    @Inject
-    extension SCGThreadExtensions
-    
-    @Inject 
-    extension SCLExtensions
+    @Inject extension SCGControlFlowExtensions
+    @Inject extension SCGThreadExtensions
+    @Inject extension SCLExtensions
     extension SCLFactory = SCLFactory::eINSTANCE
-    
-    @Inject
-    extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension AnnotationsExtensions
+    @Inject extension KEffectsExtensions
+    static val sCLFactory = SCLFactory.eINSTANCE
 
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-    
-    @Inject
-    extension AnnotationsExtensions
-
-    // -------------------------------------------------------------------------
-    // -- Processor
-    // -------------------------------------------------------------------------
-    
     override getId() {
         return "de.cau.cs.kieler.scl.processors.transformators.scg2scl"
     }
@@ -96,10 +84,6 @@ class SCGToSCLTransformation extends Processor<SCGraphs, SCLProgram> {
     override process() {
         setModel(getModel.transformSCGToSCL)
     }
-    
-    // -------------------------------------------------------------------------
-    // -- M2M Transformation 
-    // -------------------------------------------------------------------------
     
     // M2M Mapping
     private val processedNodes = <Node> newLinkedList
@@ -174,7 +158,7 @@ class SCGToSCLTransformation extends Processor<SCGraphs, SCLProgram> {
     def dispatch Scope transform(Assignment assignment, Scope scope) {
         if (assignment.marked) return scope
         scope.createLabel(assignment)
-        val statement = createAssignment => [
+        val statement = sCLFactory.createAssignment => [
             it.valuedObject = assignment.valuedObject.copyValuedObject
             it.expression = assignment.expression.copyExpression
         ]

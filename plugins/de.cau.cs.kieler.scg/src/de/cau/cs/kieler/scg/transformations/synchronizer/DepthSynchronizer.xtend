@@ -40,6 +40,7 @@ import de.cau.cs.kieler.scg.transformations.sequentializer.EmptyExpression
 import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
 import de.cau.cs.kieler.scg.SCGPlugin
 import java.util.logging.Level
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -96,6 +97,8 @@ class DepthSynchronizer extends AbstractSynchronizer {
     
     @Inject
     extension KEffectsSerializeExtensions
+    
+    @Inject extension KEffectsExtensions
    
     protected val OPERATOREXPRESSION_DEPTHLIMIT = 16
     protected val OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER = 8

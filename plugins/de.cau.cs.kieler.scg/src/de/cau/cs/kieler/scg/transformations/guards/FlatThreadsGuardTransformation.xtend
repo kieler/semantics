@@ -25,11 +25,11 @@ import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
-import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.transformations.SCGTransformations
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import com.google.inject.Injector
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * @author ssm
@@ -77,6 +77,8 @@ class FlatThreadsGuardTransformation extends AbstractGuardTransformation impleme
     
     @Inject
     extension AnnotationsExtensions
+    
+    @Inject extension KEffectsExtensions
     
     // -------------------------------------------------------------------------
     // -- Guard Transformation

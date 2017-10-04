@@ -692,17 +692,19 @@ ruleAssignment returns [EObject current=null]
     |((
 (
 		{ 
-		  /* */ 
-		}
-		{
-			if ($current==null) {
-	            $current = createModelElement(grammarAccess.getAssignmentRule());
+	        newCompositeNode(grammarAccess.getAssignmentAccess().getReferenceVariableReferenceParserRuleCall_1_0_0()); 
+	    }
+		lv_reference_1_0=ruleVariableReference		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getAssignmentRule());
 	        }
-        }
-	otherlv_1=RULE_ID
-	{
-		newLeafNode(otherlv_1, grammarAccess.getAssignmentAccess().getValuedObjectVariableCrossReference_1_0_0()); 
-	}
+       		set(
+       			$current, 
+       			"reference",
+        		lv_reference_1_0, 
+        		"de.cau.cs.kieler.esterel.Esterel.VariableReference");
+	        afterParserOrEnumRuleCall();
+	    }
 
 )
 )	otherlv_2=':=' 
@@ -4383,6 +4385,43 @@ ruleSustain returns [EObject current=null]
     	newLeafNode(otherlv_5, grammarAccess.getSustainAccess().getRightParenthesisKeyword_3_2());
     }
 )?)
+;
+
+
+
+
+
+// Entry rule entryRuleVariableReference
+entryRuleVariableReference returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getVariableReferenceRule()); }
+	 iv_ruleVariableReference=ruleVariableReference 
+	 { $current=$iv_ruleVariableReference.current; } 
+	 EOF 
+;
+
+// Rule VariableReference
+ruleVariableReference returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+(
+		{ 
+		  /* */ 
+		}
+		{
+			if ($current==null) {
+	            $current = createModelElement(grammarAccess.getVariableReferenceRule());
+	        }
+        }
+	otherlv_0=RULE_ID
+	{
+		newLeafNode(otherlv_0, grammarAccess.getVariableReferenceAccess().getValuedObjectVariableCrossReference_0()); 
+	}
+
+)
+)
 ;
 
 
@@ -12374,58 +12413,34 @@ superAssignment returns [EObject current=null]
 )*(
 (
 		{ 
-		  /* */ 
-		}
-		{
-			if ($current==null) {
-	            $current = createModelElement(grammarAccess.getSCLAssignmentRule());
-	        }
-        }
-	otherlv_1=RULE_ID
-	{
-		newLeafNode(otherlv_1, grammarAccess.getSCLAssignmentAccess().getValuedObjectValuedObjectCrossReference_1_0()); 
-	}
-
-)
-)(	otherlv_2='[' 
-    {
-    	newLeafNode(otherlv_2, grammarAccess.getSCLAssignmentAccess().getLeftSquareBracketKeyword_2_0());
-    }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getSCLAssignmentAccess().getIndicesExpressionParserRuleCall_2_1_0()); 
+	        newCompositeNode(grammarAccess.getSCLAssignmentAccess().getReferenceValuedObjectReferenceParserRuleCall_1_0()); 
 	    }
-		lv_indices_3_0=ruleExpression		{
+		lv_reference_1_0=ruleValuedObjectReference		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getSCLAssignmentRule());
 	        }
-       		add(
+       		set(
        			$current, 
-       			"indices",
-        		lv_indices_3_0, 
-        		"de.cau.cs.kieler.esterel.Esterel.Expression");
+       			"reference",
+        		lv_reference_1_0, 
+        		"de.cau.cs.kieler.kexpressions.KExpressions.ValuedObjectReference");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)	otherlv_4=']' 
-    {
-    	newLeafNode(otherlv_4, grammarAccess.getSCLAssignmentAccess().getRightSquareBracketKeyword_2_2());
-    }
-)*(
+)(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSCLAssignmentAccess().getOperatorAssignOperatorEnumRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getSCLAssignmentAccess().getOperatorAssignOperatorEnumRuleCall_2_0()); 
 	    }
-		lv_operator_5_0=ruleAssignOperator		{
+		lv_operator_2_0=ruleAssignOperator		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getSCLAssignmentRule());
 	        }
        		set(
        			$current, 
        			"operator",
-        		lv_operator_5_0, 
+        		lv_operator_2_0, 
         		"de.cau.cs.kieler.kexpressions.keffects.KEffects.AssignOperator");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -12434,39 +12449,39 @@ superAssignment returns [EObject current=null]
 )(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSCLAssignmentAccess().getExpressionExpressionParserRuleCall_4_0()); 
+	        newCompositeNode(grammarAccess.getSCLAssignmentAccess().getExpressionExpressionParserRuleCall_3_0()); 
 	    }
-		lv_expression_6_0=ruleExpression		{
+		lv_expression_3_0=ruleExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getSCLAssignmentRule());
 	        }
        		set(
        			$current, 
        			"expression",
-        		lv_expression_6_0, 
+        		lv_expression_3_0, 
         		"de.cau.cs.kieler.esterel.Esterel.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
 )(((	'schedule' 
-)=>	otherlv_7='schedule' 
+)=>	otherlv_4='schedule' 
     {
-    	newLeafNode(otherlv_7, grammarAccess.getSCLAssignmentAccess().getScheduleKeyword_5_0());
+    	newLeafNode(otherlv_4, grammarAccess.getSCLAssignmentAccess().getScheduleKeyword_4_0());
     }
 )(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSCLAssignmentAccess().getScheduleScheduleObjectReferenceParserRuleCall_5_1_0()); 
+	        newCompositeNode(grammarAccess.getSCLAssignmentAccess().getScheduleScheduleObjectReferenceParserRuleCall_4_1_0()); 
 	    }
-		lv_schedule_8_0=ruleScheduleObjectReference		{
+		lv_schedule_5_0=ruleScheduleObjectReference		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getSCLAssignmentRule());
 	        }
        		add(
        			$current, 
        			"schedule",
-        		lv_schedule_8_0, 
+        		lv_schedule_5_0, 
         		"de.cau.cs.kieler.kexpressions.KExpressions.ScheduleObjectReference");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -15303,17 +15318,17 @@ ruleEmission returns [EObject current=null]
 )*(
 (
 		{ 
-		  /* */ 
-		}
-		{
-			if ($current==null) {
-	            $current = createModelElement(grammarAccess.getEmissionRule());
-	        }
-        }
-		{ 
-	        newCompositeNode(grammarAccess.getEmissionAccess().getValuedObjectValuedObjectCrossReference_1_0()); 
+	        newCompositeNode(grammarAccess.getEmissionAccess().getReferenceValuedObjectReferenceParserRuleCall_1_0()); 
 	    }
-		rulePrimeID		{ 
+		lv_reference_1_0=ruleValuedObjectReference		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getEmissionRule());
+	        }
+       		set(
+       			$current, 
+       			"reference",
+        		lv_reference_1_0, 
+        		"de.cau.cs.kieler.kexpressions.KExpressions.ValuedObjectReference");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -15373,8 +15388,6 @@ ruleEmission returns [EObject current=null]
 
 
 
-
-
 // Entry rule entryRulePostfixEffect
 entryRulePostfixEffect returns [EObject current=null] 
 	:
@@ -15410,82 +15423,56 @@ rulePostfixEffect returns [EObject current=null]
 )*(
 (
 		{ 
-		  /* */ 
-		}
-		{
-			if ($current==null) {
-	            $current = createModelElement(grammarAccess.getPostfixEffectRule());
-	        }
-        }
-		{ 
-	        newCompositeNode(grammarAccess.getPostfixEffectAccess().getValuedObjectValuedObjectCrossReference_1_0()); 
+	        newCompositeNode(grammarAccess.getPostfixEffectAccess().getReferenceValuedObjectReferenceParserRuleCall_1_0()); 
 	    }
-		rulePrimeID		{ 
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)(	otherlv_2='[' 
-    {
-    	newLeafNode(otherlv_2, grammarAccess.getPostfixEffectAccess().getLeftSquareBracketKeyword_2_0());
-    }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getPostfixEffectAccess().getIndicesExpressionParserRuleCall_2_1_0()); 
-	    }
-		lv_indices_3_0=ruleExpression		{
+		lv_reference_1_0=ruleValuedObjectReference		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getPostfixEffectRule());
 	        }
-       		add(
+       		set(
        			$current, 
-       			"indices",
-        		lv_indices_3_0, 
-        		"de.cau.cs.kieler.esterel.Esterel.Expression");
+       			"reference",
+        		lv_reference_1_0, 
+        		"de.cau.cs.kieler.kexpressions.KExpressions.ValuedObjectReference");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)	otherlv_4=']' 
-    {
-    	newLeafNode(otherlv_4, grammarAccess.getPostfixEffectAccess().getRightSquareBracketKeyword_2_2());
-    }
-)*(
+)(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getPostfixEffectAccess().getOperatorPostfixOperatorEnumRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getPostfixEffectAccess().getOperatorPostfixOperatorEnumRuleCall_2_0()); 
 	    }
-		lv_operator_5_0=rulePostfixOperator		{
+		lv_operator_2_0=rulePostfixOperator		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getPostfixEffectRule());
 	        }
        		set(
        			$current, 
        			"operator",
-        		lv_operator_5_0, 
+        		lv_operator_2_0, 
         		"de.cau.cs.kieler.kexpressions.keffects.KEffects.PostfixOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)(	otherlv_6='schedule' 
+)(	otherlv_3='schedule' 
     {
-    	newLeafNode(otherlv_6, grammarAccess.getPostfixEffectAccess().getScheduleKeyword_4_0());
+    	newLeafNode(otherlv_3, grammarAccess.getPostfixEffectAccess().getScheduleKeyword_3_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getPostfixEffectAccess().getScheduleScheduleObjectReferenceParserRuleCall_4_1_0()); 
+	        newCompositeNode(grammarAccess.getPostfixEffectAccess().getScheduleScheduleObjectReferenceParserRuleCall_3_1_0()); 
 	    }
-		lv_schedule_7_0=ruleScheduleObjectReference		{
+		lv_schedule_4_0=ruleScheduleObjectReference		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getPostfixEffectRule());
 	        }
        		add(
        			$current, 
        			"schedule",
-        		lv_schedule_7_0, 
+        		lv_schedule_4_0, 
         		"de.cau.cs.kieler.kexpressions.KExpressions.ScheduleObjectReference");
 	        afterParserOrEnumRuleCall();
 	    }

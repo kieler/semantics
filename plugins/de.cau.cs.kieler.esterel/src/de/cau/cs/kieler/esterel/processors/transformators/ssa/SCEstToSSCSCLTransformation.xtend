@@ -57,6 +57,7 @@ import de.cau.cs.kieler.scl.Thread
 import java.util.List
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * This class contains methods to transform an Kernel SC Esterel program to SCL using signal notation.
@@ -88,15 +89,13 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
-    @Inject
-    extension KExpressionsDeclarationExtensions
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-    @Inject
-    extension KExpressionsCreateExtensions
-    @Inject
-    extension EsterelExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsCreateExtensions
+    @Inject extension KEffectsExtensions
+    @Inject extension EsterelExtensions
     
+    static val sCLFactory = SCLFactory.eINSTANCE
     extension SCLFactory = SCLFactory.eINSTANCE
     extension AnnotationsFactory = AnnotationsFactory.eINSTANCE
 
@@ -218,7 +217,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
             }
             // if exit is concurrent exit with join of other threads
             if (!threadHierarchy.empty) {
-                val join_asm = createAssignment.trace(exit.key) => [
+                val join_asm = sCLFactory.createAssignment.trace(exit.key) => [
                     valuedObject = createValuedObject => [
                         name = "join_" + exit.value.valuedObject.name.substring(5)
                         exitDecl.valuedObjects += it
@@ -348,7 +347,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
                         it.name = localSignal.name
                         signalVOMapping.put(localSignal, it)
                         // implicit reset
-                        scope.statements += createAssignment => [ asm |
+                        scope.statements += sCLFactory.createAssignment => [ asm |
                             asm.trace(lsig)
                             asm.valuedObject = it
                             asm.expression = createBoolValue(false)
@@ -362,7 +361,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
     }
 
     def dispatch Scope translate(Emit emit, Scope scope) {
-        scope.statements += createAssignment => [
+        scope.statements += sCLFactory.createAssignment => [
             it.trace(emit)
             valuedObject = emit.signal.vo
             expression = createBoolValue(true)
@@ -371,7 +370,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
     }
 
     def dispatch Scope translate(UnEmit unemit, Scope scope) {
-        scope.statements += createAssignment => [
+        scope.statements += sCLFactory.createAssignment => [
             it.trace(unemit)
             valuedObject = unemit.signal.vo
             expression = createBoolValue(false)
@@ -398,7 +397,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
     }
 
     def dispatch Scope translate(Suspend suspend, Scope scope) {
-        scope.statements += createAssignment.trace(suspend) => [
+        scope.statements += sCLFactory.createAssignment.trace(suspend) => [
             val vo = createValuedObject("suspend").trace(suspend)
             suspendDecl.valuedObjects += vo
             valuedObject = vo
@@ -424,7 +423,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
     }
 
     def dispatch Scope translate(Exit exit, Scope scope) {
-        val exitAsm = createAssignment.trace(exit) => [
+        val exitAsm = sCLFactory.createAssignment.trace(exit) => [
             valuedObject = createValuedObject => [
                 name = "exit_" + exit.trap.name
                 exitDecl.valuedObjects += it

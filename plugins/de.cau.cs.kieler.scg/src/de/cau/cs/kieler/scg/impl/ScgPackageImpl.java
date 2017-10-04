@@ -279,9 +279,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         isInited = true;
 
         // Initialize simple dependencies
-        AnnotationsPackage.eINSTANCE.eClass();
         KEffectsPackage.eINSTANCE.eClass();
-        KExpressionsPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
         theScgPackage.createPackageContents();

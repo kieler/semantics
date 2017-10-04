@@ -26,8 +26,6 @@ import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.scg.transformations.SCGTransformations
 
 import static extension de.cau.cs.kieler.core.model.codegeneration.HostcodeUtil.*
 import java.util.Stack
@@ -38,8 +36,8 @@ import de.cau.cs.kieler.kexpressions.ReferenceCall
 import java.util.List
 import de.cau.cs.kieler.annotations.TypedStringAnnotation
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * @author ssm
@@ -52,8 +50,8 @@ class SCG2CTransformation {// extends AbstractProductionTransformation {
     @Inject extension AnnotationsExtensions
     @Inject extension SCG2CSerializeHRExtensions
     @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension KExpressionsDeclarationExtensions
     @Inject extension SCGDeclarationExtensions
+    @Inject extension KEffectsExtensions
     
     public static val TICK_LOGIC_FUNCTION_NAME = "tickLogic"
     public static val TICK_FUNCTION_NAME = "tick"

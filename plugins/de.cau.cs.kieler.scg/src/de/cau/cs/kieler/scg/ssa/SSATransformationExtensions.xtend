@@ -29,7 +29,6 @@ import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.scg.ScgPackage
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.ssa.domtree.DominatorTree
@@ -50,6 +49,7 @@ import org.eclipse.xtext.xbase.lib.Functions.Function2
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.Parameter
 import java.util.Map
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * @author als
@@ -60,7 +60,6 @@ class SSATransformationExtensions {
     
     public static val ANNOTATION_IGNORE_DECLARATION = "de.cau.cs.kieler.scg.ssa.ignore"
     
-    extension ScgFactory = ScgPackage.eINSTANCE.scgFactory
     @Inject extension SCGCoreExtensions
     @Inject extension SCGControlFlowExtensions
     @Inject extension KExpressionsValuedObjectExtensions
@@ -68,6 +67,8 @@ class SSATransformationExtensions {
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension SSACoreExtensions
+        @Inject extension KEffectsExtensions
+    static val sCGFactory = ScgFactory.eINSTANCE
     
     def validate(Processor<?,?> processor, SCGraph scg) {
         // It is expected that this node is an entry node.
@@ -80,7 +81,7 @@ class SSATransformationExtensions {
     def getPhiPlacer() {
         return [ ValuedObject vo, Node bbHead |
             // Create Phi assignment
-            val asm = createAssignment
+            val asm = sCGFactory.createAssignment
             val bbHeadSB = bbHead.schedulingBlock
             bbHeadSB.nodes.add(bbHeadSB.nodes.indexOf(bbHead), asm)
             asm.valuedObject = vo

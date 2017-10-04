@@ -97,9 +97,6 @@ public class KTracePackageImpl extends EPackageImpl implements KTracePackage {
         isInited = true;
 
         // Initialize simple dependencies
-        AnnotationsPackage.eINSTANCE.eClass();
-        KEffectsPackage.eINSTANCE.eClass();
-        KExpressionsPackage.eINSTANCE.eClass();
         KExtPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects

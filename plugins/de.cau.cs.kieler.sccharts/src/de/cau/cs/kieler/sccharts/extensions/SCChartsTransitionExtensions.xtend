@@ -134,11 +134,7 @@ class SCChartsTransitionExtensions {
         val state = transition.eContainer
         if (state == null) return 0
         if (state instanceof State) {
-            var p = 1
-            for(t : state.outgoingTransitions) {
-                if (t.equals(transition)) return p
-                p++
-            }
+            return state.outgoingTransitions.indexOf(transition) + 1
         } 
         return 0
     }

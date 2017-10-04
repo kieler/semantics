@@ -38,6 +38,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.IgnoreValue
 import de.cau.cs.kieler.kexpressions.TextExpression
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * C Code Generator Logic Module
@@ -53,6 +54,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KEffectsExtensions
     @Inject extension CCodeSerializeHRExtensions
     
     static val LOGIC_NAME = "logic"

@@ -38,6 +38,7 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 
 /**
  * SCCharts CountDelay Transformation.
@@ -87,6 +88,7 @@ class CountDelay extends SCChartsProcessor implements Traceable {
     @Inject extension KEffectsExtensions
     @Inject extension KExtDeclarationExtensions
     @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsUniqueNameExtensions
@@ -94,7 +96,7 @@ class CountDelay extends SCChartsProcessor implements Traceable {
     private val nameCache = new UniqueNameCache
     
     // This prefix is used for naming of all generated signals, states and regions
-    static public final String GENERATED_PREFIX = "_"
+    static public final String GENERATED_PREFIX = "_cd"
     
 
     //-------------------------------------------------------------------------
@@ -113,6 +115,12 @@ class CountDelay extends SCChartsProcessor implements Traceable {
     // This will encode count delays in transitions.
     def void transformCountDelay(Transition transition, State targetRootState) {
         if (transition.triggerDelay > 1) {
+            
+            if (transition.sourceState.simple && transition.sourceState.outgoingTransitions.filter[ triggerDelay > 1].size == 1) {
+                transition.transformCountDelayStructurally(targetRootState)
+                return
+            }
+            
             transition.setDefaultTrace
             val sourceState = transition.sourceState
             val parentState = sourceState.parentRegion.parentState
@@ -153,6 +161,39 @@ class CountDelay extends SCChartsProcessor implements Traceable {
             transition.setTrigger(trigger)
             transition.setTriggerDelay(1)
         }
+    }
+    
+    def void transformCountDelayStructurally(Transition transition, State targetRootState) {
+        val createdTransitions = <Transition> newHashSet => [ it += transition ]
+        val priority = transition.priority
+        val int count = transition.triggerDelay
+        val source = transition.sourceState
+        var State lastState = source
+        for (i : 2..count) {
+            val newState = source.parentRegion.createState(GENERATED_PREFIX + source.name + i)
+            val otherTransitions = source.outgoingTransitions.filter[ !createdTransitions.contains(it) ].toList
+            for (t : otherTransitions) {
+                val transitionCopy = t.copy
+                transitionCopy.sourceState = newState
+                transitionCopy.targetState = t.targetState
+            }
+            
+            val prevState = lastState
+            transition.copy => [
+                sourceState = prevState
+                targetState = newState
+                triggerDelay = 1
+                effects.immutableCopy.forEach[ it.remove ]
+                setSpecificPriority(priority)
+                
+                createdTransitions += it
+            ]
+            lastState = newState
+        }
+        
+        transition.sourceState = lastState
+        transition.triggerDelay = 1
+        transition.setSpecificPriority(priority)
     }
 
     // This will encode count delays in transitions.

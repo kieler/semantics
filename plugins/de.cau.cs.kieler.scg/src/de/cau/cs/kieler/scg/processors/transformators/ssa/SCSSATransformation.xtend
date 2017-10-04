@@ -52,6 +52,7 @@ import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
 import static extension com.google.common.base.Predicates.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * The SSA transformation for SCGs
@@ -88,6 +89,7 @@ class SCSSATransformation extends Processor<SCGraphs, SCGraphs> implements Trace
     @Inject extension SCGControlFlowExtensions
     @Inject extension SCGThreadExtensions
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KEffectsExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension SSACoreExtensions
     @Inject extension IOPreserverExtensions

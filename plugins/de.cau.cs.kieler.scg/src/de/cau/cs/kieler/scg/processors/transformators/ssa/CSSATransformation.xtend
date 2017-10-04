@@ -42,6 +42,7 @@ import javax.inject.Inject
 import static com.google.common.collect.Maps.*
 import static de.cau.cs.kieler.scg.DataDependencyType.*
 import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * The SSA transformation for SCGs
@@ -77,9 +78,9 @@ class CSSATransformation extends Processor<SCGraphs, SCGraphs> implements Tracea
     
     @Inject extension SCGCoreExtensions
     @Inject extension SCGControlFlowExtensions
-    extension ScgFactory = ScgPackage.eINSTANCE.scgFactory
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
+    @Inject extension KEffectsExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension SSACoreExtensions
     @Inject extension SSATransformationExtensions
@@ -162,7 +163,7 @@ class CSSATransformation extends Processor<SCGraphs, SCGraphs> implements Tracea
                 ]
                 for (vo : concVODefs.keySet) {
                     // Create Pi assignment
-                    val asm = createAssignment
+                    val asm = ScgFactory.eINSTANCE.createAssignment
                     val sb = n.schedulingBlock
                     sb.nodes.add(sb.nodes.indexOf(n), asm)
                     nodes.put(n, asm)

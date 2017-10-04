@@ -32,6 +32,7 @@ import org.junit.runner.RunWith
 
 import static de.cau.cs.kieler.simulation.StandaloneSimulationEnvironment.*
 import static org.junit.Assert.*
+import org.eclipse.core.internal.resources.ResourceException
 
 /**
  * Tests all SCCharts compiled to C executables with their eso files.
@@ -139,7 +140,13 @@ class SCChartsNetlistSimulationTest extends AbstractXTextModelRepositoryTest<SCC
             }
         } finally {
             SimulationManager.removeListener(this)
-            standaloneSim?.project?.delete(true, true, null)
+            try {
+                standaloneSim?.project?.delete(true, true, null)
+            } catch(ResourceException e) {
+                // There is maybe still a lock on the resource (Windows). Give it a little bit more time and try again.
+                Thread.sleep(3000)
+                standaloneSim?.project?.delete(true, true, null)
+            }
         }
         
     }
