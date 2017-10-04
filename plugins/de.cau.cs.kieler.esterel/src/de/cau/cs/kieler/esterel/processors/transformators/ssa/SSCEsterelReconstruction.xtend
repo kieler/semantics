@@ -347,7 +347,7 @@ class SSCEsterelReconstruction extends Processor<SCGraphs, EsterelProgram> imple
     
     private def dispatch Expression translateExpr(ValuedObjectReference expression) {
         if (signalVOmap.containsValue(expression.valuedObject)) {
-            return createValuedObjectReference => [
+            return createSignalReference => [
                 valuedObject = signalVOmap.inverse.get(expression.valuedObject)
             ]
         } else {
