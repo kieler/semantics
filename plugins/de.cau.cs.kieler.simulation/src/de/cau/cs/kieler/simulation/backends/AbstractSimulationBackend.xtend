@@ -12,10 +12,12 @@
  */
 package de.cau.cs.kieler.simulation.backends
 
+import de.cau.cs.kieler.prom.FileExtensions
 import de.cau.cs.kieler.prom.KiBuildStandaloneSetup
+import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.kibuild.BuildConfiguration
-import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.emf.common.util.URI
+import org.eclipse.xtext.resource.XtextResourceSet
 
 /**
  * @author aas
@@ -36,15 +38,11 @@ abstract class AbstractSimulationBackend extends SimulationBackend {
     }
     
     private def BuildConfiguration loadBuildConfig(String origin) {
-//        val stream = PromPlugin.getInputStream(origin, #{"frontend" -> ""})
-//        val resourceSet = KiBuildStandaloneSetup.doSetup.getInstance(XtextResourceSet)
-//        val resource = resourceSet.createResource(URI.createURI("dummy:/dummy."+FileExtensions.BUILD_CONFIG));
-//        resource.load(stream, resourceSet.getLoadOptions());
-//        stream.close
-//        buildConfig = resource.contents.get(0) as BuildConfiguration
+        val stream = PromPlugin.getInputStream(origin, #{"frontend" -> ""})
         val resourceSet = KiBuildStandaloneSetup.doSetup.getInstance(XtextResourceSet)
-        val buildDefinitionFile = URI.createURI(origin)
-        val resource = resourceSet.getResource(buildDefinitionFile, true)
+        val resource = resourceSet.createResource(URI.createURI("dummy:/dummy."+FileExtensions.BUILD_CONFIG));
+        resource.load(stream, resourceSet.getLoadOptions());
+        stream.close
         buildConfig = resource.contents.get(0) as BuildConfiguration
     }
 }

@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.processors.transformators.codegen.c
+package de.cau.cs.kieler.scg.processors.transformators.codegen.java
 
 import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
@@ -21,57 +21,48 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import java.util.Map
+import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeGeneratorResetModule
 
 /**
- * C Code Generator Reset Module
+ * Java Code Generator Reset Module
  * 
  * Handles the creation of the reset function.
  * 
  * @author ssm
- * @kieler.design 2017-07-24 proposed 
- * @kieler.rating 2017-07-24 proposed yellow 
+ * @kieler.design 2017-10-04 proposed 
+ * @kieler.rating 2017-10-04 proposed yellow 
  * 
  */
-class CCodeGeneratorResetModule extends SCGCodeGeneratorModule {
+class JavaCodeGeneratorResetModule extends CCodeGeneratorResetModule {
     
-    static val RESET_NAME = "reset"
-    
-    @Inject CCodeGeneratorStructModule struct
+    @Inject JavaCodeGeneratorStructModule struct
     
     override configure(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
         Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, String codeFilename, SCGCodeGeneratorModule parent
     ) {
         super.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename, parent)
         
-        struct = (parent as CCodeGeneratorModule).struct as CCodeGeneratorStructModule
+        struct = (parent as JavaCodeGeneratorModule).struct as JavaCodeGeneratorStructModule
         
         return this
     }    
     
-    def getName() {
-        RESET_NAME + baseName + suffix
-    }
-    
     override generateInit() {
-        code.append("void ").append(getName)
+        indent
+        code.append("public void ").append(getName)
         code.append("(")
-        code.append(struct.getName).append("* ").append(struct.getVariableName)
         code.append(")")
-        
-        struct.forwardDeclarations.append(code).append(";\n")
         
         code.append(" {\n")
         
-        indent 
-        code.append(struct.getVariableName).append("->").append(AbstractGuardExpressions.GO_GUARD_NAME).append(" = 1;\n")
-        indent
-        code.append(struct.getVariableName).append("->").append(AbstractGuardTransformation.TERM_GUARD_NAME).append(" = 0;\n")
-    }
-    
-    override generate() {
+        indent(2) 
+        code.append(struct.getVariableName).append(struct.separator).append(AbstractGuardExpressions.GO_GUARD_NAME).append(" = true;\n")
+        indent(2)
+        code.append(struct.getVariableName).append(struct.separator).append(AbstractGuardTransformation.TERM_GUARD_NAME).append(" = false;\n")
     }
     
     override generateDone() {
+        indent
         code.append("}\n")
     }
     

@@ -12,7 +12,8 @@
  */
 package de.cau.cs.kieler.kicool.compilation
 
-import java.util.LinkedList
+import org.eclipse.xtend.lib.annotations.Accessors
+import java.util.Map
 
 /**
  * @author ssm
@@ -20,6 +21,20 @@ import java.util.LinkedList
  * @kieler.rating 2017-07-21 proposed yellow 
  * 
  */
-class CodeContainer extends LinkedList<String>{
+class CodeContainer {
+    
+    @Accessors Map<String, String> files = <String, String> newLinkedHashMap
+    
+    def add(String file, String code) {
+        files.put(file, code)
+    }
+    
+    def get(String file) {
+        files.get(file)
+    }
+    
+    def getHead() {
+        files.get(files.keySet.head)
+    }
     
 }

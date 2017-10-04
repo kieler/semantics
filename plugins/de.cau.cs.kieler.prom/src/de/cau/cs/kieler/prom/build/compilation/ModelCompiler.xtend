@@ -243,7 +243,7 @@ abstract class ModelCompiler extends Configurable {
         }
         // Compute target resource inside target directory but with same folder structure as before
         val nameWithoutExtension = Files.getNameWithoutExtension(sourceWithoutJavaFolders.name)
-        var targetPath = sourceWithoutJavaFolders.projectRelativePath.removeLastSegments(1).append(nameWithoutExtension+targetFileExtension)
+        var targetPath = sourceWithoutJavaFolders.projectRelativePath.removeLastSegments(1).append(nameWithoutExtension+"."+targetFileExtension)
         val targetFile = targetBaseFolder.getFile(targetPath)
         return targetFile
     }
@@ -254,12 +254,13 @@ abstract class ModelCompiler extends Configurable {
      * @return the file extension
      */
     protected def String getTargetFileExtension() {
-        // If the fileExtension starts with a letter, add a dot as prefix
+        // Remove leading dot if any
         var String fileExt = outputFileExtension.stringValue
-        if(fileExt.matches("^\\w.*")) {
-            fileExt = "."+fileExt
+        if(fileExt.startsWith(".")) {
+            return fileExt.substring(1)
+        } else {
+            return fileExt    
         }
-        return fileExt
     }
     
     /**

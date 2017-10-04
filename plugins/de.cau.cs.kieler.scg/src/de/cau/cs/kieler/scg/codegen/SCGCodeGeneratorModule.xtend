@@ -34,16 +34,18 @@ abstract class SCGCodeGeneratorModule extends CodeGeneratorModule {
     @Accessors var SCGraph scg
     @Accessors var Processor<SCGraphs, CodeContainer> processorInstance
     @Accessors var Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap
+    @Accessors var String codeFilename
     @Accessors var SCGCodeGeneratorModule parent
     
     def configure(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
-        Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, SCGCodeGeneratorModule parent
+        Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, String codeFilename, SCGCodeGeneratorModule parent
     ) {
         this.baseName = baseName
         this.sCGraphs = sCGraphs
         this.scg = scg
         this.processorInstance = processorInstance
         this.codeGeneratorModuleMap = codeGeneratorModuleMap
+        this.codeFilename = codeFilename 
         this.parent = parent
         return this
     }
@@ -53,5 +55,9 @@ abstract class SCGCodeGeneratorModule extends CodeGeneratorModule {
     abstract def void generate()
     
     abstract def void generateDone()
+    
+    def void generateWrite(CodeContainer codeContainer) {
+        codeContainer.add(codeFilename, code.toString)
+    }
     
 }

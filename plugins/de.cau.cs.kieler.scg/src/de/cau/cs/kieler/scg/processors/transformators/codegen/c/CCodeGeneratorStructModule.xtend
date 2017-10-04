@@ -16,6 +16,7 @@ import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * C Code Generator Struct Module
@@ -35,6 +36,8 @@ class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
     public static val STRUCT_NAME = "TickData"
     public static val STRUCT_VARIABLE_NAME = "d"
     public static val STRUCT_PRE_PREFIX = "_p"
+    
+    @Accessors StringBuilder forwardDeclarations = new StringBuilder
   
     def getName() {
         STRUCT_NAME + baseName + suffix
@@ -43,6 +46,10 @@ class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
     def getVariableName() {
         STRUCT_VARIABLE_NAME
     }
+    
+    def protected separator() {
+        "->"
+    }    
     
     override generateInit() {
         code.append("typedef struct {\n")
@@ -70,6 +77,9 @@ class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
     
     override generateDone() {
         code.append("} ").append(getName).append(";\n")
+        
+        if (forwardDeclarations.length > 0) code.append("\n")
+        code.append(forwardDeclarations)
     }
     
 }

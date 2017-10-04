@@ -156,6 +156,7 @@ class GuardSequentializerV2 extends AbstractSequentializer implements Traceable 
         val newSCG = ScgFactory::eINSTANCE.createSCGraph => [
         	annotations += createStringAnnotation(SCGFeatures.SEQUENTIALIZE_ID, SCGFeatures.SEQUENTIALIZE_NAME)
         	label = scg.label
+        	name = scg.name
         ]
         
         creationalTransformation(scg,newSCG)

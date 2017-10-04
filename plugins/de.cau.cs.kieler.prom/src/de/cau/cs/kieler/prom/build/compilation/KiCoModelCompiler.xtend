@@ -120,10 +120,7 @@ class KiCoModelCompiler extends ModelCompiler {
         if(compilationResult.problems.isNullOrEmpty) {
             // Flush compilation result to target
             targetFile = computeTargetFile
-            saveCompilationResult(resultModel, targetFile)
-            
-            // Add generated file to result
-            compilationResult.addCreatedFile(targetFile)
+            saveCompilationResult(resultModel)
             
             // Create simulation code
             if(simulationProcessor != null) {
@@ -133,7 +130,7 @@ class KiCoModelCompiler extends ModelCompiler {
                     simulationTargetFolder = new Path(outputFolder.stringValue).append("sim").append("code")
                 }
                 val fileNameWithoutExtension = Files.getNameWithoutExtension(file.name)
-                val simulationFileName = "Sim_" + fileNameWithoutExtension + targetFileExtension
+                val simulationFileName = "Sim_" + fileNameWithoutExtension + "." + targetFileExtension
                 val simulationTarget = simulationTargetFolder.append(simulationFileName)
                 // Set model specific variables of simulation template processor
                 simulationProcessor.target.value = simulationTarget.toOSString
@@ -337,15 +334,24 @@ class KiCoModelCompiler extends ModelCompiler {
      * @param result The KiCo compilation result to be saved
      * @param targetPath File path where the result should be saved
      */
-    private def void saveCompilationResult(Object result, IFile targetFile) {
+    private def void saveCompilationResult(Object result) {
         if(result == null) {
             return;
         } else if(result instanceof CodeContainer) {
-            val String resultCode = result?.get(0)
-            saveCode(resultCode, targetFile)
+            for (fileName : result.files.keySet) {
+                val String resultCode = result.get(fileName)
+                val codeTargetFile = targetFile.parent.getFile(new Path(fileName))
+                saveCode(resultCode, codeTargetFile)
+                compilationResult.addCreatedFile(codeTargetFile)
+                // Update target file with new file name from compiler output
+                if(codeTargetFile.fileExtension == targetFileExtension) {
+                    targetFile = codeTargetFile
+                }
+            }
         } else if(result instanceof EObject) {
             // Serialize EObject
             saveEObject(result, targetFile)
+            compilationResult.addCreatedFile(targetFile)
         } else {
             throw new Exception("Cannot save compilation result:"+result)
         }

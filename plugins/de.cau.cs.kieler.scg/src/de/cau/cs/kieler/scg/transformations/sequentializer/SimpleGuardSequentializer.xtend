@@ -116,6 +116,7 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
         val newSCG = ScgFactory::eINSTANCE.createSCGraph => [
         	annotations += createStringAnnotation(SCGFeatures.SEQUENTIALIZE_ID, SCGFeatures.SEQUENTIALIZE_NAME)
         	label = scg.label
+        	name = scg.name
             scg.copyAnnotations(it, <String> newHashSet("main", "voLink"))
         ]
         

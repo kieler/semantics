@@ -293,6 +293,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         val sCGraph = ScgFactory::eINSTANCE.createSCGraph => [
             // Fix: Better always take the id (e.g. for java code generation). The label could start with a number and contain spaces...
             label = rootState.name; //if(!rootState.label.nullOrEmpty) rootState.label else rootState.id
+            name = rootState.name
         ]
 
 //        creationalTransformation(rootState, sCGraph) // Tell KITT that this is not an in-place transformation from here on
