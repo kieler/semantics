@@ -18,10 +18,10 @@ import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.build.FileGenerationResult
 import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
+import de.cau.cs.kieler.prom.configurable.ResourceSubstitution
 import de.cau.cs.kieler.prom.templates.MacroCallData
 import de.cau.cs.kieler.prom.templates.TemplateContext
 import de.cau.cs.kieler.prom.templates.TemplateManager
-import de.cau.cs.kieler.prom.templates.VariableInterfaceType
 import java.util.List
 import java.util.Map
 import java.util.Map.Entry
@@ -164,7 +164,7 @@ class SimulationTemplateProcessor extends TemplateProcessor {
             }
         }
         
-        // Create simulation code
+        // Create additional mappings for the template
         if(isCanceled) {
             return result
         }
@@ -172,9 +172,25 @@ class SimulationTemplateProcessor extends TemplateProcessor {
         if(modelName == null) {
             modelName = Files.getNameWithoutExtension(modelFile.name)
         }
+        val targetFileSubstitution = new ResourceSubstitution("file") {
+            override getValue() {
+                return targetFile
+            }
+        }
+        val templateFileSubstitution = new ResourceSubstitution("file") {
+            override getValue() {
+                return targetFile
+            }
+        }
+        val additionalMappings = <String, Object> newHashMap
+        additionalMappings.put("compiled_model_loc", compiledModelFileLocation)
+        additionalMappings.put(TemplateManager.MODEL_NAME_VARIABLE, Strings.nullToEmpty(modelName))
+        additionalMappings.putAll(targetFileSubstitution.variableMappings)
+        additionalMappings.putAll(templateFileSubstitution.variableMappings)
+        
+        // Create simulation code
         context = new TemplateContext(templateFile)
-        context.additionalMappings = #{"compiled_model_loc" -> compiledModelFileLocation,
-                                       TemplateManager.MODEL_NAME_VARIABLE -> Strings.nullToEmpty(modelName)}
+        context.additionalMappings = additionalMappings
         context.macroCallDatas = macroCallDatas
         // Process
         generatedCode = TemplateManager.process(context)
@@ -237,11 +253,9 @@ class SimulationTemplateProcessor extends TemplateProcessor {
     private def MacroCallData createData(String variableInterface, String varName, String varType) {
         val isInput = (variableInterface == "input")
         val isOutput = (variableInterface == "output")
+        val isInternal = (variableInterface == "internal")
         val data = new MacroCallData 
-        data.initializeForSimulationGeneration(varName, varType, isInput, isOutput)
-        if(variableInterface == "other") {
-            data.interfaceTypes.add(VariableInterfaceType.OTHER)
-        }
+        data.initializeForSimulationGeneration(varName, varType, isInput, isOutput, isInternal)
         
         // Add (optional) array sizes.
         // The format would be VAR_NAME[SIZE_0][SIZE_1]...[SIZE_N]

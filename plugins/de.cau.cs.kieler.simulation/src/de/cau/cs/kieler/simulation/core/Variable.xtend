@@ -12,7 +12,9 @@
  */
 package de.cau.cs.kieler.simulation.core
 
+import de.cau.cs.kieler.prom.templates.VariableInterfaceType
 import de.cau.cs.kieler.simulation.core.events.VariableUserValueEvent
+import java.util.HashSet
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
@@ -33,36 +35,31 @@ class Variable implements Cloneable {
     /**
      * The variable type.
      */
-    private VariableType type = VariableType.INT
+    @Accessors
+    private var VariableType type = VariableType.INT
     
     /**
      * The variable value.
      */
     @Accessors
-    private Object value = null
+    private var Object value = null
     
     /**
      * A value for this variable entered by the user.
      */
-    private Object userValue = null
+    private var Object userValue = null
     
     /**
      * Is this variable an input of the model?
      */
     @Accessors
-    private boolean isInput = false
-    
-    /**
-     * Is this variable an output of the model?
-     */
-    @Accessors
-    private boolean isOutput = false
+    private var HashSet<VariableInterfaceType> interfaceTypes = newHashSet
  
     /**
      * The model in which this variable is saved.
      */
     @Accessors
-    private Model model = null
+    private var Model model = null
     
     /**
      * Constructor
@@ -91,6 +88,42 @@ class Variable implements Cloneable {
     }
     
     /**
+     * Returns true if the variable is an input.
+     */
+    public def boolean isInput() {
+        return interfaceTypes.contains(VariableInterfaceType.INPUT)
+    }
+    
+    /**
+     * Returns true if the variable is an output.
+     */
+    public def boolean isOutput() {
+        return interfaceTypes.contains(VariableInterfaceType.OUTPUT)
+    }
+    
+    /**
+     * Defines this variable as an input variable.
+     */
+    public def void setIsInput(boolean value) {
+        if(value) {
+            interfaceTypes.add(VariableInterfaceType.INPUT)
+        } else {
+            interfaceTypes.remove(VariableInterfaceType.INPUT)
+        }
+    }
+    
+    /**
+     * Defines this variable as an output variable.
+     */
+    public def void setIsOutput(boolean value) {
+        if(value) {
+            interfaceTypes.add(VariableInterfaceType.OUTPUT)
+        } else {
+            interfaceTypes.remove(VariableInterfaceType.OUTPUT)
+        }
+    }
+    
+    /**
      * Set the value and type of this variable.
      * The type is infered from the value.
      * 
@@ -113,15 +146,6 @@ class Variable implements Cloneable {
         } else if (v instanceof Float) {
             type = VariableType.FLOAT
         }
-    }
-    
-    /**
-     * Returns the type.
-     * 
-     * @return the type of the variable.
-     */
-    public def VariableType getType() {
-        return type
     }
     
     /**
@@ -195,6 +219,7 @@ class Variable implements Cloneable {
         }
         // Apply user value
         value = userValue
+        userValue = null
     }
     
     /**
@@ -278,8 +303,7 @@ class Variable implements Cloneable {
         val v = new Variable()
         v.name = this.name
         v.type = this.type
-        v.isInput = this.isInput
-        v.isOutput = this.isOutput
+        v.interfaceTypes = this.interfaceTypes.clone as HashSet
         v.value = this.value
         v.userValue = this.userValue
         return v

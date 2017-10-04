@@ -202,6 +202,12 @@ class DataPoolView extends ViewPart {
                 viewer.refresh
             }
         });
+        mgr.add(new Action("Show/Hide Other Variables") {
+            override run() {
+                filter.otherVariables = !filter.otherVariables
+                viewer.refresh
+            }
+        });
         mgr.add(new Separator())
         mgr.add(new Action("Clear Trace Mismatches") {
             override run() {

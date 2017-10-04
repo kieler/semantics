@@ -14,6 +14,7 @@ package de.cau.cs.kieler.simulation.core
 
 import de.cau.cs.kieler.simulation.json.JsonManager
 import java.util.List
+import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
@@ -29,18 +30,23 @@ class Model implements Cloneable {
      * The name of the model
      */
     @Accessors
-    private String name = ""
+    private var String name = ""
     
     /**
      * The pool in which this model is saved
      */
     @Accessors
-    private DataPool pool = null
+    private var DataPool pool = null
     
     /**
      * The variables of the model
      */
-    private List<Variable> variables = newArrayList()
+    private val List<Variable> variables = newArrayList
+    
+    /**
+     * A mapping of variable names to the corresponding variable.
+     */
+    private val Map<String, Variable> variablesMap = newHashMap
     
     /**
      * Indicates that at least one variable might have a user value set,
@@ -112,7 +118,7 @@ class Model implements Cloneable {
      * @return the variable with the given name, or null if none
      */
     public def Variable getVariable(String name) {
-        variables.findFirst[it.name == name]
+        variablesMap.get(name)
     }
     
     /**
@@ -125,6 +131,13 @@ class Model implements Cloneable {
     }
 
     /**
+     * Returns true if a variable with the given name is in the model.
+     */
+    public def boolean hasVariable(String name) {
+        return variablesMap.containsKey(name)
+    }
+
+    /**
      * Adds a variables.
      * 
      * @param v The variable
@@ -132,13 +145,24 @@ class Model implements Cloneable {
     public def void addVariable(Variable v) {
         // Remove in old model
         if(v.model != null) {
-            v.model.variables.remove(v)
+            v.model.removeVariable(v)
         }
         // Set new model
         v.model = this
-        if(!variables.contains(v)) {
+        if(!hasVariable(v.name)) {
             variables.add(v)
+            variablesMap.put(v.name, v)
         }
+    }
+    
+    /**
+     * Removes a variables.
+     * 
+     * @param v The variable
+     */
+    public def void removeVariable(Variable v) {
+        variables.remove(v)
+        variablesMap.remove(v.name)
     }
     
     /**

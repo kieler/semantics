@@ -16,6 +16,6 @@ model compiler kico {
 simulation compiler java {
   libFolder: kieler-gen/org/json
   outputFolder: kieler-gen/sim/bin
-  command: "javac -cp \"kieler-gen\" -d bin \"${file_path}\" "
-  jarCommand: "jar cvfe \"./${outputFolder}/${executable_name}\" sim.code.${file_basename} -C bin "
+  command: "javac -cp kieler-gen -d bin \"${file_path}\" "
+  jarCommand: "jar cvfe \"./${outputFolder}/${executable_name}\" sim.code.${file_basename} -C bin . "
 }

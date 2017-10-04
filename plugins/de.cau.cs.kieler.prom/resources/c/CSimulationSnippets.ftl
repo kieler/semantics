@@ -3,10 +3,10 @@
 /* MACROS TO SEND / RECEIVE A VARIABLE
 /*****************************************************************************/
 -->
-<#macro Simulate isInput isOutput indices...>
+<#macro Simulate interface indices...>
     <@input>
-        // Receive ${varname}
-        variable = cJSON_GetArrayItem(variables, i);
+        // Receive ${varName}
+        variable = cJSON_GetObjectItemCaseSensitive(root, "${varName}");
         if(variable != NULL) {
             cJSON *value_item = cJSON_GetObjectItemCaseSensitive(variable, "value");
             <#if indices?has_content>
@@ -24,18 +24,14 @@
             }
             </#list>
             <#else>
-            tickData.${varname} = <@value_of_item "value_item" />
+            tickData.${varName} = <@value_of_item "value_item" />
             </#if>
-        } else {
-            printf("WARNING: Did not receive variable ${varname}\n");
         }
-        i++;
     </@>
     <@output>
-        // Send ${varname}
+        // Send ${varName}
         variable = cJSON_CreateObject();
-        cJSON_AddItemToArray(variables, variable);
-        cJSON_AddStringToObject(variable, "name", "${varname}");
+        cJSON_AddItemToObject(root, "${varName}", variable);
         <#if indices?has_content>
             // Send array as object
             arr = cJSON_CreateObject();
@@ -59,16 +55,18 @@
             }
             </#list>
         <#else>
-            cJSON_AddItemToObject(variable, "value", <@cJSON_value varname />);
+            cJSON_AddItemToObject(variable, "value", <@cJSON_value varName />);
         </#if>
-        cJSON_AddStringToObject(variable, "type", "${vartype}");
-        cJSON_AddBoolToObject(variable, "in", ${isInput?c});
-        cJSON_AddBoolToObject(variable, "out", ${isOutput?c});
+        // Send additional information about variable only in first tick
+        if(nextTick == 0) {
+          cJSON_AddStringToObject(variable, "type", "${varType}");
+          cJSON_AddNumberToObject(variable, "interface", ${interface});
+        }
     </@>
 </#macro>
 
 <#macro array_elem indices>
-tickData.${varname}<#assign index = 0><#list indices as s>[i${index}]<#assign index = index+1></#list><#t>
+tickData.${varName}<#assign index = 0><#list indices as s>[i${index}]<#assign index = index+1></#list><#t>
 </#macro>
 
 <#macro cJSON_value var>
@@ -76,21 +74,21 @@ tickData.${varname}<#assign index = 0><#list indices as s>[i${index}]<#assign in
 </#macro>
 
 <#macro value_of_item item>
-<#if vartype == "bool" || vartype == "pure" || vartype == "int">
+<#if varType == "bool" || varType == "pure" || varType == "int">
 ${item}->valueint;
-<#elseif vartype == "double" || vartype == "float">
+<#elseif varType == "double" || varType == "float">
 ${item}->valuedouble;
-<#elseif vartype == "string">
+<#elseif varType == "string">
 ${item}->valuestring;
 </#if>
 </#macro>
 
 <#macro cJSON_value_method>
-<#if vartype == "int" || vartype == "float" || vartype == "double">
+<#if varType == "int" || varType == "float" || varType == "double">
 cJSON_CreateNumber<#t>
-<#elseif vartype == "bool" || vartype == "pure">
+<#elseif varType == "bool" || varType == "pure">
 cJSON_CreateBool<#t>
-<#elseif vartype == "string">
+<#elseif varType == "string">
 cJSON_CreateString<#t>
 </#if>
 </#macro>

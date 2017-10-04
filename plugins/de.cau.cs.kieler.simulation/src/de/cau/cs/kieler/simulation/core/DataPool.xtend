@@ -13,8 +13,9 @@
 package de.cau.cs.kieler.simulation.core
 
 import java.util.List
-import org.eclipse.xtend.lib.annotations.Accessors
+import java.util.Map
 import java.util.regex.Pattern
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * Central class of the simulation that holds all models and their variables for a given tick.
@@ -28,7 +29,12 @@ class DataPool implements Cloneable {
     /**
      * The models in this pool
      */
-    private val List<Model> models = newArrayList()
+    private val List<Model> models = newArrayList
+    
+    /**
+     * A mapping from model names to the corresponding model
+     */
+    private val Map<String, Model> modelsMap = newHashMap
     
     /**
      * The data pool of the previous state of the simulation.
@@ -42,6 +48,13 @@ class DataPool implements Cloneable {
      */
     @Accessors(PUBLIC_GETTER)
     private boolean hasModifiedVariable
+    
+    /**
+     * The action index in the simulation after this data pool was created.
+     * A simulation could be continued from this action index.
+     */
+    @Accessors
+    private int actionIndex = -1
     
     /**
      * Clone this object.
@@ -58,10 +71,10 @@ class DataPool implements Cloneable {
      * Returns first the model with the given name.
      * 
      * @param modelName The name of the model
-     * @return the first model with the given name, or null if none
+     * @return the model with the given name, or null if none
      */
     public def Model getModel(String modelName) {
-        return models.findFirst[it.name == modelName]
+        return modelsMap.get(modelName)
     }
     
     /**
@@ -85,8 +98,14 @@ class DataPool implements Cloneable {
      */
     public def Variable getVariable(String variableName, boolean isFullyQualified) {
         if(!isFullyQualified) {
+            for(m : models) {
+                val variable = m.getVariable(variableName)
+                if(variable != null) {
+                    return variable    
+                }
+            }
             // No model name specified, so search in the complete data pool for the variable
-            return allVariables.findFirst[it.name == variableName]    
+            return null    
         } else if(!variableName.isNullOrEmpty) {
             // Separate model name and variable name
             val i = variableName.indexOf(".")
@@ -223,6 +242,7 @@ class DataPool implements Cloneable {
      */
     public def void removeModel(Model m) {
         models.remove(m)
+        modelsMap.remove(m.name)
     }
     
     /**
@@ -233,13 +253,21 @@ class DataPool implements Cloneable {
     public def void addModel(Model m) {
         // Remove in old model
         if(m.pool != null) {
-            m.pool.models.remove(m)
+            m.pool.removeModel(m)
         }
         // Set new model
         m.pool = this
-        if(!models.contains(m)) {
+        if(!hasModel(m.name)) {
             models.add(m)
+            modelsMap.put(m.name, m)
         }
+    }
+    
+    /**
+     * Returns true if a model with the given name is in the pool.
+     */
+    public def boolean hasModel(String name) {
+        return modelsMap.containsKey(name)
     }
     
     /**
@@ -250,7 +278,7 @@ class DataPool implements Cloneable {
                              name+"_"+suffix
                          else
                              name
-        val modelWithThisName = models.findFirst[it.name.equals(uniqueName)]
+        val modelWithThisName = modelsMap.get(uniqueName)
         if(modelWithThisName == null) {
             return uniqueName
         } else {

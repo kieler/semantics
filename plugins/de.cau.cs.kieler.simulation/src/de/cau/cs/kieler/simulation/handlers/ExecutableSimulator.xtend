@@ -235,8 +235,13 @@ class ExecutableSimulator extends DefaultSimulator {
         // Let the process perform tick and wait for output
         val line = waitForJSONOutput(processReader)
         val newModel = Model.createFromJson(modelName, line)
-        pool.removeModel(model)
-        pool.addModel(newModel)        
+        // Update variable values using the new model
+        for(v : newModel.variables) {
+            val variable = model.getVariable(v.name)
+            if(variable != null) {
+                variable.value = v.value
+            }
+        }    
     }
     
     /**

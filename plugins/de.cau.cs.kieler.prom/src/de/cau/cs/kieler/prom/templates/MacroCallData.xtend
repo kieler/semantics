@@ -97,7 +97,7 @@ class MacroCallData implements Cloneable {
      * @param isOuput Defines whether the variable is used as output
      */
     public def void initializeForCodeGeneration(String varName, String varType, boolean isInput, boolean isOutput) {
-        this.addInterfaceTypes(isInput, isOutput)
+        this.interfaceTypes = VariableInterfaceType.getInterfaceTypes(isInput, isOutput, true)
         if(!isInput) {
             this.phases.remove(CodeGenerationPhase.INPUT_PHASE)    
         }
@@ -113,33 +113,15 @@ class MacroCallData implements Cloneable {
      * @param varType The type of the variable (e.g. 'int')
      * @param isInput Defines whether the variable is used as input
      * @param isOuput Defines whether the variable is used as output
+     * @param isInternal Defines whether the variable is an internal variable of the model
      */
-    public def void initializeForSimulationGeneration(String varName, String varType, boolean isInput, boolean isOutput) {
+    public def void initializeForSimulationGeneration(String varName, String varType, boolean isInput, boolean isOutput, boolean isInternal) {
         this.varName = varName
         this.varType = varType
         this.name = "Simulate"
-        this.addInterfaceTypes(isInput, isOutput)
-        // Add the arguments for the macro call                    
-        this.arguments.add(String.valueOf(isInput))
-        this.arguments.add(String.valueOf(isOutput))
-    }
-    
-    /**
-     * Adds the corresponding interface types.
-     * 
-     * @param isInput Defines whether the variable is used as input
-     * @param isOuput Defines whether the variable is used as output 
-     */
-    private def void addInterfaceTypes(boolean isInput, boolean isOutput) {
-        if(isInput) {
-            interfaceTypes.add(VariableInterfaceType.INPUT)
-        }
-        if(isOutput) {
-            interfaceTypes.add(VariableInterfaceType.OUTPUT)
-        }
-        if(!isInput && !isOutput) {
-            interfaceTypes.add(VariableInterfaceType.INTERNAL)
-        }
+        this.interfaceTypes = VariableInterfaceType.getInterfaceTypes(isInput, isOutput, isInternal)
+        // Add the arguments for the macro call
+        this.arguments.add(String.valueOf(VariableInterfaceType.getBitmask(interfaceTypes)))
     }
     
     /**

@@ -26,7 +26,6 @@ import org.eclipse.core.runtime.Assert
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.ResourceSet
-import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.JavaCore
 import org.eclipse.xtend.lib.annotations.Accessors
 
@@ -235,9 +234,9 @@ abstract class ModelCompiler extends Configurable {
         val targetBaseFolder = project.getFolder(outputFolder.stringValue)
         // Remove leading java source folder if any
         var sourceWithoutJavaFolders = file
-        if(project instanceof IJavaProject) {
+        if(PromPlugin.isJavaProject(project)) {
             val firstFolderOfSource = file.projectRelativePath.segment(0)
-            if(PromPlugin.isJavaSourceDirectory(project as IJavaProject, firstFolderOfSource)) {
+            if(PromPlugin.isJavaSourceDirectory(JavaCore.create(project), firstFolderOfSource)) {
                 val projectRelativePathWithoutSourceFolder = file.projectRelativePath.removeFirstSegments(1)
                 sourceWithoutJavaFolders = project.getFile(projectRelativePathWithoutSourceFolder)
             }

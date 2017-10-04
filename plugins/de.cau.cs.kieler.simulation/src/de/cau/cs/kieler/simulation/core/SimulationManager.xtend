@@ -669,6 +669,7 @@ class SimulationManager extends Configurable {
                 newOldestState.pool.previousPool = null    
             }
         }
+        newPool.actionIndex = newActionIndex
         currentState = new StepState(newPool, newActionIndex)
     }
     

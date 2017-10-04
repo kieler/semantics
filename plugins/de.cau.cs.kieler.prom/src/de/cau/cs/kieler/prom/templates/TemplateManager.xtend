@@ -244,7 +244,7 @@ class TemplateManager {
      * @return a string which globally sets meta information.  
      */
     private static def String getMetaAssignments(MacroCallData data) {
-        return '''<#assign varname = '«data.varName»' vartype = '«data.varType»' />'''+"\n"
+        return '''<#assign varName = '«data.varName»' varType = '«data.varType»' />'''+"\n"
     }
 
     /**

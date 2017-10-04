@@ -9,15 +9,18 @@ import org.json.*;
 
 import model.*;
 
-public class ${file_name} {
+
+public class ${file_basename} {
 
     public static ${model_name} model = new ${model_name}();
+  
+    public static int nextTick = 0;
 
     public static void main(String[] args) {
         // Initialize 
         model.reset();
         sendVariables();
-        
+        nextTick = 1;
         while (true) {
            // Receive variables
            receiveVariables();
@@ -27,6 +30,9 @@ public class ${file_name} {
            
            // Send variables
            sendVariables();
+           
+           // Increment tick count
+           nextTick++;
         }
     }
     
@@ -35,10 +41,8 @@ public class ${file_name} {
         try {
           String line = br.readLine();
           JSONObject json = new JSONObject(line);
-          JSONArray vars = json.getJSONArray("variables");
           
-          JSONObject var;
-          int i = 0;
+          JSONObject jsonVar;
           
 ${inputs}
           
@@ -51,10 +55,8 @@ ${inputs}
     
     private static void sendVariables() {
         JSONObject json = new JSONObject();
-        JSONArray vars = new JSONArray();
-        json.put("variables", vars);
 
-        JSONObject var;
+        JSONObject jsonVar;
       
 ${outputs}
     

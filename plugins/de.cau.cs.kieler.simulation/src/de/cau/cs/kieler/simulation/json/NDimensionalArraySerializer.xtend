@@ -32,7 +32,6 @@ import java.util.List
  */
 class NDimensionalArraySerializer implements JsonSerializer<NDimensionalArray>,
                                              JsonDeserializer<NDimensionalArray> {
-    
     /**
      * {@inheritDoc}
      */

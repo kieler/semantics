@@ -19,48 +19,49 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParseException
 import com.google.gson.JsonSerializationContext
 import com.google.gson.JsonSerializer
+import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
-import de.cau.cs.kieler.simulation.core.Variable
 import java.lang.reflect.Type
 
 /**
- * (De-)Serializer for models in the data pool.
+ * (De-)Serializer for data pools.
  * 
  * @author aas
  *
  */
-class ModelSerializer implements JsonSerializer<Model>, JsonDeserializer<Model> {
+class DataPoolSerializer implements JsonSerializer<DataPool>, JsonDeserializer<DataPool>  {
     
-    /**
-     * {@inheritDoc}
-     */
-    override serialize(Model src, Type typeOfSrc, JsonSerializationContext context) {
+    override serialize(DataPool src, Type typeOfSrc, JsonSerializationContext context) {
         val object = new JsonObject()
-        // Add variables
-        for(variable : src.variables) {
-            val jsonVariable = context.serialize(variable)
-            object.add(variable.name, jsonVariable)
+        // Add models
+        for(model : src.models) {
+            object.add(model.name, context.serialize(model))    
+        }
+        // Add action index if defined
+        if(src.actionIndex >= 0) {
+            object.add("actionIndex", context.serialize(src.actionIndex))
         }
         return object
     }
     
-    /**
-     * {@inheritDoc}
-     */
     override deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         val object = json.asJsonObject
         
-        val model = new Model()
+        val pool = new DataPool
         for(entry : object.entrySet) {
             switch(entry.key) {
-               // Additional fields can be deserialized here in using cases. 
-               default : {
-                   val variable = context.deserialize(entry.value, typeof(Variable)) as Variable
-                   variable.name = entry.key
-                   model.addVariable(variable)
-               } 
+                // Fetch action index
+                case "actionIndex" : {
+                    pool.actionIndex = entry.value.asInt
+                }
+                default : {
+                    // Create model
+                    val model = context.deserialize(entry.value, typeof(Model)) as Model
+                    model.name = entry.key
+                    pool.addModel(model)
+                }
             }
-        } 
-        return model
+        }
+        return pool
     }
 }

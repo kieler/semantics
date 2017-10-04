@@ -92,7 +92,7 @@ abstract class DeclarationAnalyzer extends ModelAnalyzer {
                     // Each annotation gets its own macro call
                     for (annotation : decl.annotations) {
                         val data = new MacroCallData 
-                        data.initializeForSimulationGeneration(varName, varType, isInput, isOutput)
+                        data.initializeForCodeGeneration(varName, varType, isInput, isOutput)
                         initData(data, annotation)
                         allDatas.add(data)
                     }
@@ -129,7 +129,7 @@ abstract class DeclarationAnalyzer extends ModelAnalyzer {
                     val isInput = decl.isInput
                     val isOutput = decl.isOutput
                     val data = new MacroCallData 
-                    data.initializeForSimulationGeneration(varName, varType, isInput, isOutput)
+                    data.initializeForSimulationGeneration(varName, varType, isInput, isOutput, true)
                     allDatas.add(data)
                     
                     // Add array sizes if any

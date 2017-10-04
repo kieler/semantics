@@ -23,6 +23,7 @@ import de.cau.cs.kieler.simulation.core.Variable
 import java.lang.reflect.Type
 import com.google.gson.JsonPrimitive
 import de.cau.cs.kieler.simulation.core.NDimensionalArray
+import de.cau.cs.kieler.prom.templates.VariableInterfaceType
 
 /**
  * (De-)Serializer for variables in the data pool
@@ -39,8 +40,7 @@ class VariableSerializer implements JsonSerializer<Variable> , JsonDeserializer<
         object.addProperty("name", src.name)
         object.add("value", context.serialize(src.value))
         object.add("type", context.serialize(src.type))
-        object.addProperty("in", src.isInput)
-        object.addProperty("out", src.isOutput)
+        object.addProperty("interface", VariableInterfaceType.getBitmask(src.interfaceTypes))
         return object
     }
     
@@ -53,31 +53,31 @@ class VariableSerializer implements JsonSerializer<Variable> , JsonDeserializer<
         val name = object.get("name")?.getAsString()
         val jsonValue = object.get("value")
         val value = context.deserialize(jsonValue, jsonValue.class)
-        val isInput = object.get("in")?.asBoolean
-        val isOutput = object.get("out")?.asBoolean
+        val interface = object.get("interface")
         
+        val variable = new Variable
         if(name != null) {
-            val variable = new Variable(name)
-            if(value instanceof JsonPrimitive) {
-                if(value != null) {
-                    val primitive = JsonManager.jsonAsObject(value)
-                    variable.value = primitive
-                    // Use Integer instead Double if possible
-                    if(primitive instanceof Double) {
-                        if(primitive == primitive.intValue) {
-                            variable.value = primitive.intValue
-                        }
+            variable.name = name
+        }
+        if(value instanceof JsonPrimitive) {
+            if(value != null) {
+                val primitive = JsonManager.jsonAsObject(value)
+                variable.value = primitive
+                // Use Integer instead Double if possible
+                if(primitive instanceof Double) {
+                    if(primitive == primitive.intValue) {
+                        variable.value = primitive.intValue
                     }
                 }
-            } else if (value instanceof JsonObject){
-                val array = context.deserialize(value, typeof(NDimensionalArray))
-                variable.value = array
             }
-            variable.isInput = isInput
-            variable.isOutput = isOutput
-            return variable
-        } else {
-            throw new Exception("Variable name cannot be null")
+        } else if (value instanceof JsonObject){
+            val array = context.deserialize(value, typeof(NDimensionalArray))
+            variable.value = array
         }
+        if(interface != null) {
+            val interfaceTypes = VariableInterfaceType.getInterfaceTypes(interface.asInt)
+            variable.interfaceTypes = interfaceTypes
+        }
+        return variable
     }
 }

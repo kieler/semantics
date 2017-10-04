@@ -16,6 +16,9 @@ cJSON* output = 0;
 // The data for the model
 TickData tickData;
 
+// The next tick to be executed
+int nextTick = 0;
+
 void receiveVariables() {
     char buffer[10000];
     int i = 0;
@@ -26,12 +29,9 @@ void receiveVariables() {
     }
     buffer[i] = 0;
 
-    cJSON * root = cJSON_Parse(buffer);
-    cJSON* variables = cJSON_GetObjectItemCaseSensitive(root, "variables");
-    if(cJSON_IsArray(variables)) {
-        cJSON* variable = 0;
-        int i = 0;
-        
+    cJSON *root = cJSON_Parse(buffer);
+    cJSON *variable = 0;
+    if(root != NULL) {
 ${inputs}    
 
     } else {
@@ -43,9 +43,6 @@ ${inputs}
 
 void sendVariables() {
     cJSON* root = cJSON_CreateObject();
-    
-    cJSON* variables = cJSON_CreateArray();
-    cJSON_AddItemToObject(root, "variables", variables);
   
     cJSON* variable = 0;
     cJSON* arr = 0;
@@ -77,6 +74,7 @@ int main(int argc, const char* argv[]) {
     // Initialize 
     reset(&tickData);
     sendVariables();
+    nextTick = 1;
     while (1) {
         // Receive variables
         receiveVariables();
@@ -86,5 +84,8 @@ int main(int argc, const char* argv[]) {
          
         // Send variables
         sendVariables();
+        
+        // Update tick index
+        nextTick++;
     }
 }

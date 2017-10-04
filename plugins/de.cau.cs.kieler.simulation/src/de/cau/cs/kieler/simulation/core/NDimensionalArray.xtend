@@ -79,6 +79,10 @@ class NDimensionalArray implements Cloneable{
         }
     }
     
+    new(NDimensionalArrayElement elements) {
+        // TODO: implement
+    }
+    
     /**
      * Returns the dimension of this NDimensionalArray.
      */

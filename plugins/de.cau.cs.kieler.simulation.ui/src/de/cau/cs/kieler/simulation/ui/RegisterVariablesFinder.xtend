@@ -65,7 +65,7 @@ class RegisterVariablesFinder extends PromBuildAdapter {
             // Add the variables to the simulation template processor
             if(!registerVariables.isNullOrEmpty) {
                 registerVariables.add("_GO")
-                processor.putAdditionalVariables(VariableInterfaceType.OTHER.name, registerVariables.toList)
+                processor.putAdditionalVariables("other", registerVariables.toList)
             }
         }
     }

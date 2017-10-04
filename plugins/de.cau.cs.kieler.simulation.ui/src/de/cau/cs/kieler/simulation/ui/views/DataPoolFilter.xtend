@@ -16,6 +16,7 @@ import de.cau.cs.kieler.simulation.core.Variable
 import org.eclipse.jface.viewers.Viewer
 import org.eclipse.jface.viewers.ViewerFilter
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.prom.templates.VariableInterfaceType
 
 /**
  * Class that impelments the filter for the data pool view.
@@ -38,6 +39,12 @@ class DataPoolFilter extends ViewerFilter {
     private var boolean internalVariables = false
     
     /**
+     * Determines if other variables of the models should be shown, or only inputs/outputs/internal.
+     */
+    @Accessors
+    private var boolean otherVariables = false
+    
+    /**
      * Determines if an element should be visible in the data pool view.
      * Per default only inputs and outputs are shown,
      * except if internal variables should be shown as well. 
@@ -51,10 +58,13 @@ class DataPoolFilter extends ViewerFilter {
      */
     override boolean select(Viewer viewer, Object parentElement, Object element) {
         if(element instanceof Variable) {
-            var boolean visible = true
-            // Show only inputs and outputs
-            if(!internalVariables) {
-                visible = (element.isInput || element.isOutput)
+            var boolean visible = (element.isInput || element.isOutput)
+            // Show only inputs and outputs or internal variables
+            if(internalVariables) {
+                visible = visible || element.interfaceTypes.contains(VariableInterfaceType.INTERNAL)
+            }
+            if(otherVariables) {
+                visible = visible || element.interfaceTypes.isNullOrEmpty
             }
             // Filter with (regex) search term
             if(!searchString.isNullOrEmpty) {
