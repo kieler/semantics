@@ -71,7 +71,7 @@ class KiCoModelCompiler extends ModelCompiler {
      * Optional frontend compile chain that is added before any other compile chain.
      * May contain the same values as compileChain.
      */
-    public val frontend = new ConfigurableAttribute("frontend", null, #[String, List])
+    public val frontend = new ConfigurableAttribute("frontend", null, #[String, List, Map])
     
     /**
      * Determines whether register variables should be communicated to the simulation.
@@ -225,7 +225,11 @@ class KiCoModelCompiler extends ModelCompiler {
     
     private def List<String> getCompileChain(Object value) {
         if(value instanceof String) {
-            return #[value]
+            if(value == "") {
+                return #[]
+            } else {
+                return #[value]    
+            }
         } else if(value instanceof List) {
             return value.map[it.toString]
         } else if(value instanceof Map) {

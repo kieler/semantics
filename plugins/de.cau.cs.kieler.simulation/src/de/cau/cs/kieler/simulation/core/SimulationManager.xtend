@@ -563,7 +563,6 @@ class SimulationManager extends Configurable {
                                       + "(needed: "+(currentTime-timeBeforeTick)+" ms, "
                                       + "desired: "+(nextTickTime-timeBeforeTick)+ " ms)"
                         val event = new ErrorEvent(message)
-                        System.err.println(message)
                         fireEvent(event)
                     }
                 }
