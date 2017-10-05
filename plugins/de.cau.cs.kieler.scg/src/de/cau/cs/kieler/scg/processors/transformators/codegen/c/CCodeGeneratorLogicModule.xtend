@@ -41,7 +41,7 @@ import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
- * Java Code Generator Logic Module
+ * C Code Generator Logic Module
  * 
  * Handles the creation of the tick logic function.
  * 

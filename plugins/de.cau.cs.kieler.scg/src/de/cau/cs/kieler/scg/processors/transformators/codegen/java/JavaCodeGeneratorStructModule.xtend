@@ -96,7 +96,7 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
     
     protected def createConstructor() {
         code.append("\n" + indentation)
-        code.append(className + "() {\n")
+        code.append("public " + className + "() {\n")
         
         for (declaration : scg.declarations.filter(VariableDeclaration)) {
             for (valuedObject : declaration.valuedObjects.filter[ isArray ]) {
