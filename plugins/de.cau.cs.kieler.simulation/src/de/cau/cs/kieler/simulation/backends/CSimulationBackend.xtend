@@ -18,7 +18,7 @@ import de.cau.cs.kieler.prom.drafts.PromProjectDrafts
  * @author aas
  *
  */
-class CSimulationBackend extends AbstractSimulationBackend {
+class CSimulationBackend extends OriginBasedSimulationBackend {
     
     /**
      * {@inheritDoc}

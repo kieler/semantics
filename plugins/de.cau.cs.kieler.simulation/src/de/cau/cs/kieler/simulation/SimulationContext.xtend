@@ -16,11 +16,11 @@ import de.cau.cs.kieler.prom.KiBuildExtensions
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.build.BuildProblem
+import de.cau.cs.kieler.prom.build.FileGenerationResult
 import de.cau.cs.kieler.prom.build.KielerModelingBuilder
 import de.cau.cs.kieler.prom.build.compilation.KiCoModelCompiler
 import de.cau.cs.kieler.prom.build.compilation.ModelCompiler
 import de.cau.cs.kieler.prom.build.simulation.SimulationCompiler
-import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.prom.drafts.ProjectDraftData
 import de.cau.cs.kieler.prom.templates.ModelAnalyzer
 import de.cau.cs.kieler.simulation.backends.SimulationBackend
@@ -59,23 +59,32 @@ class SimulationContext {
     public var IFile kisimFile
     
     public var IFile traceFile
+    public var int traceNumber
     
     public var IFile simInFile
     
     public var List<IFile> executableFiles = newArrayList
     
     // Fields for model compilation to executables, which are used to start the simulation afterwards
-    public var IProgressMonitor monitor 
+    @Accessors(PUBLIC_GETTER)
+    private var IProgressMonitor monitor 
+    @Accessors(PUBLIC_GETTER)
+    private var FileGenerationResult buildResult
     @Accessors(PUBLIC_GETTER)
     private var EObject model
     @Accessors(PUBLIC_GETTER)
     private var IFile modelFile
-    
+    @Accessors(PUBLIC_GETTER)
     private var ModelAnalyzer modelAnalyzer
-    
     @Accessors(PUBLIC_GETTER)
     private var SimulationBackend simulationBackend
     
+    private var List<ModelCompiler> modelCompilers
+    private var List<SimulationCompiler> simulationCompilers
+    
+    /**
+     * Flag to indicate that the project was initialized already.
+     */
     private var boolean initializedProject
     
     /**
@@ -115,6 +124,7 @@ class SimulationContext {
      * Constructor
      */
     new() {
+        // Stop any running simulations
         SimulationManager.instance?.stop
     }
     
@@ -141,6 +151,15 @@ class SimulationContext {
         this.simulationBackend = simulationBackend
         // If the backend changes, the temporary project needs to be re-initialized
         initializedProject = false
+        // Model compilers
+        val buildConfig = simulationBackend.buildConfig
+        modelCompilers = buildConfig.createModelCompilers
+        modelCompilers.setProgressMonitor
+        // Update the frontend for the compilation of the model
+        updateFrontendCompileChain
+        // Prepare simulation compilers
+        simulationCompilers = buildConfig.createSimulationCompilers
+        simulationCompilers.setProgressMonitor
     }
     
     /**
@@ -157,8 +176,14 @@ class SimulationContext {
         if(modelAnalyzer != null) {
             model = value
             // Create a (virtual) file for the source model
-            modelFile = temporaryProject.getFile("model."+modelAnalyzer.supportedFileExtensions.get(0))
+            var modelName = modelAnalyzer.getModelName(model)
+            if (modelName.isNullOrEmpty) {
+                modelName = "model"
+            }
+            modelFile = temporaryProject.getFile(modelName + "." + modelAnalyzer.supportedFileExtensions.get(0))
             PromPlugin.createResource(modelFile)
+            // Update the frontend for the compilation of the model
+            updateFrontendCompileChain
         } else {
             throw new Exception("Cannot create a simulation. No model analyzer was found for "+model)    
         }
@@ -178,9 +203,21 @@ class SimulationContext {
     }
     
     /**
-     * Creates a new simulation with the current configuration.
+     * Sets the monitor.
      */
-    private def void startSimulation() {
+    public def void setMonitor(IProgressMonitor monitor) {
+        this.monitor = monitor
+        simulationCompilers.setProgressMonitor
+        modelCompilers.setProgressMonitor
+    }
+    
+    /**
+     * Creates a new simulation with the current configuration.
+     * 
+     * Using this method a model file is not compiled beforehand.
+     * Use start to compile a model if needed and directly start the so created simulation.
+     */
+    public def void startSimulation() {
         // Check consistency
         if(kisimFile == null && executableFiles.isNullOrEmpty) {
             throw new Exception("No kisim file or executables are set to start a simulation.")
@@ -207,6 +244,7 @@ class SimulationContext {
         if(traceFile != null) {
             traceHandler = new TraceHandler()
             traceHandler.tracePath.value = traceFile.fullPath.toOSString
+            traceHandler.traceNumber.value = traceNumber
             sim.addAction("write", traceHandler)
         }
         // Add executables
@@ -245,15 +283,16 @@ class SimulationContext {
             return
         }
         sim.initialize
-        PromConsole.print("\n\nNew Simulation")
     }
     
     /**
      * Compiles the model to an executables that is ready for simulation.
+     * The created executables are added automatically.
      */
-    private def void compileModel() {
+    public def void compileModel() {
+        buildResult = new FileGenerationResult
         if(model == null) { 
-            return    
+            return
         }
         // Check consistency
         if(simulationBackend == null) {
@@ -273,21 +312,6 @@ class SimulationContext {
             }
         }
         
-        // Prepare build configuration
-        val buildConfig = simulationBackend.buildConfig
-        // Set frontend of model compilers
-        val modelCompilers = buildConfig.createModelCompilers
-        if(!modelAnalyzer.simulationFrontend.isNullOrEmpty) {
-            for(m : modelCompilers) {
-                if(m instanceof KiCoModelCompiler) {
-                    m.frontend.value = modelAnalyzer.simulationFrontend.replaceAll("\\s", "").split(",").toList
-                }
-            }
-        }
-        modelCompilers.setProgressMonitor
-        val simulationCompilers = buildConfig.createSimulationCompilers
-        simulationCompilers.setProgressMonitor
-        
         // Compile model
         for (modelCompiler : modelCompilers) {
             val modelCompilationResult = modelCompiler.compile(modelFile, model)
@@ -306,9 +330,9 @@ class SimulationContext {
                     }
                     // Check result for errors
                     checkErrors(simCompilationResult.problems)
-                    
                     // Add the created executables to the executables that should be simulated
                     executableFiles.addAll(simCompilationResult.createdFiles)
+                    buildResult.createdFiles.addAll(simCompilationResult.createdFiles)
                 }
             }
         }
@@ -325,10 +349,33 @@ class SimulationContext {
      * Sets the monitor of this context as the monitor of the compilers in the list.
      */
     private def void setProgressMonitor(List<?> compilers) {
+        if(compilers.isNullOrEmpty) {
+            return
+        }
         for(c : compilers) {
             switch(c) {
                 ModelCompiler : c.monitor = monitor
                 SimulationCompiler : c.monitor = monitor
+            }
+        }
+    }
+    
+    /**
+     * Adds a suited frontend compile chain for the current model
+     * to the build config that was loaded from the simulation backend.
+     */
+    private def void updateFrontendCompileChain() {
+        if(modelAnalyzer == null || modelCompilers.isNullOrEmpty) {
+            return
+        }
+        // Set frontend of model compilers
+        if(!modelAnalyzer.simulationFrontend.isNullOrEmpty) {
+            for(m : modelCompilers) {
+                if(m instanceof KiCoModelCompiler) {
+                    if(!m.frontend.isDefined) {
+                        m.frontend.value = modelAnalyzer.simulationFrontend.replaceAll("\\s", "").split(",").toList    
+                    }
+                }
             }
         }
     }
@@ -342,9 +389,10 @@ class SimulationContext {
         if(problems.isNullOrEmpty) {
             return
         }
+        buildResult.problems.addAll(problems)
         KielerModelingBuilder.showBuildProblems(problems)
         if(!problems.isNullOrEmpty) {
-            throw new Exception("Errors occured when creating the simulation:\n"+problems.map[it.message].join("\n"))
+            throw new Exception("Errors occured when creating the simulation: \n- "+problems.map[toString].join("\n- "))
         }
     }
     
@@ -353,7 +401,7 @@ class SimulationContext {
      * 
      * @return The temporary project for simulation
      */
-    private def IProject getTemporaryProject() {
+    public def IProject getTemporaryProject() {
         val root = ResourcesPlugin.getWorkspace.getRoot
         val project = root.getProject(TEMPORARY_PROJECT_NAME)
         if (!project.exists) {
