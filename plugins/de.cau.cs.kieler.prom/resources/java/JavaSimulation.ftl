@@ -15,7 +15,8 @@ public class ${file_basename} {
     public static ${model_name} model = new ${model_name}();
   
     public static int nextTick = 0;
-
+    public static BufferedReader stdInReader = new BufferedReader(new InputStreamReader(System.in));
+    
     public static void main(String[] args) {
         // Initialize 
         model.reset();
@@ -37,15 +38,15 @@ public class ${file_basename} {
     }
     
     private static void receiveVariables() {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         try {
-          String line = br.readLine();
+          String line = stdInReader.readLine();
           JSONObject json = new JSONObject(line);
-          
           JSONObject jsonVar;
+          JSONObject arrayObject;
+          JSONArray jsonArray;
           
 ${inputs}
-          
+        
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
@@ -55,9 +56,10 @@ ${inputs}
     
     private static void sendVariables() {
         JSONObject json = new JSONObject();
-
         JSONObject jsonVar;
-      
+        JSONObject arrayObject;
+        JSONArray jsonArray;
+        
 ${outputs}
     
         System.out.println(json.toString());

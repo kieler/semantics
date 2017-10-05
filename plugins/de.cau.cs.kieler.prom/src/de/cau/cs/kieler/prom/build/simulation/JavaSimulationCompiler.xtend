@@ -87,6 +87,18 @@ class JavaSimulationCompiler extends SimulationCompiler {
     /**
      * {@inheritDoc}
      */
+    override initializeCompilation() {
+        super.initializeCompilation
+        // Create bin folder for class files
+        val binFolder = project.getFolder("bin")
+        if(!binFolder.exists) {
+            binFolder.create(false, true, null);
+        }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
     override getExecutableFile() {
         val executableName = Files.getNameWithoutExtension(file.name) + ".jar"
         val executablePath = new Path(outputFolder.stringValue).append(executableName)

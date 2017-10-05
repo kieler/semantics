@@ -93,7 +93,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
     /**
      * Creates the substitutions for variables about the model path, name, file extension etc.  
      */
-    val modelFileSubstitution = new ResourceSubstitution("model") {
+    val modelFileSubstitution = new ResourceSubstitution("modelFile") {
         override getValue() {
             return newlyCreatedProject.getFile(modelFilePath+"."+modelFileExtension)
         }

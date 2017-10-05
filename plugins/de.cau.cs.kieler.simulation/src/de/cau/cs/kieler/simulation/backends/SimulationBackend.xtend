@@ -60,7 +60,12 @@ abstract class SimulationBackend {
     
     public static def SimulationBackend getCurrentBackend() {
         val currentBackendName = preferences.get(CURRENT_BACKEND_ATTR, DEFAULT_BACKEND.name)
-        return getBackends().findFirst[it.name == currentBackendName]
+        val backend = getBackends().findFirst[it.name == currentBackendName]
+        if(backend == null) {
+            throw new Exception("No simulation backend with name '"+currentBackendName+"' was found.\n"
+                              + "Please register a simulation backend extension with this name.")
+        }
+        return backend
     }
     
     /**

@@ -37,10 +37,10 @@ class VariableSerializer implements JsonSerializer<Variable> , JsonDeserializer<
      */
     override serialize(Variable src, Type typeOfSrc, JsonSerializationContext context) {
         val object = new JsonObject()
-        object.addProperty("name", src.name)
         object.add("value", context.serialize(src.value))
-        object.add("type", context.serialize(src.type))
-        object.addProperty("interface", VariableInterfaceType.getBitmask(src.interfaceTypes))
+//        object.addProperty("name", src.name)
+//        object.add("type", context.serialize(src.type))
+//        object.addProperty("interface", VariableInterfaceType.getBitmask(src.interfaceTypes))
         return object
     }
     

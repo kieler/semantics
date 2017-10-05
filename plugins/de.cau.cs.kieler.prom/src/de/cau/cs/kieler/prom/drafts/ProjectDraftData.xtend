@@ -175,12 +175,8 @@ class ProjectDraftData extends ConfigurationSerializable {
                     
                     if(isFile) {
                         // Setup placeholder replacements
-                        val modelFilePathWithoutExtension = new Path(modelFile).removeFileExtension
-                        val modelFileNameWithoutExtension = modelFilePathWithoutExtension.lastSegment
-                        
                         val placeholderReplacements = newHashMap
                         placeholderReplacements.put("project_name", project.name)
-                        placeholderReplacements.put("model_name", modelFileNameWithoutExtension)
                         if(additionalReplacements != null) {
                             placeholderReplacements.putAll(additionalReplacements)
                         }

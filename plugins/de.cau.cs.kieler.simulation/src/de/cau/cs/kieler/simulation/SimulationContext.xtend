@@ -180,7 +180,8 @@ class SimulationContext {
             if (modelName.isNullOrEmpty) {
                 modelName = "model"
             }
-            modelFile = temporaryProject.getFile(modelName + "." + modelAnalyzer.supportedFileExtensions.get(0))
+            val modelFolder = temporaryProject.getFolder("model")
+            modelFile = modelFolder.getFile(modelName + "." + modelAnalyzer.supportedFileExtensions.get(0))
             PromPlugin.createResource(modelFile)
             // Update the frontend for the compilation of the model
             updateFrontendCompileChain

@@ -65,6 +65,9 @@
       <simulationBackend
             class="de.cau.cs.kieler.simulation.backends.CSimulationBackend">
       </simulationBackend>
+      <simulationBackend
+            class="de.cau.cs.kieler.simulation.backends.JavaSimulationBackend">
+      </simulationBackend>
    </extension>
 
 </plugin>

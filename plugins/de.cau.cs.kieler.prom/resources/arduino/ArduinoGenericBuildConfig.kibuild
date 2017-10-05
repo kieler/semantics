@@ -27,5 +27,5 @@ model compiler kico {
 process wrapper template {
   file: assets/main.ftl
   target: ${project_name}.ino
-  modelFile: ${model_path}
+  modelFile: ${modelFile_path}
 }

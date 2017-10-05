@@ -23,9 +23,9 @@ import org.eclipse.xtend.lib.annotations.Accessors
  *
  */
 class VariableInterfaceType {
-    public static val INPUT = new VariableInterfaceType("input", 2)
-    public static val OUTPUT = new VariableInterfaceType("output", 1)
-    public static val INTERNAL = new VariableInterfaceType("internal", 0)
+    public static val INPUT = new VariableInterfaceType("input", 4)
+    public static val OUTPUT = new VariableInterfaceType("output", 2)
+    public static val INTERNAL = new VariableInterfaceType("internal", 1)
     public static val ALL_INTERFACE_TYPES = #[INPUT, OUTPUT, INTERNAL]
     
     /**
