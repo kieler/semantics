@@ -16,6 +16,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonElement
 import com.google.gson.JsonPrimitive
+import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
 import de.cau.cs.kieler.simulation.core.NDimensionalArray
 import de.cau.cs.kieler.simulation.core.Variable
@@ -39,6 +40,7 @@ class JsonManager {
     private static def Gson createGson() {
         val builder = new GsonBuilder()
         builder.excludeFieldsWithoutExposeAnnotation();
+        builder.registerTypeAdapter(typeof(DataPool), new DataPoolSerializer())
         builder.registerTypeAdapter(typeof(Model), new ModelSerializer())
         builder.registerTypeAdapter(typeof(Variable), new VariableSerializer())
         builder.registerTypeAdapter(typeof(NDimensionalArray), new NDimensionalArraySerializer())
