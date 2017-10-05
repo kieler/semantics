@@ -42,14 +42,14 @@ class StandaloneSimulationEnvironment {
     static extension KiBuildExtensions kiBuildExtensions = new KiBuildExtensions
     static extension ExtensibleURIConverterImpl URIconverter = new ExtensibleURIConverterImpl
 
-    @Accessors(PUBLIC_GETTER) val IProject project
+    @Accessors(PUBLIC_GETTER) var IProject project
     @Accessors var IFile modelFile = null
     @Accessors var BuildConfiguration buildConfig = null
     @Accessors(PUBLIC_GETTER) var FileGenerationResult buildResult = null
 
     static def createCSimulationEnvironment() {
         return new StandaloneSimulationEnvironment("TEMPORARY_SIM_PROJECT") => [
-            setResource("CSimulation.ftl",
+            setResource("assets/CSimulation.ftl",
                 URI.createURI("platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/CSimulation.ftl"))
             setResource("assets/CSimulationSnippets.ftl",
                 URI.createURI("platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/CSimulationSnippets.ftl"))
@@ -130,4 +130,8 @@ class StandaloneSimulationEnvironment {
         setBuildConfig(resource.contents.get(0) as BuildConfiguration)
     }
 
+    def setModelFile(IFile value) {
+        project = value.project
+        modelFile = value
+    }
 }

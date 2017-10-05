@@ -13,61 +13,33 @@
 package de.cau.cs.kieler.simulation.ui.wizards
 
 import de.cau.cs.kieler.prom.ui.wizards.AdvancedNewFileCreationPage
-import org.eclipse.jface.viewers.IStructuredSelection
-import org.eclipse.jface.wizard.Wizard
-import org.eclipse.ui.INewWizard
-import org.eclipse.ui.IWorkbench
+import de.cau.cs.kieler.prom.ui.wizards.AdvancedNewFileWizard
 
 /**
+ * Wizard to create a new simulation configuration.
+ * 
  * @author aas
  *
  */
-class KiSimFileWizard extends Wizard implements INewWizard {
-
+class KiSimFileWizard extends AdvancedNewFileWizard {
     /**
-     * The workbench from the init(...) method.
+     * {@inheritDoc}
      */
-    private var IWorkbench workbench
-    
-    /**
-     * The selection from the init(...) method.
-     */
-    private var IStructuredSelection selection
-    
-    /**
-     * Page to create a file.
-     */
-    private AdvancedNewFileCreationPage filePage
-    
-    /**
-     * Instantiates and adds the file creation page to this wizard.
-     */
-    override addPages(){
-        filePage = new AdvancedNewFileCreationPage("KiSim File", selection, false);
+    override protected createFileCreationPage() {
+        val filePage = new AdvancedNewFileCreationPage("KiSim File", selection, false);
         filePage.initialContentsURL = "platform:/plugin/de.cau.cs.kieler.simulation/resources/default.kisim"
         filePage.fileName = "NewSimulation.kisim"
         filePage.fileExtension = "kisim"
         filePage.description = "Create a new simulation configuration."
         
-        addPage(filePage);
-    }
-    
-    /**
-     * Creates the file with the settings from the wizard page.
-     * The method is called when the finish button is clicked.
-     */
-    override performFinish() {
-        return filePage.performFinish()
+        return filePage
     }
     
     /**
      * {@inheritDoc}
      */
-    override init(IWorkbench workbench, IStructuredSelection selection) {
-        this.workbench = workbench
-        this.selection = selection
-        
-        windowTitle = "New KiSim File"
-        helpAvailable = false
+    override protected getTitle() {
+        "New KiSim File"
     }
+    
 }

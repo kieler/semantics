@@ -4,6 +4,7 @@
 package de.cau.cs.kieler.prom.parser.antlr;
 
 import java.io.InputStream;
+
 import org.eclipse.xtext.parser.antlr.IAntlrTokenFileProvider;
 
 public class KiBuildAntlrTokenFileProvider implements IAntlrTokenFileProvider {

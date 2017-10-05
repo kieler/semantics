@@ -17,13 +17,15 @@ import de.cau.cs.kieler.simulation.core.Variable
 
 /**
  * Comparator for variables.
+ * It is used to sort variables.
  * 
  * @author aas
  *
  */
 class VariableComparator implements Comparator<Variable>{
     /**
-     * Compares two variables and orders them first by isInput, then by isOutput, then by name.
+     * Compares two variables and orders them.
+     * First inputs, then outputs, then by name.
      */
     override compare(Variable o1, Variable o2) {
         // inputs before outputs

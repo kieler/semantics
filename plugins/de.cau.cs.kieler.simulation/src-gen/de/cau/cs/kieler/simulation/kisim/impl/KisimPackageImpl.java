@@ -5,7 +5,6 @@ package de.cau.cs.kieler.simulation.kisim.impl;
 import de.cau.cs.kieler.prom.kibuild.KibuildPackage;
 
 import de.cau.cs.kieler.simulation.kisim.Action;
-import de.cau.cs.kieler.simulation.kisim.ActionOperation;
 import de.cau.cs.kieler.simulation.kisim.DataHandlerConfiguration;
 import de.cau.cs.kieler.simulation.kisim.Execution;
 import de.cau.cs.kieler.simulation.kisim.Initialization;
@@ -15,7 +14,6 @@ import de.cau.cs.kieler.simulation.kisim.SimulationConfiguration;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -63,13 +61,6 @@ public class KisimPackageImpl extends EPackageImpl implements KisimPackage
    * @generated
    */
   private EClass actionEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EEnum actionOperationEEnum = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -312,16 +303,6 @@ public class KisimPackageImpl extends EPackageImpl implements KisimPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EEnum getActionOperation()
-  {
-    return actionOperationEEnum;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public KisimFactory getKisimFactory()
   {
     return (KisimFactory)getEFactoryInstance();
@@ -368,9 +349,6 @@ public class KisimPackageImpl extends EPackageImpl implements KisimPackage
     createEAttribute(actionEClass, ACTION__OPERATION);
     createEAttribute(actionEClass, ACTION__HANDLER);
     createEAttribute(actionEClass, ACTION__ID);
-
-    // Create enums
-    actionOperationEEnum = createEEnum(ACTION_OPERATION);
   }
 
   /**
@@ -425,14 +403,9 @@ public class KisimPackageImpl extends EPackageImpl implements KisimPackage
     initEReference(getExecution_Actions(), this.getAction(), null, "actions", null, 0, -1, Execution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(actionEClass, Action.class, "Action", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getAction_Operation(), this.getActionOperation(), "operation", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAction_Operation(), ecorePackage.getEString(), "operation", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAction_Handler(), ecorePackage.getEString(), "handler", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAction_Id(), ecorePackage.getEString(), "id", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    // Initialize enums and add enum literals
-    initEEnum(actionOperationEEnum, ActionOperation.class, "ActionOperation");
-    addEEnumLiteral(actionOperationEEnum, ActionOperation.WRITE);
-    addEEnumLiteral(actionOperationEEnum, ActionOperation.READ);
 
     // Create resource
     createResource(eNS_URI);

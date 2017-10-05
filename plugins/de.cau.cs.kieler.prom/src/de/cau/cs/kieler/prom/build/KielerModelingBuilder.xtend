@@ -15,12 +15,16 @@ package de.cau.cs.kieler.prom.build
 import de.cau.cs.kieler.prom.KiBuildExtensions
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
+import de.cau.cs.kieler.prom.build.compilation.ModelCompiler
+import de.cau.cs.kieler.prom.build.simulation.SimulationCompiler
+import de.cau.cs.kieler.prom.build.templates.SimulationTemplateProcessor
+import de.cau.cs.kieler.prom.build.templates.TemplateProcessor
+import de.cau.cs.kieler.prom.build.templates.WrapperCodeTemplateProcessor
+import de.cau.cs.kieler.prom.configurable.AttributeExtensions
 import de.cau.cs.kieler.prom.kibuild.BuildConfiguration
 import java.util.ArrayList
-import java.util.HashMap
 import java.util.List
 import java.util.Map
-import java.util.Set
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IMarker
 import org.eclipse.core.resources.IProject
@@ -29,47 +33,55 @@ import org.eclipse.core.resources.IResourceDelta
 import org.eclipse.core.resources.IResourceDeltaVisitor
 import org.eclipse.core.resources.IncrementalProjectBuilder
 import org.eclipse.core.runtime.CoreException
-import org.eclipse.core.runtime.IPath
 import org.eclipse.core.runtime.IProgressMonitor
-import org.eclipse.core.runtime.Path
 import org.eclipse.emf.ecore.resource.ResourceSet
-import org.eclipse.jdt.core.IClasspathEntry
-import org.eclipse.jdt.core.IJavaProject
-import org.eclipse.jdt.core.JavaCore
+import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
-import org.eclipse.xtend.lib.annotations.Accessors
+
+import static de.cau.cs.kieler.prom.FileExtensions.*
 
 /**
+ * The kieler modeling builder has three main tasks:
+ *   1. compile model files using ModelCompiler
+ *   2. process templates. These are either simple templates, wrapper code templates or simulation code templates
+ *   3. compile generated simulation code to executables
+ * 
  * @author aas
  * 
  */
 class KielerModelingBuilder extends IncrementalProjectBuilder {
     
     /**
-     * Id of the builder
+     * Id of the builder, which is specified in the plugin.xml
      */
     public static val String BUILDER_ID = "de.cau.cs.kieler.prom.KielerModelingBuilder"; 
     
+    /**
+     * The id for the markers, which is specified in the plugin.xml
+     */
     public static val String PROBLEM_MARKER_TYPE = "kieler.modeling.builder.problem"
     
     /**
-     * The features of the KIELER Compiler that produces finished code.
-     * The field is used to cache the features.
+     * Extension methods to work with kibuild files
      */
-//    private static var Feature codeGenerationFeatures
-    
-    /**
-     * The trasnformations of the KIELER Compiler that produces finished code.
-     * The field is used to cache the transformations.
-     */
-//    private static var Set<Transformation> codeGenerationTransformations
-
     extension KiBuildExtensions kiBuildExtensions 
+    /**
+     * Extension methods to work with configurable attributes
+     */
     extension AttributeExtensions attributeExtensions 
 
-    private var List<SimulationCompiler> simulationCompilers = newArrayList
+    /**
+     * The loaded model compilers.
+     */
     private var List<ModelCompiler> modelCompilers = newArrayList
+    /**
+     * The loaded simulation compilers.
+     */
+    private var List<SimulationCompiler> simulationCompilers = newArrayList
+    /**
+     * The loaded template processors.
+     */
     private var List<TemplateProcessor> templateProcessors = newArrayList
     
     /**
@@ -89,11 +101,6 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
     private int kind
     
     /**
-     * The names of all models in the project
-     */
-    private val HashMap<String, String> modelNames = newHashMap()
-    
-    /**
      * Flag to remember if the builder has been initialized before
      */
     private boolean isInitialized
@@ -108,11 +115,18 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      */
     private DependencyGraph dependencies;
     
+    /**
+     * Flag to indicate that this incremental build should be aborted,
+     * because a full build is done instead.
+     */
     @Accessors
     private boolean abortIncrementalBuild
     
     /**
      * Creates a marker for a file in the Eclipse workspace.
+     * 
+     * @param res The resource that gets the marker
+     * @param message The message of the marker 
      */
     private static def IMarker createMarker(IResource res, String message) {
         val marker = res.createMarker(PROBLEM_MARKER_TYPE)
@@ -123,7 +137,10 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
     }
     
     /**
-     * Creates a warnin marker for a file in the Eclipse workspace.
+     * Creates a warning marker for a file in the Eclipse workspace.
+     * 
+     * @param res The resource that gets the marker
+     * @param message The message of the marker
      */
     public static def IMarker createWarningMarker(IResource res, String message) {
         val marker = createMarker(res, message)
@@ -134,6 +151,9 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
     
     /**
      * Creates an error marker for a file in the Eclipse workspace.
+     * 
+     * @param res The resource that gets the marker
+     * @param message The message of the marker
      */
     public static def IMarker createErrorMarker(IResource res, String message) {
         val marker = createMarker(res, message)
@@ -143,28 +163,29 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
     }
     
     /**
-     * Flag that is infered from the target language and determines
-     * if the target is a single transformation for code generation (e.g. "s.java")
-     * or a complex compile chain (e.g. "*T_ABORTWTO, T_EXIT").
+     * Shows the given problem using error/warning markers.
+     * 
+     * @param problems The build problems
      */
-    public static def boolean isCompileChain(String targetLanguage) {
-        var isCompileChain = false
-//        // Get code transformations of KiCo
-//        if(codeGenerationFeatures == null) {
-//            codeGenerationFeatures = KielerCompiler.getFeature(CodeGenerationFeatures.TARGET_ID)
-//            if(codeGenerationFeatures != null) {
-//                codeGenerationTransformations = codeGenerationFeatures.expandingTransformations
-//            }
-//        }
-//        // Check if target matches a transformation
-//        if(codeGenerationTransformations != null && !codeGenerationTransformations.isEmpty) {            
-//            // There is no transformation with the given id
-//            // => the target is a compile chain and not a transformation.
-//            isCompileChain = codeGenerationTransformations.filter[it.id == targetLanguage].isEmpty    
-//        }
-        return isCompileChain
+    public static def void showBuildProblems(List<BuildProblem> problems) {
+        for(problem : problems) {
+            if(problem.res != null) {
+                var IMarker marker
+                if(problem.isWarning) {
+                    marker = createWarningMarker(problem.res, problem.message)
+                } else {
+                    marker = createErrorMarker(problem.res, problem.message)
+                }
+                if(marker != null && problem.line > 0) {
+                    marker.setAttribute(IMarker.LINE_NUMBER, problem.line)
+                }
+            }
+        }
     }
     
+    /**
+     * Constructor
+     */
     new() {
         super()
         attributeExtensions = new AttributeExtensions
@@ -210,6 +231,9 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
         processAllTemplates
     }
     
+    /**
+     * Perform an incremental build of the given files, which changed since the last build.
+     */
     private def void incrementalBuild(IResourceDelta delta) {
         // Initialize
         abortIncrementalBuild = false
@@ -224,26 +248,16 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
                     val res = delta.getResource()
                     if(res.type == IResource.FILE && res.fileExtension != null && res.exists) {
                         val file = res as IFile
-                        // Only take care of files with the following extensions
-                        switch(file.fileExtension.toLowerCase) {
-//                            case "sct",
-                            case "sctx",
-                            case "strl": {
-                                changedModels.add(file)    
-                            }
-                            case "ftl": {
-                                changedTemplates.add(file)
-                            }
-                            case "kibuild": {
-                                // The configuration changed: Do a full build instead of an incremental build
-                                abortIncrementalBuild = true
-                                fullBuild
-                                // No need to check further files, because we do a full build
-                                return false
-                            }
-                            default : {
-                                // Ignore other files
-                            }
+                        if(isModel(file)) {
+                            changedModels.add(file)    
+                        } else if(isTemplate(file)) {
+                            changedTemplates.add(file)
+                        } else if(isBuildConfiguration(file)) {
+                            // The configuration changed: Do a full build instead of an incremental build
+                            abortIncrementalBuild = true
+                            fullBuild
+                            // No need to check further files, because we do a full build
+                            return false
                         }
                     } else if(res.type == IResource.FOLDER) {
                         // Ignore files that were copied to bin folder by eclipse 
@@ -292,15 +306,20 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
         return templateFiles
     }
     
+    /**
+     * Starts all registered template processors.
+     */
     private def void processAllTemplates() {
-        processTemplates(null, false)
+        processTemplates(null)
     }
     
+    /**
+     * Starts the registered template processors that handle the given files,
+     * or all template processors if the given list is null.
+     * 
+     * @param files The template files, which should be processed, or null to build all
+     */
     private def void processTemplates(List<IFile> files) {
-        processTemplates(files, true)
-    }
-    
-    private def void processTemplates(List<IFile> files, boolean onlyBuildChangedFiles) {
         // Collection of all created simulation files
         val List<IFile> createdSimulationFiles = newArrayList
         
@@ -308,7 +327,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
         for(templateProcessor : templateProcessors) {
             val templateFile = project.getFile(templateProcessor.template.stringValue)
             var templateForChangedFile = false
-            if(onlyBuildChangedFiles) {
+            if(files != null) {
                 // Check if the template of this processor changed
                 for(changedTemplate : files) {
                     // Is this processor for this template?
@@ -318,7 +337,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
                 }
             }
             // Process the template
-            if(!onlyBuildChangedFiles || templateForChangedFile) {
+            if(files == null || templateForChangedFile) {
                 monitor.subTask("Processing template '"+templateProcessor.template.stringValue+"'")
                 val result = templateProcessor.process
                 showBuildProblems(result.problems)
@@ -336,8 +355,9 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
     }
     
     /**
-     * Build a list of files
-     * @param resources The list of files to build 
+     * Build the given files
+     * 
+     * @param files The list of files to be built
      */
     private def void buildModels(List<IFile> files) {
         // Collection of all created simulation files
@@ -363,7 +383,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
                 checkDependencies()
             } 
 
-            // Compile via KiCo
+            // Compile using the registered model compilers
             for(file : files) {
                 // Compile, generate simulation code, fetch wrapper code annotations
                 if(!monitor.isCanceled) {
@@ -400,7 +420,8 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
     }
 
     /**
-     * Clean the project.
+     * Cleans the project.
+     * Removes all markers and re-initialzes this builder.
      */
     private def void clean() {
         // TODO: Delete generated files
@@ -408,7 +429,6 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
         deleteMarkers(project)
         // Re-initialize
         isInitialized = false
-        modelNames.clear
         createResourceSet
     }
 
@@ -451,12 +471,17 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
         }
     }
     
+    /**
+     * Configures this instance using the given configuration.
+     * Loads the model compiler, template processors and simulation compilers.
+     * 
+     * @param buildConfig The configuration
+     */
     private def void initializeConfiguration(BuildConfiguration buildConfig) {
         // Update attributes
         this.updateConfigurableAttributes(buildConfig.attributes)
         
         // Create model compilers
-//            buildConfig.createModelCompilers
         modelCompilers = buildConfig.createModelCompilers
         for(modelCompiler : modelCompilers) {
             modelCompiler.monitor = monitor
@@ -476,16 +501,23 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
 
     /**
      * Returns a list with all model files in the project that can be built.
+     * 
      * @return the list of model files that can be built
      */ 
     private def List<IFile> findModelFilesInProject() {
+        // TODO: Check if this can be removed
         // Search for models in project
         val membersWithoutBinDirectory = project.members.filter[it.name != "bin"]
-        return PromPlugin.findFiles(membersWithoutBinDirectory, #[//"sct",
-                                                                  "sctx",
-                                                                  "strl"])
+        return PromPlugin.findFiles(membersWithoutBinDirectory, null as List<String>).filter[isModel(it)].toList
     }
     
+    
+    
+    /**
+     * Deletes all kieler modeling builder problems from the given resource and all its contained resources.
+     * 
+     * @param res The resource
+     */
     public static def void deleteMarkers(IResource res) {
         if(res != null && res.exists) {
             val markers = res.findMarkers(PROBLEM_MARKER_TYPE, false, IResource.DEPTH_INFINITE)
@@ -497,24 +529,9 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
         }
     }
     
-    public static def void showBuildProblems(List<BuildProblem> problems) {
-        for(problem : problems) {
-            if(problem.res != null) {
-                var IMarker marker
-                if(problem.isWarning) {
-                    marker = createWarningMarker(problem.res, problem.message)
-                } else {
-                    marker = createErrorMarker(problem.res, problem.message)
-                }
-                if(marker != null && problem.line > 0) {
-                    marker.setAttribute(IMarker.LINE_NUMBER, problem.line)
-                }
-            }
-        }
-    }
-    
     /**
      * Lets all simulation compilers process the given file that can handle it.
+     * 
      * @param file The file with simulation code that should be compiled
      */
     private def void compileSimulationCode(IFile file) {
@@ -524,79 +541,6 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
                 showBuildProblems(result.problems)
             }
         }
-    }
-    
-    /**
-     * Computes the fully qualified target path for a project relative file path.
-     * The target path will be in the target directory and in this directory
-     * has the same directory structure as the original file in the project.
-     * 
-     * @return the computed path
-     */
-    public static def IResource computeTargetResource(String projectRelativePath,
-        String targetDirectory, String targetFileExtension, IProject project) {
-        
-        var IPath projectRelativeTargetPath;
-        val projectRelativePathObject = new Path(projectRelativePath)
-        // Only append file extension if the input path does have one
-        val newFileExtension = if(projectRelativePathObject.fileExtension.isNullOrEmpty)
-                                   ""
-                               else
-                                   targetFileExtension?.replace(".", "")
-        if(targetDirectory.isNullOrEmpty()) {
-            // Compute path such that the target file will be in the same file as the source file.
-            projectRelativeTargetPath = projectRelativePathObject.removeFileExtension
-        } else {
-            // Compute path in the target directory
-            // such that the directory structure of the original file is retained.
-            var IPath projectRelativeRelevantPath = new Path(projectRelativePath)
-            // The source directories of a java project are not part of the relevant target path
-            // because output files will be saved to a java source folder as well.
-            // So we remove the first segment of the path if it is a java source directory.
-            val firstSegment = new Path(projectRelativePath).segment(0);
-            if(!firstSegment.isNullOrEmpty() && project.hasNature(JavaCore.NATURE_ID)) {
-                val javaProject = JavaCore.create(project)
-                if(isJavaSourceDirectory(javaProject, firstSegment)) {
-                    projectRelativeRelevantPath = projectRelativeRelevantPath.removeFirstSegments(1)
-                }
-            }
-            
-            // Remove extension
-            val projectRelativeRelevantPathWithoutExtension = projectRelativeRelevantPath.removeFileExtension        
-         
-            // Compute target path
-            projectRelativeTargetPath = new Path(targetDirectory).append(projectRelativeRelevantPathWithoutExtension)
-        }
-        // Add file extension
-        if(!newFileExtension.isNullOrEmpty) {
-           projectRelativeTargetPath = projectRelativeTargetPath.addFileExtension(newFileExtension)
-        }
-        // Create resource handle in project
-        if(projectRelativeTargetPath.fileExtension != null) {
-            return project.getFile(projectRelativeTargetPath)    
-        } else {
-            return project.getFolder(projectRelativeTargetPath)
-        }
-    }
-    
-    /**
-     * Checks if the directory in the java project is configured as source directory.
-     * 
-     * @param javaProject A project with the java nature
-     * @param directory The directory
-     * @return true if the directory is a source directory. false otherwise.
-     */
-    private static def boolean isJavaSourceDirectory(IJavaProject javaProject, String directory) {
-        val classPathEntries = javaProject.getRawClasspath();
-        for(entry : classPathEntries) {
-            if(entry.entryKind == IClasspathEntry.CPE_SOURCE) {
-                val sourceFolderName = new Path(entry.path.toOSString).lastSegment
-                if(sourceFolderName.equals(directory)) {
-                    return true
-                }
-            } 
-        }
-        return false
     }
     
     /**
@@ -615,6 +559,9 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
         }
     }
 
+    /**
+     * Creates a fresh resource set with all models files in the project and updates their dependencies.
+     */
     private def void createResourceSet() {
         // Create resource set
         resourceSet = new XtextResourceSet()
@@ -632,12 +579,18 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
         checkDependencies
     }
 
+    /**
+     * Lets all model compilers updates the dependencies of the given files. 
+     */
     private def void updateDependencies(IFile... files) {
         for(m : modelCompilers) {
             m.updateDependencies(dependencies, files, resourceSet)
         }
     }
 
+    /**
+     * Creates a dependency graph for all models in the current resource set.
+     */
     private def void createDependencyGraph() {
         // Create new dependency graph
         dependencies = new DependencyGraph()
@@ -659,6 +612,10 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
 //        }
     }
 
+    /**
+     * Checks the dependency graph for consistency.
+     * Ensures that there are no cyclic dependencies.
+     */
     private def void checkDependencies() {
         // Check that there are no loops
         val loop = dependencies.findLoop

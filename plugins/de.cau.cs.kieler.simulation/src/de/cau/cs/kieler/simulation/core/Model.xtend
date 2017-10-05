@@ -14,6 +14,7 @@ package de.cau.cs.kieler.simulation.core
 
 import de.cau.cs.kieler.simulation.json.JsonManager
 import java.util.List
+import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
@@ -29,18 +30,23 @@ class Model implements Cloneable {
      * The name of the model
      */
     @Accessors
-    private String name = ""
+    private var String name = ""
     
     /**
      * The pool in which this model is saved
      */
     @Accessors
-    private DataPool pool = null
+    private var DataPool pool = null
     
     /**
      * The variables of the model
      */
-    private List<Variable> variables = newArrayList()
+    private val List<Variable> variables = newArrayList
+    
+    /**
+     * A mapping of variable names to the corresponding variable.
+     */
+    private val Map<String, Variable> variablesMap = newHashMap
     
     /**
      * Indicates that at least one variable might have a user value set,
@@ -49,15 +55,25 @@ class Model implements Cloneable {
     @Accessors(PUBLIC_GETTER)
     private boolean hasModifiedVariable
 
+    /**
+     * Constructor
+     */
     new () {
     }
-
+    
+    /**
+     * Constructor
+     * 
+     * @param name The name
+     */
     new(String name) {
         this.name = name
     }
 
     /**
      * Convert this model to a json representation.
+     * 
+     * @return the JSON representation for this object
      */
     public def String toJson() {
         val json = JsonManager.GSON.toJson(this)
@@ -66,6 +82,10 @@ class Model implements Cloneable {
     
     /**
      * Creates a model from a json representation
+     * 
+     * @param name The name for the new model
+     * @param json The JSON representation to be loaded
+     * @return the loaded model
      */
     public static def Model createFromJson(String name, String json) {
         val m = JsonManager.GSON.fromJson(json, typeof(Model))
@@ -75,6 +95,8 @@ class Model implements Cloneable {
     
     /**
      * Returns a list of previous states of this model from old to new. 
+     * 
+     * @return the history of previous models
      */
     public def List<Model> getHistory() {
         val List<Model> history = newArrayList()
@@ -91,33 +113,61 @@ class Model implements Cloneable {
     
     /**
      * Returns the variable with the given name.
+     * 
+     * @param name The name
+     * @return the variable with the given name, or null if none
      */
     public def Variable getVariable(String name) {
-        variables.findFirst[it.name == name]
+        variablesMap.get(name)
     }
     
     /**
      * Returns the variables.
+     * 
+     * @return the variables in this model
      */
     public def List<Variable> getVariables() {
         return variables
     }
 
     /**
+     * Returns true if a variable with the given name is in the model.
+     */
+    public def boolean hasVariable(String name) {
+        return variablesMap.containsKey(name)
+    }
+
+    /**
      * Adds a variables.
+     * 
+     * @param v The variable
      */
     public def void addVariable(Variable v) {
         // Remove in old model
         if(v.model != null) {
-            v.model.variables.remove(v)
+            v.model.removeVariable(v)
         }
         // Set new model
         v.model = this
-        if(!variables.contains(v)) {
+        if(!hasVariable(v.name)) {
             variables.add(v)
+            variablesMap.put(v.name, v)
         }
     }
     
+    /**
+     * Removes a variables.
+     * 
+     * @param v The variable
+     */
+    public def void removeVariable(Variable v) {
+        variables.remove(v)
+        variablesMap.remove(v.name)
+    }
+    
+    /**
+     * Applies the user values of all variables
+     */
     public def void applyUserValues() {
         // Apply user made changes to variable values
         for(v : variables) {
@@ -125,6 +175,9 @@ class Model implements Cloneable {
         }
     }
     
+    /**
+     * Sets the flag to indicate that at least one variable has a user value
+     */
     protected def void setModifiedVariable() {
         hasModifiedVariable = true
         pool.setModifiedVariable

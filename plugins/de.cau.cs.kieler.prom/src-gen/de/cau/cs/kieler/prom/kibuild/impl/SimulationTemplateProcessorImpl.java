@@ -2,10 +2,10 @@
  */
 package de.cau.cs.kieler.prom.kibuild.impl;
 
+import org.eclipse.emf.ecore.EClass;
+
 import de.cau.cs.kieler.prom.kibuild.KibuildPackage;
 import de.cau.cs.kieler.prom.kibuild.SimulationTemplateProcessor;
-
-import org.eclipse.emf.ecore.EClass;
 
 /**
  * <!-- begin-user-doc -->

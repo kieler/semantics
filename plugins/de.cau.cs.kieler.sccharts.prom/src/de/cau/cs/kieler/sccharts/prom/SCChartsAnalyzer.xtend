@@ -12,31 +12,27 @@
  */
 package de.cau.cs.kieler.sccharts.prom
 
-import de.cau.cs.kieler.annotations.Annotation
-import de.cau.cs.kieler.annotations.BooleanAnnotation
-import de.cau.cs.kieler.annotations.FloatAnnotation
-import de.cau.cs.kieler.annotations.IntAnnotation
-import de.cau.cs.kieler.annotations.StringAnnotation
-import de.cau.cs.kieler.kexpressions.Declaration
-import de.cau.cs.kieler.kexpressions.IntValue
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.prom.console.PromConsole
-import de.cau.cs.kieler.prom.data.MacroCallData
-import de.cau.cs.kieler.prom.templates.ModelAnalyzer
-import de.cau.cs.kieler.sccharts.State
-import java.util.ArrayList
-import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.prom.templates.DeclarationAnalyzer
 import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.kexpressions.ValueType
+import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.prom.FileExtensions
 
 /**
  * @author aas
  *
  */
-class SCChartsAnalyzer implements ModelAnalyzer{
-    
-    private static val EXPLICIT_WRAPPER_CODE_ANNOTATION_NAME = "Wrapper"
+class SCChartsAnalyzer extends DeclarationAnalyzer {
+    /**
+     * {@inheritDoc}
+     */
+    override getDeclarations(EObject model) {
+        if(model instanceof SCCharts) {
+            val rootState = model.rootStates.get(0)
+            if(rootState != null) {
+                return rootState.declarations
+            }
+        }
+    }
     
     /**
      * {@inheritDoc}
@@ -52,176 +48,50 @@ class SCChartsAnalyzer implements ModelAnalyzer{
     /**
      * {@inheritDoc}
      */
-    override getAnnotationInterface(EObject model) {
-        var State state
-        if (model instanceof SCCharts) {
-            if(!model.rootStates.isNullOrEmpty) {
-                state = model.rootStates.get(0)
-            }
-        }
-        if (state == null) {
-            return null
-        }
-        val annotationDatas = new ArrayList<MacroCallData>()
-        
-        // Iterate over model to get all annotations
-        for (decl : state.declarations.filter(VariableDeclaration)) {
-            // Only consider annotations of inputs and outputs.
-            if (!decl.const && (decl.input || decl.output)) {
-                for (annotation : decl.annotations) {
-                    val data = new MacroCallData()
-                    data.modelName = state.name
-                    initData(data, decl)
-                    initData(data, annotation)
-                    annotationDatas += data
-                }
-            } else {
-                // Print warning if explicit wrapper code annotation on variable
-                // that is neither input nor output
-                // TODO: Make validator for this
-                for (annotation : decl.annotations) {
-                     if(annotation.name == EXPLICIT_WRAPPER_CODE_ANNOTATION_NAME) {
-                         PromConsole.print('''Warning: Variable '«getVariableName(decl)»' is neither input nor output but has an explicit wrapper code annotation.''');
-                     }
-                }
-            }
-        }
-        
-        return annotationDatas
+    override getSupportedFileExtensions() {
+        return #[FileExtensions.SCCHART]
     }
     
     /**
      * {@inheritDoc}
      */
-    override getSimulationInterface(EObject model) {
-        var State state
-        if (model instanceof SCCharts) {
-            if(!model.rootStates.isNullOrEmpty) {
-                state = model.rootStates.get(0)
-            }
-        }
-        if (state == null) {
-            return null
-        }
-        val annotationDatas = new ArrayList<MacroCallData>()
-        
-        for(decl : state.declarations.filter(VariableDeclaration)) {
-            for(valuedObject : decl.valuedObjects) {
-                if(!decl.const) {
-                    val data = new MacroCallData()
-                    
-                    // Valued signal stuff
-                    val isValuedSignal = decl.signal && decl.type !== ValueType.PURE && (!decl.input || decl.output) // only outputs!
-                    val valData = new MacroCallData()
-                    
-                    data.arguments.add(String.valueOf(decl.input))
-                    data.arguments.add(String.valueOf(decl.output))
-                    if (isValuedSignal) {
-                        valData.arguments.add(String.valueOf(decl.input))
-                        valData.arguments.add(String.valueOf(decl.output))                        
-                    }
-                    
-                    // add array sizes if any
-                    if(!valuedObject.cardinalities.nullOrEmpty) {
-                        for(card : valuedObject.cardinalities) {
-                            var IntValue intValue = null;
-                            if(card instanceof IntValue) {
-                                intValue = card as IntValue
-                            } else if(card instanceof ValuedObjectReference) {
-                                if(card.valuedObject.initialValue instanceof IntValue) {
-                                    intValue = card.valuedObject.initialValue as IntValue
-                                } else {
-                                    throw new Exception("Array sizes must have an integer or integer constant as initial value")
-                                }
-                            }
-                            if(intValue != null) {
-                                data.arguments.add(intValue.value.toString)
-                                if (isValuedSignal) valData.arguments.add(intValue.value.toString)
-                            }
-                        }
-                    }
-                    
-                    data.modelName = state.name
-                    data.name = "Simulate"
-                    data.varType = if (isValuedSignal) ValueType.PURE.literal else decl.type.literal
-                    data.varName = valuedObject.name
-                    if (isValuedSignal) {
-                        valData.modelName = state.name
-                        valData.name = "Simulate"
-                        valData.varType = decl.type.literal
-                        valData.varName = valuedObject.name + "_val"
-                    }
-                    
-                    // Set interface type
-                    if(decl.input) {
-                        data.interfaceTypes.add("input")
-                        if (isValuedSignal) valData.interfaceTypes.add("input")
-                    }
-                    if(decl.output) {
-                        data.interfaceTypes.add("output")
-                        if (isValuedSignal) valData.interfaceTypes.add("output")
-                    }
-                    if(!decl.input && !decl.output) {
-                        data.interfaceTypes.add("internal")
-                        if (isValuedSignal) valData.interfaceTypes.add("internal")
-                    }
-                    
-                    annotationDatas.add(data)
-                    if (isValuedSignal) annotationDatas.add(valData)
-                }
-            }
-        }
-        
-        return annotationDatas
+    override getSupportedModelTypes() {
+        return #[SCCharts]
     }
     
     /**
-     * Fetches the data for wrapper code generation from a variable declaration of an SCT file.
+     * {@inheritDoc}
      */
-    private def void initData(MacroCallData data, VariableDeclaration decl){
-        data.setPhases(decl.isInput, decl.isOutput)
-        data.varType = decl.type.literal
-        data.varName = getVariableName(decl)
+    override protected getDefaultSimulationFrontend() {
+        // TODO: Make a compilation system to compile SCCharts to SCG
+        return "de.cau.cs.kieler.sccharts.processors.transformators.takenTransitionSignaling, \n"
+             + "de.cau.cs.kieler.sccharts.processors.transformators.reference, \n"
+             + "de.cau.cs.kieler.sccharts.processors.transformators.for, \n"
+             + "de.cau.cs.kieler.sccharts.processors.transformators.const, \n"
+             + "de.cau.cs.kieler.sccharts.processors.transformators.signal, \n"
+             + "de.cau.cs.kieler.sccharts.processors.transformators.pre, \n"
+             + "de.cau.cs.kieler.sccharts.processors.transformators.suspend, \n"
+             + "de.cau.cs.kieler.sccharts.processors.transformators.countDelay, \n"
+             + "de.cau.cs.kieler.sccharts.processors.transformators.weakSuspend, \n"
+             + "de.cau.cs.kieler.sccharts.processors.transformators.history, \n"
+             + "de.cau.cs.kieler.sccharts.processors.transformators.deferred, \n"
+             + "de.cau.cs.kieler.sccharts.processors.transformators.static, \n"
+             + "de.cau.cs.kieler.sccharts.processors.transformators.duringAction, \n"
+             + "de.cau.cs.kieler.sccharts.processors.transformators.complexFinalState, \n"
+             + "de.cau.cs.kieler.sccharts.processors.transformators.abort, \n"
+             + "de.cau.cs.kieler.sccharts.processors.transformators.exitAction, \n"
+             + "de.cau.cs.kieler.sccharts.processors.transformators.initialization, \n"
+             + "de.cau.cs.kieler.sccharts.processors.transformators.entryAction, \n"
+             + "de.cau.cs.kieler.sccharts.processors.transformators.connector, \n"
+             + "de.cau.cs.kieler.sccharts.processors.transformators.triggerEffect, \n"
+             + "de.cau.cs.kieler.sccharts.processors.transformators.surfaceDepth, \n" 
+             + "de.cau.cs.kieler.sccharts.scg.processors.transformators.SCG, \n"
+             // SCG transformations
+             + "de.cau.cs.kieler.scg.processors.transformators.dependency, \n"
+             + "de.cau.cs.kieler.scg.processors.transformators.basicBlocks, \n"
+             + "de.cau.cs.kieler.scg.processors.transformators.expressions, \n"
+             + "de.cau.cs.kieler.scg.processors.transformators.guards, \n"
+             + "de.cau.cs.kieler.scg.processors.transformators.scheduler, \n"
+             + "de.cau.cs.kieler.scg.processors.transformators.sequentializer"
     }
-    
-    /**
-     * Fetches the name of the first valued object in a declaration.
-     * @param decl The declaration
-     */
-    private def String getVariableName(Declaration decl) {
-        if (decl.valuedObjects != null && !decl.valuedObjects.isEmpty) {
-            val obj = decl.valuedObjects.get(0)
-            return obj.name
-        } else {
-            return "";
-        }
-    }
-    
-    /**
-     * Fetches the data for wrapper code generation from a variable's annotation of an SCT file.
-     */
-    private def void initData(MacroCallData data, Annotation annotation){
-        data.name = annotation.name
-        
-        // Xtend autocast switch expression
-        // (the data object is always casted to different
-        // classes such that arguments always calls a different getter)
-        switch (annotation) {
-            BooleanAnnotation: data.arguments.add(String.valueOf(annotation.value))
-            FloatAnnotation: data.arguments.add(String.valueOf(annotation.value))
-            IntAnnotation: data.arguments.add(String.valueOf(annotation.value))
-            StringAnnotation: data.arguments.addAll(annotation.values)
-        }
-        
-        if(data.name == EXPLICIT_WRAPPER_CODE_ANNOTATION_NAME && !data.arguments.isEmpty){
-            // Explicit wrapper annotation
-            // -> actual snippet name is the first argument.
-            data.name = data.arguments.remove(0)
-        }else{
-            // Not an explicit wrapper code annotation
-            // -> ignore if non existing.
-            data.ignoreNonExistingSnippet = true
-        }
-    }
-    
 }

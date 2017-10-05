@@ -4,7 +4,6 @@ package de.cau.cs.kieler.simulation.kisim;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -260,16 +259,6 @@ public interface KisimPackage extends EPackage
    */
   int ACTION_FEATURE_COUNT = 3;
 
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.simulation.kisim.ActionOperation <em>Action Operation</em>}' enum.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.simulation.kisim.ActionOperation
-   * @see de.cau.cs.kieler.simulation.kisim.impl.KisimPackageImpl#getActionOperation()
-   * @generated
-   */
-  int ACTION_OPERATION = 5;
-
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.simulation.kisim.SimulationConfiguration <em>Simulation Configuration</em>}'.
@@ -454,16 +443,6 @@ public interface KisimPackage extends EPackage
   EAttribute getAction_Id();
 
   /**
-   * Returns the meta object for enum '{@link de.cau.cs.kieler.simulation.kisim.ActionOperation <em>Action Operation</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for enum '<em>Action Operation</em>'.
-   * @see de.cau.cs.kieler.simulation.kisim.ActionOperation
-   * @generated
-   */
-  EEnum getActionOperation();
-
-  /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -631,16 +610,6 @@ public interface KisimPackage extends EPackage
      * @generated
      */
     EAttribute ACTION__ID = eINSTANCE.getAction_Id();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.simulation.kisim.ActionOperation <em>Action Operation</em>}' enum.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.simulation.kisim.ActionOperation
-     * @see de.cau.cs.kieler.simulation.kisim.impl.KisimPackageImpl#getActionOperation()
-     * @generated
-     */
-    EEnum ACTION_OPERATION = eINSTANCE.getActionOperation();
 
   }
 

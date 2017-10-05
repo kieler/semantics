@@ -1,0 +1,31 @@
+// NOTE: The arduino command line tool tries to compile the simulation code before upload.
+// However, this does not work such that the kieler-gen/sim directory has to be deleted before upload.
+// Uncomment the simulation generation configuration to create the simulation for models.
+
+
+// Compile models to C code
+model compiler kico {
+  outputFolder: kieler-gen
+  outputFileExtension: c
+  compileChain: de.cau.cs.kieler.scg.processors.codegen.c
+  ${frontend}
+  
+  // Generate C simulation from output of compilation
+//  process simulation template {
+//    file: assets/CSimulation.ftl
+//  }
+}
+
+// Compile C simulation via gcc
+//simulation compiler c {
+//  libFolder: kieler-gen/sim/lib
+//  outputFolder: kieler-gen/sim/bin
+//  command: "gcc -std=c99 -o \"./${outputFolder}/${executable_name}\" \"${file_path}\" "
+//}
+
+// Create wrapper code that can be deployed
+process wrapper template {
+  file: assets/main.ftl
+  target: ${project_name}.ino
+  modelFile: ${model_path}
+}

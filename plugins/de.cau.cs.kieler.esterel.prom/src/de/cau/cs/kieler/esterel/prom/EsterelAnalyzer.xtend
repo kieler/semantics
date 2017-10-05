@@ -16,7 +16,8 @@ package de.cau.cs.kieler.esterel.prom
 import com.google.common.base.Charsets
 import com.google.common.io.Files
 import de.cau.cs.kieler.esterel.EsterelProgram
-import de.cau.cs.kieler.prom.data.MacroCallData
+import de.cau.cs.kieler.prom.FileExtensions
+import de.cau.cs.kieler.prom.templates.MacroCallData
 import de.cau.cs.kieler.prom.templates.ModelAnalyzer
 import java.io.File
 import java.util.List
@@ -28,7 +29,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * An analyzer for wrapper code annotations in Esterel files.
  * @author aas
  */
-class EsterelAnalyzer implements ModelAnalyzer {
+class EsterelAnalyzer extends ModelAnalyzer {
     
     /**
      * {@inheritDoc}
@@ -40,15 +41,42 @@ class EsterelAnalyzer implements ModelAnalyzer {
             }
         }
     }
-    
+    /**
+     * {@inheritDoc}
+     */
     override getSimulationInterface(EObject model) {
         return null
     }
     
+    /**
+     * {@inheritDoc}
+     */
+    override getSupportedFileExtensions() {
+        return #[FileExtensions.ESTEREL]
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override getSupportedModelTypes() {
+        return #[EsterelProgram]
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override protected getDefaultSimulationFrontend() {
+        // TODO: Add a compile chain that compiles strl files to scgs
+        return ""
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
     override getAnnotationInterface(EObject model) {
         // At the moment there are no annotations for inputs/outputs in the esterel grammar.
         // So instead we parse the text file manually and search for special comments.
-        return parseModelAndGetWrapperCodeAnnotations(model)
+        return parseModel(model)
         
         // Get annotations on inputs/outputs 
 //        if (model instanceof Program) {
@@ -75,9 +103,9 @@ class EsterelAnalyzer implements ModelAnalyzer {
 //        }
     }
     
-    def private List<MacroCallData> parseModelAndGetWrapperCodeAnnotations(EObject model) {
+    def private List<MacroCallData> parseModel(EObject model) {
         // The returned list
-        val datas = newArrayList() 
+        val allDatas = newArrayList() 
         
         // Get model name
         var modelName = ""
@@ -90,36 +118,35 @@ class EsterelAnalyzer implements ModelAnalyzer {
         val path = model.eResource.URI.path
         val file = new File(path)
         val lines = Files.readLines(file, Charsets.UTF_8)
-        val annotations = newArrayList()
+        val tmpDatas = newArrayList()
         // Iterate over lines and parse
         for(line : lines) {
-            val anno = parseLineAndGetWrapperCodeAnnotation(line)
-            if(anno != null) {
-                anno.modelName = modelName
-                annotations += anno
+            val data = parseLine(line)
+            if(data != null) {
+                data.modelName = modelName
+                tmpDatas += data
             } else {
                 val inputOutput = parseInputOutputDeclaration(line)
                 // Finish wrapper code annotation data with information of input / output
-                if(inputOutput != null && !annotations.nullOrEmpty) {
-                    for(a : annotations) {
-                        a.setPhases(inputOutput.isInput, inputOutput.isOutput)
-                        a.varName = inputOutput.name
-                        a.varType = inputOutput.type
-                        
+                if(inputOutput != null && !tmpDatas.nullOrEmpty) {
+                    for(d : tmpDatas) {
+                        d.varName = inputOutput.name
+                        d.varType = inputOutput.type
+                        data.initializeForCodeGeneration(inputOutput.name, inputOutput.type, inputOutput.isInput, inputOutput.isOutput)
                         // Add this annotation to the return list
-                        datas += a
+                        allDatas += data
                     }
                     
                     // This input / output is done
-                    annotations.clear()
+                    tmpDatas.clear()
                 }
             }
         }
         
-        return datas
+        return allDatas
     }
     
-    def private MacroCallData parseLineAndGetWrapperCodeAnnotation(String line) {
+    def private MacroCallData parseLine(String line) {
         // Find line comment
         val wrapperCommentRegEx = "^\\s*%\\s*Wrapper "
         val p = Pattern.compile(wrapperCommentRegEx);

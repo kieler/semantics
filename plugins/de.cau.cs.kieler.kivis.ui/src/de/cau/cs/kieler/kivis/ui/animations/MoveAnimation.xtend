@@ -12,39 +12,50 @@
  */
 package de.cau.cs.kieler.kivis.ui.animations
 
-import de.cau.cs.kieler.kivis.kivis.Animation
-import de.cau.cs.kieler.prom.build.ConfigurableAttribute
+import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
 import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGLocatable
 
 /**
+ * Move animation for SVG elements.
+ * 
+ * Performs a translation along the x or y axis relative to the original position of the element.
+ * 
  * @author aas
  *
  */
 class MoveAnimation extends AnimationHandler {
+    /**
+     * The translation along the x axis.
+     */
     public val posX = new ConfigurableAttribute("x", 0)
+    /**
+     * The translation along the y axis.
+     */
     public val posY = new ConfigurableAttribute("y", 0)
     
+    /**
+     * {@inheritDoc}
+     */
     new() {
+        initializeAttributes
     }
     
-    new(String svgElementId, Animation animation) {
-        super(svgElementId, animation)
-        initialize
-    }
-    
+    /**
+     * {@inheritDoc}
+     */
     override getName() {
         return "move"
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override doApply(DataPool pool, Element elem) {
         // Compute position
         if(elem instanceof SVGLocatable) {
-            // Position and size of the element
-//            val SVGLocatable locatable = elem as SVGLocatable
-//            val box = locatable.getBBox()
-            // Set new transform
+            // Set new translation
             var translation = posX.floatValue + "," + posY.floatValue
             elem.setAttributeFunction("transform", "translate", translation)
         } else {

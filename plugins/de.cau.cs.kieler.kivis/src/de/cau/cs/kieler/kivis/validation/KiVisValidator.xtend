@@ -8,7 +8,7 @@ import de.cau.cs.kieler.kivis.extensions.KiVisExtensions
 import de.cau.cs.kieler.kivis.kivis.Interaction
 import de.cau.cs.kieler.kivis.kivis.Interval
 import de.cau.cs.kieler.kivis.kivis.Mapping
-import de.cau.cs.kieler.prom.build.AttributeExtensions
+import de.cau.cs.kieler.prom.configurable.AttributeExtensions
 import org.eclipse.xtext.validation.Check
 
 //import org.eclipse.xtext.validation.Check
@@ -25,13 +25,24 @@ class KiVisValidator extends AbstractKiVisValidator {
     @Inject
     extension KiVisExtensions kivisExtensions
     
+    private val CANNOT_MAP_VALUE_TO_RANGE = "Can't map a single value to a range."
+    private val LOWER_VALUE_ON_THE_LEFT = "Lower value of an interval has to be on the left side."
+    private val INTERACTION_WITHOUT_GUARD = "An interaction must have a condition or must listen to an event"
+    
+    /**
+     * Checks that there is no mapping of a single value to a range.
+     * A range might be mapped to a single value, but not the other way around.
+     */
     @Check
     public def void checkMappingDomains(Mapping mapping) {
         if (mapping.variableDomain.value != null && mapping.attributeDomain.range != null) {
-            error("Can't map a single value to a range.", mapping, null);
+            error(CANNOT_MAP_VALUE_TO_RANGE, mapping, null);
         }
     }
     
+    /**
+     * Checks that all intervals have their lower value on the left side.
+     */
     @Check
     public def void checkIntervalFromLessOrEqualIntervalTo(Interval interval) {
         val from = interval.from
@@ -40,15 +51,18 @@ class KiVisValidator extends AbstractKiVisValidator {
             val fromDouble = from.primitiveValue.doubleValue
             val toDouble = to.primitiveValue.doubleValue
             if(fromDouble > toDouble) {
-                error("Lower value of an interval has to be on the left side.", interval, null);
+                error(LOWER_VALUE_ON_THE_LEFT, interval, null);
             }
         }
     }
     
+    /**
+     * Check that an interaction is either performed when a condition holds or an event fires.
+     */
     @Check
     public def void checkEventOrConditionOnInteraction(Interaction interaction) {
         if(interaction.event == null && interaction.condition == null) {
-            error("An interaction must have a condition or must listen to an event", interaction, null)
+            error(INTERACTION_WITHOUT_GUARD, interaction, null)
         }
     }
 }

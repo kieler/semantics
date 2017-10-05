@@ -16,11 +16,16 @@ import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
 
 /**
+ * Button to perform a macro tick in the simulation.
+ * 
  * @author aas
  *
  */
 class StepSimulationMacroTick extends SimulationToolbarButton {
     
+    /**
+     * Performs a macro tick in the simulation.
+     */
     override execute(ExecutionEvent event) throws ExecutionException {
         super.execute(event)
         if(simulation != null && !justRestarted) {

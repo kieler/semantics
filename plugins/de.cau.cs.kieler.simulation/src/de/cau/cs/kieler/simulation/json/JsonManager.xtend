@@ -21,11 +21,16 @@ import de.cau.cs.kieler.simulation.core.NDimensionalArray
 import de.cau.cs.kieler.simulation.core.Variable
 
 /**
+ * Handles the Gson serializer and deserializer for JSON objects in the simulation.
+ * 
  * @author aas
  *
  */
 class JsonManager {
     
+    /**
+     * The GSON object for in the simulation.
+     */
     public static Gson GSON = createGson();
     
     /**
@@ -40,6 +45,12 @@ class JsonManager {
         return builder.create();
     }
     
+    /**
+     * Converts a primitive in JSON to its Java representation.
+     * 
+     * @param json The element to be converted to Java
+     * @return the Java representation for the json element
+     */
     public static def Object jsonAsObject(JsonElement json) {
         if (json instanceof JsonPrimitive) {
             if (json.isBoolean) {

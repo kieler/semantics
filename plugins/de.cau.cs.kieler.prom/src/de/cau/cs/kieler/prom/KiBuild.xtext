@@ -81,10 +81,10 @@ TextValue:
     value=ID
 ;
 
-// Overwrute BOOLEAN and ID to have a less strict definition of IDs
+// Overwrite BOOLEAN and ID to have a less strict definition of IDs
 terminal BOOLEAN returns ecore::EBooleanObject :
     'true' | 'false';
 
 terminal ID returns ecore::EString:
-    '^'?('a'..'z'|'A'..'Z'|'_'|'/'|'\\') ('a'..'z'|'A'..'Z'|'_'|'-'|'.'|'/'|'\\'|'0'..'9')*
+    '^'?('a'..'z'|'A'..'Z'|'_'|'/'|'\\') ('a'..'z'|'A'..'Z'|'_'|'-'|'.'|'/'|'\\'|'0'..'9'|'['|']')*
 ;

@@ -15,12 +15,15 @@ package de.cau.cs.kieler.prom.console
 import java.io.InputStream
 
 /**
+ * Interface to present information to users in a console. 
+ * 
  * @author aas
  *
  */
 interface IConsole {
     /**
      * Writes to the console.
+     * 
      * @param message The message to print to the console
      */
     def void print(String msg)

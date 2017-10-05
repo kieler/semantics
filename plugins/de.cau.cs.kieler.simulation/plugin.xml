@@ -3,6 +3,7 @@
 
 <plugin>
    <extension-point id="dataHandler" name="DataHandler" schema="schema/dataHandler.exsd"/>
+   <extension-point id="simulationBackend" name="Simulation Backend" schema="schema/simulationBackend.exsd"/>
 
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package 
@@ -33,6 +34,10 @@
            class="de.cau.cs.kieler.simulation.handlers.TraceHandler"
            name="trace">
      </dataHandler>
+     <dataHandler
+           class="de.cau.cs.kieler.simulation.handlers.SetterHandler"
+           name="setter">
+     </dataHandler>
   </extension>
   <extension
         point="org.eclipse.debug.core.launchConfigurationTypes">
@@ -54,6 +59,12 @@
             uri="http://kieler.cs.cau.de/simulation/ktrace"
             class="de.cau.cs.kieler.simulation.trace.ktrace.KTracePackage"
             genModel="model/ktrace.genmodel"/>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.simulation.simulationBackend">
+      <simulationBackend
+            class="de.cau.cs.kieler.simulation.backends.CSimulationBackend">
+      </simulationBackend>
    </extension>
 
 </plugin>

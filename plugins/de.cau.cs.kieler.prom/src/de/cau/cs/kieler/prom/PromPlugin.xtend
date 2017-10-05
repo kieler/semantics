@@ -36,11 +36,16 @@ import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.FileLocator
 import org.eclipse.core.runtime.IPath
+import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Path
 import org.eclipse.core.runtime.Platform
 import org.eclipse.core.runtime.QualifiedName
+import org.eclipse.core.runtime.Status
+import org.eclipse.core.runtime.SubMonitor
+import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.core.variables.IStringVariableManager
 import org.eclipse.core.variables.VariablesPlugin
+import org.eclipse.jdt.core.IClasspathEntry
 import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.JavaCore
 import org.eclipse.jface.preference.IPreferenceStore
@@ -51,6 +56,7 @@ import org.osgi.framework.BundleContext
 
 /**
  * The activator class controls the plug-in life cycle.
+ * Contains util methods to work with Eclipse resources (IResource, IProject, etc.) 
  * 
  * @author aas
  */
@@ -67,20 +73,10 @@ class PromPlugin implements BundleActivator  {
     public static val BUILD_DIRECTORY = "kieler-gen"
     
     /**
-     * Qualifier used to set the environment name property of a project.
+     * Qualifier used to set the build configuration for a project.
      */
     public static val BUILD_CONFIGURATION_QUALIFIER = new QualifiedName(PromPlugin.PLUGIN_ID, "build.configuration")
     
-    /**
-     * Qualifier used to set the environment name property of a project.
-     */
-    public static val ENVIRIONMENT_QUALIFIER = new QualifiedName(PromPlugin.PLUGIN_ID, "environment")
-    
-    /**
-     * Qualifier used to set the main file's project relative path of a project.
-     */
-    public static val MAIN_FILE_QUALIFIER = new QualifiedName(PromPlugin.PLUGIN_ID, "main.file")
-
     // Variable names
     public static val LAUNCHED_PROJECT_VARIABLE = "launched_project_loc"
 
@@ -122,9 +118,6 @@ class PromPlugin implements BundleActivator  {
      */
     override void start(BundleContext context) throws Exception {
         PromPlugin.context = context
-        
-        // Initialize the variables that can be used in the launch configuration
-        initializeVariables
     }
 
     /*
@@ -136,7 +129,10 @@ class PromPlugin implements BundleActivator  {
     }
     
     /**
-     * Determines is a project is a java project 
+     * Checks if a project is a java project
+     * 
+     * @param project The project
+     * @return true if the project has the Java project nature, false otherwise.
      */
     public static def boolean isJavaProject(IProject project) {
         return project.hasNature(JavaCore.NATURE_ID)
@@ -148,11 +144,11 @@ class PromPlugin implements BundleActivator  {
      * The contents of the returned input stream optionally may have placeholders which can be directly replaced in this method.
      * 
      * @param filePathOrURL The file path or an URL with the platform protocol
-     * @param placeholderReplacement A map where the keys are placeholders of the stream and the values are the values of the placeholders. 
+     * @param variableMappings A map where the keys are variables in the stream and the values are the values for the placeholders (e.g. a value for ${project_name}). 
      *
      * @return the loaded input stream
      */
-    public static def InputStream getInputStream(String filePathOrURL, Map<String, String> placeholderReplacement) {
+    public static def InputStream getInputStream(String filePathOrURL, Map<String, String> variableMappings) {
         // Get input stream from url
         var InputStream inputStream= null
         if(!filePathOrURL.isNullOrEmpty){
@@ -170,14 +166,14 @@ class PromPlugin implements BundleActivator  {
         if(inputStream != null){
             
             // Return stream of content where all placeholders are replaced with actual values.
-            if(placeholderReplacement != null){
+            if(variableMappings != null){
                 val contents = streamToString(inputStream)
                 inputStream.close
                 
                 // Replace placeholders
                 var contentsWithoutPlaceholders = contents
-                for(placeholder : placeholderReplacement.keySet) {
-                    contentsWithoutPlaceholders = contentsWithoutPlaceholders.replace(placeholder, placeholderReplacement.get(placeholder))
+                for(entry : variableMappings.entrySet) {
+                    contentsWithoutPlaceholders = contentsWithoutPlaceholders.replace("${"+entry.key+"}", entry.value)
                 }
                 val stream = stringToStream(contentsWithoutPlaceholders)
                 return stream
@@ -194,7 +190,7 @@ class PromPlugin implements BundleActivator  {
      * @return the complete text of the stream
      */
     def private static String streamToString(InputStream inputStream) {
-        var text = "";
+        var text = ""
         val reader = new InputStreamReader(inputStream, Charsets.UTF_8)
         try {
             text = CharStreams.toString(reader);
@@ -232,9 +228,10 @@ class PromPlugin implements BundleActivator  {
     }
     
     /**
-     * Returns a project handle if the project exists in the current workspace.
+     * Searches and returns the project with the given name. 
      * 
      * @param name The name of a project to be found
+     * @return the project with the given name, or null if none.
      */
     static def IProject findProject(String name) {
         if (!name.isNullOrEmpty && new Path(name).isValidPath(name)) {
@@ -261,12 +258,29 @@ class PromPlugin implements BundleActivator  {
         val path = new Path(fullPath)
         return findFile(path)
     }
-
+    
+    /**
+     * Find a folder via its full path in the workspace.
+     */
+    public static def IFolder findFolder(IPath fullPath) {
+        val folder = ResourcesPlugin.workspace.root.getFolder(fullPath)
+        return folder
+    }
+    
+    /**
+     * Find a folder via its full path in the workspace.
+     */
+    public static def IFolder findFolder(String fullPath) {
+        val path = new Path(fullPath)
+        return findFolder(path)
+    }
+    
     /**
      * Searches recursively for resources with the same file extension.
      * 
      * @param resources The resources in which the search takes place
      * @param fileExtension The file extension that files must have, or null if all files should be included
+     * @return a list of the found files
      */
     public static def List<IFile> findFiles(IResource[] resources, String fileExtension) {
         return findFiles(resources, #[fileExtension])
@@ -277,6 +291,7 @@ class PromPlugin implements BundleActivator  {
      * 
      * @param resources The resources in which the search takes place
      * @param fileExtensions The file extensions that files must have, or null if all files should be included
+     * @return a list of the found files
      */
     public static def List<IFile> findFiles(IResource[] resources, String[] fileExtensions) {
         val ArrayList<IFile> findings = newArrayList
@@ -293,95 +308,23 @@ class PromPlugin implements BundleActivator  {
     }
     
     /**
-     * Sets several eclipse string variables (e.g. ${main_name}, ${compiled_main_name}).
-     * The variables can be used for example in the commands and file paths.
-     */
-    public static def void setVariables(String projectLocation, String mainFilePath, String compiledMainFilePath) {
-        // Set project
-        setVariable(LAUNCHED_PROJECT_VARIABLE, projectLocation)
-
-        // Set main file
-        val mainFileName = new File(mainFilePath).name
-        val mainFileLocation = if(mainFileName != "")
-                                   new File(projectLocation + File.separator + mainFilePath).absolutePath
-                               else
-                                   ""
-        val mainFileWithoutExtension = new Path(mainFileName).removeFileExtension.toOSString
-        setVariable(MAIN_FILE_NAME_VARIABLE, mainFileName)
-        setVariable(MAIN_FILE_LOCATION_VARIABLE, mainFileLocation)
-        setVariable(MAIN_FILE_PATH_VARIABLE, mainFilePath)
-        setVariable(MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE, mainFileWithoutExtension)
-
-        // Set compiled main file
-        val mainTargetName = new File(compiledMainFilePath).name
-        val mainTargetLocation = if(mainTargetName != "")
-                                     new File(projectLocation + File.separator + compiledMainFilePath).absolutePath
-                                 else
-                                    ""
-        val mainTargetWithoutExtension = new Path(mainTargetName).removeFileExtension.toOSString
-        setVariable(COMPILED_MAIN_FILE_NAME_VARIABLE, mainTargetName)
-        setVariable(COMPILED_MAIN_FILE_LOCATION_VARIABLE, mainTargetLocation)
-        setVariable(COMPILED_MAIN_FILE_PATH_VARIABLE, compiledMainFilePath)
-        setVariable(COMPILED_MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE, mainTargetWithoutExtension)
-    }
-
-    /**
-     * Creates or modifies the variable with the given name and data.
+     * Checks if the directory in the java project is configured as source directory.
      * 
-     * @param name The variable's name
-     * @param value The variable's value
-     * @param description The variable's description 
+     * @param javaProject A project with the java nature
+     * @param directory The directory
+     * @return true if the directory is a source directory. false otherwise.
      */
-    public static def void setVariable(String name, String value) {
-        val variableManager = VariablesPlugin.getDefault.stringVariableManager
-        val variable = variableManager.getValueVariable(name)
-        variable?.setValue(value)
-    }
-    
-    /**
-     * Registers a string variable at the string variable manager.
-     * 
-     * @param name The name of the variable
-     * @param description A short description for the variable
-     */
-    public static def void initializeVariable(String name, String description) {
-        val variable = variableManager.newValueVariable(name, description, false, "")
-        variable.description = description
-        variableManager.addVariables(#[variable])
-    }
-    
-    /**
-     * Initializes all variables if they have not been initialized yet.
-     */
-    public static def void initializeVariables() {
-        // Check if variables have been initialized already
-        var variable = variableManager.getValueVariable(MAIN_FILE_NAME_VARIABLE)
-        // Instantiate all variables if none yet
-        if (variable == null) {
-            // Project
-            initializeVariable(LAUNCHED_PROJECT_VARIABLE,
-            "Fully qualified path to the launched application")
-    
-            // Main file
-            initializeVariable(MAIN_FILE_NAME_VARIABLE,
-                "Name of the main file of the launched application")
-            initializeVariable(MAIN_FILE_LOCATION_VARIABLE,
-                "Fully qualified location of the main file of the launched application")
-            initializeVariable(MAIN_FILE_PATH_VARIABLE,
-                "Project relative path of the main file of the launched application")
-            initializeVariable(MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE,
-                "Project relative path of the main file of the launched application without file extension")
-            
-            // Compiled main file
-            initializeVariable(COMPILED_MAIN_FILE_NAME_VARIABLE,
-                "Name of the compiled main file of the launched application")
-            initializeVariable(COMPILED_MAIN_FILE_LOCATION_VARIABLE,
-                "Fully qualified location of the compiled main file of the launched application")
-            initializeVariable(COMPILED_MAIN_FILE_PATH_VARIABLE,
-                "Project relative path of the compiled main file of the launched application")
-            initializeVariable(COMPILED_MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE,
-                "Project relative path of the compiled main file of the launched application without file extension")
+    public static def boolean isJavaSourceDirectory(IJavaProject javaProject, String directory) {
+        val classPathEntries = javaProject.getRawClasspath();
+        for(entry : classPathEntries) {
+            if(entry.entryKind == IClasspathEntry.CPE_SOURCE) {
+                val sourceFolderName = new Path(entry.path.toOSString).lastSegment
+                if(sourceFolderName.equals(directory)) {
+                    return true
+                }
+            } 
         }
+        return false
     }
     
     /**
@@ -548,17 +491,17 @@ class PromPlugin implements BundleActivator  {
      * 
      * @param projectRelativePath The project relative path of the resource to create
      * @param origin Optional path to initial content for the new file
-     * @param placeholderReplacement A map with optional placeholder replacements, e.g., a value for ${project_name}
+     * @param variableMappings A map with optional variable mappings, e.g., a value for ${project_name}
      */
     public static def IFile initializeFile(IProject project, String projectRelativePath, String origin,
-                                           Map<String, String> placeholderReplacement) {
+                                           Map<String, String> variableMappings) {
        val resource = project.getFile(projectRelativePath)
        // Create empty file
        if(origin.trim.isNullOrEmpty) {
            PromPlugin.createResource(resource)
        } else {
            // Create file with initial content from origin
-           val initialContentStream = PromPlugin.getInputStream(origin, placeholderReplacement)
+           val initialContentStream = PromPlugin.getInputStream(origin, variableMappings)
            PromPlugin.createResource(resource, initialContentStream, true)
        }
        return resource
@@ -689,5 +632,39 @@ class PromPlugin implements BundleActivator  {
                 }
             }
         }
+    }
+    
+    /**
+     * Starts the procedure in a new job with a progress monitor.
+     */
+    public static def void execInJob(String jobName, (SubMonitor) => void procedure) {
+        val job = new Job(jobName) {
+            override protected run(IProgressMonitor monitor) {
+                val subMonitor = SubMonitor.convert(monitor)
+                procedure.apply(subMonitor)
+                subMonitor.done
+                return Status.OK_STATUS
+            }
+        }
+        job.schedule
+    }
+    
+    /**
+     * Split input string on spaces, except if between double quotes (e.g. "hello world" would be one token.)
+     * Surrounding double quotes are removed.
+     * 
+     * @param str The string to be splitted
+     * @return the slices of the input string.
+     */
+    public static def List<String> splitStringOnWhitespace(String str) {
+        // Code from
+        // http://stackoverflow.com/questions/7804335/split-string-on-spaces-except-if-between-quotes-i-e-treat-hello-world-as
+        val list = new ArrayList<String>();
+        val m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(str);
+        while (m.find()) {
+            // .replace(...) is to remove surrounding qoutes
+            list.add(m.group(1).replace("\"", ""))
+        }
+        return list
     }
 }

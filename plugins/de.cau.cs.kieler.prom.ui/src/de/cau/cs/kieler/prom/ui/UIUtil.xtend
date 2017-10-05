@@ -15,13 +15,11 @@ package de.cau.cs.kieler.prom.ui
 
 import de.cau.cs.kieler.prom.IProjectHolder
 import de.cau.cs.kieler.prom.PromPlugin
-import de.cau.cs.kieler.prom.data.CommandData
-import de.cau.cs.kieler.prom.data.EnvironmentData
+import de.cau.cs.kieler.prom.drafts.ProjectDraftData
 import java.util.ArrayList
 import java.util.Collections
 import java.util.EnumSet
 import java.util.List
-import java.util.Set
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
@@ -32,19 +30,12 @@ import org.eclipse.debug.internal.ui.SWTFactory
 import org.eclipse.debug.ui.StringVariableSelectionDialog
 import org.eclipse.jface.util.LocalSelectionTransfer
 import org.eclipse.jface.viewers.ArrayContentProvider
-import org.eclipse.jface.viewers.CheckStateChangedEvent
-import org.eclipse.jface.viewers.CheckboxTableViewer
-import org.eclipse.jface.viewers.ColumnLabelProvider
 import org.eclipse.jface.viewers.ComboViewer
 import org.eclipse.jface.viewers.ContentViewer
-import org.eclipse.jface.viewers.ICellModifier
-import org.eclipse.jface.viewers.ICheckStateListener
-import org.eclipse.jface.viewers.ICheckStateProvider
 import org.eclipse.jface.viewers.LabelProvider
 import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.jface.viewers.TableViewerColumn
-import org.eclipse.jface.viewers.TextCellEditor
 import org.eclipse.swt.SWT
 import org.eclipse.swt.dnd.DND
 import org.eclipse.swt.dnd.DragSource
@@ -500,11 +491,6 @@ class UIUtil {
         input.add(StructuredSelection.EMPTY)
         input.addAll(UIExtensionLookupUtil.getLaunchShortcutConfigurationElements())
         viewer.input = input
-        
-        // Debug log, which launch shortcuts are currently installed 
-//        for (e : ExtensionLookupUtil.getLaunchShortcutConfigurationElements()){
-//            println(e.getAttribute("class"))
-//        }
 
         // Select first element as default 
         viewer.selection = new StructuredSelection(StructuredSelection.EMPTY)
@@ -522,28 +508,28 @@ class UIUtil {
     }
     
     /**
-     * Creates a combobox with the environments.
+     * Creates a combobox with the given project drafts.
      * 
      * @param parent The parent composite
-     * @parem environments A list with the environments which can be selected via this combobox
+     * @parem drafts A list with the project drafts which can be selected via this combobox
      * @return the new combobox.
      */
-    public static def ComboViewer createEnvironmentsCombo(Composite parent, List<EnvironmentData> environments) {
+    public static def ComboViewer createProjectDraftCombo(Composite parent, List<ProjectDraftData> drafts) {
         // Create combo
         val combo = new ComboViewer(parent, SWT.DEFAULT)
         combo.getControl().setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
 
         // Create content provider
         combo.setContentProvider(ArrayContentProvider.instance)
-        combo.input = environments
+        combo.input = drafts
 
-        if (!environments.isEmpty)
-            combo.selection = new StructuredSelection(environments.get(0))
+        if (!drafts.isEmpty)
+            combo.selection = new StructuredSelection(drafts.get(0))
 
         // Create label provider
         combo.setLabelProvider(new LabelProvider() {
             override String getText(Object element) {
-                val data = (element as EnvironmentData)
+                val data = (element as ProjectDraftData)
                 if (data != null)
                     return data.name
                 else
@@ -552,113 +538,6 @@ class UIUtil {
         })
 
         return combo
-    }
-
-    /**
-     * Creates a table viewer for command data objects optionally with or without checkboxes.
-     * 
-     * @param parent The parent composite
-     * @param checkboxes Flag to specify if the table should have checkboxes to enable / disable commands
-     * @return the created table viewer 
-     */
-    public static def CheckboxTableViewer createCommandTable(Composite parent) {
-        val table = new Table(parent, SWT.CHECK.bitwiseOr(SWT.BORDER).bitwiseOr(SWT.FULL_SELECTION))
-        table.setHeaderVisible(true);
-        table.setLinesVisible(true);
-        table.setLayoutData(new GridData(GridData.FILL_BOTH));
-
-        // Create viewer
-        val viewer = new CheckboxTableViewer(table)
-        // Checked state
-        viewer.checkStateProvider = new ICheckStateProvider {
-            override isChecked(Object element) {
-                val data = element as CommandData
-                return data.isEnabled()
-            }
-            override isGrayed(Object element) {
-                return false
-            }
-        }
-        viewer.addCheckStateListener(new ICheckStateListener {
-            
-            override checkStateChanged(CheckStateChangedEvent event) {
-                val data = viewer.structuredSelection?.firstElement as CommandData
-                data.enabled = event.checked
-            }
-        })
-        // Create columns
-        val checkColumn = createTableColumn(viewer, "Execute", 60)
-        checkColumn.labelProvider = new ColumnLabelProvider() {
-            override String getText(Object element) {
-                return "";
-            }
-        };
-        val nameColumn = createTableColumn(viewer, "Name", 120)
-        nameColumn.labelProvider = new ColumnLabelProvider() {
-            override String getText(Object element) {
-                val c = element as CommandData
-                return c.name;
-            }
-        };
-        val commandColumn = createTableColumn(viewer, "Command", 150)
-        commandColumn.labelProvider = new ColumnLabelProvider() {
-            override String getText(Object element) {
-                val c = element as CommandData
-                return c.command;
-            }
-        };
-
-        // Create content
-        viewer.setContentProvider(ArrayContentProvider.instance);
-        viewer.input = newArrayList()
-
-        // Add drag and drop support to change order of items
-        addDragAndDropSupportToChangeOrder(viewer)
-
-        // Create editable cells
-        val nameEditor = new TextCellEditor(table);
-        val commandEditor = new TextCellEditor(table);
-
-        // Assign the cell editors to the viewer 
-        viewer.setCellEditors(#[null, nameEditor, commandEditor]);
-        viewer.columnProperties = #["execute", "name", "command"]
-        viewer.setCellModifier(new ICellModifier{
-            
-            def int getColumnIndex(String property) {
-                switch(property) {
-                    case "execute" : return 0
-                    case "name" : return 1
-                    default : return 2
-                }
-            }
-            
-            override canModify(Object element, String property) {
-                return true
-            }
-            
-            override getValue(Object element, String property) {
-                val columnIndex = getColumnIndex(property)
-                val data = element as CommandData
-                switch (columnIndex) {
-                    case 1 : return data.name
-                    case 2 : return data.command
-                }
-                return null
-            }
-            
-            override modify(Object element, String property, Object value) {
-                val columnIndex = getColumnIndex(property)
-                val item = element as TableItem
-                val data = item.data as CommandData
-                switch (columnIndex) {
-                    case 1 : data.name = value as String
-                    case 2 : data.command = value as String
-                }
-                viewer.refresh()
-            }
-        })
-        
-        return viewer
     }
     
     /**
@@ -670,12 +549,30 @@ class UIUtil {
      * @return the created column.
      */
     public static def TableViewerColumn createTableColumn(TableViewer viewer, String title, int width) {
-        val viewerColumn = new TableViewerColumn(viewer, SWT.NONE);
-        val column = viewerColumn.getColumn()
-        column.setText(title);
-        column.setWidth(width);
-        column.setResizable(true);
-        column.setMoveable(false);
+        return createTableColumn(viewer, title, width, true)
+    }
+    
+    /**
+     * Creates a column for a table viewer with the given title and width.
+     * 
+     * @param viewer The TableViewer this column is added to
+     * @param title The title for this column
+     * @param width The width of this column
+     * @return the created column.
+     */
+    public static def TableViewerColumn createTableColumn(TableViewer viewer, String title, int width, boolean visible) {
+        val viewerColumn = new TableViewerColumn(viewer, SWT.NONE)
+        val column = viewerColumn.column
+        column.text = title
+        column.moveable = true
+        
+        if(visible) {
+            column.width = width
+            column.resizable = true
+        } else {
+            column.width = 0
+            column.resizable = false
+        }
         return viewerColumn
     }
     
@@ -803,6 +700,12 @@ class UIUtil {
         return SWTFactory.createLabel(parent, label, 1)
     }
     
+    /**
+     * Adds drag and drop support to a table viewer to change the order of its elements.
+     * Therefore the table viewer must have an array list as input.
+     * 
+     * @param viewer The table viewer
+     */
     public static def void addDragAndDropSupportToChangeOrder(TableViewer viewer) {
         val table = viewer.control as Table
         // Create transfer type

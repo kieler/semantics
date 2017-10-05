@@ -386,23 +386,23 @@ ruleAction returns [EObject current=null]
     @after { leaveRule(); }:
 ((
 (
-		{ 
-	        newCompositeNode(grammarAccess.getActionAccess().getOperationActionOperationEnumRuleCall_0_0()); 
-	    }
-		lv_operation_0_0=ruleActionOperation		{
+		lv_operation_0_0=RULE_ID
+		{
+			newLeafNode(lv_operation_0_0, grammarAccess.getActionAccess().getOperationIDTerminalRuleCall_0_0()); 
+		}
+		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getActionRule());
+	            $current = createModelElement(grammarAccess.getActionRule());
 	        }
-       		set(
+       		setWithLastConsumed(
        			$current, 
        			"operation",
         		lv_operation_0_0, 
-        		"de.cau.cs.kieler.simulation.KiSim.ActionOperation");
-	        afterParserOrEnumRuleCall();
+        		"de.cau.cs.kieler.prom.KiBuild.ID");
 	    }
 
 )
-)(
+)?(
 (
 		lv_handler_1_0=RULE_ID
 		{
@@ -438,7 +438,7 @@ ruleAction returns [EObject current=null]
 	    }
 
 )
-))
+)?)
 ;
 
 
@@ -5404,25 +5404,6 @@ ruleFloateger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken
 
 
 
-// Rule ActionOperation
-ruleActionOperation returns [Enumerator current=null] 
-    @init { enterRule(); }
-    @after { leaveRule(); }:
-((	enumLiteral_0='write' 
-	{
-        $current = grammarAccess.getActionOperationAccess().getWRITEEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
-        newLeafNode(enumLiteral_0, grammarAccess.getActionOperationAccess().getWRITEEnumLiteralDeclaration_0()); 
-    }
-)
-    |(	enumLiteral_1='read' 
-	{
-        $current = grammarAccess.getActionOperationAccess().getREADEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
-        newLeafNode(enumLiteral_1, grammarAccess.getActionOperationAccess().getREADEnumLiteralDeclaration_1()); 
-    }
-));
-
-
-
 // Rule Sign
 ruleSign returns [Enumerator current=null] 
     @init { enterRule(); }
@@ -5731,7 +5712,7 @@ ruleConditionalOperator returns [Enumerator current=null]
 
 RULE_BOOLEAN : ('true'|'false');
 
-RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_'|'/'|'\\') ('a'..'z'|'A'..'Z'|'_'|'-'|'.'|'/'|'\\'|'0'..'9')*;
+RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_'|'/'|'\\') ('a'..'z'|'A'..'Z'|'_'|'-'|'.'|'/'|'\\'|'0'..'9'|'['|']')*;
 
 RULE_HOSTCODE : '`' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'`')))* '`';
 

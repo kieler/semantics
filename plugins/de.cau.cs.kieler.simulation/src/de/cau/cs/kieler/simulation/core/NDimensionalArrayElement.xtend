@@ -15,29 +15,57 @@ package de.cau.cs.kieler.simulation.core
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
+ * Container for an element in an NDimensionalArray.
+ * Besides the value, it also stores its multidimensional index in the array and a user defined value,
+ * if the user wants to change the value.
+ * 
  * @author aas
  *
  */
 class NDimensionalArrayElement implements Cloneable {
-    
+    /**
+     * The multidimensional index of this element in the array
+     */
     @Accessors
     private var Integer[] index;
     
+    /**
+     * The value of this element
+     */
     @Accessors
     private var Object value;
     
+    /**
+     * The user defined value for this element
+     */
     @Accessors
     private var Object userValue;
     
+    /**
+     * Constructor
+     * 
+     * @param value The value
+     * @param index The index
+     */
     new(Object value, Integer... index) {
         this.value = value
         this.index = index.clone
     }
     
+    /**
+     * Checks if the user value differs from the normal value.
+     * 
+     * @return true if the user entered a value different than the normal value, false otherwise
+     */
     public def boolean isDirty() {
         return userValue != null && !userValue.equals(value)
     }
     
+    /**
+     * Returns a clone of the value.
+     * 
+     * @param value The value to be cloned
+     */
     public static def Object getCloneOfValue(Object value) {
         if(value instanceof String) {
             return new String(value)  
@@ -63,6 +91,9 @@ class NDimensionalArrayElement implements Cloneable {
     /**
      * Two NDimensionalArrayElements are equal if the value they hold are equal.
      * If a user value is set, then this value is taken as the value to be compared.
+     * 
+     * @param other The other object
+     * @return true if they are equal, false otherwise
      */
     override equals(Object other) {
         if(other != null) {

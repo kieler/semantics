@@ -6,48 +6,48 @@
     <extension
             point="org.eclipse.ui.editors">
         <editor
-            class="de.cau.cs.kieler.simulation.ui.trace.KTraceExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
+            class="de.cau.cs.kieler.simulation.ui.KiSimExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
             contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
             default="true"
-            extensions="ktrace,eso,esi"
-            id="de.cau.cs.kieler.simulation.trace.KTrace"
-            name="KTrace Editor">
+            extensions="kisim"
+            id="de.cau.cs.kieler.simulation.KiSim"
+            name="KiSim Editor">
         </editor>
     </extension>
     <extension
         point="org.eclipse.ui.handlers">
         <handler
-            class="de.cau.cs.kieler.simulation.ui.trace.KTraceExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
+            class="de.cau.cs.kieler.simulation.ui.KiSimExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
             commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
             <activeWhen>
                 <reference
-                    definitionId="de.cau.cs.kieler.simulation.trace.KTrace.Editor.opened">
+                    definitionId="de.cau.cs.kieler.simulation.KiSim.Editor.opened">
                 </reference>
             </activeWhen>
         </handler>
         <handler
-            class="de.cau.cs.kieler.simulation.ui.trace.KTraceExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
-            commandId="de.cau.cs.kieler.simulation.trace.KTrace.validate">
+            class="de.cau.cs.kieler.simulation.ui.KiSimExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
+            commandId="de.cau.cs.kieler.simulation.KiSim.validate">
          <activeWhen>
             <reference
-                    definitionId="de.cau.cs.kieler.simulation.trace.KTrace.Editor.opened">
+                    definitionId="de.cau.cs.kieler.simulation.KiSim.Editor.opened">
             </reference>
          </activeWhen>
       	</handler>
       	<!-- copy qualified name -->
         <handler
-            class="de.cau.cs.kieler.simulation.ui.trace.KTraceExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
+            class="de.cau.cs.kieler.simulation.ui.KiSimExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
             commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName">
             <activeWhen>
-				<reference definitionId="de.cau.cs.kieler.simulation.trace.KTrace.Editor.opened" />
+				<reference definitionId="de.cau.cs.kieler.simulation.KiSim.Editor.opened" />
             </activeWhen>
         </handler>
         <handler
-            class="de.cau.cs.kieler.simulation.ui.trace.KTraceExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
+            class="de.cau.cs.kieler.simulation.ui.KiSimExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
             commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedName">
             <activeWhen>
             	<and>
-            		<reference definitionId="de.cau.cs.kieler.simulation.trace.KTrace.XtextEditor.opened" />
+            		<reference definitionId="de.cau.cs.kieler.simulation.KiSim.XtextEditor.opened" />
 	                <iterate>
 						<adapt type="org.eclipse.xtext.ui.editor.outline.IOutlineNode" />
 					</iterate>
@@ -56,22 +56,22 @@
         </handler>
     </extension>
     <extension point="org.eclipse.core.expressions.definitions">
-        <definition id="de.cau.cs.kieler.simulation.trace.KTrace.Editor.opened">
+        <definition id="de.cau.cs.kieler.simulation.KiSim.Editor.opened">
             <and>
                 <reference definitionId="isActiveEditorAnInstanceOfXtextEditor"/>
                 <with variable="activeEditor">
                     <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
-                        value="de.cau.cs.kieler.simulation.trace.KTrace" 
+                        value="de.cau.cs.kieler.simulation.KiSim" 
                         forcePluginActivation="true"/>
                 </with>        
             </and>
         </definition>
-        <definition id="de.cau.cs.kieler.simulation.trace.KTrace.XtextEditor.opened">
+        <definition id="de.cau.cs.kieler.simulation.KiSim.XtextEditor.opened">
             <and>
                 <reference definitionId="isXtextEditorActive"/>
                 <with variable="activeEditor">
                     <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
-                        value="de.cau.cs.kieler.simulation.trace.KTrace" 
+                        value="de.cau.cs.kieler.simulation.KiSim" 
                         forcePluginActivation="true"/>
                 </with>        
             </and>
@@ -80,33 +80,33 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            class="de.cau.cs.kieler.simulation.ui.trace.KTraceExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="de.cau.cs.kieler.simulation.trace.KTrace"
-            name="KTrace">
-            <keywordReference id="de.cau.cs.kieler.simulation.trace.ui.keyword_KTrace"/>
+            class="de.cau.cs.kieler.simulation.ui.KiSimExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="de.cau.cs.kieler.simulation.KiSim"
+            name="KiSim">
+            <keywordReference id="de.cau.cs.kieler.simulation.ui.keyword_KiSim"/>
         </page>
         <page
-            category="de.cau.cs.kieler.simulation.trace.KTrace"
-            class="de.cau.cs.kieler.simulation.ui.trace.KTraceExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
-            id="de.cau.cs.kieler.simulation.trace.KTrace.coloring"
+            category="de.cau.cs.kieler.simulation.KiSim"
+            class="de.cau.cs.kieler.simulation.ui.KiSimExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+            id="de.cau.cs.kieler.simulation.KiSim.coloring"
             name="Syntax Coloring">
-            <keywordReference id="de.cau.cs.kieler.simulation.trace.ui.keyword_KTrace"/>
+            <keywordReference id="de.cau.cs.kieler.simulation.ui.keyword_KiSim"/>
         </page>
         <page
-            category="de.cau.cs.kieler.simulation.trace.KTrace"
-            class="de.cau.cs.kieler.simulation.ui.trace.KTraceExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
-            id="de.cau.cs.kieler.simulation.trace.KTrace.templates"
+            category="de.cau.cs.kieler.simulation.KiSim"
+            class="de.cau.cs.kieler.simulation.ui.KiSimExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
+            id="de.cau.cs.kieler.simulation.KiSim.templates"
             name="Templates">
-            <keywordReference id="de.cau.cs.kieler.simulation.trace.ui.keyword_KTrace"/>
+            <keywordReference id="de.cau.cs.kieler.simulation.ui.keyword_KiSim"/>
         </page>
     </extension>
     <extension
             point="org.eclipse.ui.propertyPages">
         <page
-            class="de.cau.cs.kieler.simulation.ui.trace.KTraceExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="de.cau.cs.kieler.simulation.trace.KTrace"
-            name="KTrace">
-            <keywordReference id="de.cau.cs.kieler.simulation.trace.ui.keyword_KTrace"/>
+            class="de.cau.cs.kieler.simulation.ui.KiSimExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="de.cau.cs.kieler.simulation.KiSim"
+            name="KiSim">
+            <keywordReference id="de.cau.cs.kieler.simulation.ui.keyword_KiSim"/>
             <enabledWhen>
 	            <adapt type="org.eclipse.core.resources.IProject"/>
 			</enabledWhen>
@@ -116,14 +116,14 @@
     <extension
         point="org.eclipse.ui.keywords">
         <keyword
-            id="de.cau.cs.kieler.simulation.trace.ui.keyword_KTrace"
-            label="KTrace"/>
+            id="de.cau.cs.kieler.simulation.ui.keyword_KiSim"
+            label="KiSim"/>
     </extension>
     <extension
          point="org.eclipse.ui.commands">
       <command
             description="Trigger expensive validation"
-            id="de.cau.cs.kieler.simulation.trace.KTrace.validate"
+            id="de.cau.cs.kieler.simulation.KiSim.validate"
             name="Validate">
       </command>
       <!-- copy qualified name -->
@@ -144,12 +144,12 @@
         <menuContribution
             locationURI="popup:#TextEditorContext?after=group.edit">
              <command
-                 commandId="de.cau.cs.kieler.simulation.trace.KTrace.validate"
+                 commandId="de.cau.cs.kieler.simulation.KiSim.validate"
                  style="push"
                  tooltip="Trigger expensive validation">
             <visibleWhen checkEnabled="false">
                 <reference
-                    definitionId="de.cau.cs.kieler.simulation.trace.KTrace.Editor.opened">
+                    definitionId="de.cau.cs.kieler.simulation.KiSim.Editor.opened">
                 </reference>
             </visibleWhen>
          </command>  
@@ -159,7 +159,7 @@
          	<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName" 
          		style="push" tooltip="Copy Qualified Name">
             	<visibleWhen checkEnabled="false">
-                	<reference definitionId="de.cau.cs.kieler.simulation.trace.KTrace.Editor.opened" />
+                	<reference definitionId="de.cau.cs.kieler.simulation.KiSim.Editor.opened" />
             	</visibleWhen>
          	</command>  
          </menuContribution>
@@ -167,7 +167,7 @@
          	<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName"
             	style="push" tooltip="Copy Qualified Name">
             	<visibleWhen checkEnabled="false">
-                	<reference definitionId="de.cau.cs.kieler.simulation.trace.KTrace.Editor.opened" />
+                	<reference definitionId="de.cau.cs.kieler.simulation.KiSim.Editor.opened" />
             	</visibleWhen>
          	</command>  
          </menuContribution>
@@ -176,7 +176,7 @@
 				style="push" tooltip="Copy Qualified Name">
          		<visibleWhen checkEnabled="false">
 	            	<and>
-	            		<reference definitionId="de.cau.cs.kieler.simulation.trace.KTrace.XtextEditor.opened" />
+	            		<reference definitionId="de.cau.cs.kieler.simulation.KiSim.XtextEditor.opened" />
 						<iterate>
 							<adapt type="org.eclipse.xtext.ui.editor.outline.IOutlineNode" />
 						</iterate>
@@ -189,7 +189,7 @@
 		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
 			<command commandId="org.eclipse.xtext.ui.editor.FindReferences">
 				<visibleWhen checkEnabled="false">
-                	<reference definitionId="de.cau.cs.kieler.simulation.trace.KTrace.Editor.opened">
+                	<reference definitionId="de.cau.cs.kieler.simulation.KiSim.Editor.opened">
                 	</reference>
             	</visibleWhen>
 			</command>
@@ -197,11 +197,11 @@
 	</extension>
 	<extension point="org.eclipse.ui.handlers">
 	    <handler
-            class="de.cau.cs.kieler.simulation.ui.trace.KTraceExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
+            class="de.cau.cs.kieler.simulation.ui.KiSimExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
             commandId="org.eclipse.xtext.ui.editor.FindReferences">
             <activeWhen>
                 <reference
-                    definitionId="de.cau.cs.kieler.simulation.trace.KTrace.Editor.opened">
+                    definitionId="de.cau.cs.kieler.simulation.KiSim.Editor.opened">
                 </reference>
             </activeWhen>
         </handler>
@@ -212,64 +212,36 @@
 	<extension
 		point="org.eclipse.emf.ecore.extension_parser">
 		<parser
-			class="de.cau.cs.kieler.simulation.ui.trace.KTraceExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
-			type="ktrace">
+			class="de.cau.cs.kieler.simulation.ui.KiSimExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+			type="kisim">
 		</parser>
 	</extension>
 	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
         <resourceServiceProvider
-            class="de.cau.cs.kieler.simulation.ui.trace.KTraceExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
-            uriExtension="ktrace">
-        </resourceServiceProvider>
-    </extension>
-
-	<extension
-		point="org.eclipse.emf.ecore.extension_parser">
-		<parser
-			class="de.cau.cs.kieler.simulation.ui.trace.KTraceExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
-			type="eso">
-		</parser>
-	</extension>
-	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
-        <resourceServiceProvider
-            class="de.cau.cs.kieler.simulation.ui.trace.KTraceExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
-            uriExtension="eso">
-        </resourceServiceProvider>
-    </extension>
-
-	<extension
-		point="org.eclipse.emf.ecore.extension_parser">
-		<parser
-			class="de.cau.cs.kieler.simulation.ui.trace.KTraceExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
-			type="esi">
-		</parser>
-	</extension>
-	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
-        <resourceServiceProvider
-            class="de.cau.cs.kieler.simulation.ui.trace.KTraceExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
-            uriExtension="esi">
+            class="de.cau.cs.kieler.simulation.ui.KiSimExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+            uriExtension="kisim">
         </resourceServiceProvider>
     </extension>
 
 
-	<!-- marker definitions for de.cau.cs.kieler.simulation.trace.KTrace -->
+	<!-- marker definitions for de.cau.cs.kieler.simulation.KiSim -->
 	<extension
-	        id="ktrace.check.fast"
-	        name="KTrace Problem"
+	        id="kisim.check.fast"
+	        name="KiSim Problem"
 	        point="org.eclipse.core.resources.markers">
 	    <super type="org.eclipse.xtext.ui.check.fast"/>
 	    <persistent value="true"/>
 	</extension>
 	<extension
-	        id="ktrace.check.normal"
-	        name="KTrace Problem"
+	        id="kisim.check.normal"
+	        name="KiSim Problem"
 	        point="org.eclipse.core.resources.markers">
 	    <super type="org.eclipse.xtext.ui.check.normal"/>
 	    <persistent value="true"/>
 	</extension>
 	<extension
-	        id="ktrace.check.expensive"
-	        name="KTrace Problem"
+	        id="kisim.check.expensive"
+	        name="KiSim Problem"
 	        point="org.eclipse.core.resources.markers">
 	    <super type="org.eclipse.xtext.ui.check.expensive"/>
 	    <persistent value="true"/>
@@ -279,11 +251,11 @@
 	<extension
 		point="org.eclipse.ui.handlers">
 		<handler 
-			class="de.cau.cs.kieler.simulation.ui.trace.KTraceExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
+			class="de.cau.cs.kieler.simulation.ui.KiSimExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
 			commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline">
 			<activeWhen>
 				<reference
-					definitionId="de.cau.cs.kieler.simulation.trace.KTrace.Editor.opened">
+					definitionId="de.cau.cs.kieler.simulation.KiSim.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
@@ -303,33 +275,33 @@
 				style="push"
 				tooltip="Open Quick Outline">
 				<visibleWhen checkEnabled="false">
-					<reference definitionId="de.cau.cs.kieler.simulation.trace.KTrace.Editor.opened"/>
+					<reference definitionId="de.cau.cs.kieler.simulation.KiSim.Editor.opened"/>
 				</visibleWhen>
 			</command>
 		</menuContribution>
 	</extension>
-    <!-- quickfix marker resolution generator for de.cau.cs.kieler.simulation.trace.KTrace -->
+    <!-- quickfix marker resolution generator for de.cau.cs.kieler.simulation.KiSim -->
     <extension
             point="org.eclipse.ui.ide.markerResolution">
         <markerResolutionGenerator
-            class="de.cau.cs.kieler.simulation.ui.trace.KTraceExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="de.cau.cs.kieler.simulation.ui.trace.ktrace.check.fast">
+            class="de.cau.cs.kieler.simulation.ui.KiSimExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="de.cau.cs.kieler.simulation.ui.kisim.check.fast">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
             </attribute>
         </markerResolutionGenerator>
         <markerResolutionGenerator
-            class="de.cau.cs.kieler.simulation.ui.trace.KTraceExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="de.cau.cs.kieler.simulation.ui.trace.ktrace.check.normal">
+            class="de.cau.cs.kieler.simulation.ui.KiSimExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="de.cau.cs.kieler.simulation.ui.kisim.check.normal">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
             </attribute>
         </markerResolutionGenerator>
         <markerResolutionGenerator
-            class="de.cau.cs.kieler.simulation.ui.trace.KTraceExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="de.cau.cs.kieler.simulation.ui.trace.ktrace.check.expensive">
+            class="de.cau.cs.kieler.simulation.ui.KiSimExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="de.cau.cs.kieler.simulation.ui.kisim.check.expensive">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">

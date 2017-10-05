@@ -3,7 +3,6 @@
 package de.cau.cs.kieler.simulation.kisim.impl;
 
 import de.cau.cs.kieler.simulation.kisim.Action;
-import de.cau.cs.kieler.simulation.kisim.ActionOperation;
 import de.cau.cs.kieler.simulation.kisim.KisimPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -38,7 +37,7 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * @generated
    * @ordered
    */
-  protected static final ActionOperation OPERATION_EDEFAULT = ActionOperation.WRITE;
+  protected static final String OPERATION_EDEFAULT = null;
 
   /**
    * The cached value of the '{@link #getOperation() <em>Operation</em>}' attribute.
@@ -48,7 +47,7 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * @generated
    * @ordered
    */
-  protected ActionOperation operation = OPERATION_EDEFAULT;
+  protected String operation = OPERATION_EDEFAULT;
 
   /**
    * The default value of the '{@link #getHandler() <em>Handler</em>}' attribute.
@@ -116,7 +115,7 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public ActionOperation getOperation()
+  public String getOperation()
   {
     return operation;
   }
@@ -126,10 +125,10 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setOperation(ActionOperation newOperation)
+  public void setOperation(String newOperation)
   {
-    ActionOperation oldOperation = operation;
-    operation = newOperation == null ? OPERATION_EDEFAULT : newOperation;
+    String oldOperation = operation;
+    operation = newOperation;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, KisimPackage.ACTION__OPERATION, oldOperation, operation));
   }
@@ -211,7 +210,7 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
     switch (featureID)
     {
       case KisimPackage.ACTION__OPERATION:
-        setOperation((ActionOperation)newValue);
+        setOperation((String)newValue);
         return;
       case KisimPackage.ACTION__HANDLER:
         setHandler((String)newValue);
@@ -257,7 +256,7 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
     switch (featureID)
     {
       case KisimPackage.ACTION__OPERATION:
-        return operation != OPERATION_EDEFAULT;
+        return OPERATION_EDEFAULT == null ? operation != null : !OPERATION_EDEFAULT.equals(operation);
       case KisimPackage.ACTION__HANDLER:
         return HANDLER_EDEFAULT == null ? handler != null : !HANDLER_EDEFAULT.equals(handler);
       case KisimPackage.ACTION__ID:

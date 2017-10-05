@@ -52,7 +52,7 @@ public class SimulationPerspective implements IPerspectiveFactory {
                         editor);
         PerspectiveHelper.addViewIfExists(bottomRight, PerspectiveHelper.VIEW_KICOOL);
         PerspectiveHelper.addViewIfExists(topCenter, PerspectiveHelper.VIEW_KLIGHD);
-        PerspectiveHelper.addViewIfExists(bottomLeft, IPageLayout.ID_PROJECT_EXPLORER);
+        PerspectiveHelper.addViewIfExists(bottomLeft, ModelingPerspective.PACKAGE_EXPLORER_ID);
 
         // Activate editor
         layout.setEditorAreaVisible(true);

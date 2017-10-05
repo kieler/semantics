@@ -12,61 +12,30 @@
  */
 package de.cau.cs.kieler.prom.ui.wizards
 
-import de.cau.cs.kieler.prom.ui.wizards.AdvancedNewFileCreationPage
-import org.eclipse.jface.viewers.IStructuredSelection
-import org.eclipse.jface.wizard.Wizard
-import org.eclipse.ui.INewWizard
-import org.eclipse.ui.IWorkbench
-
 /**
+ * File wizard to create a new build configuration.
+ * 
  * @author aas
  *
  */
-class KiBuildFileWizard extends Wizard implements INewWizard {
-
+class KiBuildFileWizard extends AdvancedNewFileWizard {
     /**
-     * The workbench from the init(...) method.
+     * {@inheritDoc}
      */
-    private var IWorkbench workbench
-    
-    /**
-     * The selection from the init(...) method.
-     */
-    private var IStructuredSelection selection
-    
-    /**
-     * Page to create a file.
-     */
-    private AdvancedNewFileCreationPage filePage
-    
-    /**
-     * Instantiates and adds the file creation page to this wizard.
-     */
-    override addPages(){
-        filePage = new KiBuildFileCreationPage("KiBuild File", selection, false);
+    override protected createFileCreationPage() {
+        val filePage = new KiBuildFileCreationPage("KiBuild File", selection, false);
         filePage.fileName = "NewBuildConfig.kibuild"
         filePage.fileExtension = "kibuild"
         filePage.description = "Create a new build configuration."
         
-        addPage(filePage);
-    }
-    
-    /**
-     * Creates the file with the settings from the wizard page.
-     * The method is called when the finish button is clicked.
-     */
-    override performFinish() {
-        return filePage.performFinish()
+        return filePage
     }
     
     /**
      * {@inheritDoc}
      */
-    override init(IWorkbench workbench, IStructuredSelection selection) {
-        this.workbench = workbench
-        this.selection = selection
-        
-        windowTitle = "New KiBuild File"
-        helpAvailable = false
+    override protected getTitle() {
+        return "New KiBuild File"
     }
+    
 }

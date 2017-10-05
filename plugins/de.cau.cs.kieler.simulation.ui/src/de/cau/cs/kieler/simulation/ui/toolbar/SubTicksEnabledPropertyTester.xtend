@@ -18,13 +18,28 @@ import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.services.IEvaluationService
 
 /**
+ * Property tester to check if the sub tick button is enabled or disabled.
+ * 
+ * Stepping through the simulation data handler after data handler is useful for debugging.
+ * However, it can be confusing for end users because the macro tick is not executed completely.
+ * Thus this feature has to be enabled in the data pool view explicity.  
+ * 
  * @author aas
  *
  */
 class SubTicksEnabledPropertyTester extends PropertyTester {
+    /**
+     * The namespace of the property.
+     */
     private static val PROPERTY_NAMESPACE = "de.cau.cs.kieler.simulation.ui";
+    /**
+     * The name of the property.
+     */
     private static val PROPERTY_NAME = "subTicksEnabled";
  
+    /**
+     * Updates the state of the property.
+     */
     public static def void update() {
         val window = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
         val evaluationService = window.getService(typeof(IEvaluationService)) as IEvaluationService
@@ -33,10 +48,20 @@ class SubTicksEnabledPropertyTester extends PropertyTester {
         }
     }
  
+    /**
+     * Returns the fully qualified name of the property.
+     * 
+     * @return the fully qualified name of the property.
+     */
     private static def String getFullyQualifiedProperty() {
         return PROPERTY_NAMESPACE+"."+PROPERTY_NAME
     }
  
+    /**
+     * Checks if sub ticks are enabled in the data pool view.
+     * 
+     * {@inheritDoc}
+     */
     override test(Object receiver, String property, Object[] args, Object expectedValue) {
         if (property == PROPERTY_NAME) {
             return DataPoolView.subTicksEnabled

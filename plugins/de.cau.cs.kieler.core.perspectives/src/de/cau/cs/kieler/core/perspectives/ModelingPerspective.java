@@ -29,6 +29,8 @@ import org.eclipse.ui.IPerspectiveFactory;
  */
 public class ModelingPerspective implements IPerspectiveFactory {
 
+    public static final String PACKAGE_EXPLORER_ID = "org.eclipse.jdt.ui.PackageExplorer";
+    
     /** {@inheritDoc} */
     public void createInitialLayout(final IPageLayout layout) {
         // Bottom Row - Left: Project Explorer, Right: KICO
@@ -44,7 +46,7 @@ public class ModelingPerspective implements IPerspectiveFactory {
 
         PerspectiveHelper.addViewIfExists(bottomRight, PerspectiveHelper.VIEW_KICOOL);
         PerspectiveHelper.addViewIfExists(topRight, PerspectiveHelper.VIEW_KLIGHD);
-        PerspectiveHelper.addViewIfExists(bottomLeft, IPageLayout.ID_PROJECT_EXPLORER);
+        PerspectiveHelper.addViewIfExists(bottomLeft, PACKAGE_EXPLORER_ID);
 
         // Activate editor
         layout.setEditorAreaVisible(true);

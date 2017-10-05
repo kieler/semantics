@@ -2068,25 +2068,6 @@ finally {
 
 
 
-// Rule ActionOperation
-ruleActionOperation
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getActionOperationAccess().getAlternatives()); }
-(rule__ActionOperation__Alternatives)
-{ after(grammarAccess.getActionOperationAccess().getAlternatives()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-
 // Rule Sign
 ruleSign
     @init {
@@ -3064,30 +3045,6 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ActionOperation__Alternatives
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getActionOperationAccess().getWRITEEnumLiteralDeclaration_0()); }
-(	'write' 
-)
-{ after(grammarAccess.getActionOperationAccess().getWRITEEnumLiteralDeclaration_0()); }
-)
-
-    |(
-{ before(grammarAccess.getActionOperationAccess().getREADEnumLiteralDeclaration_1()); }
-(	'read' 
-)
-{ after(grammarAccess.getActionOperationAccess().getREADEnumLiteralDeclaration_1()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
 rule__Sign__Alternatives
     @init {
 		int stackSize = keepStackSize();
@@ -3825,7 +3782,7 @@ rule__Action__Group__0__Impl
 :
 (
 { before(grammarAccess.getActionAccess().getOperationAssignment_0()); }
-(rule__Action__OperationAssignment_0)
+(rule__Action__OperationAssignment_0)?
 { after(grammarAccess.getActionAccess().getOperationAssignment_0()); }
 )
 
@@ -3882,7 +3839,7 @@ rule__Action__Group__2__Impl
 :
 (
 { before(grammarAccess.getActionAccess().getIdAssignment_2()); }
-(rule__Action__IdAssignment_2)
+(rule__Action__IdAssignment_2)?
 { after(grammarAccess.getActionAccess().getIdAssignment_2()); }
 )
 
@@ -13755,8 +13712,8 @@ rule__Action__OperationAssignment_0
     }
 :
 (
-{ before(grammarAccess.getActionAccess().getOperationActionOperationEnumRuleCall_0_0()); }
-	ruleActionOperation{ after(grammarAccess.getActionAccess().getOperationActionOperationEnumRuleCall_0_0()); }
+{ before(grammarAccess.getActionAccess().getOperationIDTerminalRuleCall_0_0()); }
+	RULE_ID{ after(grammarAccess.getActionAccess().getOperationIDTerminalRuleCall_0_0()); }
 )
 
 ;
@@ -15691,7 +15648,7 @@ finally {
 
 RULE_BOOLEAN : ('true'|'false');
 
-RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_'|'/'|'\\') ('a'..'z'|'A'..'Z'|'_'|'-'|'.'|'/'|'\\'|'0'..'9')*;
+RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_'|'/'|'\\') ('a'..'z'|'A'..'Z'|'_'|'-'|'.'|'/'|'\\'|'0'..'9'|'['|']')*;
 
 RULE_HOSTCODE : '`' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'`')))* '`';
 

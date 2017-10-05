@@ -15,9 +15,16 @@ package de.cau.cs.kieler.kivis.animation
 import de.cau.cs.kieler.simulation.core.DataPool
 
 /**
+ * Interface for animation handlers.
+ * 
  * @author aas
  *
  */
 interface IAnimationHandler {
+    /**
+     * Apply the animation for the given data pool.
+     * 
+     * @param pool The pool which should be visualized
+     */
     def void apply(DataPool pool)
 }

@@ -1,13 +1,15 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse Rich Client
- * 
+ *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2009 by + Kiel University + Department of Computer Science +
- * Real-Time and Embedded Systems Group
+ * Copyright 2009 by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
  * 
- * This code is provided under the terms of the Eclipse Public License (EPL). See the file
- * epl-v10.html for the license text.
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
  */
 
 /**
@@ -57,58 +59,49 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import de.cau.cs.kieler.kivis.ui.internal.KiVisActivator;
 
 /**
- * The adapted KEV-Composite class.
+ * SWT control to hold display SVG image from file. 
  * 
  * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de, Hauke Fuhrmann (haf)
- * @kieler.ignore deprecated project
  */
 
-public class KiVisCanvas extends Composite implements ISelectionListener {
+public class KiVisCanvas extends Composite {
 
+    /**
+     * The underlying JSVGCanvas.
+     */
     private EclipseJSVGCanvas svgCanvas;
-
+    /**
+     * The AWT Frame for the JSVGCanvas
+     */
+    private Frame frame;
+    
+    /**
+     * The user agent
+     */
+    private KiVisUserAgent userAgent;
+    
+    /**
+     * The file handle of the loaded image.
+     */
     private IFile svgFile;
+    /**
+     * The URI of the loaded image
+     */
     private URI svgURI; // required if RCP does not support IFiles
 
-    private Frame frame;
-
-    private KiVisUserAgent userAgent;
-
     /**
-     * This one is a single loadingStatusListener so we can keep an eye on the svg document loading
-     * status.
-     */
-    private final SVGLoadingStatusListener loadingStatusListener = new SVGLoadingStatusListener();
-
-    public KiVisUserAgent getUserAgent() {
-        return userAgent;
-    }
-
-    /**
-     * Returns the SVGLoadingStatusLister for the single svgCanvas instance. So we only need one for
-     * whole xKEV.
+     * Constructor
      * 
-     * @return loadingStatusListener
+     * @param parent The parent composite
+     * @param style The SWT style bits
+     * @param showScrollbars Determines if scrollbars should be shown
      */
-    public SVGLoadingStatusListener getSVGLoadingStatusListener() {
-        return loadingStatusListener;
-    }
-
     public KiVisCanvas(Composite parent, int style, boolean showScrollbars) {
         super(parent, style);
-        /*
-         * Set a Windows specific AWT property that prevents heavyweight components from erasing
-         * their background. Note that this is a global property and cannot be scoped. It might not
-         * be suitable for your application.
-         */
-//        try {
-//            System.setProperty("sun.awt.noerasebackground", "true");
-//        } catch (NoSuchMethodError error) {
-//            error.printStackTrace();
-//        }
-
         try {
+            // Create the user agent
             userAgent = new KiVisUserAgent(this);
+            
             // Create the EclipseJSVGCanvas
             svgCanvas = new EclipseJSVGCanvas(userAgent, true, false);
             svgCanvas.setLayout(new BorderLayout());
@@ -116,9 +109,7 @@ public class KiVisCanvas extends Composite implements ISelectionListener {
             svgCanvas.setDoubleBufferedRendering(true);
             svgCanvas.setProgressivePaint(true);
 
-            frame = null;
-            frame = SWT_AWT.new_Frame(this);
-
+            // Create a AWT panel
             Panel panel = new Panel(new BorderLayout()) {
                 private static final long serialVersionUID = -3473742040625838717L;
 
@@ -127,7 +118,6 @@ public class KiVisCanvas extends Composite implements ISelectionListener {
                     paint(g);
                 }
             };
-
             JRootPane root = new JRootPane();
             panel.add(root);
             java.awt.Container contentPane = root.getContentPane();
@@ -138,12 +128,12 @@ public class KiVisCanvas extends Composite implements ISelectionListener {
             } else {
                 contentPane.add(BorderLayout.CENTER, svgCanvas);
             }
-
-            if (frame != null) {
-                frame.setLayout(new BorderLayout());
-                frame.add(BorderLayout.CENTER, panel);
-                frame.setEnabled(true);
-            }
+            
+            // Create the AWT frame inside the SWT composite
+            frame = SWT_AWT.new_Frame(this);
+            frame.setLayout(new BorderLayout());
+            frame.add(BorderLayout.CENTER, panel);
+            frame.setEnabled(true);
         } catch (Throwable t) {
             Status s = new Status(IStatus.ERROR, KiVisActivator.DE_CAU_CS_KIELER_KIVIS_KIVIS, t.getMessage(), t);
             StatusManager.getManager().handle(s, StatusManager.SHOW);
@@ -151,18 +141,35 @@ public class KiVisCanvas extends Composite implements ISelectionListener {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void dispose() {
-        // Don't dispose svgCanvas, could be used later on (simulation can run in background without
-        // showing the canvas)
-        // svgCanvas.dispose();
+        svgCanvas.dispose();
         frame.dispose();
         super.dispose();
     }
 
+    /**
+     * Returns the user agent.
+     * @return the user agent
+     */
+    public KiVisUserAgent getUserAgent() {
+        return userAgent;
+    }
+    
+    /**
+     * Sets the svgURI
+     * @param svgURI The new svgURI
+     */
     public void setSVGURI(URI svgURI) {
         this.svgURI = svgURI;
     }
 
+    /**
+     * Sets the svgPath
+     * @param path The new svgPath
+     */
     public void setSVGPath(IPath path) {
         try {
             URL url = path.toFile().toURI().toURL();
@@ -173,12 +180,20 @@ public class KiVisCanvas extends Composite implements ISelectionListener {
         }
     }
 
-    public void setSVGFile(IFile f) {
-        svgFile = f;
-        svgURI = f.getLocationURI();
+    /**
+     * Sets the svgFile
+     * @param file The svgFile
+     */
+    public void setSVGFile(IFile file) {
+        svgFile = file;
+        svgURI = file.getLocationURI();
         paintSVGFile();
     }
 
+    /**
+     * Sets the svgFile using an URL
+     * @param url The url
+     */
     public void setSVGFile(URL url) {
         try {
             svgURI = url.toURI();
@@ -200,18 +215,23 @@ public class KiVisCanvas extends Composite implements ISelectionListener {
 
     }
 
-    /** Returns th uri to the actual svg file if exists */
+    /**
+     * Returns the svgURI
+     * @return the svgURI
+     */
     public URI getSVGURI() {
         return svgURI;
     }
 
+    /**
+     * Loads the SVG document from the svgFile. 
+     */
     public void paintSVGFile() {
         try {
             if (svgFile != null) {
                 URL url = svgFile.getLocation().toFile().toURI().toURL();
                 svgCanvas.loadSVGDocument(url.toExternalForm());
             } else if (svgURI != null) {
-                // Tools.setStatusLine("loading image...");
                 svgCanvas.loadSVGDocument(svgURI.toURL().toExternalForm());
             } else {
                 System.out.println("No document URI set!");
@@ -219,40 +239,6 @@ public class KiVisCanvas extends Composite implements ISelectionListener {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Callback of ISelectionListener that listens on selection of svg-files in the file
-     * navigator/project explorer. Will load the svg file from the selected IFile.
-     */
-    public void selectionChanged(IWorkbenchPart part, ISelection s) {
-        if (s instanceof IStructuredSelection) {
-            IStructuredSelection ss = (IStructuredSelection) s;
-            Object obj = ss.getFirstElement();
-            if (obj instanceof IFile) {
-                IFile f = (IFile) obj;
-                IPath path = (IPath) f.getLocation();
-                if (path != null) {
-                    if (path.toFile().exists()) {
-                        if (path.getFileExtension().equals("svg") //$NON-NLS-1$
-                                || path.getFileExtension().equals("svgz")) { //$NON-NLS-1$
-                            if (svgFile == null || !(svgFile.equals(f))) {
-                                // setSVGFile(f);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Returns the current JSVGCanvas of the KEV-View.
-     * 
-     * @return svgCanvas the current JSVGCanvas
-     */
-    public JSVGCanvas getSVGCanvas() {
-        return svgCanvas;
     }
 
     /**
@@ -277,14 +263,27 @@ public class KiVisCanvas extends Composite implements ISelectionListener {
         }
     }
     
+    /**
+     * Returns the JSVGCanvas
+     * @return svgCanvas the JSVGCanvas
+     */
     public JSVGCanvas getSvgCanvas() {
         return svgCanvas;
     }
 
+    /**
+     * Logs a message.
+     * @param msg The message
+     */
     protected static void log(String msg) {
         log(msg, null);
     }
     
+    /**
+     * Logs a message and an exception.
+     * @param msg The message
+     * @param e The exception
+     */
     protected static void log(String msg, Exception e) {
         Status status = new Status(Status.INFO, KiVisActivator.DE_CAU_CS_KIELER_KIVIS_KIVIS, msg, e);
         KiVisActivator.getInstance().getLog().log(status);

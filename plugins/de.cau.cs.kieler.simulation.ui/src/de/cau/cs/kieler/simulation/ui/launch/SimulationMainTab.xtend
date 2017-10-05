@@ -34,11 +34,25 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Table
 import org.eclipse.jface.viewers.ArrayContentProvider
 
+/**
+ * The main tab of the simulation launch configuration.
+ * It provides controls to display and modify the files to be launched.
+ * 
+ */
 class SimulationMainTab  extends AbstractLaunchConfigurationTab {
     
+    /**
+     * The files that should be launched
+     */
     private var List<String> files = newArrayList
+    /**
+     * The control to display the files
+     */
     private var TableViewer viewer
     
+    /**
+     * {@inheritDoc}
+     */
     override createControl(Composite parent) {
         var Composite comp = new Composite(parent, SWT.NONE)
         setControl(comp)
@@ -50,6 +64,70 @@ class SimulationMainTab  extends AbstractLaunchConfigurationTab {
         createButtons(comp)
     }
     
+    /**
+     * {@inheritDoc}
+     */
+    override getName() {
+        return "Main"
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override initializeFrom(ILaunchConfiguration configuration) {
+        files.clear
+        val filePaths = configuration.getAttribute(SimulationLaunchConfig.FILES_ATTR, #[])
+        for(file : filePaths) {
+            files.add(file)
+        }
+        viewer.refresh
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override performApply(ILaunchConfigurationWorkingCopy configuration) {
+        configuration.setAttribute(SimulationLaunchConfig.FILES_ATTR, files)
+        // Check the user input for consistency
+        checkConsistency()
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override setDefaults(ILaunchConfigurationWorkingCopy configuration) {
+    }
+    
+    /**
+     * Checks if the current input makes sense and set an error message accordingly.
+     * 
+     * @return true if the input is valid. false otherwise
+     */
+    private def boolean checkConsistency() {
+        errorMessage = checkErrors() 
+        return errorMessage == null
+    }
+    
+    /**
+     * Checks if the current input makes sense and returns an error message accordingly.
+     * @return an appropriate error message or null if there is no error. 
+     */
+    private def String checkErrors() {
+        // All files must exist in the workspace
+        for(filePath : files) {
+            val file = PromPlugin.findFile(filePath)
+            if(file == null) {
+                return "File '"+filePath+"' does not exist in the workspace.\nPlease provide the full path of the file (e.g. /PROJECT/FOLDER/FILE.txt)"
+            }
+        }
+        return null
+    }
+    
+    /**
+     * Creates the buttons to add and remove files.
+     * 
+     * @param parent The parent composite
+     */
     private def void createButtons(Composite parent) {
         val group = new Composite(parent, SWT.NONE)
         group.setLayout(new GridLayout(1, true))
@@ -76,6 +154,11 @@ class SimulationMainTab  extends AbstractLaunchConfigurationTab {
         })
     }
     
+    /**
+     * Creates the control to display and modify files to be launched.
+     * 
+     * @param parent The parent composite
+     */
     private def void createTable(Composite parent) {
         val table = new Table(parent, SWT.BORDER.bitwiseOr(SWT.FULL_SELECTION))
         table.setHeaderVisible(true);
@@ -121,52 +204,5 @@ class SimulationMainTab  extends AbstractLaunchConfigurationTab {
         
         // Set input
         viewer.input = files
-    }
-    
-    override getName() {
-        return "Main"
-    }
-    
-    override initializeFrom(ILaunchConfiguration configuration) {
-        files.clear
-        val filePaths = configuration.getAttribute(SimulationLaunchConfig.FILES_ATTR, #[])
-        for(file : filePaths) {
-            files.add(file)
-        }
-        viewer.refresh
-    }
-    
-    override performApply(ILaunchConfigurationWorkingCopy configuration) {
-        configuration.setAttribute(SimulationLaunchConfig.FILES_ATTR, files)
-        // Check the user input for consistency
-        checkConsistency()
-    }
-    
-    override setDefaults(ILaunchConfigurationWorkingCopy configuration) {
-    }
-    
-    /**
-     * Checks if the current input makes sense and set an error message accordingly.
-     * 
-     * @return true if the input is valid. false otherwise
-     */
-    private def boolean checkConsistency() {
-        errorMessage = checkErrors() 
-        return errorMessage == null
-    }
-    
-    /**
-     * Checks if the current input makes sense and returns an error message accordingly.
-     * @return an appropriate error message or null if there is no error. 
-     */
-    private def String checkErrors() {
-        // All files must exist in the workspace
-        for(filePath : files) {
-            val file = PromPlugin.findFile(filePath)
-            if(file == null) {
-                return "File '"+filePath+"' does not exist in the workspace.\nPlease provide the full path of the file (e.g. /PROJECT/FOLDER/FILE.txt)"
-            }
-        }
-        return null
     }
 }

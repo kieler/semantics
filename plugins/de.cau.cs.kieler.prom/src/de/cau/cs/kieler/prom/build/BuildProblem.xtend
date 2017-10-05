@@ -17,48 +17,114 @@ import org.eclipse.core.resources.IResource
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
+ * Container for information about problems that occured during the build.
+ * 
  * @author aas
  *
  */
 class BuildProblem {
+    /**
+     * The resource that has the problem. 
+     */
     @Accessors(PUBLIC_GETTER)
     private var IResource res
+    
+    /**
+     * The line in the resource that has the problem.  
+     */
     @Accessors
     private var int line = -1
+    
+    /**
+     * Exception that caused the problem.
+     */
     @Accessors(PUBLIC_GETTER)
     private var Exception cause = null
+    
+    /**
+     * A message for the user to understand the problem.
+     */
     @Accessors(PUBLIC_GETTER)
     private var String message = ""
+    
+    /**
+     * The severity of the problem.
+     * Typically this is either IMarker.SEVERITY_WARNING or IMarker.SEVERITY_ERROR
+     */
     private var int severity = IMarker.SEVERITY_WARNING
     
+    /**
+     * Creates a warning
+     * 
+     * @param res The resource that has the problem
+     * @param message The warning message
+     */
     static def BuildProblem createWarning(IResource res, String message) {
         return createWarning(res, message, null)
     }
     
+    /**
+     * Creates a warning
+     * 
+     * @param res The resource that has the problem
+     * @param cause The exception that caused the issue
+     */
     static def BuildProblem createWarning(IResource res, Exception cause) {
         return createWarning(res, cause.message, cause)
     }
     
+    /**
+     * Creates a warning
+     * 
+     * @param res The resource that has the problem
+     * @param message The warning message for the user
+     * @param cause The exception that caused the issue
+     */
     static def BuildProblem createWarning(IResource res, String message, Exception cause) {
         return new BuildProblem(IMarker.SEVERITY_WARNING, res, message, cause)
     }
     
+    /**
+     * Creates a error
+     * 
+     * @param res The resource that has the problem
+     * @param message The error message
+     */
     static def BuildProblem createError(IResource res, String message) {
         return createError(res, message, null)
     }
     
+    /**
+     * Creates a error
+     * 
+     * @param res The resource that has the problem
+     * @param cause The exception that caused the issue
+     */
     static def BuildProblem createError(IResource res, Exception cause) {
         return createError(res, cause.message, cause)
     }
     
+    /**
+     * Creates a error
+     * 
+     * @param res The resource that has the problem
+     * @param message The error message
+     * @param cause The exception that caused the issue
+     */
     static def BuildProblem createError(IResource res, String message, Exception cause) {
         return new BuildProblem(IMarker.SEVERITY_ERROR, res, message, cause)
     }
     
+    /**
+     * Constructor
+     */
     private new(int severity, IResource res, String message) {
         this(severity, res, message, null)
     }
     
+    /**
+     * Constructor
+     */
     private new(int severity, IResource res, String message, Exception cause) {
         this.severity = severity
         this.res = res
@@ -66,14 +132,29 @@ class BuildProblem {
         this.cause = cause
     }
     
+    /**
+     * Checks whether this problem is a warning or an error.
+     * 
+     * @return true if it is a warning, false otherwise.
+     */
     public def boolean isWarning() {
         return severity == IMarker.SEVERITY_WARNING
     }
     
+    /**
+     * Checks whether this problem is a warning or an error.
+     * 
+     * @return true if it is an error, false otherwise.
+     */
     public def boolean isError() {
         return severity == IMarker.SEVERITY_ERROR
     }
     
+    /**
+     * Creates a string with the message and cause and where the issue occurs (the resource and line)
+     * 
+     * {@inheritDoc}
+     */
     override toString() {
         val sb = new StringBuilder()
         

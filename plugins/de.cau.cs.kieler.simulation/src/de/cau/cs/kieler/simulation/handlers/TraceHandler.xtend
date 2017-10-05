@@ -12,32 +12,87 @@
  */
 package de.cau.cs.kieler.simulation.handlers
 
-import de.cau.cs.kieler.prom.build.ConfigurableAttribute
+import de.cau.cs.kieler.prom.FileExtensions
+import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
+import de.cau.cs.kieler.simulation.core.DataPoolOperation
 import de.cau.cs.kieler.simulation.core.Model
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.Variable
 import de.cau.cs.kieler.simulation.trace.TraceDataProvider
 import de.cau.cs.kieler.simulation.trace.ktrace.TraceFile
-import org.eclipse.core.runtime.IPath
 import org.eclipse.core.runtime.Path
 import org.eclipse.xtend.lib.annotations.Accessors
 
-import static de.cau.cs.kieler.simulation.FileExtensions.*
-import de.cau.cs.kieler.simulation.core.VariableType
-
 /**
+ * Loads a trace file and sets inputs of a model accordingly to some tick of the trace.
+ * Can also compare the outputs of a tick with the outputs of the trace.
+ * 
  * @author aas
  *
  */
 class TraceHandler extends DefaultDataHandler {
     
-    public val tracePath = new ConfigurableAttribute("file")
-    public val modelName = new ConfigurableAttribute("modelName")
-    public val traceNumber = new ConfigurableAttribute("traceNumber", 0)
-    public val tickNumber = new ConfigurableAttribute("tickNumber", 0)
-    public val checkOutputs = new ConfigurableAttribute("checkOutputs", true)
-    public val checkInterface = new ConfigurableAttribute("checkInterface", true)
+    /**
+     * The path to the trace file.
+     * The path must be either an absolute path in the workspace (i.e. /Project/Some/Folders/MyFile.txt)
+     * or a project relative path in the project of the currently running simulation configuration file.
+     */
+    public val tracePath = new ConfigurableAttribute("file", null, #[String])
+    /**
+     * The name of the model of which the inputs should be set and outputs should be checked
+     */
+    public val modelName = new ConfigurableAttribute("modelName", null, #[String])
+    /**
+     * The number of the trace to use (in case there are multiple traces in the file) 
+     */
+    public val traceNumber = new ConfigurableAttribute("traceNumber", 0, #[Integer])
+    /**
+     * The current tick of the loaded trace that is used
+     */
+    public val tickNumber = new ConfigurableAttribute("tickNumber", 0, #[Integer])
+    /**
+     * Determines if the interface should be checked.
+     * For instance an additional output can cause a trace mismatch if the interface is checked.
+     */
+    public val checkInterface = new ConfigurableAttribute("checkInterface", true, #[Boolean])
+    
+    /**
+     * The operation that sets the inputs of the model to the inputs from the trace.
+     */
+    private val writeOperation = new DataPoolOperation("write") {
+        override apply(DataPool pool) {
+            write(pool)
+        }
+    }
+    
+    /**
+     * The operation that checks the outputs of the model and compares them with the trace.
+     */
+    private val checkOperation = new DataPoolOperation("check") {
+        override apply(DataPool pool) {
+            compare(pool)
+        }
+    }
+    
+    /**
+     * The operation that loads the next tick.
+     * This should be called after the inputs have been set and outputs have been checked.
+     * However, if the outputs are not checked and the trace is only used to set inputs,
+     * then this should be called after the inputs have been set.
+     */
+    private val loadNextTickOperation = new DataPoolOperation("loadNextTick") {
+        override apply(DataPool pool) {
+            loadNextTick
+        }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override getOperations() {
+        return #[writeOperation, checkOperation, loadNextTickOperation]
+    }
     
     /**
      * The trace model that should be used to load the trace data.
@@ -45,11 +100,18 @@ class TraceHandler extends DefaultDataHandler {
      */
     @Accessors
     private TraceFile externalTraceModel
-        
+    
+    /**
+     * A trace data provider to read the traces and turn them into data pools.
+     */
     private var TraceDataProvider traceDataProvider;
     
-    override read(DataPool pool) {
-        initialize
+    /**
+     * Compares the output of the pool with the outputs in the trace for the current tick.
+     * 
+     * @param pool The pool
+     */
+    public def void compare(DataPool pool) {
         if(isFinished) {
 //            System.err.println("Trace is finished already.")
             return;
@@ -116,11 +178,17 @@ class TraceHandler extends DefaultDataHandler {
                 }
             }
         }
-        
-        // Get next tick
-        loadNextTick
     }
     
+    /**
+     * Compares the values of the given variables.
+     * Thereby the present/absent state of booleans (true or false) and integers (0 or not 0) are taken as the same value.
+     * Thus comparing a boolean with value false to an integer with value 42 would return true by this method.
+     * 
+     * @param a The first variable
+     * @param b The first variable
+     * @return true if the values of the variables match, possibly wrt. their present state 
+     */
     def match(Variable a, Variable b) {
         if (a.value instanceof Boolean && b.value instanceof Integer) {
             return (a.value == (b.value != 0))
@@ -131,8 +199,12 @@ class TraceHandler extends DefaultDataHandler {
         }
     }
     
-    override write(DataPool pool) {
-        initialize
+    /**
+     * Sets the input of the data pool to the input from the trace of the current tick.
+     * 
+     * @param pool The pool
+     */
+    public def void write(DataPool pool) {
         if(isFinished) {
 //            System.err.println("Trace is finished already.")
             return;
@@ -154,14 +226,27 @@ class TraceHandler extends DefaultDataHandler {
                 }   
             }    
         }
-        
-        // Don't compare outputs of the simulation with the trace.
-        // So only inputs should be set and we can get the next tick now.
-        if(!checkOutputs.boolValue) {
-            loadNextTick
-        }  
     }
     
+    /**
+     * Loads the next tick.
+     */
+    public def void loadNextTick() {
+        tickNumber.value = tickNumber.intValue+1
+        if(tickNumber.intValue >= traceDataProvider.traceLength) {
+            val event = createTraceFinishedEvent
+            SimulationManager.instance.fireEvent(event)
+        }
+    }
+    
+    /**
+     * Returns the corresponding variable from the pool for the given variable in the given model.
+     * 
+     * @param pool The pool
+     * @param model The model
+     * @param variable The variable
+     * @return the corresponding variable
+     */
     private def Variable getCorrespondingVariable(DataPool pool, Model model, Variable variable) {
         var Variable correspondingVariable
         if(pool.models.size == 1) {
@@ -173,59 +258,53 @@ class TraceHandler extends DefaultDataHandler {
         return correspondingVariable
     }
     
-    private def void initialize() {
+    /**
+     * {@inheritDoc}
+     */
+    override initialize() {
         if(traceDataProvider == null) {
             if(externalTraceModel != null) {
                 loadTrace(externalTraceModel)
             } else {
                 val path = new Path(tracePath.stringValue)
-                switch(path.fileExtension.toLowerCase) {
-                    case TRACES.contains(path.fileExtension.toLowerCase): loadTrace(path)
-//                    case SIM_HISTORY: loadDataPoolHistory(path)
-                    default:
-                        throw new Exception("The file '"+path.toOSString+"' is not a supported trace format.")
+                if(FileExtensions.TRACES.contains(path.fileExtension.toLowerCase)) {
+                    loadTrace(path.toOSString)
+                } else {
+                    throw new Exception("The file '"+path.toOSString+"' is not a supported trace format.")
                 }
             }
         }
     }
     
-    private def void loadTrace(IPath path) {
-        val traceFileHandle = getFile(path)
+    /**
+     * Loads a trace from the given file.
+     * 
+     * @param path The path to the file
+     */
+    private def void loadTrace(String path) {
+        val traceFileHandle = getIFile(path)
         if(traceFileHandle !== null && traceFileHandle.exists) {
             traceDataProvider = new TraceDataProvider(traceFileHandle, traceNumber.intValue)
         } else {
-            throw new Exception("Could not load trace '"+path.toOSString+"'")
+            throw new Exception("Could not load trace '"+path+"'")
         }
     }
     
+    /**
+     * Loads the given trace.
+     * 
+     * @param trace The trace
+     */
     private def void loadTrace(TraceFile trace) {
         traceDataProvider = new TraceDataProvider(trace, traceNumber.intValue)
     }
     
-//    private def void loadDataPoolHistory(IPath path) {
-//        val traceFileHandle = getFile(path)
-//        if(traceFileHandle != null && traceFileHandle.exists) {
-//            val lines = Files.readLines(new File(traceFileHandle.location.toOSString), Charsets.UTF_8)
-//            var DataPool lastPool
-//            for(line : lines) {
-//                val modelName = "Model"
-//                val model = Model.createFromJson(modelName, line)
-//                if(model != null) {
-//                    val pool = new DataPool()
-//                    pool.addModel(model)
-//                    if(lastPool != null) {
-//                        pool.previousPool = lastPool
-//                    }
-//                    lastPool = pool
-//                    currentTraceTick.add(pool)
-//                }
-//            }
-//        } else {
-//            throw new Exception("Could not load trace '"+path.toOSString+"'")
-//        }
-//    }
-    
-    private def TraceEvent createTraceFinishedEvent() {
+    /**
+     * Creates an event because the frace has reached its end.
+     * 
+     * @return The created event
+     */
+    private def TraceFinishedEvent createTraceFinishedEvent() {
         val event = new TraceFinishedEvent()
         event.tickNumber = tickNumber.intValue
         event.traceNumber = traceNumber.intValue
@@ -233,6 +312,13 @@ class TraceHandler extends DefaultDataHandler {
         return event
     }
     
+    /**
+     * Creates an event because of a variable value mismatch.
+     * 
+     * @param variable The variable of which the value did not match
+     * @param expectedValue The value that was expected in the trace
+     * @return the created event
+     */
     private def TraceMismatchEvent createTraceMismatchEvent(Variable variable, Object expectedValue) {
         val event = new TraceMismatchEvent()
         event.tickNumber = tickNumber.intValue
@@ -251,6 +337,12 @@ class TraceHandler extends DefaultDataHandler {
         return event
     }
     
+    /**
+     * Creates an event because of an interface mismatch.
+     * 
+     * @param variable The variable that did not match with the interface of the trace
+     * @return the created event
+     */
     private def TraceMismatchEvent createTraceInterfaceMismatchEvent(Variable variable) {
         val event = new TraceMismatchEvent()
         event.tickNumber = tickNumber.intValue
@@ -268,22 +360,25 @@ class TraceHandler extends DefaultDataHandler {
         return event
     }
     
-    private def void loadNextTick() {
-        tickNumber.value = tickNumber.intValue+1
-        if(tickNumber.intValue >= traceDataProvider.traceLength) {
-            val event = createTraceFinishedEvent
-            SimulationManager.instance.fireEvent(event)
-        }
-    }
-    
+    /**
+     * Checks whether this trace reached the end.
+     * 
+     * @return true if there is no new data in the trace
+     */
     private def boolean isFinished() {
         return tickNumber.intValue >= traceDataProvider.traceLength
     }   
     
+    /**
+     * {@inheritDoc}
+     */
     override getName() {
         "trace"
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override toString() {
         return "Trace '" + tracePath.value + "'"
     }

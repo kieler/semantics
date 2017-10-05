@@ -589,8 +589,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * @param model
      * @param context
      */
-    // package protected
-    void updateCompilerModel(Object model) {
+    public void updateCompilerModel(Object model) {
         // TODO adapt to kicool
         if (isActive() && syncCompilerToggleAction.isChecked()) {
             compiledModel = model;

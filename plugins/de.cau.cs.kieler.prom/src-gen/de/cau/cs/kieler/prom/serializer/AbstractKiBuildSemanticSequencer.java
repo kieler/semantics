@@ -3,7 +3,19 @@
  */
 package de.cau.cs.kieler.prom.serializer;
 
+import java.util.Set;
+
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.xtext.Action;
+import org.eclipse.xtext.Parameter;
+import org.eclipse.xtext.ParserRule;
+import org.eclipse.xtext.serializer.ISerializationContext;
+import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
+import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
+
 import com.google.inject.Inject;
+
 import de.cau.cs.kieler.annotations.Annotation;
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.annotations.CommentAnnotation;
@@ -38,15 +50,6 @@ import de.cau.cs.kieler.prom.kibuild.SimulationTemplateProcessor;
 import de.cau.cs.kieler.prom.kibuild.TextValue;
 import de.cau.cs.kieler.prom.kibuild.WrapperCodeTemplateProcessor;
 import de.cau.cs.kieler.prom.services.KiBuildGrammarAccess;
-import java.util.Set;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.xtext.Action;
-import org.eclipse.xtext.Parameter;
-import org.eclipse.xtext.ParserRule;
-import org.eclipse.xtext.serializer.ISerializationContext;
-import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
-import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 
 @SuppressWarnings("all")
 public abstract class AbstractKiBuildSemanticSequencer extends KExpressionsSemanticSequencer {

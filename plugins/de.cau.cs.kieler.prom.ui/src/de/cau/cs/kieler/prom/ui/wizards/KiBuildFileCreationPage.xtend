@@ -21,18 +21,33 @@ import org.eclipse.swt.widgets.Button
 import org.eclipse.swt.widgets.Composite
 
 /**
+ * File creation page for new kibuild files.
+ * 
  * @author aas
  *
  */
 class KiBuildFileCreationPage extends AdvancedNewFileCreationPage {
     
+    /**
+     * The origin of the initial content of the configuration file when compiling to C
+     */
     private val String INITIAL_C_CONFIG = "platform:/plugin/de.cau.cs.kieler.prom/resources/default.kibuild"
-    private val String INITIAL_JAVA_CONFIG = "platform:/plugin/de.cau.cs.kieler.prom/resources/default-java.kibuild"
     
+    /**
+     * The origin of the initial content of the configuration file when compiling to Java
+     */
+     private val String INITIAL_JAVA_CONFIG = "platform:/plugin/de.cau.cs.kieler.prom/resources/default-java.kibuild"
+    
+    /**
+     * {@inheritDoc}
+     */
     new(String pageName, IStructuredSelection selection, boolean fileCreationIsOptional) {
         super(pageName, selection, fileCreationIsOptional)
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override createControl(Composite parent) {
         super.createControl(parent)
         

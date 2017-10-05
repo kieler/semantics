@@ -21,12 +21,21 @@ import org.eclipse.swt.graphics.Point
 import org.eclipse.swt.widgets.Display
 
 /**
+ * Displays the history of variables in the simulation.
+ * As tooltip image a small diagram is shown, which displays the values in a graph. 
+ * 
  * @author aas
  *
  */
 class HistoryColumnLabelProvider extends DataPoolColumnLabelProvider{
+    /**
+     * The image that is created to draw the graph for the history values.
+     */
     protected var Image img
     
+    /**
+     * {@inheritDoc}
+     */
     override String getText(Object element) {
         if(element instanceof Variable) {
             return createHistoryText(element.history.map[it.value])
@@ -34,6 +43,9 @@ class HistoryColumnLabelProvider extends DataPoolColumnLabelProvider{
         return ""
     }
     
+    /**
+     * Returns an image with a small graph of the values.
+     */
     override Image getToolTipImage(Object element) {
         if(img != null) {
             img.dispose()
@@ -45,6 +57,13 @@ class HistoryColumnLabelProvider extends DataPoolColumnLabelProvider{
         return img
     }
     
+    /**
+     * Returns the text for the values in the list.
+     * If there are to many values in the list, then the text is shortened.
+     * 
+     * @param history The list of values
+     * @return the (possibly shortened) text for this history
+     */
     protected def String createHistoryText(List<Object> history) {
         var txt = ""
         val max = 6
@@ -60,6 +79,12 @@ class HistoryColumnLabelProvider extends DataPoolColumnLabelProvider{
         return txt
     }
     
+    /**
+     * Creates a small graph to display the values in the given list.
+     * 
+     * @param history The list of values
+     * @return a small image with a graph of the values
+     */
     protected static def Image createHistoryGraph(List<Object> history) {
         if(!history.isNullOrEmpty) {
             val firstValue = history.get(0)
@@ -78,6 +103,12 @@ class HistoryColumnLabelProvider extends DataPoolColumnLabelProvider{
         return null
     }
     
+    /**
+     * Creates a graph for a list of numbers.
+     * 
+     * @param numbers The numbers
+     * @return the graph
+     */
     private static def Image createNumberGraph(List<Double> numbers) {
         // Min / max value from history        
         val min = numbers.min
@@ -117,6 +148,12 @@ class HistoryColumnLabelProvider extends DataPoolColumnLabelProvider{
         return img
     }
     
+    /**
+     * Creates a graph for a list of booleans.
+     * 
+     * @param booleans The booleans
+     * @return the graph
+     */
     private static def Image createBooleanGraph(List<Boolean> booleans) {
         // Create image
         val w = 92

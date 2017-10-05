@@ -14,59 +14,59 @@ package de.cau.cs.kieler.simulation.handlers
 
 import com.google.common.base.Charsets
 import com.google.common.io.Files
-import de.cau.cs.kieler.prom.build.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
-import java.io.File
-import org.eclipse.core.resources.IFile
-import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author aas
  *
  */
-class SimulationOutputFileHandler extends DefaultDataHandler {
-    
-    public val location = new ConfigurableAttribute("fileLocation", null, true)
-    
-    @Accessors
-    private var IFile file
-    
-    private var String modelName
+class SimulationOutputFileHandler extends SimulationInputOutputFileHandlerBase {
     
     /**
-     * Write a model in the data pool to the file system.
+     * {@inheritDoc}
+     */
+    override initialize() {
+        super.initialize
+        // Get name for the model if none set
+        if(!modelName.isDefined) {
+            modelName.value = file.name
+        }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override initialize(DataPool pool) {
+    }
+    
+    /**
+     * Serialize a model in the data pool to JSON and save it in the file system.
+     * 
+     * @param pool The pool
      */
     override write(DataPool pool) {
-        val fileName = Files.getNameWithoutExtension(fileLocation)
-        modelName = fileName
-        
-        // Try to output model that has the same name as the file.
+        // Serialize the model and save it in the file system.
         // If there is no such model, output the first model in the pool
-        var model = pool.getModel(modelName)
-        if(model == null && !pool.models.isNullOrEmpty) {
-           model = pool.models.get(0) 
-        }
+        var model = findModel(pool, modelName.stringValue)
         if(model != null) {
             val json = model.toJson
-            
-            val file = new File(fileLocation)
             Files.write(json, file, Charsets.UTF_8)
-        }
-    }
-    
-    private def String getFileLocation() {
-        if(file != null) {
-            return file.location.toOSString
         } else {
-            return location.stringValue
+            throw new Exception("No model with name '"+modelName.stringValue+"' was found for "+toString)
         }
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override getName() {
         return "simout"
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override toString() {
-        return "OutputFileHandler '"+fileLocation+"'"
+        return "SimulationOutputFileHandler '"+file.path+"'"
     }
 }

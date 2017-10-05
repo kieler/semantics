@@ -23,14 +23,12 @@ import de.cau.cs.kieler.kivis.kivis.Domain
 import de.cau.cs.kieler.kivis.kivis.Mapping
 import de.cau.cs.kieler.kivis.kivis.SimulationOperation
 import de.cau.cs.kieler.kivis.kivis.VariableReference
-import de.cau.cs.kieler.prom.build.AttributeExtensions
+import de.cau.cs.kieler.prom.configurable.AttributeExtensions
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.NDimensionalArray
 import de.cau.cs.kieler.simulation.core.SimulationManager
-import java.util.List
-import java.util.Map
-import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.simulation.core.Variable
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author aas
@@ -39,58 +37,16 @@ import de.cau.cs.kieler.simulation.core.Variable
 class KiVisExtensions {
     extension var AttributeExtensions attributeExtensions
     
-    /**
-     * The data pool for which the variables have been cached
-     */
-    private static var DataPool cachedPool
-    /**
-     * Cach for variable values in a data pool.
-     * The key of the map is the fully qualified name of the variable
-     * potentially appended with the index of an array element.
-     */
-    private static var Map<String, Object> variableValueCache = newHashMap
-    
-    public static def void clearCache() {
-        updateCache(null)
-    }
-    
-    /** 
-     * Creates a new cache if the pool changes that is processed for the current animation.
-     * 
-     */
-    private static def void updateCache(DataPool pool) {
-        if(cachedPool != pool) {
-            cachedPool = pool
-            variableValueCache = newHashMap
-        }
-    }
-    
     new() {
         attributeExtensions = new AttributeExtensions
     }
     
     /**
-     * Returns the fully qualified name of a variable in the simulation.
+     * Finds the variable in the pool that corresponds to the variable reference.
+     * 
+     * @param ref The variable reference
+     * @param pool The data pool 
      */
-    private def String getFullyQualifiedVariableName(String modelName, String variableName) {
-        if(modelName.isNullOrEmpty)
-            return variableName
-        else
-            return modelName+"."+variableName
-    }
-    
-    /**
-     * Returns the fully qualified name of a variable in the simulation.
-     */
-    private def String getFullyQualifiedVariableName(String modelName, String variableName, List<Integer> indices) {
-        val nameWithoutIndex = getFullyQualifiedVariableName(modelName, variableName)
-        if(indices.isNullOrEmpty) {
-            return nameWithoutIndex
-        } else {
-            nameWithoutIndex + indices.join("[", ",", "]", [it.toString]) 
-        }
-    }
-    
     public def Variable getVariable(VariableReference ref, DataPool pool) {
         if(ref == null) {
             return null
@@ -104,52 +60,44 @@ class KiVisExtensions {
     }
     
     /**
-     * Returns the value of a variable in the data pool.
+     * Returns the value of a variable in the pool that corresponds to the variable reference.
+     * 
+     * @param ref The variable reference
+     * @param pool The data pool 
+     * @param userValue Determines whether the user entered value of the variable should be preferred or always its 'real' value
      */
     public def Object getVariableValue(VariableReference ref, DataPool pool, boolean userValue) {
         if(ref == null) {
             return null
         }
-        // Create a new variable cache if necessary
-//        updateCache(pool)
-//        val modelName = ref.model?.name
-//        val variableName = ref.name
-//        val arrayIndex = ref.indices
-//        val fullyQualifiedName = getFullyQualifiedVariableName(modelName, variableName, arrayIndex)
-//        val cachedValue = variableValueCache.getOrDefault(fullyQualifiedName, null)
-//        if(cachedValue != null) {
-//            println("using cached value of "+fullyQualifiedName)
-//            return cachedValue
-//        } else {
-            // Get variable in pool
-//            val variable = pool.getVariable(modelName, variableName)
-            val variable = getVariable(ref, pool)
-            if(variable == null) {
-                throw new Exception("Variable '"+ref.name+"' was not found in the data pool.")
+        // Get the variable from the reference
+        val variable = getVariable(ref, pool)
+        if(variable == null) {
+            throw new Exception("Variable '"+ref.name+"' was not found in the data pool.")
+        }
+        // Get value of variable
+        var Object value = if (variable.isDirty)
+                               variable.userValue
+                           else
+                               variable.value
+        // Get value of an array element
+        if(value instanceof NDimensionalArray) {
+            val arrayIndex = ref.indices
+            val array = value as NDimensionalArray
+            if(arrayIndex.isNullOrEmpty) {
+                throw new Exception("Trying to access array "+ref.name+" without index.")
             }
-            // Get value of variable
-            var Object value = if (variable.isDirty)
-                                   variable.userValue
-                               else
-                                   variable.value
-            
-            if(value instanceof NDimensionalArray) {
-                val arrayIndex = ref.indices
-                val array = value as NDimensionalArray
-                if(arrayIndex.isNullOrEmpty) {
-                    throw new Exception("Trying to access array "+ref.name+" without index.")
-                }
-                value = array.get(arrayIndex, userValue)
-            }
-            
-            if(value != null) {
-//                println("now cached value of "+fullyQualifiedName)
-//                variableValueCache.put(fullyQualifiedName, value)
-            }
-            return value
-//        }
+            value = array.get(arrayIndex, userValue)
+        }
+        return value
     }
     
+    /**
+     * Evaluates the condition where variables are replaced with their corresponding value in the pool.
+     * 
+     * @param cond The condition
+     * @param pool The pool
+     */
     public def boolean eval(Condition cond, DataPool pool) {
         if(cond instanceof AndExpression) {
             return (cond as AndExpression).eval(pool)
@@ -159,16 +107,25 @@ class KiVisExtensions {
         return true
     }
     
+    /**
+     * Evaluates the comparison where variables are replaced with their corresponding value in the pool.
+     * 
+     * @param cond The comparison
+     * @param pool The pool
+     */
     public def boolean eval(Comparison cond, DataPool pool) {
         if(cond != null) {
+            // Left side is always a variable reference of which must be resolved
             val leftValue = cond.left.getVariableValue(pool, true)
+            // Right side may be a constant value (in this case it's an EObject, e.g. IntValue)
+            // or another variable reference that must be resolved
             val right = cond.right
             var Object rightValue
             
-            if((right instanceof EObject) && !(right instanceof VariableReference)) {
-                rightValue = right.primitiveValue
-            } else if(right instanceof VariableReference) {
+            if(right instanceof VariableReference) {
                 rightValue = right.getVariableValue(pool, true)
+            } else if(right instanceof EObject) {
+                rightValue = right.primitiveValue
             }
             if( leftValue != null && rightValue != null) {
                 try {
@@ -192,29 +149,37 @@ class KiVisExtensions {
         return true
     }
     
+    /**
+     * Evaluates the expression where variables are replaced with their corresponding value in the pool.
+     * 
+     * @param cond The expression
+     * @param pool The pool
+     */
     public def boolean eval(AndExpression cond, DataPool pool) {
-        // Because we have all comparision combined by and,
-        // we can immediately return false, if any of them evaluates to false.
-        if(!cond.left.eval(pool)) {
-            return false
-        } else if(!cond.right.eval(pool)) {
-            return false
-        }
-        return true
+        return cond.left.eval(pool) && cond.right.eval(pool)
     }
     
-    
-    
+    /**
+     * Selects the (possibly linearly interpolated) value of the target side of the mapping for the given input value.
+     * When using this method, it is assumed that the input value matches the left side of the mapping already.
+     * 
+     * Example: Given a mapping "(1..10) -> (1..100)" and a value "5",
+     *          the resulting value is linearly interpolated, which is "50" in this case.
+     * 
+     * @param mapping The mapping
+     * @param value The value
+     */
     public def Object apply(Mapping mapping, Object value) {
         if(mapping.attributeDomain.value != null) {
+            // The right side is a constant, which means this value is returned no matter what the input value is.
             return mapping.attributeDomain.value.primitiveValue
         } else if(mapping.attributeDomain.range != null && mapping.variableDomain.range != null) {
+            // Interpolate the target value
             val doubleValue = value.doubleValue
             val fromLow = mapping.variableDomain.range.from.primitiveValue.doubleValue
             val fromHigh = mapping.variableDomain.range.to.primitiveValue.doubleValue
             val toLow = mapping.attributeDomain.range.from.primitiveValue.doubleValue
             val toHigh = mapping.attributeDomain.range.to.primitiveValue.doubleValue
-            // Vector calculation v = pos + percent*length
             val mappedValue = scale(doubleValue, fromLow, fromHigh, toLow, toHigh)
             // Try to use Integer instead Double if possible
             if(mappedValue == mappedValue.intValue)
@@ -224,33 +189,68 @@ class KiVisExtensions {
         return null
     }
     
+    /**
+     * Maps the given value from the source interval [fromLow, fromHigh] to the target interval [toLow, toHigh].
+     * The given value must be inside the source interval.
+     * 
+     * @param value The value
+     * @param fromLow Left side of the source interval
+     * @param fromHigh Right side of the source interval
+     * @param toLow Left side of the target interval
+     * @param toHigh Right side of the target interval
+     */
     public def double scale(double value, double fromLow, double fromHigh, double toLow, double toHigh) {
+        // Vector calculation v = pos + percent*length
         val double percent = Math.abs(value - fromLow) / Math.abs(fromHigh - fromLow)
         val mappedValue = (toLow + percent * Math.abs(toHigh-toLow))
         return mappedValue
     }
     
+    /**
+     * Checks whether the given value matches is part of the domain.
+     * 
+     * @param domain The domain
+     * @param value The value
+     */
     public def boolean matches(Domain domain, Object value) {
         if(domain.value != null) {
+            // The domain is a single value, thus for a match the given value must be equal to it.
             val domValue = domain.value.primitiveValue
             return domValue.equalsValue(value)
         } else if(domain.range != null) {
             try {
+                // The domain is a range, thus for a match it holds
+                // lowestIntervalValue <= value <= highestIntervalValue
                 val doubleValue = value.doubleValue
                 val low = domain.range.from.primitiveValue.doubleValue
                 val high = domain.range.to.primitiveValue.doubleValue
                 return (low <= doubleValue) && (doubleValue <= high)
             } catch(IllegalArgumentException e) {
+                // At least one of the values is not a proper number. Thus the range can't be matched.
                 // Just go to 'return false' at the end of the method.
             }
         }
         return false
     }
     
+    /**
+     * Returns the first attribute in the animation configuration with the given name.
+     * 
+     * @param animation The animation in which the attribute is searched
+     * @param name The name of the attribute
+     */
     public def AttributeMapping getAttribute(Animation animation, String name) {
         return animation.attributeMappings.findFirst[it.attribute.equals(name)]
     }
     
+    /**
+     * Performs the action in the data pool.
+     * An action is either an assignment of a variable (i.e. a variable in the pool is set to some value)
+     * or a simulation operation such as STEP or STOP.
+     * 
+     * @param action The action
+     * @param pool The pool 
+     */
     public def void perform(Action action, DataPool pool) {
         if(action.variable != null && action.value != null) {
             action.variable.performAssignment(action.value, pool)
@@ -259,6 +259,11 @@ class KiVisExtensions {
         }
     }
     
+    /**
+     * Performs the simulation operation
+     * 
+     * @param operation The operation
+     */
     public def void perform(SimulationOperation operation) {
         val simulation = SimulationManager.instance
         if(simulation != null && !simulation.isStopped) {
@@ -279,20 +284,26 @@ class KiVisExtensions {
         }
     }
     
+    /**
+     * Sets the value of the variable in the data pool that corresponds to the given variable reference.
+     * 
+     * @param variableReference The variableReference
+     * @param value The new value for the variable
+     * @param pool The data pool in which the variable should be set
+     */
     public def void performAssignment(VariableReference variableReference, EObject value, DataPool pool) {
         val primitive = value.primitiveValue
-        val modelName = variableReference.model?.name
-        val variableName = variableReference.name
-        val index = variableReference.indices
-        
-        val variable = pool.getVariable(modelName, variableName)
+        // Get variable in pool
+        val variable = getVariable(variableReference, pool)
         if(variable != null) {
             val currentValue = variable.value
+            // Set value of array element
             if(currentValue instanceof NDimensionalArray) {
                 if(variable.userValue == null) {
                     variable.userValue = currentValue.clone
                 }
                 val newValue = variable.userValue as NDimensionalArray
+                val index = variableReference.indices
                 val arrayElement = newValue.getElement(index)
                 arrayElement.setUserValue(primitive)
                 variable.userValue = newValue
@@ -302,6 +313,12 @@ class KiVisExtensions {
         }
     }
     
+    /**
+     * Checks whether to values are equal.
+     * This is needed in case of numbers, because the normal equals of Float and Double
+     * for example would return false for the same numeric value.
+     * 
+     */
     public def boolean equalsValue(Object v1, Object v2) {
         if(v1 == null && v2 == null) {
             return true

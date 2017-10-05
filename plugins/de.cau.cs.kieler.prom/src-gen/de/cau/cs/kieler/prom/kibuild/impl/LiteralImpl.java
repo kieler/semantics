@@ -2,18 +2,16 @@
  */
 package de.cau.cs.kieler.prom.kibuild.impl;
 
-import de.cau.cs.kieler.prom.kibuild.KibuildPackage;
-import de.cau.cs.kieler.prom.kibuild.Literal;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import de.cau.cs.kieler.prom.kibuild.KibuildPackage;
+import de.cau.cs.kieler.prom.kibuild.Literal;
 
 /**
  * <!-- begin-user-doc -->

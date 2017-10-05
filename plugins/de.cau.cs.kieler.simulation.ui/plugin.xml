@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   <extension-point id="simulationParticipant" name="Simulation Participant" schema="schema/simulationParticipant.exsd"/>
+   <extension
+         point="de.cau.cs.kieler.simulation.ui.simulationParticipant">
+         <simulationParticipant
+            class="de.cau.cs.kieler.simulation.ui.RegisterVariablesFinder" />
+   </extension>
    <extension
          point="org.eclipse.debug.ui.launchShortcuts">
       <shortcut
@@ -38,8 +44,12 @@
             commandId="de.cau.cs.kieler.simulation.ui.pause">
       </handler>
       <handler
-            class="de.cau.cs.kieler.simulation.ui.toolbar.StepSimulationBack"
+            class="de.cau.cs.kieler.simulation.ui.toolbar.StepSimulationHistoryBack"
             commandId="de.cau.cs.kieler.simulation.ui.back">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.simulation.ui.toolbar.StepSimulationHistoryForward"
+            commandId="de.cau.cs.kieler.simulation.ui.forward">
       </handler>
    </extension>
    <extension
@@ -147,11 +157,28 @@
             </command>
             <command
                   commandId="de.cau.cs.kieler.simulation.ui.back"
-                  icon="icons/stepBackIcon.png"
+                  icon="icons/stepHistoryBack.png"
                   id="de.cau.cs.kieler.simulation.ui.menus.back"
-                  label="Step Back"
+                  label="Step History Back"
                   style="push"
-                  tooltip="Step Back">
+                  tooltip="Step History Back">
+               <visibleWhen
+                     checkEnabled="false">
+                  <with
+                        variable="activeWorkbenchWindow.activePerspective">
+                     <equals
+                           value="de.cau.cs.kieler.simulation">
+                     </equals>
+                  </with>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="de.cau.cs.kieler.simulation.ui.forward"
+                  icon="icons/stepHistoryForward.png"
+                  id="de.cau.cs.kieler.simulation.ui.menus.forward"
+                  label="Step History Forward"
+                  style="push"
+                  tooltip="Step History Forward">
                <visibleWhen
                      checkEnabled="false">
                   <with
@@ -186,7 +213,7 @@
       <command
             categoryId="de.cau.cs.kieler.simulation.ui.category"
             id="de.cau.cs.kieler.simulation.ui.back"
-            name="Step Back">
+            name="Step History Back">
       </command>
       <category
             id="de.cau.cs.kieler.simulation.ui.category"
@@ -211,6 +238,11 @@
             categoryId="de.cau.cs.kieler.simulation.ui.category"
             id="de.cau.cs.kieler.simulation.ui.stop"
             name="Stop Simulation">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler.simulation.ui.category"
+            id="de.cau.cs.kieler.simulation.ui.forward"
+            name="Step History Forward">
       </command>
    </extension>
    <extension
@@ -900,5 +932,11 @@
                 value="true">
             </attribute>
         </markerResolutionGenerator>
+    </extension>
+    <extension
+          point="de.cau.cs.kieler.klighd.ui.view.controller">
+       <controller
+             class="de.cau.cs.kieler.simulation.ui.SimulateModelInDiagramView">
+       </controller>
     </extension>
 </plugin>

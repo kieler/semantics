@@ -50,8 +50,6 @@ import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Parameter;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.serializer.ISerializationContext;
-import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
-import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 
 @SuppressWarnings("all")
 public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequencer {
@@ -700,22 +698,10 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 	 *     Action returns Action
 	 *
 	 * Constraint:
-	 *     (operation=ActionOperation handler=ID id=ID)
+	 *     (operation=ID? handler=ID id=ID?)
 	 */
 	protected void sequence_Action(ISerializationContext context, de.cau.cs.kieler.simulation.kisim.Action semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KisimPackage.Literals.ACTION__OPERATION) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KisimPackage.Literals.ACTION__OPERATION));
-			if (transientValues.isValueTransient(semanticObject, KisimPackage.Literals.ACTION__HANDLER) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KisimPackage.Literals.ACTION__HANDLER));
-			if (transientValues.isValueTransient(semanticObject, KisimPackage.Literals.ACTION__ID) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KisimPackage.Literals.ACTION__ID));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getActionAccess().getOperationActionOperationEnumRuleCall_0_0(), semanticObject.getOperation());
-		feeder.accept(grammarAccess.getActionAccess().getHandlerIDTerminalRuleCall_1_0(), semanticObject.getHandler());
-		feeder.accept(grammarAccess.getActionAccess().getIdIDTerminalRuleCall_2_0(), semanticObject.getId());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

@@ -25,24 +25,56 @@ import org.eclipse.swt.widgets.Label
  */
 class LabelContribution extends ControlContribution {
     
+    /**
+     * The label
+     */
     var Label label
+    /**
+     * The text for the label
+     */
     var String text
+    /**
+     * The tooltip for the label
+     */
     var String toolTip
     
+    /**
+     * Constructor
+     * 
+     * @param id The id for the contribution
+     */
     new(String id) {
         super(id)
     }
     
+    /**
+     * Constructor
+     * 
+     * @param id The id for the contribution
+     * @param initialText The initial text for the label
+     */
     new(String id, String initialText) {
         super(id)
         this.text = initialText
     }
     
+    /**
+     * Constructor
+     * 
+     * @param id The id for the contribution
+     * @param initialText The initial text for the label
+     * @param toolTip The tooltip for the label
+     */
     new(String id, String initialText, String toolTip) {
         this(id, initialText)
         this.toolTip = toolTip
     }
 
+    /**
+     * Sets the text of the label
+     * 
+     * @param value The text
+     */
     public def void setText(String value) {
         text = value
         if(label != null && !label.isDisposed) {
@@ -52,6 +84,11 @@ class LabelContribution extends ControlContribution {
         }
     }
     
+    /**
+     * Sets the tooltip of the label
+     * 
+     * @param value The tooltip
+     */
     public def void setTooltip(String value) {
         toolTip = value
         if(label != null && !label.isDisposed) {
@@ -59,6 +96,9 @@ class LabelContribution extends ControlContribution {
         }
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override createControl(Composite parent) {
         label = new Label(parent, SWT.CENTER)
         label.text = text

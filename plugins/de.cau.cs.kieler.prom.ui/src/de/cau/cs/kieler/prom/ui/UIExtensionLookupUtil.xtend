@@ -14,13 +14,15 @@ package de.cau.cs.kieler.prom.ui
 
 import com.google.common.collect.Lists
 import de.cau.cs.kieler.prom.ExtensionLookupUtil
-import java.util.ArrayList
+import java.util.List
 import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.debug.ui.ILaunchShortcut
 import org.eclipse.ui.IWorkbenchWizard
-import java.util.List
 
 /**
+ * Auxilary class to search for installed ui extensions
+ * and instantiate classes using the fully qualified class name.
+ * 
  * @author aas
  *
  */

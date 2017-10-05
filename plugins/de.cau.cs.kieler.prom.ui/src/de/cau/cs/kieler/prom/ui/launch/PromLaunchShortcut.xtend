@@ -29,6 +29,11 @@ import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.ui.IEditorPart
 import org.eclipse.ui.ide.ResourceUtil
 
+/**
+ * Base implementation for launch shortcuts that create a launch configuration for its selection, which is then launched.
+ * This implementation searches for already existing suited launch configurations
+ * and only creates a new one if none is found.
+ */
 abstract class PromLaunchShortcut implements ILaunchShortcut {
     
     /**
@@ -38,7 +43,7 @@ abstract class PromLaunchShortcut implements ILaunchShortcut {
     /**
      * The mode in which the shortcut was used. This is either 'run' or 'debug'.
      */
-    protected String mode = ""
+    protected String mode = "run"
     /**
      * The file handle from which this launch shortcut has been startet.
      */
@@ -81,7 +86,18 @@ abstract class PromLaunchShortcut implements ILaunchShortcut {
         }
     }
     
-    abstract protected def void launch()
+    /**
+     * Searches for a suited launch configuration or creates one for the current selection.
+     * Launches the configuration afterwards. 
+     */
+    protected def void launch() {
+        // Find launch config for the files or initialize new one.
+        val configuration = findLaunchConfiguration(mode)
+        if (configuration != null && !files.isNullOrEmpty) {
+            // Launch 
+            DebugUITools.launch(configuration, mode)
+        }
+    }
     
     /**
      * Searches for a launch configuration in the project. Creates a new one if none found.
@@ -141,8 +157,6 @@ abstract class PromLaunchShortcut implements ILaunchShortcut {
     
     /**
      * Initializes a new launch config for the project.
-     * The main file and environment used are loaded from the project's properties
-     * if possible or from dialogs if not.
      * 
      * @param config The launch configuration to be initialized
      */

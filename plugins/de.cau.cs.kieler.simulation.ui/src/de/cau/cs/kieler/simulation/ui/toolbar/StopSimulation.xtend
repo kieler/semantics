@@ -17,11 +17,16 @@ import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
 
 /**
+ * Button to stop the simulation.
+ * 
  * @author aas
  *
  */
 class StopSimulation extends SimulationToolbarButton {
-    
+   
+    /**
+     * Stops the simulation.
+     */ 
     override execute(ExecutionEvent event) throws ExecutionException {
         restartSimulationIfStopped = false
         super.execute(event)

@@ -22,11 +22,17 @@ import org.eclipse.jface.viewers.IElementComparer
  *
  */
 class IdentityComparer implements IElementComparer {
-            
+    
+    /**
+     * {@inheritDoc}
+     */
     override equals(Object a, Object b) {
         return a === b
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override hashCode(Object element) {
         return element.hashCode
     }

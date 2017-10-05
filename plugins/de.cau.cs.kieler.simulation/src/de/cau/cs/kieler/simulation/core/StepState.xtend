@@ -16,8 +16,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * Combination of<br>
- *   1. a data pool<br>
- *   2. index of the step action to be executed next (like a program counter).
+ *   - a data pool<br>
+ *   - index of the step action to be executed next (like a program counter).
  * 
  * @author aas
  *
@@ -38,6 +38,9 @@ class StepState {
     
     /** 
      * Constructor
+     * 
+     * @param pool The pool
+     * @param actionIndex The index of this action
      */
     new(DataPool pool, int actionIndex) {
         this.pool = pool
