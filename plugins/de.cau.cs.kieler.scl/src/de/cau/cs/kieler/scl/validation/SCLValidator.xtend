@@ -6,6 +6,12 @@ package de.cau.cs.kieler.scl.validation
 import de.cau.cs.kieler.scl.Label
 import de.cau.cs.kieler.scl.SCLProgram
 import org.eclipse.xtext.validation.Check
+import de.cau.cs.kieler.scl.SequencePart
+import org.eclipse.emf.ecore.EObject
+import java.util.List
+import de.cau.cs.kieler.scl.SCLPackage
+import de.cau.cs.kieler.scl.Conditional
+import de.cau.cs.kieler.scl.ScopeStatement
 
 //import org.eclipse.xtext.validation.Check
 
@@ -18,6 +24,8 @@ class SCLValidator extends AbstractSCLValidator {
     
     public static val DUBLICATE_LABEL = "Duplicate label"
     public static val LEAGACY_CONDITIONAL = "This conditional uses legacy syntax. Please use if {...} else {...} instead."
+    public static val SUPERFLUOS_SEMICOLON = "Superfluous semicolon."
+    public static val MISSING_SEMICOLON = "Missing semicolon."
 
      /*
      * Checks if labels are unique
@@ -30,6 +38,36 @@ class SCLValidator extends AbstractSCLValidator {
                     labels.forEach[error(DUBLICATE_LABEL, it, null, -1)]
                 }
             ]
+        }
+    }
+    
+     /*
+     * Checks semicolons are set correctly
+     */
+    @Check
+    def checkSemicolons(SequencePart part) {
+        if (part.metaStatement) {
+            if (part.semicolon) {
+                info(SUPERFLUOS_SEMICOLON, part, null, -1)
+            }
+        } else if (!part.semicolon && part.eContainer !== null) {
+            val container = part.eContainer.eGet(part.eContainmentFeature)
+            if (container instanceof List<?>) {
+                val idx = container.indexOf(part)
+                if (idx >= 0 && idx < container.size -1) {
+                    error(MISSING_SEMICOLON, part, null, -1)
+                }
+            }
+        }
+    }
+    
+    private def boolean isMetaStatement(EObject obj) {
+        switch(obj) {
+            Conditional,
+            Label,
+            ScopeStatement,
+            Thread: return true
+            default: return false
         }
     }
 }

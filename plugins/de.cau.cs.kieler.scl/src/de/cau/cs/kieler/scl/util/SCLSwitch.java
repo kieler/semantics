@@ -27,6 +27,7 @@ import de.cau.cs.kieler.scl.SCLPackage;
 import de.cau.cs.kieler.scl.SCLProgram;
 import de.cau.cs.kieler.scl.Scope;
 import de.cau.cs.kieler.scl.ScopeStatement;
+import de.cau.cs.kieler.scl.SequencePart;
 import de.cau.cs.kieler.scl.Statement;
 import de.cau.cs.kieler.scl.StatementContainer;
 
@@ -114,6 +115,7 @@ public class SCLSwitch<T> extends Switch<T> {
                 Statement statement = (Statement)theEObject;
                 T result = caseStatement(statement);
                 if (result == null) result = caseAnnotatable(statement);
+                if (result == null) result = caseSequencePart(statement);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -138,6 +140,7 @@ public class SCLSwitch<T> extends Switch<T> {
                 T result = casePause(pause);
                 if (result == null) result = caseStatement(pause);
                 if (result == null) result = caseAnnotatable(pause);
+                if (result == null) result = caseSequencePart(pause);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -147,6 +150,7 @@ public class SCLSwitch<T> extends Switch<T> {
                 if (result == null) result = caseStatement(label);
                 if (result == null) result = caseNamedObject(label);
                 if (result == null) result = caseAnnotatable(label);
+                if (result == null) result = caseSequencePart(label);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -155,6 +159,7 @@ public class SCLSwitch<T> extends Switch<T> {
                 T result = caseGoto(goto_);
                 if (result == null) result = caseStatement(goto_);
                 if (result == null) result = caseAnnotatable(goto_);
+                if (result == null) result = caseSequencePart(goto_);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -164,6 +169,7 @@ public class SCLSwitch<T> extends Switch<T> {
                 if (result == null) result = caseKEffects_Assignment(assignment);
                 if (result == null) result = caseStatement(assignment);
                 if (result == null) result = caseEffect(assignment);
+                if (result == null) result = caseSequencePart(assignment);
                 if (result == null) result = caseAnnotatable(assignment);
                 if (result == null) result = caseSchedulable(assignment);
                 if (result == null) result = defaultCase(theEObject);
@@ -176,6 +182,7 @@ public class SCLSwitch<T> extends Switch<T> {
                 if (result == null) result = caseStatement(conditional);
                 if (result == null) result = caseDeclarationScope(conditional);
                 if (result == null) result = caseStatementContainer(conditional);
+                if (result == null) result = caseSequencePart(conditional);
                 if (result == null) result = caseAnnotatable(conditional);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -185,6 +192,7 @@ public class SCLSwitch<T> extends Switch<T> {
                 T result = caseParallel(parallel);
                 if (result == null) result = caseStatement(parallel);
                 if (result == null) result = caseAnnotatable(parallel);
+                if (result == null) result = caseSequencePart(parallel);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -195,6 +203,7 @@ public class SCLSwitch<T> extends Switch<T> {
                 if (result == null) result = caseStatement(moduleCall);
                 if (result == null) result = caseExpression(moduleCall);
                 if (result == null) result = caseAnnotatable(moduleCall);
+                if (result == null) result = caseSequencePart(moduleCall);
                 if (result == null) result = caseSchedulable(moduleCall);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -214,6 +223,7 @@ public class SCLSwitch<T> extends Switch<T> {
                 T result = caseScopeStatement(scopeStatement);
                 if (result == null) result = caseStatement(scopeStatement);
                 if (result == null) result = caseScope(scopeStatement);
+                if (result == null) result = caseSequencePart(scopeStatement);
                 if (result == null) result = caseDeclarationScope(scopeStatement);
                 if (result == null) result = caseStatementContainer(scopeStatement);
                 if (result == null) result = caseAnnotatable(scopeStatement);
@@ -224,9 +234,16 @@ public class SCLSwitch<T> extends Switch<T> {
                 ElseScope elseScope = (ElseScope)theEObject;
                 T result = caseElseScope(elseScope);
                 if (result == null) result = caseScope(elseScope);
+                if (result == null) result = caseSequencePart(elseScope);
                 if (result == null) result = caseDeclarationScope(elseScope);
                 if (result == null) result = caseStatementContainer(elseScope);
                 if (result == null) result = caseAnnotatable(elseScope);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCLPackage.SEQUENCE_PART: {
+                SequencePart sequencePart = (SequencePart)theEObject;
+                T result = caseSequencePart(sequencePart);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -456,6 +473,21 @@ public class SCLSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseElseScope(ElseScope object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Sequence Part</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Sequence Part</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseSequencePart(SequencePart object) {
         return null;
     }
 
