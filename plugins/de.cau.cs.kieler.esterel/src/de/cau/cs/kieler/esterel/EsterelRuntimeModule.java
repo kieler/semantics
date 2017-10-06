@@ -8,6 +8,7 @@ import org.eclipse.xtext.linking.lazy.LazyLinkingResource;
 import org.eclipse.xtext.resource.XtextResource;
 
 import de.cau.cs.kieler.esterel.formatting.EsterelValueConverter;
+import de.cau.cs.kieler.esterel.serializer.EsterelSerializer;
 
 /**
  * Use this class to register components to be used within the IDE.
@@ -33,6 +34,10 @@ public class EsterelRuntimeModule extends de.cau.cs.kieler.esterel.AbstractEster
     
     public Class<? extends XtextResource> bindXtextResource() {
         return EsterelResource.class;
+    }
+    
+    public Class<? extends org.eclipse.xtext.serializer.ISerializer> bindISerializer() {
+        return EsterelSerializer.class;
     }
     
 }

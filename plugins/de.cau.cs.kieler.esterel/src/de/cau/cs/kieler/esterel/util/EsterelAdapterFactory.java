@@ -19,6 +19,7 @@ import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 
 import de.cau.cs.kieler.scl.Module;
 import de.cau.cs.kieler.scl.Scope;
+import de.cau.cs.kieler.scl.SequencePart;
 import de.cau.cs.kieler.scl.Statement;
 import de.cau.cs.kieler.scl.StatementContainer;
 
@@ -412,6 +413,10 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseValuedObject(ValuedObject object) {
                 return createValuedObjectAdapter();
+            }
+            @Override
+            public Adapter caseSequencePart(SequencePart object) {
+                return createSequencePartAdapter();
             }
             @Override
             public Adapter caseStatement(Statement object) {
@@ -1652,6 +1657,20 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createValuedObjectAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.SequencePart <em>Sequence Part</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scl.SequencePart
+     * @generated
+     */
+    public Adapter createSequencePartAdapter() {
         return null;
     }
 

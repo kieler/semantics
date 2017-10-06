@@ -1,0 +1,40 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://rtsys.informatik.uni-kiel.de/kieler
+ * 
+ * Copyright 2017 by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ */
+package de.cau.cs.kieler.esterel.scest.serializer
+
+import com.google.inject.Inject
+import de.cau.cs.kieler.esterel.EsterelProgram
+import java.io.IOException
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.util.EcoreUtil
+import org.eclipse.xtext.resource.SaveOptions
+import org.eclipse.xtext.serializer.impl.Serializer
+
+/**
+ * @author als
+ * @kieler.design proposed
+ * @kieler.rating proposed yellow
+ */
+class SCEstSerializer extends Serializer {
+    
+    @Inject extension SCEstSytaxHelper
+    
+    override serialize(EObject obj, Appendable appendable, SaveOptions options) throws IOException {
+        val copy = EcoreUtil.copy(obj)
+        if (copy instanceof EsterelProgram) {
+            copy.convertSerializerFriendly
+        }
+        super.serialize(copy, appendable, options);
+    }
+    
+}
