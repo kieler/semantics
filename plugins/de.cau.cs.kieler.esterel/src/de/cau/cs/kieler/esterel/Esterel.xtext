@@ -39,9 +39,7 @@ EsterelModule returns scl::Module:
     (annotations += Annotation)*
     "module" name=ID ":"
     (declarations+=EsterelDeclaration)*
-    (   statements+=EsterelParallel
-    |   (statements+=InstructionStatement ";" | statements+=MetaStatement)* statements+=InstructionStatement?
-    )?
+    (statements+=EsterelParallel)?
     ("end" "module" | ".");
 
 
@@ -159,27 +157,23 @@ ReturnDeclaration:
     ";";
     
 // example 1:   A : combine boolean with or
-// example 2:   A (combine boolean with or)
+// example 2:   A (combine boolean with or) // NO longer supported
 // example 3:   A := 0 : combine integer with '+'
 Signal:
-    name=ID (   
-          ":" 
-          (       type=EsterelValueType
-                | idType=ID
-                | ("combine" (type=EsterelValueType | idType=ID) "with" (combineFunction=[Function|ID] | combineOperator=EsterelCombineOperator)) 
-          )
-        | ("(" 
-            (     type=EsterelValueType
-                | idType=ID
-                | ("combine" (type=EsterelValueType | idType=ID) "with" (combineFunction=[Function|ID] | combineOperator=EsterelCombineOperator))
-            )
-           ")")
-        | (":=" initialValue=Expression ":" 
-                (     type=EsterelValueType
-                    | idType=ID
-                    | ("combine" (type=EsterelValueType | idType=ID) "with" (combineFunction=[Function|ID] | combineOperator=EsterelCombineOperator))
-                )
-          ) 
+    name=ID
+    (  
+        ":=" initialValue=Expression
+        ":" 
+        (     type=EsterelValueType
+            | idType=ID
+            | ("combine" (type=EsterelValueType | idType=ID) "with" (combineFunction=[Function|ID] | combineOperator=EsterelCombineOperator))
+        )
+    |
+        ":" 
+        (       type=EsterelValueType
+              | idType=ID
+              | ("combine" (type=EsterelValueType | idType=ID) "with" (combineFunction=[Function|ID] | combineOperator=EsterelCombineOperator)) 
+        )
     )?;
 
 // = 7.3.7 Sensor Declaration
@@ -217,19 +211,30 @@ RelationIncompatibility:
  * ###################################################
  */
 
-// A label is not allowed in Esterel
-MetaStatement returns scl::Statement:
-    Nothing ";"
-;
-
-//Statement returns scl::Statement:
-//    EsterelParallel | InstructionStatement
-//;
-
 InstructionStatement returns scl::Statement:
-    Abort | Assignment | Await | Block | ProcedureCall | Emit | EveryDo | //LegacyDo 
-    Exit | Exec | Halt | IfTest | LocalSignalDeclaration | Loop | Nothing | Pause | Present | 
-    Repeat | Run | Suspend | Sustain | Trap | LocalVariableDeclaration
+    Nothing |
+    EsterelPause |
+    Halt |
+    Emit |
+    Exit |
+    Present | 
+    Await |
+    EsterelAssignment |
+    Abort |
+    Loop |
+    EveryDo |
+    Sustain |
+    Trap |
+    Suspend |
+    LocalSignalDeclaration |
+    LocalVariableDeclaration |
+    IfTest |
+    Exec |
+    Run |
+    ProcedureCall |
+    Repeat |
+    Block |
+    LegacyDo
 ;
         
 // = Parallel: at least two threads
@@ -240,7 +245,7 @@ InstructionStatement returns scl::Statement:
 
 // This rule massively improves parsing
 EsterelParallel returns scl::Statement:
-    EsterelThread ({EsterelParallel.statements+=current} ("||" statements+=EsterelThread)+)?;
+    EsterelThread ({EsterelParallel.statements+=current} (=>"||" statements+=EsterelThread)+)?;
     
 // = Thread
 // One AtomicStatement or multiple AtomicStatements
@@ -253,28 +258,39 @@ EsterelParallel returns scl::Statement:
 
 // This rule massively improves parsing   
 EsterelThread returns scl::Statement:
-    InstructionStatement ({EsterelThread.statements+=current} (";" statements+=InstructionStatement)+)? ";"?;
+    InstructionStatement ({EsterelThread.statements+=current} (=>";" statements+=InstructionStatement)+)? ";"?;
     
 // = Nothing
 // -------------------------------------
 Nothing:
     {Nothing} 
     (annotations += Annotation)* 
-    "nothing";
+    "nothing"
+;
+
+// = Pause
+// -------------------------------------
+EsterelPause returns scl::Pause:
+    {scl::Pause}
+    (annotations += Annotation)* 
+    "pause"
+;
     
 // = Halt
 // -------------------------------------
 Halt:
     {Halt} 
     (annotations += Annotation)* 
-    "halt";
+    "halt"
+;
 
 // = Block
 // -------------------------------------    
 Block:
     {Block}
     (annotations += Annotation)*
-    "[" (statements+=EsterelParallel | ( (statements+=InstructionStatement ";" | statements+=MetaStatement)* statements+=InstructionStatement? )) "]";
+    "[" (statements+=EsterelParallel) "]"
+;
 
 // = 7.5.1 Signal Emission
 // -------------------------------------
@@ -282,19 +298,26 @@ Emit:
     (annotations += Annotation)*
     "emit" 
     signal=[Signal|ID]       
-    ("("expression=Expression")")?;
+    ("("expression=Expression")")?
+;
     
 // emit a signal indefinitely
 Sustain:
     (annotations += Annotation)*
     "sustain" 
     signal=[Signal|ID]
-    ("(" expression=Expression ")")?;
+    ("(" expression=Expression ")")?
+;
 
 // = 7.5.2 Assignment and Procedure Call
 // -------------------------------------
-Assignment returns scl::Assignment:
-    valuedObject=[Variable|ID] ":=" expression=Expression;
+EsterelAssignment returns scl::Assignment:
+    reference=VariableReference ":=" expression=Expression
+;
+    
+VariableReference returns kexpressions::ValuedObjectReference:
+    valuedObject=[Variable|ID]
+;
     
 ProcedureCall:
     (annotations += Annotation)*
@@ -305,7 +328,8 @@ ProcedureCall:
     ")" | '()')
     ("(" 
         ( valueArguments+=Expression ("," valueArguments+=Expression)* )? 
-    ")" | '()');
+    ")" | '()')
+;
 
 // = 7.5.3 The present Signal Test
 // -------------------------------------
@@ -319,7 +343,7 @@ Present:
             (
                 (annotations += Annotation)*
                 "then" 
-                (statements+=EsterelParallel | ( (statements+=InstructionStatement ";" | statements+=MetaStatement)* statements+=InstructionStatement? ))
+                (statements+=EsterelParallel)
             )?
         ) 
         | 
@@ -327,9 +351,10 @@ Present:
     ) 
     (
         "else" 
-        (elseStatements+=EsterelParallel | ( (elseStatements+=InstructionStatement ";" | elseStatements+=MetaStatement)* elseStatements+=InstructionStatement? ))
+        (elseStatements+=EsterelParallel)
     )? 
-    "end" "present"?;
+    "end" "present"?
+;
 
 PresentCase:
     (annotations += Annotation)*
@@ -338,7 +363,7 @@ PresentCase:
         | "[" expression=SignalExpression "]"
     )
     (   "do" 
-        (statements+=EsterelParallel | ( (statements+=InstructionStatement ";" | statements+=MetaStatement)* statements+=InstructionStatement? ))
+        (statements+=EsterelParallel)
     )?;
 
 // = 7.5.4 The if Data Test
@@ -350,14 +375,15 @@ IfTest:
     (
         (annotations+=Annotation)*
         "then" 
-        (statements+=EsterelParallel | ( (statements+=InstructionStatement ";" | statements+=MetaStatement)* statements+=InstructionStatement? ))
+        (statements+=EsterelParallel)
     )? 
     (elseif+=ElsIf)* 
     (
             "else" 
-            (elseStatements+=EsterelParallel | ( (elseStatements+=InstructionStatement ";" | elseStatements+=MetaStatement)* elseStatements+=InstructionStatement? ))
+            (elseStatements+=EsterelParallel)
     )? 
-    "end" "if"?;
+    "end" "if"?
+;
 
 ElsIf:
     (annotations += Annotation)*
@@ -365,7 +391,7 @@ ElsIf:
     expression=Expression 
     (
         "then" 
-        (statements+=EsterelParallel | ( (statements+=InstructionStatement ";" | statements+=MetaStatement)* statements+=InstructionStatement? ))
+        (statements+=EsterelParallel)
     )?;
 
 // = 7.5.5 Looping & 7.5.9 Temporal Loops
@@ -374,8 +400,9 @@ Loop:
     {Loop}
     (annotations += Annotation)*
     "loop" 
-    (statements+=EsterelParallel | ( (statements+=InstructionStatement ";" | statements+=MetaStatement)* statements+=InstructionStatement? )) 
-    ("end" "loop"? | "each" delay=DelayExpression);
+    (statements+=EsterelParallel) 
+    ("end" "loop"? | "each" delay=DelayExpression)
+;
 
 // = 7.5.6 Repeat Looping
 // -------------------------------------
@@ -385,28 +412,31 @@ Repeat:
     "repeat" 
     expression=Expression 
     "times" 
-    (statements+=EsterelParallel | ( (statements+=InstructionStatement ";" | statements+=MetaStatement)* statements+=InstructionStatement? )) 
-    "end" "repeat"?;
+    (statements+=EsterelParallel) 
+    "end" "repeat"?
+;
 
 // = 7.5.7 The abort Statements
 // -------------------------------------
 Abort:
     (annotations += Annotation)*
     ((weak?="weak")? "abort") 
-    (statements+=EsterelParallel | ( (statements+=InstructionStatement ";" | statements+=MetaStatement)* statements+=InstructionStatement? )) 
+    (statements+=EsterelParallel) 
     "when" 
     (
         delay=DelayExpression
-        "do"
-        (doStatements+=EsterelParallel | ( (doStatements+=InstructionStatement ";" | doStatements+=MetaStatement)* doStatements+=InstructionStatement? ))
-        "end" ("weak" "abort" | "abort")?
-    |
-        delay=DelayExpression 
-        ("end" | "end" "weak"? "abort")?   
+        (
+            "do"
+            (doStatements+=EsterelParallel)
+            "end" "weak"? "abort"?
+        |
+            "end" "weak"? "abort"?
+        )? 
     |
         cases+=Case+
-        "end" ("weak" "abort" | "abort")?
-    );
+        "end" "weak"? "abort"?
+    )
+;
 
 Case:
     (annotations += Annotation)*
@@ -414,7 +444,7 @@ Case:
     delay=DelayExpression 
     ( 
         "do" 
-        (statements+=EsterelParallel | ( (statements+=InstructionStatement ";" | statements+=MetaStatement)* statements+=InstructionStatement? )) 
+        (statements+=EsterelParallel) 
     )?;
 
 // = 7.5.8 The await Statement
@@ -426,13 +456,14 @@ Await:
         delay=DelayExpression
         (   
             "do" 
-            (statements+=EsterelParallel | ( (statements+=InstructionStatement ";" | statements+=MetaStatement)* statements+=InstructionStatement? ))
+            (statements+=EsterelParallel)
             "end" "await"?
         )?
     |
         cases+=Case+
         "end" "await"?
-    );
+    )
+;
 
 // = 7.5.9 Temporal Loops
 // -------------------------------------
@@ -444,17 +475,19 @@ EveryDo:
     "every" 
     delay=DelayExpression 
     "do" 
-    (statements+=EsterelParallel | ( (statements+=InstructionStatement ";" | statements+=MetaStatement)* statements+=InstructionStatement? )) 
-    "end" "every"?;
+    (statements+=EsterelParallel)
+    "end" "every"?
+;
 
 // = 7.5.10 The suspend Statement
 // -------------------------------------
 Suspend:
     (annotations += Annotation)*
     ((weak?="weak")? "suspend") 
-    (statements+=EsterelParallel | ( (statements+=InstructionStatement ";" | statements+=MetaStatement)* statements+=InstructionStatement? )) 
+    (statements+=EsterelParallel) 
     "when" 
-    delay=DelayExpression; 
+    delay=DelayExpression
+;
     
 // = 7.5.11 Traps
 // -------------------------------------
@@ -463,45 +496,44 @@ Trap:
     "trap" 
     trapSignals+=TrapSignal ("," trapSignals+=TrapSignal)* 
     "in" 
-    (statements+=EsterelParallel | ( (statements+=InstructionStatement ";" | statements+=MetaStatement)* statements+=InstructionStatement? ))
+    (statements+=EsterelParallel)
     (trapHandler+=TrapHandler)* 
-    "end" "trap"?;
+    "end" "trap"?
+;
 
 TrapSignal returns Signal:
     {TrapSignal}
-    name=ID 
-    ( 
-          ":"
-          (    type=EsterelValueType
+    name=ID
+    (
+        ":=" initialValue=Expression
+        ":" 
+          (       type=EsterelValueType
                 | idType=ID
                 | ("combine" (type=EsterelValueType | idType=ID) "with" (combineFunction=[Function|ID] | combineOperator=EsterelCombineOperator)) 
           )
-        | ("("
-            (     type=EsterelValueType
+    |
+        ":" 
+          (       type=EsterelValueType
                 | idType=ID
-                | ("combine" (type=EsterelValueType | idType=ID) "with" (combineFunction=[Function|ID] | combineOperator=EsterelCombineOperator))
-            )
-           ")")
-        | (":=" initialValue=Expression ":" 
-            (     type=EsterelValueType
-                | idType=ID
-                | ("combine" (type=EsterelValueType | idType=ID) "with" (combineFunction=[Function|ID] | combineOperator=EsterelCombineOperator))
-            )
-          ) 
-     )?;
+                | ("combine" (type=EsterelValueType | idType=ID) "with" (combineFunction=[Function|ID] | combineOperator=EsterelCombineOperator)) 
+          )
+    )?
+;
 
 TrapHandler:
     (annotations += Annotation)*
     "handle" 
     trapExpr=TrapExpr 
     "do" 
-    (statements+=EsterelParallel | ( (statements+=InstructionStatement ";" | statements+=MetaStatement)* statements+=InstructionStatement? ));
+    (statements+=EsterelParallel)
+;
 
 Exit:
     (annotations += Annotation)*
     "exit" 
     trap=[TrapSignal|ID] 
-    ("(" expression=Expression ")")?;
+    ("(" expression=Expression ")")?
+;
 
 // = 7.5.12 The exec Task Execution Statement
 // -------------------------------------
@@ -513,11 +545,12 @@ Exec:
             ("(" (valueParameters+=Expression ("," valueParameters+=Expression)*)? ")" | '()') 
             "return" 
             returnSignal=[Signal] 
-            ("do" (statements+=EsterelParallel | ( (statements+=InstructionStatement ";" | statements+=MetaStatement)* statements+=InstructionStatement? )))? 
+            ("do" (statements+=EsterelParallel))? 
         | 
             execCaseList+=ExecCase+ 
         ) 
-    "end" "exec"?;
+    "end" "exec"?
+;
 
 ExecCase:
     (annotations += Annotation)*
@@ -526,15 +559,16 @@ ExecCase:
     ("(" (valueParameters+=Expression ("," valueParameters+=Expression)*)? ")"  | '()')
     "return" 
     returnSignal=[Signal] 
-    ("do" (statements+=EsterelParallel | ( (statements+=InstructionStatement ";" | statements+=MetaStatement)* statements+=InstructionStatement? )))?;
+    ("do" (statements+=EsterelParallel))?;
 
 // = 7.5.13 Local Signal Declaration    
 // -------------------------------------
 LocalSignalDeclaration:
     (annotations += Annotation)*
     "signal" valuedObjects+=Signal ("," valuedObjects+=Signal)* 
-    "in" (statements+=EsterelParallel | ( (statements+=InstructionStatement ";" | statements+=MetaStatement)* statements+=InstructionStatement? )) 
-    "end" "signal"?;
+    "in" (statements+=EsterelParallel)
+    "end" "signal"?
+;
 
 // = 7.5.14 Local Variable Declaration
 // ------------------------------------- 
@@ -543,8 +577,9 @@ LocalVariableDeclaration:
     "var" 
     (variableDeclarations+=EsterelVariableDeclaration) ("," variableDeclarations+=EsterelVariableDeclaration)* 
     "in" 
-    (statements+=EsterelParallel | ( (statements+=InstructionStatement ";" | statements+=MetaStatement)* statements+=InstructionStatement? )) 
-    "end" "var"?;
+    (statements+=EsterelParallel)
+    "end" "var"?
+;
     
 EsterelVariableDeclaration:
     (variables+=Variable) ("," variables+=Variable)* ":" type=TypeIdentifier;
@@ -566,7 +601,8 @@ Run:
             ("[" renamings+=Renamings (";" renamings+=Renamings)* "]")?
             
          )
-    ); //deprecated
+    )
+;
 
 ModuleRenaming:
        module=[scl::Module|ID] 
@@ -612,18 +648,16 @@ BuildInFunction:
 LegacyDo returns Do:
     (annotations += Annotation)*
     "do" 
-    (statements+=EsterelParallel | ( (statements+=InstructionStatement ";" | statements+=MetaStatement)* statements+=InstructionStatement? )) 
+    (statements+=EsterelParallel)
     ( 
-        (annotations += Annotation)* 
         "upto" 
         delay=DelayExpression
-        | 
-        (watchingAnnotations += Annotation)* 
+    | 
         "watching" 
         watching=DelayExpression 
         ( 
             "timeout" 
-            ( (watchingStatements+=Statement ";" | statements+=MetaStatement)* watchingStatements+=Statement? ) 
+            (watchingStatements+=InstructionStatement)+ 
             "end" "timeout"?  
         )?
     );

@@ -32,6 +32,7 @@ import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import java.util.LinkedHashSet
 import java.util.List
 import java.util.Set
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * @author ssm
@@ -40,6 +41,7 @@ import java.util.Set
  */
 class SimpleGuardScheduler extends InplaceProcessor<SCGraphs> {
         
+    @Inject extension KEffectsExtensions
     @Inject extension SCGDependencyExtensions
     @Inject extension SCGCoreExtensions
     

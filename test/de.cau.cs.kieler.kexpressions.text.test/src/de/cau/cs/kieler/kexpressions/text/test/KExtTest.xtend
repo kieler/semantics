@@ -178,8 +178,8 @@ public class KExtTest {
 				if (effect.expression instanceof ValuedObjectReference && (effect.expression as ValuedObjectReference).valuedObject.name.equals(valuedObjectName)) {
 					VOs += (effect.expression as ValuedObjectReference).valuedObject 
 				}
-				if (effect.valuedObject.name.equals(valuedObjectName)) {
-					VOs += effect.valuedObject
+				if (effect.reference.valuedObject.name.equals(valuedObjectName)) {
+					VOs += effect.reference.valuedObject
 				}
 			} else if (effect instanceof Emission) {
 				VOs += effect.newValue.eAllContents.filter(ValuedObjectReference)
@@ -187,8 +187,8 @@ public class KExtTest {
 				if (effect.newValue instanceof ValuedObjectReference && (effect.newValue as ValuedObjectReference).valuedObject.name.equals(valuedObjectName)) {
 					VOs += (effect.newValue as ValuedObjectReference).valuedObject 
 				}				
-				if (effect.valuedObject.name.equals(valuedObjectName)) {
-					VOs += effect.valuedObject
+				if (effect.reference.valuedObject.name.equals(valuedObjectName)) {
+					VOs += effect.reference.valuedObject
 				}
 			}
 		} else {

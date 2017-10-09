@@ -60,6 +60,7 @@ import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
 
 import static extension com.google.common.collect.Sets.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * The SSA transformation for SCGs
@@ -99,6 +100,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
     extension AnnotationsFactory = AnnotationsFactory.eINSTANCE
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
+    @Inject extension KEffectsExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension SSATransformationExtensions
     @Inject extension SSACoreExtensions
@@ -215,7 +217,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
             val sb = scg.schedulingBlocks.findFirst[it.nodes.contains(n)]
             for (d: scg.variableDeclarations.filter[type == ValueType.PURE && !input && !hasAnnotation(SSATransformationExtensions.ANNOTATION_IGNORE_DECLARATION)]) {//FIXME ignored input
                 for (vo : d.valuedObjects) {
-                    scg.nodes += createAssignment => [
+                    scg.nodes += ScgFactory.eINSTANCE.createAssignment => [
                         annotations += createStringAnnotation(WeakUnemitSSATransformation.IMPLICIT_ANNOTAION, WeakUnemitSSATransformation.IMPLICIT_ANNOTAION)
                         valuedObject = vo
                         expression = if (d.input) {vo.reference} else {createBoolValue(false)}
@@ -411,7 +413,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
                 bbVersion.get(it)
             ]
             for (in : node.incoming.immutableCopy) {
-                scg.nodes += createAssignment => [
+                scg.nodes += ScgFactory.eINSTANCE.createAssignment => [
                     val prev = (in.eContainer as Node)
                     var attachPoint = prev
                     var cf = in

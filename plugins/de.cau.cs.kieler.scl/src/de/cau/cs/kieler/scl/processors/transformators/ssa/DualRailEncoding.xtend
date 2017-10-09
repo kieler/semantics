@@ -37,6 +37,7 @@ import de.cau.cs.kieler.scl.Statement
 import java.util.Iterator
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * BROKEN!
@@ -72,6 +73,8 @@ class DualRailEncoding extends InplaceProcessor<SCLProgram> {
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
+    @Inject extension KEffectsExtensions
+    static val sCLFactory = SCLFactory.eINSTANCE
 
     // -------------------------------------------------------------------------
     // -- Transformation 
@@ -131,7 +134,7 @@ class DualRailEncoding extends InplaceProcessor<SCLProgram> {
                         statements += createConditional => [
                             expression = asm.expression.valExpression
                             // then
-                            it.statements += createAssignment => [
+                            it.statements += sCLFactory.createAssignment => [
                                 valuedObject = asm.valuedObject
                                 expression = createBoolValue(true)
                             ]
@@ -142,7 +145,7 @@ class DualRailEncoding extends InplaceProcessor<SCLProgram> {
                         statements += createConditional => [
                             expression = asm.expression.notvalExpression
                             // then
-                            it.statements += createAssignment => [
+                            it.statements += sCLFactory.createAssignment => [
                                 valuedObject = duals.get(asm.valuedObject)
                                 expression = createBoolValue(true)
                             ]
@@ -154,7 +157,7 @@ class DualRailEncoding extends InplaceProcessor<SCLProgram> {
                     instr.replace(createConditional => [
                         expression = asm.expression.errorExpression
                         // then
-                        it.statements += createAssignment => [
+                        it.statements += sCLFactory.createAssignment => [
                             valuedObject = error
                             expression = createBoolValue(true)
                         ]

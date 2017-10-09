@@ -35,6 +35,7 @@ import de.cau.cs.kieler.scg.transformations.SCGTransformations
 import java.util.LinkedHashSet
 import java.util.Set
 import java.util.logging.Level
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -85,11 +86,9 @@ class SimpleGuardScheduler extends InplaceProcessor<SCGraphs> implements Traceab
     // -- Injections 
     // -------------------------------------------------------------------------
     
-    @Inject
-    extension SCGDependencyExtensions
-
-    @Inject
-    extension SCGCoreExtensions
+    @Inject extension SCGDependencyExtensions
+    @Inject extension SCGCoreExtensions
+    @Inject extension KEffectsExtensions
 
     // -------------------------------------------------------------------------
     // -- Scheduler 

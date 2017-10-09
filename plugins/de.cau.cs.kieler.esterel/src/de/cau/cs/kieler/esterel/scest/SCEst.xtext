@@ -21,44 +21,36 @@ EsterelModule returns scl::Module:
     (annotations += Annotation)*
     "module" name=ID ":"
     (declarations+=VariableDeclaration | declarations+=EsterelDeclaration)*
-    (
-        ( statements+=EsterelParallel )
-    |   
-        (statements+=InstructionStatement ";" | statements+=MetaStatement)*
-        statements+=Statement?
-    )
-    ("end" "module" | ".");
+    (statements+=EsterelParallel)?
+    ("end" "module" | ".")
+;
 
 /* ###################################################
  * ###               7.5 Statements                ###
  * ###################################################
  */
 
-MetaOrInstructionStatement returns scl::Statement:
-    MetaStatement | InstructionStatement
-;
-
-// Allow scl labels
-MetaStatement returns scl::Statement:
-    SCL::MetaStatement
+Statement returns scl::Statement:
+    EsterelParallel
 ;
  
 InstructionStatement returns scl::Statement:
 	super
-	| UnEmit | Set | Assignment | Goto | Parallel | ModuleCall
+	// + SCEst
+	| UnEmit | Set 
+;
+
+SCLStatement returns scl::Statement:
+    Assignment | Label | Conditional | LegacyConditional | Goto | Parallel | ModuleCall | ScopeStatement
 ;
 
 EsterelThread returns scl::Statement:
-    InstructionStatement ({EsterelThread.statements+=current} (";" (statements+=InstructionStatement ";" | statements+=MetaStatement)* statements+=InstructionStatement?))?
+    (
+        InstructionStatement ({EsterelThread.statements+=current} (=>";" statements+=EsterelThread))?
     |
-    MetaStatement ({EsterelThread.statements+=current} (statements+=InstructionStatement ";" | statements+=MetaStatement)* statements+=InstructionStatement?)?;
-    
-
-// ==> 7.5.2 Assignment
-// -------------------------------------
-Assignment returns scl::Assignment:
-    SCL::Assignment | // SCL is allowed again
-    valuedObject=[Variable|ID] ":=" expression=Expression;
+        SCLStatement ({EsterelThread.statements+=current} (statements+=EsterelThread))?
+    )
+;
       
 /* ###################################################
  * ###                   SCEst                     ###
@@ -70,7 +62,8 @@ Assignment returns scl::Assignment:
 UnEmit:
     (annotations += Annotation)*
     "unemit" 
-    signal=[Signal|ID];
+    signal=[Signal|ID]
+;
 
 // ==> reset: Signal value reset (absolute write)
 // -------------------------------------
@@ -78,7 +71,8 @@ Set:
     (annotations += Annotation)*
     "set" 
     signal=[Signal|ID] 
-    ("("expression=Expression")");
+    ("("expression=Expression")")
+;
     
 /* ###################################################
  * ###                   Terminal                  ###

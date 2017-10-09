@@ -19,6 +19,7 @@ import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 
 import de.cau.cs.kieler.scl.Module;
 import de.cau.cs.kieler.scl.Scope;
+import de.cau.cs.kieler.scl.SequencePart;
 import de.cau.cs.kieler.scl.Statement;
 import de.cau.cs.kieler.scl.StatementContainer;
 
@@ -312,6 +313,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 T result = caseEsterelStatement(esterelStatement);
                 if (result == null) result = caseStatement(esterelStatement);
                 if (result == null) result = caseAnnotatable(esterelStatement);
+                if (result == null) result = caseSequencePart(esterelStatement);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -322,6 +324,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseStatementContainer(esterelParallel);
                 if (result == null) result = caseStatement(esterelParallel);
                 if (result == null) result = caseAnnotatable(esterelParallel);
+                if (result == null) result = caseSequencePart(esterelParallel);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -333,6 +336,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseStatement(esterelThread);
                 if (result == null) result = caseScope(esterelThread);
                 if (result == null) result = caseAnnotatable(esterelThread);
+                if (result == null) result = caseSequencePart(esterelThread);
                 if (result == null) result = caseStatementContainer(esterelThread);
                 if (result == null) result = caseDeclarationScope(esterelThread);
                 if (result == null) result = defaultCase(theEObject);
@@ -344,6 +348,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseEsterelStatement(nothing);
                 if (result == null) result = caseStatement(nothing);
                 if (result == null) result = caseAnnotatable(nothing);
+                if (result == null) result = caseSequencePart(nothing);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -353,6 +358,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseEsterelStatement(halt);
                 if (result == null) result = caseStatement(halt);
                 if (result == null) result = caseAnnotatable(halt);
+                if (result == null) result = caseSequencePart(halt);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -363,6 +369,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseEsterelStatement(block);
                 if (result == null) result = caseStatement(block);
                 if (result == null) result = caseAnnotatable(block);
+                if (result == null) result = caseSequencePart(block);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -372,6 +379,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseEsterelStatement(emit);
                 if (result == null) result = caseStatement(emit);
                 if (result == null) result = caseAnnotatable(emit);
+                if (result == null) result = caseSequencePart(emit);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -381,6 +389,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseEsterelStatement(sustain);
                 if (result == null) result = caseStatement(sustain);
                 if (result == null) result = caseAnnotatable(sustain);
+                if (result == null) result = caseSequencePart(sustain);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -390,6 +399,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseEsterelStatement(procedureCall);
                 if (result == null) result = caseStatement(procedureCall);
                 if (result == null) result = caseAnnotatable(procedureCall);
+                if (result == null) result = caseSequencePart(procedureCall);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -400,6 +410,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseStatementContainer(present);
                 if (result == null) result = caseStatement(present);
                 if (result == null) result = caseAnnotatable(present);
+                if (result == null) result = caseSequencePart(present);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -418,6 +429,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseStatementContainer(ifTest);
                 if (result == null) result = caseStatement(ifTest);
                 if (result == null) result = caseAnnotatable(ifTest);
+                if (result == null) result = caseSequencePart(ifTest);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -428,6 +440,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseStatementContainer(elsIf);
                 if (result == null) result = caseStatement(elsIf);
                 if (result == null) result = caseAnnotatable(elsIf);
+                if (result == null) result = caseSequencePart(elsIf);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -438,6 +451,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseStatementContainer(loop);
                 if (result == null) result = caseStatement(loop);
                 if (result == null) result = caseAnnotatable(loop);
+                if (result == null) result = caseSequencePart(loop);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -448,6 +462,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseStatementContainer(repeat);
                 if (result == null) result = caseStatement(repeat);
                 if (result == null) result = caseAnnotatable(repeat);
+                if (result == null) result = caseSequencePart(repeat);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -458,6 +473,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseStatementContainer(abort);
                 if (result == null) result = caseStatement(abort);
                 if (result == null) result = caseAnnotatable(abort);
+                if (result == null) result = caseSequencePart(abort);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -476,6 +492,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseStatementContainer(await);
                 if (result == null) result = caseStatement(await);
                 if (result == null) result = caseAnnotatable(await);
+                if (result == null) result = caseSequencePart(await);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -486,6 +503,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseStatementContainer(everyDo);
                 if (result == null) result = caseStatement(everyDo);
                 if (result == null) result = caseAnnotatable(everyDo);
+                if (result == null) result = caseSequencePart(everyDo);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -496,6 +514,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseStatementContainer(suspend);
                 if (result == null) result = caseStatement(suspend);
                 if (result == null) result = caseAnnotatable(suspend);
+                if (result == null) result = caseSequencePart(suspend);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -506,6 +525,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseStatementContainer(trap);
                 if (result == null) result = caseStatement(trap);
                 if (result == null) result = caseAnnotatable(trap);
+                if (result == null) result = caseSequencePart(trap);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -523,6 +543,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseEsterelStatement(exit);
                 if (result == null) result = caseStatement(exit);
                 if (result == null) result = caseAnnotatable(exit);
+                if (result == null) result = caseSequencePart(exit);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -533,6 +554,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseStatementContainer(exec);
                 if (result == null) result = caseStatement(exec);
                 if (result == null) result = caseAnnotatable(exec);
+                if (result == null) result = caseSequencePart(exec);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -552,6 +574,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseDeclaration(localSignalDeclaration);
                 if (result == null) result = caseStatement(localSignalDeclaration);
                 if (result == null) result = caseAnnotatable(localSignalDeclaration);
+                if (result == null) result = caseSequencePart(localSignalDeclaration);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -562,6 +585,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseStatementContainer(localVariableDeclaration);
                 if (result == null) result = caseStatement(localVariableDeclaration);
                 if (result == null) result = caseAnnotatable(localVariableDeclaration);
+                if (result == null) result = caseSequencePart(localVariableDeclaration);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -587,6 +611,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseEsterelStatement(run);
                 if (result == null) result = caseStatement(run);
                 if (result == null) result = caseAnnotatable(run);
+                if (result == null) result = caseSequencePart(run);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -658,6 +683,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseStatementContainer(do_);
                 if (result == null) result = caseStatement(do_);
                 if (result == null) result = caseAnnotatable(do_);
+                if (result == null) result = caseSequencePart(do_);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -735,6 +761,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 T result = caseSCEstStatement(scEstStatement);
                 if (result == null) result = caseStatement(scEstStatement);
                 if (result == null) result = caseAnnotatable(scEstStatement);
+                if (result == null) result = caseSequencePart(scEstStatement);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -744,6 +771,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseSCEstStatement(unEmit);
                 if (result == null) result = caseStatement(unEmit);
                 if (result == null) result = caseAnnotatable(unEmit);
+                if (result == null) result = caseSequencePart(unEmit);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -753,6 +781,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseSCEstStatement(set);
                 if (result == null) result = caseStatement(set);
                 if (result == null) result = caseAnnotatable(set);
+                if (result == null) result = caseSequencePart(set);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -2032,6 +2061,21 @@ public class EsterelSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseValuedObject(ValuedObject object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Sequence Part</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Sequence Part</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseSequencePart(SequencePart object) {
         return null;
     }
 

@@ -52,8 +52,13 @@ class SCLFormatter extends KExtFormatter {
 			format(statement, document);
 		}
 		
-		module.regionFor.keyword(moduleAccess.colonKeyword_3).prepend[ noSpace ].append[ newLine ]
-        module.regionFor.keywords(moduleAccess.semicolonKeyword_5_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+//		module.regionFor.keyword(moduleAccess.colonKeyword_3).prepend[ noSpace ].append[ newLine ]
+//        module.regionFor.keywords(moduleAccess.semicolonKeyword_5_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+        if (module.regionFor.keyword(moduleAccess.colonKeyword_3) !== null) {
+            module.regionFor.keyword(moduleAccess.colonKeyword_3).prepend[ noSpace ].append[ newLine ]
+        } else {
+            module.regionFor.ruleCall(moduleAccess.nameIDTerminalRuleCall_2_0).append[ newLine ]
+        }
 	}
 
 	def dispatch void format(Pause pause, extension IFormattableDocument document) {
@@ -61,6 +66,7 @@ class SCLFormatter extends KExtFormatter {
 		for (Annotation annotations : pause.getAnnotations()) {
 			format(annotations, document);
 		}
+		pause.regionFor.keyword(";")?.prepend[ noSpace ]
 	}
 
 	def dispatch void format(Label label, extension IFormattableDocument document) {
@@ -69,12 +75,14 @@ class SCLFormatter extends KExtFormatter {
 			format(annotations, document);
 		}
 		
-        label.regionFor.keyword(labelAccess.colonKeyword_1_1).prepend[ noSpace ].append[ newLine ]
+        label.regionFor.keyword(labelAccess.colonKeyword_2).prepend[ noSpace ].append[ newLine ]
 	}
 
 	def dispatch void format(Assignment assignment, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		super.format(assignment as de.cau.cs.kieler.kexpressions.keffects.Assignment, document)
+        assignment.regionFor.keyword(";")?.prepend[ noSpace ]
+		assignment.append[ newLine ]
 	}
 
 	def dispatch void format(Conditional conditional, extension IFormattableDocument document) {
@@ -91,7 +99,7 @@ class SCLFormatter extends KExtFormatter {
 		}
 		format(conditional.getElse(), document);
 
-        conditional.regionFor.keywords(conditionalAccess.semicolonKeyword_5_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+//        conditional.regionFor.keywords(conditionalAccess.semicolonKeyword_5_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
         conditional.regionFor.keywordPairs("{", "}").head?.interior[ indent ]
         conditional.regionFor.keyword("{").append[ newLine ]
         conditional.regionFor.keyword("}").prepend[ newLine ]
@@ -110,7 +118,7 @@ class SCLFormatter extends KExtFormatter {
 			format(statements, document);
 		}
 		
-		elsescope.regionFor.keywords(elseScopeAccess.semicolonKeyword_5_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+//		elsescope.regionFor.keywords(elseScopeAccess.semicolonKeyword_5_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
         elsescope.regionFor.keywordPairs("{", "}").head?.interior[ indent ]
         elsescope.regionFor.keyword("{").append[ newLine ]
         elsescope.regionFor.keyword("}").prepend[ newLine ]
@@ -129,11 +137,17 @@ class SCLFormatter extends KExtFormatter {
 			format(statements, document);
 		}
 		
-		thread.regionFor.keywords(threadAccess.semicolonKeyword_1_0_3_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
-        thread.regionFor.keywords(threadAccess.semicolonKeyword_1_1_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
-        thread.regionFor.keywordPairs("{", "}").head?.interior[ indent ]
-        thread.regionFor.keyword("{").append[ newLine ]
-        thread.regionFor.keyword("}").prepend[ newLine ]
+//		thread.regionFor.keywords(threadAccess.semicolonKeyword_1_0_3_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+//        thread.regionFor.keywords(threadAccess.semicolonKeyword_1_1_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+//        thread.regionFor.keywordPairs("{", "}").head?.interior[ indent ]
+//        thread.regionFor.keyword("{").append[ newLine ]
+//        thread.regionFor.keyword("}").prepend[ newLine ]
+        thread.interior[ indent ]
+        if (thread.regionFor.keyword("{") !== null) {
+            thread.regionFor.keyword("{").append[ newLine ]
+        } else {
+            thread.prepend[ newLine ]
+        }
 	}
 
 	def dispatch void format(Parallel parallel, extension IFormattableDocument document) {
@@ -141,6 +155,7 @@ class SCLFormatter extends KExtFormatter {
 		for (Thread threads : parallel.getThreads()) {
 			format(threads, document);
 		}
+		parallel.append[ newLine ]
 	}
 
 	def dispatch void format(ScopeStatement scopestatement, extension IFormattableDocument document) {
@@ -155,8 +170,7 @@ class SCLFormatter extends KExtFormatter {
 			format(statements, document);
 		}
 		
-		scopestatement.regionFor.keywords(scopeStatementAccess.semicolonKeyword_4_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
-        scopestatement.regionFor.keywordPairs("{", "}").head?.interior[ indent ]
+		scopestatement.regionFor.keywordPairs("{", "}").head?.interior[ indent ]
         scopestatement.regionFor.keyword("{").append[ newLine ]
         scopestatement.regionFor.keyword("}").prepend[ newLine ]
         scopestatement.regionFor.keyword("}").append[ newLine ]
@@ -169,5 +183,7 @@ class SCLFormatter extends KExtFormatter {
         for (Parameter parameters : callstatement.getParameters()) {
             format(parameters, document);
         }
+        
+        callstatement.regionFor.keyword(";")?.prepend[ noSpace ]
     }
 }

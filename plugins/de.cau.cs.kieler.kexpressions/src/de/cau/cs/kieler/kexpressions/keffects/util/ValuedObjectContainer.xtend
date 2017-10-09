@@ -38,9 +38,9 @@ class ValuedObjectContainer {
     @Accessors var boolean strictEqual = true
 
     def set(Assignment assignment) {
-        valuedObject = assignment.valuedObject
+        valuedObject = assignment.reference.valuedObject
         indices.clear
-        for(e : assignment.indices) {
+        for(e : assignment.reference.indices) {
             indices += e
         }
     }

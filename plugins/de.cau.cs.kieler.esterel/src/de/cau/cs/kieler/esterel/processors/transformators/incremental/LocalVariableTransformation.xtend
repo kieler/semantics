@@ -40,6 +40,7 @@ import java.util.HashMap
 import java.util.Map
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.util.EcoreUtil
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * @author mrb
@@ -68,10 +69,9 @@ class LocalVariableTransformation extends EsterelProcessor {
 //                                SCEstTransformation::RUN_ID)
 //    }
 
-    @Inject
-    extension EsterelTransformationExtensions
-    @Inject
-    extension EsterelExtensions
+    @Inject extension EsterelTransformationExtensions
+    @Inject extension EsterelExtensions
+    @Inject extension KEffectsExtensions
     
     override EsterelProgram transform(EsterelProgram prog) {
         prog.modules.forEach [ m | transformStatements(m.statements)]
@@ -227,7 +227,7 @@ class LocalVariableTransformation extends EsterelProcessor {
             if (newVariables.containsKey(a.valuedObject)) {
                 var statements = a.getContainingList
                 var pos = statements.indexOf(a)
-                var assignment = createAssignment(newVariables.get(a.valuedObject), EcoreUtil.copy(a.expression))
+                var assignment = createSCLAssignment(newVariables.get(a.valuedObject), EcoreUtil.copy(a.expression))
                 statements.set(pos, assignment)
             }
         }

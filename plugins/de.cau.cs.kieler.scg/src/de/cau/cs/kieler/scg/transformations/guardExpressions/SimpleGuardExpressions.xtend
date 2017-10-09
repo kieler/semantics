@@ -51,6 +51,7 @@ import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -97,29 +98,16 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
-    @Inject
-    extension SCGCoreExtensions
-
-    @Inject
-    extension SCGDeclarationExtensions
-
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-
-    @Inject
-    extension KExpressionsCreateExtensions
     
-    @Inject
-    extension KExpressionsDeclarationExtensions
-
-    @Inject
-    extension AnnotationsExtensions
-
-    @Inject
-    extension SynchronizerSelector
-
-    @Inject
-    extension KEffectsSerializeExtensions
+    @Inject extension SCGCoreExtensions
+    @Inject extension SCGDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsCreateExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension AnnotationsExtensions
+    @Inject extension SynchronizerSelector
+    @Inject extension KEffectsSerializeExtensions
+    @Inject extension KEffectsExtensions
 
     // -------------------------------------------------------------------------
     // -- Globals

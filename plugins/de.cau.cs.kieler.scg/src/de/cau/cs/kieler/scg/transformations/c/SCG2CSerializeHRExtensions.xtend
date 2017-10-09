@@ -56,10 +56,10 @@ class SCG2CSerializeHRExtensions extends SCGSerializeHRExtensions {
     public override CharSequence serializeAssignment(Assignment assignment, CharSequence expressionStr) {
         var res = ""
         
-        if (assignment.valuedObject != null) {
-            res = res + valuedObjectPrefix + assignment.valuedObject.name
-            if (!assignment.indices.nullOrEmpty) {
-                for(index : assignment.indices) {
+        if (assignment.reference != null) {
+            res = res + valuedObjectPrefix + assignment.reference.valuedObject.name
+            if (!assignment.reference.indices.nullOrEmpty) {
+                for(index : assignment.reference.indices) {
                     res = res + "[" + index.serialize + "]"
                 }
             }

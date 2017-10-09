@@ -42,6 +42,7 @@ import static extension java.lang.Character.*
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.scg.common.SCGAnnotations
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * @author als
@@ -62,6 +63,7 @@ class SSACoreExtensions {
     @Inject extension IOPreserverExtensions      
     @Inject extension AnnotationsExtensions
     extension AnnotationsFactory = AnnotationsFactory::eINSTANCE
+    @Inject extension KEffectsExtensions
     
     // -------------------------------------------------------------------------
 
@@ -207,7 +209,7 @@ class SSACoreExtensions {
     }
     
     def removeUnusedSSADeclarations(SCGraph scg) {
-        scg.declarations.removeIf[if (it instanceof VariableDeclaration) input == false && output == false && it.valuedObjects.empty]
+        scg.declarations.removeIf[if (it instanceof VariableDeclaration) input == false && output == false && it.valuedObjects.empty else false]
     }
     
     def getAllDefs(SCGraph scg) {

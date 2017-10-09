@@ -59,7 +59,7 @@ class KExtValidator extends AbstractKExtValidator {
         val parent = stringAnnotation.eContainer
         val VOs = <ValuedObject> newArrayList
         if (parent instanceof Assignment) {
-            VOs += parent.valuedObject
+            VOs += parent.reference.valuedObject
             if (parent.expression instanceof ValuedObjectReference) {
                 VOs += (parent.expression as ValuedObjectReference).valuedObject
             } else {

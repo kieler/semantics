@@ -49,6 +49,7 @@ import java.util.List
 import java.util.logging.Level
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -71,9 +72,19 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTraci
 
 class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Traceable {
 
-    //-------------------------------------------------------------------------
-    //--                 K I C O      C O N F I G U R A T I O N              --
-    //-------------------------------------------------------------------------
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KEffectsExtensions
+    @Inject extension SCGCoreExtensions
+    @Inject extension SCGControlFlowExtensions
+    @Inject extension AnnotationsExtensions
+    
+    public static val String GUARDPREFIX = "_g"
+	protected val SPLITSCHEDULINGBLOCKSATENTRY = false
+
+    protected val processedNodes = <Node> newHashSet
+    protected val basicBlockNodeMapping = new HashMap<Node, BasicBlock>
+    protected val basicBlockGuardCache = new HashMap<ValuedObject, BasicBlock>
+    protected val guardCache = <Guard> newArrayList
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.transformators.basicBlocks"
@@ -89,46 +100,6 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
         }
     }
 
-//    override getProducedFeatureId() {
-//        return SCGFeatures::BASICBLOCK_ID
-//    }
-//
-//    override getRequiredFeatureIds() {
-//        return newHashSet(SCGFeatures::STRUCTURALDEPTHJOIN_ID)
-//    }
-    
-    // -------------------------------------------------------------------------
-    // -- Injections 
-    // -------------------------------------------------------------------------
-    
-    @Inject extension KExpressionsDeclarationExtensions
-    @Inject extension SCGCoreExtensions
-    @Inject extension SCGControlFlowExtensions
-    @Inject extension AnnotationsExtensions
-         
-         
-    // -------------------------------------------------------------------------
-    // -- Constants
-    // -------------------------------------------------------------------------
-        
-    public static val String GUARDPREFIX = "_g"
-    
-	protected val SPLITSCHEDULINGBLOCKSATENTRY = false
-
-    // -------------------------------------------------------------------------
-    // -- Globals
-    // -------------------------------------------------------------------------
-    
-    protected val processedNodes = <Node> newHashSet
-    protected val basicBlockNodeMapping = new HashMap<Node, BasicBlock>
-    protected val basicBlockGuardCache = new HashMap<ValuedObject, BasicBlock>
-    protected val guardCache = <Guard> newArrayList
-    
-    
-    // -------------------------------------------------------------------------
-    // -- Transformation method
-    // -------------------------------------------------------------------------
-    
     /**
      * transformSCGDEPToSCGBB executes the transformation of an SCG with dependency information to an
      * SCG enriched with basic block information.

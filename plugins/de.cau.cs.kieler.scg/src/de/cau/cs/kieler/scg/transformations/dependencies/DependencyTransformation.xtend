@@ -45,6 +45,19 @@ import java.util.Map
 import java.util.Set
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.annotations.TypedStringAnnotation
+import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import com.google.inject.Injector
+import de.cau.cs.kieler.kexpressions.keffects.util.ValuedObjectContainer
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.scg.common.ValuedObjectNodeContainer
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -72,6 +85,7 @@ class DependencyTransformation extends InplaceProcessor<SCGraphs> {
     @Inject extension SCGDependencyExtensions
     @Inject extension SCGDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KEffectsExtensions
     @Inject extension AnnotationsExtensions    
     @Inject Injector injector
     

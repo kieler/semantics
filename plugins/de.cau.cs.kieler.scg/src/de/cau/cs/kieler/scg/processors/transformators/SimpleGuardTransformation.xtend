@@ -47,6 +47,7 @@ import java.util.HashMap
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * @author ssm
@@ -62,6 +63,7 @@ class SimpleGuardTransformation extends InplaceProcessor<SCGraphs> {
     @Inject extension KExpressionsDeclarationExtensions       
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsComplexCreateExtensions 
+    @Inject extension KEffectsExtensions
     @Inject extension AnnotationsExtensions    
     
     /** Name of the term signal. */

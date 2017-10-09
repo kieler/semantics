@@ -55,9 +55,10 @@ import de.cau.cs.kieler.scl.SCLProgram
 import de.cau.cs.kieler.scl.Scope
 import de.cau.cs.kieler.scl.Thread
 import java.util.List
+import de.cau.cs.kieler.scl.Statement
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.scl.Statement
 
 /**
  * This class contains methods to transform an Kernel SC Esterel program to SCL using signal notation.
@@ -91,15 +92,13 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
-    @Inject
-    extension KExpressionsDeclarationExtensions
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-    @Inject
-    extension KExpressionsCreateExtensions
-    @Inject
-    extension EsterelExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsCreateExtensions
+    @Inject extension KEffectsExtensions
+    @Inject extension EsterelExtensions
     
+    static val sCLFactory = SCLFactory.eINSTANCE
     extension SCLFactory = SCLFactory.eINSTANCE
     extension AnnotationsFactory = AnnotationsFactory.eINSTANCE
 
@@ -221,7 +220,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
             }
             // if exit is concurrent exit with join of other threads
             if (!threadHierarchy.empty) {
-                val join_asm = createAssignment.trace(exit.key) => [
+                val join_asm = sCLFactory.createAssignment.trace(exit.key) => [
                     valuedObject = createValuedObject => [
                         name = "join_" + exit.value.valuedObject.name.substring(5)
                         exitDecl.valuedObjects += it
@@ -351,7 +350,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
                         it.name = localSignal.name
                         signalVOMapping.put(localSignal, it)
                         // implicit reset
-                        scope.statements += createAssignment => [ asm |
+                        scope.statements += sCLFactory.createAssignment => [ asm |
                             asm.trace(lsig)
                             asm.valuedObject = it
                             asm.expression = createBoolValue(false)
@@ -365,7 +364,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
     }
 
     def dispatch Scope translate(Emit emit, Scope scope) {
-        scope.statements += createAssignment => [
+        scope.statements += sCLFactory.createAssignment => [
             it.trace(emit)
             valuedObject = emit.signal.vo
             expression = createBoolValue(true)
@@ -374,7 +373,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
     }
 
     def dispatch Scope translate(UnEmit unemit, Scope scope) {
-        scope.statements += createAssignment => [
+        scope.statements += sCLFactory.createAssignment => [
             it.trace(unemit)
             valuedObject = unemit.signal.vo
             expression = createBoolValue(false)
@@ -384,7 +383,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
 
     def dispatch Scope translate(Present present, Scope scope) {
         if (!present.cases.nullOrEmpty) {
-            throw new IllegalArgumentException("Cannot handle Esterel programs with cases in present!")
+            throw new IllegalArgumentException("Can only handle Esterel programs with present case!")
         }
         // No cases
         scope.statements += createConditional => [ cond |
@@ -401,12 +400,11 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
     }
 
     def dispatch Scope translate(Suspend suspend, Scope scope) {
-        scope.statements += createAssignment.trace(suspend) => [
+        scope.statements += sCLFactory.createAssignment.trace(suspend) => [
             val vo = createValuedObject("suspend").trace(suspend)
             suspendDecl.valuedObjects += vo
             valuedObject = vo
             expression = suspend.delay.expression.translateExpr
-            if (suspend.delay.delay != null) throw new IllegalArgumentException("Cannot handle count delay!")
         ]
         suspend.statements.forEach[translate(scope)]
         return scope
@@ -428,7 +426,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
     }
 
     def dispatch Scope translate(Exit exit, Scope scope) {
-        val exitAsm = createAssignment.trace(exit) => [
+        val exitAsm = sCLFactory.createAssignment.trace(exit) => [
             valuedObject = createValuedObject => [
                 name = "exit_" + exit.trap.name
                 exitDecl.valuedObjects += it
@@ -446,11 +444,6 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
         scope.statements += exitAsm
         scope.statements += goto
         return scope
-    }
-    
-    // Catch all
-    def dispatch Scope translate(Statement stm, Scope scope) {
-        throw new IllegalArgumentException("Cannot handle " + stm.eClass.name + ". Only kernel statements are supported.")
     }
 
     def dispatch Expression translateExpr(ValuedObjectReference expr) {

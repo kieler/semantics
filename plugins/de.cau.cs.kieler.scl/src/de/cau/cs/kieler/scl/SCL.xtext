@@ -14,57 +14,50 @@ SCLProgram returns SCLProgram:
 
 Module returns Module:
     (annotations += Annotation)*
-    =>'module' name = ID ':'?
+    'module' name = ID ':'?
     (declarations += Declaration)*
-    ((statements += InstructionStatement ';') | (statements += MetaStatement))*
-    (statements += Statement)?
+    (statements += Statement)*
 ;
 
 Statement returns Statement:
-    MetaStatement | InstructionStatement
-;
-
-InstructionStatement returns Statement:
-	Assignment | LegacyConditional | Goto | Parallel | Pause | ModuleCall
-;
-
-MetaStatement returns Statement:
-    Label | ScopeStatement | Conditional
+    Assignment | Label | Conditional | LegacyConditional | Goto | Parallel | Pause | ModuleCall | ScopeStatement
 ;
 
 Pause returns Pause:
     {Pause}
     (annotations += Annotation)*
     'pause'
+    semicolon?=';'?
 ;
 
 Label returns Label:
     (annotations += Annotation)*
-    (name = ID ':')
+    name = ID ':'
 ;
 
 Goto returns Goto:
     (annotations += Annotation)*
     'goto' target = [Label|ID]
+    semicolon?=';'?
 ;
 
 Assignment returns Assignment:
     (annotations += Annotation)*
-    valuedObject = [kexpressions::ValuedObject] 
-    ('[' indices += Expression ']')*
+    reference = ValuedObjectReference
     operator = AssignOperator
     expression = Expression
-    (=>'schedule' schedule+=ScheduleObjectReference+)?
+    ('schedule' schedule+=ScheduleObjectReference+)?
+    semicolon?=';'?
 ;
 
 Conditional returns Conditional: 
     (annotations += Annotation)*
     'if' expression = BoolExpression
-    =>'{'
+    '{'
     (declarations+=Declaration)*
-    ((statements += InstructionStatement ';')|(statements += MetaStatement))* (statements += Statement)?
+    (statements += Statement)*
     '}'
-    (else = ElseScope)?
+    (else = ElseScope | semicolon?=';')?
 ;
 
 ElseScope returns ElseScope:
@@ -72,27 +65,26 @@ ElseScope returns ElseScope:
     (annotations += Annotation)*
     'else' '{'
     (declarations+=Declaration)*
-    ((statements += InstructionStatement ';')|(statements += MetaStatement))*
-    (statements += Statement)?        
+    (statements += Statement)*      
     '}'
+    semicolon?=';'?
 ;
 
 LegacyConditional returns Conditional: 
     (annotations += Annotation)*
     'if' expression = BoolExpression
-    =>'then'
-    ((statements += InstructionStatement ';')|(statements += MetaStatement))*
-    (statements += Statement)?
-    ( 'end' | (else = LeagacyElseScope))
+    'then'
+    (statements += Statement)*
+    ( 'end' semicolon?=';'? | (else = LegacyElseScope))
 ;
 
-LeagacyElseScope returns ElseScope:
+LegacyElseScope returns ElseScope:
     {ElseScope}
     (annotations += Annotation)*
     'else'
-    ((statements += InstructionStatement ';')|(statements += MetaStatement))*
-    (statements += Statement)?        
+    (statements += Statement)*      
     'end'
+    semicolon?=';'?
 ;
 
 Thread returns Thread:
@@ -100,14 +92,12 @@ Thread returns Thread:
     (
         (
             (annotations += Annotation)*
-            =>'{'
+            '{'
             (declarations+=Declaration)*
-            ((statements += InstructionStatement ';')|(statements += MetaStatement))*
-            (statements += Statement)?
+            (statements += Statement)*
             '}'
         ) | (
-            ((statements += InstructionStatement ';')|(statements += MetaStatement))*
-            (statements += Statement)?
+            (statements += Statement)*
         )
     )
 ;
@@ -117,11 +107,12 @@ Parallel returns Parallel:
     (
         threads += Thread
         (
-            =>'par'
+            'par'
             threads += Thread
         )*
     )
     'join'
+    semicolon?=';'?
 ;
 
 ScopeStatement returns ScopeStatement:
@@ -129,8 +120,7 @@ ScopeStatement returns ScopeStatement:
     (annotations += Annotation)*
     '{'
         (declarations+=Declaration)*
-        ((statements += InstructionStatement ';')|(statements += MetaStatement))*
-        (statements += Statement)?
+        (statements += Statement)*
     '}'
 ;
 
@@ -139,6 +129,7 @@ ModuleCall returns ModuleCall:
     'run'
     module = [Module|ID]
     ('(' parameters += Parameter (',' parameters += Parameter)* ')' | '()')?
+    semicolon?=';'?
 ;
     
 Parameter returns kexpressions::Parameter:

@@ -13,8 +13,10 @@
  */
 package de.cau.cs.kieler.scl.extensions
 
+import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.scl.Conditional
 import de.cau.cs.kieler.scl.ElseScope
 import de.cau.cs.kieler.scl.Goto
@@ -25,13 +27,13 @@ import de.cau.cs.kieler.scl.SCLProgram
 import de.cau.cs.kieler.scl.Scope
 import de.cau.cs.kieler.scl.ScopeStatement
 import de.cau.cs.kieler.scl.Statement
+import de.cau.cs.kieler.scl.StatementContainer
 import java.util.LinkedList
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.util.EcoreUtil
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scl.StatementContainer
 
 /**
  * @author ssm, krat
@@ -43,6 +45,8 @@ import de.cau.cs.kieler.scl.StatementContainer
 class SCLExtensions {
     
     extension SCLFactory = SCLFactory.eINSTANCE
+    @Inject extension KEffectsExtensions
+    static val sCLFactory = SCLFactory.eINSTANCE
     
     /**
      * Removes all goto instructions, that target a label, that follows that goto.
@@ -315,7 +319,7 @@ class SCLExtensions {
 
                     // Add explicit assignment if initial value is given
                     if (valObj.initialValue != null) {
-                        subScope.statements.add(0, createAssignment => [
+                        subScope.statements.add(0, sCLFactory.createAssignment => [
                             it.trace(valObj)
                             valuedObject = valObj
                             expression = valObj.initialValue

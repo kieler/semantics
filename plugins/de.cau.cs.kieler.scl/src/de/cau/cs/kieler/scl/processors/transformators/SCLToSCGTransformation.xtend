@@ -60,6 +60,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * SCL to SCG Transformation 
@@ -73,24 +74,14 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
     private static val String ANNOTATION_HOSTCODE = "hostcode"
     private static val String ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"
 
-    @Inject
-    extension SCGControlFlowExtensions 
-    
-    @Inject
-    extension SCGThreadExtensions    
-
-    @Inject
-    extension KExpressionsDeclarationExtensions
-
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-
-    @Inject
-    extension AnnotationsExtensions
-    
-    @Inject
-    extension SCLExtensions
-    
+    @Inject extension SCGControlFlowExtensions 
+    @Inject extension SCGThreadExtensions    
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension AnnotationsExtensions
+    @Inject extension SCLExtensions
+    @Inject extension KEffectsExtensions
+    static val sCGFactory = ScgFactory.eINSTANCE
     extension ScgFactory = ScgFactory::eINSTANCE
     extension AnnotationsFactory = AnnotationsFactory.eINSTANCE
 
@@ -302,7 +293,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
 //            ]    
 //        } else {
             new SCLContinuation => [
-                node = createAssignment.trace(assignment).createNodeList(assignment) as Assignment => [
+                node = sCGFactory.createAssignment.trace(assignment).createNodeList(assignment) as Assignment => [
                     scg.nodes += it
                     it.expression = assignment.expression.copyExpression
                     it.valuedObject = assignment.valuedObject.copyValuedObject

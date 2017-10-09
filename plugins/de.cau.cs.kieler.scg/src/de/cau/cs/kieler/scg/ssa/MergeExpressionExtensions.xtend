@@ -16,7 +16,6 @@ import com.google.common.collect.BiMap
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.FunctionCall
 import de.cau.cs.kieler.kexpressions.OperatorExpression
@@ -27,7 +26,6 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Entry
@@ -36,12 +34,9 @@ import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.scg.ScgPackage
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.ssa.domtree.DominatorTree
 import java.util.Collection
 import java.util.LinkedList
@@ -54,12 +49,12 @@ import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
 
 import static extension com.google.common.base.Predicates.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scg.Dependency
 import com.google.common.base.Predicates
 import de.cau.cs.kieler.scg.ScheduleDependency
 import de.cau.cs.kieler.scg.GuardDependency
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * @author als
@@ -70,12 +65,12 @@ class MergeExpressionExtension {
     
     @Inject extension SCGCoreExtensions
     @Inject extension SCGControlFlowExtensions
-    @Inject extension SCGThreadExtensions
-    extension ScgFactory = ScgPackage.eINSTANCE.scgFactory
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension IOPreserverExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension SSACoreExtensions
+    @Inject extension KEffectsExtensions
+    static val sCGFactory = ScgFactory.eINSTANCE
     
     // -------------------------------------------------------------------------
 
@@ -404,11 +399,11 @@ val Multimap<EObject, EObject> mapping = null
         schedule.addAll(schedules.get(vo).reverseView)
         // Prepend inputs and register reads
         if (vo.variableDeclaration.input) {
-            schedule.add(createAssignment => [
+            schedule.add(sCGFactory.createAssignment => [
                 expression = vo.reference
             ])
         } else if (scg.isDelayed) {
-            schedule.add(createAssignment => [
+            schedule.add(sCGFactory.createAssignment => [
                 expression = createOperatorExpression(OperatorType.PRE) => [
                     subExpressions += ssaDecl.get(vo).valuedObjects.findFirst[isRegister].reference
                 ]

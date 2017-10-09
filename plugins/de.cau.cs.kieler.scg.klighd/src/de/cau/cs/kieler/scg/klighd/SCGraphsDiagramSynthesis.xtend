@@ -99,6 +99,7 @@ import com.google.common.collect.Multimap
 import org.eclipse.elk.core.options.NodeLabelPlacement
 import de.cau.cs.kieler.klighd.internal.macrolayout.KlighdDiagramLayoutConnector
 import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -110,63 +111,22 @@ import de.cau.cs.kieler.scg.SCGraphs
  */
 class SCGraphsDiagramSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
 
-    // -------------------------------------------------------------------------
-    // -- Extensions 
-    // -------------------------------------------------------------------------
-    //    extension KRenderingFactory = KRenderingFactory.eINSTANCE
-    /** Inject node extensions. */
-    @Inject
-    extension KNodeExtensions
-
-    /** Inject edge extensions. */
-    @Inject
-    extension KEdgeExtensions
-
-    /** Inject label extensions. */
-    @Inject
-    extension KLabelExtensions
-
-    /** Inject rendering extensions. */
-    @Inject
-    extension KRenderingExtensions
-
-    /** Inject port extensions. */
-    @Inject
-    extension KPortExtensions
-
-    /** Inject container rendering extensions. */
-    @Inject
-    extension KContainerRenderingExtensions
-
-    /** Inject polyline extensions. */
-    @Inject
-    extension KPolylineExtensions
-
-    /** Inject color extensions. */
-    @Inject
-    extension KColorExtensions
-
-    /** Inject SCGraph shapes extensions. */
-    @Inject
-    extension AnnotationsExtensions
-
-    /** Inject SCG shapes extensions. */
-    @Inject
-    extension SCGraphShapes
-
-    /** Inject SCG extensions. */
-    @Inject
-    extension SCGCoreExtensions
+    @Inject extension KNodeExtensions
+    @Inject extension KEdgeExtensions
+    @Inject extension KLabelExtensions
+    @Inject extension KRenderingExtensions
+    @Inject extension KPortExtensions
+    @Inject extension KContainerRenderingExtensions
+    @Inject extension KPolylineExtensions
+    @Inject extension KColorExtensions
+    @Inject extension AnnotationsExtensions
+    @Inject extension SCGraphShapes
+    @Inject extension SCGCoreExtensions
+    @Inject extension SCGControlFlowExtensions
+    @Inject extension SCGThreadExtensions
+    @Inject extension SCGSerializeHRExtensions
+    @Inject extension KEffectsExtensions
     
-    @Inject
-    extension SCGControlFlowExtensions
-
-    @Inject
-    extension SCGThreadExtensions
-    
-    @Inject
-    extension SCGSerializeHRExtensions
-
     // -------------------------------------------------------------------------
     // -- KlighD Options
     // -------------------------------------------------------------------------

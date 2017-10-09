@@ -139,16 +139,8 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 		else if (epackage == KEffectsPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case KEffectsPackage.ASSIGNMENT:
-				if (rule == grammarAccess.getEffectRule()
-						|| rule == grammarAccess.getPostfixEffectRule()) {
-					sequence_PostfixEffect(context, (Assignment) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getSubReferenceAssignmentRule()) {
-					sequence_SubReferenceAssignment(context, (Assignment) semanticObject); 
-					return; 
-				}
-				else break;
+				sequence_PostfixEffect(context, (Assignment) semanticObject); 
+				return; 
 			case KEffectsPackage.EMISSION:
 				sequence_Emission(context, (Emission) semanticObject); 
 				return; 
@@ -745,8 +737,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 				sequence_Assignment(context, (de.cau.cs.kieler.scl.Assignment) semanticObject); 
 				return; 
 			case SCLPackage.CONDITIONAL:
-				if (rule == grammarAccess.getMetaStatementRule()
-						|| rule == grammarAccess.getConditionalRule()) {
+				if (rule == grammarAccess.getConditionalRule()) {
 					sequence_Conditional(context, (Conditional) semanticObject); 
 					return; 
 				}
@@ -754,8 +745,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 					sequence_Conditional_LegacyConditional(context, (Conditional) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getInstructionStatementRule()
-						|| rule == grammarAccess.getLegacyConditionalRule()) {
+				else if (rule == grammarAccess.getLegacyConditionalRule()) {
 					sequence_LegacyConditional(context, (Conditional) semanticObject); 
 					return; 
 				}
@@ -765,8 +755,8 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 					sequence_ElseScope(context, (ElseScope) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getLeagacyElseScopeRule()) {
-					sequence_LeagacyElseScope(context, (ElseScope) semanticObject); 
+				else if (rule == grammarAccess.getLegacyElseScopeRule()) {
+					sequence_LegacyElseScope(context, (ElseScope) semanticObject); 
 					return; 
 				}
 				else break;
@@ -805,18 +795,17 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	/**
 	 * Contexts:
 	 *     Statement returns Assignment
-	 *     InstructionStatement returns Assignment
 	 *     Assignment returns Assignment
 	 *     Effect returns Assignment
 	 *
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         valuedObject=[ValuedObject|ID] 
-	 *         indices+=Expression* 
+	 *         reference=ValuedObjectReference 
 	 *         operator=AssignOperator 
 	 *         expression=Expression 
-	 *         schedule+=ScheduleObjectReference*
+	 *         schedule+=ScheduleObjectReference* 
+	 *         semicolon?=';'?
 	 *     )
 	 */
 	protected void sequence_Assignment(ISerializationContext context, de.cau.cs.kieler.scl.Assignment semanticObject) {
@@ -826,18 +815,10 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     MetaStatement returns Conditional
 	 *     Conditional returns Conditional
 	 *
 	 * Constraint:
-	 *     (
-	 *         annotations+=Annotation* 
-	 *         expression=BoolExpression 
-	 *         declarations+=Declaration* 
-	 *         (statements+=InstructionStatement | statements+=MetaStatement)* 
-	 *         statements+=Statement? 
-	 *         else=ElseScope?
-	 *     )
+	 *     (annotations+=Annotation* expression=BoolExpression declarations+=Declaration* statements+=Statement* (else=ElseScope | semicolon?=';')?)
 	 */
 	protected void sequence_Conditional(ISerializationContext context, Conditional semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -850,21 +831,8 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *
 	 * Constraint:
 	 *     (
-	 *         (
-	 *             annotations+=Annotation* 
-	 *             expression=BoolExpression 
-	 *             declarations+=Declaration* 
-	 *             (statements+=InstructionStatement | statements+=MetaStatement)* 
-	 *             statements+=Statement? 
-	 *             else=ElseScope?
-	 *         ) | 
-	 *         (
-	 *             annotations+=Annotation* 
-	 *             expression=BoolExpression 
-	 *             (statements+=InstructionStatement | statements+=MetaStatement)* 
-	 *             statements+=Statement? 
-	 *             else=LeagacyElseScope?
-	 *         )
+	 *         (annotations+=Annotation* expression=BoolExpression declarations+=Declaration* statements+=Statement* (else=ElseScope | semicolon?=';')?) | 
+	 *         (annotations+=Annotation* expression=BoolExpression statements+=Statement* (semicolon?=';' | else=LegacyElseScope)?)
 	 *     )
 	 */
 	protected void sequence_Conditional_LegacyConditional(ISerializationContext context, Conditional semanticObject) {
@@ -877,7 +845,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *     ElseScope returns ElseScope
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* declarations+=Declaration* (statements+=InstructionStatement | statements+=MetaStatement)* statements+=Statement?)
+	 *     (annotations+=Annotation* declarations+=Declaration* statements+=Statement* semicolon?=';'?)
 	 */
 	protected void sequence_ElseScope(ISerializationContext context, ElseScope semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -887,11 +855,10 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	/**
 	 * Contexts:
 	 *     Statement returns Goto
-	 *     InstructionStatement returns Goto
 	 *     Goto returns Goto
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* target=[Label|ID])
+	 *     (annotations+=Annotation* target=[Label|ID] semicolon?=';'?)
 	 */
 	protected void sequence_Goto(ISerializationContext context, Goto semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -901,7 +868,6 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	/**
 	 * Contexts:
 	 *     Statement returns Label
-	 *     MetaStatement returns Label
 	 *     Label returns Label
 	 *
 	 * Constraint:
@@ -914,29 +880,10 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     LeagacyElseScope returns ElseScope
-	 *
-	 * Constraint:
-	 *     (annotations+=Annotation* (statements+=InstructionStatement | statements+=MetaStatement)* statements+=Statement?)
-	 */
-	protected void sequence_LeagacyElseScope(ISerializationContext context, ElseScope semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     InstructionStatement returns Conditional
 	 *     LegacyConditional returns Conditional
 	 *
 	 * Constraint:
-	 *     (
-	 *         annotations+=Annotation* 
-	 *         expression=BoolExpression 
-	 *         (statements+=InstructionStatement | statements+=MetaStatement)* 
-	 *         statements+=Statement? 
-	 *         else=LeagacyElseScope?
-	 *     )
+	 *     (annotations+=Annotation* expression=BoolExpression statements+=Statement* (semicolon?=';' | else=LegacyElseScope)?)
 	 */
 	protected void sequence_LegacyConditional(ISerializationContext context, Conditional semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -945,12 +892,23 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     LegacyElseScope returns ElseScope
+	 *
+	 * Constraint:
+	 *     (annotations+=Annotation* statements+=Statement* semicolon?=';'?)
+	 */
+	protected void sequence_LegacyElseScope(ISerializationContext context, ElseScope semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Statement returns ModuleCall
-	 *     InstructionStatement returns ModuleCall
 	 *     ModuleCall returns ModuleCall
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* module=[Module|ID] (parameters+=Parameter parameters+=Parameter*)?)
+	 *     (annotations+=Annotation* module=[Module|ID] (parameters+=Parameter parameters+=Parameter*)? semicolon?=';'?)
 	 */
 	protected void sequence_ModuleCall(ISerializationContext context, ModuleCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -962,13 +920,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *     Module returns Module
 	 *
 	 * Constraint:
-	 *     (
-	 *         annotations+=Annotation* 
-	 *         name=ID 
-	 *         declarations+=Declaration* 
-	 *         (statements+=InstructionStatement | statements+=MetaStatement)* 
-	 *         statements+=Statement?
-	 *     )
+	 *     (annotations+=Annotation* name=ID declarations+=Declaration* statements+=Statement*)
 	 */
 	protected void sequence_Module(ISerializationContext context, Module semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -978,11 +930,10 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	/**
 	 * Contexts:
 	 *     Statement returns Parallel
-	 *     InstructionStatement returns Parallel
 	 *     Parallel returns Parallel
 	 *
 	 * Constraint:
-	 *     (threads+=Thread threads+=Thread*)
+	 *     (threads+=Thread threads+=Thread* semicolon?=';'?)
 	 */
 	protected void sequence_Parallel(ISerializationContext context, Parallel semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1004,11 +955,10 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	/**
 	 * Contexts:
 	 *     Statement returns Pause
-	 *     InstructionStatement returns Pause
 	 *     Pause returns Pause
 	 *
 	 * Constraint:
-	 *     annotations+=Annotation*
+	 *     (annotations+=Annotation* semicolon?=';'?)
 	 */
 	protected void sequence_Pause(ISerializationContext context, Pause semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1030,11 +980,10 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	/**
 	 * Contexts:
 	 *     Statement returns ScopeStatement
-	 *     MetaStatement returns ScopeStatement
 	 *     ScopeStatement returns ScopeStatement
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* declarations+=Declaration* (statements+=InstructionStatement | statements+=MetaStatement)* statements+=Statement?)
+	 *     (annotations+=Annotation* declarations+=Declaration* statements+=Statement*)
 	 */
 	protected void sequence_ScopeStatement(ISerializationContext context, ScopeStatement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1046,10 +995,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *     Thread returns Thread
 	 *
 	 * Constraint:
-	 *     (
-	 *         (annotations+=Annotation* declarations+=Declaration* (statements+=InstructionStatement | statements+=MetaStatement)* statements+=Statement?) | 
-	 *         ((statements+=InstructionStatement | statements+=MetaStatement)* statements+=Statement?)
-	 *     )
+	 *     ((annotations+=Annotation* declarations+=Declaration* statements+=Statement*) | statements+=Statement+)?
 	 */
 	protected void sequence_Thread(ISerializationContext context, de.cau.cs.kieler.scl.Thread semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

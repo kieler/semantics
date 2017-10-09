@@ -20,325 +20,36 @@ class SCLSemanticSequencer extends AbstractSCLSemanticSequencer {
 
     @Inject
     private SCLGrammarAccess grammarAccess;
-    
-    /**
-     * Contexts:
-     *     MetaStatement returns Conditional
-     *     Conditional returns Conditional
-     *
-     * Constraint:
-     *     (
-     *         annotations+=Annotation* 
-     *         expression=BoolExpression 
-     *         declarations+=Declaration* 
-     *         (statements+=InstructionStatement | statements+=MetaStatement)* 
-     *         statements+=Statement? 
-     *         else=ElseScope?
-     *     )
-     */
-    override sequence_Conditional(ISerializationContext context, Conditional semanticObject) {
-        val feeder = createSequencerFeeder(semanticObject, createNodeProvider(semanticObject))
-        val g = grammarAccess.conditionalAccess
-        
-        for (idxAnnotation : semanticObject.annotations.indexed) {
-            feeder.accept(g.annotationsAnnotationParserRuleCall_0_0, idxAnnotation.value, idxAnnotation.key)
-        }
-        
-        feeder.accept(g.expressionBoolExpressionParserRuleCall_2_0, semanticObject.expression)
-        
-        for (idxDecl : semanticObject.declarations.indexed) {
-            feeder.accept(g.declarationsDeclarationParserRuleCall_4_0, idxDecl.value, idxDecl.key)
-        }        
-        
-        if (!semanticObject.statements.nullOrEmpty) {
-            for (idxStm : semanticObject.statements.indexed) {
-                switch (idxStm.value) {
-                    Label,
-                    Conditional,
-                    ScopeStatement: feeder.accept(g.statementsMetaStatementParserRuleCall_5_1_0, idxStm.value, idxStm.key)
-                    case idxStm.key == semanticObject.statements.size - 1: feeder.accept(g.statementsStatementParserRuleCall_6_0, idxStm.value, idxStm.key)
-                    default: feeder.accept(g.statementsInstructionStatementParserRuleCall_5_0_0_0, idxStm.value, idxStm.key)
-                }
-            }
-        }
-        
-        if (semanticObject.^else !== null) {
-            feeder.accept(g.elseElseScopeParserRuleCall_8_0, semanticObject.^else)
-        }
-        
-        feeder.finish
-    }
-    
-    /**
-     * Contexts:
-     *     ElseScope returns ElseScope
-     *
-     * Constraint:
-     *     (annotations+=Annotation* declarations+=Declaration* (statements+=InstructionStatement | statements+=MetaStatement)* statements+=Statement?)
-     */
-    override sequence_ElseScope(ISerializationContext context, ElseScope semanticObject) {
-        val feeder = createSequencerFeeder(semanticObject, createNodeProvider(semanticObject))
-        val g = grammarAccess.elseScopeAccess
-        
-        for (idxAnnotation : semanticObject.annotations.indexed) {
-            feeder.accept(g.annotationsAnnotationParserRuleCall_1_0, idxAnnotation.value, idxAnnotation.key)
-        }
-        
-        for (idxDecl : semanticObject.declarations.indexed) {
-            feeder.accept(g.declarationsDeclarationParserRuleCall_4_0, idxDecl.value, idxDecl.key)
-        }        
-        
-        if (!semanticObject.statements.nullOrEmpty) {
-            for (idxStm : semanticObject.statements.indexed) {
-                switch (idxStm.value) {
-                    Label,
-                    Conditional,
-                    ScopeStatement: feeder.accept(g.statementsMetaStatementParserRuleCall_5_1_0, idxStm.value, idxStm.key)
-                    case idxStm.key == semanticObject.statements.size - 1: feeder.accept(g.statementsStatementParserRuleCall_6_0, idxStm.value, idxStm.key)
-                    default: feeder.accept(g.statementsInstructionStatementParserRuleCall_5_0_0_0, idxStm.value, idxStm.key)
-                }
-            }
-        }
-        
-        feeder.finish
-    }
-    
-    
-    /**
-     * Contexts:
-     *     Statement returns Goto
-     *     InstructionStatement returns Goto
-     *     Goto returns Goto
-     *
-     * Constraint:
-     *     (annotations+=Annotation* target=[Label|ID])
-     */
-    override sequence_Goto(ISerializationContext context, Goto semanticObject) {
-        val feeder = createSequencerFeeder(semanticObject, createNodeProvider(semanticObject))
-        val g = grammarAccess.gotoAccess
-        
-        for (idxAnnotation : semanticObject.annotations.indexed) {
-            feeder.accept(g.annotationsAnnotationParserRuleCall_0_0, idxAnnotation.value, idxAnnotation.key)
-        }
-        
-        feeder.accept(g.targetLabelIDTerminalRuleCall_2_0_1, semanticObject.target)
-        
-        feeder.finish
-    }
-    
-    
-    /**
-     * Contexts:
-     *     Statement returns Label
-     *     MetaStatement returns Label
-     *     Label returns Label
-     *
-     * Constraint:
-     *     (annotations+=Annotation* name=ID)
-     */
-    override sequence_Label(ISerializationContext context, Label semanticObject) {
-        val feeder = createSequencerFeeder(semanticObject, createNodeProvider(semanticObject))
-        val g = grammarAccess.labelAccess
-        
-        for (idxAnnotation : semanticObject.annotations.indexed) {
-            feeder.accept(g.annotationsAnnotationParserRuleCall_0_0, idxAnnotation.value, idxAnnotation.key)
-        }
-        
-        feeder.accept(g.nameIDTerminalRuleCall_1_0_0, semanticObject.name)
-        
-        feeder.finish
-    }
-    
-    /**
-     * Contexts:
-     *     Module returns Module
-     *
-     * Constraint:
-     *     (
-     *         annotations+=Annotation* 
-     *         name=ID 
-     *         declarations+=Declaration* 
-     *         (statements+=InstructionStatement | statements+=MetaStatement)* 
-     *         statements+=Statement?
-     *     )
-     */
-    override sequence_Module(ISerializationContext context, Module semanticObject) {
-        val feeder = createSequencerFeeder(semanticObject, createNodeProvider(semanticObject))
-        val g = grammarAccess.moduleAccess
-        
-        for (idxAnnotation : semanticObject.annotations.indexed) {
-            feeder.accept(g.annotationsAnnotationParserRuleCall_0_0, idxAnnotation.value, idxAnnotation.key)
-        }
-        
-        feeder.accept(g.nameIDTerminalRuleCall_2_0, semanticObject.name)
-        
-        for (idxDecl : semanticObject.declarations.indexed) {
-            feeder.accept(g.declarationsDeclarationParserRuleCall_4_0, idxDecl.value, idxDecl.key)
-        }        
-        
-        if (!semanticObject.statements.nullOrEmpty) {
-            for (idxStm : semanticObject.statements.indexed) {
-                switch (idxStm.value) {
-                    Label,
-                    Conditional,
-                    ScopeStatement: feeder.accept(g.statementsMetaStatementParserRuleCall_5_1_0, idxStm.value, idxStm.key)
-                    case idxStm.key == semanticObject.statements.size - 1: feeder.accept(g.statementsStatementParserRuleCall_6_0, idxStm.value, idxStm.key)
-                    default: feeder.accept(g.statementsInstructionStatementParserRuleCall_5_0_0_0, idxStm.value, idxStm.key)
-                }
-            }
-        }
-        
-        feeder.finish
-    }
-    
-    
-    /**
-     * Contexts:
-     *     Statement returns Parallel
-     *     InstructionStatement returns Parallel
-     *     Parallel returns Parallel
-     *
-     * Constraint:
-     *     (threads+=Thread threads+=Thread*)
-     */
-    override sequence_Parallel(ISerializationContext context, Parallel semanticObject) {
-        val feeder = createSequencerFeeder(semanticObject, createNodeProvider(semanticObject))
-        val g = grammarAccess.parallelAccess
-        
-        for (idxThread : semanticObject.threads.indexed) {
-            if (idxThread.key == 0) {
-                feeder.accept(g.threadsThreadParserRuleCall_1_0_0, idxThread.value, idxThread.key)
-            } else {
-                feeder.accept(g.threadsThreadParserRuleCall_1_1_1_0, idxThread.value, idxThread.key)
-            }
-        }
-        
-        feeder.finish
-    }
-    
-    /**
-     * Contexts:
-     *     Statement returns Pause
-     *     InstructionStatement returns Pause
-     *     Pause returns Pause
-     *
-     * Constraint:
-     *     annotations+=Annotation*
-     */
-    override sequence_Pause(ISerializationContext context, Pause semanticObject) {
-        val feeder = createSequencerFeeder(semanticObject, createNodeProvider(semanticObject))
-        val g = grammarAccess.pauseAccess
-        
-        for (idxAnnotation : semanticObject.annotations.indexed) {
-            feeder.accept(g.annotationsAnnotationParserRuleCall_1_0, idxAnnotation.value, idxAnnotation.key)
-        }
-        
-        feeder.finish
-    }
-    
-    
-    /**
-     * Contexts:
-     *     SCLProgram returns SCLProgram
-     *
-     * Constraint:
-     *     ((pragmas+=Pragma+ modules+=Module+) | modules+=Module+)?
-     */
-    override sequence_SCLProgram(ISerializationContext context, SCLProgram semanticObject) {
-        val feeder = createSequencerFeeder(semanticObject, createNodeProvider(semanticObject))
-        val g = grammarAccess.SCLProgramAccess
-        
-        for (idxAnnotation : semanticObject.pragmas.indexed) {
-            feeder.accept(g.pragmasPragmaParserRuleCall_0_0, idxAnnotation.value, idxAnnotation.key)
-        }
-        
-        for (idxModule : semanticObject.modules.indexed) {
-            feeder.accept(g.modulesModuleParserRuleCall_1_0, idxModule.value, idxModule.key)
-        }
-        
-        feeder.finish
-    }
-    
-    
-    /**
-     * Contexts:
-     *     Statement returns ScopeStatement
-     *     MetaStatement returns ScopeStatement
-     *     ScopeStatement returns ScopeStatement
-     *
-     * Constraint:
-     *     (annotations+=Annotation* declarations+=Declaration* (statements+=InstructionStatement | statements+=MetaStatement)* statements+=Statement?)
-     */
-    override sequence_ScopeStatement(ISerializationContext context, ScopeStatement semanticObject) {
-        val feeder = createSequencerFeeder(semanticObject, createNodeProvider(semanticObject))
-        val g = grammarAccess.scopeStatementAccess
-        
-        for (idxAnnotation : semanticObject.annotations.indexed) {
-            feeder.accept(g.annotationsAnnotationParserRuleCall_1_0, idxAnnotation.value, idxAnnotation.key)
-        }
-        
-        for (idxDecl : semanticObject.declarations.indexed) {
-            feeder.accept(g.declarationsDeclarationParserRuleCall_3_0, idxDecl.value, idxDecl.key)
-        }        
-        
-        if (!semanticObject.statements.nullOrEmpty) {
-            for (idxStm : semanticObject.statements.indexed) {
-                switch (idxStm.value) {
-                    Label,
-                    Conditional,
-                    ScopeStatement: feeder.accept(g.statementsMetaStatementParserRuleCall_4_1_0, idxStm.value, idxStm.key)
-                    case idxStm.key == semanticObject.statements.size - 1: feeder.accept(g.statementsStatementParserRuleCall_5_0, idxStm.value, idxStm.key)
-                    default: feeder.accept(g.statementsInstructionStatementParserRuleCall_4_0_0_0, idxStm.value, idxStm.key)
-                }
-            }
-        }
-        
-        feeder.finish
-    }
-    
-    
+  
     /**
      * Contexts:
      *     Thread returns Thread
      *
      * Constraint:
-     *     (
-     *         (annotations+=Annotation* declarations+=Declaration* (statements+=InstructionStatement | statements+=MetaStatement)* statements+=Statement?) | 
-     *         ((statements+=InstructionStatement | statements+=MetaStatement)* statements+=Statement?)
-     *     )
+     *     ((annotations+=Annotation* declarations+=Declaration* statements+=Statement*) | statements+=Statement+)?
      */
     override sequence_Thread(ISerializationContext context, de.cau.cs.kieler.scl.Thread semanticObject) {
         val feeder = createSequencerFeeder(semanticObject, createNodeProvider(semanticObject))
         val g = grammarAccess.threadAccess
         
-        for (idxAnnotation : semanticObject.annotations.indexed) {
-            feeder.accept(g.annotationsAnnotationParserRuleCall_1_0_0_0, idxAnnotation.value, idxAnnotation.key)
-        }
-        
-        for (idxDecl : semanticObject.declarations.indexed) {
-            feeder.accept(g.declarationsDeclarationParserRuleCall_1_0_2_0, idxDecl.value, idxDecl.key)
-        }        
-        
-        if (!semanticObject.statements.nullOrEmpty) {
-            if (!semanticObject.declarations.empty){
+        if (semanticObject.annotations.empty && semanticObject.declarations.empty) {
+            if (!semanticObject.statements.nullOrEmpty) {
                 for (idxStm : semanticObject.statements.indexed) {
-                    switch (idxStm.value) {
-                        Label,
-                        Conditional,
-                        ScopeStatement: feeder.accept(g.statementsMetaStatementParserRuleCall_1_0_3_1_0, idxStm.value, idxStm.key)
-                        case idxStm.key == semanticObject.statements.size - 1: feeder.accept(g.statementsStatementParserRuleCall_1_0_4_0, idxStm.value, idxStm.key)
-                        default: feeder.accept(g.statementsInstructionStatementParserRuleCall_1_0_3_0_0_0, idxStm.value, idxStm.key)
-                    }
+                    feeder.accept(g.getStatementsStatementParserRuleCall_1_1_0, idxStm.value, idxStm.key)
                 }
-            } else {
+            }
+        } else {
+            for (idxAnnotation : semanticObject.annotations.indexed) {
+                feeder.accept(g.annotationsAnnotationParserRuleCall_1_0_0_0, idxAnnotation.value, idxAnnotation.key)
+            }
+            
+            for (idxDecl : semanticObject.declarations.indexed) {
+                feeder.accept(g.declarationsDeclarationParserRuleCall_1_0_2_0, idxDecl.value, idxDecl.key)
+            }
+            
+            if (!semanticObject.statements.nullOrEmpty) {
                 for (idxStm : semanticObject.statements.indexed) {
-                    switch (idxStm.value) {
-                        Label,
-                        Conditional,
-                        ScopeStatement: feeder.accept(g.statementsMetaStatementParserRuleCall_1_1_0_1_0, idxStm.value, idxStm.key)
-                        case idxStm.key == semanticObject.statements.size - 1: feeder.accept(g.statementsStatementParserRuleCall_1_1_1_0, idxStm.value, idxStm.key)
-                        default: feeder.accept(g.statementsInstructionStatementParserRuleCall_1_1_0_0_0_0, idxStm.value, idxStm.key)
-                    }
+                    feeder.accept(g.getStatementsStatementParserRuleCall_1_0_3_0, idxStm.value, idxStm.key)
                 }
             }
         }

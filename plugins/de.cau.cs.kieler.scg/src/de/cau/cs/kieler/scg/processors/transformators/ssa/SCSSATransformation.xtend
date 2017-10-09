@@ -23,6 +23,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
@@ -82,6 +83,7 @@ class SCSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
     @Inject extension SCGControlFlowExtensions
     @Inject extension SCGThreadExtensions
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KEffectsExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension SSACoreExtensions
     @Inject extension IOPreserverExtensions

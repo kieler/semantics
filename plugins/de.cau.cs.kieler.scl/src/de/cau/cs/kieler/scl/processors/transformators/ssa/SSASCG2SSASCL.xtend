@@ -28,22 +28,20 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.ssa.IOPreserverExtensions
 import de.cau.cs.kieler.scg.ssa.MergeExpressionExtension
 import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
-import de.cau.cs.kieler.scl.SCLProgram
 import de.cau.cs.kieler.scl.processors.transformators.RestrictedSCG2SCL
 import java.util.Map
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scl.SCLFactory
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * This transformation creates an SCL program from an SCG in SSA form.
@@ -85,6 +83,7 @@ class SSASCG2SSASCL extends RestrictedSCG2SCL {
     @Inject extension KExpressionsCreateExtensions  
     @Inject extension KExpressionsValuedObjectExtensions  
     extension SCLFactory = SCLFactory::eINSTANCE  
+    @Inject extension KEffectsExtensions
     
     // -------------------------------------------------------------------------
     // -- Transformation 

@@ -84,6 +84,7 @@ import java.util.LinkedList
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * Methods and static variables which are used by the transformations which
@@ -94,11 +95,9 @@ import org.eclipse.emf.ecore.util.EcoreUtil
  */
 class EsterelTransformationExtensions {
 
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-    
-    @Inject
-    extension EsterelExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KEffectsExtensions
+    @Inject extension EsterelExtensions
 
     var static labelSuffix = 0;
     
@@ -847,6 +846,10 @@ class EsterelTransformationExtensions {
             it.valuedObject = objectToAssign
             it.expression = EcoreUtil.copy(expression)
         ]
+    }
+    
+    def createSCLAssignment(ValuedObject objectToAssign, Expression expression) {
+        createAssignment(objectToAssign, expression) 
     }
     
     /**

@@ -4,11 +4,10 @@
   <eClassifiers xsi:type="ecore:EClass" name="Effect" abstract="true" interface="true"
       eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable kexpressions.ecore#//Schedulable"/>
   <eClassifiers xsi:type="ecore:EClass" name="Assignment" eSuperTypes="#//Effect">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" eType="ecore:EClass kexpressions.ecore#//ValuedObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reference" eType="ecore:EClass kexpressions.ecore#//ValuedObjectReference"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass kexpressions.ecore#//Expression"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="indices" upperBound="-1"
-        eType="ecore:EClass kexpressions.ecore#//Expression" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="#//AssignOperator"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="subReference" eType="ecore:EClass kexpressions.ecore#//ValuedObjectReference"
         containment="true"/>
@@ -32,8 +31,8 @@
     <eLiterals name="ASSIGNSHIFTRIGHTUNSIGNED" value="15"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Emission" eSuperTypes="#//Effect">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" lowerBound="1"
-        eType="ecore:EClass kexpressions.ecore#//ValuedObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reference" lowerBound="1"
+        eType="ecore:EClass kexpressions.ecore#//ValuedObjectReference" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="newValue" eType="ecore:EClass kexpressions.ecore#//Expression"
         containment="true"/>
   </eClassifiers>

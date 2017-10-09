@@ -66,6 +66,7 @@ import static de.cau.cs.kieler.kexpressions.OperatorType.*
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * @author als
@@ -98,14 +99,11 @@ class SSCEsterelReconstruction extends Processor<SCGraphs, EsterelProgram> imple
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
-    @Inject
-    extension SSACoreExtensions
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-    @Inject
-    extension AnnotationsExtensions
-    @Inject
-    extension EsterelExtensions
+    @Inject extension SSACoreExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KEffectsExtensions
+    @Inject extension AnnotationsExtensions
+    @Inject extension EsterelExtensions
 
     extension EsterelFactory = EsterelFactory::eINSTANCE
     extension KExpressionsFactory = KExpressionsFactory::eINSTANCE
