@@ -678,7 +678,25 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             edge.line.lineWidth = 1 + combinedLinewWith
         }
     }
-
+    
+    def boolean isAnyParentFrom(KNode anyParentNode, KNode childNode) {
+        if (childNode == anyParentNode) {
+//            if (!childNode.incomingEdges.nullOrEmpty) {
+//                childNode.incomingEdges.get(0).source.isAnyParentFrom()   
+//            }
+            return false
+        }
+        else if (childNode.parent != null && childNode.parent == anyParentNode) {
+            return true
+        }
+        else if (childNode.parent == null) {
+            return false
+        } else {
+            return anyParentNode.isAnyParentFrom(childNode.parent)
+        }
+    }
+    
+    
     def void addSimpleConnection(Connection connection, KNode srcNode, KNode dstNode, boolean usePorts, KColor color,
         boolean addLabel) {
         connectedComponents.add(connection.src)
@@ -712,7 +730,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         if (usePorts) {
             // Add the connection
             var portId = connection.hashCode.toString
-            var portSideDest = PortSide::WEST
+//            var portSideDest = PortSide::WEST
             if (COMBINE_CONNECTIONS.booleanValue) {
 //                val srcDstKey = connection.getKey(srcNode, dstNode)
 //                val currentNumber = connection.getSrcDstNumber(srcNode, dstNode)
@@ -726,16 +744,44 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 //                }
             }
             // Todo: if masterConnection exists, then REUSE port!!!!
-            val forward = (masterConnectionMap.get(connection) == null)
-            var sideFrom = PortSide::EAST
-            var sideTo = PortSide::WEST
-            if (!forward) {
-                sideFrom = PortSide::WEST
-                sideTo = PortSide::EAST
+            //val forward = (masterConnectionMap.get(connection) == null)
+//            var sideFrom = PortSide::EAST
+//            var sideTo = PortSide::WEST
+//            if (!forward) {
+//                sideFrom = PortSide::WEST
+//                sideTo = PortSide::EAST
+//            }
+            
+            // Need to detect if from inside to outside (= port right), or from outside to inside (=port left)
+            //
+            //  [  inside  --o]o--> outside
+            //
+            //  outside --o[o--> inside  ]
+            //
+            var srcSide = PortSide::EAST
+            var dstSide = PortSide::WEST
+            var insideToOutside = false
+            if (COMBINE_CONNECTIONS.booleanValue) {
+                insideToOutside = dstNode.isAnyParentFrom(srcNode) 
+                if (insideToOutside) {
+                     srcSide = PortSide::WEST
+                     dstSide = PortSide::EAST
+                } else {
+                     srcSide = PortSide::EAST
+                     dstSide = PortSide::WEST
+                }
             }
+//            sideFrom = PortSide::NORTH
+//            sideTo = PortSide::NORTH
 
-            val KPort srcPort = srcNode.retrievePort(connection, portId, 0, 0, 8, sideFrom, color)
-            var KPort dstPort = dstNode.retrievePort(connection, portId, 0, 0, 8, sideTo, color)
+            var srcPortId = portId + srcNode.hashCode
+            var dstPortId = portId + dstNode.hashCode
+            
+            val KPort srcPort = srcNode.retrievePort(connection, srcPortId, 0, 0, 8, srcSide, color, false)
+            var KPort dstPort = dstNode.retrievePort(connection, dstPortId, 0, 0, 8, dstSide, color, true)
+//            srcPort.addOutsidePortLabel(srcNode.labels.get(0).text  + "->" + dstNode.labels.get(0).text + " [" + insideToOutside + "] src")
+//            dstPort.addOutsidePortLabel(srcNode.labels.get(0).text + "->" + dstNode.labels.get(0).text + " [" + insideToOutside + "] dst")
+            
             edge.sourcePort = srcPort
             edge.targetPort = dstPort
             edge.line.lineWidth = 1
@@ -750,11 +796,11 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     HashMap<String, KPort> portCache = newHashMap()
 
     def KPort retrievePort(KNode node, Connection connection, Object mapping, float x, float y, int size, PortSide side,
-        KColor color) {
+        KColor color, boolean dst) {
         if (!COMBINE_CONNECTIONS.booleanValue) {
             return node.addPort(connection, mapping, x, y, size, side, color)
         } else {
-            var portId = node.hashCode.toString + connection.dst.toString
+            var portId = node.hashCode.toString + connection.dst.toString + side.hashCode + dst.hashCode
 //            val masterConnection = masterConnectionMap.get(connection)
 //            if (masterConnection != null) {
 //                portId = node.hashCode.toString + masterConnection.hashCode
@@ -766,6 +812,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 return returnPort
             } else {
                 val newPort = node.addPort(connection, mapping, x, y, size, side, color)
+                newPort.addLayoutParam(CoreOptions::PORT_SIDE, side);
                 portCache.put(portId, newPort)
                 return newPort
             }
