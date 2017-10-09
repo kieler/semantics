@@ -57,6 +57,7 @@ import de.cau.cs.kieler.scl.Thread
 import java.util.List
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.scl.Statement
 
 /**
  * This class contains methods to transform an Kernel SC Esterel program to SCL using signal notation.
@@ -65,12 +66,14 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTraci
  * 
  */
 class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> implements Traceable {
+    
+    public static val ID = "de.cau.cs.kieler.esterel.processors.transformators.ssa.ssc.scest2scl"
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
     override getId() {
-        return "de.cau.cs.kieler.esterel.processors.transformators.ssa.ssc.scest2scl"
+        return ID
     }
 
     override getName() {
@@ -381,7 +384,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
 
     def dispatch Scope translate(Present present, Scope scope) {
         if (!present.cases.nullOrEmpty) {
-            throw new IllegalArgumentException("Can only handle Esterel programs with present case!")
+            throw new IllegalArgumentException("Cannot handle Esterel programs with cases in present!")
         }
         // No cases
         scope.statements += createConditional => [ cond |
@@ -403,6 +406,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
             suspendDecl.valuedObjects += vo
             valuedObject = vo
             expression = suspend.delay.expression.translateExpr
+            if (suspend.delay.delay != null) throw new IllegalArgumentException("Cannot handle count delay!")
         ]
         suspend.statements.forEach[translate(scope)]
         return scope
@@ -442,6 +446,11 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
         scope.statements += exitAsm
         scope.statements += goto
         return scope
+    }
+    
+    // Catch all
+    def dispatch Scope translate(Statement stm, Scope scope) {
+        throw new IllegalArgumentException("Cannot handle " + stm.eClass.name + ". Only kernel statements are supported.")
     }
 
     def dispatch Expression translateExpr(ValuedObjectReference expr) {

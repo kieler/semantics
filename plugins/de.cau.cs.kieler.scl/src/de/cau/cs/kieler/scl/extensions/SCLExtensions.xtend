@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scl.StatementContainer
 
 /**
  * @author ssm, krat
@@ -201,7 +202,7 @@ class SCLExtensions {
         val replaceBy = <Pair<Label, Label>>newLinkedList
         for (label : scope.eAllContents.toList.filter(Label)) {
             var EList<Statement> stmList
-            var parent = label.eContainer as Scope
+            var parent = label.eContainer as StatementContainer
 
             // Continue until Thread or SCLProgram
             var continue = true

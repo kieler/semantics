@@ -74,11 +74,13 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  */
 class SSCEsterelReconstruction extends Processor<SCGraphs, EsterelProgram> implements Traceable {
 
+    public static val ID = "de.cau.cs.kieler.esterel.processors.transformators.ssa.ssc.scg2esterel"
+
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
     override getId() {
-        return "de.cau.cs.kieler.esterel.processors.transformators.ssa.ssc.scg2esterel"
+        return ID
     }
 
     override getName() {
