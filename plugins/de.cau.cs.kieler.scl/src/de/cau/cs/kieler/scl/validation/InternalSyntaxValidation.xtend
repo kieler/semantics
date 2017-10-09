@@ -28,6 +28,8 @@ import org.eclipse.xtext.nodemodel.SyntaxErrorMessage
 import org.eclipse.xtext.nodemodel.impl.LeafNode
 import org.eclipse.xtext.parser.IParseResult
 import org.eclipse.xtext.resource.XtextSyntaxDiagnostic
+import de.cau.cs.kieler.scl.SCLProgram
+import de.cau.cs.kieler.scl.StatementContainer
 
 /**
  * @author als
@@ -63,16 +65,27 @@ class InternalSyntaxValidation {
         return diag
     }
     
+    def EObject assureSemicolons(EObject eobj) {
+        if (eobj instanceof SCLProgram) {
+            for (sc : eobj.eAllContents.filter(StatementContainer).toIterable) {
+                for (part : sc.statements.take(sc.statements.size - 1)) {
+                    part.semicolon = !part.isMetaStatement(null)
+                }
+            }
+        }
+        return eobj
+    }
+        
     private def boolean isMetaStatement(EObject obj, INode node) {
         switch(obj) {
             Label,
             ScopeStatement,
             Thread: return true
             Conditional: {
-                if (node.grammarElement instanceof Keyword) {
+                if (node !== null && node.grammarElement instanceof Keyword) {
                     return "}".equals((node.grammarElement as Keyword).value)
                 }
-                return false
+                return true
             }
             default: return false
         }

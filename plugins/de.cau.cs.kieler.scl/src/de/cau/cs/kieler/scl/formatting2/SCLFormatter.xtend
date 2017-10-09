@@ -66,6 +66,7 @@ class SCLFormatter extends KExtFormatter {
 		for (Annotation annotations : pause.getAnnotations()) {
 			format(annotations, document);
 		}
+		pause.append[ newLine ]
 		pause.regionFor.keyword(";")?.prepend[ noSpace ]
 	}
 

@@ -5,6 +5,8 @@ package de.cau.cs.kieler.scl;
 
 import org.eclipse.xtext.resource.XtextResource;
 
+import de.cau.cs.kieler.scl.serializer.SCLSerializer;
+
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
@@ -18,4 +20,7 @@ public class SCLRuntimeModule extends de.cau.cs.kieler.scl.AbstractSCLRuntimeMod
         return SCLResource.class;
     }
     
+    public Class<? extends org.eclipse.xtext.serializer.ISerializer> bindISerializer() {
+        return SCLSerializer.class;
+    }
 }
