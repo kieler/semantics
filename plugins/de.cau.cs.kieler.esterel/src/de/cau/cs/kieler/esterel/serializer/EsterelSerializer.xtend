@@ -30,11 +30,9 @@ class EsterelSerializer extends Serializer {
     @Inject extension EsterelSytaxHelper
     
     override serialize(EObject obj, Appendable appendable, SaveOptions options) throws IOException {
-        val copy = EcoreUtil.copy(obj)
-        if (copy instanceof EsterelProgram) {
-            copy.convertSerializerFriendly
-        }
-        super.serialize(copy, appendable, options);
+        if (obj instanceof EsterelProgram) obj.convertSerializerFriendly
+        super.serialize(obj, appendable, options)
+        if (obj instanceof EsterelProgram) obj.convertUserFriendly
     }
     
 }

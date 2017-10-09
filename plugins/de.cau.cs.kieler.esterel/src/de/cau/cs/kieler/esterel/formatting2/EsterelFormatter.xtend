@@ -78,25 +78,11 @@ class EsterelFormatter extends SCLFormatter {
 
 	def dispatch void format(EsterelProgram esterelprogram, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Module modules : esterelprogram.getModules()) {
-			format(modules, document);
+		for (Module module : esterelprogram.getModules()) {
+			format(module, document);
+			module.prepend[ newLine ]
 		}
 	}
-
-//	def dispatch void format(EsterelModule esterelmodule, extension IFormattableDocument document) {
-//		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-//		for (Annotation annotations : esterelmodule.getAnnotations()) {
-//			format(annotations, document);
-//		}
-//		for (EsterelDeclaration esterelDeclarations : esterelmodule.getEsterelDeclarations()) {
-//			format(esterelDeclarations, document);
-//		}
-//		for (Statement statements : esterelmodule.getStatements()) {
-//			format(statements, document);
-//		}
-//		
-////		esterelmodule.regionFor.keywords(esterelModuleAccess.semicolonKeyword_5_0_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
-//	}
 
 	def dispatch void format(TypeDeclaration typedeclaration, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
@@ -254,11 +240,13 @@ class EsterelFormatter extends SCLFormatter {
 
 	def dispatch void format(EsterelThread esterelthread, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Statement statements : esterelthread.getStatements()) {
-			format(statements, document);
+		for (Statement statement : esterelthread.getStatements()) {
+			format(statement, document);
+			statement.append[newLine]
 		}
         
-//        esterelthread.regionFor.keywords(esterelThreadAccess.semicolonKeyword_1_0_1).forEach[prepend[ noSpace ].append[ newLine ]]
+        esterelthread.regionFor.keywords(esterelThreadAccess.semicolonKeyword_1_1_0).forEach[prepend[ noSpace ]]
+        esterelthread.regionFor.keywords(esterelThreadAccess.semicolonKeyword_2).forEach[prepend[ noSpace ]]
 	}
 
 	def dispatch void format(Nothing nothing, extension IFormattableDocument document) {
