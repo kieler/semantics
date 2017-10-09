@@ -54,6 +54,7 @@ class SSACoreExtensions {
     // -------------------------------------------------------------------------
     
     public static val SSA = SCGAnnotations.ANNOTATION_SSA //"de.cau.cs.kieler.scg.ssa"
+    public static val ANNOTATION_IGNORE_DECLARATION = "de.cau.cs.kieler.scg.ssa.ignore"
     
     // -------------------------------------------------------------------------
     
@@ -146,7 +147,7 @@ class SSACoreExtensions {
         
     def createSSADeclarations(SCGraph scg) {
         val ssaDecl = HashBiMap.create(scg.declarations.size)
-        for (decl : scg.declarations.filter(VariableDeclaration).filter[!hasAnnotation("ignore")].toList) {
+        for (decl : scg.declarations.filter(VariableDeclaration).filter[!hasAnnotation(ANNOTATION_IGNORE_DECLARATION)].toList) {
             for (vo : decl.valuedObjects) {
                 ssaDecl.put(vo, createDeclaration => [
                     scg.declarations += it

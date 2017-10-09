@@ -59,6 +59,7 @@ import de.cau.cs.kieler.scl.Statement
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
 
 /**
  * This class contains methods to transform an Kernel SC Esterel program to SCL using signal notation.
@@ -165,18 +166,18 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
 
         // Special Decl
         suspendDecl = createVariableDeclaration(ValueType.PURE) => [
-            annotations += createStringAnnotation => [
-                name = SSATransformationExtensions.ANNOTATION_IGNORE_DECLARATION
+            annotations += createAnnotation => [
+                name = SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION
             ]
-            annotations += createStringAnnotation => [
+            annotations += createAnnotation => [
                 name = "suspend"
             ]
         ]
         exitDecl = createVariableDeclaration(ValueType.PURE) => [
-            annotations += createStringAnnotation => [
-                name = SSATransformationExtensions.ANNOTATION_IGNORE_DECLARATION
+            annotations += createAnnotation => [
+                name = SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION
             ]
-            annotations += createStringAnnotation => [
+            annotations += createAnnotation => [
                 name = "exit"
             ]
         ]
@@ -245,7 +246,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
                             expression = exit.value.valuedObject.reference
                             statements += createGoto => [
                                 target = join_label
-                                annotations += createStringAnnotation => [
+                                annotations += createAnnotation => [
                                     name = SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION
                                 ]
                             ]
@@ -258,7 +259,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
                         expression = exit.value.valuedObject.reference
                         statements += createGoto => [
                             target = join_label
-                            annotations += createStringAnnotation => [
+                            annotations += createAnnotation => [
                                 name = SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION
                             ]
                         ]
@@ -273,7 +274,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
                 expression = exit.value.value.valuedObject.reference
                 statements += createGoto => [
                     target = exit.value.key
-                    annotations += createStringAnnotation => [
+                    annotations += createAnnotation => [
                         name = SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION
                     ]
                 ]
@@ -435,7 +436,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
         ]
         val goto = createGoto.trace(exit) => [
             target = trapLabel.get(exit.trap)
-            annotations += createStringAnnotation => [
+            annotations += createAnnotation => [
                 name = SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION
             ]
         ]

@@ -61,6 +61,7 @@ import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
 import static extension com.google.common.collect.Sets.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * The SSA transformation for SCGs
@@ -196,7 +197,7 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
     def void addConcurrentWritersToReaders(SCGraph scg) {
         for (node : scg.uses.values.filter[!isSSA].toSet) {
             for (declDepPair : node.incoming.filter(DataDependency).filter[concurrent].groupBy[(eContainer as Assignment).valuedObject.declaration].entrySet) {
-                if (!declDepPair.key.hasAnnotation(SSATransformationExtensions.ANNOTATION_IGNORE_DECLARATION)) {
+                if (!declDepPair.key.hasAnnotation(SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION)) {
                     val refs = node.eContents.filter(Expression).head.allReferences.filter[valuedObject.declaration == declDepPair.key].toList
                     for (ref : refs) {
                         ref.replace(createOperatorExpression(OperatorType.BITWISE_OR) => [
@@ -215,10 +216,10 @@ class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements 
         for (n : nodes) {
             val cf = n.eContents.filter(ControlFlow).head
             val sb = scg.schedulingBlocks.findFirst[it.nodes.contains(n)]
-            for (d: scg.variableDeclarations.filter[type == ValueType.PURE && !input && !hasAnnotation(SSATransformationExtensions.ANNOTATION_IGNORE_DECLARATION)]) {//FIXME ignored input
+            for (d: scg.declarations.filter(VariableDeclaration).filter[type == ValueType.PURE && !input && !hasAnnotation(SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION)]) {//FIXME ignored input
                 for (vo : d.valuedObjects) {
                     scg.nodes += ScgFactory.eINSTANCE.createAssignment => [
-                        annotations += createStringAnnotation(WeakUnemitSSATransformation.IMPLICIT_ANNOTAION, WeakUnemitSSATransformation.IMPLICIT_ANNOTAION)
+                        annotations += createAnnotation => [ name = WeakUnemitSSATransformation.IMPLICIT_ANNOTAION]
                         valuedObject = vo
                         expression = if (d.input) {vo.reference} else {createBoolValue(false)}
                         next = createControlFlow => [
