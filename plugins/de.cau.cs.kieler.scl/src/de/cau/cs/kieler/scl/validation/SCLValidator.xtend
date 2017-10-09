@@ -12,6 +12,9 @@ import java.util.List
 import de.cau.cs.kieler.scl.SCLPackage
 import de.cau.cs.kieler.scl.Conditional
 import de.cau.cs.kieler.scl.ScopeStatement
+import org.eclipse.xtext.validation.CheckType
+import de.cau.cs.kieler.scl.SCLResource
+import org.eclipse.xtext.Keyword
 
 //import org.eclipse.xtext.validation.Check
 
@@ -36,6 +39,22 @@ class SCLValidator extends AbstractSCLValidator {
                     labels.forEach[error(DUBLICATE_LABEL, it, null, -1)]
                 }
             ]
+        }
+    }
+    
+     /*
+     * Checks legacy conditionals
+     */
+    @Check(CheckType.NORMAL)
+    def checkLegacyConditional(SCLProgram program) {
+        val res = program.eResource
+        if (res instanceof SCLResource) {
+            val conditionals = res.parseResult.rootNode.asTreeIterable.filter[semanticElement instanceof Conditional].groupBy[semanticElement]
+            for (cond : conditionals.keySet) {
+                if (conditionals.get(cond).filter[grammarElement instanceof Keyword].exists["then".equals((grammarElement as Keyword).value)]) {
+                    info(LEAGACY_CONDITIONAL, cond, null)
+                }
+            }
         }
     }
 
