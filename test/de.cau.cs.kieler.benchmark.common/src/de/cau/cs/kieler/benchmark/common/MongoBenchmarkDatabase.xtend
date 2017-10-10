@@ -116,7 +116,7 @@ class MongoBenchmarkDatabase extends AbstractBenchmarkDatabase {
     /**
      * {@inheritDoc}
      */
-    override storeResult(IBenchmark benchmark, TestModelData data, Document result) {
+    override storeResult(String benchmarkID, TestModelData data, Document result) {
         logger.info("Storing benchmark result")
         // Find entry
         val benchmarkFinder = and(eq("run", runID), eq("file", modelFiles.get(data)))
@@ -131,7 +131,7 @@ class MongoBenchmarkDatabase extends AbstractBenchmarkDatabase {
             runs.updateOne(eq("_id", runID), addToSet("benchmarks", newDocument.getObjectId("_id")))
         }
         // Insert result
-        benchmarks.updateOne(benchmarkFinder, set(benchmark.ID, result))
+        benchmarks.updateOne(benchmarkFinder, set(benchmarkID, result))
     }
     
     /**

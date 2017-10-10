@@ -16,26 +16,24 @@ import de.cau.cs.kieler.test.common.repository.TestModelData
 import org.bson.Document
 
 /**
- * Abstract super class for benchmark databases.
- * 
  * @author als
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-abstract class AbstractBenchmarkDatabase {
+abstract class AbstractSingleRunBenchmark implements IBenchmark {
     
     /**
-     * Stores the results of the given benchmark and the given model.
-     * <p>
-     * Persisting of the results may only happen when save is invoked.
+     * {@inheritDoc}
      */
-    abstract def void storeResult(String benchmarkID, TestModelData data, Document result)
+    override iterations() {
+        return 1
+    }
     
     /**
-     * Saves all results and related data.
-     * <p>
-     * Should only invoked once after all benchmarks finished.
+     * {@inheritDoc}
      */
-    def void save()
+    override Document calculateResult(Document[] results, TestModelData data) {
+        return results.head
+    }
     
 }
