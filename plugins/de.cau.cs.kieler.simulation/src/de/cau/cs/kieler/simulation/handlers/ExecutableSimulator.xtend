@@ -36,6 +36,7 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.prom.FileExtensions.*
+import de.cau.cs.kieler.simulation.launch.SimulationLaunchConfig
 
 /**
  * Creates a new process by starting an executable or shell command and sends / receives variables of this process using JSON.
@@ -101,6 +102,8 @@ class ExecutableSimulator extends DefaultSimulator {
      * This is only required on Windows.
      */
     private var SimulationCompilerListener exeResourceListener
+    private static var SimulationCompilerListener compilationFinishedListener = createCompilationFinishedListener
+    private static var boolean restartSimulationAfterCompilation
     
     /**
      * The operation of this data handler
@@ -148,6 +151,8 @@ class ExecutableSimulator extends DefaultSimulator {
         
         // Stop simulation when the executable is deleted
         registerResourceChangeListener(executable)
+        // Restart simulation if compilation finished
+        SimulationCompiler.addListener(compilationFinishedListener)
     }
     
     /**
@@ -198,9 +203,13 @@ class ExecutableSimulator extends DefaultSimulator {
                 if(executable.fullPath == oldExecutable.fullPath) {
                     // Stop simulation
                     SimulationManager.instance.stop
+                    restartSimulationAfterCompilation = true
                     // Notify user why simulation stopped
                     PromConsole.print("Stopped simulation because the executable '"+executable.fullPath+"' changed")
                 }
+            }
+            
+            override afterCompilation(SimulationCompiler compiler) {
             }
         }
         // Add new listener
@@ -330,6 +339,25 @@ class ExecutableSimulator extends DefaultSimulator {
             return "Simulator '"+executablePath.stringValue+"'"
         } else {
             return "Simulator '"+modelName+"'"
+        }
+    }
+    
+    /**
+     * Returns a simulation compilation listener that restarts the simulation.
+     */
+    private static def SimulationCompilerListener createCompilationFinishedListener() {
+        return new SimulationCompilerListener() {
+            override preDelete(IFile oldExecutable) {
+            }
+            
+            override afterCompilation(SimulationCompiler compiler) {
+                if(restartSimulationAfterCompilation
+                    && compiler != null && compiler.result != null && compiler.result.problems.isNullOrEmpty) {
+                    restartSimulationAfterCompilation = false
+                    SimulationLaunchConfig.launchLastSelection
+                }
+            }
+            
         }
     }
 }

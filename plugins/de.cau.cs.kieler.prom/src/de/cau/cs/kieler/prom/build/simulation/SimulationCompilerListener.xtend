@@ -28,4 +28,9 @@ abstract class SimulationCompilerListener {
      * Fired before the given executable file is deleted to be replaced by a new one.
      */  
     public def void preDelete(IFile oldExecutable)
+    
+    /**
+     * Fired after the compilation finished
+     */
+    public def void afterCompilation(SimulationCompiler compiler) 
 }

@@ -360,9 +360,6 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      * @param files The list of files to be built
      */
     private def void buildModels(List<IFile> files) {
-        // Collection of all created simulation files
-        val List<IFile> createdSimulationFiles = newArrayList
-        
         // Compile the model files
         if(!files.isNullOrEmpty) {
             // Load changed models into resource set.
@@ -406,16 +403,13 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
                                 showBuildProblems(result.simulationGenerationResult.problems)
                             }
                             // Remember to compile simulation code
-                            createdSimulationFiles.addAll(result.createdSimulationFiles)
+                            for(simFile : result.createdSimulationFiles) {
+                                compileSimulationCode(simFile)
+                            }
                         }
                     }
                 }
             }
-        }
-        
-        // Compile created simulation files
-        for(f : createdSimulationFiles) {
-            compileSimulationCode(f)
         }
     }
 

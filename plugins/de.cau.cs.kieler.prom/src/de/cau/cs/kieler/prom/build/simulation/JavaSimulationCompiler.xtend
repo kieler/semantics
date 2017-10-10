@@ -73,13 +73,17 @@ class JavaSimulationCompiler extends SimulationCompiler {
         val processDirectory = getProcessDirectory
         val commandWithoutSubstitutions = Substitution.performSubstitutions(command.stringValue, substitutions)
         val compilationArguments = PromPlugin.splitStringOnWhitespace(commandWithoutSubstitutions)
-        var result = startProcess(processDirectory, compilationArguments)
+        result = startProcess(processDirectory, compilationArguments)
         
         // Run command to create executable jar file from class files
         if(result.problems.isNullOrEmpty) {
             val jarCommandWithoutSubstitutions = Substitution.performSubstitutions(jarCommand.stringValue, substitutions)
             val jarArguments = PromPlugin.splitStringOnWhitespace(jarCommandWithoutSubstitutions)
             result = startProcess(processDirectory, jarArguments)
+        }
+        // Notify listeners
+        for(l : listeners) {
+            l.afterCompilation(this)
         }
         return result
     }

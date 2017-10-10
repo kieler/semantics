@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.simulation.ui.toolbar
 
 import org.eclipse.core.expressions.PropertyTester
-import de.cau.cs.kieler.simulation.ui.views.DataPoolView
 import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.services.IEvaluationService
 
@@ -27,7 +26,12 @@ import org.eclipse.ui.services.IEvaluationService
  * @author aas
  *
  */
-class SubTicksEnabledPropertyTester extends PropertyTester {
+class AdvancedControlsEnabledPropertyTester extends PropertyTester {
+    /**
+     * Determines if the "step sub tick" button and other advanced controls in the toolbar should be visible or not.
+     */
+    public static var boolean advancedControlsEnabled
+    
     /**
      * The namespace of the property.
      */
@@ -35,7 +39,7 @@ class SubTicksEnabledPropertyTester extends PropertyTester {
     /**
      * The name of the property.
      */
-    private static val PROPERTY_NAME = "subTicksEnabled";
+    private static val PROPERTY_NAME = "advancedControlsEnabled";
  
     /**
      * Updates the state of the property.
@@ -64,7 +68,7 @@ class SubTicksEnabledPropertyTester extends PropertyTester {
      */
     override test(Object receiver, String property, Object[] args, Object expectedValue) {
         if (property == PROPERTY_NAME) {
-            return DataPoolView.subTicksEnabled
+            return advancedControlsEnabled
         }
         return false;
     }

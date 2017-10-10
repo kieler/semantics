@@ -60,6 +60,24 @@
          <toolbar
                id="de.cau.cs.kieler.simulation.ui.simulationToolbar"
                label="KIELER Simulation">
+            <dynamic
+                  class="de.cau.cs.kieler.simulation.ui.toolbar.SimulationBackendControl"
+                  id="de.cau.cs.kieler.simulation.ui.simulationBackendControl">
+               <visibleWhen
+                     checkEnabled="false">
+                  <and>
+                     <with
+                           variable="activeWorkbenchWindow.activePerspective">
+                        <equals
+                              value="de.cau.cs.kieler.simulation">
+                        </equals>
+                     </with>
+                     <test
+                           property="de.cau.cs.kieler.simulation.ui.advancedControlsEnabled">
+                     </test>
+                  </and>
+               </visibleWhen>
+            </dynamic>
             <command
                   commandId="de.cau.cs.kieler.simulation.ui.stepSubTick"
                   disabledIcon="icons/stepIconDisabled.png"
@@ -78,7 +96,7 @@
                         </equals>
                      </with>
                      <test
-                           property="de.cau.cs.kieler.simulation.ui.subTicksEnabled">
+                           property="de.cau.cs.kieler.simulation.ui.advancedControlsEnabled">
                      </test>
                   </and>
                </visibleWhen>
@@ -248,10 +266,10 @@
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
       <propertyTester
-            class="de.cau.cs.kieler.simulation.ui.toolbar.SubTicksEnabledPropertyTester"
+            class="de.cau.cs.kieler.simulation.ui.toolbar.AdvancedControlsEnabledPropertyTester"
             id="de.cau.cs.kieler.simulation.ui.subTicksEnabledPropertyTester"
             namespace="de.cau.cs.kieler.simulation.ui"
-            properties="subTicksEnabled"
+            properties="advancedControlsEnabled"
             type="java.lang.Object">
       </propertyTester>
    </extension>

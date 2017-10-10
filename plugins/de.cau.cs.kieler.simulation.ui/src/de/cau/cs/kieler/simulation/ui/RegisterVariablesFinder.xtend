@@ -22,7 +22,6 @@ import de.cau.cs.kieler.prom.build.compilation.KiCoModelCompiler
 import de.cau.cs.kieler.prom.build.compilation.ModelCompiler
 import de.cau.cs.kieler.prom.build.templates.SimulationTemplateProcessor
 import de.cau.cs.kieler.prom.build.templates.TemplateProcessor
-import de.cau.cs.kieler.prom.templates.VariableInterfaceType
 import de.cau.cs.kieler.scg.SCGraphs
 import java.util.Set
 import org.eclipse.xtend.lib.annotations.Accessors
