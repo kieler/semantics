@@ -309,14 +309,14 @@ class Visualizer {
         // process the EObject passed as a parameter
         if (object instanceof Statement) {
             model.addValues(object as Statement)
-        } else if (object instanceof Block) {
-
-            // For a block, display all statements at once
-            for (statement : (object as Block).statements) {
-                model.addValues(statement)
-            }
-        } else if (object instanceof ConditionalLine) {
-            model.addConditionalLineValues(object as ConditionalLine)
+//        } else if (object instanceof Block) {
+//
+//            // For a block, display all statements at once
+//            for (statement : (object as Block).statements) {
+//                model.addValues(statement)
+//            }
+//        } else if (object instanceof ConditionalLine) {
+//            model.addConditionalLineValues(object as ConditionalLine)
         }
     }
 
