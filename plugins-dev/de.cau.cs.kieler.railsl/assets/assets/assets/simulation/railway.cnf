@@ -1,0 +1,65 @@
+#//==========================================================================//
+#//==     R A I L W A Y    S I M U L A T I O N    C - I N T E R F A C E    ==//
+#//==                                                                      ==//
+#//==  by Christian Motika, SS 2007, Christian-Albrechts-University Kiel   ==//
+#//==========================================================================//
+
+# Set the communication tcp port for the ModelGUI to connect to
+# this is OPTIONAL, the default port is 2020
+GUIPORT = 2222
+
+# If WAITFORGUI is enabled (1), during railway_initsystem of the simulation the
+# program waits until the model gui has connected and during 
+# railway_stopcontrol the program waits until the ModelGUI has disconnected.
+# The default value is 0.
+WAITFORGUI = 1
+
+# If you prefer to run the simulation under a windows 2000 system you may
+# need to set this compatible mode. Only set this option if you experience 
+# problems with the ModelGUI connection.
+WIN2KCOMPATIBLE = 0
+
+# Set this option if you don't want to get any state outputs from the 
+# simulation thread
+QUIETMODE = 0
+
+# If you set the logfileoutput option the state outputs are written to 
+# the logfile 'railway.log' in the current directory
+LOGFILEOUTPUT = 0
+
+
+#======================#
+# TRAIN INITIALIZATION #
+#======================#
+
+# List all track segments where you want to place initial trains.
+# Put each track segmnet in a new line.
+# If the train should be placed the other way round start the line with an
+# asterisk character (*).
+# Lines that are empty or that start with a pound character (#) are ignored.
+
+# for example:
+# IC_ST_1
+# KH_ST_5
+# *KH_ST4
+
+#KH_ST_1
+#KH_ST_2
+#*KH_ST_3
+#*KH_ST_4
+#IC_ST_3
+#IC_ST_2
+#OC_ST_2
+#OC_ST_1
+
+KH_ST_2
+*KH_ST_3
+
+OC_ST_2
+KH_ST_1
+IC_ST_2
+OC_ST_1
+OC_ST_3
+KH_ST_5
+*KH_ST_4
+IC_ST_3

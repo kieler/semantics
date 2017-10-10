@@ -1,0 +1,433 @@
+$**************  KCG Version 6.0.0b (build i19) **************
+** Command: kcg60.exe -config U:/SIMULATION/Programmcode/ScadeSource/simulationsa/Simulation/config.txt
+** Generation date: 2009-02-24T01:42:07
+*************************************************************$
+$**************  KCG Version 6.0.0b (build i19) **************
+** Command: s2c -config U:/SIMULATION/Programmcode/ScadeSource/simulationsa/Simulation\kcg_s2c_config.txt
+** Generation date: 2009-02-24T01:42:09
+*************************************************************$
+#### #621(RisingEdge).init ####
+-> RUA
+-> ZM
+-> CP
+-> CC
+-> RUA
+-> CC
+-> ZM
+#### #621(RisingEdge).cycle ####
+-> RUA
+-> ZM
+-> CP
+-> CC
+-> RUA
+-> CC
+-> ZM
+#### #704(contactSetting).init ####
+-> RUA
+-> ZM
+-> CP
+-> CC
+-> RUA
+-> CC
+-> ZM
+#### #704(contactSetting).cycle ####
+-> RUA
+unused assignement to var '#2620(SSM_#771(SM1)_reset_prv)' removed
+unused assignement to var '#2621(SSM_#771(SM1)_reset_sel)' removed
+unused assignement to var '#2623(SSM_#771(SM1)_fired_weak)' removed
+unused assignement to var '#2623(SSM_#771(SM1)_fired_weak)' removed
+unused assignement to var '#2623(SSM_#771(SM1)_fired_weak)' removed
+unused assignement to var '#2623(SSM_#771(SM1)_fired_weak)' removed
+unused assignement to var '#2623(SSM_#771(SM1)_fired_weak)' removed
+unused assignement to var '#2623(SSM_#771(SM1)_fired_weak)' removed
+unused assignement to var '#2623(SSM_#771(SM1)_fired_weak)' removed
+unused assignement to var '#2622(SSM_#771(SM1)_fired_strong)' removed
+unused assignement to var '#2622(SSM_#771(SM1)_fired_strong)' removed
+unused assignement to var '#2622(SSM_#771(SM1)_fired_strong)' removed
+unused assignement to var '#2622(SSM_#771(SM1)_fired_strong)' removed
+unused assignement to var '#2622(SSM_#771(SM1)_fired_strong)' removed
+unused assignement to var '#2622(SSM_#771(SM1)_fired_strong)' removed
+unused assignement to var '#2622(SSM_#771(SM1)_fired_strong)' removed
+-> ZM
+if(#735(_L49)) inside if (#735(_L49)) removed
+if((not #735(_L49))) inside if ((not #735(_L49))) removed
+if(#740(_L59)) inside if (#740(_L59)) removed
+if((not #740(_L59))) inside if ((not #740(_L59))) removed
+if(#735(_L49)) merged(1)
+if(#740(_L59)) merged(1)
+if(#735(_L49)) merged(1)
+if(#735(_L49)) merged(1)
+if(#740(_L59)) merged(1)
+if(#740(_L59)) merged(1)
+if(#740(_L59)) merged(1)
+if(#735(_L49)) merged(1)
+if(#737(_L56)) merged(1)
+if(#746(_L73)) merged(1)
+if(#736(_L50)) merged(1)
+if(#746(_L73)) merged(1)
+-> CP
+-> CC
+-> RUA
+unused assignement to var '#2793(Cb_#2723(SSM_#771(SM1)_Selected)_partial_#2622(SSM_#771(SM1)_fired_strong)_#2597(SSM_#771(SM1)_#772(head_ahead_prim)))' removed
+unused assignement to var '#2793(Cb_#2723(SSM_#771(SM1)_Selected)_partial_#2622(SSM_#771(SM1)_fired_strong)_#2597(SSM_#771(SM1)_#772(head_ahead_prim)))' removed
+unused assignement to var '#2793(Cb_#2723(SSM_#771(SM1)_Selected)_partial_#2622(SSM_#771(SM1)_fired_strong)_#2597(SSM_#771(SM1)_#772(head_ahead_prim)))' removed
+unused assignement to var '#2787(Cb_#2723(SSM_#771(SM1)_Selected)_partial_#2622(SSM_#771(SM1)_fired_strong)_#2595(SSM_#771(SM1)_#783(head_behind_prim)))' removed
+unused assignement to var '#2787(Cb_#2723(SSM_#771(SM1)_Selected)_partial_#2622(SSM_#771(SM1)_fired_strong)_#2595(SSM_#771(SM1)_#783(head_behind_prim)))' removed
+unused assignement to var '#2787(Cb_#2723(SSM_#771(SM1)_Selected)_partial_#2622(SSM_#771(SM1)_fired_strong)_#2595(SSM_#771(SM1)_#783(head_behind_prim)))' removed
+unused assignement to var '#2784(Cb_#2723(SSM_#771(SM1)_Selected)_partial_#2622(SSM_#771(SM1)_fired_strong)_#2594(SSM_#771(SM1)_#770(idle)))' removed
+unused assignement to var '#2784(Cb_#2723(SSM_#771(SM1)_Selected)_partial_#2622(SSM_#771(SM1)_fired_strong)_#2594(SSM_#771(SM1)_#770(idle)))' removed
+unused assignement to var '#2784(Cb_#2723(SSM_#771(SM1)_Selected)_partial_#2622(SSM_#771(SM1)_fired_strong)_#2594(SSM_#771(SM1)_#770(idle)))' removed
+unused assignement to var '#2790(Cb_#2723(SSM_#771(SM1)_Selected)_partial_#2622(SSM_#771(SM1)_fired_strong)_#2596(SSM_#771(SM1)_#797(tail_ahead__sek)))' removed
+unused assignement to var '#2790(Cb_#2723(SSM_#771(SM1)_Selected)_partial_#2622(SSM_#771(SM1)_fired_strong)_#2596(SSM_#771(SM1)_#797(tail_ahead__sek)))' removed
+unused assignement to var '#2790(Cb_#2723(SSM_#771(SM1)_Selected)_partial_#2622(SSM_#771(SM1)_fired_strong)_#2596(SSM_#771(SM1)_#797(tail_ahead__sek)))' removed
+unused assignement to var '#2796(Cb_#2723(SSM_#771(SM1)_Selected)_partial_#2622(SSM_#771(SM1)_fired_strong)_#2598(SSM_#771(SM1)_#776(tail_behind_sek)))' removed
+unused assignement to var '#2796(Cb_#2723(SSM_#771(SM1)_Selected)_partial_#2622(SSM_#771(SM1)_fired_strong)_#2598(SSM_#771(SM1)_#776(tail_behind_sek)))' removed
+unused assignement to var '#2796(Cb_#2723(SSM_#771(SM1)_Selected)_partial_#2622(SSM_#771(SM1)_fired_strong)_#2598(SSM_#771(SM1)_#776(tail_behind_sek)))' removed
+-> CC
+-> ZM
+#### #861(limiterWithDefault).cycle ####
+-> RUA
+-> ZM
+-> CP
+-> CC
+-> RUA
+-> CC
+-> ZM
+#### #1004(countDownEvent).init ####
+-> RUA
+-> ZM
+-> CP
+-> CC
+-> RUA
+-> CC
+-> ZM
+#### #1004(countDownEvent).cycle ####
+-> RUA
+-> ZM
+-> CP
+-> CC
+-> RUA
+-> CC
+-> ZM
+#### #1307(mergeSingleData).cycle ####
+-> RUA
+-> ZM
+-> CP
+-> CC
+-> RUA
+-> CC
+-> ZM
+#### #1550(switchPoint2).init ####
+-> RUA
+-> ZM
+-> CP
+-> CC
+-> RUA
+-> CC
+-> ZM
+#### #1550(switchPoint2).cycle ####
+-> RUA
+-> ZM
+-> CP
+-> CC
+-> RUA
+-> CC
+-> ZM
+#### #2471(switchAlignment).cycle ####
+-> RUA
+-> ZM
+negative condition : branches swapped
+-> CP
+-> CC
+-> RUA
+-> CC
+-> ZM
+#### #2552(prepareMotormode).cycle ####
+-> RUA
+-> ZM
+if(#2561(_L6)) merged(1)
+-> CP
+-> CC
+-> RUA
+-> CC
+-> ZM
+#### #334(track).init ####
+-> RUA
+-> ZM
+-> CP
+-> CC
+-> RUA
+-> CC
+-> ZM
+#### #334(track).cycle ####
+-> RUA
+unused assignement to var '#2851(SSM_#1052(SM4)_reset_prv)' removed
+unused assignement to var '#2852(SSM_#1052(SM4)_reset_sel)' removed
+unused assignement to var '#2892(SSM_#900(SM3)_reset_prv)' removed
+unused assignement to var '#2893(SSM_#900(SM3)_reset_sel)' removed
+unused assignement to var '#2948(SSM_#646(SM2)_reset_prv)' removed
+unused assignement to var '#2949(SSM_#646(SM2)_reset_sel)' removed
+unused assignement to var '#2854(SSM_#1052(SM4)_fired_weak)' removed
+unused assignement to var '#2854(SSM_#1052(SM4)_fired_weak)' removed
+unused assignement to var '#2895(SSM_#900(SM3)_fired_weak)' removed
+unused assignement to var '#2895(SSM_#900(SM3)_fired_weak)' removed
+unused assignement to var '#2951(SSM_#646(SM2)_fired_weak)' removed
+unused assignement to var '#2951(SSM_#646(SM2)_fired_weak)' removed
+unused assignement to var '#2970(SSM_#670(SM3)_reset_act)' removed
+unused assignement to var '#2970(SSM_#670(SM3)_reset_act)' removed
+unused assignement to var '#2970(SSM_#670(SM3)_reset_act)' removed
+unused assignement to var '#2975(SSM_#670(SM3)_fired_weak)' removed
+unused assignement to var '#2975(SSM_#670(SM3)_fired_weak)' removed
+unused assignement to var '#2975(SSM_#670(SM3)_fired_weak)' removed
+unused assignement to var '#2971(SSM_#670(SM3)_reset_nxt)' removed
+unused assignement to var '#2971(SSM_#670(SM3)_reset_nxt)' removed
+unused assignement to var '#2971(SSM_#670(SM3)_reset_nxt)' removed
+unused assignement to var '#2894(SSM_#900(SM3)_fired_strong)' removed
+unused assignement to var '#2894(SSM_#900(SM3)_fired_strong)' removed
+unused assignement to var '#2950(SSM_#646(SM2)_fired_strong)' removed
+unused assignement to var '#2950(SSM_#646(SM2)_fired_strong)' removed
+unused assignement to var '#2974(SSM_#670(SM3)_fired_strong)' removed
+unused assignement to var '#2974(SSM_#670(SM3)_fired_strong)' removed
+unused assignement to var '#2974(SSM_#670(SM3)_fired_strong)' removed
+-> ZM
+if(#5830(I_0)) merged(1)
+if(#5830(I_0)) merged(1)
+if((((#337(track_nr) >= 0) and (#337(track_nr) < 48)) and ((#337(track_nr) >= 0) and (#337(track_nr) < 48)))) merged(1)
+if(#2896(SSM_#900(SM3)_guard_#903())) merged(1)
+if(#2900(SSM_#900(SM3)_guard_#906())) merged(1)
+if(#2898(SSM_#900(SM3)_guard_#910())) merged(1)
+if(#2952(SSM_#646(SM2)_guard_#649())) merged(1)
+if(#2954(SSM_#646(SM2)_guard_#655())) merged(1)
+if((#336(input_rear)).#4925(enters)) merged(1)
+if(#2976(SSM_#670(SM3)_guard_#687())) merged(1)
+negative condition : branches swapped
+negative condition : branches swapped
+if(#530(_L382)) merged(1)
+negative condition : branches swapped
+negative condition : branches swapped
+if(#530(_L382)) merged(1)
+-> CP
+subst(2) #5832(tmp0) <-> #546(_L406)
+-> CC
+-> RUA
+unused assignement to var '#3131(Cb_#2922(SSM_#900(SM3)_Selected)_partial_#2894(SSM_#900(SM3)_fired_strong)_#2880(SSM_#900(SM3)_#899(eh_track_empty)))' removed
+unused assignement to var '#3131(Cb_#2922(SSM_#900(SM3)_Selected)_partial_#2894(SSM_#900(SM3)_fired_strong)_#2880(SSM_#900(SM3)_#899(eh_track_empty)))' removed
+unused assignement to var '#3134(Cb_#2922(SSM_#900(SM3)_Selected)_partial_#2894(SSM_#900(SM3)_fired_strong)_#2881(SSM_#900(SM3)_#901(eh_occupied)))' removed
+unused assignement to var '#3134(Cb_#2922(SSM_#900(SM3)_Selected)_partial_#2894(SSM_#900(SM3)_fired_strong)_#2881(SSM_#900(SM3)_#901(eh_occupied)))' removed
+unused assignement to var '#3134(Cb_#2922(SSM_#900(SM3)_Selected)_partial_#2894(SSM_#900(SM3)_fired_strong)_#2881(SSM_#900(SM3)_#901(eh_occupied)))' removed
+unused assignement to var '#3082(Cb_#3039(SSM_#646(SM2)_Selected)_partial_#2950(SSM_#646(SM2)_fired_strong)_#2937(SSM_#646(SM2)_#645(track_empty)))' removed
+unused assignement to var '#3082(Cb_#3039(SSM_#646(SM2)_Selected)_partial_#2950(SSM_#646(SM2)_fired_strong)_#2937(SSM_#646(SM2)_#645(track_empty)))' removed
+unused assignement to var '#3085(Cb_#3039(SSM_#646(SM2)_Selected)_partial_#2950(SSM_#646(SM2)_fired_strong)_#2938(SSM_#646(SM2)_#647(track_occupied)))' removed
+unused assignement to var '#3085(Cb_#3039(SSM_#646(SM2)_Selected)_partial_#2950(SSM_#646(SM2)_fired_strong)_#2938(SSM_#646(SM2)_#647(track_occupied)))' removed
+unused assignement to var '#3097(Cb_#3004(SSM_#670(SM3)_Selected)_partial_#2974(SSM_#670(SM3)_fired_strong)_#2962(SSM_#670(SM3)_#682(enters)))' removed
+unused assignement to var '#3097(Cb_#3004(SSM_#670(SM3)_Selected)_partial_#2974(SSM_#670(SM3)_fired_strong)_#2962(SSM_#670(SM3)_#682(enters)))' removed
+unused assignement to var '#3097(Cb_#3004(SSM_#670(SM3)_Selected)_partial_#2974(SSM_#670(SM3)_fired_strong)_#2962(SSM_#670(SM3)_#682(enters)))' removed
+-> CC
+-> ZM
+#### #1270(mergeSingleDataArrays).cycle ####
+-> RUA
+-> ZM
+-> CP
+-> CC
+-> RUA
+-> CC
+-> ZM
+#### #2545(prepareMotormodeMerge).cycle ####
+-> RUA
+-> ZM
+-> CP
+-> CC
+-> RUA
+-> CC
+-> ZM
+#### #1234(mergeGlobalData).cycle ####
+-> RUA
+-> ZM
+-> CP
+-> CC
+-> RUA
+-> CC
+-> ZM
+#### #2515(prepareDisplayData).cycle ####
+-> RUA
+-> ZM
+-> CP
+-> CC
+-> RUA
+-> CC
+-> ZM
+#### #1108(switchPoint1).init ####
+-> RUA
+-> ZM
+-> CP
+-> CC
+-> RUA
+-> CC
+-> ZM
+#### #1108(switchPoint1).cycle ####
+-> RUA
+-> ZM
+-> CP
+-> CC
+-> RUA
+-> CC
+-> ZM
+#### #1841(switchPointCross).init ####
+-> RUA
+-> ZM
+-> CP
+-> CC
+-> RUA
+-> CC
+-> ZM
+#### #1841(switchPointCross).cycle ####
+-> RUA
+-> ZM
+if(#1884(_L77)) merged(1)
+if(#1882(_L65)) merged(1)
+-> CP
+subst(2) #5835(tmp0) <-> #5836(tmp0)
+subst(2) #5837(tmp0) <-> #2000(_L396)
+-> CC
+-> RUA
+-> CC
+-> ZM
+#### #169(tracksimulator).init ####
+-> RUA
+-> ZM
+-> CP
+-> CC
+-> RUA
+-> CC
+-> ZM
+#### #169(tracksimulator).cycle ####
+-> RUA
+-> ZM
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+if(#5838(I_0)) merged(1)
+-> CP
+-> CC
+-> RUA
+-> CC
+-> ZM
+#### #160(Simulation).init ####
+-> RUA
+-> ZM
+-> CP
+-> CC
+-> RUA
+-> CC
+-> ZM
+#### #160(Simulation).cycle ####
+-> RUA
+-> ZM
+-> CP
+-> CC
+-> RUA
+-> CC
+-> ZM
+$**************  KCG Version 6.0.0b (build i19) **************
+** s2c.log
+** Generation date: 2009-02-24T01:42:13
+*************************************************************$
+$**************  KCG Version 6.0.0b (build i19) **************
+** U:/SIMULATION/Programmcode/ScadeSource/simulationsa/Simulation\kcg.log
+** Generation date: 2009-02-24T01:42:13
+*************************************************************$

@@ -1,0 +1,12 @@
+#Sun Mar 01 16:09:14 CET 2009
+LauncherExePath=Z\:\\SIMULATION\\Programmcode\\SimpleRailCtrlWin32\\CodeGenerator\\LauncherWin32.exe
+TargetWorkflow=workflowGirlsday.oaw
+SimCompile=C\:\\cygwin\\bin\\bash --login -i -c "cd /cygdrive/z/SIMULATION/Programmcode;make RailController.bin"
+GeneratorExePath=Z\:\\SIMULATION\\Programmcode\\SimpleRailCtrlWin32\\CodeGenerator\\CodeGenerator.jar
+SimStart=C\:\\cygwin\\bin\\bash --login -i -c "cd /cygdrive/z/SIMULATION/Programmcode;./c.bat;./gui.bat"
+TargetOutput=Z\:\\sho\\Diplomarbeit\\Programmcode\\Interface
+SimOutput=Z\:\\SIMULATION\\Programmcode\\RailwayControllerC
+eclipse.preferences.version=1
+TargetCompile=C\:\\cygwin\\bin\\bash --login -i -c "ssh drift 'cd sho/Diplomarbeit/Programmcode/Interface;make RailController'"
+TargetStart=C\:\\cygwin\\bin\\bash --login -i -c "ssh lukas 'cd sho/Diplomarbeit/Programmcode/Interface;./RailController'"
+SimWorkflow=workflowNormal.oaw

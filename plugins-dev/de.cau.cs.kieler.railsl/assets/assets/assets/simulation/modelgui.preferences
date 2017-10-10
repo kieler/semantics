@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Preferences for ModelGUI</comment>
+<entry key="simulink-mode">false</entry>
+<entry key="scade-mode">true</entry>
+<entry key="port">2222</entry>
+<entry key="host">localhost</entry>
+<entry key="xml-validation">true</entry>
+</properties>

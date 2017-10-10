@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workbench version="2.0">
+<workbenchAdvisor/>
+<window height="700" maximized="true" width="1000" x="0" y="25">
+<fastViewData fastViewLocation="1024"/>
+<perspectiveBar/>
+<coolbarLayout locked="0">
+<coolItem id="group.file" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.ui.workbench.file" itemType="typeToolBarContribution" x="70" y="32"/>
+<coolItem id="additions" itemType="typeGroupMarker"/>
+<coolItem id="SimpleRailCtrl.genplugin.actionSet" itemType="typeToolBarContribution" x="180" y="32"/>
+<coolItem id="group.nav" itemType="typeGroupMarker"/>
+<coolItem id="group.editor" itemType="typeGroupMarker"/>
+<coolItem id="simplerailctrl.diagram.part.SimpleRailCtrlDiagramEditorID" itemType="typeToolBarContribution" x="956" y="32"/>
+<coolItem id="group.help" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
+</coolbarLayout>
+<page focus="true" label="&lt;Unknown Label&gt; - SimpleRailCtrl Perspective">
+<editors>
+<editorArea activeWorkbook="DefaultEditorWorkbook">
+<info part="DefaultEditorWorkbook">
+<folder appearance="1" expanded="2">
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+</presentation>
+</folder>
+</info>
+</editorArea>
+<editor focus="true" id="simplerailctrl.diagram.part.SimpleRailCtrlDiagramEditorID" name="girlsday.simplerailctrl_diagram" partName="girlsday.simplerailctrl_diagram" title="girlsday.simplerailctrl_diagram" tooltip="file:/home/cmot/eclipseworkspace/CodeGenerator/girlsday.simplerailctrl_diagram" workbook="DefaultEditorWorkbook">
+<input bundle="org.eclipse.emf.common.ui" class="org.eclipse.emf.common.ui.URIEditorInput" factoryID="org.eclipse.emf.common.ui.URIEditorInputFactory" uri="file:/home/cmot/eclipseworkspace/CodeGenerator/girlsday.simplerailctrl_diagram"/>
+</editor>
+<editor id="simplerailctrl.diagram.part.SimpleRailCtrlDiagramEditorID" name="advanced.simplerailctrl_diagram" partName="advanced.simplerailctrl_diagram" title="advanced.simplerailctrl_diagram" tooltip="file:/home/cmot/SIMULATION/Programmcode/SimpleRailCtrlWin32/advanced.simplerailctrl_diagram" workbook="DefaultEditorWorkbook">
+<input bundle="org.eclipse.emf.common.ui" class="org.eclipse.emf.common.ui.URIEditorInput" factoryID="org.eclipse.emf.common.ui.URIEditorInputFactory" uri="file:/home/cmot/SIMULATION/Programmcode/SimpleRailCtrlWin32/advanced.simplerailctrl_diagram"/>
+</editor>
+</editors>
+<views>
+<view id="org.eclipse.ui.views.PropertySheet" partName="Properties">
+<viewState/>
+</view>
+<view id="SimpleRailCtrl.genplugin.ExecutionConsoleView" partName="ExecutionConsole">
+<viewState/>
+</view>
+<view id="org.eclipse.ui.views.ContentOutline" partName="Outline">
+<viewState/>
+</view>
+</views>
+<perspectives activePart="SimpleRailCtrl.genplugin.ExecutionConsoleView" activePerspective="simplerailctrl.diagram.SimpleRailCtrlPerspective">
+<perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
+<descriptor class="simplerailctrl.diagram.application.DiagramEditorPerspective" id="simplerailctrl.diagram.SimpleRailCtrlPerspective" label="SimpleRailCtrl Perspective"/>
+<alwaysOnActionSet id="SimpleRailCtrl.diagram.InitDiagram"/>
+<alwaysOnActionSet id="SimpleRailCtrl.diagram.ActionSet"/>
+<alwaysOnActionSet id="SimpleRailCtrl.genplugin.actionSet"/>
+<perspective_action id="simplerailctrl.diagram.SimpleRailCtrlPerspective"/>
+<view id="org.eclipse.ui.views.ContentOutline"/>
+<view id="SimpleRailCtrl.genplugin.ExecutionConsoleView"/>
+<view id="org.eclipse.ui.views.PropertySheet"/>
+<fastViewBars/>
+<layout>
+<mainWindow>
+<info part="org.eclipse.ui.editorss"/>
+<info folder="true" part="stickyFolderRight" ratio="0.7494929" ratioLeft="739" ratioRight="247" relationship="2" relative="org.eclipse.ui.editorss">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
+</folder>
+</info>
+<info folder="true" part="right" ratio="0.66587865" ratioLeft="845" ratioRight="424" relationship="2" relative="org.eclipse.ui.editorss">
+<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
+<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="bottomRight" ratio="0.6849475" ratioLeft="587" ratioRight="270" relationship="4" relative="right">
+<folder activePageID="SimpleRailCtrl.genplugin.ExecutionConsoleView" appearance="2" expanded="2">
+<page content="SimpleRailCtrl.genplugin.ExecutionConsoleView" label="ExecutionConsole"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@1e9b48b" ratio="0.5812133" ratioLeft="297" ratioRight="214" relationship="4" relative="right">
+<folder activePageID="org.eclipse.ui.views.PropertySheet" appearance="2" expanded="2">
+<page content="org.eclipse.ui.views.PropertySheet" label="Properties"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+</mainWindow>
+</layout>
+</perspective>
+</perspectives>
+<workingSets/>
+<navigationHistory>
+<editors>
+<editor bundle="org.eclipse.emf.common.ui" class="org.eclipse.emf.common.ui.URIEditorInput" factoryID="org.eclipse.emf.common.ui.URIEditorInputFactory" id="simplerailctrl.diagram.part.SimpleRailCtrlDiagramEditorID" uri="file:/home/cmot/eclipseworkspace/CodeGenerator/advanced.simplerailctrl_diagram"/>
+<editor bundle="org.eclipse.emf.common.ui" class="org.eclipse.emf.common.ui.URIEditorInput" factoryID="org.eclipse.emf.common.ui.URIEditorInputFactory" id="simplerailctrl.diagram.part.SimpleRailCtrlDiagramEditorID" uri="file:/home/cmot/eclipseworkspace/CodeGenerator/girlsday.simplerailctrl_diagram"/>
+<editor bundle="org.eclipse.emf.common.ui" class="org.eclipse.emf.common.ui.URIEditorInput" factoryID="org.eclipse.emf.common.ui.URIEditorInputFactory" id="simplerailctrl.diagram.part.SimpleRailCtrlDiagramEditorID" uri="file:/home/cmot/SIMULATION/Programmcode/SimpleRailCtrlWin32/CodeGenerator/ICE.simplerailctrl_diagram"/>
+<editor bundle="org.eclipse.emf.common.ui" class="org.eclipse.emf.common.ui.URIEditorInput" factoryID="org.eclipse.emf.common.ui.URIEditorInputFactory" id="simplerailctrl.diagram.part.SimpleRailCtrlDiagramEditorID" uri="file:/home/cmot/SIMULATION/Programmcode/SimpleRailCtrlWin32/advanced.simplerailctrl_diagram"/>
+<editor bundle="org.eclipse.emf.common.ui" class="org.eclipse.emf.common.ui.URIEditorInput" factoryID="org.eclipse.emf.common.ui.URIEditorInputFactory" id="simplerailctrl.diagram.part.SimpleRailCtrlDiagramEditorID" uri="file:/home/cmot/eclipseworkspace/CodeGenerator/girlsday.simplerailctrl_diagram"/>
+</editors>
+<item historyLabel="advanced.simplerailctrl_diagram" index="0"/>
+<item historyLabel="girlsday.simplerailctrl_diagram" index="1"/>
+<item historyLabel="advanced.simplerailctrl_diagram" index="0"/>
+<item historyLabel="girlsday.simplerailctrl_diagram" index="1"/>
+<item historyLabel="ICE.simplerailctrl_diagram" index="2"/>
+<item historyLabel="girlsday.simplerailctrl_diagram" index="1"/>
+<item historyLabel="ICE.simplerailctrl_diagram" index="2"/>
+<item historyLabel="advanced.simplerailctrl_diagram" index="3"/>
+<item historyLabel="ICE.simplerailctrl_diagram" index="2"/>
+<item historyLabel="advanced.simplerailctrl_diagram" index="3"/>
+<item historyLabel="girlsday.simplerailctrl_diagram" index="1"/>
+<item historyLabel="advanced.simplerailctrl_diagram" index="3"/>
+<item historyLabel="girlsday.simplerailctrl_diagram" index="1"/>
+<item historyLabel="advanced.simplerailctrl_diagram" index="3"/>
+<item historyLabel="girlsday.simplerailctrl_diagram" index="1"/>
+<item historyLabel="advanced.simplerailctrl_diagram" index="3"/>
+<item historyLabel="girlsday.simplerailctrl_diagram" index="1"/>
+<item historyLabel="advanced.simplerailctrl_diagram" index="3"/>
+<item historyLabel="girlsday.simplerailctrl_diagram" index="4"/>
+<item historyLabel="advanced.simplerailctrl_diagram" index="3"/>
+<item historyLabel="girlsday.simplerailctrl_diagram" index="4"/>
+<item historyLabel="advanced.simplerailctrl_diagram" index="3"/>
+<item historyLabel="girlsday.simplerailctrl_diagram" index="4"/>
+<item historyLabel="advanced.simplerailctrl_diagram" index="3"/>
+<item historyLabel="girlsday.simplerailctrl_diagram" index="4"/>
+<item historyLabel="advanced.simplerailctrl_diagram" index="3"/>
+<item active="true" historyLabel="girlsday.simplerailctrl_diagram" index="4"/>
+</navigationHistory>
+</page>
+<workbenchWindowAdvisor/>
+<actionBarAdvisor/>
+<trimLayout>
+<trimArea IMemento.internal.id="128">
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.WorkbenchWindow.topBar"/>
+</trimArea>
+<trimArea IMemento.internal.id="1024">
+<trimItem IMemento.internal.id="org.eclipse.jface.action.StatusLineManager"/>
+</trimArea>
+</trimLayout>
+</window>
+<mruList>
+<file factoryID="org.eclipse.emf.common.ui.URIEditorInputFactory" id="simplerailctrl.diagram.part.SimpleRailCtrlDiagramEditorID" name="advanced.simplerailctrl_diagram" tooltip="file:/home/cmot/SIMULATION/Programmcode/SimpleRailCtrlWin32/advanced.simplerailctrl_diagram">
+<persistable bundle="org.eclipse.emf.common.ui" class="org.eclipse.emf.common.ui.URIEditorInput" uri="file:/home/cmot/SIMULATION/Programmcode/SimpleRailCtrlWin32/advanced.simplerailctrl_diagram"/>
+</file>
+<file factoryID="org.eclipse.emf.common.ui.URIEditorInputFactory" id="simplerailctrl.diagram.part.SimpleRailCtrlDiagramEditorID" name="ICE.simplerailctrl_diagram" tooltip="file:/home/cmot/SIMULATION/Programmcode/SimpleRailCtrlWin32/CodeGenerator/ICE.simplerailctrl_diagram">
+<persistable bundle="org.eclipse.emf.common.ui" class="org.eclipse.emf.common.ui.URIEditorInput" uri="file:/home/cmot/SIMULATION/Programmcode/SimpleRailCtrlWin32/CodeGenerator/ICE.simplerailctrl_diagram"/>
+</file>
+<file factoryID="org.eclipse.emf.common.ui.URIEditorInputFactory" id="simplerailctrl.diagram.part.SimpleRailCtrlDiagramEditorID" name="girlsday.simplerailctrl_diagram" tooltip="file:/home/cmot/eclipseworkspace/CodeGenerator/girlsday.simplerailctrl_diagram">
+<persistable bundle="org.eclipse.emf.common.ui" class="org.eclipse.emf.common.ui.URIEditorInput" uri="file:/home/cmot/eclipseworkspace/CodeGenerator/girlsday.simplerailctrl_diagram"/>
+</file>
+<file factoryID="org.eclipse.emf.common.ui.URIEditorInputFactory" id="simplerailctrl.diagram.part.SimpleRailCtrlDiagramEditorID" name="advanced.simplerailctrl_diagram" tooltip="file:/home/cmot/eclipseworkspace/CodeGenerator/advanced.simplerailctrl_diagram">
+<persistable bundle="org.eclipse.emf.common.ui" class="org.eclipse.emf.common.ui.URIEditorInput" uri="file:/home/cmot/eclipseworkspace/CodeGenerator/advanced.simplerailctrl_diagram"/>
+</file>
+</mruList>
+</workbench>

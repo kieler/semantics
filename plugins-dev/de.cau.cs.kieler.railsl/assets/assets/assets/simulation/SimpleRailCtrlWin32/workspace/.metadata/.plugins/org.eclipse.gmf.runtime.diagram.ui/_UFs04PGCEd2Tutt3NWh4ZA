@@ -1,0 +1,19 @@
+#Sun Mar 01 16:09:02 CET 2009
+viewport.x=-84
+zoom=1.0
+print.margin.right=0.5
+rulergrid.rulerunit=0
+rulergrid.snaptogrid=true
+print.page.size=Letter
+print.margin.left=0.5
+print.page.width=8.5
+print.useInches=true
+rulergrid.gridspacing=0.125
+print.page.height=11.0
+rulergrid.gridlinecolor=12632256
+print.margin.bottom=0.5
+rulergrid.gridlinestyle=6
+rulergrid.gridlevel=true
+print.margin.top=0.5
+print.usePortrait=true
+viewport.y=350

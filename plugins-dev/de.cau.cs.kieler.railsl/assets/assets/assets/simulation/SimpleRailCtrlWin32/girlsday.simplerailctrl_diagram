@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.1/notation" xmlns:simplerailctrl="http://simplerailctrl/1.0" xmi:id="_6KKTgAOWEd6X9pkDrg2s0A" type="SimpleRailCtrl" name="girlsday.simplerailctrl_diagram" measurementUnit="Pixel">
+  <children xmi:type="notation:Node" xmi:id="_7WcgcAOWEd6X9pkDrg2s0A" type="1001">
+    <children xmi:type="notation:Node" xmi:id="_7WcgcwOWEd6X9pkDrg2s0A" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_7WcgdAOWEd6X9pkDrg2s0A" type="4002"/>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_7WcgcQOWEd6X9pkDrg2s0A"/>
+    <element xmi:type="simplerailctrl:SetSpeed" href="girlsday.simplerailctrl#//@nodes.0"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7WcgcgOWEd6X9pkDrg2s0A" x="24" y="132"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_CCoroAOXEd6X9pkDrg2s0A" type="1003">
+    <children xmi:type="notation:Node" xmi:id="_CCorowOXEd6X9pkDrg2s0A" type="4006"/>
+    <children xmi:type="notation:Node" xmi:id="_CCorpAOXEd6X9pkDrg2s0A" type="4007"/>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_CCoroQOXEd6X9pkDrg2s0A"/>
+    <element xmi:type="simplerailctrl:SetPoint" href="girlsday.simplerailctrl#//@nodes.1"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_CCorogOXEd6X9pkDrg2s0A" x="24" y="264"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_egTmIAOXEd6X9pkDrg2s0A" type="1001">
+    <children xmi:type="notation:Node" xmi:id="_egTmIwOXEd6X9pkDrg2s0A" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_egTmJAOXEd6X9pkDrg2s0A" type="4002"/>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_egTmIQOXEd6X9pkDrg2s0A"/>
+    <element xmi:type="simplerailctrl:SetSpeed" href="girlsday.simplerailctrl#//@nodes.2"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_egTmIgOXEd6X9pkDrg2s0A" x="204" y="228"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="__VSrQAP8Ed6BTYyyedII7Q" type="1001">
+    <children xmi:type="notation:Node" xmi:id="__VSrQwP8Ed6BTYyyedII7Q" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="__VSrRAP8Ed6BTYyyedII7Q" type="4002"/>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="__VSrQQP8Ed6BTYyyedII7Q"/>
+    <element xmi:type="simplerailctrl:SetSpeed" href="girlsday.simplerailctrl#//@nodes.3"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="__VSrQgP8Ed6BTYyyedII7Q" x="204" y="24"/>
+  </children>
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_6KKTgQOWEd6X9pkDrg2s0A"/>
+  <element xmi:type="simplerailctrl:RailController" href="girlsday.simplerailctrl#/"/>
+  <edges xmi:type="notation:Edge" xmi:id="_MC_WQAOXEd6X9pkDrg2s0A" type="3002" source="__VSrQAP8Ed6BTYyyedII7Q" target="_egTmIAOXEd6X9pkDrg2s0A">
+    <children xmi:type="notation:Node" xmi:id="_MC_WRAOXEd6X9pkDrg2s0A" type="4009">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_MC_WRQOXEd6X9pkDrg2s0A" x="-6" y="-91"/>
+    </children>
+    <styles xmi:type="notation:RoutingStyle" xmi:id="_MC_WQQOXEd6X9pkDrg2s0A"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_MC_WQgOXEd6X9pkDrg2s0A"/>
+    <element xmi:type="simplerailctrl:EventContact" href="girlsday.simplerailctrl#//@nodes.3/@outTransitions.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_MC_WQwOXEd6X9pkDrg2s0A" points="[0, 0, 0, -160]$[0, 160, 0, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_MC_WRgOXEd6X9pkDrg2s0A" id="(0.5,1.0)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_MC_WRwOXEd6X9pkDrg2s0A" id="(0.5,0.0)"/>
+  </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_ORt3oAOXEd6X9pkDrg2s0A" type="3001" source="_CCoroAOXEd6X9pkDrg2s0A" target="_7WcgcAOWEd6X9pkDrg2s0A">
+    <children xmi:type="notation:Node" xmi:id="_ORt3pAOXEd6X9pkDrg2s0A" type="4008">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_ORt3pQOXEd6X9pkDrg2s0A" y="-53"/>
+    </children>
+    <styles xmi:type="notation:RoutingStyle" xmi:id="_ORt3oQOXEd6X9pkDrg2s0A"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_ORt3ogOXEd6X9pkDrg2s0A"/>
+    <element xmi:type="simplerailctrl:EventWait" href="girlsday.simplerailctrl#//@nodes.1/@outTransitions.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_ORt3owOXEd6X9pkDrg2s0A" points="[0, 0, 0, 60]$[0, -60, 0, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_ORt3pgOXEd6X9pkDrg2s0A" id="(0.5,0.0)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_ORt3pwOXEd6X9pkDrg2s0A" id="(0.5,1.0)"/>
+  </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_anhtYAP9Ed6BTYyyedII7Q" type="3001" source="_egTmIAOXEd6X9pkDrg2s0A" target="_7WcgcAOWEd6X9pkDrg2s0A">
+    <children xmi:type="notation:Node" xmi:id="_anhtZAP9Ed6BTYyyedII7Q" type="4008">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_anhtZQP9Ed6BTYyyedII7Q" x="-15" y="33"/>
+    </children>
+    <styles xmi:type="notation:RoutingStyle" xmi:id="_anhtYQP9Ed6BTYyyedII7Q"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_anhtYgP9Ed6BTYyyedII7Q"/>
+    <element xmi:type="simplerailctrl:EventWait" href="girlsday.simplerailctrl#//@nodes.2/@outTransitions.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_anhtYwP9Ed6BTYyyedII7Q" points="[0, 0, 120, 60]$[-120, -60, 0, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_anq3UAP9Ed6BTYyyedII7Q" id="(0.24545455,0.0)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_anq3UQP9Ed6BTYyyedII7Q" id="(0.74545455,1.0)"/>
+  </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_gRRFoAQUEd6-96tkwIcjxg" type="3002" source="_7WcgcAOWEd6X9pkDrg2s0A" target="__VSrQAP8Ed6BTYyyedII7Q">
+    <children xmi:type="notation:Node" xmi:id="_gRRFpAQUEd6-96tkwIcjxg" type="4009">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_gRRFpQQUEd6-96tkwIcjxg" x="-25" y="-55"/>
+    </children>
+    <styles xmi:type="notation:RoutingStyle" xmi:id="_gRRFoQQUEd6-96tkwIcjxg"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_gRRFogQUEd6-96tkwIcjxg"/>
+    <element xmi:type="simplerailctrl:EventContact" href="girlsday.simplerailctrl#//@nodes.0/@outTransitions.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_gRRFowQUEd6-96tkwIcjxg" points="[0, 0, -121, 91]$[119, -92, -2, -1]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_gRRFpgQUEd6-96tkwIcjxg" id="(0.55454546,0.0)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_gRRFpwQUEd6-96tkwIcjxg" id="(0.018181818,0.425)"/>
+  </edges>
+</notation:Diagram>

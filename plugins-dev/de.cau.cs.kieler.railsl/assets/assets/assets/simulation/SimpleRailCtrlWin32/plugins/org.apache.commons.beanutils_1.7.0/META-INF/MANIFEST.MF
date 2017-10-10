@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Require-Bundle: org.apache.commons.logging
+Export-Package: org.apache.commons.beanutils,org.apache.commons.beanut
+ ils.converters,org.apache.commons.beanutils.locale,org.apache.commons
+ .beanutils.locale.converters,org.apache.commons.collections
+Bundle-Vendor: Apache.org
+Bundle-ClassPath: commons-beanutils.jar
+Bundle-Version: 1.7.0
+Bundle-Name: Commons BeanUtils Plug-in
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.apache.commons.beanutils
+

@@ -1,0 +1,191 @@
+
+[STUDIO\TOOLS\CONFIGURATIONS\Code Generator - Simulator]
+
+"U:\\shared\\teaching\\prak\\07ss-railway\\common\\examples\\simulation\\simulation.etp"="Simulation" 
+"U:\\shared\\teaching\\prak\\07ss-railway\\public\\common\\examples\\simulation\\simulation.etp"="Simulation" 
+"U:\\lab\\07ss-railway\\public\\common\\examples\\simulation\\simulation.etp"="KCG 6.0" 
+"U:\\Meins\\common\\examples\\simulation\\simulation.etp"="KCG 6.0" 
+"U:\\Meins\\cmot-chsch\\simulation2\\simulation.etp"="KCG 6.0" 
+"U:\\RAILWAY\\cmot-chsch\\simulation2\\simulation.etp"="KCG 6.0" 
+"U:\\RAILWAY\\cmot-chsch\\simulation\\simulation.etp"="KCG 6.0" 
+"U:\\Meins\\cmot-chsch\\simulation\\simulation.etp"="KCG 6.0" 
+"U:\\Meins\\cmot-chsch\\simulationBeta\\simulation.etp"="Simulation" 
+"U:\\RAILWAY\\cmot-chsch\\simulationBeta\\simulation.etp"="Simulation" 
+"U:\\RAILWAY\\common\\rwmodel\\simulation\\simulation.etp"="Simulation" 
+"U:\\RAILWAY\\common\\rwmodel\\simulation_old\\simulation.etp"="KCG 6.0" 
+"U:\\RAILWAY\\common\\rwmodel\\simulation_alt\\simulation.etp"="KCG 6.0" 
+"U:\\RAILWAY\\common\\rwmodel\\simulation_orginal\\simulation.etp"="KCG 6.0" 
+"U:\\lab\\07ss-railway\\public\\common\\rwmodel\\simulation\\simulation.etp"="Simulation" 
+"U:\\RAILWAY\\common\\rwmodel\\simulationsa\\simulation.etp"="Simulation" 
+"U:\\rail\\simulationsa\\simulation.etp"="Simulation" 
+"U:\\SIMULATION\\Programmcode\\ScadeSource\\simulationsa\\simulation.etp"="Simulation" 
+
+[STUDIO\TOOLS\CONFIGURATIONS\Design Verifier]
+
+"U:\\shared\\teaching\\prak\\07ss-railway\\common\\examples\\simulation\\simulation.etp"="KCG 6.0" 
+"U:\\shared\\teaching\\prak\\07ss-railway\\public\\common\\examples\\simulation\\simulation.etp"="KCG 6.0" 
+"U:\\lab\\07ss-railway\\public\\common\\examples\\simulation\\simulation.etp"="KCG 6.0" 
+"U:\\Meins\\common\\examples\\simulation\\simulation.etp"="KCG 6.0" 
+"U:\\Meins\\cmot-chsch\\simulation2\\simulation.etp"="KCG 6.0" 
+"U:\\RAILWAY\\cmot-chsch\\simulation2\\simulation.etp"="KCG 6.0" 
+"U:\\RAILWAY\\cmot-chsch\\simulation\\simulation.etp"="KCG 6.0" 
+"U:\\Meins\\cmot-chsch\\simulation\\simulation.etp"="KCG 6.0" 
+"U:\\Meins\\cmot-chsch\\simulationBeta\\simulation.etp"="KCG 6.0" 
+"U:\\RAILWAY\\cmot-chsch\\simulationBeta\\simulation.etp"="KCG 6.0" 
+"U:\\RAILWAY\\common\\rwmodel\\simulation\\simulation.etp"="KCG 6.0" 
+"U:\\RAILWAY\\common\\rwmodel\\simulation_old\\simulation.etp"="KCG 6.0" 
+"U:\\RAILWAY\\common\\rwmodel\\simulation_alt\\simulation.etp"="KCG 6.0" 
+"U:\\RAILWAY\\common\\rwmodel\\simulation_orginal\\simulation.etp"="KCG 6.0" 
+"U:\\lab\\07ss-railway\\public\\common\\rwmodel\\simulation\\simulation.etp"="KCG 6.0" 
+"U:\\RAILWAY\\common\\rwmodel\\simulationsa\\simulation.etp"="KCG 6.0" 
+"U:\\SIMULATION\\Programmcode\\ScadeSource\\simulationsa\\simulation.etp"="KCG 6.0" 
+
+[STUDIO\TOOLS\CONFIGURATIONS\Reporter]
+
+"U:\\shared\\teaching\\prak\\07ss-railway\\common\\examples\\simulation\\simulation.etp"="HTML" 
+"U:\\shared\\teaching\\prak\\07ss-railway\\public\\common\\examples\\simulation\\simulation.etp"="HTML" 
+"U:\\lab\\07ss-railway\\public\\common\\examples\\simulation\\simulation.etp"="HTML" 
+"U:\\Meins\\common\\examples\\simulation\\simulation.etp"="HTML" 
+"U:\\Meins\\cmot-chsch\\simulation2\\simulation.etp"="HTML" 
+"U:\\RAILWAY\\cmot-chsch\\simulation2\\simulation.etp"="HTML" 
+"U:\\RAILWAY\\cmot-chsch\\simulation\\simulation.etp"="HTML" 
+"U:\\Meins\\cmot-chsch\\simulation\\simulation.etp"="HTML" 
+"U:\\Meins\\cmot-chsch\\simulationBeta\\simulation.etp"="HTML" 
+"U:\\RAILWAY\\cmot-chsch\\simulationBeta\\simulation.etp"="HTML" 
+"U:\\RAILWAY\\common\\rwmodel\\simulation\\simulation.etp"="HTML" 
+"U:\\RAILWAY\\common\\rwmodel\\simulation_old\\simulation.etp"="HTML" 
+"U:\\RAILWAY\\common\\rwmodel\\simulation_alt\\simulation.etp"="HTML" 
+"U:\\RAILWAY\\common\\rwmodel\\simulation_orginal\\simulation.etp"="HTML" 
+"U:\\lab\\07ss-railway\\public\\common\\rwmodel\\simulation\\simulation.etp"="HTML" 
+"U:\\RAILWAY\\common\\rwmodel\\simulationsa\\simulation.etp"="HTML" 
+"U:\\rail\\simulationsa\\simulation.etp"="HTML" 
+"U:\\SIMULATION\\Programmcode\\ScadeSource\\simulationsa\\simulation.etp"="HTML" 
+
+[SCADE\Editor\Shortcut]
+
+"groupNb"="0" 
+
+[SCADE\Editor\Tool]
+
+"UsePolyline"="false" 
+"TransitionKind"="strong" 
+
+[SCADE\Simulator\ControlBreakpoint]
+
+"Count"="0" 
+
+[SCADE\Simulator\DataBreakpoint]
+
+"Count"="0" 
+
+[SCADE\Simulator\TclBreakpoint]
+
+"Count"="0" 
+
+[SCADE\Simulator\Simulation]
+
+"Latency"="50" 
+
+[SCADE\Simulator\Watch]
+
+"Count"="2" 
+"Watch1"="simulation::Simulation/displayData" 
+"Watch2"="simulation::Simulation/in_controllerCommands" 
+"Watch3"="simulation::Simulation/inittrainsout" 
+"Watch4"="simulation::Simulation/integration_simu 2/OMSG_m_ICStoGlobal" 
+"Watch5"="simulation::Simulation/railwayOutput" 
+"Watch6"="simulation::Simulation/simulation::tracksimulator 1/feedback_sensors" 
+
+[SCADE\Simulator\Graph]
+
+"Count"="0" 
+"Graph1"="simulation::Cast_Test/output_int/0" 
+"Graph2"="simulation::Cast_Test/output_int/1" 
+"Graph3"="simulation::Cast_Test/output_int/2" 
+"Graph4"="simulation::Cast_Test/output_int/3" 
+"Graph5"="simulation::Cast_Test/output_int/4" 
+"Graph6"="simulation::Cast_Test/output_int/5" 
+"Graph7"="simulation::Cast_Test/output_int/6" 
+"Graph8"="simulation::Cast_Test/output_int/7" 
+"Graph9"="simulation::Cast_Test/output_int/8" 
+
+[STUDIO\TOOLS\CONFIGURATIONS\Checker]
+
+"U:\\shared\\teaching\\prak\\07ss-railway\\common\\examples\\simulation\\simulation.etp"="KCG 6.0" 
+"U:\\Meins\\cmot-chsch\\simulation\\simulation.etp"="KCG 6.0" 
+"U:\\Meins\\cmot-chsch\\simulationBeta\\simulation.etp"="KCG 6.0" 
+"U:\\RAILWAY\\cmot-chsch\\simulationBeta\\simulation.etp"="KCG 6.0" 
+"U:\\RAILWAY\\common\\rwmodel\\simulation\\simulation.etp"="KCG 6.0" 
+"U:\\RAILWAY\\common\\rwmodel\\simulation_old\\simulation.etp"="KCG 6.0" 
+"U:\\RAILWAY\\common\\rwmodel\\simulation_alt\\simulation.etp"="KCG 6.0" 
+"U:\\RAILWAY\\common\\rwmodel\\simulation_orginal\\simulation.etp"="KCG 6.0" 
+"U:\\lab\\07ss-railway\\public\\common\\rwmodel\\simulation\\simulation.etp"="KCG 6.0" 
+"U:\\RAILWAY\\common\\rwmodel\\simulationsa\\simulation.etp"="KCG 6.0" 
+"U:\\rail\\simulationsa\\simulation.etp"="KCG 6.0" 
+"U:\\SIMULATION\\Programmcode\\ScadeSource\\simulationsa\\simulation.etp"="KCG 6.0" 
+
+[STUDIO\TOOLS\CONFIGURATIONS\TTA Extension]
+
+"U:\\shared\\teaching\\prak\\07ss-railway\\common\\examples\\simulation\\simulation.etp"="KCG 6.0" 
+"U:\\lab\\07ss-railway\\public\\common\\examples\\simulation\\simulation.etp"="KCG 6.0" 
+"U:\\shared\\teaching\\prak\\07ss-railway\\public\\common\\examples\\simulation\\simulation.etp"="KCG 6.0" 
+"U:\\Meins\\common\\examples\\simulation\\simulation.etp"="KCG 6.0" 
+"U:\\Meins\\cmot-chsch\\simulation2\\simulation.etp"="KCG 6.0" 
+"U:\\RAILWAY\\cmot-chsch\\simulation2\\simulation.etp"="KCG 6.0" 
+"U:\\RAILWAY\\cmot-chsch\\simulation\\simulation.etp"="KCG 6.0" 
+"U:\\Meins\\cmot-chsch\\simulation\\simulation.etp"="KCG 6.0" 
+"U:\\Meins\\cmot-chsch\\simulationBeta\\simulation.etp"="KCG 6.0" 
+"U:\\RAILWAY\\cmot-chsch\\simulationBeta\\simulation.etp"="KCG 6.0" 
+"U:\\RAILWAY\\common\\rwmodel\\simulation\\simulation.etp"="KCG 6.0" 
+"U:\\RAILWAY\\common\\rwmodel\\simulation_old\\simulation.etp"="KCG 6.0" 
+"U:\\RAILWAY\\common\\rwmodel\\simulation_alt\\simulation.etp"="KCG 6.0" 
+"U:\\RAILWAY\\common\\rwmodel\\simulation_orginal\\simulation.etp"="KCG 6.0" 
+"U:\\lab\\07ss-railway\\public\\common\\rwmodel\\simulation\\simulation.etp"="KCG 6.0" 
+"U:\\RAILWAY\\common\\rwmodel\\simulationsa\\simulation.etp"="KCG 6.0" 
+"U:\\rail\\simulationsa\\simulation.etp"="KCG 6.0" 
+"U:\\SIMULATION\\Programmcode\\ScadeSource\\simulationsa\\simulation.etp"="KCG 6.0" 
+
+[STUDIO\TOOLS\CONFIGURATIONS\Implementer]
+
+"U:\\shared\\teaching\\prak\\07ss-railway\\common\\examples\\simulation\\simulation.etp"="KCG 6.0" 
+
+[STUDIO\TOOLS\CONFIGURATIONS\DiffAnalyzer]
+
+"U:\\shared\\teaching\\prak\\07ss-railway\\common\\examples\\simulation\\simulation.etp"="KCG 6.0" 
+"U:\\SIMULATION\\Programmcode\\ScadeSource\\simulationsa\\simulation.etp"="KCG 6.0" 
+
+[STUDIO\TOOLS\CONFIGURATIONS\Instrumenter]
+
+"U:\\shared\\teaching\\prak\\07ss-railway\\common\\examples\\simulation\\simulation.etp"="MTC" 
+"U:\\Meins\\cmot-chsch\\simulation\\simulation.etp"="MTC" 
+"U:\\Meins\\cmot-chsch\\simulationBeta\\simulation.etp"="MTC" 
+"U:\\RAILWAY\\cmot-chsch\\simulationBeta\\simulation.etp"="MTC" 
+"U:\\RAILWAY\\common\\rwmodel\\simulation\\simulation.etp"="MTC" 
+"U:\\RAILWAY\\common\\rwmodel\\simulation_old\\simulation.etp"="MTC" 
+"U:\\RAILWAY\\common\\rwmodel\\simulation_alt\\simulation.etp"="MTC" 
+"U:\\RAILWAY\\common\\rwmodel\\simulation_orginal\\simulation.etp"="MTC" 
+"U:\\lab\\07ss-railway\\public\\common\\rwmodel\\simulation\\simulation.etp"="MTC" 
+"U:\\RAILWAY\\common\\rwmodel\\simulationsa\\simulation.etp"="MTC" 
+"U:\\rail\\simulationsa\\simulation.etp"="MTC" 
+"U:\\SIMULATION\\Programmcode\\ScadeSource\\simulationsa\\simulation.etp"="MTC" 
+
+[SCADE\Diff\Tool]
+
+"LastProject1"="" 
+"LastProject2"="" 
+
+[SCADE\Simulator\Breakpoint]
+
+"Count"="0" 
+
+[SCADE\Simulator\StopCondition]
+
+"Count"="0" 
+
+[STUDIO\TOOLS\CONFIGURATIONS\Code Generator]
+
+"U:\\SIMULATION\\Programmcode\\ScadeSource\\simulationsa\\simulation.etp"="KCG 6.0" 
+
+[STUDIO\TOOLS\CONFIGURATIONS\Timing and Stack Verifiers]
+
+"U:\\SIMULATION\\Programmcode\\ScadeSource\\simulationsa\\simulation.etp"="KCG 6.0" 

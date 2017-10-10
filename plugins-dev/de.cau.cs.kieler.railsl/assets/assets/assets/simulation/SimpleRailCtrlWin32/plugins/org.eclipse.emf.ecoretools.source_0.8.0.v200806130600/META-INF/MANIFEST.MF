@@ -1,0 +1,74 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: org.eclipse.emf.ecoretools.source; singleton=true
+Bundle-Localization: plugin
+Bundle-Name: %pluginName
+Bundle-Version: 0.8.0.v200806130600
+Bundle-Vendor: %providerName
+
+Name: about.mappings
+SHA1-Digest: dzW8Hlp2HLaYVcVwB2EWWqh6DWM=
+
+Name: src/org.eclipse.emf.ecoretools.diagram.ui.outline_0.8.0.v2008061
+ 30600/src.zip
+SHA1-Digest: OBziSH5M+fbAWhjlN88eid4X1zU=
+
+Name: src/org.eclipse.emf.ecoretools.diagram_0.8.0.v200806130600/src.z
+ ip
+SHA1-Digest: qASdSe18eEwxNonb1VsNIYYQJe0=
+
+Name: src/org.eclipse.emf.ecoretools.tabbedproperties_0.8.0.v200806130
+ 600/about.html
+SHA1-Digest: qurwoEhF1kgdyuhpLitjUIrfZFc=
+
+Name: src/org.eclipse.emf.ecoretools.properties_0.8.0.v200806130600/sr
+ c.zip
+SHA1-Digest: QT7Oscn7uS4PA0cVQHwVYbo6xTg=
+
+Name: src/org.eclipse.emf.ecoretools_0.8.0.v200806130600/src.zip
+SHA1-Digest: It747c/2Bk45WL70uEKtTFSGNCg=
+
+Name: about.html
+SHA1-Digest: qurwoEhF1kgdyuhpLitjUIrfZFc=
+
+Name: plugin.xml
+SHA1-Digest: I0t+o6kXbySrxIY1bLaTaeai3Vc=
+
+Name: about.properties
+SHA1-Digest: EJZdHwXlO4brl5PUE4ZY1f8EW+w=
+
+Name: src/org.eclipse.emf.ecoretools.diagram_0.8.0.v200806130600/about
+ .html
+SHA1-Digest: qurwoEhF1kgdyuhpLitjUIrfZFc=
+
+Name: modeling32.png
+SHA1-Digest: ADlLWFV0eQ74YnLvHnPFkYLeLrs=
+
+Name: src/org.eclipse.emf.ecoretools.tabbedproperties_0.8.0.v200806130
+ 600/src.zip
+SHA1-Digest: czPIi1kB4DQYACn+QXMlLG+7aWc=
+
+Name: src/org.eclipse.emf.ecoretools.diagram.ui.outline_0.8.0.v2008061
+ 30600/about.html
+SHA1-Digest: qurwoEhF1kgdyuhpLitjUIrfZFc=
+
+Name: about.ini
+SHA1-Digest: t0FfqhXQ1DOntXUimIG6MWb0U1g=
+
+Name: src/org.eclipse.emf.ecoretools.filters_0.8.0.v200806130600/about
+ .html
+SHA1-Digest: qurwoEhF1kgdyuhpLitjUIrfZFc=
+
+Name: plugin.properties
+SHA1-Digest: GrSS1VNQOFfEvij0YH06Qeg7r+U=
+
+Name: src/org.eclipse.emf.ecoretools.filters_0.8.0.v200806130600/src.z
+ ip
+SHA1-Digest: /fIsvT8z8QTXSSh9c8aF614mGpg=
+
+Name: META-INF/eclipse.inf
+SHA1-Digest: KyT9FF7C7t86NoBoa2kZT3ZJBfw=
+
+Name: src/org.eclipse.emf.ecoretools.properties_0.8.0.v200806130600/ab
+ out.html
+SHA1-Digest: qurwoEhF1kgdyuhpLitjUIrfZFc=
+

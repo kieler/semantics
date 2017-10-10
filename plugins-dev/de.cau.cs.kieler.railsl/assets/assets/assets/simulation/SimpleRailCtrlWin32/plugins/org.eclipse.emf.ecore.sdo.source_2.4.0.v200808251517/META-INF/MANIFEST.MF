@@ -1,0 +1,57 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: org.eclipse.emf.ecore.sdo.source; singleton=true
+Bundle-Localization: plugin
+Bundle-Name: %pluginName
+Bundle-Version: 2.4.0.v200808251517
+Bundle-Vendor: %providerName
+
+Name: about.mappings
+SHA1-Digest: 6Xizh5TNh+BDJcP4hB2yV4ChqAE=
+
+Name: src/org.eclipse.emf.commonj.sdo_2.4.0.v200808251517/about.html
+SHA1-Digest: mLkmRLtG3amkcY0I7KSYZX6qKhs=
+
+Name: src/org.eclipse.emf.ecore.sdo.edit_2.4.0.v200808251517/about.htm
+ l
+SHA1-Digest: nk+t6mvX0TZBjKKhub2T0YT09zk=
+
+Name: about.html
+SHA1-Digest: mLkmRLtG3amkcY0I7KSYZX6qKhs=
+
+Name: plugin.xml
+SHA1-Digest: I0t+o6kXbySrxIY1bLaTaeai3Vc=
+
+Name: src/org.eclipse.emf.ecore.sdo.edit_2.4.0.v200808251517/src.zip
+SHA1-Digest: hrl2EOW0r11uBLIxDjzVfpTEc30=
+
+Name: about.properties
+SHA1-Digest: ax8/BG+fZoB26tX6vqUFekQXRm0=
+
+Name: modeling32.png
+SHA1-Digest: ADlLWFV0eQ74YnLvHnPFkYLeLrs=
+
+Name: about.ini
+SHA1-Digest: KQMVTFcyVja5dvVmIh2o+qDsslY=
+
+Name: src/org.eclipse.emf.ecore.sdo_2.4.0.v200808251517/about.html
+SHA1-Digest: mLkmRLtG3amkcY0I7KSYZX6qKhs=
+
+Name: plugin.properties
+SHA1-Digest: y81X4TKIWsxy+JMUxhtNnSsMlhU=
+
+Name: src/org.eclipse.emf.commonj.sdo_2.4.0.v200808251517/src.zip
+SHA1-Digest: 1WUqcS5yBbRWZFbL5/Oj37dSmUg=
+
+Name: src/org.eclipse.emf.ecore.sdo.editor_2.4.0.v200808251517/about.h
+ tml
+SHA1-Digest: nk+t6mvX0TZBjKKhub2T0YT09zk=
+
+Name: META-INF/eclipse.inf
+SHA1-Digest: KyT9FF7C7t86NoBoa2kZT3ZJBfw=
+
+Name: src/org.eclipse.emf.ecore.sdo_2.4.0.v200808251517/src.zip
+SHA1-Digest: q2xL0VQwSem7SQQ96fqgzw6A6Mw=
+
+Name: src/org.eclipse.emf.ecore.sdo.editor_2.4.0.v200808251517/src.zip
+SHA1-Digest: EwddMhqZCUa37zjta8uGTPImTkg=
+

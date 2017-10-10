@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Require-Bundle: org.antlr.runtime;visibility:=reexport
+Export-Package: org.antlr,org.antlr.tool
+Bundle-Vendor: www.antlr.org
+Bundle-ClassPath: stringtemplate-3.0.jar,antlr-3.0-patched.jar,antlr-2
+ .7.7.jar
+Bundle-Version: 3.0.0
+Bundle-Name: Antlr 3 Plug-in
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.antlr
+

@@ -1,0 +1,12 @@
+-target_dir "U:/SIMULATION/Programmcode/ScadeSource/simulationsa/Simulation" -exp simulation::cycleBreaker,simulation::dataAll2Local,simulation::dataAll2LocalOnly,simulation::dataLocal2All,simulation::innerCircle,simulation::kickingHorsePass,simulation::outerCircle -target C -name_length 255 
+-node simulation::Simulation
+"C:/Programme/Esterel Technologies/Scade60d/libraries/libdigital/digital.xscade"
+"C:/Programme/Esterel Technologies/Scade60d/libraries/libdigital/TruthTables.xscade"
+"C:/Programme/Esterel Technologies/Scade60d/libraries/liblinear/linear.xscade"
+"C:/Programme/Esterel Technologies/Scade60d/libraries/liblinear/filters.xscade"
+"C:/Programme/Esterel Technologies/Scade60d/libraries/libmath/math.xscade"
+"C:/Programme/Esterel Technologies/Scade60d/libraries/libmath/vect.xscade"
+"C:/Programme/Esterel Technologies/Scade60d/libraries/libmathext/mathext.xscade"
+"C:/Programme/Esterel Technologies/Scade60d/libraries/libpwlinear/pwlinear.xscade"
+"C:/Programme/Esterel Technologies/Scade60d/libraries/libpwlinear/lut.xscade"
+"U:/SIMULATION/Programmcode/ScadeSource/simulationsa/Package1.xscade"

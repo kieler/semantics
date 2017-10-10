@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<workflow>
+	<property name="metamodel" value="platform:/resource/SampleGeneratorTest/SimpleRailCtrl.ecore" />
+	<property name="model" value="platform:/resource/SampleGeneratorTest/Model.xmi" />
+	<property name="src-gen" value="c:\\" />
+	
+	<!-- set up EMF for standalone execution -->
+	<bean class="org.eclipse.mwe.emf.StandaloneSetup" >
+		<platformUri value=".."/>
+	</bean>
+
+	<!-- load model and store it in slot 'model' -->
+	<component class="org.eclipse.mwe.emf.Reader">
+	    <uri value="${model}" />
+		<!-- <uri value="platform:/resource/${model}" />  -->
+		<modelSlot value="model" />
+	</component>
+
+	<!-- check model -->
+	<!--
+	<component class="oaw.check.CheckComponent">
+		<metaModel id="mm"
+			class="org.eclipse.m2t.type.emf.EmfRegistryMetaModel"/>
+		<checkFile value="metamodel::Checks" />
+		<emfAllChildrenSlot value="model" />
+	</component>
+    -->
+
+
+	<!--  generate code <metaModelFile value="${metamodel}" /> -->
+	<component class="org.openarchitectureware.xpand2.Generator">
+	
+	<metaModel class="oaw.type.emf.EmfMetaModel">
+		<metaModelFile value="${metamodel}" />
+	</metaModel>
+    <metaModel id='mm' class='org.eclipse.m2t.type.emf.EmfRegistryMetaModel' />  
+		 <expand
+			value="templateGirlsday::main FOR model" />
+		<outlet path="${src-gen}" />
+        
+	</component>
+</workflow>

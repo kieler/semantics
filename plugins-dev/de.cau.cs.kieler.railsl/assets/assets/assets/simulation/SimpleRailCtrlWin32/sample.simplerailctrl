@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simplerailctrl:RailController xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:simplerailctrl="http://simplerailctrl/1.0">
+  <nodes xsi:type="simplerailctrl:SetSpeed" speed="120">
+    <outTransitions xsi:type="simplerailctrl:EventContact" destination="//@nodes.2" track="IC_ST_2"/>
+    <track>IC_LN_0</track>
+    <track>IC_LN_1</track>
+    <track>IC_LN_2</track>
+    <track>IC_LN_3</track>
+    <track>IC_LN_4</track>
+    <track>IC_LN_5</track>
+    <track>IC_ST_0</track>
+    <track>IC_JCT_0</track>
+    <track>IC_ST_4</track>
+    <track>IC_ST_2</track>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetPoint">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.4" seconds="10"/>
+    <point>POINT_11</point>
+    <point>POINT_13</point>
+    <point>POINT_18</point>
+    <point>POINT_29</point>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSignal">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.5"/>
+    <track>IC_JCT_0</track>
+    <track>IC_LN_0</track>
+    <track>IC_LN_1</track>
+    <track>IC_LN_2</track>
+    <track>IC_LN_3</track>
+    <track>IC_LN_4</track>
+    <track>IC_LN_5</track>
+    <track>IC_ST_0</track>
+    <track>IC_ST_4</track>
+    <track>IC_ST_2</track>
+    <position>FIRST</position>
+    <position>SECOND</position>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSpeed">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.4" seconds="10"/>
+    <track>IC_ST_0</track>
+    <track>IC_LN_1</track>
+    <track>IC_LN_2</track>
+    <track>IC_LN_3</track>
+    <track>IC_LN_4</track>
+    <track>IC_LN_5</track>
+    <track>IC_JCT_0</track>
+    <track>IC_ST_4</track>
+    <track>IC_LN_0</track>
+    <track>IC_ST_2</track>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSignal" color="GREEN">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.0" seconds="5"/>
+    <track>IC_JCT_0</track>
+    <track>IC_LN_0</track>
+    <track>IC_LN_1</track>
+    <track>IC_LN_2</track>
+    <track>IC_LN_3</track>
+    <track>IC_LN_4</track>
+    <track>IC_LN_5</track>
+    <track>IC_ST_0</track>
+    <track>IC_ST_4</track>
+    <track>IC_ST_2</track>
+    <position>FIRST</position>
+    <position>SECOND</position>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSpeed" speed="50">
+    <outTransitions xsi:type="simplerailctrl:EventContact" destination="//@nodes.3" track="IC_ST_2" position="SECOND"/>
+    <track>IC_JCT_0</track>
+    <track>IC_LN_0</track>
+    <track>IC_LN_1</track>
+    <track>IC_LN_2</track>
+    <track>IC_LN_3</track>
+    <track>IC_LN_4</track>
+    <track>IC_LN_5</track>
+    <track>IC_ST_0</track>
+    <track>IC_ST_4</track>
+    <track>IC_ST_2</track>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetPoint" initial="true" direction="BRANCH">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.17" seconds="2"/>
+    <point>POINT_1</point>
+    <point>POINT_14</point>
+    <point>POINT_2</point>
+    <point>POINT_5</point>
+    <point>POINT_8</point>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSignal" color="GREEN">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.8" seconds="4"/>
+    <track>KH_LN_0</track>
+    <track>KH_LN_1</track>
+    <track>KH_LN_2</track>
+    <track>KH_LN_3</track>
+    <track>KH_LN_7</track>
+    <track>KH_LN_8</track>
+    <track>KH_ST_4</track>
+    <position>SECOND</position>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSpeed" speed="100">
+    <outTransitions xsi:type="simplerailctrl:EventContact" destination="//@nodes.10" track="KH_LN_5"/>
+    <track>KH_LN_0</track>
+    <track>KH_LN_2</track>
+    <track>KH_LN_3</track>
+    <track>KH_LN_5</track>
+    <track>KH_LN_7</track>
+    <track>KH_LN_8</track>
+    <track>KH_ST_0</track>
+    <track>KH_ST_6</track>
+    <track>KH_ST_4</track>
+    <track>KH_LN_1</track>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSignal" color="GREEN">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.12" seconds="2"/>
+    <track>KH_LN_5</track>
+    <position>SECOND</position>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSpeed" speed="40">
+    <outTransitions xsi:type="simplerailctrl:EventContact" destination="//@nodes.11" track="KH_LN_5" position="SECOND"/>
+    <track>KH_LN_5</track>
+    <track>KH_LN_3</track>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSpeed">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.9" seconds="10"/>
+    <track>KH_LN_5</track>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSpeed" speed="100">
+    <outTransitions xsi:type="simplerailctrl:EventContact" destination="//@nodes.13" track="KH_ST_4"/>
+    <track>KH_LN_3</track>
+    <track>KH_LN_5</track>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSignal">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.14"/>
+    <track>KH_LN_0</track>
+    <track>KH_LN_1</track>
+    <track>KH_LN_2</track>
+    <track>KH_LN_3</track>
+    <track>KH_LN_4</track>
+    <track>KH_LN_5</track>
+    <track>KH_LN_6</track>
+    <track>KH_LN_7</track>
+    <track>KH_LN_8</track>
+    <track>KH_ST_0</track>
+    <track>KH_ST_6</track>
+    <track>KH_ST_4</track>
+    <position>SECOND</position>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSpeed" speed="40">
+    <outTransitions xsi:type="simplerailctrl:EventContact" destination="//@nodes.15" track="KH_ST_4" position="SECOND"/>
+    <track>KH_ST_0</track>
+    <track>KH_ST_4</track>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSpeed">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.7" seconds="7"/>
+    <track>KH_LN_1</track>
+    <track>KH_LN_2</track>
+    <track>KH_LN_3</track>
+    <track>KH_LN_4</track>
+    <track>KH_LN_5</track>
+    <track>KH_LN_6</track>
+    <track>KH_LN_7</track>
+    <track>KH_LN_8</track>
+    <track>KH_ST_0</track>
+    <track>KH_ST_2</track>
+    <track>KH_ST_3</track>
+    <track>KH_ST_4</track>
+    <track>KH_ST_6</track>
+    <track>KH_LN_0</track>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetPoint" initial="true" direction="BRANCH">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.1"/>
+    <point>POINT_19</point>
+    <point>POINT_20</point>
+    <point>POINT_23</point>
+    <point>POINT_24</point>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSignal">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.7"/>
+    <track>KH_LN_5</track>
+    <position>SECOND</position>
+  </nodes>
+</simplerailctrl:RailController>

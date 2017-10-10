@@ -1,0 +1,12 @@
+#Wed Jun 17 16:58:46 CEST 2009
+LauncherExePath=/home/cmot/SIMULATION/Programmcode/SimpleRailCtrlWin32/CodeGenerator/launchLinux
+TargetWorkflow=workflowGirlsday.oaw
+SimCompile=./linuxSimCompileLauncher.bat
+GeneratorExePath=/home/cmot/SIMULATION/Programmcode/SimpleRailCtrlWin32/CodeGenerator/CodeGenerator.jar
+SimStart=./linuxSimStartLauncher.bat
+TargetOutput=/home/cmot/sho/Diplomarbeit/Programmcode/Interface
+SimOutput=/home/cmot/SIMULATION/Programmcode/RailwayControllerC
+eclipse.preferences.version=1
+TargetCompile=./linuxTargetCompileLauncher.bat
+TargetStart=./linuxTargetStartLauncher.bat
+SimWorkflow=workflowGirlsday.oaw

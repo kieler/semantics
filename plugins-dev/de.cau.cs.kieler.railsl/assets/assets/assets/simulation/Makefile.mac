@@ -1,0 +1,116 @@
+################################################################################
+##        M A K E F I L E - R A I L W A Y S I M U - (c) C. Motika, 2007       ##
+################################################################################
+
+### the source folder of the orginal SCADE generated C code
+# SCADEPROJECTFOLDER = /cygdrive/u/RAILWAY/common/rwmodel/simulationsa/Simulation
+# SCADEPROJECTFOLDER = /home/haf/rail/simulationsa/Simulation
+SCADEPROJECTFOLDER = ScadeSource/simulationsa/
+SCADEPROFILE = Simulation
+
+### this is the folder where railway.c (from simulation) is located in
+FOLDERSIMU = RailwaySimuSCADE
+
+### all files for gcc with .c or .o prefix
+SCADEFILES  = $(wildcard $(FOLDERSIMU)/*.c)
+SCADEFILESO = $(patsubst %.c,%.o, $(SCADEFILES))
+
+### compiler options for gcc
+CC = gcc
+COPTS = -O2 -IInclude
+LIBS = -lpthread -lcurses
+
+?: help
+help: usage
+
+usage:
+	@echo "+-------------------| Simulation Makefile |-------------------+"
+	@echo "|                                                             |"
+	@echo "|  make all          Build all                                |"
+	@echo "|  make clean        Remove temp files                        |"
+	@echo "|  make realclean    clean+clear simulation folder            |"
+	@echo "|  make rebuild      clean + build all                        |"
+	@echo "|  make rebuildall   clean + build all                        |"
+	@echo "|  make COPYFILES    Copy SCADE files from SCADEPROJECTFOLDER |"
+	@echo "|  make copyrebuild  COPYFILES+clean+rebuild                  |"
+	@echo "|                                                             |"
+	@echo "+-------------------------------------------------------------+"
+
+copyrebuild: COPYFILES rebuild
+rebuildall: rebuild
+rebuild: clean all
+all: RailwayInterfaceTCP.bin RailwayControllerC.bin SampleController.bin SampleController2.bin APIDemo.bin RailController.bin
+#all: RailwayInterfaceTCP.bin RailwayControllerC.bin SampleController2.bin APIDemo.bin RailController.bin
+
+### copy files from the scade folder to the generatedsimulation source folder
+### the also copy files from the project folder (imported operators)
+COPYFILES:
+	@echo "+-----------------------------+"
+	@echo "| COPYING ORGINAL SCADE FILES |"
+	@echo "+-----------------------------+"
+	cp -f -r $(SCADEPROJECTFOLDER)/$(SCADEPROFILE)/*.c $(FOLDERSIMU)
+	cp -f -r $(SCADEPROJECTFOLDER)/$(SCADEPROFILE)/*.h $(FOLDERSIMU)
+	cp -f -r $(SCADEPROJECTFOLDER)/*.c $(FOLDERSIMU)
+	cp -f -r $(SCADEPROJECTFOLDER)/*.h $(FOLDERSIMU)
+
+
+# $@ means c file name as above
+
+RailwayInterfaceTCP.bin: RailwayInterfaceTCP/linuxconio.o $(SCADEFILESO)
+	@echo "+------------------------------------+"
+	@echo "| LINKING RAILWAY INTERFACE NOW ... |"
+	@echo "+------------------------------------+"
+	$(CC) $(COPTS) $(LIBS) -s -o Executables/RailwayInterfaceTCP RailwayInterfaceTCP/RailwayInterfaceTCP.c $?
+
+RailwayControllerC.bin: RailwayInterfaceTCP/linuxconio.o $(SCADEFILESO)
+	@echo "+----------------------------------------------+"
+	@echo "| LINKING RAILWAY CONTROLLER C SAMPLE NOW ... |"
+	@echo "+----------------------------------------------+"
+	$(CC) $(COPTS) $(LIBS) -s -o Executables/RailwayControllerSample RailwayControllerC/RailwayControllerSample.c $?
+
+SampleController.bin: RailwayInterfaceTCP/linuxconio.o $(SCADEFILESO)
+	@echo "+--------------------------------------------+"
+	@echo "| LINKING SAMPLE CONTROLLER C SAMPLE NOW ... |"
+	@echo "+--------------------------------------------+"
+	$(CC) $(COPTS) $(LIBS) -s -o Executables/SampleController RailwayControllerC/SampleController.c $?
+
+SampleController2.bin: RailwayInterfaceTCP/linuxconio.o $(SCADEFILESO)
+	@echo "+---------------------------------------------+"
+	@echo "| LINKING SAMPLE CONTROLLER2 C SAMPLE NOW ... |"
+	@echo "+---------------------------------------------+"
+	$(CC) $(COPTS) $(LIBS) -s -o Executables/SampleController2 RailwayControllerC/SampleController2.c $?
+
+APIDemo.bin: RailwayInterfaceTCP/linuxconio.o $(SCADEFILESO)
+	@echo "+-----------------------------------+"
+	@echo "| LINKING API DEMO C SAMPLE NOW ... |"
+	@echo "+-----------------------------------+"
+	$(CC) $(COPTS) $(LIBS) -s -o Executables/APIDemo RailwayControllerC/apidemo.c $?
+
+RailController.bin: RailwayInterfaceTCP/linuxconio.o $(SCADEFILESO) 
+	@echo "+--------------------------------+"
+	@echo "| LINKING RailController NOW ... |"
+	@echo "+--------------------------------+"
+	$(CC) $(COPTS) $(LIBS) -s -o Executables/RailController RailwayControllerC/RailController.c $?
+
+clean: 
+	@echo "+------------------------------------------------------------------+"
+	@echo "| DELETING OBJECT FILES, BACKUP FILES AND EXECUTABLE FILES NOW ... |"
+	@echo "+------------------------------------------------------------------+"
+	rm -f -r ./RailwaySimuSCADE/*.o
+	rm -f -r ./RailwayInterfaceTCP/*.o
+	rm -f -r ./RailwayControllerC/*.o
+	rm -f -r ./RailwaySimuSCADE/*.bak
+	rm -f -r ./RailwayInterfaceTCP/*.bak
+	rm -f -r ./RailwayControllerC/*.bak
+	rm -f -r ./Executables/*.exe
+
+realclean: clean
+	@echo "+---------------------------------------------+"
+	@echo "| DELETING ALL CONTENT FROM SIMULATION FOLDER |"
+	@echo "+---------------------------------------------+"
+	mv ./RailwaySimuSCADE/railway.c ./RailwaySimuSCADE/railway_c.bak
+	mv ./RailwaySimuSCADE/railway.h ./RailwaySimuSCADE/railway_h.bak
+	rm -f -r ./RailwaySimuSCADE/*.c
+	rm -f -r ./RailwaySimuSCADE/*.h
+	mv ./RailwaySimuSCADE/railway_c.bak ./RailwaySimuSCADE/railway.c
+	mv ./RailwaySimuSCADE/railway_h.bak ./RailwaySimuSCADE/railway.h

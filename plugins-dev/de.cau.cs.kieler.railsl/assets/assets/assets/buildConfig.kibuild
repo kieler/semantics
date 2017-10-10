@@ -1,0 +1,13 @@
+// Compile models to C code
+model compiler kico {
+  outputFolder: "assets/railway"
+  outputFileExtension: c
+  compilationSystem: de.cau.cs.kieler.railSL.railSLSystem
+}
+
+// Compile models to C code
+model compiler kico {
+  outputFolder: "assets/simulation/RailwayControllerC"
+  outputFileExtension: c
+  compilationSystem: de.cau.cs.kieler.railSL.railSLSystem
+}

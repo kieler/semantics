@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simplerailctrl:RailController xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:simplerailctrl="http://simplerailctrl/1.0">
+  <nodes xsi:type="simplerailctrl:SetSpeed" speed="120">
+    <outTransitions xsi:type="simplerailctrl:EventContact" destination="//@nodes.3" track="IC_ST_3"/>
+    <track>IC_LN_0</track>
+    <track>IC_LN_1</track>
+    <track>IC_LN_2</track>
+    <track>IC_LN_3</track>
+    <track>IC_LN_4</track>
+    <track>IC_LN_5</track>
+    <track>IC_ST_0</track>
+    <track>IC_JCT_0</track>
+    <track>IC_ST_4</track>
+    <track>IC_ST_3</track>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetPoint">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.0" seconds="10"/>
+    <point>POINT_11</point>
+    <point>POINT_13</point>
+    <point>POINT_18</point>
+    <point>POINT_29</point>
+    <point>POINT_19</point>
+    <point>POINT_23</point>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSpeed">
+    <outTransitions xsi:type="simplerailctrl:EventOccupied" destination="//@nodes.26">
+      <track>KH_ST_4</track>
+    </outTransitions>
+    <track>IC_ST_0</track>
+    <track>IC_LN_1</track>
+    <track>IC_LN_2</track>
+    <track>IC_LN_3</track>
+    <track>IC_LN_4</track>
+    <track>IC_LN_5</track>
+    <track>IC_JCT_0</track>
+    <track>IC_ST_4</track>
+    <track>IC_LN_0</track>
+    <track>IC_ST_3</track>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSpeed" speed="50">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.22"/>
+    <track>IC_JCT_0</track>
+    <track>IC_LN_0</track>
+    <track>IC_LN_1</track>
+    <track>IC_LN_2</track>
+    <track>IC_LN_3</track>
+    <track>IC_LN_4</track>
+    <track>IC_LN_5</track>
+    <track>IC_ST_0</track>
+    <track>IC_ST_4</track>
+    <track>IC_ST_3</track>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetPoint" direction="BRANCH">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.20"/>
+    <point>POINT_1</point>
+    <point>POINT_14</point>
+    <point>POINT_2</point>
+    <point>POINT_5</point>
+    <point>POINT_8</point>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSpeed" speed="100" direction="REV">
+    <outTransitions xsi:type="simplerailctrl:EventContact" destination="//@nodes.6" track="KH_LN_3" position="SECOND"/>
+    <track>KH_LN_0</track>
+    <track>KH_LN_2</track>
+    <track>KH_LN_3</track>
+    <track>KH_LN_5</track>
+    <track>KH_LN_7</track>
+    <track>KH_LN_8</track>
+    <track>KH_ST_0</track>
+    <track>KH_ST_6</track>
+    <track>KH_ST_4</track>
+    <track>KH_LN_1</track>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSpeed" speed="40" direction="REV">
+    <outTransitions xsi:type="simplerailctrl:EventContact" destination="//@nodes.7" track="KH_LN_3"/>
+    <track>KH_LN_5</track>
+    <track>KH_LN_3</track>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSpeed" direction="REV">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.21" seconds="20"/>
+    <track>KH_LN_3</track>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSpeed" speed="100" direction="REV">
+    <outTransitions xsi:type="simplerailctrl:EventContact" destination="//@nodes.9" track="KH_ST_4" position="SECOND"/>
+    <track>KH_LN_3</track>
+    <track>KH_LN_5</track>
+    <track>KH_ST_6</track>
+    <track>KH_ST_4</track>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSpeed" speed="50" direction="REV">
+    <outTransitions xsi:type="simplerailctrl:EventContact" destination="//@nodes.10" track="KH_ST_4"/>
+    <track>KH_ST_0</track>
+    <track>KH_ST_4</track>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSpeed" direction="REV">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.4" seconds="7"/>
+    <track>KH_LN_1</track>
+    <track>KH_LN_2</track>
+    <track>KH_LN_3</track>
+    <track>KH_LN_4</track>
+    <track>KH_LN_5</track>
+    <track>KH_LN_6</track>
+    <track>KH_LN_7</track>
+    <track>KH_LN_8</track>
+    <track>KH_ST_0</track>
+    <track>KH_ST_2</track>
+    <track>KH_ST_3</track>
+    <track>KH_ST_4</track>
+    <track>KH_ST_6</track>
+    <track>KH_LN_0</track>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetPoint" initial="true" direction="BRANCH">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.1"/>
+    <point>POINT_20</point>
+    <point>POINT_24</point>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSignal" initial="true">
+    <outTransitions xsi:type="simplerailctrl:EventContact" destination="//@nodes.25" track="KH_LN_3" position="SECOND"/>
+    <position>SECOND</position>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSpeed" speed="100">
+    <outTransitions xsi:type="simplerailctrl:EventContact" destination="//@nodes.15" track="KH_ST_2"/>
+    <track>KH_ST_0</track>
+    <track>KH_ST_2</track>
+    <track>KH_ST_6</track>
+    <track>KIO_LN_0</track>
+    <track>KIO_LN_1</track>
+    <track>OC_ST_0</track>
+    <track>OC_ST_3</track>
+    <track>OC_ST_4</track>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetPoint" direction="BRANCH">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.19"/>
+    <point>POINT_7</point>
+    <point>POINT_8</point>
+    <point>POINT_9</point>
+    <point>POINT_17</point>
+    <point>POINT_27</point>
+    <point>POINT_4</point>
+    <point>POINT_0</point>
+    <point>POINT_1</point>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSpeed" speed="50">
+    <outTransitions xsi:type="simplerailctrl:EventContact" destination="//@nodes.16" track="KH_ST_2" position="SECOND"/>
+    <track>KH_ST_0</track>
+    <track>KH_ST_2</track>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSpeed">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.12" seconds="10"/>
+    <track>KH_ST_2</track>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetPoint">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.18" seconds="6"/>
+    <point>POINT_9</point>
+    <point>POINT_6</point>
+    <point>POINT_7</point>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetPoint" direction="BRANCH">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.8"/>
+    <point>POINT_5</point>
+    <point>POINT_8</point>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetPoint">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.13"/>
+    <point>POINT_16</point>
+    <point>POINT_28</point>
+    <point>POINT_2</point>
+    <point>POINT_3</point>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetPoint">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.23" seconds="6"/>
+    <point>POINT_7</point>
+    <point>POINT_9</point>
+    <point>POINT_0</point>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSpeed">
+    <outTransitions xsi:type="simplerailctrl:EventOccupied" destination="//@nodes.17">
+      <track>KH_ST_2</track>
+    </outTransitions>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSpeed">
+    <outTransitions xsi:type="simplerailctrl:EventContact" destination="//@nodes.2" track="IC_ST_3" position="SECOND"/>
+    <track>IC_ST_0</track>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetPoint" initial="true" direction="BRANCH">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.24"/>
+    <point>POINT_1</point>
+    <point>POINT_2</point>
+    <point>POINT_14</point>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetPoint">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.5"/>
+    <point>POINT_0</point>
+    <point>POINT_15</point>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSpeed" direction="OFF">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.14"/>
+    <track>KH_ST_4</track>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSpeed">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.0" seconds="10"/>
+  </nodes>
+</simplerailctrl:RailController>

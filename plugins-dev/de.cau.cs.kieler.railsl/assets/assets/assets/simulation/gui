@@ -1,0 +1,3 @@
+#!/bin/sh
+cd Executables
+java -jar modelgui-6b1.jar
