@@ -73,7 +73,7 @@ Workflow {
 
             // the Antlr parser
             fragment = org.eclipse.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment {
-                //antlrParam = "-Xconversiontimeout" antlrParam = "1000" 
+                //antlrParam = "-Xconversiontimeout" antlrParam = "60000" 
                 options = {
                     classSplitting = true
                     backtrack = true
@@ -109,7 +109,7 @@ Workflow {
             //     fragment which can be downloaded from http://www.itemis.com 
             //     and will be ignored if it's not available. 
             fragment = org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment {
-                antlrParam = "-Xconversiontimeout" antlrParam = "30000" 
+                //antlrParam = "-Xconversiontimeout" antlrParam = "60000" 
                 options = {
                     classSplitting = true
                     backtrack = true

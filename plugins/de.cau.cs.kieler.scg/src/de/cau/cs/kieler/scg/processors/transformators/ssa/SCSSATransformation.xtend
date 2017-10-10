@@ -16,15 +16,15 @@ import com.google.common.collect.BiMap
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
@@ -51,8 +51,6 @@ import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
 
 import static extension com.google.common.base.Predicates.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * The SSA transformation for SCGs
@@ -61,7 +59,7 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class SCSSATransformation extends Processor<SCGraphs, SCGraphs> implements Traceable {
+class SCSSATransformation extends InplaceProcessor<SCGraphs> implements Traceable {
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -72,10 +70,6 @@ class SCSSATransformation extends Processor<SCGraphs, SCGraphs> implements Trace
 
     override getName() {
         return "Sequential SSA"
-    }
-    
-    override getType() {
-        return ProcessorType.TRANSFORMATOR
     }
     
     override process() {

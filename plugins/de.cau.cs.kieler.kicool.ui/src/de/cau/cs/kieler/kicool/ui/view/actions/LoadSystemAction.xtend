@@ -27,6 +27,7 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.emf.ecore.EObject
 import static extension org.eclipse.xtext.EcoreUtil2.*
+import de.cau.cs.kieler.kicool.ui.view.CompilerViewPartListener
 
 /**
  * @author ssm
@@ -57,7 +58,7 @@ class LoadSystemAction {
     }
     
     def void invokeLoadSystem() {
-        val editor = CompilerView.getActiveEditor
+        val editor = CompilerViewPartListener.getActiveEditor
         
         if (editor instanceof XtextEditor) {
             val systemModel = editor.createModelInMemoryResource

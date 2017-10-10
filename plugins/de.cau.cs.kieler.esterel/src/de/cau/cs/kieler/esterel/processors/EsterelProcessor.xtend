@@ -13,19 +13,14 @@
 package de.cau.cs.kieler.esterel.processors
 
 import de.cau.cs.kieler.esterel.EsterelProgram
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 
 /**
  * @author als
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-abstract class EsterelProcessor extends Processor<EsterelProgram, EsterelProgram> {
-    
-    override getType() {
-        return ProcessorType.TRANSFORMATOR
-    }
+abstract class EsterelProcessor extends InplaceProcessor<EsterelProgram> {
     
     override process() {
         setModel(getModel.transform)

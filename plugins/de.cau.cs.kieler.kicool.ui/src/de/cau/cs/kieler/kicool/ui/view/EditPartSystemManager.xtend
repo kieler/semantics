@@ -15,6 +15,9 @@ package de.cau.cs.kieler.kicool.ui.view
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import org.eclipse.ui.IEditorPart
+import de.cau.cs.kieler.core.model.properties.Property
+import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 
 /**
  * The EditPartSystemManager keeps track of the active editors and associated systems. 
@@ -27,9 +30,11 @@ import org.eclipse.ui.IEditorPart
 class EditPartSystemManager implements EditorActionAdapter.EditorSaveListener, 
     EditorActionAdapter.EditorCloseListener {
     
-    private val editPartSystemMap = <IEditorPart, System> newHashMap
-    private val editPartCompilationContextMap = <IEditorPart, CompilationContext> newHashMap
+    private static val EDITOR = new Property<IEditorPart>("de.cau.cs.kieler.kicool.ui.view.editor", null)
+    private val editorSystemMap = <String, String> newHashMap
+    @Accessors private val editPartCompilationContextMap = <IEditorPart, CompilationContext> newHashMap
     private val editorActionAdapters = <IEditorPart, EditorActionAdapter> newHashMap
+    @Accessors IEditorPart activeEditor = null
     
     private var CompilerView view
     
@@ -37,24 +42,34 @@ class EditPartSystemManager implements EditorActionAdapter.EditorSaveListener,
         this.view = view
     }
     
-    def attachSystemToEditPart(IEditorPart part, System system) {
-        editPartSystemMap.put(part, system)
+    def getActiveSystemId() {
+        editorSystemMap.get(activeEditor?.site?.id)
     }
     
-    def System getSystem(IEditorPart part) {
-        editPartSystemMap.get(part)
-    }
-    
-    def removeSystem(IEditorPart part) {
-        editPartSystemMap.remove(part)
-    }
-    
-    def findEditorForSystem(System system) {
-        for(key : editPartSystemMap.keySet) {
-            if (editPartSystemMap.get(key).equals(system)) return key
+    def getActiveSystem() {
+        val id = activeSystemId
+        if (!id.nullOrEmpty) {
+            if (view.systemSelectionManager.temporarySystem.containsKey(id)) {
+                return view.systemSelectionManager.temporarySystem.get(id)
+            } else {
+                return KiCoolRegistration.getSystemById(id)
+            }
         }
-        
         return null
+    }
+
+    def setActiveSystem(String sys) {
+        if (activeEditor !== null && activeEditor.site !== null && !activeEditor.site.id.nullOrEmpty) {
+            editorSystemMap.put(activeEditor.site.id, sys)
+        }
+    }
+    
+    def static getInputEditor(CompilationContext context) {
+        context.startEnvironment.getProperty(EDITOR)
+    }
+    
+    def static setInputEditor(CompilationContext context, IEditorPart part) {
+        context.startEnvironment.setProperty(EDITOR, part)
     }
     
     def attachCompilationContextToEditorPart(IEditorPart part, CompilationContext context) {

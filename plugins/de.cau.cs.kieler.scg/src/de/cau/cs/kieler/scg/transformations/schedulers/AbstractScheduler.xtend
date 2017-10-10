@@ -13,8 +13,7 @@
  */
 package de.cau.cs.kieler.scg.transformations.schedulers
 
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 
@@ -35,16 +34,12 @@ import de.cau.cs.kieler.scg.SCGraphs
  * @kieler.design 2013-11-27 proposed 
  * @kieler.rating 2013-11-27 proposed yellow
  */
-abstract class AbstractScheduler extends Processor<SCGraphs, SCGraphs> {
+abstract class AbstractScheduler extends InplaceProcessor<SCGraphs> {
 
     override process() {
         for (scg : model.scgs) {
             scg.schedule
         }
-    }
-    
-    override getType() {
-        ProcessorType.TRANSFORMATOR
     }
 
     protected abstract def SchedulingConstraints orderSchedulingBlocks(SCGraph scg);

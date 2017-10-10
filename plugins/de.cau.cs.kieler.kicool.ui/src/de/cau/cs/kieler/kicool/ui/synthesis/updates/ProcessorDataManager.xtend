@@ -241,7 +241,7 @@ class ProcessorDataManager {
         finalResultNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
         intermediateRootNode.children += finalResultNode 
         finalResultNode.setProperty(INTERMEDIATE_DATA, 
-            new IntermediateData(processorInstance, processorNotification.compilationContext, processorInstance.getModel, view))
+            new IntermediateData(processorInstance, processorNotification.compilationContext, processorInstance.targetModel, view))
         intermediatePosX += 3.5f            
         finalResultNode.container.setFBColor(INTERMEDIATE_FINAL_RESULT)        
 
@@ -250,7 +250,7 @@ class ProcessorDataManager {
         val processorBodyNode = NODE_PROCESSOR_BODY.findNode(nodeIdMap)
         processorBodyNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
         processorBodyNode.setProperty(INTERMEDIATE_DATA, 
-            new IntermediateData(processorInstance, processorNotification.compilationContext, processorInstance.getModel, view))
+            new IntermediateData(processorInstance, processorNotification.compilationContext, processorInstance.targetModel, view))
             
         val infos = processorInstance.environment.getProperty(INFOS)
         if (infos.size > 0) {
@@ -259,7 +259,7 @@ class ProcessorDataManager {
             infoNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
             intermediateRootNode.children += infoNode 
             
-            val model = processorInstance.getModel
+            val model = processorInstance.targetModel
             if (model instanceof EObject) {
                 val morModel = new MessageObjectListPair(infos.get(null).fillUndefinedColors(INFO), model)
                 infoNode.setProperty(INTERMEDIATE_DATA, 
@@ -280,7 +280,7 @@ class ProcessorDataManager {
             warningNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
             intermediateRootNode.children += warningNode 
             
-            val model = processorInstance.getModel
+            val model = processorInstance.targetModel
             if (model instanceof EObject) {
                 val morModel = new MessageObjectListPair(warnings.get(null).fillUndefinedColors(WARNING), model)
                 warningNode.setProperty(INTERMEDIATE_DATA, 
@@ -302,7 +302,7 @@ class ProcessorDataManager {
                     errorNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
                     intermediateRootNode.children += errorNode 
                     
-                    val model = processorInstance.getModel
+                    val model = processorInstance.targetModel
                     if (model instanceof EObject) {
                         val morModel = new MessageObjectListPair(errors.get(errorKey).fillUndefinedColors(ERROR), 
                             if (errorKey === null) model else errorKey)

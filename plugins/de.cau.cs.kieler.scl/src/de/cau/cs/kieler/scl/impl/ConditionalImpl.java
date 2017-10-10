@@ -8,6 +8,8 @@ import de.cau.cs.kieler.scl.Conditional;
 import de.cau.cs.kieler.scl.SCLPackage;
 import de.cau.cs.kieler.scl.Scope;
 
+import de.cau.cs.kieler.scl.SequencePart;
+import de.cau.cs.kieler.scl.Statement;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -24,6 +26,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.scl.impl.ConditionalImpl#isSemicolon <em>Semicolon</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.impl.ConditionalImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.impl.ConditionalImpl#getElse <em>Else</em>}</li>
  * </ul>
@@ -31,6 +34,26 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * @generated
  */
 public class ConditionalImpl extends ScopeImpl implements Conditional {
+    /**
+     * The default value of the '{@link #isSemicolon() <em>Semicolon</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isSemicolon()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean SEMICOLON_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isSemicolon() <em>Semicolon</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isSemicolon()
+     * @generated
+     * @ordered
+     */
+    protected boolean semicolon = SEMICOLON_EDEFAULT;
+
     /**
      * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
      * <!-- begin-user-doc -->
@@ -68,6 +91,27 @@ public class ConditionalImpl extends ScopeImpl implements Conditional {
     @Override
     protected EClass eStaticClass() {
         return SCLPackage.Literals.CONDITIONAL;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isSemicolon() {
+        return semicolon;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setSemicolon(boolean newSemicolon) {
+        boolean oldSemicolon = semicolon;
+        semicolon = newSemicolon;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCLPackage.CONDITIONAL__SEMICOLON, oldSemicolon, semicolon));
     }
 
     /**
@@ -180,6 +224,8 @@ public class ConditionalImpl extends ScopeImpl implements Conditional {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case SCLPackage.CONDITIONAL__SEMICOLON:
+                return isSemicolon();
             case SCLPackage.CONDITIONAL__EXPRESSION:
                 return getExpression();
             case SCLPackage.CONDITIONAL__ELSE:
@@ -196,6 +242,9 @@ public class ConditionalImpl extends ScopeImpl implements Conditional {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case SCLPackage.CONDITIONAL__SEMICOLON:
+                setSemicolon((Boolean)newValue);
+                return;
             case SCLPackage.CONDITIONAL__EXPRESSION:
                 setExpression((Expression)newValue);
                 return;
@@ -214,6 +263,9 @@ public class ConditionalImpl extends ScopeImpl implements Conditional {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case SCLPackage.CONDITIONAL__SEMICOLON:
+                setSemicolon(SEMICOLON_EDEFAULT);
+                return;
             case SCLPackage.CONDITIONAL__EXPRESSION:
                 setExpression((Expression)null);
                 return;
@@ -232,12 +284,72 @@ public class ConditionalImpl extends ScopeImpl implements Conditional {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case SCLPackage.CONDITIONAL__SEMICOLON:
+                return semicolon != SEMICOLON_EDEFAULT;
             case SCLPackage.CONDITIONAL__EXPRESSION:
                 return expression != null;
             case SCLPackage.CONDITIONAL__ELSE:
                 return else_ != null;
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+        if (baseClass == SequencePart.class) {
+            switch (derivedFeatureID) {
+                case SCLPackage.CONDITIONAL__SEMICOLON: return SCLPackage.SEQUENCE_PART__SEMICOLON;
+                default: return -1;
+            }
+        }
+        if (baseClass == Statement.class) {
+            switch (derivedFeatureID) {
+                default: return -1;
+            }
+        }
+        return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+        if (baseClass == SequencePart.class) {
+            switch (baseFeatureID) {
+                case SCLPackage.SEQUENCE_PART__SEMICOLON: return SCLPackage.CONDITIONAL__SEMICOLON;
+                default: return -1;
+            }
+        }
+        if (baseClass == Statement.class) {
+            switch (baseFeatureID) {
+                default: return -1;
+            }
+        }
+        return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (semicolon: ");
+        result.append(semicolon);
+        result.append(')');
+        return result.toString();
     }
 
 } //ConditionalImpl

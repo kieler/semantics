@@ -98,7 +98,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
     }
     
     override getType() {
-        return ProcessorType.TRANSFORMATOR
+        return ProcessorType.EXOGENOUS_TRANSFORMATOR
     }
     
     override process() {

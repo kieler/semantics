@@ -13,8 +13,8 @@ Require-Bundle: com.google.guava,
  org.eclipse.xtend.lib.macro,
  org.eclipse.xtext;visibility:=reexport,
  org.eclipse.ui,
- de.cau.cs.kieler.test.common,
- org.eclipse.orbit.mongodb;bundle-version="3.2.2"
+ de.cau.cs.kieler.test.common;visibility:=reexport,
+ org.eclipse.orbit.mongodb;bundle-version="3.2.2";visibility:=reexport
 Export-Package: de.cau.cs.kieler.benchmark.common
 Bundle-Activator: de.cau.cs.kieler.benchmark.common.CommonBenchmarkActivator
 Bundle-ActivationPolicy: lazy

@@ -75,11 +75,13 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
  */
 class SSCEsterelReconstruction extends Processor<SCGraphs, EsterelProgram> implements Traceable {
 
+    public static val ID = "de.cau.cs.kieler.esterel.processors.transformators.ssa.ssc.scg2esterel"
+
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
     override getId() {
-        return "de.cau.cs.kieler.esterel.processors.transformators.ssa.ssc.scg2esterel"
+        return ID
     }
 
     override getName() {
@@ -87,7 +89,7 @@ class SSCEsterelReconstruction extends Processor<SCGraphs, EsterelProgram> imple
     }
 
     override getType() {
-        return ProcessorType.TRANSFORMATOR
+        return ProcessorType.EXOGENOUS_TRANSFORMATOR
     }
     
     override process() {
@@ -345,7 +347,7 @@ class SSCEsterelReconstruction extends Processor<SCGraphs, EsterelProgram> imple
     
     private def dispatch Expression translateExpr(ValuedObjectReference expression) {
         if (signalVOmap.containsValue(expression.valuedObject)) {
-            return createValuedObjectReference => [
+            return createSignalReference => [
                 valuedObject = signalVOmap.inverse.get(expression.valuedObject)
             ]
         } else {

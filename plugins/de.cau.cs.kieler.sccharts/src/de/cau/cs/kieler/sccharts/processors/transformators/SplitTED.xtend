@@ -14,13 +14,14 @@ package de.cau.cs.kieler.sccharts.processors.transformators
 
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 
 /**
  * @author ssm
  * @kieler.design 2017-02-19 proposed
  * @kieler.rating 2017-02-19 proposed yellow  
  */
-class SplitTED extends Processor {
+class SplitTED extends SCChartsProcessor {
     
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.transformations.splitTED"
@@ -29,10 +30,7 @@ class SplitTED extends Processor {
     override getName() {
         "Split TED"
     }
-    
-    override getType() {
-        ProcessorType.TRANSFORMATOR
-    }
+
     
     override process() {
         println("SPLIT TED")

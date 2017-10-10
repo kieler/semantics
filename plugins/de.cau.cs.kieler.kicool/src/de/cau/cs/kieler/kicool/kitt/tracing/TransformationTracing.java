@@ -230,32 +230,35 @@ public class TransformationTracing {
         TracingReport report = null;
         Thread t = Thread.currentThread();
         if (activeTracings.containsKey(t)) {
-            Tracing tracing = activeTracings.get(t);
-            TracingMapping mapping = tracingMappings.get(t);
-            AutomaticTracingAdapter adapter = tracingAdapter.get(t);
-            if (mapping != null && sourceModel != null && targetModel != null) {
-                // stop and remove tracing adapter
-                adapter.setActive(false);
-                if (mapping.isInPlace()) {
-                    sourceModel.eAdapters().remove(adapter);
-                } else if (targetModel instanceof EObject) {
-                    ((EObject) targetModel).eAdapters().remove(adapter);
-                }
-                // create report
-                if (KiTTConfig.DEBUG || createReport) {
-                    report = new TracingReport(tracing, sourceModel, targetModel, mapping);
-                    if (KiTTConfig.DEBUG) {
-                        report.printReport();
+            try {
+                Tracing tracing = activeTracings.get(t);
+                TracingMapping mapping = tracingMappings.get(t);
+                AutomaticTracingAdapter adapter = tracingAdapter.get(t);
+                if (mapping != null && sourceModel != null && targetModel != null) {
+                    // stop and remove tracing adapter
+                    adapter.setActive(false);
+                    if (mapping.isInPlace()) {
+                        sourceModel.eAdapters().remove(adapter);
+                    } else if (targetModel instanceof EObject) {
+                        ((EObject) targetModel).eAdapters().remove(adapter);
                     }
+                    // create report
+                    if (KiTTConfig.DEBUG || createReport) {
+                        report = new TracingReport(tracing, sourceModel, targetModel, mapping);
+                        if (KiTTConfig.DEBUG) {
+                            report.printReport();
+                        }
+                    }
+                    // store data in tracing chain
+                    tracing.addTransformationTrace(sourceModel, targetModel, mapping);
                 }
-                // store data in tracing chain
-                tracing.addTransformationTrace(sourceModel, targetModel, mapping);
+            } finally {
+                activeTracings.remove(t);
+                tracingMappings.remove(t);
+                tracingAdapter.remove(t);
+                tracingDefaults.remove(t);
+                appiledDefaultTracings.remove(t);
             }
-            activeTracings.remove(t);
-            tracingMappings.remove(t);
-            tracingAdapter.remove(t);
-            tracingDefaults.remove(t);
-            appiledDefaultTracings.remove(t);
         }
         return report;
     }

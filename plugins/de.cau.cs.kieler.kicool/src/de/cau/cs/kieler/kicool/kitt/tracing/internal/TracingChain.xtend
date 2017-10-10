@@ -128,6 +128,13 @@ class TracingChain {
     def getModels() {
         return models.immutableCopy;
     }
+    
+    /**
+     * Returns the internal map of tracing mappings
+     */
+    def getInternalMappins() {
+        return mappings
+    }
 
     /**
      * Performs a transitive join of all mappings between source and target model.

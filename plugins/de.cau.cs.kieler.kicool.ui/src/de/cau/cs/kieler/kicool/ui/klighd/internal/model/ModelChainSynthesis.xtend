@@ -41,6 +41,7 @@ import org.eclipse.elk.core.options.Direction
 import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import org.eclipse.elk.core.math.ElkPadding
 
 /**
  * Diagram synthesis for a ModelChain.
@@ -80,13 +81,6 @@ class ModelChainSynthesis extends AbstractDiagramSynthesis<ModelChain> {
     
     override public getDisplayedActions() {
         return newLinkedList(DisplayedActionData.create(RemovedCollapsedDiagramsAction.ID, "Remove collapsed models in model chain"));
-    }
-
-    override public getDisplayedLayoutOptions() {
-        return newLinkedList(
-            specifyLayoutOption(CoreOptions::DIRECTION, newImmutableList(Direction::DOWN, Direction::RIGHT)),
-            specifyLayoutOption(CoreOptions::SPACING_NODE_NODE, newArrayList(0, 150))
-        );
     }
 
     public static val String ID = "de.cau.cs.kieler.kicool.ui.klighd.internal.model.ModelChainSynthesis";
@@ -139,6 +133,7 @@ class ModelChainSynthesis extends AbstractDiagramSynthesis<ModelChain> {
         if (!chain.isBlankMode) {
 
             node.setLayoutOption(KlighdProperties::EXPAND, !chain.getCollapse.get(model));
+            node.addLayoutParam(CoreOptions.PADDING, new ElkPadding(5, 5, 20, 5)) // Some bugfix
 
             // Expanded Rectangle
             node.createFigure() => [

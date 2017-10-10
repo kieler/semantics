@@ -14,39 +14,39 @@
 package de.cau.cs.kieler.scg.processors.transformators
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.scg.ControlDependency
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
-import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.scg.ScgFactory
-
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
-import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.annotations.StringAnnotation
-import de.cau.cs.kieler.scg.Guard
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.scg.SchedulingBlock
-import de.cau.cs.kieler.scg.Join
-import de.cau.cs.kieler.scg.Fork
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
-import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.scg.Fork
+import de.cau.cs.kieler.scg.Guard
+import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.SchedulingBlock
+import de.cau.cs.kieler.scg.common.SCGAnnotations
+import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
+import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
+import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.HashMap
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.scg.Assignment
+
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
@@ -54,7 +54,7 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
  * @kieler.design 2017-08-10 proposed 
  * @kieler.rating 2017-08-10 proposed yellow
  */
-class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> {
+class SimpleGuardTransformation extends InplaceProcessor<SCGraphs> {
         
     @Inject extension SCGCoreExtensions
     @Inject extension SCGDeclarationExtensions
@@ -76,10 +76,6 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> {
     
     override getName() {
         "Guards V2"
-    }
-    
-    override getType() {
-        ProcessorType.TRANSFORMATOR
     }
     
     override process() {

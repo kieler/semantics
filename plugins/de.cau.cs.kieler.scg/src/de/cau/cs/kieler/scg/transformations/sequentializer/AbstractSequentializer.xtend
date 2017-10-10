@@ -60,14 +60,14 @@ abstract class AbstractSequentializer extends Processor<SCGraphs, SCGraphs> {
     // -- Sequentializer 
     // -------------------------------------------------------------------------            
 	
+    override getType() {
+        ProcessorType.EXOGENOUS_TRANSFORMATOR
+    }
+	
     override process() {
         for (scg : model.scgs) {
             scg.sequentialize
         }
-    }
-    
-    override getType() {
-        ProcessorType.TRANSFORMATOR
     }
 	
 	abstract def SCGraph sequentialize(SCGraph scg)

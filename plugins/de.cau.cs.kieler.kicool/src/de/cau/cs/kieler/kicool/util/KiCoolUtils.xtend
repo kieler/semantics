@@ -13,6 +13,14 @@
 package de.cau.cs.kieler.kicool.util
 
 import de.cau.cs.kieler.kicool.ProcessorEntry
+import de.cau.cs.kieler.kicool.System
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
+import java.lang.reflect.ParameterizedType
+import de.cau.cs.kieler.kicool.ProcessorReference
+import de.cau.cs.kieler.kicool.ProcessorSystem
+import de.cau.cs.kieler.kicool.ProcessorGroup
+import de.cau.cs.kieler.kicool.ProcessorAlternativeGroup
 
 /**
  * Generic utility class
@@ -39,6 +47,40 @@ class KiCoolUtils {
      */
     static def uniqueProcessorId(ProcessorEntry processor) {
         processor.id + "#" + processor.hashCode
-    }    
+    }
     
+    /**
+     * Retrieves the input class for a system
+     */
+    static def findInputClass(System system) {
+        try {
+            val className = system.inputClass
+            if (!className.nullOrEmpty) {
+                return Class.forName(className)
+            }
+        } catch (Exception e) {}
+        try {
+            val p = system.processors.firstProcessor
+            if (p !== null) {
+                return p.sourceTargetTypes.source as Class<?>
+            }
+        } catch (Exception e) {}
+        return null
+    }
+    
+    static def dispatch Processor<?,?> firstProcessor(ProcessorReference p) {
+        return KiCoolRegistration.getProcessorInstance(p.id)
+    }
+    
+    static def dispatch Processor<?,?> firstProcessor(ProcessorSystem p) {
+        return KiCoolRegistration.getSystemById(p.id)?.processors.firstProcessor
+    }
+    
+    static def dispatch Processor<?,?> firstProcessor(ProcessorGroup p) {
+        return p.processors.head?.firstProcessor
+    }
+    
+    static def dispatch Processor<?,?> firstProcessor(ProcessorAlternativeGroup p) {
+        return null
+    }    
 }

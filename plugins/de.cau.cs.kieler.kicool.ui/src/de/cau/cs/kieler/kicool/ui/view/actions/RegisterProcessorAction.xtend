@@ -12,15 +12,16 @@
  */
 package de.cau.cs.kieler.kicool.ui.view.actions
 
+import de.cau.cs.kieler.kicool.registration.Register
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
+import de.cau.cs.kieler.kicool.ui.view.CompilerViewPartListener
+import org.eclipse.core.resources.IFile
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.IAction
 import org.eclipse.jface.resource.ImageDescriptor
 import org.eclipse.ui.plugin.AbstractUIPlugin
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.xbase.ui.editor.XbaseEditor
-import org.eclipse.core.resources.IFile
-import de.cau.cs.kieler.kicool.registration.Register
 
 /**
  * @author ssm
@@ -51,7 +52,7 @@ class RegisterProcessorAction {
     }
     
     def void invokeRegisterProcessor() {
-        val editor = CompilerView.getActiveEditor
+        val editor = CompilerViewPartListener.getActiveEditor
         if (editor instanceof XbaseEditor) {
             registerProcessor(editor);
         }

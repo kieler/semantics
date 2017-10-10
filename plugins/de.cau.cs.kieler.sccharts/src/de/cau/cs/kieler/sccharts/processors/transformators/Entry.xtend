@@ -57,10 +57,7 @@ class Entry extends SCChartsProcessor implements Traceable {
     override process() {
         setModel(model.transform)
     }
-    
-    override getType() {
-        ProcessorType.TRANSFORMATOR
-    }
+
 
 //    override getExpandsFeatureId() {
 //        return SCChartsFeature::ENTRY_ID

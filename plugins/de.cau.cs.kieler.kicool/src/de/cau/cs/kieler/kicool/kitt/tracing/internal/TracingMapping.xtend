@@ -71,6 +71,7 @@ class TracingMapping {
         this.rmapping = mapping.rmapping;
         this.delegate = mapping
         this.title = title
+        mapping.title = mapping.title + " & " + title
     }
 
     // -------------------------------------------------------------------------

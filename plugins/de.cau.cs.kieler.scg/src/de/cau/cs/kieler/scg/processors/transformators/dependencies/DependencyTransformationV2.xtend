@@ -13,38 +13,38 @@
  */
 package de.cau.cs.kieler.scg.processors.transformators.dependencies
 
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.scg.SCGraphs
+import com.google.common.collect.HashMultimap
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
+import de.cau.cs.kieler.core.model.Pair
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
-import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scg.Fork
-import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.Join
-import de.cau.cs.kieler.scg.Exit
-import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.Depth
-import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
-import de.cau.cs.kieler.kexpressions.Expression
-import java.util.Set
-import com.google.common.collect.HashMultimap
-import de.cau.cs.kieler.core.model.Pair
-
-import static extension de.cau.cs.kieler.scg.processors.transformators.dependencies.ValuedObjectAccess.*
-import static extension de.cau.cs.kieler.scg.DataDependencyType.*
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Exit
+import de.cau.cs.kieler.scg.Fork
+import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import java.util.Deque
-import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import java.util.Set
+
+import static de.cau.cs.kieler.scg.DataDependencyType.*
+import static de.cau.cs.kieler.scg.processors.transformators.dependencies.ValuedObjectAccess.*
+
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -65,7 +65,7 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
  * @kieler.rating 2017-08-18 proposed yellow
  */
 
-class DependencyTransformationV2 extends Processor<SCGraphs, SCGraphs> implements Traceable {
+class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements Traceable {
     
     @Inject extension SCGCoreExtensions
     @Inject extension SCGDependencyExtensions
@@ -83,10 +83,6 @@ class DependencyTransformationV2 extends Processor<SCGraphs, SCGraphs> implement
     
     override getName() {
         "Dependency V2"
-    }
-    
-    override getType() {
-        ProcessorType.TRANSFORMATOR
     }
     
     override process() {

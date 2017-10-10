@@ -25,6 +25,7 @@ import static extension com.google.common.base.Preconditions.checkNotNull
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 import static de.cau.cs.kieler.kicool.environments.Environment.*
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
+import org.eclipse.emf.ecore.util.EcoreUtil
 
 /**
  * This class integrates Tracing into KiCo.
@@ -63,9 +64,11 @@ public class TracingIntegration extends IntermediateProcessor<EObject, EObject> 
         
         val tracing = environment.getProperty(Tracing.TRACING_DATA)
         checkNotNull(Tracing)
+        val processor = environment.getProperty(PROCESSOR_INSTANCE)
+        val exogenous = processor.type == ProcessorType.EXOGENOUS_TRANSFORMATOR
         
-        if (environment.getProperty(PROCESSOR_INSTANCE) instanceof Traceable) {
-            tracing.startTransformationTracing(getModel, environment.getProperty(Environment.INPLACE))
+        if (processor instanceof Traceable) {
+            tracing.startTransformationTracing(getModel, null, processor.id, !exogenous)
         } else {
             environment.warnings.add("This processor does not support tracing. Resulting tracing chain may be incomplete!")
         }
@@ -77,19 +80,34 @@ public class TracingIntegration extends IntermediateProcessor<EObject, EObject> 
         val tracing = environment.getProperty(Tracing.TRACING_DATA)
         checkNotNull(Tracing)
         
-        if (environment.getProperty(PROCESSOR_INSTANCE) instanceof Traceable) {
-            tracing.finishTransformationTracing(getSourceModel, getTargetModel)
+        // Abort tracing when errors occurred
+        if (!environment.errors.empty) {
+            environment.warnings.add("No tracing data stored due to prior errors in compilation!")
+            tracing.finishTransformationTracing(null, null)
+            return
+        }
+        
+        val processor = environment.getProperty(PROCESSOR_INSTANCE)
+        val exogenous = processor.type == ProcessorType.EXOGENOUS_TRANSFORMATOR
+        
+        if (processor instanceof Traceable) {
+            tracing.finishTransformationTracing(if (exogenous) getSourceModel else getTargetModel, getTargetModel)
         }
     }
     
     
     static def EObject copy(EObject model, Environment environment) {
-        if (!environment.isTracingActive) return null
+        if (!environment.isTracingActive || environment.getProperty(ONGOING_WORKING_COPY)) {
+            if (environment.getProperty(ONGOING_WORKING_COPY)) {
+                environment.warnings.add("Tracing is not supported in combination with 'ongoing working copy' option!")
+            }
+            return EcoreUtil.copy(model)
+        }
         
         val tracing = environment.getProperty(Tracing.TRACING_DATA)
         checkNotNull(Tracing)
         
-        tracing.startTransformationTracing(model, false)
+        tracing.startTransformationTracing(model, null, "kicool.internal.copy", false)
         val EObject copy = TransformationTracing.tracedCopy(model)
         tracing.finishTransformationTracing(model, copy)
         
@@ -97,12 +115,20 @@ public class TracingIntegration extends IntermediateProcessor<EObject, EObject> 
     }
     
     static def <T extends EObject> Pair<T, Copier> copyAndReturnCopier(T model, Environment environment) {
-        if (!environment.isTracingActive) return null
+        if (!environment.isTracingActive || environment.getProperty(ONGOING_WORKING_COPY)) {
+            if (environment.getProperty(ONGOING_WORKING_COPY)) {
+                environment.warnings.add("Tracing is not supported in combination with 'ongoing working copy' option!")
+            }
+            val copier = new Copier()
+            val EObject result = copier.copy(model)
+            copier.copyReferences
+            return new Pair(result as T, copier)
+        }
         
         val tracing = environment.getProperty(Tracing.TRACING_DATA)
         checkNotNull(Tracing)
         
-        tracing.startTransformationTracing(model, false)
+        tracing.startTransformationTracing(model, null, "kicool.internal.copy", false)
         val copy = TransformationTracing.tracedCopyAndReturnCopier(model)
         tracing.finishTransformationTracing(model, copy.first)
         
