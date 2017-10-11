@@ -21,7 +21,7 @@ import de.cau.cs.kieler.railsl.railSL.PointStatement
 import de.cau.cs.kieler.railsl.railSL.LightStatement
 import de.cau.cs.kieler.railsl.extensions.RailSLExtensions
 import de.cau.cs.kieler.railsl.compilation.RailSLTransformation
-import de.cau.cs.kieler.kvis.ui.views.KVisView
+import de.cau.cs.kieler.kivis.ui.views.KiVisView
 import org.eclipse.swt.widgets.Display
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.EObjectAtOffsetHelper
@@ -279,7 +279,7 @@ class Visualizer {
                             val object = eObjectAtOffsetHelper.resolveElementAt(state, textSelection.getOffset())
                             updatePool(object)
 
-                            KVisView.instance?.update(pool, true)
+                            KiVisView.instance?.update(pool, true)
 
                             return null
                         } catch (Exception e) {

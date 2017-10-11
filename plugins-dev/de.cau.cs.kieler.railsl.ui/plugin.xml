@@ -415,15 +415,6 @@
     </editor>
  </extension>
  <extension
-       point="de.cau.cs.kieler.kico.ui.transformation">
-    <editor
-          editor="de.cau.cs.kieler.railsl.RailSL"
-          features="RailSL.basic, REFERENCE"
-          label="Railway Compilation"
-          priority="100">
-    </editor>
- </extension>
- <extension
        point="org.eclipse.ui.newWizards">
     <category
           id="de.cau.cs.kieler.railsl.ui.railSLWizard"

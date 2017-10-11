@@ -15,13 +15,13 @@ package de.cau.cs.kieler.railsl.ui.natures
 import org.eclipse.core.resources.IProjectNature
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.resources.IProject
-import de.cau.cs.kieler.prom.build.KiCoNature
+import de.cau.cs.kieler.prom.build.KielerModelingNature
 
 /**
  * @author stu121235
  *
  */
-class RailSLNature extends KiCoNature implements IProjectNature {
+class RailSLNature extends KielerModelingNature implements IProjectNature {
     
     public static val NATURE_ID = "de.cau.cs.kieler.railsl.ui.RailSLNature"
     

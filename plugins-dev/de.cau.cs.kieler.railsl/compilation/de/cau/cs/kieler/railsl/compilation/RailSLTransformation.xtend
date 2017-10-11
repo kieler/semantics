@@ -13,42 +13,40 @@
 
 package de.cau.cs.kieler.railsl.compilation
 
-import de.cau.cs.kieler.kitt.tracing.Traceable
-import org.eclipse.emf.ecore.EObject
-import java.util.Set
-import com.google.common.collect.Sets
-import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import com.google.inject.Inject
-import de.cau.cs.kieler.railsl.railSL.Program
-import de.cau.cs.kieler.railsl.RailSLFeatures
-
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import java.util.HashMap
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import java.util.ArrayList
-import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
+import de.cau.cs.kieler.railsl.extensions.RailSLExtensions
 import de.cau.cs.kieler.railsl.railSL.Block
+import de.cau.cs.kieler.railsl.railSL.ConditionalStatement
+import de.cau.cs.kieler.railsl.railSL.ContactWaitStatement
+import de.cau.cs.kieler.railsl.railSL.CrossingStatement
+import de.cau.cs.kieler.railsl.railSL.LightStatement
+import de.cau.cs.kieler.railsl.railSL.ParallelStatement
+import de.cau.cs.kieler.railsl.railSL.PointStatement
+import de.cau.cs.kieler.railsl.railSL.Program
 import de.cau.cs.kieler.railsl.railSL.Statement
 import de.cau.cs.kieler.railsl.railSL.TimeWaitStatement
-import de.cau.cs.kieler.railsl.railSL.ContactWaitStatement
-import de.cau.cs.kieler.railsl.railSL.LightStatement
-import de.cau.cs.kieler.railsl.railSL.ConditionalStatement
-import de.cau.cs.kieler.railsl.railSL.CrossingStatement
-import de.cau.cs.kieler.railsl.extensions.RailSLExtensions
+import de.cau.cs.kieler.railsl.railSL.TrackStatement
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.SCChartsFactory
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.railsl.railSL.ParallelStatement
-import de.cau.cs.kieler.railsl.railSL.TrackStatement
-import de.cau.cs.kieler.railsl.railSL.PointStatement
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import java.util.ArrayList
+import java.util.HashMap
+import org.eclipse.emf.ecore.EObject
 
 /**
  * Transforms a RailSL model to an SCChart.
@@ -56,22 +54,28 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
  * @author Philip Eumann (peu) - stu121235@mail.uni-kiel.de
  * 
  */
-class RailSLTransformation extends AbstractProductionTransformation implements Traceable {
-
-    override getProducedFeatureId() {
-        return "REFERENCE"
-    }
+class RailSLTransformation extends Processor<Program, SCCharts> implements Traceable {
 
     override getId() {
-        return "RailSLTransformation"
+        return "de.cau.cs.kieler.railsl.railsl"
     }
-
-    override Set<String> getRequiredFeatureIds() {
-        return Sets.newHashSet(RailSLFeatures.BASIC_ID)
+    
+    override getName() {
+        "RailSL"
     }
-
-    override transform(EObject eObject) {
-        return (eObject as Program).railSLtoSCChart
+    
+    override getType() {
+        ProcessorType.TRANSFORMATOR
+    }
+        
+    override process() {
+        val model = getModel
+        val state = model.railSLtoSCChart
+        
+        val scc = SCChartsFactory.eINSTANCE.createSCCharts
+        scc.rootStates += state
+        
+        model = scc
     }
 
     /*************************************************************************

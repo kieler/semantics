@@ -8,18 +8,6 @@
 			genModel = "model/generated/RailSL.genmodel" />
 	</extension>
  <extension
-       point="de.cau.cs.kieler.kico.transformation">
-    <productionTransformationClass
-          class="de.cau.cs.kieler.railsl.compilation.RailSLTransformation">
-    </productionTransformationClass>
- </extension>
- <extension
-       point="de.cau.cs.kieler.kico.feature">
-    <featureClass
-          class="de.cau.cs.kieler.railsl.RailSL">
-    </featureClass>
- </extension>
- <extension
        point="de.cau.cs.kieler.kicool.processor">
     <Processor
           class="de.cau.cs.kieler.railsl.compilation.RailSLWrapper">
