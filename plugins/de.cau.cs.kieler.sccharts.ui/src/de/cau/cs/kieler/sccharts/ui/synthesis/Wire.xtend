@@ -12,14 +12,18 @@
  */
 package de.cau.cs.kieler.sccharts.ui.synthesis
 
-import de.cau.cs.kieler.kexpressions.Value
-import de.cau.cs.kieler.kexpressions.OperatorExpression
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.sccharts.Scope
+import java.util.Set
+import org.eclipse.emf.ecore.EStructuralFeature
+import org.eclipse.emf.ecore.EOperation
+import org.eclipse.emf.common.util.EList
+import java.lang.reflect.InvocationTargetException
+import org.eclipse.emf.common.notify.Notification
+import de.cau.cs.kieler.kexpressions.OperatorExpression
 
 /**
  * @author ssm
@@ -29,76 +33,32 @@ import de.cau.cs.kieler.sccharts.Scope
  */
 class Wire {
 
-    @Accessors var Value value = null
-    @Accessors var ValuedObjectReference valuedObjectReference = null
-    @Accessors var OperatorExpression operatorExpression = null
-    @Accessors var ValuedObjectReference subReference = null
+    @Accessors var Set<Expression> names = <Expression> newHashSet
     @Accessors var Wiring wiring = null
     @Accessors var boolean sink = false
-    @Accessors var Assignment equation = null
-    @Accessors var Wire redirectedWire = null 
+    @Accessors var boolean source = false
     @Accessors var ReferenceDeclaration referenceDeclaration = null
 
-    new(Expression expression, Wiring wiring, ValuedObjectReference subReference) {
+    new(Expression expression, Wiring wiring) {
         this.wiring = wiring
-        switch (expression) {
-            Value:
-                this.value = expression
-            ValuedObjectReference: {
-                this.valuedObjectReference = expression
-                val valuedObject = expression.valuedObject
-                if (valuedObject.eContainer instanceof ReferenceDeclaration) {
-                    this.referenceDeclaration = valuedObject.eContainer as ReferenceDeclaration
-                    this.subReference = subReference                
-                }
-            }
-            OperatorExpression: {
-                this.operatorExpression = expression
-                if (wiring != null)
-                for (subExpression : expression.subExpressions) {
-                    switch (subExpression) {
-                        Value: wiring.getWire(subExpression)
-                        ValuedObjectReference: wiring.getWire(subExpression)
-                        OperatorExpression: wiring.getWire(subExpression)
-                    }
-                }
-            }
-        }
-        if(wiring != null) wiring.add(this)
+        names.add(expression)
     }
 
-    def Expression getExpression() {
-        if (value != null)
-            return value
-        else if(valuedObjectReference != null) return valuedObjectReference else return operatorExpression
+    def contains(Expression expression) {
+        names.contains(expression)
     }
-
-    override equals(Object object) {
-        if (object instanceof Wire) {
-            if (value != null) {
-                return value.equals(object.value)
-            } else if (valuedObjectReference != null) {
-                return valuedObjectReference.valuedObject.equals(object.valuedObjectReference.valuedObject)
-            } else {
-                return operatorExpression.equals(object.operatorExpression)
-            }
-        } else {
-            return false
-        }
+    
+    def getFirstExpression() {
+        names.head
     }
-
-    override int hashCode() {
-        if (value != null) {
-            return value.hashCode
-        } else if (valuedObjectReference != null) {
-            return valuedObjectReference.valuedObject.hashCode
-        } else {
-            return operatorExpression.hashCode
-        }
+    
+    def boolean containsOperatorExpression() {
+        names.exists[ it instanceof OperatorExpression ]
     }
     
     def Scope getReference() {
         if (referenceDeclaration == null) return null
         return referenceDeclaration.reference as Scope
     }
+        
 }

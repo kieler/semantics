@@ -65,6 +65,7 @@ import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.KlighdConstants
 import org.eclipse.xtext.xbase.lib.Functions.Function1
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import com.google.inject.Injector
 
 /**
  * @author ssm
@@ -92,6 +93,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject extension KRenderingExtensions
     @Inject extension KEffectsExtensions
     @Inject IResourceServiceProvider.Registry regXtext;
+    @Inject Injector injector
     
     private val PORT_LABEL_FONT_SIZE = 6
 
@@ -102,42 +104,38 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     def performTranformation(List<Assignment> elements) {
         val nodes = <KNode>newLinkedList
         val usedNodes = <KNode>newHashSet
-        val wiring = new Wiring
+        
+        val wiring = injector.getInstance(Wiring)
 
-        for (equation : elements) {
-            equation.createWires(wiring)
-        }
+        wiring.createWires(elements)
 
+//        wiring.redirectWires
         wiring.createSources(nodes)
-        wiring.redirectWires
-        wiring.connectWires(usedNodes)
         wiring.createSinks(nodes, usedNodes)
-        val nodes2 = <KNode> newLinkedList => [ l | 
-            nodes.filter[ usedNodes.contains(it)].forEach[ l += it ]]
+        wiring.connectWires(usedNodes)
+//        val nodes2 = <KNode> newLinkedList => [ l | 
+//            nodes.filter[ usedNodes.contains(it)].forEach[ l += it ]]
 
-        return nodes2
+        return nodes
     }
 
-    protected def createWires(Assignment equation, Wiring wiring) {
-        val equationValuedObjectReference = equation.valuedObject.reference
-        wiring.getWire(equationValuedObjectReference) => [ it.equation = equation; sink = true ]
-        wiring.getWire(equation.expression) => [ it.equation = equation ]
-    }
+//    protected def createWires(Assignment equation, Wiring wiring) {
+//        val equationValuedObjectReference = equation.valuedObject.reference
+//        wiring.getWire(equationValuedObjectReference) => [ it.equation = equation; sink = true ]
+//        wiring.getWire(equation.expression) => [ it.equation = equation ]
+//    }
 
     protected def createSources(Wiring wiring, List<KNode> nodes) {
-        for (wire : wiring.wires) {
-            val node = wire.createNode
-            val expression = wire.expression
-            if (expression instanceof OperatorExpression) {
-                node.addOperatorNodeFigure.associateWith(expression)
+        for (wire : wiring.wires.filter[ source ]) {
+            val node = wire.createNode(wire.source)
+            var text = wire.firstExpression.serializeHR.removeCardinalities.toString
+            if (wire.containsOperatorExpression) {
+                node.addOperatorNodeFigure.associateWith(wire.firstExpression)
+                text = wire.names.filter(OperatorExpression).head.operator.toString
             } else {
-                node.addInputNodeFigure.associateWith(expression)
+                node.addInputNodeFigure.associateWith(wire.firstExpression)
             }
            
-            var text = wire.expression.serializeHR.removeCardinalities.toString
-            if (wire.expression instanceof OperatorExpression) {
-                text = (wire.expression as OperatorExpression).operator.toString
-            }
             node.addNodeLabel(text)
             
             node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_BASIC, PortAlignment.CENTER)
@@ -146,7 +144,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 addLayoutParam(CoreOptions::PORT_SIDE, PortSide.EAST)
                 node.ports += it
             ]          
-            port.associateWith(wire.expression)            
+            port.associateWith(wire.firstExpression)            
 
             nodes += node
         }
@@ -154,85 +152,86 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     
     protected def createSinks(Wiring wiring, List<KNode> nodes, Set<KNode> usedNodes) {
         for (wire : wiring.wires.filter[ sink ]) {
-            val expression = wire.expression
-            var node = wire.createNode("sink")
+            val expression = wire.firstExpression
+            var node = wire.createNode(wire.sink)
             if (wire.referenceDeclaration != null) {
-                node = node.createReferenceNode(wire.equation.valuedObject, wire)
+//                node = node.createReferenceNode(wire.equation.valuedObject, wire)
             } else { 
-                node.addOutputNodeFigure.associateWith(wire.equation.valuedObject)
+                node.addOutputNodeFigure.associateWith(wire.firstExpression)
             }
-            node.addNodeLabel(wire.expression.serializeHR.removeCardinalities.toString)
-            val sourceNode = wiring.getWire(wire.equation.expression).getNode
-            val sourcePort = wiring.getWire(wire.equation.expression).getPort("out")
+            node.addNodeLabel(wire.firstExpression.serializeHR.removeCardinalities.toString)
+            val sourceNode = wiring.getWire(wire.firstExpression).getNode
+            val sourcePort = wiring.getWire(wire.firstExpression).getPort("out")
             var KPort targetPort = null
-            if (expression instanceof ValuedObjectReference) {
-                if (wire.equation.subReference != null) {
-                    targetPort = node.getPort(wire.equation.subReference.valuedObject)
-                }
-            }
+//            if (expression instanceof ValuedObjectReference) {
+//                if (wire.equation.subReference != null) {
+//                    targetPort = node.getPort(wire.equation.subReference.valuedObject)
+//                }
+//            }
             
             var labelText = ""
-            if (wire.equation.expression instanceof OperatorExpression) {
-                labelText = wire.equation.expression.serializeHR.toString
+            if (wire.firstExpression instanceof OperatorExpression) {
+                labelText = wire.firstExpression.serializeHR.toString
             }
             
-            createWireEdge(wire.equation.expression, sourceNode, sourcePort, node, targetPort, labelText)
+//            createWireEdge(wire.equation.expression, sourceNode, sourcePort, node, targetPort, labelText)
             
             usedNodes += sourceNode
             usedNodes += node
             nodes += node
         }
     }
-    
-    protected def redirectWires(Wiring wiring) {
-        for(wire : wiring.wires) {
-            val expression = wire.expression
-            if (expression instanceof ValuedObjectReference) {
-                for(w : wiring.wires.filter[ equation != null ]) {
-                    if (w != wire && w.equation.valuedObject.equals(expression.valuedObject)) {
-                        wire.redirectedWire = w
-                    }
-                }
-            }
-        }
-    }
-
+//    
+//    protected def redirectWires(Wiring wiring) {
+//        for(wire : wiring.wires) {
+//            val expression = wire.expression
+//            if (expression instanceof ValuedObjectReference) {
+//                for(w : wiring.wires.filter[ equation != null ]) {
+//                    if (w != wire && w.equation.valuedObject.equals(expression.valuedObject)) {
+//                        wire.redirectedWire = w
+//                    }
+//                }
+//            }
+//        }
+//    }
+//
     protected def connectWires(Wiring wiring, Set<KNode> usedNodes) {
         for (wire : wiring.wires) {
-            val expression = wire.expression
-            switch (expression) {
-                OperatorExpression: {
-                    expression.connectWires(wiring, usedNodes)
-                }
-            }
+            var sourceNode = wire.getNode(wire.source)
+            var sourcePort = wire.getPort("out")
+            var targetNode = wire.getNode(wire.sink)
+            var targetPort = wire.getPort("in")
+            var label = "Test"
+            
+            wire.firstExpression.createWireEdge(sourceNode, sourcePort, targetNode, targetPort, label)
         }
     }
-    
-    protected def connectWires(OperatorExpression operatorExpression, Wiring wiring, Set<KNode> usedNodes) {
-        val targetNode = wiring.getWire(operatorExpression).getNode
-        usedNodes += targetNode
-        for (subExpression : operatorExpression.subExpressions) {
-            var sourceExpression = subExpression
-            var sourceWire = wiring.getWire(subExpression)
-            while (sourceWire.redirectedWire != null) {
-                sourceWire = sourceWire.redirectedWire
-                sourceExpression = sourceWire.expression
-            }
-            val sourceNode = sourceWire.getNode
-            usedNodes += sourceNode
-            
-            val sourcePort = sourceWire.getPort("out")
-            var targetPort = null
-            
-            var labelText = ""
-            if (sourceExpression instanceof OperatorExpression && sourceExpression === subExpression) {
-                labelText = sourceExpression.serializeHR.toString
-            }
-            
-            createWireEdge(sourceExpression, sourceNode, sourcePort, targetNode, targetPort, labelText)
-        }
-    }
-
+//    
+//    protected def connectWires(OperatorExpression operatorExpression, Wiring wiring, Set<KNode> usedNodes) {
+//        val targetNode = wiring.getWire(operatorExpression).getNode
+//        usedNodes += targetNode
+//        for (subExpression : operatorExpression.subExpressions) {
+//            var sourceExpression = subExpression
+//            var sourceWire = wiring.getWire(subExpression)
+//            while (sourceWire.redirectedWire != null) {
+//                sourceWire = sourceWire.redirectedWire
+//                sourceExpression = sourceWire.expression
+//            }
+//            val sourceNode = sourceWire.getNode
+//            usedNodes += sourceNode
+//            
+//            val sourcePort = sourceWire.getPort("out")
+//            var targetPort = null
+//            
+//            var labelText = ""
+//            if (sourceExpression instanceof OperatorExpression && sourceExpression === subExpression) {
+//                labelText = sourceExpression.serializeHR.toString
+//            }
+//            
+//            createWireEdge(sourceExpression, sourceNode, sourcePort, targetNode, targetPort, labelText)
+//        }
+//    }
+//
     protected def createWireEdge(Object association, KNode sourceNode, KPort sourcePort, KNode targetNode, KPort targetPort, String label) { 
         val edge = createEdge.associateWith(association)
         edge.setLayoutOption(LayeredOptions.INSIDE_SELF_LOOPS_YO, true)
@@ -245,41 +244,41 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             edge.createLabel.configureTailEdgeLabel(label, 7, KlighdConstants::DEFAULT_FONT_NAME)
         }
     }
-    
-    protected def createReferenceNode(KNode node, Object association, Wire wire) {
-        node.setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER) 
-        node.setLayoutOption(CoreOptions.PORT_LABELS_PLACEMENT, PortLabelPlacement.INSIDE) 
-        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d); //10.5 // 8f
-        node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(4d));
-        node.setLayoutOption(CoreOptions::EXPAND_NODES, true);         
-  
-        node.addReferenceNodeFigure.associateWith(association)
-        
-        val vor = wire.expression
-        
-        node.createReferenceNodePorts(wire.reference, vor, [ input ], PortSide.WEST, true)
-        node.createReferenceNodePorts(wire.reference, vor, [ output ], PortSide.EAST, false)
-
-        return node
-    }
-    
-    protected def createReferenceNodePorts(KNode node, Scope scope, Object association, Function1<? super VariableDeclaration, Boolean> predicate, PortSide portSide, boolean reverse) {
-        for(input : scope.declarations.filter(VariableDeclaration).filter(predicate)) {
-            val declarationView = if (reverse) input.valuedObjects.reverseView else input.valuedObjects
-            for(v : declarationView) {
-                val port = node.createPort(v) => [
-                    if (v.hasAnnotation("hidden")) {
-                        addLayoutParam(CoreOptions::PORT_SIDE, PortSide.SOUTH)
-                    } else {
-                        addLayoutParam(CoreOptions::PORT_SIDE, portSide)
-                    }
-                    setPortSize(2, 2)
-                    addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -3d)
-                    createLabel().configureInsidePortLabel(v.serializeHR.removeCardinalities.toString, PORT_LABEL_FONT_SIZE)
-                    node.ports += it
-                ]          
-                port.associateWith(v)              
-            }
-        }        
-    }
+//    
+//    protected def createReferenceNode(KNode node, Object association, Wire wire) {
+//        node.setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER) 
+//        node.setLayoutOption(CoreOptions.PORT_LABELS_PLACEMENT, PortLabelPlacement.INSIDE) 
+//        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d); //10.5 // 8f
+//        node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(4d));
+//        node.setLayoutOption(CoreOptions::EXPAND_NODES, true);         
+//  
+//        node.addReferenceNodeFigure.associateWith(association)
+//        
+//        val vor = wire.expression
+//        
+//        node.createReferenceNodePorts(wire.reference, vor, [ input ], PortSide.WEST, true)
+//        node.createReferenceNodePorts(wire.reference, vor, [ output ], PortSide.EAST, false)
+//
+//        return node
+//    }
+//    
+//    protected def createReferenceNodePorts(KNode node, Scope scope, Object association, Function1<? super VariableDeclaration, Boolean> predicate, PortSide portSide, boolean reverse) {
+//        for(input : scope.declarations.filter(VariableDeclaration).filter(predicate)) {
+//            val declarationView = if (reverse) input.valuedObjects.reverseView else input.valuedObjects
+//            for(v : declarationView) {
+//                val port = node.createPort(v) => [
+//                    if (v.hasAnnotation("hidden")) {
+//                        addLayoutParam(CoreOptions::PORT_SIDE, PortSide.SOUTH)
+//                    } else {
+//                        addLayoutParam(CoreOptions::PORT_SIDE, portSide)
+//                    }
+//                    setPortSize(2, 2)
+//                    addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -3d)
+//                    createLabel().configureInsidePortLabel(v.serializeHR.removeCardinalities.toString, PORT_LABEL_FONT_SIZE)
+//                    node.ports += it
+//                ]          
+//                port.associateWith(v)              
+//            }
+//        }        
+//    }
 }

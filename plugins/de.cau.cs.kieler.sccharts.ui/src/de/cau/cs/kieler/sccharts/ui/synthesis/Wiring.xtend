@@ -13,6 +13,18 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import de.cau.cs.kieler.kexpressions.Expression
+import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import java.util.List
+import java.util.Set
+import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * @author ssm
@@ -22,25 +34,79 @@ import de.cau.cs.kieler.kexpressions.Expression
  */
 class Wiring {
     
-    val wires = <Wire, Wire> newHashMap
+    @Inject extension KExpressionsValueExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsDeclarationExtensions    
+    @Inject extension KEffectsExtensions
     
-    def add(Wire wire) {
-        wires.put(wire, wire)
-    }
-    
+    @Accessors val wires = <Wire> newHashSet
+    val index = <Expression, Wire> newHashMap
+
     def getWires() {
-        wires.values
+        wires
     }
     
     def getWire(Expression expression) {
-        val key = new Wire(expression, null, null)
-        if (wires.containsKey(key)) {
-            val wire = wires.get(key)
-            return wire
-        } else {
-            val wire = new Wire(expression, this, null)
-            return wire
+        return index.get(expression)
+    }
+    
+    def createWires(List<Assignment> equations) {
+        val visited = <Expression> newHashSet 
+        for (eq : equations) {
+            eq.createWires(visited)
         }
     }
+    
+    def void createWires(Assignment equation, Set<Expression> visited) {
+        equation.expression.create(visited) 
+        equation.reference.create(visited) => [
+            sink = equation.valuedObject.output    
+        ]
+    }
+
+    def private dispatch Wire create(Value expression, Set<Expression> visited) {
+        if (visited.contains(expression)) return expression.getExistingWire;
+        visited += expression
+        
+        return expression.createWire
+    }
+    
+    def private dispatch Wire create(ValuedObjectReference expression, Set<Expression> visited) {
+        if (visited.contains(expression)) return expression.getExistingWire;
+        visited += expression
+        
+        val declaration = expression.valuedObject.declaration
+        
+        if (declaration instanceof VariableDeclaration) {
+            val existingWire = expression.getExistingWire  
+            if (existingWire != null && !existingWire.contains(expression)) {
+                existingWire.names += expression
+                return existingWire => [ source = declaration.input ]
+            } else {
+                return expression.createWire => [ source = declaration.input ]
+            }                  
+        } 
+    }    
+    
+    
+    
+    def protected Wire createWire(Expression expression) {
+        val oldWire = index.get(expression)
+        if (oldWire != null) return oldWire
+        
+        val wire = new Wire(expression, this) 
+        wires += wire
+        index.put(expression, wire)
+        
+        return wire
+    }
+    
+    def protected Wire getExistingWire(Expression expression) {
+        if (expression instanceof ValuedObjectReference) {
+            return wires.filter[ names.filter(ValuedObjectReference).exists[ it.valuedObject == expression.valuedObject ] ].head
+        }
+        return null 
+    } 
+    
     
 }
