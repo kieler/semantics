@@ -39,4 +39,11 @@ class JavaSimulationBackend extends OriginBasedSimulationBackend {
     override getProjectDraft() {
         return PromProjectDrafts.genericJava
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override getSupportedProcessors() {
+        return #["de.cau.cs.kieler.scg.processors.codegen.java"]
+    }
 }

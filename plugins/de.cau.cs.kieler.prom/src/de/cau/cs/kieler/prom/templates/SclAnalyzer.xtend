@@ -62,7 +62,7 @@ class SclAnalyzer extends DeclarationAnalyzer {
     /**
      * {@inheritDoc}
      */
-    override protected getDefaultSimulationFrontend() {
+    override protected getDefaultCompileChain() {
         return "de.cau.cs.kieler.scl.processors.transformators.scl2scg, \n"
              // SCG transformations
              + "de.cau.cs.kieler.scg.processors.transformators.dependency, \n"
@@ -70,6 +70,7 @@ class SclAnalyzer extends DeclarationAnalyzer {
              + "de.cau.cs.kieler.scg.processors.transformators.expressions, \n"
              + "de.cau.cs.kieler.scg.processors.transformators.guards, \n"
              + "de.cau.cs.kieler.scg.processors.transformators.scheduler, \n"
-             + "de.cau.cs.kieler.scg.processors.transformators.sequentializer"
+             + "de.cau.cs.kieler.scg.processors.transformators.sequentializer, \n"
+             + "de.cau.cs.kieler.scg.processors.codegen.c"
     }
 }

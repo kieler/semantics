@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.preferences.InstanceScope
 import org.eclipse.emf.ecore.EObject
 import org.osgi.service.prefs.Preferences
+import org.osgi.service.prefs.BackingStoreException
 
 /**
  * @author aas
@@ -31,7 +32,7 @@ abstract class ModelAnalyzer {
     /**
      * The attribute to store this analyzer's frontend in the preferences.
      */
-    private static val SIMULATION_FRONTENT_ATTR = "frontend"
+    private static val COMPILE_CHAIN_ATTR = "compileChain"
     
     /**
      * List with all model analyzers loaded from extensions.
@@ -80,11 +81,18 @@ abstract class ModelAnalyzer {
     public def List<Class<?>> getSupportedModelTypes()
     
     /**
-     * Returns the default simulation frontend for the supported models.
+     * Returns the default compile chain for the supported models.
      * 
-     * @return the default simulation frontend for the supported models
+     * @return the default compile chain for the supported models
      */
-    protected def String getDefaultSimulationFrontend()
+    protected def String getDefaultCompileChain()
+    
+    /**
+     * Returns the name of this analyzer.
+     */
+    public def String getName() {
+        return class.simpleName
+    }
     
     /**
      * Checks whether the models within the given files can be analyzed by this instance.
@@ -123,33 +131,38 @@ abstract class ModelAnalyzer {
      * 
      * @return the simulation frontend for the supported models
      */
-    public def String getSimulationFrontend() {
+    public def String getCompileChain() {
         val prefs = getPreferences
-        return prefs.get(getPreferenceStoreKey(SIMULATION_FRONTENT_ATTR), Strings.nullToEmpty(defaultSimulationFrontend))
+        val value = prefs.get(COMPILE_CHAIN_ATTR, null)
+        if(value == null) {
+            return Strings.nullToEmpty(defaultCompileChain)
+        } else {
+            return value
+        }
     }
     
     /**
      * Sets the simulation frontend.
      */
-    public def void setSimulationFrontend(String value) {
+    public def void setCompileChain(String value) {
         val prefs = getPreferences
-        prefs.put(getPreferenceStoreKey(SIMULATION_FRONTENT_ATTR), value)
+        prefs.put(COMPILE_CHAIN_ATTR, value)
+        
+        // Force the application to save the preferences
+        try {
+            prefs.flush()
+        } catch (BackingStoreException e) {
+            e.printStackTrace()
+        }
     }
     
     /**
      * Returns the preferences in which the attributes for model analyzers (such as the simulation frontend) are saved.
      */
-    private static def Preferences getPreferences() {
-        return InstanceScope.INSTANCE.getNode(PromPlugin.PLUGIN_ID)
+    private def Preferences getPreferences() {
+        return InstanceScope.INSTANCE.getNode(PromPlugin.PLUGIN_ID).node(name)
     }
-    
-    /**
-     * Returns the key for this analyzer to access the given attribute in the preferences.
-     */
-    private def String getPreferenceStoreKey(String attributeName) {
-        return "modelAnalyzer."+getSupportedFileExtensions.get(0)+"."+attributeName
-    }
-    
+
     /**
      * Returns all registered model analyzers.
      */

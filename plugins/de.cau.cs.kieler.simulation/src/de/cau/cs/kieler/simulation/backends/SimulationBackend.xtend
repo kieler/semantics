@@ -41,32 +41,12 @@ import org.osgi.service.prefs.Preferences
 abstract class SimulationBackend {
     private static val SIMULATION_BACKEND_EXTENSION_POINT_ID = "de.cau.cs.kieler.simulation.simulationBackend"
     
-    /**
-     * The attribute to store this analyzer's frontend in the preferences.
-     */
-    private static val CURRENT_BACKEND_ATTR = "currentSimulationBackend"
-    
-    private static val DEFAULT_BACKEND = new CSimulationBackend
-    
     private static var List<SimulationBackend> backends 
     
     public def String getName()
     public def BuildConfiguration getBuildConfig()
     public def ProjectDraftData getProjectDraft()
-    
-    public static def void setCurrentBackend(SimulationBackend value) {
-        preferences.put(CURRENT_BACKEND_ATTR, value.name)
-    }
-    
-    public static def SimulationBackend getCurrentBackend() {
-        val currentBackendName = preferences.get(CURRENT_BACKEND_ATTR, DEFAULT_BACKEND.name)
-        val backend = getBackends().findFirst[it.name == currentBackendName]
-        if(backend == null) {
-            throw new Exception("No simulation backend with name '"+currentBackendName+"' was found.\n"
-                              + "Please register a simulation backend extension with this name.")
-        }
-        return backend
-    }
+    public def List<String> getSupportedProcessors()
     
     /**
      * Returns all registered model analyzers.
@@ -102,5 +82,11 @@ abstract class SimulationBackend {
      */
     private static def Preferences getPreferences() {
         return InstanceScope.INSTANCE.getNode(PromPlugin.PLUGIN_ID)
+    }
+    
+    
+    public def boolean isSupported(String processorId) {
+        val supportedProcessors = getSupportedProcessors
+        return supportedProcessors.isNullOrEmpty || supportedProcessors.contains(processorId)
     }
 }

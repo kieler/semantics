@@ -60,24 +60,6 @@
          <toolbar
                id="de.cau.cs.kieler.simulation.ui.simulationToolbar"
                label="KIELER Simulation">
-            <dynamic
-                  class="de.cau.cs.kieler.simulation.ui.toolbar.SimulationBackendControl"
-                  id="de.cau.cs.kieler.simulation.ui.simulationBackendControl">
-               <visibleWhen
-                     checkEnabled="false">
-                  <and>
-                     <with
-                           variable="activeWorkbenchWindow.activePerspective">
-                        <equals
-                              value="de.cau.cs.kieler.simulation">
-                        </equals>
-                     </with>
-                     <test
-                           property="de.cau.cs.kieler.simulation.ui.advancedControlsEnabled">
-                     </test>
-                  </and>
-               </visibleWhen>
-            </dynamic>
             <command
                   commandId="de.cau.cs.kieler.simulation.ui.stepSubTick"
                   disabledIcon="icons/stepIconDisabled.png"
@@ -956,5 +938,13 @@
        <controller
              class="de.cau.cs.kieler.simulation.ui.SimulateModelInDiagramView">
        </controller>
+    </extension>
+    <extension
+          point="org.eclipse.ui.preferencePages">
+       <page
+             class="de.cau.cs.kieler.simulation.ui.preferences.SimulationPreferencePage"
+             id="de.cau.cs.kieler.simulation.ui.preferencePage"
+             name="Simulation">
+       </page>
     </extension>
 </plugin>

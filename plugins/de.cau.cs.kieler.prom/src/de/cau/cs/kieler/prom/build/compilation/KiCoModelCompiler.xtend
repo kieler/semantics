@@ -68,12 +68,6 @@ class KiCoModelCompiler extends ModelCompiler {
     public val compileChain = new ConfigurableAttribute("compileChain", "de.cau.cs.kieler.sccharts.netlist.simple", #[String, List, Map])
     
     /**
-     * Optional frontend compile chain that is added before any other compile chain.
-     * May contain the same values as compileChain.
-     */
-    public val frontend = new ConfigurableAttribute("frontend", null, #[String, List, Map])
-    
-    /**
      * Determines whether register variables should be communicated to the simulation.
      */
     public val communicateRegisterVariables = new ConfigurableAttribute("communicateRegisterVariables", true, #[Boolean])
@@ -155,6 +149,18 @@ class KiCoModelCompiler extends ModelCompiler {
     }
     
     /**
+     * Sets the compile chain based on the given processor or system ids.
+     * The ids have to be separated by a comma.
+     */
+    public def void setCompileChain(String systemOrProcessorCSV) {
+        compileChain.value = splitCompileChain(systemOrProcessorCSV)
+    }
+    
+    public static def List<String> splitCompileChain(String systemOrProcessorCSV) {
+        return systemOrProcessorCSV.replaceAll("\\s","").split(",").toList
+    }
+    
+    /**
      * Fetches the messages from the given object.
      * 
      * @param messageObjectReferences The message object references
@@ -194,12 +200,6 @@ class KiCoModelCompiler extends ModelCompiler {
             l.beforeCompilation(this)
         // Prepare systems from attribute
         var Iterable<String> systemPathsOrIds = getCompileChain(compileChain.value)
-        // Add frontend to compile chain
-        if(frontend.isDefined) {
-            val frontEndSystemPathsOrIds = getCompileChain(frontend.value)
-            systemPathsOrIds = (frontEndSystemPathsOrIds + systemPathsOrIds)
-        }
-        
         // Compile the model using all given compilation systems.
         resultModel = model
         for(systemPathOrId : systemPathsOrIds) {
@@ -316,7 +316,7 @@ class KiCoModelCompiler extends ModelCompiler {
         } else {
             // Load from system id
             try {
-                system = KiCoolRegistration.getSystemById(trimmedPathOrId)    
+                system = KiCoolRegistration.getSystemById(trimmedPathOrId)
             } catch (Exception e) {
                 val processor = KiCoolRegistration.getProcessorClass(trimmedPathOrId)
                 if(processor != null) {

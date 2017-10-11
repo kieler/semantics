@@ -62,36 +62,8 @@ class SCChartsAnalyzer extends DeclarationAnalyzer {
     /**
      * {@inheritDoc}
      */
-    override protected getDefaultSimulationFrontend() {
-        // TODO: Make a compilation system to compile SCCharts to SCG
+    override protected getDefaultCompileChain() {
         return "de.cau.cs.kieler.sccharts.processors.transformators.takenTransitionSignaling, \n"
-             + "de.cau.cs.kieler.sccharts.processors.transformators.reference, \n"
-             + "de.cau.cs.kieler.sccharts.processors.transformators.for, \n"
-             + "de.cau.cs.kieler.sccharts.processors.transformators.const, \n"
-             + "de.cau.cs.kieler.sccharts.processors.transformators.signal, \n"
-             + "de.cau.cs.kieler.sccharts.processors.transformators.pre, \n"
-             + "de.cau.cs.kieler.sccharts.processors.transformators.suspend, \n"
-             + "de.cau.cs.kieler.sccharts.processors.transformators.countDelay, \n"
-             + "de.cau.cs.kieler.sccharts.processors.transformators.weakSuspend, \n"
-             + "de.cau.cs.kieler.sccharts.processors.transformators.history, \n"
-             + "de.cau.cs.kieler.sccharts.processors.transformators.deferred, \n"
-             + "de.cau.cs.kieler.sccharts.processors.transformators.static, \n"
-             + "de.cau.cs.kieler.sccharts.processors.transformators.duringAction, \n"
-             + "de.cau.cs.kieler.sccharts.processors.transformators.complexFinalState, \n"
-             + "de.cau.cs.kieler.sccharts.processors.transformators.abort, \n"
-             + "de.cau.cs.kieler.sccharts.processors.transformators.exitAction, \n"
-             + "de.cau.cs.kieler.sccharts.processors.transformators.initialization, \n"
-             + "de.cau.cs.kieler.sccharts.processors.transformators.entryAction, \n"
-             + "de.cau.cs.kieler.sccharts.processors.transformators.connector, \n"
-             + "de.cau.cs.kieler.sccharts.processors.transformators.triggerEffect, \n"
-             + "de.cau.cs.kieler.sccharts.processors.transformators.surfaceDepth, \n" 
-             + "de.cau.cs.kieler.sccharts.scg.processors.transformators.SCG, \n"
-             // SCG transformations
-             + "de.cau.cs.kieler.scg.processors.transformators.dependency, \n"
-             + "de.cau.cs.kieler.scg.processors.transformators.basicBlocks, \n"
-             + "de.cau.cs.kieler.scg.processors.transformators.expressions, \n"
-             + "de.cau.cs.kieler.scg.processors.transformators.guards, \n"
-             + "de.cau.cs.kieler.scg.processors.transformators.scheduler, \n"
-             + "de.cau.cs.kieler.scg.processors.transformators.sequentializer"
+             + "de.cau.cs.kieler.sccharts.netlist.simple"
     }
 }

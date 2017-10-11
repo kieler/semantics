@@ -163,6 +163,17 @@ class ProjectDraftData extends ConfigurationSerializable {
      * 
      * @param project The project
      */
+    public def void createInitialResources(IProject project) {
+        createInitialResources(project, #{})
+    }
+    
+    /**
+     * Creates this instance's initial resources in the given project.
+     * Variables in the resources will be replaced with the given substitutions in the map.
+     * 
+     * @param project The project
+     * @param additionalReplacements Replacements for variables in the resources
+     */
     public def void createInitialResources(IProject project, Map<String, String> additionalReplacements) {
         for(data : initialResources) {
             var resolvedProjectRelativePath = data.projectRelativePath

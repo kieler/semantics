@@ -233,13 +233,8 @@ class PromProjectWizard extends Wizard implements INewWizard {
         
         val env = mainPage.selectedProjectDraft
         try {
-            var String frontendReplacement = ""
-            if(analyzer != null && !analyzer.simulationFrontend.isNullOrEmpty) {
-                frontendReplacement = "frontend: "+analyzer.simulationFrontend
-            }
             val variableMappings = newHashMap
             variableMappings.putAll(modelFileSubstitution.variableMappings)
-            variableMappings.put("frontend", frontendReplacement)
             env.createInitialResources(newlyCreatedProject, variableMappings)
         } catch (Exception e) {
             // Log error
