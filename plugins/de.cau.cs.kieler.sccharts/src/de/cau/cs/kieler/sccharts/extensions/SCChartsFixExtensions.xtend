@@ -20,7 +20,7 @@ import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.annotations.extensions.UniqueNameExtensions
 import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import java.util.ArrayList
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions

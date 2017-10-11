@@ -1,0 +1,52 @@
+scchart ABSync {
+  input signal pure A;
+  input signal pure B;
+  input signal pure Reset;
+  signal pure arm;
+  signal pure disarm;
+  output signal pure AB;
+
+  region _R0:
+
+  initial state Detection {
+
+    region _R0:
+
+    initial state WautAandB {
+
+      region _R0:
+
+      initial state wA
+      --> dA with A / arm;
+
+      final state dA;
+
+      region _R1:
+
+      initial state wB
+      --> dB with B / arm;
+
+      final state dB;
+    }
+    >-> done / AB;
+
+    state done;
+
+    region _R1:
+
+    initial state idle
+    --> Timer with arm;
+
+    state Timer {
+
+      region _R0:
+
+      initial state cnt
+      --> end with 3 true / disarm;
+
+      state end;
+    };
+  }
+  o-> Detection with Reset
+  --> Detection with disarm;
+}

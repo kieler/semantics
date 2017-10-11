@@ -33,21 +33,34 @@ class ToggleProcessorOnOffAction implements IAction {
     
     public static val ID = "de.cau.cs.kieler.kicool.ui.synthesis.actions.toggleProcessorOnOffAction"
     
-    @Accessors static val deactivatedProcessors = <ProcessorReference> newHashSet 
+    @Accessors static val deactivatedProcessors = <ProcessorReference, OnOffToggle> newHashMap 
     
     override execute(ActionContext context) {
         val kNode = context.KNode
         
         val toggleOnOffData = kNode.getProperty(TOGGLE_ON_OFF_DATA)
         val processorReference = toggleOnOffData.processorReference
+//        val toggle = toggleOnOffData.toggle
         
-        if (deactivatedProcessors.contains(processorReference)) {
-            deactivatedProcessors -= processorReference
-            setFBColor(getContainer(kNode), ON)
-        } else {
-            deactivatedProcessors += processorReference
-            setFBColor(getContainer(kNode), OFF)
+        if (!deactivatedProcessors.containsKey(processorReference)) {
+            deactivatedProcessors.put(processorReference, OnOffToggle.ON)
+        } 
+        
+        var toggle = deactivatedProcessors.get(processorReference)
+        
+        switch (toggle) {
+            case ON: toggle = OnOffToggle.OFF 
+            case OFF: toggle = OnOffToggle.HALT 
+            case HALT:  toggle = OnOffToggle.ON
         }
+        
+        switch (toggle) {
+            case ON: setFBColor(getContainer(kNode), ON) 
+            case OFF: setFBColor(getContainer(kNode), OFF)
+            case HALT: setFBColor(getContainer(kNode), HALT)
+        }
+
+        deactivatedProcessors.put(processorReference, toggle)            
         
         ActionResult.createResult(false).dontAnimateLayout()
     }

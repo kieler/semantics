@@ -9,6 +9,7 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeHRExte
 import de.cau.cs.kieler.scg.Assignment
 import java.util.List
 import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.PrintCall
 
 /**
  * @author ssm
@@ -41,6 +42,8 @@ class SCGSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             (assignment.expression as TextExpression).text
         } else if (assignment.expression instanceof FunctionCall) {
             serialize(assignment.expression) 
+        } else if (assignment.expression instanceof PrintCall) {
+            (assignment.expression as PrintCall).serialize
         }
     }
     
@@ -63,13 +66,37 @@ class SCGSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             (assignment.expression as TextExpression).text
         } else if (assignment.expression instanceof FunctionCall) {
             serialize(assignment.expression) 
-        }
-        else if (assignment.expression instanceof ReferenceCall) {
+        } else if (assignment.expression instanceof ReferenceCall) {
             (assignment.expression as ReferenceCall).serializeHR
+        } else if (assignment.expression instanceof PrintCall) {
+            (assignment.expression as PrintCall).serializeHR
         }
     }
     
+    dispatch override CharSequence serialize(FunctionCall fc) {
+        var funcCall = fc.functionName + "("
+
+        var cnt = 0
+        for (par : fc.parameters) {
+            if (cnt > 0) {
+                funcCall = funcCall + ", "
+            }
+            if (par.pureOutput) {
+                funcCall = funcCall + "!"
+            }
+            if (par.callByReference) {
+                funcCall = funcCall + "&"
+            }
+            funcCall = funcCall + par.expression.serialize
+            cnt = cnt + 1
+        }
+        funcCall = funcCall + ")"
+        return funcCall
+    }
     
+    dispatch override CharSequence serializeHR(FunctionCall fc) {
+        return fc.serialize
+    }
     
     protected def CharSequence serializeIndices(List<Expression> indices) {
         var String indicesStr = ""

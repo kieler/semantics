@@ -20,7 +20,7 @@ import de.cau.cs.kieler.sccharts.legacy.kexpressions.ValueType
 import de.cau.cs.kieler.sccharts.legacy.kexpressions.ValuedObject
 import de.cau.cs.kieler.sccharts.legacy.sccharts.Scope
 import org.eclipse.emf.ecore.EObject
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.sccharts.legacy.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.legacy.sccharts.State
 import de.cau.cs.kieler.sccharts.legacy.kexpressions.ValuedObjectReference

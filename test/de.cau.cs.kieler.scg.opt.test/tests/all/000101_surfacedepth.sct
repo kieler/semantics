@@ -1,7 +1,0 @@
-scchart surfacedepth {
-  input bool I;
-  
-  initial state A
-  --> B with I;
-  final state B;
-}

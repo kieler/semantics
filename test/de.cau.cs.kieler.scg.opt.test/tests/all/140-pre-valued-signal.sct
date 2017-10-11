@@ -1,9 +1,0 @@
-scchart _146_pre_valued_signal "146-pre-valued-signal" {
-  input signal int V;
-  output signal int O;
-
-  initial state S1
-  --> S2 with pre(V) / O(pre(val(V)));
-
-  state S2;
-}

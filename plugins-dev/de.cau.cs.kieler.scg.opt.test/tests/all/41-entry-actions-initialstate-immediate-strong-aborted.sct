@@ -1,0 +1,23 @@
+scchart _41_entry_actions_initialstate_immediate_strong_aborted
+"41-entry-actions-initialstate-immediate-strong-aborted" {
+  input signal I;
+  input signal I2;
+  output signal O;
+  output signal O2;
+  input signal R;
+  input signal S;
+  input signal W;
+
+  initial state A
+  --> B;
+
+  state B {
+
+    initial state D
+    --> E immediate with W
+    o-> E immediate with S;
+
+    state E;
+  }
+  --> B with R;
+}

@@ -1,0 +1,15 @@
+scchart _58_hostcode "58-hostcode" {
+  input signal I;
+  output signal int O;
+
+  initial state A
+  --> A with I / 'Var1++';
+
+  region:
+
+  initial state B
+  --> C;
+
+  state C
+  --> B with / O('Var1');
+}

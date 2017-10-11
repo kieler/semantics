@@ -15,7 +15,7 @@ package de.cau.cs.kieler.sccharts.legacy.sccharts.extensions
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.legacy.sccharts.State
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 
 /**
  * SCCharts Optimization Extensions.

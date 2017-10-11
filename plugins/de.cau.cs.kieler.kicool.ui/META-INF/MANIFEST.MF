@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KiCool Ui
 Bundle-SymbolicName: de.cau.cs.kieler.kicool.ui;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.13.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.kicool.ui.internal.KiCoolActivator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -22,11 +22,11 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.elk.alg.layered,
  de.cau.cs.kieler.klighd.ui,
  org.eclipse.elk.core,
- de.cau.cs.kieler.kico.ui,
  org.eclipse.ui.ide,
  org.eclipse.xtext.xbase.ui,
- de.cau.cs.kieler.kico.klighd,
- de.cau.cs.kieler.core.model
+ de.cau.cs.kieler.core.model,
+ org.eclipse.emf.ecore.edit,
+ de.cau.cs.kieler.kgraph.text
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.kicool.ui,
@@ -34,6 +34,15 @@ Export-Package: de.cau.cs.kieler.kicool.ui,
  de.cau.cs.kieler.kicool.ui.contentassist.antlr,
  de.cau.cs.kieler.kicool.ui.contentassist.antlr.internal,
  de.cau.cs.kieler.kicool.ui.internal,
+ de.cau.cs.kieler.kicool.ui.kitt.synthesis,
+ de.cau.cs.kieler.kicool.ui.kitt.tracing,
+ de.cau.cs.kieler.kicool.ui.kitt.tracing.internal;x-internal:=true,
+ de.cau.cs.kieler.kicool.ui.kitt.update,
+ de.cau.cs.kieler.kicool.ui.klighd,
+ de.cau.cs.kieler.kicool.ui.klighd.internal,
+ de.cau.cs.kieler.kicool.ui.klighd.internal.model,
+ de.cau.cs.kieler.kicool.ui.klighd.internal.model.action,
+ de.cau.cs.kieler.kicool.ui.klighd.internal.model.editor,
  de.cau.cs.kieler.kicool.ui.labeling,
  de.cau.cs.kieler.kicool.ui.outline,
  de.cau.cs.kieler.kicool.ui.quickfix,
@@ -44,5 +53,5 @@ Export-Package: de.cau.cs.kieler.kicool.ui,
  de.cau.cs.kieler.kicool.ui.synthesis.updates,
  de.cau.cs.kieler.kicool.ui.view,
  de.cau.cs.kieler.kicool.ui.view.actions
-Import-Package: de.cau.cs.kieler.kico.klighd.internal.model,
+Import-Package: de.cau.cs.kieler.kicool.ui.klighd.internal.model,
  org.apache.log4j

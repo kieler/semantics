@@ -14,9 +14,7 @@
  package de.cau.cs.kieler.scg.transformations.schedulers
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kico.KielerCompilerException
-import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
@@ -153,8 +151,7 @@ abstract class SimpleScheduler extends AbstractScheduler implements Traceable {
     }
     
     
-    protected def boolean createSchedule(SCGraph scg, List<ScheduledBlock> schedule, SchedulingConstraints constraints,
-    	KielerCompilerContext context) {
+    protected def boolean createSchedule(SCGraph scg, List<ScheduledBlock> schedule, SchedulingConstraints constraints) {
 
         val schedulingBlocks = new ArrayList<SchedulingBlock>(schedulingBlockCount)
         schedulingBlocks.addAll(constraints.schedulingBlocks)
@@ -186,7 +183,7 @@ abstract class SimpleScheduler extends AbstractScheduler implements Traceable {
 	 * 			the source SCG
 	 * @return Returns the enriched SCG model.
 	 */
-    override public SCGraph schedule(SCGraph scg, KielerCompilerContext context) {
+    override public SCGraph schedule(SCGraph scg) {
 
     	// Create a new schedule using the scgsched factory.
 // FIXME: broken in scg version 3
@@ -195,7 +192,7 @@ abstract class SimpleScheduler extends AbstractScheduler implements Traceable {
 //        val PotentialInstantaneousLoopAnalyzer potentialInstantaneousLoopAnalyzer = 
 //            Guice.createInjector().getInstance(typeof(PotentialInstantaneousLoopAnalyzer))
 //        context.compilationResult.ancillaryData += potentialInstantaneousLoopAnalyzer.analyze(scg)
-        val pilData = context.compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head.criticalNodes.toSet
+//        val pilData = context.compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head.criticalNodes.toSet
         
 
         // Create and fill a list for all scheduling blocks.
@@ -205,17 +202,17 @@ abstract class SimpleScheduler extends AbstractScheduler implements Traceable {
         schedulingBlockCount = schedulingBlockCache.size
         
         val sBlockList = <ScheduledBlock> newLinkedList
-        var schedulable = scg.createSchedule(sBlockList, schedulingConstraints, context)
+        var schedulable = scg.createSchedule(sBlockList, schedulingConstraints)
 //		schedule.scheduledBlocks += sBlockList
         
         // Print out results on the console
         // and add the scheduling information to the graph.
         if (!schedulable) {
-            if (context != null) {
-                context.getCompilationResult().addPostponedWarning(
-                    new KielerCompilerException(getId(), getId(), "The SCG is NOT ASC-schedulable!")
-                )
-            }
+//            if (context != null) {
+//                context.getCompilationResult().addPostponedWarning(
+//                    new KielerCompilerException(getId(), getId(), "The SCG is NOT ASC-schedulable!")
+//                )
+//            }
             System::out.println("The SCG is NOT ASC-schedulable!")
 //            scg.schedules.add(schedule)
         } else {

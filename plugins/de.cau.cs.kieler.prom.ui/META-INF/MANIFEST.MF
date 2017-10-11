@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Prom UI
 Bundle-SymbolicName: de.cau.cs.kieler.prom.ui;singleton:=true
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 0.13.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.prom.ui.PromUIPlugin
 Require-Bundle: org.eclipse.xtext.ui,
  org.eclipse.xtext.ui.shared,
@@ -19,8 +19,6 @@ Require-Bundle: org.eclipse.xtext.ui,
  org.eclipse.ui.console;bundle-version="3.6.201",
  org.eclipse.jdt.core;bundle-version="3.10.0",
  de.cau.cs.kieler.prom,
- de.cau.cs.kieler.kico;bundle-version="0.12.0",
- de.cau.cs.kieler.scg.s;bundle-version="0.12.0",
  de.cau.cs.kieler.kexpressions,
  de.cau.cs.kieler.kexpressions.ui,
  de.cau.cs.kieler.annotations.ui;bundle-version="0.12.0"

@@ -12,6 +12,8 @@
  */
 package de.cau.cs.kieler.prom.build
 
+import java.util.List
+import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
@@ -69,6 +71,14 @@ class ConfigurableAttribute {
     
     public def Boolean boolValue() {
         return value as Boolean
+    }
+    
+    public def List<Object> listValue() {
+        return value as List<Object>
+    }
+    
+    public def Map<String, Object> mapValue() {
+        return value as Map<String, Object>
     }
     
     override toString() {

@@ -1,0 +1,21 @@
+scchart _27_reincarnation "27-reincarnation" {
+  output signal int v;
+  input signal pure a;
+  input signal pure b;
+  input signal pure c;
+  input signal pure d;
+
+  initial state innerMacro {
+
+    state s1
+    --> s1 with a / v(3) --> s2 immediate with b / v(5);
+
+    state s2;
+
+    initial state i
+    --> s1 immediate / v(2);
+  }
+  --> innerMacro with c / v(7) --> s3 immediate with d / v(11);
+
+  state s3;
+}

@@ -24,7 +24,7 @@ import de.cau.cs.kieler.core.model.properties.Property
  * @kieler.design 2017-02-19 proposed
  * @kieler.rating 2017-02-19 proposed yellow  
  */
-abstract class Metric<Source, Type> extends IntermediateProcessor<Source> {
+abstract class Metric<Source, Type> extends IntermediateProcessor<Source, Source> {
     
     public static val IProperty<Double> METRIC = 
         new Property<Double>("de.cau.cs.kieler.kicool.metric")    

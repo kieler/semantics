@@ -20,12 +20,13 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.scg.SCGraph
 import java.util.HashMap
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -50,11 +51,9 @@ import de.cau.cs.kieler.scg.ScgFactory
  */
 class SCGDeclarationExtensions { 
     
-    @Inject
-    extension KExpressionsDeclarationExtensions
-
-    @Inject
-    extension SCGCoreExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KEffectsExtensions
+    @Inject extension SCGCoreExtensions
 
     // -------------------------------------------------------------------------
     // -- Valued object handling

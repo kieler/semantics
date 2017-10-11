@@ -22,7 +22,6 @@
 
 package de.cau.cs.kieler.scg.processors.optimizations
 
-import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.processors.optimizations.features.OptimizerFeatures
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.features.SCGFeatureGroups
@@ -37,21 +36,26 @@ import de.cau.cs.kieler.scg.impl.ConditionalImpl
 import de.cau.cs.kieler.kexpressions.impl.ValuedObjectImpl
 import de.cau.cs.kieler.kexpressions.Declaration
 import java.util.Map.Entry
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
-class ReuseVariables extends AbstractProductionTransformation {
+class ReuseVariables {
+    
+    @Inject extension KEffectsExtensions    
+    
     ArrayList<Node> visited = new ArrayList() 
     Iterable<AssignmentImpl> assignments;
     private static final val MAX_SEARCH_DEPTH = 100 // maximum search depth for next pointer search
-    override getProducedFeatureId() {
+    def getProducedFeatureId() {
         return OptimizerFeatures::RV_ID
     }
-    override getRequiredFeatureIds() {
+    def getRequiredFeatureIds() {
         return newHashSet(SCGFeatures::SEQUENTIALIZE_ID, SCGFeatureGroups::SCG_ID)
     }
-    override getId() {
+    def getId() {
         return OptimizerFeatures::RV_ID
     }
-    override getName() {
+    def getName() {
         return OptimizerFeatures::RV_NAME
     }
     def SCGraph transform(SCGraph scg) {

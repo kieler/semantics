@@ -14,8 +14,6 @@ package de.cau.cs.kieler.sccharts.benchmark
 
 import com.mongodb.BasicDBObject
 import de.cau.cs.kieler.benchmark.common.AbstractXTextModelBenchmark
-import de.cau.cs.kieler.kico.KielerCompiler
-import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.test.common.repository.TestModelData
 import org.bson.Document
@@ -85,7 +83,7 @@ class SCChartsTransformationsBenchmark extends AbstractXTextModelBenchmark<State
         // Warm up KiCo
         if (!warmUp) {
             try {
-                KielerCompiler.compile(new KielerCompilerContext("", model))
+//                KielerCompiler.compile(new KielerCompilerContext("", model))
             } catch (Exception e) {
                 // may fail but causes the ClassLoader in load all related classes
             }
@@ -105,24 +103,24 @@ class SCChartsTransformationsBenchmark extends AbstractXTextModelBenchmark<State
         val compileChain = transformations.join("!T_SIMULATIONVISUALIZATION, !T_ABORTWTO, T_", ", T_", "")[it]
         
         // Compile with KiCo
-        val context = new KielerCompilerContext(compileChain, model)
-        context.advancedSelect = false // Compilation has fixed chain (respecting dependencies)
-        context.inplace = true // Save intermediate results
+//        val context = new KielerCompilerContext(compileChain, model)
+//        context.advancedSelect = false // Compilation has fixed chain (respecting dependencies)
+//        context.inplace = true // Save intermediate results
         
         var overallDuration = System.nanoTime
-        val result = KielerCompiler.compile(context)
+//        val result = KielerCompiler.compile(context)
         data.put("duration", System.nanoTime - overallDuration)
         data.put("unit", "ns")
         
-        if (!result.postponedErrors.empty) {
-            throw new Exception("Could not compile SCCharts model into Core SCCharts form. Compilation error occurred!", result.postponedErrors.head)
-        }
+//        if (!result.postponedErrors.empty) {
+//            throw new Exception("Could not compile SCCharts model into Core SCCharts form. Compilation error occurred!", result.postponedErrors.head)
+//        }
         
         val transformations = new BasicDBObject 
         // Check all intermediate results
-        for (iResult : result.transformationIntermediateResults.filter[!it.id.nullOrEmpty]) {
-            transformations.put(iResult.id, iResult.duration)
-        }
+//        for (iResult : result.transformationIntermediateResults.filter[!it.id.nullOrEmpty]) {
+//            transformations.put(iResult.id, iResult.duration)
+//        }
         data.put("transformations", transformations)
         
         return data

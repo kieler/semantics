@@ -13,13 +13,10 @@
  */
 package de.cau.cs.kieler.prom.ui
 
-import de.cau.cs.kieler.kico.KielerCompiler
-import de.cau.cs.kieler.kico.internal.Transformation
 import de.cau.cs.kieler.prom.IProjectHolder
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.data.CommandData
 import de.cau.cs.kieler.prom.data.EnvironmentData
-import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 import java.util.ArrayList
 import java.util.Collections
 import java.util.EnumSet
@@ -438,28 +435,28 @@ class UIUtil {
         val combo = new ComboViewer(parent, SWT.DEFAULT)
 
         // Fetch possible targets from KiCo
-        var Set<Transformation> transformations
-        val feature = KielerCompiler.getFeature(CodeGenerationFeatures.TARGET_ID)
+//        var Set<Transformation> transformations
+//        val feature = KielerCompiler.getFeature(CodeGenerationFeatures.TARGET_ID)
         
-        if (feature != null)
-            transformations = feature.expandingTransformations
+//        if (feature != null)
+//            transformations = feature.expandingTransformations
         
         // Fill combo
         combo.contentProvider = ArrayContentProvider.instance
-        combo.input = transformations
+//        combo.input = transformations
 
         // Select first element as default 
-        if (transformations != null && transformations.size > 0) {
-            combo.selection = new StructuredSelection(transformations.get(0))
-        }
+//        if (transformations != null && transformations.size > 0) {
+//            combo.selection = new StructuredSelection(transformations.get(0))
+//        }
 
         // Create label provider
         combo.labelProvider = new LabelProvider() {
             override String getText(Object element) {
-                val data = (element as Transformation)
-                if (data != null)
-                    return data.name
-                else
+//                val data = (element as Transformation)
+//                if (data != null)
+//                    return data.name
+//                else
                     return ""
             }
         }

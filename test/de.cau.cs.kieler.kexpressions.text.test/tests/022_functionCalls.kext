@@ -9,39 +9,39 @@ bool B;
 int I;
 
 @check "functionCall.basic"
-expression <rand()>
+expression extern rand()
 
 @check "functionCall.basic.int"
-expression <srand(4)>
+expression extern srand(4)
 
 @check "functionCall.basic.string"
-expression <printf("Hallo Welt!")>
+expression extern printf("Hallo Welt!")
 
 @check "functionCall.basic.parameter.string"
-expression <printf("%s", S)>
+expression extern printf("%s", S)
 
 @check "functionCall.nested"
-expression <srand(<time()>)>
+expression extern srand(extern time())
 
 @check "functionCall.nested.string"
-expression <printf("%s", <getValue()>)>
+expression extern printf("%s", extern getValue())
 
 
 
 
 @check "functionCall.returnValue"
-B = <scanf("")>
+B = extern scanf("")
 
 @check "functionCall.returnValue.parameter.byReference"
-B = <scanf("%d", &I)>
+B = extern scanf("%d", &I)
 
 @check "functionCall.returnValue.parameter.byPureOutput"
-B = <scanf("%d", !&I)>
+B = extern scanf("%d", !&I)
 
 @check "functionCall.returnValue.parameter.byReference.nested"
-B = <scanf("%d", <getValue()>)>
+B = extern scanf("%d", extern getValue())
 
 @check "functionCall.returnValue.parameter.byPureOutput.hostcode"
-B = <scanf("%d", !&`x`)>
+B = extern scanf("%d", !&`x`)
 
 

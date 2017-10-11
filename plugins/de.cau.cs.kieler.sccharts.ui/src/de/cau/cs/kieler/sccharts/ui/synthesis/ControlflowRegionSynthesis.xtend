@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
+import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KRendering

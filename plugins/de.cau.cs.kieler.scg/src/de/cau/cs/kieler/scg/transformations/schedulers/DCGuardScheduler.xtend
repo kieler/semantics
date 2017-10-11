@@ -5,7 +5,6 @@ import de.cau.cs.kieler.scg.features.SCGFeatures
 import com.google.inject.Inject
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.scg.GuardDependency
 import java.util.LinkedHashSet
@@ -15,7 +14,7 @@ import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.SCGPlugin
 import java.util.logging.Level
 import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.kico.KielerCompilerException
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * @author ssm
@@ -36,31 +35,27 @@ class DCGuardScheduler extends SimpleGuardScheduler {
         return SCGTransformations::DC_SCHEDULING_NAME
     }
 
-    override getProducedFeatureId() {
-        return SCGFeatures::SCHEDULING_ID
-    }
-
-    override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::GUARDS_ID)
-    }
+//    override getProducedFeatureId() {
+//        return SCGFeatures::SCHEDULING_ID
+//    }
+//
+//    override getRequiredFeatureIds() {
+//        return newHashSet(SCGFeatures::GUARDS_ID)
+//    }
 
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
     
-    @Inject
-    extension SCGCoreExtensions
-    	
-    @Inject
-    extension SCGDependencyExtensions	
-    
-    @Inject
-    extension AnnotationsExtensions
+    @Inject extension SCGCoreExtensions
+    @Inject extension SCGDependencyExtensions	
+    @Inject extension AnnotationsExtensions
+    @Inject extension KEffectsExtensions
     
 	/**
 	 * {@inherited}
 	 */
-    public override SCGraph transform(SCGraph scg, KielerCompilerContext context) {
+    public override SCGraph transform(SCGraph scg) {
     	scg.createStringAnnotation(SCGFeatures.SCHEDULING_ID, SCGFeatures.SCHEDULING_NAME)
  
     	/** 
@@ -111,10 +106,10 @@ class DCGuardScheduler extends SimpleGuardScheduler {
     	// ASC schedulability output
     	if (size < estimatedScheduleSize) {
     	    val message = "The SCG is NOT asc-schedulable!"
-    	    if (context != null) {
-                context.getCompilationResult().addPostponedWarning(
-                    new KielerCompilerException(getId(), getId(), message));
-            }
+//    	    if (context != null) {
+//                context.getCompilationResult().addPostponedWarning(
+//                    new KielerCompilerException(getId(), getId(), message));
+//            }
     		SCGPlugin.logError(message)
     	} else {
     		SCGPlugin.log("The SCG is asc-schedulable.")

@@ -64,13 +64,13 @@ class HybridSequentializer extends SimpleSequentializer {
         return null //SCGTransformations::SEQUENTIALIZE_NAME
     }
 
-    override getProducedFeatureId() {
-        return SCGFeatures::SEQUENTIALIZE_ID
-    }
-
-    override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::SCHEDULING_ID)
-    }   
+//    override getProducedFeatureId() {
+//        return SCGFeatures::SEQUENTIALIZE_ID
+//    }
+//
+//    override getRequiredFeatureIds() {
+//        return newHashSet(SCGFeatures::SCHEDULING_ID)
+//    }   
     
     // -------------------------------------------------------------------------
     // -- Injections 

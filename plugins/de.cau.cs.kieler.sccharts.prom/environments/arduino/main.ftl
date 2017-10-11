@@ -1,24 +1,30 @@
-#import "${model_name}.ino"
+<#include "/assets/read_and_write.ftl">
+<#include "/assets/serial.ftl">
+<#include "/assets/timing.ftl">
+#include "Arduino.h"
+#import "kieler-gen/${model_name}.c"
 
-// Declarations
+// The data for the model
+TickData tickData;
+
+// Declaration snippets
 ${decls}
 
 void setup() {
-    // Initializations
+    // Initialization snippets
 ${inits}
     
     // Init model file
-    reset();  
+    reset(&tickData);
 }
 
 void loop() {
-
-    // Inputs
+    // Input snippets
 ${inputs}
         
     // Reaction of model
-    tick();
+    tick(&tickData);
 
-    // Outputs
+    // Output snippets
 ${outputs}
 }

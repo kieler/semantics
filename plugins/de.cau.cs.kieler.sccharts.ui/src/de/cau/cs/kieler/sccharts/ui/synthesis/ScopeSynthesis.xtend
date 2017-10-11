@@ -15,17 +15,16 @@ package de.cau.cs.kieler.sccharts.ui.synthesis
 import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.ui.synthesis.AbstractSCChartsSynthesis
-import de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsDiagramProperties
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHooks
 import java.util.LinkedHashSet
+import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
-import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * Scope diagram synthesis for SCCharts
@@ -36,7 +35,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @kieler.rating 2012-10-08 proposed yellow
  */
 @ViewSynthesisShared
-class ScopeSynthesis extends AbstractSCChartsSynthesis<Scope> {
+class ScopeSynthesis extends AbstractDiagramSynthesis<Scope> {
 
     @Inject extension KNodeExtensionsReplacement
     @Inject StateSynthesis stateSynthesis

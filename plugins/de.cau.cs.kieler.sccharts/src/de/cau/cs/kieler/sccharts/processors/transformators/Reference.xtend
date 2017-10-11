@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.sccharts.processors.transformators
 
 import com.google.inject.Inject
-import com.google.inject.Injector
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
@@ -27,7 +26,6 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
@@ -35,6 +33,7 @@ import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * Give me a state, Vasili. One state only please.
@@ -50,9 +49,8 @@ class Reference extends SCChartsProcessor {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExtDeclarationExtensions    
     @Inject extension SCChartsScopeExtensions
-    @Inject extension SCChartsStateExtensions
+    @Inject extension KEffectsExtensions
     @Inject extension SCChartsReferenceExtensions
-    @Inject Injector injector
     
     protected val replacedWithLiterals = <ValuedObject> newHashSet
     
@@ -74,10 +72,13 @@ class Reference extends SCChartsProcessor {
             for (state : statesWithReferences.toList) {
                 state.expandReferencedState(new Replacements)
             }
+            if (!rootState.validate) 
+                throw new IllegalStateException("References objects are not contained in the resource!")
         }
+        
     }   
     
-    protected def expandReferencedState(State stateWithReference, Replacements replacements) {
+    protected def void expandReferencedState(State stateWithReference, Replacements replacements) {
         val newState = stateWithReference.reference.scope.copy as State => [ 
             name = stateWithReference.name 
             label = stateWithReference.label
@@ -172,7 +173,7 @@ class Reference extends SCChartsProcessor {
                 }
 
                 // If the binding is an array reference, add the references to the valued object reference.                
-                if (!newRef.indices.empty) {
+                if (!newRef.indices.empty && valuedObjectReference.indices.empty) {
                     valuedObjectReference.indices.clear
                     for (index : newRef.indices) {
                         if (index instanceof Value) {
@@ -225,12 +226,12 @@ class Reference extends SCChartsProcessor {
     }
 
     protected dispatch def void replaceReferences(Assignment assignment, Replacements replacements) {
-        assignment.expression.replaceReferences(replacements)
+        assignment.expression?.replaceReferences(replacements)
         
         val newRef = replacements.peek(assignment.valuedObject)
         if (newRef != null) {
             if (newRef instanceof ValuedObjectReference) { 
-                assignment.valuedObject = (newRef as ValuedObjectReference).valuedObject
+                assignment.valuedObject = newRef.valuedObject
                 if (assignment.indices.empty && !newRef.indices.empty) {
                     // Array indices were bound to a scalar. Add the right indices.
                     for (index : newRef.indices) {
@@ -253,6 +254,11 @@ class Reference extends SCChartsProcessor {
                     "\" in an assignment exists, but is not another valued object.\n" + 
                     "The type \"" + newRef.class.getName + "\" is not supported.", assignment, true)
             }
+        } else {
+            // The valued object itself is not bound. However, the indices could be; transform.
+            for (index : assignment.indices) {
+                index.replaceReferences(replacements)
+            }     
         }
     }
     
@@ -279,5 +285,28 @@ class Reference extends SCChartsProcessor {
     }
     
 
+    protected def boolean validate(State state) {
+        var success = true
+        val valuedObjects = <ValuedObject> newHashSet
+        
+        for (vo : state.eAllContents.filter(ValuedObject).toList) {
+            valuedObjects += vo
+        }
+        for (vor : state.eAllContents.filter(ValuedObjectReference).toList) {
+            if (!valuedObjects.contains(vor.valuedObject)) {
+                
+                var container = vor.eContainer
+                while(!(container instanceof State)) {
+                    container = container.eContainer
+                }
+                
+                environment.errors.add("The valued object reference points to a valued object that is not contained in the model!", vor, true)
+                System.err.println("The valued object reference points to a valued object that is not contained in the model! " + 
+                    vor.valuedObject.name + " " + vor + " " + (container as State).name)
+                success = false
+            }
+        }
+        success
+    }
 
 }

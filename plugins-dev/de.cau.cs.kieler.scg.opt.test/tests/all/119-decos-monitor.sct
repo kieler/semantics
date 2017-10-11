@@ -1,0 +1,228 @@
+scchart SCU_Monitor {
+  signal INIT_LEFT;
+  signal INIT_RIGHT;
+  input signal RESET;
+  input signal TIMER;
+  input signal DRVCOMMAND;
+  signal DRIVE;
+  signal HOLD1_RDY;
+  signal DRV1_RDY;
+  signal TWOMOT1;
+  signal ONEMOT1;
+  signal HOLD;
+  signal EMERGENCY;
+  input signal FAIL_BRAKE;
+  input signal FAIL_ACTUATOR;
+  input signal EXCEED;
+  input signal EXCEED_A;
+  input signal EXCEED_B;
+  signal abort;
+
+  region R1:
+
+  initial state global_power_off
+  --> init_left with !RESET / INIT_LEFT;
+
+  state init_left
+  --> init_right with TIMER / INIT_RIGHT;
+
+  state init_right
+  --> operational with TIMER;
+
+  state operational {
+
+    region _R0:
+
+    initial state wait_4_drive_command
+    --> wait_4_drives with DRVCOMMAND / DRIVE;
+
+    state wait_4_drives
+    --> drive with DRV1_RDY;
+
+    state drive {
+
+      region _R0:
+
+      initial state init
+      --> fullspeed with TWOMOT1
+      --> halfspeed;
+
+      state fullspeed
+      --> halfspeed with ONEMOT1;
+
+      state halfspeed;
+    }
+    --> wait_4_drive_command with HOLD1_RDY
+    --> wait_4_brakes with !DRVCOMMAND / HOLD;
+
+    state wait_4_brakes
+    --> wait_4_drive_command with HOLD1_RDY;
+  }
+  --> global_power_off with RESET
+  --> emergency with EMERGENCY;
+
+  state emergency
+  --> global_power_off with RESET;
+
+  region R2:
+
+  initial state left_power_off
+  --> operational with INIT_LEFT;
+
+  state operational {
+
+    region _R0:
+
+    initial state active {
+
+      region _R0:
+
+      initial state hold_mode {
+
+        region _R0:
+
+        initial state init
+        --> activehold with FAIL_BRAKE / HOLD1_RDY
+        --> brake with TIMER / HOLD1_RDY;
+
+        state brake {
+
+          region _R0:
+
+          initial state monitor
+          --> fail_act_brake with FAIL_ACTUATOR & EXCEED
+          --> _S0 with EXCEED_A | EXCEED_B;
+
+          state fail_act_brake;
+
+          final state _S0;
+        }
+        >-> activehold with / HOLD1_RDY;
+
+        state activehold {
+
+          region _R0:
+
+          initial state wait_4_drives
+          --> monitor with TIMER
+          --> wait_4_drives with TIMER / EMERGENCY;
+
+          state monitor
+          --> C1 with EXCEED;
+
+          state C1
+          --> motor_fault_a with EXCEED_B & EXCEED_A
+          --> motor_fault_b with EXCEED_A & EXCEED_B
+          --> cs_breakage;
+
+          final state motor_fault_a;
+
+          final state motor_fault_b;
+
+          final state cs_breakage;
+        }
+        >-> activehold with / EMERGENCY;
+      }
+      --> drive_mode with DRIVE;
+
+      state drive_mode {
+
+        region _R0:
+
+        initial state init
+        --> C1 with TIMER / DRV1_RDY;
+
+        state C1
+        --> one_motor with FAIL_ACTUATOR / ONEMOT1
+        --> two_motors with / TWOMOT1;
+
+        state two_motors {
+
+          region _R0:
+
+          initial state monitor
+          --> C1 with EXCEED
+          --> ppu_ace_error_ with FAIL_ACTUATOR;
+
+          final state ppu_ace_error_;
+
+          state C1
+          --> failure_controller_a
+          --> failure_controller_b_
+          --> C2
+          --> C3
+          --> failure_controller_ab_;
+
+          final state failure_controller_b_;
+
+          state failure_controller_ab_
+          --> failure_controller_ab_ with / EMERGENCY;
+
+          state C2
+          --> breakage_a_shaft_ppura_
+          --> breakage_b_shaft_ppura_;
+
+          final state breakage_a_shaft_ppura_;
+
+          final state breakage_b_shaft_ppura_;
+
+          state C3
+          --> breakage_a_shaft_ppum_
+          --> breakage_b_shaft_ppum
+          --> cs_jam;
+
+          state cs_jam
+          --> cs_jam with / EMERGENCY;
+
+          final state breakage_a_shaft_ppum_;
+
+          final state breakage_b_shaft_ppum;
+
+          final state failure_controller_a;
+        }
+        >-> one_motor with / ONEMOT1;
+
+        state one_motor {
+
+          region _R0:
+
+          initial state monitor
+          --> C1 with EXCEED
+          --> monitor with TIMER / EMERGENCY;
+
+          state C1
+          --> C2
+          --> C3;
+
+          state C2
+          --> failure_controller_a_
+          --> break_shaft_a_or_jam_
+          --> break_a_or_cs_or_jam;
+
+          final state failure_controller_a_;
+
+          final state break_shaft_a_or_jam_;
+
+          state C3
+          --> failure_controller_b_
+          --> break_shaft_b_or_jam_
+          --> break_b_or_cs_or_jam;
+
+          final state failure_controller_b_;
+
+          final state break_shaft_b_or_jam_;
+
+          final state break_a_or_cs_or_jam;
+
+          final state break_b_or_cs_or_jam;
+        }
+        >-> one_motor with / EMERGENCY;
+      }
+      --> hold_mode with HOLD;
+    }
+    --> emergency with EMERGENCY;
+
+    state emergency;
+  }
+  --> left_power_off with RESET;
+}

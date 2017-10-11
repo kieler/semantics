@@ -15,10 +15,14 @@ package de.cau.cs.kieler.kicool.compilation
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.compilation.internal.AsynchronousCompilation
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
+import java.util.List
 
 import static com.google.common.base.Preconditions.*
-
 import static extension de.cau.cs.kieler.kicool.compilation.internal.ContextPopulation.*
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kicool.KiCoolFactory
+import de.cau.cs.kieler.kicool.ProcessorGroup
+import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
 
 /**
  * Class for preparing compilations programmatically through creating compilation contexts. 
@@ -36,11 +40,14 @@ class Compile {
     static def CompilationContext createCompilationContext(System system, Object sourceModel) {
         checkNotNull(system, "System is null")
         checkNotNull(sourceModel, "Source model is null")
-        new CompilationContext => [
+        val context = KiCoolRegistration.getInjector.getInstance(CompilationContext)
+        context => [
             it.system = system
-            it.sourceModel = sourceModel
+            it.originalModel = sourceModel
             it.populateContext
-            RuntimeSystems.add(it.getSystem, it)
+            // configure start environment
+            EnvironmentPropertyHolder.processEnvironmentSetter(it.startEnvironment, system.startsets)
+//            RuntimeSystems.add(it.getSystem, it)
         ]
     }
     
@@ -50,11 +57,37 @@ class Compile {
     static def CompilationContext createCompilationContext(String systemID, Object sourceModel) {
         createCompilationContext(KiCoolRegistration.getSystemById(systemID), sourceModel)
     }
+
+    /**
+     * Create a compilation context from a system id and a source model and additional processors
+     */
+    static def CompilationContext createCompilationContext(String systemID, Object sourceModel, List<String> additionalProcessors) {
+        val system = KiCoolRegistration.getSystemById(systemID).copy => [
+            for (processorId : additionalProcessors) {
+                val entry = KiCoolFactory.eINSTANCE.createProcessorReference => [
+                    it.id = processorId
+                ]
+                switch(processors) {
+                    ProcessorGroup: (processors as ProcessorGroup).processors += entry
+                }
+                
+            }
+        ]
+        createCompilationContext(system, sourceModel)
+    }
     
     /**
      * Start a compilation in an asynchronous job.
      */
     static def asyncronousCompilation(CompilationContext compilationContext) {
         AsynchronousCompilation.compile(compilationContext)
+    }
+    
+    static def addToRuntimeSystems(CompilationContext context) {
+        RuntimeSystems.add(context.getSystem, context)        
+    }
+    
+    static def removeFromRuntimeSystems(CompilationContext context) {
+        RuntimeSystems.remove(context.getSystem)
     }
 }

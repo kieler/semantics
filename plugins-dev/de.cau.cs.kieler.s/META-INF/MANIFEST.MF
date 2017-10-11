@@ -1,0 +1,43 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KIELER S Language Infrastructure
+Bundle-Vendor: Kiel University
+Bundle-Version: 0.13.0.qualifier
+Bundle-SymbolicName: de.cau.cs.kieler.s; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtend.lib,
+ org.eclipse.xtext.generator;resolution:=optional,
+ org.apache.commons.logging;resolution:=optional,
+ org.eclipse.emf.codegen.ecore;resolution:=optional,
+ org.eclipse.emf.mwe.utils;resolution:=optional,
+ org.eclipse.emf.mwe2.launch;resolution:=optional,
+ com.ibm.icu;resolution:=optional,
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib,
+ de.cau.cs.kieler.core.model,
+ com.google.inject;bundle-version="3.0.0",
+ org.eclipse.xtext;bundle-version="2.1.0",
+ org.eclipse.xtext.util,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.common,
+ org.antlr.runtime,
+ de.cau.cs.kieler.kexpressions,
+ de.cau.cs.kieler.annotations,
+ org.eclipse.xtend.lib,
+ de.cau.cs.kieler.kexpressions,
+ de.cau.cs.kieler.annotations.ui
+Import-Package: org.apache.log4j
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: de.cau.cs.kieler.s,
+ de.cau.cs.kieler.s.extensions,
+ de.cau.cs.kieler.s.formatting,
+ de.cau.cs.kieler.s.parser.antlr,
+ de.cau.cs.kieler.s.parser.antlr.internal,
+ de.cau.cs.kieler.s.s,
+ de.cau.cs.kieler.s.s.impl,
+ de.cau.cs.kieler.s.s.util,
+ de.cau.cs.kieler.s.scoping,
+ de.cau.cs.kieler.s.serializer,
+ de.cau.cs.kieler.s.services,
+ de.cau.cs.kieler.s.validation
+Bundle-ClassPath: .

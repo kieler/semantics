@@ -15,7 +15,7 @@ package de.cau.cs.kieler.sccharts.ui.synthesis
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
+import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KNode
@@ -57,23 +57,12 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
     public static val SynthesisOption AUTOMATIC_INLINE = SynthesisOption.createCheckOption("Automatic inline", false).
         setCategory(GeneralSynthesisOptions::DATAFLOW)
     
-    @Inject 
-    extension KNodeExtensionsReplacement
-
-    @Inject
-    extension KRenderingExtensions
-
-    @Inject
-    extension KExpressionsDeclarationExtensions
-    
-    @Inject
-    extension DataflowRegionStyles
-    
-    @Inject
-    extension SCChartsSerializeHRExtensions
-    
-    @Inject
-    extension EquationSynthesis 
+    @Inject extension KNodeExtensionsReplacement
+    @Inject extension KRenderingExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension DataflowRegionStyles
+    @Inject extension SCChartsSerializeHRExtensions
+    @Inject extension EquationSynthesis 
     
     override getDisplayedSynthesisOptions() {
         return newArrayList(CIRCUIT, AUTOMATIC_INLINE)
@@ -134,10 +123,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         
 
         // translate all direct dataflow equations
-        for (equation: region.equations) {
-            node.children += equation.transform;
-        }
-        
+        node.children += region.equations.performTranformation
 
         return <KNode> newArrayList(node)
     }

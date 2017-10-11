@@ -20,6 +20,9 @@ import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import com.google.inject.Inject
 import com.google.inject.Injector
+import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 
 /**
  * C Code Processor
@@ -31,7 +34,11 @@ import com.google.inject.Injector
  */
 class CCodeGenerator extends Processor<SCGraphs, CodeContainer> {
     
+    @Inject extension AnnotationsExtensions
     @Inject Injector injector
+    
+    public static val IProperty<Boolean> DEBUG_COMMENTS = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.transformators.codegen", false)
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.codegen.c"
@@ -48,6 +55,10 @@ class CCodeGenerator extends Processor<SCGraphs, CodeContainer> {
     override process() {
         val graphs = getModel
         val result = new CodeContainer
+        
+        if (graphs.hasPragma("debug")) {
+            environment.setProperty(DEBUG_COMMENTS, true)
+        }
         
         // Create a c code generator module for each SCG.
         val scgModuleMap = <SCGraph, SCGCodeGeneratorModule> newHashMap

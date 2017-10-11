@@ -1,0 +1,22 @@
+scchart _28_exit_actions "28-exit-actions" {
+  input signal I;
+  output signal O;
+  input signal R;
+  input signal S;
+  input signal SI;
+  input signal WI;
+
+  initial state A
+  --> B;
+
+  state B {
+
+    initial state C
+    o-> D with S
+    o-> D immediate with SI
+    --> D immediate with WI;
+
+    state D;
+  }
+  --> B with R;
+}

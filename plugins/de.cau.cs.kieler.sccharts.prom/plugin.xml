@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <wizard
-            category="de.cau.cs.kieler.sccharts"
+            category="de.cau.cs.kieler.prom.ui.kielerModelingWizards"
             class="de.cau.cs.kieler.sccharts.prom.SCChartsProjectWizard"
             finalPerspective="de.cau.cs.kieler.Modeling"
             hasPages="true"
@@ -18,7 +18,7 @@
       </wizard>
       <wizard
             canFinishEarly="false"
-            category="de.cau.cs.kieler.sccharts"
+            category="de.cau.cs.kieler.prom.ui.kielerModelingWizards"
             class="de.cau.cs.kieler.sccharts.prom.SctxFileWizard"
             finalPerspective="de.cau.cs.kieler.Modeling"
             hasPages="true"

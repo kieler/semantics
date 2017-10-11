@@ -1,0 +1,19 @@
+scchart ImmediateNormalTermination {
+  input signal I2;
+  input signal I1;
+  output signal O;
+
+  state B {
+
+    initial state C
+    --> D immediate with I2;
+
+    final state D;
+  }
+  >-> E with / O;
+
+  state E;
+
+  initial state A
+  --> B with I1;
+}

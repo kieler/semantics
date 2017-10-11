@@ -20,16 +20,12 @@ import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.SCGAnnotations
+import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.scg.transformations.SCGTransformations
 
 import static extension de.cau.cs.kieler.core.model.codegeneration.HostcodeUtil.*
 import java.util.Stack
@@ -40,8 +36,8 @@ import de.cau.cs.kieler.kexpressions.ReferenceCall
 import java.util.List
 import de.cau.cs.kieler.annotations.TypedStringAnnotation
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * @author ssm
@@ -49,13 +45,13 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
  * @kieler.rating 2016-06-21 proposed yellow 
  * 
  */
-class SCG2CTransformation extends AbstractProductionTransformation {
+class SCG2CTransformation {// extends AbstractProductionTransformation {
 
     @Inject extension AnnotationsExtensions
     @Inject extension SCG2CSerializeHRExtensions
     @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension KExpressionsDeclarationExtensions
     @Inject extension SCGDeclarationExtensions
+    @Inject extension KEffectsExtensions
     
     public static val TICK_LOGIC_FUNCTION_NAME = "tickLogic"
     public static val TICK_FUNCTION_NAME = "tick"
@@ -73,23 +69,23 @@ class SCG2CTransformation extends AbstractProductionTransformation {
     protected val VOCalleeMap = <ValuedObject, String> newHashMap
     protected val parameterMapping = <String, List<String>> newHashMap 
 
-    override getId() {
-        return SCGTransformations.SCG2C_ID
-    }
+//    override getId() {
+//        return SCGTransformations.SCG2C_ID
+//    }
+//
+//    override getName() {
+//        return SCGTransformations.SCG2C_NAME
+//    }
+//
+//    override getProducedFeatureId() {
+//        return SCGFeatures.C_ID
+//    }
+//
+//    override getRequiredFeatureIds() {
+//        return newHashSet(SCGFeatures.SEQUENTIALIZE_ID)
+//    }
 
-    override getName() {
-        return SCGTransformations.SCG2C_NAME
-    }
-
-    override getProducedFeatureId() {
-        return SCGFeatures.C_ID
-    }
-
-    override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures.SEQUENTIALIZE_ID)
-    }
-
-    public def String transform(SCGraph scg, KielerCompilerContext context) {
+    public def String transform(SCGraph scg) {
         val sb = new StringBuilder
 
         sb.addHeader

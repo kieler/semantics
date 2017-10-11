@@ -3,6 +3,7 @@
  */
 package de.cau.cs.kieler.kicool.ui;
 
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
@@ -11,6 +12,12 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 public class KiCoolUiModule extends de.cau.cs.kieler.kicool.ui.AbstractKiCoolUiModule {
     
     public static final String BUNDLE_ID = "de.cau.cs.kieler.kicool.ui";
+    
+    // The plug-in ID
+    public static final String PLUGIN_ID = "de.cau.cs.kieler.kicool.ui"; //$NON-NLS-1$
+
+    /** KIEM ID for source model. */
+    public static final String SOURCE_MODEL_ID = "de.cau.cs.kieler.kico.klighd.sourceModel";    
     
 	public KiCoolUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
@@ -21,5 +28,8 @@ public class KiCoolUiModule extends de.cau.cs.kieler.kicool.ui.AbstractKiCoolUiM
         return de.cau.cs.kieler.kicool.ui.contentassist.KiCoolProposalProviderX.class;
     }
 	
-	
+    public static ImageDescriptor getImageDescriptor(final String path) {
+        return AbstractUIPlugin.imageDescriptorFromPlugin(PLUGIN_ID, path);
+    }
+    
 }

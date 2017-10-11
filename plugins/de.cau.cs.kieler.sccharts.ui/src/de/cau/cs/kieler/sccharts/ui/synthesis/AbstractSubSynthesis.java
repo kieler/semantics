@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
 import com.google.inject.Inject;
 
 import de.cau.cs.kieler.klighd.SynthesisOption;
+import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.kgraph.KGraphElement;
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared;
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis;
@@ -142,6 +143,10 @@ public abstract class AbstractSubSynthesis<I extends EObject, O extends KGraphEl
      */
     public float getFloatValue(SynthesisOption option) {
         return parent.getFloatValue(option);
+    }
+    
+    public ViewContext getUsedContext() {
+        return parent.getUsedContext();
     }
 
 }

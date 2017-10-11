@@ -1,0 +1,13 @@
+scchart ^signal {
+  input bool I;
+  output signal O;
+  
+  initial state A {
+    initial state A1
+    --> A2 with / O;
+    
+    state A2
+    --> A1;
+  };
+  
+}

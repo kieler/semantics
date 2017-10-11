@@ -1,0 +1,140 @@
+scchart tcint_debug32 {
+  output signal P;
+  output signal Q;
+  output signal R;
+  output signal S;
+  output signal T;
+  output signal U;
+  output signal V;
+  output signal W;
+  output signal X;
+  output signal Y;
+  output signal Z;
+  input signal A;
+  input signal B;
+  input signal C;
+  input signal D;
+  input signal E;
+  input signal F;
+
+  region main:
+
+  initial state I
+  --> ParallelStatementList52state immediate;
+
+  state ParallelStatementList52state {
+
+    region R0:
+
+    initial state I
+    --> Trap54state immediate;
+
+    state Trap54state {
+      signal T_;
+      signal haltTrap54_;
+
+      region R0:
+
+      state S13 "13";
+
+      final state S9 "9";
+
+      state ParallelStatementList55state {
+
+        region R0:
+
+        initial state I
+        --> S24 immediate;
+
+        state S24 "24"
+        o-> S73 with A / R; T_;
+
+        state S73 "73";
+
+        region R1:
+
+        initial state I
+        --> S108 immediate;
+
+        state S108 "108"
+        o-> S136;
+
+        state S158 "158";
+
+        state S136 "136"
+        --> S158 immediate with T / V
+        --> S158 immediate;
+      }
+      --> S13 immediate with haltTrap54_
+      --> S9 immediate with T_;
+
+      initial state I
+      --> ParallelStatementList55state immediate;
+    }
+    >-> S227 with / P;
+
+    final state S227 "227";
+
+    region R1:
+
+    initial state I
+    --> Trap73state immediate;
+
+    state Trap73state {
+      signal T_747689617;
+      signal haltTrap73_;
+
+      region R0:
+
+      state S266 "266";
+
+      final state S262 "262";
+
+      state ParallelStatementList74state {
+
+        region R0:
+
+        initial state I
+        --> S277 immediate;
+
+        state S277 "277"
+        o-> S306 with B;
+
+        state S372 "372";
+
+        state S306 "306"
+        --> S372 immediate with R / W; S; T_747689617
+        --> S372 immediate with / S; T_747689617;
+
+        region R1:
+
+        initial state I
+        --> S407 immediate;
+
+        state S407 "407"
+        o-> S435;
+
+        state S457 "457";
+
+        state S435 "435"
+        --> S457 immediate with S / T
+        --> S457 immediate;
+      }
+      --> S266 immediate with haltTrap73_
+      --> S262 immediate with T_747689617;
+
+      initial state I
+      --> ParallelStatementList74state immediate;
+    }
+    >-> S526;
+
+    state S526 "526"
+    --> S549 immediate with P / X
+    --> S549 immediate with / Y;
+
+    final state S549 "549";
+  }
+  >-> S606 with / Z;
+
+  final state S606 "606";
+}

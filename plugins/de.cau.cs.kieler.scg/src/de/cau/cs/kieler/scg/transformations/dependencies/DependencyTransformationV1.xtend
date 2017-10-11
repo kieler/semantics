@@ -22,8 +22,6 @@ import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
-import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -31,7 +29,6 @@ import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
@@ -39,13 +36,12 @@ import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
 
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.scg.transformations.SCGTransformations
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.DataDependencyType
 
@@ -68,27 +64,27 @@ import de.cau.cs.kieler.scg.DataDependencyType
  * @kieler.rating 2013-10-23 proposed yellow
  */
 
-class DependencyTransformationV1 extends AbstractProductionTransformation implements Traceable {
+class DependencyTransformationV1 {//extends AbstractProductionTransformation implements Traceable {
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     
-    override getId() {
-        return SCGTransformations::DEPENDENCY_ID
-    }
-
-    override getName() {
-        return SCGTransformations::DEPENDENCY_ID
-    }
-
-    override getProducedFeatureId() {
-        return SCGFeatures::DEPENDENCY_ID
-    }
-
-    override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::BASIC_ID)
-    }
+//    override getId() {
+//        return SCGTransformations::DEPENDENCY_ID
+//    }
+//
+//    override getName() {
+//        return SCGTransformations::DEPENDENCY_ID
+//    }
+//
+//    override getProducedFeatureId() {
+//        return SCGFeatures::DEPENDENCY_ID
+//    }
+//
+//    override getRequiredFeatureIds() {
+//        return newHashSet(SCGFeatures::BASIC_ID)
+//    }
     
     // -------------------------------------------------------------------------
     // -- Injections 

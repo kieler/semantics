@@ -9,8 +9,7 @@ import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.sccharts.SCCharts;
-import de.cau.cs.kieler.sccharts.State;
-import de.cau.cs.kieler.sccharts.scg.SCGTransformation;
+import de.cau.cs.kieler.sccharts.scg.processors.transformators.SCGTransformation;
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup;
 import de.cau.cs.kieler.scg.SCGPlugin;
 import de.cau.cs.kieler.scg.SCGraph;
@@ -54,7 +53,7 @@ public class SCChartsModelFileHandler extends AbstractConvertModelHandler {
         // refactored model).
         transformed = model;
         if (commandString.equals(SCG_TRANSFORMATION)) {
-            transformed = (SCGraph) transformation.transform((SCCharts) model, null);
+            transformed = (SCGraph) transformation.transform((SCCharts) model);
         } 
         return transformed;
     }

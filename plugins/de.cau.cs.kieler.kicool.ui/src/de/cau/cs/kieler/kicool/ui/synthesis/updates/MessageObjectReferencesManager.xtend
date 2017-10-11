@@ -33,6 +33,14 @@ import de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorSystem
 import de.cau.cs.kieler.kicool.classes.IColorSystem
 import de.cau.cs.kieler.kicool.environments.MessageObjectLink
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
+import de.cau.cs.kieler.kicool.environments.MessageObjectList
+import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
+import de.cau.cs.kieler.klighd.kgraph.KLabel
+import org.eclipse.elk.graph.properties.IProperty
+import org.eclipse.elk.graph.properties.Property
+import org.eclipse.elk.graph.properties.IPropertyHolder
+
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.*
 
 /**
  * @author ssm
@@ -42,14 +50,22 @@ import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
  */
 class MessageObjectReferencesManager {
     
+    public static val IProperty<Object> MESSAGE_OBJECT_REFERENCE = 
+        new Property<Object>("de.cau.cs.kieler.kicool.ui.updates.messageObjectReference", null)    
+    
     @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions 
+    @Inject extension KLabelExtensions
     @Inject extension KRenderingExtensions  
-    @Inject extension KContainerRenderingExtensions
+    @Inject extension KContainerRenderingExtensions  
         
-    def annotateModelNodes(MessageObjectReferences references, KNode node) {
+    def annotateModelNodes(MessageObjectList references, KNode node) {
         val trackingAdapter = new SourceModelTrackingAdapter
         node.eAdapters.add(trackingAdapter)
+        
+        val reverseLabelList = <KEdge> newLinkedList
+
+        val morElements = node.eAllContents.filter(IPropertyHolder).filter[ getProperty(MESSAGE_OBJECT_REFERENCE) !== null ].toList
         
         for(reference : references) {
             if (reference.object != null) {
@@ -63,6 +79,20 @@ class MessageObjectReferencesManager {
                             val parentNode = n.eContainer as KNode
                             val commentNode = reference.createCommentBox(reference.message, n, reference.colorSystem as ColorSystem)
                             parentNode.children.add(commentNode)
+                        } else if (n instanceof KEdge) {
+                            reference.createCommentLabel(reference.message, n, reference.colorSystem as ColorSystem)
+                            reverseLabelList += n
+
+                            for (obj : morElements) {
+                                val mor = obj.getProperty(MESSAGE_OBJECT_REFERENCE)
+                                if (mor.equals(reference.payload)) {
+                                    if (obj instanceof KEdge) {
+                                        obj.container.setFBColorViaExtension(reference.colorSystem as ColorSystem)
+                                        obj.container.lineWidth = 2.0f
+                                        obj.container.styles.forEach[ propagateToChildren = true ]
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -71,7 +101,27 @@ class MessageObjectReferencesManager {
                 node.children += commentNode
             }
         }
+        
+        for (edge : reverseLabelList) {
+            val labels = <KLabel> newLinkedList => [ it += edge.labels ]
+            edge.labels.clear
+            edge.labels += labels.reverse
+        }
+                
     } 
+    
+    private def KLabel createCommentLabel(Object association, String text, KEdge edge, ColorSystem colorSystem) {
+        val label = edge.createLabel()
+        label.configureCenterEdgeLabel(text) // Add text
+        label.getKRendering => [ // Configure text
+            fontSize = 7;
+            
+            setBackgroundGradient(colorSystem.background.color, colorSystem.backgroundTarget.color, 90);
+            foreground = colorSystem.foreground.color
+        ]
+
+        return label;        
+    }
     
     private def KNode createCommentBox(Object association, String text, KNode relatedNode, ColorSystem colorSystem) {
         val node = association.createNode
@@ -114,11 +164,11 @@ class MessageObjectReferencesManager {
     }
     
     
-    static def fillUndefinedColors(MessageObjectReferences references, ColorSystem colorSystem) {
-        val newReferences = new MessageObjectReferences
-        for(reference : references) {
-            val IColorSystem cs = if (reference.colorSystem != null) reference.colorSystem else colorSystem
-            newReferences.add(new MessageObjectLink(reference.message, reference.object, reference.annotate, cs, null))
+    static def fillUndefinedColors(MessageObjectList mol, ColorSystem colorSystem) {
+        val newReferences = new MessageObjectList
+        for(ml : mol) {
+            val IColorSystem cs = if (ml.colorSystem != null) ml.colorSystem else colorSystem
+            newReferences.add(new MessageObjectLink(ml.message, ml.object, ml.annotate, cs, null, ml.payload))
         }
         newReferences
     }     

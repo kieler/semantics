@@ -1,0 +1,15 @@
+scchart _33_valued_signals_test "33-valued-signals-test" {
+  output signal bool V = false;
+
+  initial state A
+  --> B / V(true);
+
+  state B;
+
+  region:
+
+  initial state C
+  --> D with val(V) == true;
+
+  state D;
+}

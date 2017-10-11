@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="de.cau.cs.kieler.sim.instructions.provider" name="Instructions View Data Provider" schema="schema/de.cau.cs.kieler.sim.instructions.provider.exsd"/>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="true"
+            category="de.cau.cs.kieler.sim"
+            class="de.cau.cs.kieler.sim.instructions.InstructionsView"
+            icon="icons/InstructionsViewIcon.png"
+            id="de.cau.cs.kieler.sim.instructions"
+            name="Instructions View"
+            restorable="true">
+      </view>
+   </extension>
+
+</plugin>

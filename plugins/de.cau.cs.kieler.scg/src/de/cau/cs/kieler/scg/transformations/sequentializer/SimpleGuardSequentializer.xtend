@@ -17,27 +17,27 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
-import de.cau.cs.kieler.kitt.tracing.Traceable
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
-import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.scg.transformations.SCGTransformations
-
-import de.cau.cs.kieler.scg.ScheduleDependency
-import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import de.cau.cs.kieler.scg.GuardDependency
 import de.cau.cs.kieler.scg.ControlDependency
-import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.scg.GuardDependency
+import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.ScheduleDependency
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
+import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
+import de.cau.cs.kieler.scg.features.SCGFeatures
+
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * @author ssm
@@ -46,49 +46,54 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
  * 
  */
 
-class SimpleGuardSequentializer extends AbstractProductionTransformation implements Traceable {
+class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements Traceable {
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     
     override getId() {
-        return SCGTransformations::SEQUENTIALIZE_ID
+        "de.cau.cs.kieler.scg.processors.transformators.sequentializer"
     }
-
+    
     override getName() {
-        return SCGTransformations::SEQUENTIALIZE_NAME
+        "Sequentializer"
+    }
+    
+    override process() {
+        val SCGGraphs = ScgFactory.eINSTANCE.createSCGraphs => [
+            model.copyPragmas(it)
+        ]
+        creationalTransformation(model, SCGGraphs)
+        for (scg : model.scgs) {
+            SCGGraphs.scgs += scg.transform                           
+        }        
+        setModel(SCGGraphs)
+    }
+    
+    override getType() {
+        ProcessorType.TRANSFORMATOR
     }
 
-    override getProducedFeatureId() {
-        return SCGFeatures::SEQUENTIALIZE_ID
-    }
-
-    override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::SCHEDULING_ID)
-    }
+//    override getProducedFeatureId() {
+//        return SCGFeatures::SEQUENTIALIZE_ID
+//    }
+//
+//    override getRequiredFeatureIds() {
+//        return newHashSet(SCGFeatures::SCHEDULING_ID)
+//    }
 
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
     
-    @Inject 
-    extension SCGCoreExtensions
-    
-    @Inject 
-    extension SCGDeclarationExtensions
-         
-    @Inject 
-    extension SCGControlFlowExtensions	
-    
-    @Inject
-    extension AnnotationsExtensions
-
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-    
-    @Inject
-    extension SCGDependencyExtensions
+    @Inject extension SCGCoreExtensions
+    @Inject extension SCGDeclarationExtensions
+    @Inject extension SCGControlFlowExtensions	
+    @Inject extension AnnotationsExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension SCGDependencyExtensions
+    @Inject extension KEffectsExtensions
 
     // -------------------------------------------------------------------------
     // -- Globals
@@ -100,7 +105,7 @@ class SimpleGuardSequentializer extends AbstractProductionTransformation impleme
     // -- Guard Transformation
     // -------------------------------------------------------------------------    
       
-     public def SCGraph transform(SCGraph scg, KielerCompilerContext context) {
+     public def SCGraph transform(SCGraph scg) {
         
         /**
          * Since we want to build a new SCG, we cannot use the SCG copy extensions because it would 
@@ -114,7 +119,6 @@ class SimpleGuardSequentializer extends AbstractProductionTransformation impleme
             scg.copyAnnotations(it, <String> newHashSet("main", "voLink"))
         ]
         
-        creationalTransformation(scg, newSCG)
         scg.setDefaultTrace
         newSCG.trace(scg)
         
@@ -138,6 +142,7 @@ class SimpleGuardSequentializer extends AbstractProductionTransformation impleme
         
         for(entry : entryNodes) {
             val entryNode = ScgFactory.eINSTANCE.createEntry => [ newSCG.nodes += it name = entry.name ]
+            val exitNode = ScgFactory.eINSTANCE.createExit => [ newSCG.nodes += it name = entry.name + "_exit" ]
             val scheduledNodes = entry.getSchedule
             
             val AAMap = <Node, Node> newHashMap => [ put(entry, entryNode)]
@@ -179,7 +184,8 @@ class SimpleGuardSequentializer extends AbstractProductionTransformation impleme
             for(schedule : scheduleDependencies) {
                 val originalAssignment = schedule.eContainer as Node
             	val sourceAssignment = AAMap.get(originalAssignment)
-                val targetAssignment = AAMap.get(schedule.target) 
+                var targetAssignment = AAMap.get(schedule.target)
+                if (targetAssignment == null) targetAssignment = exitNode 
             	
             	// Check for guarded assignments
             	val guardDependencies = originalAssignment.dependencies.filter(GuardDependency)
@@ -227,6 +233,9 @@ class SimpleGuardSequentializer extends AbstractProductionTransformation impleme
                    	}
                	} 
             }
+            
+            
+            
         }
         
         newSCG

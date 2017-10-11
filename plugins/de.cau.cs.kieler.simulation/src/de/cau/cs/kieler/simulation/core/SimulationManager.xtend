@@ -132,6 +132,7 @@ class SimulationManager extends Configurable {
     /**
      * The current state of the simulation.
      */
+    @Accessors(PUBLIC_GETTER)
     private var StepState currentState
     
     /**

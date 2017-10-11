@@ -59,7 +59,7 @@ public class OperatorExpressionImpl extends EObjectImpl implements OperatorExpre
      * @generated
      * @ordered
      */
-    protected static final OperatorType OPERATOR_EDEFAULT = OperatorType.EQ;
+    protected static final OperatorType OPERATOR_EDEFAULT = OperatorType.NOT;
 
     /**
      * The cached value of the '{@link #getOperator() <em>Operator</em>}' attribute.

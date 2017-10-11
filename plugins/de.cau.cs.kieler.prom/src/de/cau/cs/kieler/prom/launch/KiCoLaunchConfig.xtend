@@ -16,13 +16,9 @@ package de.cau.cs.kieler.prom.launch
 import com.google.common.base.Charsets
 import com.google.common.base.Strings
 import com.google.common.io.Files
-import de.cau.cs.kieler.kico.CompilationResult
-import de.cau.cs.kieler.kico.KielerCompiler
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kico.KielerCompilerException
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
-import de.cau.cs.kieler.prom.build.KiCoBuilder
+import de.cau.cs.kieler.prom.build.KielerModelingBuilder
 import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.prom.data.FileData
 import de.cau.cs.kieler.prom.data.KiCoLaunchData
@@ -87,8 +83,8 @@ class KiCoLaunchConfig extends PromLaunchConfig {
     // Result of compilation
     @Accessors
     private val List<IFile> compiledFiles = newArrayList()
-    @Accessors
-    private val List<CompilationResult> compilationResults = newArrayList()
+//    @Accessors
+//    private val List<CompilationResult> compilationResults = newArrayList()
 
     /**
      * {@inheritDoc}
@@ -318,50 +314,50 @@ class KiCoLaunchConfig extends PromLaunchConfig {
         // Load model from file
         val EObject model = ModelImporter.load(data.getFile(project))
  
-        if (model != null) {
-            // Get compiler context with settings for KiCo
-            // TODO: ESTERELSIMULATIONVISUALIZATION throws an exception when used (21.07.2015), so we explicitly disable it.
-            // TODO: SIMULATIONVISUALIZATION throws an exception when used (28.10.2015), so we explicitly disable it.
-            // TODO: ABORTWTO often makes trouble and is not deterministicly choosen, so we explicitly disable it.
-            var String compileChain = "!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION, !T_ABORTWTO"
-            if(KiCoBuilder.isCompileChain(launchData.targetLanguage)) {
-                compileChain += ", " + launchData.targetLanguage
-            } else {
-                // If it is not a complete compile chain, it is assumed to be a transformation, which has to be prefixed with T_
-                compileChain += ", T_"+ launchData.targetLanguage
-            }
-//            println (compileChain)
-
-            val context = new KielerCompilerContext(compileChain, model)
-            context.inplace = false
-            context.advancedSelect = true
-
-            // Compile
-            val result = KielerCompiler.compile(context)
-
-            // Flush compilation result to target
-            if (result.allErrors.isNullOrEmpty() && result.allWarnings.isNullOrEmpty()) {
-                val targetLocation = computeTargetPath(data.projectRelativePath, false)
-                saveCompilationResult(data, result, targetLocation)
-                
-                // Remember compilation result
-                val targetPath = computeTargetPath(data.projectRelativePath, true)
-                compiledFiles += project.getFile(new Path(targetPath))
-                compilationResults += result
-            } else {
-                val errorMessage = "Compilation of '" + data.name + "' failed:\n\n" +
-                                   Strings.nullToEmpty(result.allErrors) + "\n" +
-                                   Strings.nullToEmpty(result.allWarnings)
-
-                // Throw exception
-                throw new KielerCompilerException("", "", errorMessage) {
-                    // Override toString to have a more readable error message and not twice the same.
-                    override toString() {
-                        return "KielerCompilerException"
-                    }
-                }
-            }
-        }
+//        if (model != null) {
+//            // Get compiler context with settings for KiCo
+//            // TODO: ESTERELSIMULATIONVISUALIZATION throws an exception when used (21.07.2015), so we explicitly disable it.
+//            // TODO: SIMULATIONVISUALIZATION throws an exception when used (28.10.2015), so we explicitly disable it.
+//            // TODO: ABORTWTO often makes trouble and is not deterministicly choosen, so we explicitly disable it.
+//            var String compileChain = "!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION, !T_ABORTWTO"
+//            if(KielerModelingBuilder.isCompileChain(launchData.targetLanguage)) {
+//                compileChain += ", " + launchData.targetLanguage
+//            } else {
+//                // If it is not a complete compile chain, it is assumed to be a transformation, which has to be prefixed with T_
+//                compileChain += ", T_"+ launchData.targetLanguage
+//            }
+////            println (compileChain)
+//
+//            val context = new KielerCompilerContext(compileChain, model)
+//            context.inplace = false
+//            context.advancedSelect = true
+//
+//            // Compile
+//            val result = KielerCompiler.compile(context)
+//
+//            // Flush compilation result to target
+//            if (result.allErrors.isNullOrEmpty() && result.allWarnings.isNullOrEmpty()) {
+//                val targetLocation = computeTargetPath(data.projectRelativePath, false)
+//                saveCompilationResult(data, result, targetLocation)
+//                
+//                // Remember compilation result
+//                val targetPath = computeTargetPath(data.projectRelativePath, true)
+//                compiledFiles += project.getFile(new Path(targetPath))
+//                compilationResults += result
+//            } else {
+//                val errorMessage = "Compilation of '" + data.name + "' failed:\n\n" +
+//                                   Strings.nullToEmpty(result.allErrors) + "\n" +
+//                                   Strings.nullToEmpty(result.allWarnings)
+//
+//                // Throw exception
+//                throw new KielerCompilerException("", "", errorMessage) {
+//                    // Override toString to have a more readable error message and not twice the same.
+//                    override toString() {
+//                        return "KielerCompilerException"
+//                    }
+//                }
+//            }
+//        }
     }
 
     /**
@@ -436,34 +432,34 @@ class KiCoLaunchConfig extends PromLaunchConfig {
      * @param result The KiCo compilation result to be saved
      * @param targetPath File path where the result should be saved
      */
-    private def void saveCompilationResult(FileData data, CompilationResult result, String targetLocation) {
-        // Create directory for the output if none yet.
-        createDirectories(targetLocation)
-        
-        // Serialize Eobject
-        if(result.string.isNullOrEmpty) {
-            saveEObject(result.getEObject(), targetLocation)
-        } else {
-            // Save generated code to file, possibly using a target template
-            val resolvedTargetTemplate = PromPlugin.performStringSubstitution(launchData.targetTemplate, project)
-            if (resolvedTargetTemplate.isNullOrEmpty()) {
-                // Don't use template
-                Files.write(result.string, new File(targetLocation), Charsets.UTF_8)
-            } else {
-                // Create wrapper code
-                val modelName = Files.getNameWithoutExtension(data.name)
-                val annotationDatas = TemplateManager.getMacroCallData(project, data)
-                val generator = new TemplateManager(project)
-                val mappings = #{TemplateManager.KICO_GENERATED_CODE_VARIABLE -> result.string,
-                                 TemplateManager.MODEL_NAME_VARIABLE -> modelName,
-                                 TemplateManager.MODEL_NAMES_VARIABLE -> #[modelName]}
-                val wrapperCode = generator.generateWrapperCode(resolvedTargetTemplate, annotationDatas, mappings)
-                
-                // Save output
-                Files.write(wrapperCode, new File(targetLocation), Charsets.UTF_8)
-            }
-        }
-    }
+//    private def void saveCompilationResult(FileData data, CompilationResult result, String targetLocation) {
+//        // Create directory for the output if none yet.
+//        createDirectories(targetLocation)
+//        
+//        // Serialize Eobject
+//        if(result.string.isNullOrEmpty) {
+//            saveEObject(result.getEObject(), targetLocation)
+//        } else {
+//            // Save generated code to file, possibly using a target template
+//            val resolvedTargetTemplate = PromPlugin.performStringSubstitution(launchData.targetTemplate, project)
+//            if (resolvedTargetTemplate.isNullOrEmpty()) {
+//                // Don't use template
+//                Files.write(result.string, new File(targetLocation), Charsets.UTF_8)
+//            } else {
+//                // Create wrapper code
+//                val modelName = Files.getNameWithoutExtension(data.name)
+//                val annotationDatas = TemplateManager.getAnnotationInterface(project, data)
+//                val generator = new TemplateManager(project)
+//                val mappings = #{TemplateManager.KICO_GENERATED_CODE_VARIABLE -> result.string,
+//                                 TemplateManager.MODEL_NAME_VARIABLE -> modelName,
+//                                 TemplateManager.MODEL_NAMES_VARIABLE -> #[modelName]}
+//                val wrapperCode = generator.generateWrapperCode(resolvedTargetTemplate, annotationDatas, mappings)
+//                
+//                // Save output
+//                Files.write(wrapperCode, new File(targetLocation), Charsets.UTF_8)
+//            }
+//        }
+//    }
 
     /**
      * Serializes and saves an EObject in the file system.

@@ -12,20 +12,18 @@
  */
 package de.cau.cs.kieler.scg.transformations
 
-import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
-import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.scg.processors.analyzer.PotentiallyInstantaneousLoopAnalyzer
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.Exit
-import de.cau.cs.kieler.scg.SCGAnnotations
+import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import java.util.Set
 import de.cau.cs.kieler.scg.Node
@@ -41,24 +39,24 @@ import de.cau.cs.kieler.scg.ControlFlow
  * @author ssm
  *
  */
-class StructuralDepthJoinTransformation extends AbstractProductionTransformation implements Traceable {
+class StructuralDepthJoinTransformation implements Traceable {
     
     
-    override getId() {
-        SCGTransformations.STRUCTURALDEPTHJOIN_ID
-    }
-
-    override getName() {
-        SCGTransformations::STRUCTURALDEPTHJOIN_NAME
-    }    
-    
-    override getProducedFeatureId() {
-        SCGFeatures.STRUCTURALDEPTHJOIN_ID
-    }
-    
-    override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::DEPENDENCY_ID)
-    }   
+//    override getId() {
+//        SCGTransformations.STRUCTURALDEPTHJOIN_ID
+//    }
+//
+//    override getName() {
+//        SCGTransformations::STRUCTURALDEPTHJOIN_NAME
+//    }    
+//    
+//    override getProducedFeatureId() {
+//        SCGFeatures.STRUCTURALDEPTHJOIN_ID
+//    }
+//    
+//    override getRequiredFeatureIds() {
+//        return newHashSet(SCGFeatures::DEPENDENCY_ID)
+//    }   
     
     @Inject extension AnnotationsExtensions     
     @Inject extension KExpressionsDeclarationExtensions
@@ -66,16 +64,17 @@ class StructuralDepthJoinTransformation extends AbstractProductionTransformation
     @Inject extension SCGControlFlowExtensions
     @Inject extension SCGThreadExtensions    
     
-    public def SCGraph transform(SCGraph scg, KielerCompilerContext context) {
+    public def SCGraph transform(SCGraph scg) {
         
         val threadMapping = <Entry, Set<Node>> newHashMap
         val nodeMapping = <Node, List<Entry>> newHashMap
         val modifiedEntries = <Entry> newHashSet;        
         scg.nodes.head.asEntry.getAllThreadNodesAndThreads(threadMapping, nodeMapping)
-        context.compilationResult.removeAllAuxiliaryData(PotentialInstantaneousLoopResult)
-        val pilData = PotentiallyInstantaneousLoopAnalyzer.createPotentiallyInstantaneousLoopData(scg, context)
+// TODO KiCool
+//        context.compilationResult.removeAllAuxiliaryData(PotentialInstantaneousLoopResult)
+//        val pilData = PotentiallyInstantaneousLoopAnalyzer.createPotentiallyInstantaneousLoopData(scg, context)
         
-        var pilJoinNodes = pilData.filter(Join).toList
+        var pilJoinNodes = <Join>emptyList//pilData.filter(Join).toList
         for(join : pilJoinNodes) {
             val threadPathTypes = join.getEntryNodes.filter[!hasAnnotation(SCGAnnotations.ANNOTATION_IGNORETHREAD)].map [
                 getStringAnnotationValue(SCGAnnotations.ANNOTATION_CONTROLFLOWTHREADPATHTYPE)
@@ -89,7 +88,7 @@ class StructuralDepthJoinTransformation extends AbstractProductionTransformation
                         entry.getStringAnnotationValue(SCGAnnotations.ANNOTATION_CONTROLFLOWTHREADPATHTYPE).fromString2 ==
                         ThreadPathType.POTENTIALLY_INSTANTANEOUS
                     ) {
-                        entry.transformSDJ(scg, threadMapping.get(entry), pilData)
+//                        entry.transformSDJ(scg, threadMapping.get(entry), pilData)
                         modifiedEntries += entry
                     }
                 }
@@ -97,7 +96,7 @@ class StructuralDepthJoinTransformation extends AbstractProductionTransformation
             }                      
         }
 
-        context.compilationResult.removeAllAuxiliaryData(PotentialInstantaneousLoopResult)
+//        context.compilationResult.removeAllAuxiliaryData(PotentialInstantaneousLoopResult)
 //        PotentiallyInstantaneousLoopAnalyzer.createPotentiallyInstantaneousLoopData(scg, context)
         
         // SCG thread path types

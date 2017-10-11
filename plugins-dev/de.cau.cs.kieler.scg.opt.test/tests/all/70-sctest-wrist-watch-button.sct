@@ -1,0 +1,273 @@
+scchart WW_button {
+  output signal WATCH_MODE_COMMAND;
+  output signal ENTER_SET_WATCH_MODE_COMMAND;
+  output signal SET_WATCH_COMMAND;
+  output signal NEXT_WATCH_TIME_POSITION_COMMAND;
+  output signal EXIT_SET_WATCH_MODE_COMMAND;
+  output signal TOGGLE_24H_MODE_COMMAND;
+  output signal TOGGLE_CHIME_COMMAND;
+  output signal STOPWATCH_MODE_COMMAND;
+  output signal START_STOP_COMMAND;
+  output signal LAP_COMMAND;
+  output signal ALARM_MODE_COMMAND;
+  output signal ENTER_SET_ALARM_MODE_COMMAND;
+  output signal SET_ALARM_COMMAND;
+  output signal NEXT_ALARM_TIME_POSITION_COMMAND;
+  output signal EXIT_SET_ALARM_MODE_COMMAND;
+  output signal TOGGLE_ALARM_COMMAND;
+  output signal STOP_ALARM_BEEP_COMMAND;
+  input signal UL;
+  input signal UR;
+  input signal LL;
+  input signal LR;
+
+  region main:
+
+  initial state init0 "I"
+  --> ParallelStatementList56state immediate;
+
+  state ParallelStatementList56state {
+
+    region R0:
+
+    initial state init1 "I"
+    --> S7 immediate;
+
+    state S7 "7"
+    --> Trap60state immediate with / WATCH_MODE_COMMAND;
+
+    state Trap60state {
+      signal WATCH_AND_SET_WATCH_MODE_;
+      signal haltTrap60_;
+
+      region R0:
+
+      state S33 "33";
+
+      final state S29 "29";
+
+      state Loop61state {
+
+        region R0:
+
+        initial state init2 "I"
+        --> ParallelStatementList67state immediate;
+
+        state ParallelStatementList67state {
+
+          region R0:
+
+          initial state init5 "I"
+          --> S58 immediate;
+
+          state S58 "58"
+          --> S63 with LL / WATCH_AND_SET_WATCH_MODE_;
+
+          state S63 "63";
+
+          region R1:
+
+          initial state init6 "I"
+          --> S103 immediate;
+
+          state S103 "103"
+          --> S107 with LR;
+
+          state S107 "107"
+          --> S108 immediate with / TOGGLE_24H_MODE_COMMAND;
+
+          state S108 "108"
+          --> S107 with LR;
+        }
+        o-> ParallelStatementList80state with UL /
+        ENTER_SET_WATCH_MODE_COMMAND;
+
+        state ParallelStatementList80state {
+
+          region R0:
+
+          initial state init3 "I"
+          --> S217 immediate;
+
+          state S217 "217"
+          --> S221 with LL;
+
+          state S221 "221"
+          --> S222 immediate with / NEXT_WATCH_TIME_POSITION_COMMAND;
+
+          state S222 "222"
+          --> S221 with LL;
+
+          region R1:
+
+          initial state init4 "I"
+          --> S268 immediate;
+
+          state S268 "268"
+          --> S272 with LR;
+
+          state S272 "272"
+          --> S273 immediate with / SET_WATCH_COMMAND;
+
+          state S273 "273"
+          --> S272 with LR;
+        }
+        o-> ParallelStatementList67state with UL /
+        EXIT_SET_WATCH_MODE_COMMAND;
+      }
+      --> S33 immediate with haltTrap60_
+      --> S29 immediate with WATCH_AND_SET_WATCH_MODE_;
+
+      initial state init7 "I"
+      --> Loop61state immediate;
+    }
+    >-> ParallelStatementList93state with / STOPWATCH_MODE_COMMAND;
+
+    state ParallelStatementList93state {
+
+      region R0:
+
+      initial state init8 "I"
+      --> S447 immediate;
+
+      state S447 "447"
+      --> S451 with LR;
+
+      state S451 "451"
+      --> S452 immediate with / START_STOP_COMMAND;
+
+      state S452 "452"
+      --> S451 with LR;
+
+      region R1:
+
+      initial state init9 "I"
+      --> S498 immediate;
+
+      state S498 "498"
+      --> S502 with UR;
+
+      state S502 "502"
+      --> S503 immediate with / LAP_COMMAND;
+
+      state S503 "503"
+      --> S502 with UR;
+    }
+    o-> Trap100state with LL;
+
+    state Trap100state {
+      signal ALARM_AND_SET_ALARM_MODE_;
+      signal haltTrap100_;
+
+      region R0:
+
+      state S582 "582";
+
+      final state S578 "578";
+
+      state StatementList101state {
+
+        region R0:
+
+        initial state init10 "I"
+        --> ParallelStatementList108state immediate with / ALARM_MODE_COMMAND;
+
+        state ParallelStatementList108state {
+
+          region R0:
+
+          initial state init13 "I"
+          --> S628 immediate;
+
+          state S628 "628"
+          --> S633 with LL / ALARM_AND_SET_ALARM_MODE_;
+
+          state S633 "633";
+
+          region R1:
+
+          initial state init14 "I"
+          --> S673 immediate;
+
+          state S673 "673"
+          --> S677 with LR;
+
+          state S677 "677"
+          --> S678 immediate with / TOGGLE_CHIME_COMMAND;
+
+          state S678 "678"
+          --> S677 with LR;
+
+          region R2:
+
+          initial state init15 "I"
+          --> S724 immediate;
+
+          state S724 "724"
+          --> S728 with UR;
+
+          state S728 "728"
+          --> S729 immediate with / TOGGLE_ALARM_COMMAND;
+
+          state S729 "729"
+          --> S728 with UR;
+        }
+        o-> ParallelStatementList124state with UL /
+        ENTER_SET_ALARM_MODE_COMMAND;
+
+        state ParallelStatementList124state {
+
+          region R0:
+
+          initial state init11 "I"
+          --> S839 immediate;
+
+          state S839 "839"
+          --> S843 with LL;
+
+          state S843 "843"
+          --> S844 immediate with / NEXT_ALARM_TIME_POSITION_COMMAND;
+
+          state S844 "844"
+          --> S843 with LL;
+
+          region R1:
+
+          initial state init12 "I"
+          --> S890 immediate;
+
+          state S890 "890"
+          --> S894 with LR;
+
+          state S894 "894"
+          --> S895 immediate with / SET_ALARM_COMMAND;
+
+          state S895 "895"
+          --> S894 with LR;
+        }
+        o-> ParallelStatementList108state with UL /
+        EXIT_SET_ALARM_MODE_COMMAND;
+      }
+      --> S582 immediate with haltTrap100_
+      --> S578 immediate with ALARM_AND_SET_ALARM_MODE_;
+
+      initial state init16 "I"
+      --> StatementList101state immediate;
+    }
+    >-> S7;
+
+    region R1:
+
+    initial state init17 "I"
+    --> S1072 immediate;
+
+    state S1072 "1072"
+    --> S1076 with UR;
+
+    state S1076 "1076"
+    --> S1077 immediate with / STOP_ALARM_BEEP_COMMAND;
+
+    state S1077 "1077"
+    --> S1076 with UR;
+  };
+}

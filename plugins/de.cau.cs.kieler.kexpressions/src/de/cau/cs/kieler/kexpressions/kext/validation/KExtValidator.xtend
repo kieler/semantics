@@ -59,7 +59,7 @@ class KExtValidator extends AbstractKExtValidator {
         val parent = stringAnnotation.eContainer
         val VOs = <ValuedObject> newArrayList
         if (parent instanceof Assignment) {
-            VOs += parent.valuedObject
+            VOs += parent.reference.valuedObject
             if (parent.expression instanceof ValuedObjectReference) {
                 VOs += (parent.expression as ValuedObjectReference).valuedObject
             } else {
@@ -122,5 +122,13 @@ class KExtValidator extends AbstractKExtValidator {
                }
            }
        }
+    }
+    
+    @Check
+    def void checkPureSignal(VariableDeclaration declaration) {
+        if (declaration.type == ValueType.PURE && (!declaration.signal)) {
+            error("Pure types are only allowed if used in combination with signals.",
+                declaration, null, -1)
+        }
     }
 }

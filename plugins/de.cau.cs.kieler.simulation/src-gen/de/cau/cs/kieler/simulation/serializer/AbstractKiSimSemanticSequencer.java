@@ -14,6 +14,7 @@ import de.cau.cs.kieler.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.kexpressions.BoolValue;
 import de.cau.cs.kieler.kexpressions.FloatValue;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
+import de.cau.cs.kieler.kexpressions.IgnoreValue;
 import de.cau.cs.kieler.kexpressions.IntValue;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.OperatorExpression;
@@ -22,6 +23,7 @@ import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
+import de.cau.cs.kieler.kexpressions.VectorValue;
 import de.cau.cs.kieler.prom.kibuild.AttributeMapping;
 import de.cau.cs.kieler.prom.kibuild.BuildConfiguration;
 import de.cau.cs.kieler.prom.kibuild.KibuildPackage;
@@ -135,13 +137,22 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()
 						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSubExpressionRule()
@@ -153,9 +164,11 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getBoolValueRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()
 						|| rule == grammarAccess.getAnyValueRule()) {
 					sequence_BoolValue(context, (BoolValue) semanticObject); 
 					return; 
@@ -179,13 +192,22 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()
 						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSubExpressionRule()
@@ -197,9 +219,11 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getFloatValueRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()
 						|| rule == grammarAccess.getAnyValueRule()) {
 					sequence_FloatValue(context, (FloatValue) semanticObject); 
 					return; 
@@ -218,13 +242,22 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()
 						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSubExpressionRule()
@@ -236,13 +269,18 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
-						|| rule == grammarAccess.getFunctionCallRule()) {
+						|| rule == grammarAccess.getFunctionCallRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_FunctionCall(context, (FunctionCall) semanticObject); 
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.IGNORE_VALUE:
+				sequence_IgnoreValue(context, (IgnoreValue) semanticObject); 
+				return; 
 			case KExpressionsPackage.INT_VALUE:
 				if (rule == grammarAccess.getRootRule()
 						|| rule == grammarAccess.getExpressionRule()) {
@@ -256,13 +294,22 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()
 						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSubExpressionRule()
@@ -274,9 +321,11 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getIntValueRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()
 						|| rule == grammarAccess.getAnyValueRule()) {
 					sequence_IntValue(context, (IntValue) semanticObject); 
 					return; 
@@ -285,7 +334,7 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 			case KExpressionsPackage.OPERATOR_EXPRESSION:
 				if (rule == grammarAccess.getRootRule()
 						|| rule == grammarAccess.getExpressionRule()) {
-					sequence_AddExpression_BitwiseAndExpression_BitwiseOrExpression_CompareOperation_DivExpression_Expression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_Expression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getBoolExpressionRule()
@@ -295,13 +344,22 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()
 						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSubExpressionRule()
@@ -313,9 +371,11 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
-						|| rule == grammarAccess.getAtomicValuedExpressionRule()) {
-					sequence_AddExpression_BitwiseAndExpression_BitwiseOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
+					sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getValuedObjectTestExpressionRule()) {
@@ -339,13 +399,22 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()
 						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSubExpressionRule()
@@ -357,9 +426,11 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
-						|| rule == grammarAccess.getReferenceCallRule()) {
+						|| rule == grammarAccess.getReferenceCallRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_ReferenceCall(context, (ReferenceCall) semanticObject); 
 					return; 
 				}
@@ -380,13 +451,22 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()
 						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSubExpressionRule()
@@ -398,9 +478,11 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getStringValueRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()
 						|| rule == grammarAccess.getAnyValueRule()) {
 					sequence_StringValue(context, (StringValue) semanticObject); 
 					return; 
@@ -419,13 +501,22 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()
 						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSubExpressionRule()
@@ -437,9 +528,11 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
-						|| rule == grammarAccess.getTextExpressionRule()) {
+						|| rule == grammarAccess.getTextExpressionRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_TextExpression(context, (TextExpression) semanticObject); 
 					return; 
 				}
@@ -457,13 +550,22 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()
 						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSubExpressionRule()
@@ -475,11 +577,62 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getValuedObjectTestExpressionRule()
-						|| rule == grammarAccess.getValuedObjectReferenceRule()) {
+						|| rule == grammarAccess.getValuedObjectReferenceRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.VECTOR_VALUE:
+				if (rule == grammarAccess.getRootRule()
+						|| rule == grammarAccess.getExpressionRule()) {
+					sequence_Expression_VectorValue(context, (VectorValue) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getBoolExpressionRule()
+						|| rule == grammarAccess.getLogicalOrExpressionRule()
+						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getLogicalAndExpressionRule()
+						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseOrExpressionRule()
+						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseAndExpressionRule()
+						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getCompareOperationRule()
+						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
+						|| rule == grammarAccess.getNotExpressionRule()
+						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getAddExpressionRule()
+						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSubExpressionRule()
+						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getMultExpressionRule()
+						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getDivExpressionRule()
+						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getModExpressionRule()
+						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
+						|| rule == grammarAccess.getAtomicExpressionRule()
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
+						|| rule == grammarAccess.getVectorValueRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
+					sequence_VectorValue(context, (VectorValue) semanticObject); 
 					return; 
 				}
 				else break;

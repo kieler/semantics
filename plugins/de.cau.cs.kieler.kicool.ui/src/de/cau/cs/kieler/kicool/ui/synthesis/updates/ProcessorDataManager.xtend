@@ -12,8 +12,6 @@
  */
 package de.cau.cs.kieler.kicool.ui.synthesis.updates
 
-import com.google.inject.Inject
-import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import java.util.Map
 import de.cau.cs.kieler.kicool.compilation.RuntimeSystems
 import de.cau.cs.kieler.klighd.krendering.KForeground
@@ -54,7 +52,6 @@ import de.cau.cs.kieler.kicool.ui.synthesis.feedback.PostUpdateDoubleCollector
 import org.eclipse.elk.core.options.CoreOptions
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.ToggleProcessorOnOffAction
-import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.getSystem
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.IntermediateData
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.ToggleOnOffData
 import static extension de.cau.cs.kieler.kicool.compilation.Metric.METRIC
@@ -67,10 +64,10 @@ import com.google.inject.Injector
 import de.cau.cs.kieler.kicool.KiCoolStandaloneSetup
 import de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis
 import de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorSystem
-import de.cau.cs.kieler.core.model.Pair
-import de.cau.cs.kieler.kicool.environments.MessageObjectReferences
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.MessageObjectReferencesManager.fillUndefinedColors
-import de.cau.cs.kieler.kicool.ui.synthesis.MessageObjectReferencePair
+import de.cau.cs.kieler.kicool.ui.synthesis.actions.OnOffToggle
+import de.cau.cs.kieler.kicool.ui.synthesis.MessageObjectListPair
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 
 /**
  * The data manager handles all synthesis updates.
@@ -83,6 +80,8 @@ class ProcessorDataManager {
     
     private static Injector injector =
             new KiCoolStandaloneSetup().createInjectorAndDoEMFRegistration();    
+            
+    private static KRenderingExtensions kRenderingExtensions = new KRenderingExtensions
     
     static val NODE_PROCESSOR = "processor"
     static val NODE_PROCESSOR_BODY = "processorbody"
@@ -118,10 +117,13 @@ class ProcessorDataManager {
         if (toggleOnOffNode != null) {
             toggleOnOffNode.container.addAction(Trigger::SINGLECLICK, ToggleProcessorOnOffAction.ID)
             toggleOnOffNode.setProperty(TOGGLE_ON_OFF_DATA, new ToggleOnOffData(processorReference))
-            if (ToggleProcessorOnOffAction.deactivatedProcessors.contains(processorReference)) {
+            val toggle = ToggleProcessorOnOffAction.deactivatedProcessors.get(processorReference)
+            if (toggle == null || toggle == OnOffToggle.ON) {
+                setFBColor(getContainer(toggleOnOffNode), ON)
+            } else if (toggle == OnOffToggle.OFF) {
                 setFBColor(getContainer(toggleOnOffNode), OFF)
             } else {
-                setFBColor(getContainer(toggleOnOffNode), ON)
+                setFBColor(getContainer(toggleOnOffNode), HALT)
             }
         }
     }
@@ -146,7 +148,7 @@ class ProcessorDataManager {
             sourceNode.setProperty(INTERMEDIATE_DATA, 
                 new IntermediateData(processorUnit, 
                     compilationNotification.compilationContext, 
-                    compilationNotification.compilationContext.sourceModel, view
+                    compilationNotification.compilationContext.originalModel, view
                 ))
         }
     }
@@ -259,7 +261,7 @@ class ProcessorDataManager {
             
             val model = processorInstance.getModel
             if (model instanceof EObject) {
-                val morModel = new MessageObjectReferencePair(infos.fillUndefinedColors(INFO), model)
+                val morModel = new MessageObjectListPair(infos.get(null).fillUndefinedColors(INFO), model)
                 infoNode.setProperty(INTERMEDIATE_DATA, 
                     new IntermediateData(processorInstance, processorNotification.compilationContext, morModel, view))
             } else {
@@ -280,7 +282,7 @@ class ProcessorDataManager {
             
             val model = processorInstance.getModel
             if (model instanceof EObject) {
-                val morModel = new MessageObjectReferencePair(warnings.fillUndefinedColors(WARNING), model)
+                val morModel = new MessageObjectListPair(warnings.get(null).fillUndefinedColors(WARNING), model)
                 warningNode.setProperty(INTERMEDIATE_DATA, 
                     new IntermediateData(processorInstance, processorNotification.compilationContext, morModel, view))
             } else {
@@ -294,23 +296,26 @@ class ProcessorDataManager {
         
         val errors = processorInstance.environment.getProperty(ERRORS)
         if (errors.size > 0) {
-            val errorNode = intermediateKGT.copy
-            errorNode.xpos = intermediatePosX
-            errorNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
-            intermediateRootNode.children += errorNode 
-            
-            val model = processorInstance.getModel
-            if (model instanceof EObject) {
-                val morModel = new MessageObjectReferencePair(errors.fillUndefinedColors(ERROR), model)
-                errorNode.setProperty(INTERMEDIATE_DATA, 
-                    new IntermediateData(processorInstance, processorNotification.compilationContext, morModel, view))
-            } else {
-                errorNode.setProperty(INTERMEDIATE_DATA, 
-                    new IntermediateData(processorInstance, processorNotification.compilationContext, warnings, view))
-            }
-                
-            errorNode.container.setFBColor(ERROR)
-            intermediatePosX += 3.5f
+                for (errorKey : errors.keySet) {
+                    val errorNode = intermediateKGT.copy
+                    errorNode.xpos = intermediatePosX
+                    errorNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
+                    intermediateRootNode.children += errorNode 
+                    
+                    val model = processorInstance.getModel
+                    if (model instanceof EObject) {
+                        val morModel = new MessageObjectListPair(errors.get(errorKey).fillUndefinedColors(ERROR), 
+                            if (errorKey === null) model else errorKey)
+                        errorNode.setProperty(INTERMEDIATE_DATA, 
+                            new IntermediateData(processorInstance, processorNotification.compilationContext, morModel, view))
+                    } else {
+                        errorNode.setProperty(INTERMEDIATE_DATA, 
+                            new IntermediateData(processorInstance, processorNotification.compilationContext, errors, view))
+                    }
+                        
+                    errorNode.container.setFBColor(ERROR)
+                    intermediatePosX += 3.5f
+                }
         }               
         
         if (processorNotification instanceof ProcessorProgress) {
@@ -381,6 +386,10 @@ class ProcessorDataManager {
     static def void setFBColor(KContainerRendering container, ColorSystem colorSystem) {
         container.setFBColors(colorSystem.foreground.color, colorSystem.background.color, colorSystem.backgroundTarget.color)
     }
+    
+    static def void setFBColorViaExtension(KContainerRendering container, ColorSystem colorSystem) {
+        container.setFBColorsViaExtension(colorSystem.foreground.color, colorSystem.background.color, colorSystem.backgroundTarget.color)
+    }
 
     static def void setFBAColor(KContainerRendering container, ColorSystem colorSystem, int alpha) {
         container.setFBAColors(colorSystem.foreground.color, colorSystem.background.color, colorSystem.backgroundTarget.color, alpha)
@@ -409,7 +418,12 @@ class ProcessorDataManager {
             }
         ]
     }
-
+    
+    private static def void setFBColorsViaExtension(KContainerRendering container, KColor foreground, KColor background, KColor backgroundTarget) {
+        kRenderingExtensions.setForeground(container, foreground)
+        kRenderingExtensions.setBackgroundGradient(container, background, backgroundTarget, 0)
+    }
+    
     private static def void setFBAColors(KContainerRendering container, KColor foreground, KColor background, KColor backgroundTarget, int alpha) {
         container.styles.filter(KColoring).forEach[ c |
             if (c instanceof KForeground) c.color = foreground

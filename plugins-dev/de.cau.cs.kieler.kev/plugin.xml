@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            id="de.cau.cs.kieler"
+            name="KIELER">
+      </category>
+      <view
+            allowMultiple="false"
+            category="de.cau.cs.kieler"
+            class="de.cau.cs.kieler.kev.views.KevView"
+            icon="icons/view/kev.gif"
+            id="de.cau.cs.kieler.kev.views.KevView"
+            name="KEV View"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.kev.extension.dataobserver.KEVDataObserver"
+            id="de.cau.cs.kieler.kev.extension.DataObserver"
+            name="KEV Data Observer">
+      </content>
+   </extension>
+   <extension
+         id="de.cau.cs.kieler.kev.extension.DataObserverBackhoe"
+         name="Example (Backhoe)"
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.kev.extension.dataobserver.Backhoe"
+            id="ede.cau.cs.kieler.kev.extension.DataObserverBackhoe"
+            name="KEV Backhoe Visualization">
+      </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.kev.extension.dataobserver.KEVExampleDataProducer"
+            id="de.cau.cs.kieler.kev.extension.DataObserverExample"
+            name="KEV Example Data Producer">
+      </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.kev.extension.dataobserver.Elevator"
+            id="ede.cau.cs.kieler.kev.extension.DataObserverElevator"
+            name="KEV Elevator Simulation">
+      </content>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="de.cau.cs.kieler.kev.editor.KevProxyEditor"
+            default="false"
+            extensions="mapping"
+            id="de.cau.cs.kieler.kev.proxyEditor"
+            name="KEV Proxy Editor">
+      </editor>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.kev.extension.dataobserver.TCPDataComponent"
+            id="de.cau.cs.kieler.kev.extension.TCPDataComponent"
+            name="KEV TCP Data Component">
+      </content>
+   </extension>
+
+</plugin>

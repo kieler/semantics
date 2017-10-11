@@ -20,7 +20,11 @@ import java.util.Map
 import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import com.google.inject.Injector
-import com.google.inject.Guice
+import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.registry.PragmaRegistry
+import de.cau.cs.kieler.annotations.StringPragma
+import de.cau.cs.kieler.kicool.environments.Environment
 
 /**
  * Root C Code Generator Module
@@ -34,7 +38,12 @@ import com.google.inject.Guice
  */
 class CCodeGeneratorModule extends SCGCodeGeneratorModule {
     
-    val Injector injector = Guice.createInjector
+    @Inject extension AnnotationsExtensions
+    @Inject extension CCodeSerializeHRExtensions
+    
+    @Inject Injector injector
+    
+    static val HOSTCODE = PragmaRegistry.register("hostcode", StringPragma, "Allows additional hostcode to be included (e.g. includes).")
     
     @Accessors var CCodeGeneratorStructModule struct
     @Accessors var CCodeGeneratorResetModule reset 
@@ -81,6 +90,7 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
         tick.generateDone
         
         code.addHeader
+        code.hostcodeAdditions
         code.append(struct.code).append("\n")
         code.append(reset.code).append("\n")
         code.append(logic.code).append("\n")
@@ -91,6 +101,36 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
         sb.append(
             "/*\n" + " * Automatically generated C code by\n" + " * KIELER SCCharts - The Key to Efficient Modeling\n" +
                 " *\n" + " * http://rtsys.informatik.uni-kiel.de/kieler\n" + " */\n\n")
-    }    
+                
+        if (processorInstance.environment.getProperty(CCodeGenerator.DEBUG_COMMENTS)) {
+            sb.addDebugComments
+        }
+    }  
+    
+    protected def void hostcodeAdditions(StringBuilder sb) {
+        val includes = modifications.get(CCodeSerializeHRExtensions.INCLUDES)
+        for (include : includes)  {
+            sb.append("#include " + include + "\n")
+        }
+        
+        val hostcodePragmas = SCGraphs.getStringPragmas(HOSTCODE)
+        for (pragma : hostcodePragmas) {
+            sb.append(pragma.values.head + "\n")
+        }
+        if (hostcodePragmas.size > 0 || includes.size > 0) {
+            sb.append("\n")
+        }
+    }  
+    
+    protected def void addDebugComments(StringBuilder sb) {
+        sb.append("/*\n" + " * Debug Comments\n *\n")
+        
+        val compilationContext = processorInstance.environment.getProperty(Environment.COMPILATION_CONTEXT)
+        for(processor : compilationContext.processorInstancesSequence) {
+            sb.append(" * " + processor.id + "\n")
+        }
+        
+        sb.append(" */\n\n")
+    }
     
 }

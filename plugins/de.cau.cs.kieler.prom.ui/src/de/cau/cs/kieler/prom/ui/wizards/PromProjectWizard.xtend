@@ -13,8 +13,9 @@
  */
 package de.cau.cs.kieler.prom.ui.wizards
 
+import com.google.common.io.Files
 import de.cau.cs.kieler.prom.PromPlugin
-import de.cau.cs.kieler.prom.build.KiCoNature
+import de.cau.cs.kieler.prom.build.KielerModelingNature
 import de.cau.cs.kieler.prom.ui.UIExtensionLookupUtil
 import de.cau.cs.kieler.prom.ui.UIUtil
 import java.io.File
@@ -33,7 +34,6 @@ import org.eclipse.jface.wizard.Wizard
 import org.eclipse.jface.wizard.WizardDialog
 import org.eclipse.ui.INewWizard
 import org.eclipse.ui.IWorkbench
-import com.google.common.io.Files
 
 /**op
  * Wizard implementation wich creates a project
@@ -258,8 +258,16 @@ class PromProjectWizard extends Wizard implements INewWizard {
                     val isFile = (path.fileExtension != null)
                     
                     if(isFile) {
+                        // Setup placeholders
+                        // Load path of model file
+                        val modelFilePath = getModelFilePath()
+                        val modelFilePathWithoutExtension = new Path(modelFilePath).removeFileExtension
+                        val modelFileNameWithoutExtension = modelFilePathWithoutExtension.lastSegment
+                        val placeholderReplacements = #{"${project_name}" -> newlyCreatedProject.name,
+                                                        "${model_name}" -> modelFileNameWithoutExtension}
                         // Create file
-                        PromPlugin.initializeFile(newlyCreatedProject, resolvedProjectRelativePath, data.origin)
+                        PromPlugin.initializeFile(newlyCreatedProject, resolvedProjectRelativePath,
+                                                  data.origin, placeholderReplacements)
                         
                         // Remember kibuild file in project preferences
                         if(Files.getFileExtension(resolvedProjectRelativePath) == "kibuild") {
@@ -321,7 +329,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
 //        newlyCreatedProject.addNature("org.eclipse.xtext.ui.shared.xtextNature")
         
         // Add KiCo nature to project (e.g. for builder)
-        newlyCreatedProject.addNature(KiCoNature.NATURE_ID)
+        newlyCreatedProject.addNature(KielerModelingNature.NATURE_ID)
         
         return true
     }

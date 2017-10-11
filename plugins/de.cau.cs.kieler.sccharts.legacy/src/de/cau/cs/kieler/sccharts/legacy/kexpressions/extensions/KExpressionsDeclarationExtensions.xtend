@@ -16,8 +16,8 @@ package de.cau.cs.kieler.sccharts.legacy.kexpressions.extensions
 import de.cau.cs.kieler.sccharts.legacy.kexpressions.Declaration
 import de.cau.cs.kieler.sccharts.legacy.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.sccharts.legacy.kexpressions.ValueType
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.sccharts.legacy.kexpressions.ValuedObject
 import org.eclipse.emf.ecore.EObject
 import java.util.List

@@ -20,15 +20,15 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.SCGraph
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.kico.transformation.Processor
 import de.cau.cs.kieler.scg.processors.SCGProcessors
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * Replaces only initialized but never rewritten variables by constants
@@ -40,16 +40,16 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
  * @kieler.rating 2015-05-25 proposed yellow
  *
  */
-class ReplaceUnusedVariables extends Processor implements Traceable {
+class ReplaceUnusedVariables implements Traceable {
     
-    @Inject
-    extension KExpressionsDeclarationExtensions       
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KEffectsExtensions       
 
-    override getId() {
+    def getId() {
         return SCGProcessors::REPLACEUNUSEDVARIABLES_ID
     }
     
-    override process(EObject eObject) {
+    def process(EObject eObject) {
         System.out.println("ReplaceUnusedVariables")
         val scg = eObject as SCGraph
 

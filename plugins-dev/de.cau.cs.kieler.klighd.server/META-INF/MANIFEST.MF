@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KLighD TCP Server
+Bundle-SymbolicName: de.cau.cs.kieler.klighd.server;singleton:=true
+Bundle-Version: 0.13.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Vendor: Kiel University
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.xtext,
+ org.eclipse.osgi,
+ de.cau.cs.kieler.kico,
+ de.cau.cs.kieler.klighd,
+ de.cau.cs.kieler.server,
+ de.cau.cs.kieler.klighd.piccolo,
+ org.eclipse.elk.graph,
+ org.eclipse.elk.core.service
+Export-Package: de.cau.cs.kieler.klighd.server
+Bundle-Activator: de.cau.cs.kieler.klighd.server.KlighdServerPlugin

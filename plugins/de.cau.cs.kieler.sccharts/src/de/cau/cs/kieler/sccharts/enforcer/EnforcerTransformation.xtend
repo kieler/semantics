@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.sccharts.enforcer
 
-import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
@@ -22,8 +21,6 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
-import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
-import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCCharts
@@ -31,11 +28,12 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import java.util.Set
 
-//import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+//import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * SCCharts Enforcer Transformation.
@@ -44,7 +42,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class EnforcerTransformation extends AbstractExpansionTransformation implements Traceable {
+class EnforcerTransformation { //extends AbstractExpansionTransformation implements Traceable {
 
     public static val ENFORCER_TRANSFORMATION_ID = "sccharts.enforcer"
     public static val ENFORCER_TRANSFORMATION_NAME = "Enforcer"
@@ -55,27 +53,28 @@ class EnforcerTransformation extends AbstractExpansionTransformation implements 
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsTransitionExtensions
+    @Inject extension KEffectsExtensions
     
     //--                 K I C O      C O N F I G U R A T I O N              --
-    override getId() {
+    def getId() {
         return ENFORCER_TRANSFORMATION_ID
     }
 
-    override getName() {
+    def getName() {
         return ENFORCER_TRANSFORMATION_NAME
     }
 
-    override getExpandsFeatureId() {
-        return EnforcerFeature.ENFORCER_FEATURE_ID
-    }
-
-    override getProducesFeatureIds() {
-        return Sets.newHashSet()
-    }
-
-    override getNotHandlesFeatureIds() {
-        return Sets.newHashSet()
-    }
+//    override getExpandsFeatureId() {
+//        return EnforcerFeature.ENFORCER_FEATURE_ID
+//    }
+//
+//    override getProducesFeatureIds() {
+//        return Sets.newHashSet()
+//    }
+//
+//    override getNotHandlesFeatureIds() {
+//        return Sets.newHashSet()
+//    }
 
 
     /**

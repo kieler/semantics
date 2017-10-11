@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.scg.transformations.schedulers
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Fork
@@ -62,13 +61,13 @@ class ThreadAwareScheduler extends SimpleScheduler {
         return null //SCGTransformations::SCHEDULING_NAME
     }
 
-    override getProducedFeatureId() {
-        return SCGFeatures::SCHEDULING_ID
-    }
-
-    override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::GUARD_EXPRESSIONS_ID)
-    }
+//    override getProducedFeatureId() {
+//        return SCGFeatures::SCHEDULING_ID
+//    }
+//
+//    override getRequiredFeatureIds() {
+//        return newHashSet(SCGFeatures::GUARD_EXPRESSIONS_ID)
+//    }
 
     // -------------------------------------------------------------------------
     // -- Injections 
@@ -176,8 +175,7 @@ class ThreadAwareScheduler extends SimpleScheduler {
     }	
 	
 	
-    protected override boolean createSchedule(SCGraph scg, List<ScheduledBlock> schedule, SchedulingConstraints constraints,
-    	KielerCompilerContext context) {
+    protected override boolean createSchedule(SCGraph scg, List<ScheduledBlock> schedule, SchedulingConstraints constraints) {
 
         // fixpoint is set to true if an iteration cannot set any remaining blocks.
         var fixpoint  = false

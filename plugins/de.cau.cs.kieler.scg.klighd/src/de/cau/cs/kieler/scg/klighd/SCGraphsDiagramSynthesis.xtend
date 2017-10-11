@@ -19,8 +19,6 @@ import com.google.common.collect.Multimap
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kico.CompilationResult
-import de.cau.cs.kieler.kico.KiCoProperties
 import de.cau.cs.kieler.klighd.IKlighdSelection
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
@@ -59,7 +57,7 @@ import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.GuardDependency
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.SCGAnnotations
+import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScheduleDependency
 import de.cau.cs.kieler.scg.SchedulingBlock
@@ -95,12 +93,13 @@ import org.eclipse.xtext.serializer.ISerializer
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scg.SCGAnnotations
-import static extension de.cau.cs.kieler.scg.SCGAnnotations.*
+import de.cau.cs.kieler.scg.common.SCGAnnotations
+import static extension de.cau.cs.kieler.scg.common.SCGAnnotations.*
 import com.google.common.collect.Multimap
 import org.eclipse.elk.core.options.NodeLabelPlacement
 import de.cau.cs.kieler.klighd.internal.macrolayout.KlighdDiagramLayoutConnector
 import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -112,63 +111,22 @@ import de.cau.cs.kieler.scg.SCGraphs
  */
 class SCGraphsDiagramSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
 
-    // -------------------------------------------------------------------------
-    // -- Extensions 
-    // -------------------------------------------------------------------------
-    //    extension KRenderingFactory = KRenderingFactory.eINSTANCE
-    /** Inject node extensions. */
-    @Inject
-    extension KNodeExtensions
-
-    /** Inject edge extensions. */
-    @Inject
-    extension KEdgeExtensions
-
-    /** Inject label extensions. */
-    @Inject
-    extension KLabelExtensions
-
-    /** Inject rendering extensions. */
-    @Inject
-    extension KRenderingExtensions
-
-    /** Inject port extensions. */
-    @Inject
-    extension KPortExtensions
-
-    /** Inject container rendering extensions. */
-    @Inject
-    extension KContainerRenderingExtensions
-
-    /** Inject polyline extensions. */
-    @Inject
-    extension KPolylineExtensions
-
-    /** Inject color extensions. */
-    @Inject
-    extension KColorExtensions
-
-    /** Inject SCGraph shapes extensions. */
-    @Inject
-    extension AnnotationsExtensions
-
-    /** Inject SCG shapes extensions. */
-    @Inject
-    extension SCGraphShapes
-
-    /** Inject SCG extensions. */
-    @Inject
-    extension SCGCoreExtensions
+    @Inject extension KNodeExtensions
+    @Inject extension KEdgeExtensions
+    @Inject extension KLabelExtensions
+    @Inject extension KRenderingExtensions
+    @Inject extension KPortExtensions
+    @Inject extension KContainerRenderingExtensions
+    @Inject extension KPolylineExtensions
+    @Inject extension KColorExtensions
+    @Inject extension AnnotationsExtensions
+    @Inject extension SCGraphShapes
+    @Inject extension SCGCoreExtensions
+    @Inject extension SCGControlFlowExtensions
+    @Inject extension SCGThreadExtensions
+    @Inject extension SCGSerializeHRExtensions
+    @Inject extension KEffectsExtensions
     
-    @Inject
-    extension SCGControlFlowExtensions
-
-    @Inject
-    extension SCGThreadExtensions
-    
-    @Inject
-    extension SCGSerializeHRExtensions
-
     // -------------------------------------------------------------------------
     // -- KlighD Options
     // -------------------------------------------------------------------------
@@ -469,7 +427,7 @@ class SCGraphsDiagramSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
     private KNode rootNode;
     private String mainEntry
     
-    private CompilationResult compilationResult;
+//    private CompilationResult compilationResult;
     private var Set<Node> PIL_Nodes = <Node> newHashSet
 
     /** The selected orientation */
@@ -497,7 +455,9 @@ class SCGraphsDiagramSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
 	    val node = createNode
 	    
 	    for(scg : model.scgs) {
-	       node.children += scg.transformSCG
+	       node.children += scg.transformSCG => [
+	           addRectangle => [invisible = true]
+	       ]
 	    }
 	    
 	    node
@@ -505,11 +465,11 @@ class SCGraphsDiagramSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
 	 
     def transformSCG(SCGraph model) {
 
-        compilationResult = this.usedContext.getProperty(KiCoProperties.COMPILATION_RESULT)
-        if (compilationResult != null) {
-            val PILR = compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head
-            if (PILR != null) PIL_Nodes += PILR.criticalNodes
-        }
+//        compilationResult = this.usedContext.getProperty(KiCoProperties.COMPILATION_RESULT)
+//        if (compilationResult != null) {
+//            val PILR = compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head
+//            if (PILR != null) PIL_Nodes += PILR.criticalNodes
+//        }
 
         // Invoke the synthesis.
         SCGraph = model

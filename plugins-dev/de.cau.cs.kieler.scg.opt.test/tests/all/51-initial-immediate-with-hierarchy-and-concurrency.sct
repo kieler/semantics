@@ -1,0 +1,20 @@
+scchart _51_initial_immediate_with_hierarchy_and_concurrency2
+"51-initial-immediate-with-hierarchy-and-concurrency" {
+  output signal O;
+  output signal L;
+
+  initial state A {
+
+    initial state B
+    --> C immediate with / L;
+
+    state C;
+  };
+
+  region:
+
+  state E;
+
+  initial state D
+  --> E immediate with L / O;
+}

@@ -17,9 +17,10 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -40,7 +41,7 @@ import de.cau.cs.kieler.scg.SCGraph
  * @kieler.rating 2013-01-21 proposed yellow
  */
 
-abstract class AbstractSequentializer extends AbstractProductionTransformation {
+abstract class AbstractSequentializer extends Processor<SCGraphs, SCGraphs> {
     
     @Inject
     extension KExpressionsValuedObjectExtensions
@@ -59,11 +60,17 @@ abstract class AbstractSequentializer extends AbstractProductionTransformation {
     // -- Sequentializer 
     // -------------------------------------------------------------------------            
 	
-    public def transform(SCGraph scg, KielerCompilerContext context) {
-        sequentialize(scg, context)
+    override process() {
+        for (scg : model.scgs) {
+            scg.sequentialize
+        }
+    }
+    
+    override getType() {
+        ProcessorType.TRANSFORMATOR
     }
 	
-	abstract def SCGraph sequentialize(SCGraph scg, KielerCompilerContext context)
+	abstract def SCGraph sequentialize(SCGraph scg)
 	
     protected def ValuedObject createGOSignal(SCGraph scg) {
         /**

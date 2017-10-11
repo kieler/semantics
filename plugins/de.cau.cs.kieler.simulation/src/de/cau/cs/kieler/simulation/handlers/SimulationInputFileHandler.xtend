@@ -28,20 +28,22 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class SimulationInputFileHandler extends DefaultSimulator {
     
     public val location = new ConfigurableAttribute("fileLocation", null, true)
+    public val modelName = new ConfigurableAttribute("modelName")
     
     @Accessors
     private var IFile file
-    private var String modelName
     
     override initialize(DataPool pool) {
-        modelName = getUniqueModelName(pool, Files.getNameWithoutExtension(fileLocation))
+        if(modelName.value == null) {
+            modelName.value = getUniqueModelName(pool, Files.getNameWithoutExtension(fileLocation))
+        }
         var Model model
         val lines = Files.readLines(new File(fileLocation), Charsets.UTF_8)
         if(lines.isNullOrEmpty) {
             model = new Model
         } else {
             val line = lines.get(0)
-            model = Model.createFromJson(modelName, line)
+            model = Model.createFromJson(modelName.stringValue, line)
         }
         pool.addModel(model)
     }
@@ -61,7 +63,7 @@ class SimulationInputFileHandler extends DefaultSimulator {
             newModel = new Model
         } else {
             val line = lines.get(0)
-            newModel = Model.createFromJson(modelName, line)
+            newModel = Model.createFromJson(modelName.stringValue, line)
         }
         
         // Update model in pool

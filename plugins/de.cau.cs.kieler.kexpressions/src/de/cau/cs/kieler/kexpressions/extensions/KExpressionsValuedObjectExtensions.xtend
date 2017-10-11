@@ -21,7 +21,7 @@ import java.util.List
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.Expression
 import com.google.common.collect.ImmutableList
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
@@ -167,12 +167,14 @@ class KExpressionsValuedObjectExtensions {
     }
     
     def List<ValuedObjectReference> getAllReferences(Expression expression) {
-        <ValuedObjectReference> newArrayList => [
+        <ValuedObjectReference> newArrayList => [ l |
         	if (expression == null) {
         	} else if (expression instanceof ValuedObjectReference) { 
-        		it += expression
+        		l += expression
         	} else { 
-        		it += expression.eAllContents.filter(ValuedObjectReference).toList
+        		expression.eAllContents.filter(ValuedObjectReference).forEach[
+        		    l += it   
+        		]
         	}
         ]  
     }    

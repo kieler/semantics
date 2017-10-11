@@ -1,0 +1,21 @@
+scchart _139_history_local_signal "139-history-local-signal" {
+  input signal pure I;
+  input signal pure R;
+  output signal int O;
+  input signal pure H;
+
+  initial state H {
+    signal int V = 0;
+
+    initial state A
+    --> B with I / V(1) --> A / O(val(V));
+
+    state B
+    --> A with I / V(2) --> B / O(val(V));
+  }
+  o-> P with R;
+
+  state P
+  --> H with R
+  --> H history with H;
+}

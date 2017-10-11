@@ -14,6 +14,7 @@ import de.cau.cs.kieler.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.kexpressions.BoolValue;
 import de.cau.cs.kieler.kexpressions.FloatValue;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
+import de.cau.cs.kieler.kexpressions.IgnoreValue;
 import de.cau.cs.kieler.kexpressions.IntValue;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.OperatorExpression;
@@ -27,6 +28,7 @@ import de.cau.cs.kieler.kexpressions.TextExpression;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
+import de.cau.cs.kieler.kexpressions.VectorValue;
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.kexpressions.keffects.Emission;
 import de.cau.cs.kieler.kexpressions.keffects.FunctionCallEffect;
@@ -149,17 +151,8 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 					sequence_Assignment_PostfixEffect(context, (Assignment) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getDFAssignmentRule()) {
-					sequence_DFAssignment(context, (Assignment) semanticObject); 
-					return; 
-				}
 				else if (rule == grammarAccess.getPostfixEffectRule()) {
 					sequence_PostfixEffect(context, (Assignment) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getEquationRule()
-						|| rule == grammarAccess.getSubReferenceAssignmentRule()) {
-					sequence_SubReferenceAssignment(context, (Assignment) semanticObject); 
 					return; 
 				}
 				else break;
@@ -189,13 +182,22 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()
 						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSubExpressionRule()
@@ -207,9 +209,11 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getBoolValueRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()
 						|| rule == grammarAccess.getAnyValueRule()) {
 					sequence_BoolValue(context, (BoolValue) semanticObject); 
 					return; 
@@ -233,13 +237,22 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()
 						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSubExpressionRule()
@@ -251,9 +264,11 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getFloatValueRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()
 						|| rule == grammarAccess.getAnyValueRule()) {
 					sequence_FloatValue(context, (FloatValue) semanticObject); 
 					return; 
@@ -272,13 +287,22 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()
 						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSubExpressionRule()
@@ -290,13 +314,18 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
-						|| rule == grammarAccess.getFunctionCallRule()) {
+						|| rule == grammarAccess.getFunctionCallRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_FunctionCall(context, (FunctionCall) semanticObject); 
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.IGNORE_VALUE:
+				sequence_IgnoreValue(context, (IgnoreValue) semanticObject); 
+				return; 
 			case KExpressionsPackage.INT_VALUE:
 				if (rule == grammarAccess.getRootRule()
 						|| rule == grammarAccess.getExpressionRule()) {
@@ -311,13 +340,22 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()
 						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSubExpressionRule()
@@ -329,9 +367,11 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getIntValueRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()
 						|| rule == grammarAccess.getAnyValueRule()) {
 					sequence_IntValue(context, (IntValue) semanticObject); 
 					return; 
@@ -340,7 +380,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 			case KExpressionsPackage.OPERATOR_EXPRESSION:
 				if (rule == grammarAccess.getRootRule()
 						|| rule == grammarAccess.getExpressionRule()) {
-					sequence_AddExpression_BitwiseAndExpression_BitwiseOrExpression_CompareOperation_DivExpression_Expression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_Expression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getBoolExpressionRule()
@@ -350,13 +390,22 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()
 						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSubExpressionRule()
@@ -368,9 +417,11 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
-						|| rule == grammarAccess.getAtomicValuedExpressionRule()) {
-					sequence_AddExpression_BitwiseAndExpression_BitwiseOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
+					sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getValuedObjectTestExpressionRule()) {
@@ -394,13 +445,22 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()
 						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSubExpressionRule()
@@ -412,9 +472,11 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
-						|| rule == grammarAccess.getReferenceCallRule()) {
+						|| rule == grammarAccess.getReferenceCallRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_ReferenceCall(context, (ReferenceCall) semanticObject); 
 					return; 
 				}
@@ -462,13 +524,22 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()
 						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSubExpressionRule()
@@ -480,9 +551,11 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getStringValueRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()
 						|| rule == grammarAccess.getAnyValueRule()) {
 					sequence_StringValue(context, (StringValue) semanticObject); 
 					return; 
@@ -501,13 +574,22 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()
 						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSubExpressionRule()
@@ -519,9 +601,11 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
-						|| rule == grammarAccess.getTextExpressionRule()) {
+						|| rule == grammarAccess.getTextExpressionRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_TextExpression(context, (TextExpression) semanticObject); 
 					return; 
 				}
@@ -550,13 +634,22 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()
 						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
 						|| rule == grammarAccess.getNotExpressionRule()
 						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSubExpressionRule()
@@ -568,10 +661,12 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getValuedObjectTestExpressionRule()
-						|| rule == grammarAccess.getValuedObjectReferenceRule()) {
+						|| rule == grammarAccess.getValuedObjectReferenceRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
 					return; 
 				}
@@ -585,6 +680,55 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 				else if (rule == grammarAccess.getDeclarationRule()
 						|| rule == grammarAccess.getVariableDeclarationRule()) {
 					sequence_VariableDeclaration(context, (VariableDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.VECTOR_VALUE:
+				if (rule == grammarAccess.getRootRule()
+						|| rule == grammarAccess.getExpressionRule()) {
+					sequence_Expression_VectorValue(context, (VectorValue) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getBoolExpressionRule()
+						|| rule == grammarAccess.getLogicalOrExpressionRule()
+						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getLogicalAndExpressionRule()
+						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseOrExpressionRule()
+						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseAndExpressionRule()
+						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getCompareOperationRule()
+						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
+						|| rule == grammarAccess.getNotExpressionRule()
+						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getAddExpressionRule()
+						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSubExpressionRule()
+						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getMultExpressionRule()
+						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getDivExpressionRule()
+						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getModExpressionRule()
+						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
+						|| rule == grammarAccess.getAtomicExpressionRule()
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
+						|| rule == grammarAccess.getVectorValueRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
+					sequence_VectorValue(context, (VectorValue) semanticObject); 
 					return; 
 				}
 				else break;
@@ -614,34 +758,19 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 		else if (epackage == SCChartsPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case SCChartsPackage.CONTROLFLOW_REGION:
-				if (rule == grammarAccess.getControlflowRegionRule()) {
+				if (rule == grammarAccess.getRegionRule()
+						|| rule == grammarAccess.getControlflowRegionRule()) {
 					sequence_ControlflowRegion(context, (ControlflowRegion) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getRegionRule()) {
-					sequence_ControlflowRegion_NestedControlflowRegion(context, (ControlflowRegion) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getImplicitControlflowRegionRule()) {
 					sequence_ImplicitControlflowRegion(context, (ControlflowRegion) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getNestedControlflowRegionRule()) {
-					sequence_NestedControlflowRegion(context, (ControlflowRegion) semanticObject); 
-					return; 
-				}
 				else break;
 			case SCChartsPackage.DATAFLOW_REGION:
-				if (rule == grammarAccess.getRegionRule()
-						|| rule == grammarAccess.getDataflowRegionRule()) {
-					sequence_DataflowRegion(context, (DataflowRegion) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getImplicitDataflowRegionRule()) {
-					sequence_ImplicitDataflowRegion(context, (DataflowRegion) semanticObject); 
-					return; 
-				}
-				else break;
+				sequence_DataflowRegion(context, (DataflowRegion) semanticObject); 
+				return; 
 			case SCChartsPackage.DURING_ACTION:
 				sequence_DuringAction(context, (DuringAction) semanticObject); 
 				return; 
@@ -690,6 +819,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     Region returns ControlflowRegion
 	 *     ControlflowRegion returns ControlflowRegion
 	 *
 	 * Constraint:
@@ -698,40 +828,10 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *         name=ExtendedID? 
 	 *         label=STRING? 
 	 *         (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
-	 *         declarations+=DeclarationWOSemicolon* 
-	 *         states+=State+
+	 *         ((declarations+=DeclarationWOSemicolon* states+=State*) | (declarations+=DeclarationWOSemicolon* (states+=ImplicitState | states+=State+)))
 	 *     )
 	 */
 	protected void sequence_ControlflowRegion(ISerializationContext context, ControlflowRegion semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Region returns ControlflowRegion
-	 *
-	 * Constraint:
-	 *     (
-	 *         (
-	 *             annotations+=Annotation* 
-	 *             name=ExtendedID? 
-	 *             label=STRING? 
-	 *             (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
-	 *             declarations+=DeclarationWOSemicolon* 
-	 *             states+=State+
-	 *         ) | 
-	 *         (
-	 *             annotations+=Annotation* 
-	 *             name=ExtendedID? 
-	 *             label=STRING? 
-	 *             (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
-	 *             declarations+=DeclarationWOSemicolon* 
-	 *             (states+=ImplicitState | states+=State+)
-	 *         )
-	 *     )
-	 */
-	protected void sequence_ControlflowRegion_NestedControlflowRegion(ISerializationContext context, ControlflowRegion semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -756,18 +856,6 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	
 	/**
 	 * Contexts:
-	 *     DFAssignment returns Assignment
-	 *
-	 * Constraint:
-	 *     (annotations+=Annotation* valuedObject=[ValuedObject|ID] indices+=Expression* operator=AssignOperator expression=Expression)
-	 */
-	protected void sequence_DFAssignment(ISerializationContext context, Assignment semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     Region returns DataflowRegion
 	 *     DataflowRegion returns DataflowRegion
 	 *
@@ -778,7 +866,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *         label=STRING? 
 	 *         (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
 	 *         declarations+=DeclarationWOSemicolon* 
-	 *         equations+=Equation+
+	 *         equations+=Assignment*
 	 *     )
 	 */
 	protected void sequence_DataflowRegion(ISerializationContext context, DataflowRegion semanticObject) {
@@ -792,7 +880,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     DuringAction returns DuringAction
 	 *
 	 * Constraint:
-	 *     (delay=DelayType? trigger=BoolExpression? (effects+=Effect effects+=Effect*)? label=STRING?)
+	 *     (delay=DelayType? (triggerDelay=INT? trigger=BoolExpression)? (effects+=Effect effects+=Effect*)? label=STRING?)
 	 */
 	protected void sequence_DuringAction(ISerializationContext context, DuringAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -839,43 +927,12 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	
 	/**
 	 * Contexts:
-	 *     ImplicitDataflowRegion returns DataflowRegion
-	 *
-	 * Constraint:
-	 *     equations+=Equation+
-	 */
-	protected void sequence_ImplicitDataflowRegion(ISerializationContext context, DataflowRegion semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     ImplicitState returns State
 	 *
 	 * Constraint:
 	 *     regions+=Region+
 	 */
 	protected void sequence_ImplicitState(ISerializationContext context, State semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     NestedControlflowRegion returns ControlflowRegion
-	 *
-	 * Constraint:
-	 *     (
-	 *         annotations+=Annotation* 
-	 *         name=ExtendedID? 
-	 *         label=STRING? 
-	 *         (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
-	 *         declarations+=DeclarationWOSemicolon* 
-	 *         (states+=ImplicitState | states+=State+)
-	 *     )
-	 */
-	protected void sequence_NestedControlflowRegion(ISerializationContext context, ControlflowRegion semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -916,7 +973,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *         label=STRING? 
 	 *         declarations+=DeclarationWOSemicolon* 
 	 *         actions+=LocalAction* 
-	 *         (regions+=ImplicitControlflowRegion | regions+=ImplicitDataflowRegion | regions+=Region+)?
+	 *         (regions+=ImplicitControlflowRegion | regions+=Region+)?
 	 *     )
 	 */
 	protected void sequence_RootState(ISerializationContext context, State semanticObject) {
@@ -961,14 +1018,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *         connector?='connector'? 
 	 *         name=ID 
 	 *         label=STRING? 
-	 *         (
-	 *             reference=ScopeCall | 
-	 *             (
-	 *                 declarations+=DeclarationWOSemicolon* 
-	 *                 actions+=LocalAction* 
-	 *                 (regions+=ImplicitControlflowRegion | regions+=ImplicitDataflowRegion | regions+=Region+)?
-	 *             )
-	 *         )? 
+	 *         (reference=ScopeCall | (declarations+=DeclarationWOSemicolon* actions+=LocalAction* (regions+=ImplicitControlflowRegion | regions+=Region+)?))? 
 	 *         outgoingTransitions+=Transition*
 	 *     )
 	 */

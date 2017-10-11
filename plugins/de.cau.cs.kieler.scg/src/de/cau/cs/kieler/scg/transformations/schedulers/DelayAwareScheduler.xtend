@@ -23,11 +23,11 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScheduledBlock
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.transformations.synchronizer.DepthJoinSynchronizer
 import de.cau.cs.kieler.scg.transformations.synchronizer.SynchronizerSelector
 import java.util.List
 import java.util.Set
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -62,23 +62,21 @@ class DelayAwareScheduler extends SimpleScheduler {
         return null //SCGTransformations::SCHEDULING_NAME
     }
 
-    override getProducedFeatureId() {
-        return SCGFeatures::SCHEDULING_ID
-    }
-
-    override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::GUARD_EXPRESSIONS_ID)
-    }
+//    override getProducedFeatureId() {
+//        return SCGFeatures::SCHEDULING_ID
+//    }
+//
+//    override getRequiredFeatureIds() {
+//        return newHashSet(SCGFeatures::GUARD_EXPRESSIONS_ID)
+//    }
     
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
      
-    @Inject
-    extension SCGCoreExtensions
-    
-    @Inject
-    extension SynchronizerSelector    
+    @Inject extension SCGCoreExtensions
+    @Inject extension KEffectsExtensions
+    @Inject extension SynchronizerSelector    
     
     protected val schizophrenicBlocks = <SchedulingBlock> newHashSet
     protected val schizophrenicEntry = <SchedulingBlock> newHashSet

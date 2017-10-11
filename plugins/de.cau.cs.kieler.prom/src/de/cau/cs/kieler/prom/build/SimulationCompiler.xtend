@@ -26,12 +26,18 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import java.io.File
 import com.google.common.io.Files
 import org.eclipse.core.runtime.Path
+import org.eclipse.core.resources.ResourcesPlugin
+import com.google.common.io.CharStreams
+import java.io.InputStreamReader
+import com.google.common.base.Charsets
 
 /**
  * @author aas
  *
  */
 abstract class SimulationCompiler extends Configurable {
+    
+    private static val listeners = <SimulationCompilerListener> newArrayList
     
     public val command = new ConfigurableAttribute("command")
     public val outputFolder = new ConfigurableAttribute("outputFolder", "kieler-gen/sim/bin")
@@ -54,6 +60,16 @@ abstract class SimulationCompiler extends Configurable {
     
     new(IProgressMonitor monitor) {
         this.monitor = monitor
+    }
+    
+    public static def void addListener(SimulationCompilerListener listener) {
+        if(!listeners.contains(listener)) {
+            listeners.add(listener)    
+        }
+    }
+    
+    public static def void removeListener(SimulationCompilerListener listener) {
+        listeners.remove(listener)
     }
     
     public def FileGenerationResult compile(IFile file) {
@@ -91,9 +107,17 @@ abstract class SimulationCompiler extends Configurable {
             monitor.subTask("Compiling simulation:" + file.name)
         }
         executableFile = getExecutableFile
-        
+        // Remove old file
+        if(executableFile.exists) {
+            // Notify listeners that the executable is going to be deleted
+            val listenersCopy =  listeners.clone as List<SimulationCompilerListener>
+            for(listener : listenersCopy) { 
+                listener.preDelete(executableFile)
+            }
+            executableFile.delete(true, null)
+        }
         // Remove markers from old simulation file
-        KiCoBuilder.deleteMarkers(file)
+        KielerModelingBuilder.deleteMarkers(file)
         
         // Create output folder
         if(!outputFolder.stringValue.isNullOrEmpty) {
@@ -129,12 +153,13 @@ abstract class SimulationCompiler extends Configurable {
                                      + "in directory '" + pBuilder.directory + "')\n\n"
                               + "Please check the KIELER Console output.")
         }
+        
         // Check that there was no error
         if(exception == null && p.exitValue != 0) {
             exception = new Exception("Simulation compilation had issues: " + p.exitValue + "\n"
                               + "(command: " + pBuilder.command + ",\n"
-                              + "in directory '" + pBuilder.directory + "')\n\n"
-                              + "Please check the KIELER Console output.")
+                              + "in directory '" + pBuilder.directory + "')\n",
+                              new Exception(CharStreams.toString(new InputStreamReader(p.inputStream, Charsets.UTF_8))))
         }
         if(p.inputStream.available > 0) {
             // Print output of process to eclipse console
@@ -142,6 +167,7 @@ abstract class SimulationCompiler extends Configurable {
             PromConsole.copy(p.inputStream)
             PromConsole.print("\n\n")
         }
+
         if(exception != null) {
             val problem = BuildProblem.createError(file, exception)
             result.addProblem(problem)

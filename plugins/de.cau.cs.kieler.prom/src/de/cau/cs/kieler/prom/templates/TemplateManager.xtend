@@ -54,7 +54,6 @@ class TemplateManager {
      */
     private static var List<ModelAnalyzer> modelAnalyzers
 
-
     /**
      * A template variable which is replaced with the name of the last analyzed model.
      */
@@ -113,7 +112,7 @@ class TemplateManager {
         var String modelName = ""
         for(data : datas) {
             val model = ModelImporter.load(data.getFile(project))
-            getMacroCallData(model, annotationDatas)
+            getAnnotationInterface(model, annotationDatas)
             modelName = Files.getNameWithoutExtension(datas.get(0).name)
             modelNames += modelName
         }
@@ -176,7 +175,7 @@ class TemplateManager {
             val map = <String, Object> newHashMap
             
             // Add name of model 
-            if(!map.containsKey(MODEL_NAME_VARIABLE)) {
+            if(!map.containsKey(MODEL_NAME_VARIABLE) && !annotationDatas.isEmpty) {
                 val modelName = annotationDatas.get(0).modelName
                 map.put(MODEL_NAME_VARIABLE, modelName)
                 map.put(MODEL_NAMES_VARIABLE, #[modelName])
@@ -478,10 +477,10 @@ class TemplateManager {
      * @param data the FileData with information which model file will be analyzed
      * @return the annotation datas
      */
-    public static def List<MacroCallData> getMacroCallData(IProject project, FileData data) {
+    public static def List<MacroCallData> getAnnotationInterface(IProject project, FileData data) {
         val List<MacroCallData> annotationDatas = newArrayList()
         val model = ModelImporter.load(data.getFile(project))
-        getMacroCallData(model, annotationDatas)
+        getAnnotationInterface(model, annotationDatas)
         return annotationDatas
     }
 
@@ -492,36 +491,12 @@ class TemplateManager {
      * @param data File data holding a path to a model file
      * @param annotationDatas List to add found annotation datas to
      */
-    public static def String getModelName(EObject model) {
-        // Load EObject from file
-        if (model != null) {
-            initAnalyzers()
-            
-            // Analyze the model with all wrapper code annotation analyzers
-            for (analyzer : TemplateManager.modelAnalyzers) {
-                val modelName = analyzer.getModelName(model)
-                if(modelName != null) {
-                    return modelName
-                }
-            }
-
-        }
-    }
-
-    /**
-     * Adds wrapper code data objects to the annotationDatas list,
-     * which where found in the given files.
-     * 
-     * @param data File data holding a path to a model file
-     * @param annotationDatas List to add found annotation datas to
-     */
-    public static def void getMacroCallData(EObject model,
+    public static def void getAnnotationInterface(EObject model,
         List<MacroCallData> annotationDatas) {
 
         // Load EObject from file
         if (model != null) {
             initAnalyzers()
-            
             // Analyze the model with all wrapper code annotation analyzers
             for (analyzer : TemplateManager.modelAnalyzers) {
                 val annotations = analyzer.getAnnotationInterface(model)
@@ -532,7 +507,7 @@ class TemplateManager {
 
         }
     }
-    
+
     /**
      * Looks for the interface (inputs / outputs) in the model
      * and based on this, creates data objects suited for simulation of the model.
@@ -552,6 +527,29 @@ class TemplateManager {
                 val datas = analyzer.getSimulationInterface(model)
                 if (!datas.isNullOrEmpty) {
                     simulationDatas.addAll(datas)    
+                }
+            }
+
+        }
+    }
+    
+    /**
+     * Adds wrapper code data objects to the annotationDatas list,
+     * which where found in the given files.
+     * 
+     * @param data File data holding a path to a model file
+     * @param annotationDatas List to add found annotation datas to
+     */
+    public static def String getModelName(EObject model) {
+        // Load EObject from file
+        if (model != null) {
+            initAnalyzers()
+            
+            // Analyze the model with all wrapper code annotation analyzers
+            for (analyzer : TemplateManager.modelAnalyzers) {
+                val modelName = analyzer.getModelName(model)
+                if(modelName != null) {
+                    return modelName
                 }
             }
 

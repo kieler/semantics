@@ -49,6 +49,7 @@ public class KiCoolParser extends AbstractContentAssistParser {
 					put(grammarAccess.getExtendedIDAccess().getAlternatives_1_0(), "rule__ExtendedID__Alternatives_1_0");
 					put(grammarAccess.getSystemAccess().getGroup(), "rule__System__Group__0");
 					put(grammarAccess.getSystemAccess().getGroup_6(), "rule__System__Group_6__0");
+					put(grammarAccess.getSystemAccess().getGroup_7(), "rule__System__Group_7__0");
 					put(grammarAccess.getIntermediateReferenceAccess().getGroup(), "rule__IntermediateReference__Group__0");
 					put(grammarAccess.getIntermediateReferenceAccess().getGroup_2(), "rule__IntermediateReference__Group_2__0");
 					put(grammarAccess.getProcessorGroupAccess().getGroup(), "rule__ProcessorGroup__Group__0");
@@ -94,8 +95,9 @@ public class KiCoolParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSystemAccess().getVersionAssignment_3(), "rule__System__VersionAssignment_3");
 					put(grammarAccess.getSystemAccess().getLabelAssignment_5(), "rule__System__LabelAssignment_5");
 					put(grammarAccess.getSystemAccess().getInputClassAssignment_6_1(), "rule__System__InputClassAssignment_6_1");
-					put(grammarAccess.getSystemAccess().getIntermediatesAssignment_7(), "rule__System__IntermediatesAssignment_7");
-					put(grammarAccess.getSystemAccess().getProcessorsAssignment_8(), "rule__System__ProcessorsAssignment_8");
+					put(grammarAccess.getSystemAccess().getStartsetsAssignment_7_1(), "rule__System__StartsetsAssignment_7_1");
+					put(grammarAccess.getSystemAccess().getIntermediatesAssignment_8(), "rule__System__IntermediatesAssignment_8");
+					put(grammarAccess.getSystemAccess().getProcessorsAssignment_9(), "rule__System__ProcessorsAssignment_9");
 					put(grammarAccess.getIntermediateReferenceAccess().getIdAssignment_1(), "rule__IntermediateReference__IdAssignment_1");
 					put(grammarAccess.getIntermediateReferenceAccess().getAliasAssignment_2_1(), "rule__IntermediateReference__AliasAssignment_2_1");
 					put(grammarAccess.getProcessorGroupAccess().getLabelAssignment_0_1(), "rule__ProcessorGroup__LabelAssignment_0_1");

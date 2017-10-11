@@ -1,0 +1,42 @@
+scchart Elevator {
+  input signal up;
+  input signal down;
+  input signal error;
+  output signal alarm;
+  output signal isUp;
+  output signal isDown;
+  output signal doorOpen;
+  output signal doorClosed;
+
+  initial state ^normal {
+    signal door;
+
+    initial state floor1
+    --> up with up / door;
+
+    state floor22 "floor2"
+    --> down with down / door;
+
+    state down
+    --> floor1 with / door;
+
+    state up
+    --> floor22 with / door;
+
+    region:
+
+    initial state door_open
+    --> door_closed with door;
+
+    state door_closed
+    --> door_open with door;
+  }
+  --> error with error;
+
+  state error {
+
+    initial state sustain_alarm
+    --> sustain_alarm with / alarm;
+  }
+  --> ^normal history with error;
+}

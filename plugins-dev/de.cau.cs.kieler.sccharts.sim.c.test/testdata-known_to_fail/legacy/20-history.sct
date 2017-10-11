@@ -1,0 +1,22 @@
+scchart _20_history "20-history" {
+  input signal pure I;
+  output signal pure O1;
+  output signal pure O2;
+  output signal pure O3;
+
+  initial state A {
+
+    initial state C
+    --> B / O1;
+
+    state B
+    --> D / O2;
+
+    state D
+    --> C / O3;
+  }
+  --> E with I;
+
+  state E
+  --> A history with I;
+}

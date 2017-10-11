@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.kicool.ui.view
 
-import de.cau.cs.kieler.kico.ui.KiCoSelectionView
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.ui.view.actions.AbstractAction
 import de.cau.cs.kieler.kicool.ui.view.actions.AutoCompileToggle
@@ -42,6 +41,7 @@ import org.eclipse.jface.action.MenuManager
 import de.cau.cs.kieler.kicool.ui.view.actions.SkinSelectionActions
 import com.google.inject.Inject
 import com.google.inject.Injector
+import de.cau.cs.kieler.kicool.ui.view.actions.CompileInplaceToggle
 
 /**
  * The IMB Compiler View
@@ -67,6 +67,7 @@ class CompilerView extends DiagramViewPart {
     @Accessors private var AutoCompileToggle autoCompileToggle = null
     @Accessors private var VisualLayoutFeedbackToggle visualLayoutFeedbackToggle = null
     @Accessors private var SkinSelectionActions skinSelectionActions = null
+    @Accessors private var CompileInplaceToggle compileInplaceToggle = null
     
     @Accessors private var CompilationAction compilationAction = null
     
@@ -113,6 +114,7 @@ class CompilerView extends DiagramViewPart {
         
         forwardResultToggle = new ForwardResultToggle(this)
         autoCompileToggle = new AutoCompileToggle(this)
+        compileInplaceToggle = new CompileInplaceToggle(this)
         
         developerToggle = new DeveloperToggle(this)
         developerToggle.addContributions(toolBar, menu)
@@ -123,6 +125,7 @@ class CompilerView extends DiagramViewPart {
 
         menu.add(forwardResultToggle.action)
         menu.add(autoCompileToggle.action)
+        menu.add(compileInplaceToggle.action)
         menu.add(new Separator)
         menu.add(visualLayoutFeedbackToggle.action)
         
@@ -138,6 +141,7 @@ class CompilerView extends DiagramViewPart {
         memento?.loadCheckedValue(autoCompileToggle)
         memento?.loadCheckedValue(visualLayoutFeedbackToggle)
         memento?.loadCheckedValue(developerToggle)
+        memento?.loadCheckedValue(compileInplaceToggle)
         
         menu.add(new Separator)
         // The standard klighd view part menu entries will be inserted after this separator.    
@@ -154,6 +158,7 @@ class CompilerView extends DiagramViewPart {
         memento.saveCheckedValue(autoCompileToggle)
         memento.saveCheckedValue(visualLayoutFeedbackToggle)
         memento.saveCheckedValue(developerToggle)
+        memento.saveCheckedValue(compileInplaceToggle)
     }
     
     def void updateView() {
@@ -175,7 +180,7 @@ class CompilerView extends DiagramViewPart {
     private def void updateDiagram(Object model, KlighdSynthesisProperties properties) {
         if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
             val instance = this
-            new UIJob("Init" + KiCoSelectionView.getClass.getName()) {
+            new UIJob("Init" + this.getClass.getName()) {
 
                 @SuppressWarnings("deprecation")
                 @Override

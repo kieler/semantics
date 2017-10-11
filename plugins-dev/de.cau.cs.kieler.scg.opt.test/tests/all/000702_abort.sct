@@ -1,0 +1,11 @@
+scchart ^abort {
+  input bool I;
+  
+  initial state A {
+    initial state A1
+    --> A1;
+  }
+  o-> B with I;
+  
+  final state B;
+}

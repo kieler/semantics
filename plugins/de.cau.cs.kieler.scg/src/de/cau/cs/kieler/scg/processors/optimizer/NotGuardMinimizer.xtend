@@ -27,6 +27,7 @@ import de.cau.cs.kieler.scg.Conditional
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * @author ssm
@@ -34,8 +35,8 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
  */
 class NotGuardMinimizer extends AbstractOptimizer {
     
-    @Inject
-    extension KExpressionsCreateExtensions
+    @Inject extension KExpressionsCreateExtensions
+    @Inject extension KEffectsExtensions
     
     private val notGuardMapping = new HashMap<ValuedObject, Expression>
     

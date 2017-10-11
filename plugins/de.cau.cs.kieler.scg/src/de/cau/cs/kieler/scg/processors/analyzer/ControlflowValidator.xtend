@@ -24,7 +24,7 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
  * @kieler.rating 2017-07-11 proposed yellow  
  *
  */
-class ControlflowValidator extends IntermediateProcessor<SCGraph> {
+class ControlflowValidator extends IntermediateProcessor<SCGraph, SCGraph> {
     
     @Inject extension SCGControlFlowExtensions
     

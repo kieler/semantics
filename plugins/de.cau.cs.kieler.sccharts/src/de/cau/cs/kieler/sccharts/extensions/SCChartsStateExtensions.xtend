@@ -18,7 +18,7 @@ import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import com.google.inject.Inject
 
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 
 /**
@@ -40,7 +40,6 @@ class SCChartsStateExtensions {
     def State createState(String id) {
         SCChartsFactory::eINSTANCE.createState => [
             setName(id)
-            setLabel("")
         ]
     }
 
@@ -66,7 +65,7 @@ class SCChartsStateExtensions {
        
     def boolean isSimple(State state) {
         !state.isHierarchical && state.actions.size == 0
-    }
+    } 
     
     def State setInitial(State state) {
         state => [ initial = true ] 
@@ -147,6 +146,13 @@ class SCChartsStateExtensions {
             }
         ]
         newState
+    }
+    
+    def boolean mayTerminate(State state) {
+        for (cfr : state.controlflowRegions) {
+            if (cfr.allFinalStates.empty) return false
+        }
+        return true
     }
          
 }

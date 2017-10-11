@@ -15,10 +15,10 @@
     </@>
     <@input>
         // Clock
-        ${varname} = false;
+        tickData.${varname} = false;
         if((millis() - ${varname}Counter) > ${millis}){
             ${varname}Counter= millis();
-            ${varname} = true;
+            tickData.${varname} = true;
         }
     </@>
 </#macro>
@@ -40,10 +40,10 @@
 <#macro ResetClock clockVariable autoFalse = true>
     <@output>
         // ResetClock
-        if(${varname}){
+        if(tickData.${varname}){
             ${clockVariable}Counter = millis();
             <#if autoFalse>
-            ${varname} = false;
+            tickData.${varname} = false;
             </#if>
         }
     </@>
@@ -58,7 +58,7 @@
 <#macro Time>
     <@input>
         // Time
-        ${varname} = millis();
+        tickData.${varname} = millis();
     </@>
 </#macro>
 
@@ -88,7 +88,7 @@
             isFirstTick = false;
         } else {
             // Set actual tick duration
-            ${varname} = millis() - tickDurationCounter;
+            tickData.${varname} = millis() - tickDurationCounter;
             <#if targetMillis != '0' >
             // Wait until target duration of tick reached
             if ( millis() - tickDurationCounter < ${targetMillis} ) {
@@ -109,8 +109,8 @@
          output unsigned delayTime = 500; -->
 <#macro Delay>
     <@output>
-        if(${varname} > 0) {
-            delay(${varname});
+        if(tickData.${varname} > 0) {
+            delay(tickData.${varname});
         }
     </@>
 </#macro>

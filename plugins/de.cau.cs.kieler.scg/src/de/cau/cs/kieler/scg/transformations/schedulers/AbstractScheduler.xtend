@@ -13,9 +13,10 @@
  */
 package de.cau.cs.kieler.scg.transformations.schedulers
 
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -34,10 +35,16 @@ import de.cau.cs.kieler.scg.SCGraph
  * @kieler.design 2013-11-27 proposed 
  * @kieler.rating 2013-11-27 proposed yellow
  */
-abstract class AbstractScheduler extends AbstractProductionTransformation {
+abstract class AbstractScheduler extends Processor<SCGraphs, SCGraphs> {
 
-    public def transform(SCGraph scg, KielerCompilerContext context) {
-        return schedule(scg, context)
+    override process() {
+        for (scg : model.scgs) {
+            scg.schedule
+        }
+    }
+    
+    override getType() {
+        ProcessorType.TRANSFORMATOR
     }
 
     protected abstract def SchedulingConstraints orderSchedulingBlocks(SCGraph scg);
@@ -52,6 +59,6 @@ abstract class AbstractScheduler extends AbstractProductionTransformation {
      * 			the SCG (of arbitrary SCG class type)
      * @return Returns a fully (in sense of the transformation chain) updated SCG.
      */
-    public abstract def SCGraph schedule(SCGraph scg, KielerCompilerContext context) 
+    public abstract def SCGraph schedule(SCGraph scg) 
         
 }

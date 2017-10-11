@@ -20,6 +20,7 @@ import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
@@ -38,7 +39,7 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
  * @kieler.rating 2012-10-08 proposed yellow
  */
 @ViewSynthesisShared
-class SCChartsSynthesis extends AbstractSCChartsSynthesis<SCCharts> {
+class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
 
     @Inject extension KNodeExtensions
     @Inject extension KRenderingExtensions
@@ -77,7 +78,7 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<SCCharts> {
         val options = new LinkedHashSet()
         
         // Add categories options
-        options.addAll(APPEARANCE, DATAFLOW, LAYOUT, DEBUGGING)
+        options.addAll(APPEARANCE, DATAFLOW, DEBUGGING, LAYOUT)
         
         // General options
         options.addAll(USE_KLAY, SHOW_ALL_SCCHARTS, SHOW_COMMENTS)
@@ -122,19 +123,27 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<SCCharts> {
             for(rootState : scc.rootStates) {
                 hooks.invokeStart(rootState, rootNode)
                 rootNode.children += stateSynthesis.transform(rootState)
+                
+                // Add tracking adapter to allow access to source model associations
+                val trackingAdapter = new SourceModelTrackingAdapter();
+                rootNode.setLayoutOption(SCChartsDiagramProperties::MODEL_TRACKER, trackingAdapter);
+                // Since the root node will node use to display the diagram (SimpleUpdateStrategy) the tracker must be set on the children.
+                rootNode.children.forEach[eAdapters.add(trackingAdapter)]
+                
                 hooks.invokeFinish(rootState, rootNode)
             }
         } else {
             hooks.invokeStart(scc.rootStates.head, rootNode)
             rootNode.children += stateSynthesis.transform(scc.rootStates.head)
+            
+            // Add tracking adapter to allow access to source model associations
+            val trackingAdapter = new SourceModelTrackingAdapter();
+            rootNode.setLayoutOption(SCChartsDiagramProperties::MODEL_TRACKER, trackingAdapter);
+            // Since the root node will node use to display the diagram (SimpleUpdateStrategy) the tracker must be set on the children.
+            rootNode.children.forEach[eAdapters.add(trackingAdapter)]
+            
             hooks.invokeFinish(scc.rootStates.head, rootNode) 
         }
-        
-        // Add tracking adapter to allow access to source model associations
-        val trackingAdapter = new SourceModelTrackingAdapter();
-        rootNode.setLayoutOption(SCChartsDiagramProperties::MODEL_TRACKER, trackingAdapter);
-        // Since the root node will node use to display the diagram (SimpleUpdateStrategy) the tracker must be set on the children.
-        rootNode.children.forEach[eAdapters.add(trackingAdapter)]
         
         val pragmaFont = scc.getStringPragmas(PRAGMA_FONT).last
         if (pragmaFont != null) {

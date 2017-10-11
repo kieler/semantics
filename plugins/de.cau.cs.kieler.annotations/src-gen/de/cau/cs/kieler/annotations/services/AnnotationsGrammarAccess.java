@@ -883,6 +883,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	private final TerminalRule tFLOAT;
 	private final TerminalRule tBOOLEAN;
 	private final TerminalRule tSTRING;
+	private final TerminalRule tID;
 	
 	private final Grammar grammar;
 
@@ -925,6 +926,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		this.tFLOAT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.FLOAT");
 		this.tBOOLEAN = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.BOOLEAN");
 		this.tSTRING = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.STRING");
+		this.tID = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.ID");
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -1287,9 +1289,9 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//terminal ID:
-	//	'^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
+	//	'^'? (('_'? 'a'..'z' | '_'? 'A'..'Z') | '_' '0'..'9' | '__') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
 	public TerminalRule getIDRule() {
-		return gaTerminals.getIDRule();
+		return tID;
 	} 
 
 	//terminal WS:

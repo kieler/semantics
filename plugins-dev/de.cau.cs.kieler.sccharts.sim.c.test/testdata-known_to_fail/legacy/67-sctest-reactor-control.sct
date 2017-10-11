@@ -1,0 +1,66 @@
+scchart Module_ReactorControl {
+  output signal pure PullOutRods;
+  output signal pure PushInRods;
+  input signal pure Start;
+  input signal pure OverHeated;
+  input signal pure CooledDown;
+  signal pure unsafe;
+
+  region main:
+
+  initial state init0 "I"
+  --> ParallelStatementList40state immediate;
+
+  state ParallelStatementList40state {
+
+    region R0:
+
+    initial state init1 "I"
+    --> Await43state immediate;
+
+    state Await43state {
+
+      region R0:
+
+      initial state init2 "I"
+      --> S18 immediate;
+
+      state S18 "18"
+      --> S23 with Start / PullOutRods;
+
+      final state S23 "23";
+    }
+    o-> Await43state with unsafe;
+
+    region R1:
+
+    initial state init3 "I"
+    --> S94 immediate;
+
+    state S94 "94"
+    --> S134 immediate with unsafe / PushInRods;
+
+    state S134 "134"
+    --> S94 with !unsafe;
+
+    region R2:
+
+    initial state init4 "I"
+    --> S193 immediate;
+
+    state S193 "193"
+    --> Sustain68state immediate with OverHeated;
+
+    state Sustain68state {
+
+      region R0:
+
+      initial state init5 "I"
+      --> S227 immediate / unsafe;
+
+      state S227 "227"
+      --> S227 / unsafe;
+    }
+    o-> S193 with CooledDown;
+  };
+}

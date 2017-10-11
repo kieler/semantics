@@ -22,8 +22,6 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeExtensions
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Entry
@@ -35,6 +33,7 @@ import java.util.HashMap
 import java.util.LinkedList
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * @author fry
@@ -42,24 +41,24 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
  * Transformation from SSA SCG into Circuit.
  * Follows the control flow of the SCG.
  */
-class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
+class SSA_SCG2CircuitTransformation {// extends AbstractProductionTransformation {
 
 	// -------------------------------------------------------------------------
 	// --                 K I C O      C O N F I G U R A T I O N              --
 	// -------------------------------------------------------------------------
-	override getId() {
+	def getId() {
 		return CircuitTransformation::SCG2CIRCUIT_ID
 	}
 
-	override getName() {
+	def getName() {
 		return CircuitTransformation::SCG2CIRCUIT_NAME
 	}
 
-	override getProducedFeatureId() {
+	def getProducedFeatureId() {
 		return CircuitFeatures::CIRCUIT_ID
 	}
 
-	override getRequiredFeatureIds() {
+	def getRequiredFeatureIds() {
 		return newHashSet(CircuitFeatures::SCG2SSASCG_ID)
 	}
 	
@@ -67,8 +66,8 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 	// --                             INJECTIONS                              --
 	// -------------------------------------------------------------------------
 	
-	@Inject
-	extension KEffectsSerializeExtensions
+	@Inject extension KEffectsSerializeExtensions
+	@Inject extension KEffectsExtensions
 
 	@Inject
 	LinkCreator linkCreator
@@ -81,7 +80,7 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 	// --                             LISTS/MAPS                              --
 	// -------------------------------------------------------------------------
 
-	protected var KielerCompilerContext compilerContext
+//	protected var KielerCompilerContext compilerContext
 		
 	val LinkedList<String> assignmentActor = new LinkedList<String>
 	
@@ -91,14 +90,14 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 	// --                          Transformation Start                       --
 	// -------------------------------------------------------------------------
 
-	def transform(SCGraph scg, KielerCompilerContext context) {
+	def transform(SCGraph scg) {
 
 		assignmentActor.clear
 		voExpressions.clear
 
 		// this map stores SSA variables of input output variables and their highest version number
 		// only interesting for linkCreator 
-		val inputOutputMap = context.compilationResult.getAuxiliaryData(SSAMapData).head.inputOutputMap
+//		val inputOutputMap = context.compilationResult.getAuxiliaryData(SSAMapData).head.inputOutputMap
 		
 		
 		// -------------------------------------------------------
@@ -152,7 +151,7 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 		// create links for each region of the circuit
 		// this has to be done step by step..... otherwise wrong ports are connected
 		linkCreator.circuitRegion(newCircuit)
-		linkCreator.logicRegion(logicRegion, inputOutputMap)
+//		linkCreator.logicRegion(logicRegion, inputOutputMap)
 		linkCreator.initRegion(initializationRegian)
 
 		//return the circuit

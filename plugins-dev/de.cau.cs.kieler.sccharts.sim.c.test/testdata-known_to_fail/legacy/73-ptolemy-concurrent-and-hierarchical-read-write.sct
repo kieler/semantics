@@ -1,0 +1,33 @@
+scchart _73_ptolemy_concurrecnt_and_hierarchical_read_write
+"73-ptolemy-concurrecnt-and-hierarchical-read-write" {
+  output signal int Out = 0;
+  output signal pure In;
+  output signal int Out2;
+  input signal pure Const;
+
+  initial state SeeminglyNonmontonic {
+
+    initial state state1 {
+
+      initial state state5
+      --> state6 with In / Out(2);
+
+      state state6;
+
+      region:
+
+      initial state state3
+      --> state4 / Out(1);
+
+      state state4;
+    }
+    --> state2 / Out2(1);
+
+    state state2;
+  };
+
+  region:
+
+  initial state Const
+  --> Const with Const / In;
+}

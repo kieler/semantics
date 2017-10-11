@@ -1,0 +1,13 @@
+scchart ^connector {
+  input bool I;
+  output bool O;
+  
+  initial state A
+  --> B;
+  connector state B
+  --> C with I / O = false
+  --> D;
+  final state C;
+  state D
+  --> A;
+}

@@ -1,0 +1,15 @@
+scchart _34_valued_signals_test2 "34-valued-signals-test2" {
+  output signal int V = 0;
+
+  initial state A
+  --> B / V(1);
+
+  state B;
+
+  region:
+
+  initial state C
+  --> D with !(val(V) == 0);
+
+  state D;
+}

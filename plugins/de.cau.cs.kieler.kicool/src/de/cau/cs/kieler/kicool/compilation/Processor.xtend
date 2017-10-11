@@ -22,6 +22,7 @@ import static extension org.eclipse.xtext.EcoreUtil2.*
 import static extension de.cau.cs.kieler.kicool.environments.Environment.*
 import java.lang.reflect.ParameterizedType
 import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.annotations.NamedObject
 
 /**
  * The abstract class of a processor. Every invokable unit in kico is a processor.
@@ -50,6 +51,10 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
         if (environments != null && environments.source != null) {
             val enabledFlag = environments.source.getProperty(ENABLED)
             environment.setProperty(ENABLED, enabledFlag)
+        }
+        if (environments != null && environments.target != null) {
+            val cancelCompilationFlag = environments.target.getProperty(CANCEL_COMPILATION)
+            environmentPrime.setProperty(CANCEL_COMPILATION, cancelCompilationFlag)
         }
         this.environments = new EnvironmentPair(environment, environmentPrime)
     }
@@ -115,7 +120,10 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
      * Protected convenient method to trigger a snapshot.
      */
     protected def void snapshot(Object model) {
-        // Retrieve snapshots object.
+        val snapshotsEnabled = environment.getProperty(SNAPSHOTS_ENABLED) 
+        val inplace = environment.getProperty(INPLACE)
+        if (inplace || !snapshotsEnabled) return
+        
         val snapshots = environment.getProperty(SNAPSHOTS)
         
         // Do a copy of the given model.
@@ -140,12 +148,20 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
     
     
     def Source getModel() {
-        try {
+//        try {
             val model = environment.getProperty(MODEL) as Source
             return model
-        } catch (ClassCastException e) {
-            return null
-        }
+//        } catch (ClassCastException e) {
+//            return null
+//        }
+    }
+    
+    def Source getSourceModel() {
+       environment.getProperty(SOURCE_MODEL) as Source
+    }
+    
+    def Target getTargetModel() {
+       environment.getProperty(MODEL) as Target
     }
     
     def Target setModel(Target model) {
@@ -176,6 +192,24 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
         }
         c
     }
+    
+    
+    /**  
+     *  Convenient method to cancel the ongoing compilation. 
+     */
+    synchronized def cancelCompilation() {
+        environment.setProperty(CANCEL_COMPILATION, true)
+    }    
+    
+    /**
+     * Convenient getter for unique names.
+     */
+    def <T extends NamedObject> T uniqueName(T namedObject) {
+        val nameCache = environment.getProperty(UNIQUE_NAME_CACHE)
+        namedObject.name = nameCache.getNewUniqueName(namedObject.name)
+        return namedObject
+    }        
+    
     
     /**
      * ID of the processor.

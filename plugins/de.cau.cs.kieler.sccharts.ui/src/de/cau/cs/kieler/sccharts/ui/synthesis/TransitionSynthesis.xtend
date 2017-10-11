@@ -98,6 +98,9 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
             ]
         }     
 
+        //Configure selection style
+        edge.setSelectionStyle
+
         // Add Label
         val label = new StringBuilder();
         if (transition.label.nullOrEmpty) {

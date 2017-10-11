@@ -28,6 +28,7 @@ import de.cau.cs.kieler.sccharts.State
 import java.util.ArrayList
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.kexpressions.ValueType
 
 /**
  * @author aas
@@ -77,6 +78,7 @@ class SCChartsAnalyzer implements ModelAnalyzer{
             } else {
                 // Print warning if explicit wrapper code annotation on variable
                 // that is neither input nor output
+                // TODO: Make validator for this
                 for (annotation : decl.annotations) {
                      if(annotation.name == EXPLICIT_WRAPPER_CODE_ANNOTATION_NAME) {
                          PromConsole.print('''Warning: Variable '«getVariableName(decl)»' is neither input nor output but has an explicit wrapper code annotation.''');
@@ -106,9 +108,19 @@ class SCChartsAnalyzer implements ModelAnalyzer{
         for(decl : state.declarations.filter(VariableDeclaration)) {
             for(valuedObject : decl.valuedObjects) {
                 if(!decl.const) {
-                    val data = new MacroCallData();
+                    val data = new MacroCallData()
+                    
+                    // Valued signal stuff
+                    val isValuedSignal = decl.signal && decl.type !== ValueType.PURE && (!decl.input || decl.output) // only outputs!
+                    val valData = new MacroCallData()
+                    
                     data.arguments.add(String.valueOf(decl.input))
                     data.arguments.add(String.valueOf(decl.output))
+                    if (isValuedSignal) {
+                        valData.arguments.add(String.valueOf(decl.input))
+                        valData.arguments.add(String.valueOf(decl.output))                        
+                    }
+                    
                     // add array sizes if any
                     if(!valuedObject.cardinalities.nullOrEmpty) {
                         for(card : valuedObject.cardinalities) {
@@ -124,27 +136,38 @@ class SCChartsAnalyzer implements ModelAnalyzer{
                             }
                             if(intValue != null) {
                                 data.arguments.add(intValue.value.toString)
+                                if (isValuedSignal) valData.arguments.add(intValue.value.toString)
                             }
                         }
                     }
                     
                     data.modelName = state.name
                     data.name = "Simulate"
-                    data.varType = decl.type.literal
+                    data.varType = if (isValuedSignal) ValueType.PURE.literal else decl.type.literal
                     data.varName = valuedObject.name
+                    if (isValuedSignal) {
+                        valData.modelName = state.name
+                        valData.name = "Simulate"
+                        valData.varType = decl.type.literal
+                        valData.varName = valuedObject.name + "_val"
+                    }
                     
                     // Set interface type
                     if(decl.input) {
                         data.interfaceTypes.add("input")
+                        if (isValuedSignal) valData.interfaceTypes.add("input")
                     }
                     if(decl.output) {
                         data.interfaceTypes.add("output")
+                        if (isValuedSignal) valData.interfaceTypes.add("output")
                     }
                     if(!decl.input && !decl.output) {
                         data.interfaceTypes.add("internal")
+                        if (isValuedSignal) valData.interfaceTypes.add("internal")
                     }
                     
                     annotationDatas.add(data)
+                    if (isValuedSignal) annotationDatas.add(valData)
                 }
             }
         }

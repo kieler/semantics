@@ -28,7 +28,7 @@ RootState returns sccharts::State:
 	'{'
 		declarations+=DeclarationWOSemicolon*
 		actions+=LocalAction*
-		(regions+=ImplicitControlflowRegion | regions+=ImplicitDataflowRegion | regions+=Region*)
+		(regions+=ImplicitControlflowRegion | regions+=Region*)
 	'}';
     
 
@@ -38,13 +38,13 @@ State returns sccharts::State:
 	final?='final'?
 	violation?='violation'?
 	connector?='connector'?
-	'state' name=ID label=STRING?
+	=>'state' name=ID label=STRING?
 	((
 	    'is' reference = ScopeCall
 	)|('{'
 		declarations+=DeclarationWOSemicolon*
 		actions+=LocalAction*
-		(regions+=ImplicitControlflowRegion | regions+=ImplicitDataflowRegion | regions+=Region*)
+		(regions+=ImplicitControlflowRegion | regions+=Region*)
 	'}'))?
 	outgoingTransitions+=Transition*;
 	
@@ -84,39 +84,29 @@ Transition returns sccharts::Transition:
 // -------------- //
 
 Region returns sccharts::Region:
-    ControlflowRegion | NestedControlflowRegion | DataflowRegion;
+    ControlflowRegion | DataflowRegion;
 
 ImplicitControlflowRegion returns sccharts::ControlflowRegion:
     {sccharts::ControlflowRegion}
-    (states+=State)+;
-
-
-ImplicitDataflowRegion returns sccharts::DataflowRegion:
-    {sccharts::DataflowRegion}
-    (equations += Equation)+;
-
+    states+=State+;
 
 ControlflowRegion returns sccharts::ControlflowRegion:
     {sccharts::ControlflowRegion}
     annotations+=Annotation*
     'region' name=ExtendedID? label=STRING?
     ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('..' forEnd=IntOrReference)?)?
-    ':'
-    declarations+=DeclarationWOSemicolon*
-    states+=State+;
+    ((
+        ':'
+        declarations+=DeclarationWOSemicolon*
+        states+=State*
+    )|(
+        '{'
+        declarations+=DeclarationWOSemicolon*
+        (states+=ImplicitState | states+=State+)
+        '}'
+    ));
 
     
-NestedControlflowRegion returns sccharts::ControlflowRegion:
-    {sccharts::ControlflowRegion}
-    annotations+=Annotation*
-    'region' name=ExtendedID? label=STRING?
-    ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('..' forEnd=IntOrReference)?)? 
-    '{'
-    declarations+=DeclarationWOSemicolon*
-    (states+=ImplicitState | states+=State+)
-    '}';
-
-
 DataflowRegion returns sccharts::DataflowRegion:
     {sccharts::DataflowRegion}
     annotations+=Annotation*
@@ -124,7 +114,7 @@ DataflowRegion returns sccharts::DataflowRegion:
     ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('..' forEnd=IntOrReference)?)? 
     ':'
     declarations+=DeclarationWOSemicolon*
-    equations+=Equation+;
+    equations+=Assignment*;
     
     
 IntOrReference returns kexpressions::Expression:
@@ -148,7 +138,7 @@ EntryAction returns sccharts::EntryAction:
          
 DuringAction returns sccharts::DuringAction:
 	{sccharts::DuringAction}
-    delay=DelayType? 'during' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
+    delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
     ('label' label=STRING)?;
          
 ExitAction returns sccharts::ExitAction:
@@ -171,19 +161,6 @@ SucceedingAction returns sccharts::SucceedingAction:
 	'succeeding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
 	('label' label=STRING)?;  
 
-
-// ---------------- //
-//  Equation Rules  // 
-// ---------------- //
-
-DFAssignment returns keffects::Assignment:
-    annotations+=Annotation*    
-	valuedObject=[kexpressions::ValuedObject]
-	('[' indices+=Expression ']')*
-	 operator=AssignOperator expression = Expression;
-
-Equation returns keffects::Assignment:
-    SubReferenceAssignment;
 
 // ------------ //
 //  Enum Rules  // 

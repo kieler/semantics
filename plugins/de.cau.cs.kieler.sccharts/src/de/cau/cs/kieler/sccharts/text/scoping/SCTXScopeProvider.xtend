@@ -108,7 +108,7 @@ class SCTXScopeProvider extends de.cau.cs.kieler.kexpressions.kext.scoping.KExtS
             
             val scopeCall = parameter.eContainer as ScopeCall
             if (scopeCall != null && scopeCall.scope != null) {
-                for (declaration : scopeCall.scope.variableDeclarations.filter[ input || output]) {
+                for (declaration : scopeCall.scope.variableDeclarations.filter[ input || output ]) {
                     voCandidates += declaration.valuedObjects
                 }
             }
@@ -121,32 +121,22 @@ class SCTXScopeProvider extends de.cau.cs.kieler.kexpressions.kext.scoping.KExtS
     
     override def IScope getScopeForReferenceDeclaration(EObject context, EReference reference) {
         if (reference == KExpressionsPackage.Literals.REFERENCE_DECLARATION__REFERENCE) {
-            val candidates = <Scope> newArrayList 
             
             val declaration = context
             if (declaration instanceof ReferenceDeclaration) {
-                val superScope = super.getScope(context.eContainer, reference)
-                val root = context.root.asSCCharts
-                candidates += root.rootStates
-                val imports = root.getStringPragmas("import").toList
-                
-                val res = context.eResource      
-                if (res != null) {
-                    val resSet = res.resourceSet
-                    
-                    if (resSet != null) {
-                        val resSetFilter = resSet.resources.filter[ 
-                            val uri = it.URI.toPlatformString(true)
-//                            println(uri)
-                            return imports.exists[ uri.endsWith(it.values.head) ]
+                val eResource = declaration.eResource
+                if (eResource != null) {
+                    val scchartsInScope = newHashSet(eResource.contents.head as SCCharts)
+                    val eResourceSet = eResource.resourceSet
+                    if (eResourceSet !== null) {
+                        eResourceSet.resources.filter[!contents.empty].map[contents.head].filter(SCCharts).forEach[ 
+                            scchartsInScope += it
                         ]
-                        for(r : resSetFilter) {
-                            candidates += r.contents.filter[ it instanceof State ].map[ it as Scope ]
-                        }
                     }
-                }      
+                    return SCTXScopes.scopeFor(scchartsInScope.map[rootStates].flatten)
+                }   
                 
-                return SCTXScopes.scopeFor(candidates, nameProvider, superScope)
+                return IScope.NULLSCOPE
             }
         }
         return context.getScopeHierarchical(reference)

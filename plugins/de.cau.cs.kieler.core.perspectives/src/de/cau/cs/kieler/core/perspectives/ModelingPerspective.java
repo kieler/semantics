@@ -42,7 +42,7 @@ public class ModelingPerspective implements IPerspectiveFactory {
         IFolderLayout topRight =
                 layout.createFolder("topRight", IPageLayout.RIGHT, PerspectiveHelper.MEDIUM, editor);
 
-        PerspectiveHelper.addViewIfExists(bottomRight, PerspectiveHelper.VIEW_KICO);
+        PerspectiveHelper.addViewIfExists(bottomRight, PerspectiveHelper.VIEW_KICOOL);
         PerspectiveHelper.addViewIfExists(topRight, PerspectiveHelper.VIEW_KLIGHD);
         PerspectiveHelper.addViewIfExists(bottomLeft, IPageLayout.ID_PROJECT_EXPLORER);
 

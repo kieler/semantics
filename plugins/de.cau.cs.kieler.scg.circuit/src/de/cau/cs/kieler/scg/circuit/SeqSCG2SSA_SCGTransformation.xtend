@@ -22,9 +22,6 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Entry
@@ -38,8 +35,8 @@ import java.util.HashMap
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.scg.ControlFlow
-import de.cau.cs.kieler.kico.KielerCompilerException
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * @author fry
@@ -47,24 +44,24 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
  * 
  * Modifies a given SCG.
  */
-class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
+class SeqSCG2SSA_SCGTransformation {// extends AbstractProductionTransformation {
 
 	// -------------------------------------------------------------------------
 	// --                 K I C O      C O N F I G U R A T I O N              --
 	// -------------------------------------------------------------------------
-	override getId() {
+	def getId() {
 		return CircuitFeatures::SCG2SSASCG_ID
 	}
 
-	override getName() {
+	def getName() {
 		return CircuitFeatures::SCG2SSASCG_NAME
 	}
 
-	override getProducedFeatureId() {
+	def getProducedFeatureId() {
 		return CircuitFeatures::SCG2SSASCG_ID
 	}
 
-	override getRequiredFeatureIds() {
+	def getRequiredFeatureIds() {
 		return newHashSet(SCGFeatures::SEQUENTIALIZE_ID)
 	}
 	
@@ -72,11 +69,9 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 	// --                             INJECTIONS                              --
 	// -------------------------------------------------------------------------
 
-	@Inject
-	extension KExpressionsDeclarationExtensions
-
-	@Inject
-	extension KExpressionsValuedObjectExtensions
+	@Inject	extension KExpressionsDeclarationExtensions
+	@Inject	extension KExpressionsValuedObjectExtensions
+	@Inject extension KEffectsExtensions
 	
 	
 	// -------------------------------------------------------------------------
@@ -101,14 +96,14 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 	// --                          Transformation Start                       --
 	// -------------------------------------------------------------------------
 
-	def transform(SCGraph scg, KielerCompilerContext context) {
+	def transform(SCGraph scg) {
 	    
 	    if (scg.declarations.filter(VariableDeclaration).filter[type != ValueType::BOOL].size > 0) {
-	        val result = context.compilationResult
-	        if (result != null) {
-	            result.addPostponedWarning(new KielerCompilerException(getId, null, "Currently the circuit transformation can only handle boolean inputs 
-but your model contains other input types as well."));
-	        }
+//	        val result = context.compilationResult
+//	        if (result != null) {
+//	            result.addPostponedWarning(new KielerCompilerException(getId, null, "Currently the circuit transformation can only handle boolean inputs 
+//but your model contains other input types as well."));
+//	        }
 	    }
 	    
 
@@ -133,7 +128,7 @@ but your model contains other input types as well."));
         createSSAs(firstAssignment, scg)
 		
 		// Store input output variables for link creation
-		context.compilationResult.addAuxiliaryData((new SSAMapData) => [it.inputOutputMap = inputOutputMap])
+//		context.compilationResult.addAuxiliaryData((new SSAMapData) => [it.inputOutputMap = inputOutputMap])
 		
 		// Return the SSA SCG
 		scg
@@ -393,7 +388,7 @@ but your model contains other input types as well."));
 
 
 //Prepare data for CircuitTransformation
-class SSAMapData extends AbstractKielerCompilerAuxiliaryData {
+class SSAMapData {// extends AbstractKielerCompilerAuxiliaryData {
 	@Accessors
 	HashMap<String, Integer> inputOutputMap
 }

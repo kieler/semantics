@@ -28,7 +28,7 @@ import de.cau.cs.kieler.sccharts.legacy.kexpressions.ValuedObjectReference
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.sccharts.legacy.kexpressions.FunctionCall
 import de.cau.cs.kieler.sccharts.legacy.kexpressions.Parameter
 import java.util.List

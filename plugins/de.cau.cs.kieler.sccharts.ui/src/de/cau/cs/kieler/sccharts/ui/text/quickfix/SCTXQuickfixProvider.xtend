@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.sccharts.ui.text.quickfix
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import org.eclipse.xtext.ui.editor.quickfix.Fix
 import de.cau.cs.kieler.sccharts.text.validation.SCTXValidator
 import org.eclipse.xtext.validation.Issue
@@ -24,6 +23,7 @@ import org.eclipse.xtext.ui.editor.model.edit.IModificationContext
 import de.cau.cs.kieler.annotations.PragmaStringAnnotation
 import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 
 /**
  * @author ssm
@@ -34,7 +34,7 @@ import de.cau.cs.kieler.sccharts.Scope
 class SCTXQuickfixProvider extends de.cau.cs.kieler.kexpressions.ui.kext.quickfix.KExtQuickfixProvider {
 
     
-    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsCoreExtensions
     
    @Fix(SCTXValidator.CHECK_VIOLATION_STATES_REQUIRE_ENFORCER_DIRECTOR)
    def void setEnforcerDirector(Issue issue, IssueResolutionAcceptor acceptor) {

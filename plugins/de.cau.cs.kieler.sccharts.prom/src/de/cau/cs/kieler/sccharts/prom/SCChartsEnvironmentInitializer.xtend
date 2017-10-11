@@ -29,18 +29,16 @@ import java.util.List
 class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
     
     override getDefaultEnvironments() {
-        val List<EnvironmentData> datas = newArrayList()
+        val List<EnvironmentData> datas = newArrayList
         // Mindstorms NXT
-        datas += getMindstormsNXTDefaultEnvironment()
+        datas += getMindstormsNXTDefaultEnvironment
         // Mindstorms NXT MAC
-        datas += getMindstormsNXTMacDefaultEnvironment()
+        datas += getMindstormsNXTMacDefaultEnvironment
         // Mindstorms EV3
-        datas += getMindstormsEV3DefaultEnvironment()
+        datas += getMindstormsEV3DefaultEnvironment
         // Arduino
-        datas += getArduinoDefaultEnvironment()
-        // C Code Simulation
-//        Uncommented for the next release.
-//        datas += getCSimulationEnvironment()
+        datas += getArduinoCDTDefaultEnvironment
+        datas += getArduinoGenericDefaultEnvironment
         return datas
     }
     
@@ -50,9 +48,6 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
      */
     private static def EnvironmentData getMindstormsNXTDefaultEnvironment(){
         var launchData = new KiCoLaunchData()
-        //val shortName = "${project_name}".sub
-        
-        //TODO: rename longer project names to a shortended version 
         launchData.mainFile = "src/${project_name}Main.ftl"
         launchData.targetLanguage = "s.java"
         launchData.targetLanguageFileExtension = ".java"
@@ -74,18 +69,12 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         return env
     } 
 
-
-
-
     /**
      * Creates the default environment for Mindstorms NXT running leJOS.
      * @return  The default environment for Mindstorms NXT running leJOS.
      */
     private static def EnvironmentData getMindstormsNXTMacDefaultEnvironment(){
         var launchData = new KiCoLaunchData()
-        //val shortName = "${project_name}".sub
-        
-        //TODO: rename longer project names to a shortended version 
         launchData.mainFile = "src/${project_name}Main.ftl"
         launchData.targetLanguage = "s.java"
         launchData.targetLanguageFileExtension = ".java"
@@ -115,12 +104,6 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         return env
     } 
 
-
-
-
-
-
-    
     /**
      * Creates the default environment for Mindstorms EV3 running leJOS.
      * @return  The default environment for Mindstorms EV3 running leJOS.
@@ -153,50 +136,44 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
      * Creates the default environment for Arduino development.
      * @return  The default environment for Arduino development.
      */
-    private static def EnvironmentData getArduinoDefaultEnvironment(){
+    private static def EnvironmentData getArduinoGenericDefaultEnvironment(){
         var launchData = new KiCoLaunchData()
-        launchData.mainFile = "${project_name}.ftl"
-        launchData.targetLanguage = "s.c"
-        launchData.targetLanguageFileExtension = ".ino"
-        launchData.wrapperCodeTemplate = '''${«PromPlugin.MAIN_FILE_PATH_VARIABLE»}'''
-        launchData.wrapperCodeSnippetDirectory = "snippets"
-        launchData.associatedLaunchShortcut = "it.baeyens.arduino.ui.launchconfig.LaunchShortcut"
         
-        val initialResources = newArrayList() 
-        initialResources += new FileData(launchData.mainFile, "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/arduino/main.ftl")
-        initialResources += new FileData("snippets", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/arduino/snippets")
-        initialResources += new FileData("snippets/core.ftl", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/core/core.ftl")
+        val simTemplateFile = new FileData("assets/CSimulation.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/CSimulation.ftl") 
+        val simTemplateSnippet = new FileData("assets/CSimulationSnippets.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/CSimulationSnippets.ftl")
+        val buildConfigFile = new FileData("assets/BuildConfig.kibuild", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/arduino/ArduinoGenericBuildConfig.kibuild")
+        val mainTemplateFile = new FileData("assets/main.ftl", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/arduino/main.ftl")
+        val snippetsFolder = new FileData("assets", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/arduino/snippets")
+        val initialResources = #[simTemplateFile, simTemplateSnippet, buildConfigFile, mainTemplateFile, snippetsFolder] 
         
-        val env = new EnvironmentData("Arduino")
+        val env = new EnvironmentData("Arduino (Generic)")
         env.launchData = launchData
         env.initialResources = initialResources
         env.modelFile = "${project_name}Model"
-        env.associatedProjectWizardClass = "it.baeyens.arduino.ui.NewSketchWizard"
+        // Eclipse Arduino V4 project wizard
+        env.associatedProjectWizardClass = "org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard"
         return env
     }
     
     /**
-     * Creates a default environment to compile and simulate C code.
-     * @return the created environment
+     * Creates the default environment for Arduino development.
+     * @return  The default environment for Arduino development.
      */
-    private static def EnvironmentData getCSimulationEnvironment() {
+    private static def EnvironmentData getArduinoCDTDefaultEnvironment(){
         var launchData = new KiCoLaunchData()
-        launchData.targetLanguage = "s.c"
-        launchData.targetLanguageFileExtension = ".c"
-        launchData.targetTemplate = "simulationTemplate.ftl"
-        launchData.wrapperCodeSnippetDirectory = "snippets"
         
-        val initialResources = newArrayList() 
-        initialResources += new FileData("simulationTemplate.ftl", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/simulation/simulationTemplate.ftl")
-        initialResources += new FileData("snippets", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/simulation/snippets")
-        initialResources += new FileData("cJSON.h", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/simulation/cJSON.h")
-        initialResources += new FileData("cJSON.c", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/simulation/cJSON.c")
+        val simTemplateFile = new FileData("assets/CSimulation.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/CSimulation.ftl") 
+        val simTemplateSnippet = new FileData("assets/CSimulationSnippets.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/CSimulationSnippets.ftl")
+        val buildConfigFile = new FileData("assets/BuildConfig.kibuild", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/arduino/ArduinoC++BuildConfig.kibuild")
+        val mainTemplateFile = new FileData("assets/main.ftl", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/arduino/main.ftl")
+        val snippetsFolder = new FileData("assets", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/arduino/snippets")
+        val initialResources = #[simTemplateFile, simTemplateSnippet, buildConfigFile, mainTemplateFile, snippetsFolder] 
         
-        var env = new EnvironmentData("C Simulation")
+        val env = new EnvironmentData("Arduino (CDT)")
         env.launchData = launchData
         env.initialResources = initialResources
-        env.modelFile = "${project_name}"
-        env.associatedProjectWizardClass = "org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard"
+        env.modelFile = "${project_name}Model"
+        env.associatedProjectWizardClass = "org.eclipse.cdt.arduino.ui.internal.project.NewArduinoProjectWizard"
         return env
     }
 }

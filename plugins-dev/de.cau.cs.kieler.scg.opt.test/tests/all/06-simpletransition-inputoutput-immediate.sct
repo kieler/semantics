@@ -1,0 +1,18 @@
+scchart syncchart {
+  input signal I;
+  output signal O;
+
+  initial state H {
+
+    initial state A
+    --> B with I;
+
+    state B
+    --> C immediate with / O;
+
+    state C;
+  }
+  --> S immediate with I;
+
+  state S;
+}

@@ -22,6 +22,7 @@ import de.cau.cs.kieler.kexpressions.keffects.Effect
 import de.cau.cs.kieler.kexpressions.keffects.Emission
 import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect
+import de.cau.cs.kieler.kexpressions.PrintCall
 
 /**
  * Serialization of KEffects.
@@ -58,6 +59,15 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
         if (operator == AssignOperator::ASSIGNXOR) {
             return " ^= "
         } else 
+        if (operator == AssignOperator::ASSIGNSHIFTLEFT) {
+            return " <<= "
+        } else 
+        if (operator == AssignOperator::ASSIGNSHIFTRIGHT) {
+            return " >>= "
+        } else 
+        if (operator == AssignOperator::ASSIGNSHIFTRIGHTUNSIGNED) {
+            return " >>>= "
+        } else 
         if (operator == AssignOperator::ASSIGNMIN) {
             return " min= " 
         } else 
@@ -76,10 +86,10 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
     
     public def CharSequence serializeAssignmentRoot(Assignment assignment) {
         var String res = ""
-        if (assignment.valuedObject != null) {
-            res = res + assignment.valuedObject.name
-            if (!assignment.indices.nullOrEmpty) {
-                for(index : assignment.indices) {
+        if (assignment.reference != null) {
+            res = res + assignment.reference.valuedObject.name
+            if (!assignment.reference.indices.nullOrEmpty) {
+                for(index : assignment.reference.indices) {
                     res = res + "[" + index.serialize + "]"
                 }
             }
@@ -106,15 +116,15 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
     }
     
     def dispatch CharSequence serialize(Emission emission) {
-        val objectContainer = emission.valuedObject.eContainer
-        if (objectContainer instanceof VariableDeclaration) {
-            if (objectContainer.type != ValueType::PURE) {
-                return (emission.valuedObject.name + "(" + emission.newValue.serialize + ")")             
+        val valuedObjectContainer = emission.reference.valuedObject.eContainer
+        if (valuedObjectContainer instanceof VariableDeclaration) {
+            if (valuedObjectContainer.type != ValueType::PURE) {
+                return (emission.reference.valuedObject.name + "(" + emission.newValue.serialize + ")")             
             } else {
-                return emission.valuedObject.name
+                return emission.reference.valuedObject.name
             }
         } else {
-            return emission.valuedObject.name
+            return emission.reference.valuedObject.name
         }
     }
     
@@ -134,6 +144,13 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
         var paramStr = printCallEffect.parameters.serializeParameters.toString
         
         return "print " + paramStr.substring(1, paramStr.length - 1)
-    }        
+    }   
+    
+    def dispatch CharSequence serialize(PrintCall printCall) {
+        var paramStr = printCall.parameters.serializeParameters.toString
+        
+        return "print " + paramStr.substring(1, paramStr.length - 1)
+    }  
+
 
 }

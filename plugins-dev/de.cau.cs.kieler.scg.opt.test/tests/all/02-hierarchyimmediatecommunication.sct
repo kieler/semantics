@@ -1,0 +1,26 @@
+scchart hierarchy {
+  input signal I;
+  output signal O;
+  signal L1;
+  signal L2;
+  signal L3;
+
+  initial state H {
+
+    initial state A
+    --> B with I / L1;
+
+    state B
+    --> C immediate with L2 / L3;
+
+    state C;
+  }
+  --> E with L3 / O;
+
+  state E;
+
+  region:
+
+  initial state D
+  --> D with L1 / L2;
+}

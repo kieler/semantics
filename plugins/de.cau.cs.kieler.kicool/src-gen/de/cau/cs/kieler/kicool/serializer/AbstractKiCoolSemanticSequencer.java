@@ -220,6 +220,7 @@ public abstract class AbstractKiCoolSemanticSequencer extends AnnotationsSemanti
 	 *         version=INT 
 	 *         label=EString 
 	 *         inputClass=ID? 
+	 *         startsets+=KVPair* 
 	 *         intermediates+=IntermediateReference* 
 	 *         processors=ProcessorGroup
 	 *     )

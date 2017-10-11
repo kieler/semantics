@@ -3,6 +3,7 @@
 package de.cau.cs.kieler.kicool.impl;
 
 import de.cau.cs.kieler.kicool.IntermediateReference;
+import de.cau.cs.kieler.kicool.KVPair;
 import de.cau.cs.kieler.kicool.KiCoolPackage;
 import de.cau.cs.kieler.kicool.ProcessorEntry;
 
@@ -33,6 +34,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#getProcessors <em>Processors</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#getIntermediates <em>Intermediates</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#getInputClass <em>Input Class</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#getStartsets <em>Startsets</em>}</li>
  * </ul>
  *
  * @generated
@@ -137,6 +139,16 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
      * @ordered
      */
     protected String inputClass = INPUT_CLASS_EDEFAULT;
+
+    /**
+     * The cached value of the '{@link #getStartsets() <em>Startsets</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getStartsets()
+     * @generated
+     * @ordered
+     */
+    protected EList<KVPair> startsets;
 
     /**
      * <!-- begin-user-doc -->
@@ -301,6 +313,18 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
      * <!-- end-user-doc -->
      * @generated
      */
+    public EList<KVPair> getStartsets() {
+        if (startsets == null) {
+            startsets = new EObjectContainmentEList<KVPair>(KVPair.class, this, KiCoolPackage.SYSTEM__STARTSETS);
+        }
+        return startsets;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -308,6 +332,8 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
                 return basicSetProcessors(null, msgs);
             case KiCoolPackage.SYSTEM__INTERMEDIATES:
                 return ((InternalEList<?>)getIntermediates()).basicRemove(otherEnd, msgs);
+            case KiCoolPackage.SYSTEM__STARTSETS:
+                return ((InternalEList<?>)getStartsets()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -332,6 +358,8 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
                 return getIntermediates();
             case KiCoolPackage.SYSTEM__INPUT_CLASS:
                 return getInputClass();
+            case KiCoolPackage.SYSTEM__STARTSETS:
+                return getStartsets();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -364,6 +392,10 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
             case KiCoolPackage.SYSTEM__INPUT_CLASS:
                 setInputClass((String)newValue);
                 return;
+            case KiCoolPackage.SYSTEM__STARTSETS:
+                getStartsets().clear();
+                getStartsets().addAll((Collection<? extends KVPair>)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -394,6 +426,9 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
             case KiCoolPackage.SYSTEM__INPUT_CLASS:
                 setInputClass(INPUT_CLASS_EDEFAULT);
                 return;
+            case KiCoolPackage.SYSTEM__STARTSETS:
+                getStartsets().clear();
+                return;
         }
         super.eUnset(featureID);
     }
@@ -418,6 +453,8 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
                 return intermediates != null && !intermediates.isEmpty();
             case KiCoolPackage.SYSTEM__INPUT_CLASS:
                 return INPUT_CLASS_EDEFAULT == null ? inputClass != null : !INPUT_CLASS_EDEFAULT.equals(inputClass);
+            case KiCoolPackage.SYSTEM__STARTSETS:
+                return startsets != null && !startsets.isEmpty();
         }
         return super.eIsSet(featureID);
     }

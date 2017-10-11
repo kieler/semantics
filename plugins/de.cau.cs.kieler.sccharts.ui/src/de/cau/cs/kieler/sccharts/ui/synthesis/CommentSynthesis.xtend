@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
+import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KRendering
@@ -41,7 +41,6 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.CommentAnnotation
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.CommentStyles
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.sccharts.featuregroups.Core
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.

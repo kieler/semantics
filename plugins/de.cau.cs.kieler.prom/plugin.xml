@@ -55,33 +55,34 @@
       </deleteParticipant>
    </extension>
    <extension
-         id="KiCoBuilder"
-         name="KiCoBuilder"
+         id="KielerModelingBuilder"
+         name="KielerModelingBuilder"
          point="org.eclipse.core.resources.builders">
       <builder
             callOnEmptyDelta="false"
             hasNature="true"
             isConfigurable="true">
          <run
-               class="de.cau.cs.kieler.prom.build.KiCoBuilder">
+               class="de.cau.cs.kieler.prom.build.KielerModelingBuilder">
          </run>
       </builder>
    </extension>
    <extension
-         id="KiCoNature"
-         name="KiCoNature"
+         id="KielerModelingNature"
+         name="KielerModelingNature"
          point="org.eclipse.core.resources.natures">
       <builder
-            id="de.cau.cs.kieler.prom.KiCoBuilder">
+            id="de.cau.cs.kieler.prom.KielerModelingBuilder">
       </builder>
       <runtime>
          <run
-               class="de.cau.cs.kieler.prom.build.KiCoNature">
+               class="de.cau.cs.kieler.prom.build.KielerModelingNature">
          </run>
       </runtime>
    </extension>
    <extension
-         id="kico.problem"
+         id="kieler.modeling.builder.problem"
+         name="KIELER Problem"
          point="org.eclipse.core.resources.markers">
       <super
             type="org.eclipse.core.resources.problemmarker">

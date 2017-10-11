@@ -1,0 +1,6 @@
+system de.cau.cs.kieler.scg.dependency
+	version 1 
+	label "SCG Dependency Analysis"
+	
+de.cau.cs.kieler.sccharts.scg.processors.transformators.SCG
+de.cau.cs.kieler.scg.processors.transformators.dependency

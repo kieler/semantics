@@ -62,9 +62,13 @@ class NDimensionalArray implements Cloneable{
         return indices.get(dimension);
     }
     
-    public def Object get(List<Integer> index) {
+    public def Object get(List<Integer> index, boolean userValue) {
         val element = getElement(index)
-        return element.value
+        return if(userValue && element.isDirty) element.userValue else element.value
+    }
+    
+    public def Object get(List<Integer> index) {
+        return get(index, false)
     }
     
     public def NDimensionalArrayElement getElement(List<Integer> index) {

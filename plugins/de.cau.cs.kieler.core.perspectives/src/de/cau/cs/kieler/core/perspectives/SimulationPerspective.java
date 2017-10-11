@@ -50,22 +50,11 @@ public class SimulationPerspective implements IPerspectiveFactory {
         IFolderLayout topCenter =
                 layout.createFolder("topCenter", IPageLayout.RIGHT, PerspectiveHelper.MEDIUM,
                         editor);
-        PerspectiveHelper.addViewIfExists(bottomLeft, IPageLayout.ID_PROJECT_EXPLORER);
-        PerspectiveHelper.addViewIfExists(bottomRight, PerspectiveHelper.VIEW_KIEM);
-        PerspectiveHelper.addViewIfExists(bottomRight, PerspectiveHelper.VIEW_KICO);
-        PerspectiveHelper.addViewIfExists(topRightTop, PerspectiveHelper.VIEW_KIEM_SIGNALS);
-        PerspectiveHelper.addViewIfExists(topRightBottom, PerspectiveHelper.VIEW_KIEM_TABLE);
+        PerspectiveHelper.addViewIfExists(bottomRight, PerspectiveHelper.VIEW_KICOOL);
         PerspectiveHelper.addViewIfExists(topCenter, PerspectiveHelper.VIEW_KLIGHD);
+        PerspectiveHelper.addViewIfExists(bottomLeft, IPageLayout.ID_PROJECT_EXPLORER);
 
         // Activate editor
         layout.setEditorAreaVisible(true);
-
-        /* Add relevant views as shortcuts into the View menu. */
-        layout.addShowViewShortcut(PerspectiveHelper.VIEW_KIEM);
-        layout.addShowViewShortcut(PerspectiveHelper.VIEW_KICO);
-        layout.addShowViewShortcut(PerspectiveHelper.VIEW_KIEM_TABLE);
-        layout.addShowViewShortcut(PerspectiveHelper.VIEW_KIEM_SIGNALS);
-        layout.addShowViewShortcut(PerspectiveHelper.VIEW_KLIGHD);
-        layout.addShowViewShortcut(IPageLayout.ID_PROJECT_EXPLORER);
     }
 }

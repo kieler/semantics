@@ -25,6 +25,7 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * SCCharts Extensions.
@@ -37,6 +38,7 @@ class SCChartsSimulation {
 
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KEffectsExtensions
     @Inject extension SCChartsActionExtensions
         
     //-------------------------------------------------------------------------

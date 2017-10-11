@@ -1,0 +1,17 @@
+scchart _79_exit_actions_strongreset_outside_left
+"79-exit-actions-strongreset-outside-left" {
+  output signal pure O;
+  input signal pure S;
+  input signal pure R;
+
+  initial state B {
+
+    initial state C2 "C" {
+      exit / O;
+    }
+    --> D with S;
+
+    state D;
+  }
+  o-> B with R;
+}

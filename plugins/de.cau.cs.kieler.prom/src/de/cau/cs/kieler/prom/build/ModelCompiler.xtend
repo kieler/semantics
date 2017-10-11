@@ -44,10 +44,10 @@ abstract class ModelCompiler extends Configurable {
     public def ModelCompilationResult compile(IFile file, EObject model) {
         val whiteListRegex = whitelist.stringValue
         val blackListRegex = blacklist.stringValue
-        if(!whiteListRegex.isNullOrEmpty && !file.location.toOSString.matches(".*"+whiteListRegex+".*")) {
+        if(!whiteListRegex.isNullOrEmpty && !file.location.toOSString.matches(".*("+whiteListRegex+").*")) {
             return new ModelCompilationResult
         }
-        if(!blackListRegex.isNullOrEmpty && file.location.toOSString.matches(".*"+blackListRegex+".*")) {
+        if(!blackListRegex.isNullOrEmpty && file.location.toOSString.matches(".*("+blackListRegex+").*")) {
             return new ModelCompilationResult
         }
         

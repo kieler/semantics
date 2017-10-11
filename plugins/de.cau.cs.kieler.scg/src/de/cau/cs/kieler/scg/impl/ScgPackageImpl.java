@@ -1207,6 +1207,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         addEEnumLiteral(branchTypeEEnum, BranchType.ELSEBRANCH);
 
         initEEnum(dataDependencyTypeEEnum, DataDependencyType.class, "DataDependencyType");
+        addEEnumLiteral(dataDependencyTypeEEnum, DataDependencyType.IGNORE);
+        addEEnumLiteral(dataDependencyTypeEEnum, DataDependencyType.UNKNOWN);
         addEEnumLiteral(dataDependencyTypeEEnum, DataDependencyType.WRITE_WRITE);
         addEEnumLiteral(dataDependencyTypeEEnum, DataDependencyType.WRITE_RELATIVEWRITE);
         addEEnumLiteral(dataDependencyTypeEEnum, DataDependencyType.WRITE_READ);

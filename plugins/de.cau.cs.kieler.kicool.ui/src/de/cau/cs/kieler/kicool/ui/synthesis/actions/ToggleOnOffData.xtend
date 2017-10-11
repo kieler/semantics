@@ -25,4 +25,5 @@ import de.cau.cs.kieler.kicool.ProcessorReference
  @Data
 class ToggleOnOffData {
     ProcessorReference processorReference
+//    OnOffToggle toggle
 }

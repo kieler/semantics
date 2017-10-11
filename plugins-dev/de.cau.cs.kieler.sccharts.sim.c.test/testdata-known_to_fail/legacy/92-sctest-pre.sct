@@ -1,0 +1,15 @@
+scchart ^pre {
+  input signal pure I;
+  output signal pure O1;
+  output signal pure O2;
+
+  region R0:
+
+  initial state S0
+  --> S2 with I / O1;
+
+  state S1;
+
+  state S2
+  --> S1 with pre(I) / O2;
+}

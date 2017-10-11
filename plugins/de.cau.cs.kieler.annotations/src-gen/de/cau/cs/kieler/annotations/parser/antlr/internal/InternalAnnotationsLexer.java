@@ -927,8 +927,8 @@ public class InternalAnnotationsLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalAnnotations.g:1191:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // InternalAnnotations.g:1191:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // InternalAnnotations.g:1191:9: ( ( '^' )? ( ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' ) | '_' '0' .. '9' | '__' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // InternalAnnotations.g:1191:11: ( '^' )? ( ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' ) | '_' '0' .. '9' | '__' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
             // InternalAnnotations.g:1191:11: ( '^' )?
             int alt20=2;
@@ -948,27 +948,284 @@ public class InternalAnnotationsLexer extends Lexer {
 
             }
 
-            if ( (input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
-                input.consume();
+            // InternalAnnotations.g:1191:16: ( ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' ) | '_' '0' .. '9' | '__' )
+            int alt24=3;
+            int LA24_0 = input.LA(1);
+
+            if ( (LA24_0=='_') ) {
+                switch ( input.LA(2) ) {
+                case '0':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                    {
+                    alt24=2;
+                    }
+                    break;
+                case '_':
+                    {
+                    alt24=3;
+                    }
+                    break;
+                case 'A':
+                case 'B':
+                case 'C':
+                case 'D':
+                case 'E':
+                case 'F':
+                case 'G':
+                case 'H':
+                case 'I':
+                case 'J':
+                case 'K':
+                case 'L':
+                case 'M':
+                case 'N':
+                case 'O':
+                case 'P':
+                case 'Q':
+                case 'R':
+                case 'S':
+                case 'T':
+                case 'U':
+                case 'V':
+                case 'W':
+                case 'X':
+                case 'Y':
+                case 'Z':
+                case 'a':
+                case 'b':
+                case 'c':
+                case 'd':
+                case 'e':
+                case 'f':
+                case 'g':
+                case 'h':
+                case 'i':
+                case 'j':
+                case 'k':
+                case 'l':
+                case 'm':
+                case 'n':
+                case 'o':
+                case 'p':
+                case 'q':
+                case 'r':
+                case 's':
+                case 't':
+                case 'u':
+                case 'v':
+                case 'w':
+                case 'x':
+                case 'y':
+                case 'z':
+                    {
+                    alt24=1;
+                    }
+                    break;
+                default:
+                    NoViableAltException nvae =
+                        new NoViableAltException("", 24, 1, input);
+
+                    throw nvae;
+                }
 
             }
+            else if ( ((LA24_0>='A' && LA24_0<='Z')||(LA24_0>='a' && LA24_0<='z')) ) {
+                alt24=1;
+            }
             else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
+                NoViableAltException nvae =
+                    new NoViableAltException("", 24, 0, input);
 
-            // InternalAnnotations.g:1191:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
-            loop21:
+                throw nvae;
+            }
+            switch (alt24) {
+                case 1 :
+                    // InternalAnnotations.g:1191:17: ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' )
+                    {
+                    // InternalAnnotations.g:1191:17: ( ( '_' )? 'a' .. 'z' | ( '_' )? 'A' .. 'Z' )
+                    int alt23=2;
+                    switch ( input.LA(1) ) {
+                    case '_':
+                        {
+                        int LA23_1 = input.LA(2);
+
+                        if ( ((LA23_1>='a' && LA23_1<='z')) ) {
+                            alt23=1;
+                        }
+                        else if ( ((LA23_1>='A' && LA23_1<='Z')) ) {
+                            alt23=2;
+                        }
+                        else {
+                            NoViableAltException nvae =
+                                new NoViableAltException("", 23, 1, input);
+
+                            throw nvae;
+                        }
+                        }
+                        break;
+                    case 'a':
+                    case 'b':
+                    case 'c':
+                    case 'd':
+                    case 'e':
+                    case 'f':
+                    case 'g':
+                    case 'h':
+                    case 'i':
+                    case 'j':
+                    case 'k':
+                    case 'l':
+                    case 'm':
+                    case 'n':
+                    case 'o':
+                    case 'p':
+                    case 'q':
+                    case 'r':
+                    case 's':
+                    case 't':
+                    case 'u':
+                    case 'v':
+                    case 'w':
+                    case 'x':
+                    case 'y':
+                    case 'z':
+                        {
+                        alt23=1;
+                        }
+                        break;
+                    case 'A':
+                    case 'B':
+                    case 'C':
+                    case 'D':
+                    case 'E':
+                    case 'F':
+                    case 'G':
+                    case 'H':
+                    case 'I':
+                    case 'J':
+                    case 'K':
+                    case 'L':
+                    case 'M':
+                    case 'N':
+                    case 'O':
+                    case 'P':
+                    case 'Q':
+                    case 'R':
+                    case 'S':
+                    case 'T':
+                    case 'U':
+                    case 'V':
+                    case 'W':
+                    case 'X':
+                    case 'Y':
+                    case 'Z':
+                        {
+                        alt23=2;
+                        }
+                        break;
+                    default:
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 23, 0, input);
+
+                        throw nvae;
+                    }
+
+                    switch (alt23) {
+                        case 1 :
+                            // InternalAnnotations.g:1191:18: ( '_' )? 'a' .. 'z'
+                            {
+                            // InternalAnnotations.g:1191:18: ( '_' )?
+                            int alt21=2;
+                            int LA21_0 = input.LA(1);
+
+                            if ( (LA21_0=='_') ) {
+                                alt21=1;
+                            }
+                            switch (alt21) {
+                                case 1 :
+                                    // InternalAnnotations.g:1191:18: '_'
+                                    {
+                                    match('_'); 
+
+                                    }
+                                    break;
+
+                            }
+
+                            matchRange('a','z'); 
+
+                            }
+                            break;
+                        case 2 :
+                            // InternalAnnotations.g:1191:32: ( '_' )? 'A' .. 'Z'
+                            {
+                            // InternalAnnotations.g:1191:32: ( '_' )?
+                            int alt22=2;
+                            int LA22_0 = input.LA(1);
+
+                            if ( (LA22_0=='_') ) {
+                                alt22=1;
+                            }
+                            switch (alt22) {
+                                case 1 :
+                                    // InternalAnnotations.g:1191:32: '_'
+                                    {
+                                    match('_'); 
+
+                                    }
+                                    break;
+
+                            }
+
+                            matchRange('A','Z'); 
+
+                            }
+                            break;
+
+                    }
+
+
+                    }
+                    break;
+                case 2 :
+                    // InternalAnnotations.g:1191:47: '_' '0' .. '9'
+                    {
+                    match('_'); 
+                    matchRange('0','9'); 
+
+                    }
+                    break;
+                case 3 :
+                    // InternalAnnotations.g:1191:60: '__'
+                    {
+                    match("__"); 
+
+
+                    }
+                    break;
+
+            }
+
+            // InternalAnnotations.g:1191:66: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            loop25:
             do {
-                int alt21=2;
-                int LA21_0 = input.LA(1);
+                int alt25=2;
+                int LA25_0 = input.LA(1);
 
-                if ( ((LA21_0>='0' && LA21_0<='9')||(LA21_0>='A' && LA21_0<='Z')||LA21_0=='_'||(LA21_0>='a' && LA21_0<='z')) ) {
-                    alt21=1;
+                if ( ((LA25_0>='0' && LA25_0<='9')||(LA25_0>='A' && LA25_0<='Z')||LA25_0=='_'||(LA25_0>='a' && LA25_0<='z')) ) {
+                    alt25=1;
                 }
 
 
-                switch (alt21) {
+                switch (alt25) {
             	case 1 :
             	    // InternalAnnotations.g:
             	    {
@@ -986,7 +1243,7 @@ public class InternalAnnotationsLexer extends Lexer {
             	    break;
 
             	default :
-            	    break loop21;
+            	    break loop25;
                 }
             } while (true);
 
@@ -1010,18 +1267,18 @@ public class InternalAnnotationsLexer extends Lexer {
             // InternalAnnotations.g:1193:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
             // InternalAnnotations.g:1193:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
-            int cnt22=0;
-            loop22:
+            int cnt26=0;
+            loop26:
             do {
-                int alt22=2;
-                int LA22_0 = input.LA(1);
+                int alt26=2;
+                int LA26_0 = input.LA(1);
 
-                if ( ((LA22_0>='\t' && LA22_0<='\n')||LA22_0=='\r'||LA22_0==' ') ) {
-                    alt22=1;
+                if ( ((LA26_0>='\t' && LA26_0<='\n')||LA26_0=='\r'||LA26_0==' ') ) {
+                    alt26=1;
                 }
 
 
-                switch (alt22) {
+                switch (alt26) {
             	case 1 :
             	    // InternalAnnotations.g:
             	    {
@@ -1039,12 +1296,12 @@ public class InternalAnnotationsLexer extends Lexer {
             	    break;
 
             	default :
-            	    if ( cnt22 >= 1 ) break loop22;
+            	    if ( cnt26 >= 1 ) break loop26;
                         EarlyExitException eee =
-                            new EarlyExitException(22, input);
+                            new EarlyExitException(26, input);
                         throw eee;
                 }
-                cnt22++;
+                cnt26++;
             } while (true);
 
 
@@ -1080,9 +1337,9 @@ public class InternalAnnotationsLexer extends Lexer {
 
     public void mTokens() throws RecognitionException {
         // InternalAnnotations.g:1:8: ( T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | RULE_COMMENT_ANNOTATION | RULE_ML_COMMENT | RULE_SL_COMMENT_ANNOTATION | RULE_SL_COMMENT | RULE_INT | RULE_FLOAT | RULE_BOOLEAN | RULE_STRING | RULE_ID | RULE_WS | RULE_ANY_OTHER )
-        int alt23=18;
-        alt23 = dfa23.predict(input);
-        switch (alt23) {
+        int alt27=18;
+        alt27 = dfa27.predict(input);
+        switch (alt27) {
             case 1 :
                 // InternalAnnotations.g:1:10: T__16
                 {
@@ -1216,7 +1473,7 @@ public class InternalAnnotationsLexer extends Lexer {
 
 
     protected DFA17 dfa17 = new DFA17(this);
-    protected DFA23 dfa23 = new DFA23(this);
+    protected DFA27 dfa27 = new DFA27(this);
     static final String DFA17_eotS =
         "\4\uffff";
     static final String DFA17_eofS =
@@ -1269,20 +1526,20 @@ public class InternalAnnotationsLexer extends Lexer {
             return "1185:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )";
         }
     }
-    static final String DFA23_eotS =
-        "\10\uffff\1\20\1\32\2\36\2\20\16\uffff\1\32\1\36\1\uffff\1\36\6\uffff\2\36\1\52\1\36\1\uffff\1\52";
-    static final String DFA23_eofS =
-        "\54\uffff";
-    static final String DFA23_minS =
-        "\1\0\7\uffff\1\52\1\56\1\162\1\141\1\0\1\101\12\uffff\2\0\2\uffff\1\56\1\165\1\uffff\1\154\6\uffff\1\145\1\163\1\60\1\145\1\uffff\1\60";
-    static final String DFA23_maxS =
-        "\1\uffff\7\uffff\1\57\1\146\1\162\1\141\1\uffff\1\172\12\uffff\2\uffff\2\uffff\1\146\1\165\1\uffff\1\154\6\uffff\1\145\1\163\1\172\1\145\1\uffff\1\172";
-    static final String DFA23_acceptS =
-        "\1\uffff\1\1\1\2\1\3\1\4\1\5\1\6\1\7\6\uffff\1\20\1\21\1\22\1\1\1\2\1\3\1\4\1\5\1\6\1\7\2\uffff\1\14\1\15\2\uffff\1\20\1\uffff\1\17\1\21\1\10\1\11\1\12\1\13\4\uffff\1\16\1\uffff";
-    static final String DFA23_specialS =
-        "\1\0\13\uffff\1\2\13\uffff\1\1\1\3\22\uffff}>";
-    static final String[] DFA23_transitionS = {
-            "\11\20\2\17\2\20\1\17\22\20\1\17\1\20\1\14\1\2\10\20\1\3\1\7\1\6\1\10\12\11\6\20\1\1\32\16\1\4\1\20\1\5\1\15\1\16\1\20\5\16\1\13\15\16\1\12\6\16\uff85\20",
+    static final String DFA27_eotS =
+        "\10\uffff\1\22\1\34\2\40\3\22\16\uffff\1\34\1\uffff\1\40\1\uffff\1\40\6\uffff\2\40\1\54\1\40\1\uffff\1\54";
+    static final String DFA27_eofS =
+        "\56\uffff";
+    static final String DFA27_minS =
+        "\1\0\7\uffff\1\52\1\56\1\162\1\141\1\0\1\101\1\60\13\uffff\2\0\1\uffff\1\56\1\uffff\1\165\1\uffff\1\154\6\uffff\1\145\1\163\1\60\1\145\1\uffff\1\60";
+    static final String DFA27_maxS =
+        "\1\uffff\7\uffff\1\57\1\146\1\162\1\141\1\uffff\2\172\13\uffff\2\uffff\1\uffff\1\146\1\uffff\1\165\1\uffff\1\154\6\uffff\1\145\1\163\1\172\1\145\1\uffff\1\172";
+    static final String DFA27_acceptS =
+        "\1\uffff\1\1\1\2\1\3\1\4\1\5\1\6\1\7\7\uffff\2\20\1\21\1\22\1\1\1\2\1\3\1\4\1\5\1\6\1\7\2\uffff\1\14\1\uffff\1\15\1\uffff\1\20\1\uffff\1\17\1\21\1\10\1\11\1\12\1\13\4\uffff\1\16\1\uffff";
+    static final String DFA27_specialS =
+        "\1\0\13\uffff\1\3\15\uffff\1\1\1\2\22\uffff}>";
+    static final String[] DFA27_transitionS = {
+            "\11\22\2\21\2\22\1\21\22\22\1\21\1\22\1\14\1\2\10\22\1\3\1\7\1\6\1\10\12\11\6\22\1\1\32\20\1\4\1\22\1\5\1\15\1\16\1\22\5\17\1\13\15\17\1\12\6\17\uff85\22",
             "",
             "",
             "",
@@ -1290,12 +1547,13 @@ public class InternalAnnotationsLexer extends Lexer {
             "",
             "",
             "",
-            "\1\30\4\uffff\1\31",
-            "\1\33\1\uffff\12\34\54\uffff\1\33",
-            "\1\35",
+            "\1\32\4\uffff\1\33",
+            "\1\36\1\uffff\12\35\54\uffff\1\36",
             "\1\37",
-            "\0\40",
-            "\32\36\4\uffff\1\36\1\uffff\32\36",
+            "\1\41",
+            "\0\42",
+            "\32\40\4\uffff\1\40\1\uffff\32\40",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
             "",
             "",
             "",
@@ -1306,56 +1564,57 @@ public class InternalAnnotationsLexer extends Lexer {
             "",
             "",
             "",
-            "\52\43\1\42\uffd5\43",
+            "",
             "\52\45\1\44\uffd5\45",
+            "\52\47\1\46\uffd5\47",
             "",
-            "",
-            "\1\33\1\uffff\12\34\54\uffff\1\33",
-            "\1\46",
-            "",
-            "\1\47",
-            "",
-            "",
-            "",
-            "",
-            "",
+            "\1\36\1\uffff\12\35\54\uffff\1\36",
             "",
             "\1\50",
-            "\1\51",
-            "\12\36\7\uffff\32\36\4\uffff\1\36\1\uffff\32\36",
-            "\1\53",
             "",
-            "\12\36\7\uffff\32\36\4\uffff\1\36\1\uffff\32\36"
+            "\1\51",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "\1\52",
+            "\1\53",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
+            "\1\55",
+            "",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40"
     };
 
-    static final short[] DFA23_eot = DFA.unpackEncodedString(DFA23_eotS);
-    static final short[] DFA23_eof = DFA.unpackEncodedString(DFA23_eofS);
-    static final char[] DFA23_min = DFA.unpackEncodedStringToUnsignedChars(DFA23_minS);
-    static final char[] DFA23_max = DFA.unpackEncodedStringToUnsignedChars(DFA23_maxS);
-    static final short[] DFA23_accept = DFA.unpackEncodedString(DFA23_acceptS);
-    static final short[] DFA23_special = DFA.unpackEncodedString(DFA23_specialS);
-    static final short[][] DFA23_transition;
+    static final short[] DFA27_eot = DFA.unpackEncodedString(DFA27_eotS);
+    static final short[] DFA27_eof = DFA.unpackEncodedString(DFA27_eofS);
+    static final char[] DFA27_min = DFA.unpackEncodedStringToUnsignedChars(DFA27_minS);
+    static final char[] DFA27_max = DFA.unpackEncodedStringToUnsignedChars(DFA27_maxS);
+    static final short[] DFA27_accept = DFA.unpackEncodedString(DFA27_acceptS);
+    static final short[] DFA27_special = DFA.unpackEncodedString(DFA27_specialS);
+    static final short[][] DFA27_transition;
 
     static {
-        int numStates = DFA23_transitionS.length;
-        DFA23_transition = new short[numStates][];
+        int numStates = DFA27_transitionS.length;
+        DFA27_transition = new short[numStates][];
         for (int i=0; i<numStates; i++) {
-            DFA23_transition[i] = DFA.unpackEncodedString(DFA23_transitionS[i]);
+            DFA27_transition[i] = DFA.unpackEncodedString(DFA27_transitionS[i]);
         }
     }
 
-    class DFA23 extends DFA {
+    class DFA27 extends DFA {
 
-        public DFA23(BaseRecognizer recognizer) {
+        public DFA27(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 23;
-            this.eot = DFA23_eot;
-            this.eof = DFA23_eof;
-            this.min = DFA23_min;
-            this.max = DFA23_max;
-            this.accept = DFA23_accept;
-            this.special = DFA23_special;
-            this.transition = DFA23_transition;
+            this.decisionNumber = 27;
+            this.eot = DFA27_eot;
+            this.eof = DFA27_eof;
+            this.min = DFA27_min;
+            this.max = DFA27_max;
+            this.accept = DFA27_accept;
+            this.special = DFA27_special;
+            this.transition = DFA27_transition;
         }
         public String getDescription() {
             return "1:1: Tokens : ( T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | RULE_COMMENT_ANNOTATION | RULE_ML_COMMENT | RULE_SL_COMMENT_ANNOTATION | RULE_SL_COMMENT | RULE_INT | RULE_FLOAT | RULE_BOOLEAN | RULE_STRING | RULE_ID | RULE_WS | RULE_ANY_OTHER );";
@@ -1365,76 +1624,80 @@ public class InternalAnnotationsLexer extends Lexer {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA23_0 = input.LA(1);
+                        int LA27_0 = input.LA(1);
 
                         s = -1;
-                        if ( (LA23_0=='@') ) {s = 1;}
+                        if ( (LA27_0=='@') ) {s = 1;}
 
-                        else if ( (LA23_0=='#') ) {s = 2;}
+                        else if ( (LA27_0=='#') ) {s = 2;}
 
-                        else if ( (LA23_0==',') ) {s = 3;}
+                        else if ( (LA27_0==',') ) {s = 3;}
 
-                        else if ( (LA23_0=='[') ) {s = 4;}
+                        else if ( (LA27_0=='[') ) {s = 4;}
 
-                        else if ( (LA23_0==']') ) {s = 5;}
+                        else if ( (LA27_0==']') ) {s = 5;}
 
-                        else if ( (LA23_0=='.') ) {s = 6;}
+                        else if ( (LA27_0=='.') ) {s = 6;}
 
-                        else if ( (LA23_0=='-') ) {s = 7;}
+                        else if ( (LA27_0=='-') ) {s = 7;}
 
-                        else if ( (LA23_0=='/') ) {s = 8;}
+                        else if ( (LA27_0=='/') ) {s = 8;}
 
-                        else if ( ((LA23_0>='0' && LA23_0<='9')) ) {s = 9;}
+                        else if ( ((LA27_0>='0' && LA27_0<='9')) ) {s = 9;}
 
-                        else if ( (LA23_0=='t') ) {s = 10;}
+                        else if ( (LA27_0=='t') ) {s = 10;}
 
-                        else if ( (LA23_0=='f') ) {s = 11;}
+                        else if ( (LA27_0=='f') ) {s = 11;}
 
-                        else if ( (LA23_0=='\"') ) {s = 12;}
+                        else if ( (LA27_0=='\"') ) {s = 12;}
 
-                        else if ( (LA23_0=='^') ) {s = 13;}
+                        else if ( (LA27_0=='^') ) {s = 13;}
 
-                        else if ( ((LA23_0>='A' && LA23_0<='Z')||LA23_0=='_'||(LA23_0>='a' && LA23_0<='e')||(LA23_0>='g' && LA23_0<='s')||(LA23_0>='u' && LA23_0<='z')) ) {s = 14;}
+                        else if ( (LA27_0=='_') ) {s = 14;}
 
-                        else if ( ((LA23_0>='\t' && LA23_0<='\n')||LA23_0=='\r'||LA23_0==' ') ) {s = 15;}
+                        else if ( ((LA27_0>='a' && LA27_0<='e')||(LA27_0>='g' && LA27_0<='s')||(LA27_0>='u' && LA27_0<='z')) ) {s = 15;}
 
-                        else if ( ((LA23_0>='\u0000' && LA23_0<='\b')||(LA23_0>='\u000B' && LA23_0<='\f')||(LA23_0>='\u000E' && LA23_0<='\u001F')||LA23_0=='!'||(LA23_0>='$' && LA23_0<='+')||(LA23_0>=':' && LA23_0<='?')||LA23_0=='\\'||LA23_0=='`'||(LA23_0>='{' && LA23_0<='\uFFFF')) ) {s = 16;}
+                        else if ( ((LA27_0>='A' && LA27_0<='Z')) ) {s = 16;}
+
+                        else if ( ((LA27_0>='\t' && LA27_0<='\n')||LA27_0=='\r'||LA27_0==' ') ) {s = 17;}
+
+                        else if ( ((LA27_0>='\u0000' && LA27_0<='\b')||(LA27_0>='\u000B' && LA27_0<='\f')||(LA27_0>='\u000E' && LA27_0<='\u001F')||LA27_0=='!'||(LA27_0>='$' && LA27_0<='+')||(LA27_0>=':' && LA27_0<='?')||LA27_0=='\\'||LA27_0=='`'||(LA27_0>='{' && LA27_0<='\uFFFF')) ) {s = 18;}
 
                         if ( s>=0 ) return s;
                         break;
                     case 1 : 
-                        int LA23_24 = input.LA(1);
+                        int LA27_26 = input.LA(1);
 
                         s = -1;
-                        if ( (LA23_24=='*') ) {s = 34;}
+                        if ( (LA27_26=='*') ) {s = 36;}
 
-                        else if ( ((LA23_24>='\u0000' && LA23_24<=')')||(LA23_24>='+' && LA23_24<='\uFFFF')) ) {s = 35;}
+                        else if ( ((LA27_26>='\u0000' && LA27_26<=')')||(LA27_26>='+' && LA27_26<='\uFFFF')) ) {s = 37;}
 
                         if ( s>=0 ) return s;
                         break;
                     case 2 : 
-                        int LA23_12 = input.LA(1);
+                        int LA27_27 = input.LA(1);
 
                         s = -1;
-                        if ( ((LA23_12>='\u0000' && LA23_12<='\uFFFF')) ) {s = 32;}
+                        if ( (LA27_27=='*') ) {s = 38;}
 
-                        else s = 16;
+                        else if ( ((LA27_27>='\u0000' && LA27_27<=')')||(LA27_27>='+' && LA27_27<='\uFFFF')) ) {s = 39;}
 
                         if ( s>=0 ) return s;
                         break;
                     case 3 : 
-                        int LA23_25 = input.LA(1);
+                        int LA27_12 = input.LA(1);
 
                         s = -1;
-                        if ( (LA23_25=='*') ) {s = 36;}
+                        if ( ((LA27_12>='\u0000' && LA27_12<='\uFFFF')) ) {s = 34;}
 
-                        else if ( ((LA23_25>='\u0000' && LA23_25<=')')||(LA23_25>='+' && LA23_25<='\uFFFF')) ) {s = 37;}
+                        else s = 18;
 
                         if ( s>=0 ) return s;
                         break;
             }
             NoViableAltException nvae =
-                new NoViableAltException(getDescription(), 23, _s, input);
+                new NoViableAltException(getDescription(), 27, _s, input);
             error(nvae);
             throw nvae;
         }

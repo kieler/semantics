@@ -1,0 +1,9 @@
+scchart CountDelays {
+  input signal I;
+  output signal O;
+
+  initial state _
+  --> _2 with 3 I / O;
+
+  state _2;
+}

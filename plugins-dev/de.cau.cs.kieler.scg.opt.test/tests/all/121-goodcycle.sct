@@ -1,0 +1,19 @@
+scchart S0 "good_cycle" {
+  output signal A;
+  output signal B;
+
+  initial state S0 "s1"
+  --> S1 with A / B;
+
+  state S1 "s2";
+
+  region:
+
+  initial state S0 "s3"
+  --> S1 with B;
+
+  state S1 "s4"
+  --> S2 with / A;
+
+  state S2 "s5";
+}

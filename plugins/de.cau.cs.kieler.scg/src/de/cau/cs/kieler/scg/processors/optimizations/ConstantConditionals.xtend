@@ -14,8 +14,7 @@
 package de.cau.cs.kieler.scg.processors.optimizations
 
 import de.cau.cs.kieler.kexpressions.BoolValue
-import de.cau.cs.kieler.kico.transformation.Processor
-import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -37,16 +36,16 @@ import org.eclipse.emf.ecore.EObject
  * @kieler.rating 2015-05-25 proposed yellow
  *
  */
-class ConstantConditionals extends Processor implements Traceable {
+class ConstantConditionals implements Traceable {
 
     private val processedNodes = <Node>newLinkedList
     private val deleteNodes = <Conditional>newLinkedList
 
-    override getId() {
+    def getId() {
         throw new UnsupportedOperationException("TODO: auto-generated method stub")
     }
     
-    override process(EObject eObject) {
+    def process(EObject eObject) {
         System.out.println("Removing constant conditionals")
         val scg = (eObject as SCGraph).nodes.head.transformCond(eObject as SCGraph)
 

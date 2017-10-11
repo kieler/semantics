@@ -1,0 +1,45 @@
+scchart allTransitions {
+  input signal pure I1;
+  input signal pure I2;
+  input signal pure I3;
+  input signal pure I4;
+  output signal pure O;
+  output signal pure O1;
+  output signal pure O2;
+  output signal pure O3;
+  output signal pure O4;
+  output signal pure O5;
+
+  region R0:
+
+  state S0 {
+
+    region R0:
+
+    initial state S1
+    --> S2 / O;
+
+    final state S2;
+  }
+  o-> S4 with I2 / O2
+  o-> S6 immediate with I4 / O4
+  --> S3 with I1 / O1
+  --> S5 immediate with I3 / O3
+  >-> S7 / O5;
+
+  state S3;
+
+  state S4;
+
+  state S5;
+
+  state S6;
+
+  state S7;
+
+  state S8
+  --> S0;
+
+  initial state S9
+  --> S8 immediate / O; O1; O2; O3; O4; O5;
+}

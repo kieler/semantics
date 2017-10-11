@@ -28,8 +28,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
 
-import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
-
 /**
  * Wrapper class to execute CEC executables.
  * 
@@ -189,7 +187,7 @@ public final class CEC {
      * @return the string
      */
     private static String resolveFragmentCECModule(final MODULE module) {
-        try {
+//        try {
             // first try the non-windows case
             URL resolvedFileName =
                     resolveBundleOrWorkspaceFile(CEC_PREFIX + module,
@@ -201,9 +199,9 @@ public final class CEC {
                                 "de.cau.cs.kieler.esterel.cec");
 
             }
-            if (resolvedFileName != null) {
-                resolvedFileName = KiemUtil.getAbsoluteBundlePath(resolvedFileName);
-            }
+//            if (resolvedFileName != null) {
+//                resolvedFileName = KiemUtil.getAbsoluteBundlePath(resolvedFileName);
+//            }
             
             if (resolvedFileName != null) {
                 File execFile = new File(resolvedFileName.getFile());
@@ -217,22 +215,22 @@ public final class CEC {
 
             }
 
-            if (resolvedFileName != null) {
-                String resolvedModuleExecutable = KiemUtil.getAbsoluteFilePath(resolvedFileName);
-                return resolvedModuleExecutable;
-            }
+//            if (resolvedFileName != null) {
+//                String resolvedModuleExecutable = KiemUtil.getAbsoluteFilePath(resolvedFileName);
+//                return resolvedModuleExecutable;
+//            }
             
             // } catch (URISyntaxException e) {
             // throw new RuntimeException("Cannot resolve executable of CEC module '" + module +
             // "'",
             // e);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("Cannot resolve executable of CEC module '" + module + "'",
-                    e);
-        } catch (IOException e) {
-            throw new RuntimeException("Cannot resolve executable of CEC module '" + module + "'",
-                    e);
-        }
+//        } catch (MalformedURLException e) {
+//            throw new RuntimeException("Cannot resolve executable of CEC module '" + module + "'",
+//                    e);
+//        } catch (IOException e) {
+//            throw new RuntimeException("Cannot resolve executable of CEC module '" + module + "'",
+//                    e);
+//        }
         throw new RuntimeException("Cannot resolve executable of CEC module '" + module + "'");
     }
 

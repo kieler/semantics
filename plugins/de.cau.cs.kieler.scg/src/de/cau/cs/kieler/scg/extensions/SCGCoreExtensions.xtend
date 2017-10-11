@@ -26,7 +26,7 @@ import de.cau.cs.kieler.scg.SchedulingBlock
 import java.util.List
 import org.eclipse.emf.ecore.EObject
 
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import com.google.inject.Guice
 import de.cau.cs.kieler.scg.ScheduleDependency
 import de.cau.cs.kieler.scg.Entry
@@ -39,6 +39,8 @@ import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.DataDependency
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -62,6 +64,8 @@ import de.cau.cs.kieler.scg.DataDependency
  * @kieler.rating 2013-08-20 proposed yellow
  */
 class SCGCoreExtensions { 
+    
+    @Inject extension KEffectsExtensions
     
     // -------------------------------------------------------------------------
     // -- Block queries
@@ -106,6 +110,7 @@ class SCGCoreExtensions {
 	 */
     def SchedulingBlock schedulingBlock(Node node) {
         val scg = node.graph
+        if (scg == null) return null
         var SchedulingBlock myBlock = null
         for (block : scg.schedulingBlocks ) {
             if (block.nodes.contains(node)) { myBlock = block }
@@ -150,6 +155,18 @@ class SCGCoreExtensions {
         node.schedulingBlock?.basicBlock
     }
 
+    /**
+     * Retrieves the nodes of a basic block.
+     * 
+     * @param node
+     *          the basic block
+     * @return Returns a list of nodes. May return null.
+     */
+    def List<Node> nodes(BasicBlock bb) {
+        val list = newArrayList
+        bb.schedulingBlocks.forEach[list.addAll(nodes)]
+        return list
+    }
 
 	/**
 	 * Retrieves all nodes of a schedule.

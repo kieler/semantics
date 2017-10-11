@@ -13,23 +13,26 @@
  */
 package de.cau.cs.kieler.scl.extensions
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scl.scl.StatementSequence
-import de.cau.cs.kieler.scl.scl.Goto
-import de.cau.cs.kieler.scl.scl.Statement
-import de.cau.cs.kieler.scl.scl.EmptyStatement
-import de.cau.cs.kieler.scl.scl.SCLProgram
-import de.cau.cs.kieler.scl.scl.Thread
-import de.cau.cs.kieler.scl.scl.InstructionStatement
-import de.cau.cs.kieler.scl.scl.Conditional
-import org.eclipse.emf.ecore.util.EcoreUtil
-import org.eclipse.emf.common.util.EList
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import java.util.LinkedList
-import de.cau.cs.kieler.scl.scl.StatementScope
 import de.cau.cs.kieler.kexpressions.Declaration
-import de.cau.cs.kieler.scl.scl.SclFactory
-import de.cau.cs.kieler.scl.scl.Parallel
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.scl.Conditional
+import de.cau.cs.kieler.scl.ElseScope
+import de.cau.cs.kieler.scl.Goto
+import de.cau.cs.kieler.scl.Label
+import de.cau.cs.kieler.scl.Parallel
+import de.cau.cs.kieler.scl.SCLFactory
+import de.cau.cs.kieler.scl.SCLProgram
+import de.cau.cs.kieler.scl.Scope
+import de.cau.cs.kieler.scl.ScopeStatement
+import de.cau.cs.kieler.scl.Statement
+import java.util.LinkedList
+import org.eclipse.emf.common.util.EList
+import org.eclipse.emf.ecore.util.EcoreUtil
+
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import com.google.inject.Inject
 
 /**
  * @author ssm, krat
@@ -39,51 +42,48 @@ import de.cau.cs.kieler.scl.scl.Parallel
  * This class provides several optimization methods for SCL.
  */
 class SCLExtensions {
-
+    
+    extension SCLFactory = SCLFactory.eINSTANCE
+    @Inject extension KEffectsExtensions
+    static val sCLFactory = SCLFactory.eINSTANCE
+    
     /**
      * Removes all goto instructions, that target a label, that follows that goto.
      * 
-     * @param sSeq The StatementSequence to optimize
-     * @return     The optimized StatementSequence
+     * @param scope The Scope to optimize
+     * @return     The optimized Scope
      */
-    def StatementSequence removeSuperfluousGotos(StatementSequence sSeq) {
+    def Scope removeSuperfluousGotos(Scope scope) {
         val toDelete = <Goto>newLinkedList
-        for (goto : sSeq.eAllContents.toList.filter(typeof(Goto))) {
-            var statement = goto.eContainer
-            var EList<Statement> stmList
-
-            // Check if in Conditional as if so we have to distinguish if we are in the else branch as this is not a sSeq
-            if ((statement.eContainer instanceof Conditional) &&
-                ((statement.eContainer as Conditional).elseStatements).contains(statement)) {
-                stmList = (statement.eContainer as Conditional).elseStatements
-            } else {
-                stmList = (statement.eContainer as StatementSequence).statements
-            }
-            var parent = statement.eContainer as StatementSequence
-            var index = stmList.indexOf(statement)
+        for (goto : scope.eAllContents.filter(typeof(Goto)).toList) {
+            var parent = goto.eContainer as Scope
+            var EList<Statement> stmList = parent.statements
+            
+            var index = stmList.indexOf(goto)
             var justLabel = true
             var oldSseq = parent
             while ((stmList.size > index + 1 || parent instanceof Conditional) && justLabel) {
                 // Check conditional following if in if-then-else branch
                 if (stmList.size == index + 1 && justLabel && parent instanceof Conditional) {
                     oldSseq = parent
-                    if ((parent.eContainer instanceof Conditional) &&
-                        ((parent.eContainer as Conditional).elseStatements).contains(oldSseq.eContainer)) {
-                        stmList = (parent.eContainer as Conditional).elseStatements
-                    } else {
-                        stmList = (parent.eContainer.eContainer as StatementSequence).statements
+                    if ((parent.eContainer instanceof Conditional) && ((parent.eContainer as Conditional).^else?.statements)?.contains(oldSseq.eContainer)) {
+                        stmList = (parent.eContainer as Conditional).^else.statements
+                    } else if (parent.eContainer instanceof Scope) {
+                        stmList = (parent.eContainer as Scope).statements
+                    } else if (parent.eContainer.eContainer instanceof Scope) {
+                        stmList = (parent.eContainer.eContainer as Scope).statements
                     }
 
-                    parent = parent.eContainer.eContainer as StatementSequence
+                    parent = parent.eContainer.eContainer as Scope
                     index = stmList.indexOf(oldSseq.eContainer)
                 }
                 if (stmList.size > index + 1) {
                     val nextStatement = stmList.get(index + 1) as Statement
-                    if (nextStatement instanceof EmptyStatement &&
-                        (nextStatement as EmptyStatement).label == goto.targetLabel) {
+                    if (nextStatement instanceof Label &&
+                        (nextStatement as Label) == goto.target) {
                         toDelete.add(goto)
                     }
-                    if (!(nextStatement instanceof EmptyStatement)) {
+                    if (!(nextStatement instanceof Label)) {
                         justLabel = false
                     }
                     index = index + 1
@@ -92,96 +92,88 @@ class SCLExtensions {
         }
         toDelete.forEach[ it.eContainer.remove ]
 
-        sSeq
+        return scope
     }
     
     /**
      * Removes superfluous gotos and redundant labels.
-     * @param sSeq The StatementSequence to optimize
-     * @return     The optimized StatementSequence
+     * @param scope The Scope to optimize
+     * @return     The optimized Scope
      */
-     def removeSuperfluousGotosAndLabels(StatementSequence sSeq) {
-         var StatementSequence oldSseq
+     def removeSuperfluousGotosAndLabels(Scope scope) {
+         var Scope oldSseq
         do {
-            oldSseq = EcoreUtil.copy(sSeq)
-            sSeq.optimizeLabels
-            sSeq.removeSuperfluousGotos
-        } while (!EcoreUtil.equals(oldSseq, sSeq))
+            oldSseq = EcoreUtil.copy(scope)
+            scope.optimizeLabels
+            scope.removeSuperfluousGotos
+        } while (!EcoreUtil.equals(oldSseq, scope))
 
-        sSeq
+        scope
      }
 
     /**
      * Removes all labels which are not used, i.e. not targeted by a goto.
      * 
-     * @param sSeq The StatementSequence to optimize
-     * @return     The optimized StatementSequence
+     * @param scope The Scope to optimize
+     * @return     The optimized Scope
      */
-    def StatementSequence optimizeLabels(StatementSequence sSeq) {
-        val toDelete = <EmptyStatement>newLinkedList
-        sSeq.eAllContents.filter(typeof(EmptyStatement)).forEach [
-            var parent = it.eContainer
-            while (!(parent instanceof Thread) && !(parent instanceof SCLProgram))
-                parent = parent.eContainer
-            if (!((parent.eAllContents.toList.filter(typeof(Goto))).exists(goto|goto.targetLabel == it.label)))
-                toDelete += it
-        ]
+    def Scope optimizeLabels(Scope scope) {
+        val targets = scope.eAllContents.filter(Goto).map[target].toSet
+        val toDelete = scope.eAllContents.filter(Label).filter[!targets.contains(it)].toList
         toDelete.forEach[it.remove]
-
-        sSeq
+        return scope
     }
 
     /**
      * Removes all statements that follow a goto before any label, i.e. removes unreachable code.
      * 
-     * @param sSeq The StatementSequence to optimize
-     * @return     The optimized StatementSequence
+     * @param scope The Scope to optimize
+     * @return     The optimized Scope
      */
-    def StatementSequence removeUnreachableCode(StatementSequence sSeq) {
+    def Scope removeUnreachableCode(Scope scope) {
         val toDelete = <Statement>newLinkedList
-        for (goto : sSeq.eAllContents.toList.filter(typeof(Goto))) {
-            var statement = goto.eContainer
-            var parent = statement.eContainer as StatementSequence
+        var gotos = scope.eAllContents.toList.filter(typeof(Goto))
+        for (goto : gotos) {
+            var statement = goto
+            var parent = statement.eContainer as Scope
             var index = parent.statements.indexOf(statement)
             var noLabel = true
             while (parent.statements.size > index + 1 && noLabel) {
                 val nextStatement = parent.statements.get(index + 1) as Statement
 
-                if (nextStatement instanceof EmptyStatement) {
+                if (nextStatement instanceof Label) {
                     noLabel = false
                 } else {
                     toDelete.add(nextStatement)
                 }
                 index = index + 1
-
             }
-
         }
         toDelete.forEach[it.remove]
 
-        sSeq
+        return scope
     }
 
     /**
      * Removes subsequent (sequences of) labels and changes corresponding gotos.
      * 
-     * @param sSeq The StatementSequence to optimize
-     * @return     The optimized StatementSequence
+     * @param scope The Scope to optimize
+     * @return     The optimized Scope
      */
-    def StatementSequence removeSubseqeuentLabels(StatementSequence sSeq) {
+    def Scope removeSubseqeuentLabels(Scope scope) {
         val toDelete = <Statement>newLinkedList
-        val replaceBy = <Pair<String, String>>newLinkedList
+        val replaceBy = <Pair<Label, Label>>newLinkedList
 
-        for (emptyStm : sSeq.eAllContents.toList.filter(typeof(EmptyStatement))) {
-            var parent = emptyStm.eContainer as StatementSequence
-            var index = parent.statements.indexOf(emptyStm)
+        for (label : scope.eAllContents.filter(Label).toList) {
+            var parent = label.eContainer as Scope
+            var index = parent.statements.indexOf(label)
             var isLabel = true
             while (parent.statements.size > index + 1 && isLabel) {
                 val nextStatement = parent.statements.get(index + 1) as Statement
 
-                if (nextStatement instanceof EmptyStatement) {
+                if (nextStatement instanceof Label) {
                     toDelete.add(nextStatement)
-                    replaceBy.add((nextStatement as EmptyStatement).label -> emptyStm.label)
+                    replaceBy.add((nextStatement as Label) -> label)
                     index = index + 1
                 } else {
                     isLabel = false;
@@ -189,67 +181,59 @@ class SCLExtensions {
             }
 
             // Replace goto targets
-            for (goto : parent.eAllContents.toList.filter(typeof(Goto))) {
-                var newLabel = replaceBy.findFirst[key == (goto as Goto).targetLabel]
+            for (goto : parent.eAllContents.toList.filter(Goto)) {
+                var newLabel = replaceBy.findFirst[key == (goto as Goto).target]
 
                 if (newLabel != null) {
-                    (goto as Goto).targetLabel = newLabel.value
+                    (goto as Goto).target = newLabel.value
                 }
             }
             replaceBy.clear
         }
         toDelete.forEach[it.remove]
 
-        sSeq
+        scope
     }
 
     /**
       * Removes double jumps, i.e. gotos targeting a label followed by another goto.
       * 
-      * @param sSeq The StatementSequence to optimize
-      * @return     The optimized StatementSequence
+      * @param scope The Scope to optimize
+      * @return     The optimized Scope
       */
-    def StatementSequence removeDoubleJumps(StatementSequence sSeq) {
-        val replaceBy = <Pair<String, String>>newLinkedList
-        for (emptyStm : sSeq.eAllContents.toList.filter(typeof(EmptyStatement))) {
+    def Scope removeDoubleJumps(Scope scope) {
+        val replaceBy = <Pair<Label, Label>>newLinkedList
+        for (label : scope.eAllContents.toList.filter(Label)) {
             var EList<Statement> stmList
-            var parent = emptyStm.eContainer as StatementSequence
+            var parent = label.eContainer as Scope
 
-            // Continue if in conditional
+            // Continue until Thread or SCLProgram
             var continue = true
 
-            // Check whether label is in conditional and in which branch
-            if ((parent instanceof Conditional) && (parent as Conditional).elseStatements.contains(emptyStm)) {
-                stmList = (parent as Conditional).elseStatements
-            } else {
-                stmList = parent.statements
-            }
-            var index = stmList.indexOf(emptyStm) + 1
-            var Statement curStm = emptyStm
+            stmList = parent.statements
+            var index = stmList.indexOf(label) + 1
+            var Statement curStm = label
             while (continue) {
                 if (stmList.size > index) {
                     val nextStatement = stmList.get(index) as Statement
-                    if (nextStatement instanceof InstructionStatement &&
-                        (nextStatement as InstructionStatement).instruction instanceof Goto) {
-                        val goto = ((nextStatement as InstructionStatement).instruction as Goto)
-                        replaceBy += emptyStm.label -> goto.targetLabel
+                    if (nextStatement instanceof Goto) {
+                        val goto = (nextStatement as Goto)
+                        replaceBy += label -> goto.target
                     }
                     continue = false;
-
-                // Check whether at end of conditonal branch or StatementScope and "look outside"
-                } else if (parent instanceof StatementScope) {
+                } else if (parent instanceof Thread) {
+                    continue = false
+                } else if (parent instanceof SCLProgram) {
+                    continue = false
+                } else if (parent instanceof ElseScope) {
                     curStm = parent.eContainer as Statement
-                    parent = parent.eContainer.eContainer as StatementSequence
+                    parent = parent.eContainer.eContainer as Scope
                     stmList = parent.statements
                     index = stmList.indexOf(curStm) + 1
-                } else if (parent instanceof Conditional) {
-                    curStm = parent.eContainer as Statement
-                    parent = parent.eContainer.eContainer as StatementSequence
-                    if ((parent instanceof Conditional) && (parent as Conditional).elseStatements.contains(curStm)) {
-                        stmList = (parent as Conditional).elseStatements
-                    } else {
-                        stmList = parent.statements
-                    }
+                } else if (parent instanceof Scope) {
+                    curStm = parent as Statement
+                    parent = parent.eContainer as Scope
+                    stmList = parent.statements
                     index = stmList.indexOf(curStm) + 1
                 } else {
                     continue = false
@@ -258,111 +242,103 @@ class SCLExtensions {
 
             // Replace goto targets
             for (goto : parent.eAllContents.toList.filter(typeof(Goto))) {
-                var newLabel = replaceBy.findFirst[key == (goto as Goto).targetLabel]
+                var newLabel = replaceBy.findFirst[key == (goto as Goto).target]
                 if (newLabel != null) {
-                    (goto as Goto).targetLabel = newLabel.value
+                    (goto as Goto).target = newLabel.value
                 }
             }
             replaceBy.clear
         }
 
-        sSeq
+        scope
     }
 
     /**
 	 * Removes unreachable code and labels which are not targeted by a goto.
 	 * 
-	 * @param sSeq The StatementSequence to optimize
-	 * @return     The optimized StatementSequence
+	 * @param scope The Scope to optimize
+	 * @return     The optimized Scope
 	 */
-    def StatementSequence removeUnreachableCodeAndLabels(StatementSequence sSeq) {
-        var StatementSequence oldSseq
+    def Scope removeUnreachableCodeAndLabels(Scope scope) {
+        var Scope oldSseq
         do {
-            oldSseq = EcoreUtil.copy(sSeq)
-            sSeq.optimizeLabels
-            sSeq.removeUnreachableCode
-        } while (!EcoreUtil.equals(oldSseq, sSeq))
+            oldSseq = EcoreUtil.copy(scope)
+            scope.optimizeLabels
+            scope.removeUnreachableCode
+        } while (!EcoreUtil.equals(oldSseq, scope))
 
-        sSeq
+        scope
     }
 
     /**
      * Applies all optimizations until fixed-point is reached
      * 
-     * @param sSeq The StatementSequence to optimize
-     * @return     The optimized StatementSequence
+     * @param scope The Scope to optimize
+     * @return     The optimized Scope
      */
-    def StatementSequence optimizeAll(StatementSequence sSeq) {
-        var StatementSequence oldSseq
+    def Scope optimizeAll(Scope scope) {
+        var Scope oldScope
         do {
-            oldSseq = EcoreUtil.copy(sSeq)
-            sSeq.removeSuperfluousGotos
-            sSeq.optimizeLabels
-            sSeq.removeUnreachableCode
-            sSeq.removeSubseqeuentLabels
-            sSeq.removeDoubleJumps
-            sSeq.removeRedundantForks
-        } while (!EcoreUtil.equals(oldSseq, sSeq))
-        sSeq
+            oldScope = EcoreUtil.copy(scope)
+            scope.removeSuperfluousGotos
+            scope.optimizeLabels
+            scope.removeUnreachableCode
+            scope.removeSubseqeuentLabels
+            scope.removeDoubleJumps
+            scope.removeRedundantForks
+        } while (!EcoreUtil.equals(oldScope, scope))
+        return scope
     }
 
     /**
-     * Remove local variable declarations (i.e. StatementScopes) and creates corresponding global varaibles.
+     * Remove local variable declarations (i.e. Scopes) and creates corresponding global varaibles.
      * 
-     * @param sSeq The StatementSequence to optimize
-     * @return     The optimized StatementSequence
+     * @param scope The Scope to optimize
+     * @return     The optimized Scope
      */
-    def removeLocalDeclarations(SCLProgram sclProgram) {
+    def removeLocalDeclarations(Scope scope) {
 
         // Collect all ValuedObject names
         val names = new LinkedList<String>
-        sclProgram.declarations.forEach[valuedObjects.forEach[names += name]]
+        scope.declarations.forEach[valuedObjects.forEach[names += name]]
 
-        val sScopes = sclProgram.eAllContents.toList.filter(typeof(StatementScope))
+        val scopes = scope.eAllContents.filter(Scope).toList
         val newDecls = new LinkedList<Declaration>
-        for (sScope : sScopes) {
-            sScope.declarations.forEach [
+        for (subScope : scopes) {
+            subScope.declarations.forEach [
                 for (valObj : valuedObjects) {
 
                     // Check whether variable name is already defined
                     if (names.contains(valObj.name)) {
                         val oldName = valObj.name
                         valObj.name = valObj.name.makeUnique(names)
-                        sScope.rename(oldName, valObj.name)
+                        subScope.rename(oldName, valObj.name)
                     }
                     names += valObj.name
 
                     // Add explicit assignment if initial value is given
                     if (valObj.initialValue != null) {
-                        sScope.statements.add(0,
-                            SclFactory::eINSTANCE.createInstructionStatement => [
-                                instruction = SclFactory::eINSTANCE.createAssignment => [
-                                    valuedObject = valObj
-                                    expression = valObj.initialValue
-                                ]
-                            ])
+                        subScope.statements.add(0, sCLFactory.createAssignment => [
+                            it.trace(valObj)
+                            valuedObject = valObj
+                            expression = valObj.initialValue
+                        ])
                     }
 
                 }
                 newDecls += it
             ]
 
-            // Replace sScope by its statements
-            val parent = sScope.eContainer.eContainer as StatementSequence
-            var index = 0
-            if ((parent instanceof Conditional) && (parent as Conditional).elseStatements.contains(sScope.eContainer)) {
-                index = (parent as Conditional).elseStatements.indexOf(sScope.eContainer)
-                (parent as Conditional).elseStatements.remove(index)
-                (parent as Conditional).elseStatements.addAll(index, sScope.statements)
-            } else {
-                index = parent.statements.indexOf(sScope.eContainer)
-                parent.statements.remove(index)
-                parent.statements.addAll(index, sScope.statements)
+            // Replace scope by its statements
+            if (subScope instanceof ScopeStatement) {
+                val parent = subScope.eContainer as Scope
+                parent.statements.addAll(parent.statements.indexOf(subScope), subScope.statements)
+                subScope.remove
             }
         }
-        sclProgram.declarations += newDecls
+        scope.declarations += newDecls
 
-        sclProgram
+        return scope
     }
 
     /**
@@ -372,8 +348,8 @@ class SCLExtensions {
      * @param oldName The variable name to rename
      * @param newName The new name
      */
-    def rename(StatementScope sScope, String oldName, String newName) {
-        for (valObj : sScope.eAllContents.toList.filter(typeof(ValuedObject))) {
+    def rename(Scope scope, String oldName, String newName) {
+        for (valObj : scope.eAllContents.toList.filter(ValuedObject)) {
             if (valObj.name.equals(oldName)) {
                 valObj.name = newName
             }
@@ -398,14 +374,14 @@ class SCLExtensions {
     
     /**
      * Removes redundant forks (i.e. forks with only one thread)
-     * @param statementSequence The StatementSequence to process
-     * @return StatementSequence wiithout redundant forks
+     * @param scope The Scope to process
+     * @return Scope without redundant forks
      */
-     def removeRedundantForks(StatementSequence statementSequence) {
-         for (parallel : statementSequence.eAllContents.toList.filter(Parallel)) {
+     def removeRedundantForks(Scope scope) {
+         for (parallel : scope.eAllContents.toList.filter(Parallel)) {
              if (parallel.threads.length <= 1) {
-                 val parent = parallel.eContainer.eContainer as StatementSequence
-                 val indexOfParallel = parent.statements.indexOf(parallel.eContainer)
+                 val parent = parallel.eContainer as Scope
+                 val indexOfParallel = parent.statements.indexOf(parallel)
                  parent.statements.remove(indexOfParallel)
                  if (parallel.threads.length == 1) {
                      parent.statements.addAll(indexOfParallel, parallel.threads.head.statements)

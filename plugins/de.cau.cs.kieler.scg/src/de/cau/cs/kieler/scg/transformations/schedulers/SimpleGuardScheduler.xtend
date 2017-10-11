@@ -14,29 +14,29 @@
 package de.cau.cs.kieler.scg.transformations.schedulers
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
-import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.ControlDependency
+import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Dependency
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.ExpressionDependency
 import de.cau.cs.kieler.scg.GuardDependency
 import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.SCGPlugin
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
-import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.transformations.SCGTransformations
 import java.util.LinkedHashSet
 import java.util.Set
-import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.scg.DataDependency
-import de.cau.cs.kieler.scg.SCGPlugin
 import java.util.logging.Level
-import de.cau.cs.kieler.kico.KielerCompilerException
-import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scg.Exit
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -55,7 +55,7 @@ import de.cau.cs.kieler.scg.Exit
  * @kieler.design 2016-02-24 proposed 
  * @kieler.rating 2016-02-24 proposed yellow
  */
-class SimpleGuardScheduler extends AbstractProductionTransformation implements Traceable {
+class SimpleGuardScheduler extends Processor<SCGraphs, SCGraphs> implements Traceable {
         
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
@@ -68,24 +68,32 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
     override getName() {
         return SCGTransformations::SCHEDULING_NAME
     }
-
-    override getProducedFeatureId() {
-        return SCGFeatures::SCHEDULING_ID
+    
+    override process() {
+        for (scg : model.scgs) {
+            scg.transform
+        }
+    }
+    
+    override getType() {
+        ProcessorType.TRANSFORMATOR
     }
 
-    override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::GUARDS_ID)
-    }
+//    override getProducedFeatureId() {
+//        return SCGFeatures::SCHEDULING_ID
+//    }
+//
+//    override getRequiredFeatureIds() {
+//        return newHashSet(SCGFeatures::GUARDS_ID)
+//    }
 
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
     
-    @Inject
-    extension SCGDependencyExtensions
-
-    @Inject
-    extension SCGCoreExtensions
+    @Inject extension SCGDependencyExtensions
+    @Inject extension SCGCoreExtensions
+    @Inject extension KEffectsExtensions
 
     // -------------------------------------------------------------------------
     // -- Scheduler 
@@ -94,7 +102,7 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
 	/**
 	 * {@inherited}
 	 */
-    public def SCGraph transform(SCGraph scg, KielerCompilerContext context) {
+    public def SCGraph transform(SCGraph scg) {
     	/** 
     	 * The {@code nodesToSchedule} {@link Set} contains the nodes that are still
     	 * not scheduled. The topological sort should remove nodes after they have been placed.
@@ -124,17 +132,11 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
     	// ASC schedulability output
     	if (schedule.size < estimatedScheduleSize) {
     		SCGPlugin.logError("The SCG is NOT asc-schedulable!")
-    		context.compilationResult?.addPostponedWarning(
-    		    new KielerCompilerException(getId, getId, "The SCG is NOT ASC-schedulable!")
-    		)
+//    		context?.compilationResult?.addPostponedWarning(
+//    		    new KielerCompilerException(getId, getId, "The SCG is NOT ASC-schedulable!")
+//    		)
     	} else {
     		SCGPlugin.log("The SCG is asc-schedulable.")
-    		var sl = "";
-    		for(s : schedule) {
-       		    if (s instanceof Assignment)
-                    sl += (s as Assignment).valuedObject.name + " "
-    		}
-    		SCGPlugin.log(sl, Level.FINE)
     	}
     	
     	scg

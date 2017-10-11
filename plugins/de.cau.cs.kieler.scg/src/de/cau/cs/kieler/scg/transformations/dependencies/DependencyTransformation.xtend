@@ -19,8 +19,6 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
-import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
-import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.DataDependencyType
@@ -32,19 +30,22 @@ import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.scg.transformations.SCGTransformations
 import java.util.List
 import java.util.Map
 import java.util.Set
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.annotations.TypedStringAnnotation
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import com.google.inject.Injector
-import de.cau.cs.kieler.kexpressions.keffects.util.ValuedObjectContainer
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.scg.common.ValuedObjectNodeContainer
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -65,59 +66,42 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
  * @kieler.rating 2013-10-23 proposed yellow
  */
 
-class DependencyTransformation extends AbstractProductionTransformation implements Traceable {
-
-    //-------------------------------------------------------------------------
-    //--                 K I C O      C O N F I G U R A T I O N              --
-    //-------------------------------------------------------------------------
+class DependencyTransformation extends Processor<SCGraphs, SCGraphs> {
     
-    override getId() {
-        return SCGTransformations::DEPENDENCY_ID
-    }
-
-    override getName() {
-        return SCGTransformations::DEPENDENCY_ID
-    }
-
-    override getProducedFeatureId() {
-        return SCGFeatures::DEPENDENCY_ID
-    }
-
-    override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::BASIC_ID)
-    }
-    
-    // -------------------------------------------------------------------------
-    // -- Injections 
-    // -------------------------------------------------------------------------
-       
     @Inject extension SCGCoreExtensions
     @Inject extension SCGThreadExtensions
     @Inject extension SCGDependencyExtensions
     @Inject extension SCGDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KEffectsExtensions
     @Inject extension AnnotationsExtensions    
     @Inject Injector injector
-
-
-    // -------------------------------------------------------------------------
-    // -- Globals 
-    // -------------------------------------------------------------------------
     
+    override getId() {
+        "de.cau.cs.kieler.scg.processors.transformators.dependency.v1"
+    }
+    
+    override getName() {
+        "Dependency"
+    }
+    
+    override getType() {
+        ProcessorType.TRANSFORMATOR
+    }
+    
+    override process() {
+        for (scg : getModel.scgs) {
+            scg.addDependencies                               
+        }        
+    }
+       
+
     protected val parameterMapping = <String, List<ValuedObject>> newHashMap
     protected val HashMultimap<Assignment, ValuedObject> writerObjectCache = HashMultimap.create 
     protected val HashMultimap<Node, ValuedObject> readerObjectCache = HashMultimap.create 
+
     
-    
-    /**
-     * transformSCGToSCGDEP executes the transformation from a standard SCG to 
-     * an SCG with dependency information.
-     * 
-     * @param scg 
-     * 			the originating source scg
-     * @return Returns a copy of the scg enriched with dependency information.
-     */   
-    def SCGraph transform(SCGraph scg) {
+    def SCGraph addDependencies(SCGraph scg) {
 
 		scg.createStringAnnotation(SCGFeatures.DEPENDENCY_ID, SCGFeatures.DEPENDENCY_NAME)
 		
@@ -158,33 +142,26 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
 	
     protected def void createNodeCaches(Map<Node, List<Entry>> nodeMapping, 
     	Set<Assignment> assignments, Set<Conditional> conditionals, 
-    	Multimap<ValuedObjectContainer, Assignment> writer, Set<Assignment> relativeWriter, 
-    	Multimap<ValuedObjectContainer, Node> reader
+    	Multimap<ValuedObject, ValuedObjectNodeContainer> writer, Set<Assignment> relativeWriter, 
+    	Multimap<ValuedObject, ValuedObjectNodeContainer> reader
 	) {
 		for(node : nodeMapping.keySet.filter[ it instanceof Assignment || it instanceof Conditional ]) {
 			if (node instanceof Assignment) {
 				if (node.valuedObject != null) {
 					assignments += node
-//<<<<<<< HEAD
-//					writer.put(node.valuedObject, node)
-//					writerObjectCache.put(node, node.valuedObject)
-//					node.expression.getAllReferences.forEach[
-//						reader.put(it.valuedObject, node)
-//						if (it.valuedObject.equals(node.valuedObject)) {
-//=======
 					
-					val VOC = injector.getInstance(ValuedObjectContainer) => [ set(node) ]
-					writer.put(VOC, node)
+					val VOC = injector.getInstance(ValuedObjectNodeContainer) => [ it.set(node, node) ]
+					writer.put(VOC.valuedObject, VOC)
 					
 					val allReferences = node.expression.allReferences
 					node.indices.forEach[ allReferences += it.allReferences ]
 					
 					allReferences.forEach[ vor |
-					    val expVOC =  injector.getInstance(ValuedObjectContainer) => [ set(vor) ]
-						reader.put(expVOC, node)
+					    val expVOC =  injector.getInstance(ValuedObjectNodeContainer) => [ it.set(vor, node) ]
+						reader.put(expVOC.valuedObject, expVOC)
 						
+						expVOC.strictEqual = false
 						if (expVOC.equals(VOC)) {
-//>>>>>>> master
 							relativeWriter += node
 						}
 					]
@@ -204,12 +181,12 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
 				                val vo = pex.valuedObject
 				                val refVODeclaration = refList.get(i).declaration
 				                if (refVODeclaration instanceof VariableDeclaration) {
-				                    val VOC =  injector.getInstance(ValuedObjectContainer) => [ set(vo) ]
+				                    val VOC =  injector.getInstance(ValuedObjectNodeContainer) => [ set(vo, node) ]
 				                    if (refVODeclaration.input) {
-				                        reader.put(VOC, node)
+				                        reader.put(VOC.valuedObject, VOC)
 				                        readerObjectCache.put(node, vo)
 				                    } else {
-				                        writer.put(VOC, node)
+				                        writer.put(VOC.valuedObject, VOC)
                                         writerObjectCache.put(node, vo)
 				                    }
 				                }
@@ -219,27 +196,24 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
 				}
 			} else if (node instanceof Conditional) {
 				conditionals += node
-//<<<<<<< HEAD
-//				node.condition.getAllReferences.forEach[
-//					reader.put(it.valuedObject, node)
-//					readerObjectCache.put(node, it.valuedObject)
-//=======
 				node.condition.getAllReferences.forEach[ vor |
-                    val expVOC =  injector.getInstance(ValuedObjectContainer) => [ set(vor) ]
-                    reader.put(expVOC, node)
-//>>>>>>> master
+                    val expVOC =  injector.getInstance(ValuedObjectNodeContainer) => [ set(vor, node) ]
+                    reader.put(expVOC.valuedObject, expVOC)
 				]
 			}
 		}
     }   
     
-    protected def createDependencies(Assignment assignment, Multimap<ValuedObjectContainer, Assignment> writer,
-    	Set<Assignment> relativeWriter, Multimap<ValuedObjectContainer, Node> reader, Map<Node, List<Entry>> nodeMapping
+    protected def createDependencies(Assignment assignment, Multimap<ValuedObject, ValuedObjectNodeContainer> writer,
+    	Set<Assignment> relativeWriter, Multimap<ValuedObject, ValuedObjectNodeContainer> reader, Map<Node, List<Entry>> nodeMapping
     ) {
-        val VOC = injector.getInstance(ValuedObjectContainer) => [ set(assignment) ]
+        val VOC = injector.getInstance(ValuedObjectNodeContainer) => [ set(assignment, assignment) ]
         VOC.potentiallyEqual = true
         if (!relativeWriter.contains(assignment)) { 
-        	for(VOWriter : writer.get(VOC).filter[ !equals(assignment) ]
+            val vOCWriter = writer.get(VOC.valuedObject)
+        	for(VOWriter : vOCWriter.filter[ 
+        	    equals(VOC)
+        	].map[ node ].filter[ !equals(assignment) ]
         	) {
         		val dependency = assignment.createDataDependency(VOWriter, 
         			if (relativeWriter.contains(VOWriter)) DataDependencyType.WRITE_RELATIVEWRITE else DataDependencyType.WRITE_WRITE
@@ -250,7 +224,10 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
         		dependency.trace(assignment)
         	}	
     	}
-    	for(VOReader : reader.get(VOC).filter[ !it.equals(assignment) ]) {
+    	val vOCReader = reader.get(VOC.valuedObject) 
+    	for(VOReader : vOCReader.filter[ 
+    	    equals(VOC)
+    	].map[ node ].filter[ !equals(assignment) ]) {
     	    
     		val dependency = assignment.createDataDependency(VOReader, DataDependencyType.WRITE_READ)
     		dependency.checkAndSetConfluence
@@ -261,3 +238,4 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
     }
 
 }
+		

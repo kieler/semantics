@@ -69,6 +69,12 @@ class AnnotationsExtensions {
             it.values += value
         ]
     }
+    
+    def Annotation createTagAnnotation(String name) {
+        AnnotationsFactory::eINSTANCE.createStringAnnotation => [
+            it.name = name
+        ]
+    }
 
 	def void copyAnnotations(Annotatable source, Annotatable target) {
 	    source.annotations.forEach[
@@ -87,8 +93,14 @@ class AnnotationsExtensions {
 	}
 
     def boolean hasPragma(Pragmatable pragmatable, String name) {
-        !pragmatable.pragmas.nullOrEmpty && !pragmatable.getStringPragmas(name).empty
+        !pragmatable.pragmas.nullOrEmpty && !pragmatable.getPragmas(name).empty
     }
+    
+    def void copyPragmas(Pragmatable source, Pragmatable target) {
+        source.pragmas.forEach[
+            target.pragmas += it.copy
+        ]
+    }    
 	
     def void removeAnnotations(Annotatable annotatable, String name) {
         if (!annotatable.annotations.nullOrEmpty) {

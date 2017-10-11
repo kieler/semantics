@@ -24,6 +24,8 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.CombineOperator
+import de.cau.cs.kieler.kexpressions.keffects.Emission
+import org.eclipse.emf.common.util.EList
 
 /**
  * @author ssm
@@ -50,8 +52,16 @@ class KEffectsExtensions {
 
     def Assignment createAssignment(ValuedObject valuedObject, Expression expression) {
         KEffectsFactory.eINSTANCE.createAssignment => [
-            it.valuedObject = valuedObject
+            it.reference = valuedObject.reference
             it.expression = expression
+        ]
+    }
+    
+    def Assignment createAssignment(ValuedObject valuedObject, Expression expression, AssignOperator operator) {
+        KEffectsFactory.eINSTANCE.createAssignment => [
+            it.reference = valuedObject.reference
+            it.expression = expression
+            it.operator = operator
         ]
     }
     
@@ -73,45 +83,61 @@ class KEffectsExtensions {
 
     // was assign
     def createAssignment(ValuedObject valuedObject) {
-        KEffectsFactory::eINSTANCE.createAssignment => [ it.valuedObject = valuedObject ]
+        KEffectsFactory::eINSTANCE.createAssignment => [ it.reference = valuedObject.reference ]
     }
 
     // was assignRelative
     def Assignment createRelativeAssignmentWithOr(ValuedObject valuedObject, Expression newValue) {
-        valuedObject.createAssignment(valuedObject.reference.or(newValue))
+        valuedObject.createAssignment(newValue, AssignOperator.ASSIGNOR)
     }
     
     
     // was assignRelativeAnd
     def Assignment createRelativeAssignmentWithAnd(ValuedObject valuedObject, Expression newValue) {
-        valuedObject.createAssignment(valuedObject.reference.and(newValue))
+        valuedObject.createAssignment(newValue, AssignOperator.ASSIGNAND)
     }    
     
     // was assingCombined
     def Assignment createCombinedAssignment(ValuedObject valuedObject, Expression newValue) {
-        if (valuedObject.combineOperator == CombineOperator::AND) {
-            return valuedObject.createAssignment(valuedObject.reference.and(newValue))
-        } else if (valuedObject.combineOperator == CombineOperator::OR) {
-            return valuedObject.createAssignment(valuedObject.reference.or(newValue))
-        } else if (valuedObject.combineOperator == CombineOperator::ADD) {
-            return valuedObject.createAssignment(valuedObject.reference.add(newValue))
-        } else if (valuedObject.combineOperator == CombineOperator::MULT) {
-            return valuedObject.createAssignment(valuedObject.reference.mult(newValue))
-        } else if (valuedObject.combineOperator == CombineOperator::MAX) {
-            return valuedObject.createAssignment(valuedObject.reference.max(newValue))
-        } else if (valuedObject.combineOperator == CombineOperator::MIN) {
-            return valuedObject.createAssignment(valuedObject.reference.min(newValue))
+        val op = switch(valuedObject.combineOperator) {
+            case ADD: AssignOperator.ASSIGNADD
+            case AND: AssignOperator.ASSIGNAND
+            case MAX: AssignOperator.ASSIGNMAX
+            case MIN: AssignOperator.ASSIGNMIN
+            case MULT: AssignOperator.ASSIGNMUL
+            case OR: AssignOperator.ASSIGNOR
+            default: AssignOperator.ASSIGN
         }
-        return valuedObject.createAssignment(newValue)
+        return valuedObject.createAssignment(newValue, op)
     }
     
-
+    def Assignment setValuedObject(Assignment assignment, ValuedObject valuedObject) {
+        if (assignment.reference == null) {
+            assignment.reference = valuedObject.reference
+        } else {
+            assignment.reference.valuedObject = valuedObject
+        }
+        assignment
+    }
+    
+    def ValuedObject getValuedObject(Assignment assignment) {
+        if (assignment.reference == null) null else assignment.reference.valuedObject
+    }
+    
+    def EList<Expression> getIndices(Assignment assignment) {
+        if (assignment.reference == null) {
+            return null
+        } else {
+            return assignment.reference.indices
+        }
+    }
+    
     def createHostcodeEffect(String text) {
         KEffectsFactory::eINSTANCE.createHostcodeEffect => [  it.text = text ]
     }
 
     def createEmission(ValuedObject valuedObject) {
-        KEffectsFactory::eINSTANCE.createEmission => [ it.valuedObject = valuedObject ]
+        KEffectsFactory::eINSTANCE.createEmission => [ it.reference = valuedObject.reference ]
     }
     
     def emit(ValuedObject valuedObject) {
@@ -120,7 +146,7 @@ class KEffectsExtensions {
 
     def createEmission(ValuedObject valuedObject, Expression newValue) {
         KEffectsFactory::eINSTANCE.createEmission => [ 
-            it.valuedObject = valuedObject
+            it.reference = valuedObject.reference
             it.newValue = newValue
         ]
     }    
@@ -128,5 +154,18 @@ class KEffectsExtensions {
     def emit(ValuedObject valuedObject, Expression newValue) {
         valuedObject.createEmission(newValue)
     }
+    
+    def Emission setValuedObject(Emission emission, ValuedObject valuedObject) {
+        if (emission.reference == null) {
+            emission.reference = valuedObject.reference
+        } else {
+            emission.reference.valuedObject = valuedObject
+        }
+        emission
+    }
+    
+    def ValuedObject getValuedObject(Emission emission) {
+        if (emission.reference == null) null else emission.reference.valuedObject
+    }    
 
 }

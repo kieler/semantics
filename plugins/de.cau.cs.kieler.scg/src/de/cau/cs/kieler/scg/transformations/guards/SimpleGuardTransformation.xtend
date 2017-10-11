@@ -20,14 +20,13 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.Join
-import de.cau.cs.kieler.scg.SCGAnnotations
+import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
@@ -38,15 +37,15 @@ import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.transformations.SCGTransformations
 import java.util.HashMap
 
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Exit
-import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * @author ssm
@@ -65,13 +64,13 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         return SCGTransformations::GUARDS_NAME
     }
 
-    override getProducedFeatureId() {
-        return SCGFeatures::GUARDS_ID
-    }
-
-    override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::GUARD_EXPRESSIONS_ID)
-    }
+//    override getProducedFeatureId() {
+//        return SCGFeatures::GUARDS_ID
+//    }
+//
+//    override getRequiredFeatureIds() {
+//        return newHashSet(SCGFeatures::GUARD_EXPRESSIONS_ID)
+//    }
 
 
     @Inject extension SCGCoreExtensions
@@ -81,9 +80,10 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsComplexCreateExtensions 
     @Inject extension AnnotationsExtensions
+    @Inject extension KEffectsExtensions
     
       
-    public def SCGraph transform(SCGraph scg, KielerCompilerContext context) {
+    override SCGraph transform(SCGraph scg) {
         
         /**
          * Since we want to build a new SCG, we cannot use the SCG copy extensions because it would 
@@ -193,24 +193,28 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         // Copy node dependencies
 		for(node : scg.nodes.filter[ dependencies.size > 0]) {
 			val sourceAssignment = VAMap.get(valuedObjectMap.get(schedulingBlockCache.get(node).guards.head.valuedObject))
-			for(dependency : node.dependencies) {
-				var Assignment ta = null
-				if (node instanceof Assignment) {
-					ta = VAMap.get(valuedObjectMap.get(schedulingBlockCache.get(dependency.target).guards.head.valuedObject))
-				} else if (node instanceof Conditional) {
-					ta = VAMap.get(valuedObjectMap.get((dependency.target as Guard).valuedObject))
-				}
-				if (ta != null) {
-					val targetAssignment = ta
-					dependency.copy => [
-						sourceAssignment.dependencies += it
-						it.target = targetAssignment
-					]
-					
-					if (dependency instanceof ControlDependency) {
-					    targetAssignment.trace(sourceAssignment)
-					}
-				}
+			if (sourceAssignment !== null) {
+    			for(dependency : node.dependencies) {
+    				var Assignment ta = null
+    				if (node instanceof Assignment) {
+    					ta = VAMap.get(valuedObjectMap.get(schedulingBlockCache.get(dependency.target).guards.head.valuedObject))
+    				} else if (node instanceof Conditional) {
+    					ta = VAMap.get(valuedObjectMap.get((dependency.target as Guard).valuedObject))
+    				}
+    				if (ta != null) {
+    					val targetAssignment = ta
+    					dependency.copy => [
+    						sourceAssignment.dependencies += it
+    						it.target = targetAssignment
+    					]
+    					
+    					if (dependency instanceof ControlDependency) {
+    					    targetAssignment.trace(sourceAssignment)
+    					}
+    				}
+    			}
+			} else {
+			    // TODO add warning for null assignment
 			}
 		}
        

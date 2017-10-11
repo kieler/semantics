@@ -1,0 +1,17 @@
+scchart ^history {
+  input bool I;
+  output bool O;
+  
+  initial state A
+  --> B immediate; 
+  
+  state B {
+    initial state B1
+    --> B2 with / O = true;
+    
+    state B2
+    --> B1 with / O = false;
+  }
+  --> A history with I;
+  
+}

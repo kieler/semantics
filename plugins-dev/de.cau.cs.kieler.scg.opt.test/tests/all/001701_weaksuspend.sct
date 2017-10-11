@@ -1,0 +1,13 @@
+scchart weaksuspend {
+  input bool I;
+  output bool O;
+  during / O = false;
+  
+  initial state A {
+    weak suspend I;
+    
+    initial state A1
+    --> A1 with / O = O | true;
+  };
+  
+}

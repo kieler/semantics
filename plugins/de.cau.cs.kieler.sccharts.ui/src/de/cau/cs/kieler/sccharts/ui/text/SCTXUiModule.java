@@ -27,5 +27,18 @@ public class SCTXUiModule extends de.cau.cs.kieler.sccharts.ui.text.AbstractSCTX
     /* provides a few additional highlighting rules */
     public Class<? extends org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
         return SCTSemanticHighlightingCalculator.class;
-    }  	
+    } 
+    
+    /* IMPORTANT!
+     * This prevents the NatureAddingEditorCallback from being added to the editor.
+     * No 'do you 'Do you want to convert to an Xtext project?' dialog will be shown.
+     * At the same time the new callback handles the correct update of imported resources when saved.
+     * IMPORTANT!
+     */
+    public Class<? extends org.eclipse.xtext.ui.editor.IXtextEditorCallback> bindIXtextEditorCallback() {
+        return SCTXEditorCallback.class;
+    }
+    public Class<? extends org.eclipse.xtext.ui.editor.DirtyStateEditorSupport> bindDirtyStateEditorSupport() {
+        return SCTXDirtyStateEditorSupport.class;
+    }
 }

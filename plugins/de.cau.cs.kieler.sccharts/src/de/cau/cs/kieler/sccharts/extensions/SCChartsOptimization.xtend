@@ -15,7 +15,7 @@ package de.cau.cs.kieler.sccharts.extensions
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.State
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 
 /**
  * SCCharts Optimization Extensions.
@@ -62,7 +62,8 @@ class SCChartsOptimization {
                     targetState.setName(state.name)
                     targetState.setLabel(state.label)
                     targetState.trace(state) //KITT: Redirect tracing relations before removing
-                    targetState.parentRegion.states.remove(state)
+                    if (targetState !== state)
+                        targetState.parentRegion.states.remove(state)
                 }
             }
         }

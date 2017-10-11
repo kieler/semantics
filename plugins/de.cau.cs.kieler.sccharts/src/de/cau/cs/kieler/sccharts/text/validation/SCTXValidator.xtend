@@ -4,7 +4,10 @@
 package de.cau.cs.kieler.sccharts.text.validation
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.AnnotationsPackage
+import de.cau.cs.kieler.annotations.StringPragma
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
@@ -13,6 +16,7 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Emission
+import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.SCChartsPackage
 import de.cau.cs.kieler.sccharts.Scope
@@ -27,11 +31,15 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.processors.transformators.For
+import de.cau.cs.kieler.sccharts.text.SCTXResource
 import java.util.Map
 import java.util.Set
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.validation.AbstractDeclarativeValidator
 import org.eclipse.xtext.validation.Check
-import de.cau.cs.kieler.sccharts.Action
+import de.cau.cs.kieler.sccharts.DuringAction
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 //import org.eclipse.xtext.validation.Check
 
@@ -52,12 +60,16 @@ class SCTXValidator extends AbstractSCTXValidator {
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KEffectsExtensions
+    
+    static val INFOS_PRAGMA = PragmaRegistry.register("infos", StringPragma, "off: Disables infos in editor.")
         
     static val String REGION_NO_INITIAL_STATE = "Every region must have an initial state";
     static val String REGION_TWO_MANY_INITIAL_STATES = "Every region must not have more than one initial state";
     static val String REGION_NO_FINAL_STATE = "Every region should have a final state whenever its parent state has a termination transition";
     static val String STATE_NOT_REACHABLE = "The state is not reachable";
     static val String NO_REGION = "A state with a termination transition must have inner behaviour";
+    static val String DUPLICATE_REGION = "There are multiple regions with the same name";
     
     static val String NON_SIGNAL_EMISSION = "Non-signals sould be used in an emission";
     static val String NON_VARIABLE_ASSIGNMENT = "Non-variables cannot be used in an assignment";
@@ -84,6 +96,26 @@ class SCTXValidator extends AbstractSCTXValidator {
     static val String NON_REACHABLE_TRANSITION = "The transition is not reachable."
     
     static val String IMMEDIATE_LOOP = "There is an immediate loop. The model is not SASC."
+    
+    static val String BROKEN_IMPORT = "Broken Import: There is no SCCharts model with the given name."
+    static val String BROKEN_FOLDER_IMPORT = "Broken Import: There are no SCCharts models in the given directory."
+
+    @Check
+    def void checkImportPragma(StringPragma pragma) {
+        if (SCTXResource.PRAGMA_IMPORT.equals(pragma.name) && pragma.eResource !== null) {
+            val res = pragma.eResource as SCTXResource
+            for (var i = 0; i < pragma.values.size; i++) {
+                val import = pragma.values.get(i)
+                if (res.directImports.get(import).empty) {
+                    if (import.endsWith("*")) {
+                        warning(BROKEN_FOLDER_IMPORT, pragma, AnnotationsPackage.eINSTANCE.stringPragma_Values, i);
+                    } else {
+                        warning(BROKEN_IMPORT, pragma, AnnotationsPackage.eINSTANCE.stringPragma_Values, i);
+                    }
+                }
+            }
+        }
+    }    
 
     /**
      * Check that there are no immediate loops between states in a region.
@@ -168,6 +200,26 @@ class SCTXValidator extends AbstractSCTXValidator {
                 warning(NON_SIGNAL_EMISSION, emission, null, -1);
             }
         } 
+    }
+    
+    /**
+     * Region names must be unique
+     *
+     * @param state the State
+     */
+    @Check
+    def void checkDuplicateRegionNames(de.cau.cs.kieler.sccharts.State state) {
+        val names = <String> newHashSet
+        for(r : state.regions) {
+            val name = r.name
+            if(!name.isNullOrEmpty) {
+                if(names.contains(name)) {
+                    warning(DUPLICATE_REGION+" '"+name+"'", r, null, -1)
+                } else {
+                    names.add(name)
+                }    
+            }
+        }
     }
 
     // -------------------------------------------------------------------------    
@@ -506,17 +558,52 @@ class SCTXValidator extends AbstractSCTXValidator {
     }
     
     @Check
+    def void checkReferencingStateFinalState(de.cau.cs.kieler.sccharts.State state) {
+        if (state.reference == null) return;
+        if (state.reference.scope == null) return;
+        if (state.terminationTransitions.empty) return;
+            
+        if (!state.reference.scope.asState.mayTerminate) {
+            warning("The referenced SCCharts does not terminate, but you are using a termination to proceed.",
+                state.reference,
+                SCChartsPackage.eINSTANCE.scopeCall_Scope);
+        }            
+    }
+    
+    @Check
     def void checkActionTriggerEffectsWithLabel(Action action) {
         if (!action.label.nullOrEmpty) {
             if (action.trigger != null) {
-                warning("The trigger of this action is hidden by the label.", 
-                    action, 
-                    SCChartsPackage.eINSTANCE.action_Trigger)
+                if (infosEnabled(action))
+                    info("The trigger of this action is hidden by the label.", 
+                        action, 
+                        SCChartsPackage.eINSTANCE.action_Trigger)
             }
             if (action.effects != null && action.effects.size > 0) {
-                warning("The effects of this action are hidden by the label.", 
-                    action, 
-                    SCChartsPackage.eINSTANCE.action_Effects)
+                if (infosEnabled(action))
+                    info("The effects of this action are hidden by the label.", 
+                        action, 
+                        SCChartsPackage.eINSTANCE.action_Effects)
+            }
+        }
+    }
+    
+    @Check
+    def void checkCountDelayOnDuringAction(DuringAction action) {
+        if (action.triggerDelay > 1) {
+            warning("Count Delays on During Actions are not supported yet. The valued will be ignored by the transformation.",
+                action, SCChartsPackage.eINSTANCE.action_TriggerDelay);
+        }
+    }
+    
+    @Check
+    def void checkForRegion(ControlflowRegion region) {
+        if (region.forStart != null && region.forStart instanceof ValuedObjectReference) {
+            val forRange = For.getForRegionRange(region)
+            if (forRange.second == -1) {
+                error("The range of the counter variable of the for region is not determinable. The array cardinalities of you array must be an int or a const int.",
+                    region, SCChartsPackage.eINSTANCE.state_Regions
+                )
             }
         }
     }
@@ -539,5 +626,15 @@ class SCTXValidator extends AbstractSCTXValidator {
                 )
             }
         }
+    }
+    
+    
+    private def boolean infosEnabled(EObject eObject) {
+        val scc = eObject.getSCCharts
+        val infoPragma = scc.getStringPragmas(INFOS_PRAGMA).head
+        if (infoPragma != null && infoPragma.values.size > 0 && infoPragma.values.head.equals("off")) {
+            return false
+        }
+        return true
     }
 }

@@ -24,8 +24,9 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeExtensions
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.BranchType
 import de.cau.cs.kieler.scg.Conditional
@@ -33,24 +34,24 @@ import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.Predecessor
+import de.cau.cs.kieler.scg.SCGPlugin
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
-import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.scg.transformations.SCGTransformations
 import de.cau.cs.kieler.scg.transformations.synchronizer.SynchronizerSelector
 import java.util.HashMap
 import java.util.List
-
-import static de.cau.cs.kieler.scg.SCGAnnotations.*
-
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.scg.SCGPlugin
 import java.util.logging.Level
+
+import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
+
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -78,48 +79,35 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
     //-------------------------------------------------------------------------
     
     override getId() {
-        return SCGTransformations::GUARD_EXPRESSIONS_ID
+        "de.cau.cs.kieler.scg.processors.transformators.expressions"
     }
-
+    
     override getName() {
-        return SCGTransformations::GUARD_EXPRESSIONS_NAME
+        "Expressions"
     }
 
-    override getProducedFeatureId() {
-        return SCGFeatures::GUARD_EXPRESSIONS_ID
-    }
-
-    override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::BASICBLOCK_ID)
-    }
+//    override getProducedFeatureId() {
+//        return SCGFeatures::GUARD_EXPRESSIONS_ID
+//    }
+//
+//    override getRequiredFeatureIds() {
+//        return newHashSet(SCGFeatures::BASICBLOCK_ID)
+//    }
 
 
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
-    @Inject
-    extension SCGCoreExtensions
-
-    @Inject
-    extension SCGDeclarationExtensions
-
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-
-    @Inject
-    extension KExpressionsCreateExtensions
     
-    @Inject
-    extension KExpressionsDeclarationExtensions
-
-    @Inject
-    extension AnnotationsExtensions
-
-    @Inject
-    extension SynchronizerSelector
-
-    @Inject
-    extension KEffectsSerializeExtensions
+    @Inject extension SCGCoreExtensions
+    @Inject extension SCGDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsCreateExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension AnnotationsExtensions
+    @Inject extension SynchronizerSelector
+    @Inject extension KEffectsSerializeExtensions
+    @Inject extension KEffectsExtensions
 
     // -------------------------------------------------------------------------
     // -- Globals
@@ -127,7 +115,6 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
     protected val schedulingBlocks = <SchedulingBlock>newArrayList
     protected val schedulingBlockCache = new HashMap<Node, SchedulingBlock>
     protected val schedulingBlockGuardCache = <Guard, SchedulingBlock>newHashMap
-    protected var KielerCompilerContext compilerContext
 
     /** Caching for predecessors */
     protected val predecessorTwinCache = <Predecessor, Predecessor>newHashMap
@@ -148,7 +135,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
     // -------------------------------------------------------------------------
     // -- Guard Creator
     // -------------------------------------------------------------------------    
-    override SCGraph createGuards(SCGraph scg, KielerCompilerContext context) {
+    override SCGraph createGuards(SCGraph scg) {
         // KiCo does this check via feature isContained
         //if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)
         //    || scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)
@@ -157,7 +144,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
         //}
 
         val timestamp = System.currentTimeMillis
-        compilerContext = context
+//        compilerContext = context
 
 //        PotentiallyInstantaneousLoopAnalyzer.createPotentiallyInstantaneousLoopData(scg, context)
 
@@ -487,7 +474,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
         //        if (synchronizer.id == DepthJoinSynchronizer::SYNCHRONIZER_ID) {
         //            (synchronizer as DepthJoinSynchronizer).schizophrenicDeclaration = schizoDeclaration
         //        }
-        synchronizer.synchronize(schedulingBlock.nodes.head as Join, guard, schedulingBlock, scg, this, compilerContext,
+        synchronizer.synchronize(schedulingBlock.nodes.head as Join, guard, schedulingBlock, scg, this,
             schedulingBlockCache)
 
         val newGuards = synchronizer.newGuards
@@ -507,7 +494,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
         guard.setDefaultTrace
         val basicBlock = schedulingBlock.basicBlock
 
-        val relevantPredecessors = <Predecessor>newHashSet
+        val relevantPredecessors = <Predecessor>newLinkedList
 // FIXME: Verify removal of schizophrenic flag        
 //        if (guard.schizophrenic) {
 //            relevantPredecessors += basicBlock.predecessors.filter[!it.basicBlock.entryBlock]

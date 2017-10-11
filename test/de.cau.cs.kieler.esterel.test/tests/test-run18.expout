@@ -1,8 +1,0 @@
-module test_run18:
-input A;
-output C;
-
-await A;
-emit C
-
-end module

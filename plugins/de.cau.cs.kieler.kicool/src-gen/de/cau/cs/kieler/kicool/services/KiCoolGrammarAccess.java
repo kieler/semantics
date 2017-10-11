@@ -35,22 +35,27 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cInputKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
 		private final Assignment cInputClassAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
 		private final RuleCall cInputClassIDTerminalRuleCall_6_1_0 = (RuleCall)cInputClassAssignment_6_1.eContents().get(0);
-		private final Assignment cIntermediatesAssignment_7 = (Assignment)cGroup.eContents().get(7);
-		private final RuleCall cIntermediatesIntermediateReferenceParserRuleCall_7_0 = (RuleCall)cIntermediatesAssignment_7.eContents().get(0);
-		private final Assignment cProcessorsAssignment_8 = (Assignment)cGroup.eContents().get(8);
-		private final RuleCall cProcessorsProcessorGroupParserRuleCall_8_0 = (RuleCall)cProcessorsAssignment_8.eContents().get(0);
+		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
+		private final Keyword cSetKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
+		private final Assignment cStartsetsAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
+		private final RuleCall cStartsetsKVPairParserRuleCall_7_1_0 = (RuleCall)cStartsetsAssignment_7_1.eContents().get(0);
+		private final Assignment cIntermediatesAssignment_8 = (Assignment)cGroup.eContents().get(8);
+		private final RuleCall cIntermediatesIntermediateReferenceParserRuleCall_8_0 = (RuleCall)cIntermediatesAssignment_8.eContents().get(0);
+		private final Assignment cProcessorsAssignment_9 = (Assignment)cGroup.eContents().get(9);
+		private final RuleCall cProcessorsProcessorGroupParserRuleCall_9_0 = (RuleCall)cProcessorsAssignment_9.eContents().get(0);
 		
 		/// **
 		// * @author ssm
 		// * @kieler.design 2016-10-19 proposed 
 		// * @kieler.rating 2016-10-19 proposed yellow
 		// * / System kicool::System:
-		//	'system' id=QualifiedID 'version' version=INT 'label' label=EString ('input' inputClass=ID)?
+		//	'system' id=QualifiedID 'version' version=INT 'label' label=EString ('input' inputClass=ID)? ('set'
+		//	startsets+=KVPair)*
 		//	intermediates+=IntermediateReference*
 		//	processors=ProcessorGroup
 		@Override public ParserRule getRule() { return rule; }
 
-		//'system' id=QualifiedID 'version' version=INT 'label' label=EString ('input' inputClass=ID)?
+		//'system' id=QualifiedID 'version' version=INT 'label' label=EString ('input' inputClass=ID)? ('set' startsets+=KVPair)*
 		//intermediates+=IntermediateReference* processors=ProcessorGroup
 		public Group getGroup() { return cGroup; }
 
@@ -93,17 +98,29 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getInputClassIDTerminalRuleCall_6_1_0() { return cInputClassIDTerminalRuleCall_6_1_0; }
 
+		//('set' startsets+=KVPair)*
+		public Group getGroup_7() { return cGroup_7; }
+
+		//'set'
+		public Keyword getSetKeyword_7_0() { return cSetKeyword_7_0; }
+
+		//startsets+=KVPair
+		public Assignment getStartsetsAssignment_7_1() { return cStartsetsAssignment_7_1; }
+
+		//KVPair
+		public RuleCall getStartsetsKVPairParserRuleCall_7_1_0() { return cStartsetsKVPairParserRuleCall_7_1_0; }
+
 		//intermediates+=IntermediateReference*
-		public Assignment getIntermediatesAssignment_7() { return cIntermediatesAssignment_7; }
+		public Assignment getIntermediatesAssignment_8() { return cIntermediatesAssignment_8; }
 
 		//IntermediateReference
-		public RuleCall getIntermediatesIntermediateReferenceParserRuleCall_7_0() { return cIntermediatesIntermediateReferenceParserRuleCall_7_0; }
+		public RuleCall getIntermediatesIntermediateReferenceParserRuleCall_8_0() { return cIntermediatesIntermediateReferenceParserRuleCall_8_0; }
 
 		//processors=ProcessorGroup
-		public Assignment getProcessorsAssignment_8() { return cProcessorsAssignment_8; }
+		public Assignment getProcessorsAssignment_9() { return cProcessorsAssignment_9; }
 
 		//ProcessorGroup
-		public RuleCall getProcessorsProcessorGroupParserRuleCall_8_0() { return cProcessorsProcessorGroupParserRuleCall_8_0; }
+		public RuleCall getProcessorsProcessorGroupParserRuleCall_9_0() { return cProcessorsProcessorGroupParserRuleCall_9_0; }
 	}
 
 	public class IntermediateReferenceElements extends AbstractParserRuleElementFinder {
@@ -518,7 +535,8 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	// * @kieler.design 2016-10-19 proposed 
 	// * @kieler.rating 2016-10-19 proposed yellow
 	// * / System kicool::System:
-	//	'system' id=QualifiedID 'version' version=INT 'label' label=EString ('input' inputClass=ID)?
+	//	'system' id=QualifiedID 'version' version=INT 'label' label=EString ('input' inputClass=ID)? ('set'
+	//	startsets+=KVPair)*
 	//	intermediates+=IntermediateReference*
 	//	processors=ProcessorGroup
 	public SystemElements getSystemAccess() {
@@ -932,9 +950,9 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//terminal ID:
-	//	'^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
+	//	'^'? (('_'? 'a'..'z' | '_'? 'A'..'Z') | '_' '0'..'9' | '__') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
 	public TerminalRule getIDRule() {
-		return gaTerminals.getIDRule();
+		return gaAnnotations.getIDRule();
 	} 
 
 	//terminal WS:

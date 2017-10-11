@@ -52,13 +52,13 @@
       <page
             class="de.cau.cs.kieler.prom.ui.build.PromProjectProperties"
             id="de.cau.cs.kieler.prom.projectProperties"
-            name="KiCo Build">
+            name="KIELER Modeling Builder">
          <enabledWhen>
             <adapt
                   type="org.eclipse.core.resources.IProject">
                <test
                      property="org.eclipse.core.resources.projectNature"
-                     value="de.cau.cs.kieler.prom.KiCoNature">
+                     value="de.cau.cs.kieler.prom.KielerModelingNature">
                </test>
             </adapt>
          </enabledWhen>
@@ -68,6 +68,7 @@
          point="org.eclipse.ui.newWizards">
       <wizard
             canFinishEarly="false"
+            category="de.cau.cs.kieler.prom.ui.kielerModelingWizards"
             class="de.cau.cs.kieler.prom.ui.wizards.FreemarkerTemplateFileWizard"
             hasPages="true"
             icon="icons/freemarker.png"
@@ -80,7 +81,7 @@
       </wizard>
       <wizard
             canFinishEarly="false"
-            category="de.cau.cs.kieler.sccharts"
+            category="de.cau.cs.kieler.prom.ui.kielerModelingWizards"
             class="de.cau.cs.kieler.prom.ui.wizards.KiBuildFileWizard"
             finalPerspective="de.cau.cs.kieler.Modeling"
             hasPages="true"
@@ -91,6 +92,10 @@
             Create a new KiBuild file to configure the automatic build of models and templates.
          </description>
       </wizard>
+      <category
+            id="de.cau.cs.kieler.prom.ui.kielerModelingWizards"
+            name="KIELER Modeling">
+      </category>
    </extension>
    
    

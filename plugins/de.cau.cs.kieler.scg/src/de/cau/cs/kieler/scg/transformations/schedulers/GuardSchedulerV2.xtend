@@ -20,9 +20,7 @@ import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kico.KielerCompilerException
-import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Guard
@@ -39,6 +37,7 @@ import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpres
 import java.util.List
 import java.util.Map
 import java.util.Set
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -71,13 +70,13 @@ class GuardSchedulerV2 extends AbstractScheduler implements Traceable {
         return SCGTransformations::SCHEDULING_NAME
     }
 
-    override getProducedFeatureId() {
-        return SCGFeatures::SCHEDULING_ID
-    }
-
-    override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::GUARD_EXPRESSIONS_ID)
-    }
+//    override getProducedFeatureId() {
+//        return SCGFeatures::SCHEDULING_ID
+//    }
+//
+//    override getRequiredFeatureIds() {
+//        return newHashSet(SCGFeatures::GUARD_EXPRESSIONS_ID)
+//    }
 
     //-------------------------------------------------------------------------
 
@@ -113,6 +112,8 @@ class GuardSchedulerV2 extends AbstractScheduler implements Traceable {
 
     @Inject
     extension KExpressionsValuedObjectExtensions
+    
+    @Inject extension KEffectsExtensions
 
     // -------------------------------------------------------------------------
     // -- Globals 
@@ -336,8 +337,7 @@ class GuardSchedulerV2 extends AbstractScheduler implements Traceable {
 
     }
 
-    protected def boolean createSchedule(SCGraph scg, List<ScheduleBlock> schedule, SchedulingConstraints constraints,
-        KielerCompilerContext context) {
+    protected def boolean createSchedule(SCGraph scg, List<ScheduleBlock> schedule, SchedulingConstraints constraints) {
 
         val remainingSchedulingBlocks = <SchedulingBlock>newHashSet
         remainingSchedulingBlocks += constraints.schedulingBlocks
@@ -373,7 +373,7 @@ class GuardSchedulerV2 extends AbstractScheduler implements Traceable {
 	 * 			the source SCG
 	 * @return Returns the enriched SCG model.
 	 */
-    override public SCGraph schedule(SCGraph scg, KielerCompilerContext context) {
+    override public SCGraph schedule(SCGraph scg) {
         // KiCo does this check via feature isContained
         // if (scg.hasAnnotation(SCGFeatures.SCHEDULING_ID)) {
         //     return scg
@@ -420,16 +420,16 @@ class GuardSchedulerV2 extends AbstractScheduler implements Traceable {
         placedSBs.clear;
 
         val scedList = <ScheduleBlock>newLinkedList
-        var schedulable = scg.createSchedule(scedList, schedulingConstraints, context)
+        var schedulable = scg.createSchedule(scedList, schedulingConstraints)
 //        schedule.scheduleBlocks += scedList
 
         // Print out results on the console
         // and add the scheduling information to the graph.
         if (!schedulable) {
-            if (context != null) {
-                context.getCompilationResult().addPostponedWarning(
-                    new KielerCompilerException(getId(), getId(), "The SCG is NOT ASC-schedulable!"));
-            }
+//            if (context != null) {
+//                context.getCompilationResult().addPostponedWarning(
+//                    new KielerCompilerException(getId(), getId(), "The SCG is NOT ASC-schedulable!"));
+//            }
             System::out.println("The SCG is NOT ASC-schedulable!")
 //            scg.schedules.add(schedule)
         } else {

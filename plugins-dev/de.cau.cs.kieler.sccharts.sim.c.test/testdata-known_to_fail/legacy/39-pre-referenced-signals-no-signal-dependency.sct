@@ -1,0 +1,35 @@
+scchart _39_pre_referenced_signals_no_signal_dependency
+"39-pre-referenced-signals-no-signal-dependency" {
+  output signal pure O;
+  input signal pure I;
+  output signal pure O2;
+  output signal int ExitDoneA;
+  output signal int ExitDoneB;
+
+  initial state A
+  o-> EB with I;
+
+  state C;
+
+  state EA {
+
+    region ExitInternalRegion25595202:
+
+    initial state ia
+    --> fa immediate with !(pre(val(ExitDoneA)) == 1) / O2;
+
+    state fa;
+  }
+  --> C immediate / ExitDoneA(1);
+
+  state EB {
+
+    region ExitInternalRegion25184130:
+
+    initial state ib
+    --> fb immediate with !(pre(val(ExitDoneB)) == 1) / O;
+
+    state fb;
+  }
+  --> EA immediate / ExitDoneB(1);
+}

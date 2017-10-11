@@ -1,0 +1,13 @@
+scchart ^static {
+  
+  initial state A {
+    static bool O;
+    
+    initial state A1
+    --> A2 with / O = true;
+    
+    state A2
+    --> A1;
+  };
+  
+}

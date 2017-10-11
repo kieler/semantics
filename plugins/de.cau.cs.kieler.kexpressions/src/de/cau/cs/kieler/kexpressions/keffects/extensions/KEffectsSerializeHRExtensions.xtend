@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.kexpressions.keffects.extensions
 
-import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Effect
@@ -41,15 +40,15 @@ class KEffectsSerializeHRExtensions extends KEffectsSerializeExtensions {
     }
     
     def dispatch CharSequence serializeHR(Emission emission) {
-        val objectContainer = emission.valuedObject.eContainer
-        if (objectContainer instanceof VariableDeclaration) {
-            if (objectContainer.type != ValueType::PURE) {
-                return (emission.valuedObject.name + "(" + emission.newValue.serializeHR + ")")             
+        val valuedObjectContainer = emission.reference.valuedObject.eContainer
+        if (valuedObjectContainer instanceof VariableDeclaration) {
+            if (valuedObjectContainer.type != ValueType::PURE) {
+                return (emission.reference.valuedObject.name + "(" + emission.newValue.serializeHR + ")")             
             } else {
-                return emission.valuedObject.name
+                return emission.reference.valuedObject.name
             }
         } else {
-            return emission.valuedObject.name
+            return emission.reference.valuedObject.name
         }
     }
     

@@ -46,8 +46,6 @@ class CompilerViewPartListener implements IPartListener2 {
         if (partRef == null) return
         val part = partRef.getPart(true)
         if (part instanceof EditorPart) { 
-//            val editorTypeID = partRef.getId
-//            val currentPartName = editorPart.getPartName
             var system = view.editPartSystemManager.getSystem(part)
             if (system == null) {
                system = view.systemSelectionManager.selectedSystem 
@@ -60,6 +58,7 @@ class CompilerViewPartListener implements IPartListener2 {
     }    
     
     override partActivated(IWorkbenchPartReference partRef) {
+        updateCompilerView(partRef)
     }
     
     override partBroughtToTop(IWorkbenchPartReference partRef) {

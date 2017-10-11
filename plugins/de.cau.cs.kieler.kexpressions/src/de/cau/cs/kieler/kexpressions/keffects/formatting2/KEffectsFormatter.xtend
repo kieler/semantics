@@ -34,12 +34,12 @@ class KEffectsFormatter extends KExpressionsFormatter {
 			format(annotations, document);
 		}
 		
-		assignment.regionFor.keywords(assignmentAccess.leftSquareBracketKeyword_2_0).forEach[prepend[ noSpace ].append[ noSpace ]]
-        assignment.regionFor.keywords(assignmentAccess.rightSquareBracketKeyword_2_2).forEach[prepend[ noSpace ]]
+//		assignment.regionFor.keywords(assignmentAccess.leftSquareBracketKeyword_2_0).forEach[prepend[ noSpace ].append[ noSpace ]]
+//        assignment.regionFor.keywords(assignmentAccess.rightSquareBracketKeyword_2_2).forEach[prepend[ noSpace ]]
 		
-		for (Expression indices : assignment.getIndices()) {
-			format(indices, document);
-		}
+//		for (Expression indices : assignment.getIndices()) {
+//			format(indices, document);
+//		}
 		
 		format(assignment.getExpression(), document);
 		format(assignment.getSubReference(), document);
@@ -72,12 +72,10 @@ class KEffectsFormatter extends KExpressionsFormatter {
 			format(annotations, document);
 		}
 		
-		functioncalleffect.regionFor.keyword(functionCallAccess.leftParenthesisKeyword_0_2_0_0)?.prepend[ noSpace ].append[ noSpace ]
-        functioncalleffect.regionFor.keyword(functionCallAccess.leftParenthesisKeyword_1_2_0_0)?.prepend[ noSpace ].append[ noSpace ]
-        functioncalleffect.regionFor.keyword(functionCallAccess.rightParenthesisKeyword_0_2_0_3)?.prepend[ noSpace ]
-        functioncalleffect.regionFor.keyword(functionCallAccess.rightParenthesisKeyword_1_2_0_3)?.prepend[ noSpace ]
-        functioncalleffect.regionFor.keyword(functionCallAccess.leftParenthesisRightParenthesisKeyword_0_2_1)?.prepend[ noSpace ]
-        functioncalleffect.regionFor.keyword(functionCallAccess.leftParenthesisRightParenthesisKeyword_1_2_1)?.prepend[ noSpace ]
+		functioncalleffect.regionFor.keyword(functionCallAccess.leftParenthesisKeyword_2_0_0)?.prepend[ noSpace ].append[ noSpace ]
+        functioncalleffect.regionFor.keyword(functionCallAccess.rightParenthesisKeyword_2_0_3)?.prepend[ noSpace ]
+        functioncalleffect.regionFor.keyword(functionCallAccess.leftParenthesisRightParenthesisKeyword_2_1)?.prepend[ noSpace ]
+        functioncalleffect.regionFor.keyword(functionCallAccess.leftParenthesisRightParenthesisKeyword_2_1)?.prepend[ noSpace ]
 		
 		for (Parameter parameters : functioncalleffect.getParameters()) {
 			format(parameters, document);

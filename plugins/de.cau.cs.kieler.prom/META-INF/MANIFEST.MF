@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Project Management
 Bundle-SymbolicName: de.cau.cs.kieler.prom;singleton:=true
-Bundle-Version: 0.12.0.qualifier
+Bundle-Version: 0.13.0.qualifier
 Require-Bundle: org.freemarker,
  com.google.guava,
  org.eclipse.core.runtime,
@@ -22,10 +22,9 @@ Require-Bundle: org.freemarker,
  org.antlr.runtime,
  org.eclipse.xtext.xbase.lib,
  de.cau.cs.kieler.kicool,
- de.cau.cs.kieler.kico,
- de.cau.cs.kieler.scg.s,
- de.cau.cs.kieler.sccharts,
- de.cau.cs.kieler.sccharts.preferences
+ de.cau.cs.kieler.sccharts.preferences,
+ de.cau.cs.kieler.kexpressions,
+ de.cau.cs.kieler.sccharts
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Kiel University

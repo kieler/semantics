@@ -21,6 +21,7 @@ import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.DoubleValue
 import de.cau.cs.kieler.kexpressions.FloatValue
 import java.util.List
+import de.cau.cs.kieler.kexpressions.VectorValue
 
 /**
  * @author ssm
@@ -45,6 +46,13 @@ class KExpressionsValueExtensions {
 		if (expression1 instanceof StringValue) return expression1.value == expression2.asStringValue.value
 		if (expression1 instanceof DoubleValue) return expression1.value == expression2.asDoubleValue.value
 		if (expression1 instanceof FloatValue) return expression1.value == expression2.asFloatValue.value
+		if (expression1 instanceof VectorValue) {
+		    for (subValue : expression1.values.indexed) {
+		        val companion = expression2.asVectorValue.values.get(subValue.key)
+		        if (!subValue.value.isSameValue(companion)) return false
+		    }
+		    return true
+		}
 		return false;
 	}
 	
@@ -66,6 +74,10 @@ class KExpressionsValueExtensions {
 
 	def FloatValue asFloatValue(Expression expression) {
 		expression as FloatValue
+	}
+	
+	def VectorValue asVectorValue(Expression expression) {
+	    expression as VectorValue
 	}
 	
 	def getIntValue(Expression expression) {

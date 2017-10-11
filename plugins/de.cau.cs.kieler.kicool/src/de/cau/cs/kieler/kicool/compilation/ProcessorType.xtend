@@ -21,6 +21,9 @@ package de.cau.cs.kieler.kicool.compilation
  */
 enum ProcessorType {
     
+    /** The processor is part of the kicool system. */
+    SYSTEM,
+    
     /** The processor is meant to do a model-to-model transformation. */
     TRANSFORMATOR, 
     

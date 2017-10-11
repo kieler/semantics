@@ -1,7 +1,0 @@
-scchart ^pre {
-  output int O;
-  
-  initial state A 
-  --> A with / O = pre(O) + 1;
-  
-}
