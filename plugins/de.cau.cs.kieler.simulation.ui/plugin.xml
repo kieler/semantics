@@ -6,6 +6,9 @@
          point="de.cau.cs.kieler.simulation.ui.simulationParticipant">
          <simulationParticipant
             class="de.cau.cs.kieler.simulation.ui.RegisterVariablesFinder" />
+         <simulationParticipant
+               class="de.cau.cs.kieler.simulation.ui.SimulateModelInDiagramView">
+         </simulationParticipant>
    </extension>
    <extension
          point="org.eclipse.debug.ui.launchShortcuts">
@@ -932,12 +935,6 @@
                 value="true">
             </attribute>
         </markerResolutionGenerator>
-    </extension>
-    <extension
-          point="de.cau.cs.kieler.klighd.ui.view.controller">
-       <controller
-             class="de.cau.cs.kieler.simulation.ui.SimulateModelInDiagramView">
-       </controller>
     </extension>
     <extension
           point="org.eclipse.ui.preferencePages">

@@ -16,6 +16,8 @@ package de.cau.cs.kieler.kicool.ui.klighd.internal.model;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import de.cau.cs.kieler.kicool.kitt.tracing.Tracing;
+import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingChain;
 import de.cau.cs.kieler.klighd.ui.view.model.MessageModel;
 
 /**
@@ -77,26 +79,22 @@ public class ModelChain {
      * @param selection
      *            the selected transformations
      */
-//    public ModelChain(final Object sourceModel, final CompilationResult compilationResult,
-//            final String modelName, final KielerCompilerSelection selection) {
-//        models.add(sourceModel);
-//        collapse.put(sourceModel, false);
-//        for (IntermediateResult ir : compilationResult.getTransformationIntermediateResults()) {
-//            Object model = ir.getResult();
-//            if (model instanceof String) {
-//                model = new CodePlaceHolder(modelName, (String) model);
-//            } else if (model == null) {
-//                model = new MessageModel("Missing Model");
-//            }
-//            if (!models.contains(model)) {
-//                tranformations.add(ir.getId());
-//                models.add(model);
-//                collapse.put(model, false); // true
-//            }
-//        }
-//        collapse.put(models.getLast(), false);
-//        blankMode = false;
-//    }
+    public ModelChain(final Tracing tracing, final String modelName, final Object selection) {
+        TracingChain chain = tracing.getTracingChain();
+        for (Object model : chain.getModels()) {
+            if (chain.getInternalMappins().containsKey(model)) {
+                tranformations.add(chain.getInternalMappins().get(model).getTitle());
+            }
+            if (model instanceof String) {
+                model = new CodePlaceHolder(modelName, (String) model);
+            } else if (model == null) {
+                model = new MessageModel("Missing Model");
+            }
+            models.add(model);
+            collapse.put(model, false);
+        }
+        blankMode = false;
+    }
 
     /**
      * Returns the selected model in this chain.

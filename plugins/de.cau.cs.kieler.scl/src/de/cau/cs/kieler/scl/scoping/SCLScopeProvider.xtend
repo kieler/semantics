@@ -28,19 +28,18 @@ import org.eclipse.xtext.scoping.Scopes
 class SCLScopeProvider extends KExtScopeProvider {
 
     override getScope(EObject context, EReference reference) {
-        switch(context) {
-            Goto: return getScopeForLabel(context, reference)
-            ModuleCall: return getScopeForModule(context, reference)
+        return switch(context) {
+            Goto: getScopeForLabel(context, reference)
+            ModuleCall: getScopeForModule(context, reference)
+            default: super.getScope(context, reference)
         }
-        
-        return super.getScope(context, reference)
     }
     
     protected def IScope getScopeForLabel(Goto goto, EReference reference) {
         var EObject module = goto
         while (module != null) {
             if (module instanceof Module) {
-                return Scopes.scopeFor(module.eAllContents.filter(Label).toIterable)
+                return Scopes.scopeFor(module.eAllContents.filter(Label).toList)
             }
             module = module.eContainer
         }

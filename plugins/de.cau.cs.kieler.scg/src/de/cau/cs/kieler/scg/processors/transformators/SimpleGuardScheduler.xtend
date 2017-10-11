@@ -14,25 +14,24 @@
 package de.cau.cs.kieler.scg.processors.transformators
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
+import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.scg.ControlDependency
+import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.ExpressionDependency
 import de.cau.cs.kieler.scg.GuardDependency
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import java.util.LinkedHashSet
-import java.util.Set
-import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.scg.DataDependency
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.kicool.environments.Environment
-import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import java.util.List
+import java.util.Set
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
@@ -40,7 +39,7 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
  * @kieler.design 2017-08-07 proposed 
  * @kieler.rating 2017-08-07 proposed yellow
  */
-class SimpleGuardScheduler extends Processor<SCGraphs, SCGraphs> {
+class SimpleGuardScheduler extends InplaceProcessor<SCGraphs> {
         
     @Inject extension KEffectsExtensions
     @Inject extension SCGDependencyExtensions
@@ -52,10 +51,6 @@ class SimpleGuardScheduler extends Processor<SCGraphs, SCGraphs> {
     
     override getName() {
         "Scheduler V2"
-    }
-    
-    override getType() {
-        ProcessorType.TRANSFORMATOR
     }
     
     override process() {

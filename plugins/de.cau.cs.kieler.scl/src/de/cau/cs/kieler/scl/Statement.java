@@ -14,5 +14,5 @@ import de.cau.cs.kieler.annotations.Annotatable;
  * @model abstract="true"
  * @generated
  */
-public interface Statement extends Annotatable {
+public interface Statement extends Annotatable, SequencePart {
 } // Statement

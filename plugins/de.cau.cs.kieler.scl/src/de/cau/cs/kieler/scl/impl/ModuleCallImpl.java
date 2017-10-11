@@ -12,6 +12,7 @@ import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 import de.cau.cs.kieler.scl.Module;
 import de.cau.cs.kieler.scl.ModuleCall;
 import de.cau.cs.kieler.scl.SCLPackage;
+import de.cau.cs.kieler.scl.SequencePart;
 import de.cau.cs.kieler.scl.Statement;
 
 import java.util.Collection;
@@ -41,6 +42,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.scl.impl.ModuleCallImpl#getSchedule <em>Schedule</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.impl.ModuleCallImpl#getParameters <em>Parameters</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.impl.ModuleCallImpl#getAnnotations <em>Annotations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.impl.ModuleCallImpl#isSemicolon <em>Semicolon</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.impl.ModuleCallImpl#getModule <em>Module</em>}</li>
  * </ul>
  *
@@ -76,6 +78,26 @@ public class ModuleCallImpl extends MinimalEObjectImpl.Container implements Modu
      * @ordered
      */
     protected EList<Annotation> annotations;
+
+    /**
+     * The default value of the '{@link #isSemicolon() <em>Semicolon</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isSemicolon()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean SEMICOLON_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isSemicolon() <em>Semicolon</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isSemicolon()
+     * @generated
+     * @ordered
+     */
+    protected boolean semicolon = SEMICOLON_EDEFAULT;
 
     /**
      * The cached value of the '{@link #getModule() <em>Module</em>}' reference.
@@ -140,6 +162,27 @@ public class ModuleCallImpl extends MinimalEObjectImpl.Container implements Modu
             annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, SCLPackage.MODULE_CALL__ANNOTATIONS);
         }
         return annotations;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isSemicolon() {
+        return semicolon;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setSemicolon(boolean newSemicolon) {
+        boolean oldSemicolon = semicolon;
+        semicolon = newSemicolon;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCLPackage.MODULE_CALL__SEMICOLON, oldSemicolon, semicolon));
     }
 
     /**
@@ -212,6 +255,8 @@ public class ModuleCallImpl extends MinimalEObjectImpl.Container implements Modu
                 return getParameters();
             case SCLPackage.MODULE_CALL__ANNOTATIONS:
                 return getAnnotations();
+            case SCLPackage.MODULE_CALL__SEMICOLON:
+                return isSemicolon();
             case SCLPackage.MODULE_CALL__MODULE:
                 if (resolve) return getModule();
                 return basicGetModule();
@@ -240,6 +285,9 @@ public class ModuleCallImpl extends MinimalEObjectImpl.Container implements Modu
                 getAnnotations().clear();
                 getAnnotations().addAll((Collection<? extends Annotation>)newValue);
                 return;
+            case SCLPackage.MODULE_CALL__SEMICOLON:
+                setSemicolon((Boolean)newValue);
+                return;
             case SCLPackage.MODULE_CALL__MODULE:
                 setModule((Module)newValue);
                 return;
@@ -264,6 +312,9 @@ public class ModuleCallImpl extends MinimalEObjectImpl.Container implements Modu
             case SCLPackage.MODULE_CALL__ANNOTATIONS:
                 getAnnotations().clear();
                 return;
+            case SCLPackage.MODULE_CALL__SEMICOLON:
+                setSemicolon(SEMICOLON_EDEFAULT);
+                return;
             case SCLPackage.MODULE_CALL__MODULE:
                 setModule((Module)null);
                 return;
@@ -285,6 +336,8 @@ public class ModuleCallImpl extends MinimalEObjectImpl.Container implements Modu
                 return parameters != null && !parameters.isEmpty();
             case SCLPackage.MODULE_CALL__ANNOTATIONS:
                 return annotations != null && !annotations.isEmpty();
+            case SCLPackage.MODULE_CALL__SEMICOLON:
+                return semicolon != SEMICOLON_EDEFAULT;
             case SCLPackage.MODULE_CALL__MODULE:
                 return module != null;
         }
@@ -301,6 +354,12 @@ public class ModuleCallImpl extends MinimalEObjectImpl.Container implements Modu
         if (baseClass == Annotatable.class) {
             switch (derivedFeatureID) {
                 case SCLPackage.MODULE_CALL__ANNOTATIONS: return AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+                default: return -1;
+            }
+        }
+        if (baseClass == SequencePart.class) {
+            switch (derivedFeatureID) {
+                case SCLPackage.MODULE_CALL__SEMICOLON: return SCLPackage.SEQUENCE_PART__SEMICOLON;
                 default: return -1;
             }
         }
@@ -325,12 +384,34 @@ public class ModuleCallImpl extends MinimalEObjectImpl.Container implements Modu
                 default: return -1;
             }
         }
+        if (baseClass == SequencePart.class) {
+            switch (baseFeatureID) {
+                case SCLPackage.SEQUENCE_PART__SEMICOLON: return SCLPackage.MODULE_CALL__SEMICOLON;
+                default: return -1;
+            }
+        }
         if (baseClass == Statement.class) {
             switch (baseFeatureID) {
                 default: return -1;
             }
         }
         return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (semicolon: ");
+        result.append(semicolon);
+        result.append(')');
+        return result.toString();
     }
 
 } //ModuleCallImpl

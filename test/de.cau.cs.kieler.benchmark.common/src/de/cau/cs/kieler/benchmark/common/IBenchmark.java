@@ -57,10 +57,24 @@ public interface IBenchmark {
     public abstract void prepare(TestModelData data);
 
     /**
-     * Performs the benchmark on a model in the prepared instance.
+     * Performs a single benchmark run on a model in the prepared instance.
      * 
      * @param data the benchmark model data
-     * @return benchmark results
+     * @return benchmark result
      */
     public abstract Document perform(TestModelData data);
+    
+    /**
+     * Returns the number of runs this benchmark should perform.
+     * 
+     * @return number of iterations
+     */
+    public abstract int iterations();
+    
+    /**
+     * Computes the final result of all performed benchmark runs.
+     * 
+     * @return final benchmark result
+     */
+    public abstract Document calculateResult(Document[] results, TestModelData data);
 }

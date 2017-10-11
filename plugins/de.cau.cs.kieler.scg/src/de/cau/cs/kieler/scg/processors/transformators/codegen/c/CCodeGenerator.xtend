@@ -49,7 +49,7 @@ class CCodeGenerator extends Processor<SCGraphs, CodeContainer> {
     }
     
     override getType() {
-        ProcessorType.TRANSFORMATOR
+        ProcessorType.EXOGENOUS_TRANSFORMATOR
     }
     
     protected def SCGCodeGeneratorModule createCodeGenetatorModule() {

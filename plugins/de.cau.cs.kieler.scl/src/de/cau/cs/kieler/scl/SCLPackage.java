@@ -8,6 +8,7 @@ import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -218,13 +219,22 @@ public interface SCLPackage extends EPackage {
     int STATEMENT__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int STATEMENT__SEMICOLON = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+
+    /**
      * The number of structural features of the '<em>Statement</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int STATEMENT_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+    int STATEMENT_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.scl.impl.StatementContainerImpl <em>Statement Container</em>}' class.
@@ -283,6 +293,15 @@ public interface SCLPackage extends EPackage {
     int PAUSE__ANNOTATIONS = STATEMENT__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PAUSE__SEMICOLON = STATEMENT__SEMICOLON;
+
+    /**
      * The number of structural features of the '<em>Pause</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -309,6 +328,15 @@ public interface SCLPackage extends EPackage {
      * @ordered
      */
     int LABEL__ANNOTATIONS = STATEMENT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LABEL__SEMICOLON = STATEMENT__SEMICOLON;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -346,6 +374,15 @@ public interface SCLPackage extends EPackage {
      * @ordered
      */
     int GOTO__ANNOTATIONS = STATEMENT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GOTO__SEMICOLON = STATEMENT__SEMICOLON;
 
     /**
      * The feature id for the '<em><b>Target</b></em>' reference.
@@ -430,13 +467,22 @@ public interface SCLPackage extends EPackage {
     int ASSIGNMENT__SUB_REFERENCE = KEffectsPackage.ASSIGNMENT__SUB_REFERENCE;
 
     /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT__SEMICOLON = KEffectsPackage.ASSIGNMENT_FEATURE_COUNT + 0;
+
+    /**
      * The number of structural features of the '<em>Assignment</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ASSIGNMENT_FEATURE_COUNT = KEffectsPackage.ASSIGNMENT_FEATURE_COUNT + 0;
+    int ASSIGNMENT_FEATURE_COUNT = KEffectsPackage.ASSIGNMENT_FEATURE_COUNT + 1;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.scl.impl.ConditionalImpl <em>Conditional</em>}' class.
@@ -476,13 +522,22 @@ public interface SCLPackage extends EPackage {
     int CONDITIONAL__STATEMENTS = SCOPE__STATEMENTS;
 
     /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONDITIONAL__SEMICOLON = SCOPE_FEATURE_COUNT + 0;
+
+    /**
      * The feature id for the '<em><b>Expression</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int CONDITIONAL__EXPRESSION = SCOPE_FEATURE_COUNT + 0;
+    int CONDITIONAL__EXPRESSION = SCOPE_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Else</b></em>' containment reference.
@@ -491,7 +546,7 @@ public interface SCLPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CONDITIONAL__ELSE = SCOPE_FEATURE_COUNT + 1;
+    int CONDITIONAL__ELSE = SCOPE_FEATURE_COUNT + 2;
 
     /**
      * The number of structural features of the '<em>Conditional</em>' class.
@@ -500,7 +555,7 @@ public interface SCLPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CONDITIONAL_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 2;
+    int CONDITIONAL_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 3;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.scl.impl.ParallelImpl <em>Parallel</em>}' class.
@@ -520,6 +575,15 @@ public interface SCLPackage extends EPackage {
      * @ordered
      */
     int PARALLEL__ANNOTATIONS = STATEMENT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PARALLEL__SEMICOLON = STATEMENT__SEMICOLON;
 
     /**
      * The feature id for the '<em><b>Threads</b></em>' containment reference list.
@@ -577,13 +641,22 @@ public interface SCLPackage extends EPackage {
     int MODULE_CALL__ANNOTATIONS = KExpressionsPackage.CALL_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MODULE_CALL__SEMICOLON = KExpressionsPackage.CALL_FEATURE_COUNT + 1;
+
+    /**
      * The feature id for the '<em><b>Module</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MODULE_CALL__MODULE = KExpressionsPackage.CALL_FEATURE_COUNT + 1;
+    int MODULE_CALL__MODULE = KExpressionsPackage.CALL_FEATURE_COUNT + 2;
 
     /**
      * The number of structural features of the '<em>Module Call</em>' class.
@@ -592,7 +665,7 @@ public interface SCLPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MODULE_CALL_FEATURE_COUNT = KExpressionsPackage.CALL_FEATURE_COUNT + 2;
+    int MODULE_CALL_FEATURE_COUNT = KExpressionsPackage.CALL_FEATURE_COUNT + 3;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.scl.impl.ThreadImpl <em>Thread</em>}' class.
@@ -660,6 +733,15 @@ public interface SCLPackage extends EPackage {
     int SCOPE_STATEMENT__ANNOTATIONS = STATEMENT__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCOPE_STATEMENT__SEMICOLON = STATEMENT__SEMICOLON;
+
+    /**
      * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -724,13 +806,51 @@ public interface SCLPackage extends EPackage {
     int ELSE_SCOPE__STATEMENTS = SCOPE__STATEMENTS;
 
     /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ELSE_SCOPE__SEMICOLON = SCOPE_FEATURE_COUNT + 0;
+
+    /**
      * The number of structural features of the '<em>Else Scope</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ELSE_SCOPE_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 0;
+    int ELSE_SCOPE_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 1;
+
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scl.SequencePart <em>Sequence Part</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scl.SequencePart
+     * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getSequencePart()
+     * @generated
+     */
+    int SEQUENCE_PART = 15;
+
+    /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SEQUENCE_PART__SEMICOLON = 0;
+
+    /**
+     * The number of structural features of the '<em>Sequence Part</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SEQUENCE_PART_FEATURE_COUNT = 1;
 
 
     /**
@@ -961,6 +1081,27 @@ public interface SCLPackage extends EPackage {
     EClass getElseScope();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scl.SequencePart <em>Sequence Part</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Sequence Part</em>'.
+     * @see de.cau.cs.kieler.scl.SequencePart
+     * @generated
+     */
+    EClass getSequencePart();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scl.SequencePart#isSemicolon <em>Semicolon</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Semicolon</em>'.
+     * @see de.cau.cs.kieler.scl.SequencePart#isSemicolon()
+     * @see #getSequencePart()
+     * @generated
+     */
+    EAttribute getSequencePart_Semicolon();
+
+    /**
      * Returns the factory that creates the instances of the model.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1187,6 +1328,24 @@ public interface SCLPackage extends EPackage {
          * @generated
          */
         EClass ELSE_SCOPE = eINSTANCE.getElseScope();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scl.SequencePart <em>Sequence Part</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scl.SequencePart
+         * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getSequencePart()
+         * @generated
+         */
+        EClass SEQUENCE_PART = eINSTANCE.getSequencePart();
+
+        /**
+         * The meta object literal for the '<em><b>Semicolon</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute SEQUENCE_PART__SEMICOLON = eINSTANCE.getSequencePart_Semicolon();
 
     }
 

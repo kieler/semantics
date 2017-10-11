@@ -112,9 +112,6 @@
               class="de.cau.cs.kieler.sccharts.processors.transformators.Const">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.Snapshot">
-        </Processor>
-        <Processor
               class="de.cau.cs.kieler.sccharts.processors.transformators.Reference">
         </Processor>
         <Processor

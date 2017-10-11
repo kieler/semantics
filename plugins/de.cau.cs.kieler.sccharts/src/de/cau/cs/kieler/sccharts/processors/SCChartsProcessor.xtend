@@ -15,16 +15,12 @@ package de.cau.cs.kieler.sccharts.processors
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 
 /**
  * @author ssm
  * @kieler.design 2017-07-09 proposed
  * @kieler.rating 2017-07-09 proposed yellow  
  */
-abstract class SCChartsProcessor extends Processor<SCCharts, SCCharts> {
-    
-    override getType() {
-        ProcessorType.TRANSFORMATOR
-    }
-    
+abstract class SCChartsProcessor extends InplaceProcessor<SCCharts> {
 }

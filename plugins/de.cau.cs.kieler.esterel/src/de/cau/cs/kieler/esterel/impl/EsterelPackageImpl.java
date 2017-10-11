@@ -684,7 +684,11 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
         isInited = true;
 
         // Initialize simple dependencies
+        AnnotationsPackage.eINSTANCE.eClass();
+        KEffectsPackage.eINSTANCE.eClass();
+        KExpressionsPackage.eINSTANCE.eClass();
         SCLPackage.eINSTANCE.eClass();
+        KExtPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
         theEsterelPackage.createPackageContents();

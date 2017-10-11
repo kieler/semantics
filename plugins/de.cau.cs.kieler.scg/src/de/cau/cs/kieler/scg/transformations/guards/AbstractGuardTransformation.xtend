@@ -17,8 +17,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 
@@ -29,7 +28,7 @@ import de.cau.cs.kieler.scg.SCGraphs
  * @kieler.rating 2016-02-22 proposed yellow
  */
 
-abstract class AbstractGuardTransformation extends Processor<SCGraphs, SCGraphs> {
+abstract class AbstractGuardTransformation extends InplaceProcessor<SCGraphs> {
     
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions    
@@ -42,10 +41,6 @@ abstract class AbstractGuardTransformation extends Processor<SCGraphs, SCGraphs>
         for (scg : model.scgs) {
             scg.transform
         }
-    }
-    
-    override getType() {
-        ProcessorType.TRANSFORMATOR
     }
     
     abstract def SCGraph transform(SCGraph scg)   

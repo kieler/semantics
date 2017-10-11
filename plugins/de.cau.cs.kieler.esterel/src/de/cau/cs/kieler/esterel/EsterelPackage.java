@@ -1375,6 +1375,15 @@ public interface EsterelPackage extends EPackage {
     int ESTEREL_STATEMENT__ANNOTATIONS = SCLPackage.STATEMENT__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ESTEREL_STATEMENT__SEMICOLON = SCLPackage.STATEMENT__SEMICOLON;
+
+    /**
      * The number of structural features of the '<em>Statement</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1401,6 +1410,15 @@ public interface EsterelPackage extends EPackage {
      * @ordered
      */
     int ESTEREL_PARALLEL__ANNOTATIONS = ESTEREL_STATEMENT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ESTEREL_PARALLEL__SEMICOLON = ESTEREL_STATEMENT__SEMICOLON;
 
     /**
      * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -1438,6 +1456,15 @@ public interface EsterelPackage extends EPackage {
      * @ordered
      */
     int ESTEREL_THREAD__ANNOTATIONS = ESTEREL_STATEMENT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ESTEREL_THREAD__SEMICOLON = ESTEREL_STATEMENT__SEMICOLON;
 
     /**
      * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -1486,6 +1513,15 @@ public interface EsterelPackage extends EPackage {
     int NOTHING__ANNOTATIONS = ESTEREL_STATEMENT__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int NOTHING__SEMICOLON = ESTEREL_STATEMENT__SEMICOLON;
+
+    /**
      * The number of structural features of the '<em>Nothing</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1512,6 +1548,15 @@ public interface EsterelPackage extends EPackage {
      * @ordered
      */
     int HALT__ANNOTATIONS = ESTEREL_STATEMENT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HALT__SEMICOLON = ESTEREL_STATEMENT__SEMICOLON;
 
     /**
      * The number of structural features of the '<em>Halt</em>' class.
@@ -1551,13 +1596,22 @@ public interface EsterelPackage extends EPackage {
     int BLOCK__STATEMENTS = SCLPackage.STATEMENT_CONTAINER__STATEMENTS;
 
     /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BLOCK__SEMICOLON = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
+
+    /**
      * The number of structural features of the '<em>Block</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int BLOCK_FEATURE_COUNT = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
+    int BLOCK_FEATURE_COUNT = SCLPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.esterel.impl.EmitImpl <em>Emit</em>}' class.
@@ -1577,6 +1631,15 @@ public interface EsterelPackage extends EPackage {
      * @ordered
      */
     int EMIT__ANNOTATIONS = ESTEREL_STATEMENT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EMIT__SEMICOLON = ESTEREL_STATEMENT__SEMICOLON;
 
     /**
      * The feature id for the '<em><b>Signal</b></em>' reference.
@@ -1625,6 +1688,15 @@ public interface EsterelPackage extends EPackage {
     int SUSTAIN__ANNOTATIONS = ESTEREL_STATEMENT__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SUSTAIN__SEMICOLON = ESTEREL_STATEMENT__SEMICOLON;
+
+    /**
      * The feature id for the '<em><b>Signal</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1669,6 +1741,15 @@ public interface EsterelPackage extends EPackage {
      * @ordered
      */
     int PROCEDURE_CALL__ANNOTATIONS = ESTEREL_STATEMENT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PROCEDURE_CALL__SEMICOLON = ESTEREL_STATEMENT__SEMICOLON;
 
     /**
      * The feature id for the '<em><b>Procedure</b></em>' reference.
@@ -1724,6 +1805,15 @@ public interface EsterelPackage extends EPackage {
      * @ordered
      */
     int PRESENT__ANNOTATIONS = ESTEREL_STATEMENT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRESENT__SEMICOLON = ESTEREL_STATEMENT__SEMICOLON;
 
     /**
      * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -1836,6 +1926,15 @@ public interface EsterelPackage extends EPackage {
     int IF_TEST__ANNOTATIONS = ESTEREL_STATEMENT__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IF_TEST__SEMICOLON = ESTEREL_STATEMENT__SEMICOLON;
+
+    /**
      * The feature id for the '<em><b>Statements</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1900,6 +1999,15 @@ public interface EsterelPackage extends EPackage {
     int ELS_IF__ANNOTATIONS = ESTEREL_STATEMENT__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ELS_IF__SEMICOLON = ESTEREL_STATEMENT__SEMICOLON;
+
+    /**
      * The feature id for the '<em><b>Statements</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1946,6 +2054,15 @@ public interface EsterelPackage extends EPackage {
     int LOOP__ANNOTATIONS = ESTEREL_STATEMENT__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LOOP__SEMICOLON = ESTEREL_STATEMENT__SEMICOLON;
+
+    /**
      * The feature id for the '<em><b>Statements</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1990,6 +2107,15 @@ public interface EsterelPackage extends EPackage {
      * @ordered
      */
     int REPEAT__ANNOTATIONS = ESTEREL_STATEMENT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REPEAT__SEMICOLON = ESTEREL_STATEMENT__SEMICOLON;
 
     /**
      * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -2045,6 +2171,15 @@ public interface EsterelPackage extends EPackage {
      * @ordered
      */
     int ABORT__ANNOTATIONS = ESTEREL_STATEMENT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ABORT__SEMICOLON = ESTEREL_STATEMENT__SEMICOLON;
 
     /**
      * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -2166,6 +2301,15 @@ public interface EsterelPackage extends EPackage {
     int AWAIT__ANNOTATIONS = ESTEREL_STATEMENT__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int AWAIT__SEMICOLON = ESTEREL_STATEMENT__SEMICOLON;
+
+    /**
      * The feature id for the '<em><b>Statements</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2221,6 +2365,15 @@ public interface EsterelPackage extends EPackage {
     int EVERY_DO__ANNOTATIONS = ESTEREL_STATEMENT__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EVERY_DO__SEMICOLON = ESTEREL_STATEMENT__SEMICOLON;
+
+    /**
      * The feature id for the '<em><b>Statements</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2265,6 +2418,15 @@ public interface EsterelPackage extends EPackage {
      * @ordered
      */
     int SUSPEND__ANNOTATIONS = ESTEREL_STATEMENT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SUSPEND__SEMICOLON = ESTEREL_STATEMENT__SEMICOLON;
 
     /**
      * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -2320,6 +2482,15 @@ public interface EsterelPackage extends EPackage {
      * @ordered
      */
     int TRAP__ANNOTATIONS = ESTEREL_STATEMENT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TRAP__SEMICOLON = ESTEREL_STATEMENT__SEMICOLON;
 
     /**
      * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -2423,6 +2594,15 @@ public interface EsterelPackage extends EPackage {
     int EXIT__ANNOTATIONS = ESTEREL_STATEMENT__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXIT__SEMICOLON = ESTEREL_STATEMENT__SEMICOLON;
+
+    /**
      * The feature id for the '<em><b>Trap</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2467,6 +2647,15 @@ public interface EsterelPackage extends EPackage {
      * @ordered
      */
     int EXEC__ANNOTATIONS = ESTEREL_STATEMENT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXEC__SEMICOLON = ESTEREL_STATEMENT__SEMICOLON;
 
     /**
      * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -2624,6 +2813,15 @@ public interface EsterelPackage extends EPackage {
     int LOCAL_SIGNAL_DECLARATION__ANNOTATIONS = ESTEREL_STATEMENT__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LOCAL_SIGNAL_DECLARATION__SEMICOLON = ESTEREL_STATEMENT__SEMICOLON;
+
+    /**
      * The feature id for the '<em><b>Statements</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2668,6 +2866,15 @@ public interface EsterelPackage extends EPackage {
      * @ordered
      */
     int LOCAL_VARIABLE_DECLARATION__ANNOTATIONS = ESTEREL_STATEMENT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LOCAL_VARIABLE_DECLARATION__SEMICOLON = ESTEREL_STATEMENT__SEMICOLON;
 
     /**
      * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -2815,6 +3022,15 @@ public interface EsterelPackage extends EPackage {
      * @ordered
      */
     int RUN__ANNOTATIONS = ESTEREL_STATEMENT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RUN__SEMICOLON = ESTEREL_STATEMENT__SEMICOLON;
 
     /**
      * The feature id for the '<em><b>Module</b></em>' containment reference.
@@ -3203,6 +3419,15 @@ public interface EsterelPackage extends EPackage {
      * @ordered
      */
     int DO__ANNOTATIONS = ESTEREL_STATEMENT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DO__SEMICOLON = ESTEREL_STATEMENT__SEMICOLON;
 
     /**
      * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -3709,6 +3934,15 @@ public interface EsterelPackage extends EPackage {
     int SC_EST_STATEMENT__ANNOTATIONS = SCLPackage.STATEMENT__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SC_EST_STATEMENT__SEMICOLON = SCLPackage.STATEMENT__SEMICOLON;
+
+    /**
      * The number of structural features of the '<em>SC Est Statement</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3735,6 +3969,15 @@ public interface EsterelPackage extends EPackage {
      * @ordered
      */
     int UN_EMIT__ANNOTATIONS = SC_EST_STATEMENT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int UN_EMIT__SEMICOLON = SC_EST_STATEMENT__SEMICOLON;
 
     /**
      * The feature id for the '<em><b>Signal</b></em>' reference.
@@ -3772,6 +4015,15 @@ public interface EsterelPackage extends EPackage {
      * @ordered
      */
     int SET__ANNOTATIONS = SC_EST_STATEMENT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SET__SEMICOLON = SC_EST_STATEMENT__SEMICOLON;
 
     /**
      * The feature id for the '<em><b>Signal</b></em>' reference.
