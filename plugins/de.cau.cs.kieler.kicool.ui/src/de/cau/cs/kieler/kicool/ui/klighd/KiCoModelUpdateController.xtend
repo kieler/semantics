@@ -65,6 +65,7 @@ import de.cau.cs.kieler.klighd.ui.view.controllers.EcoreXtextSaveUpdateControlle
 import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * Controller for the ModelView to handle models interacting with KiCo.
@@ -148,6 +149,10 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
     /** The action for toggling chain display mode. */
     private var Action chainToggleAction
     private static final boolean CHAIN_TOGGLE_ACTION_DEFAULT_STATE = false
+    
+    // -- External Contributions --
+    @Accessors private static val externalToolbarContributions = <IAction>newLinkedList
+    @Accessors private static val externalMenuContributions = <IAction>newLinkedList
 
     // -- Model --
 
@@ -322,11 +327,13 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         toolBar.add(compilerToggleAction)
         toolBar.add(syncCompilerToggleAction)
         toolBar.add(sideBySideToggleAction)
+        externalToolbarContributions.forEach[toolBar.add(it)]
 
         menu.add(new Separator())
         menu.add(syncEditorToggleAction)
         menu.add(diagramPlaceholderToggleAction)
         menu.add(chainToggleAction)
+        externalMenuContributions.forEach[menu.add(it)]
     }
 
     /**
