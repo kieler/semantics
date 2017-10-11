@@ -10,7 +10,7 @@
  <extension
        point="de.cau.cs.kieler.kicool.processor">
     <Processor
-          class="de.cau.cs.kieler.railsl.compilation.RailSLWrapper">
+          class="de.cau.cs.kieler.railsl.compilation.RailSLTransformation">
     </Processor>
  </extension>
  <extension
