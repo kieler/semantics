@@ -65,7 +65,7 @@ class RailSLTransformation extends Processor<Program, SCCharts> implements Trace
     }
     
     override getType() {
-        ProcessorType.TRANSFORMATOR
+        ProcessorType.EXOGENOUS_TRANSFORMATOR
     }
         
     override process() {
