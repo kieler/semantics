@@ -66,7 +66,7 @@ class RestrictedSCG2SCL extends Processor<SCGraphs, SCLProgram> {
     }
     
     override getType() {
-        return ProcessorType.TRANSFORMATOR
+        return ProcessorType.EXOGENOUS_TRANSFORMATOR
     }
     
     override process() {

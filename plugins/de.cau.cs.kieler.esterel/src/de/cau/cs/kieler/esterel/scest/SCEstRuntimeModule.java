@@ -3,6 +3,9 @@
  */
 package de.cau.cs.kieler.esterel.scest;
 
+import org.eclipse.xtext.resource.XtextResource;
+
+import de.cau.cs.kieler.esterel.scest.serializer.SCEstSerializer;
 import de.cau.cs.kieler.esterel.scest.validation.SCEstValidator;
 
 /**
@@ -12,5 +15,13 @@ public class SCEstRuntimeModule extends de.cau.cs.kieler.esterel.scest.AbstractS
     @org.eclipse.xtext.service.SingletonBinding(eager=true) public Class<? extends 
             de.cau.cs.kieler.esterel.scest.validation.SCEstValidator> bindSCEstValidator() {
         return SCEstValidator.class;
+    }
+    
+    public Class<? extends XtextResource> bindXtextResource() {
+        return SCEstResource.class;
+    }
+    
+    public Class<? extends org.eclipse.xtext.serializer.ISerializer> bindISerializer() {
+        return SCEstSerializer.class;
     }
 }

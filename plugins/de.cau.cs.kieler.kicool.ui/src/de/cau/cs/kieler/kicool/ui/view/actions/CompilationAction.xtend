@@ -26,6 +26,8 @@ import org.eclipse.xtext.resource.XtextResource
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.ToggleProcessorOnOffAction
 import de.cau.cs.kieler.kicool.environments.Environment
+import org.eclipse.ui.IEditorPart
+import static extension de.cau.cs.kieler.kicool.ui.view.EditPartSystemManager.*
 
 /**
  * @author ssm
@@ -56,12 +58,14 @@ class CompilationAction {
     }
     
     def void invokeCompile() {
-        var model = getEditorModel
+        val editor = view.editPartSystemManager.activeEditor
+        var Object model = editor.retrieveModel
         if (model == null) {
             model = CompilationActionSimSalabim.SIM_MODEL
         }
         
-        val cc = Compile.createCompilationContext(view.activeSystem, model)
+        val cc = Compile.createCompilationContext(view.editPartSystemManager.activeSystem, model)
+        cc.inputEditor = editor
         
         if (view.compileInplaceToggle.checked) {
             cc.startEnvironment.setProperty(Environment.INPLACE, true)
@@ -89,22 +93,15 @@ class CompilationAction {
         }
     }
     
-    protected def Object getEditorModel() {
-        val editor = CompilerView.getActiveEditor
-        
+    static def retrieveModel(IEditorPart editor) {
         if (editor instanceof XtextEditor) {
-            return editor.retrieveModelFromXtextEditor
-        }        
-    }
-    
-    static def retrieveModelFromXtextEditor(XtextEditor editor) {
-        val doc = editor.getDocument
-        var EObject m = doc.readOnly(new IUnitOfWork<EObject, XtextResource>() {
-            override exec(XtextResource state) throws Exception {
-                state.relink
-                state.contents.head
-            }
-        });   
-        return m     
+            val doc = editor.getDocument
+            var EObject m = doc.readOnly(new IUnitOfWork<EObject, XtextResource>() {
+                override exec(XtextResource state) throws Exception {
+                    state.contents.head
+                }
+            });   
+            return m 
+        }    
     }
 }

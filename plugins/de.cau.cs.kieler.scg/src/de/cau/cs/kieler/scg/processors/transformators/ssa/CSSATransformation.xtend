@@ -19,8 +19,7 @@ import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.DataDependency
@@ -51,7 +50,7 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class CSSATransformation extends Processor<SCGraphs, SCGraphs> implements Traceable {
+class CSSATransformation extends InplaceProcessor<SCGraphs> implements Traceable {
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -62,10 +61,6 @@ class CSSATransformation extends Processor<SCGraphs, SCGraphs> implements Tracea
 
     override getName() {
         return "CSSA"
-    }
-    
-    override getType() {
-        return ProcessorType.TRANSFORMATOR
     }
     
     override process() {

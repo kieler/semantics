@@ -12,26 +12,25 @@
  */
 package de.cau.cs.kieler.kicool.ui.view.actions
 
+import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.observer.AbstractContextNotification
+import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
+import de.cau.cs.kieler.kicool.compilation.observer.CompilationStart
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
+import de.cau.cs.kieler.kicool.compilation.observer.ProcessorProgress
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorStart
+import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.ui.KiCoolUIObserver
+import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelViewNotifier
+import de.cau.cs.kieler.kicool.ui.klighd.internal.model.CodePlaceHolder
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import org.eclipse.xtend.lib.annotations.Accessors
 
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.resetSystem
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.resetProcessor
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.updateProcessor
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.postUpdateProcessors
-import de.cau.cs.kieler.kicool.compilation.observer.ProcessorProgress
-import de.cau.cs.kieler.kicool.compilation.observer.CompilationStart
-import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
-
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelViewNotifier
-import de.cau.cs.kieler.kicool.ui.synthesis.Container
-import de.cau.cs.kieler.kicool.ui.klighd.internal.model.CodePlaceHolder
-import de.cau.cs.kieler.kicool.environments.Environment
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.resetProcessor
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.resetSystem
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.updateProcessor
+import static extension de.cau.cs.kieler.kicool.ui.view.EditPartSystemManager.*
 
 /**
  * @author ssm
@@ -63,7 +62,7 @@ class CompilationUpdate extends KiCoolUIObserver {
                     CompilationActionSimSalabim.simSalabim(notification)
                     
                     if (view.forwardResultToggle.checked) {
-                        val editor = view.editPartSystemManager.findEditorForSystem(notification.compilationContext.system)
+                        val editor = notification.compilationContext.inputEditor
                         var model = notification.environment.getProperty(Environment.MODEL)
                         view.editPartSystemManager.attachCompilationContextToEditorPart(editor, notification.compilationContext)
                         

@@ -13,8 +13,10 @@
  */
 package de.cau.cs.kieler.scl.extensions
 
+import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.scl.Conditional
 import de.cau.cs.kieler.scl.ElseScope
 import de.cau.cs.kieler.scl.Goto
@@ -25,14 +27,13 @@ import de.cau.cs.kieler.scl.SCLProgram
 import de.cau.cs.kieler.scl.Scope
 import de.cau.cs.kieler.scl.ScopeStatement
 import de.cau.cs.kieler.scl.Statement
+import de.cau.cs.kieler.scl.StatementContainer
 import java.util.LinkedList
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.util.EcoreUtil
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import com.google.inject.Inject
 
 /**
  * @author ssm, krat
@@ -205,7 +206,7 @@ class SCLExtensions {
         val replaceBy = <Pair<Label, Label>>newLinkedList
         for (label : scope.eAllContents.toList.filter(Label)) {
             var EList<Statement> stmList
-            var parent = label.eContainer as Scope
+            var parent = label.eContainer as StatementContainer
 
             // Continue until Thread or SCLProgram
             var continue = true

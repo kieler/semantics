@@ -13,5 +13,5 @@ package de.cau.cs.kieler.scl;
  * @model
  * @generated
  */
-public interface ElseScope extends Scope {
+public interface ElseScope extends Scope, SequencePart {
 } // ElseScope

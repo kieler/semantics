@@ -57,10 +57,6 @@ class SimulationVisualization extends SCChartsProcessor {
     override process() {
         setModel(SCChartsFactory.eINSTANCE.createSCCharts => [rootStates += model.rootStates.head.transform])
     }
-    
-    override getType() {
-        ProcessorType.TRANSFORMATOR
-    }
 
 //    override getExpandsFeatureId() {
 //        return SCChartsFeature::SIMULATIONVISUALIZATION_ID

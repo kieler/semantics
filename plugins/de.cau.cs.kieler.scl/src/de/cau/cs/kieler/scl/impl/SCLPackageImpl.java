@@ -24,6 +24,7 @@ import de.cau.cs.kieler.scl.SCLPackage;
 import de.cau.cs.kieler.scl.SCLProgram;
 import de.cau.cs.kieler.scl.Scope;
 import de.cau.cs.kieler.scl.ScopeStatement;
+import de.cau.cs.kieler.scl.SequencePart;
 import de.cau.cs.kieler.scl.Statement;
 import de.cau.cs.kieler.scl.StatementContainer;
 
@@ -147,6 +148,13 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
     private EClass elseScopeEClass = null;
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass sequencePartEClass = null;
+
+    /**
      * Creates an instance of the model <b>Package</b>, registered with
      * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
      * package URI value.
@@ -193,6 +201,9 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
         isInited = true;
 
         // Initialize simple dependencies
+        AnnotationsPackage.eINSTANCE.eClass();
+        KEffectsPackage.eINSTANCE.eClass();
+        KExpressionsPackage.eINSTANCE.eClass();
         KExtPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
@@ -413,6 +424,24 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getSequencePart() {
+        return sequencePartEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getSequencePart_Semicolon() {
+        return (EAttribute)sequencePartEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public SCLFactory getSCLFactory() {
         return (SCLFactory)getEFactoryInstance();
     }
@@ -472,6 +501,9 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
         scopeStatementEClass = createEClass(SCOPE_STATEMENT);
 
         elseScopeEClass = createEClass(ELSE_SCOPE);
+
+        sequencePartEClass = createEClass(SEQUENCE_PART);
+        createEAttribute(sequencePartEClass, SEQUENCE_PART__SEMICOLON);
     }
 
     /**
@@ -512,6 +544,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
         moduleEClass.getESuperTypes().add(this.getScope());
         moduleEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
         statementEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
+        statementEClass.getESuperTypes().add(this.getSequencePart());
         statementContainerEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         scopeEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         scopeEClass.getESuperTypes().add(theKExtPackage.getDeclarationScope());
@@ -531,6 +564,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
         scopeStatementEClass.getESuperTypes().add(this.getStatement());
         scopeStatementEClass.getESuperTypes().add(this.getScope());
         elseScopeEClass.getESuperTypes().add(this.getScope());
+        elseScopeEClass.getESuperTypes().add(this.getSequencePart());
 
         // Initialize classes and features; add operations and parameters
         initEClass(sclProgramEClass, SCLProgram.class, "SCLProgram", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -569,6 +603,9 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
         initEClass(scopeStatementEClass, ScopeStatement.class, "ScopeStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(elseScopeEClass, ElseScope.class, "ElseScope", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(sequencePartEClass, SequencePart.class, "SequencePart", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getSequencePart_Semicolon(), ecorePackage.getEBoolean(), "semicolon", "false", 1, 1, SequencePart.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Create resource
         createResource(eNS_URI);

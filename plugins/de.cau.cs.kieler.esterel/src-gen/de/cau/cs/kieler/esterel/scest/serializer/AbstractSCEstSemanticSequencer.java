@@ -710,35 +710,40 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 		else if (epackage == SCLPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case SCLPackage.ASSIGNMENT:
-				if (rule == grammarAccess.getSCLAssignmentRule()) {
+				if (rule == grammarAccess.getSCLStatementRule()
+						|| action == grammarAccess.getEsterelThreadAccess().getEsterelThreadStatementsAction_1_1_0()
+						|| rule == grammarAccess.getAssignmentRule()
+						|| rule == grammarAccess.getEffectRule()) {
 					sequence_Assignment(context, (de.cau.cs.kieler.scl.Assignment) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getMetaOrInstructionStatementRule()
-						|| rule == grammarAccess.getInstructionStatementRule()
+				else if (rule == grammarAccess.getStatementRule()
 						|| rule == grammarAccess.getEsterelThreadRule()
-						|| action == grammarAccess.getEsterelThreadAccess().getEsterelThreadStatementsAction_0_1_0()
-						|| rule == grammarAccess.getAssignmentRule()
-						|| rule == grammarAccess.getEsterelInstructionStatementRule()
 						|| rule == grammarAccess.getEsterelParallelRule()
-						|| action == grammarAccess.getEsterelParallelAccess().getEsterelParallelStatementsAction_1_0()
-						|| rule == grammarAccess.getStatementRule()
-						|| rule == grammarAccess.getEffectRule()) {
-					sequence_Assignment_Assignment(context, (de.cau.cs.kieler.scl.Assignment) semanticObject); 
+						|| action == grammarAccess.getEsterelParallelAccess().getEsterelParallelStatementsAction_1_0()) {
+					sequence_Assignment_EsterelAssignment(context, (de.cau.cs.kieler.scl.Assignment) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getInstructionStatementRule()
+						|| action == grammarAccess.getEsterelThreadAccess().getEsterelThreadStatementsAction_0_1_0()
+						|| rule == grammarAccess.getEsterelInstructionStatementRule()
+						|| rule == grammarAccess.getEsterelAssignmentRule()) {
+					sequence_EsterelAssignment(context, (de.cau.cs.kieler.scl.Assignment) semanticObject); 
 					return; 
 				}
 				else break;
 			case SCLPackage.CONDITIONAL:
-				if (rule == grammarAccess.getMetaOrInstructionStatementRule()
-						|| rule == grammarAccess.getMetaStatementRule()
+				if (rule == grammarAccess.getConditionalRule()) {
+					sequence_Conditional(context, (Conditional) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getStatementRule()
+						|| rule == grammarAccess.getSCLStatementRule()
 						|| rule == grammarAccess.getEsterelThreadRule()
 						|| action == grammarAccess.getEsterelThreadAccess().getEsterelThreadStatementsAction_1_1_0()
 						|| rule == grammarAccess.getEsterelParallelRule()
-						|| action == grammarAccess.getEsterelParallelAccess().getEsterelParallelStatementsAction_1_0()
-						|| rule == grammarAccess.getStatementRule()
-						|| rule == grammarAccess.getSCLMetaStatementRule()
-						|| rule == grammarAccess.getConditionalRule()) {
-					sequence_Conditional(context, (Conditional) semanticObject); 
+						|| action == grammarAccess.getEsterelParallelAccess().getEsterelParallelStatementsAction_1_0()) {
+					sequence_Conditional_LegacyConditional(context, (Conditional) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getLegacyConditionalRule()) {
@@ -751,8 +756,8 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 					sequence_ElseScope(context, (ElseScope) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getLeagacyElseScopeRule()) {
-					sequence_LeagacyElseScope(context, (ElseScope) semanticObject); 
+				else if (rule == grammarAccess.getLegacyElseScopeRule()) {
+					sequence_LegacyElseScope(context, (ElseScope) semanticObject); 
 					return; 
 				}
 				else break;
@@ -779,8 +784,22 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 				sequence_Parallel(context, (Parallel) semanticObject); 
 				return; 
 			case SCLPackage.PAUSE:
-				sequence_Pause(context, (Pause) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getStatementRule()
+						|| rule == grammarAccess.getInstructionStatementRule()
+						|| rule == grammarAccess.getEsterelThreadRule()
+						|| action == grammarAccess.getEsterelThreadAccess().getEsterelThreadStatementsAction_0_1_0()
+						|| rule == grammarAccess.getEsterelInstructionStatementRule()
+						|| rule == grammarAccess.getEsterelParallelRule()
+						|| action == grammarAccess.getEsterelParallelAccess().getEsterelParallelStatementsAction_1_0()
+						|| rule == grammarAccess.getEsterelPauseRule()) {
+					sequence_EsterelPause(context, (Pause) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getPauseRule()) {
+					sequence_Pause(context, (Pause) semanticObject); 
+					return; 
+				}
+				else break;
 			case SCLPackage.SCL_PROGRAM:
 				sequence_SCLProgram(context, (SCLProgram) semanticObject); 
 				return; 
@@ -797,36 +816,25 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	/**
 	 * Contexts:
-	 *     Assignment returns Assignment
-	 *
-	 * Constraint:
-	 *     (annotations+=Annotation* reference=ValuedObjectReference operator=AssignOperator expression=Expression schedule+=ScheduleObjectReference*)
-	 */
-	protected void sequence_Assignment(ISerializationContext context, de.cau.cs.kieler.scl.Assignment semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     MetaOrInstructionStatement returns Assignment
-	 *     InstructionStatement returns Assignment
+	 *     Statement returns Assignment
 	 *     EsterelThread returns Assignment
-	 *     EsterelThread.EsterelThread_0_1_0 returns Assignment
-	 *     Assignment returns Assignment
-	 *     InstructionStatement returns Assignment
 	 *     EsterelParallel returns Assignment
 	 *     EsterelParallel.EsterelParallel_1_0 returns Assignment
-	 *     Statement returns Assignment
-	 *     Effect returns Assignment
 	 *
 	 * Constraint:
 	 *     (
 	 *         (reference=VariableReference expression=Expression) | 
-	 *         (annotations+=Annotation* reference=ValuedObjectReference operator=AssignOperator expression=Expression schedule+=ScheduleObjectReference*)
+	 *         (
+	 *             annotations+=Annotation* 
+	 *             reference=ValuedObjectReference 
+	 *             operator=AssignOperator 
+	 *             expression=Expression 
+	 *             schedule+=ScheduleObjectReference* 
+	 *             semicolon?=';'?
+	 *         )
 	 *     )
 	 */
-	protected void sequence_Assignment_Assignment(ISerializationContext context, de.cau.cs.kieler.scl.Assignment semanticObject) {
+	protected void sequence_Assignment_EsterelAssignment(ISerializationContext context, de.cau.cs.kieler.scl.Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -836,15 +844,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *     EsterelModule returns Module
 	 *
 	 * Constraint:
-	 *     (
-	 *         annotations+=Annotation* 
-	 *         name=ID 
-	 *         (declarations+=VariableDeclaration | declarations+=EsterelDeclaration)* 
-	 *         (
-	 *             statements+=EsterelParallel | 
-	 *             (statements+=InstructionStatement? (statements+=MetaStatement? statements+=InstructionStatement?)* statements+=Statement?)
-	 *         )?
-	 *     )
+	 *     (annotations+=Annotation* name=ID (declarations+=VariableDeclaration | declarations+=EsterelDeclaration)* statements+=EsterelParallel?)
 	 */
 	protected void sequence_EsterelModule(ISerializationContext context, Module semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -865,22 +865,15 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	/**
 	 * Contexts:
+	 *     Statement returns EsterelThread
 	 *     EsterelThread returns EsterelThread
 	 *     EsterelParallel returns EsterelThread
 	 *     EsterelParallel.EsterelParallel_1_0 returns EsterelThread
 	 *
 	 * Constraint:
 	 *     (
-	 *         (
-	 *             statements+=EsterelThread_EsterelThread_0_1_0 
-	 *             (statements+=InstructionStatement | statements+=MetaStatement)* 
-	 *             statements+=InstructionStatement?
-	 *         ) | 
-	 *         (
-	 *             statements+=EsterelThread_EsterelThread_1_1_0 
-	 *             (statements+=InstructionStatement | statements+=MetaStatement)* 
-	 *             statements+=InstructionStatement?
-	 *         )
+	 *         (statements+=EsterelThread_EsterelThread_0_1_0 statements+=EsterelThread) | 
+	 *         (statements+=EsterelThread_EsterelThread_1_1_0 statements+=EsterelThread)
 	 *     )
 	 */
 	protected void sequence_EsterelThread(ISerializationContext context, EsterelThread semanticObject) {
@@ -890,14 +883,13 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	/**
 	 * Contexts:
-	 *     MetaOrInstructionStatement returns Set
+	 *     Statement returns Set
 	 *     InstructionStatement returns Set
 	 *     EsterelThread returns Set
 	 *     EsterelThread.EsterelThread_0_1_0 returns Set
 	 *     Set returns Set
 	 *     EsterelParallel returns Set
 	 *     EsterelParallel.EsterelParallel_1_0 returns Set
-	 *     Statement returns Set
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* signal=[Signal|ID] expression=Expression)
@@ -909,14 +901,13 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	/**
 	 * Contexts:
-	 *     MetaOrInstructionStatement returns UnEmit
+	 *     Statement returns UnEmit
 	 *     InstructionStatement returns UnEmit
 	 *     EsterelThread returns UnEmit
 	 *     EsterelThread.EsterelThread_0_1_0 returns UnEmit
 	 *     UnEmit returns UnEmit
 	 *     EsterelParallel returns UnEmit
 	 *     EsterelParallel.EsterelParallel_1_0 returns UnEmit
-	 *     Statement returns UnEmit
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* signal=[Signal|ID])

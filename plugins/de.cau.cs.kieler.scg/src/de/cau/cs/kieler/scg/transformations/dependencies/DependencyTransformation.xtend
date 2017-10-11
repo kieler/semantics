@@ -16,9 +16,16 @@ package de.cau.cs.kieler.scg.transformations.dependencies
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import com.google.inject.Inject
+import com.google.inject.Injector
+import de.cau.cs.kieler.annotations.TypedStringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.DataDependencyType
@@ -26,13 +33,17 @@ import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGPlugin
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.scg.common.ValuedObjectNodeContainer
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.List
 import java.util.Map
 import java.util.Set
+
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.annotations.TypedStringAnnotation
@@ -40,6 +51,7 @@ import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import com.google.inject.Injector
+import de.cau.cs.kieler.kexpressions.keffects.util.ValuedObjectContainer
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.scg.SCGraphs
@@ -66,7 +78,7 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
  * @kieler.rating 2013-10-23 proposed yellow
  */
 
-class DependencyTransformation extends Processor<SCGraphs, SCGraphs> {
+class DependencyTransformation extends InplaceProcessor<SCGraphs> {
     
     @Inject extension SCGCoreExtensions
     @Inject extension SCGThreadExtensions
@@ -83,10 +95,6 @@ class DependencyTransformation extends Processor<SCGraphs, SCGraphs> {
     
     override getName() {
         "Dependency"
-    }
-    
-    override getType() {
-        ProcessorType.TRANSFORMATOR
     }
     
     override process() {

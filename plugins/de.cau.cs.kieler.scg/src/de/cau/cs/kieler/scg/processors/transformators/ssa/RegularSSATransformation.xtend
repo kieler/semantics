@@ -13,18 +13,17 @@ RegularSSATransformation.xtend * KIELER - Kiel Integrated Environment for Layout
 package de.cau.cs.kieler.scg.processors.transformators.ssa
 
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
+import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
 import de.cau.cs.kieler.scg.ssa.SSATransformationExtensions
 import de.cau.cs.kieler.scg.ssa.domtree.DominatorTree
 import javax.inject.Inject
-import de.cau.cs.kieler.scg.Fork
-import de.cau.cs.kieler.scg.Surface
 
 /**
  * The SSA transformation for SCGs
@@ -33,7 +32,7 @@ import de.cau.cs.kieler.scg.Surface
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class RegularSSATransformation extends Processor<SCGraphs, SCGraphs> implements Traceable {
+class RegularSSATransformation extends InplaceProcessor<SCGraphs> implements Traceable {
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -44,10 +43,6 @@ class RegularSSATransformation extends Processor<SCGraphs, SCGraphs> implements 
 
     override getName() {
         return "Sequential SSA"
-    }
-    
-    override getType() {
-        return ProcessorType.TRANSFORMATOR
     }
     
     override process() {

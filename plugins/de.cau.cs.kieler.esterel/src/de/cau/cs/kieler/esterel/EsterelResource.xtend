@@ -12,10 +12,10 @@
  */
 package de.cau.cs.kieler.esterel
 
+import com.google.inject.Inject
+import de.cau.cs.kieler.esterel.serializer.EsterelSytaxHelper
 import org.eclipse.xtext.linking.lazy.LazyLinkingResource
 import org.eclipse.xtext.parser.IParseResult
-import de.cau.cs.kieler.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.scl.StatementContainer
 
 /**
  * @author als
@@ -24,46 +24,17 @@ import de.cau.cs.kieler.scl.StatementContainer
  */
 class EsterelResource extends LazyLinkingResource {
     
-    extension EsterelFactory = EsterelFactory.eINSTANCE
+    @Inject extension EsterelSytaxHelper
     
     override updateInternalState(IParseResult parseResult) {
         val root = parseResult.rootASTElement
         
         if (root instanceof EsterelProgram) {
-            // Collect
-            val parallels = newLinkedList
-            val threads = newLinkedList
-            for (EObj : root.eAllContents.toIterable) {
-                switch(EObj) {
-                    EsterelParallel: parallels += EObj
-                    EsterelThread: threads += EObj
-                }
+            try {
+                root.convertUserFriendly
+            } catch (Exception e) {
+                e.printStackTrace
             }
-            
-            // Fix single statement threads
-            for (parallel : parallels) {
-                for (var i = 0; i < parallel.statements.size; i++) {
-                    val stm = parallel.statements.get(i)
-                    if (!(stm instanceof EsterelThread)) {
-                        val newThread = createEsterelThread => [
-                            statements += stm
-                        ]
-                        // Add because stm is already removed
-                        parallel.statements.add(i, newThread)
-                    }
-                }
-            }  
-            
-            // Fix threads w/o parallel
-            for (thread : threads) {
-                val parent = thread.eContainer
-                if (!(parent instanceof EsterelParallel)) {
-                    if (parent instanceof StatementContainer) {
-                        parent.statements.addAll(parent.statements.indexOf(thread), thread.statements)
-                        parent.statements.remove(thread)
-                    }
-                }
-            }      
         }
         super.updateInternalState(parseResult)
     }
@@ -74,12 +45,7 @@ class EsterelResource extends LazyLinkingResource {
         // Fix tick references
         val root = parseResult?.rootASTElement
         if (root instanceof EsterelProgram) {
-            if (root.tick === null) {
-                root.tick = KExpressionsFactory.eINSTANCE.createValuedObject => [
-                    name = "tick"
-                ]
-            }
-            root.eAllContents.filter(TickReference).forEach[valuedObject = root.tick]
+            root.fixTickReferences
         }        
     }
 }

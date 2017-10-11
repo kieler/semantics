@@ -69,10 +69,7 @@ class Abort extends SCChartsProcessor implements Traceable {
     override process() {
         setModel(model.transform)
     }
-    
-    override getType() {
-        ProcessorType.TRANSFORMATOR
-    }
+
 
 //    override getExpandsFeatureId() {
 //        return SCChartsFeature::ABORT_ID

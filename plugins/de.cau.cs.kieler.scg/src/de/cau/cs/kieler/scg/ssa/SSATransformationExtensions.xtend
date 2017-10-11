@@ -20,13 +20,20 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
@@ -35,21 +42,14 @@ import de.cau.cs.kieler.scg.ssa.domtree.DominatorTree
 import java.util.Collection
 import java.util.Deque
 import java.util.LinkedList
+import java.util.Map
+import org.eclipse.xtext.xbase.lib.Functions.Function2
 
 import static com.google.common.collect.Lists.*
 import static com.google.common.collect.Maps.*
 import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scg.Node
-import org.eclipse.xtext.xbase.lib.Functions.Function2
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.Parameter
-import java.util.Map
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * @author als
@@ -58,8 +58,6 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
  */
 class SSATransformationExtensions {
     
-    public static val ANNOTATION_IGNORE_DECLARATION = "de.cau.cs.kieler.scg.ssa.ignore"
-    
     @Inject extension SCGCoreExtensions
     @Inject extension SCGControlFlowExtensions
     @Inject extension KExpressionsValuedObjectExtensions
@@ -67,7 +65,7 @@ class SSATransformationExtensions {
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension SSACoreExtensions
-        @Inject extension KEffectsExtensions
+    @Inject extension KEffectsExtensions
     static val sCGFactory = ScgFactory.eINSTANCE
     
     def validate(Processor<?,?> processor, SCGraph scg) {
@@ -119,7 +117,7 @@ class SSATransformationExtensions {
         val work = newLinkedList
         val defsite = scg.defSite
 
-        for (vo : scg.variableDeclarations.filter[!hasAnnotation(ANNOTATION_IGNORE_DECLARATION)].map[valuedObjects].flatten.toList.reverseView) {
+        for (vo : scg.variableDeclarations.filter[!hasAnnotation(SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION)].map[valuedObjects].flatten.toList.reverseView) {
             work.addAll(defsite.get(vo))
             while (!work.empty) {
                 val workBlock = work.pop
@@ -166,8 +164,8 @@ class SSATransformationExtensions {
         for (sb : block.schedulingBlocks) {
             for (s : sb.nodes) {
                 if (!s.isSSA && (s instanceof Assignment || s instanceof Conditional)) {
-                    val expr = s.eContents.filter(Expression).head
-                    for (ref : expr.allReferences.filter[!valuedObject.variableDeclaration.input && !valuedObject.declaration.hasAnnotation("ignore")]) {//FIXME ignored input
+                    val expr = if (s instanceof Assignment) s.asAssignment.expression else s.asConditional.condition
+                    for (ref : expr.allReferences.filter[!valuedObject.variableDeclaration.input && !valuedObject.declaration.hasAnnotation(SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION)]) {//FIXME ignored input
                         val vo = ref.valuedObject
                         ref.valuedObject = ssaDecl.get(vo).valuedObjects.get(stack.get(vo).peek)
                     }
@@ -175,7 +173,7 @@ class SSATransformationExtensions {
                 if (s instanceof Assignment) {
                     // create new version
                     var vo = s.valuedObject
-                    if (!vo.declaration.hasAnnotation(ANNOTATION_IGNORE_DECLARATION)) {
+                    if (!vo.declaration.hasAnnotation(SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION)) {
                         val version = ssaDecl.get(vo).valuedObjects.size
                         val newVO = vo.copy
                         ssaDecl.get(vo).valuedObjects.add(newVO)

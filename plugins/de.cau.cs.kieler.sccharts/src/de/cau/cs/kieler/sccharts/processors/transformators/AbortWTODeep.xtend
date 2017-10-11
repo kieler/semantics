@@ -60,10 +60,7 @@ class AbortWTODeep extends SCChartsProcessor {
     override process() {
         setModel(model.transform)
     }
-    
-    override getType() {
-        ProcessorType.TRANSFORMATOR
-    }
+
 
 //    override getExpandsFeatureId() {
 //        throw new UnsupportedOperationException("TODO: auto-generated method stub")

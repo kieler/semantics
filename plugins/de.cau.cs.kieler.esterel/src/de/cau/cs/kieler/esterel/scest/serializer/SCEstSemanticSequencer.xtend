@@ -4,72 +4,87 @@
 package de.cau.cs.kieler.esterel.scest.serializer
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.esterel.EsterelParallel
 import de.cau.cs.kieler.esterel.EsterelThread
 import de.cau.cs.kieler.esterel.scest.services.SCEstGrammarAccess
 import org.eclipse.xtext.serializer.ISerializationContext
-import de.cau.cs.kieler.scl.Label
-import de.cau.cs.kieler.scl.Conditional
-import de.cau.cs.kieler.scl.Scope
-import de.cau.cs.kieler.scl.Statement
 
 class SCEstSemanticSequencer extends AbstractSCEstSemanticSequencer {
 
     @Inject
-    private SCEstGrammarAccess grammarAccess;  
-      
-    /**
-     * Contexts:
-     *     EsterelThread returns EsterelThread
-     *     EsterelParallel returns EsterelThread
-     *     EsterelParallel.EsterelParallel_1_0 returns EsterelThread
-     *
-     * Constraint:
-     *     (
-     *         (
-     *             statements+=EsterelThread_EsterelThread_0_1_0 
-     *             (statements+=InstructionStatement | statements+=MetaStatement)* 
-     *             statements+=InstructionStatement?
-     *         ) | 
-     *         (
-     *             statements+=EsterelThread_EsterelThread_1_1_0 
-     *             (statements+=InstructionStatement | statements+=MetaStatement)* 
-     *             statements+=InstructionStatement?
-     *         )
-     *     )
-     */
-    protected override sequence_EsterelThread(ISerializationContext context, EsterelThread semanticObject) {
+    private SCEstGrammarAccess grammarAccess;
+    @Inject
+    extension SCEstSytaxHelper
+    
+    protected override sequence_EsterelParallel(ISerializationContext context, EsterelParallel semanticObject) {
         val feeder = createSequencerFeeder(semanticObject, createNodeProvider(semanticObject))
-        val g = grammarAccess.esterelThreadAccess
+        val g = grammarAccess.esterelParallelAccess
         
         if (!semanticObject.statements.nullOrEmpty) {
-            val firstIsMeta = semanticObject.statements.head.metaStatement
             for (idxStm : semanticObject.statements.indexed) {
-                if (firstIsMeta) {
-                    switch (idxStm.key) {
-                        case 0: feeder.accept(g.getEsterelThreadStatementsAction_1_1_0, idxStm.value, idxStm.key)
-                        case idxStm.value.metaStatement: feeder.accept(g.statementsMetaStatementParserRuleCall_1_1_1_1_0, idxStm.value, idxStm.key)
-                        case semanticObject.statements.size -1: feeder.accept(g.statementsInstructionStatementParserRuleCall_1_1_2_0, idxStm.value, idxStm.key)
-                        default: feeder.accept(g.statementsInstructionStatementParserRuleCall_1_1_1_0_0_0, idxStm.value, idxStm.key)
+                // Do not serialize threads with only one statement
+                val stm = if (idxStm.value instanceof EsterelThread) {
+                    val thread = idxStm.value as EsterelThread
+                    if (thread.statements.size == 1) {
+                        thread.statements.head
+                    } else {
+                        thread
                     }
                 } else {
-                    switch (idxStm.key) {
-                        case 0: feeder.accept(g.getEsterelThreadStatementsAction_0_1_0, idxStm.value, idxStm.key)
-                        case idxStm.value.metaStatement: feeder.accept(g.statementsMetaStatementParserRuleCall_0_1_1_1_1_0, idxStm.value, idxStm.key)
-                        case semanticObject.statements.size -1: feeder.accept(g.statementsInstructionStatementParserRuleCall_0_1_1_2_0, idxStm.value, idxStm.key)
-                        default: feeder.accept(g.statementsInstructionStatementParserRuleCall_0_1_1_1_0_0_0, idxStm.value, idxStm.key)
-                    }
+                    idxStm.value
                 }
-
+                
+                switch (idxStm.key) {
+                    case 0: feeder.accept(g.esterelParallelStatementsAction_1_0, stm, idxStm.key)
+                    default: feeder.accept(g.statementsEsterelThreadParserRuleCall_1_1_1_0, stm, idxStm.key)
+                }
             }
         }
         
         feeder.finish
     }
     
-    private def isMetaStatement(Statement stm) {
-        return stm instanceof Label
-            || stm instanceof Conditional
-            || stm instanceof Scope
+    protected override sequence_EsterelThread(ISerializationContext context, EsterelThread semanticObject) {
+        if (!semanticObject.statements.nullOrEmpty) {
+            val feeder = createSequencerFeeder(semanticObject, createNodeProvider(semanticObject))
+            val g = grammarAccess.esterelThreadAccess
+            
+            if (semanticObject.statements.size > 1) {
+                for (idxStm : semanticObject.statements.indexed) {
+                    // Do not serialize threads with only one statement
+                    val stm = if (idxStm.value instanceof EsterelThread) {
+                        val thread = idxStm.value as EsterelThread
+                        if (thread.statements.size == 1) {
+                            thread.statements.head
+                        } else {
+                            thread
+                        }
+                    } else {
+                        idxStm.value
+                    }
+                    
+                    if (stm.isSCLStatement) {
+                        switch (idxStm.key) {
+                            case 0: {
+                                feeder.accept(g.getEsterelThreadStatementsAction_1_1_0, stm, idxStm.key)
+                            }
+                            default: feeder.accept(g.getStatementsEsterelThreadParserRuleCall_1_1_1_0, idxStm.value, idxStm.key)
+                        }
+                    } else {
+                        switch (idxStm.key) {
+                            case 0: {
+                                feeder.accept(g.getEsterelThreadStatementsAction_0_1_0, stm, idxStm.key)
+                            }
+                            default: feeder.accept(g.getStatementsEsterelThreadParserRuleCall_0_1_1_1_0, idxStm.value, idxStm.key)
+                        }
+                    }
+                }
+            } else {
+                // Will not happen
+                throw new IllegalStateException("Should not happen")
+            }
+            feeder.finish
+        }
+        
     }
-    
 }

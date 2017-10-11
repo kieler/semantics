@@ -24,8 +24,11 @@ enum ProcessorType {
     /** The processor is part of the kicool system. */
     SYSTEM,
     
-    /** The processor is meant to do a model-to-model transformation. */
-    TRANSFORMATOR, 
+    /** The processor is meant to do a model-to-model transformation where input and output model are based on different meta-models. */
+    EXOGENOUS_TRANSFORMATOR,
+
+    /** The processor is meant to do an inplace model-to-model transformation within the same meta-models. The transformation can be directly performed on the model instance provided by the environment. */
+    ENDOGENOUS_TRANSFORMATOR,
     
     /** The processor is meant to analyze the model without performing any changes. */
     ANALYZER, 

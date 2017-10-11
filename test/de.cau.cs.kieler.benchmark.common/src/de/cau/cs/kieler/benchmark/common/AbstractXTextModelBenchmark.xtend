@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EObject
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-abstract class AbstractXTextModelBenchmark<T extends EObject> implements IBenchmark {
+abstract class AbstractXTextModelBenchmark<T extends EObject> extends AbstractSingleRunBenchmark {
     
     /** Reusage of model parsing */
     extension AbstractXTextModelRepositoryTest<T> = new AbstractXTextModelRepositoryTest<T>(null) {
