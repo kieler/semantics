@@ -145,7 +145,9 @@ class PromProjectDrafts extends AbstractPreferenceInitializer implements IProjec
      */
     public static def ProjectDraftData getMindstormsNXT(){
         val env = getGenericJava
-        env.addInitialResource("src/${project_name}Main.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/mindstorms_nxt/Main.ftl")
+        env.addInitialResource("assets/BuildConfig.kibuild", "platform:/plugin/de.cau.cs.kieler.prom/resources/mindstorms_nxt/BuildConfig.kibuild") 
+        env.addInitialResource("assets/CompilationConfig.kico", "platform:/plugin/de.cau.cs.kieler.prom/resources/mindstorms_nxt/CompilationConfig.kico")
+        env.addInitialResource("src/model/${project_name}Main.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/mindstorms_nxt/Main.ftl")
         env.addInitialResource("assets/snippets", "platform:/plugin/de.cau.cs.kieler.prom/resources/mindstorms_nxt/snippets")
         env.addInitialResource("assets/snippets/core.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/core/core.ftl")
         
@@ -159,8 +161,8 @@ class PromProjectDrafts extends AbstractPreferenceInitializer implements IProjec
      * @return the default project draft for Mindstorms EV3 running leJOS.
      */
     public static def ProjectDraftData getMindstormsEV3(){
-        val env = getGenericJava
-        env.addInitialResource("src/${project_name}Main.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/mindstorms_ev3/Main.ftl")
+        val env = getMindstormsNXT
+        env.addInitialResource("src/model/${project_name}Main.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/mindstorms_ev3/Main.ftl")
         env.addInitialResource("assets/snippets/ev3", "platform:/plugin/de.cau.cs.kieler.prom/resources/mindstorms_ev3/snippets")
         
         env.name ="Mindstorms EV3"

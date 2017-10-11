@@ -82,7 +82,7 @@ class TemplateManager {
             val templateCodeWithMacroCalls = getTemplateCodeWithMacroCalls(config.templateFile, config.macroCallDatas)
 
             // Debug log macro calls
-//            System.err.println(templateCodeWithMacroCalls)
+            System.err.println(templateCodeWithMacroCalls)
 
             // Add implicit include of assignment macros such as <@init> and <@output>
             FreemarkerConfiguration.stringTemplateLoader.putTemplate("injectionMacros", getOrInitializeMacroDefinitions )
@@ -187,6 +187,7 @@ class TemplateManager {
         
         // The assignment macros such as <@init> and <@output> use a variable
         // to determine if their snippet should be inserted.
+        println("phases:"+CodeGenerationPhase.PHASES)
         for(phase : CodeGenerationPhase.PHASES) {
             phase.codeToInject = phase.freeMarkerAssignment+"\n"
         }

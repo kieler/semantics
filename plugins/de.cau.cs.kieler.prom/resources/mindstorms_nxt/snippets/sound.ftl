@@ -7,7 +7,7 @@
 <#macro Beep volume=10>
     <@output>
         // Play beep sound
-        if(scchart.${varname}) {
+        if(scchart.${varName}) {
             int lastVolume = Sound.getVolume();
             Sound.setVolume(${volume});
             Sound.beep();
@@ -25,7 +25,7 @@
 <#macro Buzz volume="10">
     <@output>
         // Play buzz sound
-        if(scchart.${varname}) {
+        if(scchart.${varName}) {
             int lastVolume = Sound.getVolume();
             Sound.setVolume(${volume});
             Sound.buzz();
@@ -44,8 +44,8 @@
 <#macro BeepSequence direction="Down" volume=10>
     <@output>
         // Play sequence of beep tones
-        if(scchart.${varname}) {
-            scchart.${varname} = false;
+        if(scchart.${varName}) {
+            scchart.${varName} = false;
             int lastVolume = Sound.getVolume();
             Sound.setVolume(${volume});
             <#if direction == "Up">

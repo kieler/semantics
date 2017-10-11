@@ -72,7 +72,7 @@
       </analyzer>
    </extension>
    <extension
-         point="de.cau.cs.kieler.simulation.ui.simulationParticipant">
+         point="de.cau.cs.kieler.simulation.simulationParticipant">
       <simulationParticipant
             class="de.cau.cs.kieler.sccharts.prom.SCChartsDiagramHighlighter">
       </simulationParticipant>

@@ -6,7 +6,7 @@
          <meta.schema plugin="de.cau.cs.kieler.simulation.ui" id="simulationVisualizer" name="SimulationVisualizer"/>
       </appinfo>
       <documentation>
-         Extension point for classes that should be instanciated once by the Simulation UI.
+         Extension point for classes that should be instanciated once by the Simulation.
       </documentation>
    </annotation>
 

@@ -177,16 +177,10 @@ class SimulationTemplateProcessor extends TemplateProcessor {
                 return targetFile
             }
         }
-        val templateFileSubstitution = new ResourceSubstitution("file") {
-            override getValue() {
-                return targetFile
-            }
-        }
         val additionalMappings = <String, Object> newHashMap
         additionalMappings.put("compiled_model_loc", compiledModelFileLocation)
         additionalMappings.put(TemplateManager.MODEL_NAME_VARIABLE, Strings.nullToEmpty(modelName))
         additionalMappings.putAll(targetFileSubstitution.variableMappings)
-        additionalMappings.putAll(templateFileSubstitution.variableMappings)
         
         // Create simulation code
         context = new TemplateContext(templateFile)

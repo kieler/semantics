@@ -11,9 +11,9 @@
     <@input>
         // Light
         <#if getPerCentValue>
-        scchart.${varname} = lightSensor${port}.readNormalizedValue();
+        scchart.${varName} = lightSensor${port}.readNormalizedValue();
         <#else>
-        scchart.${varname} = lightSensor${port}.getLightValue();
+        scchart.${varName} = lightSensor${port}.getLightValue();
         </#if>
     </@>
 </#macro>
@@ -31,8 +31,8 @@
  <#macro CalibrateLightSensor port signal>
     <@output>
         // Calibrate light sensor
-        if (scchart.${varname}) {
-            scchart.${varname} = false;
+        if (scchart.${varName}) {
+            scchart.${varName} = false;
             lightSensor${port}.calibrate${signal}();
         }
     </@>
@@ -52,11 +52,11 @@
     </@>
     <@input>
         // Floodlight ${port}
-        scchart.${varname} = lightSensorFloodlight${port}.getFloodlight();
+        scchart.${varName} = lightSensorFloodlight${port}.getFloodlight();
     </@>
     <@output>
         // Floodlight ${port}
-        lightSensorFloodlight${port}.setFloodlight(scchart.${varname});
+        lightSensorFloodlight${port}.setFloodlight(scchart.${varName});
     </@>
 </#macro>
 
@@ -76,7 +76,7 @@
     </@>
     <@output>
         // RCX lamp ${port}
-        if(scchart.${varname})
+        if(scchart.${varName})
             rcxMotor${port}.forward();
         else
             rcxMotor${port}.flt();

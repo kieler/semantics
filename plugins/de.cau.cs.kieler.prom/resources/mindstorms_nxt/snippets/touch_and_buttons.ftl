@@ -8,7 +8,7 @@
 <#macro Button buttonId>
     <@input>
         // Button
-        scchart.${varname} = Button.${buttonId}.isDown();
+        scchart.${varName} = Button.${buttonId}.isDown();
     </@>
 </#macro>
 
@@ -24,6 +24,6 @@
     </@>
     <@input>
         // Touch
-        scchart.${varname} = touchSensor${port}.isPressed();
+        scchart.${varName} = touchSensor${port}.isPressed();
     </@>
 </#macro>

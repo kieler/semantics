@@ -21,6 +21,7 @@ import de.cau.cs.kieler.prom.build.FileGenerationResult
 import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
 import de.cau.cs.kieler.prom.templates.TemplateContext
 import de.cau.cs.kieler.prom.templates.TemplateManager
+import de.cau.cs.kieler.prom.configurable.ResourceSubstitution
 
 /**
  * Template processor that injects additional macro calls into the template before it is processed.
@@ -74,12 +75,23 @@ class WrapperCodeTemplateProcessor extends TemplateProcessor {
         if(isCanceled) {
             return result
         }
+        // Create additional mappings for the template
         var modelName = TemplateManager.getModelName(model)
         if(modelName == null) {
             modelName = Files.getNameWithoutExtension(modelFile.name)
         }
+        val targetFileSubstitution = new ResourceSubstitution("file") {
+            override getValue() {
+                return targetFile
+            }
+        }
+        val additionalMappings = <String, Object> newHashMap
+        additionalMappings.put(TemplateManager.MODEL_NAME_VARIABLE, Strings.nullToEmpty(modelName))
+        additionalMappings.putAll(targetFileSubstitution.variableMappings)
+        
+        // Create the code
         context = new TemplateContext(templateFile)
-        context.additionalMappings = #{TemplateManager.MODEL_NAME_VARIABLE -> Strings.nullToEmpty(modelName)}
+        context.additionalMappings = additionalMappings
         context.macroCallDatas = macroCallDatas
         // Process the context and notify listeners
         generatedCode = TemplateManager.process(context)
