@@ -12,11 +12,20 @@
  */
 package de.cau.cs.kieler.kicool.ui.klighd
 
-import org.eclipse.core.resources.IFile
+import de.cau.cs.kieler.kicool.KiCoolActivator
+import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
+import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
+import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController.ChangeEvent
+import de.cau.cs.kieler.kicool.ui.klighd.internal.ModelUtil
+import de.cau.cs.kieler.kicool.ui.klighd.internal.model.ModelChain
+import de.cau.cs.kieler.kicool.ui.view.CompilerView
+import de.cau.cs.kieler.klighd.IViewer
+import de.cau.cs.kieler.klighd.ui.view.controller.AbstractViewUpdateController
+import de.cau.cs.kieler.klighd.ui.view.controllers.EcoreXtextSaveUpdateController
+import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
+import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import org.eclipse.core.resources.IMarker
 import org.eclipse.core.resources.IResource
-import org.eclipse.core.resources.IWorkspace
-import org.eclipse.core.resources.IWorkspaceRoot
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IPath
@@ -26,7 +35,6 @@ import org.eclipse.core.runtime.Status
 import org.eclipse.emf.common.util.Diagnostic
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.util.Diagnostician
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.IAction
@@ -48,23 +56,9 @@ import org.eclipse.swt.widgets.Label
 import org.eclipse.ui.IEditorPart
 import org.eclipse.ui.IMemento
 import org.eclipse.ui.dialogs.SaveAsDialog
-import org.eclipse.ui.plugin.AbstractUIPlugin
 import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtext.ui.util.ResourceUtil
 import org.eclipse.xtext.util.StringInputStream
-
-import de.cau.cs.kieler.kicool.KiCoolActivator
-import de.cau.cs.kieler.kicool.classes.ResourceExtension
-import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
-import de.cau.cs.kieler.kicool.ui.klighd.internal.ModelUtil
-import de.cau.cs.kieler.kicool.ui.klighd.internal.model.ModelChain
-import de.cau.cs.kieler.kicool.ui.view.CompilerView
-import de.cau.cs.kieler.klighd.IViewer
-import de.cau.cs.kieler.klighd.ui.view.controller.AbstractViewUpdateController
-import de.cau.cs.kieler.klighd.ui.view.controllers.EcoreXtextSaveUpdateController
-import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
-import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
-import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 
 /**
  * Controller for the ModelView to handle models interacting with KiCo.
@@ -148,6 +142,9 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
     /** The action for toggling chain display mode. */
     private var Action chainToggleAction
     private static final boolean CHAIN_TOGGLE_ACTION_DEFAULT_STATE = false
+    
+    // -- External Contributions --
+    private static val externalUIContributors = <KiCoModelViewUIContributor>newHashSet
 
     // -- Model --
 
@@ -329,6 +326,8 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         menu.add(syncEditorToggleAction)
         menu.add(diagramPlaceholderToggleAction)
         menu.add(chainToggleAction)
+        
+        externalUIContributors.forEach[it.contribute(this, toolBar, menu)]
     }
 
     /**
@@ -704,6 +703,17 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                 closeImage.dispose()
             }
         })
+    }
+
+    // -- External UI Contributors
+    // -------------------------------------------------------------------------
+    
+    static def addExternalUIContributor(KiCoModelViewUIContributor contrib) {
+        externalUIContributors.add(contrib)
+    }
+    
+    static def removeExternalUIContributor(KiCoModelViewUIContributor contrib) {
+        externalUIContributors.remove(contrib)
     }
 
 }
