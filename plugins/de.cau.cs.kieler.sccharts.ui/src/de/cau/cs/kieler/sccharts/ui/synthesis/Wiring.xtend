@@ -16,7 +16,6 @@ import de.cau.cs.kieler.kexpressions.Expression
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import java.util.List
-import java.util.Set
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import com.google.inject.Inject
@@ -25,6 +24,8 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensio
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.core.model.Pair
+import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /**
  * @author ssm
@@ -39,8 +40,9 @@ class Wiring {
     @Inject extension KExpressionsDeclarationExtensions    
     @Inject extension KEffectsExtensions
     
-    @Accessors val wires = <Wire> newHashSet
-    val index = <Expression, Wire> newHashMap
+    @Accessors val wires = <Wire> newLinkedHashSet
+    val index = <Pair<Expression, Expression>, Wire> newHashMap
+    val semanticReferenceIndex = <ValuedObject, Expression> newHashMap
 
     def getWires() {
         wires
@@ -51,61 +53,58 @@ class Wiring {
     }
     
     def createWires(List<Assignment> equations) {
-        val visited = <Expression> newHashSet 
         for (eq : equations) {
-            eq.createWires(visited)
+            eq.createWires
         }
     }
     
-    def void createWires(Assignment equation, Set<Expression> visited) {
-        equation.expression.create(visited) 
-        equation.reference.create(visited) => [
-            sink = equation.valuedObject.output    
-        ]
+    def void createWires(Assignment equation) {
+        equation.expression.create(equation.reference)
+    }
+    
+    def private Wire create(Expression source, Expression sink) {
+        val wire = createWire(source, sink)
+        
+        switch(source) {
+            Value: wire.sourceIsInterface = true
+            ValuedObjectReference: {
+                val declaration = source.valuedObject.declaration
+                if (declaration instanceof VariableDeclaration) {
+                    wire.sourceIsInterface = declaration.input
+                }
+            }
+        }
+        
+        wire 
     }
 
-    def private dispatch Wire create(Value expression, Set<Expression> visited) {
-        if (visited.contains(expression)) return expression.getExistingWire;
-        visited += expression
-        
-        return expression.createWire
-    }
-    
-    def private dispatch Wire create(ValuedObjectReference expression, Set<Expression> visited) {
-        if (visited.contains(expression)) return expression.getExistingWire;
-        visited += expression
-        
-        val declaration = expression.valuedObject.declaration
-        
-        if (declaration instanceof VariableDeclaration) {
-            val existingWire = expression.getExistingWire  
-            if (existingWire != null && !existingWire.contains(expression)) {
-                existingWire.names += expression
-                return existingWire => [ source = declaration.input ]
-            } else {
-                return expression.createWire => [ source = declaration.input ]
-            }                  
-        } 
-    }    
-    
-    
-    
-    def protected Wire createWire(Expression expression) {
-        val oldWire = index.get(expression)
+    def protected Wire createWire(Expression source, Expression sink) {
+        val oldWire = index.get(new Pair<Expression, Expression>(source, sink))
         if (oldWire != null) return oldWire
         
-        val wire = new Wire(expression, this) 
+        val wire = new Wire(source, sink, this) 
+        
+        var semanticSource = source
+        var semanticSink = sink
+        if (source instanceof ValuedObjectReference) {
+            val existingSemanticReference = semanticReferenceIndex.get(source.valuedObject)
+            if (existingSemanticReference != null) {
+                semanticSource = existingSemanticReference
+            } else {
+                semanticReferenceIndex.put(source.valuedObject, source)
+            }
+        } 
+        wire.semanticSource = semanticSource
+        wire.semanticSink = semanticSink
+        
         wires += wire
-        index.put(expression, wire)
+        index.put(new Pair<Expression, Expression>(source, sink), wire)
         
         return wire
     }
     
-    def protected Wire getExistingWire(Expression expression) {
-        if (expression instanceof ValuedObjectReference) {
-            return wires.filter[ names.filter(ValuedObjectReference).exists[ it.valuedObject == expression.valuedObject ] ].head
-        }
-        return null 
+    def protected Wire getExistingWire(Expression source, Expression target) {
+        return index.get(new Pair<Expression, Expression>(source, target))
     } 
     
     

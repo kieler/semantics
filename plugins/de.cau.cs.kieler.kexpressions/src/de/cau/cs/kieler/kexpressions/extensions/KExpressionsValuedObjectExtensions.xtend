@@ -26,6 +26,8 @@ import de.cau.cs.kieler.kexpressions.Expression
 import com.google.common.collect.ImmutableList
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.OperatorExpression
 
 /**
  * @author ssm
@@ -201,5 +203,17 @@ class KExpressionsValuedObjectExtensions {
     def ValuedObject findValuedObjectByName(Declaration declaration, String name) {
         declaration.valuedObjects.filter[ it.name.equals(name) ]?.head
     }    
+    
+    def asValue(Expression expression) {
+        expression as Value
+    }
+
+    def asValuedObjectReference(Expression expression) {
+        expression as ValuedObjectReference
+    }
+
+    def asOperatorExpression(Expression expression) {
+        expression as OperatorExpression
+    }
     
 }

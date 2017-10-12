@@ -126,57 +126,60 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 //    }
 
     protected def createSources(Wiring wiring, List<KNode> nodes) {
-        for (wire : wiring.wires.filter[ source ]) {
-            val node = wire.createNode(wire.source)
-            var text = wire.firstExpression.serializeHR.removeCardinalities.toString
-            if (wire.containsOperatorExpression) {
-                node.addOperatorNodeFigure.associateWith(wire.firstExpression)
-                text = wire.names.filter(OperatorExpression).head.operator.toString
-            } else {
-                node.addInputNodeFigure.associateWith(wire.firstExpression)
+        for (wire : wiring.wires) {
+            val nodeExists = wire.semanticSource.nodeExists
+            val node = wire.semanticSource.createNode
+            var text = wire.semanticSource.serializeHR.removeCardinalities.toString
+            if (!nodeExists) {
+                if (wire.source instanceof OperatorExpression) {
+                    node.addOperatorNodeFigure.associateWith(wire.semanticSource)
+                    text = wire.semanticSource.asOperatorExpression.operator.toString
+                } else {
+                    node.addInputNodeFigure.associateWith(wire.source)
+                }
+                node.addNodeLabel(text)
+                node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_BASIC, PortAlignment.CENTER)
+                node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE)
+                val port = wire.semanticSource.createPort("out") => [
+                    addLayoutParam(CoreOptions::PORT_SIDE, PortSide.EAST)
+                    node.ports += it
+                ]          
+                port.associateWith(wire.semanticSource)            
             }
-           
-            node.addNodeLabel(text)
-            
-            node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_BASIC, PortAlignment.CENTER)
-            node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE)
-            val port = wire.createPort("out") => [
-                addLayoutParam(CoreOptions::PORT_SIDE, PortSide.EAST)
-                node.ports += it
-            ]          
-            port.associateWith(wire.firstExpression)            
-
             nodes += node
         }
     }
     
     protected def createSinks(Wiring wiring, List<KNode> nodes, Set<KNode> usedNodes) {
-        for (wire : wiring.wires.filter[ sink ]) {
-            val expression = wire.firstExpression
-            var node = wire.createNode(wire.sink)
-            if (wire.referenceDeclaration != null) {
+        for (wire : wiring.wires) {
+            val nodeExists = wire.semanticSink.nodeExists
+            var node = wire.semanticSink.createNode
+            
+            if (!nodeExists) {
+//                if (wire.referenceDeclaration != null) {
 //                node = node.createReferenceNode(wire.equation.valuedObject, wire)
-            } else { 
-                node.addOutputNodeFigure.associateWith(wire.firstExpression)
-            }
-            node.addNodeLabel(wire.firstExpression.serializeHR.removeCardinalities.toString)
-            val sourceNode = wiring.getWire(wire.firstExpression).getNode
-            val sourcePort = wiring.getWire(wire.firstExpression).getPort("out")
-            var KPort targetPort = null
+//            } else { 
+                    node.addOutputNodeFigure.associateWith(wire.sink)
+//            }
+                node.addNodeLabel(wire.semanticSink.serializeHR.removeCardinalities.toString)
+//                val sourceNode = wiring.getWire(wire.firstExpression).getNode
+//                val sourcePort = wiring.getWire(wire.firstExpression).getPort("out")
+//            var KPort targetPort = null
 //            if (expression instanceof ValuedObjectReference) {
 //                if (wire.equation.subReference != null) {
 //                    targetPort = node.getPort(wire.equation.subReference.valuedObject)
 //                }
 //            }
-            
-            var labelText = ""
-            if (wire.firstExpression instanceof OperatorExpression) {
-                labelText = wire.firstExpression.serializeHR.toString
             }
+            
+//                var labelText = ""
+//                if (wire.sink instanceof OperatorExpression) {
+//                    labelText = wire.firstExpression.serializeHR.toString
+//                }
             
 //            createWireEdge(wire.equation.expression, sourceNode, sourcePort, node, targetPort, labelText)
             
-            usedNodes += sourceNode
+//            usedNodes += sourceNode
             usedNodes += node
             nodes += node
         }
@@ -197,13 +200,13 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 //
     protected def connectWires(Wiring wiring, Set<KNode> usedNodes) {
         for (wire : wiring.wires) {
-            var sourceNode = wire.getNode(wire.source)
-            var sourcePort = wire.getPort("out")
-            var targetNode = wire.getNode(wire.sink)
-            var targetPort = wire.getPort("in")
+            var sourceNode = wire.semanticSource.getNode
+            var sourcePort = wire.semanticSource.getPort("out")
+            var targetNode = wire.semanticSink.getNode
+            var targetPort = null //wire.source.getPort("in")
             var label = "Test"
             
-            wire.firstExpression.createWireEdge(sourceNode, sourcePort, targetNode, targetPort, label)
+            wire.source.createWireEdge(sourceNode, sourcePort, targetNode, targetPort, label)
         }
     }
 //    

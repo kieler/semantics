@@ -12,18 +12,8 @@
  */
 package de.cau.cs.kieler.sccharts.ui.synthesis
 
-import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.sccharts.Scope
-import java.util.Set
-import org.eclipse.emf.ecore.EStructuralFeature
-import org.eclipse.emf.ecore.EOperation
-import org.eclipse.emf.common.util.EList
-import java.lang.reflect.InvocationTargetException
-import org.eclipse.emf.common.notify.Notification
-import de.cau.cs.kieler.kexpressions.OperatorExpression
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author ssm
@@ -33,32 +23,18 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
  */
 class Wire {
 
-    @Accessors var Set<Expression> names = <Expression> newHashSet
     @Accessors var Wiring wiring = null
-    @Accessors var boolean sink = false
-    @Accessors var boolean source = false
-    @Accessors var ReferenceDeclaration referenceDeclaration = null
+    @Accessors var Expression source = null
+    @Accessors var Expression sink = null
+    @Accessors var Expression semanticSource = null
+    @Accessors var Expression semanticSink = null
+    @Accessors var boolean sourceIsInterface = false
+    @Accessors var boolean sinkIsInterface = false
 
-    new(Expression expression, Wiring wiring) {
+    new(Expression source, Expression sink, Wiring wiring) {
         this.wiring = wiring
-        names.add(expression)
+        this.source = source
+        this.sink = sink
     }
 
-    def contains(Expression expression) {
-        names.contains(expression)
-    }
-    
-    def getFirstExpression() {
-        names.head
-    }
-    
-    def boolean containsOperatorExpression() {
-        names.exists[ it instanceof OperatorExpression ]
-    }
-    
-    def Scope getReference() {
-        if (referenceDeclaration == null) return null
-        return referenceDeclaration.reference as Scope
-    }
-        
 }
