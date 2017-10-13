@@ -823,6 +823,7 @@ class KiVisView extends ViewPart {
                              + "Escape : Reset perspective\n"
                              + "\n"
                              + "Right Arrow : Step simulation\n"
+                             + "Space : Play / pause simulation\n"
                 val dialog = new MessageDialog(canvas.shell, title, null, message, 0, #["OK"], 0)
                 dialog.open
             }

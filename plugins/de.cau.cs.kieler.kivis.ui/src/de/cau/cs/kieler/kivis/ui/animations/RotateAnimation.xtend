@@ -32,6 +32,10 @@ class RotateAnimation extends AnimationHandler {
      * Rotation in degrees.
      */
     public val angle = new ConfigurableAttribute("angle", 0)
+    /**
+     * Offset that is added to the angle
+     */
+    public val offsetAngle = new ConfigurableAttribute("offset", 0)
     /** 
      * The relative anchor point along the x axis. Default is centered. 
      */
@@ -65,9 +69,10 @@ class RotateAnimation extends AnimationHandler {
             val SVGLocatable locatable = elem as SVGLocatable
             val box = locatable.getBBox()
             // Set new transform
-            val rotationCenterX = box.x+anchorX.floatValue*box.width
-            val rotationCenterY = box.y+anchorY.floatValue*box.width
-            var rotation =  angle.floatValue + "," + rotationCenterX + "," + rotationCenterY
+            val rotationCenterX = box.x + anchorX.floatValue * box.width
+            val rotationCenterY = box.y + anchorY.floatValue * box.height
+            val angle = angle.floatValue + offsetAngle.floatValue
+            var rotation =  angle + "," + rotationCenterX + "," + rotationCenterY
             elem.setAttributeFunction("transform", "rotate", rotation)
         } else {
             throw new Exception("The element '"+svgElementId+"' is not an SVGLocatable.")
