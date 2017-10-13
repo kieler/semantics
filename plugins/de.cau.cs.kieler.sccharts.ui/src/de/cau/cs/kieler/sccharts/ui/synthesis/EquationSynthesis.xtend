@@ -119,12 +119,6 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         return nodes
     }
 
-//    protected def createWires(Assignment equation, Wiring wiring) {
-//        val equationValuedObjectReference = equation.valuedObject.reference
-//        wiring.getWire(equationValuedObjectReference) => [ it.equation = equation; sink = true ]
-//        wiring.getWire(equation.expression) => [ it.equation = equation ]
-//    }
-
     protected def createSources(Wiring wiring, List<KNode> nodes) {
         for (wire : wiring.wires) {
             val nodeExists = wire.semanticSource.nodeExists
@@ -184,57 +178,21 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             nodes += node
         }
     }
-//    
-//    protected def redirectWires(Wiring wiring) {
-//        for(wire : wiring.wires) {
-//            val expression = wire.expression
-//            if (expression instanceof ValuedObjectReference) {
-//                for(w : wiring.wires.filter[ equation != null ]) {
-//                    if (w != wire && w.equation.valuedObject.equals(expression.valuedObject)) {
-//                        wire.redirectedWire = w
-//                    }
-//                }
-//            }
-//        }
-//    }
-//
+
     protected def connectWires(Wiring wiring, Set<KNode> usedNodes) {
         for (wire : wiring.wires) {
             var sourceNode = wire.semanticSource.getNode
             var sourcePort = wire.semanticSource.getPort("out")
             var targetNode = wire.semanticSink.getNode
             var targetPort = null //wire.source.getPort("in")
-            var label = "Test"
+            // Only label operator expressions and only do it once.
+            var String label = if (wire.source == wire.semanticSource && wire.source instanceof OperatorExpression)
+                wire.source.serializeHR.toString else null
             
             wire.source.createWireEdge(sourceNode, sourcePort, targetNode, targetPort, label)
         }
     }
-//    
-//    protected def connectWires(OperatorExpression operatorExpression, Wiring wiring, Set<KNode> usedNodes) {
-//        val targetNode = wiring.getWire(operatorExpression).getNode
-//        usedNodes += targetNode
-//        for (subExpression : operatorExpression.subExpressions) {
-//            var sourceExpression = subExpression
-//            var sourceWire = wiring.getWire(subExpression)
-//            while (sourceWire.redirectedWire != null) {
-//                sourceWire = sourceWire.redirectedWire
-//                sourceExpression = sourceWire.expression
-//            }
-//            val sourceNode = sourceWire.getNode
-//            usedNodes += sourceNode
-//            
-//            val sourcePort = sourceWire.getPort("out")
-//            var targetPort = null
-//            
-//            var labelText = ""
-//            if (sourceExpression instanceof OperatorExpression && sourceExpression === subExpression) {
-//                labelText = sourceExpression.serializeHR.toString
-//            }
-//            
-//            createWireEdge(sourceExpression, sourceNode, sourcePort, targetNode, targetPort, labelText)
-//        }
-//    }
-//
+
     protected def createWireEdge(Object association, KNode sourceNode, KPort sourcePort, KNode targetNode, KPort targetPort, String label) { 
         val edge = createEdge.associateWith(association)
         edge.setLayoutOption(LayeredOptions.INSIDE_SELF_LOOPS_YO, true)
@@ -244,7 +202,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         if (targetPort != null) edge.targetPort = targetPort
         edge.addWireFigure
         if (!label.nullOrEmpty) {
-            edge.createLabel.configureTailEdgeLabel(label, 7, KlighdConstants::DEFAULT_FONT_NAME)
+            edge.createLabel.configureTailEdgeLabel(label, 5, KlighdConstants::DEFAULT_FONT_NAME)
         }
     }
 //    
