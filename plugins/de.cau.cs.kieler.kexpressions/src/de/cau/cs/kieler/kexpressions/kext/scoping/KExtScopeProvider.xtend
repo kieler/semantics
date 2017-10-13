@@ -89,7 +89,7 @@ import de.cau.cs.kieler.kexpressions.keffects.Emission
 		    if (contextContainer instanceof Assignment) {
 		        // The context is a subreference inside of an assignment!
 		        if (context.subReference != null && context.subReference.valuedObject == null) {
-		            return contextContainer.getScopeForReferencedDeclarationFromAssignment(reference)
+                    return context.getScopeForReferencedDeclarationFromSubReference(reference)
 		        }
 		        
             } else if (contextContainer instanceof Emission) {
@@ -129,7 +129,8 @@ import de.cau.cs.kieler.kexpressions.keffects.Emission
                     }
                     if (parentVO.valuedObject.eContainer instanceof ReferenceDeclaration) {
                         return (parentVO.valuedObject.eContainer as ReferenceDeclaration).
-                            getScopeForReferencedDeclarationObject[ output ]
+//                            getScopeForReferencedDeclarationObject[ output ]
+                            getScopeForReferenceDeclaration(reference)
                     }
                 }
             }

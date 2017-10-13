@@ -27,6 +27,7 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.core.model.Pair
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 
 /**
  * @author ssm
@@ -43,7 +44,7 @@ class Wiring {
     
     @Accessors val wires = <Wire> newLinkedHashSet
     val index = <Pair<Expression, Expression>, Wire> newHashMap
-    val semanticReferenceIndex = <ValuedObject, Expression> newHashMap
+    val semanticReferenceIndex = <Pair<ValuedObject, ValuedObject>, Expression> newHashMap
 
     def getWires() {
         wires
@@ -72,13 +73,25 @@ class Wiring {
                 val declaration = source.valuedObject.declaration
                 if (declaration instanceof VariableDeclaration) {
                     wire.sourceIsInterface = declaration.input
-                    wire.sinkIsInterface = declaration.output
+                } else if (declaration instanceof ReferenceDeclaration) {
+                    wire.semanticSourceReferenceDeclaration = declaration 
                 }
             }
             OperatorExpression: {
                 for (expression : source.subExpressions) {
                     expression.create(source)
                 }    
+            }
+        }
+        
+        switch(sink) {
+            ValuedObjectReference: {
+                val declaration = sink.valuedObject.declaration
+                if (declaration instanceof VariableDeclaration) {
+                    wire.sinkIsInterface = declaration.output
+                } else if (declaration instanceof ReferenceDeclaration) {
+                    wire.semanticSinkReferenceDeclaration = declaration 
+                }
             }
         }
         
@@ -94,26 +107,27 @@ class Wiring {
         var semanticSource = source
         var semanticSink = sink
         if (source instanceof ValuedObjectReference) {
-            var existingSemanticReference = semanticReferenceIndex.get(source.valuedObject)
+            var existingSemanticReference = semanticReferenceIndex.get(new Pair<ValuedObject, ValuedObject>(source.valuedObject, null))
             if (existingSemanticReference != null) {
                 // Directly connect the semantic source to the source of an already existing wire. 
                 if (existingSemanticReference instanceof ValuedObjectReference) {
                     val existingWire = existingSemanticReference.getSemanticSinkWire
                     if (existingWire != null) {
-                            existingSemanticReference = existingWire.semanticSource
+                        existingSemanticReference = existingWire.semanticSource
                     }
                 }
                 semanticSource = existingSemanticReference
             } else {
-                semanticReferenceIndex.put(source.valuedObject, source)
+                semanticReferenceIndex.put(new Pair<ValuedObject, ValuedObject>(source.valuedObject, null), source)
             }
         } 
         if (sink instanceof ValuedObjectReference) {
-            val existingSemanticReference = semanticReferenceIndex.get(sink.valuedObject)
+            val srValuedObject = null //if (sink.subReference != null) sink.subReference.valuedObject else null
+            val existingSemanticReference = semanticReferenceIndex.get(new Pair<ValuedObject, ValuedObject>(sink.valuedObject, srValuedObject))
             if (existingSemanticReference != null) {
                 semanticSink = existingSemanticReference
             } else {
-                semanticReferenceIndex.put(sink.valuedObject, sink)
+                semanticReferenceIndex.put(new Pair<ValuedObject, ValuedObject>(sink.valuedObject, srValuedObject), sink)
             }
         }
         wire.semanticSource = semanticSource
@@ -130,7 +144,7 @@ class Wiring {
     } 
     
     def Wire getSemanticSourceWire(ValuedObjectReference valuedObjectReference) {
-        val expression = semanticReferenceIndex.get(valuedObjectReference.valuedObject)
+        val expression = semanticReferenceIndex.get(new Pair<ValuedObject, ValuedObject>(valuedObjectReference.valuedObject, null))
         for (wire : wires) {
             if (wire.semanticSource == expression) return wire
         }
@@ -138,7 +152,7 @@ class Wiring {
     }
 
     def Wire getSemanticSinkWire(ValuedObjectReference valuedObjectReference) {
-        val expression = semanticReferenceIndex.get(valuedObjectReference.valuedObject)
+        val expression = semanticReferenceIndex.get(new Pair<ValuedObject, ValuedObject>(valuedObjectReference.valuedObject, null))
         for (wire : wires) {
             if (wire.semanticSink == expression) return wire
         }

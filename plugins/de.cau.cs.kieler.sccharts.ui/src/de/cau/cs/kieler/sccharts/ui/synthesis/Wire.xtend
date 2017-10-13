@@ -14,6 +14,7 @@ package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import de.cau.cs.kieler.kexpressions.Expression
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 
 /**
  * @author ssm
@@ -30,11 +31,18 @@ class Wire {
     @Accessors var Expression semanticSink = null
     @Accessors var boolean sourceIsInterface = false
     @Accessors var boolean sinkIsInterface = false
+    @Accessors var ReferenceDeclaration semanticSourceReferenceDeclaration = null
+    @Accessors var ReferenceDeclaration semanticSinkReferenceDeclaration = null
 
     new(Expression source, Expression sink, Wiring wiring) {
         this.wiring = wiring
         this.source = source
         this.sink = sink
+    }
+    
+    def ReferenceDeclaration getReferenceDeclaration() {
+        if (semanticSourceReferenceDeclaration != null) return semanticSourceReferenceDeclaration 
+            else semanticSinkReferenceDeclaration
     }
 
 }

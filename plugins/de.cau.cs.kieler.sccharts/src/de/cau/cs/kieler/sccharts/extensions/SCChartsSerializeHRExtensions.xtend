@@ -180,6 +180,9 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
                     type.serialize
                 })
             }
+        } else if (declaration instanceof ReferenceDeclaration) {
+            components.addKeyword("ref")
+            components.addText(if (hr) declaration.reference.serializeHR else declaration.reference.serialize)           
         }
 
         // Content
