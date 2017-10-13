@@ -761,26 +761,32 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             var srcSide = PortSide::EAST
             var dstSide = PortSide::WEST
             var insideToOutside = false
+            var outsideToInside = false
+//            var DIR = "FLAT ->"
             if (COMBINE_CONNECTIONS.booleanValue) {
-                insideToOutside = dstNode.isAnyParentFrom(srcNode) 
+                insideToOutside = dstNode.isAnyParentFrom(srcNode)
+                outsideToInside = srcNode.isAnyParentFrom(dstNode)
                 if (insideToOutside) {
-                     srcSide = PortSide::WEST
+ //                    DIR = "IN -> OUT"
+                     srcSide = PortSide::EAST
                      dstSide = PortSide::EAST
+                } else if (outsideToInside) {
+//                     DIR = "OUT -> IN"
+                     srcSide = PortSide::WEST
+                     dstSide = PortSide::WEST
                 } else {
                      srcSide = PortSide::EAST
                      dstSide = PortSide::WEST
                 }
             }
-//            sideFrom = PortSide::NORTH
-//            sideTo = PortSide::NORTH
 
             var srcPortId = portId + srcNode.hashCode
             var dstPortId = portId + dstNode.hashCode
             
             val KPort srcPort = srcNode.retrievePort(connection, srcPortId, 0, 0, 8, srcSide, color, false)
             var KPort dstPort = dstNode.retrievePort(connection, dstPortId, 0, 0, 8, dstSide, color, true)
-//            srcPort.addOutsidePortLabel(srcNode.labels.get(0).text  + "->" + dstNode.labels.get(0).text + " [" + insideToOutside + "] src")
-//            dstPort.addOutsidePortLabel(srcNode.labels.get(0).text + "->" + dstNode.labels.get(0).text + " [" + insideToOutside + "] dst")
+//            srcPort.addOutsidePortLabel(srcNode.labels.get(0).text  + "->" + dstNode.labels.get(0).text + " [" + DIR + "] src " + srcSide.toString)
+//            dstPort.addOutsidePortLabel(srcNode.labels.get(0).text + "->" + dstNode.labels.get(0).text + " [" + DIR + "] dst"  + dstSide.toString)
             
             edge.sourcePort = srcPort
             edge.targetPort = dstPort
