@@ -33,11 +33,18 @@ Action returns Action:
 ;
 
 VariableAssignment returns Action:
-    variable=VariableReference '=' value=Literal
+    variable=VariableReference '=' (value=Literal | function=Function)
 ;
 
 SimulationAction returns Action:
     operation=SimulationOperation 'simulation'
+;
+
+Function returns Function:
+    functionName=ID
+    (('(' parameters += VariableReference 
+          (',' parameters += VariableReference)* ')')
+    | '()')
 ;
 
 Animation:

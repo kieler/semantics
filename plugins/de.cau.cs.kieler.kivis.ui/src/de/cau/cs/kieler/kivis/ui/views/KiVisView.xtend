@@ -178,11 +178,13 @@ class KiVisView extends ViewPart {
     /**
      * The configuration file that was loaded
      */
+    @Accessors(PUBLIC_GETTER)
     private var IFile kivisFile
     /**
      * The image file that was loaded
      */
-    private var IFile svgImage
+    @Accessors(PUBLIC_GETTER)
+    private var IFile svgFile
     
     /**
      * Resource listener to update the image and animations if the configuration or the svg file changes. 
@@ -257,7 +259,7 @@ class KiVisView extends ViewPart {
      * This method has to be called in the UI thread.
      */
     public def void update(DataPool pool, boolean force) {
-        if(!linkWithSimulation || kivisFile == null || svgImage == null) {
+        if(!linkWithSimulation || kivisFile == null || svgFile == null) {
             return
         }
         
@@ -461,15 +463,15 @@ class KiVisView extends ViewPart {
                 // Load image file relative to the location of the configuration file
                 val project = file.project
                 val imagePath = file.parent.projectRelativePath.append(kivisConfig.image)
-                svgImage = project.getFile(imagePath)
-                if(!svgImage.exists) {
-                    throw new IllegalArgumentException("The SVG file '"+svgImage.projectRelativePath +"' "
+                svgFile = project.getFile(imagePath)
+                if(!svgFile.exists) {
+                    throw new IllegalArgumentException("The SVG file '"+svgFile.projectRelativePath +"' "
                                                      + "was not found in the project '"+file.project.name+"'.")
                 }
-                canvas.setSVGFile(svgImage)
+                canvas.setSVGFile(svgFile)
                 
                 // Register resource change listener for the files
-                registerResourceChangeListener(file, svgImage)
+                registerResourceChangeListener(file, svgFile)
                 
                 // Set label of currently loaded file
                 PromUIPlugin.asyncExecInUI[currentFileLabel.text = "Loaded '"+kivisFile.name+"' in "+loadConfigDuration+" ms"]
@@ -563,17 +565,17 @@ class KiVisView extends ViewPart {
      */
     private def void saveSVGDocument() {
         // If no image was loaded then there is no image to be saved
-        if(kivisFile == null || svgImage == null) {
+        if(kivisFile == null || svgFile == null) {
             return
         }
         // Open file dialog
         val dialog = new FileDialog(canvas.shell, SWT.SAVE)
         dialog.filterExtensions = #{"*.svg"}
-        if(kivisFile != null && svgImage != null) {
+        if(kivisFile != null && svgFile != null) {
             dialog.filterPath = kivisFile.location.removeLastSegments(1).toOSString
             val suffix = "_export"
             val fileExtension = ".svg"
-            dialog.fileName = Files.getNameWithoutExtension(svgImage.name) + suffix + fileExtension
+            dialog.fileName = Files.getNameWithoutExtension(svgFile.name) + suffix + fileExtension
         }
         val result = dialog.open()
         // Save svg image to selected file
@@ -763,7 +765,7 @@ class KiVisView extends ViewPart {
         
         mgr.add(new KiVisViewToolbarAction("Reload", "refresh.png") {
             override run() {
-                if(kivisFile != null && svgImage != null) {
+                if(kivisFile != null && svgFile != null) {
                     reload()    
                 } else {
                     loadLastKiVisFile()

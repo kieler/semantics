@@ -244,14 +244,17 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cVariableAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cVariableVariableReferenceParserRuleCall_0_0 = (RuleCall)cVariableAssignment_0.eContents().get(0);
 		private final Keyword cEqualsSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cValueLiteralParserRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
+		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
+		private final Assignment cValueAssignment_2_0 = (Assignment)cAlternatives_2.eContents().get(0);
+		private final RuleCall cValueLiteralParserRuleCall_2_0_0 = (RuleCall)cValueAssignment_2_0.eContents().get(0);
+		private final Assignment cFunctionAssignment_2_1 = (Assignment)cAlternatives_2.eContents().get(1);
+		private final RuleCall cFunctionFunctionParserRuleCall_2_1_0 = (RuleCall)cFunctionAssignment_2_1.eContents().get(0);
 		
 		//VariableAssignment Action:
-		//	variable=VariableReference '=' value=Literal
+		//	variable=VariableReference '=' (value=Literal | function=Function)
 		@Override public ParserRule getRule() { return rule; }
 
-		//variable=VariableReference '=' value=Literal
+		//variable=VariableReference '=' (value=Literal | function=Function)
 		public Group getGroup() { return cGroup; }
 
 		//variable=VariableReference
@@ -263,11 +266,20 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//'='
 		public Keyword getEqualsSignKeyword_1() { return cEqualsSignKeyword_1; }
 
+		//(value=Literal | function=Function)
+		public Alternatives getAlternatives_2() { return cAlternatives_2; }
+
 		//value=Literal
-		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
+		public Assignment getValueAssignment_2_0() { return cValueAssignment_2_0; }
 
 		//Literal
-		public RuleCall getValueLiteralParserRuleCall_2_0() { return cValueLiteralParserRuleCall_2_0; }
+		public RuleCall getValueLiteralParserRuleCall_2_0_0() { return cValueLiteralParserRuleCall_2_0_0; }
+
+		//function=Function
+		public Assignment getFunctionAssignment_2_1() { return cFunctionAssignment_2_1; }
+
+		//Function
+		public RuleCall getFunctionFunctionParserRuleCall_2_1_0() { return cFunctionFunctionParserRuleCall_2_1_0; }
 	}
 
 	public class SimulationActionElements extends AbstractParserRuleElementFinder {
@@ -292,6 +304,70 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 
 		//'simulation'
 		public Keyword getSimulationKeyword_1() { return cSimulationKeyword_1; }
+	}
+
+	public class FunctionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.Function");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cFunctionNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cFunctionNameIDTerminalRuleCall_0_0 = (RuleCall)cFunctionNameAssignment_0.eContents().get(0);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
+		private final Group cGroup_1_0 = (Group)cAlternatives_1.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_1_0_0 = (Keyword)cGroup_1_0.eContents().get(0);
+		private final Assignment cParametersAssignment_1_0_1 = (Assignment)cGroup_1_0.eContents().get(1);
+		private final RuleCall cParametersVariableReferenceParserRuleCall_1_0_1_0 = (RuleCall)cParametersAssignment_1_0_1.eContents().get(0);
+		private final Group cGroup_1_0_2 = (Group)cGroup_1_0.eContents().get(2);
+		private final Keyword cCommaKeyword_1_0_2_0 = (Keyword)cGroup_1_0_2.eContents().get(0);
+		private final Assignment cParametersAssignment_1_0_2_1 = (Assignment)cGroup_1_0_2.eContents().get(1);
+		private final RuleCall cParametersVariableReferenceParserRuleCall_1_0_2_1_0 = (RuleCall)cParametersAssignment_1_0_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_1_0_3 = (Keyword)cGroup_1_0.eContents().get(3);
+		private final Keyword cLeftParenthesisRightParenthesisKeyword_1_1 = (Keyword)cAlternatives_1.eContents().get(1);
+		
+		//Function:
+		//	functionName=ID ('(' parameters+=VariableReference (',' parameters+=VariableReference)* ')' | '()');
+		@Override public ParserRule getRule() { return rule; }
+
+		//functionName=ID ('(' parameters+=VariableReference (',' parameters+=VariableReference)* ')' | '()')
+		public Group getGroup() { return cGroup; }
+
+		//functionName=ID
+		public Assignment getFunctionNameAssignment_0() { return cFunctionNameAssignment_0; }
+
+		//ID
+		public RuleCall getFunctionNameIDTerminalRuleCall_0_0() { return cFunctionNameIDTerminalRuleCall_0_0; }
+
+		//('(' parameters+=VariableReference (',' parameters+=VariableReference)* ')' | '()')
+		public Alternatives getAlternatives_1() { return cAlternatives_1; }
+
+		//'(' parameters+=VariableReference (',' parameters+=VariableReference)* ')'
+		public Group getGroup_1_0() { return cGroup_1_0; }
+
+		//'('
+		public Keyword getLeftParenthesisKeyword_1_0_0() { return cLeftParenthesisKeyword_1_0_0; }
+
+		//parameters+=VariableReference
+		public Assignment getParametersAssignment_1_0_1() { return cParametersAssignment_1_0_1; }
+
+		//VariableReference
+		public RuleCall getParametersVariableReferenceParserRuleCall_1_0_1_0() { return cParametersVariableReferenceParserRuleCall_1_0_1_0; }
+
+		//(',' parameters+=VariableReference)*
+		public Group getGroup_1_0_2() { return cGroup_1_0_2; }
+
+		//','
+		public Keyword getCommaKeyword_1_0_2_0() { return cCommaKeyword_1_0_2_0; }
+
+		//parameters+=VariableReference
+		public Assignment getParametersAssignment_1_0_2_1() { return cParametersAssignment_1_0_2_1; }
+
+		//VariableReference
+		public RuleCall getParametersVariableReferenceParserRuleCall_1_0_2_1_0() { return cParametersVariableReferenceParserRuleCall_1_0_2_1_0; }
+
+		//')'
+		public Keyword getRightParenthesisKeyword_1_0_3() { return cRightParenthesisKeyword_1_0_3; }
+
+		//'()'
+		public Keyword getLeftParenthesisRightParenthesisKeyword_1_1() { return cLeftParenthesisRightParenthesisKeyword_1_1; }
 	}
 
 	public class AnimationElements extends AbstractParserRuleElementFinder {
@@ -860,6 +936,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	private final ActionElements pAction;
 	private final VariableAssignmentElements pVariableAssignment;
 	private final SimulationActionElements pSimulationAction;
+	private final FunctionElements pFunction;
 	private final AnimationElements pAnimation;
 	private final AttributeMappingElements pAttributeMapping;
 	private final MappingElements pMapping;
@@ -903,6 +980,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		this.pAction = new ActionElements();
 		this.pVariableAssignment = new VariableAssignmentElements();
 		this.pSimulationAction = new SimulationActionElements();
+		this.pFunction = new FunctionElements();
 		this.pAnimation = new AnimationElements();
 		this.pAttributeMapping = new AttributeMappingElements();
 		this.pMapping = new MappingElements();
@@ -1014,7 +1092,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//VariableAssignment Action:
-	//	variable=VariableReference '=' value=Literal
+	//	variable=VariableReference '=' (value=Literal | function=Function)
 	public VariableAssignmentElements getVariableAssignmentAccess() {
 		return pVariableAssignment;
 	}
@@ -1031,6 +1109,16 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getSimulationActionRule() {
 		return getSimulationActionAccess().getRule();
+	}
+
+	//Function:
+	//	functionName=ID ('(' parameters+=VariableReference (',' parameters+=VariableReference)* ')' | '()');
+	public FunctionElements getFunctionAccess() {
+		return pFunction;
+	}
+	
+	public ParserRule getFunctionRule() {
+		return getFunctionAccess().getRule();
 	}
 
 	//Animation:

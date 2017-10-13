@@ -3,6 +3,15 @@
 
 <plugin>
     <extension
+          point="de.cau.cs.kieler.kivis.functionHandler">
+       <functionHandler
+             class="de.cau.cs.kieler.kivis.ui.interactions.ColorFunction">
+       </functionHandler>
+       <functionHandler
+             class="de.cau.cs.kieler.kivis.ui.interactions.SinFunction">
+       </functionHandler>
+    </extension>
+    <extension
           point="de.cau.cs.kieler.kivis.animationHandler">
        <animationHandler
              class="de.cau.cs.kieler.kivis.ui.animations.ColorAnimation"

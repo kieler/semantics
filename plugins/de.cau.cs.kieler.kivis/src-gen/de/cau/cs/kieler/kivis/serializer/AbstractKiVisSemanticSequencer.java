@@ -32,6 +32,7 @@ import de.cau.cs.kieler.kivis.kivis.Comparison;
 import de.cau.cs.kieler.kivis.kivis.Domain;
 import de.cau.cs.kieler.kivis.kivis.Element;
 import de.cau.cs.kieler.kivis.kivis.Event;
+import de.cau.cs.kieler.kivis.kivis.Function;
 import de.cau.cs.kieler.kivis.kivis.Interaction;
 import de.cau.cs.kieler.kivis.kivis.Interval;
 import de.cau.cs.kieler.kivis.kivis.KivisPackage;
@@ -719,6 +720,9 @@ public abstract class AbstractKiVisSemanticSequencer extends KiBuildSemanticSequ
 			case KivisPackage.EVENT:
 				sequence_Event(context, (Event) semanticObject); 
 				return; 
+			case KivisPackage.FUNCTION:
+				sequence_Function(context, (Function) semanticObject); 
+				return; 
 			case KivisPackage.INTERACTION:
 				sequence_Interaction(context, (Interaction) semanticObject); 
 				return; 
@@ -858,6 +862,18 @@ public abstract class AbstractKiVisSemanticSequencer extends KiBuildSemanticSequ
 	
 	/**
 	 * Contexts:
+	 *     Function returns Function
+	 *
+	 * Constraint:
+	 *     (functionName=ID (parameters+=VariableReference parameters+=VariableReference*)?)
+	 */
+	protected void sequence_Function(ISerializationContext context, Function semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Interaction returns Interaction
 	 *
 	 * Constraint:
@@ -942,7 +958,7 @@ public abstract class AbstractKiVisSemanticSequencer extends KiBuildSemanticSequ
 	 *     Action returns Action
 	 *
 	 * Constraint:
-	 *     ((variable=VariableReference value=Literal) | operation=SimulationOperation)
+	 *     ((variable=VariableReference (value=Literal | function=Function)) | operation=SimulationOperation)
 	 */
 	protected void sequence_SimulationAction_VariableAssignment(ISerializationContext context, de.cau.cs.kieler.kivis.kivis.Action semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -954,19 +970,10 @@ public abstract class AbstractKiVisSemanticSequencer extends KiBuildSemanticSequ
 	 *     VariableAssignment returns Action
 	 *
 	 * Constraint:
-	 *     (variable=VariableReference value=Literal)
+	 *     (variable=VariableReference (value=Literal | function=Function))
 	 */
 	protected void sequence_VariableAssignment(ISerializationContext context, de.cau.cs.kieler.kivis.kivis.Action semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KivisPackage.Literals.ACTION__VARIABLE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KivisPackage.Literals.ACTION__VARIABLE));
-			if (transientValues.isValueTransient(semanticObject, KivisPackage.Literals.ACTION__VALUE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KivisPackage.Literals.ACTION__VALUE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getVariableAssignmentAccess().getVariableVariableReferenceParserRuleCall_0_0(), semanticObject.getVariable());
-		feeder.accept(grammarAccess.getVariableAssignmentAccess().getValueLiteralParserRuleCall_2_0(), semanticObject.getValue());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

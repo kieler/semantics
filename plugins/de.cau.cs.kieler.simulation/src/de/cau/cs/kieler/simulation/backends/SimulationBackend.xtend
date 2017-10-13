@@ -66,14 +66,14 @@ abstract class SimulationBackend {
         backends = newArrayList
         val config = ExtensionLookupUtil.getConfigurationElements(SIMULATION_BACKEND_EXTENSION_POINT_ID)
         try {
-            for (IConfigurationElement e : config) {
+            for (e : config) {
                 val o = e.createExecutableExtension("class");
                 if (o instanceof SimulationBackend) {
                     backends.add(o)
                 }
             }
         } catch (CoreException ex) {
-            System.err.println(ex.getMessage());
+            ex.printStackTrace
         }
     }
     

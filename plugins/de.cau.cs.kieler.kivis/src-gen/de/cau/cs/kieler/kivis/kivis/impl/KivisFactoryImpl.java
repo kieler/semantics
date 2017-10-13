@@ -70,6 +70,7 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
       case KivisPackage.INTERACTION: return createInteraction();
       case KivisPackage.EVENT: return createEvent();
       case KivisPackage.ACTION: return createAction();
+      case KivisPackage.FUNCTION: return createFunction();
       case KivisPackage.ANIMATION: return createAnimation();
       case KivisPackage.ATTRIBUTE_MAPPING: return createAttributeMapping();
       case KivisPackage.MAPPING: return createMapping();
@@ -177,6 +178,17 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
   {
     ActionImpl action = new ActionImpl();
     return action;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Function createFunction()
+  {
+    FunctionImpl function = new FunctionImpl();
+    return function;
   }
 
   /**
