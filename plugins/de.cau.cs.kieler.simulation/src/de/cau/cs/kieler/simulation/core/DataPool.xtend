@@ -85,8 +85,8 @@ class DataPool implements Cloneable {
      * @return the loaded data pool
      */
     public static def DataPool createFromJson(String json) {
-        val m = JsonManager.GSON.fromJson(json, typeof(DataPool))
-        return m
+        val pool = JsonManager.GSON.fromJson(json, typeof(DataPool))
+        return pool
     }
     
     /**

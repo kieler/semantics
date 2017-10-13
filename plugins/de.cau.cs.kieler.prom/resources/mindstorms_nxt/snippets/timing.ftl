@@ -8,14 +8,14 @@
          input bool clock; -->
 <#macro Clock millis>
     <@init>
-        long ${varname}Counter = System.currentTimeMillis();
+        long ${varName}Counter = System.currentTimeMillis();
     </@>
     <@input>
         // Clock
-        scchart.${varname} = false;
-        if ( ${varname}Counter + ${millis} < System.currentTimeMillis() ){
-            ${varname}Counter= System.currentTimeMillis();
-            scchart.${varname} = true;
+        scchart.${varName} = false;
+        if ( ${varName}Counter + ${millis} < System.currentTimeMillis() ){
+            ${varName}Counter= System.currentTimeMillis();
+            scchart.${varName} = true;
         }
     </@>
 </#macro>
@@ -37,10 +37,10 @@
 <#macro ResetClock clockVariable autoFalse=true>
     <@output>
         // ResetClock
-        if(scchart.${varname}){
+        if(scchart.${varName}){
             ${clockVariable}Counter = System.currentTimeMillis();
             <#if autoFalse>
-            scchart.${varname} = false;
+            scchart.${varName} = false;
             </#if>
         }
     </@>
@@ -59,7 +59,7 @@
     </@>
     <@input>
         // Time
-        scchart.${varname} = new Long(System.currentTimeMillis() - startTime).intValue();
+        scchart.${varName} = new Long(System.currentTimeMillis() - startTime).intValue();
     </@>
 </#macro>
 
@@ -88,7 +88,7 @@
             isFirstTick = false;
         } else {
             // Set actual tick duration
-            scchart.${varname} = new Long(System.currentTimeMillis() - tickDurationCounter).intValue();
+            scchart.${varName} = new Long(System.currentTimeMillis() - tickDurationCounter).intValue();
             <#if targetMillis != 0 >
             // Wait until target duration of tick reached
             if ( tickDurationCounter + ${targetMillis} > System.currentTimeMillis() ) {
@@ -123,7 +123,7 @@
 <#macro TickWakeUp>
     <@input>
         // Wait until wake up time has been reached.
-        long wakeUpTime = scchart.${varname};
+        long wakeUpTime = scchart.${varName};
         if ( wakeUpTime > System.currentTimeMillis() ) {
             try {
                 Thread.sleep(wakeUpTime - System.currentTimeMillis());
@@ -132,7 +132,7 @@
             }
         }
         // Set input of model to new system time. This should be the old wake up time.
-        scchart.${varname} = new Long(System.currentTimeMillis()).intValue();
+        scchart.${varName} = new Long(System.currentTimeMillis()).intValue();
         // The tick function should come next...
     </@>
 </#macro>
@@ -147,9 +147,9 @@
 <#macro Sleep>
     <@output>
         // Sleep
-        if(scchart.${varname} > 0) {
+        if(scchart.${varName} > 0) {
             try {
-                Thread.sleep(scchart.${varname});
+                Thread.sleep(scchart.${varName});
             } catch (InterruptedException e) { }
         }
     </@>

@@ -8,10 +8,10 @@
 <#macro Print autoReset=true>
     <@output>
         // Print to display
-        if(scchart.${varname} != null && !scchart.${varname}.equals("")) {
-            System.out.println(scchart.${varname});
+        if(scchart.${varName} != null && !scchart.${varName}.equals("")) {
+            System.out.println(scchart.${varName});
             <#if autoReset>
-            scchart.${varname} = "";
+            scchart.${varName} = "";
             </#if>
         }
     </@>
@@ -19,14 +19,14 @@
 
 <#macro PrintInt autoReset=true sentinel='-1'>
     <@init>
-        scchart.${varname} = ${sentinel};
+        scchart.${varName} = ${sentinel};
     </@>
     <@output>
         // Print to display
-        if(scchart.${varname} != ${sentinel}) {
-            System.out.println(scchart.${varname});
+        if(scchart.${varName} != ${sentinel}) {
+            System.out.println(scchart.${varName});
             <#if autoReset>
-            scchart.${varname} = ${sentinel};
+            scchart.${varName} = ${sentinel};
             </#if>
         }
     </@>
@@ -41,8 +41,8 @@
 <#macro DrawString x='0' y='0'>
     <@output>
         // Draw on display
-        if(scchart.${varname} != null && !scchart.${varname}.equals("")) {
-            LCD.drawString(scchart.${varname}, ${x}, ${y});
+        if(scchart.${varName} != null && !scchart.${varName}.equals("")) {
+            LCD.drawString(scchart.${varName}, ${x}, ${y});
         }
     </@>
 </#macro>
@@ -55,12 +55,12 @@
          output string text; -->
 <#macro DrawInt x2='0' y2='0' sentinel='-1'>
     <@init>
-        scchart.${varname} = ${sentinel};
+        scchart.${varName} = ${sentinel};
     </@>
     <@output>
         // Draw on display
-        if(scchart.${varname} != ${sentinel}) {
-            LCD.drawInt(scchart.${varname}, ${x2}, ${y2});
+        if(scchart.${varName} != ${sentinel}) {
+            LCD.drawInt(scchart.${varName}, ${x2}, ${y2});
         }
     </@>
 </#macro>

@@ -416,46 +416,6 @@ class UIUtil {
     }
 
     /**
-     * Creates a combobox with the KiCo transformations for code generation.
-     * 
-     * @param parent The parent container
-     * @return a new combobox. 
-     */
-    public static def createKiCoTargetsCombo(Composite parent) {
-        // Create ComboViewer
-        val combo = new ComboViewer(parent, SWT.DEFAULT)
-
-        // Fetch possible targets from KiCo
-//        var Set<Transformation> transformations
-//        val feature = KielerCompiler.getFeature(CodeGenerationFeatures.TARGET_ID)
-        
-//        if (feature != null)
-//            transformations = feature.expandingTransformations
-        
-        // Fill combo
-        combo.contentProvider = ArrayContentProvider.instance
-//        combo.input = transformations
-
-        // Select first element as default 
-//        if (transformations != null && transformations.size > 0) {
-//            combo.selection = new StructuredSelection(transformations.get(0))
-//        }
-
-        // Create label provider
-        combo.labelProvider = new LabelProvider() {
-            override String getText(Object element) {
-//                val data = (element as Transformation)
-//                if (data != null)
-//                    return data.name
-//                else
-                    return ""
-            }
-        }
-
-        return combo
-    }
-
-    /**
      * Creates a radio group to set the target directory for compilation results.
      * 
      * @param parent The parent composite
@@ -472,39 +432,6 @@ class UIUtil {
         button2.data = KiCoLaunchTargetDirectoryOptions.SAME_AS_INPUT
         button2.toolTipText = "Save compilation output in the same folder as the corresponding input files."
         return #[button1, button2]
-    }
-    
-    
-    /**
-     * Creates the combo viewer with configuration elements that define launch shortcuts.
-     * 
-     * @param parent The parent composite
-     */
-    public static def ComboViewer createLaunchShortcutCombo(Composite parent){
-        val viewer = new ComboViewer(parent, SWT.DEFAULT)
-        viewer.combo.toolTipText = "Launch shortcut that is started after the KiCo Compilation"
-        
-        // Fill combo
-        viewer.contentProvider = ArrayContentProvider.instance
-        
-        val ArrayList<Object> input = new ArrayList<Object>()
-        input.add(StructuredSelection.EMPTY)
-        input.addAll(UIExtensionLookupUtil.getLaunchShortcutConfigurationElements())
-        viewer.input = input
-
-        // Select first element as default 
-        viewer.selection = new StructuredSelection(StructuredSelection.EMPTY)
-
-        // Create label provider
-        viewer.labelProvider = new LabelProvider() {
-            override String getText(Object element) {
-                if(element != null && element instanceof IConfigurationElement)
-                    return (element as IConfigurationElement).getAttribute("label")
-                else
-                    return ""
-            }
-        }
-        return viewer       
     }
     
     /**

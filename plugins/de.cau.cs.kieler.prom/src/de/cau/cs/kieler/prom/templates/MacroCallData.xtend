@@ -65,7 +65,7 @@ class MacroCallData implements Cloneable {
      * The default is to use the macro call data for all phases.
      */
     @Accessors
-    private HashSet<CodeGenerationPhase> phases = CodeGenerationPhase.PHASES
+    private HashSet<CodeGenerationPhase> phases = CodeGenerationPhase.PHASES.clone as HashSet
     
     /**
      * Set of variable interface types that is used to categorize for which variable this macro call is used.
@@ -97,6 +97,8 @@ class MacroCallData implements Cloneable {
      * @param isOuput Defines whether the variable is used as output
      */
     public def void initializeForCodeGeneration(String varName, String varType, boolean isInput, boolean isOutput) {
+        this.varName = varName
+        this.varType = varType
         this.interfaceTypes = VariableInterfaceType.getInterfaceTypes(isInput, isOutput, true)
         if(!isInput) {
             this.phases.remove(CodeGenerationPhase.INPUT_PHASE)    

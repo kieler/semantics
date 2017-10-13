@@ -93,7 +93,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
     /**
      * Creates the substitutions for variables about the model path, name, file extension etc.  
      */
-    val modelFileSubstitution = new ResourceSubstitution("model") {
+    val modelFileSubstitution = new ResourceSubstitution("modelFile") {
         override getValue() {
             return newlyCreatedProject.getFile(modelFilePath+"."+modelFileExtension)
         }
@@ -233,13 +233,8 @@ class PromProjectWizard extends Wizard implements INewWizard {
         
         val env = mainPage.selectedProjectDraft
         try {
-            var String frontendReplacement = ""
-            if(analyzer != null && !analyzer.simulationFrontend.isNullOrEmpty) {
-                frontendReplacement = "frontend: "+analyzer.simulationFrontend
-            }
             val variableMappings = newHashMap
             variableMappings.putAll(modelFileSubstitution.variableMappings)
-            variableMappings.put("frontend", frontendReplacement)
             env.createInitialResources(newlyCreatedProject, variableMappings)
         } catch (Exception e) {
             // Log error

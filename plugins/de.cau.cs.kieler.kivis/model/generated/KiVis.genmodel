@@ -40,7 +40,12 @@
     <genClasses ecoreClass="KiVis.ecore#//Action">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Action/variable"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Action/value"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Action/function"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//Action/operation"/>
+    </genClasses>
+    <genClasses ecoreClass="KiVis.ecore#//Function">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//Function/functionName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Function/parameters"/>
     </genClasses>
     <genClasses ecoreClass="KiVis.ecore#//Animation">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//Animation/type"/>

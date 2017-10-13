@@ -3,6 +3,7 @@
 package de.cau.cs.kieler.kivis.kivis.impl;
 
 import de.cau.cs.kieler.kivis.kivis.Action;
+import de.cau.cs.kieler.kivis.kivis.Function;
 import de.cau.cs.kieler.kivis.kivis.KivisPackage;
 import de.cau.cs.kieler.kivis.kivis.SimulationOperation;
 import de.cau.cs.kieler.kivis.kivis.VariableReference;
@@ -28,6 +29,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#getVariable <em>Variable</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#getValue <em>Value</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#getFunction <em>Function</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#getOperation <em>Operation</em>}</li>
  * </ul>
  *
@@ -54,6 +56,16 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * @ordered
    */
   protected Literal value;
+
+  /**
+   * The cached value of the '{@link #getFunction() <em>Function</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getFunction()
+   * @generated
+   * @ordered
+   */
+  protected Function function;
 
   /**
    * The default value of the '{@link #getOperation() <em>Operation</em>}' attribute.
@@ -197,6 +209,54 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
+  public Function getFunction()
+  {
+    return function;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetFunction(Function newFunction, NotificationChain msgs)
+  {
+    Function oldFunction = function;
+    function = newFunction;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KivisPackage.ACTION__FUNCTION, oldFunction, newFunction);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setFunction(Function newFunction)
+  {
+    if (newFunction != function)
+    {
+      NotificationChain msgs = null;
+      if (function != null)
+        msgs = ((InternalEObject)function).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KivisPackage.ACTION__FUNCTION, null, msgs);
+      if (newFunction != null)
+        msgs = ((InternalEObject)newFunction).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KivisPackage.ACTION__FUNCTION, null, msgs);
+      msgs = basicSetFunction(newFunction, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.ACTION__FUNCTION, newFunction, newFunction));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public SimulationOperation getOperation()
   {
     return operation;
@@ -229,6 +289,8 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
         return basicSetVariable(null, msgs);
       case KivisPackage.ACTION__VALUE:
         return basicSetValue(null, msgs);
+      case KivisPackage.ACTION__FUNCTION:
+        return basicSetFunction(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -247,6 +309,8 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
         return getVariable();
       case KivisPackage.ACTION__VALUE:
         return getValue();
+      case KivisPackage.ACTION__FUNCTION:
+        return getFunction();
       case KivisPackage.ACTION__OPERATION:
         return getOperation();
     }
@@ -268,6 +332,9 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
         return;
       case KivisPackage.ACTION__VALUE:
         setValue((Literal)newValue);
+        return;
+      case KivisPackage.ACTION__FUNCTION:
+        setFunction((Function)newValue);
         return;
       case KivisPackage.ACTION__OPERATION:
         setOperation((SimulationOperation)newValue);
@@ -292,6 +359,9 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
       case KivisPackage.ACTION__VALUE:
         setValue((Literal)null);
         return;
+      case KivisPackage.ACTION__FUNCTION:
+        setFunction((Function)null);
+        return;
       case KivisPackage.ACTION__OPERATION:
         setOperation(OPERATION_EDEFAULT);
         return;
@@ -313,6 +383,8 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
         return variable != null;
       case KivisPackage.ACTION__VALUE:
         return value != null;
+      case KivisPackage.ACTION__FUNCTION:
+        return function != null;
       case KivisPackage.ACTION__OPERATION:
         return operation != OPERATION_EDEFAULT;
     }

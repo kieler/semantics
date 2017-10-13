@@ -48,7 +48,7 @@ abstract class SimulationCompiler extends Configurable {
     /**
      * The listeners that are notified before an old executable is deleted to be replaced with a new one. 
      */
-    private static val listeners = <SimulationCompilerListener> newArrayList
+    protected static val listeners = <SimulationCompilerListener> newArrayList
     
     /**
      * The command that is executed to compile the simulation code.
@@ -188,7 +188,12 @@ abstract class SimulationCompiler extends Configurable {
         // Run command on simulation code
         val processArguments = getProcessArguments
         val processDirectory = getProcessDirectory
-        return startProcess(processDirectory, processArguments)
+        result = startProcess(processDirectory, processArguments)
+        // Notify listeners
+        for(l : listeners) {
+            l.afterCompilation(this)
+        }
+        return result
     }
     
     /**
@@ -307,7 +312,7 @@ abstract class SimulationCompiler extends Configurable {
      * @return The result of the compilation
      */
     protected def FileGenerationResult startProcess(File directory, String... arguments) {
-        result = new FileGenerationResult
+        val result = new FileGenerationResult
         val pBuilder = new ProcessBuilder(arguments)
         pBuilder.directory(directory)
         pBuilder.redirectErrorStream(true)

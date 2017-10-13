@@ -21,6 +21,7 @@ import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import java.io.File
 import de.cau.cs.kieler.simulation.core.SimulationManager
+import de.cau.cs.kieler.simulation.core.DataPool
 
 /**
  * @author aas
@@ -66,12 +67,29 @@ class OpenSimulationAction extends DataPoolViewToolbarAction {
                         lastNonEmptyLine = line
                     }
                 }
-                val loadedModel = Model.createFromJson("Loaded Model", lastNonEmptyLine)
+                // Load the data pool from json
+                val loadedPool = DataPool.createFromJson(lastNonEmptyLine)
                 val currentPool = SimulationManager.instance?.currentPool
-                if(currentPool != null && loadedModel != null) {
-                    for(loadedVariable : loadedModel.variables) {
-                        val currentVariable = currentPool.getVariable(loadedVariable.name)
-                        currentVariable.userValue = loadedVariable.value
+                if(currentPool != null && loadedPool != null) {
+                    // Load the variable values
+                    if(loadedPool.models.size == 1) {
+                        // Set variables of the model
+                        for(loadedVariable : loadedPool.allVariables) {
+                            val currentVariable = currentPool.getVariable(loadedVariable.name)
+                            currentVariable.userValue = loadedVariable.value
+                        }
+                    } else if(loadedPool.models.size > 1) {
+                        // Set variables of all models
+                        for(loadedModel : loadedPool.models) {
+                            for(loadedVariable : loadedModel.variables) {
+                                val currentVariable = currentPool.getVariable(loadedModel.name, loadedVariable.name)
+                                currentVariable.userValue = loadedVariable.value
+                            }
+                        }
+                    }
+                    // Load the action index for the simulation
+                    if(loadedPool.actionIndex >= 0 && SimulationManager.instance != null) {
+                        SimulationManager.instance.currentState.actionIndex = loadedPool.actionIndex
                     }
                 }
             }

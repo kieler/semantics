@@ -27,8 +27,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
@@ -44,6 +43,7 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.ScgPackage
+import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
@@ -61,6 +61,7 @@ import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
 import static extension com.google.common.collect.Sets.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * The SSA transformation for SCGs
@@ -69,7 +70,7 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class WeakUnemitSSATransformation extends Processor<SCGraphs, SCGraphs> implements Traceable {
+class WeakUnemitSSATransformation extends InplaceProcessor<SCGraphs> implements Traceable {
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -80,10 +81,6 @@ class WeakUnemitSSATransformation extends Processor<SCGraphs, SCGraphs> implemen
 
     override getName() {
         return "Weak Unemit SSA"
-    }
-    
-    override getType() {
-        return ProcessorType.TRANSFORMATOR
     }
     
     override process() {
@@ -140,12 +137,12 @@ class WeakUnemitSSATransformation extends Processor<SCGraphs, SCGraphs> implemen
             
             return asm
         ]
-        scg.snapshot
         
         // ---------------
         // 2. Renaming
         // ---------------
         bbVersion = dt.rename(entryBB, ssaDecl)
+        scg.annotations += createStringAnnotation(SCGAnnotations.ANNOTATION_SSA, id)
         scg.snapshot
         
         // Transform phi node into assignments in each branch
@@ -160,8 +157,8 @@ class WeakUnemitSSATransformation extends Processor<SCGraphs, SCGraphs> implemen
         scg.snapshot
         
         // Removes all references to signals that are never emitted
-        scg.removeAbsentReads  
-        scg.snapshot
+//        scg.removeAbsentReads  
+//        scg.snapshot
               
         // Removes assignments to signals which are never read
         scg.removePhiWritesWithoutRead
@@ -178,8 +175,8 @@ class WeakUnemitSSATransformation extends Processor<SCGraphs, SCGraphs> implemen
         // ---------------
         
         // Removes conditional with constant conditions
-        scg.removeDeadCodeSimple
-        scg.snapshot
+//        scg.removeDeadCodeSimple
+//        scg.snapshot
         // Removes all ssa versions which are not read
         scg.removeUnusedSSAVersions
         // Merges ssa version which are always used together (in OR expressions)
@@ -200,7 +197,7 @@ class WeakUnemitSSATransformation extends Processor<SCGraphs, SCGraphs> implemen
     def void addConcurrentWritersToReaders(SCGraph scg) {
         for (node : scg.uses.values.filter[!isSSA].toSet) {
             for (declDepPair : node.incoming.filter(DataDependency).filter[concurrent].groupBy[(eContainer as Assignment).valuedObject.declaration].entrySet) {
-                if (!declDepPair.key.hasAnnotation(SSATransformationExtensions.ANNOTATION_IGNORE_DECLARATION)) {
+                if (!declDepPair.key.hasAnnotation(SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION)) {
                     val refs = node.eContents.filter(Expression).head.allReferences.filter[valuedObject.declaration == declDepPair.key].toList
                     for (ref : refs) {
                         ref.replace(createOperatorExpression(OperatorType.BITWISE_OR) => [
@@ -219,10 +216,10 @@ class WeakUnemitSSATransformation extends Processor<SCGraphs, SCGraphs> implemen
         for (n : nodes) {
             val cf = n.eContents.filter(ControlFlow).head
             val sb = scg.schedulingBlocks.findFirst[it.nodes.contains(n)]
-            for (d: scg.variableDeclarations.filter[type == ValueType.PURE && !input && !hasAnnotation(SSATransformationExtensions.ANNOTATION_IGNORE_DECLARATION)]) {//FIXME ignored input
+            for (d: scg.declarations.filter(VariableDeclaration).filter[type == ValueType.PURE && !input && !hasAnnotation(SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION)]) {//FIXME ignored input
                 for (vo : d.valuedObjects) {
                     scg.nodes += ScgFactory.eINSTANCE.createAssignment => [
-                        annotations += createStringAnnotation(WeakUnemitSSATransformation.IMPLICIT_ANNOTAION, WeakUnemitSSATransformation.IMPLICIT_ANNOTAION)
+                        annotations += createAnnotation => [ name = WeakUnemitSSATransformation.IMPLICIT_ANNOTAION]
                         valuedObject = vo
                         expression = if (d.input) {vo.reference} else {createBoolValue(false)}
                         next = createControlFlow => [

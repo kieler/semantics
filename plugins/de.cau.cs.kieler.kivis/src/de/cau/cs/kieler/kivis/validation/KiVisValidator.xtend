@@ -27,7 +27,6 @@ class KiVisValidator extends AbstractKiVisValidator {
     
     private val CANNOT_MAP_VALUE_TO_RANGE = "Can't map a single value to a range."
     private val LOWER_VALUE_ON_THE_LEFT = "Lower value of an interval has to be on the left side."
-    private val INTERACTION_WITHOUT_GUARD = "An interaction must have a condition or must listen to an event"
     
     /**
      * Checks that there is no mapping of a single value to a range.
@@ -53,16 +52,6 @@ class KiVisValidator extends AbstractKiVisValidator {
             if(fromDouble > toDouble) {
                 error(LOWER_VALUE_ON_THE_LEFT, interval, null);
             }
-        }
-    }
-    
-    /**
-     * Check that an interaction is either performed when a condition holds or an event fires.
-     */
-    @Check
-    public def void checkEventOrConditionOnInteraction(Interaction interaction) {
-        if(interaction.event == null && interaction.condition == null) {
-            error(INTERACTION_WITHOUT_GUARD, interaction, null)
         }
     }
 }

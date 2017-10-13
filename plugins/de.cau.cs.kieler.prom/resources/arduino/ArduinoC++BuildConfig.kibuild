@@ -22,5 +22,5 @@ simulation compiler c {
 process wrapper template {
   file: assets/main.ftl
   target: ${project_name}.cpp
-  modelFile: ${model_path}
+  modelFile: ${modelFile_path}
 }

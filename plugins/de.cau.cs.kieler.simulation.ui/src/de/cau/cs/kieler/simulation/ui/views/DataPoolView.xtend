@@ -29,7 +29,7 @@ import de.cau.cs.kieler.simulation.core.events.SimulationListener
 import de.cau.cs.kieler.simulation.core.events.VariableUserValueEvent
 import de.cau.cs.kieler.simulation.handlers.TraceMismatchEvent
 import de.cau.cs.kieler.simulation.ui.SimulationUiPlugin
-import de.cau.cs.kieler.simulation.ui.toolbar.SubTicksEnabledPropertyTester
+import de.cau.cs.kieler.simulation.ui.toolbar.AdvancedControlsEnabledPropertyTester
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
@@ -55,6 +55,8 @@ import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.xtend.lib.annotations.Accessors
 
+import static de.cau.cs.kieler.simulation.ui.toolbar.AdvancedControlsEnabledPropertyTester.*
+
 /**
  * Displays the data of a running simulation.
  * 
@@ -77,12 +79,6 @@ class DataPoolView extends ViewPart {
      * The simulation listener that updates this view
      */
     public static val simulationListener = createSimulationListener
-    
-    /**
-     * Determines if the "step sub tick" button in the toolbar is visible or not.
-     */
-    @Accessors(PUBLIC_GETTER)
-    static var boolean subTicksEnabled
     
     /**
      * The table that shows the data pool view of the simulation.
@@ -216,18 +212,18 @@ class DataPoolView extends ViewPart {
             }
         });
         mgr.add(new Separator())
-        mgr.add(new Action("Enable Sub Ticks") {
+        mgr.add(new Action("Enable Advanced Controls") {
             override run() {
-                subTicksEnabled = !subTicksEnabled
-                if(subTicksEnabled) {
-                    setText("Disable Sub Ticks")
+                AdvancedControlsEnabledPropertyTester.advancedControlsEnabled = !AdvancedControlsEnabledPropertyTester.advancedControlsEnabled
+                if(AdvancedControlsEnabledPropertyTester.advancedControlsEnabled) {
+                    setText("Disable Advanced Controls")
                 } else {
-                    setText("Enable Sub Ticks")
+                    setText("Enable Advanced Controls")
                 }
                 
                 // Trigger re-evaluation of the property tester
                 // that controls the visibility of the toolbar button
-                SubTicksEnabledPropertyTester.update
+                AdvancedControlsEnabledPropertyTester.update
             }
         })
     }
@@ -253,10 +249,10 @@ class DataPoolView extends ViewPart {
             }
             
             override getFileContent(List<DataPool> history) {
-                // Turn data pools history to json objects
+                // Turn data pools to json objects
                 var String content = ""
                 for(pool : history) {
-                    content += pool.toJson
+                    content += pool.toJson+"\n"
                 }
                 return content
             }

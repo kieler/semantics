@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension-point id="simulationParticipant" name="Simulation Participant" schema="schema/simulationParticipant.exsd"/>
-   <extension
-         point="de.cau.cs.kieler.simulation.ui.simulationParticipant">
-         <simulationParticipant
-            class="de.cau.cs.kieler.simulation.ui.RegisterVariablesFinder" />
-   </extension>
+    <extension
+          point="de.cau.cs.kieler.simulation.simulationParticipant">
+       <simulationParticipant
+             class="de.cau.cs.kieler.simulation.ui.RegisterVariablesFinder">
+       </simulationParticipant>
+       <simulationParticipant
+             class="de.cau.cs.kieler.simulation.ui.SimulateModelInDiagramView">
+       </simulationParticipant>
+    </extension>
    <extension
          point="org.eclipse.debug.ui.launchShortcuts">
       <shortcut
@@ -78,7 +81,7 @@
                         </equals>
                      </with>
                      <test
-                           property="de.cau.cs.kieler.simulation.ui.subTicksEnabled">
+                           property="de.cau.cs.kieler.simulation.ui.advancedControlsEnabled">
                      </test>
                   </and>
                </visibleWhen>
@@ -248,10 +251,10 @@
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
       <propertyTester
-            class="de.cau.cs.kieler.simulation.ui.toolbar.SubTicksEnabledPropertyTester"
+            class="de.cau.cs.kieler.simulation.ui.toolbar.AdvancedControlsEnabledPropertyTester"
             id="de.cau.cs.kieler.simulation.ui.subTicksEnabledPropertyTester"
             namespace="de.cau.cs.kieler.simulation.ui"
-            properties="subTicksEnabled"
+            properties="advancedControlsEnabled"
             type="java.lang.Object">
       </propertyTester>
    </extension>
@@ -934,9 +937,11 @@
         </markerResolutionGenerator>
     </extension>
     <extension
-          point="de.cau.cs.kieler.klighd.ui.view.controller">
-       <controller
-             class="de.cau.cs.kieler.simulation.ui.SimulateModelInDiagramView">
-       </controller>
+          point="org.eclipse.ui.preferencePages">
+       <page
+             class="de.cau.cs.kieler.simulation.ui.preferences.SimulationPreferencePage"
+             id="de.cau.cs.kieler.simulation.ui.preferencePage"
+             name="Simulation">
+       </page>
     </extension>
 </plugin>

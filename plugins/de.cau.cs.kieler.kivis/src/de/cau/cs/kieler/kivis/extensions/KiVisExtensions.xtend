@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.kivis.extensions
 
 import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kivis.interactions.FunctionHandler
 import de.cau.cs.kieler.kivis.kivis.Action
 import de.cau.cs.kieler.kivis.kivis.AndExpression
 import de.cau.cs.kieler.kivis.kivis.Animation
@@ -20,6 +21,7 @@ import de.cau.cs.kieler.kivis.kivis.AttributeMapping
 import de.cau.cs.kieler.kivis.kivis.Comparison
 import de.cau.cs.kieler.kivis.kivis.Condition
 import de.cau.cs.kieler.kivis.kivis.Domain
+import de.cau.cs.kieler.kivis.kivis.Function
 import de.cau.cs.kieler.kivis.kivis.Mapping
 import de.cau.cs.kieler.kivis.kivis.SimulationOperation
 import de.cau.cs.kieler.kivis.kivis.VariableReference
@@ -56,6 +58,9 @@ class KiVisExtensions {
         val variableName = ref.name
         // Get variable in pool
         val variable = pool.getVariable(modelName, variableName)
+        if(variable == null) {
+            throw new Exception("No variable '"+variableName+"' was found in the pool.\nPlease check the spelling or array indices if any.")
+        }
         return variable
     }
     
@@ -252,8 +257,12 @@ class KiVisExtensions {
      * @param pool The pool 
      */
     public def void perform(Action action, DataPool pool) {
-        if(action.variable != null && action.value != null) {
-            action.variable.performAssignment(action.value, pool)
+        if(action.variable != null) {
+            if(action.value != null) {
+                action.variable.performAssignment(action.value, pool)
+            } else if(action.function != null) {
+                action.variable.performAssignment(action.function, pool)
+            }
         } else if(action.operation != null) {
             perform(action.operation)
         }
@@ -310,6 +319,37 @@ class KiVisExtensions {
             } else {
                 variable.userValue = primitive
             }
+        }
+    }
+    
+    /**
+     * Sets the value of the variable in the data pool that corresponds to the given variable reference.
+     * 
+     * @param variableReference The variableReference
+     * @param function The function that computes the new value
+     * @param pool The data pool in which the variable should be set
+     */
+    public def void performAssignment(VariableReference variableReference, Function function, DataPool pool) {
+        // Get function handler for the function name
+        val handler = FunctionHandler.getFunctionHandler(function.functionName)
+        if(handler == null) {
+            throw new Exception("The function '"+function.functionName+"' is not handled by the simulation visualization.\n"
+                              + "Supported functions are:"+FunctionHandler.functionHandlers.map[it.name].join(", "))
+        }
+        // Get function arguments
+        val arguments = <Object>newArrayList
+        for(p : function.parameters) {
+            val argument = p.getVariableValue(pool, true)
+            if(argument != null) {
+                arguments.add(argument) 
+            }
+        }
+        // Calculate the function
+        val value = handler.getValue(arguments)
+        // Assign new value to the variable
+        val variable = getVariable(variableReference, pool)
+        if(variable != null) {
+            variable.userValue = value
         }
     }
     

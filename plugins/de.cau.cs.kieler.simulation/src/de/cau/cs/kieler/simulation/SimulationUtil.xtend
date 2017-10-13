@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.simulation
 
-import de.cau.cs.kieler.simulation.backends.SimulationBackend
 import java.util.List
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.IProgressMonitor
@@ -35,7 +34,6 @@ class SimulationUtil {
             return
         }
         val context = new SimulationContext
-        context.simulationBackend = SimulationBackend.currentBackend
         context.monitor = monitor
         for(file : files) {
             if(isSimulationConfiguration(file)) {
@@ -63,7 +61,6 @@ class SimulationUtil {
                                null
         // Start simulation with the model
         val context = new SimulationContext
-        context.simulationBackend = SimulationBackend.currentBackend
         context.model = model as EObject
         context.monitor = childMonitor
         context.start

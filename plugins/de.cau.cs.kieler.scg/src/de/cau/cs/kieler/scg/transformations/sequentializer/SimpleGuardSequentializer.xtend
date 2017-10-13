@@ -78,7 +78,7 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
     }
     
     override getType() {
-        ProcessorType.TRANSFORMATOR
+        ProcessorType.EXOGENOUS_TRANSFORMATOR
     }
 
     public def SCGraph transform(SCGraph scg) {

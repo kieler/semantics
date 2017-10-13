@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.kivis.ui.animations
 
-import de.cau.cs.kieler.kivis.animation.IAnimationHandler
+import de.cau.cs.kieler.kivis.animations.IAnimationHandler
 import de.cau.cs.kieler.kivis.extensions.KiVisExtensions
 import de.cau.cs.kieler.kivis.kivis.Animation
 import de.cau.cs.kieler.kivis.kivis.AttributeMapping

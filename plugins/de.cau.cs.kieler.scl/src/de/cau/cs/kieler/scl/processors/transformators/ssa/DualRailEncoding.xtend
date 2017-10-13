@@ -26,18 +26,17 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.scg.ssa.SSAFunction
 import de.cau.cs.kieler.scl.Assignment
 import de.cau.cs.kieler.scl.Conditional
-import de.cau.cs.kieler.scl.SCLProgram
+import de.cau.cs.kieler.scl.Module
 import de.cau.cs.kieler.scl.SCLFactory
+import de.cau.cs.kieler.scl.SCLProgram
 import de.cau.cs.kieler.scl.Statement
 import java.util.Iterator
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.scl.Module
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
@@ -49,7 +48,7 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class DualRailEncoding extends Processor<SCLProgram, SCLProgram> {
+class DualRailEncoding extends InplaceProcessor<SCLProgram> {
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -60,10 +59,6 @@ class DualRailEncoding extends Processor<SCLProgram, SCLProgram> {
 
     override getName() {
         return "SCL Dual-Rail Encoding"
-    }
-    
-    override getType() {
-        return ProcessorType.TRANSFORMATOR
     }
     
     override process() {

@@ -4,6 +4,7 @@
 <plugin>
    <extension-point id="dataHandler" name="DataHandler" schema="schema/dataHandler.exsd"/>
    <extension-point id="simulationBackend" name="Simulation Backend" schema="schema/simulationBackend.exsd"/>
+   <extension-point id="simulationParticipant" name="Simulation Participant" schema="schema/simulationParticipant.exsd"/>
 
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package 
@@ -64,6 +65,9 @@
          point="de.cau.cs.kieler.simulation.simulationBackend">
       <simulationBackend
             class="de.cau.cs.kieler.simulation.backends.CSimulationBackend">
+      </simulationBackend>
+      <simulationBackend
+            class="de.cau.cs.kieler.simulation.backends.JavaSimulationBackend">
       </simulationBackend>
    </extension>
 

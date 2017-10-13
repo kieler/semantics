@@ -3,6 +3,10 @@
  */
 package de.cau.cs.kieler.scl;
 
+import org.eclipse.xtext.resource.XtextResource;
+
+import de.cau.cs.kieler.scl.serializer.SCLSerializer;
+
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
@@ -10,6 +14,13 @@ public class SCLRuntimeModule extends de.cau.cs.kieler.scl.AbstractSCLRuntimeMod
     
     public Class<? extends org.eclipse.xtext.conversion.IValueConverterService> bindIValueConverterService() {
         return de.cau.cs.kieler.scl.formatting.SCLValueConverter.class;
-    }   
+    } 
     
+    public Class<? extends XtextResource> bindXtextResource() {
+        return SCLResource.class;
+    }
+    
+    public Class<? extends org.eclipse.xtext.serializer.ISerializer> bindISerializer() {
+        return SCLSerializer.class;
+    }
 }

@@ -12,21 +12,21 @@
 <#macro MotorSpeed port brake=true>
     <@input>
         // Motor ${port}
-        scchart.${varname} = Motor.${port}.getSpeed();
+        scchart.${varName} = Motor.${port}.getSpeed();
     </@>
     <@output>
         // Motor ${port}
-        if (Math.abs(scchart.${varname}) != Motor.${port}.getSpeed()) {
-            Motor.${port}.setSpeed(Math.abs(scchart.${varname}));
-            if(scchart.${varname} == 0)
+        if (Math.abs(scchart.${varName}) != Motor.${port}.getSpeed()) {
+            Motor.${port}.setSpeed(Math.abs(scchart.${varName}));
+            if(scchart.${varName} == 0)
                 <#if brake>
                 Motor.${port}.stop(true);
                 <#else>
                 Motor.${port}.flt(true);
                 </#if>
-            else if(scchart.${varname} > 0)
+            else if(scchart.${varName} > 0)
                 Motor.${port}.forward();
-            else if(scchart.${varname} < 0)
+            else if(scchart.${varName} < 0)
                 Motor.${port}.backward();
         }
     </@>
@@ -41,7 +41,7 @@
 <#macro MotorIsMoving port>
     <@input>
         // Motor ${port}
-        scchart.${varname} = Motor.${port}.isMoving();
+        scchart.${varName} = Motor.${port}.isMoving();
     </@>
 </#macro>
 
@@ -58,13 +58,13 @@
 <#macro MotorRotation port>
     <@input>
         // Motor ${port}
-        scchart.${varname} = Motor.${port}.getTachoCount();
+        scchart.${varName} = Motor.${port}.getTachoCount();
     </@>
     <@output>
         // Motor ${port}
-        if(scchart.${varname} != 0){
-            Motor.${port}.rotate(scchart.${varname}, true);
-            scchart.${varname} = 0;
+        if(scchart.${varName} != 0){
+            Motor.${port}.rotate(scchart.${varName}, true);
+            scchart.${varName} = 0;
         }
     </@>
 </#macro>

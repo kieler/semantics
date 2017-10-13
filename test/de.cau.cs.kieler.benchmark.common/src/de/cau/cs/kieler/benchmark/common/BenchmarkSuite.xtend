@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.Platform
 import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.ui.PlatformUI
+import org.bson.Document
 
 /**
  * The main benchmark suite starting all benchmarks.
@@ -74,27 +75,35 @@ class BenchmarkSuite extends Job {
     
             // Run each benchmark
             for (benchmarkClass : benchmarks) {
-                val filterInstance = injector.getInstance(benchmarkClass)
-                if (isBambooRun) println("Executing Benchmark: " + filterInstance.ID)
-                for (data : ModelsRepository.models.filter[filterInstance.filter(it)]) {
+                val benchmarkDataProvider = injector.getInstance(benchmarkClass)
+                if (isBambooRun) println("Executing Benchmark: " + benchmarkDataProvider.ID)
+                for (data : ModelsRepository.models.filter[benchmarkDataProvider.filter(it)]) {
                     if (isBambooRun) println(new StringBuilder("\nPerforming benchmark with model: ").append(data.repositoryPath.fileName).append(":").append(data.modelPath).toString)
+                    val results = <Document>newArrayOfSize(benchmarkDataProvider.iterations)
+                    for (i : 0..benchmarkDataProvider.iterations - 1) {
+                        if (isBambooRun) println("Run #" + i+1)
+                        try {
+                            // Prepare
+                            val benchmark = injector.getInstance(benchmarkClass)
+                            benchmark.prepare(data)
+                            
+                            // Clean JVM
+                            System.gc
+                            Thread.sleep(500)
+                            
+                            // Perform benchmark and store data
+                            results.set(i, benchmark.perform(data))
+                        } catch (Exception e) {
+                            if (isBambooRun) e.printStackTrace else throw e
+                        }
+                    }
                     try {
-                        // Prepare
-                        val benchmark = injector.getInstance(benchmarkClass)
-                        benchmark.prepare(data)
-                        
-                        // Clean JVM
-                        System.gc
-                        Thread.sleep(500)
-                        
-                        // Perform benchmark and store data
-                        val result = benchmark.perform(data)
-                        db.storeResult(benchmark, data, result)
+                        db.storeResult(benchmarkDataProvider.ID, data, benchmarkDataProvider.calculateResult(results, data))
                     } catch (Exception e) {
                         if (isBambooRun) e.printStackTrace else throw e
                     }
                 }
-                if (isBambooRun) println("Finished Benchmark: " + filterInstance.ID)
+                if (isBambooRun) println("Finished Benchmark: " + benchmarkDataProvider.ID)
                 flush
             }
     
@@ -143,9 +152,11 @@ class BenchmarkSuite extends Job {
                         builder.append(" - The ID must not start with the dollar sign ($) character.\n")
                         builder.append(" - The ID must not contain the dot (.) character.\n")
                         throw new Exception(builder.toString)
-                    } else {
-                        ids.add(benchmark.ID)
                     }
+                    if (benchmark.iterations <= 0) {
+                        throw new Exception(benchmark.class.name + " defines negative or zero number of benchmark iterations!")
+                    }
+                    ids.add(benchmark.ID)
                     benchmarks.add(benchmark.class as Class<IBenchmark>)
                 } catch (Exception e) {
                     if (isBambooRun) e.printStackTrace else throw e

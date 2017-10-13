@@ -57,7 +57,7 @@ class SSASCL2SSAEsterel extends Processor<SCLProgram, EsterelProgram> {
     }
 
     override getType() {
-        return ProcessorType.TRANSFORMATOR
+        return ProcessorType.EXOGENOUS_TRANSFORMATOR
     }
     
     override process() {

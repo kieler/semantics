@@ -22,6 +22,7 @@ import de.cau.cs.kieler.kicool.ui.klighd.internal.model.CodePlaceHolder
 import de.cau.cs.kieler.kicool.environments.Warnings
 import de.cau.cs.kieler.kicool.environments.MessageObjectReferences
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import static extension de.cau.cs.kieler.kicool.ui.view.EditPartSystemManager.*
 
 /**
  * Class that handles the intermediate model requests.
@@ -40,7 +41,7 @@ class SelectIntermediateAction implements IAction {
         
         val intermediateData = kNode.getProperty(INTERMEDIATE_DATA)
         val compilationContext = intermediateData.compilationContext
-        val editor = intermediateData.view.editPartSystemManager.findEditorForSystem(compilationContext.getRootContext.system)
+        val editor = compilationContext.getRootContext.inputEditor
         var model = intermediateData.model
         if (model instanceof String) {
 //            model = new Container<String>(model)

@@ -119,7 +119,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     }
     
     override getType() {
-        ProcessorType.TRANSFORMATOR
+        ProcessorType.EXOGENOUS_TRANSFORMATOR
     }
     
     override process() {

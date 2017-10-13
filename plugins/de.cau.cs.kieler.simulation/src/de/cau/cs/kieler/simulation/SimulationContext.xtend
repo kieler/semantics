@@ -12,6 +12,10 @@
  */
 package de.cau.cs.kieler.simulation
 
+import de.cau.cs.kieler.kicool.ProcessorGroup
+import de.cau.cs.kieler.kicool.ProcessorReference
+import de.cau.cs.kieler.kicool.ProcessorSystem
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.prom.KiBuildExtensions
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
@@ -43,6 +47,7 @@ import org.eclipse.core.runtime.preferences.InstanceScope
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.osgi.service.prefs.Preferences
+import de.cau.cs.kieler.kicool.ProcessorEntry
 
 /**
  * @author aas
@@ -155,8 +160,6 @@ class SimulationContext {
         val buildConfig = simulationBackend.buildConfig
         modelCompilers = buildConfig.createModelCompilers
         modelCompilers.setProgressMonitor
-        // Update the frontend for the compilation of the model
-        updateFrontendCompileChain
         // Prepare simulation compilers
         simulationCompilers = buildConfig.createSimulationCompilers
         simulationCompilers.setProgressMonitor
@@ -180,10 +183,13 @@ class SimulationContext {
             if (modelName.isNullOrEmpty) {
                 modelName = "model"
             }
-            modelFile = temporaryProject.getFile(modelName + "." + modelAnalyzer.supportedFileExtensions.get(0))
+            val modelFolder = temporaryProject.getFolder("model")
+            modelFile = modelFolder.getFile(modelName + "." + modelAnalyzer.supportedFileExtensions.get(0))
             PromPlugin.createResource(modelFile)
-            // Update the frontend for the compilation of the model
-            updateFrontendCompileChain
+            // Find a suited simulation backend for the compile chain of the model analyzer
+            if(simulationBackend == null) {
+                setSimulationBackend(getSimulationBackend(modelAnalyzer.compileChain.trim))    
+            }
         } else {
             throw new Exception("Cannot create a simulation. No model analyzer was found for "+model)    
         }
@@ -302,18 +308,18 @@ class SimulationContext {
         // Initialize project
         if(!initializedProject) {
             if(projectDraft != null) {
-                // Replace frontend placeholder in build config
-                var String frontendReplacement = ""
-                if(modelAnalyzer != null && !modelAnalyzer.simulationFrontend.isNullOrEmpty) {
-                    frontendReplacement = "frontend: "+modelAnalyzer.simulationFrontend
-                }
-                projectDraft.createInitialResources(modelFile.project, #{"frontend" -> frontendReplacement})
+                projectDraft.createInitialResources(modelFile.project)
                 initializedProject = true
             }
         }
         
         // Compile model
         for (modelCompiler : modelCompilers) {
+            // Set compile chain to the compile chain for the model, which is set in the model analyzer
+            if(modelCompiler instanceof KiCoModelCompiler) {
+                modelCompiler.setCompileChain(modelAnalyzer.compileChain)
+            }
+            // Compile the model
             val modelCompilationResult = modelCompiler.compile(modelFile, model)
             if(isCanceled) {
                 return
@@ -356,26 +362,6 @@ class SimulationContext {
             switch(c) {
                 ModelCompiler : c.monitor = monitor
                 SimulationCompiler : c.monitor = monitor
-            }
-        }
-    }
-    
-    /**
-     * Adds a suited frontend compile chain for the current model
-     * to the build config that was loaded from the simulation backend.
-     */
-    private def void updateFrontendCompileChain() {
-        if(modelAnalyzer == null || modelCompilers.isNullOrEmpty) {
-            return
-        }
-        // Set frontend of model compilers
-        if(!modelAnalyzer.simulationFrontend.isNullOrEmpty) {
-            for(m : modelCompilers) {
-                if(m instanceof KiCoModelCompiler) {
-                    if(!m.frontend.isDefined) {
-                        m.frontend.value = modelAnalyzer.simulationFrontend.replaceAll("\\s", "").split(",").toList    
-                    }
-                }
             }
         }
     }
@@ -425,4 +411,46 @@ class SimulationContext {
     private def ProjectDraftData getProjectDraft() {
         return simulationBackend?.projectDraft
     }
+    
+    /**
+     * Searches for a suited simulation backend for the given compile chain.
+     * Relevant for the simulation backend is the last processor that creates the target code for the models.
+     */
+    private def SimulationBackend getSimulationBackend(String compileChain) {
+        val lastProcessorOrSystemId = KiCoModelCompiler.splitCompileChain(compileChain).last
+        var String lastProcessorId
+        try {
+            val system = KiCoolRegistration.getSystemById(lastProcessorOrSystemId)
+            // If there was no exception, then this is a system
+            lastProcessorId = system.processors.getLastProcessorId    
+        } catch (Exception ex) {
+            try {
+                val processor = KiCoolRegistration.getProcessorClass(lastProcessorOrSystemId)
+                // If there was no exception, then this is a processor
+                lastProcessorId = lastProcessorOrSystemId
+            } catch(Exception e) {
+            }
+        }
+        // Find a suited simulation backend for the processor id
+        for(backend : SimulationBackend.backends) {
+            if(backend.isSupported(lastProcessorId)) {
+                return backend
+            }
+        }
+        throw new Exception("No simulation backend was found for the result of the last processor '"+lastProcessorId+"'")    
+    }
+    
+    /**
+     * Returns the last processor id of the given processor entry.
+     * The entry may also be a group of processors. The id of the last processor in this group is returned in this case.
+     */
+    private def String getLastProcessorId(ProcessorEntry processors) {
+        if(processors instanceof ProcessorGroup) { 
+            return processors.processors.last.lastProcessorId
+        } else if (processors instanceof ProcessorReference) {
+            return processors.id
+        } else if (processors instanceof ProcessorSystem) {
+            return processors.id
+        }
+    } 
 }

@@ -65,7 +65,7 @@ class EsterelAnalyzer extends ModelAnalyzer {
     /**
      * {@inheritDoc}
      */
-    override protected getDefaultSimulationFrontend() {
+    override protected getDefaultCompileChain() {
         // TODO: Add a compile chain that compiles strl files to scgs
         return ""
     }

@@ -45,8 +45,8 @@ class WorkspaceBenchmarkDatabase extends AbstractBenchmarkDatabase {
     /**
      * {@inheritDoc}
      */
-    override storeResult(IBenchmark benchmark, TestModelData data, Document result) {
-        results.put(data, new Document(benchmark.getID, result))
+    override storeResult(String benchmarkID, TestModelData data, Document result) {
+        results.put(data, new Document(benchmarkID, result))
     }
     
     /**

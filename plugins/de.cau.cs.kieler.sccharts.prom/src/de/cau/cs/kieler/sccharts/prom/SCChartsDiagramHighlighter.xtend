@@ -92,6 +92,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
      * The model compilation and template processing listener
      * that adds the internal variable for the taken transition signaling, which is created during compilation.
      */
+    // The build listener is added in its constructor, so the warning that it is not used can be ignored.
     private val buildListener = new PromBuildAdapter() {
         /**
          * Add the taken transition array to the simulation interface.
@@ -105,7 +106,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                     if(processor.additionalVariables.value == null) {
                         processor.additionalVariables.value = newHashMap
                     }
-                    processor.additionalVariables.mapValue.put(VariableInterfaceType.INTERNAL.name, "_taken_transitions["+takenTransitionArraySize+"]")    
+                    processor.putAdditionalVariable(VariableInterfaceType.INTERNAL.name, "int", "_taken_transitions["+takenTransitionArraySize+"]")
                 }
             }
         }

@@ -40,4 +40,11 @@ class CSimulationBackend extends OriginBasedSimulationBackend {
     override getProjectDraft() {
         return PromProjectDrafts.genericC
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override getSupportedProcessors() {
+        return #["de.cau.cs.kieler.scg.processors.codegen.c"]
+    }
 }

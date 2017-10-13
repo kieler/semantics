@@ -1,5 +1,10 @@
 module de.cau.cs.kieler.esterel.Esterel.SCEst
 
+/*
+ * IMPORTANT:
+ * Building this grammar requires more memory than usual builds.
+ * 6GB seem to work (JVM argument: -Xmx6g)
+ */
 
 Workflow {
 	

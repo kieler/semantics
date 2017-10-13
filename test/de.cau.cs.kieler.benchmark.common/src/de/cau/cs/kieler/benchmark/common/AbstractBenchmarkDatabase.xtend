@@ -29,7 +29,7 @@ abstract class AbstractBenchmarkDatabase {
      * <p>
      * Persisting of the results may only happen when save is invoked.
      */
-    abstract def void storeResult(IBenchmark benchmark, TestModelData data, Document result)
+    abstract def void storeResult(String benchmarkID, TestModelData data, Document result)
     
     /**
      * Saves all results and related data.

@@ -1,24 +1,24 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="de.cau.cs.kieler.simulation.ui" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="de.cau.cs.kieler.kivis" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
-      <appinfo>
-         <meta.schema plugin="de.cau.cs.kieler.simulation.ui" id="simulationVisualizer" name="SimulationVisualizer"/>
-      </appinfo>
+      <appInfo>
+         <meta.schema plugin="de.cau.cs.kieler.kivis" id="functionHandler" name="Function Handler"/>
+      </appInfo>
       <documentation>
-         Extension point for classes that should be instanciated once by the Simulation UI.
+         Extension point to register functions that can be used in kivis files to compute variable values.
       </documentation>
    </annotation>
 
    <element name="extension">
       <annotation>
-         <appinfo>
+         <appInfo>
             <meta.element />
-         </appinfo>
+         </appInfo>
       </annotation>
       <complexType>
-         <sequence minOccurs="1" maxOccurs="unbounded">
-            <element ref="simulationParticipant"/>
+         <sequence>
+            <element ref="functionHandler" minOccurs="1" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -39,33 +39,33 @@
                <documentation>
                   
                </documentation>
-               <appinfo>
+               <appInfo>
                   <meta.attribute translatable="true"/>
-               </appinfo>
+               </appInfo>
             </annotation>
          </attribute>
       </complexType>
    </element>
 
-   <element name="simulationParticipant">
+   <element name="functionHandler">
       <complexType>
          <attribute name="class" type="string">
             <annotation>
                <documentation>
                   
                </documentation>
-               <appinfo>
-                  <meta.attribute kind="java"/>
-               </appinfo>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.kivis.interactions.FunctionHandler:"/>
+               </appInfo>
             </annotation>
          </attribute>
       </complexType>
    </element>
 
    <annotation>
-      <appinfo>
+      <appInfo>
          <meta.section type="since"/>
-      </appinfo>
+      </appInfo>
       <documentation>
          0.13
       </documentation>

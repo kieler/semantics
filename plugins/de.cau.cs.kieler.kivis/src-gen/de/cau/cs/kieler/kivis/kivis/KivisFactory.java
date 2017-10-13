@@ -68,6 +68,15 @@ public interface KivisFactory extends EFactory
   Action createAction();
 
   /**
+   * Returns a new object of class '<em>Function</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Function</em>'.
+   * @generated
+   */
+  Function createFunction();
+
+  /**
    * Returns a new object of class '<em>Animation</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

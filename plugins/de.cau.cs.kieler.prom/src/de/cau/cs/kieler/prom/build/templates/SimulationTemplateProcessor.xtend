@@ -42,7 +42,7 @@ class SimulationTemplateProcessor extends TemplateProcessor {
     /**
      * The default variable type for additional variables.
      */
-    public val DEFAULT_VARIABLE_TYPE = "int"
+    public val DEFAULT_VARIABLE_TYPE = "bool"
     
     /**
      * The model file with the simulation interface.
@@ -177,16 +177,10 @@ class SimulationTemplateProcessor extends TemplateProcessor {
                 return targetFile
             }
         }
-        val templateFileSubstitution = new ResourceSubstitution("file") {
-            override getValue() {
-                return targetFile
-            }
-        }
         val additionalMappings = <String, Object> newHashMap
         additionalMappings.put("compiled_model_loc", compiledModelFileLocation)
         additionalMappings.put(TemplateManager.MODEL_NAME_VARIABLE, Strings.nullToEmpty(modelName))
         additionalMappings.putAll(targetFileSubstitution.variableMappings)
-        additionalMappings.putAll(templateFileSubstitution.variableMappings)
         
         // Create simulation code
         context = new TemplateContext(templateFile)
@@ -229,12 +223,23 @@ class SimulationTemplateProcessor extends TemplateProcessor {
             }
             return datas
         } else if(entry.value instanceof Map) {
-            // If the value is a map, then we assume that the variable type is the key of the map
-            // variable name (and array declaration) is the value of the map.
+            // If the value is a map, then we assume that the key of the map is the variable type
+            // and the value of the map are the variable names (and array declarations).
+            val interfaceType = entry.key
             val List<MacroCallData> datas = newArrayList
-            val nameAndTypeMap = entry.value as Map<String,String>
-            for(nameAndType : nameAndTypeMap.entrySet) {
-                datas.add(createData(entry.key, nameAndType.value, nameAndType.key))
+            val typeAndNamesMap = entry.value as Map<String, Object>
+            for(typeAndNames : typeAndNamesMap.entrySet) {
+                val type = typeAndNames.key
+                val names = typeAndNames.value
+                if(names instanceof String) {
+                    // Add only one variable with this interface type and variable type
+                    datas.add(createData(interfaceType, names, type))
+                } else if(names instanceof List) {
+                    // Add a list of variables with this interface type and variable type
+                    for(name : names) {
+                        datas.add(createData(interfaceType, name as String, type))
+                    }
+                }
             }
             return datas
         } else {
@@ -308,10 +313,38 @@ class SimulationTemplateProcessor extends TemplateProcessor {
     /**
      * Adds variables to the simulation interface.
      */
-     public def void putAdditionalVariables(String interfaceType, List<String> variables) {
+     public def void putAdditionalVariables(String interfaceType, List<String>  variables) {
          if(additionalVariables.value == null) {
             additionalVariables.value = newHashMap
         }
         additionalVariables.mapValue.put(interfaceType, variables)
+     }
+     
+     /**
+     * Adds a variable to the simulation interface.
+     */
+     public def void putAdditionalVariable(String interfaceType, String variable) {
+        val variables = newArrayList(variable)
+        putAdditionalVariables(interfaceType, variables)
+     }
+     
+     /**
+     * Adds variables to the simulation interface.
+     */
+     public def void putAdditionalVariables(String interfaceType, String type, List<String> variables) {
+         if(additionalVariables.value == null) {
+            additionalVariables.value = newHashMap
+        }
+        val map = newHashMap
+        map.put(type, variables)
+        additionalVariables.mapValue.put(interfaceType, map)
+     }
+     
+     /**
+     * Adds a variable to the simulation interface.
+     */
+     public def void putAdditionalVariable(String interfaceType, String type, String variable) {
+        val variables = newArrayList(variable)
+        putAdditionalVariables(interfaceType, type, variables)
      }
 }

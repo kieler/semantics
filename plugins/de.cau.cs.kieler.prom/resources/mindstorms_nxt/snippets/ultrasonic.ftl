@@ -11,6 +11,6 @@
     </@>
     <@input>
         // Ultrasonic sensor
-        scchart.${varname} = usSensor${port}.getDistance();
+        scchart.${varName} = usSensor${port}.getDistance();
     </@>
 </#macro>
