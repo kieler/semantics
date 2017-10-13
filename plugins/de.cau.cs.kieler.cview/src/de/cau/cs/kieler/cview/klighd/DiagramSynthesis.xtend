@@ -294,14 +294,14 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 }
             }
 
-//            // Update (combined) line widths
-//            for (simpleConnection : simpleConnections) {
-//                simpleConnection.updateSimpleConnection
-//            }
-//            simpleConnections.updateCombinedLineWithMeasuredMax
-//            for (simpleConnection : simpleConnections) {
-//                simpleConnection.updateSimpleConnectionLineWith
-//            }
+            // Update (combined) line widths
+            for (simpleConnection : simpleConnections) {
+                simpleConnection.updateSimpleConnection
+            }
+            simpleConnections.updateCombinedLineWithMeasuredMax
+            for (simpleConnection : simpleConnections) {
+                simpleConnection.updateSimpleConnectionLineWith
+            }
         }
 
         if (HIDE_UNCONNECTED.booleanValue) {
