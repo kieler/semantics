@@ -52,6 +52,7 @@ import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.alg.layered.properties.GreedySwitchType
 import org.eclipse.elk.alg.layered.properties.LayeredMetaDataProvider
 import org.eclipse.elk.alg.layered.p3order.CrossingMinimizationStrategy
+import java.util.ArrayList
 
 /* Package and import statements... */
 class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
@@ -86,6 +87,12 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     public static final int MIN_EXPANDED_VALUE = 1;
 
     public static final int COMBINED_LINE_WIDTH_MAX = 20
+    public static final int COMBINED_LINE_WIDTH_GAIN = 1
+    public static final int COMBINED_LINE_WIDTH_MIN = 1
+
+    // The maximum line with to draw, if this is higher than the actual line with 
+    // calculated is reduced linearly.
+    private int combinedLineWidthMeasuredMax = COMBINED_LINE_WIDTH_MAX;
 
     public static int selectedExpandLevel = DEFAULT_EXPANDED_VALUE;
 
@@ -135,6 +142,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     val HashMap<Connection, Connection> masterConnectionMap = newHashMap
     val HashMap<String, Connection> sourceDest2MasterConnection = newHashMap
     val HashMap<String, KEdge> sourceDest2Edge = newHashMap
+
+    val ArrayList<SimpleConnection> simpleConnections = newArrayList
 
 //    var num = 0
     // ================================================================= //
@@ -197,6 +206,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         }
 
         connectedComponents.clear
+        simpleConnections.clear
 
         // Ensure filter values are set
         FilterDialog.loadValues
@@ -283,6 +293,15 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                     connection.addConnection(INTERLEVEL_CONNECTIONS.booleanValue, connectionColor)
                 }
             }
+
+//            // Update (combined) line widths
+//            for (simpleConnection : simpleConnections) {
+//                simpleConnection.updateSimpleConnection
+//            }
+//            simpleConnections.updateCombinedLineWithMeasuredMax
+//            for (simpleConnection : simpleConnections) {
+//                simpleConnection.updateSimpleConnectionLineWith
+//            }
         }
 
         if (HIDE_UNCONNECTED.booleanValue) {
@@ -611,14 +630,27 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
     // ---------------------------------------------------------------------
     def String getKey(Connection connection, KNode srcNode, KNode dstNode) {
-        srcNode.hashCode + "." + dstNode.hashCode; // + "." + connection.type.hashCode
+        var connectionTypeHash = 0
+        if (connection != null && connection.type != null) {
+            connectionTypeHash = connection.type.hashCode
+        }
+        srcNode.hashCode + "." + dstNode.hashCode + "." + connectionTypeHash
+    }
+
+    def int getMaxSrcDstNumber(CViewModel model) {
+        var int returnValue = 0;
+        for (value : sourceDest2Number.values) {
+            if (value > returnValue) {
+                returnValue = value
+            }
+        }
+        return returnValue
     }
 
     def int getSrcDstNumber(Connection connection, KNode srcNode, KNode dstNode) {
         val srcDstKey = connection.getKey(srcNode, dstNode)
         if (sourceDest2Number.containsKey(srcDstKey)) {
             return sourceDest2Number.get(srcDstKey)
-
         }
         return -1
     }
@@ -637,7 +669,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 // not the first connection from src to dst
                 sourceDest2Number.put(srcDstKey, currentNumber + 1)
 
-                updateSimpleConnection(connection, srcNode, dstNode)
+                addSimpleConnection(connection, srcNode, dstNode)
                 val masterConnection = sourceDest2MasterConnection.get(srcDstKey)
                 if (masterConnection != null) {
                     masterConnectionMap.put(connection, masterConnection)
@@ -646,7 +678,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 // first connection form src to dst
                 addSimpleConnection(connection, srcNode, dstNode, usePorts, color, addLabel)
                 sourceDest2Number.put(srcDstKey, 0)
-                println("PUT(" + srcDstKey + ") " + " 0 : " + srcNode.toString + " --> " + dstNode.toString)
+                // println("PUT(" + srcDstKey + ") " + " 0 : " + srcNode.toString + " --> " + dstNode.toString)
                 val masterConnection = connection
                 sourceDest2MasterConnection.put(srcDstKey, masterConnection)
             // masterConnectionMap.put(masterConnection, masterConnection)
@@ -654,49 +686,90 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         }
     }
 
-    def void updateSimpleConnection(Connection connection, KNode srcNode, KNode dstNode) {
+    // Calculate the relative (actual) line with linearly to the maximal number
+    // and respecting the maximal line with measured.   
+    def int getActualLineWidth(int relativeLineWith) {
+        var returnLineWidth = (((relativeLineWith + 1) * COMBINED_LINE_WIDTH_GAIN) *
+            combinedLineWidthMeasuredMax) / COMBINED_LINE_WIDTH_MAX
+        println(relativeLineWith + " >>> " + returnLineWidth)
+        if (returnLineWidth < COMBINED_LINE_WIDTH_MIN) {
+            return COMBINED_LINE_WIDTH_MIN
+        }
+        return returnLineWidth
+    }
+
+    static class SimpleConnection {
+        public Connection connection
+        public int combinedNumber
+        public KNode srcNode
+        public KNode dstNode
+        public String key
+        public KEdge edge
+    }
+
+    def void addSimpleConnection(Connection connection, KNode srcNode, KNode dstNode) {
         val key = connection.getKey(srcNode, dstNode)
         val edge = sourceDest2Edge.get(key)
         if (edge != null) {
-            val currentNumber = connection.getSrcDstNumber(srcNode, dstNode)
-            var tooltipText = connection.tooltip
-            if (currentNumber > 0) {
-                // Show connection size (combined)
-                tooltipText = (currentNumber + 1) + " connections of type " + connection.type + " combined"
-            }
-            edge.setProperty(KlighdProperties::TOOLTIP, tooltipText);
-            if (edge.labels.size > 0) {
-                edge.labels.get(0).setProperty(KlighdProperties::TOOLTIP, tooltipText);
-            }
-            var combinedLinewWith = 1 + (currentNumber / 10)
-            if (combinedLinewWith > COMBINED_LINE_WIDTH_MAX) {
-                combinedLinewWith = COMBINED_LINE_WIDTH_MAX
-            }
-            if (currentNumber == 0) {
-                combinedLinewWith = 0
-            }
-            edge.line.lineWidth = 1 + combinedLinewWith
+            // Remember simple connections
+            var simpleConnection = new SimpleConnection
+            simpleConnection.connection = connection
+            simpleConnection.srcNode = srcNode
+            simpleConnection.dstNode = dstNode
+            simpleConnection.key = key
+            simpleConnection.edge = edge
+            simpleConnections.add(simpleConnection)
         }
     }
-    
+
+    def void updateCombinedLineWithMeasuredMax(List<SimpleConnection> simpleConnections) {
+        combinedLineWidthMeasuredMax = 0
+        for (simpleConnection : simpleConnections) {
+            if (simpleConnection.combinedNumber > combinedLineWidthMeasuredMax) {
+                combinedLineWidthMeasuredMax = simpleConnection.combinedNumber
+            }
+        }
+        if (combinedLineWidthMeasuredMax < COMBINED_LINE_WIDTH_MAX) {
+            combinedLineWidthMeasuredMax = COMBINED_LINE_WIDTH_MAX
+        }
+    }
+
+    def void updateSimpleConnection(SimpleConnection simpleConnection) {
+        val currentNumber = simpleConnection.connection.getSrcDstNumber(simpleConnection.srcNode, simpleConnection.dstNode)
+        println("[[[ "+currentNumber+" ]]]")
+        simpleConnection.combinedNumber = currentNumber
+        var tooltipText = simpleConnection.connection.tooltip
+        if (currentNumber > 0) {
+            // Show connection size (combined)
+            tooltipText = (currentNumber + 1) + " connections of type " + simpleConnection.connection.type + " combined"
+        }
+        simpleConnection.edge.setProperty(KlighdProperties::TOOLTIP, tooltipText);
+        if (simpleConnection.edge.labels.size > 0) {
+            simpleConnection.edge.labels.get(0).setProperty(KlighdProperties::TOOLTIP, tooltipText);
+        }
+    }
+
+    // Update all simple connections with the correct line with (w.r.t. the maximal used line with)
+    def void updateSimpleConnectionLineWith(SimpleConnection simpleConnection) {
+        val combinedLinewWidth = simpleConnection.combinedNumber.getActualLineWidth
+        simpleConnection.edge.line.lineWidth = combinedLinewWidth
+    }
+
     def boolean isAnyParentFrom(KNode anyParentNode, KNode childNode) {
         if (childNode == anyParentNode) {
 //            if (!childNode.incomingEdges.nullOrEmpty) {
 //                childNode.incomingEdges.get(0).source.isAnyParentFrom()   
 //            }
             return false
-        }
-        else if (childNode.parent != null && childNode.parent == anyParentNode) {
+        } else if (childNode.parent != null && childNode.parent == anyParentNode) {
             return true
-        }
-        else if (childNode.parent == null) {
+        } else if (childNode.parent == null) {
             return false
         } else {
             return anyParentNode.isAnyParentFrom(childNode.parent)
         }
     }
-    
-    
+
     def void addSimpleConnection(Connection connection, KNode srcNode, KNode dstNode, boolean usePorts, KColor color,
         boolean addLabel) {
         connectedComponents.add(connection.src)
@@ -744,50 +817,52 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 //                }
             }
             // Todo: if masterConnection exists, then REUSE port!!!!
-            //val forward = (masterConnectionMap.get(connection) == null)
+            // val forward = (masterConnectionMap.get(connection) == null)
 //            var sideFrom = PortSide::EAST
 //            var sideTo = PortSide::WEST
 //            if (!forward) {
 //                sideFrom = PortSide::WEST
 //                sideTo = PortSide::EAST
 //            }
-            
             // Need to detect if from inside to outside (= port right), or from outside to inside (=port left)
             //
-            //  [  inside  --o]o--> outside
+            // [  inside  --o]o--> outside
             //
-            //  outside --o[o--> inside  ]
+            // outside --o[o--> inside  ]
             //
             var srcSide = PortSide::EAST
             var dstSide = PortSide::WEST
             var insideToOutside = false
             var outsideToInside = false
-//            var DIR = "FLAT ->"
+            var DIR = "FLAT ->"
             if (COMBINE_CONNECTIONS.booleanValue) {
                 insideToOutside = dstNode.isAnyParentFrom(srcNode)
                 outsideToInside = srcNode.isAnyParentFrom(dstNode)
                 if (insideToOutside) {
- //                    DIR = "IN -> OUT"
-                     srcSide = PortSide::EAST
-                     dstSide = PortSide::EAST
+                    DIR = "IN -> OUT"
+                    srcSide = PortSide::EAST
+                    dstSide = PortSide::EAST
                 } else if (outsideToInside) {
-//                     DIR = "OUT -> IN"
-                     srcSide = PortSide::WEST
-                     dstSide = PortSide::WEST
+                     DIR = "OUT -> IN"
+                    srcSide = PortSide::WEST
+                    dstSide = PortSide::WEST
                 } else {
-                     srcSide = PortSide::EAST
-                     dstSide = PortSide::WEST
+                    srcSide = PortSide::EAST
+                    dstSide = PortSide::WEST
                 }
             }
 
             var srcPortId = portId + srcNode.hashCode
             var dstPortId = portId + dstNode.hashCode
-            
+ 
             val KPort srcPort = srcNode.retrievePort(connection, srcPortId, 0, 0, 8, srcSide, color, false)
             var KPort dstPort = dstNode.retrievePort(connection, dstPortId, 0, 0, 8, dstSide, color, true)
-//            srcPort.addOutsidePortLabel(srcNode.labels.get(0).text  + "->" + dstNode.labels.get(0).text + " [" + DIR + "] src " + srcSide.toString)
-//            dstPort.addOutsidePortLabel(srcNode.labels.get(0).text + "->" + dstNode.labels.get(0).text + " [" + DIR + "] dst"  + dstSide.toString)
             
+//            try {
+//                srcPort.addOutsidePortLabel(srcNode.labels.get(0).text  + "->" + dstNode.labels.get(0).text + " [" + DIR + "] src " + srcSide.toString)
+//                dstPort.addOutsidePortLabel(srcNode.labels.get(0).text + "->" + dstNode.labels.get(0).text + " [" + DIR + "] dst"  + dstSide.toString)
+//            } catch(Exception e) {
+//            }
             edge.sourcePort = srcPort
             edge.targetPort = dstPort
             edge.line.lineWidth = 1
