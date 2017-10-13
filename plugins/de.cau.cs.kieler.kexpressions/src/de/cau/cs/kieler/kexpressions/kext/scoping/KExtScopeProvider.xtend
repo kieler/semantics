@@ -76,18 +76,22 @@ import de.cau.cs.kieler.kexpressions.keffects.Emission
 			}
 		} else if (contextContainer instanceof ValuedObjectReference) {
 		    // The context is a subreference!
-		    return contextContainer.getScopeForReferencedDeclarationFromSubReference(reference)
-		} else if (context instanceof ValuedObjectReference) {
+		    // If it is inside an assignment, it must point to the inputs of the referenced declarations (assignments).
+		    // Otherwise, use the outputs (subreferences).
+		    val contextContainerContainer = contextContainer.eContainer
+		    if (contextContainerContainer instanceof Assignment) {
+                return contextContainerContainer.getScopeForReferencedDeclarationFromAssignment(reference)    
+		    } else {
+                return contextContainer.getScopeForReferencedDeclarationFromSubReference(reference)
+		    }
+		} 
+		else if (context instanceof ValuedObjectReference) {
 		    if (contextContainer instanceof Assignment) {
-		        if (context === contextContainer.reference) {
-		            // The context is the reference of a standard assignment.
-		            return context.getScopeHierarchical(reference)    
+		        // The context is a subreference inside of an assignment!
+		        if (context.subReference != null && context.subReference.valuedObject == null) {
+		            return contextContainer.getScopeForReferencedDeclarationFromAssignment(reference)
 		        }
 		        
-		        // The context is a subreference inside of an assignment!
-		        if (context != contextContainer.expression) {
-		            return context.eContainer.getScopeForReferencedDeclarationFromAssignment(reference)
-		        }
             } else if (contextContainer instanceof Emission) {
                 if (context === contextContainer.reference) {
                     // The context is the reference of a standard emission.
