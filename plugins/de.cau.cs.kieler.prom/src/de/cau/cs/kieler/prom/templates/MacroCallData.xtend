@@ -59,13 +59,13 @@ class MacroCallData implements Cloneable {
      */
     @Accessors
     private String modelName = ""
-        
+    
     /**
      * The phases in which the macro call should be injected.
      * The default is to use the macro call data for all phases.
      */
     @Accessors
-    private HashSet<CodeGenerationPhase> phases = CodeGenerationPhase.PHASES.clone as HashSet
+    private HashSet<CodeGenerationPhase> phases = CodeGenerationPhase.phases
     
     /**
      * Set of variable interface types that is used to categorize for which variable this macro call is used.

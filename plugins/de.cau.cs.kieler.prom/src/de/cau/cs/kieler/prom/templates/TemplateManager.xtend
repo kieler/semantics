@@ -82,7 +82,7 @@ class TemplateManager {
             val templateCodeWithMacroCalls = getTemplateCodeWithMacroCalls(config.templateFile, config.macroCallDatas)
 
             // Debug log macro calls
-            System.err.println(templateCodeWithMacroCalls)
+//            System.err.println(templateCodeWithMacroCalls)
 
             // Add implicit include of assignment macros such as <@init> and <@output>
             FreemarkerConfiguration.stringTemplateLoader.putTemplate("injectionMacros", getOrInitializeMacroDefinitions )
@@ -165,7 +165,7 @@ class TemplateManager {
         if(macroDefinitions == null){
             macroDefinitions = ""
             
-            for(phase : CodeGenerationPhase.PHASES ){
+            for(phase : CodeGenerationPhase.phases ){
                 for(macro : phase.injectionMacros){
                     macroDefinitions += macro.freeMarkerDefinition
                     macroDefinitions += "\n"
@@ -187,8 +187,7 @@ class TemplateManager {
         
         // The assignment macros such as <@init> and <@output> use a variable
         // to determine if their snippet should be inserted.
-        println("phases:"+CodeGenerationPhase.PHASES)
-        for(phase : CodeGenerationPhase.PHASES) {
+        for(phase : CodeGenerationPhase.phases) {
             phase.codeToInject = phase.freeMarkerAssignment+"\n"
         }
 
@@ -206,7 +205,7 @@ class TemplateManager {
                 isDoneAlready = false
             }
 
-            for(phase : CodeGenerationPhase.PHASES) {
+            for(phase : CodeGenerationPhase.phases) {
                 // We initialize every annotation only once
                 // although the same annotation might be used twice: as input and output.
                 if(!phase.singleton || (phase.singleton && !isDoneAlready) ) {
@@ -221,7 +220,7 @@ class TemplateManager {
         }
 
         // Send FreeMarker the text to replace the placeholder of each phase
-        for(phase : CodeGenerationPhase.PHASES) {
+        for(phase : CodeGenerationPhase.phases) {
             map.putAll(phase.injectionMacroMappings)
         }
         return map
