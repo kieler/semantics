@@ -27,6 +27,7 @@ import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGDocument
+import de.cau.cs.kieler.prom.kibuild.TextValue
 
 /**
  * Base class for configurable animations of SVG elements.
@@ -82,6 +83,11 @@ abstract class AnimationHandler extends Configurable implements IAnimationHandle
     protected var boolean isActive
     
     /**
+     * The current data pool
+     */
+    protected var DataPool pool
+    
+    /**
      * The name of the animation.
      */
     abstract public def String getName()
@@ -130,6 +136,7 @@ abstract class AnimationHandler extends Configurable implements IAnimationHandle
      * @param pool The pool
      */
     public override apply(DataPool pool) {
+        this.pool = pool
         // Get the variable and variable value that is relevant for this animation
         variable = getVariable(animation.variable, pool)
         variableValue = getVariableValue(animation.variable, pool, true)
@@ -180,8 +187,22 @@ abstract class AnimationHandler extends Configurable implements IAnimationHandle
      * @return the mapped value
      */
     protected def Object getMappedValue(AttributeMapping attributeMapping, Object value) {
-        val literal = attributeMapping.literal
-        if(literal != null) {
+        if(attributeMapping.currentValue) {
+            return value
+        } else if(attributeMapping.literal != null) {
+            val literal = attributeMapping.literal
+            // Check if the literal is actually a variable reference
+            if(literal.value instanceof TextValue) {
+                val String text = (literal.value as TextValue).value
+                if(text != "true" && text != "false") {
+                    try {
+                        val variableValue = pool.getVariableValue(text, true)
+                        return variableValue
+                    } catch (Exception e) {
+                        // The text value does not seem to be a variable reference.
+                    }
+                }
+            }
             // If all values are mapped to a constant, return this constant value.
             return literal.primitiveValue
         } else {

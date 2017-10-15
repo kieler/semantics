@@ -179,13 +179,6 @@ public class KivisSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case KivisPackage.BOOLEAN_OPERATOR:
-      {
-        BooleanOperator booleanOperator = (BooleanOperator)theEObject;
-        T result = caseBooleanOperator(booleanOperator);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case KivisPackage.AND_EXPRESSION:
       {
         AndExpression andExpression = (AndExpression)theEObject;
@@ -434,22 +427,6 @@ public class KivisSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseModelReference(ModelReference object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Boolean Operator</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Boolean Operator</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseBooleanOperator(BooleanOperator object)
   {
     return null;
   }

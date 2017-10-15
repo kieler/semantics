@@ -30,13 +30,13 @@
 ']'=69
 '^'=20
 '_'=78
-'and'=81
 'animate'=53
 'apply'=65
 'click'=37
 'compiler'=71
 'extern'=77
 'from'=59
+'if'=58
 'image'=51
 'is'=67
 'model'=70
@@ -44,6 +44,7 @@
 'mousemove'=40
 'mouseup'=39
 'on'=57
+'others'=82
 'pause'=43
 'perform'=56
 'play'=44
@@ -56,7 +57,7 @@
 'template'=73
 'using'=66
 'val'=28
-'when'=58
+'value'=81
 'wrapper'=74
 '{'=54
 '|'=21
@@ -141,3 +142,4 @@ T__78=78
 T__79=79
 T__80=80
 T__81=81
+T__82=82

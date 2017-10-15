@@ -21,7 +21,7 @@ Interaction:
     {Interaction}
     'perform' ('on' event=Event)? '{'
         (actions+=Action)*
-    '}' ('when' condition=AndExpression)?
+    '}' ('if' condition=AndExpression)?
 ;
 
 Event:
@@ -50,11 +50,11 @@ Function returns Function:
 Animation:
     'apply' type=ID ('using' variable=VariableReference)? '{'
         (attributeMappings+=AttributeMapping)*
-    '}' ('when' condition=AndExpression)?
+    '}' ('if' condition=AndExpression)?
 ;
 
 AttributeMapping:
-    attribute=ID ':' (literal=Literal | (mappings+=Mapping) (',' mappings+=Mapping)*)
+    attribute=ID ':' (currentValue ?= 'value' | literal=Literal | (mappings+=Mapping) (',' mappings+=Mapping)*)
 ;
 
 Mapping:
@@ -63,7 +63,7 @@ Mapping:
 
 AndExpression returns Condition:
     Comparison 
-    (({AndExpression.left=current} operator="and") right=Comparison)*
+    (({AndExpression.left=current} operator="&&") right=Comparison)*
 ;
 
 Comparison:
@@ -73,7 +73,8 @@ Comparison:
 ;
 
 VariableDomain returns Domain:
-    value = Literal
+    otherValues ?= 'others'
+    | value = Literal
     | range = Interval
 ;
 
@@ -84,7 +85,9 @@ Interval:
 ;
 
 AttributeDomain returns Domain:
-    VariableDomain
+    currentValue ?= 'value'
+    | value = Literal
+    | range = Interval
 ;
 
 VariableReference:
@@ -95,10 +98,6 @@ VariableReference:
 
 ModelReference:
     name=ID '.'
-;
-
-AndOperator returns BooleanOperator:
-    AND='and'
 ;
 
 enum DOMEvent:

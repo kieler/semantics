@@ -114,7 +114,7 @@ class DataPool implements Cloneable {
      * If the name is fully qualified (e.g. MyModel.MyVar)
      * then the variable is searched in the model with the corresponding name.
      * 
-     * @param variableName The name of the variable
+     * @param variableName The (possibly fully qualified) name of the variable (e.g. MyModel.MyVar)
      * @param isfullyQualified Determines whether it is a fully qualified variable name
      * @return the first variable with the given name (possibly of the corresponding model), or null if none
      */
@@ -133,7 +133,7 @@ class DataPool implements Cloneable {
             val i = variableName.indexOf(".")
             if(i >= 0 && i < variableName.length-1) {
                 val modelName = variableName.substring(0,i)
-                val relativeVariableName = variableName.substring(i + 1, i - variableName.length)
+                val relativeVariableName = variableName.substring(i + 1, variableName.length)
                 return getVariable(modelName, relativeVariableName)
             } else {
                 // This is not fully qualified actually.
@@ -143,9 +143,48 @@ class DataPool implements Cloneable {
     }
     
     /**
+     * Returns the value of a variable, or of an array element of a variable.
+     * 
+     * @param variableQualifer The (possibly fully qualified) name of the variable and optional array indices (e.g. MayVar[1][2])
+     * @param userValue Determines if the user value should be set instead of the 'real' value
+     * @return the first variable with the given name (possibly of the corresponding model), or null if none
+     */
+    public def Object getVariableValue(String variableQualifer, boolean userValue) {
+        // Separate variable name and array index part
+        val variablePart = getVariableName(variableQualifer)
+        val arrayIndices = getArrayIndices(variableQualifer)
+        
+        val variable = getVariable(variablePart)
+        if(variable != null) {
+            if(arrayIndices.isNullOrEmpty) {
+                if(userValue && variable.isDirty) {
+                    return variable.userValue
+                } else {
+                    return variable.value
+                }
+            } else {
+                val array = variable.value as NDimensionalArray
+                val arrayElement = array.getElement(arrayIndices)
+                if(arrayElement != null) {
+                    if(userValue && arrayElement.isDirty) {
+                        return arrayElement.userValue    
+                    } else {
+                        return arrayElement.value
+                    }
+                } else {
+                    throw new Exception("Could not find array element with indices "+arrayIndices)
+                }
+            }
+        } else {
+            throw new Exception("Could not find variable with name '"+variablePart+"'")
+        }
+    }
+    
+    /**
      * Sets the value of a variable, or of an array element of a variable.
      * 
      * @param variableQualifer The (possibly fully qualified) name of the variable and optional array indices (e.g. MayVar[1][2])
+     * @param newValue The new value
      * @param userValue Determines if the user value should be set instead of the 'real' value
      * @return the first variable with the given name (possibly of the corresponding model), or null if none
      */

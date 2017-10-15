@@ -428,13 +428,22 @@ public interface KivisPackage extends EPackage
   int ATTRIBUTE_MAPPING__ATTRIBUTE = KibuildPackage.ATTRIBUTE_MAPPING_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Current Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE_MAPPING__CURRENT_VALUE = KibuildPackage.ATTRIBUTE_MAPPING_FEATURE_COUNT + 1;
+
+  /**
    * The feature id for the '<em><b>Literal</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ATTRIBUTE_MAPPING__LITERAL = KibuildPackage.ATTRIBUTE_MAPPING_FEATURE_COUNT + 1;
+  int ATTRIBUTE_MAPPING__LITERAL = KibuildPackage.ATTRIBUTE_MAPPING_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Mappings</b></em>' containment reference list.
@@ -443,7 +452,7 @@ public interface KivisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ATTRIBUTE_MAPPING__MAPPINGS = KibuildPackage.ATTRIBUTE_MAPPING_FEATURE_COUNT + 2;
+  int ATTRIBUTE_MAPPING__MAPPINGS = KibuildPackage.ATTRIBUTE_MAPPING_FEATURE_COUNT + 3;
 
   /**
    * The number of structural features of the '<em>Attribute Mapping</em>' class.
@@ -452,7 +461,7 @@ public interface KivisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ATTRIBUTE_MAPPING_FEATURE_COUNT = KibuildPackage.ATTRIBUTE_MAPPING_FEATURE_COUNT + 3;
+  int ATTRIBUTE_MAPPING_FEATURE_COUNT = KibuildPackage.ATTRIBUTE_MAPPING_FEATURE_COUNT + 4;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.MappingImpl <em>Mapping</em>}' class.
@@ -567,13 +576,22 @@ public interface KivisPackage extends EPackage
   int DOMAIN = 11;
 
   /**
+   * The feature id for the '<em><b>Other Values</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DOMAIN__OTHER_VALUES = 0;
+
+  /**
    * The feature id for the '<em><b>Value</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DOMAIN__VALUE = 0;
+  int DOMAIN__VALUE = 1;
 
   /**
    * The feature id for the '<em><b>Range</b></em>' containment reference.
@@ -582,7 +600,16 @@ public interface KivisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DOMAIN__RANGE = 1;
+  int DOMAIN__RANGE = 2;
+
+  /**
+   * The feature id for the '<em><b>Current Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DOMAIN__CURRENT_VALUE = 3;
 
   /**
    * The number of structural features of the '<em>Domain</em>' class.
@@ -591,7 +618,7 @@ public interface KivisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DOMAIN_FEATURE_COUNT = 2;
+  int DOMAIN_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.IntervalImpl <em>Interval</em>}' class.
@@ -705,34 +732,6 @@ public interface KivisPackage extends EPackage
   int MODEL_REFERENCE_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.BooleanOperatorImpl <em>Boolean Operator</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kivis.kivis.impl.BooleanOperatorImpl
-   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getBooleanOperator()
-   * @generated
-   */
-  int BOOLEAN_OPERATOR = 15;
-
-  /**
-   * The feature id for the '<em><b>AND</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BOOLEAN_OPERATOR__AND = 0;
-
-  /**
-   * The number of structural features of the '<em>Boolean Operator</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BOOLEAN_OPERATOR_FEATURE_COUNT = 1;
-
-  /**
    * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.AndExpressionImpl <em>And Expression</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -740,7 +739,7 @@ public interface KivisPackage extends EPackage
    * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getAndExpression()
    * @generated
    */
-  int AND_EXPRESSION = 16;
+  int AND_EXPRESSION = 15;
 
   /**
    * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -786,7 +785,7 @@ public interface KivisPackage extends EPackage
    * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getDOMEvent()
    * @generated
    */
-  int DOM_EVENT = 17;
+  int DOM_EVENT = 16;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.SimulationOperation <em>Simulation Operation</em>}' enum.
@@ -796,7 +795,7 @@ public interface KivisPackage extends EPackage
    * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getSimulationOperation()
    * @generated
    */
-  int SIMULATION_OPERATION = 18;
+  int SIMULATION_OPERATION = 17;
 
 
   /**
@@ -1111,6 +1110,17 @@ public interface KivisPackage extends EPackage
   EAttribute getAttributeMapping_Attribute();
 
   /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.AttributeMapping#isCurrentValue <em>Current Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Current Value</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.AttributeMapping#isCurrentValue()
+   * @see #getAttributeMapping()
+   * @generated
+   */
+  EAttribute getAttributeMapping_CurrentValue();
+
+  /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.AttributeMapping#getLiteral <em>Literal</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1228,6 +1238,17 @@ public interface KivisPackage extends EPackage
   EClass getDomain();
 
   /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Domain#isOtherValues <em>Other Values</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Other Values</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Domain#isOtherValues()
+   * @see #getDomain()
+   * @generated
+   */
+  EAttribute getDomain_OtherValues();
+
+  /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.Domain#getValue <em>Value</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1248,6 +1269,17 @@ public interface KivisPackage extends EPackage
    * @generated
    */
   EReference getDomain_Range();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Domain#isCurrentValue <em>Current Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Current Value</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Domain#isCurrentValue()
+   * @see #getDomain()
+   * @generated
+   */
+  EAttribute getDomain_CurrentValue();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.Interval <em>Interval</em>}'.
@@ -1344,27 +1376,6 @@ public interface KivisPackage extends EPackage
    * @generated
    */
   EAttribute getModelReference_Name();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.BooleanOperator <em>Boolean Operator</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Boolean Operator</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.BooleanOperator
-   * @generated
-   */
-  EClass getBooleanOperator();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.BooleanOperator#getAND <em>AND</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>AND</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.BooleanOperator#getAND()
-   * @see #getBooleanOperator()
-   * @generated
-   */
-  EAttribute getBooleanOperator_AND();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.AndExpression <em>And Expression</em>}'.
@@ -1701,6 +1712,14 @@ public interface KivisPackage extends EPackage
     EAttribute ATTRIBUTE_MAPPING__ATTRIBUTE = eINSTANCE.getAttributeMapping_Attribute();
 
     /**
+     * The meta object literal for the '<em><b>Current Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ATTRIBUTE_MAPPING__CURRENT_VALUE = eINSTANCE.getAttributeMapping_CurrentValue();
+
+    /**
      * The meta object literal for the '<em><b>Literal</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1797,6 +1816,14 @@ public interface KivisPackage extends EPackage
     EClass DOMAIN = eINSTANCE.getDomain();
 
     /**
+     * The meta object literal for the '<em><b>Other Values</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute DOMAIN__OTHER_VALUES = eINSTANCE.getDomain_OtherValues();
+
+    /**
      * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1811,6 +1838,14 @@ public interface KivisPackage extends EPackage
      * @generated
      */
     EReference DOMAIN__RANGE = eINSTANCE.getDomain_Range();
+
+    /**
+     * The meta object literal for the '<em><b>Current Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute DOMAIN__CURRENT_VALUE = eINSTANCE.getDomain_CurrentValue();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.IntervalImpl <em>Interval</em>}' class.
@@ -1889,24 +1924,6 @@ public interface KivisPackage extends EPackage
      * @generated
      */
     EAttribute MODEL_REFERENCE__NAME = eINSTANCE.getModelReference_Name();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.BooleanOperatorImpl <em>Boolean Operator</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kivis.kivis.impl.BooleanOperatorImpl
-     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getBooleanOperator()
-     * @generated
-     */
-    EClass BOOLEAN_OPERATOR = eINSTANCE.getBooleanOperator();
-
-    /**
-     * The meta object literal for the '<em><b>AND</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute BOOLEAN_OPERATOR__AND = eINSTANCE.getBooleanOperator_AND();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.AndExpressionImpl <em>And Expression</em>}' class.

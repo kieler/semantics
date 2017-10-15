@@ -158,15 +158,6 @@ public interface KivisFactory extends EFactory
   ModelReference createModelReference();
 
   /**
-   * Returns a new object of class '<em>Boolean Operator</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Boolean Operator</em>'.
-   * @generated
-   */
-  BooleanOperator createBooleanOperator();
-
-  /**
    * Returns a new object of class '<em>And Expression</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
