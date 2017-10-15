@@ -22,6 +22,7 @@ import de.cau.cs.kieler.prom.build.templates.TemplateProcessor
 import de.cau.cs.kieler.prom.build.templates.WrapperCodeTemplateProcessor
 import de.cau.cs.kieler.prom.configurable.AttributeExtensions
 import de.cau.cs.kieler.prom.kibuild.BuildConfiguration
+import de.cau.cs.kieler.prom.templates.ModelAnalyzer
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
@@ -34,6 +35,7 @@ import org.eclipse.core.resources.IResourceDeltaVisitor
 import org.eclipse.core.resources.IncrementalProjectBuilder
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IProgressMonitor
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.resource.XtextResource
@@ -360,54 +362,102 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      * @param files The list of files to be built
      */
     private def void buildModels(List<IFile> files) {
-        // Compile the model files
-        if(!files.isNullOrEmpty) {
-            // Load changed models into resource set.
-            // But only if this is not a full build because in a full build this is done in the initialization.
-            if(kind != FULL_BUILD) {
-                for(f : files) {
-                    if(!monitor.isCanceled) {
-                        monitor.subTask("Loading resource "+f.name)
-                        val res = ModelImporter.getResource(f, resourceSet)
-                        ModelImporter.reload(res, resourceSet)
-                    }
-                }
-                // Re-link all models 
-                relink(resourceSet)
-                
-                // Update dependencies
-                updateDependencies(files)
-                checkDependencies()
-            } 
-
-            // Compile using the registered model compilers
-            for(file : files) {
-                // Compile, generate simulation code, fetch wrapper code annotations
+        if(files.isNullOrEmpty) {
+            return
+        }
+        
+        // Load changed models into resource set.
+        // But only if this is not a full build because in a full build this is done in the initialization.
+        if(kind != FULL_BUILD) {
+            for(f : files) {
                 if(!monitor.isCanceled) {
-                    // Remove all warnings and errors from a previous build.
-                    deleteMarkers(file)
-                    // Compile models
-                    monitor.subTask("Loading model "+file.name)
-                    val model = ModelImporter.getEObject(file, resourceSet)
-                    if(model == null) {
-                        throw new Exception("Couldn't load model "+file.name)
-                    }
-                    // Compile model
-                    if(!monitor.isCanceled) {
-                        for(modelCompiler : modelCompilers) {
-                            monitor.subTask("Compiling model '"+file.name+ "' using "+modelCompiler)
-                            val result = modelCompiler.compile(file, model)
-                            // Show problems of result
-                            showBuildProblems(result.problems)
-                            if(result.simulationGenerationResult != null) {
-                                showBuildProblems(result.simulationGenerationResult.problems)
-                            }
-                            // Remember to compile simulation code
-                            for(simFile : result.createdSimulationFiles) {
-                                compileSimulationCode(simFile)
-                            }
+                    monitor.subTask("Loading resource "+f.name)
+                    val res = ModelImporter.getResource(f, resourceSet)
+                    ModelImporter.reload(res, resourceSet)
+                }
+            }
+            // Re-link all models 
+            // Not needed since the Xtext nature is not reuired anymore for SCCharts
+//                relink(resourceSet)
+        }
+
+        // Compile using the registered model compilers
+        for(file : files) {
+            // Compile, generate simulation code, fetch wrapper code annotations
+            if(!monitor.isCanceled) {
+                // Remove all warnings and errors from a previous build.
+                deleteMarkers(file)
+                // Compile models
+                monitor.subTask("Loading model "+file.name)
+                val model = ModelImporter.getEObject(file, resourceSet)
+                if(model == null) {
+                    throw new Exception("Couldn't load model "+file.name)
+                }
+                // Compile model
+                if(!monitor.isCanceled) {
+                    for(modelCompiler : modelCompilers) {
+                        monitor.subTask("Compiling model '"+file.name+ "' using "+modelCompiler)
+                        val result = modelCompiler.compile(file, model)
+                        // Show problems of result
+                        showBuildProblems(result.problems)
+                        if(result.simulationGenerationResult != null) {
+                            showBuildProblems(result.simulationGenerationResult.problems)
+                        }
+                        // Remember to compile simulation code
+                        for(simFile : result.createdSimulationFiles) {
+                            compileSimulationCode(simFile)
                         }
                     }
+                }
+                
+                // Find dependencies
+                updateDependencies(model, file)
+                
+                // Build depending files recursively
+                buildDependingFiles(model, file)
+            }
+        }
+    }
+
+    /**
+     * Builds the files that reference the given model.
+     * 
+     * @param model The model that is referenced
+     * @param modelFile The file in which the model is saved
+     */
+    private def void buildDependingFiles(EObject model, IFile modelFile) {
+        val node = dependencies.getOrCreate(modelFile)
+        val dependingFiles = <IFile> newArrayList
+        for(dependingNode : node.depending) {
+            val dependingFile = dependingNode.content
+            if(dependingFile != null && dependingFile instanceof IFile) {
+                dependingFiles.add(dependingFile as IFile)
+            }
+        }
+        if(!dependingFiles.isNullOrEmpty) {
+//            System.err.println("Building depending files:"+dependingFiles)
+            buildModels(dependingFiles) 
+        }
+    }
+    
+    /**
+     * Updates the dependencies of the model.
+     * 
+     * @param model The model containing references
+     * @param modelFile The file in which the model is saved
+     */
+    private def void updateDependencies(EObject model, IFile modelFile) {
+        val node = dependencies.getOrCreate(modelFile)
+        val modelAnalyzer = ModelAnalyzer.analyzers.findFirst[it.isSupported(model)]
+        if(modelAnalyzer != null) {
+            val importedFiles = modelAnalyzer.getDependencies(model)
+            if(importedFiles != null) {
+                // Remove old dependencies of the model
+                node.removeAllDependencies
+                // Add new dependencies of the model
+                for(importedFile : importedFiles) {
+                    val dependencyNode = dependencies.getOrCreate(importedFile)
+                    node.addDependency(dependencyNode)
                 }
             }
         }
@@ -499,7 +549,6 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      * @return the list of model files that can be built
      */ 
     private def List<IFile> findModelFilesInProject() {
-        // TODO: Check if this can be removed
         // Search for models in project
         val membersWithoutBinDirectory = project.members.filter[it.name != "bin"]
         return PromPlugin.findFiles(membersWithoutBinDirectory, null as List<String>).filter[isModel(it)].toList
@@ -541,6 +590,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      * Re-link all XtextResources in the resource set to find references. 
      * 
      * @param path The path to a fully qualified file
+     * @deprecated since the Xtext nature is not required anymore for SCCharts, there in no need to relink
      */
     private def void relink(ResourceSet resourceSet) {
         for(res : resourceSet.resources) {
@@ -560,26 +610,21 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
         // Create resource set
         resourceSet = new XtextResourceSet()
         // Load all model files into one resource set.
-        val modelFiles = findModelFilesInProject()
-        for(f : modelFiles) {
-            monitor.subTask("Loading "+f.name)
-            ModelImporter.getResource(f, resourceSet)
-        }
+        
+        // Since the Xtext nature is not required anymore for SCCharts,
+        // there in no need to collect all models in one resource set and to relink.
+//        val modelFiles = findModelFilesInProject()
+//        for(f : modelFiles) {
+//            monitor.subTask("Loading "+f.name)
+//            ModelImporter.getResource(f, resourceSet)
+//        }
         // Relink loaded resources, because all potentially referenced models are in the resource set now.
-        relink(resourceSet)
+//        relink(resourceSet)
+
         // Update dependencies
         createDependencyGraph
         // Check dependencies for validation
         checkDependencies
-    }
-
-    /**
-     * Lets all model compilers updates the dependencies of the given files. 
-     */
-    private def void updateDependencies(IFile... files) {
-        for(m : modelCompilers) {
-            m.updateDependencies(dependencies, files, resourceSet)
-        }
     }
 
     /**
@@ -588,16 +633,6 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
     private def void createDependencyGraph() {
         // Create new dependency graph
         dependencies = new DependencyGraph()
-        // Find files in resource set
-        val List<IFile> files = newArrayList
-        for(r : resourceSet.resources) {
-            val file = ModelImporter.toPlatformResource(r)
-            if(file != null) {
-                files.add(file)
-            }
-        }
-        // Update dependencies
-        updateDependencies(files)
         // Print out dependencies
 //        for(n : dependencies.nodes) { 
 //            for(d : n.dependencies) {

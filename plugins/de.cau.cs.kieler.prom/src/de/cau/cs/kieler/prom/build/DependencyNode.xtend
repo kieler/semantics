@@ -16,18 +16,27 @@ import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
+ * A node in the dependency graph. It consists of an id and optional content.
+ * For a graph of files, the id the the full file path.
+ * 
  * @author aas
  *
  */
-//TODO: Check if this is still necessary
 class DependencyNode {
     @Accessors(PUBLIC_GETTER)
     private val List<DependencyNode> dependencies = newArrayList
     @Accessors(PUBLIC_GETTER)
     private val List<DependencyNode> depending = newArrayList
     
+    /**
+     * The id of this node. It is used to identify the node.
+     * For files this could be the full path.
+     */
     @Accessors
     private var String id
+    /**
+     * Optional content for the node.
+     */
     @Accessors
     private var Object content
     

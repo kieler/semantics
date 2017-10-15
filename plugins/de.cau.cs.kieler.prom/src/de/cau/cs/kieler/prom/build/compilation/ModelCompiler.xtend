@@ -87,15 +87,6 @@ abstract class ModelCompiler extends Configurable {
     abstract protected def ModelCompilationResult doCompile(IFile file, EObject model)
     
     /**
-     * Updates the dependencies in the graph of the given files.
-     * 
-     * @param dependencies The dependency graph
-     * @param files The files to be updated
-     * @param resourceSet The resource set in which models may reference each other
-     */
-    abstract public def void updateDependencies(DependencyGraph dependencies, List<IFile> files, ResourceSet resourceSet)
-    
-    /**
      * The model that is compiled
      */
     protected var EObject model

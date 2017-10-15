@@ -88,6 +88,16 @@ abstract class ModelAnalyzer {
     protected def String getDefaultCompileChain()
     
     /**
+     * Returns the dependencies of the given model.
+     * The dependencies are the files that are referenced (e.g. imported/used) by the model.
+     * 
+     * @return the dependencies of the model
+     */
+    public def List<IFile> getDependencies(EObject model) {
+        return null
+    }
+    
+    /**
      * Returns the name of this analyzer.
      */
     public def String getName() {

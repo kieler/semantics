@@ -13,68 +13,63 @@
 package de.cau.cs.kieler.prom.build
 
 import java.util.List
+import java.util.Map
 import org.eclipse.core.resources.IFile
-import java.util.Stack
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
+ * A container for dependency nodes.
+ * 
  * @author aas
  *
  */
-//TODO: Check if this is still necessary
 class DependencyGraph {
     @Accessors(PUBLIC_GETTER)
-    private val List<DependencyNode> nodes = newArrayList
+    private val Map<String, DependencyNode> nodes = newHashMap
     
     public def List<DependencyNode> getLeafs() {
-        return nodes.filter[it.isLeaf].toList
+        return nodes.values.filter[it.isLeaf].toList
     }
     
     public def DependencyNode get(String id) {
-        return nodes.findFirst[it.id == id]
+        return nodes.get(id)
     }
     
     public def DependencyNode getOrCreate(IFile file) {
-        return getOrCreate(file.id)
+        return getOrCreate(file.fullPath.toOSString, file)
     }
     
-    public def DependencyNode getOrCreate(String id) {
+    public def DependencyNode getOrCreate(String id, Object content) {
+        var n = get(id)
+        if(n == null) {
+            n = new DependencyNode(id, content)
+            add(n)
+        }
+        return n
+    }
+    
+    public def DependencyNode getOrCreateNode(String id) {
         var n = get(id)
         if(n == null) {
             n = new DependencyNode(id, null)
             add(n)
         }
         return n
-    }
-    
-    public def DependencyNode createNode(String id) {
-        var n = get(id)
-        if(n == null) {
-            n = new DependencyNode(id, null)
-            add(n)
-        }
-        return n
-    }
-    
-    public def DependencyNode createNode(IFile file) {
-        return createNode(file.id)
     }
     
     public def void add(DependencyNode n) {
-        if(!nodes.contains(n)) {
-            nodes.add(n)
-        }
+        nodes.put(n.id, n)
     }
     
     public def void remove(DependencyNode n) {
-        nodes.remove(n)
+        nodes.remove(n.id)
     }
     
     public def List<DependencyNode> findLoop() {
-        for(n : nodes) {
+        for(n : nodes.values) {
             n.seen = 0
         } 
-        for(n : nodes) {
+        for(n : nodes.values) {
             val loop = findLoop(n)
             if(loop != null) {
                 return loop
@@ -89,7 +84,7 @@ class DependencyGraph {
             return null    
         } else if(n.seen == 1) {
             // Found cycle
-            return nodes.filter[it.seen == 1].toList
+            return nodes.values.filter[it.seen == 1].toList
         }
         // Now visited
         n.seen = 1
@@ -102,9 +97,5 @@ class DependencyGraph {
         // Now finished without cycle
         n.seen = 2
         return null
-    }
-    
-    public def String getId(IFile file) {
-        return file.fullPath.toOSString
     }
 }
