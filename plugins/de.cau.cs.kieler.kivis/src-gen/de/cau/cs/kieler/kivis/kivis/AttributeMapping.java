@@ -16,6 +16,7 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.AttributeMapping#getAttribute <em>Attribute</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.AttributeMapping#isCurrentValue <em>Current Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.AttributeMapping#getLiteral <em>Literal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.AttributeMapping#getMappings <em>Mappings</em>}</li>
  * </ul>
@@ -51,6 +52,32 @@ public interface AttributeMapping extends de.cau.cs.kieler.prom.kibuild.Attribut
    * @generated
    */
   void setAttribute(String value);
+
+  /**
+   * Returns the value of the '<em><b>Current Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Current Value</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Current Value</em>' attribute.
+   * @see #setCurrentValue(boolean)
+   * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getAttributeMapping_CurrentValue()
+   * @model
+   * @generated
+   */
+  boolean isCurrentValue();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.kivis.kivis.AttributeMapping#isCurrentValue <em>Current Value</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Current Value</em>' attribute.
+   * @see #isCurrentValue()
+   * @generated
+   */
+  void setCurrentValue(boolean value);
 
   /**
    * Returns the value of the '<em><b>Literal</b></em>' containment reference.

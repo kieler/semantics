@@ -15,8 +15,10 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.Domain#isOtherValues <em>Other Values</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.Domain#getValue <em>Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.Domain#getRange <em>Range</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.Domain#isCurrentValue <em>Current Value</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getDomain()
@@ -25,6 +27,32 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Domain extends EObject
 {
+  /**
+   * Returns the value of the '<em><b>Other Values</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Other Values</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Other Values</em>' attribute.
+   * @see #setOtherValues(boolean)
+   * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getDomain_OtherValues()
+   * @model
+   * @generated
+   */
+  boolean isOtherValues();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.kivis.kivis.Domain#isOtherValues <em>Other Values</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Other Values</em>' attribute.
+   * @see #isOtherValues()
+   * @generated
+   */
+  void setOtherValues(boolean value);
+
   /**
    * Returns the value of the '<em><b>Value</b></em>' containment reference.
    * <!-- begin-user-doc -->
@@ -76,5 +104,31 @@ public interface Domain extends EObject
    * @generated
    */
   void setRange(Interval value);
+
+  /**
+   * Returns the value of the '<em><b>Current Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Current Value</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Current Value</em>' attribute.
+   * @see #setCurrentValue(boolean)
+   * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getDomain_CurrentValue()
+   * @model
+   * @generated
+   */
+  boolean isCurrentValue();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.kivis.kivis.Domain#isCurrentValue <em>Current Value</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Current Value</em>' attribute.
+   * @see #isCurrentValue()
+   * @generated
+   */
+  void setCurrentValue(boolean value);
 
 } // Domain

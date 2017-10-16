@@ -24,7 +24,6 @@ import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.build.BuildProblem
-import de.cau.cs.kieler.prom.build.DependencyGraph
 import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
 import de.cau.cs.kieler.prom.templates.TemplateContext
 import de.cau.cs.kieler.prom.templates.TemplateManager
@@ -40,7 +39,6 @@ import org.eclipse.core.runtime.IPath
 import org.eclipse.core.runtime.Path
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.StringInputStream
@@ -139,13 +137,6 @@ class KiCoModelCompiler extends ModelCompiler {
         }
         
         return compilationResult
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    override updateDependencies(DependencyGraph dependencies, List<IFile> files, ResourceSet resourceSet) {
-        
     }
     
     /**

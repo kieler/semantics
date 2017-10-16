@@ -14,8 +14,10 @@ package de.cau.cs.kieler.kivis.ui.animations
 
 import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
+import org.apache.batik.dom.svg.SVGOMPoint
 import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGLocatable
+import org.w3c.dom.svg.SVGPoint
 
 /**
  * Move animation for SVG elements.
@@ -34,6 +36,12 @@ class MoveAnimation extends AnimationHandler {
      * The translation along the y axis.
      */
     public val posY = new ConfigurableAttribute("y", 0)
+    /**
+     * Determines if the position is absolute or relative to the element's original position.
+     */
+    public val isAbsolute = new ConfigurableAttribute("absolute", false)
+    
+    private var SVGPoint startPosition
     
     /**
      * {@inheritDoc}
@@ -56,7 +64,16 @@ class MoveAnimation extends AnimationHandler {
         // Compute position
         if(elem instanceof SVGLocatable) {
             // Set new translation
-            var translation = posX.floatValue + "," + posY.floatValue
+            var x = posX.floatValue
+            var y = posY.floatValue
+            if(isAbsolute.boolValue)  {
+                if(startPosition == null) {
+                    startPosition = new SVGOMPoint(elem.BBox.x, elem.BBox.y)
+                }
+                x = -startPosition.x + posX.floatValue
+                y = -startPosition.y + posY.floatValue
+            }
+            var translation = x + "," + y
             elem.setAttributeFunction("transform", "translate", translation)
         } else {
             throw new Exception("The element '"+svgElementId+"' is not an SVGLocatable.")

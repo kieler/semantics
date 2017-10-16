@@ -80,7 +80,6 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
       case KivisPackage.INTERVAL: return createInterval();
       case KivisPackage.VARIABLE_REFERENCE: return createVariableReference();
       case KivisPackage.MODEL_REFERENCE: return createModelReference();
-      case KivisPackage.BOOLEAN_OPERATOR: return createBooleanOperator();
       case KivisPackage.AND_EXPRESSION: return createAndExpression();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -288,17 +287,6 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
   {
     ModelReferenceImpl modelReference = new ModelReferenceImpl();
     return modelReference;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public BooleanOperator createBooleanOperator()
-  {
-    BooleanOperatorImpl booleanOperator = new BooleanOperatorImpl();
-    return booleanOperator;
   }
 
   /**

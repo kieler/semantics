@@ -12,16 +12,47 @@
  */
 package de.cau.cs.kieler.sccharts.prom
 
+import de.cau.cs.kieler.prom.FileExtensions
+import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.templates.DeclarationAnalyzer
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.text.SCTXResource
+import org.eclipse.core.resources.IFile
+import org.eclipse.core.runtime.IPath
+import org.eclipse.core.runtime.Path
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.prom.FileExtensions
 
 /**
  * @author aas
  *
  */
 class SCChartsAnalyzer extends DeclarationAnalyzer {
+    
+    /**
+     * {@inheritDoc}
+     */
+    override getDependencies(EObject model) {
+        val dependencies = <IFile> newArrayList
+        if(model instanceof SCCharts) {
+            if(model.eResource instanceof SCTXResource) {
+                val sctxRes = model.eResource as SCTXResource
+                val directImports = sctxRes.directImports
+                for(importedFilePath : directImports.keySet) {
+                    // Add file extension if needed
+                    var IPath path = new Path(importedFilePath)
+                    if(!(path.fileExtension == FileExtensions.SCCHART)) {
+                        path = path.addFileExtension(FileExtensions.SCCHART)
+                    }
+                    // Get file handle of imported file
+                    val modelFile = ModelImporter.toPlatformResource(sctxRes)
+                    val importedFile = modelFile.parent.getFile(path)
+                    dependencies.add(importedFile)
+                }
+            }
+        }
+        return dependencies
+    }
+    
     /**
      * {@inheritDoc}
      */

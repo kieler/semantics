@@ -28,7 +28,9 @@ class CodeGenerationPhase {
     public static val OUTPUT_PHASE = new CodeGenerationPhase("output", false)
     public static val RELEASE_PHASE = new CodeGenerationPhase("release", true, "free")
     
-    public static val PHASES = newHashSet(DECLARATION_PHASE, INITIALIZATION_PHASE, INPUT_PHASE, OUTPUT_PHASE, RELEASE_PHASE)
+    public static def getPhases() {
+        return newHashSet(DECLARATION_PHASE, INITIALIZATION_PHASE, INPUT_PHASE, OUTPUT_PHASE, RELEASE_PHASE)    
+    }
     
     /**
      * The unique name of this phase.

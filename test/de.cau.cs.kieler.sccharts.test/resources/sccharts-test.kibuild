@@ -2,9 +2,8 @@
 model compiler kico {
   outputFolder: kieler-gen
   outputFileExtension: c
+  // Compile from SCCharts to C without taken transition signaling
   compileChain: de.cau.cs.kieler.sccharts.netlist.simple
-  // No frontend because the compile chain does all the way from sctx to c
-  frontend: ""
   // No need to communicate register variables, because there is no need to step back in the simulation history
   communicateRegisterVariables: false
   

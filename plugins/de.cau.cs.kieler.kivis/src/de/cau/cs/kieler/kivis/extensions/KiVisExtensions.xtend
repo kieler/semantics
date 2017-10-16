@@ -175,16 +175,21 @@ class KiVisExtensions {
      * @param value The value
      */
     public def Object apply(Mapping mapping, Object value) {
-        if(mapping.attributeDomain.value != null) {
+        val attributeDomain = mapping.attributeDomain
+        if(attributeDomain.currentValue) {
+            // The current value should be returned
+            return value
+        } else if(attributeDomain.value != null) {
             // The right side is a constant, which means this value is returned no matter what the input value is.
-            return mapping.attributeDomain.value.primitiveValue
-        } else if(mapping.attributeDomain.range != null && mapping.variableDomain.range != null) {
+            return attributeDomain.value.primitiveValue
+        } else if(attributeDomain.range != null && mapping.variableDomain.range != null) {
             // Interpolate the target value
             val doubleValue = value.doubleValue
-            val fromLow = mapping.variableDomain.range.from.primitiveValue.doubleValue
-            val fromHigh = mapping.variableDomain.range.to.primitiveValue.doubleValue
-            val toLow = mapping.attributeDomain.range.from.primitiveValue.doubleValue
-            val toHigh = mapping.attributeDomain.range.to.primitiveValue.doubleValue
+            val variableDomain = mapping.variableDomain
+            val fromLow = variableDomain.range.from.primitiveValue.doubleValue
+            val fromHigh = variableDomain.range.to.primitiveValue.doubleValue
+            val toLow = attributeDomain.range.from.primitiveValue.doubleValue
+            val toHigh = attributeDomain.range.to.primitiveValue.doubleValue
             val mappedValue = scale(doubleValue, fromLow, fromHigh, toLow, toHigh)
             // Try to use Integer instead Double if possible
             if(mappedValue == mappedValue.intValue)
@@ -218,11 +223,15 @@ class KiVisExtensions {
      * @param value The value
      */
     public def boolean matches(Domain domain, Object value) {
-        if(domain.value != null) {
+        if(domain.otherValues) {
+            // All other values should match
+            return true
+        } else if(domain.value != null) {
             // The domain is a single value, thus for a match the given value must be equal to it.
             val domValue = domain.value.primitiveValue
             return domValue.equalsValue(value)
         } else if(domain.range != null) {
+            
             try {
                 // The domain is a range, thus for a match it holds
                 // lowestIntervalValue <= value <= highestIntervalValue
@@ -334,7 +343,7 @@ class KiVisExtensions {
         val handler = FunctionHandler.getFunctionHandler(function.functionName)
         if(handler == null) {
             throw new Exception("The function '"+function.functionName+"' is not handled by the simulation visualization.\n"
-                              + "Supported functions are:"+FunctionHandler.functionHandlers.map[it.name].join(", "))
+                              + "Supported functions are:"+FunctionHandler.handledFunctions.keySet.join(", "))
         }
         // Get function arguments
         val arguments = <Object>newArrayList
@@ -345,7 +354,7 @@ class KiVisExtensions {
             }
         }
         // Calculate the function
-        val value = handler.getValue(arguments)
+        val value = handler.getValue(function.functionName, arguments)
         // Assign new value to the variable
         val variable = getVariable(variableReference, pool)
         if(variable != null) {

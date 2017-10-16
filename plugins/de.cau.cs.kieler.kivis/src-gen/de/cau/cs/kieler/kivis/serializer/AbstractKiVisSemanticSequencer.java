@@ -27,7 +27,6 @@ import de.cau.cs.kieler.kexpressions.VectorValue;
 import de.cau.cs.kieler.kivis.kivis.AndExpression;
 import de.cau.cs.kieler.kivis.kivis.Animation;
 import de.cau.cs.kieler.kivis.kivis.AttributeMapping;
-import de.cau.cs.kieler.kivis.kivis.BooleanOperator;
 import de.cau.cs.kieler.kivis.kivis.Comparison;
 import de.cau.cs.kieler.kivis.kivis.Domain;
 import de.cau.cs.kieler.kivis.kivis.Element;
@@ -705,15 +704,19 @@ public abstract class AbstractKiVisSemanticSequencer extends KiBuildSemanticSequ
 			case KivisPackage.ATTRIBUTE_MAPPING:
 				sequence_AttributeMapping(context, (AttributeMapping) semanticObject); 
 				return; 
-			case KivisPackage.BOOLEAN_OPERATOR:
-				sequence_AndOperator(context, (BooleanOperator) semanticObject); 
-				return; 
 			case KivisPackage.COMPARISON:
 				sequence_Comparison(context, (Comparison) semanticObject); 
 				return; 
 			case KivisPackage.DOMAIN:
-				sequence_VariableDomain(context, (Domain) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getAttributeDomainRule()) {
+					sequence_AttributeDomain(context, (Domain) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getVariableDomainRule()) {
+					sequence_VariableDomain(context, (Domain) semanticObject); 
+					return; 
+				}
+				else break;
 			case KivisPackage.ELEMENT:
 				sequence_Element(context, (Element) semanticObject); 
 				return; 
@@ -752,7 +755,7 @@ public abstract class AbstractKiVisSemanticSequencer extends KiBuildSemanticSequ
 	 *     AndExpression.AndExpression_1_0_0 returns AndExpression
 	 *
 	 * Constraint:
-	 *     (left=AndExpression_AndExpression_1_0_0 operator='and' right=Comparison)
+	 *     (left=AndExpression_AndExpression_1_0_0 operator='&&' right=Comparison)
 	 */
 	protected void sequence_AndExpression(ISerializationContext context, AndExpression semanticObject) {
 		if (errorAcceptor != null) {
@@ -765,26 +768,8 @@ public abstract class AbstractKiVisSemanticSequencer extends KiBuildSemanticSequ
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getAndExpressionAccess().getAndExpressionLeftAction_1_0_0(), semanticObject.getLeft());
-		feeder.accept(grammarAccess.getAndExpressionAccess().getOperatorAndKeyword_1_0_1_0(), semanticObject.getOperator());
+		feeder.accept(grammarAccess.getAndExpressionAccess().getOperatorAmpersandAmpersandKeyword_1_0_1_0(), semanticObject.getOperator());
 		feeder.accept(grammarAccess.getAndExpressionAccess().getRightComparisonParserRuleCall_1_1_0(), semanticObject.getRight());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     AndOperator returns BooleanOperator
-	 *
-	 * Constraint:
-	 *     AND='and'
-	 */
-	protected void sequence_AndOperator(ISerializationContext context, BooleanOperator semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KivisPackage.Literals.BOOLEAN_OPERATOR__AND) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KivisPackage.Literals.BOOLEAN_OPERATOR__AND));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getAndOperatorAccess().getANDAndKeyword_0(), semanticObject.getAND());
 		feeder.finish();
 	}
 	
@@ -803,10 +788,22 @@ public abstract class AbstractKiVisSemanticSequencer extends KiBuildSemanticSequ
 	
 	/**
 	 * Contexts:
+	 *     AttributeDomain returns Domain
+	 *
+	 * Constraint:
+	 *     (currentValue?='value' | value=Literal | range=Interval)
+	 */
+	protected void sequence_AttributeDomain(ISerializationContext context, Domain semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     AttributeMapping returns AttributeMapping
 	 *
 	 * Constraint:
-	 *     (attribute=ID (literal=Literal | (mappings+=Mapping mappings+=Mapping*)))
+	 *     (attribute=ID (currentValue?='value' | literal=Literal | (mappings+=Mapping mappings+=Mapping*)))
 	 */
 	protected void sequence_AttributeMapping(ISerializationContext context, AttributeMapping semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -980,10 +977,9 @@ public abstract class AbstractKiVisSemanticSequencer extends KiBuildSemanticSequ
 	/**
 	 * Contexts:
 	 *     VariableDomain returns Domain
-	 *     AttributeDomain returns Domain
 	 *
 	 * Constraint:
-	 *     (value=Literal | range=Interval)
+	 *     (otherValues?='others' | value=Literal | range=Interval)
 	 */
 	protected void sequence_VariableDomain(ISerializationContext context, Domain semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

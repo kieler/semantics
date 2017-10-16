@@ -32,7 +32,7 @@ class FileExtensions {
     public static val SCL = "scl"
     public static val MODELS = #[SCCHART, ESTEREL, SCL]
     
-    // Traces    
+    // Traces
     public static val ESO = "eso"
     public static val KTRACE = "ktrace"
     public static val TRACES = #[ESO, KTRACE]
