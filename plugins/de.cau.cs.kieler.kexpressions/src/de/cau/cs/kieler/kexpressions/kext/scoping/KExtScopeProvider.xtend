@@ -141,6 +141,13 @@ import de.cau.cs.kieler.kexpressions.keffects.Emission
 	protected def IScope getScopeForReferencedDeclarationObject(ReferenceDeclaration declaration,
 	    Function1<? super VariableDeclaration, Boolean> predicate
 	) {
+	    if (declaration.reference === null) {
+	        // IMPORTANT: This can happen if the resource that should be imported does not exist. 
+	        // In this case, the scope given to the linker was null previously. This causes a NPE. 
+	        // Return a NullScope instead.
+	        return IScope.NULLSCOPE
+	    }
+	    
         if (declaration.reference instanceof DeclarationScope) {
             val declarations = (declaration.reference as DeclarationScope).declarations
             val relevantDeclarations = declarations.filter(VariableDeclaration).filter(predicate).toList

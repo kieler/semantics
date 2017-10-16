@@ -98,7 +98,7 @@ class CompilationAction {
             val doc = editor.getDocument
             var EObject m = doc.readOnly(new IUnitOfWork<EObject, XtextResource>() {
                 override exec(XtextResource state) throws Exception {
-                    state.contents.head
+                    if (state != null && state.contents != null) state.contents.head else null
                 }
             });   
             return m 
