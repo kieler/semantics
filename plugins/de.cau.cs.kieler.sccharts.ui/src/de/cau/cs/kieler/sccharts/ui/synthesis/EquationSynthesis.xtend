@@ -130,7 +130,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 if (wire.semanticSourceReferenceDeclaration != null) {
                     node = node.createReferenceNode(wire.semanticSink, wire, (wire.semanticSource as ValuedObjectReference).valuedObject.serializeHR.removeCardinalities.toString)
                 } else {
-                    var text = wire.semanticSource.serializeHR.removeCardinalities.toString
+                    var text = wire.semanticSource.serializeHR.toString
                     if (wire.source instanceof OperatorExpression) {
                         node.addOperatorNodeFigure.associateWith(wire.semanticSource)
                         text = wire.semanticSource.asOperatorExpression.operator.toString
@@ -161,7 +161,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     node = node.createReferenceNode(wire.semanticSource, wire, (wire.semanticSink as ValuedObjectReference).valuedObject.serializeHR.removeCardinalities.toString)
                 } else { 
                     node.addOutputNodeFigure.associateWith(wire.sink)
-                    node.addNodeLabel(wire.semanticSink.serializeHR.removeCardinalities.toString)
+                    node.addNodeLabel(wire.semanticSink.serializeHR.toString)
                 }
                 
             }
@@ -178,7 +178,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             var targetPort = null as KPort
             if (wire.semanticSinkReferenceDeclaration != null) {
                 // If it is a reference, connect it to the specific port
-                targetPort = targetNode.getPort(wire.sink.asValuedObjectReference.subReference.valuedObject)
+                if (wire.sink.asValuedObjectReference.subReference !== null) {
+                    targetPort = targetNode.getPort(wire.sink.asValuedObjectReference.subReference.valuedObject)
+                }
             }
             if (wire.semanticSourceReferenceDeclaration != null) {
                 sourcePort = sourceNode.getPort(wire.source.asValuedObjectReference.subReference.valuedObject)

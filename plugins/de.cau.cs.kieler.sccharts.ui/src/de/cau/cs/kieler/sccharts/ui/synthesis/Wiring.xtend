@@ -114,7 +114,9 @@ class Wiring {
                 // Directly connect the semantic source to the source of an already existing wire. 
                 if (existingSemanticReference instanceof ValuedObjectReference) {
                     val existingWire = existingSemanticReference.getSemanticSinkWire
-                    if (existingWire != null) {
+                    if (existingWire != null && source.subReference == null) {
+                        // We don't want to use the existing semantic wire to the node if the subreference points to 
+                        // a referenced node. Therefore, only redirect to the existing wire if there is no subreference. 
                         existingSemanticReference = existingWire.semanticSource
                     }
                 }
