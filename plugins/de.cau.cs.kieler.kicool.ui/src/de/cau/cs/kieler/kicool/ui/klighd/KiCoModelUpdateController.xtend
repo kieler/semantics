@@ -304,6 +304,8 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
     override void refresh() {
         if (!compilerToggleAction.isChecked() || compiledModel == null) {
             update(ChangeEvent.EDITOR)
+        } else {
+            diagramView.updateDiagram
         }
     }
     
