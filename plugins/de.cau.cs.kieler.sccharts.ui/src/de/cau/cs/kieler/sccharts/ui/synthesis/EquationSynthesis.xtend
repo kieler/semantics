@@ -96,6 +96,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject Injector injector
     
     private val PORT_LABEL_FONT_SIZE = 6
+    
+    protected val referenceNodes = <KNode> newHashSet
 
     override performTranformation(Assignment element) {
         null
@@ -104,6 +106,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     def performTranformation(List<Assignment> elements) {
         val nodes = <KNode>newLinkedList
         val usedNodes = <KNode>newHashSet
+        referenceNodes.clear
         
         val wiring = injector.getInstance(Wiring)
 
@@ -122,12 +125,12 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     protected def createSources(Wiring wiring, List<KNode> nodes) {
         for (wire : wiring.wires) {
             val nodeExists = wire.semanticSource.nodeExists
-            val node = wire.semanticSource.createNode
-            var text = wire.semanticSource.serializeHR.removeCardinalities.toString
+            var KNode node = wire.semanticSource.createNode
             if (!nodeExists) {
                 if (wire.semanticSourceReferenceDeclaration != null) {
-                    node.createReferenceNode(wire.semanticSink, wire)    
+                    node = node.createReferenceNode(wire.semanticSink, wire, (wire.semanticSource as ValuedObjectReference).valuedObject.serializeHR.removeCardinalities.toString)
                 } else {
+                    var text = wire.semanticSource.serializeHR.removeCardinalities.toString
                     if (wire.source instanceof OperatorExpression) {
                         node.addOperatorNodeFigure.associateWith(wire.semanticSource)
                         text = wire.semanticSource.asOperatorExpression.operator.toString
@@ -138,11 +141,11 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE)
                     val port = wire.semanticSource.createPort("out") => [
                         addLayoutParam(CoreOptions::PORT_SIDE, PortSide.EAST)
-                        node.ports += it
-                    ]          
+                    ]   
+                    node.ports += port       
                     port.associateWith(wire.semanticSource)
+                    node.addNodeLabel(text)
                 }            
-                node.addNodeLabel(text)
             }
             nodes += node
         }
@@ -151,16 +154,16 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     protected def createSinks(Wiring wiring, List<KNode> nodes, Set<KNode> usedNodes) {
         for (wire : wiring.wires) {
             val nodeExists = wire.semanticSink.nodeExists
-            val node = wire.semanticSink.createNode
+            var node = wire.semanticSink.createNode
             
             if (!nodeExists) {
                 if (wire.semanticSinkReferenceDeclaration != null) {
-                    node.createReferenceNode(wire.semanticSink, wire)
+                    node = node.createReferenceNode(wire.semanticSource, wire, (wire.semanticSink as ValuedObjectReference).valuedObject.serializeHR.removeCardinalities.toString)
                 } else { 
                     node.addOutputNodeFigure.associateWith(wire.sink)
+                    node.addNodeLabel(wire.semanticSink.serializeHR.removeCardinalities.toString)
                 }
                 
-                node.addNodeLabel(wire.semanticSink.serializeHR.removeCardinalities.toString)
             }
 
             nodes += node
@@ -177,10 +180,21 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 // If it is a reference, connect it to the specific port
                 targetPort = targetNode.getPort(wire.sink.asValuedObjectReference.subReference.valuedObject)
             }
+            if (wire.semanticSourceReferenceDeclaration != null) {
+                sourcePort = sourceNode.getPort(wire.source.asValuedObjectReference.subReference.valuedObject)
+            }
+            if (targetPort === null) {
+                targetPort = targetNode.getPort(wire) => [
+                    addLayoutParam(CoreOptions::PORT_SIDE, PortSide.WEST)
+                ]
+                targetNode.ports += targetPort
+            }
             
             // Only label operator expressions and only do it once.
-            var String label = if (wire.source == wire.semanticSource && wire.source instanceof OperatorExpression)
-                wire.source.serializeHR.toString else null
+            var String label = null 
+            if (wire.source == wire.semanticSource && wire.source instanceof OperatorExpression) {
+                label = wire.source.serializeHR.toString
+            }
             
             wire.source.createWireEdge(sourceNode, sourcePort, targetNode, targetPort, label)
         }
@@ -199,7 +213,12 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         }
     }
     
-    protected def createReferenceNode(KNode node, Object association, Wire wire) {
+    protected def createReferenceNode(KNode node, Object association, Wire wire, String label) {
+        if (association.nodeExists) {
+            val oldNode = association.getNode
+            if (referenceNodes.contains(oldNode)) return oldNode
+        }
+        
         node.setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER) 
         node.setLayoutOption(CoreOptions.PORT_LABELS_PLACEMENT, PortLabelPlacement.INSIDE) 
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d); //10.5 // 8f
@@ -207,12 +226,14 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         node.setLayoutOption(CoreOptions::EXPAND_NODES, true);         
   
         node.addReferenceNodeFigure.associateWith(association)
+        node.addNodeLabel(label)
         
         val vor = wire.sink
         
         node.createReferenceNodePorts(wire.referenceDeclaration.reference as Scope, vor, [ input ], PortSide.WEST, true)
         node.createReferenceNodePorts(wire.referenceDeclaration.reference as Scope, vor, [ output ], PortSide.EAST, false)
 
+        referenceNodes += node
         return node
     }
     

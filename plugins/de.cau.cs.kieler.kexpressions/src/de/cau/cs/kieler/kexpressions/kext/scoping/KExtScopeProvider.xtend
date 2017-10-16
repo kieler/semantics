@@ -80,7 +80,8 @@ import de.cau.cs.kieler.kexpressions.keffects.Emission
 		    // Otherwise, use the outputs (subreferences).
 		    val contextContainerContainer = contextContainer.eContainer
 		    if (contextContainerContainer instanceof Assignment) {
-                return contextContainerContainer.getScopeForReferencedDeclarationFromAssignment(reference)    
+//                return contextContainerContainer.getScopeForReferencedDeclarationFromAssignment(reference)
+                return contextContainer.getScopeForReferencedDeclarationFromSubReference(reference)    
 		    } else {
                 return contextContainer.getScopeForReferencedDeclarationFromSubReference(reference)
 		    }
@@ -129,8 +130,7 @@ import de.cau.cs.kieler.kexpressions.keffects.Emission
                     }
                     if (parentVO.valuedObject.eContainer instanceof ReferenceDeclaration) {
                         return (parentVO.valuedObject.eContainer as ReferenceDeclaration).
-//                            getScopeForReferencedDeclarationObject[ output ]
-                            getScopeForReferenceDeclaration(reference)
+                            getScopeForReferencedDeclarationObject[ output || input ]
                     }
                 }
             }

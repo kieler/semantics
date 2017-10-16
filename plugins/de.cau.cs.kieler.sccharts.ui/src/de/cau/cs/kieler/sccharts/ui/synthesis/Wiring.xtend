@@ -43,7 +43,9 @@ class Wiring {
     @Inject extension KEffectsExtensions
     
     @Accessors val wires = <Wire> newLinkedHashSet
+    /** Source-Sink Wires */
     val index = <Pair<Expression, Expression>, Wire> newHashMap
+    /** Storage for valuedObject, subObject expressions */
     val semanticReferenceIndex = <Pair<ValuedObject, ValuedObject>, Expression> newHashMap
 
     def getWires() {
@@ -122,7 +124,7 @@ class Wiring {
             }
         } 
         if (sink instanceof ValuedObjectReference) {
-            val srValuedObject = null //if (sink.subReference != null) sink.subReference.valuedObject else null
+            val srValuedObject = null // if (sink.subReference != null) sink.subReference.valuedObject else null
             val existingSemanticReference = semanticReferenceIndex.get(new Pair<ValuedObject, ValuedObject>(sink.valuedObject, srValuedObject))
             if (existingSemanticReference != null) {
                 semanticSink = existingSemanticReference
