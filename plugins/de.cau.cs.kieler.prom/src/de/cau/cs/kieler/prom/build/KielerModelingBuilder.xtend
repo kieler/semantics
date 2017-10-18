@@ -115,7 +115,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
     /**
      * Graph representing the dependencies of the resources.
      */
-    private DependencyGraph dependencies;
+    private DependencyGraph dependencyGraph;
     
     /**
      * Flag to indicate that this incremental build should be aborted,
@@ -377,7 +377,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
                 }
             }
             // Re-link all models 
-            // Not needed since the Xtext nature is not reuired anymore for SCCharts
+            // Not needed since the Xtext nature is not required anymore for SCCharts
 //                relink(resourceSet)
         }
 
@@ -426,7 +426,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      * @param modelFile The file in which the model is saved
      */
     private def void buildDependingFiles(EObject model, IFile modelFile) {
-        val node = dependencies.getOrCreate(modelFile)
+        val node = dependencyGraph.getOrCreate(modelFile)
         val dependingFiles = <IFile> newArrayList
         for(dependingNode : node.depending) {
             val dependingFile = dependingNode.content
@@ -447,20 +447,23 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      * @param modelFile The file in which the model is saved
      */
     private def void updateDependencies(EObject model, IFile modelFile) {
-        val node = dependencies.getOrCreate(modelFile)
+        val node = dependencyGraph.getOrCreate(modelFile)
         val modelAnalyzer = ModelAnalyzer.analyzers.findFirst[it.isSupported(model)]
         if(modelAnalyzer != null) {
-            val importedFiles = modelAnalyzer.getDependencies(model)
-            if(importedFiles != null) {
+            val dependencies = modelAnalyzer.getDependencies(model)
+            if(dependencies != null) {
                 // Remove old dependencies of the model
                 node.removeAllDependencies
                 // Add new dependencies of the model
-                for(importedFile : importedFiles) {
-                    val dependencyNode = dependencies.getOrCreate(importedFile)
+                for(dependency : dependencies) {
+                    val dependencyNode = dependencyGraph.getOrCreate(dependency)
                     node.addDependency(dependencyNode)
                 }
             }
         }
+        
+        // Check consistency of the graph
+        checkDependencies
     }
 
     /**
@@ -468,7 +471,17 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      * Removes all markers and re-initialzes this builder.
      */
     private def void clean() {
-        // TODO: Delete generated files
+        initialize
+        // Delete all generated files
+        for(compiler : modelCompilers) {
+            compiler.clean
+        }
+        for(simCompiler : simulationCompilers) {
+            simCompiler.clean
+        }
+        for(processor : templateProcessors) {
+            processor.clean
+        }
         // Delete all markers
         deleteMarkers(project)
         // Re-initialize
@@ -477,7 +490,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
     }
 
     /**
-     * Initialize this builder
+     * Initialize this builder.
      */
     private def void initialize() {
         monitor.subTask("Initializing build")
@@ -632,7 +645,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      */
     private def void createDependencyGraph() {
         // Create new dependency graph
-        dependencies = new DependencyGraph()
+        dependencyGraph = new DependencyGraph()
         // Print out dependencies
 //        for(n : dependencies.nodes) { 
 //            for(d : n.dependencies) {
@@ -647,7 +660,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      */
     private def void checkDependencies() {
         // Check that there are no loops
-        val loop = dependencies.findLoop
+        val loop = dependencyGraph.findLoop
         if(loop != null) {
             throw new Exception("There is a loop in the dependencies of the models "+loop)
         }

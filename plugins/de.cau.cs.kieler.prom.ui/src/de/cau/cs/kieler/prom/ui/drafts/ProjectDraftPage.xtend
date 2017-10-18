@@ -333,11 +333,6 @@ class ProjectDraftPage extends PreferencePage implements IWorkbenchPreferencePag
         val input = UIExtensionLookupUtil.getWizardConfigurationElements(true)
         combo.input = input
 
-//        Debug log, which wizards are currently installed 
-//        for (e : ExtensionLookupUtil.getWizardConfigurationElements(true)){
-//            println(e.getAttribute("class"))
-//        }
-        
         // Select first element as default 
         if (input != null && input.size > 0) {
             combo.selection = new StructuredSelection(input.get(0))

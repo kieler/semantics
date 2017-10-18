@@ -36,11 +36,24 @@ class MoveAnimation extends AnimationHandler {
      * The translation along the y axis.
      */
     public val posY = new ConfigurableAttribute("y", 0)
+    
+    /**
+     * Additional translation along the x axis.
+     */
+    public val offsetX = new ConfigurableAttribute("offsetX", 0)
+    /**
+     * Additional translation along the y axis.
+     */
+    public val offsetY = new ConfigurableAttribute("offsetY", 0)
+    
     /**
      * Determines if the position is absolute or relative to the element's original position.
      */
     public val isAbsolute = new ConfigurableAttribute("absolute", false)
     
+    /**
+     * The original position of the element in the document before any animation was applied.
+     */
     private var SVGPoint startPosition
     
     /**
@@ -73,6 +86,8 @@ class MoveAnimation extends AnimationHandler {
                 x = -startPosition.x + posX.floatValue
                 y = -startPosition.y + posY.floatValue
             }
+            x = x + offsetX.floatValue
+            y = y + offsetY.floatValue
             var translation = x + "," + y
             elem.setAttributeFunction("transform", "translate", translation)
         } else {

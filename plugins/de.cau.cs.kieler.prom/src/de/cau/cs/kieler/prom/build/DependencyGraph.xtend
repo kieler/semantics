@@ -19,26 +19,53 @@ import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * A container for dependency nodes.
- * 
+ *   
  * @author aas
  *
  */
 class DependencyGraph {
+    /**
+     * The nodes in this graph.
+     * The key of the map is the node id,
+     * the value of the map is the node itself.
+     */
     @Accessors(PUBLIC_GETTER)
     private val Map<String, DependencyNode> nodes = newHashMap
     
+    /**
+     * Returns the nodes that do not have any dependencies.
+     * 
+     * @return all nodes without dependencies
+     */
     public def List<DependencyNode> getLeafs() {
         return nodes.values.filter[it.isLeaf].toList
     }
     
+    /**
+     * Returns the dependency node with the given id, or null if none.
+     * 
+     * @return the dependency node with the given id, or null if none
+     */
     public def DependencyNode get(String id) {
         return nodes.get(id)
     }
     
+    /**
+     * Returns the dependency node for the given file handle.
+     * If no such node exists, it is created.
+     * 
+     * @return an existing dependency node for the given file, or a new one if none yet. 
+     */
     public def DependencyNode getOrCreate(IFile file) {
         return getOrCreate(file.fullPath.toOSString, file)
     }
     
+    /**
+     * Returns the dependency node with the given id.
+     * If no such node exists, a new one is created with the given content.
+     * 
+     * @return an existing dependency node for the given id, or a new one if none yet. 
+     */
     public def DependencyNode getOrCreate(String id, Object content) {
         var n = get(id)
         if(n == null) {
@@ -48,23 +75,30 @@ class DependencyGraph {
         return n
     }
     
-    public def DependencyNode getOrCreateNode(String id) {
-        var n = get(id)
-        if(n == null) {
-            n = new DependencyNode(id, null)
-            add(n)
-        }
-        return n
-    }
-    
+    /**
+     * Adds the dependency node to this graph.
+     * 
+     * @param n The node
+     */
     public def void add(DependencyNode n) {
         nodes.put(n.id, n)
     }
     
+    /**
+     * Removes the dependency node from this graph.
+     * 
+     * @param n The node
+     */
     public def void remove(DependencyNode n) {
         nodes.remove(n.id)
     }
     
+    /**
+     * Searches for a loop in the dependency graph and returns involved nodes.
+     * If no loop exists, null is returned.
+     * 
+     * @return nodes that create a cyclic dependency or null if none.
+     */
     public def List<DependencyNode> findLoop() {
         for(n : nodes.values) {
             n.seen = 0
@@ -78,7 +112,11 @@ class DependencyGraph {
         return null
     }
     
-    public def List<DependencyNode> findLoop(DependencyNode n) {
+    /**
+     * Helper method to find loops in the graph.
+     * Checks if there is a loop starting from the given node. 
+     */
+    private def List<DependencyNode> findLoop(DependencyNode n) {
         if(n.seen == 2) {
             // Finished before without cycle
             return null    

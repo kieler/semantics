@@ -19,6 +19,8 @@ import org.eclipse.core.runtime.CoreException
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
+ * Base class to provide functions that can be used in the visualization config to set variables. 
+ * 
  * @author aas
  *
  */
@@ -32,6 +34,10 @@ abstract class FunctionHandler {
     
     /**
      * Returns the value of the function for the given arguments.
+     * 
+     * @param functionName The name of the function to be calculated
+     * @param arguments The arguments for the function
+     * @return the calculated value of the function
      */
     public def Object getValue(String functionName, List<Object> arguments) {
         val function = functions.findFirst[it.name == functionName]
@@ -44,6 +50,9 @@ abstract class FunctionHandler {
     /**
      * Returns the registered function handler for the given function,
      * or null if none.
+     * 
+     * @param functionName The function name
+     * @return the handler that implements the function, or null if none 
      */
     public static def FunctionHandler getFunctionHandler(String functionName) {
         // Initialize if not done yet
@@ -55,6 +64,8 @@ abstract class FunctionHandler {
     
     /**
      * Returns all registered function handlers.
+     * 
+     * @return all registered function handlers.
      */
     public static def List<FunctionHandler> getFunctionHandlers() {
         // Initialize if not done yet

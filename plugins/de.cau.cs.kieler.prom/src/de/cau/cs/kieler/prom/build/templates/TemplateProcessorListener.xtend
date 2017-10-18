@@ -16,6 +16,12 @@ package de.cau.cs.kieler.prom.build.templates
  * @author aas
  */
 interface TemplateProcessorListener {
+    /**
+     * Fired before the template a processed.
+     */
     def void beforeProcessing(TemplateProcessor processor)
+    /**
+     * Fired after a template was processed.
+     */
     def void afterProcessing(TemplateProcessor processor)
 }

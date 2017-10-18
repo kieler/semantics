@@ -25,10 +25,19 @@ import org.eclipse.xtext.resource.XtextResourceSet
  */
 abstract class OriginBasedSimulationBackend extends SimulationBackend {
     
+    /**
+     * The build config that has been loaded from the origin.
+     */
     private BuildConfiguration buildConfig
     
+    /**
+     * The origin of a build config (e.g. an URI using the platform protocol)
+     */
     abstract def String getBuildConfigOrigin()
     
+    /**
+     * Returns the build config.
+     */
     override getBuildConfig() {
         if(buildConfig == null) {
             buildConfig = loadBuildConfig(buildConfigOrigin)
@@ -36,10 +45,13 @@ abstract class OriginBasedSimulationBackend extends SimulationBackend {
         return buildConfig
     }
     
+    /**
+     * Loads the build configuration from the origin.
+     */
     private static def BuildConfiguration loadBuildConfig(String origin) {
         val resourceSet = KiBuildStandaloneSetup.doSetup.getInstance(XtextResourceSet)
         // Replace possible frontend placeholder in file from origin
-        val stream = PromPlugin.getInputStream(origin, #{"frontend" -> ""})
+        val stream = PromPlugin.getInputStream(origin, null)
         val resource = resourceSet.createResource(URI.createURI("dummy:/dummy."+FileExtensions.BUILD_CONFIG));
         resource.load(stream, resourceSet.getLoadOptions());
         stream.close

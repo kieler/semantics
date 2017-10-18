@@ -352,4 +352,18 @@ abstract class SimulationCompiler extends Configurable {
         }
         return result
     }
+    
+    /**
+     * Deletes all created files.
+     */
+    public def void clean() {
+        val folders = newArrayList
+        folders.add(project.getFolder(outputFolder.stringValue))
+        folders.add(project.getFolder(libFolder.stringValue))
+        for(folder : folders) {
+            if(folder.exists) {
+                folder.delete(false, null)
+            }
+        }
+    }
 }

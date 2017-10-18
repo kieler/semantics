@@ -22,7 +22,6 @@
 package de.cau.cs.kieler.kivis.ui.svg;
 
 import java.awt.BorderLayout;
-import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Panel;
 import java.io.File;
@@ -32,10 +31,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import javax.swing.JLabel;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
 
 import org.apache.batik.swing.JSVGCanvas;
 import org.apache.batik.swing.svg.JSVGComponent;
@@ -46,14 +43,8 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.ISelectionListener;
-import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.kivis.ui.internal.KiVisActivator;

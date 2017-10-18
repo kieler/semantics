@@ -41,21 +41,16 @@ abstract class AnimationHandler extends Configurable implements IAnimationHandle
     protected static extension KiVisExtensions kivisExtensions = new KiVisExtensions
     protected static extension SVGExtensions svgExtensions = new SVGExtensions
     
+    
     /**
      * If this attribute is true, the animation is also applied recursively to all child elements in the SVG document.
      */
     public val recursive = new ConfigurableAttribute("recursive", false)
     
     /**
-     * The variable in the data pool that is used in this animation.
+     * The configurable attributes of this instance.
      */
-    @Accessors(PUBLIC_GETTER)
-    protected var Variable variable
-    
-    /**
-     * The value of the variable that is used in this animation.
-     */
-    protected var Object variableValue
+    protected var List<ConfigurableAttribute> attributes = newArrayList
     
     /**
      * The id of the SVG element that should be animated.
@@ -73,17 +68,23 @@ abstract class AnimationHandler extends Configurable implements IAnimationHandle
     protected var Animation animation
     
     /**
-     * The configurable attributes of this instance.
+     * The variable in the data pool that is used in this animation.
      */
-    protected var List<ConfigurableAttribute> attributes = newArrayList
+    @Accessors(PUBLIC_GETTER)
+    protected var Variable variable
     
     /**
-     * Is the animation active for the current pool
+     * The value of the variable that is used in this animation.
+     */
+    protected var Object variableValue
+    
+    /**
+     * Is the animation active for the current pool?
      */
     protected var boolean isActive
     
     /**
-     * The current data pool
+     * The current data pool to be animated.
      */
     protected var DataPool pool
     
@@ -223,7 +224,7 @@ abstract class AnimationHandler extends Configurable implements IAnimationHandle
      * @param pool The pool
      * @return true if the animation should be performed for this data pool
      */
-    protected def boolean isActive(DataPool pool) {
+    private def boolean isActive(DataPool pool) {
         // Without condition, the animation is always active,
         // otherwise evaluate the condition using the variables in the pool.
         if(animation.condition == null) {

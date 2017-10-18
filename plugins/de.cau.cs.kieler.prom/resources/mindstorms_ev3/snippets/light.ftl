@@ -15,7 +15,7 @@
     <@input>
         // Light
         lightSensor${port}.getMode("${mode}").fetchSample(lightSensor${port}Samples, 0);
-        scchart.${varname} = lightSensor${port}Samples[0];
+        scchart.${varName} = lightSensor${port}Samples[0];
     </@>
     <@release>
         // Light ${port}
@@ -39,11 +39,11 @@
     </@>
     <@input>
         // Floodlight ${port}
-        scchart.${varname} = (lightSensor${port}.getFloodlight() != Color.NONE);
+        scchart.${varName} = (lightSensor${port}.getFloodlight() != Color.NONE);
     </@>
     <@output>
         // Floodlight ${port}
-        if(scchart.${varname}) {
+        if(scchart.${varName}) {
             if(lightSensor${port}.getFloodlight() != Color.RED){
                 lightSensor${port}.setFloodlight(Color.RED);
             }
@@ -75,7 +75,7 @@
     </@>
     <@output>
         // RCX lamp ${port}
-        if(scchart.${varname})
+        if(scchart.${varName})
             rcxMotor${port}.forward();
         else
             rcxMotor${port}.flt();
@@ -106,7 +106,7 @@
 <#macro EV3ButtonLED>
     <@output>
         // Pattern for on-board LED of EV3 brick.
-        Button.LEDPattern(scchart.${varname});
+        Button.LEDPattern(scchart.${varName});
     </@>
 </#macro>
 

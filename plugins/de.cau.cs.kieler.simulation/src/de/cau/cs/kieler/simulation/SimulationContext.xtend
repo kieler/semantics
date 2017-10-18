@@ -50,41 +50,89 @@ import org.osgi.service.prefs.Preferences
 import de.cau.cs.kieler.kicool.ProcessorEntry
 
 /**
+ * Class to configure and start simulations.
+ * 
  * @author aas
  *
  */
 class SimulationContext {
     static extension KiBuildExtensions kiBuildExtensions = new KiBuildExtensions
     
+    /**
+     * The name of the project in which models are compiled and simulated if none is provided.
+     */
     public static val TEMPORARY_PROJECT_NAME = "TEMPORARY_SIM_PROJECT"
     
+    /**
+     * The name of the attribute that stores the flag to determine if the temporary simulation project should be deleted.
+     */
     public static val DELETE_TEMPORARY_PROJECT_ATTR = "deleteTemporarySimulationProject"
     
     // Fields for starting the simulation
+    /**
+     * The simulation configuration file.
+     * If this is set, other fields are not used to configure the simulation.
+     */
     public var IFile kisimFile
     
+    /**
+     * The trace file
+     */
     public var IFile traceFile
+    /**
+     * The number of the trace in the trace file, in case there are multiple traces.
+     */
     public var int traceNumber
     
+    /**
+     * The simulation input file.
+     */
     public var IFile simInFile
     
+    /**
+     * The executables that simulate a model.
+     */
     public var List<IFile> executableFiles = newArrayList
     
     // Fields for model compilation to executables, which are used to start the simulation afterwards
+    /**
+     * The progress monitor.
+     */
     @Accessors(PUBLIC_GETTER)
-    private var IProgressMonitor monitor 
+    private var IProgressMonitor monitor
+    /**
+     * The result of the model compilation.
+     */ 
     @Accessors(PUBLIC_GETTER)
     private var FileGenerationResult buildResult
+    /**
+     * The model to be compiled and simulated
+     */
     @Accessors(PUBLIC_GETTER)
     private var EObject model
+    /**
+     * The file handle of the model to be compiled and simulated
+     */
     @Accessors(PUBLIC_GETTER)
     private var IFile modelFile
+    /**
+     * A suited model analyzer for the model
+     */
     @Accessors(PUBLIC_GETTER)
     private var ModelAnalyzer modelAnalyzer
+    /**
+     * A suited simulation backend for the compile chain that is used to compile the model.
+     */
     @Accessors(PUBLIC_GETTER)
     private var SimulationBackend simulationBackend
     
+    /**
+     * The model compilers from the build configuration that compile the model 
+     */
     private var List<ModelCompiler> modelCompilers
+    /**
+     * The simulation compilers that compile the simulation code from the model compilers.
+     */
     private var List<SimulationCompiler> simulationCompilers
     
     /**
@@ -113,13 +161,17 @@ class SimulationContext {
     
     /**
      * Defines if the temporary simulation project should be deleted after the simulation is done.
+     * 
+     * @param value True if the temporary project should be deleted, false otherwise.
      */
     public static def setDeleteTemporaryProject(boolean value) {
         preferences.putBoolean(DELETE_TEMPORARY_PROJECT_ATTR, value)
     }
     
     /**
-     * Returns true if the temporary simulation project should be deleted after the simulation is done.
+     * Checks if the temporary simulation project should be deleted after the simulation is done.
+     * 
+     * @return true if the temporary simulation project should be deleted after the simulation is done
      */
     public static def getDeleteTemporaryProject() {
         preferences.getBoolean(DELETE_TEMPORARY_PROJECT_ATTR, true)
@@ -135,7 +187,7 @@ class SimulationContext {
     
     /**
      * Starts the simulation.
-     * If required, a specified model is compiled beforehand.
+     * If required, the configured model is compiled beforehand.
      */
     public def void start() {
         // Add simulation listener if not done yet
@@ -167,6 +219,8 @@ class SimulationContext {
     
     /**
      * Sets the model by using an EObject.
+     * 
+     * @param value The model
      */
     public def void setModel(EObject value) {
         if(value == null) {
@@ -197,6 +251,8 @@ class SimulationContext {
     
     /**
      * Sets the model by using a file handle.
+     * 
+     * @param value The model file
      */
     public def void setModelFile(IFile value) {
         if(value == null) {
@@ -209,7 +265,9 @@ class SimulationContext {
     }
     
     /**
-     * Sets the monitor.
+     * Sets the progress monitor.
+     * 
+     * @param monitor The monitor
      */
     public def void setMonitor(IProgressMonitor monitor) {
         this.monitor = monitor
@@ -220,8 +278,8 @@ class SimulationContext {
     /**
      * Creates a new simulation with the current configuration.
      * 
-     * Using this method a model file is not compiled beforehand.
-     * Use start to compile a model if needed and directly start the so created simulation.
+     * Using this method a configured model file is not compiled beforehand.
+     * Use the start() method to compile a model if needed and directly start the so created simulation.
      */
     public def void startSimulation() {
         // Check consistency
@@ -293,7 +351,7 @@ class SimulationContext {
     
     /**
      * Compiles the model to an executables that is ready for simulation.
-     * The created executables are added automatically.
+     * The created executables are added automatically to the simulation to be created.
      */
     public def void compileModel() {
         buildResult = new FileGenerationResult
@@ -345,7 +403,9 @@ class SimulationContext {
     }
     
     /**
-     * Returns true if the progress monitor was canceled.
+     * Checks if the progress monitor was canceled.
+     * 
+     * @return true if the progress monitor was canceled, false otherwise.
      */
     private def boolean isCanceled() {
         return monitor != null && monitor.isCanceled
@@ -353,6 +413,8 @@ class SimulationContext {
     
     /**
      * Sets the monitor of this context as the monitor of the compilers in the list.
+     * 
+     * @param compilers a list of ModelCompilers and SimulationCompilers
      */
     private def void setProgressMonitor(List<?> compilers) {
         if(compilers.isNullOrEmpty) {
@@ -367,9 +429,9 @@ class SimulationContext {
     }
     
     /**
-     * Displays all problems in the workspace.
+     * Checks if there are any problems and if so,
+     * shows these to the user and throws an exception.
      * 
-     * @return true if there is a build problem that is an error, false otherwise.
      */
     private def void checkErrors(List<BuildProblem> problems) {
         if(problems.isNullOrEmpty) {
@@ -383,7 +445,8 @@ class SimulationContext {
     }
     
     /**
-     * Creates the temporary project for simulation if not done yet.
+     * Returns the temporary project for simulation.
+     * If the project does not exist yet, it is created beforehand.
      * 
      * @return The temporary project for simulation
      */
@@ -415,6 +478,10 @@ class SimulationContext {
     /**
      * Searches for a suited simulation backend for the given compile chain.
      * Relevant for the simulation backend is the last processor that creates the target code for the models.
+     * 
+     * @param compileChain The compileChain
+     * @return A simulation backend for the given compile chain
+     * @throws Exception if no suited simulation backend is found.
      */
     private def SimulationBackend getSimulationBackend(String compileChain) {
         val lastProcessorOrSystemId = KiCoModelCompiler.splitCompileChain(compileChain).last

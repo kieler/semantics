@@ -51,6 +51,13 @@ class EsterelAnalyzer extends ModelAnalyzer {
     /**
      * {@inheritDoc}
      */
+    override getDependencies(EObject model) {
+        return null
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
     override getSupportedFileExtensions() {
         return #[FileExtensions.ESTEREL]
     }

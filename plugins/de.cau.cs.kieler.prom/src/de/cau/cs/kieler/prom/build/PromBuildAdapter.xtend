@@ -18,6 +18,8 @@ import de.cau.cs.kieler.prom.build.templates.TemplateProcessor
 import de.cau.cs.kieler.prom.build.compilation.ModelCompilerListener
 
 /**
+ * Default implementation that listens to the builder and provides methods to react to to that. 
+ * 
  * @author aas
  *
  */

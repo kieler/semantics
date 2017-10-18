@@ -16,7 +16,7 @@
     <@input>
         // Gyro sensor
         gyroSensor${port}.getMode("${mode}").fetchSample(gyroSensor${port}Samples, 0);
-        scchart.${varname} = gyroSensor${port}Samples[0];
+        scchart.${varName} = gyroSensor${port}Samples[0];
     </@>
     <@release>
         // Gyro ${port}
@@ -39,10 +39,10 @@
     </@>
     <@output>
         // Reset gyro sensor
-        if(scchart.${varname}){
+        if(scchart.${varName}){
             gyroSensor${port}.reset();
             <#if autoReset>
-            scchart.${varname} = false;
+            scchart.${varName} = false;
             </#if>
         }
     </@>

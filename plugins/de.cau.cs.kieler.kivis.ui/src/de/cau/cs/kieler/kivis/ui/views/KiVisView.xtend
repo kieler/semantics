@@ -267,21 +267,23 @@ class KiVisView extends ViewPart {
         if(pool == null) {
             reload()
         } else {
-            // Execute interactions if needed
-            for(interaction : interactionHandlers) {
-                // Only apply interactions that are not triggered by an event.
-                if(!interaction.isEventTriggered) {
-                    interaction.performActions
-                }   
-            }
-            
             // Only update the view with the state of the pool, when the pool changed
             // and the data pool contains valid data, i.e., all variables have been initialized in the first macro tick
             var poolChanged = (pool != lastPool)
-            var afterInitialization = (SimulationManager.instance != null
-                                       && SimulationManager.instance.currentMacroTickNumber > 0)
-            if(force || (poolChanged && afterInitialization)) {
+            var afterFirstTick = (SimulationManager.instance != null
+                                  && SimulationManager.instance.currentMacroTickNumber > 0)
+            if(force || (poolChanged && afterFirstTick)) {
                 lastPool = pool
+                // Execute interactions that are not triggered by an event.
+                try {
+                    for(interaction : interactionHandlers) {
+                        if(!interaction.isEventTriggered) {
+                            interaction.performActions
+                        }   
+                    }
+                } catch (Exception e) {
+                    showError(e)
+                }
                 
                 // Update svg with data from pool
                 // Make all changes to the svg in the update manager.
