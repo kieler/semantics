@@ -130,6 +130,9 @@ final class EclipseJSVGCanvas extends JSVGCanvas {
         // RIGHT ARROW: step simulation 
         key = KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0);
         inputMap.put(key, STEP_MACRO_TICK_ACTION);
+        // SPACE: Play / pause simulation
+        key = KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0);
+        inputMap.put(key, PLAY_SIMULATION_ACTION);
         // CTRL + ARROW: scroll
         key = KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, KeyEvent.CTRL_MASK);
         inputMap.put(key, SCROLL_RIGHT_ACTION);

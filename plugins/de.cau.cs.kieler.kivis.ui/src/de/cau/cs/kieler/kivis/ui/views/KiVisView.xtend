@@ -227,8 +227,6 @@ class KiVisView extends ViewPart {
         control.layout = new GridLayout(1, true)
         // Create canvas
         createCanvas(control)
-        // TODO: Set size of canvas to fill the view
-        canvas.size = new Point(300,300)
         canvas.layoutData = new GridData(GridData.FILL_BOTH)
         // Create menu and toolbars.
         createMenu
@@ -296,20 +294,18 @@ class KiVisView extends ViewPart {
                     // As this is invoked later in another thread,
                     // the pool that should be visualized might already be outdated.
                     // In this case we don't animate anything here.
-                    if(SimulationManager.instance != null && pool == SimulationManager.instance.currentPool) {
-                        val time = System.currentTimeMillis
-                        try {
-                            // Safe reference to animation handlers in case the reference changes concurrently
-                            val handlers = animationHandlers
-                            for (animation : handlers) {
-                                animation.apply(pool)
-                            }
-                        } catch (Exception e) {
-                            showError(e)
+                    val time = System.currentTimeMillis
+                    try {
+                        // Safe reference to animation handlers in case the reference changes concurrently
+                        val handlers = animationHandlers
+                        for (animation : handlers) {
+                            animation.apply(pool)
                         }
-                        val duration = (System.currentTimeMillis-time)
-                        setStatusBarMessage("Update took " + duration + "ms")
+                    } catch (Exception e) {
+                        showError(e)
                     }
+                    val duration = (System.currentTimeMillis-time)
+                    setStatusBarMessage("Update took " + duration + "ms")
                 ]
             }
         }
@@ -653,19 +649,15 @@ class KiVisView extends ViewPart {
             
             override onUserValueChanged(VariableUserValueEvent e) {
                 if(!kiVisView.ignoreVariableEvents) {
-                    PromUIPlugin.asyncExecInUI[
-                        kiVisView.update(e.variable)
-                    ]
+                    kiVisView.update(e.variable)
                 }
             }
             
             override onSimulationControlEvent(SimulationControlEvent e) {
-                PromUIPlugin.asyncExecInUI[
-                    val simMan = SimulationManager.instance
-                    if(simMan != null && kiVisView != null) {
-                        kiVisView.update(simMan.currentPool, false)    
-                    }
-                ]
+                val simMan = SimulationManager.instance
+                if(simMan != null && kiVisView != null) {
+                    kiVisView.update(simMan.currentPool, false)    
+                }
             }
         }
         return listener
