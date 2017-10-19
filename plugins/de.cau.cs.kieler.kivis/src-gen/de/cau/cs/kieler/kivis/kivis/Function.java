@@ -53,7 +53,7 @@ public interface Function extends EObject
 
   /**
    * Returns the value of the '<em><b>Parameters</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.kivis.kivis.VariableReference}.
+   * The list contents are of type {@link de.cau.cs.kieler.kivis.kivis.FunctionParameter}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Parameters</em>' containment reference list isn't clear,
@@ -65,6 +65,6 @@ public interface Function extends EObject
    * @model containment="true"
    * @generated
    */
-  EList<VariableReference> getParameters();
+  EList<FunctionParameter> getParameters();
 
 } // Function
