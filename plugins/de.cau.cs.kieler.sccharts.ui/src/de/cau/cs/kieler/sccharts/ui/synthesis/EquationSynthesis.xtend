@@ -43,6 +43,9 @@ import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.KlighdConstants
 import org.eclipse.xtext.xbase.lib.Functions.Function1
 import com.google.inject.Injector
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 
 /**
  * @author ssm
@@ -56,6 +59,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     public static val SynthesisOption UNIQUE_WIRES = SynthesisOption.createCheckOption("Unique Wires", false).
         setCategory(GeneralSynthesisOptions::DATAFLOW)        
 
+    @Inject extension KRenderingExtensions
     @Inject extension KNodeExtensionsReplacement
     @Inject extension KEdgeExtensions
     @Inject extension KPortExtensionsReplacement
@@ -189,19 +193,30 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             if (referenceNodes.contains(oldNode)) return oldNode
         }
         
+        node.associateWith(association)
+        
         node.setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER) 
         node.setLayoutOption(CoreOptions.PORT_LABELS_PLACEMENT, PortLabelPlacement.INSIDE) 
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d); //10.5 // 8f
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(4d));
-        node.setLayoutOption(CoreOptions::EXPAND_NODES, true);         
+//        node.setLayoutOption(CoreOptions::EXPAND_NODES, false);   
+        node.addLayoutParam(KlighdProperties::EXPAND, false)      
   
-        node.addReferenceNodeFigure.associateWith(association)
+        node.addReferenceNodeFigure.associateWith(association) => [
+            setAsCollapsedView;
+            addDoubleClickAction(ReferenceExpandAction::ID)  
+        ]
+        node.addReferenceNodeFigure.associateWith(association) => [
+            setAsExpandedView;
+            addDoubleClickAction(ReferenceExpandAction::ID);
+        ]
         node.addNodeLabel(label)
         
         val vor = wire.sink
         
         node.createReferenceNodePorts(wire.referenceDeclaration.reference as Scope, vor, [ input ], PortSide.WEST, true)
         node.createReferenceNodePorts(wire.referenceDeclaration.reference as Scope, vor, [ output ], PortSide.EAST, false)
+        
 
         referenceNodes += node
         return node
@@ -225,5 +240,45 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 port.associateWith(v)              
             }
         }        
+    }
+    
+    protected def createReferenceNodeFromKGT() {
+//        if (reference.hasAnnotation("actor")) {
+//            val path = getSkinPath 
+//            val kgt = path + if (!path.endsWith("/")) "/" + reference.getStringAnnotationValue("actor") 
+//            println(vo.eResource.URI)
+//            val sl = vo.eResource.URI.segmentsList
+//            val nsl = sl.take(sl.length - 1).drop(1)
+//            val newURI = URI.createPlatformResourceURI(nsl.join("/") + "/" + kgt, false)
+//            println(newURI)
+//
+//            val provider = regXtext.getResourceServiceProvider(newURI)
+//            val newResourceSet = provider.get(XtextResourceSet)
+//            newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
+//            val res = newResourceSet.createResource(newURI)
+//
+//            try {
+//                res.load(newResourceSet.loadOptions)
+//                val node = (res.getContents().get(0) as KNode).children.head
+//                node.associateWith(vo)
+//                vo.addNode(node)
+//                result += node 
+//            
+//                val vos = <ValuedObject> newArrayList
+//                reference.declarations.forEach[ vos += valuedObjects ]
+//            
+//                for(p : node.eAllContents.filter(KPort).toList) {
+//                    val id = p.data.filter(KIdentifier).head
+//                    val obj = vos.filter[ it.name.equals(id.id) ].head
+//                
+//                    vo.addPort(obj, p)
+//                    valuePortMap.put(p, obj)
+//                }
+//
+//                return result
+//            } catch (Exception e) {
+//                // Display default reference actor
+//            }            
+//        }     
     }
 }
