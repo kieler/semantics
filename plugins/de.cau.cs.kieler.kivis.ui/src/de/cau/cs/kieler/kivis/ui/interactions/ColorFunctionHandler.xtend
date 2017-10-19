@@ -29,13 +29,24 @@ import org.w3c.dom.Document
 import org.w3c.dom.svg.SVGDocument
 
 /**
+ * Adds functions to get the color of a given pixel in the svg document.
+ * 
  * @author aas
  *
  */
 class ColorFunctionHandler extends FunctionHandler {
+    /**
+     * The rasterized image of the svg document.
+     */
     private BufferedImage image
+    /**
+     * The svg document that was rasterized and of which the color is returned.
+     */
     private SVGDocument svgDoc
     
+    /**
+     * Returns the argb value of a pixel.
+     */
     private NamedFunction getARGB = new NamedFunction("getColor") {
         override getValue(List<Object> arguments) {
             val argb = getARGB(arguments)
@@ -43,6 +54,9 @@ class ColorFunctionHandler extends FunctionHandler {
         }
     }
     
+    /**
+     * Returns the alpha value of a pixel.
+     */
     private NamedFunction getA = new NamedFunction("getAlpha") {
         override getValue(List<Object> arguments) {
             val argb = getARGB(arguments)
@@ -51,6 +65,9 @@ class ColorFunctionHandler extends FunctionHandler {
         }
     }
     
+    /**
+     * Returns the red value of a pixel.
+     */
     private NamedFunction getR = new NamedFunction("getRed") {
         override getValue(List<Object> arguments) {
             val argb = getARGB(arguments)
@@ -59,6 +76,9 @@ class ColorFunctionHandler extends FunctionHandler {
         }
     }
     
+    /**
+     * Returns the green value of a pixel.
+     */
     private NamedFunction getG = new NamedFunction("getGreen") {
         override getValue(List<Object> arguments) {
             val argb = getARGB(arguments)
@@ -67,6 +87,9 @@ class ColorFunctionHandler extends FunctionHandler {
         }
     }
     
+    /**
+     * Returns the blue value of a pixel.
+     */
     private NamedFunction getB = new NamedFunction("getBlue") {
         override getValue(List<Object> arguments) {
             val argb = getARGB(arguments)

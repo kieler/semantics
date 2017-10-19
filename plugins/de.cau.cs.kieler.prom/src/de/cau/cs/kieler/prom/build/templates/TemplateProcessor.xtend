@@ -128,4 +128,14 @@ abstract class TemplateProcessor extends Configurable {
     protected def boolean isCanceled() {
         return monitor != null && monitor.isCanceled
     }
+    
+    /**
+     * Deletes all created files.
+     */
+    public def void clean() {
+        val file = project.getFile(target.stringValue)
+        if(file.exists) {
+            file.delete(false, null)
+        }
+    }
 }

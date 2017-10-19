@@ -13,8 +13,13 @@
 package de.cau.cs.kieler.simulation.core
 
 import de.cau.cs.kieler.prom.ExtensionLookupUtil
+import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.configurable.Configurable
 import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
+import de.cau.cs.kieler.simulation.core.events.SimulationControlEvent
+import de.cau.cs.kieler.simulation.core.events.SimulationEvent
+import de.cau.cs.kieler.simulation.core.events.SimulationListener
+import de.cau.cs.kieler.simulation.core.events.SimulationOperation
 import de.cau.cs.kieler.simulation.kisim.Action
 import de.cau.cs.kieler.simulation.kisim.SimulationConfiguration
 import java.util.List
@@ -22,16 +27,8 @@ import java.util.Map
 import java.util.Set
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.IConfigurationElement
-import org.eclipse.core.runtime.IProgressMonitor
-import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.prom.ModelImporter
-import de.cau.cs.kieler.simulation.core.events.SimulationEvent
-import de.cau.cs.kieler.simulation.core.events.SimulationListener
-import de.cau.cs.kieler.simulation.core.events.ErrorEvent
-import de.cau.cs.kieler.simulation.core.events.SimulationOperation
-import de.cau.cs.kieler.simulation.core.events.SimulationControlEvent
 
 /**
  * The simulation manager holds a configuration of a simulation and takes care of its execution.
@@ -108,7 +105,7 @@ class SimulationManager extends Configurable {
     /**
      * The job that executes the step actions concurrently when playing.
      */
-    private var Job steppingJob
+    private var Job steppingJob = new AsynchronousSimulationJob("Simulation Player", this)
     
     /**
      * Flag to determine if the simulation is playing automatically in a separate thread.
@@ -507,70 +504,6 @@ class SimulationManager extends Configurable {
         }
         isPlaying= true
         // Create a new job to step through the simulation concurrently
-        steppingJob = new Job("Simulation Player") {
-            override protected run(IProgressMonitor monitor) {
-                var int currentTime = System.currentTimeMillis.intValue
-                var int nextTickTime = currentTime
-                while(isPlaying) {
-                    currentTime = System.currentTimeMillis.intValue
-                    if(nextTickTime > currentTime) {
-                        // Wait until next tick time reached
-                        val pause = nextTickTime - currentTime 
-                        Thread.sleep(pause);
-                    }
-                    // Save time BEFORE the tick is executed
-                    val int timeBeforeTick = System.currentTimeMillis.intValue
-                    
-                    // Notify listeners of new state
-                    fireEvent(SimulationOperation.PLAYING)
-                    
-                    // Create following state
-                    val DataPool pool = createNextPool()
-                    // Apply user made changes
-                    pool.applyUserValues
-                    // Set variable of model to current time if needed
-                    if(currentTimeVariable.value != null) {
-                        val variable = pool.getVariable(currentTimeVariable.stringValue)
-                        if(variable.isInput) {
-                            variable.value = System.currentTimeMillis.intValue
-                        } else {
-                            throw new Exception("The variable that receives the current time must be an input")
-                        }
-                    }
-                    // Perform actions on this new state
-                    val nextActionIndex = applyMacroTickActions(pool)
-                    // Save new state
-                    setNewState(pool, nextActionIndex)
-                    
-                    // Set absolute time for next tick (possibly from a variable in the data pool)
-                    if(nextTickTimeVariable.value != null) {
-                        val variable = currentPool.getVariable(nextTickTimeVariable.stringValue)
-                        if(variable.isOutput) {
-                            nextTickTime = variable.value.doubleValue.intValue
-                        } else {
-                            throw new Exception("The variable that determines the time for the next tick must be an output")
-                        }
-                    } else {
-                        nextTickTime = timeBeforeTick + desiredTickPause
-                    }
-                    currentTime = System.currentTimeMillis.intValue
-                    
-                    // Check desired tick pause.
-                    // If the nextTickTime is already smaller than the currentTime,
-                    // the tick took more time than desired. Thus it is too slow and an error is fired here.
-                    if(nextTickTime < currentTime) {
-                        val message = "Tick needed longer than desired. "
-                                      + "(needed: "+(currentTime-timeBeforeTick)+" ms, "
-                                      + "desired: "+(nextTickTime-timeBeforeTick)+ " ms)"
-                        val event = new ErrorEvent(message)
-                        fireEvent(event)
-                    }
-                }
-                // Fire one additional event after the playmode ends
-                fireEvent(SimulationOperation.MACRO_STEP)
-                return Status.OK_STATUS
-            }
-        }
         steppingJob.schedule()
     }
     
@@ -655,7 +588,7 @@ class SimulationManager extends Configurable {
      * @param newPool The data pool of the new state
      * @param newActionIndex The action index of the new state
      */
-    private def void setNewState(DataPool newPool, int newActionIndex) {
+    protected def void setNewState(DataPool newPool, int newActionIndex) {
         // Add current state to history
         if(currentState != null) {
             history.add(currentState)
@@ -677,7 +610,7 @@ class SimulationManager extends Configurable {
      * 
      * @return The data pool for the following state
      */
-    private def DataPool createNextPool() {
+    protected def DataPool createNextPool() {
         // Drop states in history if a former state was loaded
         if(positionInHistory > 0) {
             val loadedState = historyState
@@ -715,7 +648,7 @@ class SimulationManager extends Configurable {
      * 
      * @param pool The pool
      */
-    private def int applyMacroTickActions(DataPool pool) {
+    protected def int applyMacroTickActions(DataPool pool) {
         // Round action index up to next fully done macro tick
         val macroTickActionCount = actions.size
         val currentActionIndex = currentState.actionIndex

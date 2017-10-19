@@ -74,8 +74,6 @@ class SimulationTemplateProcessor extends TemplateProcessor {
       * Examples for interface types are input/output/internal.
       * 
       * If this is not set, then all interface types are included.
-      * 
-      * 
       */
     public val interfaceTypes = new ConfigurableAttribute("interfaceTypes", null, #[String, List])
     

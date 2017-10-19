@@ -26,6 +26,8 @@ import org.osgi.service.prefs.Preferences
 import org.osgi.service.prefs.BackingStoreException
 
 /**
+ * Base class to analyze, compile and simulate EMF models.
+ * 
  * @author aas
  */
 abstract class ModelAnalyzer {
@@ -74,6 +76,14 @@ abstract class ModelAnalyzer {
     public def List<String> getSupportedFileExtensions()
     
     /**
+     * Returns the dependencies of the given model.
+     * The dependencies are the files that are referenced (e.g. imported/used) by the model.
+     * 
+     * @return the dependencies of the model
+     */
+    public def List<IFile> getDependencies(EObject model)
+    
+    /**
      * Returns the types of the models that are handled by this analyzer.
      * 
      * @return the types of the models that are handled by this analyzer
@@ -86,16 +96,6 @@ abstract class ModelAnalyzer {
      * @return the default compile chain for the supported models
      */
     protected def String getDefaultCompileChain()
-    
-    /**
-     * Returns the dependencies of the given model.
-     * The dependencies are the files that are referenced (e.g. imported/used) by the model.
-     * 
-     * @return the dependencies of the model
-     */
-    public def List<IFile> getDependencies(EObject model) {
-        return null
-    }
     
     /**
      * Returns the name of this analyzer.

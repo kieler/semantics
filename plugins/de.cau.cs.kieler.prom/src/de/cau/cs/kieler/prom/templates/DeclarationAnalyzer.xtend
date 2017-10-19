@@ -27,6 +27,8 @@ import java.util.List
 import org.eclipse.emf.ecore.EObject
 
 /**
+ * Model analyzer for KExpression declarations.
+ * 
  * @author aas
  *
  */
@@ -56,13 +58,6 @@ abstract class DeclarationAnalyzer extends ModelAnalyzer {
         } else {
             return null    
         }
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    override getModelName(EObject model) {
-        return null
     }
     
     /**

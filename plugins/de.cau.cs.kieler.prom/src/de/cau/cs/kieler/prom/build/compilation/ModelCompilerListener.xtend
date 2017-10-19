@@ -17,8 +17,20 @@ package de.cau.cs.kieler.prom.build.compilation
  *
  */
 interface ModelCompilerListener {
+    /**
+     * Fired before the compilation of any model.
+     */
     public def void beforeCompilation(ModelCompiler compiler)
+    /**
+     * Fired before an element in the compile chain is processed.
+     */
     public def void beforeIntermediateCompilation(ModelCompiler compiler)
+    /**
+     * Fired after an element in the compile chain is processed.
+     */
     public def void afterIntermediateCompilation(ModelCompiler compiler)
+    /**
+     * Fired after the compilation is done, but before the simulation code for the compiled model is created.
+     */
     public def void afterCompilation(ModelCompiler compiler)
 }

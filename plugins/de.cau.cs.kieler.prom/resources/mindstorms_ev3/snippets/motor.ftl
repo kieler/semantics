@@ -15,21 +15,21 @@
     </@>
     <@input>
         // Motor ${port}
-        scchart.${varname} = motor${port}.getSpeed();
+        scchart.${varName} = motor${port}.getSpeed();
     </@>
     <@output>
         // Motor ${port}
-        if (Math.abs(scchart.${varname}) != motor${port}.getSpeed()) {
-            motor${port}.setSpeed(Math.abs(scchart.${varname}));
-            if(scchart.${varname} == 0)
+        if (Math.abs(scchart.${varName}) != motor${port}.getSpeed()) {
+            motor${port}.setSpeed(Math.abs(scchart.${varName}));
+            if(scchart.${varName} == 0)
                 <#if brake>
                 motor${port}.stop(true);
                 <#else>
                 motor${port}.flt(true);
                 </#if>
-            else if(scchart.${varname} > 0)
+            else if(scchart.${varName} > 0)
                 motor${port}.forward();
-            else if(scchart.${varname} < 0)
+            else if(scchart.${varName} < 0)
                 motor${port}.backward();
         }
     </@>
@@ -51,7 +51,7 @@
     </@>
     <@input>
         // Motor ${port}
-        scchart.${varname} = motor${port}.isMoving();
+        scchart.${varName} = motor${port}.isMoving();
     </@>
 </#macro>
 
@@ -71,13 +71,13 @@
     </@>
     <@input>
         // Motor ${port}
-        scchart.${varname} = motor${port}.getTachoCount();
+        scchart.${varName} = motor${port}.getTachoCount();
     </@>
     <@output>
         // Motor ${port}
-        if(scchart.${varname} != 0){
-            motor${port}.rotate(scchart.${varname}, true);
-            scchart.${varname} = 0;
+        if(scchart.${varName} != 0){
+            motor${port}.rotate(scchart.${varName}, true);
+            scchart.${varName} = 0;
         }
     </@>
     <@release>

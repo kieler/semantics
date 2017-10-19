@@ -16,8 +16,8 @@ import org.eclipse.core.resources.IResource
 import com.google.common.io.Files
 
 /**
- * A placeholder to use with resources (i.e. IResource).
- * Adds the placeholders for<br/>
+ * A substitution to use with resources (i.e. IResource).
+ * Substitutes placeholders for<br/>
  * - the location (suffix _loc)<br/>
  * - the project relative path (suffix _path)<br/>
  * - the full path in the workspace (suffix _fullpath)<br/>

@@ -17,8 +17,9 @@ import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
- * Class to define the phases for which wrapper code is used and thus to define which macro calls
- * need to be injected in the template.
+ * Class to define the phases that are used in wrapper code generation.
+ * Macro calls define the phases in which they are injected.
+ * Code snippets can be defined for each phase separately. 
  */
 class CodeGenerationPhase {
     
@@ -28,6 +29,11 @@ class CodeGenerationPhase {
     public static val OUTPUT_PHASE = new CodeGenerationPhase("output", false)
     public static val RELEASE_PHASE = new CodeGenerationPhase("release", true, "free")
     
+    /**
+     * Returns all phases.
+     * 
+     * @return all phases
+     */
     public static def getPhases() {
         return newHashSet(DECLARATION_PHASE, INITIALIZATION_PHASE, INPUT_PHASE, OUTPUT_PHASE, RELEASE_PHASE)    
     }
@@ -99,6 +105,7 @@ class CodeGenerationPhase {
     /**
      * Checks if the snippet definition for the annotation should be inserted as part of this phase.
      * 
+     * @param data The macro call data that might be used in this phase.
      * @return true if the snippet definition for the annotation should be inserted as part of this phase.
      */
     public def boolean isApplicable(MacroCallData data){

@@ -13,14 +13,10 @@
 package de.cau.cs.kieler.simulation.backends
 
 import de.cau.cs.kieler.prom.ExtensionLookupUtil
-import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.drafts.ProjectDraftData
 import de.cau.cs.kieler.prom.kibuild.BuildConfiguration
 import java.util.List
 import org.eclipse.core.runtime.CoreException
-import org.eclipse.core.runtime.IConfigurationElement
-import org.eclipse.core.runtime.preferences.InstanceScope
-import org.osgi.service.prefs.Preferences
 
 /**
  * Container for information about the backend compilation and simulation compilation for a target language.
@@ -39,17 +35,35 @@ import org.osgi.service.prefs.Preferences
  *
  */
 abstract class SimulationBackend {
+    /**
+     * The id of the extension point to register simulation backends
+     */
     private static val SIMULATION_BACKEND_EXTENSION_POINT_ID = "de.cau.cs.kieler.simulation.simulationBackend"
     
+    /**
+     * The registered simulation backends.
+     */
     private static var List<SimulationBackend> backends 
     
+    /**
+     * The name of this backend.
+     */
     public def String getName()
+    /**
+     * The build config for this backend.
+     */
     public def BuildConfiguration getBuildConfig()
+    /**
+     * The project draft for this backend.
+     */
     public def ProjectDraftData getProjectDraft()
+    /**
+     * The processors that create code which can be simulated using this backend.
+     */
     public def List<String> getSupportedProcessors()
     
     /**
-     * Returns all registered model analyzers.
+     * Returns all registered backends.
      */
     public static def List<SimulationBackend> getBackends() {
         // Initialize if not done yet
@@ -78,13 +92,11 @@ abstract class SimulationBackend {
     }
     
     /**
-     * Returns the preferences in which the attributes for model analyzers (such as the simulation frontend) are saved.
+     * Checks if this simulation backend can be used with the result of the given processor.
+     * 
+     * @param processorId The id of a processor
+     * @return true if this simulation backend can be used with the result of the given processor, false otherwise.
      */
-    private static def Preferences getPreferences() {
-        return InstanceScope.INSTANCE.getNode(PromPlugin.PLUGIN_ID)
-    }
-    
-    
     public def boolean isSupported(String processorId) {
         val supportedProcessors = getSupportedProcessors
         return supportedProcessors.isNullOrEmpty || supportedProcessors.contains(processorId)

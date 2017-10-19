@@ -59,7 +59,7 @@ class KiVisExtensions {
         // Get variable in pool
         val variable = pool.getVariable(modelName, variableName)
         if(variable == null) {
-            throw new Exception("No variable '"+variableName+"' was found in the pool.\nPlease check the spelling or array indices if any.")
+            throw new Exception("No variable '"+variableName+"' was found in the data pool.\nPlease check the spelling or array indices if any.")
         }
         return variable
     }
@@ -77,9 +77,6 @@ class KiVisExtensions {
         }
         // Get the variable from the reference
         val variable = getVariable(ref, pool)
-        if(variable == null) {
-            throw new Exception("Variable '"+ref.name+"' was not found in the data pool.")
-        }
         // Get value of variable
         var Object value = if (variable.isDirty)
                                variable.userValue

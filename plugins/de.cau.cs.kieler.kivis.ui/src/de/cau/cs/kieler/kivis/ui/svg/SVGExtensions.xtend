@@ -19,7 +19,6 @@ import org.w3c.dom.Node
 import org.w3c.dom.events.EventListener
 import org.w3c.dom.events.EventTarget
 import org.w3c.dom.svg.SVGPoint
-import java.util.regex.Pattern
 
 /**
  * Helper methods for modifying SVG documents.

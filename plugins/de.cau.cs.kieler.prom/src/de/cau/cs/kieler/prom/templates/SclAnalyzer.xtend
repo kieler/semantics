@@ -73,4 +73,11 @@ class SclAnalyzer extends DeclarationAnalyzer {
              + "de.cau.cs.kieler.scg.processors.transformators.sequentializer, \n"
              + "de.cau.cs.kieler.scg.processors.codegen.c"
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override getDependencies(EObject model) {
+        return null
+    }
 }

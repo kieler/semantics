@@ -16,15 +16,21 @@ import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
- * A node in the dependency graph. It consists of an id and optional content.
- * For a graph of files, the id the the full file path.
+ * A node in the dependency graph. It has an id and optional content as well as a list for dependencies and depending nodes.
+ * For instance a file handle could use its full path as id whereas the content is the file handle itself.
  * 
  * @author aas
  *
  */
 class DependencyNode {
+    /**
+     * The nodes that this node depends on.
+     */
     @Accessors(PUBLIC_GETTER)
     private val List<DependencyNode> dependencies = newArrayList
+    /**
+     * Other nodes that depend on this node.
+     */
     @Accessors(PUBLIC_GETTER)
     private val List<DependencyNode> depending = newArrayList
     
@@ -45,11 +51,22 @@ class DependencyNode {
      */
     protected int seen
     
+    /**
+     * Constructor
+     * 
+     * @param id The id
+     * @param content The content
+     */
     new(String id, Object content) {
         this.id = id
         this.content = content
     }
     
+    /**
+     * Adds a dependency for this node.
+     * 
+     * @return n A node that is used by this node.
+     */
     public def void addDependency(DependencyNode n) {
         if(!dependencies.contains(n)) {
             dependencies.add(n)            
@@ -59,21 +76,37 @@ class DependencyNode {
         }
     } 
     
+    /**
+     * Removes a dependency for this node.
+     * 
+     * @return n The node.
+     */
     public def void removeDependency(DependencyNode n) {
         dependencies.remove(n)            
         n.depending.remove(this)            
     }
     
+    /**
+     * Removes all dependencies from this node.
+     */
     public def void removeAllDependencies() {
         for(d : dependencies.clone) {
             removeDependency(d)
         }
     }
     
+    /**
+     * Checks if this is a leaf in the dependency graph, i.e., this node has no dependencies.
+     * 
+     * @return true if this node has no dependencies, false otherwise.
+     */
     public def boolean isLeaf() {
         return dependencies.isEmpty
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override toString() {
         return id
     }

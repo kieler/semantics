@@ -16,15 +16,26 @@ import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
+ * An abstract function with a name.
+ * 
  * @author aas
  *
  */
 abstract class NamedFunction {
+    /**
+     * The name of the function.
+     */
     @Accessors(PUBLIC_GETTER)
     private var String name
     
+    /**
+     * Calculates the value of the function for the given arguments
+     */
     def Object getValue(List<Object> arguments)
     
+    /**
+     * Constructor
+     */
     new(String name) {
         this.name = name
     }

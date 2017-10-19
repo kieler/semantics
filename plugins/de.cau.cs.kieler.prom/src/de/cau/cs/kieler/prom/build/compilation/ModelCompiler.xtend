@@ -262,4 +262,14 @@ abstract class ModelCompiler extends Configurable {
     protected def IProject getProject() {
         return file?.project
     }
+    
+    /**
+     * Deletes all created files.
+     */
+    public def void clean() {
+        val folder = project.getFolder(outputFolder.stringValue)
+        if(folder.exists) {
+            folder.delete(false, null)
+        }
+    }
 }

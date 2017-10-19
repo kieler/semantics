@@ -50,7 +50,7 @@ class SimulationUtil {
     }
     
     /**
-     * Starts a simulation by compiling an EObject using a suited frontend and backend
+     * Starts a simulation by compiling an EObject using a suited compile chain
      * and afterwards starting the executable result.
      */
     public static def void startSimulation(EObject model, SubMonitor monitor) {

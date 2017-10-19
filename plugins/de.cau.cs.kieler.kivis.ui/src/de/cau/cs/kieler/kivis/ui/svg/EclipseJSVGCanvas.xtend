@@ -54,6 +54,11 @@ final class EclipseJSVGCanvas extends JSVGCanvas {
      * The key for the Action to perform a macro tick.
      */
     public val String STEP_MACRO_TICK_ACTION = "StepMacroTick";
+    
+    /**
+     * The key for the Action to play / pause the simulation.
+     */
+    public val String PLAY_SIMULATION_ACTION = "PlaySimulation";
 
     /** 
      * @param userAgent The user agent
@@ -125,6 +130,9 @@ final class EclipseJSVGCanvas extends JSVGCanvas {
         // RIGHT ARROW: step simulation 
         key = KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0);
         inputMap.put(key, STEP_MACRO_TICK_ACTION);
+        // SPACE: Play / pause simulation
+        key = KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0);
+        inputMap.put(key, PLAY_SIMULATION_ACTION);
         // CTRL + ARROW: scroll
         key = KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, KeyEvent.CTRL_MASK);
         inputMap.put(key, SCROLL_RIGHT_ACTION);
@@ -160,7 +168,7 @@ final class EclipseJSVGCanvas extends JSVGCanvas {
     override installActions() {
         val actionMap = getActionMap();
 
-        // Step simulation
+        // Simulation actions
         val stepMacroTickAction = new AbstractAction() {
             override actionPerformed(ActionEvent evt) {
                 if (gvtRoot == null) {
@@ -169,7 +177,23 @@ final class EclipseJSVGCanvas extends JSVGCanvas {
                 SimulationManager.instance?.stepMacroTick
             }
         }
+        val playSimulationAction = new AbstractAction() {
+            override actionPerformed(ActionEvent evt) {
+                if (gvtRoot == null) {
+                    return;
+                }
+                val sim = SimulationManager.instance
+                if(sim != null) {
+                    if(sim.isPlaying) {
+                        sim.pause
+                    } else {
+                        sim.play
+                    }
+                }
+            }
+        }
         actionMap.put(STEP_MACRO_TICK_ACTION, stepMacroTickAction)
+        actionMap.put(PLAY_SIMULATION_ACTION, playSimulationAction)
         // Scroll
         actionMap.put(SCROLL_RIGHT_ACTION, new ScrollRightAction(10));
         actionMap.put(SCROLL_LEFT_ACTION, new ScrollLeftAction(10));

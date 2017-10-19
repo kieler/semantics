@@ -29,13 +29,13 @@ import org.w3c.dom.svg.SVGDocument
  */
 class InteractionHandler {
     
+    protected static extension KiVisExtensions kivisExtensions = new KiVisExtensions
+    protected static extension SVGExtensions svgExtensions = new SVGExtensions 
+    
     /**
      * The interaction from the configuration grammar.
      */
     protected var Interaction interaction
-    
-    protected static extension KiVisExtensions kivisExtensions = new KiVisExtensions
-    protected static extension SVGExtensions svgExtensions = new SVGExtensions 
     
     /**
      * Constructor

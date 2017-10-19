@@ -36,11 +36,24 @@ class MoveAnimation extends AnimationHandler {
      * The translation along the y axis.
      */
     public val posY = new ConfigurableAttribute("y", 0)
+    
+    /** 
+     * The relative anchor point along the x axis. Default is centered. 
+     */
+    public val anchorX = new ConfigurableAttribute("anchorX", 0.5)
+    /**
+     * The relative anchor point along the y axis. Default is centered.
+     */
+    public val anchorY = new ConfigurableAttribute("anchorY", 0.5)
+    
     /**
      * Determines if the position is absolute or relative to the element's original position.
      */
     public val isAbsolute = new ConfigurableAttribute("absolute", false)
     
+    /**
+     * The original position of the element in the document before any animation was applied.
+     */
     private var SVGPoint startPosition
     
     /**
@@ -66,13 +79,20 @@ class MoveAnimation extends AnimationHandler {
             // Set new translation
             var x = posX.floatValue
             var y = posY.floatValue
+            var offsetX = 0f
+            var offsetY = 0f
             if(isAbsolute.boolValue)  {
+                val box = elem.BBox
                 if(startPosition == null) {
-                    startPosition = new SVGOMPoint(elem.BBox.x, elem.BBox.y)
+                    startPosition = new SVGOMPoint(box.x, box.y)
                 }
                 x = -startPosition.x + posX.floatValue
                 y = -startPosition.y + posY.floatValue
+                offsetX = -anchorX.floatValue*box.width
+                offsetY = -anchorY.floatValue*box.height
             }
+            x = x + offsetX
+            y = y + offsetY
             var translation = x + "," + y
             elem.setAttributeFunction("transform", "translate", translation)
         } else {

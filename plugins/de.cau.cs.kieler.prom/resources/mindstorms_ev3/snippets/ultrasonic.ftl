@@ -12,7 +12,7 @@
     </@>
     <@input>
         usSensor${port}.getDistanceMode().fetchSample(usSensor${port}Samples, 0);
-        scchart.${varname} = usSensor${port}Samples[0];
+        scchart.${varName} = usSensor${port}Samples[0];
     </@>
 </#macro>
 

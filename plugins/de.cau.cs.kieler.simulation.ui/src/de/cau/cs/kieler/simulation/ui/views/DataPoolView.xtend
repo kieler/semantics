@@ -321,6 +321,7 @@ class DataPoolView extends ViewPart {
                 val message = "Right Arrow : Step simulation macro tick\n"
                             + "Ctrl + Right Arrow: Step in simulation history forward\n"
                             + "Ctrl + Left Arrow: Step in simulation history back\n"
+                            + "Space: Play / pause simulation\n"
                 val dialog = new MessageDialog(viewer.control.shell, title, null, message, 0, #["OK"], 0)
                 dialog.open
             }
@@ -355,6 +356,17 @@ class DataPoolView extends ViewPart {
                         if(manager != null) {
                             PromConsole.print("Step Macro Tick")
                             manager.stepMacroTick()
+                        }
+                    }
+                    // No CTRL + SPACE: Play Simulation
+                    if(e.keyCode == SWT.SPACE) {
+                        if(manager != null) {
+                            PromConsole.print("Playing Simulation")
+                            if(manager.isPlaying) {
+                                manager.pause()
+                            } else {
+                                manager.play()
+                            }
                         }
                     }
                 }

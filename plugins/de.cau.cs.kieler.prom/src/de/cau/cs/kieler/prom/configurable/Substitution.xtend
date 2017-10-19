@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.prom.configurable
 
-import java.util.List
 import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
 
@@ -21,7 +20,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * 
  * Typically a substition maps a single variable name to some value,
  * however it is also possible in extending classes to define a set of variables that are substituted.
- * For example from a single file handle,
+ * For example from a single file handle
  * it would be possible to set variable values for the file name, path or extension.
  * 
  * The syntax to use a variable is the same as in FreeMarker or Eclipse,

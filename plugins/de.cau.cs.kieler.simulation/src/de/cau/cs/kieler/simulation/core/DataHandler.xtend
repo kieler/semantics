@@ -15,12 +15,10 @@ package de.cau.cs.kieler.simulation.core
 import java.util.List
 
 /**
- * A data handler can read and modify data pools.
- * They are called by the simulation manager.
+ * A data handler is used to create and modify data pools.
+ * Therefore a data handler provides methods on a data pool, e.g., write or verify.
+ * These are called by the simulation manager.
  * If the simulation manager stops, the data handler is told to stop.
- * 
- * A data handler may request to call its read-method after every step of the simulation
- * to provide information to the user.
  * 
  * @author aas
  *
@@ -57,6 +55,9 @@ interface DataHandler {
         return operations.findFirst[it.name == operationName]
     }
     
+    /**
+     * The names of the operations that this data handler provides.
+     */
     public def String getOperationNames() {
         return operations.map[it.name].join(", ")
     }

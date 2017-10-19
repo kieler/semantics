@@ -33,6 +33,7 @@ import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.StepState
 import de.cau.cs.kieler.simulation.ui.highlighting.DiagramHighlighter
 import java.util.List
+import de.cau.cs.kieler.sccharts.PreemptionType
 
 /**
  * Highlighter for SCCharts diagrams.
@@ -285,7 +286,13 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
         
         // Calculate traversed states
         for(traversedTransition : traversedTransitions) {
-            traversedStates.add(traversedTransition.sourceState)
+            val source = traversedTransition.sourceState
+            traversedStates.add(source)
+            // Mark all final states as traversed if this was a termination transition
+            val isTerminationTransition = traversedTransition.preemption == PreemptionType.TERMINATION
+            if(isTerminationTransition) {
+                traversedStates.addAll(getFinalStates(source))
+            }
         }
         
         // Calculate current states
@@ -335,7 +342,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                 // Exactly one outgoing transition, thus the next state is unambiguous
                 val transition = outgoingTransitions.get(0)
                 val next = transition.targetState
-                
+
                 // Leave state
                 states.leaveState(state)
                 
@@ -363,6 +370,11 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
      * @return the given list where the state and all its child states have been removed
      */
     private def void leaveState(List<State> states, State state) {
+        // Add this state as traversed state if it was active
+        if(states.contains(state)) {
+            traversedStates.add(state)    
+        }
+        // Leave the state
         states.remove(state)
         // Also leave all child states
         val children = StateIterator.sccAllContainedStates(state)
@@ -391,15 +403,34 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
      * @return the direct child states of the given root state that are initial states 
      */
     private def List<State> getInitialStates(State rootState) {
-        val initialStates = <State> newArrayList
+        val states = <State> newArrayList
         for(region : rootState.regions) {
             if(region instanceof ControlflowRegion) {
                 val initState = region.states.findFirst[it.isInitial]
                 if(initState != null) {
-                    initialStates.add(initState)
+                    states.add(initState)
                 }
             }
         }
-        return initialStates
+        return states
+    }
+    
+    /**
+     * Returns the direct final child states of a given state.
+     * 
+     * @param rootState The state
+     * @return the direct child states of the given root state that are final states 
+     */
+    private def List<State> getFinalStates(State rootState) {
+        val states = <State> newArrayList
+        for(region : rootState.regions) {
+            if(region instanceof ControlflowRegion) {
+                val initState = region.states.findFirst[it.isFinal]
+                if(initState != null) {
+                    states.add(initState)
+                }
+            }
+        }
+        return states
     }
 }
