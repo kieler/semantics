@@ -19,17 +19,20 @@ import java.util.List
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.core.model.Pair
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.VectorValue
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
+import de.cau.cs.kieler.kexpressions.IgnoreValue
 
 /**
+ * The class models a wiring instance if given a list of equations (assignments).
+ * 
  * @author ssm
  * @kieler.design 2017-09-26 proposed
  * @kieler.rating 2017-09-26 proposed yellow
@@ -37,38 +40,47 @@ import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
  */
 class Wiring {
     
-    @Inject extension KExpressionsValueExtensions
     @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension KExpressionsDeclarationExtensions    
-    @Inject extension KEffectsExtensions
+    @Inject extension KExtDeclarationExtensions
     
+    /** The single wires */  
     @Accessors val wires = <Wire> newLinkedHashSet
-    /** Source-Sink Wires */
+    
+    /** Source-Sink Wires */ 
     val index = <Pair<Expression, Expression>, Wire> newHashMap
     /** Storage for valuedObject, subObject expressions */
     val semanticReferenceIndex = <Pair<ValuedObject, ValuedObject>, Expression> newHashMap
 
-    def getWires() {
-        wires
-    }
-    
-    def getWire(Expression expression) {
-        return index.get(expression)
-    }
-    
+    /** Main method that receives the list of equations. */
     def createWires(List<Assignment> equations) {
         for (eq : equations) {
             eq.createWires
         }
     }
     
+    /** Create a wiring for a a single assignment. */
     def void createWires(Assignment equation) {
         equation.expression.create(equation.reference)
     }
     
-    def private Wire create(Expression source, Expression sink) {
+    /** 
+     * This method creates wires between a source and a sink. Usually only one wire is created, but there are exceptions.
+     * Source's and sink's class type define the characteristics of the wire. 
+     * For example, if a wire's source is a literal, the wire is always seen as an interface and hence always
+     * creates a "source" node.
+     * As another example, if the source is a vector of values then create a wire for each of the values and 
+     * connect them to the sink.
+     */
+    private def Wire create(Expression source, Expression sink) {
+        if (source instanceof VectorValue) {
+            // Vectors a treated differently because they potentially result in more than one wire.
+            return source.resolveVectorValueSource(sink)
+        }
+        
         val wire = createWire(source, sink)
         
+        // Dependening on the source's (sink's) type, we have to set wire characteristics.
+        // In the case of an operator expression, we also have to create more wires.
         switch(source) {
             Value: wire.sourceIsInterface = true
             ValuedObjectReference: {
@@ -99,8 +111,42 @@ class Wiring {
         
         wire 
     }
+    
+    /** 
+     * This method splits up vector values and creates wires for each value.
+     * This is only possible if the sink is a referenced object (with more input ports).
+     */
+    protected def Wire resolveVectorValueSource(VectorValue source, Expression sink) {
+        var sinkTarget = sink
+        val isReferenceSink = sink.getReferenceDeclarationReference instanceof DeclarationScope
+        val valuedObjectList = if (isReferenceSink) sink.getReferenceDeclarationReference.asDeclarationScope.valuedObjects.filter[ input ].toList 
+            else null
+        var i = 0
+        for (vector : source.values) {
+            if (!(vector instanceof IgnoreValue)) {
+                if (isReferenceSink) {
+                    if (i < valuedObjectList.size) {
+                        sinkTarget = sink.asValuedObjectReference.valuedObject.reference 
+                        sinkTarget.asValuedObjectReference.subReference = valuedObjectList.get(i).reference
+                     } else {
+                         sinkTarget = sink
+                     }
+                }
+                vector.create(sinkTarget)
+            }
+            i++
+        }
+        return null
+    }
 
-    def protected Wire createWire(Expression source, Expression sink) {
+    /** 
+     * This method create a single wire between a source and a sink.
+     * Before creating a wire, the method checks if such a wire already exists and returns it if so.
+     * Additionally, even if such a wire does not exist, it is possible that a semantic source or sink of the wire exists.
+     * For example, if you assign "A = I" and then "O = A" then both A and O will have I as source.
+     * The method redirects semantic sources and sinks automatically. 
+     */
+    protected def Wire createWire(Expression source, Expression sink) {
         val oldWire = index.get(new Pair<Expression, Expression>(source, sink))
         if (oldWire != null) return oldWire
         
@@ -143,10 +189,12 @@ class Wiring {
         return wire
     }
     
+    /** Retrieve an existing wire from the index. */
     def protected Wire getExistingWire(Expression source, Expression target) {
         return index.get(new Pair<Expression, Expression>(source, target))
     } 
     
+    /** Retrieve the first wire with a matching semantic source. */
     def Wire getSemanticSourceWire(ValuedObjectReference valuedObjectReference) {
         val expression = semanticReferenceIndex.get(new Pair<ValuedObject, ValuedObject>(valuedObjectReference.valuedObject, null))
         for (wire : wires) {
@@ -155,6 +203,7 @@ class Wiring {
         return null
     }
 
+    /** Retrieve the first wire with a matching semantic sink. */
     def Wire getSemanticSinkWire(ValuedObjectReference valuedObjectReference) {
         val expression = semanticReferenceIndex.get(new Pair<ValuedObject, ValuedObject>(valuedObjectReference.valuedObject, null))
         for (wire : wires) {

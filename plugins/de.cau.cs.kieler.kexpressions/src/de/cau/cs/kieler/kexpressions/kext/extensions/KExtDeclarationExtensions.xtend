@@ -21,6 +21,9 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.common.util.EList
 
 import static extension org.eclipse.xtext.EcoreUtil2.*
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.Expression
 
 /**
  * @author ssm
@@ -31,6 +34,10 @@ import static extension org.eclipse.xtext.EcoreUtil2.*
 class KExtDeclarationExtensions {
     
     @Inject extension KExpressionsValuedObjectExtensions
+    
+    def DeclarationScope asDeclarationScope(EObject eObject) {
+        eObject as DeclarationScope
+    }
     
     def getValuedObjects(DeclarationScope scope) {
         scope.declarations.map[valuedObjects].flatten
@@ -94,6 +101,34 @@ class KExtDeclarationExtensions {
     
     def DeclarationScope getDeclarationScope(ValuedObject valuedObject) {
         if (valuedObject.eContainer instanceof Declaration) return (valuedObject.eContainer as Declaration).declarationScope
+        return null
+    }
+    
+    def getValuedObject(DeclarationScope scope, int index) {
+        scope.valuedObjects.get(index)
+    }
+    
+    def getValuedObject(Declaration declaration, int index) {
+        if (declaration instanceof ReferenceDeclaration) {
+            if (declaration.reference instanceof DeclarationScope) 
+                return (declaration.reference as DeclarationScope).getValuedObject(index)
+        } 
+        if (declaration.eContainer instanceof DeclarationScope) return (declaration.eContainer as DeclarationScope).getValuedObject(index)
+        return null
+    }
+    
+    def isReferenceDeclarationReference(Expression expression) {
+        if (expression instanceof ValuedObjectReference) {
+            if (expression.valuedObject.eContainer instanceof ReferenceDeclaration) return true
+        }
+        return false
+    }
+    
+    def EObject getReferenceDeclarationReference(Expression expression) {
+        if (expression instanceof ValuedObjectReference) {
+            if (expression.valuedObject.eContainer instanceof ReferenceDeclaration)
+                return (expression.valuedObject.eContainer as ReferenceDeclaration).reference 
+        }
         return null
     }
     

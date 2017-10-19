@@ -14,57 +14,34 @@ package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.kexpressions.Value
-import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.klighd.LightDiagramServices
-import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
-import de.cau.cs.kieler.klighd.krendering.KRendering
-import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
-import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.EquationStyles
-import java.util.EnumSet
 import java.util.List
 import java.util.Set
-import org.eclipse.elk.alg.layered.properties.LayerConstraint
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
-import org.eclipse.elk.core.math.KVector
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.PortAlignment
 import org.eclipse.elk.core.options.PortConstraints
 import org.eclipse.elk.core.options.PortLabelPlacement
 import org.eclipse.elk.core.options.PortSide
-import org.eclipse.elk.core.options.SizeConstraint
-import org.eclipse.emf.common.util.URI
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.xtext.resource.IResourceServiceProvider
-import org.eclipse.xtext.resource.XtextResource
-import org.eclipse.xtext.resource.XtextResourceSet
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KPort
-import de.cau.cs.kieler.klighd.kgraph.KEdge
-import de.cau.cs.kieler.klighd.kgraph.KIdentifier
 import org.eclipse.elk.core.math.ElkPadding
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.KlighdConstants
 import org.eclipse.xtext.xbase.lib.Functions.Function1
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import com.google.inject.Injector
 
 /**
@@ -83,16 +60,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject extension KEdgeExtensions
     @Inject extension KPortExtensionsReplacement
     @Inject extension KLabelExtensions
-    @Inject extension KExpressionsValueExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension SCChartsSerializeHRExtensions
     @Inject extension EquationStyles
-    @Inject extension DataflowRegionSynthesis
-    @Inject extension SCChartsSynthesis
-    @Inject extension KRenderingExtensions
-    @Inject extension KEffectsExtensions
-    @Inject IResourceServiceProvider.Registry regXtext;
     @Inject Injector injector
     
     private val PORT_LABEL_FONT_SIZE = 6
@@ -112,12 +83,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
         wiring.createWires(elements)
 
-//        wiring.redirectWires
         wiring.createSources(nodes)
         wiring.createSinks(nodes, usedNodes)
         wiring.connectWires(usedNodes)
-//        val nodes2 = <KNode> newLinkedList => [ l | 
-//            nodes.filter[ usedNodes.contains(it)].forEach[ l += it ]]
 
         return nodes
     }
@@ -128,7 +96,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             var KNode node = wire.semanticSource.createNode
             if (!nodeExists) {
                 if (wire.semanticSourceReferenceDeclaration != null) {
-                    node = node.createReferenceNode(wire.semanticSink, wire, (wire.semanticSource as ValuedObjectReference).valuedObject.serializeHR.removeCardinalities.toString)
+                    node = node.createReferenceNode(wire.semanticSource, wire, (wire.semanticSource as ValuedObjectReference).valuedObject.serializeHR.removeCardinalities.toString)
                 } else {
                     var text = wire.semanticSource.serializeHR.toString
                     if (wire.source instanceof OperatorExpression) {
@@ -158,7 +126,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             
             if (!nodeExists) {
                 if (wire.semanticSinkReferenceDeclaration != null) {
-                    node = node.createReferenceNode(wire.semanticSource, wire, (wire.semanticSink as ValuedObjectReference).valuedObject.serializeHR.removeCardinalities.toString)
+                    node = node.createReferenceNode(wire.semanticSink, wire, (wire.semanticSink as ValuedObjectReference).valuedObject.serializeHR.removeCardinalities.toString)
                 } else { 
                     node.addOutputNodeFigure.associateWith(wire.sink)
                     node.addNodeLabel(wire.semanticSink.serializeHR.toString)
