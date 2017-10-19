@@ -34,6 +34,7 @@ import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 
 /**
  * Give me a state, Vasili. One state only please.
@@ -52,6 +53,8 @@ class Reference extends SCChartsProcessor {
     @Inject extension KEffectsExtensions
     @Inject extension SCChartsReferenceExtensions
     
+    protected var Dataflow dataflowProcessor = null
+    
     protected val replacedWithLiterals = <ValuedObject> newHashSet
     
     override getId() {
@@ -64,6 +67,10 @@ class Reference extends SCChartsProcessor {
     
     override process() {
         replacedWithLiterals.clear
+        dataflowProcessor = KiCoolRegistration.getProcessorInstance("de.cau.cs.kieler.sccharts.processors.transformators.dataflow") as Dataflow
+        if (dataflowProcessor !== null) {
+            dataflowProcessor.setEnvironment(sourceEnvironment, environment)
+        }
         
         val model = getModel
         
@@ -72,6 +79,16 @@ class Reference extends SCChartsProcessor {
             for (state : statesWithReferences.toList) {
                 state.expandReferencedState(new Replacements)
             }
+            
+            if (dataflowProcessor !== null) {
+                // Optimize this.
+                dataflowProcessor.processStates(rootState)
+                val statesWithReferences2 = rootState.getAllContainedStates.filter[ reference != null && reference.scope != null ]
+                for (state : statesWithReferences2.toList) {
+                    state.expandReferencedState(new Replacements)
+                }
+            }
+            
             if (!rootState.validate) 
                 throw new IllegalStateException("References objects are not contained in the resource!")
         }
@@ -124,6 +141,15 @@ class Reference extends SCChartsProcessor {
         newState.declarations.removeIf[ if (it instanceof VariableDeclaration) { input || output } else false ]
         
         snapshot
+        
+        if (dataflowProcessor !== null) {
+            // Optimize this.
+            dataflowProcessor.processStates(newState)
+            val statesWithReferences = newState.getAllContainedStates.filter[ reference != null && reference.scope != null ]
+            for (state : statesWithReferences.toList) {
+                state.expandReferencedState(new Replacements)
+            }
+        }
     } 
     
     protected def void replaceValuedObjectReferences(Scope scope, Replacements replacements) {
