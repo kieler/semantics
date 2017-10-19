@@ -781,18 +781,16 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cModelModelReferenceParserRuleCall_0_0 = (RuleCall)cModelAssignment_0.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cLeftSquareBracketKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cIndicesAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cIndicesINTTerminalRuleCall_2_1_0 = (RuleCall)cIndicesAssignment_2_1.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
+		private final Assignment cArrayIndexAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cArrayIndexArrayIndexParserRuleCall_2_0 = (RuleCall)cArrayIndexAssignment_2.eContents().get(0);
 		
 		//VariableReference:
 		//	model=ModelReference?
-		//	name=ID ('[' indices+=INT ']')*;
+		//	name=ID
+		//	arrayIndex=ArrayIndex?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//model=ModelReference? name=ID ('[' indices+=INT ']')*
+		//model=ModelReference? name=ID arrayIndex=ArrayIndex?
 		public Group getGroup() { return cGroup; }
 
 		//model=ModelReference?
@@ -807,20 +805,11 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 
-		//('[' indices+=INT ']')*
-		public Group getGroup_2() { return cGroup_2; }
+		//arrayIndex=ArrayIndex?
+		public Assignment getArrayIndexAssignment_2() { return cArrayIndexAssignment_2; }
 
-		//'['
-		public Keyword getLeftSquareBracketKeyword_2_0() { return cLeftSquareBracketKeyword_2_0; }
-
-		//indices+=INT
-		public Assignment getIndicesAssignment_2_1() { return cIndicesAssignment_2_1; }
-
-		//INT
-		public RuleCall getIndicesINTTerminalRuleCall_2_1_0() { return cIndicesINTTerminalRuleCall_2_1_0; }
-
-		//']'
-		public Keyword getRightSquareBracketKeyword_2_2() { return cRightSquareBracketKeyword_2_2; }
+		//ArrayIndex
+		public RuleCall getArrayIndexArrayIndexParserRuleCall_2_0() { return cArrayIndexArrayIndexParserRuleCall_2_0; }
 	}
 
 	public class ModelReferenceElements extends AbstractParserRuleElementFinder {
@@ -881,7 +870,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cHyphenMinusKeyword = (Keyword)rule.eContents().get(1);
 		
 		//Range:
-		//	'-' // Alternative would be '..'
+		//	'-' // Alternative would be '..' but this creates problems with floating point numbers
 		//;
 		@Override public ParserRule getRule() { return rule; }
 
@@ -1266,7 +1255,8 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 
 	//VariableReference:
 	//	model=ModelReference?
-	//	name=ID ('[' indices+=INT ']')*;
+	//	name=ID
+	//	arrayIndex=ArrayIndex?;
 	public VariableReferenceElements getVariableReferenceAccess() {
 		return pVariableReference;
 	}
@@ -1324,7 +1314,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Range:
-	//	'-' // Alternative would be '..'
+	//	'-' // Alternative would be '..' but this creates problems with floating point numbers
 	//;
 	public RangeElements getRangeAccess() {
 		return pRange;
@@ -1418,13 +1408,25 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Literal:
-	//	value=TextValue | value=SignedInt | value=SignedFloat | value=AnyValue;
+	//	value=TextValue arrayIndex=ArrayIndex? | value=SignedInt
+	//	| value=SignedFloat
+	//	| value=AnyValue;
 	public KiBuildGrammarAccess.LiteralElements getLiteralAccess() {
 		return gaKiBuild.getLiteralAccess();
 	}
 	
 	public ParserRule getLiteralRule() {
 		return getLiteralAccess().getRule();
+	}
+
+	//ArrayIndex:
+	//	('[' indices+=INT ']')+;
+	public KiBuildGrammarAccess.ArrayIndexElements getArrayIndexAccess() {
+		return gaKiBuild.getArrayIndexAccess();
+	}
+	
+	public ParserRule getArrayIndexRule() {
+		return getArrayIndexAccess().getRule();
 	}
 
 	//enum Sign:
@@ -1476,8 +1478,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//terminal ID:
-	//	'^'? ('a'..'z' | 'A'..'Z' | '_' | '/' | '\\') ('a'..'z' | 'A'..'Z' | '_' | '-' | '.' | '/' | '\\' | '0'..'9' | '[' |
-	//	']')*;
+	//	'^'? ('a'..'z' | 'A'..'Z' | '_' | '/' | '\\') ('a'..'z' | 'A'..'Z' | '_' | '-' | '.' | '/' | '\\' | '0'..'9')*;
 	public TerminalRule getIDRule() {
 		return gaKiBuild.getIDRule();
 	} 

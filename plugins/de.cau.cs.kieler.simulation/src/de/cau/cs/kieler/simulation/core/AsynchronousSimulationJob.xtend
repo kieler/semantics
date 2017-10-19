@@ -79,9 +79,6 @@ class AsynchronousSimulationJob extends Job {
             // Save new state
             sim.setNewState(pool, nextActionIndex)
             
-            // Notify listeners of new state
-            sim.fireEvent(SimulationOperation.PLAYING)
-            
             // Set absolute time for next tick (possibly from a variable in the data pool)
             if(sim.nextTickTimeVariable.value != null) {
                 val variable = sim.currentPool.getVariable(sim.nextTickTimeVariable.stringValue)
@@ -93,6 +90,10 @@ class AsynchronousSimulationJob extends Job {
             } else {
                 nextTickTime = timeBeforeTick + SimulationManager.desiredTickPause
             }
+            
+            // Notify listeners of new state
+            sim.fireEvent(SimulationOperation.PLAYING)
+            
             currentTime = System.currentTimeMillis.intValue
             
             // Check desired tick pause.

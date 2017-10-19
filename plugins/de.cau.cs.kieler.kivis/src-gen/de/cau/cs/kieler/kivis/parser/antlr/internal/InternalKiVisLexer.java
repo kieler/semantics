@@ -545,10 +545,10 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = T__38;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:32:7: ( '[' )
-            // InternalKiVis.g:32:9: '['
+            // InternalKiVis.g:32:7: ( '.' )
+            // InternalKiVis.g:32:9: '.'
             {
-            match('['); 
+            match('.'); 
 
             }
 
@@ -565,10 +565,10 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = T__39;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:33:7: ( ']' )
-            // InternalKiVis.g:33:9: ']'
+            // InternalKiVis.g:33:7: ( '-' )
+            // InternalKiVis.g:33:9: '-'
             {
-            match(']'); 
+            match('-'); 
 
             }
 
@@ -585,10 +585,11 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = T__40;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:34:7: ( '.' )
-            // InternalKiVis.g:34:9: '.'
+            // InternalKiVis.g:34:7: ( 'model' )
+            // InternalKiVis.g:34:9: 'model'
             {
-            match('.'); 
+            match("model"); 
+
 
             }
 
@@ -605,10 +606,11 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = T__41;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:35:7: ( '-' )
-            // InternalKiVis.g:35:9: '-'
+            // InternalKiVis.g:35:7: ( 'compiler' )
+            // InternalKiVis.g:35:9: 'compiler'
             {
-            match('-'); 
+            match("compiler"); 
+
 
             }
 
@@ -625,10 +627,10 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = T__42;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:36:7: ( 'model' )
-            // InternalKiVis.g:36:9: 'model'
+            // InternalKiVis.g:36:7: ( 'process' )
+            // InternalKiVis.g:36:9: 'process'
             {
-            match("model"); 
+            match("process"); 
 
 
             }
@@ -646,10 +648,10 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = T__43;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:37:7: ( 'compiler' )
-            // InternalKiVis.g:37:9: 'compiler'
+            // InternalKiVis.g:37:7: ( 'template' )
+            // InternalKiVis.g:37:9: 'template'
             {
-            match("compiler"); 
+            match("template"); 
 
 
             }
@@ -667,10 +669,10 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = T__44;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:38:7: ( 'process' )
-            // InternalKiVis.g:38:9: 'process'
+            // InternalKiVis.g:38:7: ( 'wrapper' )
+            // InternalKiVis.g:38:9: 'wrapper'
             {
-            match("process"); 
+            match("wrapper"); 
 
 
             }
@@ -688,11 +690,10 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = T__45;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:39:7: ( 'template' )
-            // InternalKiVis.g:39:9: 'template'
+            // InternalKiVis.g:39:7: ( '[' )
+            // InternalKiVis.g:39:9: '['
             {
-            match("template"); 
-
+            match('['); 
 
             }
 
@@ -709,11 +710,10 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = T__46;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:40:7: ( 'wrapper' )
-            // InternalKiVis.g:40:9: 'wrapper'
+            // InternalKiVis.g:40:7: ( ']' )
+            // InternalKiVis.g:40:9: ']'
             {
-            match("wrapper"); 
-
+            match(']'); 
 
             }
 
@@ -1470,10 +1470,10 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = RULE_BOOLEAN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:6768:14: ( ( 'true' | 'false' ) )
-            // InternalKiVis.g:6768:16: ( 'true' | 'false' )
+            // InternalKiVis.g:6825:14: ( ( 'true' | 'false' ) )
+            // InternalKiVis.g:6825:16: ( 'true' | 'false' )
             {
-            // InternalKiVis.g:6768:16: ( 'true' | 'false' )
+            // InternalKiVis.g:6825:16: ( 'true' | 'false' )
             int alt1=2;
             int LA1_0 = input.LA(1);
 
@@ -1491,7 +1491,7 @@ public class InternalKiVisLexer extends Lexer {
             }
             switch (alt1) {
                 case 1 :
-                    // InternalKiVis.g:6768:17: 'true'
+                    // InternalKiVis.g:6825:17: 'true'
                     {
                     match("true"); 
 
@@ -1499,7 +1499,7 @@ public class InternalKiVisLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalKiVis.g:6768:24: 'false'
+                    // InternalKiVis.g:6825:24: 'false'
                     {
                     match("false"); 
 
@@ -1525,10 +1525,10 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:6770:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '/' | '\\\\' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '-' | '.' | '/' | '\\\\' | '0' .. '9' | '[' | ']' )* )
-            // InternalKiVis.g:6770:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '/' | '\\\\' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '-' | '.' | '/' | '\\\\' | '0' .. '9' | '[' | ']' )*
+            // InternalKiVis.g:6827:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '/' | '\\\\' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '-' | '.' | '/' | '\\\\' | '0' .. '9' )* )
+            // InternalKiVis.g:6827:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '/' | '\\\\' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '-' | '.' | '/' | '\\\\' | '0' .. '9' )*
             {
-            // InternalKiVis.g:6770:11: ( '^' )?
+            // InternalKiVis.g:6827:11: ( '^' )?
             int alt2=2;
             int LA2_0 = input.LA(1);
 
@@ -1537,7 +1537,7 @@ public class InternalKiVisLexer extends Lexer {
             }
             switch (alt2) {
                 case 1 :
-                    // InternalKiVis.g:6770:11: '^'
+                    // InternalKiVis.g:6827:11: '^'
                     {
                     match('^'); 
 
@@ -1555,13 +1555,13 @@ public class InternalKiVisLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // InternalKiVis.g:6770:49: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '-' | '.' | '/' | '\\\\' | '0' .. '9' | '[' | ']' )*
+            // InternalKiVis.g:6827:49: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '-' | '.' | '/' | '\\\\' | '0' .. '9' )*
             loop3:
             do {
                 int alt3=2;
                 int LA3_0 = input.LA(1);
 
-                if ( ((LA3_0>='-' && LA3_0<='9')||(LA3_0>='A' && LA3_0<=']')||LA3_0=='_'||(LA3_0>='a' && LA3_0<='z')) ) {
+                if ( ((LA3_0>='-' && LA3_0<='9')||(LA3_0>='A' && LA3_0<='Z')||LA3_0=='\\'||LA3_0=='_'||(LA3_0>='a' && LA3_0<='z')) ) {
                     alt3=1;
                 }
 
@@ -1570,7 +1570,7 @@ public class InternalKiVisLexer extends Lexer {
             	case 1 :
             	    // InternalKiVis.g:
             	    {
-            	    if ( (input.LA(1)>='-' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<=']')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
+            	    if ( (input.LA(1)>='-' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='\\'||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
             	        input.consume();
 
             	    }
@@ -1604,11 +1604,11 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = RULE_HOSTCODE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:6772:15: ( '`' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )* '`' )
-            // InternalKiVis.g:6772:17: '`' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )* '`'
+            // InternalKiVis.g:6829:15: ( '`' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )* '`' )
+            // InternalKiVis.g:6829:17: '`' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )* '`'
             {
             match('`'); 
-            // InternalKiVis.g:6772:21: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )*
+            // InternalKiVis.g:6829:21: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )*
             loop4:
             do {
                 int alt4=3;
@@ -1624,7 +1624,7 @@ public class InternalKiVisLexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // InternalKiVis.g:6772:22: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+            	    // InternalKiVis.g:6829:22: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
             	    {
             	    match('\\'); 
             	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -1640,7 +1640,7 @@ public class InternalKiVisLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // InternalKiVis.g:6772:63: ~ ( ( '\\\\' | '`' ) )
+            	    // InternalKiVis.g:6829:63: ~ ( ( '\\\\' | '`' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='_')||(input.LA(1)>='a' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1677,12 +1677,12 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = RULE_COMMENT_ANNOTATION;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:6774:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
-            // InternalKiVis.g:6774:27: '/**' ( options {greedy=false; } : . )* '*/'
+            // InternalKiVis.g:6831:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
+            // InternalKiVis.g:6831:27: '/**' ( options {greedy=false; } : . )* '*/'
             {
             match("/**"); 
 
-            // InternalKiVis.g:6774:33: ( options {greedy=false; } : . )*
+            // InternalKiVis.g:6831:33: ( options {greedy=false; } : . )*
             loop5:
             do {
                 int alt5=2;
@@ -1707,7 +1707,7 @@ public class InternalKiVisLexer extends Lexer {
 
                 switch (alt5) {
             	case 1 :
-            	    // InternalKiVis.g:6774:61: .
+            	    // InternalKiVis.g:6831:61: .
             	    {
             	    matchAny(); 
 
@@ -1737,8 +1737,8 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:6776:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
-            // InternalKiVis.g:6776:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
+            // InternalKiVis.g:6833:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
+            // InternalKiVis.g:6833:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
@@ -1751,7 +1751,7 @@ public class InternalKiVisLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // InternalKiVis.g:6776:31: ( options {greedy=false; } : . )*
+            // InternalKiVis.g:6833:31: ( options {greedy=false; } : . )*
             loop6:
             do {
                 int alt6=2;
@@ -1776,7 +1776,7 @@ public class InternalKiVisLexer extends Lexer {
 
                 switch (alt6) {
             	case 1 :
-            	    // InternalKiVis.g:6776:59: .
+            	    // InternalKiVis.g:6833:59: .
             	    {
             	    matchAny(); 
 
@@ -1806,12 +1806,12 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT_ANNOTATION;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:6778:28: ( '//*' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // InternalKiVis.g:6778:30: '//*' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // InternalKiVis.g:6835:28: ( '//*' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // InternalKiVis.g:6835:30: '//*' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//*"); 
 
-            // InternalKiVis.g:6778:36: (~ ( ( '\\n' | '\\r' ) ) )*
+            // InternalKiVis.g:6835:36: (~ ( ( '\\n' | '\\r' ) ) )*
             loop7:
             do {
                 int alt7=2;
@@ -1824,7 +1824,7 @@ public class InternalKiVisLexer extends Lexer {
 
                 switch (alt7) {
             	case 1 :
-            	    // InternalKiVis.g:6778:36: ~ ( ( '\\n' | '\\r' ) )
+            	    // InternalKiVis.g:6835:36: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1844,7 +1844,7 @@ public class InternalKiVisLexer extends Lexer {
                 }
             } while (true);
 
-            // InternalKiVis.g:6778:52: ( ( '\\r' )? '\\n' )?
+            // InternalKiVis.g:6835:52: ( ( '\\r' )? '\\n' )?
             int alt9=2;
             int LA9_0 = input.LA(1);
 
@@ -1853,9 +1853,9 @@ public class InternalKiVisLexer extends Lexer {
             }
             switch (alt9) {
                 case 1 :
-                    // InternalKiVis.g:6778:53: ( '\\r' )? '\\n'
+                    // InternalKiVis.g:6835:53: ( '\\r' )? '\\n'
                     {
-                    // InternalKiVis.g:6778:53: ( '\\r' )?
+                    // InternalKiVis.g:6835:53: ( '\\r' )?
                     int alt8=2;
                     int LA8_0 = input.LA(1);
 
@@ -1864,7 +1864,7 @@ public class InternalKiVisLexer extends Lexer {
                     }
                     switch (alt8) {
                         case 1 :
-                            // InternalKiVis.g:6778:53: '\\r'
+                            // InternalKiVis.g:6835:53: '\\r'
                             {
                             match('\r'); 
 
@@ -1896,8 +1896,8 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:6780:17: ( '//' ~ ( '*' ) (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // InternalKiVis.g:6780:19: '//' ~ ( '*' ) (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // InternalKiVis.g:6837:17: ( '//' ~ ( '*' ) (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // InternalKiVis.g:6837:19: '//' ~ ( '*' ) (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
@@ -1910,7 +1910,7 @@ public class InternalKiVisLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // InternalKiVis.g:6780:31: (~ ( ( '\\n' | '\\r' ) ) )*
+            // InternalKiVis.g:6837:31: (~ ( ( '\\n' | '\\r' ) ) )*
             loop10:
             do {
                 int alt10=2;
@@ -1923,7 +1923,7 @@ public class InternalKiVisLexer extends Lexer {
 
                 switch (alt10) {
             	case 1 :
-            	    // InternalKiVis.g:6780:31: ~ ( ( '\\n' | '\\r' ) )
+            	    // InternalKiVis.g:6837:31: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1943,7 +1943,7 @@ public class InternalKiVisLexer extends Lexer {
                 }
             } while (true);
 
-            // InternalKiVis.g:6780:47: ( ( '\\r' )? '\\n' )?
+            // InternalKiVis.g:6837:47: ( ( '\\r' )? '\\n' )?
             int alt12=2;
             int LA12_0 = input.LA(1);
 
@@ -1952,9 +1952,9 @@ public class InternalKiVisLexer extends Lexer {
             }
             switch (alt12) {
                 case 1 :
-                    // InternalKiVis.g:6780:48: ( '\\r' )? '\\n'
+                    // InternalKiVis.g:6837:48: ( '\\r' )? '\\n'
                     {
-                    // InternalKiVis.g:6780:48: ( '\\r' )?
+                    // InternalKiVis.g:6837:48: ( '\\r' )?
                     int alt11=2;
                     int LA11_0 = input.LA(1);
 
@@ -1963,7 +1963,7 @@ public class InternalKiVisLexer extends Lexer {
                     }
                     switch (alt11) {
                         case 1 :
-                            // InternalKiVis.g:6780:48: '\\r'
+                            // InternalKiVis.g:6837:48: '\\r'
                             {
                             match('\r'); 
 
@@ -1993,8 +1993,8 @@ public class InternalKiVisLexer extends Lexer {
     // $ANTLR start "RULE_NUMBER"
     public final void mRULE_NUMBER() throws RecognitionException {
         try {
-            // InternalKiVis.g:6782:22: ( '0' .. '9' )
-            // InternalKiVis.g:6782:24: '0' .. '9'
+            // InternalKiVis.g:6839:22: ( '0' .. '9' )
+            // InternalKiVis.g:6839:24: '0' .. '9'
             {
             matchRange('0','9'); 
 
@@ -2011,10 +2011,10 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:6784:10: ( ( RULE_NUMBER )+ )
-            // InternalKiVis.g:6784:12: ( RULE_NUMBER )+
+            // InternalKiVis.g:6841:10: ( ( RULE_NUMBER )+ )
+            // InternalKiVis.g:6841:12: ( RULE_NUMBER )+
             {
-            // InternalKiVis.g:6784:12: ( RULE_NUMBER )+
+            // InternalKiVis.g:6841:12: ( RULE_NUMBER )+
             int cnt13=0;
             loop13:
             do {
@@ -2028,7 +2028,7 @@ public class InternalKiVisLexer extends Lexer {
 
                 switch (alt13) {
             	case 1 :
-            	    // InternalKiVis.g:6784:12: RULE_NUMBER
+            	    // InternalKiVis.g:6841:12: RULE_NUMBER
             	    {
             	    mRULE_NUMBER(); 
 
@@ -2060,17 +2060,17 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = RULE_FLOAT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:6786:12: ( ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' ) )
-            // InternalKiVis.g:6786:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
+            // InternalKiVis.g:6843:12: ( ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' ) )
+            // InternalKiVis.g:6843:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
             {
-            // InternalKiVis.g:6786:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
+            // InternalKiVis.g:6843:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
             int alt21=2;
             alt21 = dfa21.predict(input);
             switch (alt21) {
                 case 1 :
-                    // InternalKiVis.g:6786:15: ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )?
+                    // InternalKiVis.g:6843:15: ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )?
                     {
-                    // InternalKiVis.g:6786:15: ( RULE_NUMBER )+
+                    // InternalKiVis.g:6843:15: ( RULE_NUMBER )+
                     int cnt14=0;
                     loop14:
                     do {
@@ -2084,7 +2084,7 @@ public class InternalKiVisLexer extends Lexer {
 
                         switch (alt14) {
                     	case 1 :
-                    	    // InternalKiVis.g:6786:15: RULE_NUMBER
+                    	    // InternalKiVis.g:6843:15: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -2101,7 +2101,7 @@ public class InternalKiVisLexer extends Lexer {
                     } while (true);
 
                     match('.'); 
-                    // InternalKiVis.g:6786:32: ( RULE_NUMBER )*
+                    // InternalKiVis.g:6843:32: ( RULE_NUMBER )*
                     loop15:
                     do {
                         int alt15=2;
@@ -2114,7 +2114,7 @@ public class InternalKiVisLexer extends Lexer {
 
                         switch (alt15) {
                     	case 1 :
-                    	    // InternalKiVis.g:6786:32: RULE_NUMBER
+                    	    // InternalKiVis.g:6843:32: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -2126,7 +2126,7 @@ public class InternalKiVisLexer extends Lexer {
                         }
                     } while (true);
 
-                    // InternalKiVis.g:6786:45: ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )?
+                    // InternalKiVis.g:6843:45: ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )?
                     int alt18=2;
                     int LA18_0 = input.LA(1);
 
@@ -2135,7 +2135,7 @@ public class InternalKiVisLexer extends Lexer {
                     }
                     switch (alt18) {
                         case 1 :
-                            // InternalKiVis.g:6786:46: ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+
+                            // InternalKiVis.g:6843:46: ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+
                             {
                             if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                                 input.consume();
@@ -2146,7 +2146,7 @@ public class InternalKiVisLexer extends Lexer {
                                 recover(mse);
                                 throw mse;}
 
-                            // InternalKiVis.g:6786:56: ( '+' | '-' )?
+                            // InternalKiVis.g:6843:56: ( '+' | '-' )?
                             int alt16=2;
                             int LA16_0 = input.LA(1);
 
@@ -2172,7 +2172,7 @@ public class InternalKiVisLexer extends Lexer {
 
                             }
 
-                            // InternalKiVis.g:6786:67: ( RULE_NUMBER )+
+                            // InternalKiVis.g:6843:67: ( RULE_NUMBER )+
                             int cnt17=0;
                             loop17:
                             do {
@@ -2186,7 +2186,7 @@ public class InternalKiVisLexer extends Lexer {
 
                                 switch (alt17) {
                             	case 1 :
-                            	    // InternalKiVis.g:6786:67: RULE_NUMBER
+                            	    // InternalKiVis.g:6843:67: RULE_NUMBER
                             	    {
                             	    mRULE_NUMBER(); 
 
@@ -2208,7 +2208,7 @@ public class InternalKiVisLexer extends Lexer {
 
                     }
 
-                    // InternalKiVis.g:6786:82: ( 'f' )?
+                    // InternalKiVis.g:6843:82: ( 'f' )?
                     int alt19=2;
                     int LA19_0 = input.LA(1);
 
@@ -2217,7 +2217,7 @@ public class InternalKiVisLexer extends Lexer {
                     }
                     switch (alt19) {
                         case 1 :
-                            // InternalKiVis.g:6786:82: 'f'
+                            // InternalKiVis.g:6843:82: 'f'
                             {
                             match('f'); 
 
@@ -2230,9 +2230,9 @@ public class InternalKiVisLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalKiVis.g:6786:87: ( RULE_NUMBER )+ 'f'
+                    // InternalKiVis.g:6843:87: ( RULE_NUMBER )+ 'f'
                     {
-                    // InternalKiVis.g:6786:87: ( RULE_NUMBER )+
+                    // InternalKiVis.g:6843:87: ( RULE_NUMBER )+
                     int cnt20=0;
                     loop20:
                     do {
@@ -2246,7 +2246,7 @@ public class InternalKiVisLexer extends Lexer {
 
                         switch (alt20) {
                     	case 1 :
-                    	    // InternalKiVis.g:6786:87: RULE_NUMBER
+                    	    // InternalKiVis.g:6843:87: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -2285,11 +2285,11 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:6788:13: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
-            // InternalKiVis.g:6788:15: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+            // InternalKiVis.g:6845:13: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
+            // InternalKiVis.g:6845:15: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
             {
             match('\"'); 
-            // InternalKiVis.g:6788:19: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
+            // InternalKiVis.g:6845:19: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
             loop22:
             do {
                 int alt22=3;
@@ -2305,7 +2305,7 @@ public class InternalKiVisLexer extends Lexer {
 
                 switch (alt22) {
             	case 1 :
-            	    // InternalKiVis.g:6788:20: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+            	    // InternalKiVis.g:6845:20: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
             	    {
             	    match('\\'); 
             	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -2321,7 +2321,7 @@ public class InternalKiVisLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // InternalKiVis.g:6788:61: ~ ( ( '\\\\' | '\"' ) )
+            	    // InternalKiVis.g:6845:61: ~ ( ( '\\\\' | '\"' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2358,10 +2358,10 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:6790:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // InternalKiVis.g:6790:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalKiVis.g:6847:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // InternalKiVis.g:6847:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // InternalKiVis.g:6790:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalKiVis.g:6847:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt23=0;
             loop23:
             do {
@@ -2415,8 +2415,8 @@ public class InternalKiVisLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiVis.g:6792:16: ( . )
-            // InternalKiVis.g:6792:18: .
+            // InternalKiVis.g:6849:16: ( . )
+            // InternalKiVis.g:6849:18: .
             {
             matchAny(); 
 
@@ -3038,23 +3038,23 @@ public class InternalKiVisLexer extends Lexer {
             this.transition = DFA21_transition;
         }
         public String getDescription() {
-            return "6786:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )";
+            return "6843:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )";
         }
     }
     static final String DFA24_eotS =
-        "\1\uffff\1\62\1\uffff\1\62\2\uffff\3\62\1\101\1\62\1\106\2\uffff\2\62\1\114\4\uffff\4\62\1\130\1\131\1\134\1\137\2\uffff\1\144\2\uffff\1\62\1\151\1\152\5\uffff\1\56\1\160\1\56\2\uffff\1\62\1\166\1\167\2\uffff\2\62\2\uffff\4\62\1\177\3\62\2\uffff\3\62\4\uffff\2\62\6\uffff\6\62\6\uffff\1\u0091\5\uffff\1\62\3\uffff\1\62\12\uffff\1\160\2\uffff\1\62\2\uffff\4\62\1\u009d\2\62\1\uffff\10\62\1\u00a9\7\62\5\uffff\1\62\1\uffff\6\62\1\uffff\1\62\1\u00b9\1\62\1\u00bb\3\62\1\u00bf\1\u00c0\2\62\1\uffff\5\62\1\u00c8\3\62\1\u00cb\1\62\1\u00cd\2\62\1\u00d0\1\uffff\1\62\1\uffff\1\u00c8\2\62\2\uffff\1\u00d4\1\u00d5\1\u00d6\2\62\1\u00db\1\62\1\uffff\2\62\1\uffff\1\62\1\uffff\2\62\1\uffff\1\u00e2\2\62\3\uffff\4\62\1\uffff\2\62\1\u00eb\1\u00ec\1\u00ed\1\u00ee\1\uffff\3\62\1\u00f2\3\62\1\u00f6\4\uffff\1\62\1\u00f8\1\62\1\uffff\1\62\1\u00fb\1\u00fc\1\uffff\1\62\1\uffff\1\u00fe\1\u00ff\2\uffff\1\u0100\3\uffff";
+        "\1\uffff\1\62\1\uffff\1\62\2\uffff\3\62\1\101\1\62\1\106\2\uffff\2\62\1\114\2\uffff\4\62\2\uffff\1\130\1\131\1\134\1\137\2\uffff\1\144\2\uffff\1\62\1\151\1\152\5\uffff\1\56\1\160\1\56\2\uffff\1\62\1\166\1\167\2\uffff\2\62\2\uffff\4\62\1\177\3\62\2\uffff\3\62\4\uffff\2\62\4\uffff\6\62\10\uffff\1\u0091\5\uffff\1\62\3\uffff\1\62\12\uffff\1\160\2\uffff\1\62\2\uffff\4\62\1\u009d\2\62\1\uffff\10\62\1\u00a9\7\62\5\uffff\1\62\1\uffff\6\62\1\uffff\1\62\1\u00b9\1\62\1\u00bb\3\62\1\u00bf\1\u00c0\2\62\1\uffff\5\62\1\u00c8\3\62\1\u00cb\1\62\1\u00cd\2\62\1\u00d0\1\uffff\1\62\1\uffff\1\u00c8\2\62\2\uffff\1\u00d4\1\u00d5\1\u00d6\2\62\1\u00db\1\62\1\uffff\2\62\1\uffff\1\62\1\uffff\2\62\1\uffff\1\u00e2\2\62\3\uffff\4\62\1\uffff\2\62\1\u00eb\1\u00ec\1\u00ed\1\u00ee\1\uffff\3\62\1\u00f2\3\62\1\u00f6\4\uffff\1\62\1\u00f8\1\62\1\uffff\1\62\1\u00fb\1\u00fc\1\uffff\1\62\1\uffff\1\u00fe\1\u00ff\2\uffff\1\u0100\3\uffff";
     static final String DFA24_eofS =
         "\u0101\uffff";
     static final String DFA24_minS =
-        "\1\0\1\146\1\uffff\1\156\2\uffff\1\141\1\156\1\141\1\75\1\143\1\51\2\uffff\1\163\1\141\1\46\4\uffff\1\157\1\154\1\145\1\162\1\174\1\57\1\74\1\75\2\uffff\1\52\2\uffff\1\170\1\75\1\55\5\uffff\1\0\1\56\1\0\2\uffff\1\141\2\55\2\uffff\1\151\1\160\2\uffff\1\162\1\145\1\165\1\141\1\55\1\150\1\157\1\154\2\uffff\1\155\1\150\1\145\4\uffff\1\151\1\154\6\uffff\1\144\1\155\1\151\1\155\1\165\1\141\6\uffff\1\76\4\uffff\2\0\3\uffff\1\164\12\uffff\1\56\2\uffff\1\147\2\uffff\1\155\1\154\1\146\1\143\1\55\1\163\1\171\1\uffff\1\145\1\155\1\163\1\165\1\145\2\160\1\156\1\55\1\145\1\163\1\160\1\143\1\160\1\145\1\160\5\uffff\1\0\1\uffff\2\145\1\141\1\171\1\157\1\145\1\uffff\1\145\1\55\1\162\1\55\1\145\1\154\1\144\2\55\1\147\1\145\1\uffff\1\154\1\145\1\151\1\153\1\154\1\55\1\160\1\0\1\162\1\55\1\164\1\55\1\162\1\163\1\55\1\uffff\1\163\1\uffff\1\55\1\141\1\165\2\uffff\3\55\1\144\1\154\1\55\1\141\1\uffff\1\145\1\156\1\uffff\1\145\1\uffff\1\155\1\163\1\uffff\1\55\1\164\1\154\3\uffff\1\157\1\160\1\157\1\145\1\uffff\1\164\1\162\4\55\1\uffff\1\151\1\145\1\167\1\55\1\166\1\162\1\145\1\55\4\uffff\1\157\1\55\1\156\1\uffff\1\145\2\55\1\uffff\1\156\1\uffff\2\55\2\uffff\1\55\3\uffff";
+        "\1\0\1\146\1\uffff\1\156\2\uffff\1\141\1\156\1\141\1\75\1\143\1\51\2\uffff\1\163\1\141\1\46\2\uffff\1\157\1\154\1\145\1\162\2\uffff\1\174\1\57\1\74\1\75\2\uffff\1\52\2\uffff\1\170\1\75\1\55\5\uffff\1\0\1\56\1\0\2\uffff\1\141\2\55\2\uffff\1\151\1\160\2\uffff\1\162\1\145\1\165\1\141\1\55\1\150\1\157\1\154\2\uffff\1\155\1\150\1\145\4\uffff\1\151\1\154\4\uffff\1\144\1\155\1\151\1\155\1\165\1\141\10\uffff\1\76\4\uffff\2\0\3\uffff\1\164\12\uffff\1\56\2\uffff\1\147\2\uffff\1\155\1\154\1\146\1\143\1\55\1\163\1\171\1\uffff\1\145\1\155\1\163\1\165\1\145\2\160\1\156\1\55\1\145\1\163\1\160\1\143\1\160\1\145\1\160\5\uffff\1\0\1\uffff\2\145\1\141\1\171\1\157\1\145\1\uffff\1\145\1\55\1\162\1\55\1\145\1\154\1\144\2\55\1\147\1\145\1\uffff\1\154\1\145\1\151\1\153\1\154\1\55\1\160\1\0\1\162\1\55\1\164\1\55\1\162\1\163\1\55\1\uffff\1\163\1\uffff\1\55\1\141\1\165\2\uffff\3\55\1\144\1\154\1\55\1\141\1\uffff\1\145\1\156\1\uffff\1\145\1\uffff\1\155\1\163\1\uffff\1\55\1\164\1\154\3\uffff\1\157\1\160\1\157\1\145\1\uffff\1\164\1\162\4\55\1\uffff\1\151\1\145\1\167\1\55\1\166\1\162\1\145\1\55\4\uffff\1\157\1\55\1\156\1\uffff\1\145\2\55\1\uffff\1\156\1\uffff\2\55\2\uffff\1\55\3\uffff";
     static final String DFA24_maxS =
-        "\1\uffff\1\163\1\uffff\1\160\2\uffff\1\162\1\164\1\162\1\75\1\164\1\51\2\uffff\1\163\1\141\1\46\4\uffff\2\157\2\162\1\174\1\172\1\75\1\76\2\uffff\1\172\2\uffff\1\170\1\75\1\172\5\uffff\1\uffff\1\146\1\uffff\2\uffff\1\141\2\172\2\uffff\1\151\1\160\2\uffff\1\162\1\157\1\165\1\141\1\172\1\150\1\157\1\154\2\uffff\1\155\1\150\1\157\4\uffff\1\151\1\154\6\uffff\1\165\1\155\1\151\1\155\1\165\1\141\6\uffff\1\76\4\uffff\2\uffff\3\uffff\1\164\12\uffff\1\146\2\uffff\1\147\2\uffff\1\155\1\154\1\146\1\143\1\172\1\163\1\171\1\uffff\1\145\1\155\1\163\1\165\1\145\2\160\1\156\1\172\1\145\1\163\1\160\1\143\1\160\1\145\1\160\5\uffff\1\uffff\1\uffff\2\145\1\141\1\171\1\157\1\145\1\uffff\1\145\1\172\1\162\1\172\1\145\1\154\1\144\2\172\1\147\1\145\1\uffff\1\154\1\145\1\151\1\153\1\154\1\172\1\160\1\uffff\1\162\1\172\1\164\1\172\1\162\1\163\1\172\1\uffff\1\163\1\uffff\1\172\1\141\1\165\2\uffff\3\172\1\165\1\154\1\172\1\141\1\uffff\1\145\1\156\1\uffff\1\145\1\uffff\1\155\1\163\1\uffff\1\172\1\164\1\154\3\uffff\1\157\1\160\1\157\1\145\1\uffff\1\164\1\162\4\172\1\uffff\1\151\1\145\1\167\1\172\1\166\1\162\1\145\1\172\4\uffff\1\157\1\172\1\156\1\uffff\1\145\2\172\1\uffff\1\156\1\uffff\2\172\2\uffff\1\172\3\uffff";
+        "\1\uffff\1\163\1\uffff\1\160\2\uffff\1\162\1\164\1\162\1\75\1\164\1\51\2\uffff\1\163\1\141\1\46\2\uffff\2\157\2\162\2\uffff\1\174\1\172\1\75\1\76\2\uffff\1\172\2\uffff\1\170\1\75\1\172\5\uffff\1\uffff\1\146\1\uffff\2\uffff\1\141\2\172\2\uffff\1\151\1\160\2\uffff\1\162\1\157\1\165\1\141\1\172\1\150\1\157\1\154\2\uffff\1\155\1\150\1\157\4\uffff\1\151\1\154\4\uffff\1\165\1\155\1\151\1\155\1\165\1\141\10\uffff\1\76\4\uffff\2\uffff\3\uffff\1\164\12\uffff\1\146\2\uffff\1\147\2\uffff\1\155\1\154\1\146\1\143\1\172\1\163\1\171\1\uffff\1\145\1\155\1\163\1\165\1\145\2\160\1\156\1\172\1\145\1\163\1\160\1\143\1\160\1\145\1\160\5\uffff\1\uffff\1\uffff\2\145\1\141\1\171\1\157\1\145\1\uffff\1\145\1\172\1\162\1\172\1\145\1\154\1\144\2\172\1\147\1\145\1\uffff\1\154\1\145\1\151\1\153\1\154\1\172\1\160\1\uffff\1\162\1\172\1\164\1\172\1\162\1\163\1\172\1\uffff\1\163\1\uffff\1\172\1\141\1\165\2\uffff\3\172\1\165\1\154\1\172\1\141\1\uffff\1\145\1\156\1\uffff\1\145\1\uffff\1\155\1\163\1\uffff\1\172\1\164\1\154\3\uffff\1\157\1\160\1\157\1\145\1\uffff\1\164\1\162\4\172\1\uffff\1\151\1\145\1\167\1\172\1\166\1\162\1\145\1\172\4\uffff\1\157\1\172\1\156\1\uffff\1\145\2\172\1\uffff\1\156\1\uffff\2\172\2\uffff\1\172\3\uffff";
     static final String DFA24_acceptS =
-        "\2\uffff\1\2\1\uffff\1\4\1\5\6\uffff\1\15\1\16\3\uffff\1\26\1\27\1\30\1\31\10\uffff\1\47\1\50\1\uffff\1\52\1\53\3\uffff\1\57\1\60\1\100\1\102\1\104\3\uffff\1\115\1\116\3\uffff\1\104\1\2\2\uffff\1\4\1\5\10\uffff\1\71\1\12\3\uffff\1\17\1\14\1\15\1\16\2\uffff\1\24\1\43\1\26\1\27\1\30\1\31\6\uffff\1\40\1\41\1\42\1\44\1\73\1\72\1\uffff\1\75\1\74\1\47\1\50\2\uffff\1\51\1\52\1\53\1\uffff\1\76\1\55\1\56\1\57\1\60\1\100\1\102\1\105\1\112\1\113\1\uffff\1\114\1\115\1\uffff\1\10\1\23\7\uffff\1\7\20\uffff\1\46\1\45\1\106\1\107\1\110\1\uffff\1\111\6\uffff\1\77\13\uffff\1\101\17\uffff\1\70\1\uffff\1\11\3\uffff\1\65\1\66\7\uffff\1\103\2\uffff\1\1\1\uffff\1\20\2\uffff\1\67\3\uffff\1\21\1\22\1\32\4\uffff\1\61\6\uffff\1\25\10\uffff\1\54\1\3\1\6\1\34\3\uffff\1\63\3\uffff\1\36\1\uffff\1\37\2\uffff\1\33\1\35\1\uffff\1\62\1\64\1\13";
+        "\2\uffff\1\2\1\uffff\1\4\1\5\6\uffff\1\15\1\16\3\uffff\1\26\1\27\4\uffff\1\35\1\36\4\uffff\1\47\1\50\1\uffff\1\52\1\53\3\uffff\1\57\1\60\1\100\1\102\1\104\3\uffff\1\115\1\116\3\uffff\1\104\1\2\2\uffff\1\4\1\5\10\uffff\1\71\1\12\3\uffff\1\17\1\14\1\15\1\16\2\uffff\1\24\1\43\1\26\1\27\6\uffff\1\35\1\36\1\40\1\41\1\42\1\44\1\73\1\72\1\uffff\1\75\1\74\1\47\1\50\2\uffff\1\51\1\52\1\53\1\uffff\1\76\1\55\1\56\1\57\1\60\1\100\1\102\1\105\1\112\1\113\1\uffff\1\114\1\115\1\uffff\1\10\1\23\7\uffff\1\7\20\uffff\1\46\1\45\1\106\1\107\1\110\1\uffff\1\111\6\uffff\1\77\13\uffff\1\101\17\uffff\1\70\1\uffff\1\11\3\uffff\1\65\1\66\7\uffff\1\103\2\uffff\1\1\1\uffff\1\20\2\uffff\1\67\3\uffff\1\21\1\22\1\30\4\uffff\1\61\6\uffff\1\25\10\uffff\1\54\1\3\1\6\1\32\3\uffff\1\63\3\uffff\1\34\1\uffff\1\37\2\uffff\1\31\1\33\1\uffff\1\62\1\64\1\13";
     static final String DFA24_specialS =
-        "\1\3\51\uffff\1\6\1\uffff\1\0\65\uffff\1\2\1\5\61\uffff\1\1\33\uffff\1\4\117\uffff}>";
+        "\1\6\51\uffff\1\5\1\uffff\1\0\65\uffff\1\2\1\4\61\uffff\1\1\33\uffff\1\3\117\uffff}>";
     static final String[] DFA24_transitionS = {
-            "\11\56\2\55\2\56\1\55\22\56\1\55\1\43\1\54\1\46\1\56\1\40\1\20\1\41\1\13\1\15\1\36\1\35\1\14\1\24\1\23\1\37\12\53\1\2\1\56\1\33\1\11\1\34\1\50\1\45\32\51\1\21\1\51\1\22\1\32\1\44\1\52\1\3\1\51\1\26\1\51\1\42\1\10\2\51\1\1\3\51\1\25\1\51\1\7\1\6\2\51\1\12\1\27\1\16\1\17\1\30\3\51\1\4\1\31\1\5\1\47\uff81\56",
+            "\11\56\2\55\2\56\1\55\22\56\1\55\1\43\1\54\1\46\1\56\1\40\1\20\1\41\1\13\1\15\1\36\1\35\1\14\1\22\1\21\1\37\12\53\1\2\1\56\1\33\1\11\1\34\1\50\1\45\32\51\1\27\1\51\1\30\1\32\1\44\1\52\1\3\1\51\1\24\1\51\1\42\1\10\2\51\1\1\3\51\1\23\1\51\1\7\1\6\2\51\1\12\1\25\1\16\1\17\1\26\3\51\1\4\1\31\1\5\1\47\uff81\56",
             "\1\60\6\uffff\1\57\5\uffff\1\61",
             "",
             "\1\64\1\uffff\1\65",
@@ -3073,24 +3073,24 @@ public class InternalKiVisLexer extends Lexer {
             "\1\113",
             "",
             "",
+            "\1\117",
+            "\1\121\2\uffff\1\120",
+            "\1\122\14\uffff\1\123",
+            "\1\124",
             "",
             "",
-            "\1\121",
-            "\1\123\2\uffff\1\122",
-            "\1\124\14\uffff\1\125",
-            "\1\126",
             "\1\127",
             "\1\62\21\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
             "\1\132\1\133",
             "\1\136\1\135",
             "",
             "",
-            "\1\142\2\uffff\2\62\1\143\12\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
+            "\1\142\2\uffff\2\62\1\143\12\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
             "",
             "",
             "\1\147",
             "\1\150",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
             "",
             "",
             "",
@@ -3102,8 +3102,8 @@ public class InternalKiVisLexer extends Lexer {
             "",
             "",
             "\1\165",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
             "",
             "",
             "\1\170",
@@ -3114,7 +3114,7 @@ public class InternalKiVisLexer extends Lexer {
             "\1\174\11\uffff\1\173",
             "\1\175",
             "\1\176",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
             "\1\u0080",
             "\1\u0081",
             "\1\u0082",
@@ -3133,8 +3133,6 @@ public class InternalKiVisLexer extends Lexer {
             "",
             "",
             "",
-            "",
-            "",
             "\1\u0089\20\uffff\1\u008a",
             "\1\u008b",
             "\1\u008c",
@@ -3147,13 +3145,15 @@ public class InternalKiVisLexer extends Lexer {
             "",
             "",
             "",
+            "",
+            "",
             "\1\u0090",
             "",
             "",
             "",
             "",
             "\52\u0093\1\u0092\uffd5\u0093",
-            "\52\u0096\1\u0094\2\u0096\15\u0095\7\u0096\35\u0095\1\u0096\1\u0095\1\u0096\32\u0095\uff85\u0096",
+            "\52\u0096\1\u0094\2\u0096\15\u0095\7\u0096\32\u0095\1\u0096\1\u0095\2\u0096\1\u0095\1\u0096\32\u0095\uff85\u0096",
             "",
             "",
             "",
@@ -3178,7 +3178,7 @@ public class InternalKiVisLexer extends Lexer {
             "\1\u009a",
             "\1\u009b",
             "\1\u009c",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
             "\1\u009e",
             "\1\u009f",
             "",
@@ -3190,7 +3190,7 @@ public class InternalKiVisLexer extends Lexer {
             "\1\u00a5",
             "\1\u00a6",
             "\1\u00a7",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\24\62\1\u00a8\5\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\24\62\1\u00a8\5\62",
             "\1\u00aa",
             "\1\u00ab",
             "\1\u00ac",
@@ -3203,7 +3203,7 @@ public class InternalKiVisLexer extends Lexer {
             "",
             "",
             "",
-            "\55\u0096\15\u00b1\7\u0096\35\u00b1\1\u0096\1\u00b1\1\u0096\32\u00b1\uff85\u0096",
+            "\55\u0096\15\u00b1\7\u0096\32\u00b1\1\u0096\1\u00b1\2\u0096\1\u00b1\1\u0096\32\u00b1\uff85\u0096",
             "",
             "\1\u00b2",
             "\1\u00b3",
@@ -3213,14 +3213,14 @@ public class InternalKiVisLexer extends Lexer {
             "\1\u00b7",
             "",
             "\1\u00b8",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
             "\1\u00ba",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
             "\1\u00bc",
             "\1\u00bd",
             "\1\u00be",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
             "\1\u00c1",
             "\1\u00c2",
             "",
@@ -3229,30 +3229,30 @@ public class InternalKiVisLexer extends Lexer {
             "\1\u00c5",
             "\1\u00c6",
             "\1\u00c7",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
             "\1\u00c9",
-            "\55\u0096\15\u00b1\7\u0096\35\u00b1\1\u0096\1\u00b1\1\u0096\32\u00b1\uff85\u0096",
+            "\55\u0096\15\u00b1\7\u0096\32\u00b1\1\u0096\1\u00b1\2\u0096\1\u00b1\1\u0096\32\u00b1\uff85\u0096",
             "\1\u00ca",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
             "\1\u00cc",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
             "\1\u00ce",
             "\1\u00cf",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
             "",
             "\1\u00d1",
             "",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
             "\1\u00d2",
             "\1\u00d3",
             "",
             "",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
             "\1\u00d7\10\uffff\1\u00d9\7\uffff\1\u00d8",
             "\1\u00da",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
             "\1\u00dc",
             "",
             "\1\u00dd",
@@ -3263,7 +3263,7 @@ public class InternalKiVisLexer extends Lexer {
             "\1\u00e0",
             "\1\u00e1",
             "",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
             "\1\u00e3",
             "\1\u00e4",
             "",
@@ -3276,38 +3276,38 @@ public class InternalKiVisLexer extends Lexer {
             "",
             "\1\u00e9",
             "\1\u00ea",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
             "",
             "\1\u00ef",
             "\1\u00f0",
             "\1\u00f1",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
             "\1\u00f3",
             "\1\u00f4",
             "\1\u00f5",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
             "",
             "",
             "",
             "",
             "\1\u00f7",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
             "\1\u00f9",
             "",
             "\1\u00fa",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
             "",
             "\1\u00fd",
             "",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
             "",
             "",
-            "\15\62\7\uffff\35\62\1\uffff\1\62\1\uffff\32\62",
+            "\15\62\7\uffff\32\62\1\uffff\1\62\2\uffff\1\62\1\uffff\32\62",
             "",
             "",
             ""
@@ -3363,9 +3363,9 @@ public class InternalKiVisLexer extends Lexer {
                         int LA24_149 = input.LA(1);
 
                         s = -1;
-                        if ( ((LA24_149>='-' && LA24_149<='9')||(LA24_149>='A' && LA24_149<=']')||LA24_149=='_'||(LA24_149>='a' && LA24_149<='z')) ) {s = 177;}
+                        if ( ((LA24_149>='-' && LA24_149<='9')||(LA24_149>='A' && LA24_149<='Z')||LA24_149=='\\'||LA24_149=='_'||(LA24_149>='a' && LA24_149<='z')) ) {s = 177;}
 
-                        else if ( ((LA24_149>='\u0000' && LA24_149<=',')||(LA24_149>=':' && LA24_149<='@')||LA24_149=='^'||LA24_149=='`'||(LA24_149>='{' && LA24_149<='\uFFFF')) ) {s = 150;}
+                        else if ( ((LA24_149>='\u0000' && LA24_149<=',')||(LA24_149>=':' && LA24_149<='@')||LA24_149=='['||(LA24_149>=']' && LA24_149<='^')||LA24_149=='`'||(LA24_149>='{' && LA24_149<='\uFFFF')) ) {s = 150;}
 
                         else s = 50;
 
@@ -3382,6 +3382,42 @@ public class InternalKiVisLexer extends Lexer {
                         if ( s>=0 ) return s;
                         break;
                     case 3 : 
+                        int LA24_177 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA24_177>='\u0000' && LA24_177<=',')||(LA24_177>=':' && LA24_177<='@')||LA24_177=='['||(LA24_177>=']' && LA24_177<='^')||LA24_177=='`'||(LA24_177>='{' && LA24_177<='\uFFFF')) ) {s = 150;}
+
+                        else if ( ((LA24_177>='-' && LA24_177<='9')||(LA24_177>='A' && LA24_177<='Z')||LA24_177=='\\'||LA24_177=='_'||(LA24_177>='a' && LA24_177<='z')) ) {s = 177;}
+
+                        else s = 50;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 4 : 
+                        int LA24_99 = input.LA(1);
+
+                        s = -1;
+                        if ( (LA24_99=='*') ) {s = 148;}
+
+                        else if ( ((LA24_99>='-' && LA24_99<='9')||(LA24_99>='A' && LA24_99<='Z')||LA24_99=='\\'||LA24_99=='_'||(LA24_99>='a' && LA24_99<='z')) ) {s = 149;}
+
+                        else if ( ((LA24_99>='\u0000' && LA24_99<=')')||(LA24_99>='+' && LA24_99<=',')||(LA24_99>=':' && LA24_99<='@')||LA24_99=='['||(LA24_99>=']' && LA24_99<='^')||LA24_99=='`'||(LA24_99>='{' && LA24_99<='\uFFFF')) ) {s = 150;}
+
+                        else s = 50;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 5 : 
+                        int LA24_42 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA24_42>='\u0000' && LA24_42<='\uFFFF')) ) {s = 111;}
+
+                        else s = 46;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 6 : 
                         int LA24_0 = input.LA(1);
 
                         s = -1;
@@ -3417,21 +3453,21 @@ public class InternalKiVisLexer extends Lexer {
 
                         else if ( (LA24_0=='&') ) {s = 16;}
 
-                        else if ( (LA24_0=='[') ) {s = 17;}
+                        else if ( (LA24_0=='.') ) {s = 17;}
 
-                        else if ( (LA24_0==']') ) {s = 18;}
+                        else if ( (LA24_0=='-') ) {s = 18;}
 
-                        else if ( (LA24_0=='.') ) {s = 19;}
+                        else if ( (LA24_0=='m') ) {s = 19;}
 
-                        else if ( (LA24_0=='-') ) {s = 20;}
+                        else if ( (LA24_0=='c') ) {s = 20;}
 
-                        else if ( (LA24_0=='m') ) {s = 21;}
+                        else if ( (LA24_0=='t') ) {s = 21;}
 
-                        else if ( (LA24_0=='c') ) {s = 22;}
+                        else if ( (LA24_0=='w') ) {s = 22;}
 
-                        else if ( (LA24_0=='t') ) {s = 23;}
+                        else if ( (LA24_0=='[') ) {s = 23;}
 
-                        else if ( (LA24_0=='w') ) {s = 24;}
+                        else if ( (LA24_0==']') ) {s = 24;}
 
                         else if ( (LA24_0=='|') ) {s = 25;}
 
@@ -3476,42 +3512,6 @@ public class InternalKiVisLexer extends Lexer {
                         else if ( ((LA24_0>='\t' && LA24_0<='\n')||LA24_0=='\r'||LA24_0==' ') ) {s = 45;}
 
                         else if ( ((LA24_0>='\u0000' && LA24_0<='\b')||(LA24_0>='\u000B' && LA24_0<='\f')||(LA24_0>='\u000E' && LA24_0<='\u001F')||LA24_0=='$'||LA24_0==';'||(LA24_0>='\u007F' && LA24_0<='\uFFFF')) ) {s = 46;}
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 4 : 
-                        int LA24_177 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA24_177>='\u0000' && LA24_177<=',')||(LA24_177>=':' && LA24_177<='@')||LA24_177=='^'||LA24_177=='`'||(LA24_177>='{' && LA24_177<='\uFFFF')) ) {s = 150;}
-
-                        else if ( ((LA24_177>='-' && LA24_177<='9')||(LA24_177>='A' && LA24_177<=']')||LA24_177=='_'||(LA24_177>='a' && LA24_177<='z')) ) {s = 177;}
-
-                        else s = 50;
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 5 : 
-                        int LA24_99 = input.LA(1);
-
-                        s = -1;
-                        if ( (LA24_99=='*') ) {s = 148;}
-
-                        else if ( ((LA24_99>='-' && LA24_99<='9')||(LA24_99>='A' && LA24_99<=']')||LA24_99=='_'||(LA24_99>='a' && LA24_99<='z')) ) {s = 149;}
-
-                        else if ( ((LA24_99>='\u0000' && LA24_99<=')')||(LA24_99>='+' && LA24_99<=',')||(LA24_99>=':' && LA24_99<='@')||LA24_99=='^'||LA24_99=='`'||(LA24_99>='{' && LA24_99<='\uFFFF')) ) {s = 150;}
-
-                        else s = 50;
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 6 : 
-                        int LA24_42 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA24_42>='\u0000' && LA24_42<='\uFFFF')) ) {s = 111;}
-
-                        else s = 46;
 
                         if ( s>=0 ) return s;
                         break;

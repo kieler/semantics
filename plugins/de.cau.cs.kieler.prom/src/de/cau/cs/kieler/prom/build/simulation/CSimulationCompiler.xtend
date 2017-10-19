@@ -25,7 +25,7 @@ class CSimulationCompiler extends SimulationCompiler {
     /**
      * The default command to compile C code using the gcc.
      */
-    private static val DEFAULT_COMMAND = "gcc -std=c99 -Werror=int-conversion -o \"./${outputFolder}/${executable_name}\" \"${file_path}\" "
+    private static val DEFAULT_COMMAND = "gcc -std=c99 -Werror=int-conversion -o \"./${outputFolder}/${executable_name}\" \"${file_path}\" -lm"
     
     /**
      * Constructor

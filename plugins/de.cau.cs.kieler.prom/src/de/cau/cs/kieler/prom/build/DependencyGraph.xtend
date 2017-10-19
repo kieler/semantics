@@ -46,8 +46,8 @@ class DependencyGraph {
      * 
      * @return the dependency node with the given id, or null if none
      */
-    public def DependencyNode get(String id) {
-        return nodes.get(id)
+    public def DependencyNode get(IFile file) {
+        return nodes.get(getId(file))
     }
     
     /**
@@ -57,19 +57,9 @@ class DependencyGraph {
      * @return an existing dependency node for the given file, or a new one if none yet. 
      */
     public def DependencyNode getOrCreate(IFile file) {
-        return getOrCreate(file.fullPath.toOSString, file)
-    }
-    
-    /**
-     * Returns the dependency node with the given id.
-     * If no such node exists, a new one is created with the given content.
-     * 
-     * @return an existing dependency node for the given id, or a new one if none yet. 
-     */
-    public def DependencyNode getOrCreate(String id, Object content) {
-        var n = get(id)
+        var n = get(file)
         if(n == null) {
-            n = new DependencyNode(id, content)
+            n = new DependencyNode(file)
             add(n)
         }
         return n
@@ -135,5 +125,64 @@ class DependencyGraph {
         // Now finished without cycle
         n.seen = 2
         return null
+    }
+    
+    /**
+     * Returns the nodes in a topological order, i.e., an order that respects all dependencies.
+     * The node that represent files to be built are marked correspondingly.
+     */
+    public def List<DependencyNode> getTopologicalSort(List<IFile> filesToBeBuilt) {
+        // Marking algorithm: Count the number of dependencies,
+        // If a node has 0 dependencies,
+        // add the node to the list, set its dependency count to -1
+        // and decrement the dependency count of depending nodes by 1.
+        // Repeat until no nodes left.
+        
+        // Count dependencies of nodes
+        val nodeList = newLinkedList
+        nodeList.addAll(nodes.values)
+        for(n : nodeList) {
+            n.seen = n.dependencies.size
+            n.shouldBeBuilt = false
+        }
+        
+        // Indicate the files that should be built
+        for(file : filesToBeBuilt) {
+            val node = nodes.get(getId(file))
+            if(node != null) {
+                node.shouldBeBuilt = true    
+            }
+        }
+        
+        val result = <DependencyNode> newArrayList
+        while(result.size < nodeList.size) {
+            var boolean newLeafFound = false
+            // Remove the leaf nodes
+            for(n : nodeList) {
+                if(n.seen == 0) {
+                    // No dependencies left
+                    n.seen = -1
+                    result.add(n)
+                    // Add the corresponding file to the return list
+                    newLeafFound = true
+                    // Decrement dependencies of others
+                    // Indicate that the files should be built, if this file should be built
+                    for(depending : n.depending) {
+                        depending.seen--
+                        if(n.shouldBeBuilt) {
+                            depending.shouldBeBuilt = true
+                        }
+                    }
+                }
+            }
+            if(!newLeafFound) {
+                throw new Exception("There is no topological sort for the dependency graph. There are cyclic dependencies.")
+            }
+        }
+        return result
+    }
+    
+    private def String getId(IFile file) {
+        return file.fullPath.toOSString
     }
 }

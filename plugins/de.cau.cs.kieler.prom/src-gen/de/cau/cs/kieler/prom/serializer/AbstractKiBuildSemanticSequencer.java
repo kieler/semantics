@@ -3,19 +3,7 @@
  */
 package de.cau.cs.kieler.prom.serializer;
 
-import java.util.Set;
-
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.xtext.Action;
-import org.eclipse.xtext.Parameter;
-import org.eclipse.xtext.ParserRule;
-import org.eclipse.xtext.serializer.ISerializationContext;
-import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
-import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
-
 import com.google.inject.Inject;
-
 import de.cau.cs.kieler.annotations.Annotation;
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.annotations.CommentAnnotation;
@@ -37,6 +25,7 @@ import de.cau.cs.kieler.kexpressions.TextExpression;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.VectorValue;
 import de.cau.cs.kieler.kexpressions.serializer.KExpressionsSemanticSequencer;
+import de.cau.cs.kieler.prom.kibuild.ArrayIndex;
 import de.cau.cs.kieler.prom.kibuild.AttributeMapping;
 import de.cau.cs.kieler.prom.kibuild.BuildConfiguration;
 import de.cau.cs.kieler.prom.kibuild.KibuildPackage;
@@ -50,6 +39,15 @@ import de.cau.cs.kieler.prom.kibuild.SimulationTemplateProcessor;
 import de.cau.cs.kieler.prom.kibuild.TextValue;
 import de.cau.cs.kieler.prom.kibuild.WrapperCodeTemplateProcessor;
 import de.cau.cs.kieler.prom.services.KiBuildGrammarAccess;
+import java.util.Set;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.xtext.Action;
+import org.eclipse.xtext.Parameter;
+import org.eclipse.xtext.ParserRule;
+import org.eclipse.xtext.serializer.ISerializationContext;
+import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
+import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 
 @SuppressWarnings("all")
 public abstract class AbstractKiBuildSemanticSequencer extends KExpressionsSemanticSequencer {
@@ -637,6 +635,9 @@ public abstract class AbstractKiBuildSemanticSequencer extends KExpressionsSeman
 			}
 		else if (epackage == KibuildPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
+			case KibuildPackage.ARRAY_INDEX:
+				sequence_ArrayIndex(context, (ArrayIndex) semanticObject); 
+				return; 
 			case KibuildPackage.ATTRIBUTE_MAPPING:
 				sequence_AttributeMapping(context, (AttributeMapping) semanticObject); 
 				return; 
@@ -677,10 +678,22 @@ public abstract class AbstractKiBuildSemanticSequencer extends KExpressionsSeman
 	
 	/**
 	 * Contexts:
+	 *     ArrayIndex returns ArrayIndex
+	 *
+	 * Constraint:
+	 *     indices+=INT+
+	 */
+	protected void sequence_ArrayIndex(ISerializationContext context, ArrayIndex semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     AttributeMapping returns AttributeMapping
 	 *
 	 * Constraint:
-	 *     (name=ID (value=Literal | (values+=Literal values+=Literal+) | attributes+=AttributeMapping+))
+	 *     (name=ID arrayIndex=ArrayIndex? (value=Literal | (values+=Literal values+=Literal+) | attributes+=AttributeMapping+))
 	 */
 	protected void sequence_AttributeMapping(ISerializationContext context, AttributeMapping semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -716,7 +729,7 @@ public abstract class AbstractKiBuildSemanticSequencer extends KExpressionsSeman
 	 *     Literal returns Literal
 	 *
 	 * Constraint:
-	 *     (value=TextValue | value=SignedInt | value=SignedFloat | value=AnyValue)
+	 *     ((value=TextValue arrayIndex=ArrayIndex?) | value=SignedInt | value=SignedFloat | value=AnyValue)
 	 */
 	protected void sequence_Literal(ISerializationContext context, Literal semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -294,17 +294,19 @@ class KiVisView extends ViewPart {
                     // As this is invoked later in another thread,
                     // the pool that should be visualized might already be outdated.
                     // In this case we don't animate anything here.
-                    try {
-                        // Safe reference to animation handlers in case the reference changes concurrently
-                        val handlers = animationHandlers
-                        for (animation : handlers) {
-                            animation.apply(pool)
+                    if(force || pool == SimulationManager.instance.currentPool) {
+                        try {
+                            // Safe reference to animation handlers in case the reference changes concurrently
+                            val handlers = animationHandlers
+                            for (animation : handlers) {
+                                animation.apply(pool)
+                            }
+                        } catch (Exception e) {
+                            showError(e)
                         }
-                    } catch (Exception e) {
-                        showError(e)
+                        val duration = (System.currentTimeMillis-startTime)
+                        setStatusBarMessage("Update took " + duration + "ms")
                     }
-                    val duration = (System.currentTimeMillis-startTime)
-                    setStatusBarMessage("Update took " + duration + "ms")
                 ]
             }
         }

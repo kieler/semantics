@@ -6,20 +6,16 @@ import de.cau.cs.kieler.kivis.kivis.KivisPackage;
 import de.cau.cs.kieler.kivis.kivis.ModelReference;
 import de.cau.cs.kieler.kivis.kivis.VariableReference;
 
-import java.util.Collection;
+import de.cau.cs.kieler.prom.kibuild.ArrayIndex;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
-import org.eclipse.emf.ecore.util.EDataTypeEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,7 +27,7 @@ import org.eclipse.emf.ecore.util.EDataTypeEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.VariableReferenceImpl#getModel <em>Model</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.VariableReferenceImpl#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.VariableReferenceImpl#getIndices <em>Indices</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.VariableReferenceImpl#getArrayIndex <em>Array Index</em>}</li>
  * </ul>
  *
  * @generated
@@ -69,14 +65,14 @@ public class VariableReferenceImpl extends MinimalEObjectImpl.Container implemen
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getIndices() <em>Indices</em>}' attribute list.
+   * The cached value of the '{@link #getArrayIndex() <em>Array Index</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getIndices()
+   * @see #getArrayIndex()
    * @generated
    * @ordered
    */
-  protected EList<Integer> indices;
+  protected ArrayIndex arrayIndex;
 
   /**
    * <!-- begin-user-doc -->
@@ -175,13 +171,47 @@ public class VariableReferenceImpl extends MinimalEObjectImpl.Container implemen
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Integer> getIndices()
+  public ArrayIndex getArrayIndex()
   {
-    if (indices == null)
+    return arrayIndex;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetArrayIndex(ArrayIndex newArrayIndex, NotificationChain msgs)
+  {
+    ArrayIndex oldArrayIndex = arrayIndex;
+    arrayIndex = newArrayIndex;
+    if (eNotificationRequired())
     {
-      indices = new EDataTypeEList<Integer>(Integer.class, this, KivisPackage.VARIABLE_REFERENCE__INDICES);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KivisPackage.VARIABLE_REFERENCE__ARRAY_INDEX, oldArrayIndex, newArrayIndex);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
     }
-    return indices;
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setArrayIndex(ArrayIndex newArrayIndex)
+  {
+    if (newArrayIndex != arrayIndex)
+    {
+      NotificationChain msgs = null;
+      if (arrayIndex != null)
+        msgs = ((InternalEObject)arrayIndex).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KivisPackage.VARIABLE_REFERENCE__ARRAY_INDEX, null, msgs);
+      if (newArrayIndex != null)
+        msgs = ((InternalEObject)newArrayIndex).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KivisPackage.VARIABLE_REFERENCE__ARRAY_INDEX, null, msgs);
+      msgs = basicSetArrayIndex(newArrayIndex, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.VARIABLE_REFERENCE__ARRAY_INDEX, newArrayIndex, newArrayIndex));
   }
 
   /**
@@ -196,6 +226,8 @@ public class VariableReferenceImpl extends MinimalEObjectImpl.Container implemen
     {
       case KivisPackage.VARIABLE_REFERENCE__MODEL:
         return basicSetModel(null, msgs);
+      case KivisPackage.VARIABLE_REFERENCE__ARRAY_INDEX:
+        return basicSetArrayIndex(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -214,8 +246,8 @@ public class VariableReferenceImpl extends MinimalEObjectImpl.Container implemen
         return getModel();
       case KivisPackage.VARIABLE_REFERENCE__NAME:
         return getName();
-      case KivisPackage.VARIABLE_REFERENCE__INDICES:
-        return getIndices();
+      case KivisPackage.VARIABLE_REFERENCE__ARRAY_INDEX:
+        return getArrayIndex();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -225,7 +257,6 @@ public class VariableReferenceImpl extends MinimalEObjectImpl.Container implemen
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -237,9 +268,8 @@ public class VariableReferenceImpl extends MinimalEObjectImpl.Container implemen
       case KivisPackage.VARIABLE_REFERENCE__NAME:
         setName((String)newValue);
         return;
-      case KivisPackage.VARIABLE_REFERENCE__INDICES:
-        getIndices().clear();
-        getIndices().addAll((Collection<? extends Integer>)newValue);
+      case KivisPackage.VARIABLE_REFERENCE__ARRAY_INDEX:
+        setArrayIndex((ArrayIndex)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -261,8 +291,8 @@ public class VariableReferenceImpl extends MinimalEObjectImpl.Container implemen
       case KivisPackage.VARIABLE_REFERENCE__NAME:
         setName(NAME_EDEFAULT);
         return;
-      case KivisPackage.VARIABLE_REFERENCE__INDICES:
-        getIndices().clear();
+      case KivisPackage.VARIABLE_REFERENCE__ARRAY_INDEX:
+        setArrayIndex((ArrayIndex)null);
         return;
     }
     super.eUnset(featureID);
@@ -282,8 +312,8 @@ public class VariableReferenceImpl extends MinimalEObjectImpl.Container implemen
         return model != null;
       case KivisPackage.VARIABLE_REFERENCE__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case KivisPackage.VARIABLE_REFERENCE__INDICES:
-        return indices != null && !indices.isEmpty();
+      case KivisPackage.VARIABLE_REFERENCE__ARRAY_INDEX:
+        return arrayIndex != null;
     }
     return super.eIsSet(featureID);
   }
@@ -301,8 +331,6 @@ public class VariableReferenceImpl extends MinimalEObjectImpl.Container implemen
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");
     result.append(name);
-    result.append(", indices: ");
-    result.append(indices);
     result.append(')');
     return result.toString();
   }

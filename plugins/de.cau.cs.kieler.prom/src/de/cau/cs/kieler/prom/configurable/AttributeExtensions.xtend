@@ -25,6 +25,7 @@ import de.cau.cs.kieler.prom.kibuild.TextValue
 import java.util.List
 import java.util.Map
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.prom.kibuild.ArrayIndex
 
 /**
  * Extension methods for attributes from the kibuild grammar and classes that use these for configuration.
@@ -171,8 +172,10 @@ class AttributeExtensions {
      */
     public def Object getPrimitiveValue(EObject value) {
         var EObject valueHolder = value
+        var ArrayIndex arrayIndex
         if(value instanceof Literal) {
             valueHolder = value.value
+            arrayIndex = value.arrayIndex 
         }
         if(valueHolder instanceof SignedFloat) {
             return valueHolder.primitiveValue
@@ -187,7 +190,13 @@ class AttributeExtensions {
         } else if(valueHolder instanceof BoolValue) {
             return valueHolder.value
         } else if(valueHolder instanceof TextValue) {
-            return valueHolder.value
+            if(arrayIndex == null) {
+                return valueHolder.value
+            } else {
+                // Return the text and array indices
+                val indices = arrayIndex.indices.map["["+it.toString+"]"]
+                return valueHolder.value + indices.join("")
+            } 
         }
         return null
     }

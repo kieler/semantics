@@ -38,7 +38,7 @@ public class KiSimParser extends AbstractContentAssistParser {
 				private static final long serialVersionUID = 1L;
 				{
 					put(grammarAccess.getTemplateProcessorAccess().getAlternatives(), "rule__TemplateProcessor__Alternatives");
-					put(grammarAccess.getAttributeMappingAccess().getAlternatives_1(), "rule__AttributeMapping__Alternatives_1");
+					put(grammarAccess.getAttributeMappingAccess().getAlternatives_2(), "rule__AttributeMapping__Alternatives_2");
 					put(grammarAccess.getLiteralAccess().getAlternatives(), "rule__Literal__Alternatives");
 					put(grammarAccess.getExpressionAccess().getAlternatives_0(), "rule__Expression__Alternatives_0");
 					put(grammarAccess.getNotOrValuedExpressionAccess().getAlternatives(), "rule__NotOrValuedExpression__Alternatives");
@@ -80,10 +80,12 @@ public class KiSimParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSimulationTemplateProcessorAccess().getGroup(), "rule__SimulationTemplateProcessor__Group__0");
 					put(grammarAccess.getWrapperCodeTemplateProcessorAccess().getGroup(), "rule__WrapperCodeTemplateProcessor__Group__0");
 					put(grammarAccess.getAttributeMappingAccess().getGroup(), "rule__AttributeMapping__Group__0");
-					put(grammarAccess.getAttributeMappingAccess().getGroup_1_0(), "rule__AttributeMapping__Group_1_0__0");
-					put(grammarAccess.getAttributeMappingAccess().getGroup_1_1(), "rule__AttributeMapping__Group_1_1__0");
-					put(grammarAccess.getAttributeMappingAccess().getGroup_1_1_2(), "rule__AttributeMapping__Group_1_1_2__0");
-					put(grammarAccess.getAttributeMappingAccess().getGroup_1_2(), "rule__AttributeMapping__Group_1_2__0");
+					put(grammarAccess.getAttributeMappingAccess().getGroup_2_0(), "rule__AttributeMapping__Group_2_0__0");
+					put(grammarAccess.getAttributeMappingAccess().getGroup_2_1(), "rule__AttributeMapping__Group_2_1__0");
+					put(grammarAccess.getAttributeMappingAccess().getGroup_2_1_2(), "rule__AttributeMapping__Group_2_1_2__0");
+					put(grammarAccess.getAttributeMappingAccess().getGroup_2_2(), "rule__AttributeMapping__Group_2_2__0");
+					put(grammarAccess.getLiteralAccess().getGroup_0(), "rule__Literal__Group_0__0");
+					put(grammarAccess.getArrayIndexAccess().getGroup(), "rule__ArrayIndex__Group__0");
 					put(grammarAccess.getSignedFloatAccess().getGroup(), "rule__SignedFloat__Group__0");
 					put(grammarAccess.getSignedIntAccess().getGroup(), "rule__SignedInt__Group__0");
 					put(grammarAccess.getExpressionAccess().getGroup(), "rule__Expression__Group__0");
@@ -213,14 +215,17 @@ public class KiSimParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSimulationTemplateProcessorAccess().getAttributesAssignment_5(), "rule__SimulationTemplateProcessor__AttributesAssignment_5");
 					put(grammarAccess.getWrapperCodeTemplateProcessorAccess().getAttributesAssignment_5(), "rule__WrapperCodeTemplateProcessor__AttributesAssignment_5");
 					put(grammarAccess.getAttributeMappingAccess().getNameAssignment_0(), "rule__AttributeMapping__NameAssignment_0");
-					put(grammarAccess.getAttributeMappingAccess().getValueAssignment_1_0_1(), "rule__AttributeMapping__ValueAssignment_1_0_1");
-					put(grammarAccess.getAttributeMappingAccess().getValuesAssignment_1_1_1(), "rule__AttributeMapping__ValuesAssignment_1_1_1");
-					put(grammarAccess.getAttributeMappingAccess().getValuesAssignment_1_1_2_1(), "rule__AttributeMapping__ValuesAssignment_1_1_2_1");
-					put(grammarAccess.getAttributeMappingAccess().getAttributesAssignment_1_2_2(), "rule__AttributeMapping__AttributesAssignment_1_2_2");
-					put(grammarAccess.getLiteralAccess().getValueAssignment_0(), "rule__Literal__ValueAssignment_0");
+					put(grammarAccess.getAttributeMappingAccess().getArrayIndexAssignment_1(), "rule__AttributeMapping__ArrayIndexAssignment_1");
+					put(grammarAccess.getAttributeMappingAccess().getValueAssignment_2_0_1(), "rule__AttributeMapping__ValueAssignment_2_0_1");
+					put(grammarAccess.getAttributeMappingAccess().getValuesAssignment_2_1_1(), "rule__AttributeMapping__ValuesAssignment_2_1_1");
+					put(grammarAccess.getAttributeMappingAccess().getValuesAssignment_2_1_2_1(), "rule__AttributeMapping__ValuesAssignment_2_1_2_1");
+					put(grammarAccess.getAttributeMappingAccess().getAttributesAssignment_2_2_2(), "rule__AttributeMapping__AttributesAssignment_2_2_2");
+					put(grammarAccess.getLiteralAccess().getValueAssignment_0_0(), "rule__Literal__ValueAssignment_0_0");
+					put(grammarAccess.getLiteralAccess().getArrayIndexAssignment_0_1(), "rule__Literal__ArrayIndexAssignment_0_1");
 					put(grammarAccess.getLiteralAccess().getValueAssignment_1(), "rule__Literal__ValueAssignment_1");
 					put(grammarAccess.getLiteralAccess().getValueAssignment_2(), "rule__Literal__ValueAssignment_2");
 					put(grammarAccess.getLiteralAccess().getValueAssignment_3(), "rule__Literal__ValueAssignment_3");
+					put(grammarAccess.getArrayIndexAccess().getIndicesAssignment_1(), "rule__ArrayIndex__IndicesAssignment_1");
 					put(grammarAccess.getSignedFloatAccess().getSignAssignment_0(), "rule__SignedFloat__SignAssignment_0");
 					put(grammarAccess.getSignedFloatAccess().getValueAssignment_1(), "rule__SignedFloat__ValueAssignment_1");
 					put(grammarAccess.getSignedIntAccess().getSignAssignment_0(), "rule__SignedInt__SignAssignment_0");

@@ -392,6 +392,15 @@ public interface KivisPackage extends EPackage
   int ATTRIBUTE_MAPPING__NAME = KibuildPackage.ATTRIBUTE_MAPPING__NAME;
 
   /**
+   * The feature id for the '<em><b>Array Index</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE_MAPPING__ARRAY_INDEX = KibuildPackage.ATTRIBUTE_MAPPING__ARRAY_INDEX;
+
+  /**
    * The feature id for the '<em><b>Value</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -686,13 +695,13 @@ public interface KivisPackage extends EPackage
   int VARIABLE_REFERENCE__NAME = 1;
 
   /**
-   * The feature id for the '<em><b>Indices</b></em>' attribute list.
+   * The feature id for the '<em><b>Array Index</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VARIABLE_REFERENCE__INDICES = 2;
+  int VARIABLE_REFERENCE__ARRAY_INDEX = 2;
 
   /**
    * The number of structural features of the '<em>Variable Reference</em>' class.
@@ -1383,15 +1392,15 @@ public interface KivisPackage extends EPackage
   EAttribute getVariableReference_Name();
 
   /**
-   * Returns the meta object for the attribute list '{@link de.cau.cs.kieler.kivis.kivis.VariableReference#getIndices <em>Indices</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.VariableReference#getArrayIndex <em>Array Index</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute list '<em>Indices</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.VariableReference#getIndices()
+   * @return the meta object for the containment reference '<em>Array Index</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.VariableReference#getArrayIndex()
    * @see #getVariableReference()
    * @generated
    */
-  EAttribute getVariableReference_Indices();
+  EReference getVariableReference_ArrayIndex();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.ModelReference <em>Model Reference</em>}'.
@@ -1969,12 +1978,12 @@ public interface KivisPackage extends EPackage
     EAttribute VARIABLE_REFERENCE__NAME = eINSTANCE.getVariableReference_Name();
 
     /**
-     * The meta object literal for the '<em><b>Indices</b></em>' attribute list feature.
+     * The meta object literal for the '<em><b>Array Index</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute VARIABLE_REFERENCE__INDICES = eINSTANCE.getVariableReference_Indices();
+    EReference VARIABLE_REFERENCE__ARRAY_INDEX = eINSTANCE.getVariableReference_ArrayIndex();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.ModelReferenceImpl <em>Model Reference</em>}' class.

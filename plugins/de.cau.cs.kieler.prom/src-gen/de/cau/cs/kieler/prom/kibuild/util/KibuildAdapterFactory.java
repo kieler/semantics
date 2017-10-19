@@ -2,24 +2,14 @@
  */
 package de.cau.cs.kieler.prom.kibuild.util;
 
+import de.cau.cs.kieler.prom.kibuild.*;
+
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-import org.eclipse.emf.ecore.EObject;
 
-import de.cau.cs.kieler.prom.kibuild.AttributeMapping;
-import de.cau.cs.kieler.prom.kibuild.BuildConfiguration;
-import de.cau.cs.kieler.prom.kibuild.KibuildPackage;
-import de.cau.cs.kieler.prom.kibuild.Literal;
-import de.cau.cs.kieler.prom.kibuild.ModelCompiler;
-import de.cau.cs.kieler.prom.kibuild.NormalTemplateProcessor;
-import de.cau.cs.kieler.prom.kibuild.SignedFloat;
-import de.cau.cs.kieler.prom.kibuild.SignedInt;
-import de.cau.cs.kieler.prom.kibuild.SimulationCompiler;
-import de.cau.cs.kieler.prom.kibuild.SimulationTemplateProcessor;
-import de.cau.cs.kieler.prom.kibuild.TemplateProcessor;
-import de.cau.cs.kieler.prom.kibuild.TextValue;
-import de.cau.cs.kieler.prom.kibuild.WrapperCodeTemplateProcessor;
+import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
+
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -113,6 +103,11 @@ public class KibuildAdapterFactory extends AdapterFactoryImpl
       public Adapter caseLiteral(Literal object)
       {
         return createLiteralAdapter();
+      }
+      @Override
+      public Adapter caseArrayIndex(ArrayIndex object)
+      {
+        return createArrayIndexAdapter();
       }
       @Override
       public Adapter caseSignedFloat(SignedFloat object)
@@ -252,6 +247,21 @@ public class KibuildAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createLiteralAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.prom.kibuild.ArrayIndex <em>Array Index</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.prom.kibuild.ArrayIndex
+   * @generated
+   */
+  public Adapter createArrayIndexAdapter()
   {
     return null;
   }

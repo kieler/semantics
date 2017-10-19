@@ -2,21 +2,26 @@
  */
 package de.cau.cs.kieler.prom.kibuild.impl;
 
+import de.cau.cs.kieler.prom.kibuild.ArrayIndex;
+import de.cau.cs.kieler.prom.kibuild.AttributeMapping;
+import de.cau.cs.kieler.prom.kibuild.KibuildPackage;
+import de.cau.cs.kieler.prom.kibuild.Literal;
+
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
-import de.cau.cs.kieler.prom.kibuild.AttributeMapping;
-import de.cau.cs.kieler.prom.kibuild.KibuildPackage;
-import de.cau.cs.kieler.prom.kibuild.Literal;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,6 +32,7 @@ import de.cau.cs.kieler.prom.kibuild.Literal;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.prom.kibuild.impl.AttributeMappingImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.prom.kibuild.impl.AttributeMappingImpl#getArrayIndex <em>Array Index</em>}</li>
  *   <li>{@link de.cau.cs.kieler.prom.kibuild.impl.AttributeMappingImpl#getValue <em>Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.prom.kibuild.impl.AttributeMappingImpl#getValues <em>Values</em>}</li>
  *   <li>{@link de.cau.cs.kieler.prom.kibuild.impl.AttributeMappingImpl#getAttributes <em>Attributes</em>}</li>
@@ -55,6 +61,16 @@ public class AttributeMappingImpl extends MinimalEObjectImpl.Container implement
    * @ordered
    */
   protected String name = NAME_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getArrayIndex() <em>Array Index</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getArrayIndex()
+   * @generated
+   * @ordered
+   */
+  protected ArrayIndex arrayIndex;
 
   /**
    * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
@@ -128,6 +144,54 @@ public class AttributeMappingImpl extends MinimalEObjectImpl.Container implement
     name = newName;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, KibuildPackage.ATTRIBUTE_MAPPING__NAME, oldName, name));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ArrayIndex getArrayIndex()
+  {
+    return arrayIndex;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetArrayIndex(ArrayIndex newArrayIndex, NotificationChain msgs)
+  {
+    ArrayIndex oldArrayIndex = arrayIndex;
+    arrayIndex = newArrayIndex;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KibuildPackage.ATTRIBUTE_MAPPING__ARRAY_INDEX, oldArrayIndex, newArrayIndex);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setArrayIndex(ArrayIndex newArrayIndex)
+  {
+    if (newArrayIndex != arrayIndex)
+    {
+      NotificationChain msgs = null;
+      if (arrayIndex != null)
+        msgs = ((InternalEObject)arrayIndex).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KibuildPackage.ATTRIBUTE_MAPPING__ARRAY_INDEX, null, msgs);
+      if (newArrayIndex != null)
+        msgs = ((InternalEObject)newArrayIndex).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KibuildPackage.ATTRIBUTE_MAPPING__ARRAY_INDEX, null, msgs);
+      msgs = basicSetArrayIndex(newArrayIndex, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, KibuildPackage.ATTRIBUTE_MAPPING__ARRAY_INDEX, newArrayIndex, newArrayIndex));
   }
 
   /**
@@ -216,6 +280,8 @@ public class AttributeMappingImpl extends MinimalEObjectImpl.Container implement
   {
     switch (featureID)
     {
+      case KibuildPackage.ATTRIBUTE_MAPPING__ARRAY_INDEX:
+        return basicSetArrayIndex(null, msgs);
       case KibuildPackage.ATTRIBUTE_MAPPING__VALUE:
         return basicSetValue(null, msgs);
       case KibuildPackage.ATTRIBUTE_MAPPING__VALUES:
@@ -238,6 +304,8 @@ public class AttributeMappingImpl extends MinimalEObjectImpl.Container implement
     {
       case KibuildPackage.ATTRIBUTE_MAPPING__NAME:
         return getName();
+      case KibuildPackage.ATTRIBUTE_MAPPING__ARRAY_INDEX:
+        return getArrayIndex();
       case KibuildPackage.ATTRIBUTE_MAPPING__VALUE:
         return getValue();
       case KibuildPackage.ATTRIBUTE_MAPPING__VALUES:
@@ -261,6 +329,9 @@ public class AttributeMappingImpl extends MinimalEObjectImpl.Container implement
     {
       case KibuildPackage.ATTRIBUTE_MAPPING__NAME:
         setName((String)newValue);
+        return;
+      case KibuildPackage.ATTRIBUTE_MAPPING__ARRAY_INDEX:
+        setArrayIndex((ArrayIndex)newValue);
         return;
       case KibuildPackage.ATTRIBUTE_MAPPING__VALUE:
         setValue((Literal)newValue);
@@ -290,6 +361,9 @@ public class AttributeMappingImpl extends MinimalEObjectImpl.Container implement
       case KibuildPackage.ATTRIBUTE_MAPPING__NAME:
         setName(NAME_EDEFAULT);
         return;
+      case KibuildPackage.ATTRIBUTE_MAPPING__ARRAY_INDEX:
+        setArrayIndex((ArrayIndex)null);
+        return;
       case KibuildPackage.ATTRIBUTE_MAPPING__VALUE:
         setValue((Literal)null);
         return;
@@ -315,6 +389,8 @@ public class AttributeMappingImpl extends MinimalEObjectImpl.Container implement
     {
       case KibuildPackage.ATTRIBUTE_MAPPING__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case KibuildPackage.ATTRIBUTE_MAPPING__ARRAY_INDEX:
+        return arrayIndex != null;
       case KibuildPackage.ATTRIBUTE_MAPPING__VALUE:
         return value != null;
       case KibuildPackage.ATTRIBUTE_MAPPING__VALUES:

@@ -41,6 +41,7 @@ import de.cau.cs.kieler.kivis.kivis.ModelReference;
 import de.cau.cs.kieler.kivis.kivis.VariableReference;
 import de.cau.cs.kieler.kivis.kivis.VisualizationConfiguration;
 import de.cau.cs.kieler.kivis.services.KiVisGrammarAccess;
+import de.cau.cs.kieler.prom.kibuild.ArrayIndex;
 import de.cau.cs.kieler.prom.kibuild.BuildConfiguration;
 import de.cau.cs.kieler.prom.kibuild.KibuildPackage;
 import de.cau.cs.kieler.prom.kibuild.Literal;
@@ -649,6 +650,9 @@ public abstract class AbstractKiVisSemanticSequencer extends KiBuildSemanticSequ
 			}
 		else if (epackage == KibuildPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
+			case KibuildPackage.ARRAY_INDEX:
+				sequence_ArrayIndex(context, (ArrayIndex) semanticObject); 
+				return; 
 			case KibuildPackage.BUILD_CONFIGURATION:
 				sequence_BuildConfiguration(context, (BuildConfiguration) semanticObject); 
 				return; 
@@ -1007,7 +1011,7 @@ public abstract class AbstractKiVisSemanticSequencer extends KiBuildSemanticSequ
 	 *     VariableReference returns VariableReference
 	 *
 	 * Constraint:
-	 *     (model=ModelReference? name=ID indices+=INT*)
+	 *     (model=ModelReference? name=ID arrayIndex=ArrayIndex?)
 	 */
 	protected void sequence_VariableReference(ISerializationContext context, VariableReference semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

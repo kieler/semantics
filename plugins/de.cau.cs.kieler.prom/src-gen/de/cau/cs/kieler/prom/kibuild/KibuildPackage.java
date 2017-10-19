@@ -243,13 +243,22 @@ public interface KibuildPackage extends EPackage
   int ATTRIBUTE_MAPPING__NAME = 0;
 
   /**
+   * The feature id for the '<em><b>Array Index</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE_MAPPING__ARRAY_INDEX = 1;
+
+  /**
    * The feature id for the '<em><b>Value</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ATTRIBUTE_MAPPING__VALUE = 1;
+  int ATTRIBUTE_MAPPING__VALUE = 2;
 
   /**
    * The feature id for the '<em><b>Values</b></em>' containment reference list.
@@ -258,7 +267,7 @@ public interface KibuildPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ATTRIBUTE_MAPPING__VALUES = 2;
+  int ATTRIBUTE_MAPPING__VALUES = 3;
 
   /**
    * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
@@ -267,7 +276,7 @@ public interface KibuildPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ATTRIBUTE_MAPPING__ATTRIBUTES = 3;
+  int ATTRIBUTE_MAPPING__ATTRIBUTES = 4;
 
   /**
    * The number of structural features of the '<em>Attribute Mapping</em>' class.
@@ -276,7 +285,7 @@ public interface KibuildPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ATTRIBUTE_MAPPING_FEATURE_COUNT = 4;
+  int ATTRIBUTE_MAPPING_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.prom.kibuild.impl.LiteralImpl <em>Literal</em>}' class.
@@ -298,13 +307,50 @@ public interface KibuildPackage extends EPackage
   int LITERAL__VALUE = 0;
 
   /**
+   * The feature id for the '<em><b>Array Index</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LITERAL__ARRAY_INDEX = 1;
+
+  /**
    * The number of structural features of the '<em>Literal</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LITERAL_FEATURE_COUNT = 1;
+  int LITERAL_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.prom.kibuild.impl.ArrayIndexImpl <em>Array Index</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.prom.kibuild.impl.ArrayIndexImpl
+   * @see de.cau.cs.kieler.prom.kibuild.impl.KibuildPackageImpl#getArrayIndex()
+   * @generated
+   */
+  int ARRAY_INDEX = 6;
+
+  /**
+   * The feature id for the '<em><b>Indices</b></em>' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ARRAY_INDEX__INDICES = 0;
+
+  /**
+   * The number of structural features of the '<em>Array Index</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ARRAY_INDEX_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.prom.kibuild.impl.SignedFloatImpl <em>Signed Float</em>}' class.
@@ -314,7 +360,7 @@ public interface KibuildPackage extends EPackage
    * @see de.cau.cs.kieler.prom.kibuild.impl.KibuildPackageImpl#getSignedFloat()
    * @generated
    */
-  int SIGNED_FLOAT = 6;
+  int SIGNED_FLOAT = 7;
 
   /**
    * The feature id for the '<em><b>Sign</b></em>' attribute.
@@ -351,7 +397,7 @@ public interface KibuildPackage extends EPackage
    * @see de.cau.cs.kieler.prom.kibuild.impl.KibuildPackageImpl#getSignedInt()
    * @generated
    */
-  int SIGNED_INT = 7;
+  int SIGNED_INT = 8;
 
   /**
    * The feature id for the '<em><b>Sign</b></em>' attribute.
@@ -388,7 +434,7 @@ public interface KibuildPackage extends EPackage
    * @see de.cau.cs.kieler.prom.kibuild.impl.KibuildPackageImpl#getTextValue()
    * @generated
    */
-  int TEXT_VALUE = 8;
+  int TEXT_VALUE = 9;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -416,7 +462,7 @@ public interface KibuildPackage extends EPackage
    * @see de.cau.cs.kieler.prom.kibuild.impl.KibuildPackageImpl#getNormalTemplateProcessor()
    * @generated
    */
-  int NORMAL_TEMPLATE_PROCESSOR = 9;
+  int NORMAL_TEMPLATE_PROCESSOR = 10;
 
   /**
    * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
@@ -444,7 +490,7 @@ public interface KibuildPackage extends EPackage
    * @see de.cau.cs.kieler.prom.kibuild.impl.KibuildPackageImpl#getSimulationTemplateProcessor()
    * @generated
    */
-  int SIMULATION_TEMPLATE_PROCESSOR = 10;
+  int SIMULATION_TEMPLATE_PROCESSOR = 11;
 
   /**
    * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
@@ -472,7 +518,7 @@ public interface KibuildPackage extends EPackage
    * @see de.cau.cs.kieler.prom.kibuild.impl.KibuildPackageImpl#getWrapperCodeTemplateProcessor()
    * @generated
    */
-  int WRAPPER_CODE_TEMPLATE_PROCESSOR = 11;
+  int WRAPPER_CODE_TEMPLATE_PROCESSOR = 12;
 
   /**
    * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
@@ -500,7 +546,7 @@ public interface KibuildPackage extends EPackage
    * @see de.cau.cs.kieler.prom.kibuild.impl.KibuildPackageImpl#getSign()
    * @generated
    */
-  int SIGN = 12;
+  int SIGN = 13;
 
 
   /**
@@ -675,6 +721,17 @@ public interface KibuildPackage extends EPackage
   EAttribute getAttributeMapping_Name();
 
   /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.prom.kibuild.AttributeMapping#getArrayIndex <em>Array Index</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Array Index</em>'.
+   * @see de.cau.cs.kieler.prom.kibuild.AttributeMapping#getArrayIndex()
+   * @see #getAttributeMapping()
+   * @generated
+   */
+  EReference getAttributeMapping_ArrayIndex();
+
+  /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.prom.kibuild.AttributeMapping#getValue <em>Value</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -727,6 +784,38 @@ public interface KibuildPackage extends EPackage
    * @generated
    */
   EReference getLiteral_Value();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.prom.kibuild.Literal#getArrayIndex <em>Array Index</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Array Index</em>'.
+   * @see de.cau.cs.kieler.prom.kibuild.Literal#getArrayIndex()
+   * @see #getLiteral()
+   * @generated
+   */
+  EReference getLiteral_ArrayIndex();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.prom.kibuild.ArrayIndex <em>Array Index</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Array Index</em>'.
+   * @see de.cau.cs.kieler.prom.kibuild.ArrayIndex
+   * @generated
+   */
+  EClass getArrayIndex();
+
+  /**
+   * Returns the meta object for the attribute list '{@link de.cau.cs.kieler.prom.kibuild.ArrayIndex#getIndices <em>Indices</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute list '<em>Indices</em>'.
+   * @see de.cau.cs.kieler.prom.kibuild.ArrayIndex#getIndices()
+   * @see #getArrayIndex()
+   * @generated
+   */
+  EAttribute getArrayIndex_Indices();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.prom.kibuild.SignedFloat <em>Signed Float</em>}'.
@@ -1015,6 +1104,14 @@ public interface KibuildPackage extends EPackage
     EAttribute ATTRIBUTE_MAPPING__NAME = eINSTANCE.getAttributeMapping_Name();
 
     /**
+     * The meta object literal for the '<em><b>Array Index</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ATTRIBUTE_MAPPING__ARRAY_INDEX = eINSTANCE.getAttributeMapping_ArrayIndex();
+
+    /**
      * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1055,6 +1152,32 @@ public interface KibuildPackage extends EPackage
      * @generated
      */
     EReference LITERAL__VALUE = eINSTANCE.getLiteral_Value();
+
+    /**
+     * The meta object literal for the '<em><b>Array Index</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LITERAL__ARRAY_INDEX = eINSTANCE.getLiteral_ArrayIndex();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.prom.kibuild.impl.ArrayIndexImpl <em>Array Index</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.prom.kibuild.impl.ArrayIndexImpl
+     * @see de.cau.cs.kieler.prom.kibuild.impl.KibuildPackageImpl#getArrayIndex()
+     * @generated
+     */
+    EClass ARRAY_INDEX = eINSTANCE.getArrayIndex();
+
+    /**
+     * The meta object literal for the '<em><b>Indices</b></em>' attribute list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ARRAY_INDEX__INDICES = eINSTANCE.getArrayIndex_Indices();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.prom.kibuild.impl.SignedFloatImpl <em>Signed Float</em>}' class.

@@ -2,57 +2,50 @@
  */
 package de.cau.cs.kieler.prom.kibuild.impl;
 
+import de.cau.cs.kieler.prom.kibuild.ArrayIndex;
 import de.cau.cs.kieler.prom.kibuild.KibuildPackage;
-import de.cau.cs.kieler.prom.kibuild.TextValue;
 
-import org.eclipse.emf.common.notify.Notification;
+import java.util.Collection;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Text Value</b></em>'.
+ * An implementation of the model object '<em><b>Array Index</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.prom.kibuild.impl.TextValueImpl#getValue <em>Value</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.prom.kibuild.impl.ArrayIndexImpl#getIndices <em>Indices</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class TextValueImpl extends MinimalEObjectImpl.Container implements TextValue
+public class ArrayIndexImpl extends MinimalEObjectImpl.Container implements ArrayIndex
 {
   /**
-   * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
+   * The cached value of the '{@link #getIndices() <em>Indices</em>}' attribute list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getValue()
+   * @see #getIndices()
    * @generated
    * @ordered
    */
-  protected static final String VALUE_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getValue()
-   * @generated
-   * @ordered
-   */
-  protected String value = VALUE_EDEFAULT;
+  protected EList<Integer> indices;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected TextValueImpl()
+  protected ArrayIndexImpl()
   {
     super();
   }
@@ -65,7 +58,7 @@ public class TextValueImpl extends MinimalEObjectImpl.Container implements TextV
   @Override
   protected EClass eStaticClass()
   {
-    return KibuildPackage.Literals.TEXT_VALUE;
+    return KibuildPackage.Literals.ARRAY_INDEX;
   }
 
   /**
@@ -73,22 +66,13 @@ public class TextValueImpl extends MinimalEObjectImpl.Container implements TextV
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getValue()
+  public EList<Integer> getIndices()
   {
-    return value;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setValue(String newValue)
-  {
-    String oldValue = value;
-    value = newValue;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, KibuildPackage.TEXT_VALUE__VALUE, oldValue, value));
+    if (indices == null)
+    {
+      indices = new EDataTypeEList<Integer>(Integer.class, this, KibuildPackage.ARRAY_INDEX__INDICES);
+    }
+    return indices;
   }
 
   /**
@@ -101,8 +85,8 @@ public class TextValueImpl extends MinimalEObjectImpl.Container implements TextV
   {
     switch (featureID)
     {
-      case KibuildPackage.TEXT_VALUE__VALUE:
-        return getValue();
+      case KibuildPackage.ARRAY_INDEX__INDICES:
+        return getIndices();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -112,13 +96,15 @@ public class TextValueImpl extends MinimalEObjectImpl.Container implements TextV
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case KibuildPackage.TEXT_VALUE__VALUE:
-        setValue((String)newValue);
+      case KibuildPackage.ARRAY_INDEX__INDICES:
+        getIndices().clear();
+        getIndices().addAll((Collection<? extends Integer>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -134,8 +120,8 @@ public class TextValueImpl extends MinimalEObjectImpl.Container implements TextV
   {
     switch (featureID)
     {
-      case KibuildPackage.TEXT_VALUE__VALUE:
-        setValue(VALUE_EDEFAULT);
+      case KibuildPackage.ARRAY_INDEX__INDICES:
+        getIndices().clear();
         return;
     }
     super.eUnset(featureID);
@@ -151,8 +137,8 @@ public class TextValueImpl extends MinimalEObjectImpl.Container implements TextV
   {
     switch (featureID)
     {
-      case KibuildPackage.TEXT_VALUE__VALUE:
-        return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
+      case KibuildPackage.ARRAY_INDEX__INDICES:
+        return indices != null && !indices.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -168,10 +154,10 @@ public class TextValueImpl extends MinimalEObjectImpl.Container implements TextV
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (value: ");
-    result.append(value);
+    result.append(" (indices: ");
+    result.append(indices);
     result.append(')');
     return result.toString();
   }
 
-} //TextValueImpl
+} //ArrayIndexImpl

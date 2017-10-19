@@ -105,7 +105,6 @@ public class KiVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getComparisonAccess().getGroup(), "rule__Comparison__Group__0");
 					put(grammarAccess.getIntervalAccess().getGroup(), "rule__Interval__Group__0");
 					put(grammarAccess.getVariableReferenceAccess().getGroup(), "rule__VariableReference__Group__0");
-					put(grammarAccess.getVariableReferenceAccess().getGroup_2(), "rule__VariableReference__Group_2__0");
 					put(grammarAccess.getModelReferenceAccess().getGroup(), "rule__ModelReference__Group__0");
 					put(grammarAccess.getBuildConfigurationAccess().getGroup(), "rule__BuildConfiguration__Group__0");
 					put(grammarAccess.getModelCompilerAccess().getGroup(), "rule__ModelCompiler__Group__0");
@@ -113,6 +112,8 @@ public class KiVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getNormalTemplateProcessorAccess().getGroup(), "rule__NormalTemplateProcessor__Group__0");
 					put(grammarAccess.getSimulationTemplateProcessorAccess().getGroup(), "rule__SimulationTemplateProcessor__Group__0");
 					put(grammarAccess.getWrapperCodeTemplateProcessorAccess().getGroup(), "rule__WrapperCodeTemplateProcessor__Group__0");
+					put(grammarAccess.getLiteralAccess().getGroup_0(), "rule__Literal__Group_0__0");
+					put(grammarAccess.getArrayIndexAccess().getGroup(), "rule__ArrayIndex__Group__0");
 					put(grammarAccess.getSignedFloatAccess().getGroup(), "rule__SignedFloat__Group__0");
 					put(grammarAccess.getSignedIntAccess().getGroup(), "rule__SignedInt__Group__0");
 					put(grammarAccess.getExpressionAccess().getGroup(), "rule__Expression__Group__0");
@@ -263,7 +264,7 @@ public class KiVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAttributeDomainAccess().getRangeAssignment_2(), "rule__AttributeDomain__RangeAssignment_2");
 					put(grammarAccess.getVariableReferenceAccess().getModelAssignment_0(), "rule__VariableReference__ModelAssignment_0");
 					put(grammarAccess.getVariableReferenceAccess().getNameAssignment_1(), "rule__VariableReference__NameAssignment_1");
-					put(grammarAccess.getVariableReferenceAccess().getIndicesAssignment_2_1(), "rule__VariableReference__IndicesAssignment_2_1");
+					put(grammarAccess.getVariableReferenceAccess().getArrayIndexAssignment_2(), "rule__VariableReference__ArrayIndexAssignment_2");
 					put(grammarAccess.getModelReferenceAccess().getNameAssignment_0(), "rule__ModelReference__NameAssignment_0");
 					put(grammarAccess.getFunctionParameterAccess().getVariableReferenceAssignment_0(), "rule__FunctionParameter__VariableReferenceAssignment_0");
 					put(grammarAccess.getFunctionParameterAccess().getValueAssignment_1(), "rule__FunctionParameter__ValueAssignment_1");
@@ -279,10 +280,12 @@ public class KiVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getNormalTemplateProcessorAccess().getAttributesAssignment_4(), "rule__NormalTemplateProcessor__AttributesAssignment_4");
 					put(grammarAccess.getSimulationTemplateProcessorAccess().getAttributesAssignment_5(), "rule__SimulationTemplateProcessor__AttributesAssignment_5");
 					put(grammarAccess.getWrapperCodeTemplateProcessorAccess().getAttributesAssignment_5(), "rule__WrapperCodeTemplateProcessor__AttributesAssignment_5");
-					put(grammarAccess.getLiteralAccess().getValueAssignment_0(), "rule__Literal__ValueAssignment_0");
+					put(grammarAccess.getLiteralAccess().getValueAssignment_0_0(), "rule__Literal__ValueAssignment_0_0");
+					put(grammarAccess.getLiteralAccess().getArrayIndexAssignment_0_1(), "rule__Literal__ArrayIndexAssignment_0_1");
 					put(grammarAccess.getLiteralAccess().getValueAssignment_1(), "rule__Literal__ValueAssignment_1");
 					put(grammarAccess.getLiteralAccess().getValueAssignment_2(), "rule__Literal__ValueAssignment_2");
 					put(grammarAccess.getLiteralAccess().getValueAssignment_3(), "rule__Literal__ValueAssignment_3");
+					put(grammarAccess.getArrayIndexAccess().getIndicesAssignment_1(), "rule__ArrayIndex__IndicesAssignment_1");
 					put(grammarAccess.getSignedFloatAccess().getSignAssignment_0(), "rule__SignedFloat__SignAssignment_0");
 					put(grammarAccess.getSignedFloatAccess().getValueAssignment_1(), "rule__SignedFloat__ValueAssignment_1");
 					put(grammarAccess.getSignedIntAccess().getSignAssignment_0(), "rule__SignedInt__SignAssignment_0");

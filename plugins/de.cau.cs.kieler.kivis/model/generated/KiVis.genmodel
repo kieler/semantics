@@ -82,6 +82,7 @@
     <genClasses ecoreClass="KiVis.ecore#//VariableReference">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//VariableReference/model"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//VariableReference/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//VariableReference/arrayIndex"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//VariableReference/indices"/>
     </genClasses>
     <genClasses ecoreClass="KiVis.ecore#//ModelReference">

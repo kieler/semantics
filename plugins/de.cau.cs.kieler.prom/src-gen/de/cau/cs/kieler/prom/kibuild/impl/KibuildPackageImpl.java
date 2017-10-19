@@ -2,13 +2,7 @@
  */
 package de.cau.cs.kieler.prom.kibuild.impl;
 
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EEnum;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.impl.EPackageImpl;
-
+import de.cau.cs.kieler.prom.kibuild.ArrayIndex;
 import de.cau.cs.kieler.prom.kibuild.AttributeMapping;
 import de.cau.cs.kieler.prom.kibuild.BuildConfiguration;
 import de.cau.cs.kieler.prom.kibuild.KibuildFactory;
@@ -24,6 +18,14 @@ import de.cau.cs.kieler.prom.kibuild.SimulationTemplateProcessor;
 import de.cau.cs.kieler.prom.kibuild.TemplateProcessor;
 import de.cau.cs.kieler.prom.kibuild.TextValue;
 import de.cau.cs.kieler.prom.kibuild.WrapperCodeTemplateProcessor;
+
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+
+import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -74,6 +76,13 @@ public class KibuildPackageImpl extends EPackageImpl implements KibuildPackage
    * @generated
    */
   private EClass literalEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass arrayIndexEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -352,7 +361,7 @@ public class KibuildPackageImpl extends EPackageImpl implements KibuildPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getAttributeMapping_Value()
+  public EReference getAttributeMapping_ArrayIndex()
   {
     return (EReference)attributeMappingEClass.getEStructuralFeatures().get(1);
   }
@@ -362,7 +371,7 @@ public class KibuildPackageImpl extends EPackageImpl implements KibuildPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getAttributeMapping_Values()
+  public EReference getAttributeMapping_Value()
   {
     return (EReference)attributeMappingEClass.getEStructuralFeatures().get(2);
   }
@@ -372,9 +381,19 @@ public class KibuildPackageImpl extends EPackageImpl implements KibuildPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getAttributeMapping_Attributes()
+  public EReference getAttributeMapping_Values()
   {
     return (EReference)attributeMappingEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAttributeMapping_Attributes()
+  {
+    return (EReference)attributeMappingEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -395,6 +414,36 @@ public class KibuildPackageImpl extends EPackageImpl implements KibuildPackage
   public EReference getLiteral_Value()
   {
     return (EReference)literalEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getLiteral_ArrayIndex()
+  {
+    return (EReference)literalEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getArrayIndex()
+  {
+    return arrayIndexEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getArrayIndex_Indices()
+  {
+    return (EAttribute)arrayIndexEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -567,12 +616,17 @@ public class KibuildPackageImpl extends EPackageImpl implements KibuildPackage
 
     attributeMappingEClass = createEClass(ATTRIBUTE_MAPPING);
     createEAttribute(attributeMappingEClass, ATTRIBUTE_MAPPING__NAME);
+    createEReference(attributeMappingEClass, ATTRIBUTE_MAPPING__ARRAY_INDEX);
     createEReference(attributeMappingEClass, ATTRIBUTE_MAPPING__VALUE);
     createEReference(attributeMappingEClass, ATTRIBUTE_MAPPING__VALUES);
     createEReference(attributeMappingEClass, ATTRIBUTE_MAPPING__ATTRIBUTES);
 
     literalEClass = createEClass(LITERAL);
     createEReference(literalEClass, LITERAL__VALUE);
+    createEReference(literalEClass, LITERAL__ARRAY_INDEX);
+
+    arrayIndexEClass = createEClass(ARRAY_INDEX);
+    createEAttribute(arrayIndexEClass, ARRAY_INDEX__INDICES);
 
     signedFloatEClass = createEClass(SIGNED_FLOAT);
     createEAttribute(signedFloatEClass, SIGNED_FLOAT__SIGN);
@@ -649,12 +703,17 @@ public class KibuildPackageImpl extends EPackageImpl implements KibuildPackage
 
     initEClass(attributeMappingEClass, AttributeMapping.class, "AttributeMapping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAttributeMapping_Name(), ecorePackage.getEString(), "name", null, 0, 1, AttributeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAttributeMapping_ArrayIndex(), this.getArrayIndex(), null, "arrayIndex", null, 0, 1, AttributeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAttributeMapping_Value(), this.getLiteral(), null, "value", null, 0, 1, AttributeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAttributeMapping_Values(), this.getLiteral(), null, "values", null, 0, -1, AttributeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAttributeMapping_Attributes(), this.getAttributeMapping(), null, "attributes", null, 0, -1, AttributeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(literalEClass, Literal.class, "Literal", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getLiteral_Value(), ecorePackage.getEObject(), null, "value", null, 0, 1, Literal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLiteral_ArrayIndex(), this.getArrayIndex(), null, "arrayIndex", null, 0, 1, Literal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(arrayIndexEClass, ArrayIndex.class, "ArrayIndex", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getArrayIndex_Indices(), ecorePackage.getEInt(), "indices", null, 0, -1, ArrayIndex.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(signedFloatEClass, SignedFloat.class, "SignedFloat", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getSignedFloat_Sign(), this.getSign(), "sign", null, 0, 1, SignedFloat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

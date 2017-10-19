@@ -2,23 +2,12 @@
  */
 package de.cau.cs.kieler.prom.kibuild.util;
 
+import de.cau.cs.kieler.prom.kibuild.*;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.util.Switch;
 
-import de.cau.cs.kieler.prom.kibuild.AttributeMapping;
-import de.cau.cs.kieler.prom.kibuild.BuildConfiguration;
-import de.cau.cs.kieler.prom.kibuild.KibuildPackage;
-import de.cau.cs.kieler.prom.kibuild.Literal;
-import de.cau.cs.kieler.prom.kibuild.ModelCompiler;
-import de.cau.cs.kieler.prom.kibuild.NormalTemplateProcessor;
-import de.cau.cs.kieler.prom.kibuild.SignedFloat;
-import de.cau.cs.kieler.prom.kibuild.SignedInt;
-import de.cau.cs.kieler.prom.kibuild.SimulationCompiler;
-import de.cau.cs.kieler.prom.kibuild.SimulationTemplateProcessor;
-import de.cau.cs.kieler.prom.kibuild.TemplateProcessor;
-import de.cau.cs.kieler.prom.kibuild.TextValue;
-import de.cau.cs.kieler.prom.kibuild.WrapperCodeTemplateProcessor;
+import org.eclipse.emf.ecore.util.Switch;
 
 /**
  * <!-- begin-user-doc -->
@@ -122,6 +111,13 @@ public class KibuildSwitch<T> extends Switch<T>
       {
         Literal literal = (Literal)theEObject;
         T result = caseLiteral(literal);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case KibuildPackage.ARRAY_INDEX:
+      {
+        ArrayIndex arrayIndex = (ArrayIndex)theEObject;
+        T result = caseArrayIndex(arrayIndex);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -266,6 +262,22 @@ public class KibuildSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseLiteral(Literal object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Array Index</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Array Index</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseArrayIndex(ArrayIndex object)
   {
     return null;
   }

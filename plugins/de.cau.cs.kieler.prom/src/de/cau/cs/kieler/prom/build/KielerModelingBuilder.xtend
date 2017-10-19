@@ -322,37 +322,44 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      * @param files The template files, which should be processed, or null to build all
      */
     private def void processTemplates(List<IFile> files) {
-        // Collection of all created simulation files
-        val List<IFile> createdSimulationFiles = newArrayList
-        
         monitor.subTask("Processing templates")
         for(templateProcessor : templateProcessors) {
-            val templateFile = project.getFile(templateProcessor.template.stringValue)
-            var templateForChangedFile = false
-            if(files != null) {
-                // Check if the template of this processor changed
-                for(changedTemplate : files) {
-                    // Is this processor for this template?
-                    if(templateFile == changedTemplate) {
-                        templateForChangedFile = true
+            if(!monitor.isCanceled) {
+                val templateFile = project.getFile(templateProcessor.template.stringValue)
+                var templateForChangedFile = false
+                if(files != null) {
+                    // Check if the template of this processor changed
+                    for(changedTemplate : files) {
+                        // Is this processor for this template?
+                        if(templateFile == changedTemplate) {
+                            templateForChangedFile = true
+                        }
                     }
                 }
-            }
-            // Process the template
-            if(files == null || templateForChangedFile) {
-                monitor.subTask("Processing template '"+templateProcessor.template.stringValue+"'")
-                val result = templateProcessor.process
-                showBuildProblems(result.problems)
-                // Remember to compile simulation code
-                if(templateProcessor instanceof SimulationTemplateProcessor) {
-                    createdSimulationFiles.addAll(result.createdFiles)
+                // Process the template
+                if(files == null || templateForChangedFile) {
+                    process(templateProcessor)
                 }
             }
         }
-        
-        // Compile created simulation files
-        for(f : createdSimulationFiles) {
-            compileSimulationCode(f)
+    }
+    
+    /**
+     * Process the template of the template processor.
+     * 
+     * @param templateProcessor the template processor
+     */
+    private def void process(TemplateProcessor templateProcessor) {
+        if(!monitor.isCanceled) {
+            monitor.subTask("Processing template '"+templateProcessor.template.stringValue+"'")
+            val result = templateProcessor.process
+            showBuildProblems(result.problems)
+            // Compile created simulation files
+            if(templateProcessor instanceof SimulationTemplateProcessor) {
+                for(f : result.createdFiles) {
+                    compileSimulationCode(f)
+                }
+            }
         }
     }
     
@@ -366,77 +373,104 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
             return
         }
         
-        // Load changed models into resource set.
-        // But only if this is not a full build because in a full build this is done in the initialization.
-        if(kind != FULL_BUILD) {
-            for(f : files) {
-                if(!monitor.isCanceled) {
-                    monitor.subTask("Loading resource "+f.name)
-                    val res = ModelImporter.getResource(f, resourceSet)
-                    ModelImporter.reload(res, resourceSet)
-                }
-            }
-            // Re-link all models 
-            // Not needed since the Xtext nature is not required anymore for SCCharts
-//                relink(resourceSet)
-        }
-
-        // Compile using the registered model compilers
+        // Remember which file correspods to which model, to load them only once
+        val modelForFile = <String, EObject>newHashMap
+        
+        // Load changed models into resource set and update their dependencies.
         for(file : files) {
-            // Compile, generate simulation code, fetch wrapper code annotations
+            // Reload the model in the resource set
+            reload(file)
+            // Get the model
             if(!monitor.isCanceled) {
-                // Remove all warnings and errors from a previous build.
-                deleteMarkers(file)
-                // Compile models
                 monitor.subTask("Loading model "+file.name)
-                val model = ModelImporter.getEObject(file, resourceSet)
-                if(model == null) {
-                    throw new Exception("Couldn't load model "+file.name)
-                }
-                // Compile model
+                val model = loadModel(file)
+                // Remember the model for this file
+                modelForFile.put(file.fullPath.toOSString, model)
+                // Update the dependencies
+                updateDependencies(model, file)
+            }
+        }
+        
+        if(!monitor.isCanceled) {
+            // Get topological sort of the dependency graph and mark the files that should be built (including depending files)
+            monitor.subTask("Calculating dependencies")
+            checkDependencies
+            val topologicalSort = dependencyGraph.getTopologicalSort(files)
+            System.err.println("topological sort: "+topologicalSort)
+            
+            // Build the files
+            for(node : topologicalSort) {
                 if(!monitor.isCanceled) {
-                    for(modelCompiler : modelCompilers) {
-                        monitor.subTask("Compiling model '"+file.name+ "' using "+modelCompiler)
-                        val result = modelCompiler.compile(file, model)
-                        // Show problems of result
-                        showBuildProblems(result.problems)
-                        if(result.simulationGenerationResult != null) {
-                            showBuildProblems(result.simulationGenerationResult.problems)
+                    if(node.shouldBeBuilt) {
+                        val file = node.file
+                        var model = modelForFile.get(file.fullPath.toOSString)
+                        if(model == null) {
+                            // The model was not yet loaded,
+                            // thus it is a model which is built because it depends on some already built model.
+                            reload(file)
+                            model = loadModel(file)
                         }
-                        // Remember to compile simulation code
-                        for(simFile : result.createdSimulationFiles) {
-                            compileSimulationCode(simFile)
-                        }
+                        buildModel(model, file)
                     }
                 }
-                
-                // Find dependencies
-                updateDependencies(model, file)
-                
-                // Build depending files recursively
-                buildDependingFiles(model, file)
             }
         }
     }
 
     /**
-     * Builds the files that reference the given model.
+     * Reloads the model in the given file into the resource set.
      * 
-     * @param model The model that is referenced
-     * @param modelFile The file in which the model is saved
+     * @param file The file
      */
-    private def void buildDependingFiles(EObject model, IFile modelFile) {
-        val node = dependencyGraph.getOrCreate(modelFile)
-        val dependingFiles = <IFile> newArrayList
-        for(dependingNode : node.depending) {
-            val dependingFile = dependingNode.content
-            if(dependingFile != null && dependingFile instanceof IFile) {
-                dependingFiles.add(dependingFile as IFile)
-            }
+    private def void reload(IFile file) {
+        if(!monitor.isCanceled) {
+            monitor.subTask("Reloading resource "+ file.name)
+            val res = ModelImporter.getResource(file, resourceSet)
+            ModelImporter.reload(res, resourceSet)
         }
-        if(!dependingFiles.isNullOrEmpty) {
-//            System.err.println("Building depending files:"+dependingFiles)
-            buildModels(dependingFiles) 
+    }
+    
+    /**
+     * Loads the model from the given file.
+     * 
+     * @param file The file
+     * @return the EObject that is saved in the file
+     */
+    private def EObject loadModel(IFile file) {
+        if(!monitor.isCanceled) {
+            monitor.subTask("Loading model "+ file.name)
+            val model = ModelImporter.getEObject(file, resourceSet)
+            if(model == null) {
+                throw new Exception("Couldn't load model "+file.name)
+            }
+            return model
+        }
+    }
+
+    /**
+     * Builds the model using the loaded model compilers and simulation compilers.
+     * 
+     * @param model The model
+     * @param file The file of the model
+     */
+    private def void buildModel(EObject model, IFile file) {
+        if(!monitor.isCanceled) {
+            // Remove all warnings and errors from a previous build.
+            deleteMarkers(file)
+            // Compile model
+            for(modelCompiler : modelCompilers) {
+                monitor.subTask("Compiling model '"+file.name+ "' using "+modelCompiler)
+                val result = modelCompiler.compile(file, model)
+                // Show problems of result
+                showBuildProblems(result.problems)
+                if(result.simulationGenerationResult != null) {
+                    showBuildProblems(result.simulationGenerationResult.problems)
+                }
+                // Compile simulation code
+                for(simFile : result.createdSimulationFiles) {
+                    compileSimulationCode(simFile)
+                }
+            }
         }
     }
     
@@ -524,7 +558,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
         // These are updated later, if a model file changes.
         if(!isInitialized) {
             isInitialized = true
-            createResourceSet    
+            createResourceSet
         }
     }
     
@@ -591,10 +625,13 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      * @param file The file with simulation code that should be compiled
      */
     private def void compileSimulationCode(IFile file) {
-        for(simulationCompiler : simulationCompilers) {
-            if(simulationCompiler.canCompile(file)) {
-                val result = simulationCompiler.compile(file)
-                showBuildProblems(result.problems)
+        if(!monitor.isCanceled) {
+            for(simulationCompiler : simulationCompilers) {
+                if(simulationCompiler.canCompile(file)) {
+                    monitor.subTask("Compiling simulation code "+file.name)
+                    val result = simulationCompiler.compile(file)
+                    showBuildProblems(result.problems)
+                }
             }
         }
     }
@@ -624,20 +661,8 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
         resourceSet = new XtextResourceSet()
         // Load all model files into one resource set.
         
-        // Since the Xtext nature is not required anymore for SCCharts,
-        // there in no need to collect all models in one resource set and to relink.
-//        val modelFiles = findModelFilesInProject()
-//        for(f : modelFiles) {
-//            monitor.subTask("Loading "+f.name)
-//            ModelImporter.getResource(f, resourceSet)
-//        }
-        // Relink loaded resources, because all potentially referenced models are in the resource set now.
-//        relink(resourceSet)
-
         // Update dependencies
         createDependencyGraph
-        // Check dependencies for validation
-        checkDependencies
     }
 
     /**
@@ -646,12 +671,8 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
     private def void createDependencyGraph() {
         // Create new dependency graph
         dependencyGraph = new DependencyGraph()
-        // Print out dependencies
-//        for(n : dependencies.nodes) { 
-//            for(d : n.dependencies) {
-//                println(n.id + " ref " + d.id)
-//            }
-//        }
+        // Check dependencies (e.g. no cycles)
+        checkDependencies
     }
 
     /**

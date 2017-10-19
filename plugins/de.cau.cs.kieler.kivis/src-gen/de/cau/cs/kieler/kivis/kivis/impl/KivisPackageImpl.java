@@ -759,9 +759,9 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getVariableReference_Indices()
+  public EReference getVariableReference_ArrayIndex()
   {
-    return (EAttribute)variableReferenceEClass.getEStructuralFeatures().get(2);
+    return (EReference)variableReferenceEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -968,7 +968,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
     variableReferenceEClass = createEClass(VARIABLE_REFERENCE);
     createEReference(variableReferenceEClass, VARIABLE_REFERENCE__MODEL);
     createEAttribute(variableReferenceEClass, VARIABLE_REFERENCE__NAME);
-    createEAttribute(variableReferenceEClass, VARIABLE_REFERENCE__INDICES);
+    createEReference(variableReferenceEClass, VARIABLE_REFERENCE__ARRAY_INDEX);
 
     modelReferenceEClass = createEClass(MODEL_REFERENCE);
     createEAttribute(modelReferenceEClass, MODEL_REFERENCE__NAME);
@@ -1089,7 +1089,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
     initEClass(variableReferenceEClass, VariableReference.class, "VariableReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getVariableReference_Model(), this.getModelReference(), null, "model", null, 0, 1, VariableReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getVariableReference_Name(), ecorePackage.getEString(), "name", null, 0, 1, VariableReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getVariableReference_Indices(), ecorePackage.getEInt(), "indices", null, 0, -1, VariableReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getVariableReference_ArrayIndex(), theKibuildPackage.getArrayIndex(), null, "arrayIndex", null, 0, 1, VariableReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(modelReferenceEClass, ModelReference.class, "ModelReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getModelReference_Name(), ecorePackage.getEString(), "name", null, 0, 1, ModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

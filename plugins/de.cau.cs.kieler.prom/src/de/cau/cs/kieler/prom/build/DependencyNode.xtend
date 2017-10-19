@@ -13,11 +13,11 @@
 package de.cau.cs.kieler.prom.build
 
 import java.util.List
+import org.eclipse.core.resources.IFile
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
- * A node in the dependency graph. It has an id and optional content as well as a list for dependencies and depending nodes.
- * For instance a file handle could use its full path as id whereas the content is the file handle itself.
+ * A node in the dependency graph. It contains file handle as well as a list for dependencies and depending nodes.
  * 
  * @author aas
  *
@@ -35,16 +35,10 @@ class DependencyNode {
     private val List<DependencyNode> depending = newArrayList
     
     /**
-     * The id of this node. It is used to identify the node.
-     * For files this could be the full path.
+     * The file handle
      */
     @Accessors
-    private var String id
-    /**
-     * Optional content for the node.
-     */
-    @Accessors
-    private var Object content
+    private var IFile file
     
     /**
      * Flag that can be set when visiting in a depth first search or breadth first search 
@@ -52,14 +46,17 @@ class DependencyNode {
     protected int seen
     
     /**
+     * Flag to indicate that this file should be built
+     */
+    public boolean shouldBeBuilt
+    
+    /**
      * Constructor
      * 
-     * @param id The id
-     * @param content The content
+     * @param file The file
      */
-    new(String id, Object content) {
-        this.id = id
-        this.content = content
+    new(IFile file) {
+        this.file = file
     }
     
     /**
@@ -108,6 +105,10 @@ class DependencyNode {
      * {@inheritDoc}
      */
     override toString() {
-        return id
+        return "node '"+id+"' ("+shouldBeBuilt+")"
+    }
+    
+    public def String getId() {
+        return file.fullPath.toOSString
     }
 }

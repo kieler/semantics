@@ -66,11 +66,14 @@ class ConfigurableAttribute {
         this.value = defaultValue
         if(defaultValue != null) {
             this.supportedTypes = newArrayList(defaultValue.class)
-            // Add use integers when double is supported
+            // Use also other numbers for integers or double
             if(defaultValue.class == Double) {
                 this.supportedTypes.add(Integer)
                 this.supportedTypes.add(Float)
-            }    
+            } else if(defaultValue.class == Integer) {
+                this.supportedTypes.add(Double)
+                this.supportedTypes.add(Float)
+            }
         }
     }
     

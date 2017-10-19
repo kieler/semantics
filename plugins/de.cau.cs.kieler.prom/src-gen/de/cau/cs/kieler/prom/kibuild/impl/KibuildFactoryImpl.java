@@ -2,28 +2,16 @@
  */
 package de.cau.cs.kieler.prom.kibuild.impl;
 
+import de.cau.cs.kieler.prom.kibuild.*;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.impl.EFactoryImpl;
-import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
-import de.cau.cs.kieler.prom.kibuild.AttributeMapping;
-import de.cau.cs.kieler.prom.kibuild.BuildConfiguration;
-import de.cau.cs.kieler.prom.kibuild.KibuildFactory;
-import de.cau.cs.kieler.prom.kibuild.KibuildPackage;
-import de.cau.cs.kieler.prom.kibuild.Literal;
-import de.cau.cs.kieler.prom.kibuild.ModelCompiler;
-import de.cau.cs.kieler.prom.kibuild.NormalTemplateProcessor;
-import de.cau.cs.kieler.prom.kibuild.Sign;
-import de.cau.cs.kieler.prom.kibuild.SignedFloat;
-import de.cau.cs.kieler.prom.kibuild.SignedInt;
-import de.cau.cs.kieler.prom.kibuild.SimulationCompiler;
-import de.cau.cs.kieler.prom.kibuild.SimulationTemplateProcessor;
-import de.cau.cs.kieler.prom.kibuild.TemplateProcessor;
-import de.cau.cs.kieler.prom.kibuild.TextValue;
-import de.cau.cs.kieler.prom.kibuild.WrapperCodeTemplateProcessor;
+import org.eclipse.emf.ecore.impl.EFactoryImpl;
+
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc -->
@@ -83,6 +71,7 @@ public class KibuildFactoryImpl extends EFactoryImpl implements KibuildFactory
       case KibuildPackage.TEMPLATE_PROCESSOR: return createTemplateProcessor();
       case KibuildPackage.ATTRIBUTE_MAPPING: return createAttributeMapping();
       case KibuildPackage.LITERAL: return createLiteral();
+      case KibuildPackage.ARRAY_INDEX: return createArrayIndex();
       case KibuildPackage.SIGNED_FLOAT: return createSignedFloat();
       case KibuildPackage.SIGNED_INT: return createSignedInt();
       case KibuildPackage.TEXT_VALUE: return createTextValue();
@@ -192,6 +181,17 @@ public class KibuildFactoryImpl extends EFactoryImpl implements KibuildFactory
   {
     LiteralImpl literal = new LiteralImpl();
     return literal;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ArrayIndex createArrayIndex()
+  {
+    ArrayIndexImpl arrayIndex = new ArrayIndexImpl();
+    return arrayIndex;
   }
 
   /**

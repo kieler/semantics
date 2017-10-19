@@ -24,6 +24,7 @@ import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.VectorValue;
+import de.cau.cs.kieler.prom.kibuild.ArrayIndex;
 import de.cau.cs.kieler.prom.kibuild.AttributeMapping;
 import de.cau.cs.kieler.prom.kibuild.BuildConfiguration;
 import de.cau.cs.kieler.prom.kibuild.KibuildPackage;
@@ -637,6 +638,9 @@ public abstract class AbstractKiSimSemanticSequencer extends KiBuildSemanticSequ
 			}
 		else if (epackage == KibuildPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
+			case KibuildPackage.ARRAY_INDEX:
+				sequence_ArrayIndex(context, (ArrayIndex) semanticObject); 
+				return; 
 			case KibuildPackage.ATTRIBUTE_MAPPING:
 				sequence_AttributeMapping(context, (AttributeMapping) semanticObject); 
 				return; 

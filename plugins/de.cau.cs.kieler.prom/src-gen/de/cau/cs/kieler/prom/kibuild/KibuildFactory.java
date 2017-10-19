@@ -77,6 +77,15 @@ public interface KibuildFactory extends EFactory
   Literal createLiteral();
 
   /**
+   * Returns a new object of class '<em>Array Index</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Array Index</em>'.
+   * @generated
+   */
+  ArrayIndex createArrayIndex();
+
+  /**
    * Returns a new object of class '<em>Signed Float</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

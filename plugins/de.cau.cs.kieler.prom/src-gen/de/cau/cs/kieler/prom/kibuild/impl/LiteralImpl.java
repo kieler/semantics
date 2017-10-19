@@ -2,16 +2,19 @@
  */
 package de.cau.cs.kieler.prom.kibuild.impl;
 
+import de.cau.cs.kieler.prom.kibuild.ArrayIndex;
+import de.cau.cs.kieler.prom.kibuild.KibuildPackage;
+import de.cau.cs.kieler.prom.kibuild.Literal;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
-import de.cau.cs.kieler.prom.kibuild.KibuildPackage;
-import de.cau.cs.kieler.prom.kibuild.Literal;
 
 /**
  * <!-- begin-user-doc -->
@@ -22,6 +25,7 @@ import de.cau.cs.kieler.prom.kibuild.Literal;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.prom.kibuild.impl.LiteralImpl#getValue <em>Value</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.prom.kibuild.impl.LiteralImpl#getArrayIndex <em>Array Index</em>}</li>
  * </ul>
  *
  * @generated
@@ -37,6 +41,16 @@ public class LiteralImpl extends MinimalEObjectImpl.Container implements Literal
    * @ordered
    */
   protected EObject value;
+
+  /**
+   * The cached value of the '{@link #getArrayIndex() <em>Array Index</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getArrayIndex()
+   * @generated
+   * @ordered
+   */
+  protected ArrayIndex arrayIndex;
 
   /**
    * <!-- begin-user-doc -->
@@ -112,6 +126,54 @@ public class LiteralImpl extends MinimalEObjectImpl.Container implements Literal
    * <!-- end-user-doc -->
    * @generated
    */
+  public ArrayIndex getArrayIndex()
+  {
+    return arrayIndex;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetArrayIndex(ArrayIndex newArrayIndex, NotificationChain msgs)
+  {
+    ArrayIndex oldArrayIndex = arrayIndex;
+    arrayIndex = newArrayIndex;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KibuildPackage.LITERAL__ARRAY_INDEX, oldArrayIndex, newArrayIndex);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setArrayIndex(ArrayIndex newArrayIndex)
+  {
+    if (newArrayIndex != arrayIndex)
+    {
+      NotificationChain msgs = null;
+      if (arrayIndex != null)
+        msgs = ((InternalEObject)arrayIndex).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KibuildPackage.LITERAL__ARRAY_INDEX, null, msgs);
+      if (newArrayIndex != null)
+        msgs = ((InternalEObject)newArrayIndex).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KibuildPackage.LITERAL__ARRAY_INDEX, null, msgs);
+      msgs = basicSetArrayIndex(newArrayIndex, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, KibuildPackage.LITERAL__ARRAY_INDEX, newArrayIndex, newArrayIndex));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -119,6 +181,8 @@ public class LiteralImpl extends MinimalEObjectImpl.Container implements Literal
     {
       case KibuildPackage.LITERAL__VALUE:
         return basicSetValue(null, msgs);
+      case KibuildPackage.LITERAL__ARRAY_INDEX:
+        return basicSetArrayIndex(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -135,6 +199,8 @@ public class LiteralImpl extends MinimalEObjectImpl.Container implements Literal
     {
       case KibuildPackage.LITERAL__VALUE:
         return getValue();
+      case KibuildPackage.LITERAL__ARRAY_INDEX:
+        return getArrayIndex();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -151,6 +217,9 @@ public class LiteralImpl extends MinimalEObjectImpl.Container implements Literal
     {
       case KibuildPackage.LITERAL__VALUE:
         setValue((EObject)newValue);
+        return;
+      case KibuildPackage.LITERAL__ARRAY_INDEX:
+        setArrayIndex((ArrayIndex)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -169,6 +238,9 @@ public class LiteralImpl extends MinimalEObjectImpl.Container implements Literal
       case KibuildPackage.LITERAL__VALUE:
         setValue((EObject)null);
         return;
+      case KibuildPackage.LITERAL__ARRAY_INDEX:
+        setArrayIndex((ArrayIndex)null);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -185,6 +257,8 @@ public class LiteralImpl extends MinimalEObjectImpl.Container implements Literal
     {
       case KibuildPackage.LITERAL__VALUE:
         return value != null;
+      case KibuildPackage.LITERAL__ARRAY_INDEX:
+        return arrayIndex != null;
     }
     return super.eIsSet(featureID);
   }

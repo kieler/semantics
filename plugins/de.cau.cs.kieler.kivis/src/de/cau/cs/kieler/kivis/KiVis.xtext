@@ -93,7 +93,7 @@ AttributeDomain returns Domain:
 VariableReference:
     (model=ModelReference)?
     name=ID
-    ('[' indices+=INT ']')*
+    (arrayIndex = ArrayIndex)?
 ;
 
 ModelReference:
@@ -120,5 +120,5 @@ enum SimulationOperation:
 ;
 
 Range:
-    '-' // Alternative would be '..'
+    '-' // Alternative would be '..' but this creates problems with floating point numbers
 ;

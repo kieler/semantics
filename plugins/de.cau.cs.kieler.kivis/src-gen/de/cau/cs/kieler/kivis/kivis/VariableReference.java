@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.kivis.kivis;
 
-import org.eclipse.emf.common.util.EList;
+import de.cau.cs.kieler.prom.kibuild.ArrayIndex;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.VariableReference#getModel <em>Model</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.VariableReference#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kivis.kivis.VariableReference#getIndices <em>Indices</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.VariableReference#getArrayIndex <em>Array Index</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getVariableReference()
@@ -79,19 +79,29 @@ public interface VariableReference extends EObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Indices</b></em>' attribute list.
-   * The list contents are of type {@link java.lang.Integer}.
+   * Returns the value of the '<em><b>Array Index</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Indices</em>' attribute list isn't clear,
+   * If the meaning of the '<em>Array Index</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Indices</em>' attribute list.
-   * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getVariableReference_Indices()
-   * @model unique="false"
+   * @return the value of the '<em>Array Index</em>' containment reference.
+   * @see #setArrayIndex(ArrayIndex)
+   * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getVariableReference_ArrayIndex()
+   * @model containment="true"
    * @generated
    */
-  EList<Integer> getIndices();
+  ArrayIndex getArrayIndex();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.kivis.kivis.VariableReference#getArrayIndex <em>Array Index</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Array Index</em>' containment reference.
+   * @see #getArrayIndex()
+   * @generated
+   */
+  void setArrayIndex(ArrayIndex value);
 
 } // VariableReference

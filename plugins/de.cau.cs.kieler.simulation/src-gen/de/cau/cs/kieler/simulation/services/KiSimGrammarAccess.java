@@ -443,7 +443,9 @@ public class KiSimGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AttributeMapping:
-	//	name=ID (':' value=Literal | ':' values+=Literal (',' values+=Literal)+ | ':'? '{' attributes+=AttributeMapping+ '}');
+	//	name=ID
+	//	arrayIndex=ArrayIndex? (':' value=Literal | ':' values+=Literal (',' values+=Literal)+ | ':'? '{'
+	//	attributes+=AttributeMapping+ '}');
 	public KiBuildGrammarAccess.AttributeMappingElements getAttributeMappingAccess() {
 		return gaKiBuild.getAttributeMappingAccess();
 	}
@@ -453,13 +455,25 @@ public class KiSimGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Literal:
-	//	value=TextValue | value=SignedInt | value=SignedFloat | value=AnyValue;
+	//	value=TextValue arrayIndex=ArrayIndex? | value=SignedInt
+	//	| value=SignedFloat
+	//	| value=AnyValue;
 	public KiBuildGrammarAccess.LiteralElements getLiteralAccess() {
 		return gaKiBuild.getLiteralAccess();
 	}
 	
 	public ParserRule getLiteralRule() {
 		return getLiteralAccess().getRule();
+	}
+
+	//ArrayIndex:
+	//	('[' indices+=INT ']')+;
+	public KiBuildGrammarAccess.ArrayIndexElements getArrayIndexAccess() {
+		return gaKiBuild.getArrayIndexAccess();
+	}
+	
+	public ParserRule getArrayIndexRule() {
+		return getArrayIndexAccess().getRule();
 	}
 
 	//enum Sign:
@@ -511,8 +525,7 @@ public class KiSimGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//terminal ID:
-	//	'^'? ('a'..'z' | 'A'..'Z' | '_' | '/' | '\\') ('a'..'z' | 'A'..'Z' | '_' | '-' | '.' | '/' | '\\' | '0'..'9' | '[' |
-	//	']')*;
+	//	'^'? ('a'..'z' | 'A'..'Z' | '_' | '/' | '\\') ('a'..'z' | 'A'..'Z' | '_' | '-' | '.' | '/' | '\\' | '0'..'9')*;
 	public TerminalRule getIDRule() {
 		return gaKiBuild.getIDRule();
 	} 

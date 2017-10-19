@@ -59,7 +59,7 @@ class KiVisExtensions {
         // Get variable in pool
         val variable = pool.getVariable(modelName, variableName)
         if(variable == null) {
-            throw new Exception("No variable '"+variableName+"' was found in the data pool.\nPlease check the spelling or array indices if any.")
+            throw new Exception("'"+variableName+"' was not found in the data pool.")
         }
         return variable
     }
@@ -84,7 +84,7 @@ class KiVisExtensions {
                                variable.value
         // Get value of an array element
         if(value instanceof NDimensionalArray) {
-            val arrayIndex = ref.indices
+            val arrayIndex = ref.arrayIndex?.indices
             val array = value as NDimensionalArray
             if(arrayIndex.isNullOrEmpty) {
                 throw new Exception("Trying to access array "+ref.name+" without index.")
@@ -318,7 +318,10 @@ class KiVisExtensions {
                     variable.userValue = currentValue.clone
                 }
                 val newValue = variable.userValue as NDimensionalArray
-                val index = variableReference.indices
+                val index = variableReference.arrayIndex.indices
+                if(index.isNullOrEmpty) {
+                    throw new Exception("Trying to set the array '"+variableReference.name+"' without index.")
+                }
                 val arrayElement = newValue.getElement(index)
                 arrayElement.setUserValue(primitive)
                 variable.userValue = newValue
