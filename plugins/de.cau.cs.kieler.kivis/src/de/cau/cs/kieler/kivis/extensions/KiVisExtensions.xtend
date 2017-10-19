@@ -345,7 +345,12 @@ class KiVisExtensions {
         // Get function arguments
         val arguments = <Object>newArrayList
         for(p : function.parameters) {
-            val argument = p.getVariableValue(pool, true)
+            var Object argument
+            if(p.variableReference != null) {
+                argument = p.variableReference.getVariableValue(pool, true)    
+            } else if(p.value != null) {
+                argument = p.value.primitiveValue
+            }
             if(argument != null) {
                 arguments.add(argument) 
             }

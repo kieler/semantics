@@ -32,6 +32,7 @@ import de.cau.cs.kieler.kivis.kivis.Domain;
 import de.cau.cs.kieler.kivis.kivis.Element;
 import de.cau.cs.kieler.kivis.kivis.Event;
 import de.cau.cs.kieler.kivis.kivis.Function;
+import de.cau.cs.kieler.kivis.kivis.FunctionParameter;
 import de.cau.cs.kieler.kivis.kivis.Interaction;
 import de.cau.cs.kieler.kivis.kivis.Interval;
 import de.cau.cs.kieler.kivis.kivis.KivisPackage;
@@ -726,6 +727,9 @@ public abstract class AbstractKiVisSemanticSequencer extends KiBuildSemanticSequ
 			case KivisPackage.FUNCTION:
 				sequence_Function(context, (Function) semanticObject); 
 				return; 
+			case KivisPackage.FUNCTION_PARAMETER:
+				sequence_FunctionParameter(context, (FunctionParameter) semanticObject); 
+				return; 
 			case KivisPackage.INTERACTION:
 				sequence_Interaction(context, (Interaction) semanticObject); 
 				return; 
@@ -859,10 +863,22 @@ public abstract class AbstractKiVisSemanticSequencer extends KiBuildSemanticSequ
 	
 	/**
 	 * Contexts:
+	 *     FunctionParameter returns FunctionParameter
+	 *
+	 * Constraint:
+	 *     (variableReference=VariableReference | value=Literal)
+	 */
+	protected void sequence_FunctionParameter(ISerializationContext context, FunctionParameter semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Function returns Function
 	 *
 	 * Constraint:
-	 *     (functionName=ID (parameters+=VariableReference parameters+=VariableReference*)?)
+	 *     (functionName=ID (parameters+=FunctionParameter parameters+=FunctionParameter*)?)
 	 */
 	protected void sequence_Function(ISerializationContext context, Function semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

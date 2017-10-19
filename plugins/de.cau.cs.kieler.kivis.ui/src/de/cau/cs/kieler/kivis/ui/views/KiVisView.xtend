@@ -55,7 +55,6 @@ import org.eclipse.swt.events.DisposeListener
 import org.eclipse.swt.events.MouseAdapter
 import org.eclipse.swt.events.MouseEvent
 import org.eclipse.swt.graphics.Color
-import org.eclipse.swt.graphics.Point
 import org.eclipse.swt.graphics.RGB
 import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.layout.GridLayout
@@ -272,6 +271,7 @@ class KiVisView extends ViewPart {
                                   && SimulationManager.instance.currentMacroTickNumber > 0)
             if(force || (poolChanged && afterFirstTick)) {
                 lastPool = pool
+                val startTime = System.currentTimeMillis
                 // Execute interactions that are not triggered by an event.
                 try {
                     for(interaction : interactionHandlers) {
@@ -294,7 +294,6 @@ class KiVisView extends ViewPart {
                     // As this is invoked later in another thread,
                     // the pool that should be visualized might already be outdated.
                     // In this case we don't animate anything here.
-                    val time = System.currentTimeMillis
                     try {
                         // Safe reference to animation handlers in case the reference changes concurrently
                         val handlers = animationHandlers
@@ -304,7 +303,7 @@ class KiVisView extends ViewPart {
                     } catch (Exception e) {
                         showError(e)
                     }
-                    val duration = (System.currentTimeMillis-time)
+                    val duration = (System.currentTimeMillis-startTime)
                     setStatusBarMessage("Update took " + duration + "ms")
                 ]
             }

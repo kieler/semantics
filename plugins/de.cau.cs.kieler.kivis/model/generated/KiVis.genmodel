@@ -87,6 +87,11 @@
     <genClasses ecoreClass="KiVis.ecore#//ModelReference">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//ModelReference/name"/>
     </genClasses>
+    <genClasses ecoreClass="KiVis.ecore#//FunctionParameter">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//FunctionParameter/variableReference"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//FunctionParameter/value"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//FunctionParameter/veriableReference"/>
+    </genClasses>
     <genClasses ecoreClass="KiVis.ecore#//AndExpression">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//AndExpression/left"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//AndExpression/operator"/>

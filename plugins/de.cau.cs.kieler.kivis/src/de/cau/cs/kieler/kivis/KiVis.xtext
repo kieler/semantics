@@ -42,8 +42,8 @@ SimulationAction returns Action:
 
 Function returns Function:
     functionName=ID
-    (('(' parameters += VariableReference 
-          (',' parameters += VariableReference)* ')')
+    (('(' parameters += FunctionParameter 
+          (',' parameters += FunctionParameter)* ')')
     | '()')
 ;
 
@@ -98,6 +98,11 @@ VariableReference:
 
 ModelReference:
     name=ID '.'
+;
+
+FunctionParameter:
+    variableReference = VariableReference
+    | value = Literal
 ;
 
 enum DOMEvent:

@@ -47,6 +47,7 @@ public class KiVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getIntervalAccess().getAlternatives_0(), "rule__Interval__Alternatives_0");
 					put(grammarAccess.getIntervalAccess().getAlternatives_2(), "rule__Interval__Alternatives_2");
 					put(grammarAccess.getAttributeDomainAccess().getAlternatives(), "rule__AttributeDomain__Alternatives");
+					put(grammarAccess.getFunctionParameterAccess().getAlternatives(), "rule__FunctionParameter__Alternatives");
 					put(grammarAccess.getTemplateProcessorAccess().getAlternatives(), "rule__TemplateProcessor__Alternatives");
 					put(grammarAccess.getLiteralAccess().getAlternatives(), "rule__Literal__Alternatives");
 					put(grammarAccess.getExpressionAccess().getAlternatives_0(), "rule__Expression__Alternatives_0");
@@ -264,6 +265,8 @@ public class KiVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVariableReferenceAccess().getNameAssignment_1(), "rule__VariableReference__NameAssignment_1");
 					put(grammarAccess.getVariableReferenceAccess().getIndicesAssignment_2_1(), "rule__VariableReference__IndicesAssignment_2_1");
 					put(grammarAccess.getModelReferenceAccess().getNameAssignment_0(), "rule__ModelReference__NameAssignment_0");
+					put(grammarAccess.getFunctionParameterAccess().getVariableReferenceAssignment_0(), "rule__FunctionParameter__VariableReferenceAssignment_0");
+					put(grammarAccess.getFunctionParameterAccess().getValueAssignment_1(), "rule__FunctionParameter__ValueAssignment_1");
 					put(grammarAccess.getBuildConfigurationAccess().getAttributesAssignment_0(), "rule__BuildConfiguration__AttributesAssignment_0");
 					put(grammarAccess.getBuildConfigurationAccess().getModelCompilersAssignment_1(), "rule__BuildConfiguration__ModelCompilersAssignment_1");
 					put(grammarAccess.getBuildConfigurationAccess().getSimulationCompilersAssignment_2(), "rule__BuildConfiguration__SimulationCompilersAssignment_2");

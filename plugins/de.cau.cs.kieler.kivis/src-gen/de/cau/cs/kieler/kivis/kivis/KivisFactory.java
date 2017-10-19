@@ -158,6 +158,15 @@ public interface KivisFactory extends EFactory
   ModelReference createModelReference();
 
   /**
+   * Returns a new object of class '<em>Function Parameter</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Function Parameter</em>'.
+   * @generated
+   */
+  FunctionParameter createFunctionParameter();
+
+  /**
    * Returns a new object of class '<em>And Expression</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

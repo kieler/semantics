@@ -3,8 +3,8 @@
 package de.cau.cs.kieler.kivis.kivis.impl;
 
 import de.cau.cs.kieler.kivis.kivis.Function;
+import de.cau.cs.kieler.kivis.kivis.FunctionParameter;
 import de.cau.cs.kieler.kivis.kivis.KivisPackage;
-import de.cau.cs.kieler.kivis.kivis.VariableReference;
 
 import java.util.Collection;
 
@@ -66,7 +66,7 @@ public class FunctionImpl extends MinimalEObjectImpl.Container implements Functi
    * @generated
    * @ordered
    */
-  protected EList<VariableReference> parameters;
+  protected EList<FunctionParameter> parameters;
 
   /**
    * <!-- begin-user-doc -->
@@ -117,11 +117,11 @@ public class FunctionImpl extends MinimalEObjectImpl.Container implements Functi
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<VariableReference> getParameters()
+  public EList<FunctionParameter> getParameters()
   {
     if (parameters == null)
     {
-      parameters = new EObjectContainmentEList<VariableReference>(VariableReference.class, this, KivisPackage.FUNCTION__PARAMETERS);
+      parameters = new EObjectContainmentEList<FunctionParameter>(FunctionParameter.class, this, KivisPackage.FUNCTION__PARAMETERS);
     }
     return parameters;
   }
@@ -176,7 +176,7 @@ public class FunctionImpl extends MinimalEObjectImpl.Container implements Functi
         return;
       case KivisPackage.FUNCTION__PARAMETERS:
         getParameters().clear();
-        getParameters().addAll((Collection<? extends VariableReference>)newValue);
+        getParameters().addAll((Collection<? extends FunctionParameter>)newValue);
         return;
     }
     super.eSet(featureID, newValue);

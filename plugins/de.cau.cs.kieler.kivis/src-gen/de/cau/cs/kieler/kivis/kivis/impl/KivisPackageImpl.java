@@ -15,6 +15,7 @@ import de.cau.cs.kieler.kivis.kivis.Domain;
 import de.cau.cs.kieler.kivis.kivis.Element;
 import de.cau.cs.kieler.kivis.kivis.Event;
 import de.cau.cs.kieler.kivis.kivis.Function;
+import de.cau.cs.kieler.kivis.kivis.FunctionParameter;
 import de.cau.cs.kieler.kivis.kivis.Interaction;
 import de.cau.cs.kieler.kivis.kivis.Interval;
 import de.cau.cs.kieler.kivis.kivis.KivisFactory;
@@ -147,6 +148,13 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * @generated
    */
   private EClass modelReferenceEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass functionParameterEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -781,6 +789,36 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getFunctionParameter()
+  {
+    return functionParameterEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getFunctionParameter_VariableReference()
+  {
+    return (EReference)functionParameterEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getFunctionParameter_Value()
+  {
+    return (EReference)functionParameterEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getAndExpression()
   {
     return andExpressionEClass;
@@ -935,6 +973,10 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
     modelReferenceEClass = createEClass(MODEL_REFERENCE);
     createEAttribute(modelReferenceEClass, MODEL_REFERENCE__NAME);
 
+    functionParameterEClass = createEClass(FUNCTION_PARAMETER);
+    createEReference(functionParameterEClass, FUNCTION_PARAMETER__VARIABLE_REFERENCE);
+    createEReference(functionParameterEClass, FUNCTION_PARAMETER__VALUE);
+
     andExpressionEClass = createEClass(AND_EXPRESSION);
     createEReference(andExpressionEClass, AND_EXPRESSION__LEFT);
     createEAttribute(andExpressionEClass, AND_EXPRESSION__OPERATOR);
@@ -1009,7 +1051,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
 
     initEClass(functionEClass, Function.class, "Function", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getFunction_FunctionName(), ecorePackage.getEString(), "functionName", null, 0, 1, Function.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getFunction_Parameters(), this.getVariableReference(), null, "parameters", null, 0, -1, Function.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFunction_Parameters(), this.getFunctionParameter(), null, "parameters", null, 0, -1, Function.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(animationEClass, Animation.class, "Animation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAnimation_Type(), ecorePackage.getEString(), "type", null, 0, 1, Animation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1051,6 +1093,10 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
 
     initEClass(modelReferenceEClass, ModelReference.class, "ModelReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getModelReference_Name(), ecorePackage.getEString(), "name", null, 0, 1, ModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(functionParameterEClass, FunctionParameter.class, "FunctionParameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getFunctionParameter_VariableReference(), this.getVariableReference(), null, "variableReference", null, 0, 1, FunctionParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFunctionParameter_Value(), theKibuildPackage.getLiteral(), null, "value", null, 0, 1, FunctionParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(andExpressionEClass, AndExpression.class, "AndExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getAndExpression_Left(), this.getCondition(), null, "left", null, 0, 1, AndExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

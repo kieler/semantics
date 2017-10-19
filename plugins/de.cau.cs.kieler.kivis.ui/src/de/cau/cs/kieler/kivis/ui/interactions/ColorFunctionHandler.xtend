@@ -27,6 +27,7 @@ import org.apache.batik.transcoder.TranscoderOutput
 import org.apache.batik.transcoder.image.ImageTranscoder
 import org.w3c.dom.Document
 import org.w3c.dom.svg.SVGDocument
+import de.cau.cs.kieler.simulation.core.SimulationManager
 
 /**
  * Adds functions to get the color of a given pixel in the svg document.
@@ -43,6 +44,11 @@ class ColorFunctionHandler extends FunctionHandler {
      * The svg document that was rasterized and of which the color is returned.
      */
     private SVGDocument svgDoc
+    
+    /**
+     * The action index in the simulation when the image has been rasterized.
+     */
+    private int lastActionIndex
     
     /**
      * Returns the argb value of a pixel.
@@ -108,20 +114,32 @@ class ColorFunctionHandler extends FunctionHandler {
     /**
      * Returns the color for the given arguments.
      * The first argument must be the x coordinate, whereas the second must the the y coordinate.
+     * An optional third argument determines if the image should be rasterized every frame (false per default).
      */
     private def int getARGB(List<Object> arguments) {
-        val x = arguments.get(0) as Integer
-        val y = arguments.get(1) as Integer
-        return getARGB(x, y)
+        try {
+            val x = arguments.get(0) as Integer
+            val y = arguments.get(1) as Integer
+            var rasterizeEveryFrame = false
+            if(arguments.size > 2) {
+                rasterizeEveryFrame = arguments.get(2) as Boolean
+            }
+            return getARGB(x, y, rasterizeEveryFrame)
+        } catch(ClassCastException e) {
+            throw new Exception("The arguments for the color function handler are erroneous.\n"
+                              + "Please provide 2 integers (x,y) and optionally 1 boolean (rasterizeEveryFrame?)", e)
+        }
     }
     
     /**
      * Returns the color value for the given coordinates
      */
-    private def int getARGB(int x, int y) {
+    private def int getARGB(int x, int y, boolean rasterizeEveryFrame) {
         // Update the pixel graphic to fetch the color value from
         val doc = KiVisView.instance.SVGDocument
-        if(doc != svgDoc) {
+        val currentActionIndex = SimulationManager.instance.currentState.actionIndex
+        if(doc != svgDoc
+            || (rasterizeEveryFrame && lastActionIndex != currentActionIndex)) {
             svgDoc = doc
             // Rasterize the clone of the svg document to a buffered image.
             // If not using the cloned svg, animations do not work anymore for some reason.
@@ -145,6 +163,7 @@ class ColorFunctionHandler extends FunctionHandler {
                 }
                 override writeImage(BufferedImage img, TranscoderOutput out) throws TranscoderException {
                     image = img
+                    lastActionIndex = SimulationManager.instance.currentState.actionIndex
                 }
             }
             t.transcode(input, null)

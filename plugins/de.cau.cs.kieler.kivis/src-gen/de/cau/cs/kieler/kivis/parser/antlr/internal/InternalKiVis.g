@@ -596,9 +596,9 @@ ruleFunction returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getFunctionAccess().getParametersVariableReferenceParserRuleCall_1_0_1_0()); 
+	        newCompositeNode(grammarAccess.getFunctionAccess().getParametersFunctionParameterParserRuleCall_1_0_1_0()); 
 	    }
-		lv_parameters_2_0=ruleVariableReference		{
+		lv_parameters_2_0=ruleFunctionParameter		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getFunctionRule());
 	        }
@@ -606,7 +606,7 @@ ruleFunction returns [EObject current=null]
        			$current, 
        			"parameters",
         		lv_parameters_2_0, 
-        		"de.cau.cs.kieler.kivis.KiVis.VariableReference");
+        		"de.cau.cs.kieler.kivis.KiVis.FunctionParameter");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -618,9 +618,9 @@ ruleFunction returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getFunctionAccess().getParametersVariableReferenceParserRuleCall_1_0_2_1_0()); 
+	        newCompositeNode(grammarAccess.getFunctionAccess().getParametersFunctionParameterParserRuleCall_1_0_2_1_0()); 
 	    }
-		lv_parameters_4_0=ruleVariableReference		{
+		lv_parameters_4_0=ruleFunctionParameter		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getFunctionRule());
 	        }
@@ -628,7 +628,7 @@ ruleFunction returns [EObject current=null]
        			$current, 
        			"parameters",
         		lv_parameters_4_0, 
-        		"de.cau.cs.kieler.kivis.KiVis.VariableReference");
+        		"de.cau.cs.kieler.kivis.KiVis.FunctionParameter");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1484,6 +1484,64 @@ ruleModelReference returns [EObject current=null]
     	newLeafNode(otherlv_1, grammarAccess.getModelReferenceAccess().getFullStopKeyword_1());
     }
 )
+;
+
+
+
+
+
+// Entry rule entryRuleFunctionParameter
+entryRuleFunctionParameter returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getFunctionParameterRule()); }
+	 iv_ruleFunctionParameter=ruleFunctionParameter 
+	 { $current=$iv_ruleFunctionParameter.current; } 
+	 EOF 
+;
+
+// Rule FunctionParameter
+ruleFunctionParameter returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+(
+		{ 
+	        newCompositeNode(grammarAccess.getFunctionParameterAccess().getVariableReferenceVariableReferenceParserRuleCall_0_0()); 
+	    }
+		lv_variableReference_0_0=ruleVariableReference		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getFunctionParameterRule());
+	        }
+       		set(
+       			$current, 
+       			"variableReference",
+        		lv_variableReference_0_0, 
+        		"de.cau.cs.kieler.kivis.KiVis.VariableReference");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)
+    |(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getFunctionParameterAccess().getValueLiteralParserRuleCall_1_0()); 
+	    }
+		lv_value_1_0=ruleLiteral		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getFunctionParameterRule());
+	        }
+       		set(
+       			$current, 
+       			"value",
+        		lv_value_1_0, 
+        		"de.cau.cs.kieler.prom.KiBuild.Literal");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))
 ;
 
 
