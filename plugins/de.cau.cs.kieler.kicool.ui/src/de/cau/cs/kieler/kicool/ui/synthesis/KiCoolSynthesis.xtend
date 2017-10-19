@@ -83,7 +83,7 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
         rootNode
     }
     
-    static val KGTInjector = new KGraphStandaloneSetup().createInjectorAndDoEMFRegistration
+    public static val KGTInjector = new KGraphStandaloneSetup().createInjectorAndDoEMFRegistration
     
     /**
      * Load a KGT from a bundle.

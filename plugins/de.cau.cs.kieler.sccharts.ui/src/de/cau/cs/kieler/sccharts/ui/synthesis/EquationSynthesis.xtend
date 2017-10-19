@@ -46,6 +46,14 @@ import com.google.inject.Injector
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
 import de.cau.cs.kieler.klighd.util.KlighdProperties
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.annotations.Annotatable
+import de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis
+import org.eclipse.xtext.resource.XtextResource
+import org.eclipse.xtext.resource.XtextResourceSet
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.klighd.kgraph.KIdentifier
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author ssm
@@ -65,10 +73,14 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject extension KPortExtensionsReplacement
     @Inject extension KLabelExtensions
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExtDeclarationExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension SCChartsSerializeHRExtensions
+    @Inject extension SCChartsSynthesis
     @Inject extension EquationStyles
     @Inject Injector injector
+    
+    static val ANNOTATION_FIGURE = "figure"
     
     private val PORT_LABEL_FONT_SIZE = 6
     
@@ -100,7 +112,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             var KNode node = wire.semanticSource.createNode
             if (!nodeExists) {
                 if (wire.semanticSourceReferenceDeclaration != null) {
-                    node = node.createReferenceNode(wire.semanticSource, wire, (wire.semanticSource as ValuedObjectReference).valuedObject.serializeHR.removeCardinalities.toString)
+                    node = node.createReferenceNode(wire.semanticSource, wire, (wire.semanticSource as ValuedObjectReference).valuedObject.serializeHR.removeCardinalities.toString, wire.semanticSourceReferenceDeclaration)
                 } else {
                     var text = wire.semanticSource.serializeHR.toString
                     if (wire.source instanceof OperatorExpression) {
@@ -130,7 +142,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             
             if (!nodeExists) {
                 if (wire.semanticSinkReferenceDeclaration != null) {
-                    node = node.createReferenceNode(wire.semanticSink, wire, (wire.semanticSink as ValuedObjectReference).valuedObject.serializeHR.removeCardinalities.toString)
+                    node = node.createReferenceNode(wire.semanticSink, wire, (wire.semanticSink as ValuedObjectReference).valuedObject.serializeHR.removeCardinalities.toString, wire.semanticSinkReferenceDeclaration)
                 } else { 
                     node.addOutputNodeFigure.associateWith(wire.sink)
                     node.addNodeLabel(wire.semanticSink.serializeHR.toString)
@@ -187,7 +199,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         }
     }
     
-    protected def createReferenceNode(KNode node, Object association, Wire wire, String label) {
+    protected def KNode createReferenceNode(KNode node, Object association, Wire wire, String label, ReferenceDeclaration referenceDeclaration) {
         if (association.nodeExists) {
             val oldNode = association.getNode
             if (referenceNodes.contains(oldNode)) return oldNode
@@ -202,6 +214,16 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 //        node.setLayoutOption(CoreOptions::EXPAND_NODES, false);   
         node.addLayoutParam(KlighdProperties::EXPAND, false)      
   
+        
+        if (referenceDeclaration.hasAnnotation(ANNOTATION_FIGURE)) {
+            val newNode = loadFigureFromKGT(referenceDeclaration.reference as Annotatable, association, referenceDeclaration)
+            if (newNode !== null) return newNode
+        }
+        if (referenceDeclaration.reference.asAnnotatable.hasAnnotation(ANNOTATION_FIGURE)) {
+            val newNode = loadFigureFromKGT(referenceDeclaration.reference as Annotatable, association, referenceDeclaration.reference as Annotatable)
+            if (newNode !== null) return newNode
+        }
+         
         node.addReferenceNodeFigure.associateWith(association) => [
             setAsCollapsedView;
             addDoubleClickAction(ReferenceExpandAction::ID)  
@@ -216,7 +238,6 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         
         node.createReferenceNodePorts(wire.referenceDeclaration.reference as Scope, vor, [ input ], PortSide.WEST, true)
         node.createReferenceNodePorts(wire.referenceDeclaration.reference as Scope, vor, [ output ], PortSide.EAST, false)
-        
 
         referenceNodes += node
         return node
@@ -242,43 +263,38 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         }        
     }
     
-    protected def createReferenceNodeFromKGT() {
-//        if (reference.hasAnnotation("actor")) {
-//            val path = getSkinPath 
-//            val kgt = path + if (!path.endsWith("/")) "/" + reference.getStringAnnotationValue("actor") 
-//            println(vo.eResource.URI)
-//            val sl = vo.eResource.URI.segmentsList
-//            val nsl = sl.take(sl.length - 1).drop(1)
-//            val newURI = URI.createPlatformResourceURI(nsl.join("/") + "/" + kgt, false)
-//            println(newURI)
-//
-//            val provider = regXtext.getResourceServiceProvider(newURI)
-//            val newResourceSet = provider.get(XtextResourceSet)
-//            newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
-//            val res = newResourceSet.createResource(newURI)
-//
-//            try {
-//                res.load(newResourceSet.loadOptions)
-//                val node = (res.getContents().get(0) as KNode).children.head
-//                node.associateWith(vo)
-//                vo.addNode(node)
-//                result += node 
-//            
-//                val vos = <ValuedObject> newArrayList
-//                reference.declarations.forEach[ vos += valuedObjects ]
-//            
-//                for(p : node.eAllContents.filter(KPort).toList) {
-//                    val id = p.data.filter(KIdentifier).head
-//                    val obj = vos.filter[ it.name.equals(id.id) ].head
-//                
-//                    vo.addPort(obj, p)
-//                    valuePortMap.put(p, obj)
-//                }
-//
-//                return result
-//            } catch (Exception e) {
-//                // Display default reference actor
-//            }            
-//        }     
+    protected def KNode loadFigureFromKGT(EObject eObject, Object association, Annotatable annotationObject) {
+        if (!annotationObject.hasAnnotation(ANNOTATION_FIGURE)) return null
+        
+        val path = getSkinPath 
+        val kgt = path + if (!path.endsWith("/")) "/" + annotationObject.getStringAnnotationValue(ANNOTATION_FIGURE) 
+        val sl = eObject.eResource.URI.segmentsList
+        val nsl = sl.take(sl.length - 1).drop(1)
+        val newURI = org.eclipse.emf.common.util.URI.createPlatformResourceURI(nsl.join("/") + "/" + kgt, false)
+
+        val newResourceSet = KiCoolSynthesis.KGTInjector.getInstance(XtextResourceSet)
+        newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
+        val res = newResourceSet.createResource(newURI)
+
+        try {
+            res.load(newResourceSet.loadOptions)
+            val node = (res.getContents().get(0) as KNode).children.head
+            node.associateWith(association)
+            association.addNode(node)
+
+            val valuedObjects = eObject.asDeclarationScope.valuedObjects.filter[ input || output ].toList        
+        
+            for(p : node.eAllContents.filter(KPort).toList) {
+                val id = p.data.filter(KIdentifier).head
+                val v = valuedObjects.filter[ it.name.equals(id.id) ].head
+                
+                p.associateWith(v)          
+                node.addPort(v, p)  
+            }
+
+            return node
+        } catch (Exception e) {
+            // Display default reference actor
+        }            
     }
 }
