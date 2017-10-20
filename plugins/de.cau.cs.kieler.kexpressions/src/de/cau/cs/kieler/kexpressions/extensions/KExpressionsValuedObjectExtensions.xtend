@@ -205,10 +205,6 @@ class KExpressionsValuedObjectExtensions {
         declaration.valuedObjects.filter[ it.name.equals(name) ]?.head
     }
     
-    def Parameter createParameter() {
-        KExpressionsFactory::eINSTANCE.createParameter
-    }
-        
     def asValue(Expression expression) {
         expression as Value
     }

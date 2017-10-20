@@ -106,7 +106,7 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
         null.insertLiveDeclarationValues
         null.insertLiveActionValues
         
-        layoutConfig.performLayout
+        layoutConfig?.performLayout
     }    
     
     override update(DataPool pool) {
@@ -152,9 +152,11 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
                     triggerStringIntermediateEnd
                 
                 if (pool !== null) {
-                    val variable = pool.getVariable(serialization)                    
-                    val variableValue = variable.value.toString
-                    triggerString = triggerStringFront + " (" + variableValue + ")" + triggerStringEnd
+                    val variable = pool.getVariable(serialization)   
+                    if (variable !== null) {                 
+                        val variableValue = variable.value.toString
+                        triggerString = triggerStringFront + " (" + variableValue + ")" + triggerStringEnd
+                    }
                 } else {
                     triggerString = triggerStringFront + triggerStringEnd
                 }

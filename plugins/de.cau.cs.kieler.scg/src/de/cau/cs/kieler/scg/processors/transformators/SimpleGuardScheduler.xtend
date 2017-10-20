@@ -33,6 +33,7 @@ import java.util.LinkedHashSet
 import java.util.List
 import java.util.Set
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.sccharts.DataflowRegion
 
 /** 
  * @author ssm
@@ -162,16 +163,31 @@ class SimpleGuardScheduler extends InplaceProcessor<SCGraphs> {
 	    if (originalModel instanceof SCCharts) {
     	    val guardedNodes = unschedulableNodes.map[ dependencies ].flatten.filter(GuardDependency).map[ target ].filter(Assignment).toList
     	    
-    	    val states = originalModel.rootStates.head.getAllContainedStates.toIterable.filter[ !actions.empty || !outgoingTransitions.empty ].toList
+    	    val states = originalModel.rootStates.head.getAllContainedStates.toIterable.
+    	       filter[ !actions.empty || !outgoingTransitions.empty || regions.exists[ it instanceof DataflowRegion ] ].toList
     	    for (state : states) {
     	        val actions = state.actions + state.outgoingTransitions
-    	        for (assignment : actions.map[ effects ].flatten.filter(Assignment)) {
+    	        
+    	        val equations = if (state.regions.exists[ it instanceof DataflowRegion ]) 
+    	           state.regions.filter(DataflowRegion).map[ equations ].flatten
+    	           else (<Assignment> newArrayList)
+    	        
+    	        val assignments = actions.map[ effects ].flatten.filter(Assignment)
+    	        
+    	        for (assignment : assignments) {
     	            if (assignment.heuristicallyTheSameTo(guardedNodes)) {
     	                environment.errors.add(originalModel, 
     	                   "Causal loop!", 
     	                   assignment.eContainer, assignment.valuedObject.name)
     	            }
     	        }
+                for (assignment : equations) {
+                    if (assignment.heuristicallyTheSameTo(guardedNodes)) {
+                        environment.errors.add(originalModel, 
+                           "Causal loop!", 
+                           assignment.reference, assignment.valuedObject.name)
+                    }
+                }
     	    } 
 	    }
 	}
