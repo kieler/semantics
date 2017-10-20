@@ -132,6 +132,11 @@ class KEffectsExtensions {
         }
     }
     
+    def getAllAssignmentReferences(Assignment assignment) {
+        assignment.reference.allReferences + assignment.expression.allReferences
+    }
+    
+    
     def createHostcodeEffect(String text) {
         KEffectsFactory::eINSTANCE.createHostcodeEffect => [  it.text = text ]
     }

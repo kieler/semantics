@@ -119,7 +119,9 @@ class KExtDeclarationExtensions {
     
     def isReferenceDeclarationReference(Expression expression) {
         if (expression instanceof ValuedObjectReference) {
-            if (expression.valuedObject.eContainer instanceof ReferenceDeclaration) return true
+            if (expression.valuedObject != null && expression.valuedObject.eContainer != null && 
+                expression.valuedObject.eContainer instanceof ReferenceDeclaration
+            ) return true
         }
         return false
     }
