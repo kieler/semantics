@@ -35,6 +35,7 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
+import de.cau.cs.kieler.sccharts.DataflowRegion
 
 /**
  * Give me a state, Vasili. One state only please.
@@ -160,7 +161,8 @@ class Reference extends SCChartsProcessor {
         
         // TODO: Resolve name clash
         switch(scope) {
-            ControlflowRegion: for (state : scope.states.immutableCopy) state.replaceValuedObjectReferences(replacements)  
+            ControlflowRegion: for (state : scope.states.immutableCopy) state.replaceValuedObjectReferences(replacements)
+            DataflowRegion: for (equation: scope.equations.immutableCopy) equation.replaceReferences(replacements)   
             State: scope.replaceValuedObjectReferencesInState(replacements)
         }
         
@@ -318,6 +320,7 @@ class Reference extends SCChartsProcessor {
         for (vo : state.eAllContents.filter(ValuedObject).toList) {
             valuedObjects += vo
         }
+        
         for (vor : state.eAllContents.filter(ValuedObjectReference).toList) {
             if (!valuedObjects.contains(vor.valuedObject)) {
                 
@@ -326,7 +329,7 @@ class Reference extends SCChartsProcessor {
                     container = container.eContainer
                 }
                 
-                environment.errors.add("The valued object reference points to a valued object that is not contained in the model!", vor, true)
+                environment.errors.add("The valued object reference points to a valued object (" + vor.valuedObject.name + ") that is not contained in the model!", container, true)
                 System.err.println("The valued object reference points to a valued object that is not contained in the model! " + 
                     vor.valuedObject.name + " " + vor + " " + (container as State).name)
                 success = false

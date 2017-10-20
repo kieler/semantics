@@ -28,6 +28,7 @@ import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.Parameter
 
 /**
  * @author ssm
@@ -202,8 +203,12 @@ class KExpressionsValuedObjectExtensions {
         
     def ValuedObject findValuedObjectByName(Declaration declaration, String name) {
         declaration.valuedObjects.filter[ it.name.equals(name) ]?.head
-    }    
+    }
     
+    def Parameter createParameter() {
+        KExpressionsFactory::eINSTANCE.createParameter
+    }
+        
     def asValue(Expression expression) {
         expression as Value
     }
