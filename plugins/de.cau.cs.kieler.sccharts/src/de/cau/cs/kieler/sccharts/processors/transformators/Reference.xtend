@@ -34,6 +34,8 @@ import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
+import de.cau.cs.kieler.sccharts.DataflowRegion
 
 /**
  * Give me a state, Vasili. One state only please.
@@ -52,6 +54,8 @@ class Reference extends SCChartsProcessor {
     @Inject extension KEffectsExtensions
     @Inject extension SCChartsReferenceExtensions
     
+    protected var Dataflow dataflowProcessor = null
+    
     protected val replacedWithLiterals = <ValuedObject> newHashSet
     
     override getId() {
@@ -64,6 +68,10 @@ class Reference extends SCChartsProcessor {
     
     override process() {
         replacedWithLiterals.clear
+        dataflowProcessor = KiCoolRegistration.getProcessorInstance("de.cau.cs.kieler.sccharts.processors.transformators.dataflow") as Dataflow
+        if (dataflowProcessor !== null) {
+            dataflowProcessor.setEnvironment(sourceEnvironment, environment)
+        }
         
         val model = getModel
         
@@ -72,6 +80,16 @@ class Reference extends SCChartsProcessor {
             for (state : statesWithReferences.toList) {
                 state.expandReferencedState(new Replacements)
             }
+            
+            if (dataflowProcessor !== null) {
+                // Optimize this.
+                dataflowProcessor.processState(rootState)
+                val statesWithReferences2 = rootState.getAllContainedStates.filter[ reference != null && reference.scope != null ]
+                for (state : statesWithReferences2.toList) {
+                    state.expandReferencedState(new Replacements)
+                }
+            }
+            
             if (!rootState.validate) 
                 throw new IllegalStateException("References objects are not contained in the resource!")
         }
@@ -124,6 +142,15 @@ class Reference extends SCChartsProcessor {
         newState.declarations.removeIf[ if (it instanceof VariableDeclaration) { input || output } else false ]
         
         snapshot
+        
+        if (dataflowProcessor !== null) {
+            // Optimize this.
+            dataflowProcessor.processState(newState)
+            val statesWithReferences = newState.getAllContainedStates.filter[ reference != null && reference.scope != null ]
+            for (state : statesWithReferences.toList) {
+                state.expandReferencedState(new Replacements)
+            }
+        }
     } 
     
     protected def void replaceValuedObjectReferences(Scope scope, Replacements replacements) {
@@ -134,7 +161,8 @@ class Reference extends SCChartsProcessor {
         
         // TODO: Resolve name clash
         switch(scope) {
-            ControlflowRegion: for (state : scope.states.immutableCopy) state.replaceValuedObjectReferences(replacements)  
+            ControlflowRegion: for (state : scope.states.immutableCopy) state.replaceValuedObjectReferences(replacements)
+            DataflowRegion: for (equation: scope.equations.immutableCopy) equation.replaceReferences(replacements)   
             State: scope.replaceValuedObjectReferencesInState(replacements)
         }
         
@@ -292,6 +320,7 @@ class Reference extends SCChartsProcessor {
         for (vo : state.eAllContents.filter(ValuedObject).toList) {
             valuedObjects += vo
         }
+        
         for (vor : state.eAllContents.filter(ValuedObjectReference).toList) {
             if (!valuedObjects.contains(vor.valuedObject)) {
                 
@@ -300,7 +329,7 @@ class Reference extends SCChartsProcessor {
                     container = container.eContainer
                 }
                 
-                environment.errors.add("The valued object reference points to a valued object that is not contained in the model!", vor, true)
+                environment.errors.add("The valued object reference points to a valued object (" + vor.valuedObject.name + ") that is not contained in the model!", container, true)
                 System.err.println("The valued object reference points to a valued object that is not contained in the model! " + 
                     vor.valuedObject.name + " " + vor + " " + (container as State).name)
                 success = false

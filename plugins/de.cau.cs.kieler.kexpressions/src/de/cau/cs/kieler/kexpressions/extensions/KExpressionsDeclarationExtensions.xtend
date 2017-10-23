@@ -160,7 +160,11 @@ class KExpressionsDeclarationExtensions {
         <ReferenceDeclaration> newArrayList => [ list |
             eObject.eContents.filter(ReferenceDeclaration).forEach[ list += it ]
         ]
-    }      
+    }   
+    
+    def ReferenceDeclaration getReferenceDeclaration(ValuedObject valuedObject) {
+        valuedObject.eContainer as ReferenceDeclaration
+    }   
  
     def Declaration checkAndCleanup(Declaration declaration) {
         if (declaration.valuedObjects.nullOrEmpty) { 

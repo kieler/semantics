@@ -76,6 +76,8 @@
       <simulationParticipant
             class="de.cau.cs.kieler.sccharts.prom.SCChartsDiagramHighlighter">
       </simulationParticipant>
+      <simulationParticipant
+            class="de.cau.cs.kieler.sccharts.prom.SCChartsDiagramLiveValues"></simulationParticipant>
    </extension>
 
 </plugin>

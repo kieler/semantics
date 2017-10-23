@@ -120,6 +120,9 @@
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.transformators.TakenTransitionSignaling">
         </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.Dataflow">
+        </Processor>
      </extension>
      <extension
            point="de.cau.cs.kieler.kicool.system">

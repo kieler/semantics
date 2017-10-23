@@ -32,6 +32,7 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.sccharts.iterators.ScopeIterator.*
 import static extension de.cau.cs.kieler.sccharts.iterators.StateIterator.*
 import static extension de.cau.cs.kieler.sccharts.iterators.ControlflowRegionIterator.*
+import static extension de.cau.cs.kieler.sccharts.iterators.DataflowRegionIterator.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil
 import de.cau.cs.kieler.kexpressions.Parameter
@@ -75,6 +76,10 @@ class SCChartsScopeExtensions {
 
     def getAllContainedControlflowRegions(Scope scope) {
         scope.sccAllControlflowRegions
+    }
+    
+    def getAllContainedDataflowRegions(Scope scope) {
+        scope.sccAllDataflowRegions
     }
 
     def getAllContainedTransitions(Scope scope) {

@@ -13,6 +13,7 @@ import de.cau.cs.kieler.annotations.TypedStringAnnotation
 import java.util.Set
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import org.eclipse.emf.ecore.EObject
 
 /**
  * Annotations extensions
@@ -131,6 +132,10 @@ class AnnotationsExtensions {
     
     def asStringAnnotation(Annotation annotation) {
         annotation as StringAnnotation
+    }
+    
+    def asAnnotatable(EObject eObject) {
+        eObject as Annotatable
     }
     
     def addStringAnnotation(Annotatable annotatable, String name, String text) {

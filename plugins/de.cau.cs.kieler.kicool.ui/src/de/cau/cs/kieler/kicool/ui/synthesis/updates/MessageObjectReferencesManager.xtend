@@ -41,6 +41,7 @@ import org.eclipse.elk.graph.properties.Property
 import org.eclipse.elk.graph.properties.IPropertyHolder
 
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.*
+import de.cau.cs.kieler.kicool.ui.synthesis.SourceModelTrackingAdapterReplacement
 
 /**
  * @author ssm
@@ -60,7 +61,7 @@ class MessageObjectReferencesManager {
     @Inject extension KContainerRenderingExtensions  
         
     def annotateModelNodes(MessageObjectList references, KNode node) {
-        val trackingAdapter = new SourceModelTrackingAdapter
+        val trackingAdapter = new SourceModelTrackingAdapterReplacement
         node.eAdapters.add(trackingAdapter)
         
         val reverseLabelList = <KEdge> newLinkedList

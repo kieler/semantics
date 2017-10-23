@@ -19,7 +19,9 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.sccharts.scg,
  de.cau.cs.kieler.kicool,
  de.cau.cs.kieler.simulation,
- de.cau.cs.kieler.sccharts.prom
+ de.cau.cs.kieler.sccharts.prom,
+ de.cau.cs.kieler.klighd,
+ de.cau.cs.kieler.sccharts.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 

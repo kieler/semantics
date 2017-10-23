@@ -12,14 +12,9 @@
  */
 package de.cau.cs.kieler.sccharts.ui.synthesis
 
-import de.cau.cs.kieler.kexpressions.Value
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.sccharts.Scope
 
 /**
  * @author ssm
@@ -29,76 +24,25 @@ import de.cau.cs.kieler.sccharts.Scope
  */
 class Wire {
 
-    @Accessors var Value value = null
-    @Accessors var ValuedObjectReference valuedObjectReference = null
-    @Accessors var OperatorExpression operatorExpression = null
-    @Accessors var ValuedObjectReference subReference = null
     @Accessors var Wiring wiring = null
-    @Accessors var boolean sink = false
-    @Accessors var Assignment equation = null
-    @Accessors var Wire redirectedWire = null 
-    @Accessors var ReferenceDeclaration referenceDeclaration = null
+    @Accessors var Expression source = null
+    @Accessors var Expression sink = null
+    @Accessors var Expression semanticSource = null
+    @Accessors var Expression semanticSink = null
+    @Accessors var boolean sourceIsInterface = false
+    @Accessors var boolean sinkIsInterface = false
+    @Accessors var ReferenceDeclaration semanticSourceReferenceDeclaration = null
+    @Accessors var ReferenceDeclaration semanticSinkReferenceDeclaration = null
 
-    new(Expression expression, Wiring wiring, ValuedObjectReference subReference) {
+    new(Expression source, Expression sink, Wiring wiring) {
         this.wiring = wiring
-        switch (expression) {
-            Value:
-                this.value = expression
-            ValuedObjectReference: {
-                this.valuedObjectReference = expression
-                val valuedObject = expression.valuedObject
-                if (valuedObject.eContainer instanceof ReferenceDeclaration) {
-                    this.referenceDeclaration = valuedObject.eContainer as ReferenceDeclaration
-                    this.subReference = subReference                
-                }
-            }
-            OperatorExpression: {
-                this.operatorExpression = expression
-                if (wiring != null)
-                for (subExpression : expression.subExpressions) {
-                    switch (subExpression) {
-                        Value: wiring.getWire(subExpression)
-                        ValuedObjectReference: wiring.getWire(subExpression)
-                        OperatorExpression: wiring.getWire(subExpression)
-                    }
-                }
-            }
-        }
-        if(wiring != null) wiring.add(this)
-    }
-
-    def Expression getExpression() {
-        if (value != null)
-            return value
-        else if(valuedObjectReference != null) return valuedObjectReference else return operatorExpression
-    }
-
-    override equals(Object object) {
-        if (object instanceof Wire) {
-            if (value != null) {
-                return value.equals(object.value)
-            } else if (valuedObjectReference != null) {
-                return valuedObjectReference.valuedObject.equals(object.valuedObjectReference.valuedObject)
-            } else {
-                return operatorExpression.equals(object.operatorExpression)
-            }
-        } else {
-            return false
-        }
-    }
-
-    override int hashCode() {
-        if (value != null) {
-            return value.hashCode
-        } else if (valuedObjectReference != null) {
-            return valuedObjectReference.valuedObject.hashCode
-        } else {
-            return operatorExpression.hashCode
-        }
+        this.source = source
+        this.sink = sink
     }
     
-    def Scope getReference() {
-        if (referenceDeclaration == null) return null
-        return referenceDeclaration.reference as Scope
+    def ReferenceDeclaration getReferenceDeclaration() {
+        if (semanticSourceReferenceDeclaration != null) return semanticSourceReferenceDeclaration 
+            else semanticSinkReferenceDeclaration
     }
+
 }

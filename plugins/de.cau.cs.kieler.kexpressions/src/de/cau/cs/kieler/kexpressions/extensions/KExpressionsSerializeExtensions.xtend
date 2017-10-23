@@ -274,6 +274,9 @@ class KExpressionsSerializeExtensions {
         for (index : valuedObjectReference.indices) {
             vo = vo + "[" + index.serialize + "]"
         }
+        if (valuedObjectReference.subReference != null && valuedObjectReference.subReference.valuedObject != null) {
+            vo = vo + "." + valuedObjectReference.subReference.serialize
+        }        
         vo
     }
 

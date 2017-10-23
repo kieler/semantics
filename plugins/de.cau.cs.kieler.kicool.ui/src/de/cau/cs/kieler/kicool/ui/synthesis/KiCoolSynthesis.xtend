@@ -37,6 +37,7 @@ import org.eclipse.elk.alg.layered.p2layers.LayeringStrategy
 import org.eclipse.elk.alg.layered.properties.FixedAlignment
 import de.cau.cs.kieler.klighd.KlighdOptions
 import de.cau.cs.kieler.kicool.ui.synthesis.styles.SkinSelector
+import de.cau.cs.kieler.kgraph.text.KGraphStandaloneSetup
 
 /**
  * Main diagram synthesis for KiCool.
@@ -82,17 +83,15 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
         rootNode
     }
     
+    public static val KGTInjector = new KGraphStandaloneSetup().createInjectorAndDoEMFRegistration
+    
     /**
      * Load a KGT from a bundle.
      */
     def static getKGTFromBundle(String bundleId, String resourceLocation) {
-//        val Bundle bundle = Platform.getBundle(bundleId)
-//        val URL fileURL = bundle.getEntry(SkinSelector.skinPrefix + resourceLocation)
-//        val absFile = FileLocator.resolve(fileURL)
-//        val newURI = URI.createFileURI(absFile.getFile)
         val newURI = URI.createPlatformPluginURI("/" + bundleId + "/" + SkinSelector.skinPrefix + resourceLocation, true)
-        val provider = IResourceServiceProvider.Registry.INSTANCE.getResourceServiceProvider(newURI)
-        val newResourceSet = provider.get(XtextResourceSet)
+//        val provider = IResourceServiceProvider.Registry.INSTANCE.getResourceServiceProvider(newURI)
+        val newResourceSet = KGTInjector.getInstance(XtextResourceSet)
         newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
         val res = newResourceSet.createResource(newURI)
         try {
