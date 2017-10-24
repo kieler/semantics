@@ -96,8 +96,8 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         return joiner.join(parts.map[key])
     }
 
-    def List<Pair<CharSequence, Boolean>> serializeHighlighted(Action action, boolean hr) {
-        val components = newArrayList
+    def List<Pair<CharSequence, TextFormat>> serializeHighlighted(Action action, boolean hr) {
+        val components = <Pair<CharSequence, TextFormat>> newArrayList
 
         if (action.delay == DelayType.IMMEDIATE) {
             components.addKeyword("immediate");
@@ -140,8 +140,8 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         return joiner.join(parts.map[key])
     }
 
-    def List<Pair<CharSequence, Boolean>> serializeHighlighted(Declaration declaration, boolean hr) {
-        val components = newArrayList
+    def List<Pair<CharSequence, TextFormat>> serializeHighlighted(Declaration declaration, boolean hr) {
+        val components = <Pair<CharSequence, TextFormat>> newArrayList
 
         // Modifiers
         if (declaration instanceof VariableDeclaration) {
@@ -181,8 +181,17 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
                 })
             }
         } else if (declaration instanceof ReferenceDeclaration) {
-            components.addKeyword("ref")
-            components.addText(if (hr) declaration.reference.serializeHR else declaration.reference.serialize)           
+            if (declaration.extern.nullOrEmpty) {
+                components.addKeyword("ref")
+                if (declaration.reference instanceof NamedObject) {
+                    components.addKeyword((declaration.reference as NamedObject).name)
+                } else {
+                    components.addKeyword(declaration.reference.class.name)
+                }
+            } else {
+                components.addKeyword("extern")
+                components.addHighlight(declaration.extern)
+            }          
         }
 
         // Content
@@ -218,13 +227,18 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         return components;
     }
     
-    private def addKeyword(List<Pair<CharSequence, Boolean>> list, CharSequence text) {
-        list += new Pair(text, true)
+    private def addKeyword(List<Pair<CharSequence, TextFormat>> list, CharSequence text) {
+        list += new Pair(text, TextFormat.KEYWORD)
     }
     
-    private def addText(List<Pair<CharSequence, Boolean>> list, CharSequence text) {
-        list += new Pair(text, false)
+    private def addHighlight(List<Pair<CharSequence, TextFormat>> list, CharSequence text) {
+        list += new Pair(text, TextFormat.HIGHLIGHT)
     }
+    
+    private def addText(List<Pair<CharSequence, TextFormat>> list, CharSequence text) {
+        list += new Pair(text, TextFormat.TEXT)
+    }
+    
     
     def dispatch CharSequence serialize(VariableDeclaration declaration) {
         declaration.serialize(false)
@@ -327,11 +341,16 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         val keywords = newLinkedList;
         val content = newLinkedList;
         
-        keywords += "ref"
-        if (declaration.reference instanceof NamedObject) {
-            keywords += (declaration.reference as NamedObject).name
+        if (declaration.extern.nullOrEmpty) {
+            keywords += "ref"
+            if (declaration.reference instanceof NamedObject) {
+                keywords += (declaration.reference as NamedObject).name
+            } else {
+                keywords += declaration.reference.class.name
+            }
         } else {
-            keywords += declaration.reference.class.name
+            keywords += "extern"
+            content += "\"" + declaration.extern + "\""
         }
 
         //Content
