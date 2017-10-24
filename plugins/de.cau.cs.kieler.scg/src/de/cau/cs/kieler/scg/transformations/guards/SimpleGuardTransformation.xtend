@@ -46,6 +46,7 @@ import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.scg.extensions.ValuedObjectMapping
 
 /** 
  * @author ssm
@@ -281,7 +282,7 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         newSCG     	
     }
     
-    private def Assignment createAssignment(Guard guard, HashMap<ValuedObject, ValuedObject> map) {
+    private def Assignment createAssignment(Guard guard, ValuedObjectMapping map) {
     	ScgFactory::eINSTANCE.createAssignment => [
     		valuedObject = guard.valuedObject.getValuedObjectCopy(map)
     		expression = guard.expression.copySCGExpression(map)

@@ -118,6 +118,7 @@ class SurfaceDepth extends SCChartsProcessor implements Traceable {
             targetState.transformSurfaceDepth(rootState)
         ]
 
+        snapshot
         rootState.optimizeSuperflousConditionalStates.
             optimizeSuperflousImmediateTransitions.fixDeadCode
     }

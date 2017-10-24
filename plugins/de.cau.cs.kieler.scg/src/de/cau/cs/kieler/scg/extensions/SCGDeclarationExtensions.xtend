@@ -114,18 +114,35 @@ class SCGDeclarationExtensions {
         return null
     }    
     
-    public def HashMap<ValuedObject, ValuedObject> copyDeclarations(
+    public def ValuedObjectMapping copyDeclarations(
     	SCGraph source, SCGraph target) {
-    	val map = <ValuedObject, ValuedObject> newHashMap
+    	val map = new ValuedObjectMapping
     	for (declaration : source.declarations) {
     		val newDeclaration = createDeclaration(declaration).trace(declaration)
     		declaration.valuedObjects.forEach[ 
-    			map.put(it, it.copyValuedObject(newDeclaration))
+    			map.put(it, <ValuedObject> newLinkedList(it.copyValuedObject(newDeclaration)))
     		]
     		target.declarations += newDeclaration
     	}
     	map
-	}  
+	} 
+	
+	public def addValuedObjectMapping(ValuedObjectMapping map, ValuedObject source, ValuedObject target) {
+	    val deque = map.get(source) 
+	    if (deque === null) {
+	        map.put(source, <ValuedObject> newLinkedList(target))
+	    } else {
+	        deque.push(target)
+	    }
+	} 
+	
+	public def ValuedObject peekValuedObjectMapping(ValuedObjectMapping map, ValuedObject source) {
+	    return map.get(source)?.peek
+	}
+	
+	public def void removeLastValuedObjectMapping(ValuedObjectMapping map, ValuedObject source) {
+	    map.get(source)?.pop
+	}
     
     public def void copyDeclarationsWODead(SCGraph source, SCGraph target) {
         for (declaration : source.declarations) {
@@ -147,12 +164,12 @@ class SCGDeclarationExtensions {
     }
     
     def ValuedObject getValuedObjectCopy(ValuedObject valuedObject, 
-    	HashMap<ValuedObject, ValuedObject> map
+    	ValuedObjectMapping map
     ) {
         if (valuedObject == null) {
-            throw new Exception("Valued Object is already null!")
+            throw new IllegalArgumentException("Can't copy valued object. Valued object is null!")
         }
-        val vo = map.get(valuedObject)
+        val vo = map.get(valuedObject).peek
         if (vo == null) {
             return valuedObject // TODO: Remove
             //throw new Exception("Valued Object not found! ["+valuedObject.name+"]")
@@ -161,12 +178,12 @@ class SCGDeclarationExtensions {
     }    
 
     def ValuedObject getValuedObjectCopyWNULL(ValuedObject valuedObject,
-    	HashMap<ValuedObject, ValuedObject> map
+    	ValuedObjectMapping map
     ) {
         if (valuedObject == null) {
             return null
         }
-        val vo = map.get(valuedObject)
+        val vo = map.get(valuedObject).peek
         if (vo == null) {
             throw new Exception("Valued Object not found! ["+valuedObject.name+"]")
         }
@@ -174,14 +191,14 @@ class SCGDeclarationExtensions {
     }    
     
     def ValuedObject addToValuedObjectMapping(ValuedObject source, ValuedObject target, 
-    	HashMap<ValuedObject, ValuedObject> map
+    	ValuedObjectMapping map
     ) {
-		map.put(source, target)
+		map.addValuedObjectMapping(source, target)
 		target    	
     }    
     
     def Expression copySCGExpression(Expression expression,
-    	HashMap<ValuedObject, ValuedObject> map
+    	ValuedObjectMapping map
     ) {
     	// Use the ecore utils to copy the expression. 
         val newExpression = expression.copy
@@ -203,7 +220,7 @@ class SCGDeclarationExtensions {
     }   
     
     def Assignment copySCGAssignment(Assignment assignment, 
-    	HashMap<ValuedObject, ValuedObject> map
+    	ValuedObjectMapping map
     ) {
     	ScgFactory::eINSTANCE.createAssignment => [ s |
     		s.valuedObject = assignment.valuedObject.getValuedObjectCopyWNULL(map)
