@@ -39,9 +39,6 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 /**
  * @author ssm
  *
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-
-/**
  * Transforms {@link DataflowRegion} into {@link KNode} diagram elements.
  * 
  * @author als ssm

@@ -2,34 +2,12 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.debug.ui.launchConfigurationTypeImages">
-      <launchConfigurationTypeImage
-            configTypeID="de.cau.cs.kieler.prom.launch.kiCoLaunchConfig"
-            icon="icons/foerde-logo-16.png"
-            id="de.cau.cs.kieler.prom.launch.kiCoLaunchConfigImage">
-      </launchConfigurationTypeImage>
-   </extension>
-   <extension
-         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
-      <launchConfigurationTabGroup
-            class="de.cau.cs.kieler.prom.ui.launch.KiCoLaunchConfigTabGroup"
-            id="de.cau.cs.kieler.prom.ui.launch.kiCoLaunchConfigTabGroup"
-            type="de.cau.cs.kieler.prom.launch.kiCoLaunchConfig">
-         <launchMode
-               mode="run">
-         </launchMode>
-         <launchMode
-               mode="debug">
-         </launchMode>
-      </launchConfigurationTabGroup>
-   </extension>
-   <extension
          point="org.eclipse.ui.preferencePages">
       <page
             category="de.cau.cs.kieler.sccharts"
-            class="de.cau.cs.kieler.prom.ui.environments.EnvironmentsPage"
-            id="de.cau.cs.kieler.prom.environmentsPreferencePage"
-            name="Execution Environments">
+            class="de.cau.cs.kieler.prom.ui.drafts.ProjectDraftPage"
+            id="de.cau.cs.kieler.prom.projectDraftPreferencePage"
+            name="Project Drafts">
       </page>
    </extension>
    <extension
@@ -50,7 +28,7 @@
    <extension
          point="org.eclipse.ui.propertyPages">
       <page
-            class="de.cau.cs.kieler.prom.ui.build.PromProjectProperties"
+            class="de.cau.cs.kieler.prom.ui.build.KielerModelingProjectProperties"
             id="de.cau.cs.kieler.prom.projectProperties"
             name="KIELER Modeling Builder">
          <enabledWhen>

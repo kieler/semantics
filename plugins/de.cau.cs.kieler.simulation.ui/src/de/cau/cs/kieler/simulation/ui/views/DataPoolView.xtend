@@ -15,17 +15,21 @@ package de.cau.cs.kieler.simulation.ui.views
 import com.google.common.base.Strings
 import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.prom.ui.PromUIPlugin
+import de.cau.cs.kieler.prom.ui.UIUtil
 import de.cau.cs.kieler.prom.ui.views.LabelContribution
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
-import de.cau.cs.kieler.simulation.core.SimulationEvent
-import de.cau.cs.kieler.simulation.core.SimulationEventType
-import de.cau.cs.kieler.simulation.core.SimulationListener
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.Variable
+import de.cau.cs.kieler.simulation.core.events.ErrorEvent
+import de.cau.cs.kieler.simulation.core.events.SimulationAdapter
+import de.cau.cs.kieler.simulation.core.events.SimulationControlEvent
+import de.cau.cs.kieler.simulation.core.events.SimulationEvent
+import de.cau.cs.kieler.simulation.core.events.SimulationListener
+import de.cau.cs.kieler.simulation.core.events.VariableUserValueEvent
 import de.cau.cs.kieler.simulation.handlers.TraceMismatchEvent
 import de.cau.cs.kieler.simulation.ui.SimulationUiPlugin
-import de.cau.cs.kieler.simulation.ui.toolbar.SubTicksEnabledPropertyTester
+import de.cau.cs.kieler.simulation.ui.toolbar.AdvancedControlsEnabledPropertyTester
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
@@ -51,34 +55,72 @@ import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.xtend.lib.annotations.Accessors
 
+import static de.cau.cs.kieler.simulation.ui.toolbar.AdvancedControlsEnabledPropertyTester.*
+
 /**
+ * Displays the data of a running simulation.
+ * 
  * @author aas
  *
  */
 class DataPoolView extends ViewPart {
     
+    /**
+     * The id of the view from the plugin.xml
+     */
     public static val VIEW_ID = "de.cau.cs.kieler.simulation.ui.dataPoolView"
     
+    /**
+     * The single instance
+     */
     public static var DataPoolView instance
     
+    /**
+     * The simulation listener that updates this view
+     */
     public static val simulationListener = createSimulationListener
     
-    @Accessors(PUBLIC_GETTER)
-    static var boolean subTicksEnabled
-    
+    /**
+     * The table that shows the data pool view of the simulation.
+     */
     @Accessors(PUBLIC_GETTER)
     private var TableViewer viewer
-    
+    /**
+     * The variable column of the table
+     */
     private var TableViewerColumn variableColumn
+    /**
+     * The value column of the table
+     */
     private var TableViewerColumn valueColumn
+    /**
+     * Theuser value column of the table
+     */
     private var TableViewerColumn userValueColumn
+    /**
+     * The history column of the table
+     */
     private var TableViewerColumn historyColumn
+    /**
+     * The isInput / isOutput column of the table
+     */
     private var TableViewerColumn inputOutputColumn
     
+    /**
+     * The label to display the tick count
+     */
     private var LabelContribution tickInfo
-    
+
+    /**
+     * A filter for the table to control which items are visible, e.g., to search for items
+     */    
     private var DataPoolFilter filter
     
+    /**
+     * Container for the trace mismatches and where they occured.
+     * The key is the fully qualified name of a variables.
+     * The value is the trace mismatch that occured on this variable.
+     */
     private var Map<String, TraceMismatchEvent> traceMismatches = newHashMap
     
     /**
@@ -91,7 +133,7 @@ class DataPoolView extends ViewPart {
         
         // Create viewer.
         viewer = createTable(parent);
-                                         
+        
         // Create menu and toolbars.
         createMenu
         createToolbar
@@ -120,8 +162,8 @@ class DataPoolView extends ViewPart {
      * Set the data pool to be displayed.
      */
     public def void setDataPool(DataPool pool) {
-        // Remove all trace mismatches of last tick
         if(pool == null) {
+            // The simulation stopped. Thus variables are reset.
             viewer.input = null
             traceMismatches = newHashMap
             statusLineText = ""
@@ -144,36 +186,54 @@ class DataPoolView extends ViewPart {
     }
     
     /**
-     * Create menu.
+     * Creates the menu.
      */
     private def void createMenu() {
         val mgr = getViewSite().getActionBars().getMenuManager();
         mgr.add(new ToggleColumnVisibleAction(historyColumn));
         mgr.add(new ToggleColumnVisibleAction(inputOutputColumn));
+        mgr.add(new Action("Show/Hide Internal Variables") {
+            override run() {
+                filter.internalVariables = !filter.internalVariables
+                viewer.refresh
+            }
+        });
+        mgr.add(new Action("Show/Hide Other Variables") {
+            override run() {
+                filter.otherVariables = !filter.otherVariables
+                viewer.refresh
+            }
+        });
+        mgr.add(new Separator())
         mgr.add(new Action("Clear Trace Mismatches") {
             override run() {
                 traceMismatches = newHashMap
                 viewer.refresh
             }
         });
-        mgr.add(new Action("Enable Sub Ticks") {
+        mgr.add(new Separator())
+        mgr.add(new Action("Enable Advanced Controls") {
             override run() {
-                subTicksEnabled = !subTicksEnabled
-                if(subTicksEnabled) {
-                    setText("Disable Sub Ticks")
+                AdvancedControlsEnabledPropertyTester.advancedControlsEnabled = !AdvancedControlsEnabledPropertyTester.advancedControlsEnabled
+                if(AdvancedControlsEnabledPropertyTester.advancedControlsEnabled) {
+                    setText("Disable Advanced Controls")
                 } else {
-                    setText("Enable Sub Ticks")
+                    setText("Enable Advanced Controls")
                 }
                 
                 // Trigger re-evaluation of the property tester
                 // that controls the visibility of the toolbar button
-                SubTicksEnabledPropertyTester.update
+                AdvancedControlsEnabledPropertyTester.update
             }
         })
     }
     
+    /**
+     * Creates the toolbar.
+     */
     private def void createToolbar() {
         val mgr = getViewSite().getActionBars().getToolBarManager()
+        // The toolbar items are ordered from left to right in the order that they are added
         tickInfo = new LabelContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.tickInfo",
                                          "Tick #0000 (-000)",
                                          "Last executed macro tick")
@@ -181,7 +241,7 @@ class DataPoolView extends ViewPart {
         mgr.add(new Separator())
         mgr.add(new SearchFieldContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.searchField"))
         mgr.add(new Separator())
-        mgr.add(new SimulationDelayContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.delay"))
+        mgr.add(new SimulationDelayContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.desiredPause"))
         mgr.add(new Separator())
         mgr.add(new SaveSimulationAction("Save Data Pool History", "saveFile.png") {
             override getFileExtension() {
@@ -189,15 +249,15 @@ class DataPoolView extends ViewPart {
             }
             
             override getFileContent(List<DataPool> history) {
-                // Turn models of data pool history to json objects
+                // Turn data pools to json objects
                 var String content = ""
                 for(pool : history) {
-                    content += pool.models.get(0).toJson+"\n"
+                    content += pool.toJson+"\n"
                 }
                 return content
             }
         });
-        mgr.add(new SaveSimulationAction("Save Eso trace", "saveEsoFile.png") {
+        mgr.add(new SaveSimulationAction("Save Eso Trace", "saveEsoFile.png") {
             override getFileExtension() {
                 return ".eso"
             }
@@ -232,6 +292,7 @@ class DataPoolView extends ViewPart {
                 return content
             }
         });
+        mgr.add(new OpenSimulationAction("Open Data Pool", "openFile.png"));
         mgr.add(new Separator())
         mgr.add(new Action("Reset All"){
             override run(){
@@ -258,27 +319,75 @@ class DataPoolView extends ViewPart {
             override run() {
                 val title = "Controls for the Data Pool View"
                 val message = "Right Arrow : Step simulation macro tick\n"
+                            + "Ctrl + Right Arrow: Step in simulation history forward\n"
+                            + "Ctrl + Left Arrow: Step in simulation history back\n"
+                            + "Space: Play / pause simulation\n"
                 val dialog = new MessageDialog(viewer.control.shell, title, null, message, 0, #["OK"], 0)
                 dialog.open
             }
         })
     }
     
+    /**
+     * Adds key listeners to the table for easy control of the simulation.
+     */
     private def void addKeyListeners() {
-        // Step through simulation via ARROW_RIGHT.
         viewer.control.addKeyListener(new KeyAdapter() {
             override keyPressed(KeyEvent e) {
                 val manager = SimulationManager.instance
-                if(e.keyCode == SWT.ARROW_RIGHT) {
-                    if(manager != null) {
-                        PromConsole.print("Step macro tick")
-                        manager.stepMacroTick()
+                val mod = e.stateMask
+                // CTRL + RIGHT: step history forward
+                // CTRL + LEFT: step history back
+                if(mod.hasBit(SWT.CTRL)) {
+                    if(e.keyCode == SWT.ARROW_RIGHT) {
+                        if(manager != null) {
+                            PromConsole.print("Step History Forward")
+                            manager.stepHistoryForward()
+                        }
+                    } else if(e.keyCode == SWT.ARROW_LEFT) {
+                        if(manager != null) {
+                            PromConsole.print("Step History Back")
+                            manager.stepHistoryBack()
+                        }
+                    }
+                } else {
+                    // No CTRL + RIGHT: Step Macro Tick
+                    if(e.keyCode == SWT.ARROW_RIGHT) {
+                        if(manager != null) {
+                            PromConsole.print("Step Macro Tick")
+                            manager.stepMacroTick()
+                        }
+                    }
+                    // No CTRL + SPACE: Play Simulation
+                    if(e.keyCode == SWT.SPACE) {
+                        if(manager != null) {
+                            PromConsole.print("Playing Simulation")
+                            if(manager.isPlaying) {
+                                manager.pause()
+                            } else {
+                                manager.play()
+                            }
+                        }
                     }
                 }
             }
         })
     }
     
+    /**
+     * Determines if the given bit is set in the bit mask.
+     * 
+     * @param bitMask The bit mask
+     * @param bit The bit
+     * @returns true if the bit is set, false otherwise
+     */
+    private def boolean hasBit(int bitMask, int bit) {
+        return bitMask.bitwiseAnd(bit) != 0
+    }
+    
+    /**
+     * Creates the table to show and edit data pools.
+     */
     private def TableViewer createTable(Composite parent) {
         val table = new Table(parent, SWT.BORDER.bitwiseOr(SWT.FULL_SELECTION))
         table.setHeaderVisible(true);
@@ -293,7 +402,7 @@ class DataPoolView extends ViewPart {
         viewer.addFilter(filter)
         
         // Create columns
-        variableColumn = createTableColumn(viewer, "Variable", 120, true)
+        variableColumn = UIUtil.createTableColumn(viewer, "Variable", 120, true)
         variableColumn.labelProvider = new DataPoolColumnLabelProvider() {
             override String getText(Object element) {
                 if(element instanceof Variable) {
@@ -306,7 +415,7 @@ class DataPoolView extends ViewPart {
                 }
             }
         };
-        valueColumn = createTableColumn(viewer, "Current Value", 100, true)
+        valueColumn = UIUtil.createTableColumn(viewer, "Current Value", 100, true)
         valueColumn.labelProvider = new DataPoolColumnLabelProvider() {
             override String getToolTipText(Object element) {
                 if(element instanceof Variable) {
@@ -326,7 +435,7 @@ class DataPoolView extends ViewPart {
                 return ""
             }
         };
-        userValueColumn = createTableColumn(viewer, "User Value", 100, true)
+        userValueColumn = UIUtil.createTableColumn(viewer, "User Value", 100, true)
         userValueColumn.labelProvider = new DataPoolColumnLabelProvider() {
             override String getText(Object element) {
                  if(element instanceof Variable) {
@@ -337,10 +446,10 @@ class DataPoolView extends ViewPart {
                 return ""
             }
         };
-        historyColumn = createTableColumn(viewer, "History", 200, true)
+        historyColumn = UIUtil.createTableColumn(viewer, "History", 200, true)
         historyColumn.labelProvider = new HistoryColumnLabelProvider()
         
-        inputOutputColumn = createTableColumn(viewer, "In Out", 32, false)
+        inputOutputColumn = UIUtil.createTableColumn(viewer, "In Out", 32, false)
         inputOutputColumn.labelProvider = new DataPoolColumnLabelProvider() {
             private val inputImageDescriptor = SimulationUiPlugin.imageDescriptorFromPlugin(SimulationUiPlugin.PLUGIN_ID, "icons/input.png");
             private val outputImageDescriptor = SimulationUiPlugin.imageDescriptorFromPlugin(SimulationUiPlugin.PLUGIN_ID, "icons/output.png");
@@ -414,7 +523,8 @@ class DataPoolView extends ViewPart {
         val focusCellManager = new TableViewerFocusCellManager(viewer, new FocusCellOwnerDrawHighlighter(viewer));
         val activationSupport = new ColumnViewerEditorActivationStrategy(viewer)
         activationSupport.enableEditorActivationWithKeyboard = true
-        TableViewerEditor.create(viewer, focusCellManager, activationSupport, ColumnViewerEditor.TABBING_HORIZONTAL.bitwiseOr(
+        TableViewerEditor.create(viewer, focusCellManager, activationSupport, 
+            ColumnViewerEditor.TABBING_HORIZONTAL.bitwiseOr(
             ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR).bitwiseOr(
             ColumnViewerEditor.TABBING_VERTICAL).bitwiseOr(
             ColumnViewerEditor.KEYBOARD_ACTIVATION))
@@ -423,41 +533,32 @@ class DataPoolView extends ViewPart {
     }
     
     /**
-     * Creates a column for a table viewer with the given title and width.
+     * Adds a trace mismatch for the given variable, so that this variable will be highlighted in the table.
      * 
-     * @param viewer The TableViewer this column is added to
-     * @param title The title for this column
-     * @param width The width of this column
-     * @return the created column.
+     * @param variable The variable
+     * @param e The trace mismatch event
      */
-    public static def TableViewerColumn createTableColumn(TableViewer viewer, String title, int width, boolean visible) {
-        val viewerColumn = new TableViewerColumn(viewer, SWT.NONE);
-        val column = viewerColumn.getColumn()
-        column.setText(title);
-        column.setMoveable(true);
-        
-        if(visible) {
-            column.width = width
-            column.resizable = true
-        } else {
-            column.width = 0
-            column.resizable = false
-        }
-        return viewerColumn
-    }
-    
     public def void registerTraceMismatch(Variable variable, TraceMismatchEvent e) {
         traceMismatches.put(variable.fullyQualifiedName, e)
     }
     
+    /**
+     * Returns the trace mismatch for the given variable.
+     * 
+     * @param variable The variable
+     * @return the trace mismatch for the given variable, or null if none
+     */
     public def TraceMismatchEvent getTraceMismatch(Variable variable) {
         return traceMismatches.getOrDefault(variable.fullyQualifiedName, null)
     }
     
-    private def void updateTickInfo(SimulationEvent e) {
+    /**
+     * Updates the info label with the current tick count.
+     */
+    private def void updateTickInfo() {
         var String txt = null
-        if(e.type != SimulationEventType.STOP) {
-            val simMan = SimulationManager.instance
+        val simMan = SimulationManager.instance
+        if(!simMan.isStopped) {
             val macroTick = simMan.currentMacroTickNumber
             val subTick = simMan.currentSubTickNumber
             txt = "Tick #"+macroTick
@@ -471,6 +572,11 @@ class DataPoolView extends ViewPart {
         tickInfo?.setText(Strings.nullToEmpty(txt))
     }
     
+    /**
+     * Sets the text of this view's status line.
+     * 
+     * @param value The new status line text
+     */
     private def void setStatusLineText(String value) {
         val bars = getViewSite().getActionBars();
         if(bars != null) {
@@ -479,52 +585,83 @@ class DataPoolView extends ViewPart {
         }
     }
     
+    /**
+     * Sets the search term to filter the table.
+     * 
+     * @param text The search term
+     */
     public def void setFilterText(String text) {
         filter.searchString = text
         viewer.refresh
     }
     
+    /**
+     * Creates a simulation listener that updates this view with the simulation.
+     */
     private static def SimulationListener createSimulationListener() {
-        val listener = new SimulationListener() {
+        val listener = new SimulationAdapter() {
+            var DataPoolView dataPoolView
+            
+            /**
+             * {@inheritDoc}
+             */
             override update(SimulationEvent e) {
-                val dataPoolView = DataPoolView.instance
+                dataPoolView = DataPoolView.instance
                 if(dataPoolView == null) {
                     return;
                 }
-                if(e.type == SimulationEventType.ERROR) {
-                    PromUIPlugin.asyncExecInUI[
-                        dataPoolView.setStatusLineText(e.message)    
-                    ]
-                }else if(e.type == SimulationEventType.VARIABLE_CHANGE) {
-                    PromUIPlugin.asyncExecInUI[
-                        dataPoolView.viewer.update(e.variable, null)    
-                    ]
-                } else if(e.type == SimulationEventType.TRACE) {
-                    if(e instanceof TraceMismatchEvent) {
-                        dataPoolView.registerTraceMismatch(e.variable, e)
-                        dataPoolView.viewer.update(e.variable, null)
+                super.update(e)
+            }
+            
+            /**
+             * Shows errors in the status line.
+             * 
+             * @param e The event
+             */
+            override onErrorEvent(ErrorEvent e) {
+                PromUIPlugin.asyncExecInUI[
+                    dataPoolView.setStatusLineText(e.message)    
+                ]
+            }
+            
+            /**
+             * Updates the row of the changed variable.
+             * 
+             * @param e The event
+             */
+            override onUserValueChanged(VariableUserValueEvent e) {
+                PromUIPlugin.asyncExecInUI[
+                    dataPoolView.viewer.update(e.variable, null)    
+                ]
+            }
+            
+            /**
+             * Registers a trace mismatch.
+             * 
+             * @param e The event
+             */
+            override onTraceMismatch(TraceMismatchEvent e) {
+                dataPoolView.registerTraceMismatch(e.variable, e)
+                dataPoolView.viewer.update(e.variable, null)
+            }
+            
+            /**
+             * Updates the view with the new data pool from the simulation.
+             * 
+             * @param e The event
+             */
+            override onSimulationControlEvent(SimulationControlEvent e) {
+                PromUIPlugin.asyncExecInUI[
+                    // Update data pool view
+                    if(e.pool == SimulationManager.instance?.currentPool) {
+                        // Update tick info
+                        dataPoolView.updateTickInfo
+                        // Set pool data
+                        dataPoolView.setDataPool(e.pool)
                     }
-                } else {
-                    // Execute in UI thread
-                    PromUIPlugin.asyncExecInUI[
-                            // Update tick info
-                            dataPoolView.updateTickInfo(e)
-                            // Set pool data
-                            dataPoolView.setDataPool(SimulationManager.instance?.currentPool)
-                        ]
-                        
-//                    dataPoolView.highlightDiagram
-                }
+                ]
             }
         }
         return listener
     }
-    
-//    private def void highlightDiagram() {
-//        val diagramViews = DiagramView.getAllDiagramViews
-//        if (!diagramViews.isNullOrEmpty) {
-//            val diagramView = diagramViews.get(0);
-//            val viewContext = diagramView.
-//        }
-//    }
 }

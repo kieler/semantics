@@ -1,0 +1,69 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://rtsys.informatik.uni-kiel.de/kieler
+ * 
+ * Copyright ${year} by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ */
+package de.cau.cs.kieler.scg.processors.transformators.codegen.java
+
+import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
+import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
+import de.cau.cs.kieler.scg.transformations.guards.AbstractGuardTransformation
+import com.google.inject.Inject
+import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import java.util.Map
+import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeGeneratorResetModule
+
+/**
+ * Java Code Generator Reset Module
+ * 
+ * Handles the creation of the reset function.
+ * 
+ * @author ssm
+ * @kieler.design 2017-10-04 proposed 
+ * @kieler.rating 2017-10-04 proposed yellow 
+ * 
+ */
+class JavaCodeGeneratorResetModule extends CCodeGeneratorResetModule {
+    
+    @Inject JavaCodeGeneratorStructModule struct
+    
+    override configure(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
+        Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, String codeFilename, SCGCodeGeneratorModule parent
+    ) {
+        super.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename, parent)
+        
+        struct = (parent as JavaCodeGeneratorModule).struct as JavaCodeGeneratorStructModule
+        
+        return this
+    }    
+    
+    override generateInit() {
+        indent
+        code.append("public void ").append(getName)
+        code.append("(")
+        code.append(")")
+        
+        code.append(" {\n")
+        
+        indent(2) 
+        code.append(struct.getVariableName).append(struct.separator).append(AbstractGuardExpressions.GO_GUARD_NAME).append(" = true;\n")
+        indent(2)
+        code.append(struct.getVariableName).append(struct.separator).append(AbstractGuardTransformation.TERM_GUARD_NAME).append(" = false;\n")
+    }
+    
+    override generateDone() {
+        indent
+        code.append("}\n")
+    }
+    
+}

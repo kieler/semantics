@@ -13,6 +13,8 @@
 package de.cau.cs.kieler.simulation.handlers
 
 /**
+ * Event that is fired when a trace reached its end.
+ * 
  * @author aas
  *
  */

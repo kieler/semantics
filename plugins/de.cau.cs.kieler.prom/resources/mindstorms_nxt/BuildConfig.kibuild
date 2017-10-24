@@ -1,0 +1,27 @@
+// Compile models to Java code
+model compiler kico {
+  outputFolder: kieler-gen
+  outputFileExtension: java
+  outputTemplate: assets/OutputTemplate.ftl
+  compileChain: assets/CompilationConfig.kico
+  
+  // Generate simulation from output of compilation
+  process simulation template {
+    file: assets/JavaSimulation.ftl
+  }
+} 
+
+// Compile generated simulation code
+simulation compiler java {
+  libFolder: kieler-gen/org/json
+  outputFolder: kieler-gen/sim/bin
+  command: "javac -cp kieler-gen -d bin \"${file_path}\" "
+  jarCommand: "jar cvfe \"./${outputFolder}/${executable_name}\" sim.code.${file_basename} -C bin . "
+}
+
+// Create main file that can be uploaded to the brick
+process wrapper template {
+  file: src/model/${project_name}Main.ftl
+  target: kieler-gen/model/${project_name}Main.java
+  modelFile: ${modelFile_path}
+}

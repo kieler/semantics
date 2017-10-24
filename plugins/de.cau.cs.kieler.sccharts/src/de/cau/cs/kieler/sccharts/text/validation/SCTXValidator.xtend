@@ -40,6 +40,10 @@ import org.eclipse.xtext.validation.AbstractDeclarativeValidator
 import org.eclipse.xtext.validation.Check
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.VectorValue
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage
 
 //import org.eclipse.xtext.validation.Check
 
@@ -604,6 +608,21 @@ class SCTXValidator extends AbstractSCTXValidator {
                 error("The range of the counter variable of the for region is not determinable. The array cardinalities of you array must be an int or a const int.",
                     region, SCChartsPackage.eINSTANCE.state_Regions
                 )
+            }
+        }
+    }
+    
+    @Check
+    def void checkDataflowVectorAssignment(DataflowRegion dataflowRegion) {
+        for(equation : dataflowRegion.equations) {
+            val reference = equation.reference
+            if (reference instanceof ValuedObjectReference) {
+                if (reference.valuedObject.declaration instanceof ReferenceDeclaration) {
+                    if (reference.subReference == null && !(equation.expression instanceof VectorValue)) {
+                        error("You are assigning a scalar value to a reference. You should specify the input variable of the reference or use a vector value instead of a scalar.",
+                            equation, null)
+                    }
+                }
             }
         }
     }

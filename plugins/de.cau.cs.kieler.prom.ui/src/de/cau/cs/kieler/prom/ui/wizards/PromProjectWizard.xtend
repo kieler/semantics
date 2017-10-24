@@ -13,13 +13,12 @@
  */
 package de.cau.cs.kieler.prom.ui.wizards
 
-import com.google.common.io.Files
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.build.KielerModelingNature
+import de.cau.cs.kieler.prom.configurable.ResourceSubstitution
 import de.cau.cs.kieler.prom.ui.UIExtensionLookupUtil
 import de.cau.cs.kieler.prom.ui.UIUtil
 import java.io.File
-import java.io.InputStream
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.ResourcesPlugin
@@ -27,19 +26,20 @@ import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.Path
 import org.eclipse.core.runtime.Platform
 import org.eclipse.core.runtime.Status
-import org.eclipse.jdt.core.JavaCore
 import org.eclipse.jface.dialogs.MessageDialog
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.jface.wizard.Wizard
 import org.eclipse.jface.wizard.WizardDialog
 import org.eclipse.ui.INewWizard
 import org.eclipse.ui.IWorkbench
+import de.cau.cs.kieler.prom.templates.ModelAnalyzer
 
-/**op
- * Wizard implementation wich creates a project
+/**
+ * Wizard implementation, which creates a project
  * and optionally initializes it by using enviroments.
- * Shows a main page to set the environment and with which files the new project should be initialized.
- * Then the associated project wizard of the environment is run.
+ * Shows a main page to set the project draft and with which files the new project should be initialized.
+ * When hitting finish, the associated project wizard of the project draft is run
+ * and afterwards the newly created project is initialized according to the selected project draft.
  * 
  * @author aas
  */
@@ -54,20 +54,18 @@ class PromProjectWizard extends Wizard implements INewWizard {
      */
     protected var IStructuredSelection selection
 
-
-
     /**
-     * The projects in the workspace before the associated wizard of the environment was run.
+     * The projects in the workspace before the associated wizard of the project draft was run.
      */
     protected var IProject[] projectsBeforeWizard
     
     /**
-     * The project created by the wizard of the environment.
+     * The project created by the wizard of the project draft.
      */
     protected var IProject newlyCreatedProject
 
      /**
-     * The file extension (e.g. '.sct') of an initial model file for the new project
+     * The file extension (e.g. 'sctx') of an initial model file for the new project
      */
     protected var String modelFileExtension
     
@@ -76,21 +74,31 @@ class PromProjectWizard extends Wizard implements INewWizard {
      */
     protected var String modelFileInitialContentURL
 
-
-    
     /**
      * The main page of the wizard.
      * It is the first page.
      */
     protected var PromProjectWizardMainPage mainPage
     
+    /**
+     * A suited model analyzer for the given model file extension
+     */
+    protected var ModelAnalyzer analyzer
 
     /**
      * The main file that has been created as part of this wizard
      */
     private IFile createdMainFile;
 
-
+    /**
+     * Creates the substitutions for variables about the model path, name, file extension etc.  
+     */
+    val modelFileSubstitution = new ResourceSubstitution("modelFile") {
+        override getValue() {
+            return newlyCreatedProject.getFile(modelFilePath+"."+modelFileExtension)
+        }
+    }
+    
     /**
      * @{inheritDoc}
      */
@@ -113,10 +121,12 @@ class PromProjectWizard extends Wizard implements INewWizard {
      */
     override performFinish() {
         // Start other wizard
-        startWizard(mainPage.getEnvironmentWizardClassName())
+        startWizard(mainPage.getWizardClassName())
         
         // Continue only if project has been created
         if(newlyCreatedProject != null) {
+            analyzer = ModelAnalyzer.analyzers.findFirst[it.isSupported(modelFileExtension)]
+            
             // Create main file.
             // Create model file
             val isModelFileOk = createModelFile()
@@ -147,6 +157,22 @@ class PromProjectWizard extends Wizard implements INewWizard {
         deleteCreatedProject()
         return true
     }
+
+    /**
+     * Implementation of IWorkbenchWizard. 
+     * 
+     * @param workbench The workbench
+     * @param selection The selection
+     */
+    override init(IWorkbench workbench, IStructuredSelection selection) {
+        this.workbench = workbench
+        this.selection = selection
+
+        windowTitle = "New Project"
+        helpAvailable = false
+
+        projectsBeforeWizard = ResourcesPlugin.workspace.root.projects
+    }
     
     /**
      * Deletes the newly created project.
@@ -163,7 +189,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
      * 
      * @return true if the creation ended sucessfully. false otherwise.
      */
-    protected def boolean createModelFile(){
+    protected def boolean createModelFile() {
         // If the file should not be created, we are done immediately
         if(!mainPage.isCreateModelFile)
             return true
@@ -171,70 +197,32 @@ class PromProjectWizard extends Wizard implements INewWizard {
         // Load path of model file
         val modelFilePath = getModelFilePath()
         val modelFilePathWithoutExtension = new Path(modelFilePath).removeFileExtension
-        val modelFileNameWithoutExtension = modelFilePathWithoutExtension.lastSegment
- 
+        val projectRelativePath = modelFilePathWithoutExtension.addFileExtension(modelFileExtension)
         try {
-            // Open initial content stream
-            var InputStream initialContentStream = null
-            if(!modelFileInitialContentURL.isNullOrEmpty()){
-                initialContentStream = PromPlugin.getInputStream(modelFileInitialContentURL, #{"${name}" -> modelFileNameWithoutExtension})
-            }
-            
             // Create file
-            val fileHandle = newlyCreatedProject.getFile(modelFilePathWithoutExtension + modelFileExtension)
-            PromPlugin.createResource(fileHandle, initialContentStream)
-            UIUtil.openFileInEditor(fileHandle)
-
+            // The variable base name in the model file templates are called 'file' instead 'model'
+            val substitution = new ResourceSubstitution("file") {
+                override getValue() {
+                    return modelFileSubstitution.getValue
+                }
+            }
+            val file = PromPlugin.initializeFile(newlyCreatedProject,
+                                                 projectRelativePath.toOSString,
+                                                 modelFileInitialContentURL,
+                                                 substitution.variableMappings)
+            UIUtil.openFileInEditor(file)
             return true
             
         } catch (Exception e) {
             MessageDialog.openError(shell, "Error", "The model file '"+modelFilePathWithoutExtension+"' could not be created.\n"
-                + "Please check the environment settings in the preferences and enter a valid file path.");
+                + "Please check the project draft settings in the preferences and enter a valid file path.");
 
             return false
         }
     }
     
     /**
-     * Returns the model file path from the environment if it is not empty.
-     * Otherwise a suited value is infered from the project name.
-     * 
-     * @return the path without file extension for the model file  
-     */
-    private def String getModelFilePath() {
-        val env = mainPage.selectedEnvironment
-        var resolvedPath = ""
-        try {
-            resolvedPath = PromPlugin.performStringSubstitution(env.modelFile, newlyCreatedProject)
-        } catch (CoreException ce) {
-            MessageDialog.openError(shell, "Error", ce.message)
-            return "Model"
-        }
-        
-        var modelFilePathWithoutExtension = resolvedPath
-        if(modelFilePathWithoutExtension.isNullOrEmpty()) {
-            // Infere parent directory of file from main file directory.
-            // Therefore the main file has to be created before the model file.
-            var modelFileDirectory = ""
-            if(createdMainFile != null && createdMainFile.exists()){
-                modelFileDirectory = createdMainFile.parent.projectRelativePath.toOSString + File.separator
-            }
-            
-            // Infere file name from project name
-            var modelFileNameWithoutExtension = newlyCreatedProject.name
-            // We use only alphanumeric characters of the project name
-            modelFileNameWithoutExtension = modelFileNameWithoutExtension.replaceAll("[^\\w]", "")
-            // the file name may not begin with a number
-            modelFileNameWithoutExtension = modelFileNameWithoutExtension.replaceAll("^\\d*", "")
-            
-            // Cobine directory and name of file
-            modelFilePathWithoutExtension = modelFileDirectory + modelFileNameWithoutExtension
-        }
-        return modelFilePathWithoutExtension
-    }
-    
-    /**
-     * Creates the initial resources defined in the environment.
+     * Creates the initial resources defined in the project draft.
      * 
      * @return true if the creation ended sucessfully. false otherwise.
      */
@@ -243,91 +231,31 @@ class PromProjectWizard extends Wizard implements INewWizard {
         if(!mainPage.isCreateInitialResources)
             return true
         
-        val env = mainPage.selectedEnvironment
-        for(data : env.initialResources) {
-            var resolvedProjectRelativePath = data.projectRelativePath
-            try {
-                if(!data.projectRelativePath.trim.isNullOrEmpty) {
-                    try {
-                        resolvedProjectRelativePath = PromPlugin.performStringSubstitution(data.projectRelativePath.trim, newlyCreatedProject)
-                    } catch (CoreException ce) {
-                        MessageDialog.openError(shell, "Error", ce.message)
-                        return false
-                    }
-                    val path = new Path(resolvedProjectRelativePath)
-                    val isFile = (path.fileExtension != null)
-                    
-                    if(isFile) {
-                        // Setup placeholders
-                        // Load path of model file
-                        val modelFilePath = getModelFilePath()
-                        val modelFilePathWithoutExtension = new Path(modelFilePath).removeFileExtension
-                        val modelFileNameWithoutExtension = modelFilePathWithoutExtension.lastSegment
-                        val placeholderReplacements = #{"${project_name}" -> newlyCreatedProject.name,
-                                                        "${model_name}" -> modelFileNameWithoutExtension}
-                        // Create file
-                        PromPlugin.initializeFile(newlyCreatedProject, resolvedProjectRelativePath,
-                                                  data.origin, placeholderReplacements)
-                        
-                        // Remember kibuild file in project preferences
-                        if(Files.getFileExtension(resolvedProjectRelativePath) == "kibuild") {
-                            newlyCreatedProject.setPersistentProperty(PromPlugin.BUILD_CONFIGURATION_QUALIFIER,
-                                                                      resolvedProjectRelativePath)
-                        }
-                    } else {
-                        // Create folder
-                        PromPlugin.initializeFolder(newlyCreatedProject, resolvedProjectRelativePath, data.origin)
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace()                
-                
-                var msg = "Could not initialize '" + resolvedProjectRelativePath +"'\n" 
-                    + "with '" + data.origin + "'.\n"
-                    + "Please make sure that all paths are valid."
-                
-                // Log error
-                val bundle = Platform.getBundle(PromPlugin.PLUGIN_ID)
-                val log = Platform.getLog(bundle)
-                log.log(new Status(Status.ERROR, PromPlugin.PLUGIN_ID, msg, e))
-                
-                // Open dialog
-                MessageDialog.openError(shell, "Error", msg)
-                
-                return false
-            }
+        val env = mainPage.selectedProjectDraft
+        try {
+            val variableMappings = newHashMap
+            variableMappings.putAll(modelFileSubstitution.variableMappings)
+            env.createInitialResources(newlyCreatedProject, variableMappings)
+        } catch (Exception e) {
+            // Log error
+            val bundle = Platform.getBundle(PromPlugin.PLUGIN_ID)
+            val log = Platform.getLog(bundle)
+            log.log(new Status(Status.ERROR, PromPlugin.PLUGIN_ID, e.message, e))
+            // Open dialog
+            MessageDialog.openError(shell, "Error", e.message)
+            return false
         }
         return true
     }
 
     /**
-     * Sets the used environment and possibly created main file
+     * Sets the used project draft and possibly created main file
      * to the properties of the newly created project.
      * This data is used by the launch configuration shortcut, to use as reasonable defaults.
      * 
      * @return true if it ended sucessfully. false otherwise.
      */
     protected def boolean initializeProjectProperties() {
-        // Remember name of used environment.
-        val env = mainPage.getSelectedEnvironment()
-        newlyCreatedProject.setPersistentProperty(PromPlugin.ENVIRIONMENT_QUALIFIER, env.name)
-        
-        // Remember created main file in project properties
-        if(!env.launchData.mainFile.isNullOrEmpty) {
-            var resolvedMainFilePath = ""
-            try {
-                resolvedMainFilePath = PromPlugin.performStringSubstitution(env.launchData.mainFile, newlyCreatedProject)
-            } catch (CoreException ce) {
-                MessageDialog.openError(shell, "Error", ce.message)
-                return false
-            }
-            newlyCreatedProject.setPersistentProperty(PromPlugin.MAIN_FILE_QUALIFIER, resolvedMainFilePath)
-        }
-        
-        // Add Xtext nature to project (e.g. for SCCharts with cross-references)
-        // Since the new sctx grammar, the Xtext nature is not longer required
-//        newlyCreatedProject.addNature("org.eclipse.xtext.ui.shared.xtextNature")
-        
         // Add KiCo nature to project (e.g. for builder)
         newlyCreatedProject.addNature(KielerModelingNature.NATURE_ID)
         
@@ -360,7 +288,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
 
     /**
      * Compares the current projects with the projects
-     * which existed before the environment's associated project wizard has been opened.
+     * which existed before the project draft's associated project wizard has been opened.
      * 
      * @return the project that has been created since this wizard has been opened.
      */
@@ -373,22 +301,6 @@ class PromProjectWizard extends Wizard implements INewWizard {
                 return project
             }
         }
-    }
-
-    /**
-     * Implementation of IWorkbenchWizard. 
-     * 
-     * @param workbench The workbench
-     * @param selection The selection
-     */
-    override init(IWorkbench workbench, IStructuredSelection selection) {
-        this.workbench = workbench
-        this.selection = selection
-
-        windowTitle = "New Project"
-        helpAvailable = false
-
-        projectsBeforeWizard = ResourcesPlugin.workspace.root.projects
     }
 
     /**
@@ -409,45 +321,51 @@ class PromProjectWizard extends Wizard implements INewWizard {
 
             // Find new project.
             newlyCreatedProject = findNewlyCreatedProject()
-            
-            // Initialize new project.
-            initializeNewProject()
         } else {
             newlyCreatedProject = null
-            
             // Output an error message
             MessageDialog.openError(shell, "Project Wizard Not Found", "The project wizard '"+fullyQualifiedClassName+"'\n"
-                + "of the selected environment could not be loaded.\n"
+                + "of the selected project draft could not be loaded.\n"
                 + "Please install all required plugins."
             )
         }
     }
     
     /**
-     * Add resources to the newly created project.
+     * Returns the model file path from the project draft if it is not empty.
+     * Otherwise a suited value is infered from the project name.
+     * 
+     * @return the path without file extension for the model file  
      */
-    private def void initializeNewProject(){
-        if (newlyCreatedProject != null) {
-            createBuildDirectory()
+    private def String getModelFilePath() {
+        val env = mainPage.selectedProjectDraft
+        var resolvedPath = ""
+        try {
+            resolvedPath = PromPlugin.performStringSubstitution(env.modelFile, newlyCreatedProject)
+        } catch (CoreException ce) {
+            MessageDialog.openError(shell, "Error", ce.message)
+            return "Model"
         }
-    }
-    
-    /**
-     * Creates the output folder for compiled files
-     */
-    private def void createBuildDirectory() {
-        val env = mainPage.selectedEnvironment
-        val targetDirectory = env.launchData.targetDirectory
-        if(!targetDirectory.isNullOrEmpty()) {
-            // Create folder for generated files
-            val sourceFolder = newlyCreatedProject.getFolder(targetDirectory);
-            sourceFolder.create(false, true, null);
-            
-            // Add folder to java class path if it is a java project
-            if (newlyCreatedProject.hasNature(JavaCore.NATURE_ID)) {
-                val javaProject = JavaCore.create(newlyCreatedProject);
-                PromPlugin.addFolderToJavaClasspath(javaProject, sourceFolder)
+        
+        var modelFilePathWithoutExtension = resolvedPath
+        if(modelFilePathWithoutExtension.isNullOrEmpty()) {
+            // Infere parent directory of file from main file directory.
+            // Therefore the main file has to be created before the model file.
+            var modelFileDirectory = ""
+            if(createdMainFile != null && createdMainFile.exists()){
+                modelFileDirectory = createdMainFile.parent.projectRelativePath.toOSString + File.separator
             }
+            
+            // Infere file name from project name
+            var modelFileNameWithoutExtension = newlyCreatedProject.name
+            // We use only alphanumeric characters of the project name
+            modelFileNameWithoutExtension = modelFileNameWithoutExtension.replaceAll("[^\\w]", "")
+            // the file name may not begin with a number
+            modelFileNameWithoutExtension = modelFileNameWithoutExtension.replaceAll("^\\d*", "")
+            
+            // Cobine directory and name of file
+            modelFilePathWithoutExtension = modelFileDirectory + modelFileNameWithoutExtension
         }
+        return modelFilePathWithoutExtension
     }
 }

@@ -24,6 +24,19 @@ interface Simulator extends DataHandler {
      */
     public def void initialize(DataPool pool)
     
+    /**
+     * Sets the base name for the model.
+     * The name in the simulation may differ, if there is already another model with this name.
+     * 
+     * @param value The new value
+     */
     public def void setBaseModelName(String value)
+    
+    /**
+     * Returns the desired name for the model.
+     * The name in the simulation may differ, if there is already another model with this name.
+     * 
+     * @return the desired name for the model
+     */
     public def String getBaseModelName()
 }

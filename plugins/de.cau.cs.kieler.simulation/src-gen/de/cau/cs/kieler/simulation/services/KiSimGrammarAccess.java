@@ -196,24 +196,24 @@ public class KiSimGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.simulation.KiSim.Action");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cOperationAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cOperationActionOperationEnumRuleCall_0_0 = (RuleCall)cOperationAssignment_0.eContents().get(0);
+		private final RuleCall cOperationIDTerminalRuleCall_0_0 = (RuleCall)cOperationAssignment_0.eContents().get(0);
 		private final Assignment cHandlerAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cHandlerIDTerminalRuleCall_1_0 = (RuleCall)cHandlerAssignment_1.eContents().get(0);
 		private final Assignment cIdAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cIdIDTerminalRuleCall_2_0 = (RuleCall)cIdAssignment_2.eContents().get(0);
 		
 		//Action:
-		//	operation=ActionOperation handler=ID id=ID;
+		//	operation=ID? handler=ID id=ID?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//operation=ActionOperation handler=ID id=ID
+		//operation=ID? handler=ID id=ID?
 		public Group getGroup() { return cGroup; }
 
-		//operation=ActionOperation
+		//operation=ID?
 		public Assignment getOperationAssignment_0() { return cOperationAssignment_0; }
 
-		//ActionOperation
-		public RuleCall getOperationActionOperationEnumRuleCall_0_0() { return cOperationActionOperationEnumRuleCall_0_0; }
+		//ID
+		public RuleCall getOperationIDTerminalRuleCall_0_0() { return cOperationIDTerminalRuleCall_0_0; }
 
 		//handler=ID
 		public Assignment getHandlerAssignment_1() { return cHandlerAssignment_1; }
@@ -221,7 +221,7 @@ public class KiSimGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getHandlerIDTerminalRuleCall_1_0() { return cHandlerIDTerminalRuleCall_1_0; }
 
-		//id=ID
+		//id=ID?
 		public Assignment getIdAssignment_2() { return cIdAssignment_2; }
 
 		//ID
@@ -229,40 +229,11 @@ public class KiSimGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	
-	public class ActionOperationElements extends AbstractEnumRuleElementFinder {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.simulation.KiSim.ActionOperation");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final EnumLiteralDeclaration cWRITEEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
-		private final Keyword cWRITEWriteKeyword_0_0 = (Keyword)cWRITEEnumLiteralDeclaration_0.eContents().get(0);
-		private final EnumLiteralDeclaration cREADEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
-		private final Keyword cREADReadKeyword_1_0 = (Keyword)cREADEnumLiteralDeclaration_1.eContents().get(0);
-		
-		//enum ActionOperation:
-		//	WRITE='write' | READ='read';
-		public EnumRule getRule() { return rule; }
-
-		//WRITE='write' | READ='read'
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//WRITE='write'
-		public EnumLiteralDeclaration getWRITEEnumLiteralDeclaration_0() { return cWRITEEnumLiteralDeclaration_0; }
-
-		//'write'
-		public Keyword getWRITEWriteKeyword_0_0() { return cWRITEWriteKeyword_0_0; }
-
-		//READ='read'
-		public EnumLiteralDeclaration getREADEnumLiteralDeclaration_1() { return cREADEnumLiteralDeclaration_1; }
-
-		//'read'
-		public Keyword getREADReadKeyword_1_0() { return cREADReadKeyword_1_0; }
-	}
-	
 	private final SimulationConfigurationElements pSimulationConfiguration;
 	private final DataHandlerConfigurationElements pDataHandlerConfiguration;
 	private final InitializationElements pInitialization;
 	private final ExecutionElements pExecution;
 	private final ActionElements pAction;
-	private final ActionOperationElements eActionOperation;
 	
 	private final Grammar grammar;
 
@@ -290,7 +261,6 @@ public class KiSimGrammarAccess extends AbstractGrammarElementFinder {
 		this.pInitialization = new InitializationElements();
 		this.pExecution = new ExecutionElements();
 		this.pAction = new ActionElements();
-		this.eActionOperation = new ActionOperationElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -380,23 +350,13 @@ public class KiSimGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Action:
-	//	operation=ActionOperation handler=ID id=ID;
+	//	operation=ID? handler=ID id=ID?;
 	public ActionElements getActionAccess() {
 		return pAction;
 	}
 	
 	public ParserRule getActionRule() {
 		return getActionAccess().getRule();
-	}
-
-	//enum ActionOperation:
-	//	WRITE='write' | READ='read';
-	public ActionOperationElements getActionOperationAccess() {
-		return eActionOperation;
-	}
-	
-	public EnumRule getActionOperationRule() {
-		return getActionOperationAccess().getRule();
 	}
 
 	//BuildConfiguration:
@@ -483,7 +443,9 @@ public class KiSimGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AttributeMapping:
-	//	name=ID (':' value=Literal | ':' values+=Literal (',' values+=Literal)+ | ':'? '{' attributes+=AttributeMapping+ '}');
+	//	name=ID
+	//	arrayIndex=ArrayIndex? (':' value=Literal | ':' values+=Literal (',' values+=Literal)+ | ':'? '{'
+	//	attributes+=AttributeMapping+ '}');
 	public KiBuildGrammarAccess.AttributeMappingElements getAttributeMappingAccess() {
 		return gaKiBuild.getAttributeMappingAccess();
 	}
@@ -493,13 +455,25 @@ public class KiSimGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Literal:
-	//	value=TextValue | value=SignedInt | value=SignedFloat | value=AnyValue;
+	//	value=TextValue arrayIndex=ArrayIndex? | value=SignedInt
+	//	| value=SignedFloat
+	//	| value=AnyValue;
 	public KiBuildGrammarAccess.LiteralElements getLiteralAccess() {
 		return gaKiBuild.getLiteralAccess();
 	}
 	
 	public ParserRule getLiteralRule() {
 		return getLiteralAccess().getRule();
+	}
+
+	//ArrayIndex:
+	//	('[' indices+=INT ']')+;
+	public KiBuildGrammarAccess.ArrayIndexElements getArrayIndexAccess() {
+		return gaKiBuild.getArrayIndexAccess();
+	}
+	
+	public ParserRule getArrayIndexRule() {
+		return getArrayIndexAccess().getRule();
 	}
 
 	//enum Sign:

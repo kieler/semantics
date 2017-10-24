@@ -16,13 +16,41 @@ import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Simulator
 
 /**
+ * Default implementation of a simulator.
+ * Handles the naming of models.
+ * 
  * @author aas
  *
  */
 abstract class DefaultSimulator extends DefaultDataHandler implements Simulator {
     
+    /**
+     * The desired name for the model
+     */
     protected var String baseModelName
     
+    /**
+     * {@inheritDoc}
+     */
+    override setBaseModelName(String value) {
+        baseModelName = value
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override getBaseModelName() {
+        return baseModelName
+    }
+    
+    /**
+     * Returns a name for the model that is unique in the given data pool.
+     * The base name is preferred. If there is no base name, the default name is used.
+     * 
+     * @param pool The pool
+     * @param defaultName The default name
+     * @return a unique name for a model in the data pool
+     */
     protected def String getUniqueModelName(DataPool pool, String defaultName) {
         if(baseModelName.isNullOrEmpty) {
             return pool.getUniqueModelName(defaultName, 0)
@@ -30,17 +58,4 @@ abstract class DefaultSimulator extends DefaultDataHandler implements Simulator 
             return pool.getUniqueModelName(baseModelName, 0)
         }
     }
-    
-    override setBaseModelName(String value) {
-        baseModelName = value
-    }
-    
-    override getBaseModelName() {
-        return baseModelName
-    }
-    
-    override getName() {
-        throw new UnsupportedOperationException("TODO: auto-generated method stub")
-    }
-    
 }

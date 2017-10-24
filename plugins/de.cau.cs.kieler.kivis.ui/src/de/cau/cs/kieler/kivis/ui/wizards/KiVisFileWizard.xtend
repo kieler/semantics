@@ -13,10 +13,7 @@
 package de.cau.cs.kieler.kivis.ui.wizards
 
 import de.cau.cs.kieler.prom.ui.wizards.AdvancedNewFileCreationPage
-import org.eclipse.jface.viewers.IStructuredSelection
-import org.eclipse.jface.wizard.Wizard
-import org.eclipse.ui.INewWizard
-import org.eclipse.ui.IWorkbench
+import de.cau.cs.kieler.prom.ui.wizards.AdvancedNewFileWizard
 
 /**
  * Implementation of a newWizard which contains a page to create a kivis file with default content. 
@@ -24,52 +21,24 @@ import org.eclipse.ui.IWorkbench
  * @author aas
  *
  */
-class KiVisFileWizard extends Wizard implements INewWizard {
-
+class KiVisFileWizard extends AdvancedNewFileWizard {
     /**
-     * The workbench from the init(...) method.
+     * {@inheritDoc}
      */
-    private var IWorkbench workbench
-    
-    /**
-     * The selection from the init(...) method.
-     */
-    private var IStructuredSelection selection
-    
-    /**
-     * Page to create an sct file.
-     */
-    private AdvancedNewFileCreationPage filePage
-    
-    /**
-     * Instantiates and adds the sct file creation page to this wizard.
-     */
-    override addPages(){
-        filePage = new AdvancedNewFileCreationPage("KiVis File", selection, false);
+    override protected createFileCreationPage() {
+        val filePage = new AdvancedNewFileCreationPage("KiVis File", selection, false);
         filePage.initialContentsURL = "platform:/plugin/de.cau.cs.kieler.kivis.ui/resources/default.kivis"
         filePage.fileName = "NewVisualization.kivis"
         filePage.fileExtension = "kivis"
         filePage.description = "Create a new KiVis file to configure simulation visualization."
         
-        addPage(filePage);
-    }
-    
-    /**
-     * Creates the kivis file with the settings from the file creation page.
-     * The method is called when the finish button is clicked.
-     */
-    override performFinish() {
-        return filePage.performFinish()
+        return filePage
     }
     
     /**
      * {@inheritDoc}
      */
-    override init(IWorkbench workbench, IStructuredSelection selection) {
-        this.workbench = workbench
-        this.selection = selection
-        
-        windowTitle = "New KiVis File"
-        helpAvailable = false
+    override protected getTitle() {
+        return "New KiVis File"
     }
 }

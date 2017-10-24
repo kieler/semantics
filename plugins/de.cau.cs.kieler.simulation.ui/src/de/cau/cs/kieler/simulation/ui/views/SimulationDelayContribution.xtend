@@ -21,17 +21,30 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Spinner
 
 /**
+ * The control in the data pool view to set the desired simulation pause in play mode.
+ * It contains a spinner.
+ * 
  * @author aas
  *
  */
 class SimulationDelayContribution extends ControlContribution {
-    
+    /**
+     * The spinner
+     */
     var Spinner spinner
-        
-    protected new(String id) {
+    
+    /**
+     * Constructor
+     * 
+     * @param id The id of this contribution
+     */
+    new(String id) {
         super(id)
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override createControl(Composite parent) {
         spinner = new Spinner(parent, SWT.BORDER)
         spinner.toolTipText = "Simulation delay in play mode (milliseconds)"
@@ -42,6 +55,9 @@ class SimulationDelayContribution extends ControlContribution {
         spinner.selection = SimulationManager.getDesiredTickPause
         
         spinner.addSelectionListener(new SelectionAdapter() {
+            /**
+             * Sets the desired pause for the simulation play mode. 
+             */
             override widgetSelected(SelectionEvent e) {
                 val value = spinner.selection
                 if(value >= SimulationManager.MIN_PAUSE && value <= SimulationManager.MAX_PAUSE) {

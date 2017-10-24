@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.prom.kibuild.Literal#getValue <em>Value</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.prom.kibuild.Literal#getArrayIndex <em>Array Index</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.prom.kibuild.KibuildPackage#getLiteral()
@@ -47,5 +48,31 @@ public interface Literal extends EObject
    * @generated
    */
   void setValue(EObject value);
+
+  /**
+   * Returns the value of the '<em><b>Array Index</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Array Index</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Array Index</em>' containment reference.
+   * @see #setArrayIndex(ArrayIndex)
+   * @see de.cau.cs.kieler.prom.kibuild.KibuildPackage#getLiteral_ArrayIndex()
+   * @model containment="true"
+   * @generated
+   */
+  ArrayIndex getArrayIndex();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.prom.kibuild.Literal#getArrayIndex <em>Array Index</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Array Index</em>' containment reference.
+   * @see #getArrayIndex()
+   * @generated
+   */
+  void setArrayIndex(ArrayIndex value);
 
 } // Literal

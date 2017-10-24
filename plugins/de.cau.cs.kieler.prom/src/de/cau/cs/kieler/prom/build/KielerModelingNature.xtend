@@ -31,7 +31,7 @@ class KielerModelingNature implements IProjectNature {
     private IProject project;
     
     /**
-     * Add the builder to the project
+     * Add the builder to the project.
      */
     override void configure() throws CoreException {
         // Add builder to project
@@ -57,7 +57,7 @@ class KielerModelingNature implements IProjectNature {
     }
     
     /**
-     * Remove the builder from the project
+     * Remove the builder from the project.
      */
     override void deconfigure() throws CoreException {
         // Remove builder
@@ -72,7 +72,7 @@ class KielerModelingNature implements IProjectNature {
     }
     
     /**
-     * Returns the project
+     * Returns the project.
      * @return the project
      */
     override IProject getProject() {
@@ -81,7 +81,6 @@ class KielerModelingNature implements IProjectNature {
 
     /**
      * Sets the project
-     * @return the project
      */
     override void setProject(IProject project) {
         this.project = project;

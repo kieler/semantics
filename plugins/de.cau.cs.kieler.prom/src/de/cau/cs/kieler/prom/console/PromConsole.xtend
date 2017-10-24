@@ -18,11 +18,16 @@ import de.cau.cs.kieler.prom.console.IConsole
 
 /**
  * Delegates printing to either a registered console, or to stdout if there is no registered.
+ * Used to have a central class to show (debug) information to end-users.
  * 
  * @author aas
  *
  */
 class PromConsole {
+    /**
+     * The currently used console.
+     * Other plugins may register their console here.
+     */
     @Accessors
     private static var IConsole currentConsole
     

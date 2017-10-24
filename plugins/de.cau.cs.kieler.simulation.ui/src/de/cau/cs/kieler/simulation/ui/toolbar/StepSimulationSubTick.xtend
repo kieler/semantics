@@ -17,16 +17,21 @@ import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
 
 /**
+ * Button to perform a sub tick (only a single data handler) in the simulation.
+ * 
  * @author aas
  *
  */
 class StepSimulationSubTick extends SimulationToolbarButton {
     
+    /**
+     * Performs a sub tick in the simulation.
+     */
     override execute(ExecutionEvent event) throws ExecutionException {
         super.execute(event)
         if(simulation != null && !justRestarted) {
             PromConsole.print("Step single (performing "
-                + simulation.currentAction.method + " on " + simulation.currentAction.handler + ")")
+                + simulation.currentAction.operation.name + " on " + simulation.currentAction.handler + ")")
             simulation.stepSubTick()
         }
         return null

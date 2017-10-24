@@ -34,6 +34,7 @@ abstract class CodeGeneratorModule {
     @Accessors var String prefix = ""
     @Accessors var String suffix = ""
     @Accessors var String indentation = "  "
+    @Accessors var int indentationModifier = 0
     
     new() {
         
@@ -44,7 +45,9 @@ abstract class CodeGeneratorModule {
     }
     
     protected def indent(int n) {
-        for (i : 1..n) {
+        val m = n + indentationModifier
+        if (m == 0) return;
+        for (i : 1..m) {
             code.append(indentation)
         }
     }

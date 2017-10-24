@@ -138,7 +138,7 @@ class SCTXScopeProvider extends de.cau.cs.kieler.kexpressions.kext.scoping.KExtS
                 
                 return IScope.NULLSCOPE
             }
-        }
+        } 
         return context.getScopeHierarchical(reference)
     }       
 

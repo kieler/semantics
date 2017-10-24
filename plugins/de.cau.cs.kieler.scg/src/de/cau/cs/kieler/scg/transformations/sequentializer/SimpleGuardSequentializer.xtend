@@ -48,10 +48,16 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements Traceable {
 
-    //-------------------------------------------------------------------------
-    //--                 K I C O      C O N F I G U R A T I O N              --
-    //-------------------------------------------------------------------------
-    
+    @Inject extension SCGCoreExtensions
+    @Inject extension SCGDeclarationExtensions
+    @Inject extension SCGControlFlowExtensions	
+    @Inject extension AnnotationsExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension SCGDependencyExtensions
+    @Inject extension KEffectsExtensions
+
+    private static val String ANNOTATION_HOSTCODE = "hostcode"
+     
     override getId() {
         "de.cau.cs.kieler.scg.processors.transformators.sequentializer"
     }
@@ -74,39 +80,8 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
     override getType() {
         ProcessorType.EXOGENOUS_TRANSFORMATOR
     }
-    
-//    override getProducedFeatureId() {
-//        return SCGFeatures::SEQUENTIALIZE_ID
-//    }
-//
-//    override getRequiredFeatureIds() {
-//        return newHashSet(SCGFeatures::SCHEDULING_ID)
-//    }
 
-    // -------------------------------------------------------------------------
-    // -- Injections 
-    // -------------------------------------------------------------------------
-    
-    @Inject extension SCGCoreExtensions
-    @Inject extension SCGDeclarationExtensions
-    @Inject extension SCGControlFlowExtensions	
-    @Inject extension AnnotationsExtensions
-    @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension SCGDependencyExtensions
-    @Inject extension KEffectsExtensions
-
-    // -------------------------------------------------------------------------
-    // -- Globals
-    // -------------------------------------------------------------------------
-
-    private static val String ANNOTATION_HOSTCODE = "hostcode" 
-    
-    // -------------------------------------------------------------------------
-    // -- Guard Transformation
-    // -------------------------------------------------------------------------    
-      
-     public def SCGraph transform(SCGraph scg) {
-        
+    public def SCGraph transform(SCGraph scg) {
         /**
          * Since we want to build a new SCG, we cannot use the SCG copy extensions because it would 
          * preserve all previous (node) data.
@@ -116,6 +91,7 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
         val newSCG = ScgFactory::eINSTANCE.createSCGraph => [
         	annotations += createStringAnnotation(SCGFeatures.SEQUENTIALIZE_ID, SCGFeatures.SEQUENTIALIZE_NAME)
         	label = scg.label
+        	name = scg.name
             scg.copyAnnotations(it, <String> newHashSet("main", "voLink"))
         ]
         
@@ -135,30 +111,14 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
             if (node instanceof Exit) exitNodes += node
         }
         
-//        val assignmentHeadNodes = scg.nodes.filter[ 
-//            incoming.filter(ScheduleDependency).empty &&
-//            incoming.filter(GuardDependency).empty
-//        ]
-        
         for(entry : entryNodes) {
             val entryNode = ScgFactory.eINSTANCE.createEntry => [ newSCG.nodes += it name = entry.name ]
-            val exitNode = ScgFactory.eINSTANCE.createExit => [ newSCG.nodes += it name = entry.name + "_exit" ]
+            var exitNode = null as Node 
             val scheduledNodes = entry.getSchedule
             
             val AAMap = <Node, Node> newHashMap => [ put(entry, entryNode)]
             val scheduleDependencies = <ScheduleDependency> newArrayList => [ it += entry.dependencies.filter(ScheduleDependency) ]
             
-         	// Create new assignments
-//<<<<<<< HEAD
-//            for(assignment : assignmentNodes) {
-//            	assignment.copySCGAssignment(valuedObjectMap) => [
-//            		newSCG.nodes += it
-//            		AAMap.put(assignment, it)
-//            		
-//            		it.trace(assignment)
-//            	]
-//            	scheduleDependencies += assignment.dependencies.filter(ScheduleDependency)
-//=======
             for(node : scheduledNodes) {
                 if (node instanceof Assignment) {
                 	node.copySCGAssignment(valuedObjectMap) => [
@@ -170,9 +130,13 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
             	        newSCG.nodes += it
             	        AAMap.put(node, it)
             	    ]
+            	    exitNode = node
             	}
             	scheduleDependencies += node.dependencies.filter(ScheduleDependency)
-//>>>>>>> ssm/dataflow
+            }
+            
+            if (exitNode == null) {
+                exitNode = ScgFactory.eINSTANCE.createExit => [ newSCG.nodes += it name = entry.name + "_exit" ]                
             }
             
             // Add a new schedule dependency to cover the last guarded assignments.

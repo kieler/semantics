@@ -1,14 +1,17 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse Rich Client
- * 
+ *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2009 by + Kiel University + Department of Computer Science +
- * Real-Time and Embedded Systems Group
+ * Copyright 2009 by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
  * 
- * This code is provided under the terms of the Eclipse Public License (EPL). See the file
- * epl-v10.html for the license text.
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
  */
+ 
 package de.cau.cs.kieler.kivis.ui.svg
 
 import de.cau.cs.kieler.simulation.core.SimulationManager
@@ -16,7 +19,6 @@ import java.awt.event.ActionEvent
 import java.awt.event.InputEvent
 import java.awt.event.KeyEvent
 import java.awt.event.MouseEvent
-import java.util.Iterator
 import javax.swing.AbstractAction
 import javax.swing.InputMap
 import javax.swing.JComponent
@@ -39,41 +41,40 @@ import org.apache.batik.util.ParsedURL
 /** 
  * Modifies the regular JSVGCanvas in such a way that the EclipseDocumentLoader class gets used
  * instead of the standard DocumentLoader.
+ * Also uses simpler key bindings to control the SVG canvas.
+ * 
  * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de
+ * @author aas
  * @kieler.rating 2010-02-17 proposed yellow
  * @kieler.ignore deprecated project
  */
 final class EclipseJSVGCanvas extends JSVGCanvas {
-    /** 
-     * Generated serialVersionID.
-     */
-    static final long serialVersionUID = -3324506235308202723L
-    /** 
-     * This one is a single loadingStatusListener so we can keep an eye on the svg document loading
-     * status.
-     */
-    final SVGLoadingStatusListener loadingStatusListener = new SVGLoadingStatusListener()
 
     /**
      * The key for the Action to perform a macro tick.
      */
     public val String STEP_MACRO_TICK_ACTION = "StepMacroTick";
+    
+    /**
+     * The key for the Action to play / pause the simulation.
+     */
+    public val String PLAY_SIMULATION_ACTION = "PlaySimulation";
 
     /** 
-     * This method needs to be private in order to create only one single instance.
-     * @param userAgent
-     * @param b1
-     * @param b2
+     * @param userAgent The user agent
+     * @param eventsEnabled Determines if the SVG document should listen for events
+     * @param selectableText Determines if text in the SVG document can be selected
      */
     new(SVGUserAgent userAgent, boolean eventsEnabled, boolean selectableText) {
         super(userAgent, eventsEnabled, selectableText)
-        // Add the loadingStatusListener to the single instance
-        this.addSVGDocumentLoaderListener(loadingStatusListener)
-
         // Change mouse interaction to work without modifiers
         changeInteractors()
     }
-
+    
+    /**
+     * Changes the default interactors (e.g. which key bindings are used to rotate / zoom / move the image)
+     * of the JSVGCanvas.
+     */
     private def void changeInteractors() {
         // The scheme to change an interactor is as follows: remove old, create new, add new 
         
@@ -120,12 +121,18 @@ final class EclipseJSVGCanvas extends JSVGCanvas {
         interactors.add(resetTransformInteractor)
     }
 
+    /**
+     * {@inheritDoc}
+     */
     override installKeyboardActions() {
         var InputMap inputMap = getInputMap(JComponent.WHEN_FOCUSED)
         var KeyStroke key
         // RIGHT ARROW: step simulation 
         key = KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0);
         inputMap.put(key, STEP_MACRO_TICK_ACTION);
+        // SPACE: Play / pause simulation
+        key = KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0);
+        inputMap.put(key, PLAY_SIMULATION_ACTION);
         // CTRL + ARROW: scroll
         key = KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, KeyEvent.CTRL_MASK);
         inputMap.put(key, SCROLL_RIGHT_ACTION);
@@ -155,10 +162,13 @@ final class EclipseJSVGCanvas extends JSVGCanvas {
         inputMap.put(key, RESET_TRANSFORM_ACTION);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     override installActions() {
         val actionMap = getActionMap();
 
-        // Step simulation
+        // Simulation actions
         val stepMacroTickAction = new AbstractAction() {
             override actionPerformed(ActionEvent evt) {
                 if (gvtRoot == null) {
@@ -167,7 +177,23 @@ final class EclipseJSVGCanvas extends JSVGCanvas {
                 SimulationManager.instance?.stepMacroTick
             }
         }
+        val playSimulationAction = new AbstractAction() {
+            override actionPerformed(ActionEvent evt) {
+                if (gvtRoot == null) {
+                    return;
+                }
+                val sim = SimulationManager.instance
+                if(sim != null) {
+                    if(sim.isPlaying) {
+                        sim.pause
+                    } else {
+                        sim.play
+                    }
+                }
+            }
+        }
         actionMap.put(STEP_MACRO_TICK_ACTION, stepMacroTickAction)
+        actionMap.put(PLAY_SIMULATION_ACTION, playSimulationAction)
         // Scroll
         actionMap.put(SCROLL_RIGHT_ACTION, new ScrollRightAction(10));
         actionMap.put(SCROLL_LEFT_ACTION, new ScrollLeftAction(10));
@@ -193,17 +219,8 @@ final class EclipseJSVGCanvas extends JSVGCanvas {
     }
     
     /** 
-     * Returns the SVGLoadingStatusLister for the single svgCanvas instance. So we only need one for
-     * whole xKEV.
-     * @return loadingStatusListener
-     */
-    def SVGLoadingStatusListener getSVGLoadingStatusListener() {
-        return loadingStatusListener
-    }
-
-    /** 
      * Loads the SVGDoument from the given url.
-     * @param urlThe path and filename which should be loaded.
+     * @param url The url that should be loaded.
      */
     override void loadSVGDocument(String url) {
         var String oldURI = null
@@ -216,9 +233,9 @@ final class EclipseJSVGCanvas extends JSVGCanvas {
         loader = new EclipseDocumentLoader(userAgent)
         nextDocumentLoader = new SVGDocumentLoader(url2, loader)
         nextDocumentLoader.setPriority(Thread.MIN_PRIORITY)
-        var Iterator<?> it = svgDocumentLoaderListeners.iterator()
-        while (it.hasNext()) {
-            nextDocumentLoader.addSVGDocumentLoaderListener((it.next() as SVGDocumentLoaderListener))
+        var iter = svgDocumentLoaderListeners.iterator()
+        while (iter.hasNext()) {
+            nextDocumentLoader.addSVGDocumentLoaderListener(iter.next as SVGDocumentLoaderListener)
         }
         startDocumentLoader()
     }

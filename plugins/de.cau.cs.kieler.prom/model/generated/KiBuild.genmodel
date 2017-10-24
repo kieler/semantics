@@ -41,6 +41,7 @@
     </genClasses>
     <genClasses ecoreClass="KiBuild.ecore#//AttributeMapping">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiBuild.ecore#//AttributeMapping/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiBuild.ecore#//AttributeMapping/arrayIndex"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiBuild.ecore#//AttributeMapping/value"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiBuild.ecore#//AttributeMapping/values"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiBuild.ecore#//AttributeMapping/attributes"/>
@@ -49,6 +50,10 @@
     </genClasses>
     <genClasses ecoreClass="KiBuild.ecore#//Literal">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiBuild.ecore#//Literal/value"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiBuild.ecore#//Literal/arrayIndex"/>
+    </genClasses>
+    <genClasses ecoreClass="KiBuild.ecore#//ArrayIndex">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiBuild.ecore#//ArrayIndex/indices"/>
     </genClasses>
     <genClasses ecoreClass="KiBuild.ecore#//SignedFloat">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiBuild.ecore#//SignedFloat/sign"/>

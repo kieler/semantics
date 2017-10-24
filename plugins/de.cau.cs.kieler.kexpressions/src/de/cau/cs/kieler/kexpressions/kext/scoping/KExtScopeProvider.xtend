@@ -76,18 +76,23 @@ import de.cau.cs.kieler.kexpressions.keffects.Emission
 			}
 		} else if (contextContainer instanceof ValuedObjectReference) {
 		    // The context is a subreference!
-		    return contextContainer.getScopeForReferencedDeclarationFromSubReference(reference)
-		} else if (context instanceof ValuedObjectReference) {
+		    // If it is inside an assignment, it must point to the inputs of the referenced declarations (assignments).
+		    // Otherwise, use the outputs (subreferences).
+		    val contextContainerContainer = contextContainer.eContainer
+		    if (contextContainerContainer instanceof Assignment) {
+//                return contextContainerContainer.getScopeForReferencedDeclarationFromAssignment(reference)
+                return contextContainer.getScopeForReferencedDeclarationFromSubReference(reference)    
+		    } else {
+                return contextContainer.getScopeForReferencedDeclarationFromSubReference(reference)
+		    }
+		} 
+		else if (context instanceof ValuedObjectReference) {
 		    if (contextContainer instanceof Assignment) {
-		        if (context === contextContainer.reference) {
-		            // The context is the reference of a standard assignment.
-		            return context.getScopeHierarchical(reference)    
+		        // The context is a subreference inside of an assignment!
+		        if (context.subReference != null && context.subReference.valuedObject == null) {
+                    return context.getScopeForReferencedDeclarationFromSubReference(reference)
 		        }
 		        
-		        // The context is a subreference inside of an assignment!
-		        if (context != contextContainer.expression) {
-		            return context.eContainer.getScopeForReferencedDeclarationFromAssignment(reference)
-		        }
             } else if (contextContainer instanceof Emission) {
                 if (context === contextContainer.reference) {
                     // The context is the reference of a standard emission.
@@ -125,7 +130,7 @@ import de.cau.cs.kieler.kexpressions.keffects.Emission
                     }
                     if (parentVO.valuedObject.eContainer instanceof ReferenceDeclaration) {
                         return (parentVO.valuedObject.eContainer as ReferenceDeclaration).
-                            getScopeForReferencedDeclarationObject[ output ]
+                            getScopeForReferencedDeclarationObject[ output || input ]
                     }
                 }
             }
@@ -136,6 +141,13 @@ import de.cau.cs.kieler.kexpressions.keffects.Emission
 	protected def IScope getScopeForReferencedDeclarationObject(ReferenceDeclaration declaration,
 	    Function1<? super VariableDeclaration, Boolean> predicate
 	) {
+	    if (declaration.reference === null) {
+	        // IMPORTANT: This can happen if the resource that should be imported does not exist. 
+	        // In this case, the scope given to the linker was null previously. This causes a NPE. 
+	        // Return a NullScope instead.
+	        return IScope.NULLSCOPE
+	    }
+	    
         if (declaration.reference instanceof DeclarationScope) {
             val declarations = (declaration.reference as DeclarationScope).declarations
             val relevantDeclarations = declarations.filter(VariableDeclaration).filter(predicate).toList

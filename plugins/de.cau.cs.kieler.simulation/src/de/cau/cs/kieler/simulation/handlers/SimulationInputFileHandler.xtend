@@ -14,31 +14,29 @@ package de.cau.cs.kieler.simulation.handlers
 
 import com.google.common.base.Charsets
 import com.google.common.io.Files
-import de.cau.cs.kieler.prom.build.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
-import java.io.File
-import org.eclipse.core.resources.IFile
-import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
+ * Reads the input file and sets the variables of a model in the simulation accordingly.
+ * 
  * @author aas
  *
  */
-class SimulationInputFileHandler extends DefaultSimulator {
-    
-    public val location = new ConfigurableAttribute("fileLocation", null, true)
-    public val modelName = new ConfigurableAttribute("modelName")
-    
-    @Accessors
-    private var IFile file
-    
+class SimulationInputFileHandler extends SimulationInputOutputFileHandlerBase {
+    /**
+     * {@inheritDoc}
+     */
     override initialize(DataPool pool) {
-        if(modelName.value == null) {
-            modelName.value = getUniqueModelName(pool, Files.getNameWithoutExtension(fileLocation))
+        super.initialize
+        // Create name for new model if none set
+        if(!modelName.isDefined) {
+            modelName.value = getUniqueModelName(pool, file.name)
         }
+        // Load the JSON object from the file
+        val lines = Files.readLines(file, Charsets.UTF_8)
+        // Set variable of model or create new model from the JSON object
         var Model model
-        val lines = Files.readLines(new File(fileLocation), Charsets.UTF_8)
         if(lines.isNullOrEmpty) {
             model = new Model
         } else {
@@ -50,14 +48,16 @@ class SimulationInputFileHandler extends DefaultSimulator {
     
     /**
      * Reads the content of the file and parses it as JSON object.
-     * Fills the data pool with the created objects.
+     * Fills the data pool with the loaded values.
+     * 
+     * @param pool The pool
      */
     override write(DataPool pool) {
         // Get model in pool
-        val model = pool.models.findFirst[it.name == modelName]
-        
+        val model = findModel(pool, modelName.stringValue)
+
         // Read data pool from file
-        val lines = Files.readLines(new File(fileLocation), Charsets.UTF_8)
+        val lines = Files.readLines(file, Charsets.UTF_8)
         var Model newModel
         if(lines.isNullOrEmpty) {
             newModel = new Model
@@ -71,20 +71,11 @@ class SimulationInputFileHandler extends DefaultSimulator {
         pool.addModel(newModel) 
     }
     
-    private def String getFileLocation() {
-        if(file != null) {
-            return file.location.toOSString
-        } else {
-            return location.stringValue
-        }
-    }
-    
     override getName() {
         return "simin"
     }
     
     override toString() {
-        return "InputFileHandler '"+fileLocation+"'"
+        return "SimulationInputFileHandler '"+file.path+"'"
     }
-    
 }

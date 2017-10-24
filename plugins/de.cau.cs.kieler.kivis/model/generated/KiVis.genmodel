@@ -40,7 +40,12 @@
     <genClasses ecoreClass="KiVis.ecore#//Action">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Action/variable"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Action/value"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Action/function"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//Action/operation"/>
+    </genClasses>
+    <genClasses ecoreClass="KiVis.ecore#//Function">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//Function/functionName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Function/parameters"/>
     </genClasses>
     <genClasses ecoreClass="KiVis.ecore#//Animation">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//Animation/type"/>
@@ -50,6 +55,7 @@
     </genClasses>
     <genClasses ecoreClass="KiVis.ecore#//AttributeMapping">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//AttributeMapping/attribute"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//AttributeMapping/currentValue"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//AttributeMapping/literal"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//AttributeMapping/mappings"/>
     </genClasses>
@@ -64,8 +70,10 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Comparison/right"/>
     </genClasses>
     <genClasses ecoreClass="KiVis.ecore#//Domain">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//Domain/otherValues"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Domain/value"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Domain/range"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//Domain/currentValue"/>
     </genClasses>
     <genClasses ecoreClass="KiVis.ecore#//Interval">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Interval/from"/>
@@ -74,18 +82,24 @@
     <genClasses ecoreClass="KiVis.ecore#//VariableReference">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//VariableReference/model"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//VariableReference/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//VariableReference/arrayIndex"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//VariableReference/indices"/>
     </genClasses>
     <genClasses ecoreClass="KiVis.ecore#//ModelReference">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//ModelReference/name"/>
     </genClasses>
-    <genClasses ecoreClass="KiVis.ecore#//BooleanOperator">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//BooleanOperator/AND"/>
+    <genClasses ecoreClass="KiVis.ecore#//FunctionParameter">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//FunctionParameter/variableReference"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//FunctionParameter/value"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//FunctionParameter/veriableReference"/>
     </genClasses>
     <genClasses ecoreClass="KiVis.ecore#//AndExpression">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//AndExpression/left"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//AndExpression/operator"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//AndExpression/right"/>
+    </genClasses>
+    <genClasses ecoreClass="KiVis.ecore#//BooleanOperator">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//BooleanOperator/AND"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

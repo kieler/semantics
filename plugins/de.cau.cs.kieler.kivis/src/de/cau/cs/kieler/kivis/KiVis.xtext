@@ -21,7 +21,7 @@ Interaction:
     {Interaction}
     'perform' ('on' event=Event)? '{'
         (actions+=Action)*
-    '}' ('when' condition=AndExpression)?
+    '}' ('if' condition=AndExpression)?
 ;
 
 Event:
@@ -33,21 +33,28 @@ Action returns Action:
 ;
 
 VariableAssignment returns Action:
-    variable=VariableReference '=' value=Literal
+    variable=VariableReference '=' (value=Literal | function=Function)
 ;
 
 SimulationAction returns Action:
     operation=SimulationOperation 'simulation'
 ;
 
+Function returns Function:
+    functionName=ID
+    (('(' parameters += FunctionParameter 
+          (',' parameters += FunctionParameter)* ')')
+    | '()')
+;
+
 Animation:
     'apply' type=ID ('using' variable=VariableReference)? '{'
         (attributeMappings+=AttributeMapping)*
-    '}' ('when' condition=AndExpression)?
+    '}' ('if' condition=AndExpression)?
 ;
 
 AttributeMapping:
-    attribute=ID ':' (literal=Literal | (mappings+=Mapping) (',' mappings+=Mapping)*)
+    attribute=ID ':' (currentValue ?= 'value' | literal=Literal | (mappings+=Mapping) (',' mappings+=Mapping)*)
 ;
 
 Mapping:
@@ -56,7 +63,7 @@ Mapping:
 
 AndExpression returns Condition:
     Comparison 
-    (({AndExpression.left=current} operator="and") right=Comparison)*
+    (({AndExpression.left=current} operator="&&") right=Comparison)*
 ;
 
 Comparison:
@@ -66,7 +73,8 @@ Comparison:
 ;
 
 VariableDomain returns Domain:
-    value = Literal
+    otherValues ?= 'others'
+    | value = Literal
     | range = Interval
 ;
 
@@ -77,21 +85,24 @@ Interval:
 ;
 
 AttributeDomain returns Domain:
-    VariableDomain
+    currentValue ?= 'value'
+    | value = Literal
+    | range = Interval
 ;
 
 VariableReference:
     (model=ModelReference)?
     name=ID
-    ('[' indices+=INT ']')*
+    (arrayIndex = ArrayIndex)?
 ;
 
 ModelReference:
     name=ID '.'
 ;
 
-AndOperator returns BooleanOperator:
-    AND='and'
+FunctionParameter:
+    variableReference = VariableReference
+    | value = Literal
 ;
 
 enum DOMEvent:
@@ -109,5 +120,5 @@ enum SimulationOperation:
 ;
 
 Range:
-    '-' // Alternative would be '..'
+    '-' // Alternative would be '..' but this creates problems with floating point numbers
 ;

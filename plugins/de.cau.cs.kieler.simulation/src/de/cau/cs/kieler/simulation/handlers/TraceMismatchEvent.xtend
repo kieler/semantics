@@ -13,12 +13,20 @@
 package de.cau.cs.kieler.simulation.handlers
 
 /**
+ * Event that is fired when the current simulation diverges from a previous trace.
+ * 
  * @author aas
  *
  */
 class TraceMismatchEvent extends TraceEvent {
+    /**
+     * The value expected by the trace
+     */
     public Object expectedValue
     
+    /**
+     * {@inheritDoc}
+     */
     override toString() {
         return message
     }

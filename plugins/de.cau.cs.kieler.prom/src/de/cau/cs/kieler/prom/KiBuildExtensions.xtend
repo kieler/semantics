@@ -12,22 +12,31 @@
  */
 package de.cau.cs.kieler.prom
 
-import de.cau.cs.kieler.prom.build.ModelCompiler
+import de.cau.cs.kieler.prom.build.simulation.SimulationCompiler
+import de.cau.cs.kieler.prom.build.templates.SimpleTemplateProcessor
+import de.cau.cs.kieler.prom.build.templates.TemplateProcessor
 import de.cau.cs.kieler.prom.kibuild.BuildConfiguration
+import de.cau.cs.kieler.prom.kibuild.NormalTemplateProcessor
+import de.cau.cs.kieler.prom.kibuild.SimulationTemplateProcessor
+import de.cau.cs.kieler.prom.kibuild.WrapperCodeTemplateProcessor
 import java.util.List
 import org.eclipse.core.runtime.IConfigurationElement
-import de.cau.cs.kieler.prom.build.SimulationCompiler
-import de.cau.cs.kieler.prom.build.SimpleTemplateProcessor
-import de.cau.cs.kieler.prom.build.WrapperCodeTemplateProcessor
-import de.cau.cs.kieler.prom.build.SimulationTemplateProcessor
-import de.cau.cs.kieler.prom.build.TemplateProcessor
+import de.cau.cs.kieler.prom.build.compilation.ModelCompiler
 
 /**
+ * Extension methods to work with KiBuild files.
+ * 
  * @author aas
  *
  */
 class KiBuildExtensions {
     
+    /**
+     * Creates the model compilers that are configured in the build configuration.
+     * 
+     * @param buildConfig The build configuration
+     * @return a list of the instantiated model compilers
+     */
     public def List<ModelCompiler> createModelCompilers(BuildConfiguration buildConfig) {
         val List<ModelCompiler> modelCompilers = newArrayList
         for(config : buildConfig.modelCompilers) {
@@ -47,6 +56,12 @@ class KiBuildExtensions {
         return modelCompilers
     }
     
+    /**
+     * Creates the simulation compilers that are configured in the build configuration.
+     * 
+     * @param buildConfig The build configuration
+     * @return a list of the instantiated simulation compilers 
+     */
     public def List<SimulationCompiler> createSimulationCompilers(BuildConfiguration buildConfig) {
         val List<SimulationCompiler> simulationCompilers = newArrayList
         for(config : buildConfig.simulationCompilers) {
@@ -66,16 +81,22 @@ class KiBuildExtensions {
         return simulationCompilers
     }
     
+    /**
+     * Creates the template processors that are configured in the build configuration.
+     * 
+     * @param buildConfig The build configuration
+     * @return a list of the instantiated template processors 
+     */
     public def List<TemplateProcessor> createTemplateProcessors(BuildConfiguration buildConfig) {
         val List<TemplateProcessor> templateProcessors = newArrayList
         for(config : buildConfig.templateProcessors) {
             var TemplateProcessor processor
-            if(config instanceof de.cau.cs.kieler.prom.kibuild.NormalTemplateProcessor) {
+            if(config instanceof NormalTemplateProcessor) {
                 processor = new SimpleTemplateProcessor
-            } else if(config instanceof de.cau.cs.kieler.prom.kibuild.WrapperCodeTemplateProcessor) {
-                processor = new WrapperCodeTemplateProcessor
-            } else if(config instanceof de.cau.cs.kieler.prom.kibuild.SimulationTemplateProcessor) {
-                processor = new SimulationTemplateProcessor
+            } else if(config instanceof WrapperCodeTemplateProcessor) {
+                processor = new de.cau.cs.kieler.prom.build.templates.WrapperCodeTemplateProcessor
+            } else if(config instanceof SimulationTemplateProcessor) {
+                processor = new de.cau.cs.kieler.prom.build.templates.SimulationTemplateProcessor
             }
             if(processor != null) {
                 if(!templateProcessors.contains(processor)) {

@@ -19,13 +19,22 @@ import java.util.List
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IProgressMonitor
+import org.eclipse.core.runtime.SubMonitor
 import org.eclipse.debug.core.ILaunch
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate
 import org.eclipse.xtend.lib.annotations.Accessors
 
+/**
+ * Launch configuration for the simulation.
+ * Stores the files that should be launched.
+ * 
+ */
 class SimulationLaunchConfig implements ILaunchConfigurationDelegate  {
     
+    /**
+     * The name of the filed to store the files that should be launched
+     */
     public static val FILES_ATTR = "files"
     
     /**
@@ -35,29 +44,42 @@ class SimulationLaunchConfig implements ILaunchConfigurationDelegate  {
     public static String LAUNCH_CONFIGURATION_TYPE_ID = "de.cau.cs.kieler.simulation.simulationLaunchConfig"
     
     /**
-     * Static field to re-start last configuration
+     * Static field to re-start the last configuration
      */
     @Accessors(PUBLIC_GETTER)
     private static var List<IFile> lastFiles = newArrayList()
     
     /**
-     * The file handle from which this launch shortcut has been startet.
+     * The files for this launch config.
      */
     protected List<IFile> files = newArrayList()
     
+    /**
+     * Launches the last used configuration.
+     */
     public static def void launchLastSelection() {
-        SimulationUtil.startSimulation(lastFiles)
+        PromPlugin.execInJob("Starting simulation",
+                             [SubMonitor monitor |
+                                 val childMonitor = monitor.newChild(1)
+                                 SimulationUtil.startSimulation(lastFiles, childMonitor)
+                             ])
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override launch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException {
         // Load settings from configuration
         loadSettings(configuration)
         
-        // Create simulation based on selection
-        SimulationUtil.startSimulation(files)
+        // Create simulation based on the loaded files
         lastFiles = files
+        SimulationUtil.startSimulation(files, monitor)
     }
     
+    /**
+     * Loads all required data from the given config to start the simulation.
+     */
     private def void loadSettings(ILaunchConfiguration config) {
         // Load files that should be launched
         files.clear

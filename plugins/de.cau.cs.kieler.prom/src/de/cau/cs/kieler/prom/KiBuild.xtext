@@ -54,13 +54,21 @@ WrapperCodeTemplateProcessor returns TemplateProcessor:
 
 AttributeMapping:
     name=ID
+    (arrayIndex = ArrayIndex)?
     ((':' value=Literal)
     | (':' values+=Literal (',' values+=Literal)+)
     | (':'? '{' (attributes+=AttributeMapping)+ '}'))
 ;
 
 Literal:
-    value=TextValue | value = SignedInt | value = SignedFloat | (value = AnyValue)
+    (value=TextValue (arrayIndex = ArrayIndex)?)
+   | value = SignedInt
+   | value = SignedFloat
+   | value = AnyValue
+;
+
+ArrayIndex:
+    ('[' indices+=INT ']')+
 ;
 
 enum Sign:
@@ -81,10 +89,12 @@ TextValue:
     value=ID
 ;
 
-// Overwrute BOOLEAN and ID to have a less strict definition of IDs
+// Overwrite BOOLEAN and ID to have a less strict definition of IDs
 terminal BOOLEAN returns ecore::EBooleanObject :
     'true' | 'false';
 
+// IDs may contain letters, dots, slashes, dashes, underscores and numbers as well as brackets.
+// Thus it is possible have a path (e.g. '/abc/m3.x') written as ID instead of a string 
 terminal ID returns ecore::EString:
     '^'?('a'..'z'|'A'..'Z'|'_'|'/'|'\\') ('a'..'z'|'A'..'Z'|'_'|'-'|'.'|'/'|'\\'|'0'..'9')*
 ;

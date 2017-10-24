@@ -16,19 +16,36 @@ import org.eclipse.jface.action.Action
 import org.eclipse.jface.viewers.TableViewerColumn
 
 /**
+ * Base class to toggle the visibility of a column in the data pool view.
+ * Hiding a column is done by setting the column's width to 0. To show a column, its width is restored.
+ * 
  * @author aas
  *
  */
 class ToggleColumnVisibleAction extends Action {
     
+    /**
+     * The column
+     */
     private var TableViewerColumn column
+    /**
+     * The with of the column before it was hidden.
+     */
     private var int lastWidth
      
+    /**
+     * Constructor
+     * 
+     * @param column The column 
+     */
     new(TableViewerColumn column) {
         super("Show/Hide "+column.column.text)
         this.column = column
     }
     
+    /**
+     * Toggles the visibility of the column by settings its width.
+     */
     override run() {
         val col = column.column
         if(col.width > 0) {

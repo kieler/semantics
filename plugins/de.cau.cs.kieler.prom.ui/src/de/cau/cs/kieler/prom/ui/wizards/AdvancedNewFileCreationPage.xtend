@@ -13,11 +13,11 @@
  */
 package de.cau.cs.kieler.prom.ui.wizards
 
+import com.google.common.base.Strings
 import de.cau.cs.kieler.prom.PromPlugin
+import de.cau.cs.kieler.prom.configurable.ResourceSubstitution
 import de.cau.cs.kieler.prom.ui.UIUtil
 import org.eclipse.core.resources.IFile
-import org.eclipse.core.runtime.Path
-import org.eclipse.debug.internal.ui.SWTFactory
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.swt.SWT
 import org.eclipse.swt.events.SelectionAdapter
@@ -26,13 +26,14 @@ import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.widgets.Button
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Label
+import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.dialogs.WizardNewFileCreationPage
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * Implementation of an IWizardPage
  * that contains controls to specify whether and where a file should be created.
- * When created, the file is initialized with the contents of a URL (e.g. a file in the plugin).<br>
+ * When created, the file is initialized with the contents of a URL (e.g. a file in some plugin).<br>
  * It is possible to make the file creation optional
  * such that the user can decide if the file should be created or not.<br>
  * 
@@ -44,19 +45,19 @@ class AdvancedNewFileCreationPage extends WizardNewFileCreationPage {
 
     /**
      * A URL to a file which contains initial content for the newly created file.
+     * The URL must use the platform protocol of Eclipse.
      */
-    @Accessors
-    protected String initialContentsURL = ""
+    @Accessors(PROTECTED_GETTER)
+    private String initialContentsURL = ""
 
     /**
-     * A flag that specifies if the created file should be opened with an editor within Eclipse.
+     * Specifies whether the created file should be opened with an editor within Eclipse.
      */
     @Accessors
     protected boolean openOnCreation = true
 
     /**
-     * A flag that specifies
-     * if this page might be skipped although the input to create a file is not valid.
+     * Specifies whether this page might be skipped although the input to create a file is not valid.
      */
     @Accessors
     protected boolean fileCreationIsOptional = false
@@ -66,8 +67,6 @@ class AdvancedNewFileCreationPage extends WizardNewFileCreationPage {
      */
     @Accessors
     protected IFile newFile
-
-
 
     /**
      * The parent composite of the controls of this class.
@@ -81,7 +80,10 @@ class AdvancedNewFileCreationPage extends WizardNewFileCreationPage {
      */
     protected Button createFileCheckbox
     
-    
+    /**
+     * Shows the origin of the initial contents for the file
+     */
+    protected Text originTextField
     
     /**
      * Creates a new instance of this class with the given page name and selection.
@@ -106,19 +108,19 @@ class AdvancedNewFileCreationPage extends WizardNewFileCreationPage {
     override createControl(Composite parent) {
         this.parent = parent
 
+        // Create composite to contain contents from super class as well as from this class.
+        val comp = UIUtil.createComposite(parent, 1)
+
+        // Create contents of super class
+        super.createControl(comp)
+
+        // Horizontal line to separate new controls of this class
+        val separator = new Label(comp, SWT.HORIZONTAL.bitwiseOr(SWT.SEPARATOR));
+        separator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
         if (fileCreationIsOptional) {
-            // Create composite to contain contents from super class as well as from this class.
-            val comp = UIUtil.createComposite(parent, 1)
-
-            // Create contents of super class
-            super.createControl(comp)
-
-            // Horizontal line to separate new controls of this class
-            val separator = new Label(comp, SWT.HORIZONTAL.bitwiseOr(SWT.SEPARATOR));
-            separator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
             // Create checkbox to check if file should be created or not
-            createFileCheckbox = SWTFactory.createCheckButton(comp, "Create file", null, true, 1)
+            createFileCheckbox = UIUtil.createCheckButton(comp, "Create file", true)
             createFileCheckbox.addSelectionListener(new SelectionAdapter() {
                 override void widgetSelected(SelectionEvent e) {
                     // Update whether page is complete
@@ -129,13 +131,16 @@ class AdvancedNewFileCreationPage extends WizardNewFileCreationPage {
                 }
             })
             createFileCheckbox.toolTipText = "The file is only created if this checkbox is checked."
-
-            // The controls for this wizard is the composite for this class as well as for the super class.
-            // Therefore setControl(...) has to be called after super.createControl(...)
-            setControl(comp)
-        } else {
-            super.createControl(parent)
         }
+        
+        // Text field for the origin of the initial contents
+        val hgroup = UIUtil.createComposite(comp, 2)
+        originTextField = UIUtil.createTextField(hgroup, "Initial content origin:")
+        originTextField.text = Strings.nullToEmpty(initialContentsURL)
+       
+        // The controls for this wizard is the composite for this class as well as for the super class.
+        // Therefore setControl(...) has to be called after super.createControl(...)
+        setControl(comp)
     }
 
     /**
@@ -214,8 +219,32 @@ class AdvancedNewFileCreationPage extends WizardNewFileCreationPage {
      * @return an input stream with initial contents for the new file
      */
     protected override getInitialContents() {
-        val fileNameWithoutExtension = new Path(fileName).removeFileExtension.toOSString
-        val placeholderMap = #{"${name}" -> fileNameWithoutExtension}
-        return PromPlugin.getInputStream(initialContentsURL, placeholderMap)
+        val substitution = new ResourceSubstitution("file") {
+            override getValue() {
+                val projectName = containerFullPath.segment(0)
+                val folderPath = containerFullPath.removeFirstSegments(0)
+                val project = PromPlugin.findProject(projectName)
+                if(folderPath != null) {
+                    val folder = project.getFolder(folderPath)
+                    return folder.getFile(fileName)    
+                } else {
+                    return project.getFile(fileName)
+                }
+            }
+        }
+        val mappings = substitution.variableMappings
+        return PromPlugin.getInputStream(originTextField.text, mappings)
+    }
+    
+    /**
+     * Sets the initial content origin.
+     * 
+     * @param value The new value
+     */
+    public def setInitialContentsURL(String value) {
+        initialContentsURL = value
+        if(originTextField != null) {
+            originTextField.text = initialContentsURL    
+        }
     }
 }

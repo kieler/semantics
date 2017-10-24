@@ -88,7 +88,7 @@ class CCodeSerializeHRExtensions extends SCGSerializeHRExtensions {
     }  
     
     override dispatch CharSequence serialize(BoolValue expression) {
-        if(expression.value == true) return "1"
+        if (expression.value) return "1"
         return "0"
     }
     

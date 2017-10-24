@@ -31,22 +31,32 @@ import de.cau.cs.kieler.kivis.ui.internal.KiVisActivator;
 
 /**
  * This class implements a SVG user agent.
+ * 
+ * @author sschwieb
  */
 public class KiVisUserAgent implements SVGUserAgent {
 
+    /**
+     * The canvas that is handled by this user agent.
+     */
     private KiVisCanvas canvas;
     
-    public Shell getShell() {
-        return canvas.getShell();
-    }
+    /**
+     * The shell of the canvas
+     */
+    private Shell shell;
     
     /**
      * Creates a new SVGUserAgent.
      */
     protected KiVisUserAgent(KiVisCanvas canvas) {
         this.canvas = canvas;
+        this.shell = canvas.getShell();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public String getDefaultFontFamily() {
         return "arial"; //$NON-NLS-1$
     }
@@ -62,7 +72,7 @@ public class KiVisUserAgent implements SVGUserAgent {
                 ex.printStackTrace();
                 Status status = new Status(Status.ERROR, KiVisActivator.getInstance().getBundle()
                         .getSymbolicName(), Status.OK, fMessage, ex);
-                ErrorDialog.openError(getShell(), "Error", fMessage, status);
+                ErrorDialog.openError(shell, "Error", fMessage, status);
             }
         });
     }
@@ -80,7 +90,7 @@ public class KiVisUserAgent implements SVGUserAgent {
                 }
                 Status status = new Status(Status.ERROR, KiVisActivator.getInstance().getBundle()
                         .getSymbolicName(), Status.OK, msg, fex);
-                ErrorDialog.openError(getShell(), "Error", fex.getMessage(), status);
+                ErrorDialog.openError(shell, "Error", fex.getMessage(), status);
             }
         });
     }
@@ -93,7 +103,7 @@ public class KiVisUserAgent implements SVGUserAgent {
         final String fMessage = message;
         Display.getDefault().syncExec(new Runnable() {
             public void run() {
-                MessageDialog.openInformation(getShell(), "Message", fMessage);
+                MessageDialog.openInformation(shell, "Message", fMessage);
             }
         });
     }
@@ -115,14 +125,14 @@ public class KiVisUserAgent implements SVGUserAgent {
      * Shows a prompt dialog box.
      */
     public String showPrompt(String message) {
-        return canvas.getSVGCanvas().showPrompt(message);
+        return canvas.getSvgCanvas().showPrompt(message);
     }
 
     /**
      * Shows a prompt dialog box.
      */
     public String showPrompt(String message, String defaultValue) {
-        return canvas.getSVGCanvas().showPrompt(message, defaultValue);
+        return canvas.getSvgCanvas().showPrompt(message, defaultValue);
     }
 
     /**

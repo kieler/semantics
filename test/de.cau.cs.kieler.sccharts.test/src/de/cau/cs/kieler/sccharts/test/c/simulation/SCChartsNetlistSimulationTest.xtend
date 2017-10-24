@@ -14,27 +14,24 @@ package de.cau.cs.kieler.sccharts.test.c.simulation
 
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
-import de.cau.cs.kieler.simulation.core.SimulationEvent
-import de.cau.cs.kieler.simulation.core.SimulationEventType
-import de.cau.cs.kieler.simulation.core.SimulationListener
+import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.backends.CSimulationBackend
 import de.cau.cs.kieler.simulation.core.SimulationManager
-import de.cau.cs.kieler.simulation.core.StepAction
-import de.cau.cs.kieler.simulation.handlers.ExecutableSimulator
+import de.cau.cs.kieler.simulation.core.events.SimulationEvent
+import de.cau.cs.kieler.simulation.core.events.SimulationListener
 import de.cau.cs.kieler.simulation.handlers.TraceFinishedEvent
-import de.cau.cs.kieler.simulation.handlers.TraceHandler
 import de.cau.cs.kieler.simulation.handlers.TraceMismatchEvent
 import de.cau.cs.kieler.simulation.trace.TraceDataProvider
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.TestModelData
+import org.eclipse.core.internal.resources.ResourceException
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.runtime.Platform
 import org.junit.Test
 import org.junit.runner.RunWith
 
-import static de.cau.cs.kieler.simulation.StandaloneSimulationEnvironment.*
 import static org.junit.Assert.*
-import org.eclipse.core.internal.resources.ResourceException
 
 /**
  * Tests all SCCharts compiled to C executables with their eso files.
@@ -80,87 +77,86 @@ class SCChartsNetlistSimulationTest extends AbstractXTextModelRepositoryTest<SCC
     @Test
     def void testSimulation(SCCharts scc, TestModelData modelData) {
         traceError = null
-        
         // Assert that sccharts prom is loaded. Only then the SCChartsAnalyser is registered and the executable provides an interface
         assertTrue("Plugin 'de.cau.cs.kieler.sccharts.prom' is not loaded but required for SCCharts simulation", Platform.getBundle("de.cau.cs.kieler.sccharts.prom") !== null)
         
-        // Setup simulation project
-        val standaloneSim = createCSimulationEnvironment
-        try {
-            // Setup model file
-            val modelFile = standaloneSim.project.getFile(modelData.modelPath.fileName.toString)
-            modelFile.createLink(modelData.repositoryPath.resolve(modelData.modelPath).toUri, IResource.ALLOW_MISSING_LOCAL, null)
-            standaloneSim.modelFile = modelFile
-            
-            // Build simulation code
-            standaloneSim.build(scc)
-            if (standaloneSim.buildResult.problems.exists[error]) {
-                fail("Build problem(s) occured: \n- " + standaloneSim.buildResult.problems.filter[error].map[toString].join("\n- "))
+        // Custom backend that compiles from sctx to c without additional frontend and transition signaling
+        // and without communication of register variables.
+        val simBackend = new CSimulationBackend() {
+            override getBuildConfigOrigin() {
+                return "platform:/plugin/de.cau.cs.kieler.sccharts.test/resources/sccharts-test.kibuild"
             }
-            assertTrue("Build failed to create executable", !standaloneSim.buildResult.createdFiles.isNullOrEmpty)
+        }
+        
+        val context = new SimulationContext
+        SimulationContext.setDeleteTemporaryProject(false)
+        context.simulationBackend = simBackend
+        // Setup simulation project
+        val project = context.temporaryProject
+        try {
+            // Build the simulation executable
+            try {
+                // Setup model file
+                context.model = scc
+                context.compileModel
+            } catch (Exception e) {
+                fail(e.message)
+            }
+            assertTrue("Build failed to create executable", !context.executableFiles.isNullOrEmpty)
+            
+            // In the following, the compiled executable simulation for the model has been created successfully
 
             // Register for events
             SimulationManager.addListener(this)
             
+            // Iterate over trance files and run each
             for (traceFilePath : modelData.tracePaths.filter[fileName.toString.endsWith("eso") || fileName.toString.endsWith("ktrace")]) {
-                val traceFile = standaloneSim.project.getFile(traceFilePath.fileName.toString)
+                val traceFile = project.getFile(traceFilePath.fileName.toString)
                 traceFile.createLink(modelData.repositoryPath.resolve(traceFilePath).toUri, IResource.ALLOW_MISSING_LOCAL, null)
                 assertTrue("Could not link to trace file", traceFile.exists)
                 val trace = TraceDataProvider.loadTraceFile(traceFile)
                 
+                // Run each trace in the trace file
                 for (var i = 0; i < trace.traces.size; i++) {
                     traceFinished = false
 
-                    // executable
-                    val exeSimulator = new ExecutableSimulator
-                    exeSimulator.executableFile = standaloneSim.buildResult.createdFiles.head
-                    
-                    // Create trace from eso file
-                    val traceHandler = new TraceHandler()
-                    traceHandler.tracePath.value = traceFile.fullPath.toOSString
-                    traceHandler.traceNumber.value = i
-                    
-                    // Create new simulation with the trace
-                    val sim = new SimulationManager
-                    sim.addAction(StepAction.Method.WRITE, traceHandler)
-                    sim.addAction(StepAction.Method.WRITE, exeSimulator)
-                    sim.addAction(StepAction.Method.READ, traceHandler)
-                    sim.initialize
+                    // Configure trace
+                    context.traceFile = traceFile
+                    context.traceNumber = i
+                    // Start simulation
+                    context.startSimulation
                     
                     // Run simulation until end of trace
+                    val sim = SimulationManager.instance
                     while(!traceFinished) {
-                        SimulationManager.instance.stepMacroTick
+                        sim.stepMacroTick
                         if (traceError !== null) {
                             sim.stop
                             fail(traceError.message)
                         }
                     }
-                    
+                    // Stop the simulation
                     sim.stop
                 }
             }
         } finally {
             SimulationManager.removeListener(this)
             try {
-                standaloneSim?.project?.delete(true, true, null)
+                project?.delete(true, true, null)
             } catch(ResourceException e) {
                 // There is maybe still a lock on the resource (Windows). Give it a little bit more time and try again.
                 Thread.sleep(3000)
-                standaloneSim?.project?.delete(true, true, null)
+                project?.delete(true, true, null)
             }
         }
-        
     }
     
     override update(SimulationEvent e) {
-        if (e.type == SimulationEventType.TRACE) {
-            if (e instanceof TraceMismatchEvent) {
-                traceError = e
-            } else if (e instanceof TraceFinishedEvent) {
-                traceFinished = true
-            }
+        if (e instanceof TraceMismatchEvent) {
+            traceError = e
+        } else if (e instanceof TraceFinishedEvent) {
+            traceFinished = true
         }
     }
-      
 }
 				

@@ -66,7 +66,8 @@ class CodePlaceHolderSynthesis extends AbstractDiagramSynthesis<CodePlaceHolder>
                 it.setGridPlacement(1);
 
                 // title
-                it.addText("CODE") => [
+                val titleText = if (placeholder.name.nullOrEmpty) "CODE" else "CODE - " + placeholder.name
+                it.addText(titleText) => [
                     it.fontSize = 11;
                     it.setFontBold = true;
                     it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);

@@ -18,8 +18,11 @@ import org.eclipse.xtext.validation.Check
  */
 class KiSimValidator extends AbstractKiSimValidator {
 
+    /**
+     * Checks that the IDs of data handlers are unique.
+     */
     @Check
-    public def void checkGreetingStartsWithCapital(SimulationConfiguration config) {
+    public def void checkUniqueIds(SimulationConfiguration config) {
         val Map<String, DataHandlerConfiguration> handlersWithIds = newHashMap
         for(dataHandlerConfig : config.handlers) {
             val fullyQualifiedId = dataHandlerConfig.name + Strings.nullToEmpty(dataHandlerConfig.id)

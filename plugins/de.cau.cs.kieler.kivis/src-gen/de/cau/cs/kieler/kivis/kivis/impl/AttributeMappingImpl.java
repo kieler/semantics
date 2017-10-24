@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.AttributeMappingImpl#getAttribute <em>Attribute</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.AttributeMappingImpl#isCurrentValue <em>Current Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.AttributeMappingImpl#getLiteral <em>Literal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.AttributeMappingImpl#getMappings <em>Mappings</em>}</li>
  * </ul>
@@ -59,6 +60,26 @@ public class AttributeMappingImpl extends de.cau.cs.kieler.prom.kibuild.impl.Att
    * @ordered
    */
   protected String attribute = ATTRIBUTE_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isCurrentValue() <em>Current Value</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isCurrentValue()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean CURRENT_VALUE_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isCurrentValue() <em>Current Value</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isCurrentValue()
+   * @generated
+   * @ordered
+   */
+  protected boolean currentValue = CURRENT_VALUE_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getLiteral() <em>Literal</em>}' containment reference.
@@ -122,6 +143,29 @@ public class AttributeMappingImpl extends de.cau.cs.kieler.prom.kibuild.impl.Att
     attribute = newAttribute;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.ATTRIBUTE_MAPPING__ATTRIBUTE, oldAttribute, attribute));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isCurrentValue()
+  {
+    return currentValue;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setCurrentValue(boolean newCurrentValue)
+  {
+    boolean oldCurrentValue = currentValue;
+    currentValue = newCurrentValue;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.ATTRIBUTE_MAPPING__CURRENT_VALUE, oldCurrentValue, currentValue));
   }
 
   /**
@@ -216,6 +260,8 @@ public class AttributeMappingImpl extends de.cau.cs.kieler.prom.kibuild.impl.Att
     {
       case KivisPackage.ATTRIBUTE_MAPPING__ATTRIBUTE:
         return getAttribute();
+      case KivisPackage.ATTRIBUTE_MAPPING__CURRENT_VALUE:
+        return isCurrentValue();
       case KivisPackage.ATTRIBUTE_MAPPING__LITERAL:
         return getLiteral();
       case KivisPackage.ATTRIBUTE_MAPPING__MAPPINGS:
@@ -237,6 +283,9 @@ public class AttributeMappingImpl extends de.cau.cs.kieler.prom.kibuild.impl.Att
     {
       case KivisPackage.ATTRIBUTE_MAPPING__ATTRIBUTE:
         setAttribute((String)newValue);
+        return;
+      case KivisPackage.ATTRIBUTE_MAPPING__CURRENT_VALUE:
+        setCurrentValue((Boolean)newValue);
         return;
       case KivisPackage.ATTRIBUTE_MAPPING__LITERAL:
         setLiteral((Literal)newValue);
@@ -262,6 +311,9 @@ public class AttributeMappingImpl extends de.cau.cs.kieler.prom.kibuild.impl.Att
       case KivisPackage.ATTRIBUTE_MAPPING__ATTRIBUTE:
         setAttribute(ATTRIBUTE_EDEFAULT);
         return;
+      case KivisPackage.ATTRIBUTE_MAPPING__CURRENT_VALUE:
+        setCurrentValue(CURRENT_VALUE_EDEFAULT);
+        return;
       case KivisPackage.ATTRIBUTE_MAPPING__LITERAL:
         setLiteral((Literal)null);
         return;
@@ -284,6 +336,8 @@ public class AttributeMappingImpl extends de.cau.cs.kieler.prom.kibuild.impl.Att
     {
       case KivisPackage.ATTRIBUTE_MAPPING__ATTRIBUTE:
         return ATTRIBUTE_EDEFAULT == null ? attribute != null : !ATTRIBUTE_EDEFAULT.equals(attribute);
+      case KivisPackage.ATTRIBUTE_MAPPING__CURRENT_VALUE:
+        return currentValue != CURRENT_VALUE_EDEFAULT;
       case KivisPackage.ATTRIBUTE_MAPPING__LITERAL:
         return literal != null;
       case KivisPackage.ATTRIBUTE_MAPPING__MAPPINGS:
@@ -305,6 +359,8 @@ public class AttributeMappingImpl extends de.cau.cs.kieler.prom.kibuild.impl.Att
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (attribute: ");
     result.append(attribute);
+    result.append(", currentValue: ");
+    result.append(currentValue);
     result.append(')');
     return result.toString();
   }

@@ -70,6 +70,7 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
       case KivisPackage.INTERACTION: return createInteraction();
       case KivisPackage.EVENT: return createEvent();
       case KivisPackage.ACTION: return createAction();
+      case KivisPackage.FUNCTION: return createFunction();
       case KivisPackage.ANIMATION: return createAnimation();
       case KivisPackage.ATTRIBUTE_MAPPING: return createAttributeMapping();
       case KivisPackage.MAPPING: return createMapping();
@@ -79,7 +80,7 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
       case KivisPackage.INTERVAL: return createInterval();
       case KivisPackage.VARIABLE_REFERENCE: return createVariableReference();
       case KivisPackage.MODEL_REFERENCE: return createModelReference();
-      case KivisPackage.BOOLEAN_OPERATOR: return createBooleanOperator();
+      case KivisPackage.FUNCTION_PARAMETER: return createFunctionParameter();
       case KivisPackage.AND_EXPRESSION: return createAndExpression();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -177,6 +178,17 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
   {
     ActionImpl action = new ActionImpl();
     return action;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Function createFunction()
+  {
+    FunctionImpl function = new FunctionImpl();
+    return function;
   }
 
   /**
@@ -283,10 +295,10 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public BooleanOperator createBooleanOperator()
+  public FunctionParameter createFunctionParameter()
   {
-    BooleanOperatorImpl booleanOperator = new BooleanOperatorImpl();
-    return booleanOperator;
+    FunctionParameterImpl functionParameter = new FunctionParameterImpl();
+    return functionParameter;
   }
 
   /**

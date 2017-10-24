@@ -105,6 +105,11 @@ public class KibuildAdapterFactory extends AdapterFactoryImpl
         return createLiteralAdapter();
       }
       @Override
+      public Adapter caseArrayIndex(ArrayIndex object)
+      {
+        return createArrayIndexAdapter();
+      }
+      @Override
       public Adapter caseSignedFloat(SignedFloat object)
       {
         return createSignedFloatAdapter();
@@ -242,6 +247,21 @@ public class KibuildAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createLiteralAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.prom.kibuild.ArrayIndex <em>Array Index</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.prom.kibuild.ArrayIndex
+   * @generated
+   */
+  public Adapter createArrayIndexAdapter()
   {
     return null;
   }

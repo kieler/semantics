@@ -85,6 +85,7 @@ import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.sccharts.scg.SCChartsSCGPlugin
 import de.cau.cs.kieler.sccharts.scg.PatternType
+import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -293,6 +294,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         val sCGraph = ScgFactory::eINSTANCE.createSCGraph => [
             // Fix: Better always take the id (e.g. for java code generation). The label could start with a number and contain spaces...
             label = rootState.name; //if(!rootState.label.nullOrEmpty) rootState.label else rootState.id
+            name = rootState.name
         ]
 
 //        creationalTransformation(rootState, sCGraph) // Tell KITT that this is not an in-place transformation from here on
@@ -859,7 +861,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     }
 
     def Parameter convertToSCGParameter(Parameter parameter) {
-        createParameter.trace(parameter) => [
+        KExpressionsFactory.eINSTANCE.createParameter.trace(parameter) => [
             callByReference = parameter.callByReference
             expression = parameter.expression.convertToSCGExpression
         ]

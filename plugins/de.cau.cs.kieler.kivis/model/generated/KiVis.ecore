@@ -30,7 +30,14 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.prom/model/generated/KiBuild.ecore#//Literal"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="function" eType="#//Function"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="operation" eType="#//SimulationOperation"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Function">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="functionName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
+        eType="#//FunctionParameter" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Animation">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -43,6 +50,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AttributeMapping" eSuperTypes="platform:/resource/de.cau.cs.kieler.prom/model/generated/KiBuild.ecore#//AttributeMapping">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="attribute" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="currentValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="literal" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.prom/model/generated/KiBuild.ecore#//Literal"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="mappings" upperBound="-1"
@@ -63,10 +71,12 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Domain">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="otherValues" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.prom/model/generated/KiBuild.ecore#//Literal"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="range" eType="#//Interval"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="currentValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Interval">
     <eStructuralFeatures xsi:type="ecore:EReference" name="from" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
@@ -78,14 +88,17 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="model" eType="#//ModelReference"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="indices" unique="false"
-        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="arrayIndex" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.prom/model/generated/KiBuild.ecore#//ArrayIndex"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ModelReference">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="BooleanOperator">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="AND" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  <eClassifiers xsi:type="ecore:EClass" name="FunctionParameter">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variableReference" eType="#//VariableReference"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.prom/model/generated/KiBuild.ecore#//Literal"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="DOMEvent">
     <eLiterals name="CLICK" literal="click"/>

@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.prom.kibuild.AttributeMapping#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.prom.kibuild.AttributeMapping#getArrayIndex <em>Array Index</em>}</li>
  *   <li>{@link de.cau.cs.kieler.prom.kibuild.AttributeMapping#getValue <em>Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.prom.kibuild.AttributeMapping#getValues <em>Values</em>}</li>
  *   <li>{@link de.cau.cs.kieler.prom.kibuild.AttributeMapping#getAttributes <em>Attributes</em>}</li>
@@ -52,6 +53,32 @@ public interface AttributeMapping extends EObject
    * @generated
    */
   void setName(String value);
+
+  /**
+   * Returns the value of the '<em><b>Array Index</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Array Index</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Array Index</em>' containment reference.
+   * @see #setArrayIndex(ArrayIndex)
+   * @see de.cau.cs.kieler.prom.kibuild.KibuildPackage#getAttributeMapping_ArrayIndex()
+   * @model containment="true"
+   * @generated
+   */
+  ArrayIndex getArrayIndex();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.prom.kibuild.AttributeMapping#getArrayIndex <em>Array Index</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Array Index</em>' containment reference.
+   * @see #getArrayIndex()
+   * @generated
+   */
+  void setArrayIndex(ArrayIndex value);
 
   /**
    * Returns the value of the '<em><b>Value</b></em>' containment reference.

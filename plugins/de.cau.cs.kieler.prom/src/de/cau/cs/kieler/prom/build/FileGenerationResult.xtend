@@ -16,25 +16,45 @@ import java.util.List
 import org.eclipse.core.resources.IFile
 
 /**
+ * Container for information about files and problems that have been created as part of a build.
+ * 
  * @author aas
  *
  */
 class FileGenerationResult {
+    /**
+     * The created files.
+     */
     private List<IFile> createdFiles = newArrayList
+    /**
+     * The problems that occured.
+     */
     private List<BuildProblem> problems = newArrayList
     
+    /**
+     * Adds a created file.
+     */
     public def void addCreatedFile(IFile createdFile) {
         createdFiles.add(createdFile)
     }
     
+    /**
+     * Returns the created files.
+     */
     public def List<IFile> getCreatedFiles() {
         return createdFiles
     }
     
+    /**
+     * Adds a problem.
+     */
     public def addProblem(BuildProblem problem) {
         problems.add(problem)
     }
     
+    /**
+     * Returns the problems that occured.
+     */
     public def getProblems() {
         return problems
     }

@@ -3,9 +3,9 @@
  */
 package de.cau.cs.kieler.prom.formatting;
 
+import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter;
 import org.eclipse.xtext.formatting.impl.FormattingConfig;
-import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.util.Pair;
 
 /**

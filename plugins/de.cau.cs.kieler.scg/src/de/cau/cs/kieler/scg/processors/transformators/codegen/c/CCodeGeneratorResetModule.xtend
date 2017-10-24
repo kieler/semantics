@@ -39,11 +39,11 @@ class CCodeGeneratorResetModule extends SCGCodeGeneratorModule {
     @Inject CCodeGeneratorStructModule struct
     
     override configure(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
-        Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, SCGCodeGeneratorModule parent
+        Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, String codeFilename, SCGCodeGeneratorModule parent
     ) {
-        super.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, parent)
+        super.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename, parent)
         
-        struct = (parent as CCodeGeneratorModule).struct
+        struct = (parent as CCodeGeneratorModule).struct as CCodeGeneratorStructModule
         
         return this
     }    
@@ -56,7 +56,11 @@ class CCodeGeneratorResetModule extends SCGCodeGeneratorModule {
         code.append("void ").append(getName)
         code.append("(")
         code.append(struct.getName).append("* ").append(struct.getVariableName)
-        code.append(") {\n")
+        code.append(")")
+        
+        struct.forwardDeclarations.append(code).append(";\n")
+        
+        code.append(" {\n")
         
         indent 
         code.append(struct.getVariableName).append("->").append(AbstractGuardExpressions.GO_GUARD_NAME).append(" = 1;\n")

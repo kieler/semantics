@@ -180,6 +180,9 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
                     type.serialize
                 })
             }
+        } else if (declaration instanceof ReferenceDeclaration) {
+            components.addKeyword("ref")
+            components.addText(if (hr) declaration.reference.serializeHR else declaration.reference.serialize)           
         }
 
         // Content
@@ -431,6 +434,9 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         for (index : valuedObjectReference.indices) {
             vo = vo + "[" + index.serialize + "]"
         }
+        if (valuedObjectReference.subReference != null && valuedObjectReference.subReference.valuedObject != null) {
+            vo = vo + "." + valuedObjectReference.subReference.serializeHR
+        }        
         vo
     }    
     
@@ -439,6 +445,9 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         for (index : valuedObjectReference.indices) {
             vo = vo + "[" + index.serializeHR + "]"
         }
+        if (valuedObjectReference.subReference != null && valuedObjectReference.subReference.valuedObject != null) {
+            vo = vo + "." + valuedObjectReference.subReference.serializeHR
+        }        
         vo
     }   
     

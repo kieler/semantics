@@ -19,13 +19,14 @@ Workflow {
         registerGenModelFile = "platform:/resource/de.cau.cs.kieler.prom/model/generated/KiBuild.genmodel"
     }
     
-    component = DirectoryCleaner {
-        directory = "${runtimeProject}/src-gen"
-    }
-    
-    component = DirectoryCleaner {
-        directory = "${runtimeProject}.ui/src-gen"
-    }
+// DO NOT CLEAN because this will delete the generated KTrace code  
+//    component = DirectoryCleaner {
+//        directory = "${runtimeProject}/src-gen"
+//    }
+//    
+//    component = DirectoryCleaner {
+//        directory = "${runtimeProject}.ui/src-gen"
+//    }
 
     component = Generator {
         pathRtProject = runtimeProject

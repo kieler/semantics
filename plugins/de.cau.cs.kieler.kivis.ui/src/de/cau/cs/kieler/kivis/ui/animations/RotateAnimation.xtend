@@ -12,33 +12,56 @@
  */
 package de.cau.cs.kieler.kivis.ui.animations
 
-import de.cau.cs.kieler.kivis.kivis.Animation
-import de.cau.cs.kieler.prom.build.ConfigurableAttribute
+import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
 import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGLocatable
 
 /**
+ * Rotates an SVG element.
+ * The rotation is performed around an anchor position that is relative to the SVG element's bounding box.
+ * 
+ * For instance an anchor point of (0.5, 0.5) would rotate around the center of the element,
+ * whereas an anchor point of (1, 0) would rotate around the upper right corner of the element.
+ * 
  * @author aas
  *
  */
 class RotateAnimation extends AnimationHandler {
-    public val angle = new ConfigurableAttribute("x", 0)
-    public val anchorX = new ConfigurableAttribute("x", 0.5)
-    public val anchorY = new ConfigurableAttribute("x", 0.5)
+    /**
+     * Rotation in degrees.
+     */
+    public val angle = new ConfigurableAttribute("angle", 0)
+    /**
+     * Offset that is added to the angle
+     */
+    public val offsetAngle = new ConfigurableAttribute("offset", 0)
+    /** 
+     * The relative anchor point along the x axis. Default is centered. 
+     */
+    public val anchorX = new ConfigurableAttribute("anchorX", 0.5)
+    /**
+     * The relative anchor point along the y axis. Default is centered.
+     */
+    public val anchorY = new ConfigurableAttribute("anchorY", 0.5)
     
+    /**
+     * {@inheritDoc}
+     */
     new() {
+        initializeAttributes
     }
     
-    new(String svgElementId, Animation animation) {
-        super(svgElementId, animation)
-        initialize
-    }
-    
+    /**
+     * {@inheritDoc}
+     */
     override getName() {
         return "rotate"
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override doApply(DataPool pool, Element elem) {
         // Compute position
         if(elem instanceof SVGLocatable) {
@@ -46,9 +69,10 @@ class RotateAnimation extends AnimationHandler {
             val SVGLocatable locatable = elem as SVGLocatable
             val box = locatable.getBBox()
             // Set new transform
-            val rotationCenterX = box.x+anchorX.floatValue*box.width
-            val rotationCenterY = box.y+anchorY.floatValue*box.width
-            var rotation =  angle.floatValue + "," + rotationCenterX + "," + rotationCenterY
+            val rotationCenterX = box.x + anchorX.floatValue * box.width
+            val rotationCenterY = box.y + anchorY.floatValue * box.height
+            val angle = angle.floatValue + offsetAngle.floatValue
+            var rotation =  angle + "," + rotationCenterX + "," + rotationCenterY
             elem.setAttributeFunction("transform", "rotate", rotation)
         } else {
             throw new Exception("The element '"+svgElementId+"' is not an SVGLocatable.")

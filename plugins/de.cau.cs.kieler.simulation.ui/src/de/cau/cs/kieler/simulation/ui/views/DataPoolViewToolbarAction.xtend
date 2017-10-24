@@ -16,17 +16,34 @@ import de.cau.cs.kieler.simulation.ui.SimulationUiPlugin
 import org.eclipse.jface.action.Action
 
 /**
+ * Base class for data pool toolbar actions.
+ * Provides a constructor to set an image for the action from the plugin's icon directory.
+ * 
  * @author aas
  *
  */
 class DataPoolViewToolbarAction extends Action {
+    /**
+     * The name of the image file that should be used for this action.
+     */
     String imageName
     
+    /**
+     * Constructor
+     * 
+     * @param title The action's title
+     * @param imageName The name of the image file for this action. The file must be in the icon directory.
+     */
     new(String title, String imageName) {
         super(title)
         this.imageName = imageName
     }
     
+    /**
+     * Returns the image from the icon directory if it is set.
+     * 
+     * {@inheritDoc}
+     */
     override getImageDescriptor() {
         if(imageName == null) {
             return null

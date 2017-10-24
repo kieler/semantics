@@ -29,7 +29,7 @@ public abstract class AbstractKiBuildSyntacticSequencer extends AbstractSyntacti
 	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_4_0__p;
 	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a;
 	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__p;
-	protected AbstractElementAlias match_AttributeMapping_ColonKeyword_1_2_0_q;
+	protected AbstractElementAlias match_AttributeMapping_ColonKeyword_2_2_0_q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
@@ -41,7 +41,7 @@ public abstract class AbstractKiBuildSyntacticSequencer extends AbstractSyntacti
 		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_4_0__p = new AlternativeAlias(true, false, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()));
 		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a = new GroupAlias(true, true, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()));
 		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__p = new GroupAlias(true, false, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()));
-		match_AttributeMapping_ColonKeyword_1_2_0_q = new TokenAlias(false, true, grammarAccess.getAttributeMappingAccess().getColonKeyword_1_2_0());
+		match_AttributeMapping_ColonKeyword_2_2_0_q = new TokenAlias(false, true, grammarAccess.getAttributeMappingAccess().getColonKeyword_2_2_0());
 	}
 	
 	@Override
@@ -70,8 +70,8 @@ public abstract class AbstractKiBuildSyntacticSequencer extends AbstractSyntacti
 				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__p.equals(syntax))
 				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__p(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_AttributeMapping_ColonKeyword_1_2_0_q.equals(syntax))
-				emit_AttributeMapping_ColonKeyword_1_2_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_AttributeMapping_ColonKeyword_2_2_0_q.equals(syntax))
+				emit_AttributeMapping_ColonKeyword_2_2_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
@@ -191,9 +191,10 @@ public abstract class AbstractKiBuildSyntacticSequencer extends AbstractSyntacti
 	 *     ':'?
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     arrayIndex=ArrayIndex (ambiguity) '{' attributes+=AttributeMapping
 	 *     name=ID (ambiguity) '{' attributes+=AttributeMapping
 	 */
-	protected void emit_AttributeMapping_ColonKeyword_1_2_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_AttributeMapping_ColonKeyword_2_2_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

@@ -1,4 +1,4 @@
-scchart ${name} {
+scchart ${file_basename} {
 
   input bool I
   output int O

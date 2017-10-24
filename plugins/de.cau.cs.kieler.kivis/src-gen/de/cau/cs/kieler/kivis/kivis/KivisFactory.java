@@ -68,6 +68,15 @@ public interface KivisFactory extends EFactory
   Action createAction();
 
   /**
+   * Returns a new object of class '<em>Function</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Function</em>'.
+   * @generated
+   */
+  Function createFunction();
+
+  /**
    * Returns a new object of class '<em>Animation</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -149,13 +158,13 @@ public interface KivisFactory extends EFactory
   ModelReference createModelReference();
 
   /**
-   * Returns a new object of class '<em>Boolean Operator</em>'.
+   * Returns a new object of class '<em>Function Parameter</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Boolean Operator</em>'.
+   * @return a new object of class '<em>Function Parameter</em>'.
    * @generated
    */
-  BooleanOperator createBooleanOperator();
+  FunctionParameter createFunctionParameter();
 
   /**
    * Returns a new object of class '<em>And Expression</em>'.

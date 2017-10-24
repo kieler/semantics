@@ -1,8 +1,0 @@
-scchart ${name} {
-
-  input bool I;
-  output int O;
-
-  initial state init
-    --> init with I / O++;
-}

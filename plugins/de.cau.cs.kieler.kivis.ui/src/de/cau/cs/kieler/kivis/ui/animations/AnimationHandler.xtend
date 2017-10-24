@@ -12,53 +12,111 @@
  */
 package de.cau.cs.kieler.kivis.ui.animations
 
+import de.cau.cs.kieler.kivis.animations.IAnimationHandler
 import de.cau.cs.kieler.kivis.extensions.KiVisExtensions
 import de.cau.cs.kieler.kivis.kivis.Animation
 import de.cau.cs.kieler.kivis.kivis.AttributeMapping
 import de.cau.cs.kieler.kivis.ui.svg.SVGExtensions
 import de.cau.cs.kieler.kivis.ui.views.KiVisView
-import de.cau.cs.kieler.prom.build.AttributeExtensions
-import de.cau.cs.kieler.prom.build.Configurable
-import de.cau.cs.kieler.prom.build.ConfigurableAttribute
+import de.cau.cs.kieler.prom.configurable.AttributeExtensions
+import de.cau.cs.kieler.prom.configurable.Configurable
+import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
+import de.cau.cs.kieler.simulation.core.Variable
 import java.util.List
+import org.eclipse.xtend.lib.annotations.Accessors
 import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGDocument
-import de.cau.cs.kieler.kivis.animation.IAnimationHandler
-import de.cau.cs.kieler.simulation.core.Variable
-import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.prom.kibuild.TextValue
 
 /**
+ * Base class for configurable animations of SVG elements.
+ * 
  * @author aas
  *
  */
 abstract class AnimationHandler extends Configurable implements IAnimationHandler {
     
-    public val recursive = new ConfigurableAttribute("recursive", false)
-    
-    @Accessors(PUBLIC_GETTER)
-    protected var Variable variable
-    protected var Object variableValue
-    protected var String svgElementId
-    protected var Animation animation
-    protected var DataPool lastPool
-    
-    protected val List<ConfigurableAttribute> attributes = newArrayList
-    
-    abstract public def String getName()
-    abstract protected def void doApply(DataPool pool, Element element)
-    
     protected static extension AttributeExtensions attributeExtensions = new AttributeExtensions 
     protected static extension KiVisExtensions kivisExtensions = new KiVisExtensions
     protected static extension SVGExtensions svgExtensions = new SVGExtensions
     
+    
+    /**
+     * If this attribute is true, the animation is also applied recursively to all child elements in the SVG document.
+     */
+    public val recursive = new ConfigurableAttribute("recursive", false)
+    
+    /**
+     * The configurable attributes of this instance.
+     */
+    protected var List<ConfigurableAttribute> attributes = newArrayList
+    
+    /**
+     * The id of the SVG element that should be animated.
+     */
+    protected var String svgElementId
+    
+    /**
+     * The SVG element that should be animated.
+     */
+    protected var Element element
+    
+    /**
+     * The configuration of this animation from the kivis grammar. 
+     */
+    protected var Animation animation
+    
+    /**
+     * The variable in the data pool that is used in this animation.
+     */
+    @Accessors(PUBLIC_GETTER)
+    protected var Variable variable
+    
+    /**
+     * The value of the variable that is used in this animation.
+     */
+    protected var Object variableValue
+    
+    /**
+     * Is the animation active for the current pool?
+     */
+    protected var boolean isActive
+    
+    /**
+     * The current data pool to be animated.
+     */
+    protected var DataPool pool
+    
+    /**
+     * The name of the animation.
+     */
+    abstract public def String getName()
+    
+    /**
+     * Performs the actual animation of the SVG element to represent the state of the data pool.
+     */
+    abstract protected def void doApply(DataPool pool, Element element)
+    
+    /**
+     * Constructor
+     */
     public new() {
     }
     
-    public new(String svgElementId, Animation animation) {
-        this()
-        this.svgElementId = svgElementId
+    /**
+     * Initializes this instance.
+     * 
+     * @param svgElementId The id of the SVG element that should be animated
+     * @param animation The configuration of the animation from the grammar
+     */
+    public def void initialize(String svgElementId, Animation animation) {
         this.animation = animation
+        this.svgElementId = svgElementId
+        this.element = findElement(svgElementId)
+        if(element == null) {
+            throw new IllegalArgumentException("SVG element '"+svgElementId+"' does not exist")
+        }
     }
     
     /**
@@ -68,28 +126,28 @@ abstract class AnimationHandler extends Configurable implements IAnimationHandle
      * to ensure that all fields are initialized
      * and because Java reflection includes the fields of superclasses.
      */
-    protected def void initialize() {
+    protected def void initializeAttributes() {
         // Collect attributes via reflection
-        attributes.clear
-        for(f : class.fields) {
-            if(f.type == typeof(ConfigurableAttribute)) {
-                val attr = f.get(this) as ConfigurableAttribute
-                if(attr != null) {
-                    attributes.add(attr)
-                }
-            }
-        }
+        attributes = this.getConfigurableAttributes()
     }
     
+    /**
+     * Performs the animation for the given data pool.
+     * 
+     * @param pool The pool
+     */
     public override apply(DataPool pool) {
-        // Update the svg with the new pool
+        this.pool = pool
+        // Get the variable and variable value that is relevant for this animation
         variable = getVariable(animation.variable, pool)
-        variableValue = getVariableValue(pool)
-        if(isActive(pool)) {
-            // Update attributes
+        variableValue = getVariableValue(animation.variable, pool, true)
+        // Check if this animation should be performed
+        isActive = isActive(pool) 
+        if(isActive) {
+            // Update attribute values
             for(attributeMapping : animation.attributeMappings) {
                 val attributeName = attributeMapping.attribute
-                val attr = getAttribute(attributeName)
+                val attr = attributes.getAttribute(attributeName)
                 if(attr != null) {
                     val newValue = getMappedValue(attributeMapping, variableValue)
                     if(newValue != null) {
@@ -109,7 +167,6 @@ abstract class AnimationHandler extends Configurable implements IAnimationHandle
                 }
             }
             // Apply
-            val element = findElement(true)
             if(recursive == null || !recursive.boolValue) {
                 // Don't apply this animation recursively
                 doApply(pool, element)
@@ -122,68 +179,77 @@ abstract class AnimationHandler extends Configurable implements IAnimationHandle
             }
         }
     }
-    
-    private def SVGDocument getSVGDocument() {
-         return KiVisView.instance?.canvas?.svgCanvas?.getSVGDocument();
-    }
-    
-    protected def Element findElement(String id) {
-        return SVGDocument.getElementById(id)
-    }
-    
-    protected def Element findElement() {
-        return SVGDocument.getElementById(svgElementId)
-    }
-    
-    protected def Element findElement(boolean mustExist) {
-        val elem = findElement
-        if(elem != null) {
-            return elem
-        } else {
-            throw new IllegalArgumentException("SVG element '"+svgElementId+"' does not exist")
-        }
-    }
-    
-    protected def Object getVariableValue(DataPool pool) {
-        return getVariableValue(animation.variable, pool, true)
-    }
-    
+
+    /**
+     * Maps the given value using the attribute mapping to the target value.
+     * 
+     * @param attributeMapping The mapping
+     * @param value The source value for the mapping.
+     * @return the mapped value
+     */
     protected def Object getMappedValue(AttributeMapping attributeMapping, Object value) {
-        if(attributeMapping == null) {
-            return null
-        }
-        
-        val literal = attributeMapping.literal
-        if(literal != null) {
+        if(attributeMapping.currentValue) {
+            return value
+        } else if(attributeMapping.literal != null) {
+            val literal = attributeMapping.literal
+            // Check if the literal is actually a variable reference
+            if(literal.value instanceof TextValue) {
+                val String text = (literal.value as TextValue).value
+                if(text != "true" && text != "false") {
+                    try {
+                        val variableValue = pool.getVariableValue(text, true)
+                        return variableValue
+                    } catch (Exception e) {
+                        // The text value does not seem to be a variable reference.
+                    }
+                }
+            }
+            // If all values are mapped to a constant, return this constant value.
             return literal.primitiveValue
         } else {
+            // Find a mapping where the input value matches the source domain
+            // and return the new value from the target domain.
             for(mapping : attributeMapping.mappings) {
                 if(mapping.variableDomain.matches(value)) {
                     return mapping.apply(value)
-//                } else {
-//                    if(mapping.variableDomain.range != null) {
-//                        System.err.println(value + " does not match with "
-//                            + mapping.variableDomain.range.from.primitiveValue 
-//                            + "-"
-//                            + mapping.variableDomain.range.to.primitiveValue)
-//                    } else {
-//                        System.err.println(value + " does not match with "+ mapping.variableDomain.value.primitiveValue)
-//                    } 
                 }
             }
             return null
         }
     }
     
-    protected def ConfigurableAttribute getAttribute(String name) {
-        return attributes.getAttribute(name)
-    }
-    
-    protected def boolean isActive(DataPool pool) {
+    /**
+     * Checks if the animation is active in the given pool.
+     * 
+     * @param pool The pool
+     * @return true if the animation should be performed for this data pool
+     */
+    private def boolean isActive(DataPool pool) {
+        // Without condition, the animation is always active,
+        // otherwise evaluate the condition using the variables in the pool.
         if(animation.condition == null) {
             return true
         } else {
             return animation.condition.eval(pool)
         }
+    }
+    
+    /**
+     * Returns the SVG Document that is currently loaded in the KiVis View.
+     * 
+     * @return the SVG Document that is currently loaded in the KiVis View.
+     */
+    private def SVGDocument getSVGDocument() {
+         return KiVisView.instance?.SVGDocument
+    }
+    
+    /**
+     * Searches the SVG document for an element with the given id.
+     * 
+     * @param id The id
+     * @return the svg element with the matching id or null if there is none
+     */
+    protected def Element findElement(String id) {
+        return SVGDocument.getElementById(id)
     }
 }

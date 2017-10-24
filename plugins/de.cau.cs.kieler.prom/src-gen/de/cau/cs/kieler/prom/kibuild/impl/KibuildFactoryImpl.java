@@ -71,6 +71,7 @@ public class KibuildFactoryImpl extends EFactoryImpl implements KibuildFactory
       case KibuildPackage.TEMPLATE_PROCESSOR: return createTemplateProcessor();
       case KibuildPackage.ATTRIBUTE_MAPPING: return createAttributeMapping();
       case KibuildPackage.LITERAL: return createLiteral();
+      case KibuildPackage.ARRAY_INDEX: return createArrayIndex();
       case KibuildPackage.SIGNED_FLOAT: return createSignedFloat();
       case KibuildPackage.SIGNED_INT: return createSignedInt();
       case KibuildPackage.TEXT_VALUE: return createTextValue();
@@ -180,6 +181,17 @@ public class KibuildFactoryImpl extends EFactoryImpl implements KibuildFactory
   {
     LiteralImpl literal = new LiteralImpl();
     return literal;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ArrayIndex createArrayIndex()
+  {
+    ArrayIndexImpl arrayIndex = new ArrayIndexImpl();
+    return arrayIndex;
   }
 
   /**

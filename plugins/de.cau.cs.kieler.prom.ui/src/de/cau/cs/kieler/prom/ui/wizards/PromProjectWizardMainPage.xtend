@@ -13,8 +13,8 @@
  */
 package de.cau.cs.kieler.prom.ui.wizards
 
-import de.cau.cs.kieler.prom.data.EnvironmentData
-import de.cau.cs.kieler.prom.environments.PromEnvironmentsInitializer
+import de.cau.cs.kieler.prom.drafts.ProjectDraftData
+import de.cau.cs.kieler.prom.drafts.PromProjectDrafts
 import de.cau.cs.kieler.prom.ui.PromUIPlugin
 import de.cau.cs.kieler.prom.ui.UIUtil
 import java.util.List
@@ -29,22 +29,21 @@ import org.eclipse.swt.widgets.Composite
 
 /**
  * The main page for the project wizard.
- * It contains a control to select the environment to use
- * and the wrapper code snippets to import in the new project.
+ * It contains a control to select the project draft to use.
  * 
  * @author aas
  */
 class PromProjectWizardMainPage extends WizardPage {
 
     /**
-     * The environments loaded from this plugins preference store.
+     * The project drafts loaded from this plugins preference store.
      */
-    private List<EnvironmentData> environments
+    private List<ProjectDraftData> drafts
 
     /**
-     * The combobox with the environments.
+     * The combobox with the project drafts.
      */
-    private ComboViewer environmentsCombo
+    private ComboViewer draftsCombo
 
     /**
      * Checkbox to specify if a model file (e.g. SCT) should be created and initialized.
@@ -52,7 +51,7 @@ class PromProjectWizardMainPage extends WizardPage {
     private Button createModelFileCheckbox
     
     /**
-     * Checkbox to specify the initial resources of the environment should be created.
+     * Checkbox to specify the initial resources of the project draft that should be created.
      */
     private Button createInitialResourcesCheckbox
     
@@ -65,7 +64,7 @@ class PromProjectWizardMainPage extends WizardPage {
         super(pageName)
 
         title = pageName
-        description = "Set the environment for the project."
+        description = "Select the Project Draft to be used."
     }
 
     /**
@@ -78,42 +77,42 @@ class PromProjectWizardMainPage extends WizardPage {
         comp.setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
         comp.setLayout(new GridLayout())
 
-        loadEnvironments()
+        loadProjectDrafts()
 
-        createEnvironmentsComponent(comp)
+        createProjectDraftComponent(comp)
         createProjectInitializationComponent(comp)
         
         pageComplete = true
     }
 
     /**
-     * Loads the environments from this plugin's preference store. 
+     * Loads the project drafts from this plugin's preference store. 
      */
-    private def void loadEnvironments() {
+    private def void loadProjectDrafts() {
         val store = PromUIPlugin.^default.preferenceStore
 
-        // It might be that on a new installation there are no environments initialized.
+        // It might be that on a new installation there are no project drafts initialized.
         // So we do it here manually.
-        if (EnvironmentData.isPreferenceStoreEmpty(store))
-            PromEnvironmentsInitializer.initializeDefaultEnvironments()
+        if (ProjectDraftData.isPreferenceStoreEmpty(store))
+            PromProjectDrafts.initializeDefaults()
 
-        // Load environments from store
-        environments = EnvironmentData.loadAllFromPreferenceStore(store)
+        // Load project drafts from store
+        drafts = ProjectDraftData.loadAllFromPreferenceStore(store)
     }
 
     /**
-     * Creates a group with the environments combobox.
+     * Creates a group with the project drafts combobox.
      * 
      * @param parent The parent compisite
      */
-    private def void createEnvironmentsComponent(Composite parent) {
-        val group = UIUtil.createGroup(parent, "Environment", 1)
+    private def void createProjectDraftComponent(Composite parent) {
+        val group = UIUtil.createGroup(parent, "Project Draft", 1)
 
-        environmentsCombo = UIUtil.createEnvironmentsCombo(group, environments)
+        draftsCombo = UIUtil.createProjectDraftCombo(group, drafts)
 
         // Information label
-        UIUtil.createLabel(group, "The environment specifies the following project wizard\n" +
-            "and is used to initialize launches and resources.\nEnvironments are configured in the preferences.")
+        UIUtil.createLabel(group, "A Project Draft specifies the following project wizard\n" +
+            "and is used to initialize resources.\nThey are configured in the preferences.")
     }
 
     /**
@@ -130,31 +129,31 @@ class PromProjectWizardMainPage extends WizardPage {
 
         // Initial resources components
         createInitialResourcesCheckbox = UIUtil.createCheckButton(group, "Create initial resources", true);
-        createInitialResourcesCheckbox.toolTipText = "Initial resources specified in the environment"
+        createInitialResourcesCheckbox.toolTipText = "Initial resources specified in the Project Draft"
             + " will be imported to the new project."
     }
     
     /**
-     * @return the selected environment in the combobox.
+     * @return the selected project draft in the combobox.
      */
-    public def EnvironmentData getSelectedEnvironment() {
-        val selection = environmentsCombo.getSelection();
+    public def ProjectDraftData getSelectedProjectDraft() {
+        val selection = draftsCombo.getSelection();
         if (!selection.isEmpty()) {
             val structuredSelection = selection as IStructuredSelection
-            return structuredSelection.getFirstElement() as EnvironmentData
+            return structuredSelection.getFirstElement() as ProjectDraftData
         } else {
             return null
         }
     }
 
     /**
-     * @return the associated project wizard class name of the selected environment in the combobox<br />
-     *         or an empty string if there is no environment selected. 
+     * @return the associated project wizard class name of the selected project draft in the combobox<br />
+     *         or an empty string if there is no project draft selected. 
      */
-    public def String getEnvironmentWizardClassName() {
-        val env = getSelectedEnvironment()
+    public def String getWizardClassName() {
+        val env = getSelectedProjectDraft()
         if (env != null) {
-            return env.getAssociatedProjectWizardClass
+            return env.associatedProjectWizardClass
         } else {
             return ""
         }
@@ -177,5 +176,4 @@ class PromProjectWizardMainPage extends WizardPage {
     public def boolean isCreateInitialResources(){
         return createInitialResourcesCheckbox.selection
     }
-
 }

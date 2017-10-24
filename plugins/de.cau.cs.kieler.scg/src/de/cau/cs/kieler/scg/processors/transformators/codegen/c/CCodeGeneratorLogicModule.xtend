@@ -69,13 +69,13 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     protected val conditionalStack = <Conditional> newLinkedList
     
     override configure(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
-        Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, SCGCodeGeneratorModule parent
+        Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, String codeFilename, SCGCodeGeneratorModule parent
     ) {
-        super.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, parent)
+        super.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename, parent)
         
-        struct = (parent as CCodeGeneratorModule).struct
-        reset = (parent as CCodeGeneratorModule).reset
-        tick = (parent as CCodeGeneratorModule).tick
+        struct = (parent as CCodeGeneratorModule).struct as CCodeGeneratorStructModule
+        reset = (parent as CCodeGeneratorModule).reset as CCodeGeneratorResetModule
+        tick = (parent as CCodeGeneratorModule).tick as CCodeGeneratorTickModule
         
         return this
     }
@@ -88,10 +88,15 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     override generateInit() {
         preVariables.clear
         
+        indent(0)
         code.append("void ").append(getName)
         code.append("(")
         code.append(struct.getName).append("* ").append(struct.getVariableName)
-        code.append(") {\n")
+        code.append(")")
+        
+        struct.forwardDeclarations.append(code).append(";\n")
+        
+        code.append(" {\n")
     }
     
     override generate() {
@@ -113,6 +118,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     }
     
     override generateDone() {
+        indent(0)
         code.append("}\n")
     }
     
@@ -133,7 +139,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         }
         
         // Add the assignment.
-        valuedObjectPrefix = struct.getVariableName + "->"
+        valuedObjectPrefix = struct.getVariableName + struct.separator
         prePrefix = CCodeGeneratorStructModule.STRUCT_PRE_PREFIX
         if (assignment.valuedObject.isArray && assignment.expression instanceof VectorValue) {
             for (asgn : assignment.splitAssignment) {
@@ -156,7 +162,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     }
         
     protected def dispatch void generate(Conditional conditional, Deque<Node> nodes) {
-        valuedObjectPrefix = struct.getVariableName + "->"
+        valuedObjectPrefix = struct.getVariableName + struct.separator
         prePrefix = CCodeGeneratorStructModule.STRUCT_PRE_PREFIX
 
         indent(conditionalStack.size + 1)
@@ -220,13 +226,13 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         struct.code.append(";\n")
         
         // Add the initialization in the reset function.
-        reset.code.append(indentation).append(struct.getVariableName).append("->").append(name).append(" = 0;\n")
+        reset.code.append(indentation).append(struct.getVariableName).append(struct.separator).append(name).append(" = 0;\n")
         
         // Add the "register save" in the tick function.
         prePrefix = "_"
         tick.code.append(indentation)
-        tick.code.append(struct.getVariableName).append("->").append(name).append(" = ")
-        tick.code.append(struct.getVariableName).append("->").append(operatorExpression.serializeHR).append(";\n")
+        tick.code.append(struct.getVariableName).append(struct.separator).append(name).append(" = ")
+        tick.code.append(struct.getVariableName).append(struct.separator).append(operatorExpression.serializeHR).append(";\n")
     }
     
     protected def List<Assignment> splitAssignment(Assignment assignment) {

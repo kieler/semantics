@@ -22,18 +22,42 @@ import org.eclipse.core.runtime.IPath
 import org.eclipse.ui.dialogs.SaveAsDialog
 
 /**
+ * Base class for toolbar action to save the complete simulation run to a file format. 
+ * 
  * @author aas
  *
  */
 abstract class SaveSimulationAction extends DataPoolViewToolbarAction {
+    /**
+     * The content of the file to be created for the given list of data pools.
+     * 
+     * @param history The history of data pools in this simulation run
+     * @return the content of the file to be created
+     */
     protected def String getFileContent(List<DataPool> history)
+    
+    /**
+     * Returns the file extension of the file to be created.
+     * 
+     * @return the file extension of the file to be created
+     */
     protected def String getFileExtension()
     
-    
+    /**
+     * Constructor
+     * 
+     * @param title The title of this action
+     * @param imageName The name of an image file for this action. The image must be in the plugin's icons folder.
+     */
     new(String title, String imageName) {
         super(title, imageName)
     }
     
+    /**
+     * Opens a select the file in which the simulation should be saved.
+     * 
+     * @return the path of the file to be created.
+     */
     protected def IPath openSaveAsDialog() {
         val dialog = new SaveAsDialog(DataPoolView.instance.viewer.control.shell)
         dialog.blockOnOpen = true
@@ -48,6 +72,11 @@ abstract class SaveSimulationAction extends DataPoolViewToolbarAction {
         return dialog.result
     }
     
+    /**
+     * Determines if the simulation can be saved.
+     * 
+     * @return true if the simulation can be saved, false otherwise
+     */
     protected def boolean isApplicable() {
         val simMan = SimulationManager.instance
         if(simMan == null || simMan.isStopped) {
@@ -58,6 +87,9 @@ abstract class SaveSimulationAction extends DataPoolViewToolbarAction {
         }
     }
     
+    /**
+     * Opens the save as dialog and saves the simulation to a file.
+     */
     override run() {
         val result = openSaveAsDialog()
         if(result != null) {

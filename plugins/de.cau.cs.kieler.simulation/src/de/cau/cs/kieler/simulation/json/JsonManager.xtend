@@ -16,16 +16,22 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonElement
 import com.google.gson.JsonPrimitive
+import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
 import de.cau.cs.kieler.simulation.core.NDimensionalArray
 import de.cau.cs.kieler.simulation.core.Variable
 
 /**
+ * Handles the Gson serializer and deserializer for JSON objects in the simulation.
+ * 
  * @author aas
  *
  */
 class JsonManager {
     
+    /**
+     * The GSON object for in the simulation.
+     */
     public static Gson GSON = createGson();
     
     /**
@@ -34,12 +40,19 @@ class JsonManager {
     private static def Gson createGson() {
         val builder = new GsonBuilder()
         builder.excludeFieldsWithoutExposeAnnotation();
+        builder.registerTypeAdapter(typeof(DataPool), new DataPoolSerializer())
         builder.registerTypeAdapter(typeof(Model), new ModelSerializer())
         builder.registerTypeAdapter(typeof(Variable), new VariableSerializer())
         builder.registerTypeAdapter(typeof(NDimensionalArray), new NDimensionalArraySerializer())
         return builder.create();
     }
     
+    /**
+     * Converts a primitive in JSON to its Java representation.
+     * 
+     * @param json The element to be converted to Java
+     * @return the Java representation for the json element
+     */
     public static def Object jsonAsObject(JsonElement json) {
         if (json instanceof JsonPrimitive) {
             if (json.isBoolean) {

@@ -100,6 +100,11 @@ public class KivisAdapterFactory extends AdapterFactoryImpl
         return createActionAdapter();
       }
       @Override
+      public Adapter caseFunction(Function object)
+      {
+        return createFunctionAdapter();
+      }
+      @Override
       public Adapter caseAnimation(Animation object)
       {
         return createAnimationAdapter();
@@ -145,9 +150,9 @@ public class KivisAdapterFactory extends AdapterFactoryImpl
         return createModelReferenceAdapter();
       }
       @Override
-      public Adapter caseBooleanOperator(BooleanOperator object)
+      public Adapter caseFunctionParameter(FunctionParameter object)
       {
-        return createBooleanOperatorAdapter();
+        return createFunctionParameterAdapter();
       }
       @Override
       public Adapter caseAndExpression(AndExpression object)
@@ -252,6 +257,21 @@ public class KivisAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createActionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kivis.kivis.Function <em>Function</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.kivis.kivis.Function
+   * @generated
+   */
+  public Adapter createFunctionAdapter()
   {
     return null;
   }
@@ -392,16 +412,16 @@ public class KivisAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kivis.kivis.BooleanOperator <em>Boolean Operator</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kivis.kivis.FunctionParameter <em>Function Parameter</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.kivis.kivis.BooleanOperator
+   * @see de.cau.cs.kieler.kivis.kivis.FunctionParameter
    * @generated
    */
-  public Adapter createBooleanOperatorAdapter()
+  public Adapter createFunctionParameterAdapter()
   {
     return null;
   }

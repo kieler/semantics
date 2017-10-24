@@ -254,13 +254,22 @@ public interface KivisPackage extends EPackage
   int ACTION__VALUE = 1;
 
   /**
+   * The feature id for the '<em><b>Function</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACTION__FUNCTION = 2;
+
+  /**
    * The feature id for the '<em><b>Operation</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ACTION__OPERATION = 2;
+  int ACTION__OPERATION = 3;
 
   /**
    * The number of structural features of the '<em>Action</em>' class.
@@ -269,7 +278,44 @@ public interface KivisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ACTION_FEATURE_COUNT = 3;
+  int ACTION_FEATURE_COUNT = 4;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.FunctionImpl <em>Function</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.kivis.kivis.impl.FunctionImpl
+   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getFunction()
+   * @generated
+   */
+  int FUNCTION = 5;
+
+  /**
+   * The feature id for the '<em><b>Function Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FUNCTION__FUNCTION_NAME = 0;
+
+  /**
+   * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FUNCTION__PARAMETERS = 1;
+
+  /**
+   * The number of structural features of the '<em>Function</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FUNCTION_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.AnimationImpl <em>Animation</em>}' class.
@@ -279,7 +325,7 @@ public interface KivisPackage extends EPackage
    * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getAnimation()
    * @generated
    */
-  int ANIMATION = 5;
+  int ANIMATION = 6;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -334,7 +380,7 @@ public interface KivisPackage extends EPackage
    * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getAttributeMapping()
    * @generated
    */
-  int ATTRIBUTE_MAPPING = 6;
+  int ATTRIBUTE_MAPPING = 7;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -344,6 +390,15 @@ public interface KivisPackage extends EPackage
    * @ordered
    */
   int ATTRIBUTE_MAPPING__NAME = KibuildPackage.ATTRIBUTE_MAPPING__NAME;
+
+  /**
+   * The feature id for the '<em><b>Array Index</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE_MAPPING__ARRAY_INDEX = KibuildPackage.ATTRIBUTE_MAPPING__ARRAY_INDEX;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' containment reference.
@@ -382,13 +437,22 @@ public interface KivisPackage extends EPackage
   int ATTRIBUTE_MAPPING__ATTRIBUTE = KibuildPackage.ATTRIBUTE_MAPPING_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Current Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE_MAPPING__CURRENT_VALUE = KibuildPackage.ATTRIBUTE_MAPPING_FEATURE_COUNT + 1;
+
+  /**
    * The feature id for the '<em><b>Literal</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ATTRIBUTE_MAPPING__LITERAL = KibuildPackage.ATTRIBUTE_MAPPING_FEATURE_COUNT + 1;
+  int ATTRIBUTE_MAPPING__LITERAL = KibuildPackage.ATTRIBUTE_MAPPING_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Mappings</b></em>' containment reference list.
@@ -397,7 +461,7 @@ public interface KivisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ATTRIBUTE_MAPPING__MAPPINGS = KibuildPackage.ATTRIBUTE_MAPPING_FEATURE_COUNT + 2;
+  int ATTRIBUTE_MAPPING__MAPPINGS = KibuildPackage.ATTRIBUTE_MAPPING_FEATURE_COUNT + 3;
 
   /**
    * The number of structural features of the '<em>Attribute Mapping</em>' class.
@@ -406,7 +470,7 @@ public interface KivisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ATTRIBUTE_MAPPING_FEATURE_COUNT = KibuildPackage.ATTRIBUTE_MAPPING_FEATURE_COUNT + 3;
+  int ATTRIBUTE_MAPPING_FEATURE_COUNT = KibuildPackage.ATTRIBUTE_MAPPING_FEATURE_COUNT + 4;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.MappingImpl <em>Mapping</em>}' class.
@@ -416,7 +480,7 @@ public interface KivisPackage extends EPackage
    * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getMapping()
    * @generated
    */
-  int MAPPING = 7;
+  int MAPPING = 8;
 
   /**
    * The feature id for the '<em><b>Variable Domain</b></em>' containment reference.
@@ -453,7 +517,7 @@ public interface KivisPackage extends EPackage
    * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getCondition()
    * @generated
    */
-  int CONDITION = 8;
+  int CONDITION = 9;
 
   /**
    * The number of structural features of the '<em>Condition</em>' class.
@@ -472,7 +536,7 @@ public interface KivisPackage extends EPackage
    * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getComparison()
    * @generated
    */
-  int COMPARISON = 9;
+  int COMPARISON = 10;
 
   /**
    * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -518,7 +582,16 @@ public interface KivisPackage extends EPackage
    * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getDomain()
    * @generated
    */
-  int DOMAIN = 10;
+  int DOMAIN = 11;
+
+  /**
+   * The feature id for the '<em><b>Other Values</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DOMAIN__OTHER_VALUES = 0;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' containment reference.
@@ -527,7 +600,7 @@ public interface KivisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DOMAIN__VALUE = 0;
+  int DOMAIN__VALUE = 1;
 
   /**
    * The feature id for the '<em><b>Range</b></em>' containment reference.
@@ -536,7 +609,16 @@ public interface KivisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DOMAIN__RANGE = 1;
+  int DOMAIN__RANGE = 2;
+
+  /**
+   * The feature id for the '<em><b>Current Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DOMAIN__CURRENT_VALUE = 3;
 
   /**
    * The number of structural features of the '<em>Domain</em>' class.
@@ -545,7 +627,7 @@ public interface KivisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DOMAIN_FEATURE_COUNT = 2;
+  int DOMAIN_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.IntervalImpl <em>Interval</em>}' class.
@@ -555,7 +637,7 @@ public interface KivisPackage extends EPackage
    * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getInterval()
    * @generated
    */
-  int INTERVAL = 11;
+  int INTERVAL = 12;
 
   /**
    * The feature id for the '<em><b>From</b></em>' containment reference.
@@ -592,7 +674,7 @@ public interface KivisPackage extends EPackage
    * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getVariableReference()
    * @generated
    */
-  int VARIABLE_REFERENCE = 12;
+  int VARIABLE_REFERENCE = 13;
 
   /**
    * The feature id for the '<em><b>Model</b></em>' containment reference.
@@ -613,13 +695,13 @@ public interface KivisPackage extends EPackage
   int VARIABLE_REFERENCE__NAME = 1;
 
   /**
-   * The feature id for the '<em><b>Indices</b></em>' attribute list.
+   * The feature id for the '<em><b>Array Index</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VARIABLE_REFERENCE__INDICES = 2;
+  int VARIABLE_REFERENCE__ARRAY_INDEX = 2;
 
   /**
    * The number of structural features of the '<em>Variable Reference</em>' class.
@@ -638,7 +720,7 @@ public interface KivisPackage extends EPackage
    * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getModelReference()
    * @generated
    */
-  int MODEL_REFERENCE = 13;
+  int MODEL_REFERENCE = 14;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -659,32 +741,41 @@ public interface KivisPackage extends EPackage
   int MODEL_REFERENCE_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.BooleanOperatorImpl <em>Boolean Operator</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.FunctionParameterImpl <em>Function Parameter</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kivis.kivis.impl.BooleanOperatorImpl
-   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getBooleanOperator()
+   * @see de.cau.cs.kieler.kivis.kivis.impl.FunctionParameterImpl
+   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getFunctionParameter()
    * @generated
    */
-  int BOOLEAN_OPERATOR = 14;
+  int FUNCTION_PARAMETER = 15;
 
   /**
-   * The feature id for the '<em><b>AND</b></em>' attribute.
+   * The feature id for the '<em><b>Variable Reference</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int BOOLEAN_OPERATOR__AND = 0;
+  int FUNCTION_PARAMETER__VARIABLE_REFERENCE = 0;
 
   /**
-   * The number of structural features of the '<em>Boolean Operator</em>' class.
+   * The feature id for the '<em><b>Value</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int BOOLEAN_OPERATOR_FEATURE_COUNT = 1;
+  int FUNCTION_PARAMETER__VALUE = 1;
+
+  /**
+   * The number of structural features of the '<em>Function Parameter</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FUNCTION_PARAMETER_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.AndExpressionImpl <em>And Expression</em>}' class.
@@ -694,7 +785,7 @@ public interface KivisPackage extends EPackage
    * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getAndExpression()
    * @generated
    */
-  int AND_EXPRESSION = 15;
+  int AND_EXPRESSION = 16;
 
   /**
    * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -740,7 +831,7 @@ public interface KivisPackage extends EPackage
    * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getDOMEvent()
    * @generated
    */
-  int DOM_EVENT = 16;
+  int DOM_EVENT = 17;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.SimulationOperation <em>Simulation Operation</em>}' enum.
@@ -750,7 +841,7 @@ public interface KivisPackage extends EPackage
    * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getSimulationOperation()
    * @generated
    */
-  int SIMULATION_OPERATION = 17;
+  int SIMULATION_OPERATION = 18;
 
 
   /**
@@ -936,6 +1027,17 @@ public interface KivisPackage extends EPackage
   EReference getAction_Value();
 
   /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.Action#getFunction <em>Function</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Function</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Action#getFunction()
+   * @see #getAction()
+   * @generated
+   */
+  EReference getAction_Function();
+
+  /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Action#getOperation <em>Operation</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -945,6 +1047,38 @@ public interface KivisPackage extends EPackage
    * @generated
    */
   EAttribute getAction_Operation();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.Function <em>Function</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Function</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Function
+   * @generated
+   */
+  EClass getFunction();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Function#getFunctionName <em>Function Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Function Name</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Function#getFunctionName()
+   * @see #getFunction()
+   * @generated
+   */
+  EAttribute getFunction_FunctionName();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kivis.kivis.Function#getParameters <em>Parameters</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Parameters</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Function#getParameters()
+   * @see #getFunction()
+   * @generated
+   */
+  EReference getFunction_Parameters();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.Animation <em>Animation</em>}'.
@@ -1020,6 +1154,17 @@ public interface KivisPackage extends EPackage
    * @generated
    */
   EAttribute getAttributeMapping_Attribute();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.AttributeMapping#isCurrentValue <em>Current Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Current Value</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.AttributeMapping#isCurrentValue()
+   * @see #getAttributeMapping()
+   * @generated
+   */
+  EAttribute getAttributeMapping_CurrentValue();
 
   /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.AttributeMapping#getLiteral <em>Literal</em>}'.
@@ -1139,6 +1284,17 @@ public interface KivisPackage extends EPackage
   EClass getDomain();
 
   /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Domain#isOtherValues <em>Other Values</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Other Values</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Domain#isOtherValues()
+   * @see #getDomain()
+   * @generated
+   */
+  EAttribute getDomain_OtherValues();
+
+  /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.Domain#getValue <em>Value</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1159,6 +1315,17 @@ public interface KivisPackage extends EPackage
    * @generated
    */
   EReference getDomain_Range();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Domain#isCurrentValue <em>Current Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Current Value</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Domain#isCurrentValue()
+   * @see #getDomain()
+   * @generated
+   */
+  EAttribute getDomain_CurrentValue();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.Interval <em>Interval</em>}'.
@@ -1225,15 +1392,15 @@ public interface KivisPackage extends EPackage
   EAttribute getVariableReference_Name();
 
   /**
-   * Returns the meta object for the attribute list '{@link de.cau.cs.kieler.kivis.kivis.VariableReference#getIndices <em>Indices</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.VariableReference#getArrayIndex <em>Array Index</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute list '<em>Indices</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.VariableReference#getIndices()
+   * @return the meta object for the containment reference '<em>Array Index</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.VariableReference#getArrayIndex()
    * @see #getVariableReference()
    * @generated
    */
-  EAttribute getVariableReference_Indices();
+  EReference getVariableReference_ArrayIndex();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.ModelReference <em>Model Reference</em>}'.
@@ -1257,25 +1424,36 @@ public interface KivisPackage extends EPackage
   EAttribute getModelReference_Name();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.BooleanOperator <em>Boolean Operator</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.FunctionParameter <em>Function Parameter</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Boolean Operator</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.BooleanOperator
+   * @return the meta object for class '<em>Function Parameter</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.FunctionParameter
    * @generated
    */
-  EClass getBooleanOperator();
+  EClass getFunctionParameter();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.BooleanOperator#getAND <em>AND</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.FunctionParameter#getVariableReference <em>Variable Reference</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>AND</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.BooleanOperator#getAND()
-   * @see #getBooleanOperator()
+   * @return the meta object for the containment reference '<em>Variable Reference</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.FunctionParameter#getVariableReference()
+   * @see #getFunctionParameter()
    * @generated
    */
-  EAttribute getBooleanOperator_AND();
+  EReference getFunctionParameter_VariableReference();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.FunctionParameter#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Value</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.FunctionParameter#getValue()
+   * @see #getFunctionParameter()
+   * @generated
+   */
+  EReference getFunctionParameter_Value();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.AndExpression <em>And Expression</em>}'.
@@ -1510,12 +1688,46 @@ public interface KivisPackage extends EPackage
     EReference ACTION__VALUE = eINSTANCE.getAction_Value();
 
     /**
+     * The meta object literal for the '<em><b>Function</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ACTION__FUNCTION = eINSTANCE.getAction_Function();
+
+    /**
      * The meta object literal for the '<em><b>Operation</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     EAttribute ACTION__OPERATION = eINSTANCE.getAction_Operation();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.FunctionImpl <em>Function</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kivis.kivis.impl.FunctionImpl
+     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getFunction()
+     * @generated
+     */
+    EClass FUNCTION = eINSTANCE.getFunction();
+
+    /**
+     * The meta object literal for the '<em><b>Function Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute FUNCTION__FUNCTION_NAME = eINSTANCE.getFunction_FunctionName();
+
+    /**
+     * The meta object literal for the '<em><b>Parameters</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference FUNCTION__PARAMETERS = eINSTANCE.getFunction_Parameters();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.AnimationImpl <em>Animation</em>}' class.
@@ -1576,6 +1788,14 @@ public interface KivisPackage extends EPackage
      * @generated
      */
     EAttribute ATTRIBUTE_MAPPING__ATTRIBUTE = eINSTANCE.getAttributeMapping_Attribute();
+
+    /**
+     * The meta object literal for the '<em><b>Current Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ATTRIBUTE_MAPPING__CURRENT_VALUE = eINSTANCE.getAttributeMapping_CurrentValue();
 
     /**
      * The meta object literal for the '<em><b>Literal</b></em>' containment reference feature.
@@ -1674,6 +1894,14 @@ public interface KivisPackage extends EPackage
     EClass DOMAIN = eINSTANCE.getDomain();
 
     /**
+     * The meta object literal for the '<em><b>Other Values</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute DOMAIN__OTHER_VALUES = eINSTANCE.getDomain_OtherValues();
+
+    /**
      * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1688,6 +1916,14 @@ public interface KivisPackage extends EPackage
      * @generated
      */
     EReference DOMAIN__RANGE = eINSTANCE.getDomain_Range();
+
+    /**
+     * The meta object literal for the '<em><b>Current Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute DOMAIN__CURRENT_VALUE = eINSTANCE.getDomain_CurrentValue();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.IntervalImpl <em>Interval</em>}' class.
@@ -1742,12 +1978,12 @@ public interface KivisPackage extends EPackage
     EAttribute VARIABLE_REFERENCE__NAME = eINSTANCE.getVariableReference_Name();
 
     /**
-     * The meta object literal for the '<em><b>Indices</b></em>' attribute list feature.
+     * The meta object literal for the '<em><b>Array Index</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute VARIABLE_REFERENCE__INDICES = eINSTANCE.getVariableReference_Indices();
+    EReference VARIABLE_REFERENCE__ARRAY_INDEX = eINSTANCE.getVariableReference_ArrayIndex();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.ModelReferenceImpl <em>Model Reference</em>}' class.
@@ -1768,22 +2004,30 @@ public interface KivisPackage extends EPackage
     EAttribute MODEL_REFERENCE__NAME = eINSTANCE.getModelReference_Name();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.BooleanOperatorImpl <em>Boolean Operator</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.FunctionParameterImpl <em>Function Parameter</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kivis.kivis.impl.BooleanOperatorImpl
-     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getBooleanOperator()
+     * @see de.cau.cs.kieler.kivis.kivis.impl.FunctionParameterImpl
+     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getFunctionParameter()
      * @generated
      */
-    EClass BOOLEAN_OPERATOR = eINSTANCE.getBooleanOperator();
+    EClass FUNCTION_PARAMETER = eINSTANCE.getFunctionParameter();
 
     /**
-     * The meta object literal for the '<em><b>AND</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Variable Reference</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute BOOLEAN_OPERATOR__AND = eINSTANCE.getBooleanOperator_AND();
+    EReference FUNCTION_PARAMETER__VARIABLE_REFERENCE = eINSTANCE.getFunctionParameter_VariableReference();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference FUNCTION_PARAMETER__VALUE = eINSTANCE.getFunctionParameter_Value();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.AndExpressionImpl <em>And Expression</em>}' class.

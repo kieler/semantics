@@ -20,23 +20,39 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Text
 
 /**
+ * The search field contribution in the data pool view.
+ * It contains a text control.
+ * 
  * @author aas
  *
  */
 class SearchFieldContribution extends ControlContribution {
     
+    /**
+     * The text control
+     */
     var Text text
-        
-    protected new(String id) {
+    
+    /**
+     * Constructor
+     * 
+     * @param id The id of this contribution
+     */
+    new(String id) {
         super(id)
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override createControl(Composite parent) {
         text = new Text(parent, SWT.SINGLE.bitwiseOr(SWT.BORDER).bitwiseOr(SWT.SEARCH).bitwiseOr(SWT.ICON_SEARCH).bitwiseOr(SWT.ICON_CANCEL))
         text.toolTipText = "Filter for variable names"
         
         text.addModifyListener(new ModifyListener(){
-            
+            /**
+             * Sets the search term for the data pool view filter. 
+             */
             override modifyText(ModifyEvent e) {
                 if(DataPoolView.instance != null) {
                     DataPoolView.instance.filterText = text.text

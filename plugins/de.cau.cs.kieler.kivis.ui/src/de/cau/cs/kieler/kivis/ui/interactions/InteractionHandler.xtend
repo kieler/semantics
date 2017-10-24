@@ -22,22 +22,35 @@ import de.cau.cs.kieler.simulation.core.SimulationManager
 import org.w3c.dom.svg.SVGDocument
 
 /**
+ * Implementation for interactions that can be defined in the kivis configuration grammar.
+ * 
  * @author aas
  *
  */
 class InteractionHandler {
     
-    protected var Interaction interaction
-    
     protected static extension KiVisExtensions kivisExtensions = new KiVisExtensions
     protected static extension SVGExtensions svgExtensions = new SVGExtensions 
     
+    /**
+     * The interaction from the configuration grammar.
+     */
+    protected var Interaction interaction
+    
+    /**
+     * Constructor
+     * 
+     * @param interaction The interaction from the configuration grammar that should be implemented by this instance.
+     */
     new(Interaction interaction){
         this.interaction = interaction
         // Initialize listeners
         initializeListeners
     }
     
+    /**
+     * Creates an event listener in the SVG to perform actions e.g. when an SVG element is clicked. 
+     */
     private def void initializeListeners() {
         // Register event if listening for any
         val event = interaction.event 
@@ -70,12 +83,18 @@ class InteractionHandler {
         }
     }
     
-    public def void apply(DataPool pool) {
-        if(interaction.event == null) {
-            performActions
-        }
+    /**
+     * Returns true if the interaction is triggered by some event (e.g. an SVG element is clicked)
+     * 
+     * @return True if interaction is bound to an event
+     */
+    public def boolean isEventTriggered() {
+        return interaction.event != null
     }
     
+    /**
+     * Performs the actions of this instance if it is active in the current simulation pool.
+     */
     public def void performActions() {
         val pool = SimulationManager.instance?.currentPool
         if(pool != null && isActive(pool)) {
@@ -85,6 +104,12 @@ class InteractionHandler {
         }
     }
     
+    /**
+     * Evaluates the condition of this interaction in the given pool.
+     * 
+     * @param pool The pool
+     * @return true if the condition holds, false otherwise.
+     */
     public def boolean isActive(DataPool pool) {
         if(pool == null) {
             return false
@@ -96,7 +121,12 @@ class InteractionHandler {
         }
     }
     
+    /**
+     * Returns the SVG Document that is currently loaded in the KiVis View.
+     * 
+     * @return the SVG Document that is currently loaded in the KiVis View.
+     */
     private def SVGDocument getSVGDocument() {
-         return KiVisView.instance?.canvas?.svgCanvas?.getSVGDocument();
+         return KiVisView.instance?.SVGDocument
     }
 }

@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.Action#getVariable <em>Variable</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.Action#getValue <em>Value</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.Action#getFunction <em>Function</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.Action#getOperation <em>Operation</em>}</li>
  * </ul>
  *
@@ -77,6 +78,32 @@ public interface Action extends EObject
    * @generated
    */
   void setValue(Literal value);
+
+  /**
+   * Returns the value of the '<em><b>Function</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Function</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Function</em>' containment reference.
+   * @see #setFunction(Function)
+   * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getAction_Function()
+   * @model containment="true"
+   * @generated
+   */
+  Function getFunction();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.kivis.kivis.Action#getFunction <em>Function</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Function</em>' containment reference.
+   * @see #getFunction()
+   * @generated
+   */
+  void setFunction(Function value);
 
   /**
    * Returns the value of the '<em><b>Operation</b></em>' attribute.

@@ -12,26 +12,33 @@
  */
 package de.cau.cs.kieler.simulation.core
 
+import java.util.List
+
 /**
- * A data handler can read an modify data pools.
- * They are called by the simulation manager.
+ * A data handler is used to create and modify data pools.
+ * Therefore a data handler provides methods on a data pool, e.g., write or verify.
+ * These are called by the simulation manager.
  * If the simulation manager stops, the data handler is told to stop.
- * 
- * A data handler may request to call its read-method after every step of the simulation
- * to provide information to the user.
  * 
  * @author aas
  *
  */
 interface DataHandler {
     /**
-     * Read the content of the data pool.
+     * The name of this data handler.
+     * This must match the name that is used to register the handler in the extension point.
      */
-    public def void read(DataPool pool)
+    public def String getName()
+    
     /**
-     * Read the content of the data pool and modify it as desired.
+     * The operations that can be performed by this data handler.
      */
-    public def void write(DataPool pool)
+    public def List<DataPoolOperation> getOperations()
+    
+    /**
+     * Initialize everything
+     */
+    public def void initialize()
     
     /**
      * Stop everything and clean up
@@ -39,8 +46,19 @@ interface DataHandler {
     public def void stop()
     
     /**
-     * The name of this data handler.
-     * This must match the name that is used to register the handler in the extension point.
+     * Searches for the operation with the given name.
+     * 
+     * @param operationName The name of the operation
+     * @return The operation with that name, or null if none
      */
-    public def String getName()
+    public def DataPoolOperation getOperation(String operationName) {
+        return operations.findFirst[it.name == operationName]
+    }
+    
+    /**
+     * The names of the operations that this data handler provides.
+     */
+    public def String getOperationNames() {
+        return operations.map[it.name].join(", ")
+    }
 }

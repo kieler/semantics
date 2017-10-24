@@ -29,6 +29,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AttributeMapping">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="arrayIndex" eType="#//ArrayIndex"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//Literal"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="values" upperBound="-1"
@@ -39,6 +41,12 @@
   <eClassifiers xsi:type="ecore:EClass" name="Literal">
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="arrayIndex" eType="#//ArrayIndex"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ArrayIndex">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="indices" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="Sign">
     <eLiterals name="POSITIVE" literal="+"/>

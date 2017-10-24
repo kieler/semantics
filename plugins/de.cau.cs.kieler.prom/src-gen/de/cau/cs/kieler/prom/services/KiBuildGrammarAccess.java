@@ -331,31 +331,36 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
-		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
-		private final Group cGroup_1_0 = (Group)cAlternatives_1.eContents().get(0);
-		private final Keyword cColonKeyword_1_0_0 = (Keyword)cGroup_1_0.eContents().get(0);
-		private final Assignment cValueAssignment_1_0_1 = (Assignment)cGroup_1_0.eContents().get(1);
-		private final RuleCall cValueLiteralParserRuleCall_1_0_1_0 = (RuleCall)cValueAssignment_1_0_1.eContents().get(0);
-		private final Group cGroup_1_1 = (Group)cAlternatives_1.eContents().get(1);
-		private final Keyword cColonKeyword_1_1_0 = (Keyword)cGroup_1_1.eContents().get(0);
-		private final Assignment cValuesAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
-		private final RuleCall cValuesLiteralParserRuleCall_1_1_1_0 = (RuleCall)cValuesAssignment_1_1_1.eContents().get(0);
-		private final Group cGroup_1_1_2 = (Group)cGroup_1_1.eContents().get(2);
-		private final Keyword cCommaKeyword_1_1_2_0 = (Keyword)cGroup_1_1_2.eContents().get(0);
-		private final Assignment cValuesAssignment_1_1_2_1 = (Assignment)cGroup_1_1_2.eContents().get(1);
-		private final RuleCall cValuesLiteralParserRuleCall_1_1_2_1_0 = (RuleCall)cValuesAssignment_1_1_2_1.eContents().get(0);
-		private final Group cGroup_1_2 = (Group)cAlternatives_1.eContents().get(2);
-		private final Keyword cColonKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_1_2_1 = (Keyword)cGroup_1_2.eContents().get(1);
-		private final Assignment cAttributesAssignment_1_2_2 = (Assignment)cGroup_1_2.eContents().get(2);
-		private final RuleCall cAttributesAttributeMappingParserRuleCall_1_2_2_0 = (RuleCall)cAttributesAssignment_1_2_2.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_1_2_3 = (Keyword)cGroup_1_2.eContents().get(3);
+		private final Assignment cArrayIndexAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cArrayIndexArrayIndexParserRuleCall_1_0 = (RuleCall)cArrayIndexAssignment_1.eContents().get(0);
+		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
+		private final Group cGroup_2_0 = (Group)cAlternatives_2.eContents().get(0);
+		private final Keyword cColonKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
+		private final Assignment cValueAssignment_2_0_1 = (Assignment)cGroup_2_0.eContents().get(1);
+		private final RuleCall cValueLiteralParserRuleCall_2_0_1_0 = (RuleCall)cValueAssignment_2_0_1.eContents().get(0);
+		private final Group cGroup_2_1 = (Group)cAlternatives_2.eContents().get(1);
+		private final Keyword cColonKeyword_2_1_0 = (Keyword)cGroup_2_1.eContents().get(0);
+		private final Assignment cValuesAssignment_2_1_1 = (Assignment)cGroup_2_1.eContents().get(1);
+		private final RuleCall cValuesLiteralParserRuleCall_2_1_1_0 = (RuleCall)cValuesAssignment_2_1_1.eContents().get(0);
+		private final Group cGroup_2_1_2 = (Group)cGroup_2_1.eContents().get(2);
+		private final Keyword cCommaKeyword_2_1_2_0 = (Keyword)cGroup_2_1_2.eContents().get(0);
+		private final Assignment cValuesAssignment_2_1_2_1 = (Assignment)cGroup_2_1_2.eContents().get(1);
+		private final RuleCall cValuesLiteralParserRuleCall_2_1_2_1_0 = (RuleCall)cValuesAssignment_2_1_2_1.eContents().get(0);
+		private final Group cGroup_2_2 = (Group)cAlternatives_2.eContents().get(2);
+		private final Keyword cColonKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_2_2_1 = (Keyword)cGroup_2_2.eContents().get(1);
+		private final Assignment cAttributesAssignment_2_2_2 = (Assignment)cGroup_2_2.eContents().get(2);
+		private final RuleCall cAttributesAttributeMappingParserRuleCall_2_2_2_0 = (RuleCall)cAttributesAssignment_2_2_2.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_2_2_3 = (Keyword)cGroup_2_2.eContents().get(3);
 		
 		//AttributeMapping:
-		//	name=ID (':' value=Literal | ':' values+=Literal (',' values+=Literal)+ | ':'? '{' attributes+=AttributeMapping+ '}');
+		//	name=ID
+		//	arrayIndex=ArrayIndex? (':' value=Literal | ':' values+=Literal (',' values+=Literal)+ | ':'? '{'
+		//	attributes+=AttributeMapping+ '}');
 		@Override public ParserRule getRule() { return rule; }
 
-		//name=ID (':' value=Literal | ':' values+=Literal (',' values+=Literal)+ | ':'? '{' attributes+=AttributeMapping+ '}')
+		//name=ID arrayIndex=ArrayIndex? (':' value=Literal | ':' values+=Literal (',' values+=Literal)+ | ':'? '{'
+		//attributes+=AttributeMapping+ '}')
 		public Group getGroup() { return cGroup; }
 
 		//name=ID
@@ -364,69 +369,78 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
 
+		//arrayIndex=ArrayIndex?
+		public Assignment getArrayIndexAssignment_1() { return cArrayIndexAssignment_1; }
+
+		//ArrayIndex
+		public RuleCall getArrayIndexArrayIndexParserRuleCall_1_0() { return cArrayIndexArrayIndexParserRuleCall_1_0; }
+
 		//(':' value=Literal | ':' values+=Literal (',' values+=Literal)+ | ':'? '{' attributes+=AttributeMapping+ '}')
-		public Alternatives getAlternatives_1() { return cAlternatives_1; }
+		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 
 		//':' value=Literal
-		public Group getGroup_1_0() { return cGroup_1_0; }
+		public Group getGroup_2_0() { return cGroup_2_0; }
 
 		//':'
-		public Keyword getColonKeyword_1_0_0() { return cColonKeyword_1_0_0; }
+		public Keyword getColonKeyword_2_0_0() { return cColonKeyword_2_0_0; }
 
 		//value=Literal
-		public Assignment getValueAssignment_1_0_1() { return cValueAssignment_1_0_1; }
+		public Assignment getValueAssignment_2_0_1() { return cValueAssignment_2_0_1; }
 
 		//Literal
-		public RuleCall getValueLiteralParserRuleCall_1_0_1_0() { return cValueLiteralParserRuleCall_1_0_1_0; }
+		public RuleCall getValueLiteralParserRuleCall_2_0_1_0() { return cValueLiteralParserRuleCall_2_0_1_0; }
 
 		//':' values+=Literal (',' values+=Literal)+
-		public Group getGroup_1_1() { return cGroup_1_1; }
+		public Group getGroup_2_1() { return cGroup_2_1; }
 
 		//':'
-		public Keyword getColonKeyword_1_1_0() { return cColonKeyword_1_1_0; }
+		public Keyword getColonKeyword_2_1_0() { return cColonKeyword_2_1_0; }
 
 		//values+=Literal
-		public Assignment getValuesAssignment_1_1_1() { return cValuesAssignment_1_1_1; }
+		public Assignment getValuesAssignment_2_1_1() { return cValuesAssignment_2_1_1; }
 
 		//Literal
-		public RuleCall getValuesLiteralParserRuleCall_1_1_1_0() { return cValuesLiteralParserRuleCall_1_1_1_0; }
+		public RuleCall getValuesLiteralParserRuleCall_2_1_1_0() { return cValuesLiteralParserRuleCall_2_1_1_0; }
 
 		//(',' values+=Literal)+
-		public Group getGroup_1_1_2() { return cGroup_1_1_2; }
+		public Group getGroup_2_1_2() { return cGroup_2_1_2; }
 
 		//','
-		public Keyword getCommaKeyword_1_1_2_0() { return cCommaKeyword_1_1_2_0; }
+		public Keyword getCommaKeyword_2_1_2_0() { return cCommaKeyword_2_1_2_0; }
 
 		//values+=Literal
-		public Assignment getValuesAssignment_1_1_2_1() { return cValuesAssignment_1_1_2_1; }
+		public Assignment getValuesAssignment_2_1_2_1() { return cValuesAssignment_2_1_2_1; }
 
 		//Literal
-		public RuleCall getValuesLiteralParserRuleCall_1_1_2_1_0() { return cValuesLiteralParserRuleCall_1_1_2_1_0; }
+		public RuleCall getValuesLiteralParserRuleCall_2_1_2_1_0() { return cValuesLiteralParserRuleCall_2_1_2_1_0; }
 
 		//':'? '{' attributes+=AttributeMapping+ '}'
-		public Group getGroup_1_2() { return cGroup_1_2; }
+		public Group getGroup_2_2() { return cGroup_2_2; }
 
 		//':'?
-		public Keyword getColonKeyword_1_2_0() { return cColonKeyword_1_2_0; }
+		public Keyword getColonKeyword_2_2_0() { return cColonKeyword_2_2_0; }
 
 		//'{'
-		public Keyword getLeftCurlyBracketKeyword_1_2_1() { return cLeftCurlyBracketKeyword_1_2_1; }
+		public Keyword getLeftCurlyBracketKeyword_2_2_1() { return cLeftCurlyBracketKeyword_2_2_1; }
 
 		//attributes+=AttributeMapping+
-		public Assignment getAttributesAssignment_1_2_2() { return cAttributesAssignment_1_2_2; }
+		public Assignment getAttributesAssignment_2_2_2() { return cAttributesAssignment_2_2_2; }
 
 		//AttributeMapping
-		public RuleCall getAttributesAttributeMappingParserRuleCall_1_2_2_0() { return cAttributesAttributeMappingParserRuleCall_1_2_2_0; }
+		public RuleCall getAttributesAttributeMappingParserRuleCall_2_2_2_0() { return cAttributesAttributeMappingParserRuleCall_2_2_2_0; }
 
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_1_2_3() { return cRightCurlyBracketKeyword_1_2_3; }
+		public Keyword getRightCurlyBracketKeyword_2_2_3() { return cRightCurlyBracketKeyword_2_2_3; }
 	}
 
 	public class LiteralElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.prom.KiBuild.Literal");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Assignment cValueAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
-		private final RuleCall cValueTextValueParserRuleCall_0_0 = (RuleCall)cValueAssignment_0.eContents().get(0);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Assignment cValueAssignment_0_0 = (Assignment)cGroup_0.eContents().get(0);
+		private final RuleCall cValueTextValueParserRuleCall_0_0_0 = (RuleCall)cValueAssignment_0_0.eContents().get(0);
+		private final Assignment cArrayIndexAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final RuleCall cArrayIndexArrayIndexParserRuleCall_0_1_0 = (RuleCall)cArrayIndexAssignment_0_1.eContents().get(0);
 		private final Assignment cValueAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
 		private final RuleCall cValueSignedIntParserRuleCall_1_0 = (RuleCall)cValueAssignment_1.eContents().get(0);
 		private final Assignment cValueAssignment_2 = (Assignment)cAlternatives.eContents().get(2);
@@ -435,17 +449,28 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValueAnyValueParserRuleCall_3_0 = (RuleCall)cValueAssignment_3.eContents().get(0);
 		
 		//Literal:
-		//	value=TextValue | value=SignedInt | value=SignedFloat | value=AnyValue;
+		//	value=TextValue arrayIndex=ArrayIndex? | value=SignedInt
+		//	| value=SignedFloat
+		//	| value=AnyValue;
 		@Override public ParserRule getRule() { return rule; }
 
-		//value=TextValue | value=SignedInt | value=SignedFloat | value=AnyValue
+		//value=TextValue arrayIndex=ArrayIndex? | value=SignedInt | value=SignedFloat | value=AnyValue
 		public Alternatives getAlternatives() { return cAlternatives; }
 
+		//value=TextValue arrayIndex=ArrayIndex?
+		public Group getGroup_0() { return cGroup_0; }
+
 		//value=TextValue
-		public Assignment getValueAssignment_0() { return cValueAssignment_0; }
+		public Assignment getValueAssignment_0_0() { return cValueAssignment_0_0; }
 
 		//TextValue
-		public RuleCall getValueTextValueParserRuleCall_0_0() { return cValueTextValueParserRuleCall_0_0; }
+		public RuleCall getValueTextValueParserRuleCall_0_0_0() { return cValueTextValueParserRuleCall_0_0_0; }
+
+		//arrayIndex=ArrayIndex?
+		public Assignment getArrayIndexAssignment_0_1() { return cArrayIndexAssignment_0_1; }
+
+		//ArrayIndex
+		public RuleCall getArrayIndexArrayIndexParserRuleCall_0_1_0() { return cArrayIndexArrayIndexParserRuleCall_0_1_0; }
 
 		//value=SignedInt
 		public Assignment getValueAssignment_1() { return cValueAssignment_1; }
@@ -464,6 +489,34 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 
 		//AnyValue
 		public RuleCall getValueAnyValueParserRuleCall_3_0() { return cValueAnyValueParserRuleCall_3_0; }
+	}
+
+	public class ArrayIndexElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.prom.KiBuild.ArrayIndex");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cLeftSquareBracketKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cIndicesAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cIndicesINTTerminalRuleCall_1_0 = (RuleCall)cIndicesAssignment_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		
+		//ArrayIndex:
+		//	('[' indices+=INT ']')+;
+		@Override public ParserRule getRule() { return rule; }
+
+		//('[' indices+=INT ']')+
+		public Group getGroup() { return cGroup; }
+
+		//'['
+		public Keyword getLeftSquareBracketKeyword_0() { return cLeftSquareBracketKeyword_0; }
+
+		//indices+=INT
+		public Assignment getIndicesAssignment_1() { return cIndicesAssignment_1; }
+
+		//INT
+		public RuleCall getIndicesINTTerminalRuleCall_1_0() { return cIndicesINTTerminalRuleCall_1_0; }
+
+		//']'
+		public Keyword getRightSquareBracketKeyword_2() { return cRightSquareBracketKeyword_2; }
 	}
 
 	public class SignedFloatElements extends AbstractParserRuleElementFinder {
@@ -578,6 +631,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	private final WrapperCodeTemplateProcessorElements pWrapperCodeTemplateProcessor;
 	private final AttributeMappingElements pAttributeMapping;
 	private final LiteralElements pLiteral;
+	private final ArrayIndexElements pArrayIndex;
 	private final SignElements eSign;
 	private final SignedFloatElements pSignedFloat;
 	private final SignedIntElements pSignedInt;
@@ -611,6 +665,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		this.pWrapperCodeTemplateProcessor = new WrapperCodeTemplateProcessorElements();
 		this.pAttributeMapping = new AttributeMappingElements();
 		this.pLiteral = new LiteralElements();
+		this.pArrayIndex = new ArrayIndexElements();
 		this.eSign = new SignElements();
 		this.pSignedFloat = new SignedFloatElements();
 		this.pSignedInt = new SignedIntElements();
@@ -738,7 +793,9 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AttributeMapping:
-	//	name=ID (':' value=Literal | ':' values+=Literal (',' values+=Literal)+ | ':'? '{' attributes+=AttributeMapping+ '}');
+	//	name=ID
+	//	arrayIndex=ArrayIndex? (':' value=Literal | ':' values+=Literal (',' values+=Literal)+ | ':'? '{'
+	//	attributes+=AttributeMapping+ '}');
 	public AttributeMappingElements getAttributeMappingAccess() {
 		return pAttributeMapping;
 	}
@@ -748,13 +805,25 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Literal:
-	//	value=TextValue | value=SignedInt | value=SignedFloat | value=AnyValue;
+	//	value=TextValue arrayIndex=ArrayIndex? | value=SignedInt
+	//	| value=SignedFloat
+	//	| value=AnyValue;
 	public LiteralElements getLiteralAccess() {
 		return pLiteral;
 	}
 	
 	public ParserRule getLiteralRule() {
 		return getLiteralAccess().getRule();
+	}
+
+	//ArrayIndex:
+	//	('[' indices+=INT ']')+;
+	public ArrayIndexElements getArrayIndexAccess() {
+		return pArrayIndex;
+	}
+	
+	public ParserRule getArrayIndexRule() {
+		return getArrayIndexAccess().getRule();
 	}
 
 	//enum Sign:

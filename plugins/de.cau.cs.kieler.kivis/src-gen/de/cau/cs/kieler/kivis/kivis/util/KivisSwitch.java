@@ -107,6 +107,13 @@ public class KivisSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case KivisPackage.FUNCTION:
+      {
+        Function function = (Function)theEObject;
+        T result = caseFunction(function);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case KivisPackage.ANIMATION:
       {
         Animation animation = (Animation)theEObject;
@@ -172,10 +179,10 @@ public class KivisSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case KivisPackage.BOOLEAN_OPERATOR:
+      case KivisPackage.FUNCTION_PARAMETER:
       {
-        BooleanOperator booleanOperator = (BooleanOperator)theEObject;
-        T result = caseBooleanOperator(booleanOperator);
+        FunctionParameter functionParameter = (FunctionParameter)theEObject;
+        T result = caseFunctionParameter(functionParameter);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -267,6 +274,22 @@ public class KivisSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseAction(Action object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Function</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Function</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseFunction(Function object)
   {
     return null;
   }
@@ -416,17 +439,17 @@ public class KivisSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Boolean Operator</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Function Parameter</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Boolean Operator</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Function Parameter</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseBooleanOperator(BooleanOperator object)
+  public T caseFunctionParameter(FunctionParameter object)
   {
     return null;
   }

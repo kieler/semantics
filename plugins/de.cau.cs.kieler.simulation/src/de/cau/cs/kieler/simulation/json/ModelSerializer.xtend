@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.simulation.json
 
-import com.google.gson.JsonArray
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
@@ -21,36 +20,46 @@ import com.google.gson.JsonParseException
 import com.google.gson.JsonSerializationContext
 import com.google.gson.JsonSerializer
 import de.cau.cs.kieler.simulation.core.Model
-import java.lang.reflect.Type
 import de.cau.cs.kieler.simulation.core.Variable
+import java.lang.reflect.Type
 
 /**
+ * (De-)Serializer for models in the data pool.
+ * 
  * @author aas
  *
  */
 class ModelSerializer implements JsonSerializer<Model>, JsonDeserializer<Model> {
     
+    /**
+     * {@inheritDoc}
+     */
     override serialize(Model src, Type typeOfSrc, JsonSerializationContext context) {
         val object = new JsonObject()
         // Add variables
-        val variablesArray = new JsonArray()
-        for(v : src.variables) {
-            val jsonVariable = context.serialize(v)
-            variablesArray.add(jsonVariable)
+        for(variable : src.variables) {
+            val jsonVariable = context.serialize(variable)
+            object.add(variable.name, jsonVariable)
         }
-        object.add("variables", variablesArray)
         return object
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         val object = json.asJsonObject
         
-        val jsonVariables = object.get("variables").asJsonArray
-        
         val model = new Model()
-        for(jsonVariable : jsonVariables) {
-            val v = context.deserialize(jsonVariable, typeof(Variable))
-            model.addVariable(v)
+        for(entry : object.entrySet) {
+            switch(entry.key) {
+               // Additional fields can be deserialized here in using cases. 
+               default : {
+                   val variable = context.deserialize(entry.value, typeof(Variable)) as Variable
+                   variable.name = entry.key
+                   model.addVariable(variable)
+               } 
+            }
         } 
         return model
     }
