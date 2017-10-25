@@ -35,6 +35,9 @@
       <SCTGeneratorExtension
             class="de.cau.cs.kieler.sccharts.text.sctgenerator.extensions.ActionExtension">
       </SCTGeneratorExtension>
+      <SCTGeneratorExtension
+            class="de.cau.cs.kieler.sccharts.text.sct.sctgenerator.extensions.EsoExtension">
+      </SCTGeneratorExtension>      
    </extension>   
 
      <extension

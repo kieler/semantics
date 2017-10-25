@@ -81,6 +81,15 @@
       <Processor
             class="de.cau.cs.kieler.scg.processors.transformators.codegen.java.JavaCodeGenerator">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.priority.PriorityProcessor">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.priority.SJTransformation">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.priority.SCLPTransformation">
+      </Processor>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.system">
@@ -107,6 +116,12 @@
       </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.netlist.java.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.priority.simple.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.priority.java.kico">
       </TransformationSystem>
    </extension>
 
