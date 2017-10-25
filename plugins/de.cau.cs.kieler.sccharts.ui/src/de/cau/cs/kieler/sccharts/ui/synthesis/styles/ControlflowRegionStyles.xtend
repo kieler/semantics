@@ -33,6 +33,7 @@ import org.eclipse.elk.graph.properties.Property
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.klighd.microlayout.PlacementUtil.*
+import de.cau.cs.kieler.sccharts.extensions.TextFormat
 
 /**
  * Styles for {@link ControlflowRegion}.
@@ -131,7 +132,7 @@ class ControlflowRegionStyles {
      * Adds a label in declaration style with the given components.<br>
      * The first part will be highlighted as keywords.
      */
-    def KRectangle addDeclarationLabel(KContainerRendering container, List<Pair<CharSequence, Boolean>> components) {
+    def KRectangle addDeclarationLabel(KContainerRendering container, List<Pair<CharSequence, TextFormat>> components) {
         container.getProperty(DECLARATIONS_CONTAINER)?.addKeywordLabel(components);
     }
     

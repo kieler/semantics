@@ -29,6 +29,7 @@ import static extension de.cau.cs.kieler.klighd.microlayout.PlacementUtil.*
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.sccharts.extensions.TextFormat
 
 /**
  * Styles for {@link DataflowRegion}.
@@ -85,7 +86,7 @@ class DataflowRegionStyles extends ControlflowRegionStyles {
      * Adds a label in declaration style with the given components.<br>
      * The first part will be highlighted as keywords.
      */
-    override KRectangle addDeclarationLabel(KContainerRendering container, List<Pair<CharSequence, Boolean>> components) {
+    override KRectangle addDeclarationLabel(KContainerRendering container, List<Pair<CharSequence, TextFormat>> components) {
         container.getProperty(DECLARATIONS_CONTAINER)?.addKeywordLabel(components);
     }
     

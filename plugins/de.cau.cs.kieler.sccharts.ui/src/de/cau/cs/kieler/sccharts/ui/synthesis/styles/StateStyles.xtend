@@ -30,6 +30,7 @@ import org.eclipse.elk.graph.properties.Property
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.sccharts.extensions.TextFormat
 
 /**
  * Styles for {@link State}.
@@ -232,7 +233,7 @@ class StateStyles {
      * Adds a label in declaration style with the given components to a macro state.<br>
      * The first part will be highlighted as keywords.
      */
-    def KRectangle addActionLabel(KNode node, List<Pair<CharSequence, Boolean>> components) {
+    def KRectangle addActionLabel(KNode node, List<Pair<CharSequence, TextFormat>> components) {
         node.actionsContainer.addKeywordLabel(components);
     }
 
@@ -240,14 +241,14 @@ class StateStyles {
      * Adds a label in action style with the given components to a macro state.<br>
      * The first part will be highlighted as keywords.
      */
-    def KRectangle addDeclarationLabel(KNode node, List<Pair<CharSequence, Boolean>> components) {
+    def KRectangle addDeclarationLabel(KNode node, List<Pair<CharSequence, TextFormat>> components) {
         return node.declarationsContainer.addKeywordLabel(components);
     }
 
     /**
      * Creates a text with highlighted keywords.
      */
-    package def addKeywordLabel(KContainerRendering container, List<Pair<CharSequence, Boolean>> components) {
+    package def addKeywordLabel(KContainerRendering container, List<Pair<CharSequence, TextFormat>> components) {
         return container.addRectangle() => [
             // This additional rectangle allows left align in grid placement
             invisible = true
@@ -259,7 +260,7 @@ class StateStyles {
                 var parts = 0
                 val entries = components.iterator
                 val builder = new StringBuilder()
-                var keyword = true
+                var keyword = TextFormat.KEYWORD
                 var KText ktext = null               
                 while (entries.hasNext) {
                 	val entry = entries.next
@@ -267,9 +268,12 @@ class StateStyles {
 		                ktext = it.addText(builder.append(" ").toString) => [
                             horizontalAlignment = H_LEFT
                         ]
-		                if (keyword) {
+		                if (keyword == TextFormat.KEYWORD) {
 		                	ktext.highlightKeyword
 		                }                		
+                        if (keyword == TextFormat.HIGHLIGHT) {
+                            ktext.highlightHighlight
+                        }
 		                builder.length = 0
                 		parts++
                 	}
@@ -283,8 +287,11 @@ class StateStyles {
                 ktext = addText(builder.toString) => [
                     horizontalAlignment = H_LEFT
                 ]
-                if (keyword) {
+                if (keyword == TextFormat.KEYWORD) {
                 	ktext.highlightKeyword
+                }
+                if (keyword == TextFormat.HIGHLIGHT) {
+                    ktext.highlightHighlight
                 }
                 parts++
                 setGridPlacement(parts)
@@ -295,6 +302,10 @@ class StateStyles {
     package def highlightKeyword(KText ktext) {
         ktext.foreground = KEYWORD.color;
         ktext.fontBold = true;    	
+    }
+    
+    package def highlightHighlight(KText ktext) {
+        ktext.foreground = KEYWORD.color;
     }
 
     /**
