@@ -152,31 +152,43 @@ class DataPool implements Cloneable {
     public def Object getVariableValue(String variableQualifer, boolean userValue) {
         // Separate variable name and array index part
         val variablePart = getVariableName(variableQualifer)
-        val arrayIndices = getArrayIndices(variableQualifer)
         
         val variable = getVariable(variablePart)
         if(variable != null) {
-            if(arrayIndices.isNullOrEmpty) {
-                if(userValue && variable.isDirty) {
-                    return variable.userValue
-                } else {
-                    return variable.value
-                }
-            } else {
-                val array = variable.value as NDimensionalArray
-                val arrayElement = array.getElement(arrayIndices)
-                if(arrayElement != null) {
-                    if(userValue && arrayElement.isDirty) {
-                        return arrayElement.userValue    
-                    } else {
-                        return arrayElement.value
-                    }
-                } else {
-                    throw new Exception("Could not find array element with indices "+arrayIndices)
-                }
-            }
+            val arrayIndices = getArrayIndices(variableQualifer)
+            return getVariableValue(variable, arrayIndices, userValue)
         } else {
             throw new Exception("Could not find variable with name '"+variablePart+"'")
+        }
+    }
+    
+    /**
+     * Returns the value of a variable, or of an array element of a variable.
+     * 
+     * @param variable The variable
+     * @param arrayIndices The array indices in case the variable contains an array of which a specific value should be returned
+     * @param userValue Determines if the user value or the normal value should be returned
+     * @return the value of the variable, or value of the array on the given index
+     */
+    public def Object getVariableValue(Variable variable, List<Integer> arrayIndices, boolean userValue) {
+        if(arrayIndices.isNullOrEmpty) {
+            if(userValue && variable.isDirty) {
+                return variable.userValue
+            } else {
+                return variable.value
+            }
+        } else {
+            val array = variable.value as NDimensionalArray
+            val arrayElement = array.getElement(arrayIndices)
+            if(arrayElement != null) {
+                if(userValue && arrayElement.isDirty) {
+                    return arrayElement.userValue    
+                } else {
+                    return arrayElement.value
+                }
+            } else {
+                throw new Exception("Could not find array element with indices "+arrayIndices)
+            }
         }
     }
     
@@ -191,10 +203,10 @@ class DataPool implements Cloneable {
     public def void setVariableValue(String variableQualifer, Object newValue, boolean userValue) {
         // Separate variable name and array index part
         val variablePart = getVariableName(variableQualifer)
-        val arrayIndices = getArrayIndices(variableQualifer)
         
         val variable = getVariable(variablePart, true)
         if(variable != null) {
+            val arrayIndices = getArrayIndices(variableQualifer)
             if(arrayIndices.isNullOrEmpty) {
                 if(userValue) {
                     variable.userValue = newValue

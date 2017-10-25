@@ -70,6 +70,7 @@ import org.w3c.dom.Element
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.EventListener
 import org.w3c.dom.svg.SVGDocument
+import org.eclipse.jface.action.Action
 
 /**
  * The KiVis View.
@@ -111,6 +112,11 @@ class KiVisView extends ViewPart {
     @Accessors(PUBLIC_GETTER)
     private static var KiVisView instance
 
+    /**
+     * Determines if user values should be animated, or always the current value of variables.
+     */
+    @Accessors(PUBLIC_GETTER)
+    private var boolean animateUserValues = true
     
     /**
      * The main control of this view
@@ -281,46 +287,60 @@ class KiVisView extends ViewPart {
         } else {
             // Only update the view with the state of the pool, when the pool changed
             // and the data pool contains valid data, i.e., all variables have been initialized in the first macro tick
+            val sim = SimulationManager.instance
             var poolChanged = (pool != lastPool)
-            var afterFirstTick = (SimulationManager.instance != null
-                                  && SimulationManager.instance.currentMacroTickNumber > 0)
+            var afterFirstTick = (sim != null && sim.currentMacroTickNumber > 0)
             if(force || (poolChanged && afterFirstTick)) {
                 lastPool = pool
-                val startTime = System.currentTimeMillis
                 updateInteractions(false)
                 
-                // Update svg with data from pool
+                // Update svg with data from the pool.
                 // Make all changes to the svg in the update manager.
                 // Otherwise the svg canvas is not updated properly.
                 asyncExecSvgUpdate [
                     if(!initialized) {
                         return
                     }
-                    
-                    // As this is invoked later in another thread,
-                    // the pool that should be visualized might already be outdated.
-                    // In this case we don't animate anything here.
-                    if(force || pool == SimulationManager.instance.currentPool) {
-                        try {
-                            // Safe reference to animation handlers in case the reference changes concurrently
-                            val handlers = animationHandlers
-                            for (animation : handlers) {
-                                animation.apply(pool)
-                            }
-                        } catch (Exception e) {
-                            showError(e)
-                        }
-                        val duration = (System.currentTimeMillis-startTime)
-                        setStatusBarMessage("Update took " + duration + "ms")
-                    }
+                    updateAnimations(pool, force, null)
                 ]
             }
         }
     }
     
     /**
+     * Updates all animation handlers to reflect the state of the pool.
+     * If the variable is provided, only animation handlers for which the variable is relevant are animated.
+     * 
+     * @param pool The pool to be animated
+     * @param force Determines if the pool should be animated even though it is not the current simulation pool
+     * @param variable The variable that changes and requires re-animation
+     */
+    private def void updateAnimations(DataPool pool, boolean force, Variable variable) {
+        val startTime = System.currentTimeMillis
+        // As this is invoked later in another thread,
+        // the pool that should be visualized might already be outdated.
+        // In this case we don't animate anything here.
+        if(force || pool == SimulationManager.instance.currentPool) {
+            try {
+                // Safe reference to animation handlers in case the reference changes concurrently
+                val handlers = animationHandlers
+                for (animation : handlers) {
+                    if(variable == null || animation.usedVariables.contains(variable)) {
+                        animation.apply(pool)
+                    }
+                }
+            } catch (Exception e) {
+                showError(e)
+            }
+            val duration = (System.currentTimeMillis-startTime)
+            setStatusBarMessage("Animation update took " + duration + "ms")
+        }
+    }
+    
+    /**
      * Updates animations for which the given variable is relevant.
-     * This method has to be called in the UI thread.
+     * 
+     * @param variable The variable that changes and requires re-animation
      */
     public def void update(Variable variable) {
         if(variable == null) {
@@ -328,23 +348,11 @@ class KiVisView extends ViewPart {
         }
         
         asyncExecSvgUpdate [
-            if(SimulationManager.instance != null) {
-                val time = System.currentTimeMillis
-                try {
-                    // Safe reference to animation handlers in case the reference changes concurrently
-                    val handlers = animationHandlers
-                    for (animation : handlers) {
-                        // Apply animations for the changed variable
-                        if(animation.variable === variable) {
-                            animation.apply(SimulationManager.instance.currentPool)
-                        }
-                    }
-                } catch (Exception e) {
-                    showError(e)
-                }
-                val duration = (System.currentTimeMillis-time)
-                setStatusBarMessage("Update took " + duration + "ms")
+            val sim = SimulationManager.instance
+            if(!initialized || sim == null) {
+                return
             }
+            updateAnimations(variable.model.pool, false, variable)
         ]
     }
     
@@ -532,7 +540,8 @@ class KiVisView extends ViewPart {
                     throw new Exception("No animation handler was found with name '"+animation.type + "'\n"
                                       + "Available animation handlers are: "+animationHandlerNames)
                 }
-                if(animation != null) {
+                if(handler != null) {
+                    handler.animateUserValues = animateUserValues
                     animationHandlers.add(handler)
                 }
             }
@@ -764,7 +773,22 @@ class KiVisView extends ViewPart {
      * Creates the menu of this view.
      */
     private def void createMenu() {
-//        val mgr = getViewSite().getActionBars().getMenuManager();
+        val mgr = getViewSite().getActionBars().getMenuManager()
+        mgr.add(new Action("Disable user values") {
+            override run() {
+                animateUserValues = !animateUserValues
+                // Propagate the change to all handlers
+                for(handler : animationHandlers) {
+                    handler.animateUserValues = animateUserValues
+                }
+                
+                if(animateUserValues) {
+                    text = "Disable user values"
+                } else {
+                    text = "Enable user values"
+                }
+            }
+        });
     }
 
     /**
