@@ -620,8 +620,9 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY,
                     "de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationUpdateStrategy")
             // Give model synthesis access to the compilation result
-            // TODO adapt to kicool
-//            properties.setProperty(KiCoProperties.COMPILATION_RESULT, compiledModelContext)
+            val compiler = CompilerView.getVIEWS().findFirst[editPartSystemManager.activeEditor == editor]
+            val cc = compiler.editPartSystemManager.editPartCompilationContextMap.get(editor)
+            properties.setProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT, cc)
 
             // Create model to passed to update
             var Object model = null
@@ -631,8 +632,6 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                     model = new MessageModel(MODEL_PLACEHOLDER_PREFIX + getEditor().getTitle(), MODEL_PLACEHOLDER_MESSGAE)
                 } else if (sideBySideToggleAction.isChecked()) {
                     // Assumes singleton view
-                    val compiler = CompilerView.getVIEWS().findFirst[editPartSystemManager.activeEditor == editor]
-                    val cc = compiler.editPartSystemManager.editPartCompilationContextMap.get(editor)
                     val tracing = if (cc !== null && cc.startEnvironment.getProperty(Tracing.ACTIVE_TRACING)) {
                         cc.startEnvironment.getProperty(Tracing.TRACING_DATA)
                     }

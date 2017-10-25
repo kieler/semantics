@@ -110,6 +110,7 @@ import de.cau.cs.kieler.scg.processors.transformators.priority.PriorityProcessor
 import java.util.LinkedList
 import de.cau.cs.kieler.scg.processors.transformators.priority.PriorityAuxiliaryData
 import de.cau.cs.kieler.annotations.IntAnnotation
+import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -215,9 +216,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     
     public static val PRIO_STATEMENTS_PROPERTY = new Property<Boolean>("scgPriority.PrioStatements", false)
     
-    public static val COMPILATION_CONTEXT = new Property<CompilationContext>("scg.compilcationContext", null)
-        
-
     // Text constants for the dependency types filter
     private static val DEPENDENCYFILTERSTRING_WRITE_WRITE = "write - write"
     private static val DEPENDENCYFILTERSTRING_ABSWRITE_RELWRITE = "abs. write - rel. write"
@@ -493,7 +491,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 */
     override transform(SCGraph model) {
 
-        val compilationContext = this.usedContext.getProperty(COMPILATION_CONTEXT)
+        val compilationContext = this.usedContext.getProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT)
         if (compilationContext != null) {
 //            val PILR = compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head
 //            if (PILR != null) PIL_Nodes += PILR.criticalNodes

@@ -14,6 +14,7 @@ package de.cau.cs.kieler.scg.processors.transformators.priority
 
 import de.cau.cs.kieler.scg.Node
 import java.util.LinkedList
+import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
 
 /**
  * Class that contains auxiliary data in the form of strongly connected components.
@@ -22,7 +23,7 @@ import java.util.LinkedList
  * @author lpe
  *
  */
-class PriorityAuxiliaryData {
+class PriorityAuxiliaryData implements IKiCoolCloneable {
     
     public static final String OPTIMIZED_NODE_PRIORITIES_ANNOTATION = "optPrioIDs"
     public static final String NODE_PRIORITIES_ANNOTATION = "nodePrios"
@@ -44,4 +45,13 @@ class PriorityAuxiliaryData {
     public def void setStronglyConnectedComponents(LinkedList<LinkedList<Node>> scc) {
         this.stronglyConnectedComponents = scc
     }
+    
+    override isMutable() {
+        false
+    }
+    
+    override cloneObject() {
+        this
+    }
+    
 }
