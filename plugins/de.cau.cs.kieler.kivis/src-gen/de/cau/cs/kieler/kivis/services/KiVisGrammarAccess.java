@@ -120,10 +120,16 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cInteractionAction_0 = (Action)cGroup.eContents().get(0);
 		private final Keyword cPerformKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cOnKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cEventAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cEventEventParserRuleCall_2_1_0 = (RuleCall)cEventAssignment_2_1.eContents().get(0);
+		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
+		private final Group cGroup_2_0 = (Group)cAlternatives_2.eContents().get(0);
+		private final Keyword cOnKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
+		private final Assignment cEventAssignment_2_0_1 = (Assignment)cGroup_2_0.eContents().get(1);
+		private final RuleCall cEventEventParserRuleCall_2_0_1_0 = (RuleCall)cEventAssignment_2_0_1.eContents().get(0);
+		private final Alternatives cAlternatives_2_1 = (Alternatives)cAlternatives_2.eContents().get(1);
+		private final Assignment cAfterTickAssignment_2_1_0 = (Assignment)cAlternatives_2_1.eContents().get(0);
+		private final Keyword cAfterTickAfterTickKeyword_2_1_0_0 = (Keyword)cAfterTickAssignment_2_1_0.eContents().get(0);
+		private final Assignment cBeforeTickAssignment_2_1_1 = (Assignment)cAlternatives_2_1.eContents().get(1);
+		private final Keyword cBeforeTickBeforeTickKeyword_2_1_1_0 = (Keyword)cBeforeTickAssignment_2_1_1.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cActionsAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cActionsActionParserRuleCall_4_0 = (RuleCall)cActionsAssignment_4.eContents().get(0);
@@ -135,12 +141,13 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Interaction:
 		//	{Interaction}
-		//	'perform' ('on' event=Event)? '{'
+		//	'perform' (('on' event=Event)? | (afterTick?='after tick' | beforeTick?='before tick')?) '{'
 		//	actions+=Action*
 		//	'}' ('if' condition=AndExpression)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//{Interaction} 'perform' ('on' event=Event)? '{' actions+=Action* '}' ('if' condition=AndExpression)?
+		//{Interaction} 'perform' (('on' event=Event)? | (afterTick?='after tick' | beforeTick?='before tick')?) '{'
+		//actions+=Action* '}' ('if' condition=AndExpression)?
 		public Group getGroup() { return cGroup; }
 
 		//{Interaction}
@@ -149,17 +156,35 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//'perform'
 		public Keyword getPerformKeyword_1() { return cPerformKeyword_1; }
 
+		//(('on' event=Event)? | (afterTick?='after tick' | beforeTick?='before tick')?)
+		public Alternatives getAlternatives_2() { return cAlternatives_2; }
+
 		//('on' event=Event)?
-		public Group getGroup_2() { return cGroup_2; }
+		public Group getGroup_2_0() { return cGroup_2_0; }
 
 		//'on'
-		public Keyword getOnKeyword_2_0() { return cOnKeyword_2_0; }
+		public Keyword getOnKeyword_2_0_0() { return cOnKeyword_2_0_0; }
 
 		//event=Event
-		public Assignment getEventAssignment_2_1() { return cEventAssignment_2_1; }
+		public Assignment getEventAssignment_2_0_1() { return cEventAssignment_2_0_1; }
 
 		//Event
-		public RuleCall getEventEventParserRuleCall_2_1_0() { return cEventEventParserRuleCall_2_1_0; }
+		public RuleCall getEventEventParserRuleCall_2_0_1_0() { return cEventEventParserRuleCall_2_0_1_0; }
+
+		//(afterTick?='after tick' | beforeTick?='before tick')?
+		public Alternatives getAlternatives_2_1() { return cAlternatives_2_1; }
+
+		//afterTick?='after tick'
+		public Assignment getAfterTickAssignment_2_1_0() { return cAfterTickAssignment_2_1_0; }
+
+		//'after tick'
+		public Keyword getAfterTickAfterTickKeyword_2_1_0_0() { return cAfterTickAfterTickKeyword_2_1_0_0; }
+
+		//beforeTick?='before tick'
+		public Assignment getBeforeTickAssignment_2_1_1() { return cBeforeTickAssignment_2_1_1; }
+
+		//'before tick'
+		public Keyword getBeforeTickBeforeTickKeyword_2_1_1_0() { return cBeforeTickBeforeTickKeyword_2_1_1_0; }
 
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
@@ -1105,7 +1130,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Interaction:
 	//	{Interaction}
-	//	'perform' ('on' event=Event)? '{'
+	//	'perform' (('on' event=Event)? | (afterTick?='after tick' | beforeTick?='before tick')?) '{'
 	//	actions+=Action*
 	//	'}' ('if' condition=AndExpression)?;
 	public InteractionElements getInteractionAccess() {

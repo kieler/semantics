@@ -251,6 +251,21 @@ class KiVisView extends ViewPart {
     override setFocus() {
     }
 
+    public def void updateInteractions(boolean beforeTick) {
+        // Execute interactions that are not triggered by an event.
+        try {
+            for(interaction : interactionHandlers) {
+                if(!interaction.isEventTriggered
+                    && (interaction.isFiredBeforeTick && beforeTick
+                        || interaction.isFiredAfterTick && !beforeTick)) {
+                    interaction.performActions
+                }   
+            }
+        } catch (Exception e) {
+            showError(e)
+        }
+    }
+
     /**
      * Updates all animations for the given pool.
      * This method has to be called in the UI thread.
@@ -272,16 +287,7 @@ class KiVisView extends ViewPart {
             if(force || (poolChanged && afterFirstTick)) {
                 lastPool = pool
                 val startTime = System.currentTimeMillis
-                // Execute interactions that are not triggered by an event.
-                try {
-                    for(interaction : interactionHandlers) {
-                        if(!interaction.isEventTriggered) {
-                            interaction.performActions
-                        }   
-                    }
-                } catch (Exception e) {
-                    showError(e)
-                }
+                updateInteractions(false)
                 
                 // Update svg with data from pool
                 // Make all changes to the svg in the update manager.
@@ -656,8 +662,17 @@ class KiVisView extends ViewPart {
             
             override onSimulationControlEvent(SimulationControlEvent e) {
                 val simMan = SimulationManager.instance
-                if(simMan != null && kiVisView != null) {
-                    kiVisView.update(simMan.currentPool, false)    
+                if(simMan == null || kiVisView == null) {
+                    return
+                }
+                
+                switch(e.operation) {
+                    case BEFORE_STEPPING : {
+                        kiVisView.updateInteractions(true)
+                    }
+                    default : {
+                        kiVisView.update(simMan.currentPool, false)    
+                    }
                 }
             }
         }

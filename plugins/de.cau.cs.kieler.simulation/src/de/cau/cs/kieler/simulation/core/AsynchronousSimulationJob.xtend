@@ -60,9 +60,11 @@ class AsynchronousSimulationJob extends Job {
             // Save time BEFORE the tick is executed
             val int timeBeforeTick = System.currentTimeMillis.intValue
             
+            // Notify listeners that a tick is going to happen
+            sim.fireEvent(SimulationOperation.BEFORE_STEPPING)
+            
             // Create following state
             val DataPool pool = sim.createNextPool()
-            
             // Apply user made changes
             pool.applyUserValues
             // Set variable of model to current time if needed

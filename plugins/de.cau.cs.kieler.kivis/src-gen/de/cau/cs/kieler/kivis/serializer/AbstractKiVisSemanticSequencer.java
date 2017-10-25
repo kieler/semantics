@@ -894,7 +894,7 @@ public abstract class AbstractKiVisSemanticSequencer extends KiBuildSemanticSequ
 	 *     Interaction returns Interaction
 	 *
 	 * Constraint:
-	 *     (event=Event? actions+=Action* condition=AndExpression?)
+	 *     ((event=Event | afterTick?='after tick' | beforeTick?='before tick')? actions+=Action* condition=AndExpression?)
 	 */
 	protected void sequence_Interaction(ISerializationContext context, Interaction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

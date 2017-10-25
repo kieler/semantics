@@ -162,13 +162,31 @@ public interface KivisPackage extends EPackage
   int INTERACTION__EVENT = 0;
 
   /**
+   * The feature id for the '<em><b>After Tick</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INTERACTION__AFTER_TICK = 1;
+
+  /**
+   * The feature id for the '<em><b>Before Tick</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INTERACTION__BEFORE_TICK = 2;
+
+  /**
    * The feature id for the '<em><b>Actions</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INTERACTION__ACTIONS = 1;
+  int INTERACTION__ACTIONS = 3;
 
   /**
    * The feature id for the '<em><b>Condition</b></em>' containment reference.
@@ -177,7 +195,7 @@ public interface KivisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INTERACTION__CONDITION = 2;
+  int INTERACTION__CONDITION = 4;
 
   /**
    * The number of structural features of the '<em>Interaction</em>' class.
@@ -186,7 +204,7 @@ public interface KivisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INTERACTION_FEATURE_COUNT = 3;
+  int INTERACTION_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.EventImpl <em>Event</em>}' class.
@@ -941,6 +959,28 @@ public interface KivisPackage extends EPackage
   EReference getInteraction_Event();
 
   /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Interaction#isAfterTick <em>After Tick</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>After Tick</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Interaction#isAfterTick()
+   * @see #getInteraction()
+   * @generated
+   */
+  EAttribute getInteraction_AfterTick();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Interaction#isBeforeTick <em>Before Tick</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Before Tick</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Interaction#isBeforeTick()
+   * @see #getInteraction()
+   * @generated
+   */
+  EAttribute getInteraction_BeforeTick();
+
+  /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kivis.kivis.Interaction#getActions <em>Actions</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1618,6 +1658,22 @@ public interface KivisPackage extends EPackage
      * @generated
      */
     EReference INTERACTION__EVENT = eINSTANCE.getInteraction_Event();
+
+    /**
+     * The meta object literal for the '<em><b>After Tick</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute INTERACTION__AFTER_TICK = eINSTANCE.getInteraction_AfterTick();
+
+    /**
+     * The meta object literal for the '<em><b>Before Tick</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute INTERACTION__BEFORE_TICK = eINSTANCE.getInteraction_BeforeTick();
 
     /**
      * The meta object literal for the '<em><b>Actions</b></em>' containment reference list feature.
