@@ -621,7 +621,9 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                     "de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationUpdateStrategy")
             // Give model synthesis access to the compilation result
             val compiler = CompilerView.getVIEWS().findFirst[editPartSystemManager.activeEditor == editor]
-            val cc = compiler.editPartSystemManager.editPartCompilationContextMap.get(editor)
+            val cc = if (compiler !== null) {
+                compiler.editPartSystemManager.editPartCompilationContextMap.get(editor)
+            }
             properties.setProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT, cc)
 
             // Create model to passed to update
