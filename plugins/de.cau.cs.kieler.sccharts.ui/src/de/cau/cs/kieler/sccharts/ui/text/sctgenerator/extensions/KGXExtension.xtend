@@ -31,6 +31,7 @@ import org.eclipse.elk.graph.properties.Property
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import de.cau.cs.kieler.klighd.kgraph.KLayoutData
+import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
 
 /**
  * @author ssm
@@ -89,7 +90,7 @@ class KGXExtension implements ISCTGeneratorExtension {
     
     public def exportAsKGX(SCCharts sccharts, IProject project) {
         val vc = LightDiagramServices.translateModel2(sccharts, null, null)
-        LightDiagramServices.layoutDiagram(vc);
+        LightDiagramServices.layoutDiagram(new LightDiagramLayoutConfig(vc));
         val node = vc.viewModel
         // Bugfix for label manager property bug
         node.eAllContents.filter(KLayoutData).toList.forEach[

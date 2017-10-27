@@ -20,8 +20,8 @@ import de.cau.cs.kieler.kicool.System
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.EdgeRouting
 import org.eclipse.elk.core.options.Direction
-import org.eclipse.elk.alg.layered.p4nodes.NodePlacementStrategy
-import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
+import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.osgi.framework.Bundle
 import org.eclipse.core.runtime.Platform
 import java.net.URL
@@ -33,11 +33,12 @@ import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.elk.core.math.ElkPadding
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.util.KGraphUtil
-import org.eclipse.elk.alg.layered.p2layers.LayeringStrategy
-import org.eclipse.elk.alg.layered.properties.FixedAlignment
+import org.eclipse.elk.alg.layered.options.LayeringStrategy
+import org.eclipse.elk.alg.layered.options.FixedAlignment
 import de.cau.cs.kieler.klighd.KlighdOptions
 import de.cau.cs.kieler.kicool.ui.synthesis.styles.SkinSelector
 import de.cau.cs.kieler.kgraph.text.KGraphStandaloneSetup
+import org.eclipse.elk.alg.layered.options.WrappingStrategy
 
 /**
  * Main diagram synthesis for KiCool.
@@ -65,7 +66,7 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
         rootNode.setLayoutOption(LayeredOptions::SPACING_NODE_NODE_BETWEEN_LAYERS, 12d);
         rootNode.setLayoutOption(CoreOptions::PADDING, new ElkPadding(8d));
         rootNode.setLayoutOption(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH)
-        rootNode.setLayoutOption(LayeredOptions::SAUSAGE_FOLDING, true)
+        rootNode.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.SINGLE_EDGE)
 
         // Workaround until we use the next version of ELK        
         // val size = usedContext.getProperty(KlighdOptions.VIEWER).getControl.getSize

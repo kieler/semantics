@@ -232,7 +232,7 @@ class EquationStyles {
     def KRectangle addCircuitReferenceNodeFigure(KNode node) {
         node.setMinimalNodeSize(45, 100);
         node.addLayoutParam(CoreOptions.NODE_SIZE_CONSTRAINTS, SizeConstraint.minimumSize)
-        node.addLayoutParam(CoreOptions.SPACING_PORT_SURROUNDING, new ElkMargin(16,0,6,0))
+        node.addLayoutParam(CoreOptions.SPACING_PORTS_SURROUNDING, new ElkMargin(16,0,6,0))
 
         node.addRectangle => [
             // Mark this figure as container for further content

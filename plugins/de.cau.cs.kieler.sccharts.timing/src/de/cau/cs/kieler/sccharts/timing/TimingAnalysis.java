@@ -49,6 +49,7 @@ import com.google.common.collect.Iterators;
 import de.cau.cs.kieler.kexpressions.ValueType;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
+import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
 import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.krendering.KRectangle;
@@ -498,7 +499,7 @@ public class TimingAnalysis extends Job {
                                 timingLabels.get(region), regionRectangles, renderingExtensions);
                     }
 				}
-				LightDiagramServices.layoutDiagram(viewContext);
+				LightDiagramServices.layoutDiagram(new LightDiagramLayoutConfig(viewContext));
 				return Status.OK_STATUS;
 			}
 		}.schedule();

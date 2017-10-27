@@ -74,10 +74,10 @@ import java.util.HashMap
 import java.util.List
 import java.util.Set
 import javax.inject.Inject
-import org.eclipse.elk.alg.layered.p2layers.LayeringStrategy
-import org.eclipse.elk.alg.layered.p4nodes.NodePlacementStrategy
-import org.eclipse.elk.alg.layered.properties.LayerConstraint
-import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.alg.layered.options.LayeringStrategy
+import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
+import org.eclipse.elk.alg.layered.options.LayerConstraint
+import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.EdgeRouting
@@ -99,6 +99,7 @@ import com.google.common.collect.Multimap
 import org.eclipse.elk.core.options.NodeLabelPlacement
 import de.cau.cs.kieler.klighd.internal.macrolayout.KlighdDiagramLayoutConnector
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import org.eclipse.elk.alg.layered.options.WrappingStrategy
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -518,18 +519,14 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             node.setLayoutOption(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, false);
             if (scg.hasAnnotation(ANNOTATION_SEQUENTIALIZED)) {
                 node.setLayoutOption(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH)
-                // Future pragmatics releases wont have sausage folding option but wrapping strategy
-                // node.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.PATH_LIKE)
-                node.setLayoutOption(LayeredOptions::SAUSAGE_FOLDING, true)
+                node.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.SINGLE_EDGE)
             }
             
             
             // Sausage folding on/off
             if ((SHOW_SAUSAGE_FOLDING.booleanValue) && scg.hasAnnotation(SCGFeatures::SEQUENTIALIZE_ID)) {
                 node.addLayoutParam(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH)
-                // Future pragmatics releases wont have sausage folding option but wrapping strategy
-                // node.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.PATH_LIKE)
-                node.setLayoutOption(LayeredOptions::SAUSAGE_FOLDING, true)
+                node.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.SINGLE_EDGE)
             }
     
             // Added as suggested by uru (mail to cmot, 11.11.2016)            
@@ -717,7 +714,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	            node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
             }
             node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
-            node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_BASIC, PortAlignment::CENTER)
+            node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_DEFAULT, PortAlignment::CENTER)
             node.addLayoutParam(CoreOptions::SPACING_PORT_PORT, 10.0)
             if (!isGuardSCG) {            
                 if (topdown()) {
@@ -787,7 +784,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
             }
             node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
-            node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_BASIC, PortAlignment::CENTER)
+            node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_DEFAULT, PortAlignment::CENTER)
             node.addLayoutParam(CoreOptions::SPACING_PORT_PORT, 10.0)
             var KPort port
             if (topdown) {
@@ -970,7 +967,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             } else {
                 node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
             }
-            node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_BASIC, PortAlignment::CENTER)
+            node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_DEFAULT, PortAlignment::CENTER)
             node.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 10d)
             if (topdown) {
                 node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
@@ -1012,7 +1009,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             } else {
                 node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
             }
-            node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_BASIC, PortAlignment::CENTER)
+            node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_DEFAULT, PortAlignment::CENTER)
             node.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 10d)
             if (topdown) {
                 node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)

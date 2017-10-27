@@ -18,19 +18,20 @@ import de.cau.cs.kieler.klighd.KlighdOptions
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
 import de.cau.cs.kieler.klighd.kgraph.KLabel
 import de.cau.cs.kieler.klighd.krendering.KRenderingRef
-import de.cau.cs.kieler.klighd.labels.SoftWrappingLabelManager
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import org.eclipse.elk.graph.ElkLabel
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.klighd.labels.management.AbstractKlighdLabelManager
+import de.cau.cs.kieler.klighd.labels.management.IdentLabelManager
 
 /**
  * @author als
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-public class SemanticSoftWrappingLabelManager extends SoftWrappingLabelManager {
+public class SemanticSoftWrappingLabelManager extends IdentLabelManager { //AbstractKlighdLabelManager {
 
     @Inject extension SCChartsSerializeHRExtensions
 
@@ -41,61 +42,61 @@ public class SemanticSoftWrappingLabelManager extends SoftWrappingLabelManager {
     /**
      * {@inheritDoc}
      */
-    override resizeLabel(ElkLabel elkLabel, double targetWidth) {
-        var rendering = elkLabel.getProperty(KlighdOptions.K_RENDERING)
-        if(rendering instanceof KRenderingRef) rendering = rendering.rendering
-        val kLabel = rendering?.eContainer
-        val transition = if(kLabel instanceof KLabel) kLabel.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)
-        if (transition instanceof Transition) {
-            if (transition.label.isNullOrEmpty) {
-                val dummyLabel = elkLabel.copy
-                val parts = newLinkedList
-                val part = new StringBuilder
-                var effectPrefix = new StringBuffer
-
-                // Prio
-                if (transition.sourceState.outgoingTransitions.size > 1) {
-                    part.append(transition.sourceState.outgoingTransitions.indexOf(transition) + 1).append(": ")
-                }
-                // Trigger
-                if (transition.trigger != null) {
-                    if (transition.triggerDelay > 1) {
-                        part.append(transition.triggerDelay).append(" ");
-                    }
-                    part.append(transition.trigger.serializeHR);
-
-                    // Soft wrap first part
-                    dummyLabel.text = part.toString
-                    parts.add(super.resizeLabel(dummyLabel, targetWidth))
-                } else {
-                    effectPrefix.append(part)
-                }
-
-                // Effects
-                if (parts.empty && transition.effects.empty) {
-                    // Only priority
-                    return effectPrefix.toString
-                } else {
-                    effectPrefix.append("/ ")
-                    for (effect : transition.effects) {
-                        part.length = 0 // clear part
-                        part.append(effectPrefix)
-                        part.append(effect.serializeHR)
-                        part.append(";")
-
-                        // Soft wrap first part
-                        dummyLabel.text = part.toString
-                        parts.add(super.resizeLabel(dummyLabel, targetWidth))
-
-                        // Convert prefix to indentation
-                        for (var i = 0; i < effectPrefix.length; i++) {
-                            effectPrefix.setCharAt(i, ' ')
-                        }
-                    }
-                }
-                return parts.join("\n")
-            }
-        }
-        return super.resizeLabel(elkLabel, targetWidth)
-    }
+//    override resizeLabel(ElkLabel elkLabel, double targetWidth) {
+//        var rendering = elkLabel.getProperty(KlighdOptions.K_RENDERING)
+//        if(rendering instanceof KRenderingRef) rendering = rendering.rendering
+//        val kLabel = rendering?.eContainer
+//        val transition = if(kLabel instanceof KLabel) kLabel.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)
+//        if (transition instanceof Transition) {
+//            if (transition.label.isNullOrEmpty) {
+//                val dummyLabel = elkLabel.copy
+//                val parts = newLinkedList
+//                val part = new StringBuilder
+//                var effectPrefix = new StringBuffer
+//
+//                // Prio
+//                if (transition.sourceState.outgoingTransitions.size > 1) {
+//                    part.append(transition.sourceState.outgoingTransitions.indexOf(transition) + 1).append(": ")
+//                }
+//                // Trigger
+//                if (transition.trigger != null) {
+//                    if (transition.triggerDelay > 1) {
+//                        part.append(transition.triggerDelay).append(" ");
+//                    }
+//                    part.append(transition.trigger.serializeHR);
+//
+//                    // Soft wrap first part
+//                    dummyLabel.text = part.toString
+//                    parts.add(super.resizeLabel(dummyLabel, targetWidth))
+//                } else {
+//                    effectPrefix.append(part)
+//                }
+//
+//                // Effects
+//                if (parts.empty && transition.effects.empty) {
+//                    // Only priority
+//                    return effectPrefix.toString
+//                } else {
+//                    effectPrefix.append("/ ")
+//                    for (effect : transition.effects) {
+//                        part.length = 0 // clear part
+//                        part.append(effectPrefix)
+//                        part.append(effect.serializeHR)
+//                        part.append(";")
+//
+//                        // Soft wrap first part
+//                        dummyLabel.text = part.toString
+//                        parts.add(super.resizeLabel(dummyLabel, targetWidth))
+//
+//                        // Convert prefix to indentation
+//                        for (var i = 0; i < effectPrefix.length; i++) {
+//                            effectPrefix.setCharAt(i, ' ')
+//                        }
+//                    }
+//                }
+//                return parts.join("\n")
+//            }
+//        }
+//        return super.resizeLabel(elkLabel, targetWidth)
+//    }
 }
