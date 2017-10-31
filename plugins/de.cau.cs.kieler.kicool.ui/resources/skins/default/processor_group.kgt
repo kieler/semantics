@@ -15,8 +15,9 @@ knode group {
     {
         styles:
             lineWidth = 1.5
-            foreground = 105r,55g,185b,255a 
-            background = 155r,155g,155b,155a
+            foreground = 190r,190g,190b,255a 
+            background = 190r, 190g, 190b, 255a -> 145r, 145g, 145b, 243a (90)
+//            background = 155r,155g,155b,155a
             
         actions: doubleClick => de.cau.cs.kieler.klighd.^actions.CollapseExpandAction
                  
@@ -38,7 +39,8 @@ knode group {
     de.cau.cs.kieler.klighd.expandedRendering = true]{
         styles:
             lineWidth = 1 
-            foreground = 105r,55g,255b,255a
+            foreground = 190r,190g,190b,255a
+//            foreground = 105r,55g,255b,255a
             background = 255r,255g,255b,255a
         
         actions: doubleClick => de.cau.cs.kieler.klighd.^actions.CollapseExpandAction

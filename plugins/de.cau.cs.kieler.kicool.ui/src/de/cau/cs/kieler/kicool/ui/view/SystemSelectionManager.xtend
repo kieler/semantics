@@ -166,4 +166,13 @@ class SystemSelectionManager implements SelectionListener {
         }
     }
     
+    def widgetSelectFirst(boolean updateView) {
+        val id = index.get(0)
+        if (!id.nullOrEmpty) {
+            // Workaround: show always the identity system.
+            view.editPartSystemManager.setActiveSystem("de.cau.cs.kieler.kicool.identity")
+            if (updateView) view.updateView
+        }
+    }
+    
 }

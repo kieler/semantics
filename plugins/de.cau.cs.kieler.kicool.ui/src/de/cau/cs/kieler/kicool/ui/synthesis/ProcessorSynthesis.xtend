@@ -60,15 +60,17 @@ class ProcessorSynthesis {
     static val COLLAPSED_ID = "collapsed"
     static val EXPANDED_ID = "expanded" 
     
-    static val PROCESSOR_NODE = KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, PROCESSOR_KGT)
-    
     private def setId(KNode node, String id) {
         node.getData(KIdentifier).id = id
         node
     }
+    
+    def KNode processorNode() {
+        KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, PROCESSOR_KGT)
+    }
 
     dispatch def List<KNode> transform(ProcessorReference processorReference) {
-        val processorNode = PROCESSOR_NODE.copy
+        val processorNode = processorNode
         val nodeId = processorReference.uniqueProcessorId
         processorNode.setId(nodeId)
         processorReference.populateProcessorData(processorNode)        

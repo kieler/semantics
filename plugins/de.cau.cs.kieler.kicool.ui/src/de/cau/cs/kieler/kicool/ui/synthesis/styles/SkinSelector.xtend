@@ -21,6 +21,6 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 class SkinSelector {
     
-    @Accessors static String skinPrefix = "resources/"
+    @Accessors static String skinPrefix = "resources/skins/"
     
 }

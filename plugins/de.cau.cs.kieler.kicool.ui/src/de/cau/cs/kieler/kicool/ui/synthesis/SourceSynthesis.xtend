@@ -33,12 +33,13 @@ class SourceSynthesis {
     @Inject extension ProcessorStyles    
     
     static val SOURCE_KGT = "source.kgt"
-    static val SOURCE_NODE = KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, SOURCE_KGT)
     
     def KNode sourceNode() {
-        val sourceNode = SOURCE_NODE.copy
-       
-        sourceNode
+//        val SOURCE_NODE = KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, SOURCE_KGT)
+//        val sourceNode = SOURCE_NODE.copy
+//       
+//        sourceNode
+        KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, SOURCE_KGT)
     }
     
     def sourceConnect(KNode source, KNode target) {
