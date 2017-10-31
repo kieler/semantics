@@ -26,6 +26,12 @@ import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
+import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.sccharts.ui.synthesis.Wiring
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.krendering.KPolygon
 
 /**
  * 
@@ -45,6 +51,7 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
     protected val triggerEdgeMap = <Expression, KEdge> newLinkedHashMap
     protected val valuedObjectTextMap = <ValuedObject, KText> newLinkedHashMap
     protected val actionTextMap = <Expression, KText> newLinkedHashMap
+    protected val wireTextMap = <Expression, KText> newLinkedHashMap
     
     private var LightDiagramLayoutConfig layoutConfig = null
     
@@ -61,6 +68,8 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
     override protected isSupported(Object model) {
         model instanceof SCCharts
     }
+    
+    public static val SCTXInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
     
     override initialize(DataPool pool) {
         super.initialize(pool)
@@ -91,6 +100,30 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
                     actionTextMap.put(valuedObjectReference, text)
                 }
             }
+            
+            if (scope instanceof DataflowRegion) {
+                val wiring = SCTXInjector.getInstance(Wiring)
+                wiring.createWires(scope.equations)
+                for (wire : wiring.wires) {    
+                    if (wire.source instanceof ValuedObjectReference) {
+                        val elements = diagramViewContext.getTargetElements(wire.source).filter(KNode)
+                        if (!elements.empty) { 
+                            val polygon = elements.head.data.filter(KPolygon).head //.filter(KRectangle).head
+                            val text = polygon.children.filter(KText).filter[ text.contains(wire.source.asValuedObjectReference.valuedObject.name) ].head
+                            wireTextMap.put(wire.source.asValuedObjectReference, text)
+                        }
+                    }
+                    if (wire.sink instanceof ValuedObjectReference) {
+                        val elements = diagramViewContext.getTargetElements(wire.sink).filter(KNode)
+                        if (!elements.empty) { 
+                            val polygon = elements.head.data.filter(KPolygon).head //.filter(KRectangle).head
+                            val text = polygon.children.filter(KText).filter[ text.contains(wire.sink.asValuedObjectReference.valuedObject.name) ].head
+                            wireTextMap.put(wire.sink.asValuedObjectReference, text)
+                        }
+                    }
+                }            
+            }
+            
         }
         
         update(pool)
@@ -105,6 +138,7 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
         null.insertLiveTransitionValues
         null.insertLiveDeclarationValues
         null.insertLiveActionValues
+        null.insertLiveWireValues
         
         layoutConfig?.performLayout
     }    
@@ -115,6 +149,7 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
         pool.insertLiveTransitionValues
         pool.insertLiveDeclarationValues
         pool.insertLiveActionValues
+        pool.insertLiveWireValues
     }
     
     protected def insertLiveTransitionValues(DataPool pool) {
@@ -137,6 +172,13 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
             val text = actionTextMap.get(valuedObjectReference)
             text.text = valuedObjectReference.modifyTriggerText(text.text, pool)
         }
+    }
+    
+    protected def insertLiveWireValues(DataPool pool) {
+        for (valuedObjectReference : wireTextMap.keySet) {
+            val text = wireTextMap.get(valuedObjectReference)
+            text.text = valuedObjectReference.modifyTriggerText(text.text, pool)
+        }        
     }
     
     protected def String modifyTriggerText(Expression trigger, String text, DataPool pool) {

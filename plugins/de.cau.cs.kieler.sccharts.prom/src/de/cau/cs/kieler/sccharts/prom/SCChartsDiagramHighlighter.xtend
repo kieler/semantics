@@ -34,6 +34,11 @@ import de.cau.cs.kieler.simulation.core.StepState
 import de.cau.cs.kieler.simulation.ui.highlighting.DiagramHighlighter
 import java.util.List
 import de.cau.cs.kieler.sccharts.PreemptionType
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.sccharts.DataflowRegion
+import java.util.Set
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.simulation.ui.highlighting.Highlight
 
 /**
  * Highlighter for SCCharts diagrams.
@@ -73,6 +78,11 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
      * These are the states in which the control flow will continue in the next tick.
      */
     protected var List<State> currentStates = <State> newArrayList
+    
+    /**
+     * The active dataflow equations.
+     */
+    protected var Set<DataflowRegion> currentActiveDataflowRegions = <DataflowRegion> newHashSet
     
     /**
      * The highlighting style for traversed states and transitions
@@ -193,8 +203,22 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                            getHighlighting(#[] + currentStates, CURRENT_ELEMENT_STYLE)
                                        else
                                            newArrayList
+                                           
+        val currentDataflowHighlighting = if (currentActiveDataflowRegions.nullOrEmpty) newArrayList
+                                            else getHighlighting(#[] + currentActiveDataflowRegions, CURRENT_ELEMENT_STYLE)
+        val currentWireHighlighting = <Highlight> newArrayList
+        if (!currentDataflowHighlighting.empty) {
+            for (highlight : currentDataflowHighlighting) {
+                highlight.element.eAllContents.filter(KEdge).forEach[
+                    currentWireHighlighting.add(new Highlight(it, CURRENT_ELEMENT_STYLE))
+                ]
+            }
+        }
+                                            
+                                           
         // Create highlighting with the corresponding styles
-        val highlighting = traversedGraphHighlighting + currentGraphHighlighting
+        val highlighting = traversedGraphHighlighting + currentGraphHighlighting + 
+            currentDataflowHighlighting + currentWireHighlighting
         highlightDiagram(highlighting)
     }
     
@@ -301,6 +325,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
             currentStates = getInitialStates(rootState)    
         }
         currentStates = calculateNewCurrentStates(currentStates, traversedTransitions)
+        currentActiveDataflowRegions = calculateNewActiveEquations(currentStates, rootState)
     }
     
     /**
@@ -433,4 +458,18 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
         }
         return states
     }
+    
+    /**
+     * Calculates the currently active data flow equations by including all dataflow regions of the active states.
+     */
+    def calculateNewActiveEquations(List<State> states, State rootState) {
+        val result = <DataflowRegion> newHashSet
+        for (state : states + newArrayList(rootState)) {
+            for (dfRegion : state.regions.filter(DataflowRegion)) {
+                result += dfRegion
+            }
+        }
+        return result
+    }
+    
 }
