@@ -38,6 +38,8 @@ import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.*
  */
 class SystemSelectionManager implements SelectionListener {
     
+    public static val TEMPORARY_SYSTEM_PREFIX = "TMP "
+    
     @Accessors private Map<String, System> temporarySystem = 
         <String, System> newHashMap
     
@@ -92,7 +94,7 @@ class SystemSelectionManager implements SelectionListener {
         for(system : systems.filter[!filter || hasInput(modelClassFilter)]) {
             var name = system.label
             if (name.nullOrEmpty) name = system.id
-            if (temporarySystem.containsValue(system)) name = "TMP " + name
+            if (temporarySystem.containsValue(system)) name = TEMPORARY_SYSTEM_PREFIX + name
             combo.add(name)
             index.add(system.id)
         }
@@ -146,17 +148,7 @@ class SystemSelectionManager implements SelectionListener {
     }
     
     def setTemporarySystem(System system) {
-//        val systemKeyBase = "TMP " + system.id
-//        var systemKey = systemKeyBase + " 1"
-//        var i = 1
-//        while (view.combo.items.contains(systemKey)) {
-//            i++
-//            systemKey = systemKeyBase + " " + i 
-//        }
-        temporarySystem.put("TMP " + system.id, system)
-//        view.combo.items.add(0, systemKey)
-//        view.combo.selectedIndex = 0
-//        view.combo.update(0)
+        temporarySystem.put(system.id, system)
         updateSystemList
         view.updateToolbar
     }
