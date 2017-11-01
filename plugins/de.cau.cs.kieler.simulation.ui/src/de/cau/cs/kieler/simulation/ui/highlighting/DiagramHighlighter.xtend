@@ -17,6 +17,7 @@ import de.cau.cs.kieler.klighd.kgraph.KLabeledGraphElement
 import de.cau.cs.kieler.klighd.krendering.KForeground
 import de.cau.cs.kieler.klighd.ui.view.DiagramView
 import de.cau.cs.kieler.prom.ui.PromUIPlugin
+import de.cau.cs.kieler.simulation.SimulationParticipant
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.StepState
@@ -27,7 +28,6 @@ import de.cau.cs.kieler.simulation.core.events.SimulationListener
 import de.cau.cs.kieler.simulation.core.events.SimulationOperation
 import java.util.List
 import java.util.Map
-import java.util.Set
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
 
@@ -37,10 +37,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author aas
  *
  */
-abstract class DiagramHighlighter {
-    
-    @Accessors(PUBLIC_GETTER)
-    private static val Set<DiagramHighlighter> diagramHighlighters = newHashSet
+abstract class DiagramHighlighter implements SimulationParticipant {
     
     /**
      * The elements that have been highlighted scince the last call of unhighlightDiagram.
@@ -67,7 +64,7 @@ abstract class DiagramHighlighter {
     protected var SimulationListener simulationListener = createSimulationListener
 
     /**
-     * Determines whether this highlighter is enabled or not.
+     * Determines whether this participant is enabled or not.
      */
     @Accessors
     private var boolean enabled = true
@@ -82,18 +79,11 @@ abstract class DiagramHighlighter {
     }
     
     /**
-     * Returns the user readable name for this highlighter
-     */
-    public def String getName() {
-        return splitCamelCase(class.simpleName)
-    }
-    
-    /**
      * Enables or disables this highlighter.
      * 
      * @param value The new enabled state
      */
-    public def void setEnabled(boolean value) {
+    override setEnabled(boolean value) {
         enabled = value
         if(!enabled) {
             unhighlightDiagram
@@ -101,21 +91,17 @@ abstract class DiagramHighlighter {
     }
     
     /**
-     * Registers the simulation listener for this instance
-     * and stores this diagram highlighter in the corresponding static list of all highlighters.
+     * Registers the simulation listener for this instance.
      */
     protected def void register() {
         SimulationManager.addListener(simulationListener)
-        diagramHighlighters.add(this)
     }
     
     /**
-     * Removes the simulation listener for this instance
-     * and this instance from the corresponding static list of all highlighters.
+     * Removes the simulation listener for this instance.
      */
     protected def void unregister() {
         SimulationManager.removeListener(simulationListener)
-        diagramHighlighters.remove(this)
     }
 
     /**
@@ -317,31 +303,5 @@ abstract class DiagramHighlighter {
                 }
             }
         }
-    }
-    
-    /**
-     * Converts a text in camelCase to a more human readable form.
-     * Examples:
-     * "lowercase"        -> "lowercase"
-     * "Class"            -> "Class"
-     * "MyClass"          -> "My Class"
-     * "HTML"             -> "HTML"
-     * "PDFLoader"        -> "PDF Loader"
-     * "AString"          -> "A String"
-     * "SimpleXMLParser"  -> "Simple XML Parser"
-     * "GL11Version"      -> "GL 11 Version"
-     * "99Bottles"        -> "99 Bottles"
-     * "May5"             -> "May 5"
-     * "BFG9000"          -> "BFG 9000"
-     * 
-     * @param s The text in camelCase
-     */
-    static private def String splitCamelCase(String s) {
-       return s.replaceAll(
-           String.format("%s|%s|%s",
-               "(?<=[A-Z])(?=[A-Z][a-z])",
-               "(?<=[^A-Z])(?=[A-Z])",
-               "(?<=[A-Za-z])(?=[^A-Za-z])"),
-           " ")
     }
 }
