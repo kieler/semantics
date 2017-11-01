@@ -149,10 +149,17 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
         // Remember single instance
         instance = this
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override getName() {
+        return "SCChart Highlighter"
+    }
 
     /**
      * {@inheritDoc}
-     */    
+     */
     override isSupported(Object model) {
         return model instanceof SCCharts
     }

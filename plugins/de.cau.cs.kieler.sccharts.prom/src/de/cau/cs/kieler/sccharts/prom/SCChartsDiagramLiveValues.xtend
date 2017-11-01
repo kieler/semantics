@@ -48,6 +48,9 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
     
     private var LightDiagramLayoutConfig layoutConfig = null
     
+    /**
+     * Constructor
+     */
     new() {
         super()
         // Remove old instance if any
@@ -58,10 +61,23 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
         instance = this
     }
     
+    /**
+     * {@inheritDoc}
+     */
+    override getName() {
+        return "SCChart Live Values"
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
     override protected isSupported(Object model) {
         model instanceof SCCharts
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override initialize(DataPool pool) {
         super.initialize(pool)
         
@@ -97,8 +113,11 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
         
         layoutConfig = new LightDiagramLayoutConfig(diagramViewContext)
         layoutConfig.performLayout
-    }    
+    }
     
+    /**
+     * {@inheritDoc}
+     */
     override stop() {
         super.stop()
         
@@ -109,6 +128,9 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
         layoutConfig?.performLayout
     }    
     
+    /**
+     * {@inheritDoc}
+     */
     override update(DataPool pool) {
         super.update(pool)
         
