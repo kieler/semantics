@@ -88,16 +88,20 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
             for (declaration : scope.declarations) {
                 for (valuedObject : declaration.valuedObjects) {
                     val rectangle = diagramViewContext.getTargetElements(declaration).filter(KRectangle).head
-                    val text = rectangle.children.filter(KText).filter[ text.contains(valuedObject.name) ].head
-                    valuedObjectTextMap.put(valuedObject, text)
+                    if (rectangle !== null) {
+                        val text = rectangle.children.filter(KText).filter[ text.contains(valuedObject.name) ].head
+                        valuedObjectTextMap.put(valuedObject, text)
+                    }
                 }
             }
             
             for (action : scope.actions) {
                 for (valuedObjectReference : action.trigger.allReferences) {
                     val rectangle = diagramViewContext.getTargetElements(action).filter(KRectangle).head
-                    val text = rectangle.children.filter(KText).filter[ text.contains(valuedObjectReference.valuedObject.name) ].head
-                    actionTextMap.put(valuedObjectReference, text)
+                    if (rectangle !== null) {
+                        val text = rectangle.children.filter(KText).filter[ text.contains(valuedObjectReference.valuedObject.name) ].head
+                        actionTextMap.put(valuedObjectReference, text)
+                    }
                 }
             }
             
