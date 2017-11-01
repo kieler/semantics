@@ -11,6 +11,7 @@
       <unit id="org.eclipse.epp.mpc.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.equinox.executable.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.sdk.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.xpand.sdk.feature.group" version="0.0.0"/>
       <repository location="http://download.eclipse.org/releases/oxygen"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
@@ -23,7 +24,6 @@
       <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20170919201930/repository/"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
-      <unit id="org.eclipse.xpand.sdk.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.xtext.sdk.feature.group" version="0.0.0"/>
       <repository location="http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.12.0/"/>
     </location>
