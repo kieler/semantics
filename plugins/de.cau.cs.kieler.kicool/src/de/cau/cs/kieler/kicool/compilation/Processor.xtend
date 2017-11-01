@@ -86,7 +86,7 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
     /**
      * Since it is immutable, we can just return the object.
      */
-    override Object cloneObject() {
+    override IKiCoolCloneable cloneObject() {
         this
     }
     
