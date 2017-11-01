@@ -82,7 +82,9 @@ class EsterelScopeProvider extends SCLScopeProvider {
         scopeElems.addAll(getLocalSignals(context));
         scopeElems.addAll(getLocalVariables(context));
         scopeElems.addAll(getLocalTraps(context));
-        scopeElems.addAll(getAllElements(context, COLLECT_CONSTANTS.merge(COLLECT_SENSORS).merge(COLLECT_SIGNALS)));
+        scopeElems.addAll(getAllElements(context, COLLECT_CONSTANTS))
+        scopeElems.addAll(getAllElements(context, COLLECT_SENSORS))
+        scopeElems.addAll(getAllElements(context, COLLECT_SIGNALS))
         return new SimpleScope(scopeElems);
     }
 

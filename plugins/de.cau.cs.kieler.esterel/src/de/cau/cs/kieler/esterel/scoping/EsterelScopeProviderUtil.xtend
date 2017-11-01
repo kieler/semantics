@@ -59,7 +59,7 @@ class EsterelScopeProviderUtil {
     public static val ScopeFunction<Module> COLLECT_CONSTANTS = new ScopeFunction<Module>() {
         override collect(Module m, List<IEObjectDescription> scopeElems) {
             for (d : m.declarations.filter(ConstantDeclaration)) {
-                for (s : d.valuedObjects) {
+                for (s : d.constants) {
                     scopeElems.add(new EObjectDescription(QualifiedName.create(s.name), s, emptyMap));
                 }
             }
