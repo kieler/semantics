@@ -51,6 +51,7 @@ import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.scg.extensions.ValuedObjectMapping
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -126,7 +127,7 @@ class SimpleSequentializer extends AbstractSequentializer {
     protected var Set<Node> pilData = null
     protected var SynchronizerData joinData = null
     
-    protected HashMap<ValuedObject, ValuedObject> valuedObjectMap = null
+    protected ValuedObjectMapping valuedObjectMap = null
          
                
     // -------------------------------------------------------------------------

@@ -48,6 +48,7 @@ import java.util.HashMap
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.scg.extensions.ValuedObjectMapping
 
 /** 
  * @author ssm
@@ -208,14 +209,14 @@ class SimpleGuardTransformation extends InplaceProcessor<SCGraphs> {
         
         // Copy node dependencies
         for(node : scg.nodes.filter[ dependencies.size > 0]) {
-            val sourceAssignment = VAMap.get(valuedObjectMap.get(schedulingBlockCache.get(node).guards.head.valuedObject))
+            val sourceAssignment = VAMap.get(valuedObjectMap.get(schedulingBlockCache.get(node).guards.head.valuedObject).peek)
             if (sourceAssignment !== null) {
                 for(dependency : node.dependencies) {
                     var Assignment ta = null
                     if (node instanceof Assignment) {
-                        ta = VAMap.get(valuedObjectMap.get(schedulingBlockCache.get(dependency.target).guards.head.valuedObject))
+                        ta = VAMap.get(valuedObjectMap.get(schedulingBlockCache.get(dependency.target).guards.head.valuedObject).peek)
                     } else if (node instanceof Conditional) {
-                        ta = VAMap.get(valuedObjectMap.get((dependency.target as Guard).valuedObject))
+                        ta = VAMap.get(valuedObjectMap.get((dependency.target as Guard).valuedObject).peek)
                     }
                     if (ta != null) {
                         val targetAssignment = ta
@@ -258,7 +259,7 @@ class SimpleGuardTransformation extends InplaceProcessor<SCGraphs> {
         val AAMap = <Assignment, Assignment> newHashMap
         for(schedulingBlock : scg.schedulingBlocks) {
             for(assignment : schedulingBlock.nodes.filter(Assignment)) {
-                val guardAssignment = VAMap.get(valuedObjectMap.get(schedulingBlock.guards.head.valuedObject))
+                val guardAssignment = VAMap.get(valuedObjectMap.get(schedulingBlock.guards.head.valuedObject).peek)
 
                 if (guardAssignment != null) {
                     val newAssignment = assignment.copySCGAssignment(valuedObjectMap)
@@ -295,7 +296,7 @@ class SimpleGuardTransformation extends InplaceProcessor<SCGraphs> {
         newSCG      
     }
     
-    private def Assignment createAssignment(Guard guard, HashMap<ValuedObject, ValuedObject> map) {
+    private def Assignment createAssignment(Guard guard, ValuedObjectMapping map) {
         ScgFactory::eINSTANCE.createAssignment => [
             valuedObject = guard.valuedObject.getValuedObjectCopy(map)
             expression = guard.expression.copySCGExpression(map)

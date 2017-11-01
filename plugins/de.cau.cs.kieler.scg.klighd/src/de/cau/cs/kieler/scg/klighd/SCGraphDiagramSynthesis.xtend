@@ -88,6 +88,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.jface.viewers.ISelectionChangedListener
 import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.xtext.serializer.ISerializer
+import org.eclipse.elk.graph.properties.Property
 
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
@@ -99,6 +100,17 @@ import com.google.common.collect.Multimap
 import org.eclipse.elk.core.options.NodeLabelPlacement
 import de.cau.cs.kieler.klighd.internal.macrolayout.KlighdDiagramLayoutConnector
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.scg.klighd.actions.OptNodePrioActions
+import de.cau.cs.kieler.scg.klighd.actions.NodePriorityActions
+import de.cau.cs.kieler.scg.klighd.actions.ThreadPriorityActions
+import de.cau.cs.kieler.scg.klighd.actions.SCCActions
+import de.cau.cs.kieler.scg.klighd.actions.PrioStatementsActions
+import de.cau.cs.kieler.kicool.compilation.CompilationContext
+import de.cau.cs.kieler.scg.processors.transformators.priority.PriorityProcessor
+import java.util.LinkedList
+import de.cau.cs.kieler.scg.processors.transformators.priority.PriorityAuxiliaryData
+import de.cau.cs.kieler.annotations.IntAnnotation
+import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -125,6 +137,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     @Inject extension SCGThreadExtensions
     @Inject extension SCGSerializeHRExtensions
     @Inject extension KEffectsExtensions
+
+    extension KRenderingFactory = KRenderingFactory.eINSTANCE
 
     // -------------------------------------------------------------------------
     // -- KlighD Options
@@ -185,13 +199,23 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         128f);
 
     /** Control flow thickness */
-    private static val SynthesisOption CONTROLFLOW_THICKNESS = SynthesisOption::createRangeOption(
+    public static val SynthesisOption CONTROLFLOW_THICKNESS = SynthesisOption::createRangeOption(
         "Controlflow thickness", 0.5f, 5f, 0.5f, 2f);
 
     /** Graph orientation */
     private static val SynthesisOption ORIENTATION = SynthesisOption::createChoiceOption("Orientation",
         <String>newLinkedList("Top-Down", "Left-Right"), "Top-Down");
+        
+    public static val NODE_PRIO_PROPERTY = new Property<Boolean>("scgPriority.NodePriority", false)
 
+    public static val OPT_PRIO_PROPERTY = new Property<Boolean>("scgPriority.OptNodePriority", false)
+    
+    public static val THREAD_PRIO_PROPERTY = new Property<Boolean>("scgPriority.ThreadPriority", false)
+    
+    public static val SCC_PROPERTY = new Property<Boolean>("scgPriority.SCCPriority", false)
+    
+    public static val PRIO_STATEMENTS_PROPERTY = new Property<Boolean>("scgPriority.PrioStatements", false)
+    
     // Text constants for the dependency types filter
     private static val DEPENDENCYFILTERSTRING_WRITE_WRITE = "write - write"
     private static val DEPENDENCYFILTERSTRING_ABSWRITE_RELWRITE = "abs. write - rel. write"
@@ -252,7 +276,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             SynthesisOption::createSeparator("Layout"),
             LAYOUT_DEPENDENCIES,
             LAYOUT_SEPARATE_CC,
-            ORIENTATION
+            ORIENTATION,
+            SynthesisOption::createSeparator("Priority"),
+            OptNodePrioActions.SHOW_OPT_PRIO_ID,
+            NodePriorityActions.SHOW_NODE_PRIORITY,
+            ThreadPriorityActions.SHOW_THREAD_PRIO,
+            SCCActions.SHOW_SCC,
+            PrioStatementsActions.SHOW_PRIO_STATEMENTS
         );
     }
 
@@ -299,7 +329,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         [it.red = 240; it.green = 128; it.blue = 128;]
     private static val KColor SCHEDULING_NOTSCHEDULABLE = RENDERING_FACTORY.createKColor() =>
         [it.red = 255; it.green = 0; it.blue = 0;]
-    private static val KColor STANDARD_CONTROLFLOWEDGE = RENDERING_FACTORY.createKColor() =>
+    public static val KColor STANDARD_CONTROLFLOWEDGE = RENDERING_FACTORY.createKColor() =>
         [it.red = 0; it.green = 0; it.blue = 0;]
 //    private static val KColor SCHEDULING_CONTROLFLOWEDGE = RENDERING_FACTORY.createKColor() =>
 //        [it.red = 144; it.green = 144; it.blue = 144;]
@@ -314,6 +344,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val KColor SCHIZO_COLOR = KRenderingFactory::eINSTANCE.createKColor() => 
         [it.red = 245; it.green = 96; it.blue = 33;]
 
+    public static val KColor NODE_PRIORITY_COLOR = KRenderingFactory::eINSTANCE.createKColor() =>
+        [it.red = 255; it.green = 30; it.blue = 30;]
+    private static val KColor OPT_PRIORITY_COLOR = KRenderingFactory::eINSTANCE.createKColor() =>
+        [it.red = 30; it.green = 30; it.blue = 255;]
+    public static val KColor STRONGLY_CONNECTED_COMPONENT_COLOR = KRenderingFactory::eINSTANCE.createKColor() =>
+        [it.red = 180; it.green = 50; it.blue = 180;]
     private static val KColor PROBLEM_COLOR = KRenderingFactory::eINSTANCE.createKColor() => 
         [it.red = 255; it.green = 0; it.blue = 0;]
     private static val int PROBLEM_WIDTH = 4    
@@ -438,6 +474,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     protected boolean isSCPDG
     protected boolean isGuardSCG
     
+    /** List of all strongly connected components of the SCG */
+    private LinkedList<LinkedList<Node>> scc    
+    
     protected val HashMultimap<KNode, KNode> hierarchyAttachment = HashMultimap.create  
 
     // -------------------------------------------------------------------------
@@ -452,11 +491,16 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 */
     override transform(SCGraph model) {
 
-//        compilationResult = this.usedContext.getProperty(KiCoProperties.COMPILATION_RESULT)
-//        if (compilationResult != null) {
+        val compilationContext = this.usedContext.getProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT)
+        if (compilationContext != null) {
 //            val PILR = compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head
 //            if (PILR != null) PIL_Nodes += PILR.criticalNodes
-//        }
+
+            val prioAuxData = compilationContext.result.getProperty(PriorityProcessor.PRIORITY_AUXILIARY_DATA)
+            if(prioAuxData != null) {
+                scc = prioAuxData.stronglyConnectedComponents
+            }
+        }
 
         // Invoke the synthesis.
         SCGraph = model
@@ -638,6 +682,19 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                                     if (!regionLabel.nullOrEmpty) text = regionLabel + " - "
                                     text = text + threadPathType.toString2
                                 }
+                                
+                                var threadSegmentIDText = ""
+                                if(entry.hasAnnotation(PriorityAuxiliaryData.THREAD_SEGMENT_ANNOTATION)) {
+                                    threadSegmentIDText = "ThreadID: " + 
+                                        (entry.getAnnotation(PriorityAuxiliaryData.THREAD_SEGMENT_ANNOTATION) 
+                                                                as IntAnnotation).value.toString  
+                                    val labelTR = addInsideBottomLeftNodeLabel(threadSegmentIDText, 10, 
+                                                                        KlighdConstants::DEFAULT_FONT_NAME) => [
+                                        it.KRendering.setForeground(SCGraphDiagramSynthesis.REGIONLABEL.copy)
+                                    ]
+                                    labelTR.KRendering.setProperty(THREAD_PRIO_PROPERTY, true)
+                                }
+                                                                
                                 if (SHOW_POTENTIALPROBLEMS.booleanValue) {
                                     addInsideTopLeftNodeLabel(text, 10, KlighdConstants::DEFAULT_FONT_NAME) => [
                                         it.KRendering.setForeground(REGIONLABEL.copy);
@@ -658,6 +715,51 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     it.dependencies.forEach[ synthesizeDependency ]
                 ]
             }
+            
+            // Draw strongly connected components
+            if(scc != null) {
+                for(component : scc) {
+                    if(component.size > 1) {
+                        for(n : component) { 
+                            for(n2CF : n.allNext) {
+                                val n2 = n2CF.target
+                                if(component.contains(n2)) {
+                                    val edges = n2CF.allEdges
+                                    for(edge : edges) {
+                                        val edgeRendering = edge.getData(typeof(KRoundedBendsPolyline))
+                                        edgeRendering.setProperty(SCC_PROPERTY, true)
+                                        val style = createKForeground().setColor2(STRONGLY_CONNECTED_COMPONENT_COLOR.copy)
+                                        style.properties.put(SCCActions.P, true)
+                                        style.propagateToChildren = true
+                                        edgeRendering.styles += style
+                                    }
+                                    n2CF.thickenControlFlow(4)
+                                    
+                                } 
+                            }
+                            for(n2Dep : n.dependencies) {
+                                val n2 = n2Dep.target
+                                if(component.contains(n2)) {
+                                    val edges = n2Dep.allEdges
+                                    for(edge : edges) {
+                                        if(edge != null) {
+                                            val edgeRendering = edge.getData(typeof(KRoundedBendsPolyline))
+                                            edgeRendering.setProperty(SCC_PROPERTY, true)
+                                            val style = createKForeground().setColor2(STRONGLY_CONNECTED_COMPONENT_COLOR.copy)
+                                            style.properties.put(SCCActions.P, true)
+                                            style.propagateToChildren = true
+                                            edgeRendering.styles += style
+                                        }                                        
+                                    }
+                                    n2Dep.thickenDependency(4)
+//                                    n2Dep.colorDependency(STRONGLY_CONNECTED_COMPONENT_COLOR.copy)                                   
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+                        
             // Draw analysis visualization if present.
             scg.synthesizeAnalyses
             scg.synthesizeSchedule
@@ -706,7 +808,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     assignmentStr = serializeHR(assignment) as String
                 }
                         
-                it.addText(assignmentStr).associateWith(assignment).setSurroundingSpace(4, 0, 2, 0) => [
+                it.addText(assignmentStr).associateWith(assignment).setSurroundingSpace(4, 0.1f, 2, 0) => [
                     if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                 ]
             ]
@@ -742,6 +844,35 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     var sbHeadNodeName = assignment.getStringAnnotationValue(SCGAnnotations.ANNOTATION_HEADNODE)
                 	sbHeadNodeName.createLabel(node).associateWith(assignment).configureOutsideTopLeftNodeLabel(sbHeadNodeName, 9, KlighdConstants::DEFAULT_FONT_NAME).KRendering.foreground = "black".color
  				}
+            }
+            
+                        // Draw the node priorities
+            var nodePrio    = -1
+            var optNodePrio = -1
+            if(assignment.hasAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION)) {
+                nodePrio = (assignment.getAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION) as IntAnnotation).value
+                
+                var container = node.KContainerRendering
+                val txt = container.addText(nodePrio.toString)
+                txt.setProperty(NODE_PRIO_PROPERTY, true)
+                txt.setAreaPlacementData.from(LEFT,0,-0.9f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0)
+                txt.setForeground(SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
+            }
+            
+            // Draw the optimized node priority IDs
+            if(assignment.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
+                optNodePrio = (assignment.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
+                                                            as IntAnnotation).value
+                
+                val container = node.KContainerRendering
+                val txt = container.addText(optNodePrio.toString)
+                txt.setProperty(OPT_PRIO_PROPERTY, true)
+                txt.setAreaPlacementData.from(LEFT,0,0.9f,TOP,0,0.3f).to(RIGHT,0,0.9f,BOTTOM,0,0)
+                txt.setForeground(SCGraphDiagramSynthesis.OPT_PRIORITY_COLOR.copy)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
             }
         ]
     }
@@ -829,6 +960,35 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             // Added as suggested by uru (mail to cmot, 11.11.2016)            
             port.addLayoutParam(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy.NETWORK_SIMPLEX);
 
+            // Draw the node priorities
+            var nodePrio    = -1
+            var optNodePrio = -1
+            if(conditional.hasAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION)) {
+                nodePrio = (conditional.getAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION) as IntAnnotation).value
+                
+                val container = node.KContainerRendering
+                val txt = container.addText(nodePrio.toString)
+                txt.setProperty(NODE_PRIO_PROPERTY, true)
+                txt.setAreaPlacementData.from(LEFT,0,0,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
+                txt.setForeground(SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
+                
+            }
+            
+            // Draw the optimized node priority IDs
+            if(conditional.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
+                optNodePrio = (conditional.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
+                                                            as IntAnnotation).value
+                val container = node.KContainerRendering
+
+                val txt = container.addText(optNodePrio.toString)
+                txt.setProperty(OPT_PRIO_PROPERTY, true)
+                txt.setAreaPlacementData.from(LEFT,0,0,TOP,0,0.6f).to(RIGHT,0,0,BOTTOM,0,0)
+                txt.setForeground(SCGraphDiagramSynthesis.OPT_PRIORITY_COLOR.copy)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
+            }
         ]
     }
 
@@ -875,6 +1035,36 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
                 port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.5)
             }
+            
+            // Draw the node priorities
+            var nodePrio    = -1
+            var optNodePrio = -1
+            if(surface.hasAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION)) {
+                nodePrio = (surface.getAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION) as IntAnnotation).value
+                val container = node.KContainerRendering
+                
+                val txt = container.addText(nodePrio.toString)
+                txt.setProperty(NODE_PRIO_PROPERTY, true)
+                txt.setAreaPlacementData.from(LEFT,0,-0.8f,TOP,0,0.6f)//.to(RIGHT,0,0,BOTTOM,0,0.1f)
+                txt.setForeground(SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
+                
+            }
+            
+            // Draw the optimized node priority IDs
+            if(surface.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
+                optNodePrio = (surface.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
+                                                        as IntAnnotation).value
+                val container = node.KContainerRendering
+
+                val txt = container.addText(optNodePrio.toString)
+                txt.setProperty(OPT_PRIO_PROPERTY, true)
+                txt.setAreaPlacementData.from(LEFT,0,0.8f,TOP,0,0.6f)//.to(RIGHT,0,0,BOTTOM,0,0.1f)
+                txt.setForeground(SCGraphDiagramSynthesis.OPT_PRIORITY_COLOR.copy)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
+            }            
         ]
     }
 
@@ -924,6 +1114,36 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 val port = node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
                 port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.5)
             }
+            
+            // Draw the node priorities
+            var nodePrio    = -1
+            var optNodePrio = -1
+            if(depth.hasAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION)) {
+                nodePrio = (depth.getAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION) as IntAnnotation).value
+                val container = node.KContainerRendering
+
+                val txt = container.addText(nodePrio.toString)
+                txt.setProperty(NODE_PRIO_PROPERTY, true)
+                txt.setAreaPlacementData.from(LEFT,0,-0.8f,TOP,0,-0.3f).to(RIGHT,0,0,BOTTOM,0,0)
+                txt.setForeground(SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
+                
+            }
+            
+            // Draw the optimized node priority IDs
+            if(depth.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
+                optNodePrio = (depth.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
+                                                    as IntAnnotation).value
+                val container = node.KContainerRendering
+
+                val txt = container.addText(optNodePrio.toString)
+                txt.setProperty(OPT_PRIO_PROPERTY, true)
+                txt.setAreaPlacementData.from(LEFT,0,0.8f,TOP,0,-0.3f).to(RIGHT,0,0,BOTTOM,0,0)
+                txt.setForeground(SCGraphDiagramSynthesis.OPT_PRIORITY_COLOR.copy)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
+            }            
         ]
     }
 
@@ -979,6 +1199,39 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST)
                 node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
             }
+
+            
+            // Draw the node priorities
+            var nodePrio    = -1
+            var optNodePrio = -1
+
+            if(entry.hasAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION)) {
+
+                nodePrio = (entry.getAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION) as IntAnnotation).value
+                val container = node.KContainerRendering
+
+                val txt = container.addText(nodePrio.toString)
+                txt.setProperty(NODE_PRIO_PROPERTY, true)
+                txt.setAreaPlacementData.from(LEFT,0,-0.8f,TOP,0,0.1f)//.to(RIGHT,0,0,BOTTOM,0,0.6f)
+                txt.setForeground(SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
+                
+            }
+            
+            // Draw the optimized node priority IDs
+            if(entry.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
+                optNodePrio = (entry.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
+                                                    as IntAnnotation).value
+                val container = node.KContainerRendering
+
+                val txt = container.addText(optNodePrio.toString)
+                txt.setProperty(OPT_PRIO_PROPERTY, true)
+                txt.setAreaPlacementData.from(LEFT,0,0.8f,TOP,0,0.1f)//.to(RIGHT,0,0,BOTTOM,0,0.6f)
+                txt.setForeground(SCGraphDiagramSynthesis.OPT_PRIORITY_COLOR.copy)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
+            }            
         ]
     }
 
@@ -1020,6 +1273,36 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             } else {
                 node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST)
                 node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
+            }
+            
+            // Draw the node priorities
+            var nodePrio    = -1
+            var optNodePrio = -1
+            if(exit.hasAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION)) {
+                nodePrio = (exit.getAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION) as IntAnnotation).value
+                val container = node.KContainerRendering
+
+                val txt = container.addText(nodePrio.toString)
+                txt.setProperty(NODE_PRIO_PROPERTY, true)
+                txt.setAreaPlacementData.from(LEFT,0,-0.8f,TOP,0,0.1f)//.to(RIGHT,0,0,BOTTOM,0,0.6f)
+                txt.setForeground(SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
+                
+            }
+            
+            // Draw the optimized node priority IDs
+            if(exit.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
+                optNodePrio = (exit.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
+                                                    as IntAnnotation).value
+                val container = node.KContainerRendering
+
+                val txt = container.addText(optNodePrio.toString)
+                txt.setProperty(OPT_PRIO_PROPERTY, true)
+                txt.setAreaPlacementData.from(LEFT,0,0.8f,TOP,0,0.1f)//.to(RIGHT,0,0,BOTTOM,0,0.6f)
+                txt.setForeground(SCGraphDiagramSynthesis.OPT_PRIORITY_COLOR.copy)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
             }
         ]
     }
@@ -1068,6 +1351,36 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             } else {
                 val port = node.addPort(SCGPORTID_INCOMING, 0, 37.5f, 1, PortSide::WEST)
                 port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.5)
+            }
+            
+            // Draw the node priorities
+            var nodePrio    = -1
+            var optNodePrio = -1
+            if(fork.hasAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION)) {
+                nodePrio = (fork.getAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION) as IntAnnotation).value
+                val container = node.KContainerRendering
+
+                val txt = container.addText(nodePrio.toString)
+                txt.setProperty(NODE_PRIO_PROPERTY, true)
+                txt.setAreaPlacementData.from(LEFT,0,-0.6f,TOP,0,0.6f)//.to(RIGHT,0,0,BOTTOM,0,0.6f)
+                txt.setForeground(SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
+                
+            }
+            
+            // Draw the optimized node priority IDs
+            if(fork.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
+                optNodePrio = (fork.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
+                                                    as IntAnnotation).value
+                val container = node.KContainerRendering
+
+                val txt = container.addText(optNodePrio.toString)
+                txt.setProperty(OPT_PRIO_PROPERTY, true)
+                txt.setAreaPlacementData.from(LEFT,0,0.6f,TOP,0,0.6f)//.to(RIGHT,0,0,BOTTOM,0,0.6f)
+                txt.setForeground(SCGraphDiagramSynthesis.OPT_PRIORITY_COLOR.copy)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
             }
         ]
     }
@@ -1118,6 +1431,36 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             } else {
                 val port = node.addPort(SCGPORTID_OUTGOING, 0, 37.5f, 0, PortSide::EAST)
                 port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -0.5)
+            }
+            
+            // Draw the node priorities
+            var nodePrio    = -1
+            var optNodePrio = -1
+            if(join.hasAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION)) {
+                nodePrio = (join.getAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION) as IntAnnotation).value
+                val container = node.KContainerRendering
+
+                val txt = container.addText(nodePrio.toString)
+                txt.setProperty(NODE_PRIO_PROPERTY, true)
+                txt.setAreaPlacementData.from(LEFT,0,-0.6f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
+                txt.setForeground(SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
+                
+            }
+            
+            // Draw the optimized node priority IDs
+            if(join.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
+                optNodePrio = (join.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
+                                                    as IntAnnotation).value
+                val container = node.KContainerRendering
+
+                val txt = container.addText(optNodePrio.toString)
+                txt.setProperty(OPT_PRIO_PROPERTY, true)
+                txt.setAreaPlacementData.from(LEFT,0,0.6f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
+                txt.setForeground(SCGraphDiagramSynthesis.OPT_PRIORITY_COLOR.copy)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
             }
         ]
     }
@@ -1233,6 +1576,32 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (controlFlow.target.schizophrenic) {
                 edge.KRendering.foreground = SCHIZO_COLOR.copy
             }
+            
+            
+            //Visualize the prio-statements of the priority-based approach
+            if(!(sourceObj instanceof Fork) && !(sourceObj instanceof Depth) && !(targetObj instanceof Join)){
+                val srcNode = sourceObj as Node
+                val tgtNode = targetObj as Node
+                if(srcNode.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
+                    && tgtNode.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
+                    val srcPrio = srcNode.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
+                                                            as IntAnnotation
+                    val tgtPrio = tgtNode.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
+                                                            as IntAnnotation
+                    if(srcPrio.value != tgtPrio.value) {
+                        val port = edge.sourcePort => [
+                            it.setPortSize(50, 20)
+                            it.KContainerRendering.setProperty(PRIO_STATEMENTS_PROPERTY, true)
+                            var rec = it.KContainerRendering.addRoundedRectangle(CORNERRADIUS, CORNERRADIUS, LINEWIDTH)
+                            rec.background = "white".color
+                            var txt = rec.addText("prio(" + tgtPrio.value + ")")
+                            txt.fontSize = 7
+                            var x = txt.setAreaPlacementData
+                            x.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 1, 0)
+                        ]
+                    }
+                }
+            }            
         ]
     }
     
@@ -1600,7 +1969,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         if (!(scg.hasSchedulingData && SHOW_SCHEDULINGPATH.booleanValue)) return;
         
     	for(node : scg.nodes) {
-    	    // filter[ !dependencies.filter(ScheduleDependency).empty ]
     	    if (!node.dependencies.filter(ScheduleDependency).empty) { 
       		    val sourceKNode = node.node 
       			val targetNode = node.dependencies.filter(ScheduleDependency).head.target

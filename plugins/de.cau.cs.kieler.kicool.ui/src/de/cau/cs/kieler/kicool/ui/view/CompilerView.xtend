@@ -212,7 +212,7 @@ class CompilerView extends DiagramViewPart {
     }
     
     private def void saveCheckedValue(IMemento memento, AbstractAction action) {
-        memento?.putString(action.action.id, action.action.checked.toString)
+        if (action !== null) memento?.putString(action.action.id, action.action.checked.toString)
     }
 
 }

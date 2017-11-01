@@ -31,13 +31,14 @@ import de.cau.cs.kieler.kexpressions.PrintCall
 import com.google.common.collect.Multimap
 import com.google.common.collect.HashMultimap
 import com.google.inject.Singleton
+import de.cau.cs.kieler.scg.codegen.CodeGeneratorSerializeHRExtensions
 
 /**
  * @author ssm
  *
  */
 @Singleton
-class CCodeSerializeHRExtensions extends SCGSerializeHRExtensions {
+class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     
     public static val INCLUDES = "includes"
     
