@@ -117,7 +117,13 @@
            system="system/de.cau.cs.kieler.esterel.scest.scl.netlist.kico">
      </TransformationSystem>
      <TransformationSystem
+           system="system/de.cau.cs.kieler.esterel.kernel.kico">
+     </TransformationSystem>
+     <TransformationSystem
            system="system/de.cau.cs.kieler.esterel.scc.kico">
+     </TransformationSystem>
+     <TransformationSystem
+           system="system/de.cau.cs.kieler.esterel.kernel.scc.kico">
      </TransformationSystem>
   </extension>
   <extension
@@ -145,6 +151,33 @@
      </Processor>
      <Processor
            class="de.cau.cs.kieler.esterel.processors.transformators.ssa.SSCEsterelReconstruction">
+     </Processor>
+  </extension>
+  <extension
+        point="de.cau.cs.kieler.kicool.processor">
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.kernel.AwaitKernelTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.kernel.AbortKernelTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.kernel.HaltKernelTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.kernel.LoopEachKernelTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.kernel.DoKernelTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.kernel.EveryKernelTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.kernel.PresentCaseKernelTransformation">
+     </Processor>
+     <Processor
+           class="de.cau.cs.kieler.esterel.processors.transformators.kernel.SustainKernelTransformation">
      </Processor>
   </extension>
   <!--extension

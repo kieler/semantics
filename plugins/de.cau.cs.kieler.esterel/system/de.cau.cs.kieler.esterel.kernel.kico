@@ -1,0 +1,12 @@
+system de.cau.cs.kieler.esterel.kernel
+    version 1 
+    label "Kernel Esterel"
+    
+de.cau.cs.kieler.esterel.processors.transformators.kernel.do
+de.cau.cs.kieler.esterel.processors.transformators.kernel.every
+de.cau.cs.kieler.esterel.processors.transformators.kernel.loopeach
+de.cau.cs.kieler.esterel.processors.transformators.kernel.halt
+de.cau.cs.kieler.esterel.processors.transformators.kernel.sustain
+de.cau.cs.kieler.esterel.processors.transformators.kernel.abort
+de.cau.cs.kieler.esterel.processors.transformators.kernel.await
+de.cau.cs.kieler.esterel.processors.transformators.kernel.present

@@ -2,7 +2,20 @@ system de.cau.cs.kieler.esterel.scc
     version 1 
     label "Esterel SCC"
     set de.cau.cs.kieler.kicool.kitt.tracingActive true
+    set de.cau.cs.kieler.esterel.processors.transformators.kernel.strict false
     
+//system de.cau.cs.kieler.esterel.kernel
+//system de.cau.cs.kieler.esterel.kernel.scc
+
+de.cau.cs.kieler.esterel.processors.transformators.kernel.do
+de.cau.cs.kieler.esterel.processors.transformators.kernel.every
+de.cau.cs.kieler.esterel.processors.transformators.kernel.loopeach
+de.cau.cs.kieler.esterel.processors.transformators.kernel.halt
+de.cau.cs.kieler.esterel.processors.transformators.kernel.sustain
+de.cau.cs.kieler.esterel.processors.transformators.kernel.abort
+de.cau.cs.kieler.esterel.processors.transformators.kernel.await
+de.cau.cs.kieler.esterel.processors.transformators.kernel.present
+
 de.cau.cs.kieler.esterel.processors.transformators.ssa.ssc.scest2scl
 de.cau.cs.kieler.scl.processors.transformators.scl2scg
 de.cau.cs.kieler.scg.processors.transformators.dependency
