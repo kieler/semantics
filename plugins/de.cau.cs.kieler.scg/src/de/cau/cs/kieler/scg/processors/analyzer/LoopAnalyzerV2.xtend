@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2013 by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -24,6 +24,7 @@ import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import java.util.Deque
+import de.cau.cs.kieler.scg.Assignment
 
 /** 
  * @author ssm
@@ -38,7 +39,7 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
         new Property<LoopData>("de.cau.cs.kieler.scg.processors.loopAnalyzer.data", null)	
 	
     override getId() {
-        "de.cau.cs.kieler.scg.processors.loopAnalyzer"
+        "de.cau.cs.kieler.scg.processors.loopAnalyzerV2"
     }
     
     override getName() {
@@ -56,12 +57,21 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
         environment.setProperty(LOOP_DATA, loopData)
 
         val nodesToCheck = <Node> newLinkedList
+        val checkedNodes = <Node> newHashSet
         for (scg : model.scgs) {
             nodesToCheck += scg.nodes.head as Entry
         }
         
         while (nodesToCheck.peek !== null) {
-            nodesToCheck.pop.checkInstantaneousLoop(loopData, nodesToCheck)
+            val nextNode = nodesToCheck.pop
+            if (!checkedNodes.contains(nextNode)) {
+                nextNode.checkInstantaneousLoop(loopData, nodesToCheck)
+                checkedNodes += nextNode
+            }
+        }
+        
+        if (!loopData.criticalNodes.empty) {
+            environment.errors.add("Instananeous loop detected!")
         }
     }	
 	
@@ -74,15 +84,23 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
 	        visited += actualNode
 	        
             val nextNodes =
-                (actualNode.allNext.map[ target ] +  
-                actualNode.eContents.filter(DataDependency).filter[concurrent && confluent ].map[ target ]).toList
+                (actualNode.allNext.map[ target ] + 
+                if (actualNode instanceof Assignment) 
+                    actualNode.dependencies.filter(DataDependency).filter[ concurrent && !confluent ].map[ target ]
+                else #[]).toList
+                
                
             var Node nextNode = null
             
             for (nn : nextNodes) {
                 if (path.contains(nn)) {
                     // loop
-                    loopData.criticalNodes.addAll(path)
+                    val iter = path.iterator
+                    var Node pn = null
+                    while ((pn = iter.next) !== nn) {
+                        loopData.criticalNodes.add(pn)
+                    } 
+                    loopData.criticalNodes.add(pn)
                 }    
                 if (!visited.contains(nn)) {
                     if (nn instanceof Surface) {
@@ -96,7 +114,7 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
             if (nextNode === null) {
                 path.pop
             } else {
-                path += nextNode
+                path.push(nextNode)
             }
 	    } while(!path.empty)
 	}

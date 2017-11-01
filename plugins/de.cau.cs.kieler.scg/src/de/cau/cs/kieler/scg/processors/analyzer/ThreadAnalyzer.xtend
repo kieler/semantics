@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2013 by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -20,6 +20,7 @@ import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 
 /** 
  * @author ssm
@@ -28,10 +29,13 @@ import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
  */
 class ThreadAnalyzer extends InplaceProcessor<SCGraphs> {
 	
+	@Inject extension AnnotationsExtensions
 	@Inject extension SCGThreadExtensions
 	
     public static val IProperty<ThreadData> THREAD_DATA = 
         new Property<ThreadData>("de.cau.cs.kieler.scg.processors.threadAnalyzer.data", null)	
+        
+    public static val String ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"        
 	
     override getId() {
         "de.cau.cs.kieler.scg.processors.threadAnalyzer"
@@ -52,6 +56,9 @@ class ThreadAnalyzer extends InplaceProcessor<SCGraphs> {
             val threadPathTypes = entry.getThreadControlFlowTypes
             for (threadEntry : threadPathTypes.keySet) {
                 threadData.data.put(threadEntry, threadPathTypes.get(threadEntry))
+                if (!threadEntry.hasAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE)) {
+                    threadEntry.createStringAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(threadEntry).toString2)
+                }                
             }            
         }
     }	

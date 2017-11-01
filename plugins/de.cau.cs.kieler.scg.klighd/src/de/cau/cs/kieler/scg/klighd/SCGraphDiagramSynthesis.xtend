@@ -111,6 +111,7 @@ import java.util.LinkedList
 import de.cau.cs.kieler.scg.processors.transformators.priority.PriorityAuxiliaryData
 import de.cau.cs.kieler.annotations.IntAnnotation
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
+import de.cau.cs.kieler.scg.processors.analyzer.LoopAnalyzerV2
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -493,8 +494,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
         val compilationContext = this.usedContext.getProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT)
         if (compilationContext != null) {
-//            val PILR = compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head
-//            if (PILR != null) PIL_Nodes += PILR.criticalNodes
+            val PILR = compilationContext.result.getProperty(LoopAnalyzerV2.LOOP_DATA)
+            if (PILR != null) PIL_Nodes += PILR.criticalNodes
 
             val prioAuxData = compilationContext.result.getProperty(PriorityProcessor.PRIORITY_AUXILIARY_DATA)
             if(prioAuxData != null) {
