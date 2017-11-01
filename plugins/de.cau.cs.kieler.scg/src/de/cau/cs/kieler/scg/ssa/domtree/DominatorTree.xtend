@@ -29,6 +29,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 
 import static com.google.common.collect.Maps.*
 import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.Assignment
 
 /**
  * This class computes dominator information using the Lengauer-Tarjan method.
@@ -110,7 +111,7 @@ class DominatorTree {
             for (predecessor : predecessors(bb)) {
                 val newSemiCandidate = if (predecessor.dfnum <= bb.dfnum) {
                     predecessor
-                }else{
+                } else {
                     predecessor.ancestorWithLowestSemi.semi
                 }
                 if (newSemiCandidate.dfnum < semiCandidate.dfnum) {
@@ -222,6 +223,10 @@ class DominatorTree {
     
     def getDominanceFrontiers(BasicBlock bb) {
         return dominanceFrontiers.get(bb)
+    }
+    
+    def isFragmented() {
+        return dfNum.size > idom.size + 1
     }
 
     // -------------------------------------------------------------------------

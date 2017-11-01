@@ -67,6 +67,9 @@ import static de.cau.cs.kieler.kexpressions.OperatorType.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.esterel.EsterelThread
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.esterel.Await
 
 /**
  * @author als
@@ -153,7 +156,9 @@ class SSCEsterelReconstruction extends Processor<SCGraphs, EsterelProgram> imple
             mapping.get(it).filter(Declaration).exists[isSSA]
         ]
 
-        if (hasSSA) {
+// Disbales becase of dead code optimization
+// Should have effect even if no signal versions present
+//        if (hasSSA) {
             // Introduce Versions
             val ssaVersions = newLinkedList
             // -- Interface
@@ -193,7 +198,11 @@ class SSCEsterelReconstruction extends Processor<SCGraphs, EsterelProgram> imple
             // insert phi assignments
             val reverseMapping = HashMultimap.<Node, Object>create
             for (entry : mapping.entries) {
-                if (entry.key instanceof Statement && entry.value instanceof Node) {
+                if (entry.value instanceof Entry || entry.value instanceof de.cau.cs.kieler.scg.Exit) {
+                    if (entry.key instanceof EsterelThread) {
+                        reverseMapping.put(entry.value as Node, entry.key)
+                    }
+                } else if (entry.key instanceof Statement && entry.value instanceof Node) {
                     reverseMapping.put(entry.value as Node, entry.key)
                 }
             }
@@ -206,8 +215,17 @@ class SSCEsterelReconstruction extends Processor<SCGraphs, EsterelProgram> imple
                     }
                     val stms = reverseMapping.get(attachNode)
                     if (stms.empty || stms.size > 1) {
-                        throw new IllegalArgumentException("Problem")
-                    } else {
+                        throw new IllegalArgumentException("Too many attach nodes")
+                    } else if (stms.head instanceof Await || (stms.head instanceof Loop && (stms.head as Loop).delay !== null)) {
+                        throw new IllegalArgumentException("Cannot attach inside non-kernel statements")
+                    } else if (stms.head instanceof EsterelThread) {
+                        val thread = stms.head as EsterelThread
+                        if (attachNode instanceof Entry) {
+                            thread.statements.head.addSSAAssignment(asm, true)
+                        } else {
+                            thread.statements.last.addSSAAssignment(asm, false)
+                        }
+                    } else if (stms.head instanceof Statement) {
                         val stm = stms.head as Statement
                         if (stm instanceof Present) {
                             if (branch.equals("then")) {
@@ -223,7 +241,18 @@ class SSCEsterelReconstruction extends Processor<SCGraphs, EsterelProgram> imple
                     }
                 }
             }
-        }
+            
+            val opts = esterel.eAllContents.filter(Present).filter[expression === null].toList
+            for (p : opts) {
+                val c = p.eContainer as StatementContainer
+                c.statements.addAll(c.statements.indexOf(p), p.statements)
+                c.statements.addAll(c.statements.indexOf(p), p.elseStatements)
+                c.statements.remove(p)
+            }
+//            if (!opts.empty) {
+//                while()
+//            }
+//        }
 
         return esterel
     }
@@ -280,6 +309,12 @@ class SSCEsterelReconstruction extends Processor<SCGraphs, EsterelProgram> imple
     
     private def dispatch Statement translate(Loop loop) {
         loop.statements.immutableCopy.forEach[it.replace(it.translate)]
+        // Loop Each
+        if (loop.delay !== null) {
+            val conds = mapping.get(loop).filter(Conditional)
+            if (conds.size != 1) environment.errors.add("Cannot convert loop each!")
+            loop.delay.expression = conds.head.condition.translateExpr
+        }
         return loop
     }    
 
@@ -319,9 +354,21 @@ class SSCEsterelReconstruction extends Processor<SCGraphs, EsterelProgram> imple
     
     private def dispatch Statement translate(Present present) {
         val cond = mapping.get(present).filter(Conditional).head
-        present.statements.immutableCopy.forEach[it.replace(it.translate)]
-        present.expression = cond.condition.translateExpr
-        present.elseStatements.immutableCopy.forEach[it.replace(it.translate)]
+        val b = cond.condition
+        if (b instanceof BoolValue) {
+            present.expression = null
+            if (b.value) {
+                present.statements.immutableCopy.forEach[it.replace(it.translate)]
+                present.elseStatements.clear
+            } else {
+                present.statements.clear
+                present.elseStatements.immutableCopy.forEach[it.replace(it.translate)]
+            }
+        } else {
+            present.statements.immutableCopy.forEach[it.replace(it.translate)]
+            present.expression = cond.condition.translateExpr
+            present.elseStatements.immutableCopy.forEach[it.replace(it.translate)]
+        }
         return present
     }
     
@@ -341,9 +388,17 @@ class SSCEsterelReconstruction extends Processor<SCGraphs, EsterelProgram> imple
         return exit
     }    
     
+    private def dispatch Statement translate(Await await) {
+        val conds = mapping.get(await).filter(Conditional)
+        if (conds.size != 1) environment.errors.add("Cannot convert await!")
+        await.delay.expression = conds.head.condition.translateExpr
+        return await
+    }    
+    
     private def dispatch Statement translate(Statement stm) {
-        throw new UnsupportedOperationException("Not yet supported!")
+        throw new UnsupportedOperationException(stm.eClass.name + " not yet supported!")
     }
+    
     
     private def dispatch Expression translateExpr(ValuedObjectReference expression) {
         if (signalVOmap.containsValue(expression.valuedObject)) {

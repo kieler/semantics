@@ -188,7 +188,7 @@ class SSACoreExtensions {
         val use = scg.uses
         val def = scg.defs
         for (decl : scg.declarations.filter[isSSA]) {//input == false && output == false
-            decl.valuedObjects.removeIf[!isRegister && !isTerm && use.get(it).empty && !def.containsKey(it)]
+            decl.valuedObjects.removeIf[!isRegister && !isTerm && (use.get(it).empty || use.get(it).forall[hasAnnotation("dead")]) && !def.containsKey(it)]
         }
         scg.removeUnusedSSADeclarations 
     }

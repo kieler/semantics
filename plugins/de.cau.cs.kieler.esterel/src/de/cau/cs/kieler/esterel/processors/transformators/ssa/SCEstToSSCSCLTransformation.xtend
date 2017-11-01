@@ -60,6 +60,9 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.esterel.LocalVariableDeclaration
+import de.cau.cs.kieler.kexpressions.BoolValue
 
 /**
  * This class contains methods to transform an Kernel SC Esterel program to SCL using signal notation.
@@ -68,6 +71,9 @@ import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
  * 
  */
 class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> implements Traceable {
+    
+    static val strict = false
+    public static val ARTIFICIAL_JOIN = "ARTIFICIAL_JOIN"
     
     public static val ID = "de.cau.cs.kieler.esterel.processors.transformators.ssa.ssc.scest2scl"
 
@@ -134,7 +140,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
         
 
         if (sourceEsterelProgram.modules.size > 1) {
-            throw new IllegalArgumentException("Cannot handle Esterel programs with multiple modules!")
+            environment.errors.add("Cannot handle Esterel programs with multiple modules!")
         }
         
         val module = sourceEsterelProgram.modules.head
@@ -144,7 +150,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
 
         // Interface transformations
         if (module.signalDeclarations.size > module.declarations.size) {
-            throw new IllegalArgumentException("Can only handle Esterel programs with signal declarations!")
+            environment.errors.add("Can only handle Esterel programs with signal declarations!")
         }
         for (decl : module.signalDeclarations) {
             sclModule.declarations += createVariableDeclaration(ValueType.PURE) => [
@@ -153,7 +159,11 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
                 output = decl.output
                 for (sig : decl.signals) {
                     if (sig.type !== ValueType.PURE) {
-                        throw new IllegalArgumentException("Can only handle Esterel programs with pure signals!")
+                        if (strict) {
+                            environment.errors.add("Can only handle Esterel programs with non-pure signals!")
+                        } else {
+                            environment.warnings.add("Can only handle Esterel programs with non-pure signals, valued signal will be treated pure!")
+                        }
                     }
                     valuedObjects += createValuedObject(sig.name) => [
                         it.trace(sig)
@@ -203,7 +213,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
         }
 
         // Added join jumps for concurrent exits 
-        for (exit : exits.entrySet) {
+        for (exit : exits.entrySet.sortBy[outerTraps.get(it.key).size]) {
             val endTrap = exit.key.target
             val threadHierarchy = <Thread>newLinkedList
             var parent = exit.key.eContainer
@@ -227,7 +237,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
                         exitDecl.valuedObjects += it
                     ]
                     expression = createBoolValue(true)
-                    annotations += createAnnotation => [name = "IS_JOIN"]
+                    annotations += createAnnotation => [name = ARTIFICIAL_JOIN]
                 ]
                 val join_label = createLabel.trace(exit.key) => [
                     name = "join_" + exit.value.valuedObject.name.substring(5)
@@ -252,9 +262,23 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
                             ]
                         ])
                     }
-                    for (pexit : t.eAllContents.filter(Goto).filter[target != exit.key.target && exits.containsKey(it) && !outerTraps.get(exit.key).contains(it.target)].toList) {
-                        parallelExits.put(exits.get(pexit), new Pair(join_label, join_asm))
+                    for (goto : t.eAllContents.filter(Goto).filter[
+                        exits.containsKey(it) && outerTraps.get(it).size > outerTraps.get(exit.key).size
+                    ].toList) {
+                        val scope = goto.eContainer as Scope
+                        scope.statements.add(scope.statements.indexOf(goto), createConditional => [
+                            expression = exit.value.valuedObject.reference
+                            statements += createGoto => [
+                                target = join_label
+                                annotations += createAnnotation => [
+                                    name = SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION
+                                ]
+                            ]
+                        ])
                     }
+//                    for (pexit : t.eAllContents.filter(Goto).filter[target != exit.key.target && exits.containsKey(it) && !outerTraps.get(exit.key).contains(it.target)].toList) {
+//                        parallelExits.put(exits.get(pexit), new Pair(join_label, join_asm))
+//                    }
                     t.statements.add(createConditional => [
                         expression = exit.value.valuedObject.reference
                         statements += createGoto => [
@@ -267,19 +291,19 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
                 }
             }
         }
-        // Apply trap hierarchy to exits
-        for (exit : parallelExits.entries) {
-            val scope = exit.key.eContainer as Scope
-            scope.statements.add(scope.statements.indexOf(exit.key)+1, createConditional => [
-                expression = exit.value.value.valuedObject.reference
-                statements += createGoto => [
-                    target = exit.value.key
-                    annotations += createAnnotation => [
-                        name = SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION
-                    ]
-                ]
-            ])
-        }
+//        // Apply trap hierarchy to exits
+//        for (exit : parallelExits.entries) {
+//            val scope = exit.key.eContainer as Scope
+//            scope.statements.add(scope.statements.indexOf(exit.key)+1, createConditional => [
+//                expression = exit.value.value.valuedObject.reference
+//                statements += createGoto => [
+//                    target = exit.value.key
+//                    annotations += createAnnotation => [
+//                        name = SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION
+//                    ]
+//                ]
+//            ])
+//        }
 
         // Make unique labels
         sclModule.eAllContents.filter(Label).groupBy[name].values.forEach [
@@ -298,8 +322,13 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
     def ValuedObject vo(ValuedObject vo) {
         if (vo instanceof Signal) {
             return vo.vo
-        } else {
-            throw new IllegalArgumentException("Can only handle Esterel programs with pure signals!")
+        } else {        
+            if (strict) {
+                environment.errors.add("Reference to non-pure signals are not supported!")
+            } else {
+                environment.warnings.add("Replaced reference to non-pure signals by tick!")
+            }
+            return null
         }
     }
 
@@ -320,7 +349,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
     def dispatch Scope translate(EsterelParallel parallel, Scope scope) {
         scope.statements += createParallel.trace(parallel) => [
             for (esterelThread : parallel.threads) {
-                threads += createThread.trace(parallel) => [ t |
+                threads += createThread.trace(esterelThread) => [ t |
                     esterelThread.statements.forEach[translate(t)]
                 ]
             }
@@ -361,6 +390,24 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
             ]
             lsig.statements.forEach[translate(scope)]
         ]
+        return scope
+    }
+    
+    def dispatch Scope translate(LocalVariableDeclaration lvar, Scope scope) {
+        if (strict) {
+            environment.errors.add("Cannot handle Esterel programs with local variables!")
+        } else {
+            environment.warnings.add("Ignored local variable decarations!")
+        }
+        return scope
+    }
+    
+    def dispatch Scope translate(Assignment asm, Scope scope) {
+        if (strict) {
+            environment.errors.add("Cannot handle Esterel programs with variable assignments!")
+        } else {
+            environment.warnings.add("Ignored variable assignment!")
+        }
         return scope
     }
 
@@ -448,11 +495,22 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
     }
 
     def dispatch Expression translateExpr(ValuedObjectReference expr) {
-        return expr.valuedObject.vo.reference
+        if (strict) {
+            return expr.valuedObject.vo.reference
+        } else {
+            val vo = expr.valuedObject.vo
+            if (vo === null) {
+                return createBoolValue(true)
+            }
+            return vo.reference
+        }
+        
     }
 
     def dispatch Expression translateExpr(OperatorExpression expr) {
         return createOperatorExpression(expr.operator) => [
+            if (operator == OperatorType.BITWISE_AND) operator = OperatorType.LOGICAL_AND
+            if (operator == OperatorType.BITWISE_OR) operator = OperatorType.LOGICAL_OR
             it.trace(expr)
             subExpressions.addAll(expr.subExpressions.map[translateExpr])
         ]
