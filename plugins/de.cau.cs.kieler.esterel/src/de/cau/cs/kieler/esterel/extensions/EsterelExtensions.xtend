@@ -31,6 +31,8 @@ import de.cau.cs.kieler.esterel.Constant
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.esterel.Variable
 import de.cau.cs.kieler.esterel.Sensor
+import de.cau.cs.kieler.esterel.EsterelProgram
+import de.cau.cs.kieler.esterel.Present
 
 /**
  * @author als
@@ -49,6 +51,10 @@ class EsterelExtensions {
     
     def constantDeclarations(Module m) {
         return m.declarations.filter(ConstantDeclaration)
+    }
+        
+    def constants(Declaration d) {
+        return d.valuedObjects.filter(Constant)
     }
     
     def signalDeclarations(Module m) {
@@ -92,6 +98,17 @@ class EsterelExtensions {
     
     def threads(EsterelParallel par) {
         return par.statements.filter(EsterelThread)
+    }
+    
+    // ---------------------------------------------------------------------
+    
+    def isKernel(EsterelProgram prog) {
+        return prog.eAllContents.forall[
+            switch (it) {
+                // TODO
+                default: false
+            }
+        ]
     }
     
 }
