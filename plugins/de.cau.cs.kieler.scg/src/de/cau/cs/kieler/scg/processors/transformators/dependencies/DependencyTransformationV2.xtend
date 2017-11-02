@@ -43,8 +43,10 @@ import java.util.Set
 
 import static de.cau.cs.kieler.scg.DataDependencyType.*
 import static de.cau.cs.kieler.scg.processors.transformators.dependencies.ValuedObjectAccess.*
+import static de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.*
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -72,6 +74,7 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsValueExtensions
     @Inject extension KEffectsExtensions
+    @Inject extension AnnotationsExtensions
     
     /** Only save conflicting dependencies in the model. */
     public static val IProperty<Boolean> SAVE_ONLY_CONFLICTING_DEPENDENCIES = 
@@ -114,12 +117,12 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
             switch(node) {
                 Assignment: {
                     node.processAssignment(forkStack, valuedObjectAccessors)
-                    node.next.target.addAndMark(nodes, visited)
+                    if (!node.next.hasAnnotation(IGNORE_INTER_THREAD_CF_ANNOTATION)) node.next.target.addAndMark(nodes, visited)
                 }
                 Conditional: {
                     node.processConditional(forkStack, valuedObjectAccessors)
-                    node.^else.target.addAndMark(nodes, visited)
-                    node.then.target.addAndMark(nodes, visited)
+                    if (!node.^else.hasAnnotation(IGNORE_INTER_THREAD_CF_ANNOTATION)) node.^else.target.addAndMark(nodes, visited)
+                    if (!node.then.hasAnnotation(IGNORE_INTER_THREAD_CF_ANNOTATION)) node.then.target.addAndMark(nodes, visited)
                 }
                 Fork: {
                     forkStack.push(node)
