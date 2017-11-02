@@ -96,7 +96,8 @@ class KiCoolRegistration {
                 modelsMap.put(system.key, model as System) 
                 modelsIdMap.put((model as System).id, model as System)
             } catch (Exception e) {
-                throw new Exception("There was an error loading the registered processor system " + system.toString, e)
+                java.lang.System.err.println("There was an error loading the registered processor system " + system.toString)
+                e.printStackTrace
             }
         }
         modelList

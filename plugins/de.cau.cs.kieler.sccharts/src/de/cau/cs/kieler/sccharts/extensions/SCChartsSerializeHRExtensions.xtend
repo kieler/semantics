@@ -184,9 +184,9 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             if (declaration.extern.nullOrEmpty) {
                 components.addKeyword("ref")
                 if (declaration.reference instanceof NamedObject) {
-                    components.addKeyword((declaration.reference as NamedObject).name)
+                    components.addHighlight((declaration.reference as NamedObject).name)
                 } else {
-                    components.addKeyword(declaration.reference.class.name)
+                    components.addHighlight(declaration.reference.class.name)
                 }
             } else {
                 components.addKeyword("extern")

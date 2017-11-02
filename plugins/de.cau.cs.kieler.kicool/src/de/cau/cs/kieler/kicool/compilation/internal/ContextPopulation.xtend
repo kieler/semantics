@@ -84,6 +84,7 @@ class ContextPopulation {
         ]
         
         cc.subContexts.put(processorSystem, subContext)
+        cc.processorInstancesSequence.addAll(subContext.processorInstancesSequence)
     }
     
     
