@@ -43,7 +43,7 @@ class EditPartSystemManager implements EditorActionAdapter.EditorSaveListener,
     }
     
     def getActiveSystemId() {
-        val systemId = editorSystemMap.get(activeEditor?.site?.id)
+        val String systemId = editorSystemMap.get(activeEditor?.site?.id)
         // If the selection is null, set the first one for this editor and proceed.
         if (systemId === null && activeEditor !== null) {
             view.systemSelectionManager.widgetSelectFirst(false)
