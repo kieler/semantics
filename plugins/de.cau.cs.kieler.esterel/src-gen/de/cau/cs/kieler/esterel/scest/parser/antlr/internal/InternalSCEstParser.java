@@ -3493,7 +3493,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTypeDeclaration"
-    // InternalSCEst.g:1275:1: ruleTypeDeclaration returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'type' ( (lv_types_2_0= ruleTypeDefinition ) ) (otherlv_3= ',' ( (lv_types_4_0= ruleTypeDefinition ) ) )* otherlv_5= ';' ) ;
+    // InternalSCEst.g:1275:1: ruleTypeDeclaration returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'type' ( (lv_valuedObjects_2_0= ruleTypeDefinition ) ) (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleTypeDefinition ) ) )* otherlv_5= ';' ) ;
     public final EObject ruleTypeDeclaration() throws RecognitionException {
         EObject current = null;
 
@@ -3502,19 +3502,19 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
         Token otherlv_5=null;
         EObject lv_annotations_0_0 = null;
 
-        EObject lv_types_2_0 = null;
+        EObject lv_valuedObjects_2_0 = null;
 
-        EObject lv_types_4_0 = null;
+        EObject lv_valuedObjects_4_0 = null;
 
 
          enterRule(); 
             
         try {
-            // InternalSCEst.g:1278:28: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'type' ( (lv_types_2_0= ruleTypeDefinition ) ) (otherlv_3= ',' ( (lv_types_4_0= ruleTypeDefinition ) ) )* otherlv_5= ';' ) )
-            // InternalSCEst.g:1279:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'type' ( (lv_types_2_0= ruleTypeDefinition ) ) (otherlv_3= ',' ( (lv_types_4_0= ruleTypeDefinition ) ) )* otherlv_5= ';' )
+            // InternalSCEst.g:1278:28: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'type' ( (lv_valuedObjects_2_0= ruleTypeDefinition ) ) (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleTypeDefinition ) ) )* otherlv_5= ';' ) )
+            // InternalSCEst.g:1279:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'type' ( (lv_valuedObjects_2_0= ruleTypeDefinition ) ) (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleTypeDefinition ) ) )* otherlv_5= ';' )
             {
-            // InternalSCEst.g:1279:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'type' ( (lv_types_2_0= ruleTypeDefinition ) ) (otherlv_3= ',' ( (lv_types_4_0= ruleTypeDefinition ) ) )* otherlv_5= ';' )
-            // InternalSCEst.g:1279:2: ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'type' ( (lv_types_2_0= ruleTypeDefinition ) ) (otherlv_3= ',' ( (lv_types_4_0= ruleTypeDefinition ) ) )* otherlv_5= ';'
+            // InternalSCEst.g:1279:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'type' ( (lv_valuedObjects_2_0= ruleTypeDefinition ) ) (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleTypeDefinition ) ) )* otherlv_5= ';' )
+            // InternalSCEst.g:1279:2: ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'type' ( (lv_valuedObjects_2_0= ruleTypeDefinition ) ) (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleTypeDefinition ) ) )* otherlv_5= ';'
             {
             // InternalSCEst.g:1279:2: ( (lv_annotations_0_0= ruleAnnotation ) )*
             loop19:
@@ -3575,19 +3575,19 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getTypeDeclarationAccess().getTypeKeyword_1());
                   
             }
-            // InternalSCEst.g:1301:1: ( (lv_types_2_0= ruleTypeDefinition ) )
-            // InternalSCEst.g:1302:1: (lv_types_2_0= ruleTypeDefinition )
+            // InternalSCEst.g:1301:1: ( (lv_valuedObjects_2_0= ruleTypeDefinition ) )
+            // InternalSCEst.g:1302:1: (lv_valuedObjects_2_0= ruleTypeDefinition )
             {
-            // InternalSCEst.g:1302:1: (lv_types_2_0= ruleTypeDefinition )
-            // InternalSCEst.g:1303:3: lv_types_2_0= ruleTypeDefinition
+            // InternalSCEst.g:1302:1: (lv_valuedObjects_2_0= ruleTypeDefinition )
+            // InternalSCEst.g:1303:3: lv_valuedObjects_2_0= ruleTypeDefinition
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getTypeDeclarationAccess().getTypesTypeDefinitionParserRuleCall_2_0()); 
+              	        newCompositeNode(grammarAccess.getTypeDeclarationAccess().getValuedObjectsTypeDefinitionParserRuleCall_2_0()); 
               	    
             }
             pushFollow(FollowSets000.FOLLOW_24);
-            lv_types_2_0=ruleTypeDefinition();
+            lv_valuedObjects_2_0=ruleTypeDefinition();
 
             state._fsp--;
             if (state.failed) return current;
@@ -3598,8 +3598,8 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
               	        }
                      		add(
                      			current, 
-                     			"types",
-                      		lv_types_2_0, 
+                     			"valuedObjects",
+                      		lv_valuedObjects_2_0, 
                       		"de.cau.cs.kieler.esterel.Esterel.TypeDefinition");
               	        afterParserOrEnumRuleCall();
               	    
@@ -3610,7 +3610,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSCEst.g:1319:2: (otherlv_3= ',' ( (lv_types_4_0= ruleTypeDefinition ) ) )*
+            // InternalSCEst.g:1319:2: (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleTypeDefinition ) ) )*
             loop20:
             do {
                 int alt20=2;
@@ -3623,7 +3623,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
 
                 switch (alt20) {
             	case 1 :
-            	    // InternalSCEst.g:1319:4: otherlv_3= ',' ( (lv_types_4_0= ruleTypeDefinition ) )
+            	    // InternalSCEst.g:1319:4: otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleTypeDefinition ) )
             	    {
             	    otherlv_3=(Token)match(input,29,FollowSets000.FOLLOW_6); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -3631,19 +3631,19 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
             	          	newLeafNode(otherlv_3, grammarAccess.getTypeDeclarationAccess().getCommaKeyword_3_0());
             	          
             	    }
-            	    // InternalSCEst.g:1323:1: ( (lv_types_4_0= ruleTypeDefinition ) )
-            	    // InternalSCEst.g:1324:1: (lv_types_4_0= ruleTypeDefinition )
+            	    // InternalSCEst.g:1323:1: ( (lv_valuedObjects_4_0= ruleTypeDefinition ) )
+            	    // InternalSCEst.g:1324:1: (lv_valuedObjects_4_0= ruleTypeDefinition )
             	    {
-            	    // InternalSCEst.g:1324:1: (lv_types_4_0= ruleTypeDefinition )
-            	    // InternalSCEst.g:1325:3: lv_types_4_0= ruleTypeDefinition
+            	    // InternalSCEst.g:1324:1: (lv_valuedObjects_4_0= ruleTypeDefinition )
+            	    // InternalSCEst.g:1325:3: lv_valuedObjects_4_0= ruleTypeDefinition
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getTypeDeclarationAccess().getTypesTypeDefinitionParserRuleCall_3_1_0()); 
+            	      	        newCompositeNode(grammarAccess.getTypeDeclarationAccess().getValuedObjectsTypeDefinitionParserRuleCall_3_1_0()); 
             	      	    
             	    }
             	    pushFollow(FollowSets000.FOLLOW_24);
-            	    lv_types_4_0=ruleTypeDefinition();
+            	    lv_valuedObjects_4_0=ruleTypeDefinition();
 
             	    state._fsp--;
             	    if (state.failed) return current;
@@ -3654,8 +3654,8 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
             	      	        }
             	             		add(
             	             			current, 
-            	             			"types",
-            	              		lv_types_4_0, 
+            	             			"valuedObjects",
+            	              		lv_valuedObjects_4_0, 
             	              		"de.cau.cs.kieler.esterel.Esterel.TypeDefinition");
             	      	        afterParserOrEnumRuleCall();
             	      	    
@@ -3846,7 +3846,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleConstantDeclaration"
-    // InternalSCEst.g:1401:1: ruleConstantDeclaration returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'constant' ( (lv_constants_2_0= ruleConstant ) ) (otherlv_3= ',' ( (lv_constants_4_0= ruleConstant ) ) )* otherlv_5= ';' ) ;
+    // InternalSCEst.g:1401:1: ruleConstantDeclaration returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'constant' ( (lv_valuedObjects_2_0= ruleConstant ) ) (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleConstant ) ) )* otherlv_5= ';' ) ;
     public final EObject ruleConstantDeclaration() throws RecognitionException {
         EObject current = null;
 
@@ -3855,19 +3855,19 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
         Token otherlv_5=null;
         EObject lv_annotations_0_0 = null;
 
-        EObject lv_constants_2_0 = null;
+        EObject lv_valuedObjects_2_0 = null;
 
-        EObject lv_constants_4_0 = null;
+        EObject lv_valuedObjects_4_0 = null;
 
 
          enterRule(); 
             
         try {
-            // InternalSCEst.g:1404:28: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'constant' ( (lv_constants_2_0= ruleConstant ) ) (otherlv_3= ',' ( (lv_constants_4_0= ruleConstant ) ) )* otherlv_5= ';' ) )
-            // InternalSCEst.g:1405:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'constant' ( (lv_constants_2_0= ruleConstant ) ) (otherlv_3= ',' ( (lv_constants_4_0= ruleConstant ) ) )* otherlv_5= ';' )
+            // InternalSCEst.g:1404:28: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'constant' ( (lv_valuedObjects_2_0= ruleConstant ) ) (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleConstant ) ) )* otherlv_5= ';' ) )
+            // InternalSCEst.g:1405:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'constant' ( (lv_valuedObjects_2_0= ruleConstant ) ) (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleConstant ) ) )* otherlv_5= ';' )
             {
-            // InternalSCEst.g:1405:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'constant' ( (lv_constants_2_0= ruleConstant ) ) (otherlv_3= ',' ( (lv_constants_4_0= ruleConstant ) ) )* otherlv_5= ';' )
-            // InternalSCEst.g:1405:2: ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'constant' ( (lv_constants_2_0= ruleConstant ) ) (otherlv_3= ',' ( (lv_constants_4_0= ruleConstant ) ) )* otherlv_5= ';'
+            // InternalSCEst.g:1405:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'constant' ( (lv_valuedObjects_2_0= ruleConstant ) ) (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleConstant ) ) )* otherlv_5= ';' )
+            // InternalSCEst.g:1405:2: ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'constant' ( (lv_valuedObjects_2_0= ruleConstant ) ) (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleConstant ) ) )* otherlv_5= ';'
             {
             // InternalSCEst.g:1405:2: ( (lv_annotations_0_0= ruleAnnotation ) )*
             loop21:
@@ -3928,19 +3928,19 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getConstantDeclarationAccess().getConstantKeyword_1());
                   
             }
-            // InternalSCEst.g:1427:1: ( (lv_constants_2_0= ruleConstant ) )
-            // InternalSCEst.g:1428:1: (lv_constants_2_0= ruleConstant )
+            // InternalSCEst.g:1427:1: ( (lv_valuedObjects_2_0= ruleConstant ) )
+            // InternalSCEst.g:1428:1: (lv_valuedObjects_2_0= ruleConstant )
             {
-            // InternalSCEst.g:1428:1: (lv_constants_2_0= ruleConstant )
-            // InternalSCEst.g:1429:3: lv_constants_2_0= ruleConstant
+            // InternalSCEst.g:1428:1: (lv_valuedObjects_2_0= ruleConstant )
+            // InternalSCEst.g:1429:3: lv_valuedObjects_2_0= ruleConstant
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getConstantDeclarationAccess().getConstantsConstantParserRuleCall_2_0()); 
+              	        newCompositeNode(grammarAccess.getConstantDeclarationAccess().getValuedObjectsConstantParserRuleCall_2_0()); 
               	    
             }
             pushFollow(FollowSets000.FOLLOW_24);
-            lv_constants_2_0=ruleConstant();
+            lv_valuedObjects_2_0=ruleConstant();
 
             state._fsp--;
             if (state.failed) return current;
@@ -3951,8 +3951,8 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
               	        }
                      		add(
                      			current, 
-                     			"constants",
-                      		lv_constants_2_0, 
+                     			"valuedObjects",
+                      		lv_valuedObjects_2_0, 
                       		"de.cau.cs.kieler.esterel.Esterel.Constant");
               	        afterParserOrEnumRuleCall();
               	    
@@ -3963,7 +3963,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSCEst.g:1445:2: (otherlv_3= ',' ( (lv_constants_4_0= ruleConstant ) ) )*
+            // InternalSCEst.g:1445:2: (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleConstant ) ) )*
             loop22:
             do {
                 int alt22=2;
@@ -3976,7 +3976,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
 
                 switch (alt22) {
             	case 1 :
-            	    // InternalSCEst.g:1445:4: otherlv_3= ',' ( (lv_constants_4_0= ruleConstant ) )
+            	    // InternalSCEst.g:1445:4: otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleConstant ) )
             	    {
             	    otherlv_3=(Token)match(input,29,FollowSets000.FOLLOW_6); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -3984,19 +3984,19 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
             	          	newLeafNode(otherlv_3, grammarAccess.getConstantDeclarationAccess().getCommaKeyword_3_0());
             	          
             	    }
-            	    // InternalSCEst.g:1449:1: ( (lv_constants_4_0= ruleConstant ) )
-            	    // InternalSCEst.g:1450:1: (lv_constants_4_0= ruleConstant )
+            	    // InternalSCEst.g:1449:1: ( (lv_valuedObjects_4_0= ruleConstant ) )
+            	    // InternalSCEst.g:1450:1: (lv_valuedObjects_4_0= ruleConstant )
             	    {
-            	    // InternalSCEst.g:1450:1: (lv_constants_4_0= ruleConstant )
-            	    // InternalSCEst.g:1451:3: lv_constants_4_0= ruleConstant
+            	    // InternalSCEst.g:1450:1: (lv_valuedObjects_4_0= ruleConstant )
+            	    // InternalSCEst.g:1451:3: lv_valuedObjects_4_0= ruleConstant
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getConstantDeclarationAccess().getConstantsConstantParserRuleCall_3_1_0()); 
+            	      	        newCompositeNode(grammarAccess.getConstantDeclarationAccess().getValuedObjectsConstantParserRuleCall_3_1_0()); 
             	      	    
             	    }
             	    pushFollow(FollowSets000.FOLLOW_24);
-            	    lv_constants_4_0=ruleConstant();
+            	    lv_valuedObjects_4_0=ruleConstant();
 
             	    state._fsp--;
             	    if (state.failed) return current;
@@ -4007,8 +4007,8 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
             	      	        }
             	             		add(
             	             			current, 
-            	             			"constants",
-            	              		lv_constants_4_0, 
+            	             			"valuedObjects",
+            	              		lv_valuedObjects_4_0, 
             	              		"de.cau.cs.kieler.esterel.Esterel.Constant");
             	      	        afterParserOrEnumRuleCall();
             	      	    
@@ -4310,7 +4310,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFunctionDeclaration"
-    // InternalSCEst.g:1571:1: ruleFunctionDeclaration returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'function' ( (lv_functions_2_0= ruleFunction ) ) (otherlv_3= ',' ( (lv_functions_4_0= ruleFunction ) ) )* otherlv_5= ';' ) ;
+    // InternalSCEst.g:1571:1: ruleFunctionDeclaration returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'function' ( (lv_valuedObjects_2_0= ruleFunction ) ) (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleFunction ) ) )* otherlv_5= ';' ) ;
     public final EObject ruleFunctionDeclaration() throws RecognitionException {
         EObject current = null;
 
@@ -4319,19 +4319,19 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
         Token otherlv_5=null;
         EObject lv_annotations_0_0 = null;
 
-        EObject lv_functions_2_0 = null;
+        EObject lv_valuedObjects_2_0 = null;
 
-        EObject lv_functions_4_0 = null;
+        EObject lv_valuedObjects_4_0 = null;
 
 
          enterRule(); 
             
         try {
-            // InternalSCEst.g:1574:28: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'function' ( (lv_functions_2_0= ruleFunction ) ) (otherlv_3= ',' ( (lv_functions_4_0= ruleFunction ) ) )* otherlv_5= ';' ) )
-            // InternalSCEst.g:1575:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'function' ( (lv_functions_2_0= ruleFunction ) ) (otherlv_3= ',' ( (lv_functions_4_0= ruleFunction ) ) )* otherlv_5= ';' )
+            // InternalSCEst.g:1574:28: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'function' ( (lv_valuedObjects_2_0= ruleFunction ) ) (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleFunction ) ) )* otherlv_5= ';' ) )
+            // InternalSCEst.g:1575:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'function' ( (lv_valuedObjects_2_0= ruleFunction ) ) (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleFunction ) ) )* otherlv_5= ';' )
             {
-            // InternalSCEst.g:1575:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'function' ( (lv_functions_2_0= ruleFunction ) ) (otherlv_3= ',' ( (lv_functions_4_0= ruleFunction ) ) )* otherlv_5= ';' )
-            // InternalSCEst.g:1575:2: ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'function' ( (lv_functions_2_0= ruleFunction ) ) (otherlv_3= ',' ( (lv_functions_4_0= ruleFunction ) ) )* otherlv_5= ';'
+            // InternalSCEst.g:1575:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'function' ( (lv_valuedObjects_2_0= ruleFunction ) ) (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleFunction ) ) )* otherlv_5= ';' )
+            // InternalSCEst.g:1575:2: ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'function' ( (lv_valuedObjects_2_0= ruleFunction ) ) (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleFunction ) ) )* otherlv_5= ';'
             {
             // InternalSCEst.g:1575:2: ( (lv_annotations_0_0= ruleAnnotation ) )*
             loop24:
@@ -4392,19 +4392,19 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getFunctionDeclarationAccess().getFunctionKeyword_1());
                   
             }
-            // InternalSCEst.g:1597:1: ( (lv_functions_2_0= ruleFunction ) )
-            // InternalSCEst.g:1598:1: (lv_functions_2_0= ruleFunction )
+            // InternalSCEst.g:1597:1: ( (lv_valuedObjects_2_0= ruleFunction ) )
+            // InternalSCEst.g:1598:1: (lv_valuedObjects_2_0= ruleFunction )
             {
-            // InternalSCEst.g:1598:1: (lv_functions_2_0= ruleFunction )
-            // InternalSCEst.g:1599:3: lv_functions_2_0= ruleFunction
+            // InternalSCEst.g:1598:1: (lv_valuedObjects_2_0= ruleFunction )
+            // InternalSCEst.g:1599:3: lv_valuedObjects_2_0= ruleFunction
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getFunctionDeclarationAccess().getFunctionsFunctionParserRuleCall_2_0()); 
+              	        newCompositeNode(grammarAccess.getFunctionDeclarationAccess().getValuedObjectsFunctionParserRuleCall_2_0()); 
               	    
             }
             pushFollow(FollowSets000.FOLLOW_24);
-            lv_functions_2_0=ruleFunction();
+            lv_valuedObjects_2_0=ruleFunction();
 
             state._fsp--;
             if (state.failed) return current;
@@ -4415,8 +4415,8 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
               	        }
                      		add(
                      			current, 
-                     			"functions",
-                      		lv_functions_2_0, 
+                     			"valuedObjects",
+                      		lv_valuedObjects_2_0, 
                       		"de.cau.cs.kieler.esterel.Esterel.Function");
               	        afterParserOrEnumRuleCall();
               	    
@@ -4427,7 +4427,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSCEst.g:1615:2: (otherlv_3= ',' ( (lv_functions_4_0= ruleFunction ) ) )*
+            // InternalSCEst.g:1615:2: (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleFunction ) ) )*
             loop25:
             do {
                 int alt25=2;
@@ -4440,7 +4440,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
 
                 switch (alt25) {
             	case 1 :
-            	    // InternalSCEst.g:1615:4: otherlv_3= ',' ( (lv_functions_4_0= ruleFunction ) )
+            	    // InternalSCEst.g:1615:4: otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleFunction ) )
             	    {
             	    otherlv_3=(Token)match(input,29,FollowSets000.FOLLOW_6); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -4448,19 +4448,19 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
             	          	newLeafNode(otherlv_3, grammarAccess.getFunctionDeclarationAccess().getCommaKeyword_3_0());
             	          
             	    }
-            	    // InternalSCEst.g:1619:1: ( (lv_functions_4_0= ruleFunction ) )
-            	    // InternalSCEst.g:1620:1: (lv_functions_4_0= ruleFunction )
+            	    // InternalSCEst.g:1619:1: ( (lv_valuedObjects_4_0= ruleFunction ) )
+            	    // InternalSCEst.g:1620:1: (lv_valuedObjects_4_0= ruleFunction )
             	    {
-            	    // InternalSCEst.g:1620:1: (lv_functions_4_0= ruleFunction )
-            	    // InternalSCEst.g:1621:3: lv_functions_4_0= ruleFunction
+            	    // InternalSCEst.g:1620:1: (lv_valuedObjects_4_0= ruleFunction )
+            	    // InternalSCEst.g:1621:3: lv_valuedObjects_4_0= ruleFunction
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getFunctionDeclarationAccess().getFunctionsFunctionParserRuleCall_3_1_0()); 
+            	      	        newCompositeNode(grammarAccess.getFunctionDeclarationAccess().getValuedObjectsFunctionParserRuleCall_3_1_0()); 
             	      	    
             	    }
             	    pushFollow(FollowSets000.FOLLOW_24);
-            	    lv_functions_4_0=ruleFunction();
+            	    lv_valuedObjects_4_0=ruleFunction();
 
             	    state._fsp--;
             	    if (state.failed) return current;
@@ -4471,8 +4471,8 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
             	      	        }
             	             		add(
             	             			current, 
-            	             			"functions",
-            	              		lv_functions_4_0, 
+            	             			"valuedObjects",
+            	              		lv_valuedObjects_4_0, 
             	              		"de.cau.cs.kieler.esterel.Esterel.Function");
             	      	        afterParserOrEnumRuleCall();
             	      	    
@@ -4895,7 +4895,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleProcedureDeclaration"
-    // InternalSCEst.g:1772:1: ruleProcedureDeclaration returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'procedure' ( (lv_procedures_2_0= ruleProcedure ) ) (otherlv_3= ',' ( (lv_procedures_4_0= ruleProcedure ) ) )* otherlv_5= ';' ) ;
+    // InternalSCEst.g:1772:1: ruleProcedureDeclaration returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'procedure' ( (lv_valuedObjects_2_0= ruleProcedure ) ) (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleProcedure ) ) )* otherlv_5= ';' ) ;
     public final EObject ruleProcedureDeclaration() throws RecognitionException {
         EObject current = null;
 
@@ -4904,19 +4904,19 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
         Token otherlv_5=null;
         EObject lv_annotations_0_0 = null;
 
-        EObject lv_procedures_2_0 = null;
+        EObject lv_valuedObjects_2_0 = null;
 
-        EObject lv_procedures_4_0 = null;
+        EObject lv_valuedObjects_4_0 = null;
 
 
          enterRule(); 
             
         try {
-            // InternalSCEst.g:1775:28: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'procedure' ( (lv_procedures_2_0= ruleProcedure ) ) (otherlv_3= ',' ( (lv_procedures_4_0= ruleProcedure ) ) )* otherlv_5= ';' ) )
-            // InternalSCEst.g:1776:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'procedure' ( (lv_procedures_2_0= ruleProcedure ) ) (otherlv_3= ',' ( (lv_procedures_4_0= ruleProcedure ) ) )* otherlv_5= ';' )
+            // InternalSCEst.g:1775:28: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'procedure' ( (lv_valuedObjects_2_0= ruleProcedure ) ) (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleProcedure ) ) )* otherlv_5= ';' ) )
+            // InternalSCEst.g:1776:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'procedure' ( (lv_valuedObjects_2_0= ruleProcedure ) ) (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleProcedure ) ) )* otherlv_5= ';' )
             {
-            // InternalSCEst.g:1776:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'procedure' ( (lv_procedures_2_0= ruleProcedure ) ) (otherlv_3= ',' ( (lv_procedures_4_0= ruleProcedure ) ) )* otherlv_5= ';' )
-            // InternalSCEst.g:1776:2: ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'procedure' ( (lv_procedures_2_0= ruleProcedure ) ) (otherlv_3= ',' ( (lv_procedures_4_0= ruleProcedure ) ) )* otherlv_5= ';'
+            // InternalSCEst.g:1776:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'procedure' ( (lv_valuedObjects_2_0= ruleProcedure ) ) (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleProcedure ) ) )* otherlv_5= ';' )
+            // InternalSCEst.g:1776:2: ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'procedure' ( (lv_valuedObjects_2_0= ruleProcedure ) ) (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleProcedure ) ) )* otherlv_5= ';'
             {
             // InternalSCEst.g:1776:2: ( (lv_annotations_0_0= ruleAnnotation ) )*
             loop29:
@@ -4977,19 +4977,19 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getProcedureDeclarationAccess().getProcedureKeyword_1());
                   
             }
-            // InternalSCEst.g:1798:1: ( (lv_procedures_2_0= ruleProcedure ) )
-            // InternalSCEst.g:1799:1: (lv_procedures_2_0= ruleProcedure )
+            // InternalSCEst.g:1798:1: ( (lv_valuedObjects_2_0= ruleProcedure ) )
+            // InternalSCEst.g:1799:1: (lv_valuedObjects_2_0= ruleProcedure )
             {
-            // InternalSCEst.g:1799:1: (lv_procedures_2_0= ruleProcedure )
-            // InternalSCEst.g:1800:3: lv_procedures_2_0= ruleProcedure
+            // InternalSCEst.g:1799:1: (lv_valuedObjects_2_0= ruleProcedure )
+            // InternalSCEst.g:1800:3: lv_valuedObjects_2_0= ruleProcedure
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getProcedureDeclarationAccess().getProceduresProcedureParserRuleCall_2_0()); 
+              	        newCompositeNode(grammarAccess.getProcedureDeclarationAccess().getValuedObjectsProcedureParserRuleCall_2_0()); 
               	    
             }
             pushFollow(FollowSets000.FOLLOW_24);
-            lv_procedures_2_0=ruleProcedure();
+            lv_valuedObjects_2_0=ruleProcedure();
 
             state._fsp--;
             if (state.failed) return current;
@@ -5000,8 +5000,8 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
               	        }
                      		add(
                      			current, 
-                     			"procedures",
-                      		lv_procedures_2_0, 
+                     			"valuedObjects",
+                      		lv_valuedObjects_2_0, 
                       		"de.cau.cs.kieler.esterel.Esterel.Procedure");
               	        afterParserOrEnumRuleCall();
               	    
@@ -5012,7 +5012,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSCEst.g:1816:2: (otherlv_3= ',' ( (lv_procedures_4_0= ruleProcedure ) ) )*
+            // InternalSCEst.g:1816:2: (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleProcedure ) ) )*
             loop30:
             do {
                 int alt30=2;
@@ -5025,7 +5025,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
 
                 switch (alt30) {
             	case 1 :
-            	    // InternalSCEst.g:1816:4: otherlv_3= ',' ( (lv_procedures_4_0= ruleProcedure ) )
+            	    // InternalSCEst.g:1816:4: otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleProcedure ) )
             	    {
             	    otherlv_3=(Token)match(input,29,FollowSets000.FOLLOW_6); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -5033,19 +5033,19 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
             	          	newLeafNode(otherlv_3, grammarAccess.getProcedureDeclarationAccess().getCommaKeyword_3_0());
             	          
             	    }
-            	    // InternalSCEst.g:1820:1: ( (lv_procedures_4_0= ruleProcedure ) )
-            	    // InternalSCEst.g:1821:1: (lv_procedures_4_0= ruleProcedure )
+            	    // InternalSCEst.g:1820:1: ( (lv_valuedObjects_4_0= ruleProcedure ) )
+            	    // InternalSCEst.g:1821:1: (lv_valuedObjects_4_0= ruleProcedure )
             	    {
-            	    // InternalSCEst.g:1821:1: (lv_procedures_4_0= ruleProcedure )
-            	    // InternalSCEst.g:1822:3: lv_procedures_4_0= ruleProcedure
+            	    // InternalSCEst.g:1821:1: (lv_valuedObjects_4_0= ruleProcedure )
+            	    // InternalSCEst.g:1822:3: lv_valuedObjects_4_0= ruleProcedure
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getProcedureDeclarationAccess().getProceduresProcedureParserRuleCall_3_1_0()); 
+            	      	        newCompositeNode(grammarAccess.getProcedureDeclarationAccess().getValuedObjectsProcedureParserRuleCall_3_1_0()); 
             	      	    
             	    }
             	    pushFollow(FollowSets000.FOLLOW_24);
-            	    lv_procedures_4_0=ruleProcedure();
+            	    lv_valuedObjects_4_0=ruleProcedure();
 
             	    state._fsp--;
             	    if (state.failed) return current;
@@ -5056,8 +5056,8 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
             	      	        }
             	             		add(
             	             			current, 
-            	             			"procedures",
-            	              		lv_procedures_4_0, 
+            	             			"valuedObjects",
+            	              		lv_valuedObjects_4_0, 
             	              		"de.cau.cs.kieler.esterel.Esterel.Procedure");
             	      	        afterParserOrEnumRuleCall();
             	      	    
@@ -5618,7 +5618,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTaskDeclaration"
-    // InternalSCEst.g:2004:1: ruleTaskDeclaration returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'task' ( (lv_tasks_2_0= ruleTask ) ) (otherlv_3= ',' ( (lv_tasks_4_0= ruleTask ) ) )* otherlv_5= ';' ) ;
+    // InternalSCEst.g:2004:1: ruleTaskDeclaration returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'task' ( (lv_valuedObjects_2_0= ruleTask ) ) (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleTask ) ) )* otherlv_5= ';' ) ;
     public final EObject ruleTaskDeclaration() throws RecognitionException {
         EObject current = null;
 
@@ -5627,19 +5627,19 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
         Token otherlv_5=null;
         EObject lv_annotations_0_0 = null;
 
-        EObject lv_tasks_2_0 = null;
+        EObject lv_valuedObjects_2_0 = null;
 
-        EObject lv_tasks_4_0 = null;
+        EObject lv_valuedObjects_4_0 = null;
 
 
          enterRule(); 
             
         try {
-            // InternalSCEst.g:2007:28: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'task' ( (lv_tasks_2_0= ruleTask ) ) (otherlv_3= ',' ( (lv_tasks_4_0= ruleTask ) ) )* otherlv_5= ';' ) )
-            // InternalSCEst.g:2008:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'task' ( (lv_tasks_2_0= ruleTask ) ) (otherlv_3= ',' ( (lv_tasks_4_0= ruleTask ) ) )* otherlv_5= ';' )
+            // InternalSCEst.g:2007:28: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'task' ( (lv_valuedObjects_2_0= ruleTask ) ) (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleTask ) ) )* otherlv_5= ';' ) )
+            // InternalSCEst.g:2008:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'task' ( (lv_valuedObjects_2_0= ruleTask ) ) (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleTask ) ) )* otherlv_5= ';' )
             {
-            // InternalSCEst.g:2008:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'task' ( (lv_tasks_2_0= ruleTask ) ) (otherlv_3= ',' ( (lv_tasks_4_0= ruleTask ) ) )* otherlv_5= ';' )
-            // InternalSCEst.g:2008:2: ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'task' ( (lv_tasks_2_0= ruleTask ) ) (otherlv_3= ',' ( (lv_tasks_4_0= ruleTask ) ) )* otherlv_5= ';'
+            // InternalSCEst.g:2008:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'task' ( (lv_valuedObjects_2_0= ruleTask ) ) (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleTask ) ) )* otherlv_5= ';' )
+            // InternalSCEst.g:2008:2: ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'task' ( (lv_valuedObjects_2_0= ruleTask ) ) (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleTask ) ) )* otherlv_5= ';'
             {
             // InternalSCEst.g:2008:2: ( (lv_annotations_0_0= ruleAnnotation ) )*
             loop37:
@@ -5700,19 +5700,19 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getTaskDeclarationAccess().getTaskKeyword_1());
                   
             }
-            // InternalSCEst.g:2030:1: ( (lv_tasks_2_0= ruleTask ) )
-            // InternalSCEst.g:2031:1: (lv_tasks_2_0= ruleTask )
+            // InternalSCEst.g:2030:1: ( (lv_valuedObjects_2_0= ruleTask ) )
+            // InternalSCEst.g:2031:1: (lv_valuedObjects_2_0= ruleTask )
             {
-            // InternalSCEst.g:2031:1: (lv_tasks_2_0= ruleTask )
-            // InternalSCEst.g:2032:3: lv_tasks_2_0= ruleTask
+            // InternalSCEst.g:2031:1: (lv_valuedObjects_2_0= ruleTask )
+            // InternalSCEst.g:2032:3: lv_valuedObjects_2_0= ruleTask
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getTaskDeclarationAccess().getTasksTaskParserRuleCall_2_0()); 
+              	        newCompositeNode(grammarAccess.getTaskDeclarationAccess().getValuedObjectsTaskParserRuleCall_2_0()); 
               	    
             }
             pushFollow(FollowSets000.FOLLOW_24);
-            lv_tasks_2_0=ruleTask();
+            lv_valuedObjects_2_0=ruleTask();
 
             state._fsp--;
             if (state.failed) return current;
@@ -5723,8 +5723,8 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
               	        }
                      		add(
                      			current, 
-                     			"tasks",
-                      		lv_tasks_2_0, 
+                     			"valuedObjects",
+                      		lv_valuedObjects_2_0, 
                       		"de.cau.cs.kieler.esterel.Esterel.Task");
               	        afterParserOrEnumRuleCall();
               	    
@@ -5735,7 +5735,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSCEst.g:2048:2: (otherlv_3= ',' ( (lv_tasks_4_0= ruleTask ) ) )*
+            // InternalSCEst.g:2048:2: (otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleTask ) ) )*
             loop38:
             do {
                 int alt38=2;
@@ -5748,7 +5748,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
 
                 switch (alt38) {
             	case 1 :
-            	    // InternalSCEst.g:2048:4: otherlv_3= ',' ( (lv_tasks_4_0= ruleTask ) )
+            	    // InternalSCEst.g:2048:4: otherlv_3= ',' ( (lv_valuedObjects_4_0= ruleTask ) )
             	    {
             	    otherlv_3=(Token)match(input,29,FollowSets000.FOLLOW_6); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -5756,19 +5756,19 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
             	          	newLeafNode(otherlv_3, grammarAccess.getTaskDeclarationAccess().getCommaKeyword_3_0());
             	          
             	    }
-            	    // InternalSCEst.g:2052:1: ( (lv_tasks_4_0= ruleTask ) )
-            	    // InternalSCEst.g:2053:1: (lv_tasks_4_0= ruleTask )
+            	    // InternalSCEst.g:2052:1: ( (lv_valuedObjects_4_0= ruleTask ) )
+            	    // InternalSCEst.g:2053:1: (lv_valuedObjects_4_0= ruleTask )
             	    {
-            	    // InternalSCEst.g:2053:1: (lv_tasks_4_0= ruleTask )
-            	    // InternalSCEst.g:2054:3: lv_tasks_4_0= ruleTask
+            	    // InternalSCEst.g:2053:1: (lv_valuedObjects_4_0= ruleTask )
+            	    // InternalSCEst.g:2054:3: lv_valuedObjects_4_0= ruleTask
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getTaskDeclarationAccess().getTasksTaskParserRuleCall_3_1_0()); 
+            	      	        newCompositeNode(grammarAccess.getTaskDeclarationAccess().getValuedObjectsTaskParserRuleCall_3_1_0()); 
             	      	    
             	    }
             	    pushFollow(FollowSets000.FOLLOW_24);
-            	    lv_tasks_4_0=ruleTask();
+            	    lv_valuedObjects_4_0=ruleTask();
 
             	    state._fsp--;
             	    if (state.failed) return current;
@@ -5779,8 +5779,8 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
             	      	        }
             	             		add(
             	             			current, 
-            	             			"tasks",
-            	              		lv_tasks_4_0, 
+            	             			"valuedObjects",
+            	              		lv_valuedObjects_4_0, 
             	              		"de.cau.cs.kieler.esterel.Esterel.Task");
             	      	        afterParserOrEnumRuleCall();
             	      	    
@@ -17727,7 +17727,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTrapHandler"
-    // InternalSCEst.g:6135:1: ruleTrapHandler returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'handle' ( (lv_trapExpr_2_0= ruleTrapExpr ) ) otherlv_3= 'do' ( (lv_statements_4_0= ruleEsterelParallel ) ) ) ;
+    // InternalSCEst.g:6135:1: ruleTrapHandler returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'handle' ( (lv_expression_2_0= ruleTrapExpr ) ) otherlv_3= 'do' ( (lv_statements_4_0= ruleEsterelParallel ) ) ) ;
     public final EObject ruleTrapHandler() throws RecognitionException {
         EObject current = null;
 
@@ -17735,7 +17735,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
         Token otherlv_3=null;
         EObject lv_annotations_0_0 = null;
 
-        EObject lv_trapExpr_2_0 = null;
+        EObject lv_expression_2_0 = null;
 
         EObject lv_statements_4_0 = null;
 
@@ -17743,11 +17743,11 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalSCEst.g:6138:28: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'handle' ( (lv_trapExpr_2_0= ruleTrapExpr ) ) otherlv_3= 'do' ( (lv_statements_4_0= ruleEsterelParallel ) ) ) )
-            // InternalSCEst.g:6139:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'handle' ( (lv_trapExpr_2_0= ruleTrapExpr ) ) otherlv_3= 'do' ( (lv_statements_4_0= ruleEsterelParallel ) ) )
+            // InternalSCEst.g:6138:28: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'handle' ( (lv_expression_2_0= ruleTrapExpr ) ) otherlv_3= 'do' ( (lv_statements_4_0= ruleEsterelParallel ) ) ) )
+            // InternalSCEst.g:6139:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'handle' ( (lv_expression_2_0= ruleTrapExpr ) ) otherlv_3= 'do' ( (lv_statements_4_0= ruleEsterelParallel ) ) )
             {
-            // InternalSCEst.g:6139:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'handle' ( (lv_trapExpr_2_0= ruleTrapExpr ) ) otherlv_3= 'do' ( (lv_statements_4_0= ruleEsterelParallel ) ) )
-            // InternalSCEst.g:6139:2: ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'handle' ( (lv_trapExpr_2_0= ruleTrapExpr ) ) otherlv_3= 'do' ( (lv_statements_4_0= ruleEsterelParallel ) )
+            // InternalSCEst.g:6139:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'handle' ( (lv_expression_2_0= ruleTrapExpr ) ) otherlv_3= 'do' ( (lv_statements_4_0= ruleEsterelParallel ) ) )
+            // InternalSCEst.g:6139:2: ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'handle' ( (lv_expression_2_0= ruleTrapExpr ) ) otherlv_3= 'do' ( (lv_statements_4_0= ruleEsterelParallel ) )
             {
             // InternalSCEst.g:6139:2: ( (lv_annotations_0_0= ruleAnnotation ) )*
             loop144:
@@ -17808,19 +17808,19 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getTrapHandlerAccess().getHandleKeyword_1());
                   
             }
-            // InternalSCEst.g:6161:1: ( (lv_trapExpr_2_0= ruleTrapExpr ) )
-            // InternalSCEst.g:6162:1: (lv_trapExpr_2_0= ruleTrapExpr )
+            // InternalSCEst.g:6161:1: ( (lv_expression_2_0= ruleTrapExpr ) )
+            // InternalSCEst.g:6162:1: (lv_expression_2_0= ruleTrapExpr )
             {
-            // InternalSCEst.g:6162:1: (lv_trapExpr_2_0= ruleTrapExpr )
-            // InternalSCEst.g:6163:3: lv_trapExpr_2_0= ruleTrapExpr
+            // InternalSCEst.g:6162:1: (lv_expression_2_0= ruleTrapExpr )
+            // InternalSCEst.g:6163:3: lv_expression_2_0= ruleTrapExpr
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getTrapHandlerAccess().getTrapExprTrapExprParserRuleCall_2_0()); 
+              	        newCompositeNode(grammarAccess.getTrapHandlerAccess().getExpressionTrapExprParserRuleCall_2_0()); 
               	    
             }
             pushFollow(FollowSets000.FOLLOW_97);
-            lv_trapExpr_2_0=ruleTrapExpr();
+            lv_expression_2_0=ruleTrapExpr();
 
             state._fsp--;
             if (state.failed) return current;
@@ -17831,8 +17831,8 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
               	        }
                      		set(
                      			current, 
-                     			"trapExpr",
-                      		lv_trapExpr_2_0, 
+                     			"expression",
+                      		lv_expression_2_0, 
                       		"de.cau.cs.kieler.esterel.Esterel.TrapExpr");
               	        afterParserOrEnumRuleCall();
               	    
@@ -19877,7 +19877,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLocalVariableDeclaration"
-    // InternalSCEst.g:6849:1: ruleLocalVariableDeclaration returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'var' ( (lv_variableDeclarations_2_0= ruleEsterelVariableDeclaration ) ) (otherlv_3= ',' ( (lv_variableDeclarations_4_0= ruleEsterelVariableDeclaration ) ) )* otherlv_5= 'in' ( (lv_statements_6_0= ruleEsterelParallel ) ) otherlv_7= 'end' (otherlv_8= 'var' )? ) ;
+    // InternalSCEst.g:6849:1: ruleLocalVariableDeclaration returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'var' ( (lv_declarations_2_0= ruleEsterelVariableDeclaration ) ) (otherlv_3= ',' ( (lv_declarations_4_0= ruleEsterelVariableDeclaration ) ) )* otherlv_5= 'in' ( (lv_statements_6_0= ruleEsterelParallel ) ) otherlv_7= 'end' (otherlv_8= 'var' )? ) ;
     public final EObject ruleLocalVariableDeclaration() throws RecognitionException {
         EObject current = null;
 
@@ -19888,9 +19888,9 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
         Token otherlv_8=null;
         EObject lv_annotations_0_0 = null;
 
-        EObject lv_variableDeclarations_2_0 = null;
+        EObject lv_declarations_2_0 = null;
 
-        EObject lv_variableDeclarations_4_0 = null;
+        EObject lv_declarations_4_0 = null;
 
         EObject lv_statements_6_0 = null;
 
@@ -19898,11 +19898,11 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalSCEst.g:6852:28: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'var' ( (lv_variableDeclarations_2_0= ruleEsterelVariableDeclaration ) ) (otherlv_3= ',' ( (lv_variableDeclarations_4_0= ruleEsterelVariableDeclaration ) ) )* otherlv_5= 'in' ( (lv_statements_6_0= ruleEsterelParallel ) ) otherlv_7= 'end' (otherlv_8= 'var' )? ) )
-            // InternalSCEst.g:6853:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'var' ( (lv_variableDeclarations_2_0= ruleEsterelVariableDeclaration ) ) (otherlv_3= ',' ( (lv_variableDeclarations_4_0= ruleEsterelVariableDeclaration ) ) )* otherlv_5= 'in' ( (lv_statements_6_0= ruleEsterelParallel ) ) otherlv_7= 'end' (otherlv_8= 'var' )? )
+            // InternalSCEst.g:6852:28: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'var' ( (lv_declarations_2_0= ruleEsterelVariableDeclaration ) ) (otherlv_3= ',' ( (lv_declarations_4_0= ruleEsterelVariableDeclaration ) ) )* otherlv_5= 'in' ( (lv_statements_6_0= ruleEsterelParallel ) ) otherlv_7= 'end' (otherlv_8= 'var' )? ) )
+            // InternalSCEst.g:6853:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'var' ( (lv_declarations_2_0= ruleEsterelVariableDeclaration ) ) (otherlv_3= ',' ( (lv_declarations_4_0= ruleEsterelVariableDeclaration ) ) )* otherlv_5= 'in' ( (lv_statements_6_0= ruleEsterelParallel ) ) otherlv_7= 'end' (otherlv_8= 'var' )? )
             {
-            // InternalSCEst.g:6853:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'var' ( (lv_variableDeclarations_2_0= ruleEsterelVariableDeclaration ) ) (otherlv_3= ',' ( (lv_variableDeclarations_4_0= ruleEsterelVariableDeclaration ) ) )* otherlv_5= 'in' ( (lv_statements_6_0= ruleEsterelParallel ) ) otherlv_7= 'end' (otherlv_8= 'var' )? )
-            // InternalSCEst.g:6853:2: ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'var' ( (lv_variableDeclarations_2_0= ruleEsterelVariableDeclaration ) ) (otherlv_3= ',' ( (lv_variableDeclarations_4_0= ruleEsterelVariableDeclaration ) ) )* otherlv_5= 'in' ( (lv_statements_6_0= ruleEsterelParallel ) ) otherlv_7= 'end' (otherlv_8= 'var' )?
+            // InternalSCEst.g:6853:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'var' ( (lv_declarations_2_0= ruleEsterelVariableDeclaration ) ) (otherlv_3= ',' ( (lv_declarations_4_0= ruleEsterelVariableDeclaration ) ) )* otherlv_5= 'in' ( (lv_statements_6_0= ruleEsterelParallel ) ) otherlv_7= 'end' (otherlv_8= 'var' )? )
+            // InternalSCEst.g:6853:2: ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'var' ( (lv_declarations_2_0= ruleEsterelVariableDeclaration ) ) (otherlv_3= ',' ( (lv_declarations_4_0= ruleEsterelVariableDeclaration ) ) )* otherlv_5= 'in' ( (lv_statements_6_0= ruleEsterelParallel ) ) otherlv_7= 'end' (otherlv_8= 'var' )?
             {
             // InternalSCEst.g:6853:2: ( (lv_annotations_0_0= ruleAnnotation ) )*
             loop169:
@@ -19963,19 +19963,19 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getLocalVariableDeclarationAccess().getVarKeyword_1());
                   
             }
-            // InternalSCEst.g:6875:1: ( (lv_variableDeclarations_2_0= ruleEsterelVariableDeclaration ) )
-            // InternalSCEst.g:6876:1: (lv_variableDeclarations_2_0= ruleEsterelVariableDeclaration )
+            // InternalSCEst.g:6875:1: ( (lv_declarations_2_0= ruleEsterelVariableDeclaration ) )
+            // InternalSCEst.g:6876:1: (lv_declarations_2_0= ruleEsterelVariableDeclaration )
             {
-            // InternalSCEst.g:6876:1: (lv_variableDeclarations_2_0= ruleEsterelVariableDeclaration )
-            // InternalSCEst.g:6877:3: lv_variableDeclarations_2_0= ruleEsterelVariableDeclaration
+            // InternalSCEst.g:6876:1: (lv_declarations_2_0= ruleEsterelVariableDeclaration )
+            // InternalSCEst.g:6877:3: lv_declarations_2_0= ruleEsterelVariableDeclaration
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getLocalVariableDeclarationAccess().getVariableDeclarationsEsterelVariableDeclarationParserRuleCall_2_0()); 
+              	        newCompositeNode(grammarAccess.getLocalVariableDeclarationAccess().getDeclarationsEsterelVariableDeclarationParserRuleCall_2_0()); 
               	    
             }
             pushFollow(FollowSets000.FOLLOW_102);
-            lv_variableDeclarations_2_0=ruleEsterelVariableDeclaration();
+            lv_declarations_2_0=ruleEsterelVariableDeclaration();
 
             state._fsp--;
             if (state.failed) return current;
@@ -19986,8 +19986,8 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
               	        }
                      		add(
                      			current, 
-                     			"variableDeclarations",
-                      		lv_variableDeclarations_2_0, 
+                     			"declarations",
+                      		lv_declarations_2_0, 
                       		"de.cau.cs.kieler.esterel.Esterel.EsterelVariableDeclaration");
               	        afterParserOrEnumRuleCall();
               	    
@@ -19998,7 +19998,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSCEst.g:6893:2: (otherlv_3= ',' ( (lv_variableDeclarations_4_0= ruleEsterelVariableDeclaration ) ) )*
+            // InternalSCEst.g:6893:2: (otherlv_3= ',' ( (lv_declarations_4_0= ruleEsterelVariableDeclaration ) ) )*
             loop170:
             do {
                 int alt170=2;
@@ -20011,7 +20011,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
 
                 switch (alt170) {
             	case 1 :
-            	    // InternalSCEst.g:6893:4: otherlv_3= ',' ( (lv_variableDeclarations_4_0= ruleEsterelVariableDeclaration ) )
+            	    // InternalSCEst.g:6893:4: otherlv_3= ',' ( (lv_declarations_4_0= ruleEsterelVariableDeclaration ) )
             	    {
             	    otherlv_3=(Token)match(input,29,FollowSets000.FOLLOW_6); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -20019,19 +20019,19 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
             	          	newLeafNode(otherlv_3, grammarAccess.getLocalVariableDeclarationAccess().getCommaKeyword_3_0());
             	          
             	    }
-            	    // InternalSCEst.g:6897:1: ( (lv_variableDeclarations_4_0= ruleEsterelVariableDeclaration ) )
-            	    // InternalSCEst.g:6898:1: (lv_variableDeclarations_4_0= ruleEsterelVariableDeclaration )
+            	    // InternalSCEst.g:6897:1: ( (lv_declarations_4_0= ruleEsterelVariableDeclaration ) )
+            	    // InternalSCEst.g:6898:1: (lv_declarations_4_0= ruleEsterelVariableDeclaration )
             	    {
-            	    // InternalSCEst.g:6898:1: (lv_variableDeclarations_4_0= ruleEsterelVariableDeclaration )
-            	    // InternalSCEst.g:6899:3: lv_variableDeclarations_4_0= ruleEsterelVariableDeclaration
+            	    // InternalSCEst.g:6898:1: (lv_declarations_4_0= ruleEsterelVariableDeclaration )
+            	    // InternalSCEst.g:6899:3: lv_declarations_4_0= ruleEsterelVariableDeclaration
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getLocalVariableDeclarationAccess().getVariableDeclarationsEsterelVariableDeclarationParserRuleCall_3_1_0()); 
+            	      	        newCompositeNode(grammarAccess.getLocalVariableDeclarationAccess().getDeclarationsEsterelVariableDeclarationParserRuleCall_3_1_0()); 
             	      	    
             	    }
             	    pushFollow(FollowSets000.FOLLOW_102);
-            	    lv_variableDeclarations_4_0=ruleEsterelVariableDeclaration();
+            	    lv_declarations_4_0=ruleEsterelVariableDeclaration();
 
             	    state._fsp--;
             	    if (state.failed) return current;
@@ -20042,8 +20042,8 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
             	      	        }
             	             		add(
             	             			current, 
-            	             			"variableDeclarations",
-            	              		lv_variableDeclarations_4_0, 
+            	             			"declarations",
+            	              		lv_declarations_4_0, 
             	              		"de.cau.cs.kieler.esterel.Esterel.EsterelVariableDeclaration");
             	      	        afterParserOrEnumRuleCall();
             	      	    
@@ -20192,15 +20192,15 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEsterelVariableDeclaration"
-    // InternalSCEst.g:6962:1: ruleEsterelVariableDeclaration returns [EObject current=null] : ( ( (lv_variables_0_0= ruleVariable ) ) (otherlv_1= ',' ( (lv_variables_2_0= ruleVariable ) ) )* otherlv_3= ':' ( (lv_type_4_0= ruleTypeIdentifier ) ) ) ;
+    // InternalSCEst.g:6962:1: ruleEsterelVariableDeclaration returns [EObject current=null] : ( ( (lv_valuedObjects_0_0= ruleVariable ) ) (otherlv_1= ',' ( (lv_valuedObjects_2_0= ruleVariable ) ) )* otherlv_3= ':' ( (lv_type_4_0= ruleTypeIdentifier ) ) ) ;
     public final EObject ruleEsterelVariableDeclaration() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_1=null;
         Token otherlv_3=null;
-        EObject lv_variables_0_0 = null;
+        EObject lv_valuedObjects_0_0 = null;
 
-        EObject lv_variables_2_0 = null;
+        EObject lv_valuedObjects_2_0 = null;
 
         EObject lv_type_4_0 = null;
 
@@ -20208,25 +20208,25 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalSCEst.g:6965:28: ( ( ( (lv_variables_0_0= ruleVariable ) ) (otherlv_1= ',' ( (lv_variables_2_0= ruleVariable ) ) )* otherlv_3= ':' ( (lv_type_4_0= ruleTypeIdentifier ) ) ) )
-            // InternalSCEst.g:6966:1: ( ( (lv_variables_0_0= ruleVariable ) ) (otherlv_1= ',' ( (lv_variables_2_0= ruleVariable ) ) )* otherlv_3= ':' ( (lv_type_4_0= ruleTypeIdentifier ) ) )
+            // InternalSCEst.g:6965:28: ( ( ( (lv_valuedObjects_0_0= ruleVariable ) ) (otherlv_1= ',' ( (lv_valuedObjects_2_0= ruleVariable ) ) )* otherlv_3= ':' ( (lv_type_4_0= ruleTypeIdentifier ) ) ) )
+            // InternalSCEst.g:6966:1: ( ( (lv_valuedObjects_0_0= ruleVariable ) ) (otherlv_1= ',' ( (lv_valuedObjects_2_0= ruleVariable ) ) )* otherlv_3= ':' ( (lv_type_4_0= ruleTypeIdentifier ) ) )
             {
-            // InternalSCEst.g:6966:1: ( ( (lv_variables_0_0= ruleVariable ) ) (otherlv_1= ',' ( (lv_variables_2_0= ruleVariable ) ) )* otherlv_3= ':' ( (lv_type_4_0= ruleTypeIdentifier ) ) )
-            // InternalSCEst.g:6966:2: ( (lv_variables_0_0= ruleVariable ) ) (otherlv_1= ',' ( (lv_variables_2_0= ruleVariable ) ) )* otherlv_3= ':' ( (lv_type_4_0= ruleTypeIdentifier ) )
+            // InternalSCEst.g:6966:1: ( ( (lv_valuedObjects_0_0= ruleVariable ) ) (otherlv_1= ',' ( (lv_valuedObjects_2_0= ruleVariable ) ) )* otherlv_3= ':' ( (lv_type_4_0= ruleTypeIdentifier ) ) )
+            // InternalSCEst.g:6966:2: ( (lv_valuedObjects_0_0= ruleVariable ) ) (otherlv_1= ',' ( (lv_valuedObjects_2_0= ruleVariable ) ) )* otherlv_3= ':' ( (lv_type_4_0= ruleTypeIdentifier ) )
             {
-            // InternalSCEst.g:6966:2: ( (lv_variables_0_0= ruleVariable ) )
-            // InternalSCEst.g:6967:1: (lv_variables_0_0= ruleVariable )
+            // InternalSCEst.g:6966:2: ( (lv_valuedObjects_0_0= ruleVariable ) )
+            // InternalSCEst.g:6967:1: (lv_valuedObjects_0_0= ruleVariable )
             {
-            // InternalSCEst.g:6967:1: (lv_variables_0_0= ruleVariable )
-            // InternalSCEst.g:6968:3: lv_variables_0_0= ruleVariable
+            // InternalSCEst.g:6967:1: (lv_valuedObjects_0_0= ruleVariable )
+            // InternalSCEst.g:6968:3: lv_valuedObjects_0_0= ruleVariable
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getEsterelVariableDeclarationAccess().getVariablesVariableParserRuleCall_0_0()); 
+              	        newCompositeNode(grammarAccess.getEsterelVariableDeclarationAccess().getValuedObjectsVariableParserRuleCall_0_0()); 
               	    
             }
             pushFollow(FollowSets000.FOLLOW_118);
-            lv_variables_0_0=ruleVariable();
+            lv_valuedObjects_0_0=ruleVariable();
 
             state._fsp--;
             if (state.failed) return current;
@@ -20237,8 +20237,8 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
               	        }
                      		add(
                      			current, 
-                     			"variables",
-                      		lv_variables_0_0, 
+                     			"valuedObjects",
+                      		lv_valuedObjects_0_0, 
                       		"de.cau.cs.kieler.esterel.Esterel.Variable");
               	        afterParserOrEnumRuleCall();
               	    
@@ -20249,7 +20249,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSCEst.g:6984:2: (otherlv_1= ',' ( (lv_variables_2_0= ruleVariable ) ) )*
+            // InternalSCEst.g:6984:2: (otherlv_1= ',' ( (lv_valuedObjects_2_0= ruleVariable ) ) )*
             loop172:
             do {
                 int alt172=2;
@@ -20262,7 +20262,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
 
                 switch (alt172) {
             	case 1 :
-            	    // InternalSCEst.g:6984:4: otherlv_1= ',' ( (lv_variables_2_0= ruleVariable ) )
+            	    // InternalSCEst.g:6984:4: otherlv_1= ',' ( (lv_valuedObjects_2_0= ruleVariable ) )
             	    {
             	    otherlv_1=(Token)match(input,29,FollowSets000.FOLLOW_6); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -20270,19 +20270,19 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
             	          	newLeafNode(otherlv_1, grammarAccess.getEsterelVariableDeclarationAccess().getCommaKeyword_1_0());
             	          
             	    }
-            	    // InternalSCEst.g:6988:1: ( (lv_variables_2_0= ruleVariable ) )
-            	    // InternalSCEst.g:6989:1: (lv_variables_2_0= ruleVariable )
+            	    // InternalSCEst.g:6988:1: ( (lv_valuedObjects_2_0= ruleVariable ) )
+            	    // InternalSCEst.g:6989:1: (lv_valuedObjects_2_0= ruleVariable )
             	    {
-            	    // InternalSCEst.g:6989:1: (lv_variables_2_0= ruleVariable )
-            	    // InternalSCEst.g:6990:3: lv_variables_2_0= ruleVariable
+            	    // InternalSCEst.g:6989:1: (lv_valuedObjects_2_0= ruleVariable )
+            	    // InternalSCEst.g:6990:3: lv_valuedObjects_2_0= ruleVariable
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getEsterelVariableDeclarationAccess().getVariablesVariableParserRuleCall_1_1_0()); 
+            	      	        newCompositeNode(grammarAccess.getEsterelVariableDeclarationAccess().getValuedObjectsVariableParserRuleCall_1_1_0()); 
             	      	    
             	    }
             	    pushFollow(FollowSets000.FOLLOW_118);
-            	    lv_variables_2_0=ruleVariable();
+            	    lv_valuedObjects_2_0=ruleVariable();
 
             	    state._fsp--;
             	    if (state.failed) return current;
@@ -20293,8 +20293,8 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
             	      	        }
             	             		add(
             	             			current, 
-            	             			"variables",
-            	              		lv_variables_2_0, 
+            	             			"valuedObjects",
+            	              		lv_valuedObjects_2_0, 
             	              		"de.cau.cs.kieler.esterel.Esterel.Variable");
             	      	        afterParserOrEnumRuleCall();
             	      	    

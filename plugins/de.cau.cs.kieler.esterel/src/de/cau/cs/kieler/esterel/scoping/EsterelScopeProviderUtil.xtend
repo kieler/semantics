@@ -59,7 +59,7 @@ class EsterelScopeProviderUtil {
     public static val ScopeFunction<Module> COLLECT_CONSTANTS = new ScopeFunction<Module>() {
         override collect(Module m, List<IEObjectDescription> scopeElems) {
             for (d : m.declarations.filter(ConstantDeclaration)) {
-                for (s : d.constants) {
+                for (s : d.valuedObjects) {
                     scopeElems.add(new EObjectDescription(QualifiedName.create(s.name), s, emptyMap));
                 }
             }
@@ -69,7 +69,7 @@ class EsterelScopeProviderUtil {
     /** collecting all functions of a passed module. */
     public static val ScopeFunction<Module> COLLECT_FUNCTIONS = new ScopeFunction<Module>() {
         override collect(Module m, List<IEObjectDescription> scopeElems) {
-            for (s : m.declarations.filter(FunctionDeclaration).map[functions.filter(Function)].flatten) {
+            for (s : m.declarations.filter(FunctionDeclaration).map[valuedObjects.filter(Function)].flatten) {
                 scopeElems.add(new EObjectDescription(QualifiedName.create(s.name), s, emptyMap));
             }
         }
@@ -78,7 +78,7 @@ class EsterelScopeProviderUtil {
     /** collecting all procedures of a passed module. */
     public static val ScopeFunction<Module> COLLECT_PROCEDURES = new ScopeFunction<Module>() {
         override collect(Module m, List<IEObjectDescription> scopeElems) {
-            for (s : m.declarations.filter(ProcedureDeclaration).map[procedures.filter(Procedure)].flatten) {
+            for (s : m.declarations.filter(ProcedureDeclaration).map[valuedObjects.filter(Procedure)].flatten) {
                 scopeElems.add(new EObjectDescription(QualifiedName.create(s.name), s, emptyMap));
             }
         }
@@ -95,7 +95,7 @@ class EsterelScopeProviderUtil {
     /** collecting all types of a passed module. */
     public static val ScopeFunction<Module> COLLECT_TYPES = new ScopeFunction<Module>() {
         override collect(Module m, List<IEObjectDescription> scopeElems) {
-            for (s : m.declarations.filter(TypeDeclaration).map[types.filter(TypeDefinition)].flatten) {
+            for (s : m.declarations.filter(TypeDeclaration).map[valuedObjects.filter(TypeDefinition)].flatten) {
                 scopeElems.add(new EObjectDescription(QualifiedName.create(s.name), s, emptyMap));
             }
         }
@@ -103,7 +103,7 @@ class EsterelScopeProviderUtil {
     /** collecting all tasks of a passed module. */
     public static val ScopeFunction<Module> COLLECT_TASKS = new ScopeFunction<Module>() {
         override collect(Module m, List<IEObjectDescription> scopeElems) {
-            for (s : m.declarations.filter(TaskDeclaration).map[tasks.filter(Task)].flatten) {
+            for (s : m.declarations.filter(TaskDeclaration).map[valuedObjects.filter(Task)].flatten) {
                 scopeElems.add(new EObjectDescription(QualifiedName.create(s.name), s, emptyMap));
             }
         }
@@ -213,9 +213,9 @@ class EsterelScopeProviderUtil {
         while (!(parent instanceof Module) && parent != null) {
             // Get the local variables into the scope
             if (parent instanceof LocalVariableDeclaration) {
-                val decl = (parent as LocalVariableDeclaration).getVariableDeclarations();
+                val decl = (parent as LocalVariableDeclaration).getDeclarations();
                 for (EsterelVariableDeclaration vdecl : decl) {
-                    for (Variable varSingle : vdecl.getVariables()) {
+                    for (Variable varSingle : vdecl.valuedObjects.filter(Variable)) {
                         scopeElems.add(new EObjectDescription(QualifiedName.create(varSingle
                                 .getName()), varSingle, emptyMap));
                     }

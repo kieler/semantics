@@ -12,27 +12,31 @@
  */
 package de.cau.cs.kieler.esterel.extensions
 
+import de.cau.cs.kieler.esterel.Constant
 import de.cau.cs.kieler.esterel.ConstantDeclaration
+import de.cau.cs.kieler.esterel.EsterelParallel
+import de.cau.cs.kieler.esterel.EsterelProgram
+import de.cau.cs.kieler.esterel.EsterelThread
+import de.cau.cs.kieler.esterel.Function
 import de.cau.cs.kieler.esterel.FunctionDeclaration
 import de.cau.cs.kieler.esterel.InputDeclaration
 import de.cau.cs.kieler.esterel.InputOutputDeclaration
 import de.cau.cs.kieler.esterel.OutputDeclaration
+import de.cau.cs.kieler.esterel.Sensor
 import de.cau.cs.kieler.esterel.SensorDeclaration
 import de.cau.cs.kieler.esterel.Signal
 import de.cau.cs.kieler.esterel.SignalDeclaration
 import de.cau.cs.kieler.esterel.TypeDeclaration
+import de.cau.cs.kieler.esterel.TypeDefinition
+import de.cau.cs.kieler.esterel.Variable
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.scl.Module
-import de.cau.cs.kieler.esterel.EsterelParallel
-import de.cau.cs.kieler.esterel.EsterelThread
-import de.cau.cs.kieler.esterel.Constant
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.esterel.Variable
-import de.cau.cs.kieler.esterel.Sensor
-import de.cau.cs.kieler.esterel.EsterelProgram
-import de.cau.cs.kieler.esterel.Present
+import de.cau.cs.kieler.esterel.Task
+import de.cau.cs.kieler.esterel.TaskDeclaration
+import de.cau.cs.kieler.esterel.Procedure
+import de.cau.cs.kieler.esterel.ProcedureDeclaration
 
 /**
  * @author als
@@ -81,14 +85,42 @@ class EsterelExtensions {
         return d instanceof OutputDeclaration
     }
     
+    def variables(Declaration d) {
+        return d.valuedObjects.filter(Variable)
+    }
+    
     def typeDeclarations(Module m) {
         return m.declarations.filter(TypeDeclaration)
+    }
+    
+    def types(Declaration d) {
+        return d.valuedObjects.filter(TypeDefinition)
     }
     
     def functionDeclarations(Module m) {
         return m.declarations.filter(FunctionDeclaration)
     }
+     
+    def functions(Declaration d) {
+        return d.valuedObjects.filter(Function)
+    }   
     
+    def taskDeclarations(Module m) {
+        return m.declarations.filter(TaskDeclaration)
+    }
+     
+    def tasks(Declaration d) {
+        return d.valuedObjects.filter(Task)
+    }
+    
+    def procedureDeclarations(Module m) {
+        return m.declarations.filter(ProcedureDeclaration)
+    }
+     
+    def procedures(Declaration d) {
+        return d.valuedObjects.filter(Procedure)
+    }
+        
     def ValueType type(ValuedObject vo) {
         switch (vo) {
             Signal: return vo.type

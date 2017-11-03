@@ -160,13 +160,13 @@ class TrapTransformation extends EsterelProcessor {
                 // add a thread for each trap handler
                 for( h : trap.trapHandler ) {
                     var Conditional conditional2
-                    if (h.trapExpr instanceof ValuedObjectReference) {
-                        var variable = exitVariables.get((h.trapExpr as ValuedObjectReference).valuedObject)?.key
+                    if (h.expression instanceof ValuedObjectReference) {
+                        var variable = exitVariables.get((h.expression as ValuedObjectReference).valuedObject)?.key
                         conditional2 = createConditional(createValuedObjectReference(variable))
                     }
                     else {
-                        h.trapExpr.transformReferences(exitVariables)
-                        conditional2 = createConditional(h.trapExpr)
+                        h.expression.transformReferences(exitVariables)
+                        conditional2 = createConditional(h.expression)
                     }
                     conditional2.statements.add(h.statements)
                     var thread = createThread(conditional2)

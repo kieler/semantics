@@ -829,7 +829,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//TypeDeclaration:
 	//	annotations+=Annotation*
 	//	"type"
-	//	types+=TypeDefinition ("," types+=TypeDefinition)*
+	//	valuedObjects+=TypeDefinition ("," valuedObjects+=TypeDefinition)*
 	//	";";
 	public EsterelGrammarAccess.TypeDeclarationElements getTypeDeclarationAccess() {
 		return gaEsterel.getTypeDeclarationAccess();
@@ -854,7 +854,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//ConstantDeclaration:
 	//	annotations+=Annotation*
 	//	"constant"
-	//	constants+=Constant ("," constants+=Constant)*
+	//	valuedObjects+=Constant ("," valuedObjects+=Constant)*
 	//	";";
 	public EsterelGrammarAccess.ConstantDeclarationElements getConstantDeclarationAccess() {
 		return gaEsterel.getConstantDeclarationAccess();
@@ -879,7 +879,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//FunctionDeclaration:
 	//	annotations+=Annotation*
 	//	"function"
-	//	functions+=Function ("," functions+=Function)*
+	//	valuedObjects+=Function ("," valuedObjects+=Function)*
 	//	";";
 	public EsterelGrammarAccess.FunctionDeclarationElements getFunctionDeclarationAccess() {
 		return gaEsterel.getFunctionDeclarationAccess();
@@ -904,7 +904,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// -------------------------------------
 	//ProcedureDeclaration:
 	//	annotations+=Annotation*
-	//	"procedure" procedures+=Procedure ("," procedures+=Procedure)*
+	//	"procedure" valuedObjects+=Procedure ("," valuedObjects+=Procedure)*
 	//	";";
 	public EsterelGrammarAccess.ProcedureDeclarationElements getProcedureDeclarationAccess() {
 		return gaEsterel.getProcedureDeclarationAccess();
@@ -929,7 +929,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// -------------------------------------
 	//TaskDeclaration:
 	//	annotations+=Annotation*
-	//	"task" tasks+=Task ("," tasks+=Task)*
+	//	"task" valuedObjects+=Task ("," valuedObjects+=Task)*
 	//	";";
 	public EsterelGrammarAccess.TaskDeclarationElements getTaskDeclarationAccess() {
 		return gaEsterel.getTaskDeclarationAccess();
@@ -1450,7 +1450,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//TrapHandler:
 	//	annotations+=Annotation*
 	//	"handle"
-	//	trapExpr=TrapExpr
+	//	expression=TrapExpr
 	//	"do"
 	//	statements+=EsterelParallel;
 	public EsterelGrammarAccess.TrapHandlerElements getTrapHandlerAccess() {
@@ -1524,7 +1524,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//LocalVariableDeclaration:
 	//	annotations+=Annotation*
 	//	"var"
-	//	variableDeclarations+=EsterelVariableDeclaration ("," variableDeclarations+=EsterelVariableDeclaration)*
+	//	declarations+=EsterelVariableDeclaration ("," declarations+=EsterelVariableDeclaration)*
 	//	"in"
 	//	statements+=EsterelParallel "end" "var"?;
 	public EsterelGrammarAccess.LocalVariableDeclarationElements getLocalVariableDeclarationAccess() {
@@ -1536,7 +1536,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//EsterelVariableDeclaration:
-	//	variables+=Variable ("," variables+=Variable)* ":" type=TypeIdentifier;
+	//	valuedObjects+=Variable ("," valuedObjects+=Variable)* ":" type=TypeIdentifier;
 	public EsterelGrammarAccess.EsterelVariableDeclarationElements getEsterelVariableDeclarationAccess() {
 		return gaEsterel.getEsterelVariableDeclarationAccess();
 	}

@@ -151,7 +151,7 @@ class LocalVariableTransformation extends EsterelProcessor {
         // this map combines an Esterel variable with the new SCL variable
         var HashMap<Variable, ValuedObject> newVariables = new HashMap<Variable, ValuedObject>()
         // go through all declarations
-        for (decl : variables.variableDeclarations) {
+        for (decl : variables.declarations) {
             if (decl.type.type != null) {
                 var ValueType type
                 switch decl.type.type {

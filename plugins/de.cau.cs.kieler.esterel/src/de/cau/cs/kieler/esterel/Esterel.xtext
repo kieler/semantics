@@ -76,7 +76,7 @@ TypeIdentifier:
 TypeDeclaration:
     (annotations += Annotation)*
     "type"
-    types+=TypeDefinition ("," types+=TypeDefinition)* 
+    valuedObjects+=TypeDefinition ("," valuedObjects+=TypeDefinition)* 
     ";";
 
 TypeDefinition:
@@ -87,7 +87,7 @@ TypeDefinition:
 ConstantDeclaration:
     (annotations += Annotation)*
     "constant" 
-    constants+=Constant ("," constants+=Constant)* 
+    valuedObjects+=Constant ("," valuedObjects+=Constant)* 
     ";";
 
 Constant:
@@ -98,7 +98,7 @@ Constant:
 FunctionDeclaration:
     (annotations += Annotation)*
     "function" 
-    functions+=Function ("," functions+=Function)* 
+    valuedObjects+=Function ("," valuedObjects+=Function)* 
     ";";
 
 Function:
@@ -110,7 +110,7 @@ Function:
 // -------------------------------------
 ProcedureDeclaration:
     (annotations += Annotation)*
-    "procedure" procedures+=Procedure ("," procedures+=Procedure)* 
+    "procedure" valuedObjects+=Procedure ("," valuedObjects+=Procedure)* 
     ";";
 
 Procedure:
@@ -122,7 +122,7 @@ Procedure:
 // -------------------------------------
 TaskDeclaration:
     (annotations += Annotation)*
-    "task" tasks+=Task ("," tasks+=Task)* 
+    "task" valuedObjects+=Task ("," valuedObjects+=Task)* 
     ";";
 
 Task:
@@ -523,7 +523,7 @@ TrapSignal returns Signal:
 TrapHandler:
     (annotations += Annotation)*
     "handle" 
-    trapExpr=TrapExpr 
+    expression=TrapExpr 
     "do" 
     (statements+=EsterelParallel)
 ;
@@ -575,14 +575,14 @@ LocalSignalDeclaration:
 LocalVariableDeclaration:
     (annotations += Annotation)*
     "var" 
-    (variableDeclarations+=EsterelVariableDeclaration) ("," variableDeclarations+=EsterelVariableDeclaration)* 
+    (declarations+=EsterelVariableDeclaration) ("," declarations+=EsterelVariableDeclaration)* 
     "in" 
     (statements+=EsterelParallel)
     "end" "var"?
 ;
     
 EsterelVariableDeclaration:
-    (variables+=Variable) ("," variables+=Variable)* ":" type=TypeIdentifier;
+    (valuedObjects+=Variable) ("," valuedObjects+=Variable)* ":" type=TypeIdentifier;
 
 Variable:
      name=ID (":=" initialValue=Expression)?;

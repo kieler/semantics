@@ -1301,16 +1301,16 @@ ruleTypeDeclaration returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTypeDeclarationAccess().getTypesTypeDefinitionParserRuleCall_2_0()); 
+	        newCompositeNode(grammarAccess.getTypeDeclarationAccess().getValuedObjectsTypeDefinitionParserRuleCall_2_0()); 
 	    }
-		lv_types_2_0=ruleTypeDefinition		{
+		lv_valuedObjects_2_0=ruleTypeDefinition		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTypeDeclarationRule());
 	        }
        		add(
        			$current, 
-       			"types",
-        		lv_types_2_0, 
+       			"valuedObjects",
+        		lv_valuedObjects_2_0, 
         		"de.cau.cs.kieler.esterel.Esterel.TypeDefinition");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -1323,16 +1323,16 @@ ruleTypeDeclaration returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTypeDeclarationAccess().getTypesTypeDefinitionParserRuleCall_3_1_0()); 
+	        newCompositeNode(grammarAccess.getTypeDeclarationAccess().getValuedObjectsTypeDefinitionParserRuleCall_3_1_0()); 
 	    }
-		lv_types_4_0=ruleTypeDefinition		{
+		lv_valuedObjects_4_0=ruleTypeDefinition		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTypeDeclarationRule());
 	        }
        		add(
        			$current, 
-       			"types",
-        		lv_types_4_0, 
+       			"valuedObjects",
+        		lv_valuedObjects_4_0, 
         		"de.cau.cs.kieler.esterel.Esterel.TypeDefinition");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -1427,16 +1427,16 @@ ruleConstantDeclaration returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getConstantDeclarationAccess().getConstantsConstantParserRuleCall_2_0()); 
+	        newCompositeNode(grammarAccess.getConstantDeclarationAccess().getValuedObjectsConstantParserRuleCall_2_0()); 
 	    }
-		lv_constants_2_0=ruleConstant		{
+		lv_valuedObjects_2_0=ruleConstant		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getConstantDeclarationRule());
 	        }
        		add(
        			$current, 
-       			"constants",
-        		lv_constants_2_0, 
+       			"valuedObjects",
+        		lv_valuedObjects_2_0, 
         		"de.cau.cs.kieler.esterel.Esterel.Constant");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -1449,16 +1449,16 @@ ruleConstantDeclaration returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getConstantDeclarationAccess().getConstantsConstantParserRuleCall_3_1_0()); 
+	        newCompositeNode(grammarAccess.getConstantDeclarationAccess().getValuedObjectsConstantParserRuleCall_3_1_0()); 
 	    }
-		lv_constants_4_0=ruleConstant		{
+		lv_valuedObjects_4_0=ruleConstant		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getConstantDeclarationRule());
 	        }
        		add(
        			$current, 
-       			"constants",
-        		lv_constants_4_0, 
+       			"valuedObjects",
+        		lv_valuedObjects_4_0, 
         		"de.cau.cs.kieler.esterel.Esterel.Constant");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -1597,16 +1597,16 @@ ruleFunctionDeclaration returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getFunctionDeclarationAccess().getFunctionsFunctionParserRuleCall_2_0()); 
+	        newCompositeNode(grammarAccess.getFunctionDeclarationAccess().getValuedObjectsFunctionParserRuleCall_2_0()); 
 	    }
-		lv_functions_2_0=ruleFunction		{
+		lv_valuedObjects_2_0=ruleFunction		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getFunctionDeclarationRule());
 	        }
        		add(
        			$current, 
-       			"functions",
-        		lv_functions_2_0, 
+       			"valuedObjects",
+        		lv_valuedObjects_2_0, 
         		"de.cau.cs.kieler.esterel.Esterel.Function");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -1619,16 +1619,16 @@ ruleFunctionDeclaration returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getFunctionDeclarationAccess().getFunctionsFunctionParserRuleCall_3_1_0()); 
+	        newCompositeNode(grammarAccess.getFunctionDeclarationAccess().getValuedObjectsFunctionParserRuleCall_3_1_0()); 
 	    }
-		lv_functions_4_0=ruleFunction		{
+		lv_valuedObjects_4_0=ruleFunction		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getFunctionDeclarationRule());
 	        }
        		add(
        			$current, 
-       			"functions",
-        		lv_functions_4_0, 
+       			"valuedObjects",
+        		lv_valuedObjects_4_0, 
         		"de.cau.cs.kieler.esterel.Esterel.Function");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -1798,16 +1798,16 @@ ruleProcedureDeclaration returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getProcedureDeclarationAccess().getProceduresProcedureParserRuleCall_2_0()); 
+	        newCompositeNode(grammarAccess.getProcedureDeclarationAccess().getValuedObjectsProcedureParserRuleCall_2_0()); 
 	    }
-		lv_procedures_2_0=ruleProcedure		{
+		lv_valuedObjects_2_0=ruleProcedure		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getProcedureDeclarationRule());
 	        }
        		add(
        			$current, 
-       			"procedures",
-        		lv_procedures_2_0, 
+       			"valuedObjects",
+        		lv_valuedObjects_2_0, 
         		"de.cau.cs.kieler.esterel.Esterel.Procedure");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -1820,16 +1820,16 @@ ruleProcedureDeclaration returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getProcedureDeclarationAccess().getProceduresProcedureParserRuleCall_3_1_0()); 
+	        newCompositeNode(grammarAccess.getProcedureDeclarationAccess().getValuedObjectsProcedureParserRuleCall_3_1_0()); 
 	    }
-		lv_procedures_4_0=ruleProcedure		{
+		lv_valuedObjects_4_0=ruleProcedure		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getProcedureDeclarationRule());
 	        }
        		add(
        			$current, 
-       			"procedures",
-        		lv_procedures_4_0, 
+       			"valuedObjects",
+        		lv_valuedObjects_4_0, 
         		"de.cau.cs.kieler.esterel.Esterel.Procedure");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -2030,16 +2030,16 @@ ruleTaskDeclaration returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTaskDeclarationAccess().getTasksTaskParserRuleCall_2_0()); 
+	        newCompositeNode(grammarAccess.getTaskDeclarationAccess().getValuedObjectsTaskParserRuleCall_2_0()); 
 	    }
-		lv_tasks_2_0=ruleTask		{
+		lv_valuedObjects_2_0=ruleTask		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTaskDeclarationRule());
 	        }
        		add(
        			$current, 
-       			"tasks",
-        		lv_tasks_2_0, 
+       			"valuedObjects",
+        		lv_valuedObjects_2_0, 
         		"de.cau.cs.kieler.esterel.Esterel.Task");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -2052,16 +2052,16 @@ ruleTaskDeclaration returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTaskDeclarationAccess().getTasksTaskParserRuleCall_3_1_0()); 
+	        newCompositeNode(grammarAccess.getTaskDeclarationAccess().getValuedObjectsTaskParserRuleCall_3_1_0()); 
 	    }
-		lv_tasks_4_0=ruleTask		{
+		lv_valuedObjects_4_0=ruleTask		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTaskDeclarationRule());
 	        }
        		add(
        			$current, 
-       			"tasks",
-        		lv_tasks_4_0, 
+       			"valuedObjects",
+        		lv_valuedObjects_4_0, 
         		"de.cau.cs.kieler.esterel.Esterel.Task");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -6161,16 +6161,16 @@ ruleTrapHandler returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTrapHandlerAccess().getTrapExprTrapExprParserRuleCall_2_0()); 
+	        newCompositeNode(grammarAccess.getTrapHandlerAccess().getExpressionTrapExprParserRuleCall_2_0()); 
 	    }
-		lv_trapExpr_2_0=ruleTrapExpr		{
+		lv_expression_2_0=ruleTrapExpr		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTrapHandlerRule());
 	        }
        		set(
        			$current, 
-       			"trapExpr",
-        		lv_trapExpr_2_0, 
+       			"expression",
+        		lv_expression_2_0, 
         		"de.cau.cs.kieler.esterel.Esterel.TrapExpr");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -6875,16 +6875,16 @@ ruleLocalVariableDeclaration returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getLocalVariableDeclarationAccess().getVariableDeclarationsEsterelVariableDeclarationParserRuleCall_2_0()); 
+	        newCompositeNode(grammarAccess.getLocalVariableDeclarationAccess().getDeclarationsEsterelVariableDeclarationParserRuleCall_2_0()); 
 	    }
-		lv_variableDeclarations_2_0=ruleEsterelVariableDeclaration		{
+		lv_declarations_2_0=ruleEsterelVariableDeclaration		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getLocalVariableDeclarationRule());
 	        }
        		add(
        			$current, 
-       			"variableDeclarations",
-        		lv_variableDeclarations_2_0, 
+       			"declarations",
+        		lv_declarations_2_0, 
         		"de.cau.cs.kieler.esterel.Esterel.EsterelVariableDeclaration");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -6897,16 +6897,16 @@ ruleLocalVariableDeclaration returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getLocalVariableDeclarationAccess().getVariableDeclarationsEsterelVariableDeclarationParserRuleCall_3_1_0()); 
+	        newCompositeNode(grammarAccess.getLocalVariableDeclarationAccess().getDeclarationsEsterelVariableDeclarationParserRuleCall_3_1_0()); 
 	    }
-		lv_variableDeclarations_4_0=ruleEsterelVariableDeclaration		{
+		lv_declarations_4_0=ruleEsterelVariableDeclaration		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getLocalVariableDeclarationRule());
 	        }
        		add(
        			$current, 
-       			"variableDeclarations",
-        		lv_variableDeclarations_4_0, 
+       			"declarations",
+        		lv_declarations_4_0, 
         		"de.cau.cs.kieler.esterel.Esterel.EsterelVariableDeclaration");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -6966,16 +6966,16 @@ ruleEsterelVariableDeclaration returns [EObject current=null]
 ((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getEsterelVariableDeclarationAccess().getVariablesVariableParserRuleCall_0_0()); 
+	        newCompositeNode(grammarAccess.getEsterelVariableDeclarationAccess().getValuedObjectsVariableParserRuleCall_0_0()); 
 	    }
-		lv_variables_0_0=ruleVariable		{
+		lv_valuedObjects_0_0=ruleVariable		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getEsterelVariableDeclarationRule());
 	        }
        		add(
        			$current, 
-       			"variables",
-        		lv_variables_0_0, 
+       			"valuedObjects",
+        		lv_valuedObjects_0_0, 
         		"de.cau.cs.kieler.esterel.Esterel.Variable");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -6988,16 +6988,16 @@ ruleEsterelVariableDeclaration returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getEsterelVariableDeclarationAccess().getVariablesVariableParserRuleCall_1_1_0()); 
+	        newCompositeNode(grammarAccess.getEsterelVariableDeclarationAccess().getValuedObjectsVariableParserRuleCall_1_1_0()); 
 	    }
-		lv_variables_2_0=ruleVariable		{
+		lv_valuedObjects_2_0=ruleVariable		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getEsterelVariableDeclarationRule());
 	        }
        		add(
        			$current, 
-       			"variables",
-        		lv_variables_2_0, 
+       			"valuedObjects",
+        		lv_valuedObjects_2_0, 
         		"de.cau.cs.kieler.esterel.Esterel.Variable");
 	        afterParserOrEnumRuleCall();
 	    }

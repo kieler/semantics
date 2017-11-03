@@ -592,6 +592,8 @@ public class EsterelSwitch<T> extends Switch<T> {
             case EsterelPackage.ESTEREL_VARIABLE_DECLARATION: {
                 EsterelVariableDeclaration esterelVariableDeclaration = (EsterelVariableDeclaration)theEObject;
                 T result = caseEsterelVariableDeclaration(esterelVariableDeclaration);
+                if (result == null) result = caseDeclaration(esterelVariableDeclaration);
+                if (result == null) result = caseAnnotatable(esterelVariableDeclaration);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }

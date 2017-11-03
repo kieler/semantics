@@ -71,10 +71,12 @@ import de.cau.cs.kieler.scl.Statement
 import de.cau.cs.kieler.scl.formatting2.SCLFormatter
 import org.eclipse.xtext.formatting2.IFormattableDocument
 import de.cau.cs.kieler.esterel.DelayExpression
+import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
 
 class EsterelFormatter extends SCLFormatter {
 	
 	@Inject extension EsterelGrammarAccess
+    @Inject extension EsterelExtensions
 
 	def dispatch void format(EsterelProgram esterelprogram, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
@@ -90,7 +92,7 @@ class EsterelFormatter extends SCLFormatter {
 		for (Annotation annotations : typedeclaration.getAnnotations()) {
 			format(annotations, document);
 		}
-		for (TypeDefinition types : typedeclaration.getTypes()) {
+		for (TypeDefinition types : typedeclaration.types) {
 			format(types, document);
 		}
 		typedeclaration.append[ newLine ]
@@ -98,7 +100,7 @@ class EsterelFormatter extends SCLFormatter {
 
 	def dispatch void format(ConstantDeclaration constantdeclaration, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Constant constants : constantdeclaration.getConstants()) {
+		for (Constant constants : constantdeclaration.constants()) {
 			format(constants, document);
 		}
         constantdeclaration.append[ newLine ]
@@ -116,7 +118,7 @@ class EsterelFormatter extends SCLFormatter {
 		for (Annotation annotations : functiondeclaration.getAnnotations()) {
 			format(annotations, document);
 		}
-		for (Function functions : functiondeclaration.getFunctions()) {
+		for (Function functions : functiondeclaration.functions()) {
 			format(functions, document);
 		}
 		
@@ -136,7 +138,7 @@ class EsterelFormatter extends SCLFormatter {
 		for (Annotation annotations : proceduredeclaration.getAnnotations()) {
 			format(annotations, document);
 		}
-		for (Procedure procedures : proceduredeclaration.getProcedures()) {
+		for (Procedure procedures : proceduredeclaration.procedures) {
 			format(procedures, document);
 		}
         proceduredeclaration.append[ newLine ]
@@ -157,7 +159,7 @@ class EsterelFormatter extends SCLFormatter {
 		for (Annotation annotations : taskdeclaration.getAnnotations()) {
 			format(annotations, document);
 		}
-		for (Task tasks : taskdeclaration.getTasks()) {
+		for (Task tasks : taskdeclaration.tasks) {
 			format(tasks, document);
 		}
         taskdeclaration.append[ newLine ]
@@ -520,7 +522,7 @@ class EsterelFormatter extends SCLFormatter {
 		for (Annotation annotations : traphandler.getAnnotations()) {
 			format(annotations, document);
 		}
-		format(traphandler.getTrapExpr(), document);
+		format(traphandler.expression, document);
 		for (Statement statements : traphandler.getStatements()) {
 			format(statements, document);
 		}
@@ -589,7 +591,7 @@ class EsterelFormatter extends SCLFormatter {
 		for (Annotation annotations : localvariabledeclaration.getAnnotations()) {
 			format(annotations, document);
 		}
-		for (EsterelVariableDeclaration variableDeclarations : localvariabledeclaration.getVariableDeclarations()) {
+		for (EsterelVariableDeclaration variableDeclarations : localvariabledeclaration.getDeclarations()) {
 			format(variableDeclarations, document);
 		}
 		for (Statement statements : localvariabledeclaration.getStatements()) {
@@ -601,7 +603,7 @@ class EsterelFormatter extends SCLFormatter {
 
 	def dispatch void format(EsterelVariableDeclaration esterelvariabledeclaration, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Variable variables : esterelvariabledeclaration.getVariables()) {
+		for (Variable variables : esterelvariabledeclaration.variables()) {
 			format(variables, document);
 		}
 		format(esterelvariabledeclaration.getType(), document);

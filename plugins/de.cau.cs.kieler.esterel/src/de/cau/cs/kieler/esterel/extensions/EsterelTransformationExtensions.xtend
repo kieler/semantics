@@ -1554,7 +1554,7 @@ class EsterelTransformationExtensions {
             (o as Present).expression = expr
         }
         else if (o instanceof TrapHandler) {
-            (o as TrapHandler).trapExpr = expr
+            (o as TrapHandler).expression = expr
         }
         else {
             throw new UnsupportedOperationException("The following expression will be homeless! " + expr.toString)
@@ -1837,7 +1837,7 @@ class EsterelTransformationExtensions {
      */
     def createTypeDecl(TypeDefinition type) {
         EsterelFactory::eINSTANCE.createTypeDeclaration => [
-            it.types += type
+            it.valuedObjects += type
         ]
     }
     
@@ -1848,7 +1848,7 @@ class EsterelTransformationExtensions {
      */
     def createFunctionDecl(Function function) {
         EsterelFactory::eINSTANCE.createFunctionDeclaration => [
-            it.functions += function
+            it.valuedObjects += function
         ]
     }
     

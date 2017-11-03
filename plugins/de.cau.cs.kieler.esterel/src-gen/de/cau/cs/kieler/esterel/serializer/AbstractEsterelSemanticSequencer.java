@@ -1308,7 +1308,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     ConstantDeclaration returns ConstantDeclaration
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* constants+=Constant constants+=Constant*)
+	 *     (annotations+=Annotation* valuedObjects+=Constant valuedObjects+=Constant*)
 	 */
 	protected void sequence_ConstantDeclaration(ISerializationContext context, ConstantDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1592,7 +1592,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     EsterelVariableDeclaration returns EsterelVariableDeclaration
 	 *
 	 * Constraint:
-	 *     (variables+=Variable variables+=Variable* type=TypeIdentifier)
+	 *     (valuedObjects+=Variable valuedObjects+=Variable* type=TypeIdentifier)
 	 */
 	protected void sequence_EsterelVariableDeclaration(ISerializationContext context, EsterelVariableDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1687,7 +1687,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     FunctionDeclaration returns FunctionDeclaration
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* functions+=Function functions+=Function*)
+	 *     (annotations+=Annotation* valuedObjects+=Function valuedObjects+=Function*)
 	 */
 	protected void sequence_FunctionDeclaration(ISerializationContext context, FunctionDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1832,12 +1832,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     LocalVariableDeclaration returns LocalVariableDeclaration
 	 *
 	 * Constraint:
-	 *     (
-	 *         annotations+=Annotation* 
-	 *         variableDeclarations+=EsterelVariableDeclaration 
-	 *         variableDeclarations+=EsterelVariableDeclaration* 
-	 *         statements+=EsterelParallel
-	 *     )
+	 *     (annotations+=Annotation* declarations+=EsterelVariableDeclaration declarations+=EsterelVariableDeclaration* statements+=EsterelParallel)
 	 */
 	protected void sequence_LocalVariableDeclaration(ISerializationContext context, LocalVariableDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1964,7 +1959,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     ProcedureDeclaration returns ProcedureDeclaration
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* procedures+=Procedure procedures+=Procedure*)
+	 *     (annotations+=Annotation* valuedObjects+=Procedure valuedObjects+=Procedure*)
 	 */
 	protected void sequence_ProcedureDeclaration(ISerializationContext context, ProcedureDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2299,7 +2294,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     TaskDeclaration returns TaskDeclaration
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* tasks+=Task tasks+=Task*)
+	 *     (annotations+=Annotation* valuedObjects+=Task valuedObjects+=Task*)
 	 */
 	protected void sequence_TaskDeclaration(ISerializationContext context, TaskDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2468,7 +2463,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     TrapHandler returns TrapHandler
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* trapExpr=TrapExpr statements+=EsterelParallel)
+	 *     (annotations+=Annotation* expression=TrapExpr statements+=EsterelParallel)
 	 */
 	protected void sequence_TrapHandler(ISerializationContext context, TrapHandler semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2558,7 +2553,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     TypeDeclaration returns TypeDeclaration
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* types+=TypeDefinition types+=TypeDefinition*)
+	 *     (annotations+=Annotation* valuedObjects+=TypeDefinition valuedObjects+=TypeDefinition*)
 	 */
 	protected void sequence_TypeDeclaration(ISerializationContext context, TypeDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
