@@ -12,10 +12,10 @@
  */
 package de.cau.cs.kieler.sccharts.ui.synthesis.labels;
 
-import de.cau.cs.kieler.klighd.labels.AbstractKlighdLabelManager;
-import de.cau.cs.kieler.klighd.labels.IdentLabelManager;
-import de.cau.cs.kieler.klighd.labels.ListLabelManager;
-import de.cau.cs.kieler.klighd.labels.TruncatingLabelManager;
+import de.cau.cs.kieler.klighd.labels.management.AbstractKlighdLabelManager;
+import de.cau.cs.kieler.klighd.labels.management.IdentLabelManager;
+import de.cau.cs.kieler.klighd.labels.management.SoftWrappingLabelManager;
+import de.cau.cs.kieler.klighd.labels.management.TruncatingLabelManager;
 
 /**
  * @author als
@@ -26,11 +26,8 @@ public enum LabelShorteningStrategies {
     NO,
     TRUNCATE,
     TRUNCATE_VARIABLES,
-    HOSTCODE_ARGUMENTS,
-    TRIGGER_EFFECT,
     VARIABLES,
     PRIORITIES,
-    MIXED,
     SOFT_WRAPPING,
     SEMANTIC_SOFT_WRAPPING;
 
@@ -43,16 +40,10 @@ public enum LabelShorteningStrategies {
             return "Truncate";
         case TRUNCATE_VARIABLES:
             return "Truncate Variables";
-        case HOSTCODE_ARGUMENTS:
-            return "Hostcode Arguments";
-        case TRIGGER_EFFECT:
-            return "Trigger and Effect Wrapping";
         case VARIABLES:
             return "Used Variables";
         case PRIORITIES:
             return "Priorities";
-        case MIXED:
-            return "Mixed (Truncate Variables + Hostcode Arguments + Trigger and Effect Wrapping)";
         case SOFT_WRAPPING:
             return "Soft Wrapping";
         case SEMANTIC_SOFT_WRAPPING:
@@ -70,20 +61,12 @@ public enum LabelShorteningStrategies {
             return new TruncatingLabelManager();
         case TRUNCATE_VARIABLES:
             return new TruncateSignalsLabelManager();
-        case HOSTCODE_ARGUMENTS:
-            return new HostCodeTransitionLabelManager();
-        case TRIGGER_EFFECT:
-            return new SemanticalWrappingTransitionLabelManager();
         case VARIABLES:
             return new ShortenToSignalsLabelManager();
         case PRIORITIES:
             return new TransitionPriorityLabelManager();
-        case MIXED:
-            return new ListLabelManager(false, new ShortenToSignalsLabelManager(),
-                    new HostCodeTransitionLabelManager(),
-                    new SemanticalWrappingTransitionLabelManager());
         case SOFT_WRAPPING:
-            return new de.cau.cs.kieler.klighd.labels.SoftWrappingLabelManager();
+            return new SoftWrappingLabelManager();
         case SEMANTIC_SOFT_WRAPPING:
             return new SemanticSoftWrappingLabelManager();
         default:

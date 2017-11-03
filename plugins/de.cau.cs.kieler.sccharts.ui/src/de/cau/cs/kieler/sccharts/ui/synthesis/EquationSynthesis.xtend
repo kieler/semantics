@@ -27,7 +27,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.EquationStyles
 import java.util.List
 import java.util.Set
-import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.PortAlignment
 import org.eclipse.elk.core.options.PortConstraints
@@ -121,7 +121,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     } else {
                         node.addInputNodeFigure.associateWith(wire.source)
                     }
-                    node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_BASIC, PortAlignment.CENTER)
+                    node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_DEFAULT, PortAlignment.CENTER)
                     node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE)
                     val port = wire.semanticSource.createPort("out") => [
                         addLayoutParam(CoreOptions::PORT_SIDE, PortSide.EAST)

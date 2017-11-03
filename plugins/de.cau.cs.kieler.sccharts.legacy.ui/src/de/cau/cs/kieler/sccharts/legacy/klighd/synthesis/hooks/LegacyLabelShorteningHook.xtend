@@ -53,8 +53,7 @@ class LegacyLabelShorteningHook extends SynthesisActionHook {
         newLinkedList(
             LabelShorteningStrategies.NO,
             LabelShorteningStrategies.TRUNCATE,
-            LabelShorteningStrategies.SOFT_WRAPPING,
-            LabelShorteningStrategies.PRIORITIES
+            LabelShorteningStrategies.SOFT_WRAPPING
         ), LabelShorteningStrategies.NO).setCategory(LABEL_MANAGEMENT_CATEGORY).
         setUpdateAction(LegacyLabelShorteningHook.ID) // Register this action as updater
     /** The synthesis option for fixed shorten labels value */
@@ -100,7 +99,7 @@ class LegacyLabelShorteningHook extends SynthesisActionHook {
     private def configureLabelManagement(KNode rootNode) {
         var labelManager = (SHORTEN_LABEL_STRATEGY.objectValue as LabelShorteningStrategies).getNewLabelManager();
         if (labelManager != null) {
-            labelManager.fixTargetWidth(SHORTEN_LABEL_WIDTH.intValue)
+            labelManager.fixedTargetWidth = SHORTEN_LABEL_WIDTH.intValue
         }
         rootNode.setLayoutOption(LabelManagementOptions.LABEL_MANAGER, labelManager)
     }

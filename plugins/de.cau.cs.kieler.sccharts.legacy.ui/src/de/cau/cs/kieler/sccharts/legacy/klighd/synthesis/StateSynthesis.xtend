@@ -26,8 +26,8 @@ import de.cau.cs.kieler.sccharts.legacy.sccharts.StateType
 import de.cau.cs.kieler.sccharts.legacy.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.legacy.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.styles.StateStyles
-import org.eclipse.elk.alg.layered.properties.LayerConstraint
-import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.alg.layered.options.LayerConstraint
+import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.math.ElkPadding
 import org.eclipse.elk.core.options.CoreOptions
 

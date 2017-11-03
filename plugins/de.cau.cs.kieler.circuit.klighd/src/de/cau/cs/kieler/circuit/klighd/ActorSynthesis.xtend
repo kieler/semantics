@@ -26,8 +26,8 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import java.util.EnumSet
-import org.eclipse.elk.alg.layered.properties.EdgeLabelSideSelection
-import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.alg.layered.options.EdgeLabelSideSelection
+import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.options.SizeConstraint
 
 /**
@@ -136,7 +136,7 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 				// Create the rendering for the expanded version of this region
 				val expandedRendering = createRegion(actorNode, actor)
 				expandedRendering.setProperty(KlighdProperties::EXPANDED_RENDERING, true)
-				expandedRendering.setProperty(LayeredOptions.EDGE_LABEL_SIDE_SELECTION, EdgeLabelSideSelection.SMART)
+				expandedRendering.setProperty(LayeredOptions.EDGE_LABELS_SIDE_SELECTION, EdgeLabelSideSelection.SMART_DOWN)
 				expandedRendering.setProperty(LayeredOptions.INSIDE_SELF_LOOPS_ACTIVATE, true);
 				expandedRendering.addAction(Trigger::DOUBLECLICK, KlighdConstants::ACTION_COLLAPSE_EXPAND)
 				expandedRendering.setProperty(LayeredOptions.NODE_SIZE_CONSTRAINTS, SizeConstraint.free)

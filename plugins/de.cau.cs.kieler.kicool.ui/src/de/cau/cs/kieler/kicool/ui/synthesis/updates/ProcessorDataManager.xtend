@@ -68,6 +68,7 @@ import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.MessageObje
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.OnOffToggle
 import de.cau.cs.kieler.kicool.ui.synthesis.MessageObjectListPair
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
 
 /**
  * The data manager handles all synthesis updates.
@@ -386,7 +387,7 @@ class ProcessorDataManager {
             }
         }
         
-        LightDiagramServices.layoutDiagram(view)
+        LightDiagramServices.layoutDiagram(new LightDiagramLayoutConfig(view))
     }
     
     

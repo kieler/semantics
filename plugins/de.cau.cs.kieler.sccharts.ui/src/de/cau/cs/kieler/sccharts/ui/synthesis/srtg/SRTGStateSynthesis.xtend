@@ -23,7 +23,7 @@ import org.eclipse.elk.core.options.CoreOptions
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
-import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.alg.layered.options.LayeredOptions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import org.eclipse.elk.core.math.ElkPadding

@@ -26,9 +26,9 @@ import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.DataflowRegionStyles
-import org.eclipse.elk.alg.layered.p4nodes.NodePlacementStrategy
-import org.eclipse.elk.alg.layered.properties.GreedySwitchType
-import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
+import org.eclipse.elk.alg.layered.options.GreedySwitchType
+import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.math.ElkPadding
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
