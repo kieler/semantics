@@ -26,7 +26,7 @@ import de.cau.cs.kieler.kicool.ui.synthesis.styles.SkinSelector
  */
 class SkinSelectionActions {
 
-    val static skins = #[new Pair<String, String>("Default Skin", "default/"),
+    public val static skins = #[new Pair<String, String>("Default Skin", "default/"),
                          new Pair<String, String>("SCCharts Skin", "scc/"),
                          new Pair<String, String>("Detailed Skin", "detailed/")
     ]
