@@ -15,7 +15,7 @@ package de.cau.cs.kieler.kicool.classes
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 
 /**
- * Interface for objects that will be pu tin an environment.
+ * Interface for objects that will be put in an environment.
  * Return null if the object is not cloneable.
  * 
  * @author ssm
@@ -28,12 +28,12 @@ interface IKiCoolCloneable {
      * The class is mutable. If not, the clones object may be the original object and 
      * you are not allowed to change it in the environment. 
      */
-    public def boolean isMutable()
+    def boolean isMutable()
     
     /**
      * Returns the cloned object.
      */
-    public def IKiCoolCloneable cloneObject()
+    def IKiCoolCloneable cloneObject()
     
     /**
      * Determines if the object is lost when preparing prime environments.

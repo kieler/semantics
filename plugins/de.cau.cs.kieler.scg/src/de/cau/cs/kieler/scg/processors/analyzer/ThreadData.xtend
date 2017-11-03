@@ -32,8 +32,8 @@ class ThreadData implements IKiCoolCloneable {
     }
     
     override cloneObject() {
-        new ThreadData => [
-            it.data.putAll(data)
+        new ThreadData => [ td |
+            td.data.putAll(data)
         ] 
     }
     
