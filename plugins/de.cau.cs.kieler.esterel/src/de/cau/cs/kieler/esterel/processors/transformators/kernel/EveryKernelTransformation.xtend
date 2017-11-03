@@ -54,17 +54,8 @@ class EveryKernelTransformation extends InplaceProcessor<EsterelProgram> impleme
     }
     
     // !! Produces: await, loop each
-
-    // -------------------------------------------------------------------------
-    // -- Injections 
-    // -------------------------------------------------------------------------
-    @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension KEffectsExtensions
-    @Inject extension AnnotationsExtensions
-    @Inject extension EsterelExtensions
     
     extension EsterelFactory = EsterelFactory.eINSTANCE
-    extension SCLFactory = SCLFactory.eINSTANCE
     
     def transform(EveryDo every) {
         val c = (every.eContainer as StatementContainer)

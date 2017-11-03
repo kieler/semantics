@@ -54,8 +54,6 @@ class PresentCaseKernelTransformation extends InplaceProcessor<EsterelProgram> i
         model.eAllContents.filter(Present).filter[!cases.nullOrEmpty].toList.forEach[transform]
     }
     
-    // !! Produces: Await
-    
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------

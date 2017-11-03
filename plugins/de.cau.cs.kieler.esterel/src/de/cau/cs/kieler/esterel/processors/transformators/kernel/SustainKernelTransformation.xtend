@@ -57,10 +57,6 @@ class SustainKernelTransformation extends InplaceProcessor<EsterelProgram> imple
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
-    @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension KEffectsExtensions
-    @Inject extension AnnotationsExtensions
-    @Inject extension EsterelExtensions
     
     extension EsterelFactory = EsterelFactory.eINSTANCE
     extension SCLFactory = SCLFactory.eINSTANCE

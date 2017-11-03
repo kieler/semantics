@@ -52,16 +52,7 @@ class LoopEachKernelTransformation extends InplaceProcessor<EsterelProgram> impl
     
     // !! Produces: abort, halt
 
-    // -------------------------------------------------------------------------
-    // -- Injections 
-    // -------------------------------------------------------------------------
-    @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension KEffectsExtensions
-    @Inject extension AnnotationsExtensions
-    @Inject extension EsterelExtensions
-    
     extension EsterelFactory = EsterelFactory.eINSTANCE
-    extension SCLFactory = SCLFactory.eINSTANCE
     
     def transform(Loop loop) {
         val abort = createAbort.trace(loop) => [

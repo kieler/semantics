@@ -104,7 +104,7 @@ class AwaitKernelTransformation extends InplaceProcessor<EsterelProgram> impleme
             } else if (!await.statements.nullOrEmpty) {
                 statements.addAll(await.statements)
                 
-                throw new UnsupportedOperationException("Await case do supported")
+                throw new UnsupportedOperationException("Await do not supported")
             }
             statements += createExit.trace(await) => [
                 trap = trapSig

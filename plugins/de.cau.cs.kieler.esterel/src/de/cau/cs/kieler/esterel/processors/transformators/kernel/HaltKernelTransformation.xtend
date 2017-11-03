@@ -52,14 +52,6 @@ class HaltKernelTransformation extends InplaceProcessor<EsterelProgram> implemen
         model.eAllContents.filter(Halt).toList.forEach[transform]
     }
     
-    // -------------------------------------------------------------------------
-    // -- Injections 
-    // -------------------------------------------------------------------------
-    @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension KEffectsExtensions
-    @Inject extension AnnotationsExtensions
-    @Inject extension EsterelExtensions
-    
     extension EsterelFactory = EsterelFactory.eINSTANCE
     extension SCLFactory = SCLFactory.eINSTANCE
     
