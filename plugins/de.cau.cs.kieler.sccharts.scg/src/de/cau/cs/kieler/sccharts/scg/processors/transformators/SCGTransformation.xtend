@@ -41,7 +41,6 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -55,9 +54,7 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.processors.optimizer.SuperfluousForkRemover
-import de.cau.cs.kieler.scg.transformations.SCGTransformations
 import java.util.HashMap
 import java.util.Set
 import org.eclipse.elk.graph.properties.IProperty
@@ -86,6 +83,10 @@ import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.sccharts.scg.SCChartsSCGPlugin
 import de.cau.cs.kieler.sccharts.scg.PatternType
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
+import de.cau.cs.kieler.scg.processors.analyzer.ThreadAnalyzer
+import de.cau.cs.kieler.scg.processors.analyzer.LoopAnalyzerV2
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -97,19 +98,6 @@ import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceable {
     
     protected static val ANNOTATION_IGNORETHREAD = "ignore"
-    
-
-    // -------------------------------------------------------------------------
-    // --                 K I C O      C O N F I G U R A T I O N              --
-    // -------------------------------------------------------------------------
-
-//    override getProducedFeatureId() {
-//        return SCGFeatures::BASIC_ID
-//    }
-//
-//    override getRequiredFeatureIds() {
-//        return newHashSet(SCChartsFeatureGroup::CORE_ID)
-//    }
 
     override getId() {
         "de.cau.cs.kieler.sccharts.scg.processors.transformators.SCG"
@@ -134,13 +122,19 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             scgs.addAll(model.rootStates.map[transform])
         ]
         setModel(scgs)
+        
+        val threadAnalyzerProcessor = KiCoolRegistration.getProcessorInstance("de.cau.cs.kieler.scg.processors.threadAnalyzer") as ThreadAnalyzer
+        if (threadAnalyzerProcessor !== null) {
+            threadAnalyzerProcessor.setEnvironment(environment, environment)
+            threadAnalyzerProcessor.process
+            snapshot
+        }
+     
     }
-
 
     // Property to disable SuperflousForkRemover because KiCo has no proper support for processors
     public static val IProperty<Boolean> ENABLE_SFR = new Property<Boolean>("de.cau.cs.kieler.sccharts.scg.sfr", true);
 
-    // -------------------------------------------------------------------------
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
@@ -159,12 +153,8 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     private val uniqueNameCache = new UniqueNameCache
 
     private static val String ANNOTATION_REGIONNAME = "regionName"
-    private static val String ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"
     private static val String ANNOTATION_HOSTCODE = "hostcode"
 
-    // -------------------------------------------------------------------------
-    // --                         U T I L I T Y                               --
-    // -------------------------------------------------------------------------
     private var Entry rootStateEntry = null
 
     // State mappings         
@@ -237,9 +227,8 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         valuedObjectSSChart2SCG.get(valuedObjectSCChart)
     }
 
-    // -------------------------------------------------------------------------
-    // --             T R A N S F O R M      T O    S C G                     --
-    // -------------------------------------------------------------------------
+
+
     def SCGraph transform(EObject eObject) {
         return switch (eObject) {
             SCGraph: return eObject.processSCG
@@ -254,12 +243,12 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         val newSCG = superfluousForkRemover.optimize(scg)
 
         // SCG thread path types
-        val threadPathTypes = (newSCG.nodes.head as Entry).getThreadControlFlowTypes
-        for (entry : threadPathTypes.keySet) {
-            if (!entry.hasAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE)) {
-                entry.addStringAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
-            }
-        }
+//        val threadPathTypes = (newSCG.nodes.head as Entry).getThreadControlFlowTypes
+//        for (entry : threadPathTypes.keySet) {
+//            if (!entry.hasAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE)) {
+//                entry.addStringAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
+//            }
+//        }
         newSCG
     }
     
@@ -271,19 +260,8 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         val scopeList = rootState.eAllContents.filter(Scope).toList
         val stateList = scopeList.filter(State).toList
 
-        // fixTerminationWithEffects() and fixPossibleHaltStates() should be and is (now) handled by trigger/effect and surface/depth transformation!                
-//        // Fix termination transitions that have effects
-//        SCChartsSCGPlugin.log(" ... ")
-//        var state = rootState.fixTerminationWithEffects(stateList.fold(newLinkedList)[first, second |
-//            first += second.outgoingTransitions first])
-//        // Fix possible halt states
-//        state = state.fixPossibleHaltStates(stateList)
-//        SCChartsSCGPlugin.log(" ... ")
-
-
         // Expose local variables
         scopeList.transformLocalValuedObjectCached(rootState, uniqueNameCache)
-        SCChartsSCGPlugin.log(" ... ")
 
         // Clear mappings
         resetMapping
@@ -392,13 +370,6 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             } else {
                 sCGraph
             }
-
-        // SCG thread path types
-        val threadPathTypes = (scg.nodes.head as Entry).getThreadControlFlowTypes
-        for (entry : threadPathTypes.keySet) {
-            if (!entry.hasAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE))
-                entry.createStringAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
-        }
 
         scg
     }
@@ -870,6 +841,13 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     def dispatch Expression convertToSCGExpression(PrintCall printCall) {
         createPrintCall.trace(printCall) => [ pc |
             printCall.parameters.forEach[ pc.parameters += it.convertToSCGParameter ]
+        ]
+    }
+    
+    def dispatch Expression convertToSCGExpression(ReferenceCall referenceCall) {
+        createReferenceCall.trace(referenceCall) => [ rc |
+            rc.valuedObject = referenceCall.valuedObject.getSCGValuedObject
+            referenceCall.parameters.forEach[ rc.parameters += it.convertToSCGParameter ]
         ]
     }
     

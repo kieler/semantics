@@ -18,7 +18,7 @@ import de.cau.cs.kieler.klighd.KlighdOptions
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
 import de.cau.cs.kieler.klighd.kgraph.KLabel
 import de.cau.cs.kieler.klighd.krendering.KRenderingRef
-import de.cau.cs.kieler.klighd.labels.SoftWrappingLabelManager
+import de.cau.cs.kieler.klighd.labels.management.SoftWrappingLabelManager
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import org.eclipse.elk.graph.ElkLabel
@@ -41,7 +41,7 @@ public class SemanticSoftWrappingLabelManager extends SoftWrappingLabelManager {
     /**
      * {@inheritDoc}
      */
-    override resizeLabel(ElkLabel elkLabel, double targetWidth) {
+    override doResizeLabel(ElkLabel elkLabel, double targetWidth) {
         var rendering = elkLabel.getProperty(KlighdOptions.K_RENDERING)
         if(rendering instanceof KRenderingRef) rendering = rendering.rendering
         val kLabel = rendering?.eContainer
@@ -66,7 +66,7 @@ public class SemanticSoftWrappingLabelManager extends SoftWrappingLabelManager {
 
                     // Soft wrap first part
                     dummyLabel.text = part.toString
-                    parts.add(super.resizeLabel(dummyLabel, targetWidth))
+                    parts.add(super.doResizeLabel(dummyLabel, targetWidth).newText?:dummyLabel.text)
                 } else {
                     effectPrefix.append(part)
                 }
@@ -74,7 +74,7 @@ public class SemanticSoftWrappingLabelManager extends SoftWrappingLabelManager {
                 // Effects
                 if (parts.empty && transition.effects.empty) {
                     // Only priority
-                    return effectPrefix.toString
+                    return Result.modified(effectPrefix.toString)
                 } else {
                     effectPrefix.append("/ ")
                     for (effect : transition.effects) {
@@ -85,7 +85,7 @@ public class SemanticSoftWrappingLabelManager extends SoftWrappingLabelManager {
 
                         // Soft wrap first part
                         dummyLabel.text = part.toString
-                        parts.add(super.resizeLabel(dummyLabel, targetWidth))
+                        parts.add(super.doResizeLabel(dummyLabel, targetWidth).newText?:dummyLabel.text)
 
                         // Convert prefix to indentation
                         for (var i = 0; i < effectPrefix.length; i++) {
@@ -93,9 +93,9 @@ public class SemanticSoftWrappingLabelManager extends SoftWrappingLabelManager {
                         }
                     }
                 }
-                return parts.join("\n")
+                return Result.modified(parts.join("\n"))
             }
         }
-        return super.resizeLabel(elkLabel, targetWidth)
+        return super.doResizeLabel(elkLabel, targetWidth)
     }
 }

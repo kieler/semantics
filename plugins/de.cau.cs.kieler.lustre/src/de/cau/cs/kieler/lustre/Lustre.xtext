@@ -1,0 +1,290 @@
+ grammar de.cau.cs.kieler.lustre.Lustre
+
+generate lustre "http://www.cau.de/cs/kieler/lustre/Lustre"
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+/**
+ * @author cpa
+ */
+
+LustreProgram hidden(WS, LUSTRE_COMMENT):
+    nodes += Node_Declaration+    
+//    packages+=Package_Declaration+   
+;
+
+
+/*
+ * Packages
+ */
+
+Package_Declaration:
+    'package' name=IDENT 
+        ('uses' uses+=IDENT (',' uses+=IDENT)*)? 
+        'provides' provides+=Package_Provided+
+    'body'
+    (
+        nodes+=Node_Declaration |
+        types+=Type_Declaration |
+        constants+=Constant_Declaration
+    )*
+    'end'
+;
+
+Package_Provided:
+    'node' name=[Node_Declaration | IDENT] 
+        '(' (parameters+=Package_Provided_IO (',' parameters+=Package_Provided_IO)*)? ')' 
+        'returns' '(' returned+=Package_Provided_IO (',' returned+=Package_Provided_IO)* ')' 
+    ';'
+;
+
+Package_Provided_IO:
+    name=[Variable_Declaration | IDENT] ':' type=IDENT
+;
+
+Entity_Declaration:
+    Node_Declaration
+    | Type_Declaration
+    | Constant_Declaration
+;
+
+/*
+ * Identifiers
+ */
+ 
+//Identifier:
+//    (package=[Package | IDENT] '::')? name=[Variable_Declaration | IDENT] | name=[Node_Declaration | IDENT];
+
+
+/* 
+ * Types
+ */
+
+Type_Declaration:
+    'type' name=IDENT ';'
+    | 'type' name=IDENT '=' type=Type  ';'
+;
+
+Type:
+    name=IDENT
+//    | Array_Type
+//    | Record_Type
+//    | Enum_Type
+;
+
+Array_Type:
+    type=[Type_Declaration | IDENT] '^' length=INT
+    // XXX Original Lustre allows Type^Expression  
+;
+
+Record_Type:
+    'struct' '{' fields+=Field (',' fields+=Field)* '}'
+;
+
+Field:
+    name=IDENT ':' type=[Type | IDENT]
+;
+
+//Enum_Type:
+//    'enum' '{' nameList=Ident_List '}'
+//;
+
+
+/*
+ * Constants and variables
+ */
+
+Constant_Declaration:
+    'const' name=IDENT ':' type=Type ';'
+    | 'const' name=IDENT '=' expr=ConstantExpression ';'
+    | 'const' name=IDENT ':' type=Type '=' expr=ConstantExpression ';'
+    // XXX Original Lustre allows Expressions
+;
+
+Variable_Declaration:
+    name=IDENT ':' type=Type ('when' clock=IDENT)?;
+
+Local_Variable_Declaration returns Variable_Declaration:
+    'var' Variable_Declaration ';'
+; 
+
+Local_Constant_Declaration returns Constant_Declaration:
+    {Constant_Declaration} 'const' name=IDENT '=' expr=ConstantExpression ';'
+    | {Constant_Declaration} 'const' name=IDENT ':' type=Type '=' expr=ConstantExpression ';'
+    // XXX Original Lustre allows Expressions
+;
+
+
+/*
+ * Nodes
+ */
+ 
+Node_Declaration:
+    'node'  
+        name=IDENT 
+        '(' (parameters+=Variable_Declaration (',' parameters+=Variable_Declaration)*)? ')' 
+        'returns' '(' returned+=Variable_Declaration (',' returned+=Variable_Declaration)* ')' 
+    ';'
+    (
+        constants+=Local_Constant_Declaration |
+        variables+=Local_Variable_Declaration
+    )* 
+    'let' 
+    (
+        equations+=Equation | 
+        assertions+=Assertion |
+        automatons+=Automaton
+    )*
+    'tel' ';'?
+;
+
+Equation:
+    left=[Variable_Declaration | IDENT] '=' right=Right_Part ';'
+;
+
+Assertion:
+    'assert' Expression ';'
+;
+
+Automaton:
+    'automaton' states+=AState ('|' states+=AState)* 'end' ';' 
+;
+
+AState:
+    name=IDENT '->'
+    (
+        equations+=Equation | 
+        assertions+=Assertion |
+        automatons+=Automaton
+    )*
+    transitions+=ATransition+
+;
+
+ATransition:
+    ('until'|strong?='unless') condition=Expression ('then'|history?='continue') nextState=[AState|IDENT] ';'    
+;
+
+Left_Part:
+    '(' Left_List ')'
+    | Left_List;
+
+Left_List:
+    id+=Left (',' id+=Left)*;
+
+Left:
+    name=IDENT selector=Selector?
+;
+
+Selector:
+     '.' name=IDENT
+     | '[' begin=Expression end=SelTrancheEnd? ']'
+ ;
+
+SelTrancheEnd returns Expression:
+    '..' Expression;
+
+Right_Part returns Expression:
+    Expression
+;
+
+/*
+ * Expressions
+ */
+ 
+Expression:
+    {IfThenElse} 'if' ifexpr=Expression 'then' thenexpr=Expression 'else' elseexpr=Expression
+    | Fby
+;
+
+Fby returns Expression:
+    Arrow ({Fby.subExpressions+=current} ('fby' subExpressions+=Arrow)+)?
+;
+
+Arrow returns Expression:
+    Or ({Arrow.subExpressions+=current} ('->' subExpressions+=Or)+)?
+;
+
+Or returns Expression:
+    And ({Or.subExpressions+=current} ('or' subExpressions+=And)+)?
+;
+
+And returns Expression:
+    Equality ({And.subExpressions+=current} ('and' subExpressions+=Equality)+)?
+;
+
+Equality returns Expression:
+    Comparison ({Equality.left=current} op=('='|'<>') right=Comparison)*
+;
+
+Comparison returns Expression:
+    Mod ({Comparison.left=current} op=('>='|'<='|'>'|'<') right=Mod)*
+;
+
+Mod returns Expression:
+    PlusOrMinus ({Mod.subExpressions+=current} 'mod' subExpressions+=PlusOrMinus)*
+;
+
+PlusOrMinus returns Expression:
+    MulOrDiv ((({Plus.subExpressions+=current} '+') | ({Minus.subExpressions+=current} '-')) subExpressions+=MulOrDiv)*
+;
+
+MulOrDiv returns Expression:
+    Primary ((({Mul.subExpressions+=current} '*') | ({Div.subExpressions+=current} '/')) subExpressions+=Primary)*
+;
+
+Primary returns Expression:
+    '(' Expression ')'
+    | {Not} 'not' expression=Primary
+    | {UMinus} '-' expression=Primary
+    | {Pre} 'pre' expression=Primary
+    | {Current} 'current' expression=Primary
+    | AtomicExpression
+;
+
+AtomicExpression returns Expression:
+    ConstantExpression | VariableReference
+;
+
+VariableReference:
+    {VariableReference} value=[Variable_Declaration | IDENT]
+;
+
+ConstantExpression returns Expression:
+    {BoolConstant} value=BOOL 
+    | {FloatConstant} value=FLOAT
+    | {IntConstant} value=INT
+;
+
+/*
+ * Lexical tokens
+ */
+ 
+terminal BOOL returns ecore::EBoolean:
+    'true' | 'false';
+ 
+terminal IDENT returns ecore::EString: 
+    '^'?('a'..'z'|'A'..'Z'|'_')('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
+
+terminal INT returns ecore::EInt: 
+    ('0'..'9')+;
+
+terminal FLOAT returns ecore::EFloat:
+    ('0'..'9')+ '.' ('0'..'9')*
+    | '.' ('0'..'9')+;
+
+terminal STRING_CONSTANT: 
+    '"' ( '\\'('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|'"') )* '"' |
+    "'" ( '\\'('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|"'") )* "'"; 
+
+terminal LUSTRE_COMMENT:
+    ML_COMMENT | SL_COMMENT;
+
+terminal ML_COMMENT: 
+    '(*' -> '*)'
+;
+ 
+terminal SL_COMMENT: 
+    '--' !('\n'|'\r')* ('\r'? '\n')?
+;
+
+terminal WS: 
+    (' '|'\t'|'\r'|'\n')+;

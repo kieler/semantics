@@ -1,0 +1,32 @@
+knode processor {
+	size: width = 100 height = 16.5 
+	properties: 
+		org.eclipse.elk.padding = "[top=0.0,left=0.0,bottom=0.0,right=0.0]"
+    krectangle {
+        styles: lineStyle = solid foreground = 100r invisible = true
+    }
+    
+    knode processorbody {
+		size: width = 100 height = 16.5 
+        properties:
+            org.eclipse.elk.padding = "[top=4.0,left=4.0,bottom=4.0,right=4.0]"
+            org.eclipse.elk.spacing.border = 0
+            
+              
+        kroundedRectangle (8, 8) {
+            styles: lineStyle = solid 
+            foreground = 190r, 190g, 190b 
+            background = 248r, 249g, 253b, 255a -> 205r, 220g, 243b, 243a (90)
+        }
+        knode name {
+            krectangle {
+                styles: invisible = true
+            }
+            klabel "Identity" {
+                ktext {
+                    styles: fontName = "Arial" fontSize = 8pt
+                }
+            }
+        }
+    }
+} 

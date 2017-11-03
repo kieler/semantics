@@ -68,7 +68,7 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
                 target.propertyMap.put(MODEL, model)
             }
         } else {
-            copyValue(target, MODEL, model)
+            copyValue(target, MODEL, model, modelCopier)
         }
         
         // set source model
@@ -81,7 +81,7 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
                 if (k == ORIGINAL_MODEL) {
                     target.propertyMap.put(k, v)
                 } else {
-                    copyValue(target, k, v)
+                    copyValue(target, k, v, modelCopier)
                 }
                 
                 if (modelCopier != null) {
@@ -102,7 +102,7 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
         target
     }
     
-    static def <T extends EnvironmentPropertyHolder> copyValue(T target, IProperty<?> k, Object v) {
+    static def <T extends EnvironmentPropertyHolder> copyValue(T target, IProperty<?> k, Object v, Copier copier) {
         if (v instanceof EObject) {
             target.propertyMap.put(k, v.copy)
         } else {
@@ -118,7 +118,11 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
                 target.propertyMap.put(k, new String(v))
             } else if (v instanceof IKiCoolCloneable) {
                 if (!v.volatile) {
-                    target.propertyMap.put(k, v.cloneObject)
+                    val clone =  v.cloneObject
+                    if (copier !== null) { 
+                        clone.resolveCopiedObjects(copier)
+                    }
+                    target.propertyMap.put(k, clone)
                 }
             } else if (v instanceof List<?>) {
                 if (k.equals(Environment.ERRORS)) {

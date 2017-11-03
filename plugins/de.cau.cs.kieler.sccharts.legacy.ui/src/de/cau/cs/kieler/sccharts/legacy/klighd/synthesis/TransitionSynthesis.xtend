@@ -23,7 +23,7 @@ import de.cau.cs.kieler.sccharts.legacy.sccharts.Transition
 import de.cau.cs.kieler.sccharts.legacy.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.legacy.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.styles.TransitionStyles
-import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.EdgeRouting
 
@@ -31,7 +31,7 @@ import static de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.GeneralSynthesis
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import org.eclipse.elk.core.options.EdgeLabelPlacement
-import org.eclipse.elk.alg.layered.properties.EdgeLabelSideSelection
+import org.eclipse.elk.alg.layered.options.EdgeLabelSideSelection
 
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.

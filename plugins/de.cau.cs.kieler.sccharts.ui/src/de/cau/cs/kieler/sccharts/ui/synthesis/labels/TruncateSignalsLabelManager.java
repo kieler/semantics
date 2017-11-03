@@ -16,11 +16,7 @@ package de.cau.cs.kieler.sccharts.ui.synthesis.labels;
 import java.util.Arrays;
 import java.util.List;
 
-import org.eclipse.elk.graph.ElkLabel;
-import org.eclipse.swt.graphics.FontData;
-
-import de.cau.cs.kieler.klighd.labels.AbstractKlighdLabelManager;
-import de.cau.cs.kieler.klighd.labels.LabelManagementUtil;
+import de.cau.cs.kieler.klighd.labels.management.IdentLabelManager;
 
 /**
  * Label manager that shortens every Signal a bit, instead cutting of the end of the whole
@@ -28,7 +24,7 @@ import de.cau.cs.kieler.klighd.labels.LabelManagementUtil;
  * 
  * @author ybl
  */
-public class TruncateSignalsLabelManager extends AbstractKlighdLabelManager {
+public class TruncateSignalsLabelManager extends IdentLabelManager { // AbstractKlighdLabelManager {
 
     /** Operators used in transition labels. */
     private final static List<String> OPERATORS = Arrays.asList(new String[] { "<<", ">>", ">>>",
@@ -39,30 +35,30 @@ public class TruncateSignalsLabelManager extends AbstractKlighdLabelManager {
     /**
      * {@inheritDoc}
      */
-    @Override
-    public String resizeLabel(ElkLabel label, double targetWidth) {
-        FontData fontData = LabelManagementUtil.fontDataFor(label);
-        int numOperators = countOperators(label.getText());
-        targetWidth = targetWidth / (numOperators + 2);
-        String result = "";
-        String[] labelParts = label.getText().split(" ");
-        String nextToShorten = "";
-
-        for (String labelPart : labelParts) {
-            if (!OPERATORS.contains(labelPart)) {
-                nextToShorten += labelPart + " ";
-            } else {
-                result += LabelManagementUtil.findFittingString(nextToShorten, fontData, targetWidth)
-                        + "... ";
-                result += labelPart + " ";
-                nextToShorten = "";
-            }
-        }
-
-        result += LabelManagementUtil.findFittingString(nextToShorten, fontData, targetWidth) + "... ";
-        
-        return result;
-    }
+//    @Override
+//    public String resizeLabel(ElkLabel label, double targetWidth) {
+//        FontData fontData = LabelManagementUtil.fontDataFor(label);
+//        int numOperators = countOperators(label.getText());
+//        targetWidth = targetWidth / (numOperators + 2);
+//        String result = "";
+//        String[] labelParts = label.getText().split(" ");
+//        String nextToShorten = "";
+//
+//        for (String labelPart : labelParts) {
+//            if (!OPERATORS.contains(labelPart)) {
+//                nextToShorten += labelPart + " ";
+//            } else {
+//                result += LabelManagementUtil.findFittingString(nextToShorten, fontData, targetWidth)
+//                        + "... ";
+//                result += labelPart + " ";
+//                nextToShorten = "";
+//            }
+//        }
+//
+//        result += LabelManagementUtil.findFittingString(nextToShorten, fontData, targetWidth) + "... ";
+//        
+//        return result;
+//    }
 
     /**
      * Counts the number of operators in the given string.
@@ -71,16 +67,16 @@ public class TruncateSignalsLabelManager extends AbstractKlighdLabelManager {
      *            the label text.
      * @return number of operators.
      */
-    private int countOperators(final String text) {
-        String[] labelParts = text.split(" ");
-        int cnt = 0;
-
-        for (String labelPart : labelParts) {
-            if (OPERATORS.contains(labelPart)) {
-                cnt++;
-            }
-        }
-
-        return cnt;
-    }
+//    private int countOperators(final String text) {
+//        String[] labelParts = text.split(" ");
+//        int cnt = 0;
+//
+//        for (String labelPart : labelParts) {
+//            if (OPERATORS.contains(labelPart)) {
+//                cnt++;
+//            }
+//        }
+//
+//        return cnt;
+//    }
 }

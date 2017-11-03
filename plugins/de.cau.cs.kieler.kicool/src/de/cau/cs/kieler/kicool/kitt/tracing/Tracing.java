@@ -243,7 +243,7 @@ public class Tracing implements IKiCoolCloneable {
      * {@inheritDoc}
      */
     @Override
-    public Object cloneObject() {
+    public IKiCoolCloneable cloneObject() {
         return this;
     }
 }

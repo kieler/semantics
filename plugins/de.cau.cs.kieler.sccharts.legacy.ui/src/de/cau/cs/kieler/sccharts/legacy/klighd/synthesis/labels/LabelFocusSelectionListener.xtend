@@ -35,6 +35,7 @@ import org.eclipse.elk.graph.properties.Property
 import org.eclipse.jface.viewers.ISelectionChangedListener
 import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.ui.PlatformUI
+import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
 
 /**
  * Manages focusing of shortened labels. A label is focused if it is selected or the declaration of a 
@@ -116,7 +117,8 @@ class LabelFocusSelectionListener implements ISelectionChangedListener {
             if (focusRemoved || !focusedLabels.empty) {
                 PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
                     override run() {
-                        LightDiagramServices.layoutDiagram(viewContext, true, ZoomStyle.NONE);
+                        val c = new LightDiagramLayoutConfig(viewContext).animate(true).zoomStyle(ZoomStyle.NONE)
+                        LightDiagramServices.layoutDiagram(c);
                     }
                 });
             }

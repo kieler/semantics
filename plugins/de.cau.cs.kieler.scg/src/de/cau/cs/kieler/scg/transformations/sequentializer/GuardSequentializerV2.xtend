@@ -46,6 +46,7 @@ import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.scg.extensions.ValuedObjectMapping
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -123,7 +124,7 @@ class GuardSequentializerV2 extends AbstractSequentializer implements Traceable 
     protected val schedulingBlockGuardCache = <Guard, Set<SchedulingBlock>> newHashMap
          
 	protected val placedGuards = <Guard> newHashSet
-	protected var HashMap<ValuedObject, ValuedObject> valuedObjectMap = null
+	protected var ValuedObjectMapping valuedObjectMap = null
                
     // -------------------------------------------------------------------------
     // -- Sequentializer

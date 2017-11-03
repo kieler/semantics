@@ -69,6 +69,7 @@ class LoadSystemAction {
     }
     
     private def de.cau.cs.kieler.kicool.System createModelInMemoryResource(XtextEditor editor) {
+        // TODO: Use general temporary project concept also used in prom.
         val injector = KiCoolStandaloneSetup.doSetup
         val ResourceSet rs = injector.getInstance(typeof(ResourceSet))
         val r = rs.createResource(URI.createURI("temporary" + System.nanoTime + ".kico"))

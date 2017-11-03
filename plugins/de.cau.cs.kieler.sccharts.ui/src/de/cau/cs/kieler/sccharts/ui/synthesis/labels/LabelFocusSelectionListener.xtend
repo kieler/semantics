@@ -19,12 +19,14 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.klighd.IKlighdSelection
 import de.cau.cs.kieler.klighd.KlighdOptions
+import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.ZoomStyle
 import de.cau.cs.kieler.klighd.kgraph.KLabel
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.LabelShorteningHook
 import java.lang.ref.WeakReference
 import java.util.HashSet
@@ -34,7 +36,6 @@ import org.eclipse.elk.graph.properties.Property
 import org.eclipse.jface.viewers.ISelectionChangedListener
 import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.ui.PlatformUI
-import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 
 /**
  * Manages focusing of shortened labels. A label is focused if it is selected or the declaration of a 
@@ -115,7 +116,8 @@ class LabelFocusSelectionListener implements ISelectionChangedListener {
             if (focusRemoved || !focusedLabels.empty) {
                 PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
                     override run() {
-                        LightDiagramServices.layoutDiagram(viewContext, true, ZoomStyle.NONE);
+                        val c = new LightDiagramLayoutConfig(viewContext).animate(true).zoomStyle(ZoomStyle.NONE);
+                        LightDiagramServices.layoutDiagram(c);
                     }
                 });
             }

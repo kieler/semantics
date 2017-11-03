@@ -27,6 +27,7 @@ import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * @author ssm
@@ -193,10 +194,9 @@ class SCChartsFixExtensions {
         }
 
         var hierarchicalScopeName = targetScope.getHierarchicalName("local")
-        val declarations = scope.variableDeclarations
-        for(declaration : declarations) {
+        for(declaration : scope.declarations.immutableCopy) {
             targetScope.declarations.add(declaration)
-            if (expose) declaration.output = true
+            if (expose && declaration instanceof VariableDeclaration) (declaration as VariableDeclaration).output = true
             for(valuedObject : declaration.valuedObjects) {
                 valuedObject.name = ("_" + hierarchicalScopeName + "_" + valuedObject.name)
                 valuedObject.uniqueName(nameCache)

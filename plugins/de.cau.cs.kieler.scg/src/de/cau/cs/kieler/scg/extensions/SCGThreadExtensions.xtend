@@ -406,6 +406,11 @@ class SCGThreadExtensions {
         // Add all incoming control flows to the list an repeat until the list is empty.
         controlFlows += node.allPrevious
         if (node instanceof Depth) controlFlows += (node as Depth).surface.allPrevious
+        // INSERTED FROM lpe/priorities
+        if (node instanceof Join) {
+            controlFlows.clear
+            controlFlows += (node as Join).fork.allPrevious    
+        }        
         while(!controlFlows.empty) {
             // Check the first control flow and its parent node.
             var prevNode = controlFlows.head.eContainer as Node
@@ -603,11 +608,13 @@ class SCGThreadExtensions {
     			newType = oldType
     		}
     		else if (type != ThreadPathType::DELAYED) {
-    			newType = ThreadPathType::POTENTIALLY_INSTANTANEOUS
+//    			newType = ThreadPathType::POTENTIALLY_INSTANTANEOUS
     		}
     	}
     	else if (oldType == ThreadPathType::POTENTIALLY_INSTANTANEOUS) {
-    		newType = ThreadPathType::POTENTIALLY_INSTANTANEOUS
+    	    if (type == ThreadPathType::DELAYED) {
+                newType = ThreadPathType::DELAYED
+    		}
     	}
     	
     	newType

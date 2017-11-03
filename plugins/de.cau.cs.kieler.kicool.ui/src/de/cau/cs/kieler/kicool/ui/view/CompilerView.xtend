@@ -139,7 +139,7 @@ class CompilerView extends DiagramViewPart {
         
         val MenuManager skinMenu = new MenuManager("Synthesis Skins")
         skinSelectionActions = new SkinSelectionActions(this)
-        skinSelectionActions.actions.forEach[ skinMenu.add(it) ]
+        skinSelectionActions.actions.forEach[ skinMenu.add(it.action) ]
         menu.add(skinMenu)
         menu.add(developerToggle.action)
         
@@ -148,6 +148,7 @@ class CompilerView extends DiagramViewPart {
         memento?.loadCheckedValue(visualLayoutFeedbackToggle)
         memento?.loadCheckedValue(developerToggle)
         memento?.loadCheckedValue(compileInplaceToggle)
+        memento?.loadCheckedValues(skinSelectionActions.actions)
         
         menu.add(new Separator)
         // The standard klighd view part menu entries will be inserted after this separator.    
@@ -165,6 +166,7 @@ class CompilerView extends DiagramViewPart {
         memento.saveCheckedValue(visualLayoutFeedbackToggle)
         memento.saveCheckedValue(developerToggle)
         memento.saveCheckedValue(compileInplaceToggle)
+        memento.saveCheckedValues(skinSelectionActions.actions)
     }
     
     def void updateView() {
@@ -211,8 +213,20 @@ class CompilerView extends DiagramViewPart {
         } 
     }
     
-    private def void saveCheckedValue(IMemento memento, AbstractAction action) {
-        memento?.putString(action.action.id, action.action.checked.toString)
+    private def void loadCheckedValues(IMemento memento, List<? extends AbstractAction> actions) {
+        for (action : actions) {
+            if (action !== null) memento?.loadCheckedValue(action)
+        }
     }
+    
+    private def void saveCheckedValue(IMemento memento, AbstractAction action) {
+        if (action !== null) memento?.putString(action.action.id, action.action.checked.toString)
+    }
+    
+    private def void saveCheckedValues(IMemento memento, List<? extends AbstractAction> actions) {
+        for (action : actions) {
+            if (action !== null) memento?.putString(action.action.id, action.action.checked.toString)
+        }
+    }    
 
 }

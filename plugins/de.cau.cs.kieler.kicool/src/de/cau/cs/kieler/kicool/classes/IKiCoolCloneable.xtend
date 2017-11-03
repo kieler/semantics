@@ -33,7 +33,7 @@ interface IKiCoolCloneable {
     /**
      * Returns the cloned object.
      */
-    public def Object cloneObject()
+    public def IKiCoolCloneable cloneObject()
     
     /**
      * Determines if the object is lost when preparing prime environments.

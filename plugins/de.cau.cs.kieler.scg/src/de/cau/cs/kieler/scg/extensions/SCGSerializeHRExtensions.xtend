@@ -51,7 +51,7 @@ class SCGSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         if (assignment.valuedObject != null) {
             var CharSequence assignmentText = ""
             if (assignment.expression != null && !assignment.operator.isPostfixOperator) {
-                assignmentText = serializeHR(assignment.expression)
+                assignmentText = assignment.expression.serializeHR
             }
             var valuedObjectName = assignment.valuedObject.name
             if (!assignment.indices.nullOrEmpty) {

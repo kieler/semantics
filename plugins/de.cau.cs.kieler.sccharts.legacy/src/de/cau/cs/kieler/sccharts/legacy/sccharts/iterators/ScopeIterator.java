@@ -13,18 +13,11 @@
  */
 package de.cau.cs.kieler.sccharts.legacy.sccharts.iterators;
 
-import static com.google.common.collect.Iterators.concat;
-import static com.google.common.collect.Iterators.transform;
-
+import java.util.Collections;
 import java.util.Iterator;
 
 import org.eclipse.emf.common.util.AbstractTreeIterator;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Iterators;
-
-import de.cau.cs.kieler.sccharts.legacy.kexpressions.Declaration;
-import de.cau.cs.kieler.sccharts.legacy.kexpressions.ValuedObject;
 import de.cau.cs.kieler.sccharts.legacy.sccharts.ControlflowRegion;
 import de.cau.cs.kieler.sccharts.legacy.sccharts.Region;
 import de.cau.cs.kieler.sccharts.legacy.sccharts.Scope;
@@ -52,7 +45,7 @@ public final class ScopeIterator {
                     final Iterator<State> states = ((ControlflowRegion) object).getStates().iterator();
                     return states;
                 } else {
-                    return Iterators.emptyIterator();
+                    return Collections.emptyIterator();
                 }
             }
 

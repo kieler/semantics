@@ -26,35 +26,39 @@ import de.cau.cs.kieler.kicool.ui.synthesis.styles.SkinSelector
  */
 class SkinSelectionActions {
 
-    val static skins = #[new Pair<String, String>("Default Skin", ""),
-                         new Pair<String, String>("SCCharts Skin", "scc/")
+    val static skins = #[new Pair<String, String>("Default Skin", "default/"),
+                         new Pair<String, String>("SCCharts Skin", "scc/"),
+                         new Pair<String, String>("Detailed Skin", "detailed/")
     ]
 
-    @Accessors List<Action> actions = <Action> newLinkedList
+    @Accessors List<AbstractAction> actions = <AbstractAction> newLinkedList
     @Accessors private CompilerView view
     
     new(CompilerView view) {
         this.view = view 
         for(s : skins) {
             
-            val action = new Action(s.key, IAction.AS_RADIO_BUTTON) {
-                override void run() {
-                    if (isChecked) invoke(s.value)
+            val action = new AbstractAction(view, 
+                s.key, 
+                IAction.AS_RADIO_BUTTON,
+                "skinToggle" + s.key.replaceAll(" ", ""), 
+                s.key,
+                s.key, 
+                null
+            ) {
+                override void invoke() {
+                    if (action.isChecked) invokeFromActions(s.value)
                 }
             }
-            action.setId("skinToggle" + s.key.replaceAll(" ", ""))
-            action.setText(s.key)
-            action.setToolTipText(s.key)
-            action.imageDescriptor = null
             
             actions += action    
         } 
         
-        actions.head.checked = true
+        actions.head.action.checked = true
     }
     
-    protected def void invoke(String str) {
-        SkinSelector.skinPrefix = "resources/" + str
+    protected def void invokeFromActions(String str) {
+        SkinSelector.skinPrefix = "resources/skins/" + str
         view.updateView
     }
 }
