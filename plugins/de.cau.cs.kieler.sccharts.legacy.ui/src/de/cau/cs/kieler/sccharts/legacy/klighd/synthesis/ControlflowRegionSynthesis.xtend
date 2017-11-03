@@ -27,9 +27,9 @@ import de.cau.cs.kieler.sccharts.legacy.sccharts.extensions.SCChartsSerializeHRE
 import de.cau.cs.kieler.sccharts.legacy.klighd.actions.LegacyReferenceExpandAction
 import de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.hooks.actions.LegacyMemorizingExpandCollapseAction
 import de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.styles.ControlflowRegionStyles
-import org.eclipse.elk.alg.layered.properties.EdgeLabelSideSelection
-import org.eclipse.elk.alg.layered.properties.FixedAlignment
-import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.alg.layered.options.EdgeLabelSideSelection
+import org.eclipse.elk.alg.layered.options.FixedAlignment
+import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.EdgeRouting
 
@@ -74,7 +74,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         if (USE_KLAY.booleanValue) {
             node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
             node.setLayoutOption(LayeredOptions::NODE_PLACEMENT_BK_FIXED_ALIGNMENT, FixedAlignment::BALANCED);
-            node.setLayoutOption(LayeredOptions::EDGE_LABEL_SIDE_SELECTION, EdgeLabelSideSelection.ALWAYS_UP)
+            node.setLayoutOption(LayeredOptions::EDGE_LABELS_SIDE_SELECTION, EdgeLabelSideSelection.ALWAYS_UP)
         } else {
             node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.graphviz.dot");
             node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 40.0);

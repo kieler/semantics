@@ -13,15 +13,17 @@
  */
 package de.cau.cs.kieler.scg.klighd
 
-import com.google.inject.Injector
 import com.google.common.collect.HashMultimap
-import com.google.common.collect.Multimap
+import de.cau.cs.kieler.annotations.IntAnnotation
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.klighd.IKlighdSelection
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.internal.macrolayout.KlighdDiagramLayoutConnector
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KPort
@@ -57,61 +59,54 @@ import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.GuardDependency
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScheduleDependency
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGSerializeHRExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
+import de.cau.cs.kieler.scg.klighd.actions.NodePriorityActions
+import de.cau.cs.kieler.scg.klighd.actions.OptNodePrioActions
+import de.cau.cs.kieler.scg.klighd.actions.PrioStatementsActions
+import de.cau.cs.kieler.scg.klighd.actions.SCCActions
+import de.cau.cs.kieler.scg.klighd.actions.ThreadPriorityActions
+import de.cau.cs.kieler.scg.processors.analyzer.LoopAnalyzerV2
+import de.cau.cs.kieler.scg.processors.transformators.priority.PriorityAuxiliaryData
+import de.cau.cs.kieler.scg.processors.transformators.priority.PriorityProcessor
 import java.util.ArrayList
 import java.util.HashMap
+import java.util.LinkedList
 import java.util.List
 import java.util.Set
 import javax.inject.Inject
-import org.eclipse.elk.alg.layered.p2layers.LayeringStrategy
-import org.eclipse.elk.alg.layered.p4nodes.NodePlacementStrategy
-import org.eclipse.elk.alg.layered.properties.LayerConstraint
-import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.alg.layered.options.LayerConstraint
+import org.eclipse.elk.alg.layered.options.LayeredOptions
+import org.eclipse.elk.alg.layered.options.LayeringStrategy
+import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
+import org.eclipse.elk.alg.layered.options.WrappingStrategy
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.EdgeRouting
+import org.eclipse.elk.core.options.NodeLabelPlacement
 import org.eclipse.elk.core.options.PortAlignment
 import org.eclipse.elk.core.options.PortConstraints
 import org.eclipse.elk.core.options.PortSide
+import org.eclipse.elk.graph.properties.Property
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.jface.viewers.ISelectionChangedListener
 import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.xtext.serializer.ISerializer
-import org.eclipse.elk.graph.properties.Property
 
+import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scg.common.SCGAnnotations
-import static extension de.cau.cs.kieler.scg.common.SCGAnnotations.*
-import com.google.common.collect.Multimap
-import org.eclipse.elk.core.options.NodeLabelPlacement
-import de.cau.cs.kieler.klighd.internal.macrolayout.KlighdDiagramLayoutConnector
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.scg.klighd.actions.OptNodePrioActions
-import de.cau.cs.kieler.scg.klighd.actions.NodePriorityActions
-import de.cau.cs.kieler.scg.klighd.actions.ThreadPriorityActions
-import de.cau.cs.kieler.scg.klighd.actions.SCCActions
-import de.cau.cs.kieler.scg.klighd.actions.PrioStatementsActions
-import de.cau.cs.kieler.kicool.compilation.CompilationContext
-import de.cau.cs.kieler.scg.processors.transformators.priority.PriorityProcessor
-import java.util.LinkedList
-import de.cau.cs.kieler.scg.processors.transformators.priority.PriorityAuxiliaryData
-import de.cau.cs.kieler.annotations.IntAnnotation
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
-import de.cau.cs.kieler.scg.processors.analyzer.LoopAnalyzerV2
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -563,18 +558,14 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             node.setLayoutOption(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, false);
             if (scg.hasAnnotation(ANNOTATION_SEQUENTIALIZED)) {
                 node.setLayoutOption(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH)
-                // Future pragmatics releases wont have sausage folding option but wrapping strategy
-                // node.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.PATH_LIKE)
-                node.setLayoutOption(LayeredOptions::SAUSAGE_FOLDING, true)
+                node.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.SINGLE_EDGE)
             }
             
             
             // Sausage folding on/off
             if ((SHOW_SAUSAGE_FOLDING.booleanValue) && scg.hasAnnotation(SCGFeatures::SEQUENTIALIZE_ID)) {
                 node.addLayoutParam(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH)
-                // Future pragmatics releases wont have sausage folding option but wrapping strategy
-                // node.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.PATH_LIKE)
-                node.setLayoutOption(LayeredOptions::SAUSAGE_FOLDING, true)
+                node.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.SINGLE_EDGE)
             }
     
             // Added as suggested by uru (mail to cmot, 11.11.2016)            
@@ -820,7 +811,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	            node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
             }
             node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
-            node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_BASIC, PortAlignment::CENTER)
+            node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_DEFAULT, PortAlignment::CENTER)
             node.addLayoutParam(CoreOptions::SPACING_PORT_PORT, 10.0)
             if (!isGuardSCG) {            
                 if (topdown()) {
@@ -919,7 +910,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
             }
             node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
-            node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_BASIC, PortAlignment::CENTER)
+            node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_DEFAULT, PortAlignment::CENTER)
             node.addLayoutParam(CoreOptions::SPACING_PORT_PORT, 10.0)
             var KPort port
             if (topdown) {
@@ -1191,7 +1182,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             } else {
                 node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
             }
-            node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_BASIC, PortAlignment::CENTER)
+            node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_DEFAULT, PortAlignment::CENTER)
             node.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 10d)
             if (topdown) {
                 node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
@@ -1266,7 +1257,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             } else {
                 node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
             }
-            node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_BASIC, PortAlignment::CENTER)
+            node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_DEFAULT, PortAlignment::CENTER)
             node.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 10d)
             if (topdown) {
                 node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)

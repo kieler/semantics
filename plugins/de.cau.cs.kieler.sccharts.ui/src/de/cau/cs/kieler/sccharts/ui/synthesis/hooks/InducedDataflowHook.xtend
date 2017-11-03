@@ -56,8 +56,8 @@ import java.util.EnumSet
 import java.util.Iterator
 import java.util.Map
 import java.util.Set
-import org.eclipse.elk.alg.layered.properties.LayerConstraint
-import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.alg.layered.options.LayerConstraint
+import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.math.ElkPadding
 import org.eclipse.elk.core.options.Alignment
 import org.eclipse.elk.core.options.CoreOptions

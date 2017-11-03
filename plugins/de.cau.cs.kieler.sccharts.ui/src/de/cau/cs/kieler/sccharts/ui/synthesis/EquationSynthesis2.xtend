@@ -39,8 +39,8 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.styles.EquationStyles
 import java.util.EnumSet
 import java.util.List
 import java.util.Set
-import org.eclipse.elk.alg.layered.properties.LayerConstraint
-import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.alg.layered.options.LayerConstraint
+import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.math.KVector
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.PortAlignment
@@ -455,7 +455,7 @@ class EquationSynthesis2 extends SubSynthesis<Assignment, KNode> {
                     if (vo instanceof ValuedObjectReference || vo instanceof ValuedObject) {
                         node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST)
                     }
-                    node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_BASIC, PortAlignment.CENTER)
+                    node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_DEFAULT, PortAlignment.CENTER)
                     node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE)
                     result += node
                     

@@ -39,7 +39,6 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
 import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.alg.force.properties.StressOptions
 
 /**
  * Main diagram synthesis for SCCharts.
