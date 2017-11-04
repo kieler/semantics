@@ -46,7 +46,7 @@ class PostUpdateDoubleCollector {
     
     def getPercentile(de.cau.cs.kieler.kicool.compilation.Processor<?,?> processor) {
         val value = processorMap.get(processor) 
-        if (value != null) {
+        if (value !== null) {
             var double pVal = value.doubleValue() / maxValue
             if (pVal < nullPercent) { pVal = nullPercent }
             return pVal

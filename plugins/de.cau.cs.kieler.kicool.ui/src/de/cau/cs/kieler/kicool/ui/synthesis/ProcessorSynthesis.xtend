@@ -37,7 +37,8 @@ import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.uniqueProcessor
 import static de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.Color.*
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.*
-import static extension org.eclipse.xtext.EcoreUtil2.* import de.cau.cs.kieler.kicool.ProcessorReference
+import static extension org.eclipse.xtext.EcoreUtil2.* 
+import de.cau.cs.kieler.kicool.ProcessorReference
 
 /**
  * Main diagram synthesis for processors in KiCool.
@@ -140,7 +141,7 @@ class ProcessorSynthesis {
     
     dispatch def List<KNode> transform(ProcessorSystem processorSystem) {
         val system = processorSystem.getProcessorSystem
-        if (system != null) {
+        if (system !== null) {
 //            val systemModel = system.transform
             val systemModel = system.processors.transform
             return newArrayList(systemModel) 

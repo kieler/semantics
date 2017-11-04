@@ -60,8 +60,6 @@ import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.krendering.KPolygon
 import de.cau.cs.kieler.kicool.ProcessorReference
 import org.eclipse.emf.ecore.EObject
-import com.google.inject.Injector
-import de.cau.cs.kieler.kicool.KiCoolStandaloneSetup
 import de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis
 import de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorSystem
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.MessageObjectReferencesManager.fillUndefinedColors
@@ -79,12 +77,8 @@ import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
  */
 class ProcessorDataManager {
     
-    private static Injector injector =
-            new KiCoolStandaloneSetup().createInjectorAndDoEMFRegistration();    
-            
     private static KRenderingExtensions kRenderingExtensions = new KRenderingExtensions
     
-    static val NODE_PROCESSOR = "processor"
     static val NODE_PROCESSOR_BODY = "processorbody"
     static val NODE_ACTIVITY_STATUS = "status"
     static val NODE_NAME = "name"
@@ -152,7 +146,7 @@ class ProcessorDataManager {
             sourceNode.setProperty(INTERMEDIATE_DATA, 
                 new IntermediateData(processorUnit, 
                     compilationNotification.compilationContext, 
-                    compilationNotification.compilationContext.originalModel, view
+                    null, view
                 ))
         }
         

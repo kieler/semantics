@@ -16,10 +16,6 @@ import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
-import de.cau.cs.kieler.core.model.Pair
-import de.cau.cs.kieler.kicool.environments.MessageObjectReferences
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
 import de.cau.cs.kieler.klighd.LightDiagramServices
@@ -37,8 +33,6 @@ import de.cau.cs.kieler.kicool.ui.synthesis.updates.MessageObjectReferencesManag
 class MessageObjectListSynthesis extends AbstractDiagramSynthesis<MessageObjectListPair> {
     
     @Inject extension KNodeExtensions
-    @Inject extension KRenderingExtensions
-    @Inject extension KContainerRenderingExtensions
     @Inject extension MessageObjectReferencesManager
    
     override transform(MessageObjectListPair model) {
@@ -46,7 +40,7 @@ class MessageObjectListSynthesis extends AbstractDiagramSynthesis<MessageObjectL
         
         val properties = new KlighdSynthesisProperties
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy.ID)
-        val viewpart = usedContext.diagramWorkbenchPart
+//        val viewpart = usedContext.diagramWorkbenchPart
         val subDiagramViewContext = LightDiagramServices::translateModel2(model.second, usedContext, properties)
         usedContext.addChildViewContext(subDiagramViewContext)
         

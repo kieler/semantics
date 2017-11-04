@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.kicool.ui.view.actions
 
-import org.eclipse.jface.action.Action
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import java.util.List
