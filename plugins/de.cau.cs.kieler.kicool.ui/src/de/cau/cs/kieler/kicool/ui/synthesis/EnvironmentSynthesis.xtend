@@ -47,6 +47,7 @@ import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import org.eclipse.elk.core.options.Alignment
 import org.eclipse.elk.core.options.PortSide
+import de.cau.cs.kieler.klighd.SynthesisOption
 
 /**
  * @author ssm
@@ -59,7 +60,6 @@ class EnvironmentSynthesis extends AbstractDiagramSynthesis<EnvironmentPair> {
     @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions
     @Inject extension KPortExtensions  
-    @Inject extension KLabelExtensions
     @Inject extension KRenderingExtensions
     @Inject extension KContainerRenderingExtensions
     @Inject extension KPolylineExtensions
@@ -67,6 +67,14 @@ class EnvironmentSynthesis extends AbstractDiagramSynthesis<EnvironmentPair> {
     
     static val VALUE_STRING_MAX_LENGTH = 64
     
+    // Options
+    public static val SynthesisOption SHORTEN_VALUES = SynthesisOption::createCheckOption("Shorten Values", true)
+        
+    // Sidebar
+    override getDisplayedSynthesisOptions() {
+        return newLinkedList(SHORTEN_VALUES);
+    }
+
     override transform(EnvironmentPair model) {
         val rootNode = model.createNode
         
@@ -154,7 +162,9 @@ class EnvironmentSynthesis extends AbstractDiagramSynthesis<EnvironmentPair> {
         keyText.fontBold = true
         keyText.setGridPlacementData().from(LEFT, 8, 0, TOP, 0, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0)
         
-        val valueStringShortended = if (valueString.length > VALUE_STRING_MAX_LENGTH) valueString.substring(0, VALUE_STRING_MAX_LENGTH - 3) + "..." else valueString                
+        val valueStringShortended = if (valueString.length > VALUE_STRING_MAX_LENGTH && SHORTEN_VALUES.booleanValue) 
+            valueString.substring(0, VALUE_STRING_MAX_LENGTH - 3) + "..." 
+            else valueString                
         val valueText = figure.addText(valueStringShortended)
         valueText.foreground = "blue".color
         valueText.fontSize = 9
