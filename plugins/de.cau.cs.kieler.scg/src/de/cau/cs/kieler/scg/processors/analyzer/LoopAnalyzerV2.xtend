@@ -51,7 +51,7 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
         val loopData = new LoopData
         val threadData = environment.getProperty(ThreadAnalyzer.THREAD_DATA)
         if (threadData === null) {
-            environment.errors.add("This processor requires thread information, but no thread data was found.")
+            environment.warnings.add("This processor requires thread information, but no thread data was found.")
             return;
         }
         environment.setProperty(LOOP_DATA, loopData)
