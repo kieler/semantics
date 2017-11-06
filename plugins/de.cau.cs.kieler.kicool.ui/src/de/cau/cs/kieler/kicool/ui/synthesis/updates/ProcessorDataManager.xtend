@@ -67,6 +67,7 @@ import de.cau.cs.kieler.kicool.ui.synthesis.actions.OnOffToggle
 import de.cau.cs.kieler.kicool.ui.synthesis.MessageObjectListPair
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
+import de.cau.cs.kieler.kicool.environments.EnvironmentPair
 
 /**
  * The data manager handles all synthesis updates.
@@ -246,7 +247,11 @@ class ProcessorDataManager {
                 environmentNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
                 intermediateRootNode.children += environmentNode 
                 environmentNode.setProperty(INTERMEDIATE_DATA, 
-                    new IntermediateData(processorInstance, processorNotification.compilationContext, processorInstance.sourceEnvironment, view))
+                    new IntermediateData(processorInstance, 
+                        processorNotification.compilationContext, 
+                        new EnvironmentPair(processorInstance.sourceEnvironment, processorInstance.sourceEnvironment),
+                        view
+                    ))
                 intermediatePosX += intermediatePosXInc          
                 environmentNode.container.setFBColor(ENVIRONMENT_MODEL)                 
             }            
@@ -286,7 +291,11 @@ class ProcessorDataManager {
                 environmentNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
                 intermediateRootNode.children += environmentNode 
                 environmentNode.setProperty(INTERMEDIATE_DATA, 
-                    new IntermediateData(processorInstance, processorNotification.compilationContext, processorInstance.environment, view))
+                    new IntermediateData(processorInstance, 
+                        processorNotification.compilationContext, 
+                        new EnvironmentPair(processorInstance.sourceEnvironment, processorInstance.environment), 
+                        view
+                    ))
                 intermediatePosX += intermediatePosXInc          
                 environmentNode.container.setFBColor(ENVIRONMENT_MODEL)                 
             }            

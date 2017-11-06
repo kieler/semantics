@@ -350,6 +350,10 @@
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.synthesis.CodeContainerSynthesis"
             id="de.cau.cs.kieler.kicool.ui.synthesis.CodeContainerSynthesis">
       </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.synthesis.EnvironmentSynthesis"
+            id="de.cau.cs.kieler.kicool.ui.synthesis.EnvironmentSynthesis">
+      </diagramSynthesis>
    </extension>
        <extension
              point="org.eclipse.ui.views">

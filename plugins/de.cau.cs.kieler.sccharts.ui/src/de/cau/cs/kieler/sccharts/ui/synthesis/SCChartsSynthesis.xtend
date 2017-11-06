@@ -39,6 +39,7 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
 import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.alg.force.options.StressOptions
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -162,7 +163,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         }
         
         val pragmaFont = scc.getStringPragmas(PRAGMA_FONT).last
-        if (pragmaFont != null) {
+        if (pragmaFont !== null) {
             rootNode.eAllContents.filter(KText).forEach[ fontName = pragmaFont.values.head ]
         }
         
@@ -176,8 +177,8 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     
     protected def void configureInterChartCommunication(KNode rootNode, SCCharts scc, HashMap<State, KNode> rootStateNodes) {
         // Bugged in the stress version we're working with.
-//        rootNode.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.stress")
-//        rootNode.setLayoutOption(StressOptions.DESIRED_EDGE_LENGTH, 200f)
+        rootNode.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.stress")
+        rootNode.setLayoutOption(StressOptions.DESIRED_EDGE_LENGTH, 300d)
         val HashMultimap<String, State> inputMessages = HashMultimap.create
         scc.rootStates.forEach[ rootState | rootState.declarations.filter(VariableDeclaration).filter[ input ].map[ valuedObjects ].flatten.forEach[ vo | inputMessages.put(vo.name, rootState) ] ]
         for (rootState : scc.rootStates) {
