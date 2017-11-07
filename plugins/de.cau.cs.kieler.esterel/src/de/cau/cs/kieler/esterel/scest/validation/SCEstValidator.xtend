@@ -67,72 +67,72 @@ class SCEstValidator extends SCEstJavaValidator{
      * ##########################################################
      */
         
-    @Check
-    def void emitSignal(Emit emit) {
-        if (emit.signal.type.isPure) {
-            if (emit.expression != null) {
-                error(emit.signal.name + " is not a valued signal!", emit, null, -1)
-            }
-        }
-        else {
-            if (emit.expression == null) {
-                error("Must be a valued emit since " + emit.signal.name + " is a valued signal!", emit, null, -1)
-            }
-        }
-    }
-    
-    @Check
-    def void annotation(Annotation annotation) {
-        if (annotation.isGenerated || annotation.isInterfaceAnnotation || annotation.isGeneratedModuleAnnotation) {
-            error("Annotations of name '" + interfaceScope + "', '" + generatedModule + "' or '" + generatedAnnotation + "' are forbidden!", annotation, null, -1)
-        }
-    }
-    
-    @Check
-    def void combineOperatorValuedObject(ValuedObject vo) {
-        if (vo.eContainer instanceof Declaration) {
-            var type = (vo.eContainer as Declaration).type
-            if (!combineOperatorFitsType(type, vo.combineOperator)) {
-                error("The combine operator '" + vo.combineOperator + "' does not fit the valued objects type '" + type + "'!", vo, null, -1)
-            }
-        }
-    }
-    
-    @Check
-    def void combineOperatorIVariable(IVariable variable) {
-        var parent = variable.eContainer as VariableDecl
-        if (!combineOperatorFitsType(parent.type?.type, parent.type?.operator)) {
-            error("The combine operator '" + parent.type?.operator + "' does not fit the variables type '" + parent.type?.type + "'!", variable, null, -1)
-        }
-    }
-    
-    @Check
-    def void combineOperatorConstant(Constant constant) {
-        var parent = constant.eContainer as OneTypeConstantDecls
-        if (!combineOperatorFitsType(parent.type?.type, parent.type?.operator)) {
-            error("The combine operator '" + parent.type?.operator + "' does not fit the constants type '" + parent.type?.type + "'!", constant, null, -1)
-        }
-    }
-    
-    @Check
-    def void combineOperatorISignal(ISignal signal) {
-        if (signal.eContainer instanceof SensorWithType) {
-            var parent = signal.eContainer as SensorWithType
-            if (!combineOperatorFitsType(parent.type?.type, parent.type?.operator)) {
-                error("The combine operator '" + parent.type?.operator + "' does not fit the sensors type '" + parent.type?.type + "'!", signal, null, -1)
-            }
-        }
-        else if (!combineOperatorFitsType(signal.type, signal.combineOperator)) {
-            error("The combine operator '" + signal.combineOperator + "' does not fit the signals type '" + signal.type + "'!", signal, null, -1)
-        }
-    }
-    
-    @Check
-    def void combineOperatorTrapSignal(TrapSignal trap) {
-        if (!combineOperatorFitsType(trap.type, trap.combineOperator)) {
-            error("The combine operator '" + trap.combineOperator + "' does not fit the traps type '" + trap.type + "'!", trap, null, -1)
-        }
-    }
+//    @Check
+//    def void emitSignal(Emit emit) {
+//        if (emit.signal.type.isPure) {
+//            if (emit.expression != null) {
+//                error(emit.signal.name + " is not a valued signal!", emit, null, -1)
+//            }
+//        }
+//        else {
+//            if (emit.expression == null) {
+//                error("Must be a valued emit since " + emit.signal.name + " is a valued signal!", emit, null, -1)
+//            }
+//        }
+//    }
+//    
+//    @Check
+//    def void annotation(Annotation annotation) {
+//        if (annotation.isGenerated || annotation.isInterfaceAnnotation || annotation.isGeneratedModuleAnnotation) {
+//            error("Annotations of name '" + interfaceScope + "', '" + generatedModule + "' or '" + generatedAnnotation + "' are forbidden!", annotation, null, -1)
+//        }
+//    }
+//    
+//    @Check
+//    def void combineOperatorValuedObject(ValuedObject vo) {
+//        if (vo.eContainer instanceof Declaration) {
+//            var type = (vo.eContainer as Declaration).type
+//            if (!combineOperatorFitsType(type, vo.combineOperator)) {
+//                error("The combine operator '" + vo.combineOperator + "' does not fit the valued objects type '" + type + "'!", vo, null, -1)
+//            }
+//        }
+//    }
+//    
+//    @Check
+//    def void combineOperatorIVariable(IVariable variable) {
+//        var parent = variable.eContainer as VariableDecl
+//        if (!combineOperatorFitsType(parent.type?.type, parent.type?.operator)) {
+//            error("The combine operator '" + parent.type?.operator + "' does not fit the variables type '" + parent.type?.type + "'!", variable, null, -1)
+//        }
+//    }
+//    
+//    @Check
+//    def void combineOperatorConstant(Constant constant) {
+//        var parent = constant.eContainer as OneTypeConstantDecls
+//        if (!combineOperatorFitsType(parent.type?.type, parent.type?.operator)) {
+//            error("The combine operator '" + parent.type?.operator + "' does not fit the constants type '" + parent.type?.type + "'!", constant, null, -1)
+//        }
+//    }
+//    
+//    @Check
+//    def void combineOperatorISignal(ISignal signal) {
+//        if (signal.eContainer instanceof SensorWithType) {
+//            var parent = signal.eContainer as SensorWithType
+//            if (!combineOperatorFitsType(parent.type?.type, parent.type?.operator)) {
+//                error("The combine operator '" + parent.type?.operator + "' does not fit the sensors type '" + parent.type?.type + "'!", signal, null, -1)
+//            }
+//        }
+//        else if (!combineOperatorFitsType(signal.type, signal.combineOperator)) {
+//            error("The combine operator '" + signal.combineOperator + "' does not fit the signals type '" + signal.type + "'!", signal, null, -1)
+//        }
+//    }
+//    
+//    @Check
+//    def void combineOperatorTrapSignal(TrapSignal trap) {
+//        if (!combineOperatorFitsType(trap.type, trap.combineOperator)) {
+//            error("The combine operator '" + trap.combineOperator + "' does not fit the traps type '" + trap.type + "'!", trap, null, -1)
+//        }
+//    }
     
     
     /*

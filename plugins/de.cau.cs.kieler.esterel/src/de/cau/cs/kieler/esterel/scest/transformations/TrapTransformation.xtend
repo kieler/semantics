@@ -147,13 +147,13 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
             trap.statements.transformStatements
             scope.statements.add(trap.statements)
             scope.statements.add(label)
-            var potInst = scope.statements.checkPotentiallyInstantaneous
-            if (potInst.key) {
-                scope.statements.transformPausesJoins(conditional, label, exitVariables, potInst.value)
-            } 
-            else {
+//            var potInst = scope.statements.checkPotentiallyInstantaneous
+//            if (potInst.key) {
+//                scope.statements.transformPausesJoins(conditional, label, exitVariables, potInst.value)
+//            } 
+//            else {
                 scope.statements.transformPausesJoins(conditional, label, exitVariables, false)
-            }
+//            }
             scope.statements.checkGotos
             
             // trap handler
