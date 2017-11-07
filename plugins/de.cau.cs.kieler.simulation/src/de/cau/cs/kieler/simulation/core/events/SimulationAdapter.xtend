@@ -42,6 +42,8 @@ class SimulationAdapter implements SimulationListener {
                     onSimulationInitialized(e)
                 case STOP : 
                     onSimulationStopped(e)
+                case BEFORE_STEPPING:
+                    onBeforeSimulationStepped(e)
                 default : { 
                     onSimulationStepped(e)    
                 }
@@ -131,10 +133,18 @@ class SimulationAdapter implements SimulationListener {
     }
     
     /**
-     * This is fired when a new simulation has is performing a step.
+     * This is fired when a simulation has performed a step.
      * 
      * @param e The event
      */
     protected def void onSimulationStepped(SimulationControlEvent e) {
+    }
+    
+    /**
+     * This is fired before a simulation is performing macro step or sub step.
+     * 
+     * @param e The event
+     */
+    protected def void onBeforeSimulationStepped(SimulationControlEvent e) {
     }
 }

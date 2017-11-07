@@ -17,6 +17,7 @@ import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.prom.ui.PromUIPlugin
 import de.cau.cs.kieler.prom.ui.UIUtil
 import de.cau.cs.kieler.prom.ui.views.LabelContribution
+import de.cau.cs.kieler.simulation.SimulationPlugin
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
 import de.cau.cs.kieler.simulation.core.SimulationManager
@@ -34,6 +35,7 @@ import java.util.ArrayList
 import java.util.List
 import java.util.Map
 import org.eclipse.jface.action.Action
+import org.eclipse.jface.action.IAction
 import org.eclipse.jface.action.Separator
 import org.eclipse.jface.dialogs.MessageDialog
 import org.eclipse.jface.viewers.ArrayContentProvider
@@ -192,13 +194,13 @@ class DataPoolView extends ViewPart {
         val mgr = getViewSite().getActionBars().getMenuManager();
         mgr.add(new ToggleColumnVisibleAction(historyColumn));
         mgr.add(new ToggleColumnVisibleAction(inputOutputColumn));
-        mgr.add(new Action("Show/Hide Internal Variables") {
+        mgr.add(new Action("Internal Variables", IAction.AS_CHECK_BOX) {
             override run() {
                 filter.internalVariables = !filter.internalVariables
                 viewer.refresh
             }
         });
-        mgr.add(new Action("Show/Hide Other Variables") {
+        mgr.add(new Action("Other Variables", IAction.AS_CHECK_BOX) {
             override run() {
                 filter.otherVariables = !filter.otherVariables
                 viewer.refresh
@@ -212,20 +214,29 @@ class DataPoolView extends ViewPart {
             }
         });
         mgr.add(new Separator())
-        mgr.add(new Action("Enable Advanced Controls") {
+        mgr.add(new Action("Enable Advanced Controls", IAction.AS_CHECK_BOX) {
             override run() {
                 AdvancedControlsEnabledPropertyTester.advancedControlsEnabled = !AdvancedControlsEnabledPropertyTester.advancedControlsEnabled
-                if(AdvancedControlsEnabledPropertyTester.advancedControlsEnabled) {
-                    setText("Disable Advanced Controls")
-                } else {
-                    setText("Enable Advanced Controls")
-                }
-                
                 // Trigger re-evaluation of the property tester
                 // that controls the visibility of the toolbar button
                 AdvancedControlsEnabledPropertyTester.update
             }
         })
+        
+        // Enable / disable simulation participants
+        for(participant : SimulationPlugin.simulationParticipants) {
+            if(!participant.name.isNullOrEmpty) {
+                val action = new Action(participant.name, IAction.AS_CHECK_BOX) {
+                    override run() {
+                        participant.enabled = !participant.enabled
+                        // This option requires a restart
+                        SimulationManager.instance?.stop
+                    }
+                }
+                action.checked = participant.enabled
+                mgr.add(action)
+            }
+        }
     }
     
     /**

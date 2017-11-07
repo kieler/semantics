@@ -339,9 +339,29 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getInteraction_AfterTick()
+  {
+    return (EAttribute)interactionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getInteraction_BeforeTick()
+  {
+    return (EAttribute)interactionEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EReference getInteraction_Actions()
   {
-    return (EReference)interactionEClass.getEStructuralFeatures().get(1);
+    return (EReference)interactionEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -351,7 +371,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    */
   public EReference getInteraction_Condition()
   {
-    return (EReference)interactionEClass.getEStructuralFeatures().get(2);
+    return (EReference)interactionEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -915,6 +935,8 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
 
     interactionEClass = createEClass(INTERACTION);
     createEReference(interactionEClass, INTERACTION__EVENT);
+    createEAttribute(interactionEClass, INTERACTION__AFTER_TICK);
+    createEAttribute(interactionEClass, INTERACTION__BEFORE_TICK);
     createEReference(interactionEClass, INTERACTION__ACTIONS);
     createEReference(interactionEClass, INTERACTION__CONDITION);
 
@@ -1036,6 +1058,8 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
 
     initEClass(interactionEClass, Interaction.class, "Interaction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getInteraction_Event(), this.getEvent(), null, "event", null, 0, 1, Interaction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getInteraction_AfterTick(), ecorePackage.getEBoolean(), "afterTick", null, 0, 1, Interaction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getInteraction_BeforeTick(), ecorePackage.getEBoolean(), "beforeTick", null, 0, 1, Interaction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getInteraction_Actions(), this.getAction(), null, "actions", null, 0, -1, Interaction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getInteraction_Condition(), this.getCondition(), null, "condition", null, 0, 1, Interaction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

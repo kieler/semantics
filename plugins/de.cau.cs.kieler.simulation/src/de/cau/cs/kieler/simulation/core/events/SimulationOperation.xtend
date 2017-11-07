@@ -19,6 +19,7 @@ package de.cau.cs.kieler.simulation.core.events
  *
  */
 enum SimulationOperation {
+    BEFORE_STEPPING,
     SUB_STEP,
     MACRO_STEP,
     STEP_HISTORY_BACK,

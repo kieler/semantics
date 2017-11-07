@@ -42,6 +42,16 @@ class Redirect extends DefaultDataHandler {
     /**
      * Optional mapping of output variables to input variables, in case not all inputs should be set,
      * or to create a mapping without matching names of inputs and outputs.
+     * Example:
+     * configure redirect A_to_B {
+     *   from: A
+     *   to: B
+     *   mapping {
+     *     someOutputOfA: someInputOfB
+     *     otherOutputOfA: otherInputOfB
+     *   }
+     * }
+     * 
      */
     public val mapping = new ConfigurableAttribute("mapping", null, #[Map])
     

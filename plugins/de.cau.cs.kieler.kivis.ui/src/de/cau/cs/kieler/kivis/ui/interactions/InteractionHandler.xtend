@@ -122,6 +122,25 @@ class InteractionHandler {
     }
     
     /**
+     * Determines if the interaction should be fired before ticks.
+     * This is the default if it is not specified in the grammar.
+     * 
+     * @return true if this interaction should be fired before ticks, false otherwise.
+     */
+     public def boolean isFiredBeforeTick() {
+        return interaction.isBeforeTick || (!interaction.isBeforeTick && !interaction.isAfterTick)
+    }
+    
+    /**
+     * Determines if the interaction should be fired after ticks.
+     * 
+     * @return true if this interaction should be fired after ticks, false otherwise.
+     */
+    public def boolean isFiredAfterTick() {
+        return interaction.isAfterTick
+    }
+    
+    /**
      * Returns the SVG Document that is currently loaded in the KiVis View.
      * 
      * @return the SVG Document that is currently loaded in the KiVis View.

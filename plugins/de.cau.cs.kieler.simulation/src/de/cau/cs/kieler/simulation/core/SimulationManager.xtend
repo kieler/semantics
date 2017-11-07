@@ -385,7 +385,8 @@ class SimulationManager extends Configurable {
         } else if(isPlaying) {
             pause()
         }
-        
+        // Notify listeners that a tick is going to happen
+        fireEvent(SimulationOperation.BEFORE_STEPPING)
         // Create following state
         val DataPool pool = createNextPool()
         // Apply user made changes
@@ -394,7 +395,6 @@ class SimulationManager extends Configurable {
         currentAction.apply(pool)
         // Save new state
         setNewState(pool, currentState.actionIndex + 1)
-        
         // Fire event
         fireEvent(SimulationOperation.SUB_STEP)
     }
@@ -408,7 +408,8 @@ class SimulationManager extends Configurable {
         } else if(isPlaying) {
             pause()
         }
-        
+        // Notify listeners that a tick is going to happen
+        fireEvent(SimulationOperation.BEFORE_STEPPING)
         // Create following state
         val DataPool pool = createNextPool()
         // Apply user made changes
@@ -621,10 +622,6 @@ class SimulationManager extends Configurable {
             // The current state replaces the loaded state
             currentState.pool.previousPool = loadedState.pool.previousPool
             currentState.actionIndex = loadedState.actionIndex
-        }
-        // Apply user values
-        if(currentPool.hasModifiedVariable) {
-            currentPool.applyUserValues
         }
         // Clone pool for next tick
         val pool = currentPool.clone()

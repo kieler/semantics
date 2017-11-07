@@ -38,6 +38,8 @@ public class KiVisParser extends AbstractContentAssistParser {
 				private static final long serialVersionUID = 1L;
 				{
 					put(grammarAccess.getVisualizationConfigurationAccess().getAlternatives_1(), "rule__VisualizationConfiguration__Alternatives_1");
+					put(grammarAccess.getInteractionAccess().getAlternatives_2(), "rule__Interaction__Alternatives_2");
+					put(grammarAccess.getInteractionAccess().getAlternatives_2_1(), "rule__Interaction__Alternatives_2_1");
 					put(grammarAccess.getActionAccess().getAlternatives(), "rule__Action__Alternatives");
 					put(grammarAccess.getVariableAssignmentAccess().getAlternatives_2(), "rule__VariableAssignment__Alternatives_2");
 					put(grammarAccess.getFunctionAccess().getAlternatives_1(), "rule__Function__Alternatives_1");
@@ -84,7 +86,7 @@ public class KiVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVisualizationConfigurationAccess().getGroup_0(), "rule__VisualizationConfiguration__Group_0__0");
 					put(grammarAccess.getElementAccess().getGroup(), "rule__Element__Group__0");
 					put(grammarAccess.getInteractionAccess().getGroup(), "rule__Interaction__Group__0");
-					put(grammarAccess.getInteractionAccess().getGroup_2(), "rule__Interaction__Group_2__0");
+					put(grammarAccess.getInteractionAccess().getGroup_2_0(), "rule__Interaction__Group_2_0__0");
 					put(grammarAccess.getInteractionAccess().getGroup_6(), "rule__Interaction__Group_6__0");
 					put(grammarAccess.getEventAccess().getGroup(), "rule__Event__Group__0");
 					put(grammarAccess.getVariableAssignmentAccess().getGroup(), "rule__VariableAssignment__Group__0");
@@ -223,7 +225,9 @@ public class KiVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVisualizationConfigurationAccess().getInteractionsAssignment_1_1(), "rule__VisualizationConfiguration__InteractionsAssignment_1_1");
 					put(grammarAccess.getElementAccess().getNameAssignment_1(), "rule__Element__NameAssignment_1");
 					put(grammarAccess.getElementAccess().getAnimationsAssignment_3(), "rule__Element__AnimationsAssignment_3");
-					put(grammarAccess.getInteractionAccess().getEventAssignment_2_1(), "rule__Interaction__EventAssignment_2_1");
+					put(grammarAccess.getInteractionAccess().getEventAssignment_2_0_1(), "rule__Interaction__EventAssignment_2_0_1");
+					put(grammarAccess.getInteractionAccess().getAfterTickAssignment_2_1_0(), "rule__Interaction__AfterTickAssignment_2_1_0");
+					put(grammarAccess.getInteractionAccess().getBeforeTickAssignment_2_1_1(), "rule__Interaction__BeforeTickAssignment_2_1_1");
 					put(grammarAccess.getInteractionAccess().getActionsAssignment_4(), "rule__Interaction__ActionsAssignment_4");
 					put(grammarAccess.getInteractionAccess().getConditionAssignment_6_1(), "rule__Interaction__ConditionAssignment_6_1");
 					put(grammarAccess.getEventAccess().getEventAssignment_0(), "rule__Event__EventAssignment_0");
