@@ -3,4 +3,13 @@ system de.cau.cs.kieler.scl.netlist
 	label "SCL Netlist-based"
 
 de.cau.cs.kieler.scl.processors.transformators.scl2scg
-system de.cau.cs.kieler.scg.netlist
+post process de.cau.cs.kieler.scg.processors.threadAnalyzer
+pre set de.cau.cs.kieler.scg.processors.loopAnalyzer.errorOnInstantaneousLoop true
+de.cau.cs.kieler.scg.processors.transformators.dependency
+post process de.cau.cs.kieler.scg.processors.loopAnalyzerV2
+de.cau.cs.kieler.scg.processors.transformators.basicBlocks
+de.cau.cs.kieler.scg.processors.transformators.expressions
+de.cau.cs.kieler.scg.processors.transformators.guards
+de.cau.cs.kieler.scg.processors.transformators.scheduler
+de.cau.cs.kieler.scg.processors.transformators.sequentializer
+de.cau.cs.kieler.scg.processors.codegen.c
