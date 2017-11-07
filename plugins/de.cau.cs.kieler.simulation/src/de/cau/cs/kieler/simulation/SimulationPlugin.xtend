@@ -1,6 +1,8 @@
 package de.cau.cs.kieler.simulation
 
 import de.cau.cs.kieler.prom.ExtensionLookupUtil
+import java.util.Set
+import org.eclipse.xtend.lib.annotations.Accessors
 import org.osgi.framework.BundleActivator
 import org.osgi.framework.BundleContext
 
@@ -14,6 +16,9 @@ class SimulationPlugin implements BundleActivator {
      * The extension point id of simulation participants.
      */
     public static val SIMULATION_PARTICIPANT_EXTENSION_POINT = "de.cau.cs.kieler.simulation.simulationParticipant"
+    
+    @Accessors(PUBLIC_GETTER)
+    private static val Set<SimulationParticipant> simulationParticipants = newHashSet
     
     /**
      * Flag to determine if the participants have been initialized.
@@ -45,7 +50,8 @@ class SimulationPlugin implements BundleActivator {
             val configElements = ExtensionLookupUtil.getConfigurationElements(SIMULATION_PARTICIPANT_EXTENSION_POINT)
             if(!configElements.isNullOrEmpty) {
                 for(configElement : configElements) {
-                    ExtensionLookupUtil.instantiateClassFromConfiguration(configElement)
+                    val participant = ExtensionLookupUtil.instantiateClassFromConfiguration(configElement) as SimulationParticipant
+                    simulationParticipants.add(participant)
                 }
             }
         }

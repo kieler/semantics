@@ -250,14 +250,14 @@ ruleInteraction returns [EObject current=null]
     {
     	newLeafNode(otherlv_1, grammarAccess.getInteractionAccess().getPerformKeyword_1());
     }
-(	otherlv_2='on' 
+((	otherlv_2='on' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getInteractionAccess().getOnKeyword_2_0());
+    	newLeafNode(otherlv_2, grammarAccess.getInteractionAccess().getOnKeyword_2_0_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getInteractionAccess().getEventEventParserRuleCall_2_1_0()); 
+	        newCompositeNode(grammarAccess.getInteractionAccess().getEventEventParserRuleCall_2_0_1_0()); 
 	    }
 		lv_event_3_0=ruleEvent		{
 	        if ($current==null) {
@@ -272,49 +272,81 @@ ruleInteraction returns [EObject current=null]
 	    }
 
 )
-))?	otherlv_4='{' 
+))?
+    |((
+(
+		lv_afterTick_4_0=	'after tick' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getInteractionAccess().getLeftCurlyBracketKeyword_3());
+        newLeafNode(lv_afterTick_4_0, grammarAccess.getInteractionAccess().getAfterTickAfterTickKeyword_2_1_0_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getInteractionRule());
+	        }
+       		setWithLastConsumed($current, "afterTick", true, "after tick");
+	    }
+
+)
+)
+    |(
+(
+		lv_beforeTick_5_0=	'before tick' 
+    {
+        newLeafNode(lv_beforeTick_5_0, grammarAccess.getInteractionAccess().getBeforeTickBeforeTickKeyword_2_1_1_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getInteractionRule());
+	        }
+       		setWithLastConsumed($current, "beforeTick", true, "before tick");
+	    }
+
+)
+))?)	otherlv_6='{' 
+    {
+    	newLeafNode(otherlv_6, grammarAccess.getInteractionAccess().getLeftCurlyBracketKeyword_3());
     }
 (
 (
 		{ 
 	        newCompositeNode(grammarAccess.getInteractionAccess().getActionsActionParserRuleCall_4_0()); 
 	    }
-		lv_actions_5_0=ruleAction		{
+		lv_actions_7_0=ruleAction		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getInteractionRule());
 	        }
        		add(
        			$current, 
        			"actions",
-        		lv_actions_5_0, 
+        		lv_actions_7_0, 
         		"de.cau.cs.kieler.kivis.KiVis.Action");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)*	otherlv_6='}' 
+)*	otherlv_8='}' 
     {
-    	newLeafNode(otherlv_6, grammarAccess.getInteractionAccess().getRightCurlyBracketKeyword_5());
+    	newLeafNode(otherlv_8, grammarAccess.getInteractionAccess().getRightCurlyBracketKeyword_5());
     }
-(	otherlv_7='if' 
+(	otherlv_9='if' 
     {
-    	newLeafNode(otherlv_7, grammarAccess.getInteractionAccess().getIfKeyword_6_0());
+    	newLeafNode(otherlv_9, grammarAccess.getInteractionAccess().getIfKeyword_6_0());
     }
 (
 (
 		{ 
 	        newCompositeNode(grammarAccess.getInteractionAccess().getConditionAndExpressionParserRuleCall_6_1_0()); 
 	    }
-		lv_condition_8_0=ruleAndExpression		{
+		lv_condition_10_0=ruleAndExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getInteractionRule());
 	        }
        		set(
        			$current, 
        			"condition",
-        		lv_condition_8_0, 
+        		lv_condition_10_0, 
         		"de.cau.cs.kieler.kivis.KiVis.AndExpression");
 	        afterParserOrEnumRuleCall();
 	    }

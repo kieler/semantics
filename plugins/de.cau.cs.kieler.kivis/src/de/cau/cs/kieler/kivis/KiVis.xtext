@@ -19,7 +19,7 @@ Element:
 
 Interaction:
     {Interaction}
-    'perform' ('on' event=Event)? '{'
+    'perform' (('on' event=Event)? | (afterTick ?= ('after tick')|(beforeTick ?= 'before tick'))?)'{'
         (actions+=Action)*
     '}' ('if' condition=AndExpression)?
 ;

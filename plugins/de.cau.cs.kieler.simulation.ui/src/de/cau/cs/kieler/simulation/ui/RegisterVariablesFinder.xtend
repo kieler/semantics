@@ -25,6 +25,7 @@ import de.cau.cs.kieler.prom.build.templates.TemplateProcessor
 import de.cau.cs.kieler.scg.SCGraphs
 import java.util.Set
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.simulation.SimulationParticipant
 
 /**
  * Adds the variables to the communicated variables in the simulation that save the sate of a model
@@ -36,7 +37,9 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author aas
  *
  */
-class RegisterVariablesFinder extends PromBuildAdapter {
+class RegisterVariablesFinder extends PromBuildAdapter implements SimulationParticipant {
+    
+    private boolean enabled = true
     
     /**
      * Constructor
@@ -60,6 +63,9 @@ class RegisterVariablesFinder extends PromBuildAdapter {
      * @param processor The potential simulation template processor
      */
     override beforeProcessing(TemplateProcessor processor) {
+        if(!enabled) {
+            return
+        }
         if(processor instanceof SimulationTemplateProcessor) {
             // Add the variables to the simulation template processor
             if(!registerVariables.isNullOrEmpty) {
@@ -75,6 +81,9 @@ class RegisterVariablesFinder extends PromBuildAdapter {
      * @param compiler The potential KiCoModelCompiler
      */
     override beforeCompilation(ModelCompiler compiler) {
+        if(!enabled) {
+            return
+        }
         registerVariables = newHashSet
     }
     
@@ -84,6 +93,9 @@ class RegisterVariablesFinder extends PromBuildAdapter {
      * @param compiler The potential KiCoModelCompiler
      */
     override afterIntermediateCompilation(ModelCompiler compiler) {
+        if(!enabled) {
+            return
+        }
         // Get guard registers if any in the intermediate results of this processor
         var SCGraphs lastSCGraphs
         if(compiler instanceof KiCoModelCompiler) {
@@ -106,6 +118,20 @@ class RegisterVariablesFinder extends PromBuildAdapter {
                 updateRegisterVariables(lastSCGraphs)
             }    
         }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override setEnabled(boolean value) {
+        enabled = value
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override isEnabled() {
+        return enabled
     }
     
     /**
