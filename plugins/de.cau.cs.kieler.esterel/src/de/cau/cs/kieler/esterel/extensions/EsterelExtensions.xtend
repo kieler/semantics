@@ -12,31 +12,47 @@
  */
 package de.cau.cs.kieler.esterel.extensions
 
+import de.cau.cs.kieler.annotations.Annotation
+import de.cau.cs.kieler.esterel.Block
 import de.cau.cs.kieler.esterel.Constant
 import de.cau.cs.kieler.esterel.ConstantDeclaration
+import de.cau.cs.kieler.esterel.Emit
 import de.cau.cs.kieler.esterel.EsterelParallel
 import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.EsterelThread
+import de.cau.cs.kieler.esterel.Exit
 import de.cau.cs.kieler.esterel.Function
 import de.cau.cs.kieler.esterel.FunctionDeclaration
 import de.cau.cs.kieler.esterel.InputDeclaration
 import de.cau.cs.kieler.esterel.InputOutputDeclaration
+import de.cau.cs.kieler.esterel.LocalSignalDeclaration
+import de.cau.cs.kieler.esterel.Loop
+import de.cau.cs.kieler.esterel.Nothing
 import de.cau.cs.kieler.esterel.OutputDeclaration
+import de.cau.cs.kieler.esterel.Present
+import de.cau.cs.kieler.esterel.Procedure
+import de.cau.cs.kieler.esterel.ProcedureDeclaration
+import de.cau.cs.kieler.esterel.Relation
+import de.cau.cs.kieler.esterel.RelationDeclaration
 import de.cau.cs.kieler.esterel.Sensor
 import de.cau.cs.kieler.esterel.SensorDeclaration
 import de.cau.cs.kieler.esterel.Signal
 import de.cau.cs.kieler.esterel.SignalDeclaration
+import de.cau.cs.kieler.esterel.SignalReference
+import de.cau.cs.kieler.esterel.Task
+import de.cau.cs.kieler.esterel.TaskDeclaration
+import de.cau.cs.kieler.esterel.Trap
+import de.cau.cs.kieler.esterel.TrapExpression
+import de.cau.cs.kieler.esterel.TrapReference
 import de.cau.cs.kieler.esterel.TypeDeclaration
 import de.cau.cs.kieler.esterel.TypeDefinition
 import de.cau.cs.kieler.esterel.Variable
 import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.scl.Module
-import de.cau.cs.kieler.esterel.Task
-import de.cau.cs.kieler.esterel.TaskDeclaration
-import de.cau.cs.kieler.esterel.Procedure
-import de.cau.cs.kieler.esterel.ProcedureDeclaration
+import de.cau.cs.kieler.scl.Pause
 
 /**
  * @author als
@@ -137,7 +153,27 @@ class EsterelExtensions {
     def isKernel(EsterelProgram prog) {
         return prog.eAllContents.forall[
             switch (it) {
-                // TODO
+                Module: true
+                SignalDeclaration: true
+                Signal: idType === null && initialValue === null && type === null
+                RelationDeclaration: true
+                Relation: true
+                EsterelParallel: true
+                EsterelThread: true
+                Nothing: true
+                Block: true
+                Emit: expression === null
+                Present: cases.nullOrEmpty
+                Loop: delay === null
+                Trap: trapHandler.empty
+                Exit: expression === null
+                LocalSignalDeclaration: true
+                TrapExpression: true
+                TrapReference: true
+                SignalReference: true
+                Pause: true
+                OperatorExpression: true
+                Annotation: true
                 default: false
             }
         ]
