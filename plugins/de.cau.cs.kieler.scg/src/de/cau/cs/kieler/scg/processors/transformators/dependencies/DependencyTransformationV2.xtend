@@ -96,13 +96,6 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
             scg.searchDependencies(valuedObjectAccessors)          
             scg.addDependencies(valuedObjectAccessors)                     
         }      
-        
-        val loopAnalyzerProcessor = KiCoolRegistration.getProcessorInstance("de.cau.cs.kieler.scg.processors.loopAnalyzerV2") as LoopAnalyzerV2
-        if (loopAnalyzerProcessor !== null) {
-            loopAnalyzerProcessor.setEnvironment(environment, environment)
-            loopAnalyzerProcessor.process
-            snapshot
-        }             
     }
 
     /** 

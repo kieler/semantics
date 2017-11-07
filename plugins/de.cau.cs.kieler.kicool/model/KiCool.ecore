@@ -22,6 +22,10 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="postsets" upperBound="-1"
         eType="#//KVPair" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="metric" eType="#//IntermediateReference"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="preprocesses" upperBound="-1"
+        eType="#//ProcessorReference" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="postprocesses" upperBound="-1"
+        eType="#//ProcessorReference" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ProcessorSystem" eSuperTypes="#//ProcessorEntry"/>
   <eClassifiers xsi:type="ecore:EClass" name="ProcessorGroup" eSuperTypes="#//ProcessorEntry">
