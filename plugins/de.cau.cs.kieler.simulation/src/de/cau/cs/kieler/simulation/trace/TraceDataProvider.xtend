@@ -26,8 +26,8 @@ import de.cau.cs.kieler.kexpressions.keffects.Effect
 import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
+import de.cau.cs.kieler.simulation.core.NDimensionalArray
 import de.cau.cs.kieler.simulation.core.Variable
-import de.cau.cs.kieler.simulation.trace.KTraceStandaloneSetup
 import de.cau.cs.kieler.simulation.trace.ktrace.Tick
 import de.cau.cs.kieler.simulation.trace.ktrace.Trace
 import de.cau.cs.kieler.simulation.trace.ktrace.TraceFile
@@ -49,6 +49,9 @@ class TraceDataProvider {
 
     @Accessors(PUBLIC_GETTER) val IFile sourceFile;
     val List<DataPool> tracePool
+
+    @Accessors(PUBLIC_GETTER)
+    var traceSemantics = TraceSemantics.EMISSION
 
     new(IFile file, int traceNumber) {
         this.sourceFile = file
@@ -83,13 +86,13 @@ class TraceDataProvider {
             pool.addModel(model)
             // Add inputs
             for (Effect e : t.inputs) {
-                val variable = e.convert
+                val variable = e.convert(pool)
                 variable.setIsInput(true)
                 model.addVariable(variable)
             }
             // Add outputs
             for (Effect e : t.outputs) {
-                val variable = e.convert
+                val variable = e.convert(pool)
                 variable.setIsOutput(true)
                 model.addVariable(variable)
             }
@@ -97,10 +100,15 @@ class TraceDataProvider {
         }
     }
 
-    private def Variable convert(Effect e) {
+    private def Variable convert(Effect e, DataPool pool) {
         switch(e) {
             Emission: {
-                val v = new Variable(e.reference.valuedObject.name)
+                traceSemantics = TraceSemantics.EMISSION
+                val varName = e.reference.valuedObject.name
+                var v = pool.getVariable(varName)
+                if(v === null) {
+                    v = new Variable(varName)
+                }
                 if (e.newValue !== null) {
                     v.setValue(e.newValue.convert)
                 } else {
@@ -109,7 +117,73 @@ class TraceDataProvider {
                 }
                 return v
             }
-            Assignment: throw new UnsupportedOperationException("Not yet supported.")
+            Assignment: {
+                traceSemantics = TraceSemantics.ASSIGNMENT
+                val valuedObject = e.reference.valuedObject
+                val varName = valuedObject.name
+                var v = pool.getVariable(varName)
+                if(v === null) {
+                    v = new Variable(varName)
+                }
+                // Set the variable value
+                val arrayIndices = e.reference.indices
+                val newValue = e.expression.convert
+                if(arrayIndices.nullOrEmpty) {
+                    v.setValue(newValue)
+                } else {
+                    val convertedArrayIndices = <Integer>newArrayList
+                    for(card : arrayIndices) {
+                        if(card instanceof IntValue) {
+                            convertedArrayIndices.add(card.value)
+                        } else {
+                            throw new Exception("Only integers are supported for array indices in traces at the moment.")
+                        }
+                    } 
+                    setArrayValueDynamically(v, convertedArrayIndices, newValue)
+                }
+                return v    
+            }
+        }
+    }
+    
+    private def void setArrayValueDynamically(Variable v, List<Integer> index, Object value) {
+        // Compute the minimum one dimensional array size
+        // e.g. 6 for the assignment 'Y[2][1]=2'
+        val oneDimArraySize = index.reduce[a,b | (a+1) * (b+1)]
+        if(v.value === null || !(v.value instanceof NDimensionalArray)) {
+            val arr = new NDimensionalArray(newArrayOfSize(oneDimArraySize).toList, index)
+            arr.set(index, value)
+            v.value = arr
+        } else {
+            val arr = v.value as NDimensionalArray
+            // Check if the index that should be set actually fits into the current array of the variable.
+            var fits = true
+            for(var dimension=0; dimension < index.size; dimension++) {
+                // +1 here, because the array cardinalities are the ones of a declaration,
+                // whereas the others are the ones from a usage (i.e. int x[3][2]   vs   x[2][1]=3)
+                if(arr.cardinalities.get(dimension) < (index.get(dimension)+1) ) {
+                    fits = false
+                }
+            }
+            if(fits) {
+                arr.set(index, value)
+            } else {
+                // The current array does not have the field that should be set.
+                // Thus we create a new one that has this filed and copy the old array values.
+                val newCardinalities = <Integer> newArrayList
+                for(var dimension=0; dimension < index.size; dimension++) {
+                    newCardinalities.add(Math.max(arr.cardinalities.get(dimension), (index.get(dimension)+1) ))
+                }
+                val newOneDimArraySize = newCardinalities.reduce[a,b | a*b]
+                val newArr = new NDimensionalArray(newArrayOfSize(newOneDimArraySize).toList, newCardinalities)
+                // Copy old values
+                for(e : arr.elements) {
+                    newArr.set(e.index, e.value)
+                }
+                // Set new value
+                newArr.set(index, value)
+                v.value = newArr
+            }
         }
     }
     
