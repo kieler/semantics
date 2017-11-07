@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.kicool.ui.view
 
-import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.ui.view.actions.AbstractAction
 import de.cau.cs.kieler.kicool.ui.view.actions.AutoCompileToggle
 import de.cau.cs.kieler.kicool.ui.view.actions.CompilationAction
@@ -29,20 +28,16 @@ import org.eclipse.jface.action.IMenuManager
 import org.eclipse.jface.action.IToolBarManager
 import org.eclipse.jface.action.Separator
 import org.eclipse.swt.widgets.Composite
-import org.eclipse.ui.IEditorPart
-import org.eclipse.ui.IEditorReference
 import org.eclipse.ui.IMemento
 import org.eclipse.ui.IViewSite
-import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.progress.UIJob
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kicool.ui.view.actions.VisualLayoutFeedbackToggle
 import org.eclipse.jface.action.MenuManager
 import de.cau.cs.kieler.kicool.ui.view.actions.SkinSelectionActions
-import com.google.inject.Inject
-import com.google.inject.Injector
 import de.cau.cs.kieler.kicool.ui.view.actions.CompileInplaceToggle
 import java.util.List
+import de.cau.cs.kieler.kicool.ui.view.actions.DebugEnvironmentModelsToggle
 
 /**
  * The IMB Compiler View
@@ -69,6 +64,7 @@ class CompilerView extends DiagramViewPart {
     @Accessors private var VisualLayoutFeedbackToggle visualLayoutFeedbackToggle = null
     @Accessors private var SkinSelectionActions skinSelectionActions = null
     @Accessors private var CompileInplaceToggle compileInplaceToggle = null
+    @Accessors private var DebugEnvironmentModelsToggle debugEnvironmentModelsToggle = null
     
     @Accessors private var CompilationAction compilationAction = null
     
@@ -124,6 +120,7 @@ class CompilerView extends DiagramViewPart {
         
         developerToggle = new DeveloperToggle(this)
         developerToggle.addContributions(toolBar, menu)
+        debugEnvironmentModelsToggle = new DebugEnvironmentModelsToggle(this)
         visualLayoutFeedbackToggle = new VisualLayoutFeedbackToggle(this)
         
         toolBar.add(new Separator)
@@ -139,15 +136,20 @@ class CompilerView extends DiagramViewPart {
         
         val MenuManager skinMenu = new MenuManager("Synthesis Skins")
         skinSelectionActions = new SkinSelectionActions(this)
-        skinSelectionActions.actions.forEach[ skinMenu.add(it) ]
+        skinSelectionActions.actions.forEach[ skinMenu.add(it.action) ]
         menu.add(skinMenu)
         menu.add(developerToggle.action)
+        menu.add(debugEnvironmentModelsToggle.action)
         
-        memento?.loadCheckedValue(forwardResultToggle)
-        memento?.loadCheckedValue(autoCompileToggle)
-        memento?.loadCheckedValue(visualLayoutFeedbackToggle)
-        memento?.loadCheckedValue(developerToggle)
-        memento?.loadCheckedValue(compileInplaceToggle)
+        if (memento !== null) {
+            memento.loadCheckedValue(forwardResultToggle)
+            memento.loadCheckedValue(autoCompileToggle)
+            memento.loadCheckedValue(visualLayoutFeedbackToggle)
+            memento.loadCheckedValue(developerToggle)
+            memento.loadCheckedValue(compileInplaceToggle)
+            memento.loadCheckedValues(skinSelectionActions.actions)
+            memento.loadCheckedValue(debugEnvironmentModelsToggle)
+        }
         
         menu.add(new Separator)
         // The standard klighd view part menu entries will be inserted after this separator.    
@@ -165,10 +167,12 @@ class CompilerView extends DiagramViewPart {
         memento.saveCheckedValue(visualLayoutFeedbackToggle)
         memento.saveCheckedValue(developerToggle)
         memento.saveCheckedValue(compileInplaceToggle)
+        memento.saveCheckedValues(skinSelectionActions.actions)
+        memento.saveCheckedValue(debugEnvironmentModelsToggle)
     }
     
     def void updateView() {
-        if (editPartSystemManager.activeSystemId == null) return
+        if (editPartSystemManager.activeSystemId === null) return
         
         val properties = new KlighdSynthesisProperties
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
@@ -184,12 +188,11 @@ class CompilerView extends DiagramViewPart {
     }
 
     private def void updateDiagram(Object model, KlighdSynthesisProperties properties) {
-        if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
+        if (this.getViewer() === null || this.getViewer().getViewContext() === null) {
             val instance = this
             new UIJob("Init" + this.getClass.getName()) {
 
                 @SuppressWarnings("deprecation")
-                @Override
                 public override IStatus runInUIThread(IProgressMonitor monitor) {
                     DiagramViewManager.initializeView(instance, model, null, properties);
                     return Status.OK_STATUS;
@@ -205,14 +208,26 @@ class CompilerView extends DiagramViewPart {
 
     private def void loadCheckedValue(IMemento memento, AbstractAction action) {
         val setting = memento.getString(action.action.id)
-        if (setting != null) {
+        if (setting !== null) {
             action.action.checked = Boolean.parseBoolean(setting)
             action.invoke
         } 
     }
     
+    private def void loadCheckedValues(IMemento memento, List<? extends AbstractAction> actions) {
+        for (action : actions) {
+            if (action !== null) memento?.loadCheckedValue(action)
+        }
+    }
+    
     private def void saveCheckedValue(IMemento memento, AbstractAction action) {
         if (action !== null) memento?.putString(action.action.id, action.action.checked.toString)
     }
+    
+    private def void saveCheckedValues(IMemento memento, List<? extends AbstractAction> actions) {
+        for (action : actions) {
+            if (action !== null) memento?.putString(action.action.id, action.action.checked.toString)
+        }
+    }    
 
 }

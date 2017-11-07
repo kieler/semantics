@@ -24,7 +24,7 @@ import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties;
 import de.cau.cs.kieler.klighd.kgraph.KLabel;
 import de.cau.cs.kieler.klighd.krendering.KRendering;
 import de.cau.cs.kieler.klighd.krendering.KRenderingRef;
-import de.cau.cs.kieler.klighd.labels.AbstractKlighdLabelManager;
+import de.cau.cs.kieler.klighd.labels.management.AbstractKlighdLabelManager;
 import de.cau.cs.kieler.sccharts.Transition;
 
 /**
@@ -39,7 +39,7 @@ public class TransitionPriorityLabelManager extends AbstractKlighdLabelManager {
      * {@inheritDoc}
      */
     @Override
-    public String resizeLabel(ElkLabel label, double targetWidth) {
+    public Result doResizeLabel(ElkLabel label, double targetWidth) {
 
         // Find the corresponding source model element
         // Grab the rendering from the label
@@ -65,16 +65,16 @@ public class TransitionPriorityLabelManager extends AbstractKlighdLabelManager {
 
                     if (matcher.matches()) {
                         // The new label is the priority followed by a period
-                        return matcher.group(1) + ".";
+                        return Result.modified(matcher.group(1) + ".");
                     } else {
                         // If no priority available 
-                        return "...";
+                        return Result.modified("...");
                     }
                 }
             }
         }
         
         // Fallback case: Remove label completely
-        return "";
+        return Result.modified("");
     }
 }

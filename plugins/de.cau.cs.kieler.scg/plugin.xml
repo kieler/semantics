@@ -90,6 +90,12 @@
       <Processor
             class="de.cau.cs.kieler.scg.processors.transformators.priority.SCLPTransformation">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.analyzer.ThreadAnalyzer">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.analyzer.LoopAnalyzerV2">
+      </Processor>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.system">

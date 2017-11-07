@@ -13,15 +13,17 @@
  */
 package de.cau.cs.kieler.scg.klighd
 
-import com.google.inject.Injector
 import com.google.common.collect.HashMultimap
-import com.google.common.collect.Multimap
+import de.cau.cs.kieler.annotations.IntAnnotation
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.klighd.IKlighdSelection
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.internal.macrolayout.KlighdDiagramLayoutConnector
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KPort
@@ -57,60 +59,54 @@ import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.GuardDependency
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScheduleDependency
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGSerializeHRExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
+import de.cau.cs.kieler.scg.klighd.actions.NodePriorityActions
+import de.cau.cs.kieler.scg.klighd.actions.OptNodePrioActions
+import de.cau.cs.kieler.scg.klighd.actions.PrioStatementsActions
+import de.cau.cs.kieler.scg.klighd.actions.SCCActions
+import de.cau.cs.kieler.scg.klighd.actions.ThreadPriorityActions
+import de.cau.cs.kieler.scg.processors.analyzer.LoopAnalyzerV2
+import de.cau.cs.kieler.scg.processors.transformators.priority.PriorityAuxiliaryData
+import de.cau.cs.kieler.scg.processors.transformators.priority.PriorityProcessor
 import java.util.ArrayList
 import java.util.HashMap
+import java.util.LinkedList
 import java.util.List
 import java.util.Set
 import javax.inject.Inject
-import org.eclipse.elk.alg.layered.p2layers.LayeringStrategy
-import org.eclipse.elk.alg.layered.p4nodes.NodePlacementStrategy
-import org.eclipse.elk.alg.layered.properties.LayerConstraint
-import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.alg.layered.options.LayerConstraint
+import org.eclipse.elk.alg.layered.options.LayeredOptions
+import org.eclipse.elk.alg.layered.options.LayeringStrategy
+import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
+import org.eclipse.elk.alg.layered.options.WrappingStrategy
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.EdgeRouting
+import org.eclipse.elk.core.options.NodeLabelPlacement
 import org.eclipse.elk.core.options.PortAlignment
 import org.eclipse.elk.core.options.PortConstraints
 import org.eclipse.elk.core.options.PortSide
+import org.eclipse.elk.graph.properties.Property
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.jface.viewers.ISelectionChangedListener
 import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.xtext.serializer.ISerializer
-import org.eclipse.elk.graph.properties.Property
 
+import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scg.common.SCGAnnotations
-import static extension de.cau.cs.kieler.scg.common.SCGAnnotations.*
-import com.google.common.collect.Multimap
-import org.eclipse.elk.core.options.NodeLabelPlacement
-import de.cau.cs.kieler.klighd.internal.macrolayout.KlighdDiagramLayoutConnector
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.scg.klighd.actions.OptNodePrioActions
-import de.cau.cs.kieler.scg.klighd.actions.NodePriorityActions
-import de.cau.cs.kieler.scg.klighd.actions.ThreadPriorityActions
-import de.cau.cs.kieler.scg.klighd.actions.SCCActions
-import de.cau.cs.kieler.scg.klighd.actions.PrioStatementsActions
-import de.cau.cs.kieler.kicool.compilation.CompilationContext
-import de.cau.cs.kieler.scg.processors.transformators.priority.PriorityProcessor
-import java.util.LinkedList
-import de.cau.cs.kieler.scg.processors.transformators.priority.PriorityAuxiliaryData
-import de.cau.cs.kieler.annotations.IntAnnotation
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -411,7 +407,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     !selectedNodes.contains(it)
                 ].map[
                     var container = it.eContainer
-                    while (container != null) {
+                    while (container !== null) {
                         if (container instanceof KNode) return container as KNode
                         container = container.eContainer
                     }
@@ -463,7 +459,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private String mainEntry
     
 //    private CompilationResult compilationResult;
-    private var Set<Node> PIL_Nodes = <Node> newHashSet
+    private var Set<Node> pilNodes = <Node> newHashSet
 
     /** The selected orientation */
     private int orientation
@@ -492,12 +488,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     override transform(SCGraph model) {
 
         val compilationContext = this.usedContext.getProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT)
-        if (compilationContext != null) {
-//            val PILR = compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head
-//            if (PILR != null) PIL_Nodes += PILR.criticalNodes
+        if (compilationContext !== null) {
+            val scgs = model.eContainer
+            val pilr = compilationContext.getResultForModel(scgs).getProperty(LoopAnalyzerV2.LOOP_DATA)
+            if (pilr !== null) pilNodes += pilr.criticalNodes
 
             val prioAuxData = compilationContext.result.getProperty(PriorityProcessor.PRIORITY_AUXILIARY_DATA)
-            if(prioAuxData != null) {
+            if(prioAuxData !== null) {
                 scc = prioAuxData.stronglyConnectedComponents
             }
         }
@@ -562,18 +559,14 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             node.setLayoutOption(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, false);
             if (scg.hasAnnotation(ANNOTATION_SEQUENTIALIZED)) {
                 node.setLayoutOption(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH)
-                // Future pragmatics releases wont have sausage folding option but wrapping strategy
-                // node.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.PATH_LIKE)
-                node.setLayoutOption(LayeredOptions::SAUSAGE_FOLDING, true)
+                node.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.SINGLE_EDGE)
             }
             
             
             // Sausage folding on/off
             if ((SHOW_SAUSAGE_FOLDING.booleanValue) && scg.hasAnnotation(SCGFeatures::SEQUENTIALIZE_ID)) {
                 node.addLayoutParam(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH)
-                // Future pragmatics releases wont have sausage folding option but wrapping strategy
-                // node.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.PATH_LIKE)
-                node.setLayoutOption(LayeredOptions::SAUSAGE_FOLDING, true)
+                node.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.SINGLE_EDGE)
             }
     
             // Added as suggested by uru (mail to cmot, 11.11.2016)            
@@ -596,15 +589,15 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 if (n.schizophrenic) {
                     aNode.KRendering.foreground = SCHIZO_COLOR.copy
                     if (n instanceof Assignment) {
-                        if (n.next == null) {
+                        if (n.next === null) {
                             node.children += aNode.createDeadend(SCGPORTID_OUTGOING)
                         }
                     }
                     else if (n instanceof Conditional) {
-                        if (n.then == null) {
+                        if (n.then === null) {
                             node.children += aNode.createDeadend(SCGPORTID_OUTGOING_THEN)
                         }
-                        if (n.^else == null) {
+                        if (n.^else === null) {
                             node.children += aNode.createDeadend(SCGPORTID_OUTGOING_ELSE)
                         }
                     }
@@ -667,7 +660,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (SHOW_HIERARCHY.booleanValue) {
                 scg.nodes.filter(typeof(Fork)).forEach[
                     allNext.map[target].filter(typeof(Entry)).forEach [ entry |
-                        if (entry != null) {
+                        if (entry !== null) {
                             var label = ""
                             if (entry.hasAnnotation(ANNOTATION_LABEL)) {
                                 label = entry.getStringAnnotationValue(ANNOTATION_LABEL)
@@ -678,7 +671,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                             entry.getThreadNodes.createHierarchy(NODEGROUPING_HIERARCHY, null) => [
                             	var text = ""
                                 val threadPathType = threadTypes.get(entry)
-                                if (threadPathType != null) {
+                                if (threadPathType !== null) {
                                     if (!regionLabel.nullOrEmpty) text = regionLabel + " - "
                                     text = text + threadPathType.toString2
                                 }
@@ -717,7 +710,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             
             // Draw strongly connected components
-            if(scc != null) {
+            if(scc !== null) {
                 for(component : scc) {
                     if(component.size > 1) {
                         for(n : component) { 
@@ -742,7 +735,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                                 if(component.contains(n2)) {
                                     val edges = n2Dep.allEdges
                                     for(edge : edges) {
-                                        if(edge != null) {
+                                        if(edge !== null) {
                                             val edgeRendering = edge.getData(typeof(KRoundedBendsPolyline))
                                             edgeRendering.setProperty(SCC_PROPERTY, true)
                                             val style = createKForeground().setColor2(STRONGLY_CONNECTED_COMPONENT_COLOR.copy)
@@ -819,7 +812,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	            node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
             }
             node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
-            node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_BASIC, PortAlignment::CENTER)
+            node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_DEFAULT, PortAlignment::CENTER)
             node.addLayoutParam(CoreOptions::SPACING_PORT_PORT, 10.0)
             if (!isGuardSCG) {            
                 if (topdown()) {
@@ -899,7 +892,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 } else {
                     conditionalStr = serializeHR(conditional.condition) as String
                 }
-                if (conditional.condition != null)
+                if (conditional.condition !== null)
                     node.KContainerRendering.addText(
 //                        serializer.serialize(conditional.condition.copy.fix).removeParenthesis).setAreaPlacementData.
                         conditionalStr).setAreaPlacementData.
@@ -918,7 +911,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
             }
             node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
-            node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_BASIC, PortAlignment::CENTER)
+            node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_DEFAULT, PortAlignment::CENTER)
             node.addLayoutParam(CoreOptions::SPACING_PORT_PORT, 10.0)
             var KPort port
             if (topdown) {
@@ -1190,7 +1183,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             } else {
                 node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
             }
-            node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_BASIC, PortAlignment::CENTER)
+            node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_DEFAULT, PortAlignment::CENTER)
             node.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 10d)
             if (topdown) {
                 node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
@@ -1265,7 +1258,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             } else {
                 node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
             }
-            node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_BASIC, PortAlignment::CENTER)
+            node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_DEFAULT, PortAlignment::CENTER)
             node.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 10d)
             if (topdown) {
                 node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
@@ -1497,7 +1490,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 * @return Returns the KEdge. 
 	 */
     private def KEdge synthesizeControlFlow(ControlFlow controlFlow, String outgoingPortId) {
-        if(controlFlow.target == null || controlFlow.eContainer == null) return null;
+        if(controlFlow.target == null || controlFlow.eContainer === null) return null;
 
         return controlFlow.createNewEdge().associateWith(controlFlow) => [ edge |
             // Get and set source and target information.
@@ -1589,7 +1582,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     val tgtPrio = tgtNode.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
                                                             as IntAnnotation
                     if(srcPrio.value != tgtPrio.value) {
-                        val port = edge.sourcePort => [
+                        edge.sourcePort => [
                             it.setPortSize(50, 20)
                             it.KContainerRendering.setProperty(PRIO_STATEMENTS_PROPERTY, true)
                             var rec = it.KContainerRendering.addRoundedRectangle(CORNERRADIUS, CORNERRADIUS, LINEWIDTH)
@@ -1908,7 +1901,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 if (scg.hasAnnotation(ANNOTATION_GUARDCREATOR)) {
                     val guard = basicBlock.schedulingBlocks.head.guards.head
                     var String expText
-                    if (basicBlock.deadBlock && (guard == null || guard.expression == null)) {
+                    if (basicBlock.deadBlock && (guard === null || guard.expression === null)) {
                         expText = "<null>"
                     } else {
                         val exp = guard.expression.copy
@@ -1928,7 +1921,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                      if (!schedulingBlock.label.nullOrEmpty) {
                          sbName = schedulingBlock.label + " "
                      }
-                     if (schedulingBlock.guards.head != null) { 
+                     if (schedulingBlock.guards.head !== null) { 
                          if (schedulingBlock.guards.head.valuedObject.name != schedulingBlock.label) {
                             sbName = sbName + "(" + schedulingBlock.guards.head.valuedObject.name + ")"//reference.valuedObject.name
                          }
@@ -1936,7 +1929,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
 	                if (scg.hasAnnotation(ANNOTATION_GUARDCREATOR)) {
 	                    var expText = "<null>"
-	                    if (schedulingBlock.guards.head != null /* && !schedulingBlock.basicBlock.deadBlock */) {
+	                    if (schedulingBlock.guards.head !== null /* && !schedulingBlock.basicBlock.deadBlock */) {
         	            	expText = serializeHR(schedulingBlock.guards.head.expression) as String
     	            	}	
 						sbName = sbName + "\n" + expText       
@@ -2008,13 +2001,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
         val schedules = <List<Node>> newArrayList
 
-        for(node : scg.nodes.filter[ incoming.filter(ScheduleDependency).empty && incoming.filter(GuardDependency).empty ]) {
+        for (node : scg.nodes.filter[ incoming.filter(ScheduleDependency).empty && incoming.filter(GuardDependency).empty ]) {
             val newSchedule = <Node> newArrayList => [ s | 
                 s += node
                 node.dependencies.filter(GuardDependency).forEach[ s += it.target ]
             ]
             var next = node.dependencies.filter(ScheduleDependency).head?.target
-            while(next!=null) {
+            while (next !== null) {
                 newSchedule += next
                 next.dependencies.filter(GuardDependency).forEach[ newSchedule += it.target ]
                 next = next.dependencies.filter(ScheduleDependency).head?.target
@@ -2044,13 +2037,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         if(!SHOW_POTENTIALPROBLEMS.booleanValue) return;
 //        scg.analyses.forEach[visualize(it, this)]
 
-        if (PIL_Nodes.empty) return;
+        if (pilNodes.empty) return;
         
-        for (n : PIL_Nodes) {
+        for (n : pilNodes) {
             val nextFlows = n.allNext
             var hasFlows = false
             for (flow : nextFlows) {
-                if (PIL_Nodes.contains(flow.target)) {
+                if (pilNodes.contains(flow.target)) {
                     flow.colorControlFlow(PROBLEM_COLOR.copy)
                     flow.thickenControlFlow(PROBLEM_WIDTH)
                     hasFlows = true
@@ -2058,9 +2051,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             
             if (!hasFlows) {
-                val nextDeps = n.eContents.filter(DataDependency).filter[ concurrent == true && confluent == false].toList
+                val nextDeps = n.eContents.filter(DataDependency).filter[ concurrent && !confluent ].toList
                 for (flow : nextDeps) {
-                    if (PIL_Nodes.contains(flow.target)) {
+                    if (pilNodes.contains(flow.target)) {
                         flow.colorDependency(PROBLEM_COLOR.copy)
                         flow.thickenDependency(PROBLEM_WIDTH)
                     } 

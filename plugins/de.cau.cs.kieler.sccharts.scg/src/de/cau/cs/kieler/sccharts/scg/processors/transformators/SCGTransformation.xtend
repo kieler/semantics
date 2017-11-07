@@ -84,6 +84,9 @@ import de.cau.cs.kieler.sccharts.scg.SCChartsSCGPlugin
 import de.cau.cs.kieler.sccharts.scg.PatternType
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
+import de.cau.cs.kieler.scg.processors.analyzer.ThreadAnalyzer
+import de.cau.cs.kieler.scg.processors.analyzer.LoopAnalyzerV2
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -119,6 +122,14 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             scgs.addAll(model.rootStates.map[transform])
         ]
         setModel(scgs)
+        
+        val threadAnalyzerProcessor = KiCoolRegistration.getProcessorInstance("de.cau.cs.kieler.scg.processors.threadAnalyzer") as ThreadAnalyzer
+        if (threadAnalyzerProcessor !== null) {
+            threadAnalyzerProcessor.setEnvironment(environment, environment)
+            threadAnalyzerProcessor.process
+            snapshot
+        }
+     
     }
 
     // Property to disable SuperflousForkRemover because KiCo has no proper support for processors
@@ -142,7 +153,6 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     private val uniqueNameCache = new UniqueNameCache
 
     private static val String ANNOTATION_REGIONNAME = "regionName"
-    private static val String ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"
     private static val String ANNOTATION_HOSTCODE = "hostcode"
 
     private var Entry rootStateEntry = null
@@ -233,12 +243,12 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         val newSCG = superfluousForkRemover.optimize(scg)
 
         // SCG thread path types
-        val threadPathTypes = (newSCG.nodes.head as Entry).getThreadControlFlowTypes
-        for (entry : threadPathTypes.keySet) {
-            if (!entry.hasAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE)) {
-                entry.addStringAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
-            }
-        }
+//        val threadPathTypes = (newSCG.nodes.head as Entry).getThreadControlFlowTypes
+//        for (entry : threadPathTypes.keySet) {
+//            if (!entry.hasAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE)) {
+//                entry.addStringAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
+//            }
+//        }
         newSCG
     }
     
@@ -360,13 +370,6 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             } else {
                 sCGraph
             }
-
-        // SCG thread path types
-        val threadPathTypes = (scg.nodes.head as Entry).getThreadControlFlowTypes
-        for (entry : threadPathTypes.keySet) {
-            if (!entry.hasAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE))
-                entry.createStringAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
-        }
 
         scg
     }

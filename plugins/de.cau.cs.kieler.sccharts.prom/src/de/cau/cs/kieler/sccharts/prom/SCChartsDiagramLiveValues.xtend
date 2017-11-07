@@ -26,6 +26,12 @@ import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
+import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.sccharts.ui.synthesis.Wiring
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.krendering.KPolygon
 
 /**
  * 
@@ -45,12 +51,10 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
     protected val triggerEdgeMap = <Expression, KEdge> newLinkedHashMap
     protected val valuedObjectTextMap = <ValuedObject, KText> newLinkedHashMap
     protected val actionTextMap = <Expression, KText> newLinkedHashMap
+    protected val wireTextMap = <Expression, KText> newLinkedHashMap
     
     private var LightDiagramLayoutConfig layoutConfig = null
     
-    /**
-     * Constructor
-     */
     new() {
         super()
         // Remove old instance if any
@@ -61,23 +65,12 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
         instance = this
     }
     
-    /**
-     * {@inheritDoc}
-     */
-    override getName() {
-        return "SCChart Live Values"
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
     override protected isSupported(Object model) {
         model instanceof SCCharts
     }
     
-    /**
-     * {@inheritDoc}
-     */
+    public static val SCTXInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
+    
     override initialize(DataPool pool) {
         super.initialize(pool)
         
@@ -95,48 +88,72 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
             for (declaration : scope.declarations) {
                 for (valuedObject : declaration.valuedObjects) {
                     val rectangle = diagramViewContext.getTargetElements(declaration).filter(KRectangle).head
-                    val text = rectangle.children.filter(KText).filter[ text.contains(valuedObject.name) ].head
-                    valuedObjectTextMap.put(valuedObject, text)
+                    if (rectangle !== null) {
+                        val text = rectangle.children.filter(KText).filter[ text.contains(valuedObject.name) ].head
+                        valuedObjectTextMap.put(valuedObject, text)
+                    }
                 }
             }
             
             for (action : scope.actions) {
                 for (valuedObjectReference : action.trigger.allReferences) {
                     val rectangle = diagramViewContext.getTargetElements(action).filter(KRectangle).head
-                    val text = rectangle.children.filter(KText).filter[ text.contains(valuedObjectReference.valuedObject.name) ].head
-                    actionTextMap.put(valuedObjectReference, text)
+                    if (rectangle !== null) {
+                        val text = rectangle.children.filter(KText).filter[ text.contains(valuedObjectReference.valuedObject.name) ].head
+                        actionTextMap.put(valuedObjectReference, text)
+                    }
                 }
             }
+            
+            if (scope instanceof DataflowRegion) {
+                val wiring = SCTXInjector.getInstance(Wiring)
+                wiring.createWires(scope.equations)
+                for (wire : wiring.wires) {    
+                    if (wire.source instanceof ValuedObjectReference) {
+                        val elements = diagramViewContext.getTargetElements(wire.source).filter(KNode)
+                        if (!elements.empty) { 
+                            val polygon = elements.head.data.filter(KPolygon).head //.filter(KRectangle).head
+                            val text = polygon.children.filter(KText).filter[ text.contains(wire.source.asValuedObjectReference.valuedObject.name) ].head
+                            wireTextMap.put(wire.source.asValuedObjectReference, text)
+                        }
+                    }
+                    if (wire.sink instanceof ValuedObjectReference) {
+                        val elements = diagramViewContext.getTargetElements(wire.sink).filter(KNode)
+                        if (!elements.empty) { 
+                            val polygon = elements.head.data.filter(KPolygon).head //.filter(KRectangle).head
+                            val text = polygon.children.filter(KText).filter[ text.contains(wire.sink.asValuedObjectReference.valuedObject.name) ].head
+                            wireTextMap.put(wire.sink.asValuedObjectReference, text)
+                        }
+                    }
+                }            
+            }
+            
         }
         
         update(pool)
         
         layoutConfig = new LightDiagramLayoutConfig(diagramViewContext)
         layoutConfig.performLayout
-    }
+    }    
     
-    /**
-     * {@inheritDoc}
-     */
     override stop() {
         super.stop()
         
         null.insertLiveTransitionValues
         null.insertLiveDeclarationValues
         null.insertLiveActionValues
+        null.insertLiveWireValues
         
         layoutConfig?.performLayout
     }    
     
-    /**
-     * {@inheritDoc}
-     */
     override update(DataPool pool) {
         super.update(pool)
         
         pool.insertLiveTransitionValues
         pool.insertLiveDeclarationValues
         pool.insertLiveActionValues
+        pool.insertLiveWireValues
     }
     
     protected def insertLiveTransitionValues(DataPool pool) {
@@ -159,6 +176,13 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
             val text = actionTextMap.get(valuedObjectReference)
             text.text = valuedObjectReference.modifyTriggerText(text.text, pool)
         }
+    }
+    
+    protected def insertLiveWireValues(DataPool pool) {
+        for (valuedObjectReference : wireTextMap.keySet) {
+            val text = wireTextMap.get(valuedObjectReference)
+            text.text = valuedObjectReference.modifyTriggerText(text.text, pool)
+        }        
     }
     
     protected def String modifyTriggerText(Expression trigger, String text, DataPool pool) {

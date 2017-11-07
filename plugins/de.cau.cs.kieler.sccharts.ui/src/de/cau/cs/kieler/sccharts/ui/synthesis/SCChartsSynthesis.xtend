@@ -28,8 +28,18 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHooks
 import java.util.LinkedHashSet
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.klighd.krendering.Colors
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import java.util.HashMap
+import com.google.common.collect.HashMultimap
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.alg.force.options.StressOptions
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -42,10 +52,12 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
 
     @Inject extension KNodeExtensions
+    @Inject extension KEdgeExtensions
     @Inject extension KRenderingExtensions
     @Inject extension SCChartsCoreExtensions 
     @Inject extension SCChartsSerializeHRExtensions
     @Inject extension AnnotationsExtensions
+    @Inject extension TransitionStyles
     @Inject StateSynthesis stateSynthesis
     @Inject ControlflowRegionSynthesis controlflowSynthesis    
     @Inject DataflowRegionSynthesis dataflowSynthesis  
@@ -120,9 +132,11 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         if (scc.hasPragma(PRAGMA_SKINPATH)) skinPath = scc.getStringPragmas(PRAGMA_SKINPATH).head.values.head
 
         if (SHOW_ALL_SCCHARTS.booleanValue) {
+            val rootStateNodes = <State, KNode> newHashMap
             for(rootState : scc.rootStates) {
                 hooks.invokeStart(rootState, rootNode)
-                rootNode.children += stateSynthesis.transform(rootState)
+                rootStateNodes.put(rootState, stateSynthesis.transform(rootState).head)
+                rootNode.children += rootStateNodes.get(rootState)
                 
                 // Add tracking adapter to allow access to source model associations
                 val trackingAdapter = new SourceModelTrackingAdapter();
@@ -131,6 +145,9 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
                 rootNode.children.forEach[eAdapters.add(trackingAdapter)]
                 
                 hooks.invokeFinish(rootState, rootNode)
+            }
+            if (scc.rootStates.size > 1) {
+                rootNode.configureInterChartCommunication(scc, rootStateNodes)
             }
         } else {
             hooks.invokeStart(scc.rootStates.head, rootNode)
@@ -146,7 +163,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         }
         
         val pragmaFont = scc.getStringPragmas(PRAGMA_FONT).last
-        if (pragmaFont != null) {
+        if (pragmaFont !== null) {
             rootNode.eAllContents.filter(KText).forEach[ fontName = pragmaFont.values.head ]
         }
         
@@ -156,6 +173,28 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
                 ((System.currentTimeMillis - startTime) as float / 1000) + "s.")
 		
         return rootNode
+    }
+    
+    protected def void configureInterChartCommunication(KNode rootNode, SCCharts scc, HashMap<State, KNode> rootStateNodes) {
+        // Bugged in the stress version we're working with.
+        rootNode.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.stress")
+        rootNode.setLayoutOption(StressOptions.DESIRED_EDGE_LENGTH, 300d)
+        val HashMultimap<String, State> inputMessages = HashMultimap.create
+        scc.rootStates.forEach[ rootState | rootState.declarations.filter(VariableDeclaration).filter[ input ].map[ valuedObjects ].flatten.forEach[ vo | inputMessages.put(vo.name, rootState) ] ]
+        for (rootState : scc.rootStates) {
+            val sourceNode = rootStateNodes.get(rootState)
+            for (outputMessage : rootState.declarations.filter(VariableDeclaration).filter[ output ].map[ valuedObjects ].flatten) {
+                for (target : inputMessages.get(outputMessage.name)) {
+                    val targetNode = rootStateNodes.get(target)
+                    
+                    val edge = createEdge.associateWith(outputMessage)
+                    edge.addPolyline(3) => [ foreground = Colors.DARK_SLATE_BLUE ]
+                    edge.addDefaultDecorator
+                    edge.source = sourceNode
+                    edge.target = targetNode
+                }                 
+            }
+        }
     }
    
 }

@@ -608,11 +608,13 @@ class SCGThreadExtensions {
     			newType = oldType
     		}
     		else if (type != ThreadPathType::DELAYED) {
-    			newType = ThreadPathType::POTENTIALLY_INSTANTANEOUS
+//    			newType = ThreadPathType::POTENTIALLY_INSTANTANEOUS
     		}
     	}
     	else if (oldType == ThreadPathType::POTENTIALLY_INSTANTANEOUS) {
-    		newType = ThreadPathType::POTENTIALLY_INSTANTANEOUS
+    	    if (type == ThreadPathType::DELAYED) {
+                newType = ThreadPathType::DELAYED
+    		}
     	}
     	
     	newType

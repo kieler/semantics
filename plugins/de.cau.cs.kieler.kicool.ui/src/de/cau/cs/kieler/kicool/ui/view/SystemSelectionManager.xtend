@@ -38,6 +38,8 @@ import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.*
  */
 class SystemSelectionManager implements SelectionListener {
     
+    public static val TEMPORARY_SYSTEM_PREFIX = "TMP "
+    
     @Accessors private Map<String, System> temporarySystem = 
         <String, System> newHashMap
     
@@ -77,7 +79,7 @@ class SystemSelectionManager implements SelectionListener {
     }
     
     private def updateSystemList(boolean filter, boolean updateView) {
-        if (combo == null || combo.disposed) return;
+        if (combo === null || combo.disposed) return;
         combo.removeAll
         index.clear
         
@@ -92,7 +94,7 @@ class SystemSelectionManager implements SelectionListener {
         for(system : systems.filter[!filter || hasInput(modelClassFilter)]) {
             var name = system.label
             if (name.nullOrEmpty) name = system.id
-            if (temporarySystem.containsValue(system)) name = "TMP " + name
+            if (temporarySystem.containsValue(system)) name = TEMPORARY_SYSTEM_PREFIX + name
             combo.add(name)
             index.add(system.id)
         }
@@ -134,7 +136,7 @@ class SystemSelectionManager implements SelectionListener {
     def System getSelectedSystem() {
         if (!combo.isDisposed && combo.selectionIndex != -1) {
             val systemId = index.get(combo.selectionIndex)
-            if (systemId != null) {
+            if (systemId !== null) {
                 if (temporarySystem.containsKey(systemId)) {
                     return temporarySystem.get(systemId)
                 } else {
@@ -146,17 +148,7 @@ class SystemSelectionManager implements SelectionListener {
     }
     
     def setTemporarySystem(System system) {
-//        val systemKeyBase = "TMP " + system.id
-//        var systemKey = systemKeyBase + " 1"
-//        var i = 1
-//        while (view.combo.items.contains(systemKey)) {
-//            i++
-//            systemKey = systemKeyBase + " " + i 
-//        }
-        temporarySystem.put("TMP " + system.id, system)
-//        view.combo.items.add(0, systemKey)
-//        view.combo.selectedIndex = 0
-//        view.combo.update(0)
+        temporarySystem.put(system.id, system)
         updateSystemList
         view.updateToolbar
     }
@@ -171,6 +163,15 @@ class SystemSelectionManager implements SelectionListener {
                 view.editPartSystemManager.setActiveSystem(id)
                 view.updateView
             }
+        }
+    }
+    
+    def widgetSelectFirst(boolean updateView) {
+        val id = index.get(0)
+        if (!id.nullOrEmpty) {
+            // Workaround: show always the identity system.
+            view.editPartSystemManager.setActiveSystem("de.cau.cs.kieler.kicool.identity")
+            if (updateView) view.updateView
         }
     }
     

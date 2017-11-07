@@ -16,8 +16,6 @@ import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.kicool.ui.klighd.internal.model.CodePlaceHolder

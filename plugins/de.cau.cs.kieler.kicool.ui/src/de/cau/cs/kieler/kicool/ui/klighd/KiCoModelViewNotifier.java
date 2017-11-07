@@ -13,14 +13,11 @@
  */
 package de.cau.cs.kieler.kicool.ui.klighd;
 
-import java.util.HashMap;
 import java.util.HashSet;
 
-import org.eclipse.elk.core.util.Pair;
 import org.eclipse.ui.IEditorPart;
 
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController;
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController.ChangeEvent;
 
 /**
  * Static Notifier for the KiCoModelUpdateController.

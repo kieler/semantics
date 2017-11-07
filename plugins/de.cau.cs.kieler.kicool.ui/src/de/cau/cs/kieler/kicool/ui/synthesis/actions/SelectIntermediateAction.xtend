@@ -19,7 +19,6 @@ import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelViewNotifier
 import de.cau.cs.kieler.kicool.ui.synthesis.Container
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.INTERMEDIATE_DATA
 import de.cau.cs.kieler.kicool.ui.klighd.internal.model.CodePlaceHolder
-import de.cau.cs.kieler.kicool.environments.Warnings
 import de.cau.cs.kieler.kicool.environments.MessageObjectReferences
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import static extension de.cau.cs.kieler.kicool.ui.view.EditPartSystemManager.*

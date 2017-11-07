@@ -20,24 +20,19 @@ import de.cau.cs.kieler.kicool.System
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.EdgeRouting
 import org.eclipse.elk.core.options.Direction
-import org.eclipse.elk.alg.layered.p4nodes.NodePlacementStrategy
-import org.eclipse.elk.alg.layered.properties.LayeredOptions
-import org.osgi.framework.Bundle
-import org.eclipse.core.runtime.Platform
-import java.net.URL
-import org.eclipse.core.runtime.FileLocator
+import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
+import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.emf.common.util.URI
-import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.elk.core.math.ElkPadding
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.util.KGraphUtil
-import org.eclipse.elk.alg.layered.p2layers.LayeringStrategy
-import org.eclipse.elk.alg.layered.properties.FixedAlignment
-import de.cau.cs.kieler.klighd.KlighdOptions
+import org.eclipse.elk.alg.layered.options.LayeringStrategy
+import org.eclipse.elk.alg.layered.options.FixedAlignment
 import de.cau.cs.kieler.kicool.ui.synthesis.styles.SkinSelector
 import de.cau.cs.kieler.kgraph.text.KGraphStandaloneSetup
+import org.eclipse.elk.alg.layered.options.WrappingStrategy
 
 /**
  * Main diagram synthesis for KiCool.
@@ -61,11 +56,11 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
         rootNode.setLayoutOption(CoreOptions::DIRECTION, Direction::RIGHT);
         rootNode.setLayoutOption(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::BRANDES_KOEPF)
         rootNode.setLayoutOption(LayeredOptions::NODE_PLACEMENT_BK_FIXED_ALIGNMENT, FixedAlignment.BALANCED)
-        rootNode.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d);
-        rootNode.setLayoutOption(LayeredOptions::SPACING_NODE_NODE_BETWEEN_LAYERS, 12d);
-        rootNode.setLayoutOption(CoreOptions::PADDING, new ElkPadding(8d));
+//        rootNode.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d);
+        rootNode.setLayoutOption(LayeredOptions::SPACING_NODE_NODE_BETWEEN_LAYERS, 12d)
+        rootNode.setLayoutOption(CoreOptions::PADDING, new ElkPadding(8d))
         rootNode.setLayoutOption(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH)
-        rootNode.setLayoutOption(LayeredOptions::SAUSAGE_FOLDING, true)
+        rootNode.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.SINGLE_EDGE)
 
         // Workaround until we use the next version of ELK        
         // val size = usedContext.getProperty(KlighdOptions.VIEWER).getControl.getSize
@@ -90,7 +85,6 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
      */
     def static getKGTFromBundle(String bundleId, String resourceLocation) {
         val newURI = URI.createPlatformPluginURI("/" + bundleId + "/" + SkinSelector.skinPrefix + resourceLocation, true)
-//        val provider = IResourceServiceProvider.Registry.INSTANCE.getResourceServiceProvider(newURI)
         val newResourceSet = KGTInjector.getInstance(XtextResourceSet)
         newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
         val res = newResourceSet.createResource(newURI)

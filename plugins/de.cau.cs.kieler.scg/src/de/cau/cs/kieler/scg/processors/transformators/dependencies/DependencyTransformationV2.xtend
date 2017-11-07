@@ -45,6 +45,8 @@ import static de.cau.cs.kieler.scg.DataDependencyType.*
 import static de.cau.cs.kieler.scg.processors.transformators.dependencies.ValuedObjectAccess.*
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
+import de.cau.cs.kieler.scg.processors.analyzer.LoopAnalyzerV2
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -90,7 +92,14 @@ class DependencyTransformationV2 extends InplaceProcessor<SCGraphs> implements T
             val valuedObjectAccessors = new ValuedObjectAccessors
             scg.searchDependencies(valuedObjectAccessors)          
             scg.addDependencies(valuedObjectAccessors)                     
-        }        
+        }      
+        
+        val loopAnalyzerProcessor = KiCoolRegistration.getProcessorInstance("de.cau.cs.kieler.scg.processors.loopAnalyzerV2") as LoopAnalyzerV2
+        if (loopAnalyzerProcessor !== null) {
+            loopAnalyzerProcessor.setEnvironment(environment, environment)
+            loopAnalyzerProcessor.process
+            snapshot
+        }             
     }
 
     /** 

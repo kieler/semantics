@@ -14,19 +14,16 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis.labels;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.elk.graph.ElkLabel;
-
-import de.cau.cs.kieler.klighd.labels.AbstractKlighdLabelManager;
+import de.cau.cs.kieler.klighd.labels.management.IdentLabelManager;
 
 /**
  * Label manager that shortens transition labels to the list of signals they contain.
  * 
  * @author ybl
  */
-public class ShortenToSignalsLabelManager extends AbstractKlighdLabelManager {
+public class ShortenToSignalsLabelManager extends IdentLabelManager {  // AbstractKlighdLabelManager {
 
     /** Operators used in transition labels. */
     private final static List<String> OPERATORS = Arrays.asList(new String[] { "<<", ">>", ">>>",
@@ -37,62 +34,62 @@ public class ShortenToSignalsLabelManager extends AbstractKlighdLabelManager {
     /**
      * {@inheritDoc}
      */
-    @Override
-    public String resizeLabel(ElkLabel label, double targetWidth) {
-        LinkedList<String> deleteEntriesList = new LinkedList<String>();
-        String resultText = label.getText();
-
-        // Delete all operators
-        for (String entry : OPERATORS) {
-            resultText = resultText.replace(entry, "");
-        }
-
-        // Delete numbers
-        LinkedList<String> textList = new LinkedList<String>(
-                Arrays.asList(resultText.trim().split(" ")));
-        
-        for (String textPart : textList) {
-            try {
-                Integer.valueOf(textPart);
-                deleteEntriesList.add(textPart);
-            } catch (NumberFormatException e) {
-                if (textPart.equals("true") || textPart.equals("false")) {
-                    deleteEntriesList.add(textPart);
-                }
-            }
-        }
-        
-        for (String entry : deleteEntriesList) {
-            while (textList.remove(entry)) {
-            }
-        }
-
-        // Retransform the list to string and add commata
-        resultText = "";
-        boolean hostCode = false;
-        for (String textPart : textList) {
-            if (textPart.contains("(")) {
-                hostCode = true;
-            } else if (textPart.contains(")")) {
-                hostCode = false;
-            }
-
-            if (!(textPart.equals("") || resultText.contains(textPart))) {
-                // no empty textpart and no doubled textParts are added
-                if ((textPart.contains(":")) || hostCode) {
-                    resultText += textPart + " ";
-                } else {
-
-                    resultText += textPart.trim() + ", ";
-                }
-            }
-        }
-        
-        if (!textList.isEmpty() && !textList.get(0).equals("")) {
-            // remove last comma
-            resultText = resultText.substring(0, resultText.length() - 2);
-        }
-        
-        return resultText;
-    }
+//    @Override
+//    public String resizeLabel(ElkLabel label, double targetWidth) {
+//        LinkedList<String> deleteEntriesList = new LinkedList<String>();
+//        String resultText = label.getText();
+//
+//        // Delete all operators
+//        for (String entry : OPERATORS) {
+//            resultText = resultText.replace(entry, "");
+//        }
+//
+//        // Delete numbers
+//        LinkedList<String> textList = new LinkedList<String>(
+//                Arrays.asList(resultText.trim().split(" ")));
+//        
+//        for (String textPart : textList) {
+//            try {
+//                Integer.valueOf(textPart);
+//                deleteEntriesList.add(textPart);
+//            } catch (NumberFormatException e) {
+//                if (textPart.equals("true") || textPart.equals("false")) {
+//                    deleteEntriesList.add(textPart);
+//                }
+//            }
+//        }
+//        
+//        for (String entry : deleteEntriesList) {
+//            while (textList.remove(entry)) {
+//            }
+//        }
+//
+//        // Retransform the list to string and add commata
+//        resultText = "";
+//        boolean hostCode = false;
+//        for (String textPart : textList) {
+//            if (textPart.contains("(")) {
+//                hostCode = true;
+//            } else if (textPart.contains(")")) {
+//                hostCode = false;
+//            }
+//
+//            if (!(textPart.equals("") || resultText.contains(textPart))) {
+//                // no empty textpart and no doubled textParts are added
+//                if ((textPart.contains(":")) || hostCode) {
+//                    resultText += textPart + " ";
+//                } else {
+//
+//                    resultText += textPart.trim() + ", ";
+//                }
+//            }
+//        }
+//        
+//        if (!textList.isEmpty() && !textList.get(0).equals("")) {
+//            // remove last comma
+//            resultText = resultText.substring(0, resultText.length() - 2);
+//        }
+//        
+//        return resultText;
+//    }
 }

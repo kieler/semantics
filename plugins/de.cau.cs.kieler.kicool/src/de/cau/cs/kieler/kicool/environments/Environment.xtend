@@ -96,6 +96,9 @@ class Environment extends EnvironmentPropertyHolder {
     public static val IProperty<Boolean> UNIQUE_NAME_CACHE_ENABLED = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.uniqueNameCacheEnabled", true)
         
+    public static val IProperty<Boolean> DEBUG_ENVIRONMENT_MODELS = 
+        new Property<Boolean>("de.cau.cs.kieler.kicool.debugEnvironmentModels", false)
+        
     public static val REPORT_ROOT = MessageObjectReferences.ROOT
              
     new() {

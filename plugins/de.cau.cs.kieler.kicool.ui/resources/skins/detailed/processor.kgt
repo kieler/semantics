@@ -20,8 +20,8 @@ knode processor {
         
         kroundedRectangle (2.5,2.5) {
             styles: lineStyle = solid
-            foreground = 100r,100g,200b
-            background = 222r,222g,255b,255a -> 177r,177g,222b,255a (90)
+            foreground = 190r, 190g, 190b 
+            background = 248r, 249g, 253b, 255a -> 205r, 220g, 222b, 243a (90)
         }   
             
         knode name {

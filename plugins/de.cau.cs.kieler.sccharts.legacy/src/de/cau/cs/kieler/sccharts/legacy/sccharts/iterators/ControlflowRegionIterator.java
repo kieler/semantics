@@ -16,12 +16,12 @@ package de.cau.cs.kieler.sccharts.legacy.sccharts.iterators;
 import static com.google.common.collect.Iterators.concat;
 import static com.google.common.collect.Iterators.transform;
 
+import java.util.Collections;
 import java.util.Iterator;
 
 import org.eclipse.emf.common.util.AbstractTreeIterator;
 
 import com.google.common.base.Function;
-import com.google.common.collect.Iterators;
 
 import de.cau.cs.kieler.sccharts.legacy.sccharts.ControlflowRegion;
 import de.cau.cs.kieler.sccharts.legacy.sccharts.Region;
@@ -42,7 +42,7 @@ public final class ControlflowRegionIterator {
          */
         public Iterator<ControlflowRegion> apply(State s) {
 //            return s.getConcurrencies().iterator();
-            return Iterators.emptyIterator();
+            return Collections.emptyIterator();
         }
     };
     
