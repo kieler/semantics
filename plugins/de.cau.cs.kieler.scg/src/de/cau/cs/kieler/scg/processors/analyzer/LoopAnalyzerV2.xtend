@@ -71,7 +71,7 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
         }
         
         if (!loopData.criticalNodes.empty) {
-            environment.errors.add("Instananeous loop detected!")
+            environment.warnings.add("Instananeous loop detected!")
         }
     }	
 	
