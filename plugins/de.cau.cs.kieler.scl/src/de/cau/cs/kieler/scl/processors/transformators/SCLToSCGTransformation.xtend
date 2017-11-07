@@ -61,6 +61,8 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
+import de.cau.cs.kieler.scg.processors.analyzer.ThreadAnalyzer
 
 /** 
  * SCL to SCG Transformation 
@@ -103,6 +105,13 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
     
     override process() {
         setModel(getModel.transformSCLToSCG)
+        
+        val threadAnalyzerProcessor = KiCoolRegistration.getProcessorInstance("de.cau.cs.kieler.scg.processors.threadAnalyzer") as ThreadAnalyzer
+        if (threadAnalyzerProcessor !== null) {
+            threadAnalyzerProcessor.setEnvironment(environment, environment)
+            threadAnalyzerProcessor.process
+            snapshot
+        }
     }
     
 //    override getProducedFeatureId() {
