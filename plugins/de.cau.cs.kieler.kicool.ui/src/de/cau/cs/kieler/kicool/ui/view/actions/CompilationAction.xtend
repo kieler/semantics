@@ -60,7 +60,7 @@ class CompilationAction {
     def void invokeCompile() {
         val editor = view.editPartSystemManager.activeEditor
         var Object model = editor.retrieveModel
-        if (model == null) {
+        if (model === null) {
             model = CompilationActionSimSalabim.SIM_MODEL
         }
         
@@ -69,6 +69,9 @@ class CompilationAction {
         
         if (view.compileInplaceToggle.checked) {
             cc.startEnvironment.setProperty(Environment.INPLACE, true)
+        }
+        if (view.debugEnvironmentModelsToggle.checked) {
+            cc.startEnvironment.setProperty(Environment.DEBUG_ENVIRONMENT_MODELS, true)
         }
         
         cc.deactiveDisabledProcessors
@@ -82,7 +85,7 @@ class CompilationAction {
     protected def void deactiveDisabledProcessors(CompilationContext cc) {
         for (proc : ToggleProcessorOnOffAction.deactivatedProcessors.keySet) {
             val unit = cc.processorMap.get(proc)
-            if (unit != null) {
+            if (unit !== null) {
                 val toggle = ToggleProcessorOnOffAction.deactivatedProcessors.get(proc)
                 switch(toggle) {
                     case ON: {}
@@ -98,7 +101,7 @@ class CompilationAction {
             val doc = editor.getDocument
             var EObject m = doc.readOnly(new IUnitOfWork<EObject, XtextResource>() {
                 override exec(XtextResource state) throws Exception {
-                    if (state != null && state.contents != null) state.contents.head else null
+                    if (state !== null && state.contents !== null) state.contents.head else null
                 }
             });   
             return m 

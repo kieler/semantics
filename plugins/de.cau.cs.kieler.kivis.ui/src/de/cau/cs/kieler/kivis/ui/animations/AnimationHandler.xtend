@@ -21,13 +21,13 @@ import de.cau.cs.kieler.kivis.ui.views.KiVisView
 import de.cau.cs.kieler.prom.configurable.AttributeExtensions
 import de.cau.cs.kieler.prom.configurable.Configurable
 import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
+import de.cau.cs.kieler.prom.kibuild.TextValue
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Variable
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGDocument
-import de.cau.cs.kieler.prom.kibuild.TextValue
 
 /**
  * Base class for configurable animations of SVG elements.
@@ -46,6 +46,16 @@ abstract class AnimationHandler extends Configurable implements IAnimationHandle
      * If this attribute is true, the animation is also applied recursively to all child elements in the SVG document.
      */
     public val recursive = new ConfigurableAttribute("recursive", false)
+    
+    /**
+     * The variables in the data pool that are referenced by the animation.
+     */
+    public val usedVariables = <Variable> newHashSet
+    
+    /**
+     * Determines if user values should be animated or always the current value of variables.
+     */
+    public var boolean animateUserValues = true
     
     /**
      * The configurable attributes of this instance.
@@ -139,8 +149,12 @@ abstract class AnimationHandler extends Configurable implements IAnimationHandle
     public override apply(DataPool pool) {
         this.pool = pool
         // Get the variable and variable value that is relevant for this animation
+        usedVariables.clear
         variable = getVariable(animation.variable, pool)
-        variableValue = getVariableValue(animation.variable, pool, true)
+        variableValue = getVariableValue(animation.variable, pool, animateUserValues)
+        if(variable != null) {
+            usedVariables.add(variable)
+        }
         // Check if this animation should be performed
         isActive = isActive(pool) 
         if(isActive) {
@@ -196,10 +210,14 @@ abstract class AnimationHandler extends Configurable implements IAnimationHandle
             if(literal.value instanceof TextValue) {
                 val String text = (literal.value as TextValue).value
                 if(text != "true" && text != "false") {
-                    try {
-                        val variableValue = pool.getVariableValue(text, true)
-                        return variableValue
-                    } catch (Exception e) {
+                    // Separate variable name and array index part
+                    val variablePart = DataPool.getVariableName(text)
+                    val variable = pool.getVariable(variablePart)
+                    if(variable != null) {
+                        usedVariables.add(variable)
+                        val arrayIndices = DataPool.getArrayIndices(text)
+                        return pool.getVariableValue(variable, arrayIndices, animateUserValues)
+                    } else {
                         // The text value does not seem to be a variable reference.
                     }
                 }

@@ -22,12 +22,13 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.jface.action.IAction
 import org.eclipse.jface.action.IMenuManager
 import org.eclipse.jface.action.IToolBarManager
+import de.cau.cs.kieler.simulation.SimulationParticipant
 
 /**
  * @author aas
  *
  */
-class SimulateModelInDiagramView implements KiCoModelViewUIContributor {
+class SimulateModelInDiagramView implements KiCoModelViewUIContributor, SimulationParticipant {
     private var IAction simulateAction
     
     private var KiCoModelUpdateController muc
@@ -55,5 +56,17 @@ class SimulateModelInDiagramView implements KiCoModelViewUIContributor {
     override contribute(KiCoModelUpdateController muc, IToolBarManager toolBar, IMenuManager menu) {
         this.muc = muc
         toolBar.add(simulateAction);
+    }
+    
+    override setEnabled(boolean value) {
+        // This participant cannot be disabled
+    }
+    
+    override isEnabled() {
+        true
+    }
+    
+    override getName() {
+        return ""
     }
 }

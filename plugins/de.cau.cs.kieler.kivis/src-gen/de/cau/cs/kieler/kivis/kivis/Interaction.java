@@ -16,6 +16,8 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.Interaction#getEvent <em>Event</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.Interaction#isAfterTick <em>After Tick</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.Interaction#isBeforeTick <em>Before Tick</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.Interaction#getActions <em>Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.Interaction#getCondition <em>Condition</em>}</li>
  * </ul>
@@ -51,6 +53,58 @@ public interface Interaction extends EObject
    * @generated
    */
   void setEvent(Event value);
+
+  /**
+   * Returns the value of the '<em><b>After Tick</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>After Tick</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>After Tick</em>' attribute.
+   * @see #setAfterTick(boolean)
+   * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getInteraction_AfterTick()
+   * @model
+   * @generated
+   */
+  boolean isAfterTick();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.kivis.kivis.Interaction#isAfterTick <em>After Tick</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>After Tick</em>' attribute.
+   * @see #isAfterTick()
+   * @generated
+   */
+  void setAfterTick(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>Before Tick</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Before Tick</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Before Tick</em>' attribute.
+   * @see #setBeforeTick(boolean)
+   * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getInteraction_BeforeTick()
+   * @model
+   * @generated
+   */
+  boolean isBeforeTick();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.kivis.kivis.Interaction#isBeforeTick <em>Before Tick</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Before Tick</em>' attribute.
+   * @see #isBeforeTick()
+   * @generated
+   */
+  void setBeforeTick(boolean value);
 
   /**
    * Returns the value of the '<em><b>Actions</b></em>' containment reference list.

@@ -37,8 +37,8 @@ import de.cau.cs.kieler.kicool.ui.view.CompilerViewPartListener
 class LoadSystemAction {
 
     public static final ImageDescriptor ICON_LOAD_SYSTEM = AbstractUIPlugin.imageDescriptorFromPlugin(
-            "de.cau.cs.kieler.kicool.ui", "icons/IMBC_gear.png");    
-    
+            "de.cau.cs.kieler.kicool.ui", "icons/IMBC_gear.png");
+            
     /** The action for compiling systems. */
     @Accessors private Action action
     @Accessors private CompilerView view
@@ -62,7 +62,7 @@ class LoadSystemAction {
         
         if (editor instanceof XtextEditor) {
             val systemModel = editor.createModelInMemoryResource
-            if (systemModel != null) {
+            if (systemModel !== null) {
                 view.systemSelectionManager.setTemporarySystem(systemModel)
             }
         }

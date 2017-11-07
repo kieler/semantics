@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.kicool.ui.synthesis.styles
 
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kicool.ui.view.actions.SkinSelectionActions
 
 /**
  * @author ssm
@@ -21,6 +22,6 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 class SkinSelector {
     
-    @Accessors static String skinPrefix = "resources/skins/"
+    @Accessors static String skinPrefix = "resources/skins/" + SkinSelectionActions.skins.head
     
 }

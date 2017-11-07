@@ -79,7 +79,7 @@ class SystemSelectionManager implements SelectionListener {
     }
     
     private def updateSystemList(boolean filter, boolean updateView) {
-        if (combo == null || combo.disposed) return;
+        if (combo === null || combo.disposed) return;
         combo.removeAll
         index.clear
         
@@ -136,7 +136,7 @@ class SystemSelectionManager implements SelectionListener {
     def System getSelectedSystem() {
         if (!combo.isDisposed && combo.selectionIndex != -1) {
             val systemId = index.get(combo.selectionIndex)
-            if (systemId != null) {
+            if (systemId !== null) {
                 if (temporarySystem.containsKey(systemId)) {
                     return temporarySystem.get(systemId)
                 } else {

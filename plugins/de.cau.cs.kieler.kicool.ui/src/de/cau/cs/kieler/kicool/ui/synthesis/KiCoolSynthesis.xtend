@@ -22,12 +22,7 @@ import org.eclipse.elk.core.options.EdgeRouting
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
 import org.eclipse.elk.alg.layered.options.LayeredOptions
-import org.osgi.framework.Bundle
-import org.eclipse.core.runtime.Platform
-import java.net.URL
-import org.eclipse.core.runtime.FileLocator
 import org.eclipse.emf.common.util.URI
-import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.elk.core.math.ElkPadding
@@ -35,7 +30,6 @@ import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.util.KGraphUtil
 import org.eclipse.elk.alg.layered.options.LayeringStrategy
 import org.eclipse.elk.alg.layered.options.FixedAlignment
-import de.cau.cs.kieler.klighd.KlighdOptions
 import de.cau.cs.kieler.kicool.ui.synthesis.styles.SkinSelector
 import de.cau.cs.kieler.kgraph.text.KGraphStandaloneSetup
 import org.eclipse.elk.alg.layered.options.WrappingStrategy

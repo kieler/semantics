@@ -13,10 +13,10 @@
  */
 package de.cau.cs.kieler.core.model.properties;
 
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.Serializable
+import java.util.HashMap
+import java.util.Map
+import java.util.LinkedHashMap
 
 /**
  * An abstract holder class for properties that uses a hash map. 
@@ -32,7 +32,7 @@ public class MapPropertyHolder implements IPropertyHolder, Serializable {
     private static val long serialVersionUID = 4507851447415709893L
     
     /** map of property identifiers to their values. */
-    protected HashMap<IProperty<?>, Object> propertyMap = new HashMap<IProperty<?>, Object>()
+    protected HashMap<IProperty<?>, Object> propertyMap = new LinkedHashMap<IProperty<?>, Object>()
     
     /**
      * {@inheritDoc}

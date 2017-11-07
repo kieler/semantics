@@ -79,6 +79,11 @@ class ExecutableSimulator extends DefaultSimulator {
     private var Process process
     
     /**
+     * The process builder that created the process.
+     */
+    private var ProcessBuilder processBuilder
+    
+    /**
      * A reader to read stdout of the process
      */
     private var BufferedReader processReader
@@ -134,8 +139,8 @@ class ExecutableSimulator extends DefaultSimulator {
      */
     override initialize(DataPool pool) {
         // Execute jar file or binary
-        val pBuilder = createProcessBuilder
-        process = pBuilder.start()
+        processBuilder = createProcessBuilder
+        process = processBuilder.start
         
         // Get reader and writer for process
         val isr = new InputStreamReader(process.inputStream)
@@ -167,6 +172,9 @@ class ExecutableSimulator extends DefaultSimulator {
             val commandWithoutPlaceholders = exeSubstitution.replace(shellCommand.stringValue)
             val commandList = PromPlugin.splitStringOnWhitespace(commandWithoutPlaceholders)
             pBuilder = new ProcessBuilder(commandList)
+            if(executable != null) {
+                pBuilder.directory(new File(executable.project.location.toOSString))
+            }
         } else {
             if(executable == null) {
                 throw new IllegalArgumentException("Could not load the executable file '"+executablePath.stringValue+"'")
@@ -287,7 +295,7 @@ class ExecutableSimulator extends DefaultSimulator {
             // Call readLine with a timeout of 1 second
             val callable = new Callable<String>(){ 
                 override call() throws Exception {
-                    br.readLine
+                    return br.readLine
                 }
             }
             try {
@@ -295,7 +303,8 @@ class ExecutableSimulator extends DefaultSimulator {
             } catch(UncheckedTimeoutException e) {
                 // If the process is null, the simulation was stopped already
                 SimulationManager.instance.stop
-                throw new IOException("Process of simulation '" + executable.name + "' is not responding", e)    
+                throw new IOException("Process of simulation '" + processBuilder.command + "' in '" + processBuilder.directory + "'\n" 
+                                    + "is not responding with a line on stdout", e)    
             }
             
             Thread.sleep(1);
@@ -303,7 +312,8 @@ class ExecutableSimulator extends DefaultSimulator {
             val time = System.currentTimeMillis 
             if(time-startTime < 0 || time-startTime > 1000) {
                 SimulationManager.instance.stop
-                throw new IOException("Process of simulation '" + executable.name + "' is not responding with a JSON object.")
+                throw new IOException("Process of simulation '" + processBuilder.command + "' in '" + processBuilder.directory + "'\n"
+                                    + "is not responding with a JSON object.")
             }
         } while(line == null || !line.startsWith("{") || !line.endsWith("}"))
         

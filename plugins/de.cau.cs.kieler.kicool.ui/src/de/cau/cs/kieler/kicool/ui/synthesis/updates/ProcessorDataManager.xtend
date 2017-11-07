@@ -60,8 +60,6 @@ import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.krendering.KPolygon
 import de.cau.cs.kieler.kicool.ProcessorReference
 import org.eclipse.emf.ecore.EObject
-import com.google.inject.Injector
-import de.cau.cs.kieler.kicool.KiCoolStandaloneSetup
 import de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis
 import de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorSystem
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.MessageObjectReferencesManager.fillUndefinedColors
@@ -69,6 +67,7 @@ import de.cau.cs.kieler.kicool.ui.synthesis.actions.OnOffToggle
 import de.cau.cs.kieler.kicool.ui.synthesis.MessageObjectListPair
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
+import de.cau.cs.kieler.kicool.environments.EnvironmentPair
 
 /**
  * The data manager handles all synthesis updates.
@@ -79,12 +78,8 @@ import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
  */
 class ProcessorDataManager {
     
-    private static Injector injector =
-            new KiCoolStandaloneSetup().createInjectorAndDoEMFRegistration();    
-            
     private static KRenderingExtensions kRenderingExtensions = new KRenderingExtensions
     
-    static val NODE_PROCESSOR = "processor"
     static val NODE_PROCESSOR_BODY = "processorbody"
     static val NODE_ACTIVITY_STATUS = "status"
     static val NODE_NAME = "name"
@@ -108,7 +103,7 @@ class ProcessorDataManager {
         
         val nodeIdMap = node.createNodeIdMap
         
-        if (rtProcessor == null) {
+        if (rtProcessor === null) {
             nodeIdMap.findNode(NODE_PROCESSOR_BODY).setFrameErrorColor
             nodeIdMap.findNode(NODE_NAME).label.text = processorReference.id.split("\\.").last
             return;
@@ -118,11 +113,11 @@ class ProcessorDataManager {
         
         
         val toggleOnOffNode = nodeIdMap.findNode(NODE_ACTIVE)
-        if (toggleOnOffNode != null) {
+        if (toggleOnOffNode !== null) {
             toggleOnOffNode.container.addAction(Trigger::SINGLECLICK, ToggleProcessorOnOffAction.ID)
             toggleOnOffNode.setProperty(TOGGLE_ON_OFF_DATA, new ToggleOnOffData(processorReference))
             val toggle = ToggleProcessorOnOffAction.deactivatedProcessors.get(processorReference)
-            if (toggle == null || toggle == OnOffToggle.ON) {
+            if (toggle === null || toggle == OnOffToggle.ON) {
                 setFBColor(getContainer(toggleOnOffNode), ON)
             } else if (toggle == OnOffToggle.OFF) {
                 setFBColor(getContainer(toggleOnOffNode), OFF)
@@ -137,7 +132,7 @@ class ProcessorDataManager {
         val allProcessors = compilationNotification.compilationContext.processorMap.keySet
         for(processor : allProcessors) {
             val processorNode = node.findNode(processor.uniqueProcessorId)    
-            if (processorNode == null) {
+            if (processorNode === null) {
                 // This can happen because metrics are also listed in the processor map.
             } else {
                 processorNode.resetProcessorNode(node)
@@ -152,7 +147,7 @@ class ProcessorDataManager {
             sourceNode.setProperty(INTERMEDIATE_DATA, 
                 new IntermediateData(processorUnit, 
                     compilationNotification.compilationContext, 
-                    compilationNotification.compilationContext.originalModel, view
+                    null, view
                 ))
         }
         
@@ -164,7 +159,7 @@ class ProcessorDataManager {
         val processorReference = processorNotification.processorReference
         val processorInstance = processorNotification.processorInstance
         val processorNode = node.findNode(processorReference.uniqueProcessorId)
-        if (processorNode == null) {
+        if (processorNode === null) {
             System.err.println("There was an update notification for an non-existing processor (" + processorReference.uniqueProcessorId + 
                 "). This should not happen. I'm very sorry.")
             return
@@ -175,7 +170,7 @@ class ProcessorDataManager {
         val edges = processorNode.incomingEdges
         if (edges.size > 1) for (edge : edges) {
             val procId = edge.source.getProperty(PROCESSOR_IDENTIFIER)
-            if (procId != null) {
+            if (procId !== null) {
                 val proc = processorNotification.compilationContext.processorMap.get(procId)
                 if (processorInstance.sourceEnvironment != proc.environment) {
                     edge.container.setFBColors(INACTIVE_ENVIRONMENT.color, INACTIVE_ENVIRONMENT.color, INACTIVE_ENVIRONMENT.color)
@@ -201,7 +196,7 @@ class ProcessorDataManager {
         val processorReference = processorNotification.processorReference
         val processorInstance = processorNotification.processorInstance
         val processorNode = node.findNode(processorReference.uniqueProcessorId)
-        if (processorNode == null) {
+        if (processorNode === null) {
             System.err.println("There was an update notification for an non-existing processor system (" + processorReference.uniqueProcessorId + 
                 "). This should not happen. I'm sorry.")
             return
@@ -218,7 +213,7 @@ class ProcessorDataManager {
         val pTime = processorInstance.environment.getProperty(PTIME)
         var envText = "pTime: " + pTime + "ms"
         val mMetric = processorInstance.environment.getProperty(METRIC)
-        if (mMetric != null) envText += "\nmMetric: " + String.format(Locale.US, "%.3f", mMetric as Double) 
+        if (mMetric !== null) envText += "\nmMetric: " + String.format(Locale.US, "%.3f", mMetric as Double) 
         NODE_ENVIRONMENT.findNode(nodeIdMap)?.setLabel(envText)
         
         
@@ -243,14 +238,28 @@ class ProcessorDataManager {
         if (intermediateRootNode !== null) {
             val intermediateKGT = intermediateNode
             intermediateRootNode.children.clear
-            
             val intermediatePosXInc = intermediateKGT.width - 0.5f
-            
             var intermediatePosX = 0.0f
-            // Test for infos, warnings and errors
+            
+            if (processorInstance.environment.getProperty(DEBUG_ENVIRONMENT_MODELS)) {
+                val environmentNode = intermediateKGT.copy
+                environmentNode.xpos = intermediatePosX
+                environmentNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
+                intermediateRootNode.children += environmentNode 
+                environmentNode.setProperty(INTERMEDIATE_DATA, 
+                    new IntermediateData(processorInstance, 
+                        processorNotification.compilationContext, 
+                        new EnvironmentPair(processorInstance.sourceEnvironment, processorInstance.sourceEnvironment),
+                        view
+                    ))
+                intermediatePosX += intermediatePosXInc          
+                environmentNode.container.setFBColor(ENVIRONMENT_MODEL)                 
+            }            
+            
             // Test for snapshots
+            var Object lastModel = null
             val snapshots = processorInstance.environment.getProperty(SNAPSHOTS) as Snapshots
-            if (snapshots!= null) {
+            if (snapshots !== null) {
                 for(snapshot : snapshots) {
                     val intermediateNode = intermediateKGT.copy
                     intermediateNode.xpos = intermediatePosX
@@ -259,19 +268,38 @@ class ProcessorDataManager {
                     intermediateNode.setProperty(INTERMEDIATE_DATA, 
                         new IntermediateData(processorInstance, processorNotification.compilationContext, snapshot, view))
                     intermediatePosX += intermediatePosXInc
+                    lastModel = snapshot
                 }
             }
             
             // Final result
-            val finalResultNode = intermediateKGT.copy
-            finalResultNode.xpos = intermediatePosX
-    //        finalResultNode.width = finalResultNode.width * 1
-            finalResultNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
-            intermediateRootNode.children += finalResultNode 
-            finalResultNode.setProperty(INTERMEDIATE_DATA, 
-                new IntermediateData(processorInstance, processorNotification.compilationContext, processorInstance.targetModel, view))
-            intermediatePosX += 3.5f            
-            finalResultNode.container.setFBColor(INTERMEDIATE_FINAL_RESULT)        
+            if (lastModel !== processorInstance.targetModel) {
+                val finalResultNode = intermediateKGT.copy
+                finalResultNode.xpos = intermediatePosX
+                finalResultNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
+                intermediateRootNode.children += finalResultNode 
+                finalResultNode.setProperty(INTERMEDIATE_DATA, 
+                    new IntermediateData(processorInstance, processorNotification.compilationContext, processorInstance.targetModel, view))
+                intermediatePosX += intermediatePosXInc          
+                finalResultNode.container.setFBColor(INTERMEDIATE_FINAL_RESULT)
+            }        
+    
+    
+            if (processorInstance.environment.getProperty(DEBUG_ENVIRONMENT_MODELS)) {
+                val environmentNode = intermediateKGT.copy
+                environmentNode.xpos = intermediatePosX
+                environmentNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
+                intermediateRootNode.children += environmentNode 
+                environmentNode.setProperty(INTERMEDIATE_DATA, 
+                    new IntermediateData(processorInstance, 
+                        processorNotification.compilationContext, 
+                        new EnvironmentPair(processorInstance.sourceEnvironment, processorInstance.environment), 
+                        view
+                    ))
+                intermediatePosX += intermediatePosXInc          
+                environmentNode.container.setFBColor(ENVIRONMENT_MODEL)                 
+            }            
+    
     
             val infos = processorInstance.environment.getProperty(INFOS)
             if (infos.size > 0) {
@@ -367,7 +395,7 @@ class ProcessorDataManager {
         // Gather data.       
         for(processor : allProcessors) {
             val processorNode = node.findNode(processor.uniqueProcessorId)    
-            if (processorNode == null) {
+            if (processorNode === null) {
                 // This can happen because metrics are also listed in the processor map.
             } else {
                 val compilationUnit = contextNotification.compilationContext.getProcessorInstance(processor)
@@ -378,7 +406,7 @@ class ProcessorDataManager {
         // Update view.
         for(processor : allProcessors) {
             val processorNode = node.findNode(processor.uniqueProcessorId)    
-            if (processorNode == null) {
+            if (processorNode === null) {
                 // This can happen because metrics are also listed in the processor map.
             } else {
                 val compilationUnit = contextNotification.compilationContext.getProcessorInstance(processor)

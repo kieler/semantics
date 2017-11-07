@@ -13,38 +13,38 @@
  */
 package de.cau.cs.kieler.kicool.ui.synthesis
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.Collection
+import java.util.Collections
+import java.util.Iterator
+import java.util.Map
 
-import org.eclipse.elk.graph.properties.IProperty;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EContentAdapter;
-import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.elk.graph.properties.IProperty
+import org.eclipse.emf.common.notify.Notification
+import org.eclipse.emf.common.notify.Notifier
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.util.EContentAdapter
+import org.eclipse.emf.ecore.util.InternalEList
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Iterators;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Multimap;
+import com.google.common.base.Predicate
+import com.google.common.collect.ArrayListMultimap
+import com.google.common.collect.Iterables
+import com.google.common.collect.Iterators
+import com.google.common.collect.Maps
+import com.google.common.collect.Multimap
 
-import de.cau.cs.kieler.klighd.kgraph.EMapPropertyHolder;
-import de.cau.cs.kieler.klighd.kgraph.KGraphElement;
-import de.cau.cs.kieler.klighd.kgraph.KGraphPackage;
-import de.cau.cs.kieler.klighd.kgraph.impl.IPropertyToObjectMapImpl;
-import de.cau.cs.kieler.klighd.krendering.KRendering;
-import de.cau.cs.kieler.klighd.util.KlighdPredicates;
+import de.cau.cs.kieler.klighd.kgraph.EMapPropertyHolder
+import de.cau.cs.kieler.klighd.kgraph.KGraphElement
+import de.cau.cs.kieler.klighd.kgraph.KGraphPackage
+import de.cau.cs.kieler.klighd.kgraph.impl.IPropertyToObjectMapImpl
+import de.cau.cs.kieler.klighd.krendering.KRendering
+import de.cau.cs.kieler.klighd.util.KlighdPredicates
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
 
 /**
  * A specialized {@link EContentAdapter} realizing efficient source target element tracking by means
  * of {@link Map Maps}. 
- * Translated to xtend and added more methods/visibility for convenience. 
+ * Translated to xtend and added more methods/visibility for convenience. (ssm) 
  * 
  * @author ssm
  * @original author chsch
@@ -74,7 +74,7 @@ public class SourceModelTrackingAdapterReplacement extends EContentAdapter {
      *         identified
      */
     public def Object getSourceElement(EObject viewElement) {
-        if (viewElement == null) {
+        if (viewElement === null) {
             return null;
         }
         
@@ -96,7 +96,7 @@ public class SourceModelTrackingAdapterReplacement extends EContentAdapter {
      *         elements could be identified
      */
     public def Collection<EObject> getTargetElements(Object element) {        
-        if (element == null) {
+        if (element === null) {
             return Collections.emptyList();
         }
         
@@ -113,7 +113,6 @@ public class SourceModelTrackingAdapterReplacement extends EContentAdapter {
     /**
      * {@inheritDoc}
      */
-    @Override
     override void setTarget(EObject newTarget) {
         basicSetTarget(newTarget)
 
@@ -223,7 +222,7 @@ public class SourceModelTrackingAdapterReplacement extends EContentAdapter {
         
         if (type == Notification.SET
                 && (notification.getNotifier() as IPropertyToObjectMapImpl).getKey== MODEL_ELEMENT
-                && newValue != null) {
+                && newValue !== null) {
             addTracedElement(notifier)
             return
 
@@ -250,7 +249,7 @@ public class SourceModelTrackingAdapterReplacement extends EContentAdapter {
 
             val Object sourceElement = internalGetSourceElement(element)
 
-            if (sourceElement != null
+            if (sourceElement !== null
                     && !sourceTargetsMap.containsEntry(sourceElement, element)) {
                 // since during the additions of KGraphElements this method is called for
                 //  their layout data as well, so entries might get duplicated

@@ -48,11 +48,11 @@ public class EditorActionAdapter implements IPropertyListener, IPartListener2 {
     }
 
     override void propertyChanged(Object source, int propId) {
-        if (editor != null) {
+        if (editor !== null) {
             val sourceEditor = source as IEditorPart
             if (propId == IWorkbenchPartConstants.PROP_DIRTY && !sourceEditor.isDirty()) {
                 // dirty flag changed and editor is not dirty -> saved
-                if (saveListener != null) saveListener.onEditorSaved(sourceEditor)
+                if (saveListener !== null) saveListener.onEditorSaved(sourceEditor)
             }
         }
     }
@@ -64,8 +64,8 @@ public class EditorActionAdapter implements IPropertyListener, IPartListener2 {
      *            the editor
      */
     def void activate(IEditorPart newEditor) {
-        if (newEditor != null) {
-            if (this.editor != null) {
+        if (newEditor !== null) {
+            if (this.editor !== null) {
                 this.editor.removePropertyListener(this)
             }
             this.editor = newEditor;
@@ -78,7 +78,7 @@ public class EditorActionAdapter implements IPropertyListener, IPartListener2 {
      * Stops the listening on the current editor.
      */
     def void deactivate() {
-        if (editor != null) {
+        if (editor !== null) {
             editor.removePropertyListener(this)
             editor.site.page.removePartListener(this)
         }
@@ -91,10 +91,10 @@ public class EditorActionAdapter implements IPropertyListener, IPartListener2 {
     }
     
     override partClosed(IWorkbenchPartReference partRef) {
-        if (partRef == null) return
+        if (partRef === null) return
         val part = partRef.getPart(true)
         if (part instanceof EditorPart) {
-            if (closeListener != null) closeListener.onEditorClosed(part)            
+            if (closeListener !== null) closeListener.onEditorClosed(part)            
         } 
     }
     

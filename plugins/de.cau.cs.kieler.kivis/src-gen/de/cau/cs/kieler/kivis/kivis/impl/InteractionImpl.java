@@ -33,6 +33,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.InteractionImpl#getEvent <em>Event</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.InteractionImpl#isAfterTick <em>After Tick</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.InteractionImpl#isBeforeTick <em>Before Tick</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.InteractionImpl#getActions <em>Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.InteractionImpl#getCondition <em>Condition</em>}</li>
  * </ul>
@@ -50,6 +52,46 @@ public class InteractionImpl extends MinimalEObjectImpl.Container implements Int
    * @ordered
    */
   protected Event event;
+
+  /**
+   * The default value of the '{@link #isAfterTick() <em>After Tick</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isAfterTick()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean AFTER_TICK_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isAfterTick() <em>After Tick</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isAfterTick()
+   * @generated
+   * @ordered
+   */
+  protected boolean afterTick = AFTER_TICK_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isBeforeTick() <em>Before Tick</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isBeforeTick()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean BEFORE_TICK_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isBeforeTick() <em>Before Tick</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isBeforeTick()
+   * @generated
+   * @ordered
+   */
+  protected boolean beforeTick = BEFORE_TICK_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getActions() <em>Actions</em>}' containment reference list.
@@ -138,6 +180,52 @@ public class InteractionImpl extends MinimalEObjectImpl.Container implements Int
     }
     else if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.INTERACTION__EVENT, newEvent, newEvent));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isAfterTick()
+  {
+    return afterTick;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setAfterTick(boolean newAfterTick)
+  {
+    boolean oldAfterTick = afterTick;
+    afterTick = newAfterTick;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.INTERACTION__AFTER_TICK, oldAfterTick, afterTick));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isBeforeTick()
+  {
+    return beforeTick;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setBeforeTick(boolean newBeforeTick)
+  {
+    boolean oldBeforeTick = beforeTick;
+    beforeTick = newBeforeTick;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.INTERACTION__BEFORE_TICK, oldBeforeTick, beforeTick));
   }
 
   /**
@@ -234,6 +322,10 @@ public class InteractionImpl extends MinimalEObjectImpl.Container implements Int
     {
       case KivisPackage.INTERACTION__EVENT:
         return getEvent();
+      case KivisPackage.INTERACTION__AFTER_TICK:
+        return isAfterTick();
+      case KivisPackage.INTERACTION__BEFORE_TICK:
+        return isBeforeTick();
       case KivisPackage.INTERACTION__ACTIONS:
         return getActions();
       case KivisPackage.INTERACTION__CONDITION:
@@ -255,6 +347,12 @@ public class InteractionImpl extends MinimalEObjectImpl.Container implements Int
     {
       case KivisPackage.INTERACTION__EVENT:
         setEvent((Event)newValue);
+        return;
+      case KivisPackage.INTERACTION__AFTER_TICK:
+        setAfterTick((Boolean)newValue);
+        return;
+      case KivisPackage.INTERACTION__BEFORE_TICK:
+        setBeforeTick((Boolean)newValue);
         return;
       case KivisPackage.INTERACTION__ACTIONS:
         getActions().clear();
@@ -280,6 +378,12 @@ public class InteractionImpl extends MinimalEObjectImpl.Container implements Int
       case KivisPackage.INTERACTION__EVENT:
         setEvent((Event)null);
         return;
+      case KivisPackage.INTERACTION__AFTER_TICK:
+        setAfterTick(AFTER_TICK_EDEFAULT);
+        return;
+      case KivisPackage.INTERACTION__BEFORE_TICK:
+        setBeforeTick(BEFORE_TICK_EDEFAULT);
+        return;
       case KivisPackage.INTERACTION__ACTIONS:
         getActions().clear();
         return;
@@ -302,12 +406,35 @@ public class InteractionImpl extends MinimalEObjectImpl.Container implements Int
     {
       case KivisPackage.INTERACTION__EVENT:
         return event != null;
+      case KivisPackage.INTERACTION__AFTER_TICK:
+        return afterTick != AFTER_TICK_EDEFAULT;
+      case KivisPackage.INTERACTION__BEFORE_TICK:
+        return beforeTick != BEFORE_TICK_EDEFAULT;
       case KivisPackage.INTERACTION__ACTIONS:
         return actions != null && !actions.isEmpty();
       case KivisPackage.INTERACTION__CONDITION:
         return condition != null;
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (afterTick: ");
+    result.append(afterTick);
+    result.append(", beforeTick: ");
+    result.append(beforeTick);
+    result.append(')');
+    return result.toString();
   }
 
 } //InteractionImpl

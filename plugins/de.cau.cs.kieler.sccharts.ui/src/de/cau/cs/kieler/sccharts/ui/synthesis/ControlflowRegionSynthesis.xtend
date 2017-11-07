@@ -85,7 +85,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         if (!region.states.empty) {
 
             var forLabel = ""
-            if (region.counterVariable != null) {
+            if (region.counterVariable !== null) {
                 val range = For.getForRegionRange(region)
                 forLabel = " | " + region.counterVariable.name + "[" + range.first + ", " + range.second + "]"
             }

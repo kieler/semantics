@@ -30,8 +30,10 @@
 ']'=74
 '^'=20
 '_'=78
+'after tick'=81
 'animate'=53
 'apply'=65
+'before tick'=82
 'click'=37
 'compiler'=69
 'extern'=77
@@ -44,7 +46,7 @@
 'mousemove'=40
 'mouseup'=39
 'on'=57
-'others'=82
+'others'=84
 'pause'=43
 'perform'=56
 'play'=44
@@ -57,7 +59,7 @@
 'template'=71
 'using'=66
 'val'=28
-'value'=81
+'value'=83
 'wrapper'=72
 '{'=54
 '|'=21
@@ -143,3 +145,5 @@ T__79=79
 T__80=80
 T__81=81
 T__82=82
+T__83=83
+T__84=84

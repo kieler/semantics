@@ -64,7 +64,7 @@ class OpenSystemAction {
         val input = new KiCoolEditorInput(system)
 
         val page = window.getActivePage();
-        if (page != null) {
+        if (page !== null) {
             try {
                 page.openEditor(input, KiCoolActivator.DE_CAU_CS_KIELER_KICOOL_KICOOL);
             } catch (PartInitException e) {

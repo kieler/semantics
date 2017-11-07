@@ -30,6 +30,8 @@
     </genClasses>
     <genClasses ecoreClass="KiVis.ecore#//Interaction">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Interaction/event"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//Interaction/afterTick"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiVis.ecore#//Interaction/beforeTick"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Interaction/actions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiVis.ecore#//Interaction/condition"/>
     </genClasses>

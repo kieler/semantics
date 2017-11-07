@@ -407,7 +407,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     !selectedNodes.contains(it)
                 ].map[
                     var container = it.eContainer
-                    while (container != null) {
+                    while (container !== null) {
                         if (container instanceof KNode) return container as KNode
                         container = container.eContainer
                     }
@@ -459,7 +459,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private String mainEntry
     
 //    private CompilationResult compilationResult;
-    private var Set<Node> PIL_Nodes = <Node> newHashSet
+    private var Set<Node> pilNodes = <Node> newHashSet
 
     /** The selected orientation */
     private int orientation
@@ -488,12 +488,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     override transform(SCGraph model) {
 
         val compilationContext = this.usedContext.getProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT)
-        if (compilationContext != null) {
-            val PILR = compilationContext.result.getProperty(LoopAnalyzerV2.LOOP_DATA)
-            if (PILR != null) PIL_Nodes += PILR.criticalNodes
+        if (compilationContext !== null) {
+            val scgs = model.eContainer
+            val pilr = compilationContext.getResultForModel(scgs).getProperty(LoopAnalyzerV2.LOOP_DATA)
+            if (pilr !== null) pilNodes += pilr.criticalNodes
 
             val prioAuxData = compilationContext.result.getProperty(PriorityProcessor.PRIORITY_AUXILIARY_DATA)
-            if(prioAuxData != null) {
+            if(prioAuxData !== null) {
                 scc = prioAuxData.stronglyConnectedComponents
             }
         }
@@ -588,15 +589,15 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 if (n.schizophrenic) {
                     aNode.KRendering.foreground = SCHIZO_COLOR.copy
                     if (n instanceof Assignment) {
-                        if (n.next == null) {
+                        if (n.next === null) {
                             node.children += aNode.createDeadend(SCGPORTID_OUTGOING)
                         }
                     }
                     else if (n instanceof Conditional) {
-                        if (n.then == null) {
+                        if (n.then === null) {
                             node.children += aNode.createDeadend(SCGPORTID_OUTGOING_THEN)
                         }
-                        if (n.^else == null) {
+                        if (n.^else === null) {
                             node.children += aNode.createDeadend(SCGPORTID_OUTGOING_ELSE)
                         }
                     }
@@ -659,7 +660,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (SHOW_HIERARCHY.booleanValue) {
                 scg.nodes.filter(typeof(Fork)).forEach[
                     allNext.map[target].filter(typeof(Entry)).forEach [ entry |
-                        if (entry != null) {
+                        if (entry !== null) {
                             var label = ""
                             if (entry.hasAnnotation(ANNOTATION_LABEL)) {
                                 label = entry.getStringAnnotationValue(ANNOTATION_LABEL)
@@ -670,7 +671,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                             entry.getThreadNodes.createHierarchy(NODEGROUPING_HIERARCHY, null) => [
                             	var text = ""
                                 val threadPathType = threadTypes.get(entry)
-                                if (threadPathType != null) {
+                                if (threadPathType !== null) {
                                     if (!regionLabel.nullOrEmpty) text = regionLabel + " - "
                                     text = text + threadPathType.toString2
                                 }
@@ -709,7 +710,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             
             // Draw strongly connected components
-            if(scc != null) {
+            if(scc !== null) {
                 for(component : scc) {
                     if(component.size > 1) {
                         for(n : component) { 
@@ -734,7 +735,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                                 if(component.contains(n2)) {
                                     val edges = n2Dep.allEdges
                                     for(edge : edges) {
-                                        if(edge != null) {
+                                        if(edge !== null) {
                                             val edgeRendering = edge.getData(typeof(KRoundedBendsPolyline))
                                             edgeRendering.setProperty(SCC_PROPERTY, true)
                                             val style = createKForeground().setColor2(STRONGLY_CONNECTED_COMPONENT_COLOR.copy)
@@ -891,7 +892,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 } else {
                     conditionalStr = serializeHR(conditional.condition) as String
                 }
-                if (conditional.condition != null)
+                if (conditional.condition !== null)
                     node.KContainerRendering.addText(
 //                        serializer.serialize(conditional.condition.copy.fix).removeParenthesis).setAreaPlacementData.
                         conditionalStr).setAreaPlacementData.
@@ -1489,7 +1490,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 * @return Returns the KEdge. 
 	 */
     private def KEdge synthesizeControlFlow(ControlFlow controlFlow, String outgoingPortId) {
-        if(controlFlow.target == null || controlFlow.eContainer == null) return null;
+        if(controlFlow.target == null || controlFlow.eContainer === null) return null;
 
         return controlFlow.createNewEdge().associateWith(controlFlow) => [ edge |
             // Get and set source and target information.
@@ -1581,7 +1582,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     val tgtPrio = tgtNode.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
                                                             as IntAnnotation
                     if(srcPrio.value != tgtPrio.value) {
-                        val port = edge.sourcePort => [
+                        edge.sourcePort => [
                             it.setPortSize(50, 20)
                             it.KContainerRendering.setProperty(PRIO_STATEMENTS_PROPERTY, true)
                             var rec = it.KContainerRendering.addRoundedRectangle(CORNERRADIUS, CORNERRADIUS, LINEWIDTH)
@@ -1900,7 +1901,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 if (scg.hasAnnotation(ANNOTATION_GUARDCREATOR)) {
                     val guard = basicBlock.schedulingBlocks.head.guards.head
                     var String expText
-                    if (basicBlock.deadBlock && (guard == null || guard.expression == null)) {
+                    if (basicBlock.deadBlock && (guard === null || guard.expression === null)) {
                         expText = "<null>"
                     } else {
                         val exp = guard.expression.copy
@@ -1920,7 +1921,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                      if (!schedulingBlock.label.nullOrEmpty) {
                          sbName = schedulingBlock.label + " "
                      }
-                     if (schedulingBlock.guards.head != null) { 
+                     if (schedulingBlock.guards.head !== null) { 
                          if (schedulingBlock.guards.head.valuedObject.name != schedulingBlock.label) {
                             sbName = sbName + "(" + schedulingBlock.guards.head.valuedObject.name + ")"//reference.valuedObject.name
                          }
@@ -1928,7 +1929,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
 	                if (scg.hasAnnotation(ANNOTATION_GUARDCREATOR)) {
 	                    var expText = "<null>"
-	                    if (schedulingBlock.guards.head != null /* && !schedulingBlock.basicBlock.deadBlock */) {
+	                    if (schedulingBlock.guards.head !== null /* && !schedulingBlock.basicBlock.deadBlock */) {
         	            	expText = serializeHR(schedulingBlock.guards.head.expression) as String
     	            	}	
 						sbName = sbName + "\n" + expText       
@@ -2000,13 +2001,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
         val schedules = <List<Node>> newArrayList
 
-        for(node : scg.nodes.filter[ incoming.filter(ScheduleDependency).empty && incoming.filter(GuardDependency).empty ]) {
+        for (node : scg.nodes.filter[ incoming.filter(ScheduleDependency).empty && incoming.filter(GuardDependency).empty ]) {
             val newSchedule = <Node> newArrayList => [ s | 
                 s += node
                 node.dependencies.filter(GuardDependency).forEach[ s += it.target ]
             ]
             var next = node.dependencies.filter(ScheduleDependency).head?.target
-            while(next!=null) {
+            while (next !== null) {
                 newSchedule += next
                 next.dependencies.filter(GuardDependency).forEach[ newSchedule += it.target ]
                 next = next.dependencies.filter(ScheduleDependency).head?.target
@@ -2036,13 +2037,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         if(!SHOW_POTENTIALPROBLEMS.booleanValue) return;
 //        scg.analyses.forEach[visualize(it, this)]
 
-        if (PIL_Nodes.empty) return;
+        if (pilNodes.empty) return;
         
-        for (n : PIL_Nodes) {
+        for (n : pilNodes) {
             val nextFlows = n.allNext
             var hasFlows = false
             for (flow : nextFlows) {
-                if (PIL_Nodes.contains(flow.target)) {
+                if (pilNodes.contains(flow.target)) {
                     flow.colorControlFlow(PROBLEM_COLOR.copy)
                     flow.thickenControlFlow(PROBLEM_WIDTH)
                     hasFlows = true
@@ -2050,9 +2051,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             
             if (!hasFlows) {
-                val nextDeps = n.eContents.filter(DataDependency).filter[ concurrent == true && confluent == false].toList
+                val nextDeps = n.eContents.filter(DataDependency).filter[ concurrent && !confluent ].toList
                 for (flow : nextDeps) {
-                    if (PIL_Nodes.contains(flow.target)) {
+                    if (pilNodes.contains(flow.target)) {
                         flow.colorDependency(PROBLEM_COLOR.copy)
                         flow.thickenDependency(PROBLEM_WIDTH)
                     } 

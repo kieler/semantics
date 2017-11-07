@@ -78,7 +78,7 @@ class KiVisExtensions {
         // Get the variable from the reference
         val variable = getVariable(ref, pool)
         // Get value of variable
-        var Object value = if (variable.isDirty)
+        var Object value = if (userValue && variable.isDirty)
                                variable.userValue
                            else
                                variable.value

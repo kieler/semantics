@@ -14,6 +14,7 @@ package de.cau.cs.kieler.simulation.ui.views
 
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.viewers.TableViewerColumn
+import org.eclipse.jface.action.IAction
 
 /**
  * Base class to toggle the visibility of a column in the data pool view.
@@ -39,8 +40,9 @@ class ToggleColumnVisibleAction extends Action {
      * @param column The column 
      */
     new(TableViewerColumn column) {
-        super("Show/Hide "+column.column.text)
+        super(column.column.text + " Column", IAction.AS_CHECK_BOX)
         this.column = column
+        checked = column.column.width > 0
     }
     
     /**

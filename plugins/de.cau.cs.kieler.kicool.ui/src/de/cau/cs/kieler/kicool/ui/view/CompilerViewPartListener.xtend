@@ -46,7 +46,7 @@ class CompilerViewPartListener implements IPartListener2 {
     }
     
     def updateCompilerView(IWorkbenchPartReference partRef) {
-        if (partRef == null) return
+        if (partRef === null) return
         val part = partRef.getPart(true)
         if (part instanceof EditorPart) {
             view.editPartSystemManager.activeEditor = part
@@ -63,7 +63,7 @@ class CompilerViewPartListener implements IPartListener2 {
     }
     
     override partClosed(IWorkbenchPartReference partRef) {
-        if (partRef == null) return
+        if (partRef === null) return
         val part = partRef.getPart(true)
         if (part instanceof EditorPart) {
             // view.editPartSystemManager.removeSystem(part)
@@ -82,10 +82,10 @@ class CompilerViewPartListener implements IPartListener2 {
     
     override partOpened(IWorkbenchPartReference partRef) {
         val part = partRef.getPart(false)
-        if (part == null) return;
+        if (part === null) return;
         if (part instanceof CompilerView) {
             val activePartRef = activeEditorReference
-            if (activePartRef != null) {
+            if (activePartRef !== null) {
                 updateCompilerView(activePartRef)
             }
             view.updateView
@@ -104,7 +104,7 @@ class CompilerViewPartListener implements IPartListener2 {
         val activeEditor = activePage.activeEditor
         for(reference : activePage.editorReferences) {
             val editor = reference.getEditor(false)
-            if (editor?.equals(activeEditor)) return reference
+            if (editor !== null && editor.equals(activeEditor)) return reference
         }
         return null
     }

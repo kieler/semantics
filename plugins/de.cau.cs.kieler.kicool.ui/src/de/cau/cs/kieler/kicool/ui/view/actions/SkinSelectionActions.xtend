@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.kicool.ui.view.actions
 
-import org.eclipse.jface.action.Action
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import java.util.List
@@ -26,7 +25,7 @@ import de.cau.cs.kieler.kicool.ui.synthesis.styles.SkinSelector
  */
 class SkinSelectionActions {
 
-    val static skins = #[new Pair<String, String>("Default Skin", "default/"),
+    public val static skins = #[new Pair<String, String>("Default Skin", "default/"),
                          new Pair<String, String>("SCCharts Skin", "scc/"),
                          new Pair<String, String>("Detailed Skin", "detailed/")
     ]

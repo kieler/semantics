@@ -37,7 +37,6 @@ abstract class KiCoolUIObserver implements Observer {
         if (arg instanceof AbstractContextNotification) {
             if (runInUIThread) {
                 new UIJob("Updating...") {
-                    @Override
                     override IStatus runInUIThread(IProgressMonitor monitor) {
                         arg.update
                         return Status.OK_STATUS;

@@ -60,7 +60,7 @@ class RegisterProcessorAction {
     
     private def registerProcessor(XbaseEditor editor) {
         val file = editor.editorInput.getAdapter(typeof(IFile))
-        if (file != null) {
+        if (file !== null) {
             Register.registerRuntimeClass(file)
         }
     }
