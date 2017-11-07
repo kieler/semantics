@@ -122,14 +122,6 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             scgs.addAll(model.rootStates.map[transform])
         ]
         setModel(scgs)
-        
-        val threadAnalyzerProcessor = KiCoolRegistration.getProcessorInstance("de.cau.cs.kieler.scg.processors.threadAnalyzer") as ThreadAnalyzer
-        if (threadAnalyzerProcessor !== null) {
-            threadAnalyzerProcessor.setEnvironment(environment, environment)
-            threadAnalyzerProcessor.process
-            snapshot
-        }
-     
     }
 
     // Property to disable SuperflousForkRemover because KiCo has no proper support for processors
@@ -241,14 +233,6 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         val SuperfluousForkRemover superfluousForkRemover = Guice.createInjector().getInstance(
             typeof(SuperfluousForkRemover))
         val newSCG = superfluousForkRemover.optimize(scg)
-
-        // SCG thread path types
-//        val threadPathTypes = (newSCG.nodes.head as Entry).getThreadControlFlowTypes
-//        for (entry : threadPathTypes.keySet) {
-//            if (!entry.hasAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE)) {
-//                entry.addStringAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
-//            }
-//        }
         newSCG
     }
     

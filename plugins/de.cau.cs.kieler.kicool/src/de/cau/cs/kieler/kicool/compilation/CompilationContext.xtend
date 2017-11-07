@@ -141,12 +141,12 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
             return environment    
         }
         
+        // Set environment information that come from the outside, e.g. the system.
+        environment.processEnvironmentSetter(processorReference.presets)
+        
         val environmentPrime = environment.preparePrimeEnvironment
         
         processorInstance.setEnvironment(environment, environmentPrime)
-        
-        // Set environment information that come from the outside, e.g. the system.
-        environment.processEnvironmentSetter(processorReference.presets)
         
         notify(new ProcessorStart(this, processorReference, processorInstance))
         
@@ -155,8 +155,12 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
             if (intermediateProcessor.validateInputType) intermediateProcessor.processBefore
         }
         
+        
         val startTimestamp = System.nanoTime
         environmentPrime.setProperty(START_TIMESTAMP, startTimestamp)
+        
+        processorInstance.executeCoProcessors(processorReference.preprocesses)
+        
         try {
             if (processorInstance.sourceEnvironment.getProperty(ENABLED)) { 
                 processorInstance.process
@@ -167,6 +171,9 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
             System.err.println("Error in processor " + processorReference)
             e.printStackTrace
         }
+
+        processorInstance.executeCoProcessors(processorReference.postprocesses)
+        
         val stopTimestamp = System.nanoTime
         environmentPrime.setProperty(STOP_TIMESTAMP, stopTimestamp)
         environmentPrime.setProperty(PTIME, (stopTimestamp - startTimestamp) / 1000_000)
@@ -187,7 +194,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         
         environmentPrime
     }
-    
+        
     /** For a processor group, call compile for each entry. You can cancel a compilation if the cancel property is set. */
     protected dispatch def Environment compileEntry(ProcessorGroup processorGroup, Environment environment) {
         var Environment environmentPrime = environment
@@ -315,5 +322,12 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         } 
         return getIntermediateProcessors        
     }
+    
+    protected def void executeCoProcessors(Processor<?, ?> processor, List<ProcessorReference> processorReferences) {
+        for (processorReference : processorReferences) {
+            processor.executeCoProcessor(processor.createCoProcessor(processorReference.id), true)
+        }
+    }
+    
         
 }

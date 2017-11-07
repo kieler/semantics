@@ -231,13 +231,31 @@ public interface KiCoolPackage extends EPackage {
     int PROCESSOR_REFERENCE__METRIC = PROCESSOR_ENTRY_FEATURE_COUNT + 2;
 
     /**
+     * The feature id for the '<em><b>Preprocesses</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PROCESSOR_REFERENCE__PREPROCESSES = PROCESSOR_ENTRY_FEATURE_COUNT + 3;
+
+    /**
+     * The feature id for the '<em><b>Postprocesses</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PROCESSOR_REFERENCE__POSTPROCESSES = PROCESSOR_ENTRY_FEATURE_COUNT + 4;
+
+    /**
      * The number of structural features of the '<em>Processor Reference</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int PROCESSOR_REFERENCE_FEATURE_COUNT = PROCESSOR_ENTRY_FEATURE_COUNT + 3;
+    int PROCESSOR_REFERENCE_FEATURE_COUNT = PROCESSOR_ENTRY_FEATURE_COUNT + 5;
 
     /**
      * The number of operations of the '<em>Processor Reference</em>' class.
@@ -440,6 +458,24 @@ public interface KiCoolPackage extends EPackage {
      * @ordered
      */
     int INTERMEDIATE_REFERENCE__METRIC = PROCESSOR_REFERENCE__METRIC;
+
+    /**
+     * The feature id for the '<em><b>Preprocesses</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_REFERENCE__PREPROCESSES = PROCESSOR_REFERENCE__PREPROCESSES;
+
+    /**
+     * The feature id for the '<em><b>Postprocesses</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_REFERENCE__POSTPROCESSES = PROCESSOR_REFERENCE__POSTPROCESSES;
 
     /**
      * The feature id for the '<em><b>Alias</b></em>' attribute.
@@ -674,6 +710,28 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      */
     EReference getProcessorReference_Metric();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kicool.ProcessorReference#getPreprocesses <em>Preprocesses</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Preprocesses</em>'.
+     * @see de.cau.cs.kieler.kicool.ProcessorReference#getPreprocesses()
+     * @see #getProcessorReference()
+     * @generated
+     */
+    EReference getProcessorReference_Preprocesses();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kicool.ProcessorReference#getPostprocesses <em>Postprocesses</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Postprocesses</em>'.
+     * @see de.cau.cs.kieler.kicool.ProcessorReference#getPostprocesses()
+     * @see #getProcessorReference()
+     * @generated
+     */
+    EReference getProcessorReference_Postprocesses();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kicool.ProcessorSystem <em>Processor System</em>}'.
@@ -931,6 +989,22 @@ public interface KiCoolPackage extends EPackage {
          * @generated
          */
         EReference PROCESSOR_REFERENCE__METRIC = eINSTANCE.getProcessorReference_Metric();
+
+        /**
+         * The meta object literal for the '<em><b>Preprocesses</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference PROCESSOR_REFERENCE__PREPROCESSES = eINSTANCE.getProcessorReference_Preprocesses();
+
+        /**
+         * The meta object literal for the '<em><b>Postprocesses</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference PROCESSOR_REFERENCE__POSTPROCESSES = eINSTANCE.getProcessorReference_Postprocesses();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kicool.impl.ProcessorSystemImpl <em>Processor System</em>}' class.

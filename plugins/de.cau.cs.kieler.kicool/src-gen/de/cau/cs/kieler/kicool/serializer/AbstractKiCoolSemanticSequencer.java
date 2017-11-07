@@ -119,8 +119,15 @@ public abstract class AbstractKiCoolSemanticSequencer extends AnnotationsSemanti
 				sequence_ProcessorGroup(context, (ProcessorGroup) semanticObject); 
 				return; 
 			case KiCoolPackage.PROCESSOR_REFERENCE:
-				sequence_Processor(context, (ProcessorReference) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getCoProcessorRule()) {
+					sequence_CoProcessor(context, (ProcessorReference) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getProcessorRule()) {
+					sequence_Processor(context, (ProcessorReference) semanticObject); 
+					return; 
+				}
+				else break;
 			case KiCoolPackage.PROCESSOR_SYSTEM:
 				sequence_ProcessorSystem(context, (ProcessorSystem) semanticObject); 
 				return; 
@@ -131,6 +138,24 @@ public abstract class AbstractKiCoolSemanticSequencer extends AnnotationsSemanti
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
+	
+	/**
+	 * Contexts:
+	 *     CoProcessor returns ProcessorReference
+	 *
+	 * Constraint:
+	 *     id=QualifiedID
+	 */
+	protected void sequence_CoProcessor(ISerializationContext context, ProcessorReference semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, KiCoolPackage.Literals.PROCESSOR_ENTRY__ID) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KiCoolPackage.Literals.PROCESSOR_ENTRY__ID));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getCoProcessorAccess().getIdQualifiedIDParserRuleCall_0(), semanticObject.getId());
+		feeder.finish();
+	}
+	
 	
 	/**
 	 * Contexts:
@@ -203,7 +228,14 @@ public abstract class AbstractKiCoolSemanticSequencer extends AnnotationsSemanti
 	 *     Processor returns ProcessorReference
 	 *
 	 * Constraint:
-	 *     (presets+=KVPair* id=QualifiedID metric=[IntermediateReference|QualifiedID]? postsets+=KVPair*)
+	 *     (
+	 *         presets+=KVPair* 
+	 *         preprocesses+=CoProcessor* 
+	 *         id=QualifiedID 
+	 *         metric=[IntermediateReference|QualifiedID]? 
+	 *         postprocesses+=CoProcessor* 
+	 *         postsets+=KVPair*
+	 *     )
 	 */
 	protected void sequence_Processor(ISerializationContext context, ProcessorReference semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

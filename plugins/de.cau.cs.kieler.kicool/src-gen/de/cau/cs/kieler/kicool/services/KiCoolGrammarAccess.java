@@ -44,15 +44,15 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cProcessorsAssignment_9 = (Assignment)cGroup.eContents().get(9);
 		private final RuleCall cProcessorsProcessorGroupParserRuleCall_9_0 = (RuleCall)cProcessorsAssignment_9.eContents().get(0);
 		
-		/// **
+		///**
 		// * @author ssm
 		// * @kieler.design 2016-10-19 proposed 
 		// * @kieler.rating 2016-10-19 proposed yellow
-		// * / System kicool::System:
+		// */ System kicool::System:
 		//	'system' id=QualifiedID 'version' version=INT 'label' label=EString ('input' inputClass=ID)? ('set'
 		//	startsets+=KVPair)*
 		//	intermediates+=IntermediateReference*
-		//	processors=ProcessorGroup
+		//	processors=ProcessorGroup;
 		@Override public ParserRule getRule() { return rule; }
 
 		//'system' id=QualifiedID 'version' version=INT 'label' label=EString ('input' inputClass=ID)? ('set' startsets+=KVPair)*
@@ -135,7 +135,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAliasEStringParserRuleCall_2_1_0 = (RuleCall)cAliasAssignment_2_1.eContents().get(0);
 		
 		//IntermediateReference kicool::IntermediateReference:
-		//	'intermediate' id=QualifiedID ('alias' alias=EString)?
+		//	'intermediate' id=QualifiedID ('alias' alias=EString)?;
 		@Override public ParserRule getRule() { return rule; }
 
 		//'intermediate' id=QualifiedID ('alias' alias=EString)?
@@ -196,7 +196,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		//	processors+=ProcessorAlternativeGroup
 		//	']' | '['
 		//	processors+=ProcessorGroup
-		//	']')+
+		//	']')+;
 		@Override public ParserRule getRule() { return rule; }
 
 		//('label' label=EString)? (processors+=Processor | 'system' processors+=ProcessorSystem | '['
@@ -273,90 +273,139 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
 		private final Keyword cPreKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
-		private final Group cGroup_0_1 = (Group)cGroup_0.eContents().get(1);
-		private final Keyword cSetKeyword_0_1_0 = (Keyword)cGroup_0_1.eContents().get(0);
-		private final Assignment cPresetsAssignment_0_1_1 = (Assignment)cGroup_0_1.eContents().get(1);
-		private final RuleCall cPresetsKVPairParserRuleCall_0_1_1_0 = (RuleCall)cPresetsAssignment_0_1_1.eContents().get(0);
-		private final Assignment cIdAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cIdQualifiedIDParserRuleCall_1_0 = (RuleCall)cIdAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cIntermediateKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cMetricAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final CrossReference cMetricIntermediateReferenceCrossReference_2_1_0 = (CrossReference)cMetricAssignment_2_1.eContents().get(0);
-		private final RuleCall cMetricIntermediateReferenceQualifiedIDParserRuleCall_2_1_0_1 = (RuleCall)cMetricIntermediateReferenceCrossReference_2_1_0.eContents().get(1);
+		private final Keyword cSetKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
+		private final Assignment cPresetsAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
+		private final RuleCall cPresetsKVPairParserRuleCall_0_2_0 = (RuleCall)cPresetsAssignment_0_2.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cPreKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Keyword cProcessKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		private final Assignment cPreprocessesAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final RuleCall cPreprocessesCoProcessorParserRuleCall_1_2_0 = (RuleCall)cPreprocessesAssignment_1_2.eContents().get(0);
+		private final Assignment cIdAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cIdQualifiedIDParserRuleCall_2_0 = (RuleCall)cIdAssignment_2.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cPostKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Group cGroup_3_1 = (Group)cGroup_3.eContents().get(1);
-		private final Keyword cSetKeyword_3_1_0 = (Keyword)cGroup_3_1.eContents().get(0);
-		private final Assignment cPostsetsAssignment_3_1_1 = (Assignment)cGroup_3_1.eContents().get(1);
-		private final RuleCall cPostsetsKVPairParserRuleCall_3_1_1_0 = (RuleCall)cPostsetsAssignment_3_1_1.eContents().get(0);
+		private final Keyword cIntermediateKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cMetricAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final CrossReference cMetricIntermediateReferenceCrossReference_3_1_0 = (CrossReference)cMetricAssignment_3_1.eContents().get(0);
+		private final RuleCall cMetricIntermediateReferenceQualifiedIDParserRuleCall_3_1_0_1 = (RuleCall)cMetricIntermediateReferenceCrossReference_3_1_0.eContents().get(1);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cPostKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Keyword cProcessKeyword_4_1 = (Keyword)cGroup_4.eContents().get(1);
+		private final Assignment cPostprocessesAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
+		private final RuleCall cPostprocessesCoProcessorParserRuleCall_4_2_0 = (RuleCall)cPostprocessesAssignment_4_2.eContents().get(0);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cPostKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Keyword cSetKeyword_5_1 = (Keyword)cGroup_5.eContents().get(1);
+		private final Assignment cPostsetsAssignment_5_2 = (Assignment)cGroup_5.eContents().get(2);
+		private final RuleCall cPostsetsKVPairParserRuleCall_5_2_0 = (RuleCall)cPostsetsAssignment_5_2.eContents().get(0);
 		
 		//Processor kicool::ProcessorReference:
-		//	('pre' ('set' presets+=KVPair)+)?
-		//	id=QualifiedID ('intermediate' metric=[kicool::IntermediateReference|QualifiedID])? ('post' ('set'
-		//	postsets+=KVPair)+)?
+		//	('pre' 'set' presets+=KVPair)* ('pre' 'process' preprocesses+=CoProcessor)*
+		//	id=QualifiedID ('intermediate' metric=[kicool::IntermediateReference|QualifiedID])? ('post' 'process'
+		//	postprocesses+=CoProcessor)* ('post' 'set' postsets+=KVPair)*;
 		@Override public ParserRule getRule() { return rule; }
 
-		//('pre' ('set' presets+=KVPair)+)? id=QualifiedID ('intermediate' metric=[kicool::IntermediateReference|QualifiedID])?
-		//('post' ('set' postsets+=KVPair)+)?
+		//('pre' 'set' presets+=KVPair)* ('pre' 'process' preprocesses+=CoProcessor)* id=QualifiedID ('intermediate'
+		//metric=[kicool::IntermediateReference|QualifiedID])? ('post' 'process' postprocesses+=CoProcessor)* ('post' 'set'
+		//postsets+=KVPair)*
 		public Group getGroup() { return cGroup; }
 
-		//('pre' ('set' presets+=KVPair)+)?
+		//('pre' 'set' presets+=KVPair)*
 		public Group getGroup_0() { return cGroup_0; }
 
 		//'pre'
 		public Keyword getPreKeyword_0_0() { return cPreKeyword_0_0; }
 
-		//('set' presets+=KVPair)+
-		public Group getGroup_0_1() { return cGroup_0_1; }
-
 		//'set'
-		public Keyword getSetKeyword_0_1_0() { return cSetKeyword_0_1_0; }
+		public Keyword getSetKeyword_0_1() { return cSetKeyword_0_1; }
 
 		//presets+=KVPair
-		public Assignment getPresetsAssignment_0_1_1() { return cPresetsAssignment_0_1_1; }
+		public Assignment getPresetsAssignment_0_2() { return cPresetsAssignment_0_2; }
 
 		//KVPair
-		public RuleCall getPresetsKVPairParserRuleCall_0_1_1_0() { return cPresetsKVPairParserRuleCall_0_1_1_0; }
+		public RuleCall getPresetsKVPairParserRuleCall_0_2_0() { return cPresetsKVPairParserRuleCall_0_2_0; }
+
+		//('pre' 'process' preprocesses+=CoProcessor)*
+		public Group getGroup_1() { return cGroup_1; }
+
+		//'pre'
+		public Keyword getPreKeyword_1_0() { return cPreKeyword_1_0; }
+
+		//'process'
+		public Keyword getProcessKeyword_1_1() { return cProcessKeyword_1_1; }
+
+		//preprocesses+=CoProcessor
+		public Assignment getPreprocessesAssignment_1_2() { return cPreprocessesAssignment_1_2; }
+
+		//CoProcessor
+		public RuleCall getPreprocessesCoProcessorParserRuleCall_1_2_0() { return cPreprocessesCoProcessorParserRuleCall_1_2_0; }
 
 		//id=QualifiedID
-		public Assignment getIdAssignment_1() { return cIdAssignment_1; }
+		public Assignment getIdAssignment_2() { return cIdAssignment_2; }
 
 		//QualifiedID
-		public RuleCall getIdQualifiedIDParserRuleCall_1_0() { return cIdQualifiedIDParserRuleCall_1_0; }
+		public RuleCall getIdQualifiedIDParserRuleCall_2_0() { return cIdQualifiedIDParserRuleCall_2_0; }
 
 		//('intermediate' metric=[kicool::IntermediateReference|QualifiedID])?
-		public Group getGroup_2() { return cGroup_2; }
-
-		//'intermediate'
-		public Keyword getIntermediateKeyword_2_0() { return cIntermediateKeyword_2_0; }
-
-		//metric=[kicool::IntermediateReference|QualifiedID]
-		public Assignment getMetricAssignment_2_1() { return cMetricAssignment_2_1; }
-
-		//[kicool::IntermediateReference|QualifiedID]
-		public CrossReference getMetricIntermediateReferenceCrossReference_2_1_0() { return cMetricIntermediateReferenceCrossReference_2_1_0; }
-
-		//QualifiedID
-		public RuleCall getMetricIntermediateReferenceQualifiedIDParserRuleCall_2_1_0_1() { return cMetricIntermediateReferenceQualifiedIDParserRuleCall_2_1_0_1; }
-
-		//('post' ('set' postsets+=KVPair)+)?
 		public Group getGroup_3() { return cGroup_3; }
 
-		//'post'
-		public Keyword getPostKeyword_3_0() { return cPostKeyword_3_0; }
+		//'intermediate'
+		public Keyword getIntermediateKeyword_3_0() { return cIntermediateKeyword_3_0; }
 
-		//('set' postsets+=KVPair)+
-		public Group getGroup_3_1() { return cGroup_3_1; }
+		//metric=[kicool::IntermediateReference|QualifiedID]
+		public Assignment getMetricAssignment_3_1() { return cMetricAssignment_3_1; }
+
+		//[kicool::IntermediateReference|QualifiedID]
+		public CrossReference getMetricIntermediateReferenceCrossReference_3_1_0() { return cMetricIntermediateReferenceCrossReference_3_1_0; }
+
+		//QualifiedID
+		public RuleCall getMetricIntermediateReferenceQualifiedIDParserRuleCall_3_1_0_1() { return cMetricIntermediateReferenceQualifiedIDParserRuleCall_3_1_0_1; }
+
+		//('post' 'process' postprocesses+=CoProcessor)*
+		public Group getGroup_4() { return cGroup_4; }
+
+		//'post'
+		public Keyword getPostKeyword_4_0() { return cPostKeyword_4_0; }
+
+		//'process'
+		public Keyword getProcessKeyword_4_1() { return cProcessKeyword_4_1; }
+
+		//postprocesses+=CoProcessor
+		public Assignment getPostprocessesAssignment_4_2() { return cPostprocessesAssignment_4_2; }
+
+		//CoProcessor
+		public RuleCall getPostprocessesCoProcessorParserRuleCall_4_2_0() { return cPostprocessesCoProcessorParserRuleCall_4_2_0; }
+
+		//('post' 'set' postsets+=KVPair)*
+		public Group getGroup_5() { return cGroup_5; }
+
+		//'post'
+		public Keyword getPostKeyword_5_0() { return cPostKeyword_5_0; }
 
 		//'set'
-		public Keyword getSetKeyword_3_1_0() { return cSetKeyword_3_1_0; }
+		public Keyword getSetKeyword_5_1() { return cSetKeyword_5_1; }
 
 		//postsets+=KVPair
-		public Assignment getPostsetsAssignment_3_1_1() { return cPostsetsAssignment_3_1_1; }
+		public Assignment getPostsetsAssignment_5_2() { return cPostsetsAssignment_5_2; }
 
 		//KVPair
-		public RuleCall getPostsetsKVPairParserRuleCall_3_1_1_0() { return cPostsetsKVPairParserRuleCall_3_1_1_0; }
+		public RuleCall getPostsetsKVPairParserRuleCall_5_2_0() { return cPostsetsKVPairParserRuleCall_5_2_0; }
+	}
+
+	public class CoProcessorElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kicool.KiCool.CoProcessor");
+		private final Assignment cIdAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cIdQualifiedIDParserRuleCall_0 = (RuleCall)cIdAssignment.eContents().get(0);
+		
+		//CoProcessor kicool::ProcessorReference:
+		//	id=QualifiedID;
+		@Override public ParserRule getRule() { return rule; }
+
+		//id=QualifiedID
+		public Assignment getIdAssignment() { return cIdAssignment; }
+
+		//QualifiedID
+		public RuleCall getIdQualifiedIDParserRuleCall_0() { return cIdQualifiedIDParserRuleCall_0; }
 	}
 
 	public class ProcessorSystemElements extends AbstractParserRuleElementFinder {
@@ -365,7 +414,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cIdQualifiedIDParserRuleCall_0 = (RuleCall)cIdAssignment.eContents().get(0);
 		
 		//ProcessorSystem kicool::ProcessorSystem:
-		//	id=QualifiedID
+		//	id=QualifiedID;
 		@Override public ParserRule getRule() { return rule; }
 
 		//id=QualifiedID
@@ -392,7 +441,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ProcessorAlternativeGroup kicool::ProcessorAlternativeGroup:
 		//	('label' label=EString)? (processors+=ProcessorGroup ('|'
-		//	processors+=ProcessorGroup)+)
+		//	processors+=ProcessorGroup)+);
 		@Override public ParserRule getRule() { return rule; }
 
 		//('label' label=EString)? (processors+=ProcessorGroup ('|' processors+=ProcessorGroup)+)
@@ -410,7 +459,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		//EString
 		public RuleCall getLabelEStringParserRuleCall_0_1_0() { return cLabelEStringParserRuleCall_0_1_0; }
 
-		//(processors+=ProcessorGroup ('|' processors+=ProcessorGroup)+)
+		//processors+=ProcessorGroup ('|' processors+=ProcessorGroup)+
 		public Group getGroup_1() { return cGroup_1; }
 
 		//processors+=ProcessorGroup
@@ -443,7 +492,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValueEStringAllTypesParserRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
 		
 		//KVPair kicool::KVPair:
-		//	key=EString isKeyValue?='key'? value=EStringAllTypes
+		//	key=EString isKeyValue?='key'? value=EStringAllTypes;
 		@Override public ParserRule getRule() { return rule; }
 
 		//key=EString isKeyValue?='key'? value=EStringAllTypes
@@ -473,6 +522,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	private final IntermediateReferenceElements pIntermediateReference;
 	private final ProcessorGroupElements pProcessorGroup;
 	private final ProcessorElements pProcessor;
+	private final CoProcessorElements pCoProcessor;
 	private final ProcessorSystemElements pProcessorSystem;
 	private final ProcessorAlternativeGroupElements pProcessorAlternativeGroup;
 	private final KVPairElements pKVPair;
@@ -494,6 +544,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		this.pIntermediateReference = new IntermediateReferenceElements();
 		this.pProcessorGroup = new ProcessorGroupElements();
 		this.pProcessor = new ProcessorElements();
+		this.pCoProcessor = new CoProcessorElements();
 		this.pProcessorSystem = new ProcessorSystemElements();
 		this.pProcessorAlternativeGroup = new ProcessorAlternativeGroupElements();
 		this.pKVPair = new KVPairElements();
@@ -530,15 +581,15 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
-	/// **
+	///**
 	// * @author ssm
 	// * @kieler.design 2016-10-19 proposed 
 	// * @kieler.rating 2016-10-19 proposed yellow
-	// * / System kicool::System:
+	// */ System kicool::System:
 	//	'system' id=QualifiedID 'version' version=INT 'label' label=EString ('input' inputClass=ID)? ('set'
 	//	startsets+=KVPair)*
 	//	intermediates+=IntermediateReference*
-	//	processors=ProcessorGroup
+	//	processors=ProcessorGroup;
 	public SystemElements getSystemAccess() {
 		return pSystem;
 	}
@@ -548,7 +599,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//IntermediateReference kicool::IntermediateReference:
-	//	'intermediate' id=QualifiedID ('alias' alias=EString)?
+	//	'intermediate' id=QualifiedID ('alias' alias=EString)?;
 	public IntermediateReferenceElements getIntermediateReferenceAccess() {
 		return pIntermediateReference;
 	}
@@ -565,7 +616,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	//	processors+=ProcessorAlternativeGroup
 	//	']' | '['
 	//	processors+=ProcessorGroup
-	//	']')+
+	//	']')+;
 	public ProcessorGroupElements getProcessorGroupAccess() {
 		return pProcessorGroup;
 	}
@@ -575,9 +626,9 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Processor kicool::ProcessorReference:
-	//	('pre' ('set' presets+=KVPair)+)?
-	//	id=QualifiedID ('intermediate' metric=[kicool::IntermediateReference|QualifiedID])? ('post' ('set'
-	//	postsets+=KVPair)+)?
+	//	('pre' 'set' presets+=KVPair)* ('pre' 'process' preprocesses+=CoProcessor)*
+	//	id=QualifiedID ('intermediate' metric=[kicool::IntermediateReference|QualifiedID])? ('post' 'process'
+	//	postprocesses+=CoProcessor)* ('post' 'set' postsets+=KVPair)*;
 	public ProcessorElements getProcessorAccess() {
 		return pProcessor;
 	}
@@ -586,8 +637,18 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		return getProcessorAccess().getRule();
 	}
 
+	//CoProcessor kicool::ProcessorReference:
+	//	id=QualifiedID;
+	public CoProcessorElements getCoProcessorAccess() {
+		return pCoProcessor;
+	}
+	
+	public ParserRule getCoProcessorRule() {
+		return getCoProcessorAccess().getRule();
+	}
+
 	//ProcessorSystem kicool::ProcessorSystem:
-	//	id=QualifiedID
+	//	id=QualifiedID;
 	public ProcessorSystemElements getProcessorSystemAccess() {
 		return pProcessorSystem;
 	}
@@ -598,7 +659,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ProcessorAlternativeGroup kicool::ProcessorAlternativeGroup:
 	//	('label' label=EString)? (processors+=ProcessorGroup ('|'
-	//	processors+=ProcessorGroup)+)
+	//	processors+=ProcessorGroup)+);
 	public ProcessorAlternativeGroupElements getProcessorAlternativeGroupAccess() {
 		return pProcessorAlternativeGroup;
 	}
@@ -608,7 +669,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//KVPair kicool::KVPair:
-	//	key=EString isKeyValue?='key'? value=EStringAllTypes
+	//	key=EString isKeyValue?='key'? value=EStringAllTypes;
 	public KVPairElements getKVPairAccess() {
 		return pKVPair;
 	}
@@ -617,11 +678,11 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		return getKVPairAccess().getRule();
 	}
 
-	/// **
+	///**
 	// * @author ssm
 	// * @kieler.design 2015-08-21 proposed 
 	// * @kieler.rating 2015-08-21 proposed yellow
-	// * / // ------------------ //
+	// */ // ------------------ //
 	////  Annotation Rules  // 
 	//// ------------------ //
 	//// General rule for annotations
@@ -653,7 +714,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	//// Derived grammars may use this rule if the general annotation rules compromises the grammar
 	//// due to ambiguities.
 	//ValuedAnnotation Annotation:
-	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation
+	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation;
 	public AnnotationsGrammarAccess.ValuedAnnotationElements getValuedAnnotationAccess() {
 		return gaAnnotations.getValuedAnnotationAccess();
 	}
@@ -666,7 +727,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	//// The restricted type annotation rule does not allow typed string annotations. 
 	//// You can use this rule in derived grammars if you don't want to permit typed strings. 
 	//RestrictedTypeAnnotation Annotation:
-	//	CommentAnnotation | RestrictedKeyStringValueAnnotation | RestrictedTypedKeyStringValueAnnotation | TagAnnotation
+	//	CommentAnnotation | RestrictedKeyStringValueAnnotation | RestrictedTypedKeyStringValueAnnotation | TagAnnotation;
 	public AnnotationsGrammarAccess.RestrictedTypeAnnotationElements getRestrictedTypeAnnotationAccess() {
 		return gaAnnotations.getRestrictedTypeAnnotationAccess();
 	}
@@ -681,7 +742,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	//// (If you are looking for an example, the keffects grammar uses this rule for their emission
 	//// rule and to avoid grammar ambiguities.)  
 	//QuotedStringAnnotation Annotation:
-	//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | TagAnnotation
+	//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | TagAnnotation;
 	public AnnotationsGrammarAccess.QuotedStringAnnotationElements getQuotedStringAnnotationAccess() {
 		return gaAnnotations.getQuotedStringAnnotationAccess();
 	}
@@ -691,7 +752,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// CommentAnnotation
-	//// e.g.: / ** semantic comment * /
+	//// e.g.: /** semantic comment */
 	//CommentAnnotation:
 	//	values+=COMMENT_ANNOTATION;
 	public AnnotationsGrammarAccess.CommentAnnotationElements getCommentAnnotationAccess() {
@@ -703,7 +764,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//CommentAnnotatonSL CommentAnnotation:
-	//	values+=SL_COMMENT_ANNOTATION
+	//	values+=SL_COMMENT_ANNOTATION;
 	public AnnotationsGrammarAccess.CommentAnnotatonSLElements getCommentAnnotatonSLAccess() {
 		return gaAnnotations.getCommentAnnotatonSLAccess();
 	}
@@ -715,7 +776,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	//// TagAnnotation
 	//// e.g.: @HVlayout
 	//TagAnnotation Annotation:
-	//	'@' name=ExtendedID
+	//	'@' name=ExtendedID;
 	public AnnotationsGrammarAccess.TagAnnotationElements getTagAnnotationAccess() {
 		return gaAnnotations.getTagAnnotationAccess();
 	}
@@ -725,7 +786,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//PragmaTag Pragma:
-	//	'#' name=ExtendedID
+	//	'#' name=ExtendedID;
 	public AnnotationsGrammarAccess.PragmaTagElements getPragmaTagAccess() {
 		return gaAnnotations.getPragmaTagAccess();
 	}
@@ -738,7 +799,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	//// e.g.: @layouter dot
 	//// You may separate different values via comma.   
 	//KeyStringValueAnnotation StringAnnotation:
-	//	'@' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*
+	//	'@' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*;
 	public AnnotationsGrammarAccess.KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getKeyStringValueAnnotationAccess();
 	}
@@ -748,7 +809,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//RestrictedKeyStringValueAnnotation StringAnnotation:
-	//	'@' name=ExtendedID values+=EStringBoolean (',' values+=EStringBoolean)*
+	//	'@' name=ExtendedID values+=EStringBoolean (',' values+=EStringBoolean)*;
 	public AnnotationsGrammarAccess.RestrictedKeyStringValueAnnotationElements getRestrictedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getRestrictedKeyStringValueAnnotationAccess();
 	}
@@ -770,7 +831,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	//// TypedKeyStringValueAnnotation
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 	//TypedKeyStringValueAnnotation TypedStringAnnotation:
-	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringAllTypes (',' values+=EStringAllTypes)*
+	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringAllTypes (',' values+=EStringAllTypes)*;
 	public AnnotationsGrammarAccess.TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getTypedKeyStringValueAnnotationAccess();
 	}
@@ -780,7 +841,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//RestrictedTypedKeyStringValueAnnotation TypedStringAnnotation:
-	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*
+	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*;
 	public AnnotationsGrammarAccess.RestrictedTypedKeyStringValueAnnotationElements getRestrictedTypedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getRestrictedTypedKeyStringValueAnnotationAccess();
 	}
@@ -793,7 +854,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	//// The quoted key string value annotation is a replacement derived grammars may use
 	//// if they want to disallow quote-less strings in a key string annotation. 
 	//QuotedKeyStringValueAnnotation StringAnnotation:
-	//	'@' name=ExtendedID values+=STRING (',' values+=STRING)*
+	//	'@' name=ExtendedID values+=STRING (',' values+=STRING)*;
 	public AnnotationsGrammarAccess.QuotedKeyStringValueAnnotationElements getQuotedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getQuotedKeyStringValueAnnotationAccess();
 	}
@@ -806,7 +867,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	//// The quoted typed key string value annotation is a replacement derived grammars may use
 	//// if they want to disallow quote-less strings in a key string annotation. 
 	//QuotedTypedKeyStringValueAnnotation TypedStringAnnotation:
-	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=STRING (',' values+=STRING)*
+	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=STRING (',' values+=STRING)*;
 	public AnnotationsGrammarAccess.QuotedTypedKeyStringValueAnnotationElements getQuotedTypedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getQuotedTypedKeyStringValueAnnotationAccess();
 	}
@@ -874,7 +935,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	//// Integer
 	//// The integer rule extends the EInt terminal by an optional sign for negative numbers.
 	//Integer ecore::EInt:
-	//	'-'? INT
+	//	'-'? INT;
 	public AnnotationsGrammarAccess.IntegerElements getIntegerAccess() {
 		return gaAnnotations.getIntegerAccess();
 	}
@@ -886,7 +947,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	//// Floateger
 	//// The floateger rule extends the EFloat terminal by an optional sign for negative numbers.
 	//Floateger ecore::EFloat:
-	//	'-'? FLOAT
+	//	'-'? FLOAT;
 	public AnnotationsGrammarAccess.FloategerElements getFloategerAccess() {
 		return gaAnnotations.getFloategerAccess();
 	}
@@ -896,19 +957,19 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//terminal COMMENT_ANNOTATION:
-	//	'/ **'->'* /';
+	//	'/**'->'*/';
 	public TerminalRule getCOMMENT_ANNOTATIONRule() {
 		return gaAnnotations.getCOMMENT_ANNOTATIONRule();
 	} 
 
 	//terminal ML_COMMENT:
-	//	'/ *' !'*'->'* /';
+	//	'/*' !'*'->'*/';
 	public TerminalRule getML_COMMENTRule() {
 		return gaAnnotations.getML_COMMENTRule();
 	} 
 
 	//terminal SL_COMMENT_ANNOTATION:
-	//	'// *' !('\n' | '\r')* ('\r'? '\n')?;
+	//	'//*' !('\n' | '\r')* ('\r'? '\n')?;
 	public TerminalRule getSL_COMMENT_ANNOTATIONRule() {
 		return gaAnnotations.getSL_COMMENT_ANNOTATIONRule();
 	} 
