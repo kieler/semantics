@@ -20,6 +20,7 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.kicool.ui.synthesis.updates.MessageObjectReferencesManager
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 
 /**
  * Generic synthesis for strings.
@@ -33,6 +34,7 @@ import de.cau.cs.kieler.kicool.ui.synthesis.updates.MessageObjectReferencesManag
 class MessageObjectListSynthesis extends AbstractDiagramSynthesis<MessageObjectListPair> {
     
     @Inject extension KNodeExtensions
+    @Inject extension KRenderingExtensions
     @Inject extension MessageObjectReferencesManager
    
     override transform(MessageObjectListPair model) {
@@ -45,7 +47,8 @@ class MessageObjectListSynthesis extends AbstractDiagramSynthesis<MessageObjectL
         usedContext.addChildViewContext(subDiagramViewContext)
         
         val subDiagramNode = subDiagramViewContext.viewModel
-         
+        subDiagramNode.addRectangle => [invisible = true]
+        
         rootNode.children.add(subDiagramNode)
         annotateModelNodes(model.first, rootNode)
         
