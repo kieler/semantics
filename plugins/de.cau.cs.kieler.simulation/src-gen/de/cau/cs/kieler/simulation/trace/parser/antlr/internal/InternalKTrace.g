@@ -608,9 +608,9 @@ ruleKTick returns [EObject current=null]
 	    }
 
 )
-)*(	otherlv_2='/' 
+)*(	otherlv_2='=>' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getKTickAccess().getSolidusKeyword_2_0());
+    	newLeafNode(otherlv_2, grammarAccess.getKTickAccess().getEqualsSignGreaterThanSignKeyword_2_0());
     }
 (
 (

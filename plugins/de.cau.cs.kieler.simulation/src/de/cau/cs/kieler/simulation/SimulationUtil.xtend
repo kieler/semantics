@@ -38,6 +38,8 @@ class SimulationUtil {
         for(file : files) {
             if(isSimulationConfiguration(file)) {
                 context.kisimFile = file
+            } else if(isTrace(file)) {
+                context.traceFile = file
             } else if(isSimulationInput(file)) {
                 context.simInFile = file
             } else if(isExecutable(file)) {

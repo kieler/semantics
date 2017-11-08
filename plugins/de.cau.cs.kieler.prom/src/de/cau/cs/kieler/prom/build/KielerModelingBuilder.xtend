@@ -396,7 +396,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
             monitor.subTask("Calculating dependencies")
             checkDependencies
             val topologicalSort = dependencyGraph.getTopologicalSort(files)
-            System.err.println("topological sort: "+topologicalSort)
+//            System.err.println("topological sort: "+topologicalSort)
             
             // Build the files
             for(node : topologicalSort) {

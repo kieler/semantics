@@ -5646,11 +5646,11 @@ rule__KTick__Group_2__0__Impl
     }
 :
 (
-{ before(grammarAccess.getKTickAccess().getSolidusKeyword_2_0()); }
+{ before(grammarAccess.getKTickAccess().getEqualsSignGreaterThanSignKeyword_2_0()); }
 
-	'/' 
+	'=>' 
 
-{ after(grammarAccess.getKTickAccess().getSolidusKeyword_2_0()); }
+{ after(grammarAccess.getKTickAccess().getEqualsSignGreaterThanSignKeyword_2_0()); }
 )
 
 ;
