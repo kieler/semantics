@@ -12,11 +12,10 @@
  */
 package de.cau.cs.kieler.kicool.ui.klighd
 
+import de.cau.cs.kieler.core.model.util.ModelUtil
 import de.cau.cs.kieler.kicool.KiCoolActivator
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController.ChangeEvent
-import de.cau.cs.kieler.kicool.ui.klighd.internal.ModelUtil
 import de.cau.cs.kieler.kicool.ui.klighd.internal.model.ModelChain
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import de.cau.cs.kieler.klighd.IViewer
@@ -24,6 +23,8 @@ import de.cau.cs.kieler.klighd.ui.view.controller.AbstractViewUpdateController
 import de.cau.cs.kieler.klighd.ui.view.controllers.EcoreXtextSaveUpdateController
 import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
+import java.io.IOException
+import java.util.Collections
 import org.eclipse.core.resources.IMarker
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.ResourcesPlugin
@@ -35,6 +36,9 @@ import org.eclipse.core.runtime.Status
 import org.eclipse.emf.common.util.Diagnostic
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.util.Diagnostician
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.IAction
@@ -537,6 +541,27 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                 }
             }
         }
+    }
+    
+    /**
+     * Save a models to the given URI.
+     * 
+     * @param model
+     *            the models to store in the new file
+     * @param uri
+     *            the target file URI
+     * @throws IOException
+     *             if an error occurs while saving
+     */
+    private def saveModel(EObject model, URI uri) throws IOException {
+        // Create a resource set.
+        val resourceSet = new ResourceSetImpl();
+        // Create a resource for this file.
+        val resource = resourceSet.createResource(uri);
+        // Add the model objects to the contents.
+        resource.getContents().add(model);
+        // Save the contents of the resource to the file system.
+        resource.save(Collections.EMPTY_MAP);
     }
 
     /**
