@@ -42,28 +42,23 @@ import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
  * 
  */
 @ViewSynthesisShared
-class StateActionsHook extends SynthesisActionHook {
+class StateActionsHook extends SynthesisHook {
 
     @Inject
     extension StateStyles
-
     @Inject
     extension KRenderingExtensions
     @Inject
     extension KContainerRenderingExtensions
-    extension KRenderingFactory = KRenderingFactory::eINSTANCE
 
     /** Action ID */
     public static final String ID = "de.cau.cs.kieler.sccharts.ui.synthesis.hooks.StateActionsHook"
     /** The related synthesis option */
     public static final SynthesisOption SHOW_STATE_ACTIONS = SynthesisOption.createCheckOption("State actions", true).
-    	setCategory(GeneralSynthesisOptions::APPEARANCE).setUpdateAction(StateActionsHook.ID); // Register this action as updater
+    	setCategory(GeneralSynthesisOptions::APPEARANCE)
     /** The to break lines in effect chain */
     public static final SynthesisOption LINEBREAKS_IN_EFFECTS = SynthesisOption.createCheckOption("Linebreaks between action effects", false).
         setCategory(GeneralSynthesisOptions::APPEARANCE)
-    /** Property to save position of the container */
-    private static final IProperty<Integer> INDEX = new Property<Integer>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.index", 0)
 
     override getDisplayedSynthesisOptions() {
         return newLinkedList(SHOW_STATE_ACTIONS, LINEBREAKS_IN_EFFECTS)
@@ -101,48 +96,9 @@ class StateActionsHook extends SynthesisActionHook {
                 }
                 // Hide actions
                 if (!SHOW_STATE_ACTIONS.booleanValue) {
-                    val idx = container.children.indexOf(actions)
-                    actions.setProperty(INDEX, idx)
                     container.children.remove(actions)
-                    container.addInvisiblePlaceholder(idx)
                 }
             }
         }
-    }
-
-    override executeAction(KNode rootNode) {
-        for (KNode node : rootNode.eAllContentsOfType(KNode).toIterable) {
-            if (usedContext.getSourceElement(node) instanceof State) {
-                val state = usedContext.getSourceElement(node) as State
-                val container = node.contentContainer
-                val actions = container?.getProperty(StateStyles::ACTIONS_CONTAINER)
-
-                // Show or hide actions
-                if (actions != null) {
-                    if (SHOW_STATE_ACTIONS.booleanValue && !state.actions.empty) {
-                        // Insert actions in correct position
-                        val pos = actions.getProperty(INDEX)
-                        container.children.remove(pos)
-                        container.children.add(pos, actions)
-                    } else {
-                        val idx = container.children.indexOf(actions)
-                        actions.setProperty(INDEX, idx)
-                        container.children.remove(actions)
-                        container.addInvisiblePlaceholder(idx)
-                    }
-                }
-            }
-        }
-        return ActionResult.createResult(true)
-    }
-
-    /** 
-     * Adds an invisible places holder to the given container in the specific position.
-     */
-    private def addInvisiblePlaceholder(KContainerRendering container, int index) {
-        val rendering = createKRectangle() => [
-            invisible = true
-        ]
-        container.children.add(index, rendering)
     }
 }
