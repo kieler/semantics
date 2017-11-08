@@ -17,10 +17,6 @@
             id="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.StateActionsHook">
       </action>
       <action
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.DeclarationsHook"
-            id="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.DeclarationsHook">
-      </action>
-      <action
             class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SCGDependencyHook"
             id="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SCGDependencyHook">
       </action>
