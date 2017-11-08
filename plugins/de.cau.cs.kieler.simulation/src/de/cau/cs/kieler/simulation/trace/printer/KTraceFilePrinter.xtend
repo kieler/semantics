@@ -47,9 +47,9 @@ class KTraceFilePrinter extends TracePrinter {
             // Outputs of the current tick
             var outputContent = convert(pool, false, lastValues)
             // Combine inputs and outputs in trace file with appropriate separators
+//            content += "// After tick "+tickCount+"\n" // TODO: These comments gives error markers in the trace files for some reason. 
             content += "   " + inputContent + "\n"
                      + "=> " + outputContent + TICK_SEPARATOR
-//            content += "// After tick "+tickCount
             content += "\n"
         }
         return content

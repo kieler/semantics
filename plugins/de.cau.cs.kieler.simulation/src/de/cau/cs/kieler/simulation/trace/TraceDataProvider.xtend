@@ -149,7 +149,7 @@ class TraceDataProvider {
     private def void setArrayValueDynamically(Variable v, List<Integer> index, Object value) {
         // Compute the minimum one dimensional array size
         // e.g. 6 for the assignment 'Y[2][1]=2'
-        val oneDimArraySize = index.reduce[a,b | (a+1) * (b+1)]
+        val oneDimArraySize = index.fold(1, [a,b | (a+1) * (b+1)])
         if(v.value === null || !(v.value instanceof NDimensionalArray)) {
             val arr = new NDimensionalArray(newArrayOfSize(oneDimArraySize).toList, index)
             arr.set(index, value)
@@ -174,7 +174,7 @@ class TraceDataProvider {
                 for(var dimension=0; dimension < index.size; dimension++) {
                     newCardinalities.add(Math.max(arr.cardinalities.get(dimension), (index.get(dimension)+1) ))
                 }
-                val newOneDimArraySize = newCardinalities.reduce[a,b | a*b]
+                val newOneDimArraySize = newCardinalities.fold(1, [a,b | a*b])
                 val newArr = new NDimensionalArray(newArrayOfSize(newOneDimArraySize).toList, newCardinalities)
                 // Copy old values
                 for(e : arr.elements) {
