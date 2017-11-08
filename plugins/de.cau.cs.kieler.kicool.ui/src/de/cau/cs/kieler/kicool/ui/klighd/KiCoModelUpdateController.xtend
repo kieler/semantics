@@ -16,7 +16,7 @@ import de.cau.cs.kieler.core.model.util.ModelUtil
 import de.cau.cs.kieler.kicool.KiCoolActivator
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
-import de.cau.cs.kieler.kicool.ui.klighd.internal.model.ModelChain
+import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import de.cau.cs.kieler.klighd.IViewer
 import de.cau.cs.kieler.klighd.ui.view.controller.AbstractViewUpdateController
@@ -36,8 +36,6 @@ import org.eclipse.core.runtime.Status
 import org.eclipse.emf.common.util.Diagnostic
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.util.Diagnostician
 import org.eclipse.jface.action.Action

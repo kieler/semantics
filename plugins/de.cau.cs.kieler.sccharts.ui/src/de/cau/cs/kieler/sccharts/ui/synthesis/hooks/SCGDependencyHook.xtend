@@ -21,7 +21,7 @@ import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingMapping
-import de.cau.cs.kieler.kicool.ui.kitt.tracing.internal.TracingEdgeNode
+import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingEdgeNode
 import de.cau.cs.kieler.klighd.IKlighdSelection
 import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
 import de.cau.cs.kieler.klighd.SynthesisOption

@@ -22,7 +22,7 @@ import de.cau.cs.kieler.kicool.compilation.observer.ProcessorStart
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.ui.KiCoolUIObserver
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelViewNotifier
-import de.cau.cs.kieler.kicool.ui.klighd.internal.model.CodePlaceHolder
+import de.cau.cs.kieler.kicool.ui.klighd.models.CodePlaceHolder
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import org.eclipse.xtend.lib.annotations.Accessors
 

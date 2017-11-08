@@ -11,11 +11,11 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kicool.ui.klighd.internal.model.action;
+package de.cau.cs.kieler.kicool.ui.klighd.actions;
 
 import com.google.inject.Guice;
 
-import de.cau.cs.kieler.kicool.ui.klighd.internal.model.ModelChain;
+import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain;
 import de.cau.cs.kieler.klighd.IAction;
 import de.cau.cs.kieler.klighd.kgraph.KEdge;
 import de.cau.cs.kieler.klighd.kgraph.KGraphFactory;

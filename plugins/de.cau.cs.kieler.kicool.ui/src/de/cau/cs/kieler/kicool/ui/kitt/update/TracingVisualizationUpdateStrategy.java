@@ -30,11 +30,11 @@ import com.google.inject.Guice;
 import com.google.inject.Module;
 import com.google.inject.Scopes;
 
+import de.cau.cs.kieler.kicool.ui.kitt.tracing.InternalTracingProperties;
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingSynthesisOptions;
-import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties;
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingSynthesisOptions.TracingMode;
-import de.cau.cs.kieler.kicool.ui.kitt.tracing.internal.InternalTracingProperties;
-import de.cau.cs.kieler.kicool.ui.kitt.tracing.internal.TracingVisualizer;
+import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties;
+import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizer;
 import de.cau.cs.kieler.klighd.IKlighdSelection;
 import de.cau.cs.kieler.klighd.IUpdateStrategy;
 import de.cau.cs.kieler.klighd.IViewChangeListener;

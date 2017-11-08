@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kicool.ui.kitt.tracing.internal
+package de.cau.cs.kieler.kicool.ui.kitt.tracing
 
 import com.google.common.base.Predicates
 import com.google.inject.Inject
@@ -200,7 +200,7 @@ class TracingVisualizer {
 
                         //add real object if tracing tree is not transient
                         if (!eow.model.transient) {
-                            visibleEdgesModelOrigin.addAll(parents.map[it.EObject].filterNull);
+                            visibleEdgesModelOrigin.addAll(parents.map[it.getEObject].filterNull);
                         }
                     } else {
                         visibleEdgesModelOrigin.add(it);
@@ -368,11 +368,11 @@ class TracingVisualizer {
             val targetModelRootNode = viewContext.getTargetElements(target).findFirst[
                 it instanceof KNode &&
                     (it as KNode).getProperty(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE)] as KNode;
-            if (!source.transient && sourceModelRootNode != null && source.rootObject.EObject != null) {
-                _sourceInstanceMap = source.modelInstanceMapping(source.rootObject.EObject);
+            if (!source.transient && sourceModelRootNode != null && source.rootObject.getEObject != null) {
+                _sourceInstanceMap = source.modelInstanceMapping(source.rootObject.getEObject);
             }
-            if (!target.transient && targetModelRootNode != null && target.rootObject.EObject != null) {
-                _targetInstanceMap = target.modelInstanceMapping(target.rootObject.EObject);
+            if (!target.transient && targetModelRootNode != null && target.rootObject.getEObject != null) {
+                _targetInstanceMap = target.modelInstanceMapping(target.rootObject.getEObject);
             }
             val sourceInstanceMap = _sourceInstanceMap;
             val targetInstanceMap = _targetInstanceMap;

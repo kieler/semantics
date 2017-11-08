@@ -11,20 +11,20 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kicool.ui.klighd.internal.model
+package de.cau.cs.kieler.kicool.ui.klighd.syntheses
 
+import com.google.inject.Inject
+import de.cau.cs.kieler.kicool.KiCoolActivator
+import de.cau.cs.kieler.kicool.ui.klighd.models.CodePlaceHolder
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.kicool.KiCoolActivator
-import org.eclipse.xtext.resource.XtextResource
 import java.io.ByteArrayOutputStream
-import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.emf.common.util.URI
-import com.google.inject.Inject
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.resource.IResourceServiceProvider
+import org.eclipse.xtext.resource.XtextResourceSet
 
 /**
  * Diagram synthesis for Ecore models based on a XText grammar.
@@ -41,7 +41,7 @@ class XtextSerializationSynthesis extends AbstractDiagramSynthesis<EObject> {
 
     // -------------------------------------------------------------------------
     // Constants
-    public static val String ID = "de.cau.cs.kieler.kicool.ui.klighd.internal.model.XtextSerializationSynthesis";
+    public static val String ID = "de.cau.cs.kieler.kicool.ui.klighd.syntheses.XtextSerializationSynthesis";
 
     // -------------------------------------------------------------------------
     // Synthesis
@@ -77,8 +77,8 @@ class XtextSerializationSynthesis extends AbstractDiagramSynthesis<EObject> {
             var title = "Unknown Resource";
             if (usedContext.sourceWorkbenchPart != null) {
                 title = usedContext.sourceWorkbenchPart.title;
-            } else if (model.eResource != null && model.eResource.URI != null) {
-                title = model.eResource.URI.lastSegment;
+            } else if (model.eResource != null && model.eResource.getURI != null) {
+                title = model.eResource.getURI.lastSegment;
             }
             val resourceExtension = KiCoolActivator.getInstance().getResourceExtension(model);
             var fileExtension = "txt";
