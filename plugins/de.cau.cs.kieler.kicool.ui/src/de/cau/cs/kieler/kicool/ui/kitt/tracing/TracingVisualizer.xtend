@@ -47,6 +47,7 @@ import org.eclipse.elk.core.util.Pair
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
 
 /**
  * Adds tracing edges from mappings to a diagram.
@@ -92,9 +93,7 @@ class TracingVisualizer {
 
     /** Returns the tracing stored in the compilation result of the ViewContext */
     private def Tracing tracing(ViewContext viewContext) {
-        // TODO: fix this for kicool
-        // return (viewContext.getProperty(KiCoProperties.COMPILATION_RESULT)?.getAuxiliaryData(Tracing)?:emptyList).head;
-        return null
+         return viewContext.getProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT)?.startEnvironment?.getProperty(Tracing.TRACING_DATA)
     }
 
     /** Removed all tracing edges from the diagram */

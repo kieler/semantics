@@ -384,8 +384,8 @@
                 id="de.cau.cs.kieler.kicool.ui.klighd.internal.model.action.OpenCodeInEditorAction">
           </action>
           <action
-                class="de.cau.cs.kieler.kicool.ui.klighd.actions.RemovedCollapsedDiagramsAction"
-                id="de.cau.cs.kieler.kicool.ui.klighd.internal.model.action.RemovedCollapsedDiagramsAction">
+                class="de.cau.cs.kieler.kicool.ui.klighd.actions.RemoveChainElementAction"
+                id="de.cau.cs.kieler.kicool.ui.klighd.actions.RemoveChainElementAction">
           </action>
        </extension>
        <extension

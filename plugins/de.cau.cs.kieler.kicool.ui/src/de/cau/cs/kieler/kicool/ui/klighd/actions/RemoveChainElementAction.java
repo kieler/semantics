@@ -34,10 +34,10 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions;
  * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
-public class RemovedCollapsedDiagramsAction implements IAction {
+public class RemoveChainElementAction implements IAction {
 
 	/** The action ID. */
-	public static final String ID = "de.cau.cs.kieler.kicool.ui.klighd.internal.model.action.RemovedCollapsedDiagramsAction";
+	public static final String ID = "de.cau.cs.kieler.kicool.ui.klighd.actions.RemoveChainElementAction";
 
 	private static final KRenderingExtensions rendering = Guice.createInjector()
 			.getInstance(KRenderingExtensions.class);
@@ -49,6 +49,7 @@ public class RemovedCollapsedDiagramsAction implements IAction {
 		ModelChain modelChain = (ModelChain) context.getViewContext().getInputModel();
 		KNode rootNode = context.getViewContext().getViewModel();
 
+		// TODO Remove only selected element
 		rootNode.getChildren().removeIf(node -> !context.getContextViewer().isExpanded(node));
 		if (!modelChain.isBlankMode()) {
 			for (int i = 0; i < rootNode.getChildren().size(); i++) {
