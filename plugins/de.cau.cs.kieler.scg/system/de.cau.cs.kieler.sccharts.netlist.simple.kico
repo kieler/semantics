@@ -23,7 +23,10 @@ de.cau.cs.kieler.sccharts.processors.transformators.connector
 de.cau.cs.kieler.sccharts.processors.transformators.triggerEffect
 de.cau.cs.kieler.sccharts.processors.transformators.surfaceDepth	
 de.cau.cs.kieler.sccharts.scg.processors.transformators.SCG
+post process de.cau.cs.kieler.scg.processors.threadAnalyzer
+pre set de.cau.cs.kieler.scg.processors.loopAnalyzer.errorOnInstantaneousLoop true
 de.cau.cs.kieler.scg.processors.transformators.dependency
+post process de.cau.cs.kieler.scg.processors.loopAnalyzerV2
 de.cau.cs.kieler.scg.processors.transformators.basicBlocks
 de.cau.cs.kieler.scg.processors.transformators.expressions
 de.cau.cs.kieler.scg.processors.transformators.guards

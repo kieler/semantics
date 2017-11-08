@@ -54,13 +54,15 @@ ProcessorGroup returns kicool::ProcessorGroup:
 ;
 
 Processor returns kicool::ProcessorReference:
-    ('pre' 
-        ('set' presets += KVPair)+
-    )?
+    ('pre' 'set' presets += KVPair)*
+    ('pre' 'process' preprocesses += CoProcessor)*
     id = QualifiedID ('intermediate' metric = [kicool::IntermediateReference|QualifiedID])?
-    ('post' 
-        ('set' postsets += KVPair)+
-    )?
+    ('post' 'process' postprocesses += CoProcessor)*
+    ('post' 'set' postsets += KVPair)*
+;
+
+CoProcessor returns kicool::ProcessorReference: 
+    id = QualifiedID
 ;
 
 ProcessorSystem returns kicool::ProcessorSystem:
