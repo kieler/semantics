@@ -249,9 +249,9 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             }
         }
         chainToggleAction.setId("chainToggleAction")
-        chainToggleAction.setText("Display Transformation Chain")
+        chainToggleAction.setText("Display Tracing Chain")
         chainToggleAction.setToolTipText(
-                "Enable tranformation chain view in displaySideBySide display mode")
+                "Shows tracing chain in side-by-side mode if tracing data is available.")
         // actionTracingChainToggle.setImageDescriptor(ICON_CHAIN)
         chainToggleAction.setChecked(CHAIN_TOGGLE_ACTION_DEFAULT_STATE)
     }
@@ -660,14 +660,14 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                     val tracing = if (cc !== null && cc.startEnvironment.getProperty(Tracing.ACTIVE_TRACING)) {
                         cc.startEnvironment.getProperty(Tracing.TRACING_DATA)
                     }
-                    if (chainToggleAction.isChecked() && tracing != null) {
+                    if (chainToggleAction.isChecked && compilerToggleAction.isChecked && tracing != null) {
                         model = new ModelChain(tracing, getEditor().getTitle(), null)
-                    } else if (compilerToggleAction.isChecked() && compiledModel != null) {
+                    } else if (compilerToggleAction.isChecked && compilerToggleAction.isChecked && compiledModel != null) {
                         model = new ModelChain(sourceModel, compiledModel)
                     } else {
                         model = new ModelChain(sourceModel, sourceModel)
                     }
-                } else if (compilerToggleAction.isChecked() && compiledModel != null) {
+                } else if (compilerToggleAction.isChecked && compiledModel != null) {
                     model = compiledModel
                 } else {
                     model = sourceModel
