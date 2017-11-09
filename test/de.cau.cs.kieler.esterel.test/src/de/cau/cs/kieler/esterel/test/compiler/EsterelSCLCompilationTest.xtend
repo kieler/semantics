@@ -14,8 +14,11 @@ package de.cau.cs.kieler.esterel.test.compiler
 
 import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.EsterelStandaloneSetup
+import de.cau.cs.kieler.esterel.processors.transformators.incremental.SCEstTransformation
+import de.cau.cs.kieler.esterel.scest.SCEstStandaloneSetup
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.scl.SCLProgram
 import de.cau.cs.kieler.scl.SCLStandaloneSetup
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
@@ -25,6 +28,7 @@ import java.io.ByteArrayOutputStream
 import java.io.PrintWriter
 import java.io.StringWriter
 import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.xmi.XMLResource
 import org.eclipse.xtext.diagnostics.Severity
@@ -38,10 +42,8 @@ import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
 
+import static extension java.lang.Boolean.parseBoolean
 import static extension java.lang.String.format
-import de.cau.cs.kieler.esterel.processors.transformators.incremental.SCEstTransformation
-import de.cau.cs.kieler.scl.SCLProgram
-import org.eclipse.emf.ecore.EObject
 
 /**
  * Tests if all sensible intermediate results of the Esterel to SCL compilation fullfill basic sanity properties.
@@ -51,7 +53,7 @@ import org.eclipse.emf.ecore.EObject
  * @kieler.rating proposed yellow
  */
 @RunWith(ModelsRepositoryTestRunner)
-class SCEstSCLCompilationTest extends AbstractXTextModelRepositoryTest<EsterelProgram> {
+class EsterelSCLCompilationTest extends AbstractXTextModelRepositoryTest<EsterelProgram> {
     
     /** Compiler configuration */
     private val compilationSystemID = "de.cau.cs.kieler.esterel.scest.scl"
@@ -59,6 +61,7 @@ class SCEstSCLCompilationTest extends AbstractXTextModelRepositoryTest<EsterelPr
     /** Sct Parser Injector */
     static val sclInjector = new SCLStandaloneSetup().createInjectorAndDoEMFRegistration
     static val esterelInjector = new EsterelStandaloneSetup().createInjectorAndDoEMFRegistration
+    static val scestInjector = new SCEstStandaloneSetup().createInjectorAndDoEMFRegistration
     
     //-----------------------------------------------------------------------------------------------------------------
     
@@ -74,7 +77,8 @@ class SCEstSCLCompilationTest extends AbstractXTextModelRepositoryTest<EsterelPr
      */
     override filter(TestModelData modelData) {
         return modelData.modelProperties.contains("esterel")
-        && !modelData.additionalProperties.containsKey("testSerializability")
+        && !modelData.modelProperties.contains("known-to-fail") // TODO Test them anyway?
+        && (!modelData.additionalProperties.containsKey("testSerializability") || modelData.additionalProperties.get("testSerializability").trim.parseBoolean)
         && (!modelData.modelProperties.contains("must-fail") || modelData.modelProperties.contains("must-fail-validation"))
     }
     
@@ -100,7 +104,7 @@ class SCEstSCLCompilationTest extends AbstractXTextModelRepositoryTest<EsterelPr
             if (SCEstTransformation.SCL_ID.equals(iResult.id)) {
                 assertTrue("Intermediate result of transformation " + iResult.id + " is not an SCL Program", iResult.model instanceof SCLProgram)
             } else {
-                assertTrue("Intermediate result of transformation " + iResult.id + " is not an Esterel Program", iResult.model instanceof EsterelProgram)
+                assertTrue("Intermediate result of transformation " + iResult.id + " is not a SCEst Program", iResult.model instanceof EsterelProgram)
             }
 
             // Check compiler errors
@@ -115,8 +119,8 @@ class SCEstSCLCompilationTest extends AbstractXTextModelRepositoryTest<EsterelPr
             }     
             
             // Create resource
-            val uri = URI.createURI("dummy:/test/" + modelData.modelPath.fileName.toString + if (SCEstTransformation.SCL_ID.equals(iResult.id)) ".scl" else "")
-            val resourceSet = (if (SCEstTransformation.SCL_ID.equals(iResult.id)) sclInjector else esterelInjector).getInstance(XtextResourceSet)
+            val uri = URI.createURI("dummy:/test/" + modelData.modelPath.fileName.toString + if (SCEstTransformation.SCL_ID.equals(iResult.id)) ".scl" else ".scest")
+            val resourceSet = (if (SCEstTransformation.SCL_ID.equals(iResult.id)) sclInjector else scestInjector).getInstance(XtextResourceSet)
             val resource = resourceSet.createResource(uri) as XtextResource
             resource.getContents().add(iResult.model as EsterelProgram)
             
@@ -138,14 +142,14 @@ class SCEstSCLCompilationTest extends AbstractXTextModelRepositoryTest<EsterelPr
             if (SCEstTransformation.SCL_ID.equals(iResult.id)) {
                 assertTrue("Intermediate result of transformation " + iResult.id + " is not an SCL Program", iResult.model instanceof SCLProgram)
             } else {
-                assertTrue("Intermediate result of transformation " + iResult.id + " is not an Esterel Program", iResult.model instanceof EsterelProgram)
+                assertTrue("Intermediate result of transformation " + iResult.id + " is not a SCEst Program", iResult.model instanceof EsterelProgram)
             }
 
             try {
                 // Serialize
                 val outputStream = new ByteArrayOutputStream(25000);
-                val uri = URI.createURI("dummy:/test/" + modelData.modelPath.fileName.toString + if (SCEstTransformation.SCL_ID.equals(iResult.id)) ".scl" else "")
-                val resourceSet = (if (SCEstTransformation.SCL_ID.equals(iResult.id)) sclInjector else esterelInjector).getInstance(XtextResourceSet)
+                val uri = URI.createURI("dummy:/test/" + modelData.modelPath.fileName.toString + if (SCEstTransformation.SCL_ID.equals(iResult.id)) ".scl" else ".scest")
+                val resourceSet = (if (SCEstTransformation.SCL_ID.equals(iResult.id)) sclInjector else scestInjector).getInstance(XtextResourceSet)
                 
                 // create model resource
                 val resource = resourceSet.createResource(uri) as XtextResource
