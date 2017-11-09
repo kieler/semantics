@@ -38,6 +38,8 @@ import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.klighd.SynthesisOption
+import java.util.List
 
 class DominatorTreeSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
     
@@ -62,6 +64,15 @@ class DominatorTreeSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
     
     @Inject
     extension KContainerRenderingExtensions
+    
+    private static val EDGE_OPTIONS = #["Immediate Dominators", "Dominance Frontiers", "DFS Sequence", "BB Hierarchy"]
+    
+    /** Edge options */
+    public static val SynthesisOption EDGES = SynthesisOption::createChoiceOption("Edges", EDGE_OPTIONS, EDGE_OPTIONS.head)
+    
+    override getDisplayedSynthesisOptions() {
+        return newLinkedList(EDGES)
+    }
     
     override transform(SCGraphs scgs) {
         createNode() => [
@@ -130,11 +141,29 @@ class DominatorTreeSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
     }
 
     private def void createDTEdge(Map<BasicBlock, KNode> map, KNode node, BasicBlock bb, DominatorTree dt) {
-        val idom = dt.idom(bb)
-        if (idom != null) {
+        var List<Pair<KNode, KNode>> sourceTargetPairs = newLinkedList
+        switch (EDGE_OPTIONS.indexOf(EDGES.objectValue)) {
+            case 0: {
+                sourceTargetPairs += new Pair(map.get(dt.idom(bb)), node)
+            }
+            case 1: {
+                for (dFront: dt.getDominanceFrontiers(bb)) {
+                    sourceTargetPairs += new Pair(node, map.get(dFront))
+                }
+            }
+            case 2: {
+                sourceTargetPairs += new Pair(map.get(dt.dfvertex(dt.dfnum(bb) - 1)), node)
+            }
+            case 3: {
+                for (succ: dt.successors(bb)) {
+                    sourceTargetPairs += new Pair(node, map.get(succ))
+                }
+            }
+        }
+        for (pair : sourceTargetPairs.filter[key !== null && value !== null]) {
             createEdge => [
-                source = map.get(idom)
-                target = node
+                source = pair.key
+                target = pair.value
                 addPolyline => [
                     lineWidth = 3
                     it.addArrowDecorator

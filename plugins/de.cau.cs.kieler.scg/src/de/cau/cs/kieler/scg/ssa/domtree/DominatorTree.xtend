@@ -20,16 +20,15 @@ import com.google.common.collect.Multimap
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.scg.ScgPackage
+import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static com.google.common.collect.Maps.*
-import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.Assignment
 
 /**
  * This class computes dominator information using the Lengauer-Tarjan method.
@@ -48,6 +47,7 @@ class DominatorTree {
     // These fields represent the structure of the SCG
     val Multimap<BasicBlock, BasicBlock> successors = LinkedHashMultimap.create
     val Multimap<BasicBlock, BasicBlock> predecessors = LinkedHashMultimap.create
+    val Map<Node, BasicBlock> bbNodes = newHashMap
     // These fields represent the structure of the SCG in depth first form
     val BiMap<Integer, BasicBlock> dfNum = HashBiMap.create
     val Map<BasicBlock, BasicBlock> dfParent = newHashMap
@@ -89,6 +89,7 @@ class DominatorTree {
                     } else if (node instanceof Surface) {
                         surfaces.put(node, bb)
                     }
+                    bbNodes.put(node, bb)
                 }
             }
         }
@@ -139,6 +140,18 @@ class DominatorTree {
                 idom.put(bb, bb.samedom.idom)
             }
         }
+        
+        // Fix all BBs that have a predecessor and are reachable but have no dominator
+        for (bb : scg.basicBlocks.filter[!it.predecessors.empty && dfNum.containsValue(it) && it.idom === null ]) {
+            val firstNode = bb.schedulingBlocks.head?.nodes.head
+            // A join is always dominated by its fork
+            if (firstNode instanceof Join) {
+                idom.put(bb, bbNodes.get(firstNode.fork))
+            } else {
+                println("WRONG!")
+            }
+        }
+        
         
         // Calculate Dominance Frontiers
         calculateDominanceFrontiers(entryBB)
@@ -241,15 +254,15 @@ class DominatorTree {
         return predecessors.get(bb)
     }
     
-    private def dfnum(BasicBlock bb) {
+    def dfnum(BasicBlock bb) {
         return dfNum.inverse.get(bb)?:0
     }
 
-    private def dfvertex(int index) {
+    def dfvertex(int index) {
         return dfNum.get(index)
     }
 
-    private def dfparent(BasicBlock bb) {
+    def dfparent(BasicBlock bb) {
         return dfParent.get(bb)
     }
 
