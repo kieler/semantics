@@ -297,6 +297,15 @@ class Variable implements Cloneable {
     }
     
     /**
+     * Returns true if the value of this variable is an array.
+     * 
+     * @return true if the value of this variable is an array, false otherwise
+     */
+    public def boolean isArray() {
+        return (value !== null && value instanceof NDimensionalArray)
+    }
+    
+    /**
      * Clones an object
      */
     override Variable clone() {
