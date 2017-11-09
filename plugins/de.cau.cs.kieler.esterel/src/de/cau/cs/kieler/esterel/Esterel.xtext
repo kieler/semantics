@@ -429,8 +429,6 @@ Abort:
             "do"
             (doStatements+=EsterelParallel)
             "end" "weak"? "abort"?
-        |
-            "end" "weak"? "abort"?
         )? 
     |
         cases+=Case+
