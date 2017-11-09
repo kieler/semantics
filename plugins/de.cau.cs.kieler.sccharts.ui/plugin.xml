@@ -13,14 +13,6 @@
             id="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.LabelShorteningHook">
       </action>
       <action
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SCGDependencyHook"
-            id="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SCGDependencyHook">
-      </action>
-      <action
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SCGLoopHook"
-            id="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SCGLoopHook">
-      </action>
-      <action
             class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.LayoutHook"
             id="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.LayoutHook">
       </action>
