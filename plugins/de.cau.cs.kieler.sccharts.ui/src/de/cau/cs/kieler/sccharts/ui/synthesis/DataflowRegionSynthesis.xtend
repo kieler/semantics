@@ -93,6 +93,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         // Expanded
         node.addRegionFigure => [
             setAsExpandedView
+            addDoubleClickAction(ReferenceExpandAction::ID)
             if (region.declarations.empty) {
                 addStatesArea(label.nullOrEmpty);
             } else {
@@ -114,6 +115,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         // Collapsed
         node.addRegionFigure => [
             setAsCollapsedView
+            addDoubleClickAction(ReferenceExpandAction::ID)
             if (CIRCUIT.booleanValue)
                 addExpandButton(label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
         ]
@@ -152,6 +154,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             node.addRegionFigure => [
                 setAsExpandedView;
                 addStatesArea(true);
+                addDoubleClickAction(ReferenceExpandAction::ID)
                 // Add Button after area to assure correct overlapping
                 // Use special expand action to resolve references
                 addCollapseButton(null).addDoubleClickAction(ReferenceExpandAction::ID);
@@ -160,6 +163,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             // Collapsed
             node.addRegionFigure => [
                 setAsCollapsedView;
+                addDoubleClickAction(ReferenceExpandAction::ID)
                 addExpandButton(null).addDoubleClickAction(ReferenceExpandAction::ID);
             ]
         }

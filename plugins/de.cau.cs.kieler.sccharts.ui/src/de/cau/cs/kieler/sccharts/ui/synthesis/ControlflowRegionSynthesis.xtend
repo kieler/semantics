@@ -96,6 +96,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             node.addRegionFigure => [
                 setAsExpandedView
                 associateWith(region)
+                addDoubleClickAction(ReferenceExpandAction::ID)
                 if (region.declarations.empty) {
                     addStatesArea(!label.nullOrEmpty);
                 } else {
@@ -117,6 +118,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             node.addRegionFigure => [
                 setAsCollapsedView
                 associateWith(region)
+                addDoubleClickAction(ReferenceExpandAction::ID)
                 addExpandButton(label).addDoubleClickAction(MemorizingExpandCollapseAction.ID);
             ]
 
@@ -164,17 +166,19 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
 
         // Expanded
         node.addRegionFigure => [
-            setAsExpandedView;
-            addStatesArea(false);
+            setAsExpandedView
+            addStatesArea(false)
+            addDoubleClickAction(ReferenceExpandAction::ID)
             // Add Button after area to assure correct overlapping
             // Use special expand action to resolve references
-            addCollapseButton(null).addDoubleClickAction(ReferenceExpandAction::ID);
+            addCollapseButton(null).addDoubleClickAction(ReferenceExpandAction::ID)
         ]
 
         // Collapsed
         node.addRegionFigure => [
-            setAsCollapsedView;
-            addExpandButton(null).addDoubleClickAction(ReferenceExpandAction::ID);
+            setAsCollapsedView
+            addDoubleClickAction(ReferenceExpandAction::ID)
+            addExpandButton(null).addDoubleClickAction(ReferenceExpandAction::ID)
         ]
 
         return node;
