@@ -110,14 +110,14 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                     }
                 }
                 // Add Button after area to assure correct overlapping
-                addButton("[-]" + label).addDoubleClickAction(MemorizingExpandCollapseAction.ID);
+                addCollapseButton(label).addDoubleClickAction(MemorizingExpandCollapseAction.ID);
             ]
 
             // Collapsed
             node.addRegionFigure => [
                 setAsCollapsedView
                 associateWith(region)
-                addButton("[+]" + label).addDoubleClickAction(MemorizingExpandCollapseAction.ID);
+                addExpandButton(label).addDoubleClickAction(MemorizingExpandCollapseAction.ID);
             ]
 
             // Add inner states
@@ -168,13 +168,13 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             addStatesArea(false);
             // Add Button after area to assure correct overlapping
             // Use special expand action to resolve references
-            addButton("[-]").addDoubleClickAction(ReferenceExpandAction::ID);
+            addCollapseButton(null).addDoubleClickAction(ReferenceExpandAction::ID);
         ]
 
         // Collapsed
         node.addRegionFigure => [
             setAsCollapsedView;
-            addButton("[+]").addDoubleClickAction(ReferenceExpandAction::ID);
+            addExpandButton(null).addDoubleClickAction(ReferenceExpandAction::ID);
         ]
 
         return node;

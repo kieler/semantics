@@ -108,14 +108,14 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             }
             // Add Button after area to assure correct overlapping
             if (!CIRCUIT.booleanValue)
-                addButton("[-]" + label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                addCollapseButton(label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
         ]
 
         // Collapsed
         node.addRegionFigure => [
             setAsCollapsedView
             if (CIRCUIT.booleanValue)
-                addButton("[+]" + label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                addExpandButton(label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
         ]
         
 
@@ -154,13 +154,13 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                 addStatesArea(true);
                 // Add Button after area to assure correct overlapping
                 // Use special expand action to resolve references
-                addButton("[-]").addDoubleClickAction(ReferenceExpandAction::ID);
+                addCollapseButton(null).addDoubleClickAction(ReferenceExpandAction::ID);
             ]
     
             // Collapsed
             node.addRegionFigure => [
                 setAsCollapsedView;
-                addButton("[+]").addDoubleClickAction(ReferenceExpandAction::ID);
+                addExpandButton(null).addDoubleClickAction(ReferenceExpandAction::ID);
             ]
         }
 
