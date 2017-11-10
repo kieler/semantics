@@ -32,6 +32,7 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
+import de.cau.cs.kieler.klighd.SynthesisOption
 
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.
@@ -44,6 +45,9 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 @ViewSynthesisShared
 class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
 
+    public static final SynthesisOption SHOW_USER_LABELS =
+            SynthesisOption.createCheckOption("Show user labels", true).setCategory(APPEARANCE);
+
     @Inject extension KNodeExtensionsReplacement
     @Inject extension KEdgeExtensions
     @Inject extension AnnotationsExtensions
@@ -51,6 +55,10 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
     @Inject extension SCChartsSerializeHRExtensions
     @Inject extension TransitionStyles
     @Inject extension ColorStore
+    
+    override getDisplayedSynthesisOptions() {
+        return newLinkedList(SHOW_USER_LABELS)
+    }
 
     override performTranformation(Transition transition) {
         val edge = transition.createEdge().associateWith(transition);
@@ -103,7 +111,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
 
         // Add Label
         val label = new StringBuilder();
-        if (transition.label.nullOrEmpty) {
+        if (transition.label.nullOrEmpty || !SHOW_USER_LABELS.booleanValue) {
             label.append(transition.serializeHR);
         } else {
             label.append(transition.label);
