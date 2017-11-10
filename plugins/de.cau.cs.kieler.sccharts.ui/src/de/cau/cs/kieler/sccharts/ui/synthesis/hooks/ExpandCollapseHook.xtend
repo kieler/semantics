@@ -42,7 +42,7 @@ class ExpandCollapseHook extends SynthesisHook {
 
     /** The related synthesis option */
     public static val SynthesisOption INITIALLY_COLLAPSE_ALL = SynthesisOption.createCheckOption("Initially Collapse Regions", false)
-    .setCategory(GeneralSynthesisOptions::APPEARANCE);
+    .setCategory(GeneralSynthesisOptions::NAVIGATION);
       
     // ----------------------------------------------------------------------------------------------------------------
 

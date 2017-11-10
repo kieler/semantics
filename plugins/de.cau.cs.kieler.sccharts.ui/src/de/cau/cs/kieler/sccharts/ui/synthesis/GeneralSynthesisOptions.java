@@ -36,7 +36,9 @@ public final class GeneralSynthesisOptions {
     //-- CATEGORIES --
     
     /** The appearance category */
-    public static final SynthesisOption APPEARANCE = SynthesisOption.createCategory("Appearance");
+    public static final SynthesisOption APPEARANCE = SynthesisOption.createCategory("Appearance");    
+    /** The navigation category */
+    public static final SynthesisOption NAVIGATION = SynthesisOption.createCategory("Navigation");
     /** The debugging category */
     public static final SynthesisOption DEBUGGING = SynthesisOption.createCategory("Analysis / Debugging", false);
     /** The layout category */

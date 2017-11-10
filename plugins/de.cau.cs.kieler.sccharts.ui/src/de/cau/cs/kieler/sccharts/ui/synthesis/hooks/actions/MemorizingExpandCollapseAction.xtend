@@ -36,7 +36,7 @@ class MemorizingExpandCollapseAction implements IAction {
     
     /** The related synthesis option */
     public static val SynthesisOption MEMORIZE_EXPANSION_STATES = SynthesisOption.createCheckOption("Remember Collapsed/Expanded Regions", true)
-    .setCategory(GeneralSynthesisOptions::APPEARANCE);      
+    .setCategory(GeneralSynthesisOptions::NAVIGATION);      
     
     /** Memory-leak-free cache of region expansion states */
     public static final WeakHashMap<Region, Boolean> REGION_STATES = new WeakHashMap
