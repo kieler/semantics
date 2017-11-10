@@ -23,6 +23,8 @@ import de.cau.cs.kieler.simulation.trace.TraceDataProvider
 import de.cau.cs.kieler.simulation.trace.ktrace.TraceFile
 import org.eclipse.core.runtime.Path
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.simulation.trace.TraceSemantics
+import de.cau.cs.kieler.simulation.core.NDimensionalArray
 
 /**
  * Loads a trace file and sets inputs of a model accordingly to some tick of the trace.
@@ -107,16 +109,78 @@ class TraceHandler extends DefaultDataHandler {
     private var TraceDataProvider traceDataProvider;
     
     /**
+     * The data pool that is compared with the current pool when the assignment trace semantics are used.
+     * In this case the defined variables accumulate over the ticks and are stored in this pool.
+     */
+    private var DataPool comparePool
+    private val assignedOutputs = <String>newHashSet
+    
+    /**
      * Compares the output of the pool with the outputs in the trace for the current tick.
      * 
      * @param pool The pool
      */
     public def void compare(DataPool pool) {
-        if(isFinished) {
+         if(isFinished) {
 //            System.err.println("Trace is finished already.")
             return;
         }
-        // Compare variables in pool with output of this tick
+        if(traceDataProvider.traceSemantics == TraceSemantics.EMISSION) {
+            compareEmissions(pool)
+        } else if(traceDataProvider.traceSemantics == TraceSemantics.ASSIGNMENT) {
+            compareAssignments(pool)
+        }
+    }
+    
+    /**
+     * Compares the given data pool with the compare pool that is created by assigning the variables from the trace.
+     * A variable once set in the trace must match its value with the given pool.
+     * 
+     * @param pool The pool
+     */
+    public def void compareAssignments(DataPool pool) {
+        if(comparePool === null) {
+            comparePool = SimulationManager.instance.currentPool.clone
+        }
+        val tracePool = traceDataProvider.getDataPool(tickNumber.intValue)
+        // Set the output variables in the compare pool according to the trace
+        for(m : tracePool.models) {
+            for(v : m.variables) {
+                if(v.isOutput) {
+                    val correspondingVariable = getCorrespondingVariable(comparePool, m , v)
+                    correspondingVariable.assign(v)
+                    assignedOutputs.add(v.name)
+                } 
+            }
+        }
+        // Compare all outputs that have been assigned once
+        for(model : pool.models) {
+            for(variable : model.variables) {
+                if(variable.isOutput) {
+                    val boolean wasAssigned = assignedOutputs.contains(variable.name)
+                    if(wasAssigned) {
+                        var TraceMismatchEvent event
+                        val correspondingVariable = getCorrespondingVariable(comparePool, model, variable)
+                        if(!variable.match(correspondingVariable)) {
+                            event = createTraceMismatchEvent(variable, correspondingVariable.value)
+                        }
+                        if(event !== null) {
+                            SimulationManager.instance?.fireEvent(event)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    /**
+     * Compares the data pool from the trace in signal / emission manner of ESO files.
+     * This means all variables that are currently defined in the trace pool are taken as present.
+     * Otherwise they are taken as absent. The given pool must match this.
+     * 
+     * @param pool The pool
+     */
+    public def void compareEmissions(DataPool pool) {
         val tracePool = traceDataProvider.getDataPool(tickNumber.intValue)
         
         for(model : pool.models) {
@@ -159,7 +223,7 @@ class TraceHandler extends DefaultDataHandler {
                         if(isPresent != shouldBePresent) {
                             event = createTraceMismatchEvent(variable, variable.toggledPresentState)
                         }
-                        if(event != null) {
+                        if(event !== null) {
                             SimulationManager.instance?.fireEvent(event)
                         }
                     }
@@ -171,7 +235,7 @@ class TraceHandler extends DefaultDataHandler {
             for(model : tracePool.models) {
                 for(variable : model.variables) {
                     if(variable.isOutput) {
-                        if(getCorrespondingVariable(pool, model, variable) == null) {
+                        if(getCorrespondingVariable(pool, model, variable) === null) {
                             SimulationManager.instance?.fireEvent(createTraceInterfaceMismatchEvent(variable))
                         }
                     }
@@ -204,19 +268,47 @@ class TraceHandler extends DefaultDataHandler {
      * 
      * @param pool The pool
      */
-    public def void write(DataPool pool) {
-        if(isFinished) {
+     public def void write(DataPool pool) {
+         if(isFinished) {
 //            System.err.println("Trace is finished already.")
             return;
         }
-        // Set inputs of variables in the pool to inputs of the trace.
+        if(traceDataProvider.traceSemantics == TraceSemantics.EMISSION) {
+            writeEmissions(pool)
+        } else if(traceDataProvider.traceSemantics == TraceSemantics.ASSIGNMENT) {
+            writeAssignments(pool)
+        }
+     }
+     
+     /**
+      * Applies the assignments of inputs from the trace to the given pool.
+      * 
+      * @param pool The pool
+      */
+     public def void writeAssignments(DataPool pool) {
+        val tracePool = traceDataProvider.getDataPool(tickNumber.intValue)
+        for(model : tracePool.models) {
+            for(variable : model.variables) {
+                if(variable.isInput) {
+                    val correspondingVariable = getCorrespondingVariable(pool, model, variable)
+                    correspondingVariable.assign(variable)
+                }
+            }
+        }
+     }
+     
+     /**
+      * Sets the inputs in the given pool to reflect the present / absent state of variables from the trace.
+      * If a variable is not defined in the trace, then it is taken as absent. Otherwise it is taken as present.
+      */
+     public def void writeEmissions(DataPool pool) {
         val tracePool = traceDataProvider.getDataPool(tickNumber.intValue)
         for(model : pool.models) {
             for(variable : model.variables) {
                 if(variable.isInput) {
                     // No variable in currentPool => this variable is absent in the trace
                     val correspondingVariable = getCorrespondingVariable(tracePool, model, variable)
-                    if(correspondingVariable == null) {
+                    if(correspondingVariable === null) {
                         // Variable is absent in the trace
                         variable.setAbsent
                     } else {
@@ -227,7 +319,29 @@ class TraceHandler extends DefaultDataHandler {
             }    
         }
     }
-    
+     
+    /**
+     * Sets the corresponding variable to the value of the given variable.
+     * If both variables contain arrays, then the array elements are set accordingly.
+     */
+    private def void assign(Variable correspondingVariable, Variable variable) {
+         if(correspondingVariable !== null) {
+            if(variable.isArray) {
+                val correspondingArray = correspondingVariable.value as NDimensionalArray
+                // Set array elements
+                val arr = variable.value as NDimensionalArray
+                for(e : arr.elements) {
+                    if(e.value !== null) {
+                        correspondingArray.set(e.index, e.value)
+                    }
+                }
+            } else {
+                // Set variable value
+                correspondingVariable.value = variable.value
+            }
+        }
+    }
+     
     /**
      * Loads the next tick.
      */
@@ -262,8 +376,8 @@ class TraceHandler extends DefaultDataHandler {
      * {@inheritDoc}
      */
     override initialize() {
-        if(traceDataProvider == null) {
-            if(externalTraceModel != null) {
+        if(traceDataProvider === null) {
+            if(externalTraceModel !== null) {
                 loadTrace(externalTraceModel)
             } else {
                 val path = new Path(tracePath.stringValue)

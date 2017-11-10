@@ -65,8 +65,12 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
         instance = this
     }
     
-    override protected isSupported(Object model) {
+    override isSupported(Object model) {
         model instanceof SCCharts
+    }
+    
+    override getName() {
+        return "SCChart Live Values"
     }
     
     public static val SCTXInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
