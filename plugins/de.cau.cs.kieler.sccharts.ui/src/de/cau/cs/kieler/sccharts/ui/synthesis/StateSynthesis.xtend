@@ -63,7 +63,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     @Inject extension CommentSynthesis
     
     /** Scope call parameters synthesis option */
-    public static final SynthesisOption SHOW_BINDINGS = SynthesisOption.createCheckOption("Show binding parameters", true).setCategory(GeneralSynthesisOptions::APPEARANCE)
+    public static final SynthesisOption SHOW_BINDINGS = SynthesisOption.createCheckOption("Binding Parameters", true).setCategory(GeneralSynthesisOptions::APPEARANCE)
     
     override getDisplayedSynthesisOptions() {
         return newLinkedList(SHOW_BINDINGS)

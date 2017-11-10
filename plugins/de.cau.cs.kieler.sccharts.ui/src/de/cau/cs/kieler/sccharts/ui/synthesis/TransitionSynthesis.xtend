@@ -46,7 +46,7 @@ import de.cau.cs.kieler.klighd.SynthesisOption
 class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
 
     public static final SynthesisOption SHOW_USER_LABELS =
-            SynthesisOption.createCheckOption("Show user labels", true).setCategory(APPEARANCE);
+            SynthesisOption.createCheckOption("User Labels", true).setCategory(APPEARANCE);
 
     @Inject extension KNodeExtensionsReplacement
     @Inject extension KEdgeExtensions

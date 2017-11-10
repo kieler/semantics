@@ -37,11 +37,11 @@ import static extension de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.Mem
 class ExpandCollapseHook extends SynthesisHook {
     
     /** The related synthesis actions */
-    public static val DisplayedActionData COLLAPSE_ALL = DisplayedActionData.create(CollapseAllRegionsAction.ID, "Collapse All Regions");
-    public static val DisplayedActionData EXPAND_ALL = DisplayedActionData.create(ExpandAllRegionsAction.ID, "Expand All Regions")  
+    public static val DisplayedActionData COLLAPSE_ALL = DisplayedActionData.create(CollapseAllRegionsAction.ID, "Collapse Regions")
+    public static val DisplayedActionData EXPAND_ALL = DisplayedActionData.create(ExpandAllRegionsAction.ID, "Expand Regions")
 
     /** The related synthesis option */
-    public static val SynthesisOption INITIALLY_COLLAPSE_ALL = SynthesisOption.createCheckOption("Initially collapse all regions", false)
+    public static val SynthesisOption INITIALLY_COLLAPSE_ALL = SynthesisOption.createCheckOption("Initially Collapse Regions", false)
     .setCategory(GeneralSynthesisOptions::APPEARANCE);
       
     // ----------------------------------------------------------------------------------------------------------------

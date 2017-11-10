@@ -104,7 +104,7 @@ class SCGDependencyHook extends SynthesisHook {
 	public static final String JOB_NAME = "Calculating SCG Dependencies";
 	/** The related synthesis option */
 	public static final SynthesisOption SHOW_SCG_DEPENDENCIES = SynthesisOption.createCheckOption(
-		"Show SCG Dependencies", false)
+		"SCG Dependencies", false)
 		.setCategory(GeneralSynthesisOptions::DEBUGGING)
 		.setUpdateStrategy(SimpleUpdateStrategy.ID)
 	/** The related synthesis option for regions */

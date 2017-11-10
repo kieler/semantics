@@ -56,9 +56,9 @@ public final class GeneralSynthesisOptions {
             "Adaptive Zoom", false).setCategory(APPEARANCE);
     
     public static final SynthesisOption SHOW_ALL_SCCHARTS =
-            SynthesisOption.createCheckOption("Show all SCCharts", false).setCategory(APPEARANCE);
+            SynthesisOption.createCheckOption("All SCCharts", false).setCategory(APPEARANCE);
     
     public static final SynthesisOption SHOW_COMMENTS =
-            SynthesisOption.createCheckOption("Show comment nodes", true).setCategory(APPEARANCE);
+            SynthesisOption.createCheckOption("Comment Nodes", true).setCategory(APPEARANCE);
 
 }

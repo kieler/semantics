@@ -59,7 +59,7 @@ class SCGLoopHook extends SynthesisHook {
     /** Job name */
     public static final String JOB_NAME = "Calculating SCG Loops";
     /** The related synthesis option. */
-    public static final SynthesisOption SHOW_SCG_LOOPS = SynthesisOption.createCheckOption("Show SCG Loops", false).
+    public static final SynthesisOption SHOW_SCG_LOOPS = SynthesisOption.createCheckOption("SCG Loops", false).
         setCategory(GeneralSynthesisOptions::DEBUGGING)
         .setUpdateStrategy(SimpleUpdateStrategy.ID)
     /** Property to mark highlighting styles. */
