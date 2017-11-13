@@ -49,9 +49,11 @@ class CompilerViewPartListener implements IPartListener2 {
         if (partRef === null) return
         val part = partRef.getPart(true)
         if (part instanceof EditorPart) {
-            view.editPartSystemManager.activeEditor = part
-            view.systemSelectionManager.updateSystemList
-            view.updateView
+            if (view.editPartSystemManager.activeEditor !== part) {
+                view.editPartSystemManager.activeEditor = part
+                view.systemSelectionManager.updateSystemList
+                view.updateView
+            }
         }
     }    
     

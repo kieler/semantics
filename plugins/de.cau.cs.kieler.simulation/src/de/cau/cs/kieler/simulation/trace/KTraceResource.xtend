@@ -58,8 +58,10 @@ class KTraceResource extends LazyLinkingResource {
         }
         
         val root = newParseResult.rootASTElement as TraceFile
-        root.aggregatedValuedObjects.clear
-        root.aggregatedValuedObjects.addAll(voMap.values)
+        if (root !== null) {
+            root.aggregatedValuedObjects.clear
+            root.aggregatedValuedObjects.addAll(voMap.values)
+        }
         
         super.updateInternalState(newParseResult)
     }

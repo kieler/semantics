@@ -29,6 +29,9 @@ import de.cau.cs.kieler.simulation.core.events.SimulationEvent
 import de.cau.cs.kieler.simulation.core.events.SimulationListener
 import de.cau.cs.kieler.simulation.core.events.VariableUserValueEvent
 import de.cau.cs.kieler.simulation.handlers.TraceMismatchEvent
+import de.cau.cs.kieler.simulation.trace.printer.EsoFilePrinter
+import de.cau.cs.kieler.simulation.trace.printer.KTraceFilePrinter
+import de.cau.cs.kieler.simulation.trace.printer.SimulationHistoryPrinter
 import de.cau.cs.kieler.simulation.ui.SimulationUiPlugin
 import de.cau.cs.kieler.simulation.ui.toolbar.AdvancedControlsEnabledPropertyTester
 import java.util.ArrayList
@@ -254,55 +257,9 @@ class DataPoolView extends ViewPart {
         mgr.add(new Separator())
         mgr.add(new SimulationDelayContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.desiredPause"))
         mgr.add(new Separator())
-        mgr.add(new SaveSimulationAction("Save Data Pool History", "saveFile.png") {
-            override getFileExtension() {
-                return ".sim"
-            }
-            
-            override getFileContent(List<DataPool> history) {
-                // Turn data pools to json objects
-                var String content = ""
-                for(pool : history) {
-                    content += pool.toJson+"\n"
-                }
-                return content
-            }
-        });
-        mgr.add(new SaveSimulationAction("Save Eso Trace", "saveEsoFile.png") {
-            override getFileExtension() {
-                return ".eso"
-            }
-            
-            override getFileContent(List<DataPool> history) {
-                // Turn models of data pool history to eso file
-                var String content = ""
-                content += "! reset;\n"
-                for(pool : history) {
-                    for(v : pool.allVariables) {
-                        if(v.isInput && v.isPresent) {
-                            content += v.name
-                            if(v.value instanceof Integer) {
-                                content += "("+v.value+")"
-                            }
-                            content += " "
-                        }
-                    }
-                    content += "\n"
-                    content += "% Output: "
-                    for(v : pool.allVariables) {
-                        if(v.isOutput && v.isPresent) {
-                            content += v.name
-                            if(v.value instanceof Integer) {
-                                content += "("+v.value+")"
-                            }
-                            content += " "
-                        }
-                    }
-                    content += "\n;\n"
-                }
-                return content
-            }
-        });
+        mgr.add(new SaveSimulationAction("Save Data Pool History", "saveFile.png", new SimulationHistoryPrinter))
+        mgr.add(new SaveSimulationAction("Save KTrace", "saveKTraceFile.png", new KTraceFilePrinter))
+        mgr.add(new SaveSimulationAction("Save Eso Trace", "saveEsoFile.png", new EsoFilePrinter))
         mgr.add(new OpenSimulationAction("Open Data Pool", "openFile.png"));
         mgr.add(new Separator())
         mgr.add(new Action("Reset All"){

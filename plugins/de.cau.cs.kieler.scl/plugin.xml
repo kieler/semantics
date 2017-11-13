@@ -16,6 +16,9 @@
       <TransformationSystem
             system="system/de.cau.cs.kieler.scl.netlist.kico">
       </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.scl.prio.kico">
+      </TransformationSystem>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.resource.extension">
