@@ -249,13 +249,22 @@ public interface KiCoolPackage extends EPackage {
     int PROCESSOR_REFERENCE__POSTPROCESSES = PROCESSOR_ENTRY_FEATURE_COUNT + 4;
 
     /**
+     * The feature id for the '<em><b>Silent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PROCESSOR_REFERENCE__SILENT = PROCESSOR_ENTRY_FEATURE_COUNT + 5;
+
+    /**
      * The number of structural features of the '<em>Processor Reference</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int PROCESSOR_REFERENCE_FEATURE_COUNT = PROCESSOR_ENTRY_FEATURE_COUNT + 5;
+    int PROCESSOR_REFERENCE_FEATURE_COUNT = PROCESSOR_ENTRY_FEATURE_COUNT + 6;
 
     /**
      * The number of operations of the '<em>Processor Reference</em>' class.
@@ -476,6 +485,15 @@ public interface KiCoolPackage extends EPackage {
      * @ordered
      */
     int INTERMEDIATE_REFERENCE__POSTPROCESSES = PROCESSOR_REFERENCE__POSTPROCESSES;
+
+    /**
+     * The feature id for the '<em><b>Silent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_REFERENCE__SILENT = PROCESSOR_REFERENCE__SILENT;
 
     /**
      * The feature id for the '<em><b>Alias</b></em>' attribute.
@@ -732,6 +750,17 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      */
     EReference getProcessorReference_Postprocesses();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kicool.ProcessorReference#isSilent <em>Silent</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Silent</em>'.
+     * @see de.cau.cs.kieler.kicool.ProcessorReference#isSilent()
+     * @see #getProcessorReference()
+     * @generated
+     */
+    EAttribute getProcessorReference_Silent();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kicool.ProcessorSystem <em>Processor System</em>}'.
@@ -1005,6 +1034,14 @@ public interface KiCoolPackage extends EPackage {
          * @generated
          */
         EReference PROCESSOR_REFERENCE__POSTPROCESSES = eINSTANCE.getProcessorReference_Postprocesses();
+
+        /**
+         * The meta object literal for the '<em><b>Silent</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute PROCESSOR_REFERENCE__SILENT = eINSTANCE.getProcessorReference_Silent();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kicool.impl.ProcessorSystemImpl <em>Processor System</em>}' class.

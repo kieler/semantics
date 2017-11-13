@@ -1,9 +1,9 @@
 system de.cau.cs.kieler.sccharts.netlist.simple
-	version 1 
-	label "Netlist-based Compilation (simple)"
+    version 1 
+    label "Netlist-based Compilation (simple)"
 
 de.cau.cs.kieler.sccharts.processors.transformators.reference
-de.cau.cs.kieler.sccharts.processors.transformators.for	
+de.cau.cs.kieler.sccharts.processors.transformators.for 
 de.cau.cs.kieler.sccharts.processors.transformators.const
 de.cau.cs.kieler.sccharts.processors.transformators.history
 de.cau.cs.kieler.sccharts.processors.transformators.signal
@@ -21,12 +21,13 @@ de.cau.cs.kieler.sccharts.processors.transformators.initialization
 de.cau.cs.kieler.sccharts.processors.transformators.entryAction
 de.cau.cs.kieler.sccharts.processors.transformators.connector
 de.cau.cs.kieler.sccharts.processors.transformators.triggerEffect
-de.cau.cs.kieler.sccharts.processors.transformators.surfaceDepth	
+de.cau.cs.kieler.sccharts.processors.transformators.surfaceDepth    
 de.cau.cs.kieler.sccharts.scg.processors.transformators.SCG
-post process de.cau.cs.kieler.scg.processors.threadAnalyzer
-pre set de.cau.cs.kieler.scg.processors.loopAnalyzer.errorOnInstantaneousLoop true
+post process de.cau.cs.kieler.scg.processors.threadAnalyzer silent
+pre set de.cau.cs.kieler.scg.processors.loopAnalyzer.warningOnInstantaneousLoop true
 de.cau.cs.kieler.scg.processors.transformators.dependency
 post process de.cau.cs.kieler.scg.processors.loopAnalyzerV2
+pre process de.cau.cs.kieler.scg.processors.structuralDepthJoin
 de.cau.cs.kieler.scg.processors.transformators.basicBlocks
 post process de.cau.cs.kieler.scg.processors.transformators.expressions
 de.cau.cs.kieler.scg.processors.transformators.guards

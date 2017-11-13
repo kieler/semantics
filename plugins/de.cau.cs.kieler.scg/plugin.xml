@@ -96,6 +96,9 @@
       <Processor
             class="de.cau.cs.kieler.scg.processors.analyzer.LoopAnalyzerV2">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.StructuralDepthJoinProcessor">
+      </Processor>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.system">
