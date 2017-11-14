@@ -99,6 +99,9 @@
       <Processor
             class="de.cau.cs.kieler.scg.processors.transformators.StructuralDepthJoinProcessor">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.SurfaceDepthSeparatorProcessor">
+      </Processor>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.system">

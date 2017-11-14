@@ -144,6 +144,12 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
                             dependency.remove
                         }
                     }
+                    // Also, if the schizo node is the target of a dependency from the depth.
+                    for (dependency : sNode.incoming.filter(DataDependency).filter[ concurrent ].toList) {
+                        if (!dependency.eContainer.asNode.isInSurface(threadData.forkMap.get(fork))) {
+                            dependency.remove
+                        }
+                    }
                 }                
                 
                 curedForks += fork
