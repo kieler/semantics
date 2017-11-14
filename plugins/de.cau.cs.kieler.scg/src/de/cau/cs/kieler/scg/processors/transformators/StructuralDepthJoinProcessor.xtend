@@ -77,12 +77,16 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
             return;
         }
                 
+        val warningProperty = environment.getProperty(LoopAnalyzerV2.WARNING_ON_INSTANTANEOUS_LOOP)
+        environment.setProperty(LoopAnalyzerV2.WARNING_ON_INSTANTANEOUS_LOOP, false)
         for (scg : getModel.scgs) {
             while (scg.processModel(threadData, loopData)) {
                 executeCoProcessor(loopAnalyzer, false)
                 snapshot
             }
         }
+        environment.setProperty(LoopAnalyzerV2.WARNING_ON_INSTANTANEOUS_LOOP, warningProperty)
+        executeCoProcessor(loopAnalyzer, false)
     }    
     
     public def boolean processModel(SCGraph scg, ThreadData threadData, LoopData loopData) {
@@ -91,7 +95,7 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
             if (loopData.criticalNodes.contains(fork) && loopData.criticalNodes.contains(fork.join)) {
                 val entries = threadData.forkMap.get(fork)
                 if (entries.exists[ threadData.data.get(it) === ThreadPathType.POTENTIALLY_INSTANTANEOUS ]
-                    && entries.exists[ threadData.data.get(it) === ThreadPathType.DELAYED ]) {
+                    && fork.hasConcurrentDelay(threadData)) {
                     cureableForks += fork
                 }
             }
@@ -134,6 +138,7 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
                         entry.createStringAnnotation(SCGAnnotations.ANNOTATION_CONTROLFLOWTHREADPATHTYPE, ThreadPathType.DELAYED.toString2)                        
                     }
                 }
+                fork.propagateDelay(threadData)
                 
                 for (sNode : schizoNodes) {
                     // IMPORTANT!
@@ -142,12 +147,14 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
                     for (dependency : sNode.dependencies.filter(DataDependency).filter[ concurrent ].toList) {
                         if (!dependency.target.isInSurface(threadData.forkMap.get(fork))) {
                             dependency.remove
+                            dependency.target = null
                         }
                     }
                     // Also, if the schizo node is the target of a dependency from the depth.
                     for (dependency : sNode.incoming.filter(DataDependency).filter[ concurrent ].toList) {
                         if (!dependency.eContainer.asNode.isInSurface(threadData.forkMap.get(fork))) {
                             dependency.remove
+                            dependency.target = null
                         }
                     }
                 }                
@@ -199,6 +206,30 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
         join.allPrevious.map[eContainer].filter(Exit).map[entry]
     }
     
+    protected def boolean hasConcurrentDelay(Node node, ThreadData threadData) {
+        if (node instanceof Fork) {
+            val entries = threadData.forkMap.get(node)
+            if (entries.exists[ threadData.data.get(it) === ThreadPathType.DELAYED ]) return true            
+        }
+        
+        val visited = <Node> newHashSet => [ add(node) ]
+        val searchStack = <Node> newLinkedList => [ addAll(node.allPrevious.map[ eContainer ].filter(Node) ) ]
+        while (!searchStack.empty) {
+            val head = searchStack.pop
+            
+            if (head instanceof Fork) {
+                return head.hasConcurrentDelay(threadData)
+            }
+            
+            val nextNodes = head.allPrevious.map[ eContainer ].filter(Node).filter[ !visited.contains(it) ]
+            if (nextNodes !== null) {
+                nextNodes.forEach[ searchStack.push(it) ]
+            }
+        }
+        
+        return false
+    }
+    
     protected def isInSurface(Node node, Collection<Entry> entries) {
         for (entry : entries) {
             if (node.isInSurface(entry)) return true
@@ -227,5 +258,35 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
         }
         
         return false
+    }
+    
+    protected def void propagateDelay(Node node, ThreadData threadData) {
+        val visited = <Node> newHashSet
+        val searchStack = <Node> newLinkedList => [ add(node) ]
+        
+        while (!searchStack.empty) {
+            val head = searchStack.pop
+            
+            if (head instanceof Entry) {
+                threadData.data.put(head, ThreadPathType.DELAYED)
+                if (head.hasAnnotation(SCGAnnotations.ANNOTATION_CONTROLFLOWTHREADPATHTYPE)) {
+                    head.removeAnnotations(SCGAnnotations.ANNOTATION_CONTROLFLOWTHREADPATHTYPE)
+                }
+                head.createStringAnnotation(SCGAnnotations.ANNOTATION_CONTROLFLOWTHREADPATHTYPE, ThreadPathType.DELAYED.toString2)
+                val fork = head.allPrevious.map[ eContainer ].filter(Fork).head
+                if (fork !== null) {
+                    fork.propagateDelay(threadData)
+                }
+                return                        
+            }
+            
+            visited += head
+            val nextNodes = head.allPrevious.map[ eContainer ].
+                filter(Node).
+                filter[ !visited.contains(it) ]
+            if (!nextNodes.empty) {
+                nextNodes.forEach[ searchStack.push(it) ]
+            }
+        }        
     }
 }
