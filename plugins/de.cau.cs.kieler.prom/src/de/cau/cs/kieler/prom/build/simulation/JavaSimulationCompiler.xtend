@@ -19,6 +19,8 @@ import de.cau.cs.kieler.prom.configurable.Substitution
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Path
+import de.cau.cs.kieler.prom.data.FileData
+import de.cau.cs.kieler.prom.configurable.ResourceSubstitution
 
 /**
  * Compiles Java code for the simulation.
@@ -43,6 +45,20 @@ class JavaSimulationCompiler extends SimulationCompiler {
     public val jarCommand = new ConfigurableAttribute("jarCommand", null, #[String])
     
     /**
+     * The library directory in which the SJ library should be saved.
+     */
+    public val sjLibFolder = new ConfigurableAttribute("sjLibFolder", null, #[String])
+    
+    /**
+     * Placeholder for the SJ library folder.
+     */
+    private val sjLibFolderSubstitution = new ResourceSubstitution("sjLibFolder") {
+        override getValue() {
+            return project.getFolder(libFolder.stringValue)
+        }
+    }
+
+    /**
      * Constructor
      */
     new() {
@@ -50,6 +66,8 @@ class JavaSimulationCompiler extends SimulationCompiler {
         jarCommand.value = DEFAULT_JAR_COMMAND
         // The directory structure of the json lib must follow its package declaration
         libFolder.value = "kieler-gen/org/json"
+        // Same for the SJ library folder
+        sjLibFolder.value = "kieler-gen/de/cau/cs/kieler/scg/processors/transformators/priority"
     }
     
     /**
@@ -121,6 +139,32 @@ class JavaSimulationCompiler extends SimulationCompiler {
      */
     override getLibFolderOrigin() {
         return "platform:/plugin/de.cau.cs.kieler.prom/resources/java/org/json"
+    }
+    
+    /**
+     * The origin of the SJ library.
+     */
+    private def getSJLibFolderOrigin() {
+        return "platform:/plugin/de.cau.cs.kieler.prom/resources/java/lib"
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override getLibFolderDatas() {
+        val sjLibFolderData = new FileData(sjLibFolder.stringValue, getSJLibFolderOrigin)
+        val list = super.getLibFolderDatas
+        list.add(sjLibFolderData)
+        return list
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override getSubstitutions() {
+        val list = super.getSubstitutions
+        list.add(sjLibFolderSubstitution)
+        return list
     }
     
     /**
