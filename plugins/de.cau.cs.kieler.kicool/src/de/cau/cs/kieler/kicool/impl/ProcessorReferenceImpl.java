@@ -33,6 +33,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorReferenceImpl#getPresets <em>Presets</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorReferenceImpl#getPostsets <em>Postsets</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorReferenceImpl#getMetric <em>Metric</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorReferenceImpl#getPreprocesses <em>Preprocesses</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorReferenceImpl#getPostprocesses <em>Postprocesses</em>}</li>
  * </ul>
  *
  * @generated
@@ -67,6 +69,26 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
      * @ordered
      */
     protected IntermediateReference metric;
+
+    /**
+     * The cached value of the '{@link #getPreprocesses() <em>Preprocesses</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getPreprocesses()
+     * @generated
+     * @ordered
+     */
+    protected EList<ProcessorReference> preprocesses;
+
+    /**
+     * The cached value of the '{@link #getPostprocesses() <em>Postprocesses</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getPostprocesses()
+     * @generated
+     * @ordered
+     */
+    protected EList<ProcessorReference> postprocesses;
 
     /**
      * <!-- begin-user-doc -->
@@ -154,6 +176,30 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
      * <!-- end-user-doc -->
      * @generated
      */
+    public EList<ProcessorReference> getPreprocesses() {
+        if (preprocesses == null) {
+            preprocesses = new EObjectContainmentEList<ProcessorReference>(ProcessorReference.class, this, KiCoolPackage.PROCESSOR_REFERENCE__PREPROCESSES);
+        }
+        return preprocesses;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<ProcessorReference> getPostprocesses() {
+        if (postprocesses == null) {
+            postprocesses = new EObjectContainmentEList<ProcessorReference>(ProcessorReference.class, this, KiCoolPackage.PROCESSOR_REFERENCE__POSTPROCESSES);
+        }
+        return postprocesses;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -161,6 +207,10 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
                 return ((InternalEList<?>)getPresets()).basicRemove(otherEnd, msgs);
             case KiCoolPackage.PROCESSOR_REFERENCE__POSTSETS:
                 return ((InternalEList<?>)getPostsets()).basicRemove(otherEnd, msgs);
+            case KiCoolPackage.PROCESSOR_REFERENCE__PREPROCESSES:
+                return ((InternalEList<?>)getPreprocesses()).basicRemove(otherEnd, msgs);
+            case KiCoolPackage.PROCESSOR_REFERENCE__POSTPROCESSES:
+                return ((InternalEList<?>)getPostprocesses()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -180,6 +230,10 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
             case KiCoolPackage.PROCESSOR_REFERENCE__METRIC:
                 if (resolve) return getMetric();
                 return basicGetMetric();
+            case KiCoolPackage.PROCESSOR_REFERENCE__PREPROCESSES:
+                return getPreprocesses();
+            case KiCoolPackage.PROCESSOR_REFERENCE__POSTPROCESSES:
+                return getPostprocesses();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -204,6 +258,14 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
             case KiCoolPackage.PROCESSOR_REFERENCE__METRIC:
                 setMetric((IntermediateReference)newValue);
                 return;
+            case KiCoolPackage.PROCESSOR_REFERENCE__PREPROCESSES:
+                getPreprocesses().clear();
+                getPreprocesses().addAll((Collection<? extends ProcessorReference>)newValue);
+                return;
+            case KiCoolPackage.PROCESSOR_REFERENCE__POSTPROCESSES:
+                getPostprocesses().clear();
+                getPostprocesses().addAll((Collection<? extends ProcessorReference>)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -225,6 +287,12 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
             case KiCoolPackage.PROCESSOR_REFERENCE__METRIC:
                 setMetric((IntermediateReference)null);
                 return;
+            case KiCoolPackage.PROCESSOR_REFERENCE__PREPROCESSES:
+                getPreprocesses().clear();
+                return;
+            case KiCoolPackage.PROCESSOR_REFERENCE__POSTPROCESSES:
+                getPostprocesses().clear();
+                return;
         }
         super.eUnset(featureID);
     }
@@ -243,6 +311,10 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
                 return postsets != null && !postsets.isEmpty();
             case KiCoolPackage.PROCESSOR_REFERENCE__METRIC:
                 return metric != null;
+            case KiCoolPackage.PROCESSOR_REFERENCE__PREPROCESSES:
+                return preprocesses != null && !preprocesses.isEmpty();
+            case KiCoolPackage.PROCESSOR_REFERENCE__POSTPROCESSES:
+                return postprocesses != null && !postprocesses.isEmpty();
         }
         return super.eIsSet(featureID);
     }

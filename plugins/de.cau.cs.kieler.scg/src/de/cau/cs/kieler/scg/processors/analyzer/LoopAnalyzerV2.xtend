@@ -37,6 +37,8 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
 	
     public static val IProperty<LoopData> LOOP_DATA = 
         new Property<LoopData>("de.cau.cs.kieler.scg.processors.loopAnalyzer.data", null)	
+    public static val IProperty<Boolean> ERROR_ON_INSTANTANEOUS_LOOP = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.loopAnalyzer.errorOnInstantaneousLoop", false)
 	
     override getId() {
         "de.cau.cs.kieler.scg.processors.loopAnalyzerV2"
@@ -70,8 +72,8 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
             }
         }
         
-        if (!loopData.criticalNodes.empty) {
-            environment.warnings.add("Instananeous loop detected!")
+        if (!loopData.criticalNodes.empty && environment.getProperty(ERROR_ON_INSTANTANEOUS_LOOP)) {
+            environment.errors.add("Instananeous loop detected!")
         }
     }	
 	

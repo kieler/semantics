@@ -38,6 +38,7 @@ import org.junit.runner.RunWith
 import static org.junit.Assert.*
 
 import static extension java.lang.String.format
+import static extension java.lang.Boolean.parseBoolean
 
 /**
  * Tests if all intermediate results of an SCCharts normalization compilation fullfill basic sanity properties.
@@ -69,7 +70,8 @@ class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<SCChart
      */
     override filter(TestModelData modelData) {
         return modelData.modelProperties.contains("sccharts")
-        && !modelData.additionalProperties.containsKey("testSerializability")
+        && !modelData.modelProperties.contains("known-to-fail") // TODO Test them anyway?
+        && (!modelData.additionalProperties.containsKey("testSerializability") || modelData.additionalProperties.get("testSerializability").trim.parseBoolean)
         && (!modelData.modelProperties.contains("must-fail") || modelData.modelProperties.contains("must-fail-validation"))
     }
     

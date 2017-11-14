@@ -16,6 +16,8 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.kicool.ProcessorReference#getPresets <em>Presets</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.ProcessorReference#getPostsets <em>Postsets</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.ProcessorReference#getMetric <em>Metric</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.ProcessorReference#getPreprocesses <em>Preprocesses</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.ProcessorReference#getPostprocesses <em>Postprocesses</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.kicool.KiCoolPackage#getProcessorReference()
@@ -80,5 +82,37 @@ public interface ProcessorReference extends ProcessorEntry {
      * @generated
      */
     void setMetric(IntermediateReference value);
+
+    /**
+     * Returns the value of the '<em><b>Preprocesses</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.kicool.ProcessorReference}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Preprocesses</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Preprocesses</em>' containment reference list.
+     * @see de.cau.cs.kieler.kicool.KiCoolPackage#getProcessorReference_Preprocesses()
+     * @model containment="true"
+     * @generated
+     */
+    EList<ProcessorReference> getPreprocesses();
+
+    /**
+     * Returns the value of the '<em><b>Postprocesses</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.kicool.ProcessorReference}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Postprocesses</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Postprocesses</em>' containment reference list.
+     * @see de.cau.cs.kieler.kicool.KiCoolPackage#getProcessorReference_Postprocesses()
+     * @model containment="true"
+     * @generated
+     */
+    EList<ProcessorReference> getPostprocesses();
 
 } // ProcessorReference

@@ -79,6 +79,13 @@ class NDimensionalArray implements Cloneable{
         }
     }
     
+    /** 
+     * Returns the size of the array if it was one dimensional.
+     */
+    public def int getOneDimensionalArraySize() {
+        return elements.size
+    }
+    
     /**
      * Returns the dimension of this NDimensionalArray.
      */

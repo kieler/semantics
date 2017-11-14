@@ -20,12 +20,12 @@ import de.cau.cs.kieler.kicool.compilation.observer.ProcessorProgress
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorSnapshot
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.environments.EnvironmentPair
-import java.lang.reflect.Type
 import org.eclipse.emf.ecore.EObject
 
 import static de.cau.cs.kieler.kicool.environments.Environment.*
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 
 /**
  * The abstract class of a processor. Every invokable unit in kico is a processor.
@@ -51,11 +51,11 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
      * However, preserve the enabled flag.
      */
     public def setEnvironment(Environment environment, Environment environmentPrime) {
-        if (environments != null && environments.source != null) {
+        if (environments !== null && environments.source !== null) {
             val enabledFlag = environments.source.getProperty(ENABLED)
             environment.setProperty(ENABLED, enabledFlag)
         }
-        if (environments != null && environments.target != null) {
+        if (environments !== null && environments.target !== null) {
             val cancelCompilationFlag = environments.target.getProperty(CANCEL_COMPILATION)
             environmentPrime.setProperty(CANCEL_COMPILATION, cancelCompilationFlag)
         }
@@ -118,6 +118,29 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
             new ProcessorProgress(progress, compilationContext, processorReference, this)
         )
     }
+    
+    protected def Processor<?,?> createCoProcessor(String id) {
+        val p = KiCoolRegistration.getProcessorInstance(id)
+        if (p !== null) {
+            p.setEnvironment(environment, environment)
+        } 
+        p
+    }
+    
+    protected def Processor<?,?> createCoProcessor(Class<Processor<?,?>> clazz) {
+        val p = KiCoolRegistration.getInstance(clazz) as Processor<?,?>
+        if (p !== null) {
+            p.setEnvironment(environment, environment)
+        } 
+        p
+    }
+    
+    protected def boolean executeCoProcessor(Processor<?,?> processorInstance, boolean doSnapshot) {
+        if (processorInstance === null) return false
+        processorInstance.process
+        if (doSnapshot) snapshot
+        return true
+    } 
     
     /**
      * Protected convenient method to trigger a snapshot.
@@ -195,7 +218,7 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
         val nameCache = environment.getProperty(UNIQUE_NAME_CACHE)
         namedObject.name = nameCache.getNewUniqueName(namedObject.name)
         return namedObject
-    }        
+    }       
     
     
     /**
