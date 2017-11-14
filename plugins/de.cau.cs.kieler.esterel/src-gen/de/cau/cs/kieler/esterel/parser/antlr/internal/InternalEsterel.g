@@ -3560,7 +3560,16 @@ ruleVariableReference returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(
+((
+	{ 
+	  /* */ 
+	}
+    {
+        $current = forceCreateModelElement(
+            grammarAccess.getVariableReferenceAccess().getVariableReferenceAction_0(),
+            $current);
+    }
+)(
 (
 		{ 
 		  /* */ 
@@ -3570,13 +3579,13 @@ ruleVariableReference returns [EObject current=null]
 	            $current = createModelElement(grammarAccess.getVariableReferenceRule());
 	        }
         }
-	otherlv_0=RULE_ID
+	otherlv_1=RULE_ID
 	{
-		newLeafNode(otherlv_0, grammarAccess.getVariableReferenceAccess().getValuedObjectVariableCrossReference_0()); 
+		newLeafNode(otherlv_1, grammarAccess.getVariableReferenceAccess().getValuedObjectVariableCrossReference_1_0()); 
 	}
 
 )
-)
+))
 ;
 
 
@@ -10036,9 +10045,9 @@ ruleValuedObjectTestExpression returns [EObject current=null]
 )(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsValuedObjectReferenceParserRuleCall_1_2_0()); 
+	        newCompositeNode(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsSignalReferenceExpressionParserRuleCall_1_2_0()); 
 	    }
-		lv_subExpressions_7_0=ruleValuedObjectReference		{
+		lv_subExpressions_7_0=ruleSignalReferenceExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getValuedObjectTestExpressionRule());
 	        }
@@ -10046,7 +10055,7 @@ ruleValuedObjectTestExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_7_0, 
-        		"de.cau.cs.kieler.kexpressions.KExpressions.ValuedObjectReference");
+        		"de.cau.cs.kieler.esterel.Esterel.SignalReferenceExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 

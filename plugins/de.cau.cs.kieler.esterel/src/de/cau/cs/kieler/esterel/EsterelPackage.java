@@ -3879,6 +3879,61 @@ public interface EsterelPackage extends EPackage {
     int TICK_REFERENCE_FEATURE_COUNT = SIGNAL_REFERENCE_FEATURE_COUNT + 0;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.esterel.impl.VariableReferenceImpl <em>Variable Reference</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.esterel.impl.VariableReferenceImpl
+     * @see de.cau.cs.kieler.esterel.impl.EsterelPackageImpl#getVariableReference()
+     * @generated
+     */
+    int VARIABLE_REFERENCE = 73;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VARIABLE_REFERENCE__SCHEDULE = KExpressionsPackage.VALUED_OBJECT_REFERENCE__SCHEDULE;
+
+    /**
+     * The feature id for the '<em><b>Valued Object</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VARIABLE_REFERENCE__VALUED_OBJECT = KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT;
+
+    /**
+     * The feature id for the '<em><b>Indices</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VARIABLE_REFERENCE__INDICES = KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES;
+
+    /**
+     * The feature id for the '<em><b>Sub Reference</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VARIABLE_REFERENCE__SUB_REFERENCE = KExpressionsPackage.VALUED_OBJECT_REFERENCE__SUB_REFERENCE;
+
+    /**
+     * The number of structural features of the '<em>Variable Reference</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VARIABLE_REFERENCE_FEATURE_COUNT = KExpressionsPackage.VALUED_OBJECT_REFERENCE_FEATURE_COUNT + 0;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.esterel.impl.SCEstStatementImpl <em>SC Est Statement</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3886,7 +3941,7 @@ public interface EsterelPackage extends EPackage {
      * @see de.cau.cs.kieler.esterel.impl.EsterelPackageImpl#getSCEstStatement()
      * @generated
      */
-    int SC_EST_STATEMENT = 73;
+    int SC_EST_STATEMENT = 74;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -3923,7 +3978,7 @@ public interface EsterelPackage extends EPackage {
      * @see de.cau.cs.kieler.esterel.impl.EsterelPackageImpl#getUnEmit()
      * @generated
      */
-    int UN_EMIT = 74;
+    int UN_EMIT = 75;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -3969,7 +4024,7 @@ public interface EsterelPackage extends EPackage {
      * @see de.cau.cs.kieler.esterel.impl.EsterelPackageImpl#getSet()
      * @generated
      */
-    int SET = 75;
+    int SET = 76;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -5826,6 +5881,16 @@ public interface EsterelPackage extends EPackage {
     EClass getTickReference();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.VariableReference <em>Variable Reference</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Variable Reference</em>'.
+     * @see de.cau.cs.kieler.esterel.VariableReference
+     * @generated
+     */
+    EClass getVariableReference();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.SCEstStatement <em>SC Est Statement</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -7423,6 +7488,16 @@ public interface EsterelPackage extends EPackage {
          * @generated
          */
         EClass TICK_REFERENCE = eINSTANCE.getTickReference();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.esterel.impl.VariableReferenceImpl <em>Variable Reference</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.esterel.impl.VariableReferenceImpl
+         * @see de.cau.cs.kieler.esterel.impl.EsterelPackageImpl#getVariableReference()
+         * @generated
+         */
+        EClass VARIABLE_REFERENCE = eINSTANCE.getVariableReference();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.esterel.impl.SCEstStatementImpl <em>SC Est Statement</em>}' class.

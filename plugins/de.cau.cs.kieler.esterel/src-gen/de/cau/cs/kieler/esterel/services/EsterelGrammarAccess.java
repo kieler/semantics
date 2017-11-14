@@ -2220,22 +2220,30 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class VariableReferenceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.Esterel.VariableReference");
-		private final Assignment cValuedObjectAssignment = (Assignment)rule.eContents().get(1);
-		private final CrossReference cValuedObjectVariableCrossReference_0 = (CrossReference)cValuedObjectAssignment.eContents().get(0);
-		private final RuleCall cValuedObjectVariableIDTerminalRuleCall_0_1 = (RuleCall)cValuedObjectVariableCrossReference_0.eContents().get(1);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cVariableReferenceAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cValuedObjectAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cValuedObjectVariableCrossReference_1_0 = (CrossReference)cValuedObjectAssignment_1.eContents().get(0);
+		private final RuleCall cValuedObjectVariableIDTerminalRuleCall_1_0_1 = (RuleCall)cValuedObjectVariableCrossReference_1_0.eContents().get(1);
 		
 		//VariableReference kexpressions::ValuedObjectReference:
-		//	valuedObject=[Variable];
+		//	{VariableReference} valuedObject=[Variable];
 		@Override public ParserRule getRule() { return rule; }
 
+		//{VariableReference} valuedObject=[Variable]
+		public Group getGroup() { return cGroup; }
+
+		//{VariableReference}
+		public Action getVariableReferenceAction_0() { return cVariableReferenceAction_0; }
+
 		//valuedObject=[Variable]
-		public Assignment getValuedObjectAssignment() { return cValuedObjectAssignment; }
+		public Assignment getValuedObjectAssignment_1() { return cValuedObjectAssignment_1; }
 
 		//[Variable]
-		public CrossReference getValuedObjectVariableCrossReference_0() { return cValuedObjectVariableCrossReference_0; }
+		public CrossReference getValuedObjectVariableCrossReference_1_0() { return cValuedObjectVariableCrossReference_1_0; }
 
 		//ID
-		public RuleCall getValuedObjectVariableIDTerminalRuleCall_0_1() { return cValuedObjectVariableIDTerminalRuleCall_0_1; }
+		public RuleCall getValuedObjectVariableIDTerminalRuleCall_1_0_1() { return cValuedObjectVariableIDTerminalRuleCall_1_0_1; }
 	}
 
 	public class ProcedureCallElements extends AbstractParserRuleElementFinder {
@@ -6533,18 +6541,18 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
 		private final RuleCall cOperatorEsterelValueTestOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cSubExpressionsValuedObjectReferenceParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		private final RuleCall cSubExpressionsSignalReferenceExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
 		private final RuleCall cValuedObjectReferenceParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//// Example: pre(pre(?A)), pre(pre(A)), ?A, A varX
 		//ValuedObjectTestExpression kexpressions::Expression:
 		//	{kexpressions::OperatorExpression} operator=EsterelPreOperator '(' subExpressions+=ValuedObjectTestExpression ')'
-		//	| {kexpressions::OperatorExpression} operator=EsterelValueTestOperator subExpressions+=ValuedObjectReference
+		//	| {kexpressions::OperatorExpression} operator=EsterelValueTestOperator subExpressions+=SignalReferenceExpression
 		//	| ValuedObjectReference;
 		@Override public ParserRule getRule() { return rule; }
 
 		//{kexpressions::OperatorExpression} operator=EsterelPreOperator '(' subExpressions+=ValuedObjectTestExpression ')' |
-		//{kexpressions::OperatorExpression} operator=EsterelValueTestOperator subExpressions+=ValuedObjectReference |
+		//{kexpressions::OperatorExpression} operator=EsterelValueTestOperator subExpressions+=SignalReferenceExpression |
 		//ValuedObjectReference
 		public Alternatives getAlternatives() { return cAlternatives; }
 
@@ -6572,7 +6580,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//')'
 		public Keyword getRightParenthesisKeyword_0_4() { return cRightParenthesisKeyword_0_4; }
 
-		//{kexpressions::OperatorExpression} operator=EsterelValueTestOperator subExpressions+=ValuedObjectReference
+		//{kexpressions::OperatorExpression} operator=EsterelValueTestOperator subExpressions+=SignalReferenceExpression
 		public Group getGroup_1() { return cGroup_1; }
 
 		//{kexpressions::OperatorExpression}
@@ -6584,11 +6592,11 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//EsterelValueTestOperator
 		public RuleCall getOperatorEsterelValueTestOperatorEnumRuleCall_1_1_0() { return cOperatorEsterelValueTestOperatorEnumRuleCall_1_1_0; }
 
-		//subExpressions+=ValuedObjectReference
+		//subExpressions+=SignalReferenceExpression
 		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
 
-		//ValuedObjectReference
-		public RuleCall getSubExpressionsValuedObjectReferenceParserRuleCall_1_2_0() { return cSubExpressionsValuedObjectReferenceParserRuleCall_1_2_0; }
+		//SignalReferenceExpression
+		public RuleCall getSubExpressionsSignalReferenceExpressionParserRuleCall_1_2_0() { return cSubExpressionsSignalReferenceExpressionParserRuleCall_1_2_0; }
 
 		//ValuedObjectReference
 		public RuleCall getValuedObjectReferenceParserRuleCall_2() { return cValuedObjectReferenceParserRuleCall_2; }
@@ -7784,7 +7792,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//VariableReference kexpressions::ValuedObjectReference:
-	//	valuedObject=[Variable];
+	//	{VariableReference} valuedObject=[Variable];
 	public VariableReferenceElements getVariableReferenceAccess() {
 		return pVariableReference;
 	}
@@ -8822,7 +8830,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: pre(pre(?A)), pre(pre(A)), ?A, A varX
 	//ValuedObjectTestExpression kexpressions::Expression:
 	//	{kexpressions::OperatorExpression} operator=EsterelPreOperator '(' subExpressions+=ValuedObjectTestExpression ')'
-	//	| {kexpressions::OperatorExpression} operator=EsterelValueTestOperator subExpressions+=ValuedObjectReference
+	//	| {kexpressions::OperatorExpression} operator=EsterelValueTestOperator subExpressions+=SignalReferenceExpression
 	//	| ValuedObjectReference;
 	public ValuedObjectTestExpressionElements getValuedObjectTestExpressionAccess() {
 		return pValuedObjectTestExpression;

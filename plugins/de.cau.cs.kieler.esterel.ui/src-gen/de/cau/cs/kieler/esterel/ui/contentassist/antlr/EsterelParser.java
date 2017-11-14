@@ -214,6 +214,7 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSustainAccess().getGroup(), "rule__Sustain__Group__0");
 					put(grammarAccess.getSustainAccess().getGroup_3(), "rule__Sustain__Group_3__0");
 					put(grammarAccess.getEsterelAssignmentAccess().getGroup(), "rule__EsterelAssignment__Group__0");
+					put(grammarAccess.getVariableReferenceAccess().getGroup(), "rule__VariableReference__Group__0");
 					put(grammarAccess.getProcedureCallAccess().getGroup(), "rule__ProcedureCall__Group__0");
 					put(grammarAccess.getProcedureCallAccess().getGroup_3_0(), "rule__ProcedureCall__Group_3_0__0");
 					put(grammarAccess.getProcedureCallAccess().getGroup_3_0_1(), "rule__ProcedureCall__Group_3_0_1__0");
@@ -619,7 +620,7 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSustainAccess().getExpressionAssignment_3_1(), "rule__Sustain__ExpressionAssignment_3_1");
 					put(grammarAccess.getEsterelAssignmentAccess().getReferenceAssignment_0(), "rule__EsterelAssignment__ReferenceAssignment_0");
 					put(grammarAccess.getEsterelAssignmentAccess().getExpressionAssignment_2(), "rule__EsterelAssignment__ExpressionAssignment_2");
-					put(grammarAccess.getVariableReferenceAccess().getValuedObjectAssignment(), "rule__VariableReference__ValuedObjectAssignment");
+					put(grammarAccess.getVariableReferenceAccess().getValuedObjectAssignment_1(), "rule__VariableReference__ValuedObjectAssignment_1");
 					put(grammarAccess.getProcedureCallAccess().getAnnotationsAssignment_0(), "rule__ProcedureCall__AnnotationsAssignment_0");
 					put(grammarAccess.getProcedureCallAccess().getProcedureAssignment_2(), "rule__ProcedureCall__ProcedureAssignment_2");
 					put(grammarAccess.getProcedureCallAccess().getReferenceArgumentsAssignment_3_0_1_0(), "rule__ProcedureCall__ReferenceArgumentsAssignment_3_0_1_0");

@@ -83,6 +83,7 @@ import de.cau.cs.kieler.esterel.TypeRenaming;
 import de.cau.cs.kieler.esterel.UnEmit;
 import de.cau.cs.kieler.esterel.Variable;
 
+import de.cau.cs.kieler.esterel.VariableReference;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
@@ -615,6 +616,13 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * @generated
      */
     private EClass tickReferenceEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass variableReferenceEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -2249,6 +2257,15 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getVariableReference() {
+        return variableReferenceEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getSCEstStatement() {
         return scEstStatementEClass;
     }
@@ -2570,6 +2587,8 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
 
         tickReferenceEClass = createEClass(TICK_REFERENCE);
 
+        variableReferenceEClass = createEClass(VARIABLE_REFERENCE);
+
         scEstStatementEClass = createEClass(SC_EST_STATEMENT);
 
         unEmitEClass = createEClass(UN_EMIT);
@@ -2700,6 +2719,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
         trapReferenceEClass.getESuperTypes().add(theKExpressionsPackage.getValuedObjectReference());
         signalReferenceEClass.getESuperTypes().add(theKExpressionsPackage.getValuedObjectReference());
         tickReferenceEClass.getESuperTypes().add(this.getSignalReference());
+        variableReferenceEClass.getESuperTypes().add(theKExpressionsPackage.getValuedObjectReference());
         scEstStatementEClass.getESuperTypes().add(theSCLPackage.getStatement());
         unEmitEClass.getESuperTypes().add(this.getSCEstStatement());
         setEClass.getESuperTypes().add(this.getSCEstStatement());
@@ -2948,6 +2968,8 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
         initEClass(signalReferenceEClass, SignalReference.class, "SignalReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(tickReferenceEClass, TickReference.class, "TickReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(variableReferenceEClass, VariableReference.class, "VariableReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(scEstStatementEClass, SCEstStatement.class, "SCEstStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

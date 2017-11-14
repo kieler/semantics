@@ -1218,7 +1218,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//VariableReference kexpressions::ValuedObjectReference:
-	//	valuedObject=[Variable];
+	//	{VariableReference} valuedObject=[Variable];
 	public EsterelGrammarAccess.VariableReferenceElements getVariableReferenceAccess() {
 		return gaEsterel.getVariableReferenceAccess();
 	}
@@ -2209,7 +2209,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: pre(pre(?A)), pre(pre(A)), ?A, A varX
 	//ValuedObjectTestExpression kexpressions::Expression:
 	//	{kexpressions::OperatorExpression} operator=EsterelPreOperator '(' subExpressions+=ValuedObjectTestExpression ')'
-	//	| {kexpressions::OperatorExpression} operator=EsterelValueTestOperator subExpressions+=ValuedObjectReference
+	//	| {kexpressions::OperatorExpression} operator=EsterelValueTestOperator subExpressions+=SignalReferenceExpression
 	//	| ValuedObjectReference;
 	public EsterelGrammarAccess.ValuedObjectTestExpressionElements getValuedObjectTestExpressionAccess() {
 		return gaEsterel.getValuedObjectTestExpressionAccess();
