@@ -316,7 +316,7 @@ EsterelAssignment returns scl::Assignment:
 ;
     
 VariableReference returns kexpressions::ValuedObjectReference:
-    valuedObject=[Variable|ID]
+   {VariableReference} valuedObject=[Variable|ID]
 ;
     
 ProcedureCall:
@@ -977,5 +977,5 @@ AtomicValuedExpression returns kexpressions::Expression:
 // Example: pre(pre(?A)), pre(pre(A)), ?A, A varX
 ValuedObjectTestExpression returns kexpressions::Expression:
     {kexpressions::OperatorExpression} operator=EsterelPreOperator '('subExpressions+=ValuedObjectTestExpression')'
-    | {kexpressions::OperatorExpression} operator=EsterelValueTestOperator subExpressions+=ValuedObjectReference
+    | {kexpressions::OperatorExpression} operator=EsterelValueTestOperator subExpressions+=SignalReferenceExpression
     | ValuedObjectReference;

@@ -289,6 +289,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="TrapReference" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObjectReference"/>
   <eClassifiers xsi:type="ecore:EClass" name="SignalReference" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObjectReference"/>
   <eClassifiers xsi:type="ecore:EClass" name="TickReference" eSuperTypes="#//SignalReference"/>
+  <eClassifiers xsi:type="ecore:EClass" name="VariableReference" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObjectReference"/>
   <eClassifiers xsi:type="ecore:EClass" name="SCEstStatement" eSuperTypes="../../de.cau.cs.kieler.scl/model/scl.ecore#//Statement"/>
   <eClassifiers xsi:type="ecore:EClass" name="UnEmit" eSuperTypes="#//SCEstStatement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="signal" eType="#//Signal"/>
