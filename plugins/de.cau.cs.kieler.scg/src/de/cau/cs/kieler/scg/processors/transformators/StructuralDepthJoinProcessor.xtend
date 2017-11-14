@@ -36,6 +36,9 @@ import de.cau.cs.kieler.scg.processors.analyzer.LoopAnalyzerV2
 import de.cau.cs.kieler.scg.processors.analyzer.ThreadData
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.processors.analyzer.LoopData
+import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.DataDependency
+import java.util.Collection
 
 /**
  * @author ssm
@@ -85,10 +88,12 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
     public def boolean processModel(SCGraph scg, ThreadData threadData, LoopData loopData) {
         val cureableForks = <Fork> newLinkedList                
         for (fork : threadData.forkMap.keySet) {
-            val entries = threadData.forkMap.get(fork)
-            if (entries.exists[ threadData.data.get(it) === ThreadPathType.POTENTIALLY_INSTANTANEOUS ]
-                && entries.exists[ threadData.data.get(it) === ThreadPathType.DELAYED ]) {
-                cureableForks += fork
+            if (loopData.criticalNodes.contains(fork) && loopData.criticalNodes.contains(fork.join)) {
+                val entries = threadData.forkMap.get(fork)
+                if (entries.exists[ threadData.data.get(it) === ThreadPathType.POTENTIALLY_INSTANTANEOUS ]
+                    && entries.exists[ threadData.data.get(it) === ThreadPathType.DELAYED ]) {
+                    cureableForks += fork
+                }
             }
         }
         
@@ -114,12 +119,13 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
                         "This should not happen. Aborting compilation.")
                 }
                 
+                val schizoNodes = <Node> newLinkedList
                 for (entry : threadData.forkMap.get(fork).toList) {
                     if (threadData.data.get(entry) === ThreadPathType.POTENTIALLY_INSTANTANEOUS) {
                         val threadMapping = <Entry, Set<Node>> newHashMap
                         val nodeMapping = <Node, List<Entry>> newHashMap
                         entry.getAllThreadNodesAndThreads(threadMapping, nodeMapping)                          
-                        entry.transformSDJ(scg, threadMapping.get(entry), loopData.criticalNodes)
+                        schizoNodes += entry.transformSDJ(scg, threadMapping.get(entry), loopData.criticalNodes, threadData.forkMap.get(fork))
                         
                         threadData.data.put(entry, ThreadPathType.DELAYED)
                         if (entry.hasAnnotation(SCGAnnotations.ANNOTATION_CONTROLFLOWTHREADPATHTYPE)) {
@@ -129,6 +135,17 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
                     }
                 }
                 
+                for (sNode : schizoNodes) {
+                    // IMPORTANT!
+                    // If there is an dependency that is pointing to a node inside a depth of the loop, 
+                    // remove it.
+                    for (dependency : sNode.dependencies.filter(DataDependency).filter[ concurrent ].toList) {
+                        if (!dependency.target.isInSurface(threadData.forkMap.get(fork))) {
+                            dependency.remove
+                        }
+                    }
+                }                
+                
                 curedForks += fork
                 return true
             }
@@ -137,16 +154,18 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
         return false
     }  
 
-    public def void transformSDJ(Entry entry, SCGraph scg, Set<Node> threadNodes, Set<Node> pilData) {
-        val pilNodes = threadNodes.filter[ pilData.contains(it) ].filter[ !(it instanceof Exit) ]
-        val schizoMapping = <Node, Node> newHashMap
+    public def List<Node> transformSDJ(Entry entry, SCGraph scg, Set<Node> threadNodes, Set<Node> pilData, Collection<Entry> threadEntries) {
+        val pilNodes = threadNodes.filter[ pilData.contains(it) ].filter[ !(it instanceof Exit) && !(it instanceof Entry) ]
+        val schizoMapping = <Node, Node> newLinkedHashMap
+        val resultNodes = <Node> newLinkedList
         
         for(pNode : pilNodes) {
             val sNode = pNode.copyNode(true)
             sNode.schizophrenic = true
             schizoMapping.put(pNode, sNode)
-            
+                        
             scg.nodes += sNode
+            resultNodes += sNode
         }
         
         for(pNode : pilNodes) {
@@ -167,10 +186,40 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
         
         var entrySchizo = schizoMapping.get(entry.next.target)
         entry.next.target = entrySchizo
+        resultNodes
     }    
     
     protected def getEntryNodes(Join join) {
         join.allPrevious.map[eContainer].filter(Exit).map[entry]
     }
     
+    protected def isInSurface(Node node, Collection<Entry> entries) {
+        for (entry : entries) {
+            if (node.isInSurface(entry)) return true
+        }
+        return false
+    }
+    
+    protected def isInSurface(Node node, Entry entry) {
+        val visited = <Node> newHashSet
+        val searchStack = <Node> newLinkedList => [ add(entry) ]
+        
+        while (!searchStack.empty) {
+            val head = searchStack.pop
+            
+            if (head == node) {
+                return true
+            }
+            
+            visited += head
+            val nextNodes = head.allNext.map[ target ].
+                filter[ !(it instanceof Join) && !(it instanceof Surface) && !(it instanceof Exit) ].
+                filter[ !visited.contains(it) ]
+            if (!nextNodes.empty) {
+                nextNodes.forEach[ searchStack.push(it) ]
+            } 
+        }
+        
+        return false
+    }
 }
