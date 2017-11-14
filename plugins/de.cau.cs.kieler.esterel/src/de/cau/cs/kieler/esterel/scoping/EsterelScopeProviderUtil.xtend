@@ -193,12 +193,12 @@ class EsterelScopeProviderUtil {
                 }
             }
             switch (parent) {
-                LocalSignalDeclaration : {
-                    val signals = (parent as LocalSignalDeclaration).getValuedObjects();
-                    for (s : signals) {
-                        scopeElems.add(new EObjectDescription(QualifiedName.create(s.getName()), s, emptyMap));
-                    }
-                }
+//                LocalSignalDeclaration : {
+//                    val signals = (parent as LocalSignalDeclaration).getValuedObjects();
+//                    for (s : signals) {
+//                        scopeElems.add(new EObjectDescription(QualifiedName.create(s.getName()), s, emptyMap));
+//                    }
+//                }
                 LocalVariableDeclaration : {
                     val decl = (parent as LocalVariableDeclaration).getDeclarations();
                     for (EsterelVariableDeclaration vdecl : decl) {
@@ -221,8 +221,8 @@ class EsterelScopeProviderUtil {
             parent = parent.eContainer();
         }
         scopeElems.addAll(getAllElements(context, COLLECT_CONSTANTS))
-        scopeElems.addAll(getAllElements(context, COLLECT_SENSORS))
-        scopeElems.addAll(getAllElements(context, COLLECT_SIGNALS))
+//        scopeElems.addAll(getAllElements(context, COLLECT_SENSORS))
+//        scopeElems.addAll(getAllElements(context, COLLECT_SIGNALS))
 
         return scopeElems;
     }
