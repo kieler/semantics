@@ -20,7 +20,7 @@ import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionArrayExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsArrayExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
@@ -96,7 +96,7 @@ class Signal extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsUniqueNameExtensions
     @Inject extension ValuedObjectRise
-    @Inject extension KExpressionArrayExtensions
+    @Inject extension KExpressionsArrayExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"

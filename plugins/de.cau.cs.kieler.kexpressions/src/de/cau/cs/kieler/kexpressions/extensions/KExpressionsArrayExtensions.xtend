@@ -23,7 +23,7 @@ import org.eclipse.emf.common.util.EList
  * @author aas
  *
  */
-class KExpressionArrayExtensions {
+class KExpressionsArrayExtensions {
     @Inject
     extension KExpressionsCreateExtensions
     
