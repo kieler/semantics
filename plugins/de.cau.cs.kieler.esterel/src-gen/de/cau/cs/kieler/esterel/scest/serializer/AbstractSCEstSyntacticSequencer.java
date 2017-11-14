@@ -22,11 +22,10 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected SCEstGrammarAccess grammarAccess;
-	protected AbstractElementAlias match_Abort_AbortKeyword_4_0_1_0_4_q;
+	protected AbstractElementAlias match_Abort_AbortKeyword_4_0_1_4_q;
 	protected AbstractElementAlias match_Abort_AbortKeyword_4_1_3_q;
-	protected AbstractElementAlias match_Abort_WeakKeyword_4_0_1_0_3_q;
+	protected AbstractElementAlias match_Abort_WeakKeyword_4_0_1_3_q;
 	protected AbstractElementAlias match_Abort_WeakKeyword_4_1_2_q;
-	protected AbstractElementAlias match_Abort___EndKeyword_4_0_1_1_0_WeakKeyword_4_0_1_1_1_q_AbortKeyword_4_0_1_1_2_q__q;
 	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_a_LeftParenthesisKeyword_5_0__a;
 	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_a_LeftParenthesisKeyword_5_0__p;
 	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_5_0__a;
@@ -68,11 +67,10 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (SCEstGrammarAccess) access;
-		match_Abort_AbortKeyword_4_0_1_0_4_q = new TokenAlias(false, true, grammarAccess.getAbortAccess().getAbortKeyword_4_0_1_0_4());
+		match_Abort_AbortKeyword_4_0_1_4_q = new TokenAlias(false, true, grammarAccess.getAbortAccess().getAbortKeyword_4_0_1_4());
 		match_Abort_AbortKeyword_4_1_3_q = new TokenAlias(false, true, grammarAccess.getAbortAccess().getAbortKeyword_4_1_3());
-		match_Abort_WeakKeyword_4_0_1_0_3_q = new TokenAlias(false, true, grammarAccess.getAbortAccess().getWeakKeyword_4_0_1_0_3());
+		match_Abort_WeakKeyword_4_0_1_3_q = new TokenAlias(false, true, grammarAccess.getAbortAccess().getWeakKeyword_4_0_1_3());
 		match_Abort_WeakKeyword_4_1_2_q = new TokenAlias(false, true, grammarAccess.getAbortAccess().getWeakKeyword_4_1_2());
-		match_Abort___EndKeyword_4_0_1_1_0_WeakKeyword_4_0_1_1_1_q_AbortKeyword_4_0_1_1_2_q__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getAbortAccess().getEndKeyword_4_0_1_1_0()), new TokenAlias(false, true, grammarAccess.getAbortAccess().getWeakKeyword_4_0_1_1_1()), new TokenAlias(false, true, grammarAccess.getAbortAccess().getAbortKeyword_4_0_1_1_2()));
 		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_a_LeftParenthesisKeyword_5_0__a = new GroupAlias(true, true, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_5_0()));
 		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_a_LeftParenthesisKeyword_5_0__p = new GroupAlias(true, false, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_5_0()));
 		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_5_0__a = new AlternativeAlias(true, true, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_5_0()), new TokenAlias(false, false, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_2_0()));
@@ -124,16 +122,14 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_Abort_AbortKeyword_4_0_1_0_4_q.equals(syntax))
-				emit_Abort_AbortKeyword_4_0_1_0_4_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			if (match_Abort_AbortKeyword_4_0_1_4_q.equals(syntax))
+				emit_Abort_AbortKeyword_4_0_1_4_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Abort_AbortKeyword_4_1_3_q.equals(syntax))
 				emit_Abort_AbortKeyword_4_1_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_Abort_WeakKeyword_4_0_1_0_3_q.equals(syntax))
-				emit_Abort_WeakKeyword_4_0_1_0_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Abort_WeakKeyword_4_0_1_3_q.equals(syntax))
+				emit_Abort_WeakKeyword_4_0_1_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Abort_WeakKeyword_4_1_2_q.equals(syntax))
 				emit_Abort_WeakKeyword_4_1_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_Abort___EndKeyword_4_0_1_1_0_WeakKeyword_4_0_1_1_1_q_AbortKeyword_4_0_1_1_2_q__q.equals(syntax))
-				emit_Abort___EndKeyword_4_0_1_1_0_WeakKeyword_4_0_1_1_1_q_AbortKeyword_4_0_1_1_2_q__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_a_LeftParenthesisKeyword_5_0__a.equals(syntax))
 				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_a_LeftParenthesisKeyword_5_0__a(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_a_LeftParenthesisKeyword_5_0__p.equals(syntax))
@@ -219,7 +215,7 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	 * This ambiguous syntax occurs at:
 	 *     doStatements+=EsterelParallel 'end' 'weak'? (ambiguity) (rule end)
 	 */
-	protected void emit_Abort_AbortKeyword_4_0_1_0_4_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Abort_AbortKeyword_4_0_1_4_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -241,7 +237,7 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	 * This ambiguous syntax occurs at:
 	 *     doStatements+=EsterelParallel 'end' (ambiguity) 'abort'? (rule end)
 	 */
-	protected void emit_Abort_WeakKeyword_4_0_1_0_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Abort_WeakKeyword_4_0_1_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -253,17 +249,6 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	 *     cases+=Case 'end' (ambiguity) 'abort'? (rule end)
 	 */
 	protected void emit_Abort_WeakKeyword_4_1_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Ambiguous syntax:
-	 *     ('end' 'weak'? 'abort'?)?
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     delay=DelayExpression (ambiguity) (rule end)
-	 */
-	protected void emit_Abort___EndKeyword_4_0_1_1_0_WeakKeyword_4_0_1_1_1_q_AbortKeyword_4_0_1_1_2_q__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -478,7 +463,6 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	 * This ambiguous syntax occurs at:
 	 *     task=[Task|ID] (ambiguity) '(' valueParameters+=Expression
 	 *     task=[Task|ID] (ambiguity) ('()' | ('(' ')')) 'return' returnSignal=[Signal|ID]
-	 *     task=[Task|ID] (ambiguity) (('(' ')') | '()') 'return' returnSignal=[Signal|ID]
 	 */
 	protected void emit_Exec_LeftParenthesisRightParenthesisKeyword_2_0_1_1_or___LeftParenthesisKeyword_2_0_1_0_0_RightParenthesisKeyword_2_0_1_0_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -491,7 +475,6 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	 * This ambiguous syntax occurs at:
 	 *     referenceParameters+=[Variable|ID] ')' (ambiguity) 'return' returnSignal=[Signal|ID]
 	 *     task=[Task|ID] ('()' | ('(' ')')) (ambiguity) 'return' returnSignal=[Signal|ID]
-	 *     task=[Task|ID] (('(' ')') | '()') (ambiguity) 'return' returnSignal=[Signal|ID]
 	 */
 	protected void emit_Exec_LeftParenthesisRightParenthesisKeyword_2_0_2_1_or___LeftParenthesisKeyword_2_0_2_0_0_RightParenthesisKeyword_2_0_2_0_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -613,7 +596,6 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	 * This ambiguous syntax occurs at:
 	 *     procedure=[Procedure|ID] (ambiguity) '(' valueArguments+=Expression
 	 *     procedure=[Procedure|ID] (ambiguity) ('()' | ('(' ')')) (rule end)
-	 *     procedure=[Procedure|ID] (ambiguity) (('(' ')') | '()') (rule end)
 	 */
 	protected void emit_ProcedureCall_LeftParenthesisRightParenthesisKeyword_3_1_or___LeftParenthesisKeyword_3_0_0_RightParenthesisKeyword_3_0_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -625,7 +607,6 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     procedure=[Procedure|ID] ('()' | ('(' ')')) (ambiguity) (rule end)
-	 *     procedure=[Procedure|ID] (('(' ')') | '()') (ambiguity) (rule end)
 	 *     referenceArguments+=[Variable|ID] ')' (ambiguity) (rule end)
 	 */
 	protected void emit_ProcedureCall_LeftParenthesisRightParenthesisKeyword_4_1_or___LeftParenthesisKeyword_4_0_0_RightParenthesisKeyword_4_0_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {

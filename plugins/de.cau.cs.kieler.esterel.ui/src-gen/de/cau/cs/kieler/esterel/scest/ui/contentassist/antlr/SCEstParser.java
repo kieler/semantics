@@ -69,7 +69,6 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPresentCaseAccess().getAlternatives_2(), "rule__PresentCase__Alternatives_2");
 					put(grammarAccess.getLoopAccess().getAlternatives_4(), "rule__Loop__Alternatives_4");
 					put(grammarAccess.getAbortAccess().getAlternatives_4(), "rule__Abort__Alternatives_4");
-					put(grammarAccess.getAbortAccess().getAlternatives_4_0_1(), "rule__Abort__Alternatives_4_0_1");
 					put(grammarAccess.getAwaitAccess().getAlternatives_2(), "rule__Await__Alternatives_2");
 					put(grammarAccess.getTrapSignalAccess().getAlternatives_2(), "rule__TrapSignal__Alternatives_2");
 					put(grammarAccess.getTrapSignalAccess().getAlternatives_2_0_3(), "rule__TrapSignal__Alternatives_2_0_3");
@@ -252,8 +251,7 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAbortAccess().getGroup(), "rule__Abort__Group__0");
 					put(grammarAccess.getAbortAccess().getGroup_1(), "rule__Abort__Group_1__0");
 					put(grammarAccess.getAbortAccess().getGroup_4_0(), "rule__Abort__Group_4_0__0");
-					put(grammarAccess.getAbortAccess().getGroup_4_0_1_0(), "rule__Abort__Group_4_0_1_0__0");
-					put(grammarAccess.getAbortAccess().getGroup_4_0_1_1(), "rule__Abort__Group_4_0_1_1__0");
+					put(grammarAccess.getAbortAccess().getGroup_4_0_1(), "rule__Abort__Group_4_0_1__0");
 					put(grammarAccess.getAbortAccess().getGroup_4_1(), "rule__Abort__Group_4_1__0");
 					put(grammarAccess.getCaseAccess().getGroup(), "rule__Case__Group__0");
 					put(grammarAccess.getCaseAccess().getGroup_3(), "rule__Case__Group_3__0");
@@ -674,7 +672,7 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAbortAccess().getWeakAssignment_1_0(), "rule__Abort__WeakAssignment_1_0");
 					put(grammarAccess.getAbortAccess().getStatementsAssignment_2(), "rule__Abort__StatementsAssignment_2");
 					put(grammarAccess.getAbortAccess().getDelayAssignment_4_0_0(), "rule__Abort__DelayAssignment_4_0_0");
-					put(grammarAccess.getAbortAccess().getDoStatementsAssignment_4_0_1_0_1(), "rule__Abort__DoStatementsAssignment_4_0_1_0_1");
+					put(grammarAccess.getAbortAccess().getDoStatementsAssignment_4_0_1_1(), "rule__Abort__DoStatementsAssignment_4_0_1_1");
 					put(grammarAccess.getAbortAccess().getCasesAssignment_4_1_0(), "rule__Abort__CasesAssignment_4_1_0");
 					put(grammarAccess.getCaseAccess().getAnnotationsAssignment_0(), "rule__Case__AnnotationsAssignment_0");
 					put(grammarAccess.getCaseAccess().getDelayAssignment_2(), "rule__Case__DelayAssignment_2");

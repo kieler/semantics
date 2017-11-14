@@ -1981,8 +1981,8 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EsterelPackage.Literals.PROCEDURE_RENAMING__OLD_NAME));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getProcedureRenamingAccess().getNewNameProcedureIDTerminalRuleCall_0_0_1(), semanticObject.getNewName());
-		feeder.accept(grammarAccess.getProcedureRenamingAccess().getOldNameProcedureIDTerminalRuleCall_2_0_1(), semanticObject.getOldName());
+		feeder.accept(grammarAccess.getProcedureRenamingAccess().getNewNameProcedureIDTerminalRuleCall_0_0_1(), semanticObject.eGet(EsterelPackage.Literals.PROCEDURE_RENAMING__NEW_NAME, false));
+		feeder.accept(grammarAccess.getProcedureRenamingAccess().getOldNameProcedureIDTerminalRuleCall_2_0_1(), semanticObject.eGet(EsterelPackage.Literals.PROCEDURE_RENAMING__OLD_NAME, false));
 		feeder.finish();
 	}
 	
@@ -2034,9 +2034,9 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EsterelPackage.Literals.RELATION_IMPLICATION__SECOND));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getRelationImplicationAccess().getFirstSignalIDTerminalRuleCall_0_0_1(), semanticObject.getFirst());
+		feeder.accept(grammarAccess.getRelationImplicationAccess().getFirstSignalIDTerminalRuleCall_0_0_1(), semanticObject.eGet(EsterelPackage.Literals.RELATION_IMPLICATION__FIRST, false));
 		feeder.accept(grammarAccess.getRelationImplicationAccess().getTypeEqualsSignGreaterThanSignKeyword_1_0(), semanticObject.getType());
-		feeder.accept(grammarAccess.getRelationImplicationAccess().getSecondSignalIDTerminalRuleCall_2_0_1(), semanticObject.getSecond());
+		feeder.accept(grammarAccess.getRelationImplicationAccess().getSecondSignalIDTerminalRuleCall_2_0_1(), semanticObject.eGet(EsterelPackage.Literals.RELATION_IMPLICATION__SECOND, false));
 		feeder.finish();
 	}
 	
@@ -2205,7 +2205,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__VALUED_OBJECT));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getSignalReferenceExpressionAccess().getValuedObjectSignalIDTerminalRuleCall_1_0_1(), semanticObject.getValuedObject());
+		feeder.accept(grammarAccess.getSignalReferenceExpressionAccess().getValuedObjectSignalIDTerminalRuleCall_1_0_1(), semanticObject.eGet(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__VALUED_OBJECT, false));
 		feeder.finish();
 	}
 	
@@ -2225,8 +2225,8 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EsterelPackage.Literals.SIGNAL_RENAMING__OLD_NAME));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getSignalRenamingAccess().getNewNameSignalIDTerminalRuleCall_0_0_1(), semanticObject.getNewName());
-		feeder.accept(grammarAccess.getSignalRenamingAccess().getOldNameSignalIDTerminalRuleCall_2_0_1(), semanticObject.getOldName());
+		feeder.accept(grammarAccess.getSignalRenamingAccess().getNewNameSignalIDTerminalRuleCall_0_0_1(), semanticObject.eGet(EsterelPackage.Literals.SIGNAL_RENAMING__NEW_NAME, false));
+		feeder.accept(grammarAccess.getSignalRenamingAccess().getOldNameSignalIDTerminalRuleCall_2_0_1(), semanticObject.eGet(EsterelPackage.Literals.SIGNAL_RENAMING__OLD_NAME, false));
 		feeder.finish();
 	}
 	
@@ -2316,8 +2316,8 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EsterelPackage.Literals.TASK_RENAMING__OLD_NAME));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getTaskRenamingAccess().getNewNameTaskIDTerminalRuleCall_0_0_1(), semanticObject.getNewName());
-		feeder.accept(grammarAccess.getTaskRenamingAccess().getOldNameTaskIDTerminalRuleCall_2_0_1(), semanticObject.getOldName());
+		feeder.accept(grammarAccess.getTaskRenamingAccess().getNewNameTaskIDTerminalRuleCall_0_0_1(), semanticObject.eGet(EsterelPackage.Literals.TASK_RENAMING__NEW_NAME, false));
+		feeder.accept(grammarAccess.getTaskRenamingAccess().getOldNameTaskIDTerminalRuleCall_2_0_1(), semanticObject.eGet(EsterelPackage.Literals.TASK_RENAMING__OLD_NAME, false));
 		feeder.finish();
 	}
 	
@@ -2453,7 +2453,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EsterelPackage.Literals.TRAP_EXPRESSION__TRAP));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getTrapExpressionAccess().getTrapSignalIDTerminalRuleCall_2_0_1(), semanticObject.getTrap());
+		feeder.accept(grammarAccess.getTrapExpressionAccess().getTrapSignalIDTerminalRuleCall_2_0_1(), semanticObject.eGet(EsterelPackage.Literals.TRAP_EXPRESSION__TRAP, false));
 		feeder.finish();
 	}
 	
@@ -2502,7 +2502,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__VALUED_OBJECT));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getTrapReferenceExprAccess().getValuedObjectTrapSignalIDTerminalRuleCall_1_0_1(), semanticObject.getValuedObject());
+		feeder.accept(grammarAccess.getTrapReferenceExprAccess().getValuedObjectTrapSignalIDTerminalRuleCall_1_0_1(), semanticObject.eGet(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__VALUED_OBJECT, false));
 		feeder.finish();
 	}
 	
@@ -2630,7 +2630,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__VALUED_OBJECT));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getVariableReferenceAccess().getValuedObjectVariableIDTerminalRuleCall_0_1(), semanticObject.getValuedObject());
+		feeder.accept(grammarAccess.getVariableReferenceAccess().getValuedObjectVariableIDTerminalRuleCall_0_1(), semanticObject.eGet(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__VALUED_OBJECT, false));
 		feeder.finish();
 	}
 	

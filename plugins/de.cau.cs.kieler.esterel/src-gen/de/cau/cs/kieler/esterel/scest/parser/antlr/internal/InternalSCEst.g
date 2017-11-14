@@ -5201,14 +5201,14 @@ ruleAbort returns [EObject current=null]
 	    }
 
 )
-)((	otherlv_6='do' 
+)(	otherlv_6='do' 
     {
-    	newLeafNode(otherlv_6, grammarAccess.getAbortAccess().getDoKeyword_4_0_1_0_0());
+    	newLeafNode(otherlv_6, grammarAccess.getAbortAccess().getDoKeyword_4_0_1_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getAbortAccess().getDoStatementsEsterelParallelParserRuleCall_4_0_1_0_1_0()); 
+	        newCompositeNode(grammarAccess.getAbortAccess().getDoStatementsEsterelParallelParserRuleCall_4_0_1_1_0()); 
 	    }
 		lv_doStatements_7_0=ruleEsterelParallel		{
 	        if ($current==null) {
@@ -5225,59 +5225,46 @@ ruleAbort returns [EObject current=null]
 )
 )	otherlv_8='end' 
     {
-    	newLeafNode(otherlv_8, grammarAccess.getAbortAccess().getEndKeyword_4_0_1_0_2());
+    	newLeafNode(otherlv_8, grammarAccess.getAbortAccess().getEndKeyword_4_0_1_2());
     }
 (	otherlv_9='weak' 
     {
-    	newLeafNode(otherlv_9, grammarAccess.getAbortAccess().getWeakKeyword_4_0_1_0_3());
+    	newLeafNode(otherlv_9, grammarAccess.getAbortAccess().getWeakKeyword_4_0_1_3());
     }
 )?(	otherlv_10='abort' 
     {
-    	newLeafNode(otherlv_10, grammarAccess.getAbortAccess().getAbortKeyword_4_0_1_0_4());
+    	newLeafNode(otherlv_10, grammarAccess.getAbortAccess().getAbortKeyword_4_0_1_4());
     }
-)?)
-    |(	otherlv_11='end' 
-    {
-    	newLeafNode(otherlv_11, grammarAccess.getAbortAccess().getEndKeyword_4_0_1_1_0());
-    }
-(	otherlv_12='weak' 
-    {
-    	newLeafNode(otherlv_12, grammarAccess.getAbortAccess().getWeakKeyword_4_0_1_1_1());
-    }
-)?(	otherlv_13='abort' 
-    {
-    	newLeafNode(otherlv_13, grammarAccess.getAbortAccess().getAbortKeyword_4_0_1_1_2());
-    }
-)?))?)
+)?)?)
     |((
 (
 		{ 
 	        newCompositeNode(grammarAccess.getAbortAccess().getCasesCaseParserRuleCall_4_1_0_0()); 
 	    }
-		lv_cases_14_0=ruleCase		{
+		lv_cases_11_0=ruleCase		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getAbortRule());
 	        }
        		add(
        			$current, 
        			"cases",
-        		lv_cases_14_0, 
+        		lv_cases_11_0, 
         		"de.cau.cs.kieler.esterel.Esterel.Case");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)+	otherlv_15='end' 
+)+	otherlv_12='end' 
     {
-    	newLeafNode(otherlv_15, grammarAccess.getAbortAccess().getEndKeyword_4_1_1());
+    	newLeafNode(otherlv_12, grammarAccess.getAbortAccess().getEndKeyword_4_1_1());
     }
-(	otherlv_16='weak' 
+(	otherlv_13='weak' 
     {
-    	newLeafNode(otherlv_16, grammarAccess.getAbortAccess().getWeakKeyword_4_1_2());
+    	newLeafNode(otherlv_13, grammarAccess.getAbortAccess().getWeakKeyword_4_1_2());
     }
-)?(	otherlv_17='abort' 
+)?(	otherlv_14='abort' 
     {
-    	newLeafNode(otherlv_17, grammarAccess.getAbortAccess().getAbortKeyword_4_1_3());
+    	newLeafNode(otherlv_14, grammarAccess.getAbortAccess().getAbortKeyword_4_1_3());
     }
 )?)))
 ;
