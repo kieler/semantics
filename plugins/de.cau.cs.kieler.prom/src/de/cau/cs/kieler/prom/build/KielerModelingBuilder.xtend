@@ -169,7 +169,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      * 
      * @param problems The build problems
      */
-    public static def void showBuildProblems(List<BuildProblem> problems) {
+    public static def void showBuildProblems(BuildProblem... problems) {
         for(problem : problems) {
             if(problem.res != null) {
                 var IMarker marker
@@ -203,19 +203,26 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
         this.project = getProject()
         this.kind = kind
         
-        switch(kind) {
-            case FULL_BUILD : fullBuild()
-            case CLEAN_BUILD : clean()
-            case AUTO_BUILD,
-            case INCREMENTAL_BUILD : {
-                val delta = getDelta(project);
-                if (delta == null) {
-                   fullBuild;
-                } else {
-                   incrementalBuild(delta);
+        try {
+            switch(kind) {
+                case FULL_BUILD : fullBuild()
+                case CLEAN_BUILD : clean()
+                case AUTO_BUILD,
+                case INCREMENTAL_BUILD : {
+                    val delta = getDelta(project);
+                    if (delta == null) {
+                       fullBuild;
+                    } else {
+                       incrementalBuild(delta);
+                    }
                 }
             }
+        } catch(Exception e) {
+            // Show any exception as error marker on the project
+            val problem = BuildProblem.createError(project, e)
+            showBuildProblems(problem)
         }
+        
         return null;
     }
     
@@ -279,7 +286,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
             buildModels(changedModels)
             // Process templates
             changedTemplates.addAll(getTemplatesThatNeedRebuild(changedModels))
-            processTemplates(changedTemplates)            
+            processTemplates(changedTemplates) 
         }
     }
     
