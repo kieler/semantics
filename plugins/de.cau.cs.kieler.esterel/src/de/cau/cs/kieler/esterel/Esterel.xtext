@@ -68,8 +68,8 @@ EsterelDeclaration:
 TypeIdentifier: 
       type=EsterelValueType
     | ("combine" (type=EsterelValueType | idType=ID) "with" operator=EsterelCombineOperator)
-    | esterelType=[TypeDefinition|ID]
-    | idType=ID;
+    | idType=ID
+    | esterelType=[TypeDefinition|ID];
     
 // = 7.3.1 Type Declarations
 // -------------------------------------
@@ -162,18 +162,20 @@ ReturnDeclaration:
 Signal:
     name=ID
     (  
-        ":=" initialValue=Expression
+        (":=" initialValue=Expression)?
         ":" 
         (     type=EsterelValueType
             | idType=ID
             | ("combine" (type=EsterelValueType | idType=ID) "with" (combineFunction=[Function|ID] | combineOperator=EsterelCombineOperator))
         )
     |
-        ":" 
-        (       type=EsterelValueType
-              | idType=ID
-              | ("combine" (type=EsterelValueType | idType=ID) "with" (combineFunction=[Function|ID] | combineOperator=EsterelCombineOperator)) 
+        "("
+        (":=" initialValue=Expression ":")?
+        (     type=EsterelValueType
+            | idType=ID
+            | ("combine" (type=EsterelValueType | idType=ID) "with" (combineFunction=[Function|ID] | combineOperator=EsterelCombineOperator))
         )
+        ")"
     )?;
 
 // = 7.3.7 Sensor Declaration
@@ -844,7 +846,7 @@ SignalPreExpression returns kexpressions::Expression:
 // --> B.3.4 Delay Expressions <--
 // -------------------------------------
 DelayExpression:
-    ( delay=IntValue | immediate?="immediate" )?
+    ( delay=Expression | immediate?="immediate" )?
     (     expression=SignalReferenceExpr 
         | expression=SignalPreExpression
         | "[" expression=SignalExpression "]"

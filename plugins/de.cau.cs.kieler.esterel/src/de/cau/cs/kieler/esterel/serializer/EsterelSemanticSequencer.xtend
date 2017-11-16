@@ -117,7 +117,7 @@ class EsterelSemanticSequencer extends AbstractEsterelSemanticSequencer {
         val g = grammarAccess.delayExpressionAccess
         
         if (semanticObject.delay !== null) {
-            feeder.accept(g.getDelayIntValueParserRuleCall_0_0_0, semanticObject.delay)
+            feeder.accept(g.getDelayExpressionParserRuleCall_0_0_0, semanticObject.delay)
         }
         
         if (semanticObject.delay === null && semanticObject.immediate) {
