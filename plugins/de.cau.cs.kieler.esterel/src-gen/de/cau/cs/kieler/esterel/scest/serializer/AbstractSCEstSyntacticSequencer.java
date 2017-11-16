@@ -283,13 +283,13 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	 *     ('(' | '(')*
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) '??' trap=[Signal|ID]
+	 *     (rule start) (ambiguity) '??' trap=[TrapSignal|ID]
 	 *     (rule start) (ambiguity) 'extern' functionName=ID
 	 *     (rule start) (ambiguity) constant=[Constant|ID]
 	 *     (rule start) (ambiguity) function=[Function|ID]
-	 *     (rule start) (ambiguity) operator=EsterelPreOperator
 	 *     (rule start) (ambiguity) operator=EsterelSubOperator
-	 *     (rule start) (ambiguity) operator=EsterelValueTestOperator
+	 *     (rule start) (ambiguity) operator=PreOperator
+	 *     (rule start) (ambiguity) operator=ValOperator
 	 *     (rule start) (ambiguity) text=HOSTCODE
 	 *     (rule start) (ambiguity) value=AnyValue
 	 *     (rule start) (ambiguity) value=BOOLEAN
@@ -320,12 +320,12 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	 *     ('(' '('*)*
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) '??' trap=[Signal|ID]
+	 *     (rule start) (ambiguity) '??' trap=[TrapSignal|ID]
 	 *     (rule start) (ambiguity) 'extern' functionName=ID
 	 *     (rule start) (ambiguity) constant=[Constant|ID]
 	 *     (rule start) (ambiguity) function=[Function|ID]
-	 *     (rule start) (ambiguity) operator=EsterelPreOperator
-	 *     (rule start) (ambiguity) operator=EsterelValueTestOperator
+	 *     (rule start) (ambiguity) operator=PreOperator
+	 *     (rule start) (ambiguity) operator=ValOperator
 	 *     (rule start) (ambiguity) text=HOSTCODE
 	 *     (rule start) (ambiguity) value=AnyValue
 	 *     (rule start) (ambiguity) value=BOOLEAN

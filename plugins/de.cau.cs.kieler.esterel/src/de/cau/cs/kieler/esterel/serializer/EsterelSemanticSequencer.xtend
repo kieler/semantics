@@ -11,6 +11,7 @@ import de.cau.cs.kieler.esterel.TickReference
 import de.cau.cs.kieler.esterel.services.EsterelGrammarAccess
 import org.eclipse.xtext.serializer.ISerializationContext
 import de.cau.cs.kieler.esterel.SignalReference
+import de.cau.cs.kieler.kexpressions.OperatorExpression
 
 class EsterelSemanticSequencer extends AbstractEsterelSemanticSequencer {
 
@@ -128,8 +129,10 @@ class EsterelSemanticSequencer extends AbstractEsterelSemanticSequencer {
                 feeder.accept(g.getExpressionSignalReferenceExprParserRuleCall_1_0_0, semanticObject.expression)
             } else if (semanticObject.expression instanceof SignalReference) {
                 feeder.accept(g.getExpressionSignalReferenceExprParserRuleCall_1_0_0, semanticObject.expression)
+            } else if (semanticObject.expression instanceof OperatorExpression) {
+                feeder.accept(g.expressionSignalPreExpressionParserRuleCall_1_1_0, semanticObject.expression)
             } else {
-                feeder.accept(g.expressionSignalExpressionParserRuleCall_1_1_1_0, semanticObject.expression)
+                feeder.accept(g.expressionSignalExpressionParserRuleCall_1_2_1_0, semanticObject.expression)
             }
             
         }
