@@ -657,7 +657,7 @@ LegacyDo returns Do:
         watching=DelayExpression 
         ( 
             "timeout" 
-            (watchingStatements+=InstructionStatement)+ 
+            watchingStatements+=EsterelParallel 
             "end" "timeout"?  
         )?
     );
@@ -846,10 +846,18 @@ SignalPreExpression returns kexpressions::Expression:
 // --> B.3.4 Delay Expressions <--
 // -------------------------------------
 DelayExpression:
-    ( delay=Expression | immediate?="immediate" )?
-    (     expression=SignalReferenceExpr 
-        | expression=SignalPreExpression
-        | "[" expression=SignalExpression "]"
+    (delay=Expression
+        (     expression=SignalReferenceExpr 
+            | expression=SignalPreExpression
+            | "[" expression=SignalExpression "]"
+        )
+    )
+    |
+    (immediate?="immediate"?
+        (     expression=SignalReferenceExpr 
+            | expression=SignalPreExpression
+            | "[" expression=SignalExpression "]"
+        )
     );
 
     
