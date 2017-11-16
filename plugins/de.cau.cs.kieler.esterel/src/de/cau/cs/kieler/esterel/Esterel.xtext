@@ -822,7 +822,7 @@ SignalNotExpression returns kexpressions::Expression:
 
 SignalAtomicExpression returns kexpressions::Expression:
      "(" SignalExpression ")"
-    | SignalPreExpr
+    | SignalPreExpression
     | SignalReferenceExpr;
     
 
@@ -836,7 +836,7 @@ SignalReferenceExpression returns kexpressions::ValuedObjectReference:
 TickSignalExpression returns kexpressions::ValuedObjectReference:
     {TickReference} 'tick';
 
-SignalPreExpr returns kexpressions::Expression:
+SignalPreExpression returns kexpressions::Expression:
     {kexpressions::OperatorExpression} 
     operator=EsterelPreOperator 
     '(' subExpressions+=SignalReferenceExpr ')';
@@ -846,7 +846,7 @@ SignalPreExpr returns kexpressions::Expression:
 DelayExpression:
     ( delay=IntValue | immediate?="immediate" )?
     (     expression=SignalReferenceExpr 
-        | expression=SignalPreExpr
+        | expression=SignalPreExpression
         | "[" expression=SignalExpression "]"
     );
 
@@ -994,11 +994,6 @@ AtomicValuedExpression returns kexpressions::Expression:
 
 // Example: pre(pre(?A)), pre(pre(A)), ?A, A varX
 ValuedObjectPreExpression returns kexpressions::Expression:
-    {kexpressions::OperatorExpression} operator=EsterelPreOperator '('subExpressions+=SignalSensorTestExpression')'
-    | SignalSensorTestExpression
+    {kexpressions::OperatorExpression} operator=EsterelPreOperator '('subExpressions+=ValuedObjectPreExpression')'
+    | {kexpressions::OperatorExpression} operator=EsterelValueTestOperator subExpressions+=SignalReferenceExpression
     | ValuedObjectReference;
-     
-SignalSensorTestExpression returns kexpressions::Expression:
-    {kexpressions::OperatorExpression} 
-    operator=EsterelValueTestOperator 
-    subExpressions+=SignalReferenceExpression;

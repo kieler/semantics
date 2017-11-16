@@ -50,8 +50,9 @@ class EsterelScopeProvider extends SCLScopeProvider {
         var IScope scope
         switch (context) {
             SignalReference : {
-                if ((context.eContainer as OperatorExpression)?.operator == OperatorType.VAL) {
-                    scope = new SimpleScope(getSignalsAndSensors(context))
+                if ( (context.eContainer instanceof OperatorExpression) && 
+                     (context.eContainer as OperatorExpression).operator === OperatorType.VAL) {
+                     scope = new SimpleScope(getSignalsAndSensors(context))
                 }
                 else {
                     scope = new SimpleScope(getAllSignals(context))
@@ -71,9 +72,9 @@ class EsterelScopeProvider extends SCLScopeProvider {
                 scope = polymorphicFindScopeForReferenceName(context, reference);
             }
         }
-        if (scope == null) {
+        if (scope === null) {
             scope = polymorphicFindScopeForClassName(context, reference);
-            if (scope == null) {
+            if (scope === null) {
                 return super.getScope(context, reference);
             }
         }
