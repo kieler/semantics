@@ -545,12 +545,11 @@ Exec:
             ("(" (valueParameters+=Expression ("," valueParameters+=Expression)*)? ")" | '()') 
             "return" 
             returnSignal=[Signal] 
-            ("do" (statements+=EsterelParallel))? 
+            ("do" (statements+=EsterelParallel) "end" "exec"?)? 
         | 
             execCaseList+=ExecCase+ 
-        ) 
-    "end" "exec"?
-;
+            "end" "exec"?
+        );
 
 ExecCase:
     (annotations += Annotation)*
