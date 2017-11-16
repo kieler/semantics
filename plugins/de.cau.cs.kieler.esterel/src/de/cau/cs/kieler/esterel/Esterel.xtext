@@ -718,17 +718,21 @@ enum EsterelCombineOperator returns kexpressions::CombineOperator:
  * ###################################################
  */
 
+@Override 
 terminal SL_COMMENT:
     '%' !('\n' | '\r')* ('\r'? '\n')?;
 
+@Override 
 terminal ML_COMMENT:
     ('%' '{')->('}' '%');
 
 // allow escaping by double quotes ( "this is a ""quote"", how nice." ) - Esterel style
+@Override 
 terminal STRING:
     '"' (!('"') | ('"' '"'))* '"';
 
 // custom terminal rule allowing to save transition label string as they are
+@Override 
 terminal HOSTCODE: 
     "'" ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|"'") )* "'";       
        
@@ -741,17 +745,18 @@ terminal HOSTCODE:
 // Esterel is a bit richer than what is provided by kexpressions. 
 // These rules are introduced here.
 // Care about order of the rules! 
+@Override 
 AtomicExpression returns kexpressions::Expression:
     EsterelFunctionCall
     | TrapExpression
     | BoolValue
-    | ValuedObjectTestExpression
+    | ValuedObjectPreExpression
     | TextExpression
     | '(' BooleanExpression ')'
     | ConstantExpression;
 
 TrapExpression returns kexpressions::Expression:
-    {TrapExpression} "??" trap=[Signal|ID];
+    {TrapExpression} "??" trap=[TrapSignal|ID];
 
 EsterelFunctionCall:
     function=[Function|ID] 
@@ -841,6 +846,7 @@ SignalPreExpr returns kexpressions::Expression:
 DelayExpression:
     ( delay=IntValue | immediate?="immediate" )?
     (     expression=SignalReferenceExpr 
+        | expression=SignalPreExpr
         | "[" expression=SignalExpression "]"
     );
 
@@ -855,6 +861,7 @@ DelayExpression:
  * #########################################################################
  */    
 
+@Override 
 Expression returns kexpressions::Expression:
       BooleanExpression
     | ValuedExpression;
@@ -884,6 +891,7 @@ AndExpression returns kexpressions::Expression:
 
 
 // Example: 42 <= ?A
+@Override 
 CompareOperation returns kexpressions::Expression:
     NotOrValuedExpression 
     ({kexpressions::OperatorExpression.subExpressions+=current} 
@@ -892,6 +900,7 @@ CompareOperation returns kexpressions::Expression:
 
 
 // order IS IMPORTANT
+@Override 
 NotOrValuedExpression returns kexpressions::Expression:
       ValuedExpression
     | NotExpression;
@@ -899,6 +908,7 @@ NotOrValuedExpression returns kexpressions::Expression:
 
 // Example: not A, not false, not (A or B)
 // at the latter we need the parans to indicate the right binding
+@Override 
 NotExpression returns kexpressions::Expression:
     {kexpressions::OperatorExpression} 
     operator=EsterelNotOperator 
@@ -908,12 +918,14 @@ NotExpression returns kexpressions::Expression:
   
     
 // everything that evaluates to a primitive number value
+@Override 
 ValuedExpression returns kexpressions::Expression:
     AddExpression;
 
 
 // Example: 1 + 2
 // The warning can be ignored since the operator will only override itself in this loop.
+@Override 
 AddExpression returns kexpressions::Expression:
     SubExpression 
     (   {kexpressions::OperatorExpression.subExpressions+=current} 
@@ -923,6 +935,7 @@ AddExpression returns kexpressions::Expression:
 
 // Example: varA - ?B
 // The warning can be ignored since the operator will only override itself in this loop.
+@Override 
 SubExpression returns kexpressions::Expression:
     MultExpression 
     (   {kexpressions::OperatorExpression.subExpressions+=current} 
@@ -932,6 +945,7 @@ SubExpression returns kexpressions::Expression:
 
 // Example: 2 * 4
 // The warning can be ignored since the operator will only override itself in this loop.
+@Override 
 MultExpression returns kexpressions::Expression:
     DivExpression 
     (   {kexpressions::OperatorExpression.subExpressions+=current} 
@@ -941,6 +955,7 @@ MultExpression returns kexpressions::Expression:
 
 // Example: (2 / 4)
 // note: division always has to have parantheses because the '/' sign is also used for trigger/effect delimiter
+@Override 
 DivExpression returns kexpressions::Expression:
     ModExpression 
     (   {kexpressions::OperatorExpression.subExpressions+=current} 
@@ -950,6 +965,7 @@ DivExpression returns kexpressions::Expression:
     
 
 // Example: varA mod ?B
+@Override 
 ModExpression returns kexpressions::Expression:
     NegExpression 
     (   {kexpressions::OperatorExpression.subExpressions+=current} 
@@ -960,6 +976,7 @@ ModExpression returns kexpressions::Expression:
 
 // Example: not A, not false, not (A or B)
 // at the latter we need the parans to indicate the right binding
+@Override 
 NegExpression returns kexpressions::Expression:
     {kexpressions::OperatorExpression} 
     operator=EsterelSubOperator 
@@ -967,6 +984,7 @@ NegExpression returns kexpressions::Expression:
     | 
     AtomicValuedExpression;
 
+@Override 
 AtomicValuedExpression returns kexpressions::Expression:
     IntValue
     | FloatValue
@@ -975,7 +993,12 @@ AtomicValuedExpression returns kexpressions::Expression:
 
 
 // Example: pre(pre(?A)), pre(pre(A)), ?A, A varX
-ValuedObjectTestExpression returns kexpressions::Expression:
-    {kexpressions::OperatorExpression} operator=EsterelPreOperator '('subExpressions+=ValuedObjectTestExpression')'
-    | {kexpressions::OperatorExpression} operator=EsterelValueTestOperator subExpressions+=SignalReferenceExpression
+ValuedObjectPreExpression returns kexpressions::Expression:
+    {kexpressions::OperatorExpression} operator=EsterelPreOperator '('subExpressions+=SignalSensorTestExpression')'
+    | SignalSensorTestExpression
     | ValuedObjectReference;
+     
+SignalSensorTestExpression returns kexpressions::Expression:
+    {kexpressions::OperatorExpression} 
+    operator=EsterelValueTestOperator 
+    subExpressions+=SignalReferenceExpression;

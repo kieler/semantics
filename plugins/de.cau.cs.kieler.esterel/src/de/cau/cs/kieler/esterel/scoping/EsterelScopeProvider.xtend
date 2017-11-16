@@ -30,6 +30,9 @@ import org.eclipse.xtext.scoping.impl.SimpleScope
 import static de.cau.cs.kieler.esterel.scoping.EsterelScopeProviderUtil.*
 import de.cau.cs.kieler.esterel.SignalReference
 import de.cau.cs.kieler.esterel.VariableReference
+import de.cau.cs.kieler.esterel.TrapExpression
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
 
 /**
  * This class contains custom scoping description.
@@ -47,9 +50,15 @@ class EsterelScopeProvider extends SCLScopeProvider {
         var IScope scope
         switch (context) {
             SignalReference : {
-                scope = new SimpleScope(getAllSignals(context))
+                if ((context.eContainer as OperatorExpression)?.operator == OperatorType.VAL) {
+                    scope = new SimpleScope(getSignalsAndSensors(context))
+                }
+                else {
+                    scope = new SimpleScope(getAllSignals(context))
+                }
             }   
-            TrapReference : {
+            TrapReference ,
+            TrapExpression : {
                 scope = new SimpleScope(getLocalTraps(context))
             }
             VariableReference : {

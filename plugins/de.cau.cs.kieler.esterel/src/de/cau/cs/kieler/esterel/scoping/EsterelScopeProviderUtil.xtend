@@ -179,52 +179,67 @@ class EsterelScopeProviderUtil {
      * 
      * @return list with scope elements
      */
+    public static def List<IEObjectDescription> getSignalsAndSensors(EObject context) {
+        val scopeElems = new ArrayList<IEObjectDescription>();
+        
+        scopeElems.addAll(getAllElements(context, COLLECT_SIGNALS))
+        scopeElems.addAll(getAllElements(context, COLLECT_SENSORS))
+
+        return scopeElems;
+        
+    }
+    
+    /**
+     * collect everything of type 'valuedObject' (signals, variables, traps ...)
+     * 
+     * @param context context
+     * 
+     * @return list with scope elements
+     */
     public static def List<IEObjectDescription> getValuedObjects(EObject context) {
         val scopeElems = new ArrayList<IEObjectDescription>();
+        
+        scopeElems.addAll(getLocalVariables(context))
+        scopeElems.addAll(getAllElements(context, COLLECT_CONSTANTS))
 
-        var parent = context.eContainer();
-        // Go up in the Structure until Module/MainModule
-        while (!(parent instanceof Module) && parent != null) {
-            // Get the local signals into the scope
-            if (parent instanceof LocalSignalDeclaration) {
-                val signals = (parent as LocalSignalDeclaration).getValuedObjects();
-                for (s : signals) {
-                    scopeElems.add(new EObjectDescription(QualifiedName.create(s.getName()), s, emptyMap));
-                }
-            }
-            switch (parent) {
+        return scopeElems;
+
+//        var parent = context.eContainer();
+//        // Go up in the Structure until Module/MainModule
+//        while (!(parent instanceof Module) && parent != null) {
+//            switch (parent) {
+//                LocalVariableDeclaration : {
+//                    val decl = (parent as LocalVariableDeclaration).getDeclarations();
+//                    for (EsterelVariableDeclaration vdecl : decl) {
+//                        for (Variable varSingle : vdecl.valuedObjects.filter(Variable)) {
+//                            scopeElems.add(new EObjectDescription(QualifiedName.create(varSingle
+//                                    .getName()), varSingle, emptyMap));
+//                        }
+//                    }
+//                }
 //                LocalSignalDeclaration : {
 //                    val signals = (parent as LocalSignalDeclaration).getValuedObjects();
 //                    for (s : signals) {
 //                        scopeElems.add(new EObjectDescription(QualifiedName.create(s.getName()), s, emptyMap));
 //                    }
 //                }
-                LocalVariableDeclaration : {
-                    val decl = (parent as LocalVariableDeclaration).getDeclarations();
-                    for (EsterelVariableDeclaration vdecl : decl) {
-                        for (Variable varSingle : vdecl.valuedObjects.filter(Variable)) {
-                            scopeElems.add(new EObjectDescription(QualifiedName.create(varSingle
-                                    .getName()), varSingle, emptyMap));
-                        }
-                    }
-                }
-                Trap : {
-                    val trapDecl = (parent as Trap).getTrapSignals();
-                    // add Trap to the scope
-                    for (Signal trap : trapDecl) {
-                        scopeElems.add(new EObjectDescription(QualifiedName.create(trap.getName()),
-                                trap, emptyMap));
-                    }                    
-                }
-                
-            }
-            parent = parent.eContainer();
-        }
-        scopeElems.addAll(getAllElements(context, COLLECT_CONSTANTS))
+//                Trap : {
+//                    val trapDecl = (parent as Trap).getTrapSignals();
+//                    // add Trap to the scope
+//                    for (Signal trap : trapDecl) {
+//                        scopeElems.add(new EObjectDescription(QualifiedName.create(trap.getName()),
+//                                trap, emptyMap));
+//                    }                    
+//                }
+//                
+//            }
+//            parent = parent.eContainer();
+//        }
+//        scopeElems.addAll(getAllElements(context, COLLECT_CONSTANTS))
 //        scopeElems.addAll(getAllElements(context, COLLECT_SENSORS))
 //        scopeElems.addAll(getAllElements(context, COLLECT_SIGNALS))
-
-        return scopeElems;
+//
+//        return scopeElems;
     }
 
     /**
