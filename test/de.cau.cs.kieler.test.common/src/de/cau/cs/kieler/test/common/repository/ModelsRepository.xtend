@@ -243,7 +243,7 @@ class ModelsRepository {
         package new(ModelProperties parent, Properties propertyFile) {
             ignore = if (propertyFile.containsKey("ignore")) propertyFile.getProperty("ignore").trim.parseBoolean else parent.ignore
             confidential = if (propertyFile.containsKey("confidential")) propertyFile.getProperty("confidential").trim.parseBoolean else parent.confidential
-            modelExt = if (propertyFile.containsKey("modelFileExtension")) propertyFile.getProperty("modelFileExtension").split(",").map[trim].toSet else parent.modelExt
+            modelExt = if (propertyFile.containsKey("modelFileExtension")) propertyFile.getProperty("modelFileExtension").split(",").map[trim].map[if (it.startsWith(".")) it else "." + it].toSet else parent.modelExt
             traceExt = if (propertyFile.containsKey("traceFileExtension")) propertyFile.getProperty("traceFileExtension").split(",").map[trim].toSet else parent.traceExt
             resourceSetID = if (propertyFile.containsKey("resourceSetID")) propertyFile.getProperty("resourceSetID").trim else parent.resourceSetID
             // Combine model properties
