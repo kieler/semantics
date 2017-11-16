@@ -219,12 +219,51 @@ class PromPlugin implements BundleActivator  {
      * @param sourceFolder The source folder to be added
      */
     public static def void addFolderToJavaClasspath(IJavaProject javaProject, IFolder sourceFolder) {
-        val root = javaProject.getPackageFragmentRoot(sourceFolder);
         val oldEntries = javaProject.rawClasspath;
         val newEntries = newArrayOfSize(oldEntries.length + 1);
         System.arraycopy(oldEntries, 0, newEntries, 0, oldEntries.length);
-        newEntries.set(oldEntries.length, JavaCore.newSourceEntry(root.path));
+        newEntries.set(oldEntries.length, JavaCore.newSourceEntry(sourceFolder.fullPath));
         javaProject.setRawClasspath(newEntries, null);
+    }
+    
+    /**
+     * Excludes a folder inside a source folder of a java project from beeing built.
+     * 
+     * @param javaProject The java project
+     * @param sourceFolder The source folder
+     * @param exclude The folder to be excluded from the build
+     */
+    public static def void excludeFolderFromJavaClasspath(IJavaProject javaProject, IFolder excludeFolder) {
+        val entries = javaProject.rawClasspath
+        val sourceFolder = javaProject.project.getFolder(excludeFolder.projectRelativePath.segment(0))
+        val excludePath = excludeFolder.projectRelativePath.addTrailingSeparator.removeFirstSegments(1)
+        for(entry : entries) {
+            if(entry.path == sourceFolder.fullPath) {
+                val oldExclusionPatterns = entry.exclusionPatterns
+                if(!entry.exclusionPatterns.contains(excludePath)) {
+                    val newExclusionPatterns = newArrayOfSize(oldExclusionPatterns.length + 1)
+                    System.arraycopy(oldExclusionPatterns, 0, newExclusionPatterns, 0, oldExclusionPatterns.length)
+                    newExclusionPatterns.set(oldExclusionPatterns.length, excludePath)
+                    updateClasspathEntry(javaProject, entry, JavaCore.newSourceEntry(entry.path, newExclusionPatterns))
+                } else {
+                }
+            }
+        }
+    }
+    
+    /**
+     * Replaces the classpath entry that matches oldEntry with newEntry. 
+     */
+    public static def void updateClasspathEntry(IJavaProject javaProject, IClasspathEntry oldEntry, IClasspathEntry newEntry) {
+        val oldEntries = javaProject.rawClasspath
+        val newEntries = oldEntries.clone
+        for(var i = 0; i < newEntries.length; i++) {
+            val entry = newEntries.get(i)
+            if(entry.path == newEntry.path) {
+                newEntries.set(i, newEntry)
+            }
+        }
+        javaProject.setRawClasspath(newEntries, null)
     }
     
     /**

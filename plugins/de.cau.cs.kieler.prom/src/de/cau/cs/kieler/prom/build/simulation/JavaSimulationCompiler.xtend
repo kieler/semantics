@@ -15,12 +15,14 @@ package de.cau.cs.kieler.prom.build.simulation
 import com.google.common.io.Files
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
+import de.cau.cs.kieler.prom.configurable.ResourceSubstitution
 import de.cau.cs.kieler.prom.configurable.Substitution
+import de.cau.cs.kieler.prom.data.FileData
 import org.eclipse.core.resources.IFile
+import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Path
-import de.cau.cs.kieler.prom.data.FileData
-import de.cau.cs.kieler.prom.configurable.ResourceSubstitution
+import org.eclipse.jdt.core.JavaCore
 
 /**
  * Compiles Java code for the simulation.
@@ -165,6 +167,20 @@ class JavaSimulationCompiler extends SimulationCompiler {
         val list = super.getSubstitutions
         list.add(sjLibFolderSubstitution)
         return list
+    }
+    
+    override createLibrary(IProject project) {
+        super.createLibrary(project)
+        // Exclude the sim folder from beeing built.
+        // The files of the simulation are compiled independent of the Java project builder
+        // and some projects (e.g. Mindstorms NXT) have issues in these files.
+        if(PromPlugin.isJavaProject(project)) {
+            val jProject = JavaCore.create(project);
+            val simFolder = project.getFolder(new Path("kieler-gen/sim"))
+            val libFolder = project.getFolder(new Path(libFolder.stringValue))
+            PromPlugin.excludeFolderFromJavaClasspath(jProject, simFolder)
+            PromPlugin.excludeFolderFromJavaClasspath(jProject, libFolder)
+        }
     }
     
     /**
