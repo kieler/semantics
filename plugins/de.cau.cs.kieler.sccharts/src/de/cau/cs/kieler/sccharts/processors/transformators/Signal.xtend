@@ -159,10 +159,11 @@ class Signal extends SCChartsProcessor implements Traceable {
         // Go thru all signals
         for (ValuedObject signal : allSignals) {
             signal.setDefaultTrace;
-
+            
             val presentVariable = signal
+            val combineOperator = presentVariable.combineOperator
             val arrayIndexIterator = signal.cardinalities.indexIterable
-
+            
             // If this is a valued signal we need a second signal for the value
             if (!signal.pureSignal) {
                 val valueDecl = createVariableDeclaration(signal.type)
@@ -216,7 +217,7 @@ class Signal extends SCChartsProcessor implements Traceable {
                         if (signalEmission.newValue != null) {
 
                             // Assign the emitted valued and combine!
-                            val variableAssignment = currentValueVariable.createCombinedAssignment(signalEmission.newValue)
+                            val variableAssignment = currentValueVariable.createAssignment(signalEmission.newValue, combineOperator)
                             variableAssignment.reference.applyIndices(signalEmission.reference)
                             
                             // Put it in right order
@@ -238,16 +239,12 @@ class Signal extends SCChartsProcessor implements Traceable {
                         signalRef.setValuedObject(valueVariable);
                         signalTest.replace(signalRef);
                     }
-// TODO: Not need to trim any more?                    
-//                    if (action.trigger != null) {
-//                        action.setTrigger(action.trigger.trim)
-//                    }
                 }
                 
                 currentValueVariable.combineOperator = null
                 valueVariable.combineOperator = null
             } // ValuedObject
-
+        
             // Change signal to variable
             val newDecl = createBoolDeclaration
             newDecl.setInput(presentVariable.isInput)
@@ -255,12 +252,12 @@ class Signal extends SCChartsProcessor implements Traceable {
             val declarationScope = presentVariable.declarationScope
             presentVariable.removeFromContainmentAndCleanup
             declarationScope.addValuedObject(presentVariable, newDecl)
-                
+            
             // Reset initial value and combine operator because we want to reset
             // the signal manually in every
             presentVariable.setInitialValue(null)
             presentVariable.setCombineOperator(null)
-
+            
             // Modify signal emission & presence test
             val allActions = state.eAllContents.filter(typeof(Action)).toList
             for (Action action : allActions) {
@@ -290,6 +287,7 @@ class Signal extends SCChartsProcessor implements Traceable {
                 ).toList
                 for (ValuedObjectReference signalTest : allSignalTests.immutableCopy) {
                     val presentVariableTest = signalTest.valuedObject.reference // .isEqual(TRUE);
+                    presentVariableTest.applyIndices(signalTest)
                     action.replace(signalTest, presentVariableTest)
                 }
             }
@@ -309,7 +307,7 @@ class Signal extends SCChartsProcessor implements Traceable {
                     absentDuringAction.createAssignment(presentVariable, FALSE)
                 } else {
                     for(arrayIndex : arrayIndexIterator) {
-                        val assignment =                     absentDuringAction.createAssignment(presentVariable, FALSE)
+                        val assignment = absentDuringAction.createAssignment(presentVariable, FALSE)
                         assignment.indices.addAll(arrayIndex.convert)
                     }
                 } 
