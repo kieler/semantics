@@ -1060,13 +1060,26 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 * Constraint:
 	 *     (
 	 *         annotations+=RestrictedTypeAnnotation* 
-	 *         (preemption=PreemptionType | preemption=PreemptionTypeLegacy) 
-	 *         targetState=[State|ID] 
-	 *         delay=DelayType? 
-	 *         deferred?='deferred'? 
-	 *         history=HistoryType? 
-	 *         (triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? 
-	 *         (effects+=Effect effects+=Effect*)? 
+	 *         (
+	 *             (
+	 *                 (preemption=PreemptionType | preemption=PreemptionTypeLegacy) 
+	 *                 targetState=[State|ID] 
+	 *                 delay=DelayType? 
+	 *                 deferred?='deferred'? 
+	 *                 history=HistoryType? 
+	 *                 (triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? 
+	 *                 (effects+=Effect effects+=Effect*)?
+	 *             ) | 
+	 *             (
+	 *                 delay=DelayType? 
+	 *                 (triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? 
+	 *                 (effects+=Effect effects+=Effect*)? 
+	 *                 (preemption=PreemptionType | preemption=PreemptionTypeLegacy) 
+	 *                 targetState=[State|ID] 
+	 *                 deferred?='deferred'? 
+	 *                 history=HistoryType?
+	 *             )
+	 *         ) 
 	 *         label=STRING?
 	 *     )
 	 */

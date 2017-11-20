@@ -1257,7 +1257,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.SCHEDULE_OBJECT_REFERENCE__PRIORITY));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getScheduleObjectReferenceAccess().getValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1(), semanticObject.getValuedObject());
+		feeder.accept(grammarAccess.getScheduleObjectReferenceAccess().getValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1(), semanticObject.eGet(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__VALUED_OBJECT, false));
 		feeder.accept(grammarAccess.getScheduleObjectReferenceAccess().getPriorityINTTerminalRuleCall_1_0(), semanticObject.getPriority());
 		feeder.finish();
 	}
