@@ -394,18 +394,30 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class CoProcessorElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kicool.KiCool.CoProcessor");
-		private final Assignment cIdAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cIdQualifiedIDParserRuleCall_0 = (RuleCall)cIdAssignment.eContents().get(0);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cIdAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cIdQualifiedIDParserRuleCall_0_0 = (RuleCall)cIdAssignment_0.eContents().get(0);
+		private final Assignment cSilentAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cSilentSilentKeyword_1_0 = (Keyword)cSilentAssignment_1.eContents().get(0);
 		
 		//CoProcessor kicool::ProcessorReference:
-		//	id=QualifiedID;
+		//	id=QualifiedID silent?='silent'?;
 		@Override public ParserRule getRule() { return rule; }
 
+		//id=QualifiedID silent?='silent'?
+		public Group getGroup() { return cGroup; }
+
 		//id=QualifiedID
-		public Assignment getIdAssignment() { return cIdAssignment; }
+		public Assignment getIdAssignment_0() { return cIdAssignment_0; }
 
 		//QualifiedID
-		public RuleCall getIdQualifiedIDParserRuleCall_0() { return cIdQualifiedIDParserRuleCall_0; }
+		public RuleCall getIdQualifiedIDParserRuleCall_0_0() { return cIdQualifiedIDParserRuleCall_0_0; }
+
+		//silent?='silent'?
+		public Assignment getSilentAssignment_1() { return cSilentAssignment_1; }
+
+		//'silent'
+		public Keyword getSilentSilentKeyword_1_0() { return cSilentSilentKeyword_1_0; }
 	}
 
 	public class ProcessorSystemElements extends AbstractParserRuleElementFinder {
@@ -638,7 +650,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//CoProcessor kicool::ProcessorReference:
-	//	id=QualifiedID;
+	//	id=QualifiedID silent?='silent'?;
 	public CoProcessorElements getCoProcessorAccess() {
 		return pCoProcessor;
 	}

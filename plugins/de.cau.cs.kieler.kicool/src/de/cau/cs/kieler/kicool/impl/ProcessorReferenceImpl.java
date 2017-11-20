@@ -35,6 +35,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorReferenceImpl#getMetric <em>Metric</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorReferenceImpl#getPreprocesses <em>Preprocesses</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorReferenceImpl#getPostprocesses <em>Postprocesses</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorReferenceImpl#isSilent <em>Silent</em>}</li>
  * </ul>
  *
  * @generated
@@ -89,6 +90,26 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
      * @ordered
      */
     protected EList<ProcessorReference> postprocesses;
+
+    /**
+     * The default value of the '{@link #isSilent() <em>Silent</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isSilent()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean SILENT_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isSilent() <em>Silent</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isSilent()
+     * @generated
+     * @ordered
+     */
+    protected boolean silent = SILENT_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -200,6 +221,27 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isSilent() {
+        return silent;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setSilent(boolean newSilent) {
+        boolean oldSilent = silent;
+        silent = newSilent;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KiCoolPackage.PROCESSOR_REFERENCE__SILENT, oldSilent, silent));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -234,6 +276,8 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
                 return getPreprocesses();
             case KiCoolPackage.PROCESSOR_REFERENCE__POSTPROCESSES:
                 return getPostprocesses();
+            case KiCoolPackage.PROCESSOR_REFERENCE__SILENT:
+                return isSilent();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -266,6 +310,9 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
                 getPostprocesses().clear();
                 getPostprocesses().addAll((Collection<? extends ProcessorReference>)newValue);
                 return;
+            case KiCoolPackage.PROCESSOR_REFERENCE__SILENT:
+                setSilent((Boolean)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -293,6 +340,9 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
             case KiCoolPackage.PROCESSOR_REFERENCE__POSTPROCESSES:
                 getPostprocesses().clear();
                 return;
+            case KiCoolPackage.PROCESSOR_REFERENCE__SILENT:
+                setSilent(SILENT_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -315,8 +365,26 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
                 return preprocesses != null && !preprocesses.isEmpty();
             case KiCoolPackage.PROCESSOR_REFERENCE__POSTPROCESSES:
                 return postprocesses != null && !postprocesses.isEmpty();
+            case KiCoolPackage.PROCESSOR_REFERENCE__SILENT:
+                return silent != SILENT_EDEFAULT;
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (silent: ");
+        result.append(silent);
+        result.append(')');
+        return result.toString();
     }
 
 } //ProcessorReferenceImpl

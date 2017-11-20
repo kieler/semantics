@@ -63,6 +63,7 @@ public class KiCoolParser extends AbstractContentAssistParser {
 					put(grammarAccess.getProcessorAccess().getGroup_3(), "rule__Processor__Group_3__0");
 					put(grammarAccess.getProcessorAccess().getGroup_4(), "rule__Processor__Group_4__0");
 					put(grammarAccess.getProcessorAccess().getGroup_5(), "rule__Processor__Group_5__0");
+					put(grammarAccess.getCoProcessorAccess().getGroup(), "rule__CoProcessor__Group__0");
 					put(grammarAccess.getProcessorAlternativeGroupAccess().getGroup(), "rule__ProcessorAlternativeGroup__Group__0");
 					put(grammarAccess.getProcessorAlternativeGroupAccess().getGroup_0(), "rule__ProcessorAlternativeGroup__Group_0__0");
 					put(grammarAccess.getProcessorAlternativeGroupAccess().getGroup_1(), "rule__ProcessorAlternativeGroup__Group_1__0");
@@ -111,7 +112,8 @@ public class KiCoolParser extends AbstractContentAssistParser {
 					put(grammarAccess.getProcessorAccess().getMetricAssignment_3_1(), "rule__Processor__MetricAssignment_3_1");
 					put(grammarAccess.getProcessorAccess().getPostprocessesAssignment_4_2(), "rule__Processor__PostprocessesAssignment_4_2");
 					put(grammarAccess.getProcessorAccess().getPostsetsAssignment_5_2(), "rule__Processor__PostsetsAssignment_5_2");
-					put(grammarAccess.getCoProcessorAccess().getIdAssignment(), "rule__CoProcessor__IdAssignment");
+					put(grammarAccess.getCoProcessorAccess().getIdAssignment_0(), "rule__CoProcessor__IdAssignment_0");
+					put(grammarAccess.getCoProcessorAccess().getSilentAssignment_1(), "rule__CoProcessor__SilentAssignment_1");
 					put(grammarAccess.getProcessorSystemAccess().getIdAssignment(), "rule__ProcessorSystem__IdAssignment");
 					put(grammarAccess.getProcessorAlternativeGroupAccess().getLabelAssignment_0_1(), "rule__ProcessorAlternativeGroup__LabelAssignment_0_1");
 					put(grammarAccess.getProcessorAlternativeGroupAccess().getProcessorsAssignment_1_0(), "rule__ProcessorAlternativeGroup__ProcessorsAssignment_1_0");
