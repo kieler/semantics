@@ -54,6 +54,9 @@ class EsterelScopeProvider extends SCLScopeProvider {
                      (context.eContainer as OperatorExpression).operator === OperatorType.VAL) {
                      scope = new SimpleScope(getSignalsAndSensors(context))
                 }
+                else if (context.eContainer instanceof SignalRenaming) {
+                    scope = new SimpleScope(getSignalsAndSensors(context))
+                }
                 else {
                     scope = new SimpleScope(getAllSignals(context))
                 }

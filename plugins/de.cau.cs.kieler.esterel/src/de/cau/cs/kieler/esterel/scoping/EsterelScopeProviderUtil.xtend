@@ -173,7 +173,7 @@ class EsterelScopeProviderUtil {
     }
     
     /**
-     * collect everything of type 'valuedObject' (signals, variables, traps ...)
+     * collect all signals (including local signals) and sensors AND the valued object "tick"
      * 
      * @param context context
      * 
