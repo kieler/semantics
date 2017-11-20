@@ -91,7 +91,7 @@ ConstantDeclaration:
     ";";
 
 Constant:
-    name=ID ("=" initialValue=AnyValue)? ":" type=TypeIdentifier;
+    name=ID ("=" initialValue=Expression)? ":" type=TypeIdentifier;
     
 // = 7.3.3 Function Declaration
 // -------------------------------------
@@ -632,7 +632,7 @@ TaskRenaming:
     newName=[Task|ID] "/" oldName=[Task|ID];
 
 SignalRenaming:
-    newName=[Signal|ID] "/" oldName=[Signal|ID];
+    newName=SignalOrTickReferenceExpression "/" oldName=SignalOrTickReferenceExpression;
 
 // renaming can also rename build in types and functions
 BuildInFunction:
@@ -824,10 +824,10 @@ SignalNotExpression returns kexpressions::Expression:
 SignalAtomicExpression returns kexpressions::Expression:
      "(" SignalExpression ")"
     | SignalPreExpression
-    | SignalReferenceExpr;
+    | SignalOrTickReferenceExpression;
     
 
-SignalReferenceExpr returns kexpressions::ValuedObjectReference:
+SignalOrTickReferenceExpression returns kexpressions::ValuedObjectReference:
     SignalReferenceExpression | TickSignalExpression
 ;
 
@@ -840,20 +840,20 @@ TickSignalExpression returns kexpressions::ValuedObjectReference:
 SignalPreExpression returns kexpressions::Expression:
     {kexpressions::OperatorExpression} 
     operator=EsterelPreOperator 
-    '(' subExpressions+=SignalReferenceExpr ')';
+    '(' subExpressions+=SignalOrTickReferenceExpression ')';
 
 // --> B.3.4 Delay Expressions <--
 // -------------------------------------
 DelayExpression:
     (delay=Expression
-        (     expression=SignalReferenceExpr 
+        (     expression=SignalOrTickReferenceExpression 
             | expression=SignalPreExpression
             | "[" expression=SignalExpression "]"
         )
     )
     |
     (immediate?="immediate"?
-        (     expression=SignalReferenceExpr 
+        (     expression=SignalOrTickReferenceExpression 
             | expression=SignalPreExpression
             | "[" expression=SignalExpression "]"
         )

@@ -231,7 +231,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConstantRenaming" eSuperTypes="#//Renaming">
     <eStructuralFeatures xsi:type="ecore:EReference" name="newName" eType="#//Constant"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="newValue" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Value"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="newValue" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="oldName" eType="#//Constant"/>
   </eClassifiers>
@@ -249,8 +249,10 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="oldName" eType="#//Task"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SignalRenaming" eSuperTypes="#//Renaming">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="newName" eType="#//Signal"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="oldName" eType="#//Signal"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="newName" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObjectReference"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="oldName" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObjectReference"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Do" eSuperTypes="#//EsterelStatement ../../de.cau.cs.kieler.scl/model/scl.ecore#//StatementContainer">
     <eStructuralFeatures xsi:type="ecore:EReference" name="watchingAnnotations" upperBound="-1"
