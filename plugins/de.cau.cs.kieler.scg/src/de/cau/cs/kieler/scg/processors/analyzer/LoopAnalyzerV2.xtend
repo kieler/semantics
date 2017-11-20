@@ -25,6 +25,7 @@ import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import java.util.Deque
 import de.cau.cs.kieler.scg.Assignment
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 
 /** 
  * @author ssm
@@ -35,12 +36,18 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
 	
 	@Inject extension SCGControlFlowExtensions
 	
+	public static val IProperty<Boolean> LOOP_ANALYZER_ENABLED = 
+	   new Property<Boolean>("de.cau.cs.kieler.scg.processors.loopAnalyzer.enabled", true)
     public static val IProperty<LoopData> LOOP_DATA = 
         new Property<LoopData>("de.cau.cs.kieler.scg.processors.loopAnalyzer.data", null)	
     public static val IProperty<Boolean> ERROR_ON_INSTANTANEOUS_LOOP = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.loopAnalyzer.errorOnInstantaneousLoop", false)
     public static val IProperty<Boolean> WARNING_ON_INSTANTANEOUS_LOOP = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.loopAnalyzer.warningOnInstantaneousLoop", false)
+    public static val IProperty<Integer> LOOP_ANALYZER_MAX_STRIPPED_NODES = 
+        new Property<Integer>("de.cau.cs.kieler.scg.processors.loopAnalyzer.maxStrippedNodes", 100)
+    public static val IProperty<Boolean> LOOP_ANALYZER_STOP_AFTER_FIRST_LOOP = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.loopAnalyzer.stopAfterFirstLoop", true)
 	
     override getId() {
         "de.cau.cs.kieler.scg.processors.loopAnalyzerV2"
@@ -60,6 +67,8 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
         }
         environment.setProperty(LOOP_DATA, loopData)
 
+        if (!environment.getProperty(LOOP_ANALYZER_ENABLED)) return;
+
         val nodesToCheck = <Node> newLinkedList
         val checkedNodes = <Node> newHashSet
         for (scg : model.scgs) {
@@ -76,10 +85,13 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
         
         if (!loopData.criticalNodes.empty) {
             if (environment.getProperty(ERROR_ON_INSTANTANEOUS_LOOP)) {
-                environment.errors.add("Instananeous loop detected!")
+                environment.errors.add("Instantaneous loop detected!")
             }
             if (environment.getProperty(WARNING_ON_INSTANTANEOUS_LOOP)) {
-                environment.warnings.add("Instananeous loop detected!")
+                environment.warnings.add("Instantaneous loop detected!")
+                val strippedModel = extractLoopModel(loopData)
+                environment.warnings.add(strippedModel.first, 
+                   "Instantaneous loop detected!", null)
             }
         }
     }	
@@ -110,6 +122,10 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
                         loopData.criticalNodes.add(pn)
                     } 
                     loopData.criticalNodes.add(pn)
+                    
+                    if (environment.getProperty(LOOP_ANALYZER_STOP_AFTER_FIRST_LOOP)) {
+                        return
+                    }
                 }    
                 if (!visited.contains(nn)) {
                     if (nn instanceof Surface) {
@@ -127,6 +143,44 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
             }
 	    } while(!path.empty)
 	}
+	
+	
+    protected def extractLoopModel(LoopData loopData) {
+        val modelCopy = getModel.copyEObjectAndReturnCopier
+        val copier = modelCopy.second
+        val maxStrippedNodes = environment.getProperty(LOOP_ANALYZER_MAX_STRIPPED_NODES)
+        
+        val reverseMap = <Node, Node> newLinkedHashMap
+        for (sourceNode : copier.keySet.filter(Node)) {
+            reverseMap.put(copier.get(sourceNode) as Node, sourceNode)
+        }
+        
+        var i = 0
+        for (scg : modelCopy.first.scgs) {
+            for (node : scg.nodes.immutableCopy) {
+                
+                if (i > maxStrippedNodes) {
+                    node.remove
+                } else {
+                
+                    val sourceNode = reverseMap.get(node)
+                    if (!loopData.criticalNodes.contains(sourceNode)) {
+                        val adjacentNodes = (sourceNode.incoming.map[ eContainer ].filter(Node) +
+                             sourceNode.allNext.map[ target ] + 
+                             sourceNode.dependencies.map[ target ]).toSet
+                        if (!adjacentNodes.exists[ loopData.criticalNodes.contains(it) ]) {
+                            node.remove   
+                        }
+                    } else {
+                        loopData.criticalNodes += node
+                        i++                    
+                    }
+                
+                }
+            }
+        }
+        modelCopy
+    }	
     
 }
 

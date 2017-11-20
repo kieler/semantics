@@ -324,48 +324,51 @@ class ProcessorDataManager {
                 
             val warnings = processorInstance.environment.getProperty(WARNINGS)
             if (warnings.size > 0) {
-                val warningNode = intermediateKGT.copy
-                warningNode.xpos = intermediatePosX
-                warningNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
-                intermediateRootNode.children += warningNode 
-                
-                val model = processorInstance.targetModel
-                if (model instanceof EObject) {
-                    val morModel = new MessageObjectListPair(warnings.get(null).fillUndefinedColors(WARNING), model)
-                    warningNode.setProperty(INTERMEDIATE_DATA, 
-                        new IntermediateData(processorInstance, processorNotification.compilationContext, morModel, view))
-                } else {
-                    warningNode.setProperty(INTERMEDIATE_DATA, 
-                        new IntermediateData(processorInstance, processorNotification.compilationContext, warnings, view))
-                }
+                for (warningKey : warnings.keySet) {
+                    val warningNode = intermediateKGT.copy
+                    warningNode.xpos = intermediatePosX
+                    warningNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
+                    intermediateRootNode.children += warningNode 
                     
-                warningNode.container.setFBColor(WARNING)
-                intermediatePosX += intermediatePosXInc
+                    val model = processorInstance.targetModel
+                    if (model instanceof EObject) {
+                        val morModel = new MessageObjectListPair(warnings.get(null).fillUndefinedColors(WARNING), 
+                            if (warningKey === null) model else warningKey)
+                        warningNode.setProperty(INTERMEDIATE_DATA, 
+                            new IntermediateData(processorInstance, processorNotification.compilationContext, morModel, view))
+                    } else {
+                        warningNode.setProperty(INTERMEDIATE_DATA, 
+                            new IntermediateData(processorInstance, processorNotification.compilationContext, warnings, view))
+                    }
+                        
+                    warningNode.container.setFBColor(WARNING)
+                    intermediatePosX += intermediatePosXInc
+                }
             }       
             
             val errors = processorInstance.environment.getProperty(ERRORS)
             if (errors.size > 0) {
-                    for (errorKey : errors.keySet) {
-                        val errorNode = intermediateKGT.copy
-                        errorNode.xpos = intermediatePosX
-                        errorNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
-                        intermediateRootNode.children += errorNode 
-                        
-                        val model = processorInstance.targetModel
-                        if (model instanceof EObject) {
-                            val morModel = new MessageObjectListPair(errors.get(errorKey).fillUndefinedColors(ERROR), 
-                                if (errorKey === null) model else errorKey)
-                            errorNode.setProperty(INTERMEDIATE_DATA, 
-                                new IntermediateData(processorInstance, processorNotification.compilationContext, morModel, view))
-                        } else {
-                            errorNode.setProperty(INTERMEDIATE_DATA, 
-                                new IntermediateData(processorInstance, processorNotification.compilationContext, errors, view))
-                        }
-                            
-                        errorNode.container.setFBColor(ERROR)
-                        intermediatePosX += intermediatePosXInc
+                for (errorKey : errors.keySet) {
+                    val errorNode = intermediateKGT.copy
+                    errorNode.xpos = intermediatePosX
+                    errorNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
+                    intermediateRootNode.children += errorNode 
+                    
+                    val model = processorInstance.targetModel
+                    if (model instanceof EObject) {
+                        val morModel = new MessageObjectListPair(errors.get(errorKey).fillUndefinedColors(ERROR), 
+                            if (errorKey === null) model else errorKey)
+                        errorNode.setProperty(INTERMEDIATE_DATA, 
+                            new IntermediateData(processorInstance, processorNotification.compilationContext, morModel, view))
+                    } else {
+                        errorNode.setProperty(INTERMEDIATE_DATA, 
+                            new IntermediateData(processorInstance, processorNotification.compilationContext, errors, view))
                     }
-              }
+                        
+                    errorNode.container.setFBColor(ERROR)
+                    intermediatePosX += intermediatePosXInc
+                }
+            }
         }               
         
         if (processorNotification instanceof ProcessorProgress) {

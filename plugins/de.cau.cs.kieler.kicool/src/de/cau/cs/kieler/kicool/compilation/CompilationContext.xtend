@@ -251,7 +251,19 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
                     return processor.environment
                 }
             }
+            
+            val errors = processor.environment.getProperty(ERRORS)
+            if (errors.keySet.contains(model)) {
+                return processor.environment
+            }
+            
+            val warnings = processor.environment.getProperty(WARNINGS)
+            if (warnings.keySet.contains(model)) {
+                return processor.environment
+            }
+            
         }
+        return null
     }
     
     override cloneObject() {
