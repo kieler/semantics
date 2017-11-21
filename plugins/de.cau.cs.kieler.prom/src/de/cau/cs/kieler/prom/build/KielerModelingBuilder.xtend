@@ -42,6 +42,8 @@ import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
 
 import static de.cau.cs.kieler.prom.FileExtensions.*
+import org.eclipse.core.resources.IFolder
+import org.eclipse.core.runtime.Path
 
 /**
  * The kieler modeling builder has three main tasks:
@@ -255,10 +257,10 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
             delta.accept(new IResourceDeltaVisitor() {
                 override visit(IResourceDelta delta) throws CoreException {
                     val res = delta.getResource()
-                    if(res.type == IResource.FILE && res.fileExtension != null && res.exists) {
+                    if(res.type == IResource.FILE && res.fileExtension !== null && res.exists) {
                         val file = res as IFile
                         if(isModel(file)) {
-                            changedModels.add(file)    
+                            changedModels.add(file)
                         } else if(isTemplate(file)) {
                             changedTemplates.add(file)
                         } else if(isBuildConfiguration(file)) {
@@ -271,7 +273,13 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
                     } else if(res.type == IResource.FOLDER) {
                         // Ignore files that were copied to bin folder by eclipse 
                         if(res.name.toLowerCase == "bin") {
-                            return false;
+                            return false
+                        }
+                        if(!res.exists && isOutputFolder(res as IFolder)) {
+                            // Do a full build if the output folder was deleted
+                            abortIncrementalBuild = true
+                            fullBuild
+                            return false
                         }
                     }
                     return true; // Visit children too
@@ -320,6 +328,26 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
      */
     private def void processAllTemplates() {
         processTemplates(null)
+    }
+    
+    /**
+     * Checks whether the given folder is the output folder of a model compiler.
+     * 
+     * @return true if the folder is an output folder of a model compiler.
+     */
+    private def boolean isOutputFolder(IFolder folder) {
+        if(buildConfig === null) {
+            initialize
+        }
+        if(buildConfig !== null) {
+            for(modelCompiler : modelCompilers) {
+                val outputFolder = project.getFolder(new Path(modelCompiler.outputFolder.stringValue))
+                if(outputFolder == folder) {
+                    return true
+                }
+            }
+        }
+        return false
     }
     
     /**
@@ -551,7 +579,7 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
             try {
                 val file = project.getFile(configFilePath)
                 val model = ModelImporter.load(file)
-                if(model != null && model instanceof BuildConfiguration) {
+                if(model !== null && model instanceof BuildConfiguration) {
                         initializeConfiguration(model as BuildConfiguration)
                 } else {
                     throw new Exception("Build configuration '" + file.projectRelativePath + "' could not be loaded")
@@ -561,8 +589,6 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
             }
         }
         
-        // At first build, search for wrapper code annotations in all model files.
-        // These are updated later, if a model file changes.
         if(!isInitialized) {
             isInitialized = true
             createResourceSet
