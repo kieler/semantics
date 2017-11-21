@@ -814,8 +814,8 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// overwrite to allow type definitions in a specific module
 	//TypeIdentifier:
 	//	type=EsterelValueType
-	//	| "combine" (type=EsterelValueType | idType=ID) "with" operator=EsterelCombineOperator | esterelType=[TypeDefinition]
-	//	| idType=ID;
+	//	| "combine" (type=EsterelValueType | idType=ID) "with" operator=EsterelCombineOperator | idType=ID
+	//	| esterelType=[TypeDefinition];
 	public EsterelGrammarAccess.TypeIdentifierElements getTypeIdentifierAccess() {
 		return gaEsterel.getTypeIdentifierAccess();
 	}
@@ -865,7 +865,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Constant:
-	//	name=ID ("=" initialValue=AnyValue)? ":" type=TypeIdentifier;
+	//	name=ID ("=" initialValue=Expression)? ":" type=TypeIdentifier;
 	public EsterelGrammarAccess.ConstantElements getConstantAccess() {
 		return gaEsterel.getConstantAccess();
 	}
@@ -1008,15 +1008,16 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// example 2:   A (combine boolean with or) // NO longer supported
 	//// example 3:   A := 0 : combine integer with '+'
 	//Signal:
-	//	name=ID (":=" initialValue=Expression
+	//	name=ID ((":=" initialValue=Expression)?
 	//	":" (type=EsterelValueType
 	//	| idType=ID
 	//	| "combine" (type=EsterelValueType | idType=ID) "with" (combineFunction=[Function] |
 	//	combineOperator=EsterelCombineOperator)) |
-	//	":" (type=EsterelValueType
+	//	"(" (":=" initialValue=Expression ":")? (type=EsterelValueType
 	//	| idType=ID
 	//	| "combine" (type=EsterelValueType | idType=ID) "with" (combineFunction=[Function] |
-	//	combineOperator=EsterelCombineOperator)))?;
+	//	combineOperator=EsterelCombineOperator))
+	//	")")?;
 	public EsterelGrammarAccess.SignalElements getSignalAccess() {
 		return gaEsterel.getSignalAccess();
 	}
@@ -1478,9 +1479,9 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//	"exec" (task=[Task] ("(" (referenceParameters+=[Variable] ("," referenceParameters+=[Variable])*)? ")" | '()') ("("
 	//	(valueParameters+=Expression ("," valueParameters+=Expression)*)? ")" | '()')
 	//	"return"
-	//	returnSignal=[Signal] ("do" statements+=EsterelParallel)?
-	//	| execCaseList+=ExecCase+)
-	//	"end" "exec"?;
+	//	returnSignal=[Signal] ("do" statements+=EsterelParallel "end" "exec"?)?
+	//	| execCaseList+=ExecCase+
+	//	"end" "exec"?);
 	public EsterelGrammarAccess.ExecElements getExecAccess() {
 		return gaEsterel.getExecAccess();
 	}
@@ -1644,7 +1645,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//SignalRenaming:
-	//	newName=[Signal] "/" oldName=[Signal];
+	//	newName=SignalOrTickReferenceExpression "/" oldName=SignalOrTickReferenceExpression;
 	public EsterelGrammarAccess.SignalRenamingElements getSignalRenamingAccess() {
 		return gaEsterel.getSignalRenamingAccess();
 	}
@@ -1675,7 +1676,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//	|
 	//	"watching"
 	//	watching=DelayExpression ("timeout"
-	//	watchingStatements+=super::InstructionStatement+
+	//	watchingStatements+=EsterelParallel
 	//	"end" "timeout"?)?);
 	public EsterelGrammarAccess.LegacyDoElements getLegacyDoAccess() {
 		return gaEsterel.getLegacyDoAccess();
@@ -1962,7 +1963,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//SignalAtomicExpression kexpressions::Expression:
 	//	"(" SignalExpression ")"
 	//	| SignalPreExpression
-	//	| SignalReferenceExpr;
+	//	| SignalOrTickReferenceExpression;
 	public EsterelGrammarAccess.SignalAtomicExpressionElements getSignalAtomicExpressionAccess() {
 		return gaEsterel.getSignalAtomicExpressionAccess();
 	}
@@ -1971,14 +1972,14 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getSignalAtomicExpressionAccess().getRule();
 	}
 
-	//SignalReferenceExpr kexpressions::ValuedObjectReference:
+	//SignalOrTickReferenceExpression kexpressions::ValuedObjectReference:
 	//	SignalReferenceExpression | TickSignalExpression;
-	public EsterelGrammarAccess.SignalReferenceExprElements getSignalReferenceExprAccess() {
-		return gaEsterel.getSignalReferenceExprAccess();
+	public EsterelGrammarAccess.SignalOrTickReferenceExpressionElements getSignalOrTickReferenceExpressionAccess() {
+		return gaEsterel.getSignalOrTickReferenceExpressionAccess();
 	}
 	
-	public ParserRule getSignalReferenceExprRule() {
-		return getSignalReferenceExprAccess().getRule();
+	public ParserRule getSignalOrTickReferenceExpressionRule() {
+		return getSignalOrTickReferenceExpressionAccess().getRule();
 	}
 
 	//SignalReferenceExpression kexpressions::ValuedObjectReference:
@@ -2003,7 +2004,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 
 	//SignalPreExpression kexpressions::Expression:
 	//	{kexpressions::OperatorExpression} operator=EsterelPreOperator
-	//	'(' subExpressions+=SignalReferenceExpr ')';
+	//	'(' subExpressions+=SignalOrTickReferenceExpression ')';
 	public EsterelGrammarAccess.SignalPreExpressionElements getSignalPreExpressionAccess() {
 		return gaEsterel.getSignalPreExpressionAccess();
 	}
@@ -2015,7 +2016,9 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// --> B.3.4 Delay Expressions <--
 	//// -------------------------------------
 	//DelayExpression:
-	//	(delay=IntValue | immediate?="immediate")? (expression=SignalReferenceExpr
+	//	delay=Expression (expression=SignalOrTickReferenceExpression
+	//	| expression=SignalPreExpression
+	//	| "[" expression=SignalExpression "]") | immediate?="immediate"? (expression=SignalOrTickReferenceExpression
 	//	| expression=SignalPreExpression
 	//	| "[" expression=SignalExpression "]");
 	public EsterelGrammarAccess.DelayExpressionElements getDelayExpressionAccess() {

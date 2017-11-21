@@ -1344,7 +1344,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     Constant returns Constant
 	 *
 	 * Constraint:
-	 *     (name=ID initialValue=AnyValue? type=TypeIdentifier)
+	 *     (name=ID initialValue=Expression? type=TypeIdentifier)
 	 */
 	protected void sequence_Constant(ISerializationContext context, Constant semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1356,7 +1356,10 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     DelayExpression returns DelayExpression
 	 *
 	 * Constraint:
-	 *     ((delay=IntValue | immediate?='immediate')? (expression=SignalReferenceExpr | expression=SignalPreExpression | expression=SignalExpression))
+	 *     (
+	 *         (delay=Expression (expression=SignalOrTickReferenceExpression | expression=SignalPreExpression | expression=SignalExpression)) | 
+	 *         (immediate?='immediate'? (expression=SignalOrTickReferenceExpression | expression=SignalPreExpression | expression=SignalExpression))
+	 *     )
 	 */
 	protected void sequence_DelayExpression(ISerializationContext context, DelayExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1749,11 +1752,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     LegacyDo returns Do
 	 *
 	 * Constraint:
-	 *     (
-	 *         annotations+=Annotation* 
-	 *         statements+=EsterelParallel 
-	 *         (delay=DelayExpression | (watching=DelayExpression watchingStatements+=InstructionStatement*))
-	 *     )
+	 *     (annotations+=Annotation* statements+=EsterelParallel (delay=DelayExpression | (watching=DelayExpression watchingStatements+=EsterelParallel?)))
 	 */
 	protected void sequence_LegacyDo(ISerializationContext context, Do semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2120,7 +2119,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (subExpressions+=SignalExpression_OperatorExpression_1_0 (operator=EsterelOrOperator subExpressions+=SignalAndExpression)+) | 
 	 *         (subExpressions+=SignalAndExpression_OperatorExpression_1_0 (operator=EsterelAndOperator subExpressions+=SignalNotExpression)+) | 
 	 *         (operator=EsterelNotOperator subExpressions+=SignalNotExpression) | 
-	 *         (operator=EsterelPreOperator subExpressions+=SignalReferenceExpr)
+	 *         (operator=EsterelPreOperator subExpressions+=SignalOrTickReferenceExpression)
 	 *     )
 	 */
 	protected void sequence_SignalAndExpression_SignalExpression_SignalNotExpression_SignalPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
@@ -2133,7 +2132,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     SignalPreExpression returns OperatorExpression
 	 *
 	 * Constraint:
-	 *     (operator=EsterelPreOperator subExpressions+=SignalReferenceExpr)
+	 *     (operator=EsterelPreOperator subExpressions+=SignalOrTickReferenceExpression)
 	 */
 	protected void sequence_SignalPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2148,7 +2147,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     SignalAndExpression.OperatorExpression_1_0 returns SignalReference
 	 *     SignalNotExpression returns SignalReference
 	 *     SignalAtomicExpression returns SignalReference
-	 *     SignalReferenceExpr returns SignalReference
+	 *     SignalOrTickReferenceExpression returns SignalReference
 	 *     SignalReferenceExpression returns SignalReference
 	 *
 	 * Constraint:
@@ -2170,7 +2169,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     SignalRenaming returns SignalRenaming
 	 *
 	 * Constraint:
-	 *     (newName=[Signal|ID] oldName=[Signal|ID])
+	 *     (newName=SignalOrTickReferenceExpression oldName=SignalOrTickReferenceExpression)
 	 */
 	protected void sequence_SignalRenaming(ISerializationContext context, SignalRenaming semanticObject) {
 		if (errorAcceptor != null) {
@@ -2180,8 +2179,8 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EsterelPackage.Literals.SIGNAL_RENAMING__OLD_NAME));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getSignalRenamingAccess().getNewNameSignalIDTerminalRuleCall_0_0_1(), semanticObject.eGet(EsterelPackage.Literals.SIGNAL_RENAMING__NEW_NAME, false));
-		feeder.accept(grammarAccess.getSignalRenamingAccess().getOldNameSignalIDTerminalRuleCall_2_0_1(), semanticObject.eGet(EsterelPackage.Literals.SIGNAL_RENAMING__OLD_NAME, false));
+		feeder.accept(grammarAccess.getSignalRenamingAccess().getNewNameSignalOrTickReferenceExpressionParserRuleCall_0_0(), semanticObject.getNewName());
+		feeder.accept(grammarAccess.getSignalRenamingAccess().getOldNameSignalOrTickReferenceExpressionParserRuleCall_2_0(), semanticObject.getOldName());
 		feeder.finish();
 	}
 	
@@ -2195,12 +2194,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         name=ID 
 	 *         (
 	 *             (
-	 *                 initialValue=Expression 
+	 *                 initialValue=Expression? 
 	 *                 (type=EsterelValueType | idType=ID | ((type=EsterelValueType | idType=ID) (combineFunction=[Function|ID] | combineOperator=EsterelCombineOperator)))
 	 *             ) | 
-	 *             type=EsterelValueType | 
-	 *             idType=ID | 
-	 *             ((type=EsterelValueType | idType=ID) (combineFunction=[Function|ID] | combineOperator=EsterelCombineOperator))
+	 *             (
+	 *                 initialValue=Expression? 
+	 *                 (type=EsterelValueType | idType=ID | ((type=EsterelValueType | idType=ID) (combineFunction=[Function|ID] | combineOperator=EsterelCombineOperator)))
+	 *             )
 	 *         )?
 	 *     )
 	 */
@@ -2301,7 +2301,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     SignalAndExpression.OperatorExpression_1_0 returns TickReference
 	 *     SignalNotExpression returns TickReference
 	 *     SignalAtomicExpression returns TickReference
-	 *     SignalReferenceExpr returns TickReference
+	 *     SignalOrTickReferenceExpression returns TickReference
 	 *     TickSignalExpression returns TickReference
 	 *
 	 * Constraint:
@@ -2538,7 +2538,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     TypeIdentifier returns TypeIdentifier
 	 *
 	 * Constraint:
-	 *     (type=EsterelValueType | ((type=EsterelValueType | idType=ID) operator=EsterelCombineOperator) | esterelType=[TypeDefinition|ID] | idType=ID)
+	 *     (type=EsterelValueType | ((type=EsterelValueType | idType=ID) operator=EsterelCombineOperator) | idType=ID | esterelType=[TypeDefinition|ID])
 	 */
 	protected void sequence_TypeIdentifier(ISerializationContext context, TypeIdentifier semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

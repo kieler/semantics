@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.esterel;
 
+import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.Value;
 
 /**
@@ -58,12 +59,12 @@ public interface ConstantRenaming extends Renaming {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>New Value</em>' containment reference.
-     * @see #setNewValue(Value)
+     * @see #setNewValue(Expression)
      * @see de.cau.cs.kieler.esterel.EsterelPackage#getConstantRenaming_NewValue()
      * @model containment="true"
      * @generated
      */
-    Value getNewValue();
+    Expression getNewValue();
 
     /**
      * Sets the value of the '{@link de.cau.cs.kieler.esterel.ConstantRenaming#getNewValue <em>New Value</em>}' containment reference.
@@ -73,7 +74,7 @@ public interface ConstantRenaming extends Renaming {
      * @see #getNewValue()
      * @generated
      */
-    void setNewValue(Value value);
+    void setNewValue(Expression value);
 
     /**
      * Returns the value of the '<em><b>Old Name</b></em>' reference.

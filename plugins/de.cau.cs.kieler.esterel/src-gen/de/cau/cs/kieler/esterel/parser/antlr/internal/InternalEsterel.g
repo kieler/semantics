@@ -513,26 +513,9 @@ ruleTypeIdentifier returns [EObject current=null]
 ))
     |(
 (
-		{ 
-		  /* */ 
-		}
+		lv_idType_6_0=RULE_ID
 		{
-			if ($current==null) {
-	            $current = createModelElement(grammarAccess.getTypeIdentifierRule());
-	        }
-        }
-	otherlv_6=RULE_ID
-	{
-		newLeafNode(otherlv_6, grammarAccess.getTypeIdentifierAccess().getEsterelTypeTypeDefinitionCrossReference_2_0()); 
-	}
-
-)
-)
-    |(
-(
-		lv_idType_7_0=RULE_ID
-		{
-			newLeafNode(lv_idType_7_0, grammarAccess.getTypeIdentifierAccess().getIdTypeIDTerminalRuleCall_3_0()); 
+			newLeafNode(lv_idType_6_0, grammarAccess.getTypeIdentifierAccess().getIdTypeIDTerminalRuleCall_2_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -541,9 +524,26 @@ ruleTypeIdentifier returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"idType",
-        		lv_idType_7_0, 
+        		lv_idType_6_0, 
         		"de.cau.cs.kieler.annotations.Annotations.ID");
 	    }
+
+)
+)
+    |(
+(
+		{ 
+		  /* */ 
+		}
+		{
+			if ($current==null) {
+	            $current = createModelElement(grammarAccess.getTypeIdentifierRule());
+	        }
+        }
+	otherlv_7=RULE_ID
+	{
+		newLeafNode(otherlv_7, grammarAccess.getTypeIdentifierAccess().getEsterelTypeTypeDefinitionCrossReference_3_0()); 
+	}
 
 )
 ))
@@ -805,9 +805,9 @@ ruleConstant returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getConstantAccess().getInitialValueAnyValueParserRuleCall_1_1_0()); 
+	        newCompositeNode(grammarAccess.getConstantAccess().getInitialValueExpressionParserRuleCall_1_1_0()); 
 	    }
-		lv_initialValue_2_0=ruleAnyValue		{
+		lv_initialValue_2_0=ruleExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getConstantRule());
 	        }
@@ -815,7 +815,7 @@ ruleConstant returns [EObject current=null]
        			$current, 
        			"initialValue",
         		lv_initialValue_2_0, 
-        		"de.cau.cs.kieler.kexpressions.KExpressions.AnyValue");
+        		"de.cau.cs.kieler.esterel.Esterel.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1894,14 +1894,14 @@ ruleSignal returns [EObject current=null]
 	    }
 
 )
-)((	otherlv_1=':=' 
+)(((	otherlv_1=':=' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getSignalAccess().getColonEqualsSignKeyword_1_0_0());
+    	newLeafNode(otherlv_1, grammarAccess.getSignalAccess().getColonEqualsSignKeyword_1_0_0_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSignalAccess().getInitialValueExpressionParserRuleCall_1_0_1_0()); 
+	        newCompositeNode(grammarAccess.getSignalAccess().getInitialValueExpressionParserRuleCall_1_0_0_1_0()); 
 	    }
 		lv_initialValue_2_0=ruleExpression		{
 	        if ($current==null) {
@@ -1916,14 +1916,14 @@ ruleSignal returns [EObject current=null]
 	    }
 
 )
-)	otherlv_3=':' 
+))?	otherlv_3=':' 
     {
-    	newLeafNode(otherlv_3, grammarAccess.getSignalAccess().getColonKeyword_1_0_2());
+    	newLeafNode(otherlv_3, grammarAccess.getSignalAccess().getColonKeyword_1_0_1());
     }
 ((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSignalAccess().getTypeEsterelValueTypeEnumRuleCall_1_0_3_0_0()); 
+	        newCompositeNode(grammarAccess.getSignalAccess().getTypeEsterelValueTypeEnumRuleCall_1_0_2_0_0()); 
 	    }
 		lv_type_4_0=ruleEsterelValueType		{
 	        if ($current==null) {
@@ -1943,7 +1943,7 @@ ruleSignal returns [EObject current=null]
 (
 		lv_idType_5_0=RULE_ID
 		{
-			newLeafNode(lv_idType_5_0, grammarAccess.getSignalAccess().getIdTypeIDTerminalRuleCall_1_0_3_1_0()); 
+			newLeafNode(lv_idType_5_0, grammarAccess.getSignalAccess().getIdTypeIDTerminalRuleCall_1_0_2_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1960,12 +1960,12 @@ ruleSignal returns [EObject current=null]
 )
     |(	otherlv_6='combine' 
     {
-    	newLeafNode(otherlv_6, grammarAccess.getSignalAccess().getCombineKeyword_1_0_3_2_0());
+    	newLeafNode(otherlv_6, grammarAccess.getSignalAccess().getCombineKeyword_1_0_2_2_0());
     }
 ((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSignalAccess().getTypeEsterelValueTypeEnumRuleCall_1_0_3_2_1_0_0()); 
+	        newCompositeNode(grammarAccess.getSignalAccess().getTypeEsterelValueTypeEnumRuleCall_1_0_2_2_1_0_0()); 
 	    }
 		lv_type_7_0=ruleEsterelValueType		{
 	        if ($current==null) {
@@ -1985,7 +1985,7 @@ ruleSignal returns [EObject current=null]
 (
 		lv_idType_8_0=RULE_ID
 		{
-			newLeafNode(lv_idType_8_0, grammarAccess.getSignalAccess().getIdTypeIDTerminalRuleCall_1_0_3_2_1_1_0()); 
+			newLeafNode(lv_idType_8_0, grammarAccess.getSignalAccess().getIdTypeIDTerminalRuleCall_1_0_2_2_1_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -2001,7 +2001,7 @@ ruleSignal returns [EObject current=null]
 )
 ))	otherlv_9='with' 
     {
-    	newLeafNode(otherlv_9, grammarAccess.getSignalAccess().getWithKeyword_1_0_3_2_2());
+    	newLeafNode(otherlv_9, grammarAccess.getSignalAccess().getWithKeyword_1_0_2_2_2());
     }
 ((
 (
@@ -2015,7 +2015,7 @@ ruleSignal returns [EObject current=null]
         }
 	otherlv_10=RULE_ID
 	{
-		newLeafNode(otherlv_10, grammarAccess.getSignalAccess().getCombineFunctionFunctionCrossReference_1_0_3_2_3_0_0()); 
+		newLeafNode(otherlv_10, grammarAccess.getSignalAccess().getCombineFunctionFunctionCrossReference_1_0_2_2_3_0_0()); 
 	}
 
 )
@@ -2023,7 +2023,7 @@ ruleSignal returns [EObject current=null]
     |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSignalAccess().getCombineOperatorEsterelCombineOperatorEnumRuleCall_1_0_3_2_3_1_0()); 
+	        newCompositeNode(grammarAccess.getSignalAccess().getCombineOperatorEsterelCombineOperatorEnumRuleCall_1_0_2_2_3_1_0()); 
 	    }
 		lv_combineOperator_11_0=ruleEsterelCombineOperator		{
 	        if ($current==null) {
@@ -2039,56 +2039,40 @@ ruleSignal returns [EObject current=null]
 
 )
 )))))
-    |(	otherlv_12=':' 
+    |(	otherlv_12='(' 
     {
-    	newLeafNode(otherlv_12, grammarAccess.getSignalAccess().getColonKeyword_1_1_0());
+    	newLeafNode(otherlv_12, grammarAccess.getSignalAccess().getLeftParenthesisKeyword_1_1_0());
     }
-((
+(	otherlv_13=':=' 
+    {
+    	newLeafNode(otherlv_13, grammarAccess.getSignalAccess().getColonEqualsSignKeyword_1_1_1_0());
+    }
+(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSignalAccess().getTypeEsterelValueTypeEnumRuleCall_1_1_1_0_0()); 
+	        newCompositeNode(grammarAccess.getSignalAccess().getInitialValueExpressionParserRuleCall_1_1_1_1_0()); 
 	    }
-		lv_type_13_0=ruleEsterelValueType		{
+		lv_initialValue_14_0=ruleExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getSignalRule());
 	        }
        		set(
        			$current, 
-       			"type",
-        		lv_type_13_0, 
-        		"de.cau.cs.kieler.esterel.Esterel.EsterelValueType");
+       			"initialValue",
+        		lv_initialValue_14_0, 
+        		"de.cau.cs.kieler.esterel.Esterel.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)
-    |(
-(
-		lv_idType_14_0=RULE_ID
-		{
-			newLeafNode(lv_idType_14_0, grammarAccess.getSignalAccess().getIdTypeIDTerminalRuleCall_1_1_1_1_0()); 
-		}
-		{
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getSignalRule());
-	        }
-       		setWithLastConsumed(
-       			$current, 
-       			"idType",
-        		lv_idType_14_0, 
-        		"de.cau.cs.kieler.annotations.Annotations.ID");
-	    }
-
-)
-)
-    |(	otherlv_15='combine' 
+)	otherlv_15=':' 
     {
-    	newLeafNode(otherlv_15, grammarAccess.getSignalAccess().getCombineKeyword_1_1_1_2_0());
+    	newLeafNode(otherlv_15, grammarAccess.getSignalAccess().getColonKeyword_1_1_1_2());
     }
-((
+)?((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSignalAccess().getTypeEsterelValueTypeEnumRuleCall_1_1_1_2_1_0_0()); 
+	        newCompositeNode(grammarAccess.getSignalAccess().getTypeEsterelValueTypeEnumRuleCall_1_1_2_0_0()); 
 	    }
 		lv_type_16_0=ruleEsterelValueType		{
 	        if ($current==null) {
@@ -2108,7 +2092,7 @@ ruleSignal returns [EObject current=null]
 (
 		lv_idType_17_0=RULE_ID
 		{
-			newLeafNode(lv_idType_17_0, grammarAccess.getSignalAccess().getIdTypeIDTerminalRuleCall_1_1_1_2_1_1_0()); 
+			newLeafNode(lv_idType_17_0, grammarAccess.getSignalAccess().getIdTypeIDTerminalRuleCall_1_1_2_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -2122,9 +2106,51 @@ ruleSignal returns [EObject current=null]
 	    }
 
 )
-))	otherlv_18='with' 
+)
+    |(	otherlv_18='combine' 
     {
-    	newLeafNode(otherlv_18, grammarAccess.getSignalAccess().getWithKeyword_1_1_1_2_2());
+    	newLeafNode(otherlv_18, grammarAccess.getSignalAccess().getCombineKeyword_1_1_2_2_0());
+    }
+((
+(
+		{ 
+	        newCompositeNode(grammarAccess.getSignalAccess().getTypeEsterelValueTypeEnumRuleCall_1_1_2_2_1_0_0()); 
+	    }
+		lv_type_19_0=ruleEsterelValueType		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getSignalRule());
+	        }
+       		set(
+       			$current, 
+       			"type",
+        		lv_type_19_0, 
+        		"de.cau.cs.kieler.esterel.Esterel.EsterelValueType");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)
+    |(
+(
+		lv_idType_20_0=RULE_ID
+		{
+			newLeafNode(lv_idType_20_0, grammarAccess.getSignalAccess().getIdTypeIDTerminalRuleCall_1_1_2_2_1_1_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getSignalRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"idType",
+        		lv_idType_20_0, 
+        		"de.cau.cs.kieler.annotations.Annotations.ID");
+	    }
+
+)
+))	otherlv_21='with' 
+    {
+    	newLeafNode(otherlv_21, grammarAccess.getSignalAccess().getWithKeyword_1_1_2_2_2());
     }
 ((
 (
@@ -2136,9 +2162,9 @@ ruleSignal returns [EObject current=null]
 	            $current = createModelElement(grammarAccess.getSignalRule());
 	        }
         }
-	otherlv_19=RULE_ID
+	otherlv_22=RULE_ID
 	{
-		newLeafNode(otherlv_19, grammarAccess.getSignalAccess().getCombineFunctionFunctionCrossReference_1_1_1_2_3_0_0()); 
+		newLeafNode(otherlv_22, grammarAccess.getSignalAccess().getCombineFunctionFunctionCrossReference_1_1_2_2_3_0_0()); 
 	}
 
 )
@@ -2146,22 +2172,26 @@ ruleSignal returns [EObject current=null]
     |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSignalAccess().getCombineOperatorEsterelCombineOperatorEnumRuleCall_1_1_1_2_3_1_0()); 
+	        newCompositeNode(grammarAccess.getSignalAccess().getCombineOperatorEsterelCombineOperatorEnumRuleCall_1_1_2_2_3_1_0()); 
 	    }
-		lv_combineOperator_20_0=ruleEsterelCombineOperator		{
+		lv_combineOperator_23_0=ruleEsterelCombineOperator		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getSignalRule());
 	        }
        		set(
        			$current, 
        			"combineOperator",
-        		lv_combineOperator_20_0, 
+        		lv_combineOperator_23_0, 
         		"de.cau.cs.kieler.esterel.Esterel.EsterelCombineOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))))))?)
+))))	otherlv_24=')' 
+    {
+    	newLeafNode(otherlv_24, grammarAccess.getSignalAccess().getRightParenthesisKeyword_1_1_3());
+    }
+))?)
 ;
 
 
@@ -5842,34 +5872,42 @@ ruleExec returns [EObject current=null]
 	    }
 
 )
-))?)
-    |(
+)	otherlv_19='end' 
+    {
+    	newLeafNode(otherlv_19, grammarAccess.getExecAccess().getEndKeyword_2_0_5_2());
+    }
+(	otherlv_20='exec' 
+    {
+    	newLeafNode(otherlv_20, grammarAccess.getExecAccess().getExecKeyword_2_0_5_3());
+    }
+)?)?)
+    |((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getExecAccess().getExecCaseListExecCaseParserRuleCall_2_1_0()); 
+	        newCompositeNode(grammarAccess.getExecAccess().getExecCaseListExecCaseParserRuleCall_2_1_0_0()); 
 	    }
-		lv_execCaseList_19_0=ruleExecCase		{
+		lv_execCaseList_21_0=ruleExecCase		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getExecRule());
 	        }
        		add(
        			$current, 
        			"execCaseList",
-        		lv_execCaseList_19_0, 
+        		lv_execCaseList_21_0, 
         		"de.cau.cs.kieler.esterel.Esterel.ExecCase");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)+)	otherlv_20='end' 
+)+	otherlv_22='end' 
     {
-    	newLeafNode(otherlv_20, grammarAccess.getExecAccess().getEndKeyword_3());
+    	newLeafNode(otherlv_22, grammarAccess.getExecAccess().getEndKeyword_2_1_1());
     }
-(	otherlv_21='exec' 
+(	otherlv_23='exec' 
     {
-    	newLeafNode(otherlv_21, grammarAccess.getExecAccess().getExecKeyword_4());
+    	newLeafNode(otherlv_23, grammarAccess.getExecAccess().getExecKeyword_2_1_2());
     }
-)?)
+)?)))
 ;
 
 
@@ -7372,17 +7410,19 @@ ruleSignalRenaming returns [EObject current=null]
 ((
 (
 		{ 
-		  /* */ 
-		}
-		{
-			if ($current==null) {
-	            $current = createModelElement(grammarAccess.getSignalRenamingRule());
+	        newCompositeNode(grammarAccess.getSignalRenamingAccess().getNewNameSignalOrTickReferenceExpressionParserRuleCall_0_0()); 
+	    }
+		lv_newName_0_0=ruleSignalOrTickReferenceExpression		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getSignalRenamingRule());
 	        }
-        }
-	otherlv_0=RULE_ID
-	{
-		newLeafNode(otherlv_0, grammarAccess.getSignalRenamingAccess().getNewNameSignalCrossReference_0_0()); 
-	}
+       		set(
+       			$current, 
+       			"newName",
+        		lv_newName_0_0, 
+        		"de.cau.cs.kieler.esterel.Esterel.SignalOrTickReferenceExpression");
+	        afterParserOrEnumRuleCall();
+	    }
 
 )
 )	otherlv_1='/' 
@@ -7392,17 +7432,19 @@ ruleSignalRenaming returns [EObject current=null]
 (
 (
 		{ 
-		  /* */ 
-		}
-		{
-			if ($current==null) {
-	            $current = createModelElement(grammarAccess.getSignalRenamingRule());
+	        newCompositeNode(grammarAccess.getSignalRenamingAccess().getOldNameSignalOrTickReferenceExpressionParserRuleCall_2_0()); 
+	    }
+		lv_oldName_2_0=ruleSignalOrTickReferenceExpression		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getSignalRenamingRule());
 	        }
-        }
-	otherlv_2=RULE_ID
-	{
-		newLeafNode(otherlv_2, grammarAccess.getSignalRenamingAccess().getOldNameSignalCrossReference_2_0()); 
-	}
+       		set(
+       			$current, 
+       			"oldName",
+        		lv_oldName_2_0, 
+        		"de.cau.cs.kieler.esterel.Esterel.SignalOrTickReferenceExpression");
+	        afterParserOrEnumRuleCall();
+	    }
 
 )
 ))
@@ -7636,9 +7678,9 @@ ruleLegacyDo returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getLegacyDoAccess().getWatchingStatementsInstructionStatementParserRuleCall_3_1_2_1_0()); 
+	        newCompositeNode(grammarAccess.getLegacyDoAccess().getWatchingStatementsEsterelParallelParserRuleCall_3_1_2_1_0()); 
 	    }
-		lv_watchingStatements_8_0=ruleInstructionStatement		{
+		lv_watchingStatements_8_0=ruleEsterelParallel		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getLegacyDoRule());
 	        }
@@ -7646,12 +7688,12 @@ ruleLegacyDo returns [EObject current=null]
        			$current, 
        			"watchingStatements",
         		lv_watchingStatements_8_0, 
-        		"de.cau.cs.kieler.esterel.Esterel.InstructionStatement");
+        		"de.cau.cs.kieler.esterel.Esterel.EsterelParallel");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)+	otherlv_9='end' 
+)	otherlv_9='end' 
     {
     	newLeafNode(otherlv_9, grammarAccess.getLegacyDoAccess().getEndKeyword_3_1_2_2());
     }
@@ -8613,11 +8655,11 @@ ruleSignalAtomicExpression returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getSignalAtomicExpressionAccess().getSignalReferenceExprParserRuleCall_2()); 
+        newCompositeNode(grammarAccess.getSignalAtomicExpressionAccess().getSignalOrTickReferenceExpressionParserRuleCall_2()); 
     }
-    this_SignalReferenceExpr_4=ruleSignalReferenceExpr
+    this_SignalOrTickReferenceExpression_4=ruleSignalOrTickReferenceExpression
     { 
-        $current = $this_SignalReferenceExpr_4.current; 
+        $current = $this_SignalOrTickReferenceExpression_4.current; 
         afterParserOrEnumRuleCall();
     }
 )
@@ -8627,17 +8669,17 @@ ruleSignalAtomicExpression returns [EObject current=null]
 
 
 
-// Entry rule entryRuleSignalReferenceExpr
-entryRuleSignalReferenceExpr returns [EObject current=null] 
+// Entry rule entryRuleSignalOrTickReferenceExpression
+entryRuleSignalOrTickReferenceExpression returns [EObject current=null] 
 	:
-	{ newCompositeNode(grammarAccess.getSignalReferenceExprRule()); }
-	 iv_ruleSignalReferenceExpr=ruleSignalReferenceExpr 
-	 { $current=$iv_ruleSignalReferenceExpr.current; } 
+	{ newCompositeNode(grammarAccess.getSignalOrTickReferenceExpressionRule()); }
+	 iv_ruleSignalOrTickReferenceExpression=ruleSignalOrTickReferenceExpression 
+	 { $current=$iv_ruleSignalOrTickReferenceExpression.current; } 
 	 EOF 
 ;
 
-// Rule SignalReferenceExpr
-ruleSignalReferenceExpr returns [EObject current=null] 
+// Rule SignalOrTickReferenceExpression
+ruleSignalOrTickReferenceExpression returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
@@ -8646,7 +8688,7 @@ ruleSignalReferenceExpr returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getSignalReferenceExprAccess().getSignalReferenceExpressionParserRuleCall_0()); 
+        newCompositeNode(grammarAccess.getSignalOrTickReferenceExpressionAccess().getSignalReferenceExpressionParserRuleCall_0()); 
     }
     this_SignalReferenceExpression_0=ruleSignalReferenceExpression
     { 
@@ -8659,7 +8701,7 @@ ruleSignalReferenceExpr returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getSignalReferenceExprAccess().getTickSignalExpressionParserRuleCall_1()); 
+        newCompositeNode(grammarAccess.getSignalOrTickReferenceExpressionAccess().getTickSignalExpressionParserRuleCall_1()); 
     }
     this_TickSignalExpression_1=ruleTickSignalExpression
     { 
@@ -8801,9 +8843,9 @@ ruleSignalPreExpression returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSignalPreExpressionAccess().getSubExpressionsSignalReferenceExprParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getSignalPreExpressionAccess().getSubExpressionsSignalOrTickReferenceExpressionParserRuleCall_3_0()); 
 	    }
-		lv_subExpressions_3_0=ruleSignalReferenceExpr		{
+		lv_subExpressions_3_0=ruleSignalOrTickReferenceExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getSignalPreExpressionRule());
 	        }
@@ -8811,7 +8853,7 @@ ruleSignalPreExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_3_0, 
-        		"de.cau.cs.kieler.esterel.Esterel.SignalReferenceExpr");
+        		"de.cau.cs.kieler.esterel.Esterel.SignalOrTickReferenceExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -8844,9 +8886,9 @@ ruleDelayExpression returns [EObject current=null]
 (((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getDelayExpressionAccess().getDelayIntValueParserRuleCall_0_0_0()); 
+	        newCompositeNode(grammarAccess.getDelayExpressionAccess().getDelayExpressionParserRuleCall_0_0_0()); 
 	    }
-		lv_delay_0_0=ruleIntValue		{
+		lv_delay_0_0=ruleExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getDelayExpressionRule());
 	        }
@@ -8854,7 +8896,25 @@ ruleDelayExpression returns [EObject current=null]
        			$current, 
        			"delay",
         		lv_delay_0_0, 
-        		"de.cau.cs.kieler.kexpressions.KExpressions.IntValue");
+        		"de.cau.cs.kieler.esterel.Esterel.Expression");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)((
+(
+		{ 
+	        newCompositeNode(grammarAccess.getDelayExpressionAccess().getExpressionSignalOrTickReferenceExpressionParserRuleCall_0_1_0_0()); 
+	    }
+		lv_expression_1_0=ruleSignalOrTickReferenceExpression		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getDelayExpressionRule());
+	        }
+       		set(
+       			$current, 
+       			"expression",
+        		lv_expression_1_0, 
+        		"de.cau.cs.kieler.esterel.Esterel.SignalOrTickReferenceExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -8862,9 +8922,55 @@ ruleDelayExpression returns [EObject current=null]
 )
     |(
 (
-		lv_immediate_1_0=	'immediate' 
+		{ 
+	        newCompositeNode(grammarAccess.getDelayExpressionAccess().getExpressionSignalPreExpressionParserRuleCall_0_1_1_0()); 
+	    }
+		lv_expression_2_0=ruleSignalPreExpression		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getDelayExpressionRule());
+	        }
+       		set(
+       			$current, 
+       			"expression",
+        		lv_expression_2_0, 
+        		"de.cau.cs.kieler.esterel.Esterel.SignalPreExpression");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)
+    |(	otherlv_3='[' 
     {
-        newLeafNode(lv_immediate_1_0, grammarAccess.getDelayExpressionAccess().getImmediateImmediateKeyword_0_1_0());
+    	newLeafNode(otherlv_3, grammarAccess.getDelayExpressionAccess().getLeftSquareBracketKeyword_0_1_2_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getDelayExpressionAccess().getExpressionSignalExpressionParserRuleCall_0_1_2_1_0()); 
+	    }
+		lv_expression_4_0=ruleSignalExpression		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getDelayExpressionRule());
+	        }
+       		set(
+       			$current, 
+       			"expression",
+        		lv_expression_4_0, 
+        		"de.cau.cs.kieler.esterel.Esterel.SignalExpression");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)	otherlv_5=']' 
+    {
+    	newLeafNode(otherlv_5, grammarAccess.getDelayExpressionAccess().getRightSquareBracketKeyword_0_1_2_2());
+    }
+)))
+    |((
+(
+		lv_immediate_6_0=	'immediate' 
+    {
+        newLeafNode(lv_immediate_6_0, grammarAccess.getDelayExpressionAccess().getImmediateImmediateKeyword_1_0_0());
     }
  
 	    {
@@ -8875,20 +8981,20 @@ ruleDelayExpression returns [EObject current=null]
 	    }
 
 )
-))?((
+)?((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getDelayExpressionAccess().getExpressionSignalReferenceExprParserRuleCall_1_0_0()); 
+	        newCompositeNode(grammarAccess.getDelayExpressionAccess().getExpressionSignalOrTickReferenceExpressionParserRuleCall_1_1_0_0()); 
 	    }
-		lv_expression_2_0=ruleSignalReferenceExpr		{
+		lv_expression_7_0=ruleSignalOrTickReferenceExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getDelayExpressionRule());
 	        }
        		set(
        			$current, 
        			"expression",
-        		lv_expression_2_0, 
-        		"de.cau.cs.kieler.esterel.Esterel.SignalReferenceExpr");
+        		lv_expression_7_0, 
+        		"de.cau.cs.kieler.esterel.Esterel.SignalOrTickReferenceExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -8897,49 +9003,49 @@ ruleDelayExpression returns [EObject current=null]
     |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getDelayExpressionAccess().getExpressionSignalPreExpressionParserRuleCall_1_1_0()); 
+	        newCompositeNode(grammarAccess.getDelayExpressionAccess().getExpressionSignalPreExpressionParserRuleCall_1_1_1_0()); 
 	    }
-		lv_expression_3_0=ruleSignalPreExpression		{
+		lv_expression_8_0=ruleSignalPreExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getDelayExpressionRule());
 	        }
        		set(
        			$current, 
        			"expression",
-        		lv_expression_3_0, 
+        		lv_expression_8_0, 
         		"de.cau.cs.kieler.esterel.Esterel.SignalPreExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
 )
-    |(	otherlv_4='[' 
+    |(	otherlv_9='[' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getDelayExpressionAccess().getLeftSquareBracketKeyword_1_2_0());
+    	newLeafNode(otherlv_9, grammarAccess.getDelayExpressionAccess().getLeftSquareBracketKeyword_1_1_2_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getDelayExpressionAccess().getExpressionSignalExpressionParserRuleCall_1_2_1_0()); 
+	        newCompositeNode(grammarAccess.getDelayExpressionAccess().getExpressionSignalExpressionParserRuleCall_1_1_2_1_0()); 
 	    }
-		lv_expression_5_0=ruleSignalExpression		{
+		lv_expression_10_0=ruleSignalExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getDelayExpressionRule());
 	        }
        		set(
        			$current, 
        			"expression",
-        		lv_expression_5_0, 
+        		lv_expression_10_0, 
         		"de.cau.cs.kieler.esterel.Esterel.SignalExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)	otherlv_6=']' 
+)	otherlv_11=']' 
     {
-    	newLeafNode(otherlv_6, grammarAccess.getDelayExpressionAccess().getRightSquareBracketKeyword_1_2_2());
+    	newLeafNode(otherlv_11, grammarAccess.getDelayExpressionAccess().getRightSquareBracketKeyword_1_1_2_2());
     }
-)))
+))))
 ;
 
 

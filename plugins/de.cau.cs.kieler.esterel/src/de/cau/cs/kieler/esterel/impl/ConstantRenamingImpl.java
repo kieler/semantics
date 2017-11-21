@@ -6,6 +6,7 @@ import de.cau.cs.kieler.esterel.Constant;
 import de.cau.cs.kieler.esterel.ConstantRenaming;
 import de.cau.cs.kieler.esterel.EsterelPackage;
 
+import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.Value;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -51,7 +52,7 @@ public class ConstantRenamingImpl extends MinimalEObjectImpl.Container implement
      * @generated
      * @ordered
      */
-    protected Value newValue;
+    protected Expression newValue;
 
     /**
      * The cached value of the '{@link #getOldName() <em>Old Name</em>}' reference.
@@ -125,7 +126,7 @@ public class ConstantRenamingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
-    public Value getNewValue() {
+    public Expression getNewValue() {
         return newValue;
     }
 
@@ -134,8 +135,8 @@ public class ConstantRenamingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetNewValue(Value newNewValue, NotificationChain msgs) {
-        Value oldNewValue = newValue;
+    public NotificationChain basicSetNewValue(Expression newNewValue, NotificationChain msgs) {
+        Expression oldNewValue = newValue;
         newValue = newNewValue;
         if (eNotificationRequired()) {
             ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.CONSTANT_RENAMING__NEW_VALUE, oldNewValue, newNewValue);
@@ -149,7 +150,7 @@ public class ConstantRenamingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setNewValue(Value newNewValue) {
+    public void setNewValue(Expression newNewValue) {
         if (newNewValue != newValue) {
             NotificationChain msgs = null;
             if (newValue != null)
@@ -247,7 +248,7 @@ public class ConstantRenamingImpl extends MinimalEObjectImpl.Container implement
                 setNewName((Constant)newValue);
                 return;
             case EsterelPackage.CONSTANT_RENAMING__NEW_VALUE:
-                setNewValue((Value)newValue);
+                setNewValue((Expression)newValue);
                 return;
             case EsterelPackage.CONSTANT_RENAMING__OLD_NAME:
                 setOldName((Constant)newValue);
@@ -268,7 +269,7 @@ public class ConstantRenamingImpl extends MinimalEObjectImpl.Container implement
                 setNewName((Constant)null);
                 return;
             case EsterelPackage.CONSTANT_RENAMING__NEW_VALUE:
-                setNewValue((Value)null);
+                setNewValue((Expression)null);
                 return;
             case EsterelPackage.CONSTANT_RENAMING__OLD_NAME:
                 setOldName((Constant)null);

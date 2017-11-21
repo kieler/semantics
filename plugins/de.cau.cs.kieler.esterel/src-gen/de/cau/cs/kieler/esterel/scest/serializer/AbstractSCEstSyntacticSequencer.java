@@ -40,7 +40,8 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	protected AbstractElementAlias match_EveryDo_EveryKeyword_6_q;
 	protected AbstractElementAlias match_ExecCase_LeftParenthesisRightParenthesisKeyword_3_1_or___LeftParenthesisKeyword_3_0_0_RightParenthesisKeyword_3_0_2__;
 	protected AbstractElementAlias match_ExecCase_LeftParenthesisRightParenthesisKeyword_4_1_or___LeftParenthesisKeyword_4_0_0_RightParenthesisKeyword_4_0_2__;
-	protected AbstractElementAlias match_Exec_ExecKeyword_4_q;
+	protected AbstractElementAlias match_Exec_ExecKeyword_2_0_5_3_q;
+	protected AbstractElementAlias match_Exec_ExecKeyword_2_1_2_q;
 	protected AbstractElementAlias match_Exec_LeftParenthesisRightParenthesisKeyword_2_0_1_1_or___LeftParenthesisKeyword_2_0_1_0_0_RightParenthesisKeyword_2_0_1_0_2__;
 	protected AbstractElementAlias match_Exec_LeftParenthesisRightParenthesisKeyword_2_0_2_1_or___LeftParenthesisKeyword_2_0_2_0_0_RightParenthesisKeyword_2_0_2_0_2__;
 	protected AbstractElementAlias match_Function_LeftParenthesisRightParenthesisKeyword_1_1_or___LeftParenthesisKeyword_1_0_0_RightParenthesisKeyword_1_0_2__;
@@ -85,7 +86,8 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 		match_EveryDo_EveryKeyword_6_q = new TokenAlias(false, true, grammarAccess.getEveryDoAccess().getEveryKeyword_6());
 		match_ExecCase_LeftParenthesisRightParenthesisKeyword_3_1_or___LeftParenthesisKeyword_3_0_0_RightParenthesisKeyword_3_0_2__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getExecCaseAccess().getLeftParenthesisKeyword_3_0_0()), new TokenAlias(false, false, grammarAccess.getExecCaseAccess().getRightParenthesisKeyword_3_0_2())), new TokenAlias(false, false, grammarAccess.getExecCaseAccess().getLeftParenthesisRightParenthesisKeyword_3_1()));
 		match_ExecCase_LeftParenthesisRightParenthesisKeyword_4_1_or___LeftParenthesisKeyword_4_0_0_RightParenthesisKeyword_4_0_2__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getExecCaseAccess().getLeftParenthesisKeyword_4_0_0()), new TokenAlias(false, false, grammarAccess.getExecCaseAccess().getRightParenthesisKeyword_4_0_2())), new TokenAlias(false, false, grammarAccess.getExecCaseAccess().getLeftParenthesisRightParenthesisKeyword_4_1()));
-		match_Exec_ExecKeyword_4_q = new TokenAlias(false, true, grammarAccess.getExecAccess().getExecKeyword_4());
+		match_Exec_ExecKeyword_2_0_5_3_q = new TokenAlias(false, true, grammarAccess.getExecAccess().getExecKeyword_2_0_5_3());
+		match_Exec_ExecKeyword_2_1_2_q = new TokenAlias(false, true, grammarAccess.getExecAccess().getExecKeyword_2_1_2());
 		match_Exec_LeftParenthesisRightParenthesisKeyword_2_0_1_1_or___LeftParenthesisKeyword_2_0_1_0_0_RightParenthesisKeyword_2_0_1_0_2__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getExecAccess().getLeftParenthesisKeyword_2_0_1_0_0()), new TokenAlias(false, false, grammarAccess.getExecAccess().getRightParenthesisKeyword_2_0_1_0_2())), new TokenAlias(false, false, grammarAccess.getExecAccess().getLeftParenthesisRightParenthesisKeyword_2_0_1_1()));
 		match_Exec_LeftParenthesisRightParenthesisKeyword_2_0_2_1_or___LeftParenthesisKeyword_2_0_2_0_0_RightParenthesisKeyword_2_0_2_0_2__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getExecAccess().getLeftParenthesisKeyword_2_0_2_0_0()), new TokenAlias(false, false, grammarAccess.getExecAccess().getRightParenthesisKeyword_2_0_2_0_2())), new TokenAlias(false, false, grammarAccess.getExecAccess().getLeftParenthesisRightParenthesisKeyword_2_0_2_1()));
 		match_Function_LeftParenthesisRightParenthesisKeyword_1_1_or___LeftParenthesisKeyword_1_0_0_RightParenthesisKeyword_1_0_2__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getFunctionAccess().getLeftParenthesisKeyword_1_0_0()), new TokenAlias(false, false, grammarAccess.getFunctionAccess().getRightParenthesisKeyword_1_0_2())), new TokenAlias(false, false, grammarAccess.getFunctionAccess().getLeftParenthesisRightParenthesisKeyword_1_1()));
@@ -158,8 +160,10 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 				emit_ExecCase_LeftParenthesisRightParenthesisKeyword_3_1_or___LeftParenthesisKeyword_3_0_0_RightParenthesisKeyword_3_0_2__(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ExecCase_LeftParenthesisRightParenthesisKeyword_4_1_or___LeftParenthesisKeyword_4_0_0_RightParenthesisKeyword_4_0_2__.equals(syntax))
 				emit_ExecCase_LeftParenthesisRightParenthesisKeyword_4_1_or___LeftParenthesisKeyword_4_0_0_RightParenthesisKeyword_4_0_2__(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_Exec_ExecKeyword_4_q.equals(syntax))
-				emit_Exec_ExecKeyword_4_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Exec_ExecKeyword_2_0_5_3_q.equals(syntax))
+				emit_Exec_ExecKeyword_2_0_5_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Exec_ExecKeyword_2_1_2_q.equals(syntax))
+				emit_Exec_ExecKeyword_2_1_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Exec_LeftParenthesisRightParenthesisKeyword_2_0_1_1_or___LeftParenthesisKeyword_2_0_1_0_0_RightParenthesisKeyword_2_0_1_0_2__.equals(syntax))
 				emit_Exec_LeftParenthesisRightParenthesisKeyword_2_0_1_1_or___LeftParenthesisKeyword_2_0_1_0_0_RightParenthesisKeyword_2_0_1_0_2__(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Exec_LeftParenthesisRightParenthesisKeyword_2_0_2_1_or___LeftParenthesisKeyword_2_0_2_0_0_RightParenthesisKeyword_2_0_2_0_2__.equals(syntax))
@@ -448,11 +452,20 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	 *     'exec'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     execCaseList+=ExecCase 'end' (ambiguity) (rule end)
-	 *     returnSignal=[Signal|ID] 'end' (ambiguity) (rule end)
 	 *     statements+=EsterelParallel 'end' (ambiguity) (rule end)
 	 */
-	protected void emit_Exec_ExecKeyword_4_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Exec_ExecKeyword_2_0_5_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'exec'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     execCaseList+=ExecCase 'end' (ambiguity) (rule end)
+	 */
+	protected void emit_Exec_ExecKeyword_2_1_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -510,7 +523,7 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	 *     'timeout'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     watchingStatements+=InstructionStatement 'end' (ambiguity) (rule end)
+	 *     watchingStatements+=EsterelParallel 'end' (ambiguity) (rule end)
 	 */
 	protected void emit_LegacyDo_TimeoutKeyword_3_1_2_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

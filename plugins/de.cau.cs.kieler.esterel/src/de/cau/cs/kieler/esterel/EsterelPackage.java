@@ -3339,7 +3339,7 @@ public interface EsterelPackage extends EPackage {
     int SIGNAL_RENAMING = 63;
 
     /**
-     * The feature id for the '<em><b>New Name</b></em>' reference.
+     * The feature id for the '<em><b>New Name</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -3348,7 +3348,7 @@ public interface EsterelPackage extends EPackage {
     int SIGNAL_RENAMING__NEW_NAME = RENAMING_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Old Name</b></em>' reference.
+     * The feature id for the '<em><b>Old Name</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -5637,10 +5637,10 @@ public interface EsterelPackage extends EPackage {
     EClass getSignalRenaming();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.esterel.SignalRenaming#getNewName <em>New Name</em>}'.
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.SignalRenaming#getNewName <em>New Name</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>New Name</em>'.
+     * @return the meta object for the containment reference '<em>New Name</em>'.
      * @see de.cau.cs.kieler.esterel.SignalRenaming#getNewName()
      * @see #getSignalRenaming()
      * @generated
@@ -5648,10 +5648,10 @@ public interface EsterelPackage extends EPackage {
     EReference getSignalRenaming_NewName();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.esterel.SignalRenaming#getOldName <em>Old Name</em>}'.
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.SignalRenaming#getOldName <em>Old Name</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Old Name</em>'.
+     * @return the meta object for the containment reference '<em>Old Name</em>'.
      * @see de.cau.cs.kieler.esterel.SignalRenaming#getOldName()
      * @see #getSignalRenaming()
      * @generated
@@ -7288,7 +7288,7 @@ public interface EsterelPackage extends EPackage {
         EClass SIGNAL_RENAMING = eINSTANCE.getSignalRenaming();
 
         /**
-         * The meta object literal for the '<em><b>New Name</b></em>' reference feature.
+         * The meta object literal for the '<em><b>New Name</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -7296,7 +7296,7 @@ public interface EsterelPackage extends EPackage {
         EReference SIGNAL_RENAMING__NEW_NAME = eINSTANCE.getSignalRenaming_NewName();
 
         /**
-         * The meta object literal for the '<em><b>Old Name</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Old Name</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
