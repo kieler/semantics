@@ -129,6 +129,20 @@ class PromPlugin implements BundleActivator  {
     }
     
     /**
+     * Creates a bitmask in which the given bits are set.
+     * 
+     * @param bits The bits to be set in the bitmask
+     * @return the bitwise OR over all given bits.
+     */
+    public static def int createBitmask(int... bits) {
+        var mask = 0
+        for(b : bits) {
+            mask = mask.bitwiseOr(b)
+        }
+        return mask
+    }
+    
+    /**
      * Checks if a project is a java project
      * 
      * @param project The project
@@ -283,15 +297,25 @@ class PromPlugin implements BundleActivator  {
     }
 
     /**
-     * Find a file via its full path in the workspace.
+     * Find a file via its full path in the workspace or an absolute file path.
      */
     public static def IFile findFile(IPath fullPath) {
-        val file = ResourcesPlugin.workspace.root.getFile(fullPath)
+        // Try to find a file from the full workspace path
+        var file = ResourcesPlugin.workspace.root.getFile(fullPath)
+        if(file === null || !file.exists) {
+            // Try to find a file from an absolute file path
+            val jFile = new File(fullPath.toOSString)
+            val uri = jFile.toURI()
+            val files = ResourcesPlugin.getWorkspace().getRoot().findFilesForLocationURI(uri)
+            if(files !== null && !files.isEmpty) {
+                file = files.get(0)
+            }
+        }
         return file
     }
     
     /**
-     * Find a file via its full path in the workspace.
+     * Find a file via its full path in the workspace or an absolute file path.
      */
     public static def IFile findFile(String fullPath) {
         val path = new Path(fullPath)
