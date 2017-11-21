@@ -129,6 +129,20 @@ class PromPlugin implements BundleActivator  {
     }
     
     /**
+     * Creates a bitmask in which the given bits are set.
+     * 
+     * @param bits The bits to be set in the bitmask
+     * @return the bitwise OR over all given bits.
+     */
+    public static def int createBitmask(int... bits) {
+        var mask = 0
+        for(b : bits) {
+            mask = mask.bitwiseOr(b)
+        }
+        return mask
+    }
+    
+    /**
      * Checks if a project is a java project
      * 
      * @param project The project
@@ -219,12 +233,51 @@ class PromPlugin implements BundleActivator  {
      * @param sourceFolder The source folder to be added
      */
     public static def void addFolderToJavaClasspath(IJavaProject javaProject, IFolder sourceFolder) {
-        val root = javaProject.getPackageFragmentRoot(sourceFolder);
         val oldEntries = javaProject.rawClasspath;
         val newEntries = newArrayOfSize(oldEntries.length + 1);
         System.arraycopy(oldEntries, 0, newEntries, 0, oldEntries.length);
-        newEntries.set(oldEntries.length, JavaCore.newSourceEntry(root.path));
+        newEntries.set(oldEntries.length, JavaCore.newSourceEntry(sourceFolder.fullPath));
         javaProject.setRawClasspath(newEntries, null);
+    }
+    
+    /**
+     * Excludes a folder inside a source folder of a java project from beeing built.
+     * 
+     * @param javaProject The java project
+     * @param sourceFolder The source folder
+     * @param exclude The folder to be excluded from the build
+     */
+    public static def void excludeFolderFromJavaClasspath(IJavaProject javaProject, IFolder excludeFolder) {
+        val entries = javaProject.rawClasspath
+        val sourceFolder = javaProject.project.getFolder(excludeFolder.projectRelativePath.segment(0))
+        val excludePath = excludeFolder.projectRelativePath.addTrailingSeparator.removeFirstSegments(1)
+        for(entry : entries) {
+            if(entry.path == sourceFolder.fullPath) {
+                val oldExclusionPatterns = entry.exclusionPatterns
+                if(!entry.exclusionPatterns.contains(excludePath)) {
+                    val newExclusionPatterns = newArrayOfSize(oldExclusionPatterns.length + 1)
+                    System.arraycopy(oldExclusionPatterns, 0, newExclusionPatterns, 0, oldExclusionPatterns.length)
+                    newExclusionPatterns.set(oldExclusionPatterns.length, excludePath)
+                    updateClasspathEntry(javaProject, entry, JavaCore.newSourceEntry(entry.path, newExclusionPatterns))
+                } else {
+                }
+            }
+        }
+    }
+    
+    /**
+     * Replaces the classpath entry that matches oldEntry with newEntry. 
+     */
+    public static def void updateClasspathEntry(IJavaProject javaProject, IClasspathEntry oldEntry, IClasspathEntry newEntry) {
+        val oldEntries = javaProject.rawClasspath
+        val newEntries = oldEntries.clone
+        for(var i = 0; i < newEntries.length; i++) {
+            val entry = newEntries.get(i)
+            if(entry.path == newEntry.path) {
+                newEntries.set(i, newEntry)
+            }
+        }
+        javaProject.setRawClasspath(newEntries, null)
     }
     
     /**
@@ -244,15 +297,25 @@ class PromPlugin implements BundleActivator  {
     }
 
     /**
-     * Find a file via its full path in the workspace.
+     * Find a file via its full path in the workspace or an absolute file path.
      */
     public static def IFile findFile(IPath fullPath) {
-        val file = ResourcesPlugin.workspace.root.getFile(fullPath)
+        // Try to find a file from the full workspace path
+        var file = ResourcesPlugin.workspace.root.getFile(fullPath)
+        if(file === null || !file.exists) {
+            // Try to find a file from an absolute file path
+            val jFile = new File(fullPath.toOSString)
+            val uri = jFile.toURI()
+            val files = ResourcesPlugin.getWorkspace().getRoot().findFilesForLocationURI(uri)
+            if(files !== null && !files.isEmpty) {
+                file = files.get(0)
+            }
+        }
         return file
     }
     
     /**
-     * Find a file via its full path in the workspace.
+     * Find a file via its full path in the workspace or an absolute file path.
      */
     public static def IFile findFile(String fullPath) {
         val path = new Path(fullPath)

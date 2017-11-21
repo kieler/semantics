@@ -47,6 +47,24 @@
           </description>
        </wizard>
     </extension>
+    <extension
+          point="org.eclipse.ui.perspectiveExtensions">
+       <perspectiveExtension
+             targetID="de.cau.cs.kieler.Modeling">
+          <newWizardShortcut
+                id="de.cau.cs.kieler.kivis.ui.fileWizard">
+          </newWizardShortcut>
+       </perspectiveExtension>
+       <perspectiveExtension
+             targetID="de.cau.cs.kieler.simulation">
+          <newWizardShortcut
+                id="org.eclipse.ui.wizards.new.folder">
+          </newWizardShortcut>
+          <newWizardShortcut
+                id="de.cau.cs.kieler.kivis.ui.fileWizard">
+          </newWizardShortcut>
+       </perspectiveExtension>
+    </extension>
 
     <extension
             point="org.eclipse.ui.editors">
