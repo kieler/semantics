@@ -876,8 +876,22 @@ class EsterelTransformationExtensions {
      */
     def createScopeStatement(Declaration decl) {
         SCLFactory::eINSTANCE.createScopeStatement => [
-            if (decl != null) {
+            if (decl !== null) {
                 it.declarations.add(decl)
+            }
+        ]
+    }
+    
+    /**
+     * Creates a new SCL ScopeStatement
+     * 
+     * @param statements Already existing statements for the Scope statement.
+     * @return The newly created SCL ScopeStatement
+     */
+    def createScopeStatement(EList<Statement> statements) {
+        SCLFactory::eINSTANCE.createScopeStatement => [
+            if (statements !== null) {
+                it.statements.addAll(statements)
             }
         ]
     }
