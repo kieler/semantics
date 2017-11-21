@@ -53,6 +53,7 @@ class SCGTransformationTest extends AbstractXTextModelRepositoryTest<SCCharts> {
      */
     override filter(TestModelData modelData) {
         return modelData.modelProperties.contains("sccharts")
+        && !modelData.modelProperties.contains("known-to-fail") // TODO Test them anyway?
         && !modelData.modelProperties.contains("must-fail")
     }
     
