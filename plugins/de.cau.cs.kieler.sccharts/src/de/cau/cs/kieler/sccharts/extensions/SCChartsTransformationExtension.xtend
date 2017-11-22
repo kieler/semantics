@@ -484,7 +484,7 @@ class SCChartsTransformationExtension {
     }
 
     // copies all attributes from a declaration to a target declaration
-    def private VariableDeclaration copyAttributes(VariableDeclaration target, VariableDeclaration declaration) {
+    def VariableDeclaration copyAttributes(VariableDeclaration target, VariableDeclaration declaration) {
         target => [
             type = declaration.type
             input = declaration.input
