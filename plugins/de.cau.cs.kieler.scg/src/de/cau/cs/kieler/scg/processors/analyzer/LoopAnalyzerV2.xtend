@@ -88,10 +88,10 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
                 environment.errors.add("Instantaneous loop detected!")
             }
             if (environment.getProperty(WARNING_ON_INSTANTANEOUS_LOOP)) {
-//                environment.warnings.add("Instantaneous loop detected!")
+                environment.warnings.add("Instantaneous loop detected!")
                 val strippedModel = extractLoopModel(loopData)
-//                environment.warnings.add(strippedModel.first, 
-//                   "Instantaneous loop detected!", null)
+                environment.warnings.add(strippedModel.first, 
+                   "Instantaneous loop detected!", null)
             }
         }
     }	
