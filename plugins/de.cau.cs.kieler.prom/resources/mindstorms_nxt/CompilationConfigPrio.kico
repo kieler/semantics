@@ -1,18 +1,18 @@
-system de.cau.cs.kieler.sccharts.netlist.simple.java.transitions
-  version 1
-  label "Netlist-based and taken transitions (simple) (Java)"
+system de.cau.cs.kieler.sccharts.priority.java.transitions
+    version 1 
+    label "Priority-based and taken transitions (simple)  (Java)"
 
-
-de.cau.cs.kieler.sccharts.processors.transformators.takenTransitionSignaling
+// The code generation for arrays is buggy in sjlp (KISEMA-1259)
+//de.cau.cs.kieler.sccharts.processors.transformators.takenTransitionSignaling
 de.cau.cs.kieler.sccharts.processors.transformators.reference
 de.cau.cs.kieler.sccharts.processors.transformators.for 
 de.cau.cs.kieler.sccharts.processors.transformators.const
-de.cau.cs.kieler.sccharts.processors.transformators.history
 de.cau.cs.kieler.sccharts.processors.transformators.signal
+de.cau.cs.kieler.sccharts.processors.transformators.^pre
 de.cau.cs.kieler.sccharts.processors.transformators.suspend
 de.cau.cs.kieler.sccharts.processors.transformators.countDelay
-de.cau.cs.kieler.sccharts.processors.transformators.^pre
 de.cau.cs.kieler.sccharts.processors.transformators.weakSuspend
+de.cau.cs.kieler.sccharts.processors.transformators.history
 de.cau.cs.kieler.sccharts.processors.transformators.deferred
 de.cau.cs.kieler.sccharts.processors.transformators.static
 de.cau.cs.kieler.sccharts.processors.transformators.duringAction
@@ -23,12 +23,8 @@ de.cau.cs.kieler.sccharts.processors.transformators.initialization
 de.cau.cs.kieler.sccharts.processors.transformators.entryAction
 de.cau.cs.kieler.sccharts.processors.transformators.connector
 de.cau.cs.kieler.sccharts.processors.transformators.triggerEffect
-de.cau.cs.kieler.sccharts.processors.transformators.surfaceDepth  
+de.cau.cs.kieler.sccharts.processors.transformators.surfaceDepth
 de.cau.cs.kieler.sccharts.scg.processors.transformators.SCG
 de.cau.cs.kieler.scg.processors.transformators.dependency
-de.cau.cs.kieler.scg.processors.transformators.basicBlocks
-de.cau.cs.kieler.scg.processors.transformators.expressions
-de.cau.cs.kieler.scg.processors.transformators.guards
-de.cau.cs.kieler.scg.processors.transformators.scheduler
-de.cau.cs.kieler.scg.processors.transformators.sequentializer
-de.cau.cs.kieler.scg.processors.codegen.java
+de.cau.cs.kieler.scg.processors.transformators.priorities
+de.cau.cs.kieler.scg.processors.transformators.sjlp

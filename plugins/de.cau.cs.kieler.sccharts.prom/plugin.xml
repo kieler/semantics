@@ -36,34 +36,21 @@
       <perspectiveExtension
             targetID="de.cau.cs.kieler.Modeling">
          <newWizardShortcut
-               id="de.cau.cs.kieler.sccharts.prom.projectwizard">
+               id="de.cau.cs.kieler.sccharts.prom.scchartsProject">
          </newWizardShortcut>
          <newWizardShortcut
-               id="de.cau.cs.kieler.sccharts.prom.filewizard">
+               id="de.cau.cs.kieler.sccharts.prom.sctxWizard">
          </newWizardShortcut>
       </perspectiveExtension>
       <perspectiveExtension
             targetID="de.cau.cs.kieler.simulation">
          <newWizardShortcut
-               id="de.cau.cs.kieler.sccharts.prom.projectwizard">
+               id="de.cau.cs.kieler.sccharts.prom.scchartsProject">
          </newWizardShortcut>
          <newWizardShortcut
-               id="de.cau.cs.kieler.sccharts.prom.filewizard">
+               id="de.cau.cs.kieler.sccharts.prom.sctxWizard">
          </newWizardShortcut>
       </perspectiveExtension>
-   </extension>
-   <extension
-         point="org.eclipse.ui.navigator.navigatorContent">
-      <commonWizard
-            type="new"
-            wizardId="de.cau.cs.kieler.sccharts.prom.sctxWizard">
-         <enablement></enablement>
-      </commonWizard>
-      <commonWizard
-            type="new"
-            wizardId="de.cau.cs.kieler.sccharts.prom.scchartsProject">
-         <enablement></enablement>
-      </commonWizard>
    </extension>
    <extension
          point="de.cau.cs.kieler.prom.modelAnalyzer">

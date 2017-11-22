@@ -12,9 +12,16 @@
  */
 package de.cau.cs.kieler.scg.processors.transformators.priority
 
+import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.annotations.IntAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -25,22 +32,15 @@ import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.transformations.c.SCG2CSerializeHRExtensions
 import java.util.ArrayList
 import java.util.HashMap
+import java.util.HashSet
 import java.util.LinkedList
 import java.util.Stack
-import javax.inject.Inject
-import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import java.util.HashSet
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * Class to perform the transformation of an SCG to Java Code using the priority based compilation approach
@@ -178,8 +178,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
      */
     protected def void addImports(StringBuilder sb, String programName) {        
         sb.appendInd("import model." + programName + ".State;\n")
-        sb.appendInd("import static model." + programName + ".State.*;\n")
-        sb.appendInd("import model.SJLProgramForPriorities;\n\n\n")
+        sb.appendInd("import static model." + programName + ".State.*;\n\n")
     }
     
     protected def void addReset(StringBuilder sb, SCGraph scg) {
