@@ -262,6 +262,11 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
                 return processor.environment
             }
             
+            val infos = processor.environment.getProperty(INFOS)
+            if (infos.keySet.contains(model)) {
+                return processor.environment
+            }
+            
         }
         return null
     }

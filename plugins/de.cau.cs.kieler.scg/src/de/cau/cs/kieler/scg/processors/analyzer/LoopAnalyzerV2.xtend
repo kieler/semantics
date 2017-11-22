@@ -44,6 +44,8 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.loopAnalyzer.errorOnInstantaneousLoop", false)
     public static val IProperty<Boolean> WARNING_ON_INSTANTANEOUS_LOOP = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.loopAnalyzer.warningOnInstantaneousLoop", false)
+    public static val IProperty<Boolean> INFO_ON_INSTANTANEOUS_LOOP = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.loopAnalyzer.infoOnInstantaneousLoop", false)
     public static val IProperty<Integer> LOOP_ANALYZER_MAX_STRIPPED_NODES = 
         new Property<Integer>("de.cau.cs.kieler.scg.processors.loopAnalyzer.maxStrippedNodes", 100)
     public static val IProperty<Boolean> LOOP_ANALYZER_STOP_AFTER_FIRST_LOOP = 
@@ -86,11 +88,20 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
         if (!loopData.criticalNodes.empty) {
             if (environment.getProperty(ERROR_ON_INSTANTANEOUS_LOOP)) {
                 environment.errors.add("Instantaneous loop detected!")
+                val strippedModel = extractLoopModel(loopData)
+                environment.errors.add(strippedModel.first, 
+                   "Instantaneous loop detected!", null)
             }
             if (environment.getProperty(WARNING_ON_INSTANTANEOUS_LOOP)) {
                 environment.warnings.add("Instantaneous loop detected!")
                 val strippedModel = extractLoopModel(loopData)
                 environment.warnings.add(strippedModel.first, 
+                   "Instantaneous loop detected!", null)
+            }
+            if (environment.getProperty(INFO_ON_INSTANTANEOUS_LOOP)) {
+                environment.infos.add("Instantaneous loop detected!")
+                val strippedModel = extractLoopModel(loopData)
+                environment.infos.add(strippedModel.first, 
                    "Instantaneous loop detected!", null)
             }
         }
