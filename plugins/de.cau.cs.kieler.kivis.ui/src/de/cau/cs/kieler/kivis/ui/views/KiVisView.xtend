@@ -21,6 +21,7 @@ import de.cau.cs.kieler.kivis.ui.svg.KiVisCanvas
 import de.cau.cs.kieler.kivis.ui.svg.SVGExtensions
 import de.cau.cs.kieler.prom.ExtensionLookupUtil
 import de.cau.cs.kieler.prom.ModelImporter
+import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.ui.PromUIPlugin
 import de.cau.cs.kieler.prom.ui.views.LabelContribution
 import de.cau.cs.kieler.simulation.core.DataPool
@@ -48,8 +49,14 @@ import org.eclipse.core.resources.IResourceChangeListener
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.preferences.InstanceScope
+import org.eclipse.jface.action.Action
 import org.eclipse.jface.dialogs.MessageDialog
 import org.eclipse.swt.SWT
+import org.eclipse.swt.dnd.DND
+import org.eclipse.swt.dnd.DropTarget
+import org.eclipse.swt.dnd.DropTargetAdapter
+import org.eclipse.swt.dnd.DropTargetEvent
+import org.eclipse.swt.dnd.FileTransfer
 import org.eclipse.swt.events.DisposeEvent
 import org.eclipse.swt.events.DisposeListener
 import org.eclipse.swt.events.MouseAdapter
@@ -60,17 +67,18 @@ import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.layout.RowLayout
 import org.eclipse.swt.widgets.Composite
+import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.FileDialog
 import org.eclipse.swt.widgets.Label
 import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
+import org.eclipse.ui.part.ResourceTransfer
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.w3c.dom.Element
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.EventListener
 import org.w3c.dom.svg.SVGDocument
-import org.eclipse.jface.action.Action
 
 /**
  * The KiVis View.
@@ -767,6 +775,60 @@ class KiVisView extends ViewPart {
                 }
             }
         })
+        
+        // Add drag and drop support to open kivis files
+        addDragAndDropSupport(canvas)
+    }
+    
+    /**
+     * Adds drag and drop support to the control to open kivis files.
+     * 
+     * @param control The control that should receive kivis files.
+     */
+    private def void addDragAndDropSupport(Control control) {
+        // Allow data to be copied to the drop target
+        val operations = PromPlugin.createBitmask(DND.DROP_COPY, DND.DROP_DEFAULT)
+        val target = new DropTarget(control, operations);
+   
+        // Receive data in Resource or File format
+        val resTransfer = ResourceTransfer.getInstance()
+        val fileTransfer = FileTransfer.getInstance()
+        val types = #[fileTransfer, resTransfer]
+        target.setTransfer(types);
+        
+        target.addDropListener(new DropTargetAdapter() {
+            override void dragEnter(DropTargetEvent event){
+                // Change drop event to copy.
+                if(event.detail == DND.DROP_DEFAULT) {
+                    event.detail = DND.DROP_COPY
+                }
+            }
+            
+            override void drop(DropTargetEvent event) {
+                var IFile file
+                // Open file from Resource
+                if (resTransfer.isSupportedType(event.currentDataType)) {
+                    val resources = event.data as IResource[]
+                    if(!resources.isNullOrEmpty) {
+                        val res = resources.get(0)
+                        if(res.type == IResource.FILE) {
+                            file = res as IFile
+                        }
+                    }
+                }
+                // Open file from File transfer
+                if (fileTransfer.isSupportedType(event.currentDataType)){
+                    val filePaths = event.data as String[]
+                    if(!filePaths.isNullOrEmpty) {
+                        val filePath = filePaths.get(0)
+                        file = PromPlugin.findFile(filePath)
+                    }
+                }
+                if(file !== null) {
+                    loadFile(file)
+                }
+            }
+        })
     }
     
     /**
@@ -856,6 +918,8 @@ class KiVisView extends ViewPart {
                              + "\n"
                              + "Right Arrow : Step simulation\n"
                              + "Space : Play / pause simulation\n"
+                             +"\n"
+                             +"You can drag and drop KiVis files into this view to open them."
                 val dialog = new MessageDialog(canvas.shell, title, null, message, 0, #["OK"], 0)
                 dialog.open
             }

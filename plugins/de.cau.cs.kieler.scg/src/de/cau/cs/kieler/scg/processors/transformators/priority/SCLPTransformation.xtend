@@ -218,7 +218,7 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
                 sb.append(" ")
                 sb.append(variables.name)    
                 for(card : variables.cardinalities) {
-                    sb.append("[" + card + "]")
+                    sb.append("[" + card.serializeHR + "]")
                 }            
             }
             sb.append(";\n")

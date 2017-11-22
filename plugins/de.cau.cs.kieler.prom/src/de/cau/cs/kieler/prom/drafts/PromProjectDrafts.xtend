@@ -147,6 +147,7 @@ class PromProjectDrafts extends AbstractPreferenceInitializer implements IProjec
         val env = getGenericJava
         env.addInitialResource("assets/BuildConfig.kibuild", "platform:/plugin/de.cau.cs.kieler.prom/resources/mindstorms_nxt/BuildConfig.kibuild") 
         env.addInitialResource("assets/CompilationConfig.kico", "platform:/plugin/de.cau.cs.kieler.prom/resources/mindstorms_nxt/CompilationConfig.kico")
+        env.addInitialResource("assets/CompilationConfigPrio.kico", "platform:/plugin/de.cau.cs.kieler.prom/resources/mindstorms_nxt/CompilationConfigPrio.kico")
         env.addInitialResource("src/model/${project_name}Main.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/mindstorms_nxt/Main.ftl")
         env.addInitialResource("assets/snippets", "platform:/plugin/de.cau.cs.kieler.prom/resources/mindstorms_nxt/snippets")
         env.addInitialResource("assets/snippets/core.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/core/core.ftl")

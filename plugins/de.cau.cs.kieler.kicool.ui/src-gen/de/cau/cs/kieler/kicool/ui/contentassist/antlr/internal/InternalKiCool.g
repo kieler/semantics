@@ -185,9 +185,9 @@ ruleCoProcessor
     }
 	:
 (
-{ before(grammarAccess.getCoProcessorAccess().getIdAssignment()); }
-(rule__CoProcessor__IdAssignment)
-{ after(grammarAccess.getCoProcessorAccess().getIdAssignment()); }
+{ before(grammarAccess.getCoProcessorAccess().getGroup()); }
+(rule__CoProcessor__Group__0)
+{ after(grammarAccess.getCoProcessorAccess().getGroup()); }
 )
 
 ;
@@ -2537,6 +2537,67 @@ finally {
 }
 
 
+
+
+
+
+
+
+rule__CoProcessor__Group__0
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__CoProcessor__Group__0__Impl
+	rule__CoProcessor__Group__1
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__CoProcessor__Group__0__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getCoProcessorAccess().getIdAssignment_0()); }
+(rule__CoProcessor__IdAssignment_0)
+{ after(grammarAccess.getCoProcessorAccess().getIdAssignment_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+rule__CoProcessor__Group__1
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__CoProcessor__Group__1__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__CoProcessor__Group__1__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getCoProcessorAccess().getSilentAssignment_1()); }
+(rule__CoProcessor__SilentAssignment_1)?
+{ after(grammarAccess.getCoProcessorAccess().getSilentAssignment_1()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
 
 
 
@@ -5394,14 +5455,37 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__CoProcessor__IdAssignment
+rule__CoProcessor__IdAssignment_0
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getCoProcessorAccess().getIdQualifiedIDParserRuleCall_0()); }
-	ruleQualifiedID{ after(grammarAccess.getCoProcessorAccess().getIdQualifiedIDParserRuleCall_0()); }
+{ before(grammarAccess.getCoProcessorAccess().getIdQualifiedIDParserRuleCall_0_0()); }
+	ruleQualifiedID{ after(grammarAccess.getCoProcessorAccess().getIdQualifiedIDParserRuleCall_0_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__CoProcessor__SilentAssignment_1
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getCoProcessorAccess().getSilentSilentKeyword_1_0()); }
+(
+{ before(grammarAccess.getCoProcessorAccess().getSilentSilentKeyword_1_0()); }
+
+	'silent' 
+
+{ after(grammarAccess.getCoProcessorAccess().getSilentSilentKeyword_1_0()); }
+)
+
+{ after(grammarAccess.getCoProcessorAccess().getSilentSilentKeyword_1_0()); }
 )
 
 ;

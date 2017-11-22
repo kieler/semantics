@@ -108,8 +108,8 @@ class KiCoModelCompiler extends ModelCompiler {
             return compilationResult
         }
         
-        // Save result if no errors and warnings
-        if(compilationResult.problems.isNullOrEmpty) {
+        // Save result if no errors
+        if(compilationResult.problems.filter[it.isError].isNullOrEmpty) {
             // Flush compilation result to target
             targetFile = computeTargetFile
             saveCompilationResult(resultModel)

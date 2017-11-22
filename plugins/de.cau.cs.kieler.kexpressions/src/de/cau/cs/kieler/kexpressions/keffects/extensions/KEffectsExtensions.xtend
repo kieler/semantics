@@ -99,7 +99,11 @@ class KEffectsExtensions {
     
     // was assingCombined
     def Assignment createCombinedAssignment(ValuedObject valuedObject, Expression newValue) {
-        val op = switch(valuedObject.combineOperator) {
+        return createAssignment(valuedObject, newValue, valuedObject.combineOperator)
+    }
+    
+    def Assignment createAssignment(ValuedObject valuedObject, Expression newValue, CombineOperator combineOperator) {
+        val op = switch(combineOperator) {
             case ADD: AssignOperator.ASSIGNADD
             case AND: AssignOperator.ASSIGNAND
             case MAX: AssignOperator.ASSIGNMAX
