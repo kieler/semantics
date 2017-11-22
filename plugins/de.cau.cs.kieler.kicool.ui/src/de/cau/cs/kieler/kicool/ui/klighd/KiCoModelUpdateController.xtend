@@ -143,9 +143,6 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
     private var Action chainToggleAction
     private static final boolean CHAIN_TOGGLE_ACTION_DEFAULT_STATE = false
     
-    // -- External Contributions --
-    private static val externalUIContributors = <KiCoModelViewUIContributor>newHashSet
-
     // -- Model --
 
     /** Model extracted from editor. */
@@ -327,6 +324,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         menu.add(diagramPlaceholderToggleAction)
         menu.add(chainToggleAction)
         
+        val externalUIContributors = KiCoModelViewUIContributorRegistry.contributors
         externalUIContributors.forEach[it.contribute(this, toolBar, menu)]
     }
 
@@ -705,16 +703,4 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             }
         })
     }
-
-    // -- External UI Contributors
-    // -------------------------------------------------------------------------
-    
-    static def addExternalUIContributor(KiCoModelViewUIContributor contrib) {
-        externalUIContributors.add(contrib)
-    }
-    
-    static def removeExternalUIContributor(KiCoModelViewUIContributor contrib) {
-        externalUIContributors.remove(contrib)
-    }
-
 }

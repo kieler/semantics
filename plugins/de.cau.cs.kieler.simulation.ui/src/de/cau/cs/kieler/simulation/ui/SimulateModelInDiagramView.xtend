@@ -28,24 +28,18 @@ import de.cau.cs.kieler.simulation.SimulationParticipant
  * @author aas
  *
  */
-class SimulateModelInDiagramView implements KiCoModelViewUIContributor, SimulationParticipant {
+class SimulateModelInDiagramView implements KiCoModelViewUIContributor {
     private var IAction simulateAction
     
     private var KiCoModelUpdateController muc
     
-    /**
-     * Constructor
-     */
     new() {
-        // Register this controller
-        KiCoModelUpdateController.addExternalUIContributor(this)
-        
         simulateAction = new DataPoolViewToolbarAction("Simulate model", "runIcon.png") {
             override run() {
                 PromPlugin.execInJob("Starting simulation",
                                      [SubMonitor monitor |
                                          val model = muc.model
-                                         if(model != null && model instanceof EObject) {
+                                         if(model !== null && model instanceof EObject) {
                                              SimulationUtil.startSimulation(model as EObject, monitor)
                                          }
                                      ])
@@ -56,17 +50,5 @@ class SimulateModelInDiagramView implements KiCoModelViewUIContributor, Simulati
     override contribute(KiCoModelUpdateController muc, IToolBarManager toolBar, IMenuManager menu) {
         this.muc = muc
         toolBar.add(simulateAction);
-    }
-    
-    override setEnabled(boolean value) {
-        // This participant cannot be disabled
-    }
-    
-    override isEnabled() {
-        true
-    }
-    
-    override getName() {
-        return ""
     }
 }
