@@ -41,6 +41,8 @@ class RegisterVariablesFinder extends PromBuildAdapter implements SimulationPart
     
     private boolean enabled = true
     
+    private var RegisterVariablesFinder instance
+    
     /**
      * Constructor
      * 
@@ -48,7 +50,12 @@ class RegisterVariablesFinder extends PromBuildAdapter implements SimulationPart
      */
     new() {
         // Register this listener for model compilation and template processing
-        super()
+        register
+        // Unregister old instance if needed
+        if(instance !== null) {
+            instance.unregister
+        }
+        instance = this
     }
     
     /**

@@ -30,8 +30,17 @@ class PromBuildAdapter implements ModelCompilerListener, TemplateProcessorListen
      * Registers this listener.
      */
     new() {
+        register
+    }
+    
+    public def register() {
         ModelCompiler.registerListener(this)
         TemplateProcessor.registerListener(this)
+    }
+    
+    public def unregister() {
+        ModelCompiler.removeListener(this)
+        TemplateProcessor.removeListener(this)
     }
     
     override beforeCompilation(ModelCompiler compiler) {

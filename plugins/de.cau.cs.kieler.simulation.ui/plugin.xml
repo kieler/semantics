@@ -2,12 +2,15 @@
 <?eclipse version="3.4"?>
 <plugin>
     <extension
+          point="de.cau.cs.kieler.kicool.ui.kicoModelViewUIUpdateContributor">
+       <kicoModelViewUIUpdateContributor
+             class="de.cau.cs.kieler.simulation.ui.SimulateModelInDiagramView">
+       </kicoModelViewUIUpdateContributor>
+    </extension>
+    <extension
           point="de.cau.cs.kieler.simulation.simulationParticipant">
        <simulationParticipant
              class="de.cau.cs.kieler.simulation.ui.RegisterVariablesFinder">
-       </simulationParticipant>
-       <simulationParticipant
-             class="de.cau.cs.kieler.simulation.ui.SimulateModelInDiagramView">
        </simulationParticipant>
     </extension>
    <extension
