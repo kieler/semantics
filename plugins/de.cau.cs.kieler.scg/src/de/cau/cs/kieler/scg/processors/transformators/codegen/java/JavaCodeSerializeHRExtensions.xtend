@@ -30,6 +30,10 @@ class JavaCodeSerializeHRExtensions extends CCodeSerializeHRExtensions {
     override dispatch CharSequence serialize(ValueType valueType) {
         if (valueType == ValueType.BOOL) {
             return "boolean"
+        } else if (valueType == ValueType.FLOAT) {
+            return "double"
+        } else if (valueType == ValueType.STRING) {
+            return "String"            
         } else {
             return valueType.literal
         }
@@ -42,6 +46,9 @@ class JavaCodeSerializeHRExtensions extends CCodeSerializeHRExtensions {
     
     override dispatch CharSequence serialize(PrintCall printCall) {
         var paramStr = printCall.parameters.serializeParameters.toString
+        if (printCall.parameters.size == 1) {
+            return "System.out.println(" + paramStr.substring(1, paramStr.length - 1) + ")" 
+        } 
         
         return "System.out.format(" + paramStr.substring(1, paramStr.length - 1) + ")"
     }
