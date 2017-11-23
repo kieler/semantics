@@ -40,6 +40,9 @@ import static org.eclipse.emf.common.util.URI.*
 
 import static extension com.google.common.collect.Sets.*
 import static extension de.cau.cs.kieler.core.model.util.URIUtils.*
+import org.eclipse.emf.ecore.EReference
+import org.eclipse.xtext.resource.impl.ListBasedDiagnosticConsumer
+import org.eclipse.xtext.diagnostics.Severity
 
 /**
  * A customized {@link LazyLinkingResource}. Modifies the parsed model and fixes some runtime bugs.
@@ -129,8 +132,14 @@ public class SCTXResource extends LazyLinkingResource {
         }
 
         super.updateInternalState(parseResult);
-    }
+        if (parseResult.rootASTElement !== null) {
+            for (ref : parseResult.rootASTElement.eAllContents.map[e | e.eClass().getEReferences().map[new Pair(e,it)]].toIterable.flatten) {
+                SCTXLinker.checkUncontainedOpposites(ref.key, ref.value);
+            }
+        }
 
+    }    
+    
     // ---------------------------------------------------------------------------------------
     protected def void updateImports(SCCharts scc) {
         // Assure resource set

@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.sccharts.text;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import org.eclipse.emf.common.util.EList;
@@ -21,6 +23,8 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.diagnostics.IDiagnosticProducer;
 import org.eclipse.xtext.linking.impl.Linker;
+
+import de.cau.cs.kieler.sccharts.Transition;
 
 /**
  * A customized Xtext linker linking textual SCCharts models.
@@ -42,9 +46,6 @@ public class SCTXLinker extends Linker {
     @Override
     public void ensureLinked(EObject obj, IDiagnosticProducer producer) {
         super.ensureLinked(obj, producer);
-        for (EReference ref : obj.eClass().getEReferences()) {
-            checkUncontainedOpposites(obj, ref);
-        }
     }
 
     /**
@@ -54,18 +55,27 @@ public class SCTXLinker extends Linker {
      * @param obj
      * @param ref
      */
-    private void checkUncontainedOpposites(EObject obj, EReference ref) {
+    public static void checkUncontainedOpposites(EObject obj, EReference ref) {
         EReference oppRef = ref.getEOpposite();
         if (oppRef != null) {
             if (ref.isMany()) {
                 EList<EObject> refObjs = (EList<EObject>) obj.eGet(ref);
                 if (refObjs != null) {
                     // Remove non-contained opposites
-                    refObjs.removeIf(new Predicate<EObject>() {
+                     refObjs.removeIf(new Predicate<EObject>() {
+                        Set<EObject> exists = new HashSet();
 
                         @Override
                         public boolean test(EObject t) {
-                            return t.eContainer() == null;
+                            if (!exists.contains(t) || t.eGet(oppRef) == null) {
+                                System.out.println(t);
+                                if ( t instanceof Transition) 
+                                    System.out.println("  " + ((Transition) t).getTargetState());
+//                                if (((Transition) t).getTargetState() == null) return true;
+                            }
+                            boolean b = t.eContainer() == null || exists.contains(t) || t.eGet(oppRef) == null;
+                                    if (!b) exists.add(t);
+                            return b;
                         }
                     });
                 }

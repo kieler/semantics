@@ -69,6 +69,7 @@ Parameter returns kexpressions::Parameter:
 // ------------------ //
 
 Transition returns sccharts::Transition:
+    {sccharts::Transition}
 	annotations+=RestrictedTypeAnnotation*
 	
 	((
