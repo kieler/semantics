@@ -12,77 +12,66 @@
  */
 package de.cau.cs.kieler.esterel.processors.transformators.incremental
 
-import com.google.inject.Inject
-import de.cau.cs.kieler.esterel.Constant
-import de.cau.cs.kieler.esterel.ConstantDeclaration
-import de.cau.cs.kieler.esterel.ConstantExpression
-import de.cau.cs.kieler.esterel.EsterelProgram
-import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
-import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
-import de.cau.cs.kieler.esterel.processors.EsterelProcessor
-import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.scl.Module
-import de.cau.cs.kieler.scl.ScopeStatement
-import de.cau.cs.kieler.scl.Statement
 import java.util.HashMap
-import java.util.Map
-import org.eclipse.emf.common.util.EList
+import com.google.inject.Inject
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
+import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
+import de.cau.cs.kieler.esterel.EsterelProgram
+import de.cau.cs.kieler.esterel.Constant
+import de.cau.cs.kieler.esterel.ConstantExpression
+import de.cau.cs.kieler.esterel.ConstantDeclaration
+import de.cau.cs.kieler.scl.ScopeStatement
+import de.cau.cs.kieler.scl.Module
+import de.cau.cs.kieler.scl.Statement
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * @author mrb
  *
  */
-class ConstantTransformation extends EsterelProcessor {
+class ConstantTransformation extends InplaceProcessor<EsterelProgram> {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
+    
+    public static val ID = "de.cau.cs.kieler.esterel.processors.constant"
+    
     override getId() {
-        return SCEstTransformation::CONSTANT_ID
+        return ID
     }
 
     override getName() {
-        return SCEstTransformation::CONSTANT_NAME
+        return "Constant"
     }
-
-//    override getExpandsFeatureId() {
-//        return SCEstFeature::CONSTANT_ID
-//    }
-//        
-//    override getNotHandlesFeatureIds() {
-//        return Sets.newHashSet( SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::RUN_ID)
-//    }
-
+    
     @Inject
     extension EsterelTransformationExtensions
-    @Inject
-    extension EsterelExtensions
     
-    override EsterelProgram transform(EsterelProgram prog) {
-        prog.modules.forEach [transformConstants]
-        return prog
+    override process() {
+        model.eAllContents.filter(Module).toList.forEach[transform]
     }
     
-    def transformConstants(Module module) {
+    def transform(Module module) {
         // this map combines an Esterel sensor with the new SCL variable
-        var HashMap<Constant, ValuedObject> newVariables = new HashMap<Constant, ValuedObject>()
-        var ScopeStatement scope = module.getIScope
-        for (decl: module.constantDeclarations) {
-            for (v : decl.constants) {
+        val HashMap<Constant, ValuedObject> newVariables = new HashMap<Constant, ValuedObject>()
+        val constantDeclarations = module.declarations.filter(ConstantDeclaration).toList
+        val ScopeStatement scope = module.getIScope
+        for (decl: constantDeclarations) {
+            for (c : decl.valuedObjects.filter(Constant)) {
                 var ValueType newType
-                if (v.type != ValueType.PURE) {
-                    newType = if (v.type == ValueType.DOUBLE) ValueType.FLOAT else v.type.type
+                if (c.type.type != ValueType.PURE) {
+                    newType = if (c.type.type == ValueType.DOUBLE) ValueType.FLOAT else c.type.type
                 }
                 else {
                     throw new UnsupportedOperationException(
                     "The following constant doesn't have a valid type for SCL! " + decl)
                 }
-                var newDecl = createDeclaration(newType, null)
-                var c = v as Constant
-                var variable = createNewUniqueVariable(if (c.initialValue!=null) c.initialValue else null)
+                val newDecl = createDeclaration(newType, null)
+                val variable = createNewUniqueVariable(c.initialValue)
                 newVariables.put(c, variable)
                 newDecl.valuedObjects.add(variable)
                 scope.declarations.add(newDecl)
@@ -93,51 +82,32 @@ class ConstantTransformation extends EsterelProcessor {
         module.declarations.removeIf[it instanceof ConstantDeclaration]
     }
     
-    def transformReferences(Statement statement, Map<Constant, ValuedObject> newVariables) {
-        var references = statement.eAllContents.filter(ValuedObjectReference).toList
+    def transformReferences(Statement statement, HashMap<Constant, ValuedObject> newVariables) {
+        val references = statement.eAllContents.filter(ValuedObjectReference).toList
         // iterate over all valued object references contained in the scope
-        // if a reference references a transformed sensor then set the reference to the new variable
+        // if a reference references a transformed constant then set the reference to the new variable
         for (ref : references) {
             if (ref.valuedObject instanceof Constant) {
                 var vObject = ref.valuedObject as Constant
                 if (newVariables.containsKey(vObject)) {
                     ref.valuedObject = newVariables.get(vObject)
-                    removeValueTestOperator(ref.eContainer)
                 }
             }
         }
     }
     
-    def transformConstantExpressions(Statement statement, Map<Constant, ValuedObject> newVariables) {
-        var constantExpr = statement.eAllContents.filter(ConstantExpression).toList
+    def transformConstantExpressions(Statement statement, HashMap<Constant, ValuedObject> newVariables) {
+        val constantExpr = statement.eAllContents.filter(ConstantExpression).toList
         for (expr : constantExpr) {
-            if (expr.constant instanceof Constant) {
-                var constant = expr.constant as Constant
+            if (expr.constant !== null) {
+                val constant = expr.constant as Constant
                 // if the constant expression references a transformed constant
                 if (newVariables.containsKey(constant)) {
-                    if(expr.eContainer.eGet(expr.eContainingFeature) instanceof EList) {
-                        var list = expr.eContainer.eGet(expr.eContainingFeature) as EList<Expression>
-                        var pos = list.indexOf(expr)
-                        list.set(pos, createValuedObjectReference(newVariables.get(constant)))
-                    }
-                    else {
-                        setExpression(createValuedObjectReference(newVariables.get(constant)), expr.eContainer, false)
-                    }
+                    expr.replace(createValuedObjectReference(newVariables.get(constant)))
                 }
             }
-            else if (expr.value != null) {
-                if(expr.eContainer.eGet(expr.eContainingFeature) instanceof EList) {
-                    var list = expr.eContainer.eGet(expr.eContainingFeature) as EList<Expression>
-                    var pos = list.indexOf(expr)
-                    list.set(pos, expr.value)
-                }
-                else {
-                    setExpression(expr.value, expr.eContainer, false)
-                }
-            }
-            else {
-                throw new UnsupportedOperationException(
-                        "The following constant expression doesn't have a constant and value! " + expr)
+            else { // if (expr.value !== null)
+                expr.replace(expr.value)
             }
         }
     }

@@ -117,6 +117,10 @@ class EsterelTransformationExtensions {
     
     var static moduleSuffix = 0;
     
+    final private static String s_cur = "s_cur"
+    
+    final private static String s_set = "s_set"
+    
     final private static String generatedAnnotation = "depth"
     
     final private static String interfaceScope = "IScope"
@@ -272,7 +276,7 @@ class EsterelTransformationExtensions {
      * @return A new ValuedObject with an unused name
      */
     def ValuedObject createTrapVariable(Signal trap) {
-        if (trap != null) {
+        if (trap !== null) {
             createValuedObject(createNewUniqueTrapName(trap.name)) => [
                 it.initialValue = trap.initialValue
                 it.combineOperator = trap.combineOperator
@@ -291,7 +295,7 @@ class EsterelTransformationExtensions {
      * @return A new ValuedObject with an unused name
      */
     def ValuedObject createTrapVariable(Expression expr, String name) {
-        if (name != null) {
+        if (name !== null) {
             createValuedObject(createNewUniqueTrapName(name)) => [
                 it.initialValue = expr 
             ]
@@ -309,7 +313,7 @@ class EsterelTransformationExtensions {
      * @return A new ValuedObject with an unused name
      */
     def ValuedObject createSignalVariable(Expression expr, CombineOperator op, String name) {
-        if (name != null) {
+        if (name !== null) {
             createValuedObject(name) => [
                 it.initialValue = EcoreUtil.copy(expr)
                 it.combineOperator = op
@@ -463,7 +467,7 @@ class EsterelTransformationExtensions {
      */
     def createNewUniqueSignalName(String name) {
         signalSuffix++
-        if (name != null) {
+        if (name !== null) {
             return name + "_sig"
         }
         else {
@@ -542,7 +546,7 @@ class EsterelTransformationExtensions {
      * @return A statement which increments valObj
      */
     def Statement incrementInt(ValuedObject valuedObjectToIncrement) {
-        createAssignment(valuedObjectToIncrement,
+        createAssignment(valuedObjectToIncrement.createValuedObjectReference,
             KExpressionsFactory::eINSTANCE.createOperatorExpression => [
                 operator = OperatorType::ADD
                 subExpressions += createValuedObjectReference(valuedObjectToIncrement)
@@ -722,7 +726,7 @@ class EsterelTransformationExtensions {
     def createDeclaration(ValueType type, ValuedObject object) {
         KExpressionsFactory::eINSTANCE.createVariableDeclaration => [
             it.type = type
-            if (object != null) {
+            if (object !== null) {
                 it.valuedObjects.add(object)
             }
         ]
@@ -837,19 +841,65 @@ class EsterelTransformationExtensions {
     /**
      * Creates an assignment
      * 
-     * @param objectToAssign The ValuedObject to be assigned with something
+     * @param objectToAssign The valued object to be assigned with something
      * @param expression The expression that should be assigned
      * @return An assignment instruction
      */
     def createAssignment(ValuedObject objectToAssign, Expression expression) {
         SCLFactory::eINSTANCE.createAssignment => [
-            it.valuedObject = objectToAssign
+            it.reference = objectToAssign.createValuedObjectReference
+            it.expression = EcoreUtil.copy(expression)
+        ]
+    }
+
+    /**
+     * Creates an assignment
+     * 
+     * @param reference The ValuedObjectReference representing the vo to be assigned with something
+     * @param expression The expression that should be assigned
+     * @return An assignment instruction
+     */
+    def createAssignment(ValuedObjectReference reference, Expression expression) {
+        SCLFactory::eINSTANCE.createAssignment => [
+            it.reference = reference
             it.expression = EcoreUtil.copy(expression)
         ]
     }
     
     def createSCLAssignment(ValuedObject objectToAssign, Expression expression) {
         createAssignment(objectToAssign, expression) 
+    }
+    
+    /**
+     * Creates an assignment for the 's_cur' variable which does not exist yet
+     * therefore the signal is temporarily used for the assignment 
+     * 
+     * @param sigRef The SignalReference representing the signal to be assigned with something
+     * @param expression The expression that should be assigned
+     * @return An assignment instruction
+     */
+    def createCurAssignment(SignalReference sigRef, Expression expression) {
+        SCLFactory::eINSTANCE.createAssignment => [
+            it.annotations += createAnnotation(s_cur)
+            it.reference = sigRef
+            it.expression = EcoreUtil.copy(expression)
+        ]
+    }
+    
+    /**
+     * Creates an assignment for the 's_set' variable which does not exist yet
+     * therefore the signal is temporarily used for the assignment 
+     * 
+     * @param sigRef The SignalReference representing the signal to be assigned with something
+     * @param expression The expression that should be assigned
+     * @return An assignment instruction
+     */
+    def createSetAssignment(SignalReference sigRef, Expression expression) {
+        SCLFactory::eINSTANCE.createAssignment => [
+            it.annotations += createAnnotation(s_set)
+            it.reference = sigRef
+            it.expression = EcoreUtil.copy(expression)
+        ]
     }
     
     /**
@@ -1242,7 +1292,7 @@ class EsterelTransformationExtensions {
      */
     def createElseScope(EList<Statement> statements) {
         SCLFactory::eINSTANCE.createElseScope => [
-            if (statements != null) {
+            if (statements !== null) {
                 it.statements.add(statements)
             }
         ]
@@ -1251,12 +1301,12 @@ class EsterelTransformationExtensions {
     /**
      * Create an ElseScope for a Conditional.
      * 
-     * @param statement The statement which belong in the ElseScope
+     * @param statement The statement which belongs in the ElseScope
      * @return An ElseScope with a statement
      */
     def createElseScope(Statement statement) {
         SCLFactory::eINSTANCE.createElseScope => [
-            if (statement != null) {
+            if (statement !== null) {
                 it.statements.add(statement)
             }
         ]
@@ -1432,7 +1482,7 @@ class EsterelTransformationExtensions {
     def transformReferences(EObject obj) {
         // iterate over all valued object references contained in the scope
         // if a reference references a transformed signal then set the reference to the new signal
-        var references = obj.eAllContents.filter(ValuedObjectReference).toList
+        val references = obj.eAllContents.filter(ValuedObjectReference).toList
         if (obj instanceof ValuedObjectReference) {
             references += obj
         }
@@ -1444,7 +1494,7 @@ class EsterelTransformationExtensions {
                     var parent = ref.eContainer
                     if (parent instanceof OperatorExpression) {
                         if ( (parent as OperatorExpression).operator == OperatorType.VAL) {
-                            if (newSignals.get(signal).s_val == null) {
+                            if (newSignals.get(signal).s_val === null) {
                                 throw new UnsupportedOperationException("The '?' expression is not valid because of a missing 's_val' valued object for the following Signal! " + signal.name)
                             }
                             ref.valuedObject = newSignals.get(signal).s_val
@@ -1457,7 +1507,7 @@ class EsterelTransformationExtensions {
                                 list.set(pos, createValuedObjectReference(newSignals.get(signal).s))
                             }
                             else {
-                                if (newSignals.get(signal).s_val == null) {
+                                if (newSignals.get(signal).s_val === null) {
                                     throw new UnsupportedOperationException("The 'pre()' expression is not valid because of a missing 's_val' valued object for the following Signal! " + signal.name)
                                 }
                                 ref.valuedObject = newSignals.get(signal).s_val 
@@ -1473,7 +1523,7 @@ class EsterelTransformationExtensions {
                 }
             }
             // if "ref" is still a SignalReferenceExpr it must be transformed into a ValuedObjectReference
-            if (ref.eContainer != null && ref instanceof SignalReference && ref.valuedObject != null) {
+            if (ref.eContainer !== null && ref instanceof SignalReference && ref.valuedObject !== null) {
                 if(ref.eContainer.eGet(ref.eContainingFeature) instanceof EList) {
                     var list = ref.eContainer.eGet(ref.eContainingFeature) as EList<Expression>
                     var pos = list.indexOf(ref)
@@ -1779,15 +1829,15 @@ class EsterelTransformationExtensions {
             taskList.addAll(d.eAllContents.filter(Task).toList)
         }
         // update references of the renamings
-        if (run.renamings != null && !run.renamings.empty) {
+        if (run.renamings !== null && !run.renamings.empty) {
             for (oneTypeRenaming : run.renamings) {
                 for (renaming : oneTypeRenaming.renamings) {
                     switch renaming {
                         SignalRenaming: {
                             for (var i=0; i<signalList.length; i++) {
                                 var s = signalList.get(i)
-                                if (s.name.equals(renaming.oldName.name)) {
-                                    renaming.oldName = s
+                                if (s.name.equals(renaming.oldName.valuedObject.name)) {
+                                    renaming.oldName = s.createSignalReference
                                     i = signalList.length
                                 }
                             }
@@ -1875,7 +1925,7 @@ class EsterelTransformationExtensions {
         var references = obj.eAllContents.filter(SignalReference).toList
         for (ref : references) {
             // if "ref" is still a SignalReferenceExpr it must be transformed into a ValuedObjectReference
-            if (ref.eContainer != null && ref instanceof SignalReference && ref.valuedObject != null) {
+            if (ref.eContainer !== null && ref instanceof SignalReference && ref.valuedObject !== null) {
                 if(ref.eContainer.eGet(ref.eContainingFeature) instanceof EList) {
                     var list = ref.eContainer.eGet(ref.eContainingFeature) as EList<Expression>
                     var pos = list.indexOf(ref)
@@ -1887,6 +1937,18 @@ class EsterelTransformationExtensions {
                 }
             }
         }
+    }
+    
+    /**
+     * Create a SignalReference
+     * 
+     * @param signal the signal for the reference
+     * @return a SignalReference
+     */
+    def createSignalReference(ValuedObject signal) {
+        EsterelFactory::eINSTANCE.createSignalReference => [
+            it.valuedObject = signal
+        ]
     }
  
 }
