@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.diagnostics.IDiagnosticProducer;
 import org.eclipse.xtext.linking.impl.Linker;
 
-import de.cau.cs.kieler.sccharts.Transition;
 
 /**
  * A customized Xtext linker linking textual SCCharts models.
@@ -44,8 +43,8 @@ public class SCTXLinker extends Linker {
     }
 
     @Override
-    public void ensureLinked(EObject obj, IDiagnosticProducer producer) {
-        super.ensureLinked(obj, producer);
+    public void beforeEnsureIsLinked(EObject obj, EReference ref, IDiagnosticProducer producer) {
+        checkUncontainedOpposites(obj, ref);
     }
 
     /**
@@ -59,23 +58,18 @@ public class SCTXLinker extends Linker {
         EReference oppRef = ref.getEOpposite();
         if (oppRef != null) {
             if (ref.isMany()) {
+                @SuppressWarnings("unchecked")
                 EList<EObject> refObjs = (EList<EObject>) obj.eGet(ref);
                 if (refObjs != null) {
                     // Remove non-contained opposites
                      refObjs.removeIf(new Predicate<EObject>() {
-                        Set<EObject> exists = new HashSet();
+                        Set<EObject> exists = new HashSet<EObject>();
 
                         @Override
                         public boolean test(EObject t) {
-                            if (!exists.contains(t) || t.eGet(oppRef) == null) {
-                                System.out.println(t);
-                                if ( t instanceof Transition) 
-                                    System.out.println("  " + ((Transition) t).getTargetState());
-//                                if (((Transition) t).getTargetState() == null) return true;
-                            }
-                            boolean b = t.eContainer() == null || exists.contains(t) || t.eGet(oppRef) == null;
-                                    if (!b) exists.add(t);
-                            return b;
+                            boolean remove = t.eContainer() == null || t.eGet(oppRef) == null; 
+                            if (!remove) exists.add(t);
+                            return remove;
                         }
                     });
                 }

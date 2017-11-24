@@ -43,6 +43,8 @@ import static extension de.cau.cs.kieler.core.model.util.URIUtils.*
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.resource.impl.ListBasedDiagnosticConsumer
 import org.eclipse.xtext.diagnostics.Severity
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.Transition
 
 /**
  * A customized {@link LazyLinkingResource}. Modifies the parsed model and fixes some runtime bugs.
@@ -132,12 +134,28 @@ public class SCTXResource extends LazyLinkingResource {
         }
 
         super.updateInternalState(parseResult);
-        if (parseResult.rootASTElement !== null) {
-            for (ref : parseResult.rootASTElement.eAllContents.map[e | e.eClass().getEReferences().map[new Pair(e,it)]].toIterable.flatten) {
-                SCTXLinker.checkUncontainedOpposites(ref.key, ref.value);
+
+        // ssm + als magic to correct broken bidirectional references that were created by the xtext linking process.
+        // Depending on the grammar and when using eOpposites, the opposite lists of the transitions sometimes include
+        // the same reference more than once. Furthermore, removing one of these also automatically removes the opposite,
+        // because these are managed by emf. Hence, we have to remember the target state, remove all references, and then
+        // set the target state again.  
+        val states = parseResult.rootASTElement.eAllContents.filter(State).filter[ incomingTransitions.toSet.size < incomingTransitions.size ].toIterable
+        for (state : states) {
+            val dups = <Transition, State> newHashMap
+            
+            for (t : state.incomingTransitions) {
+                if (state.incomingTransitions.filter[ it == t ].size > 1) {
+                    dups.put(t, t.targetState)
+                }
+            }
+            
+            state.incomingTransitions.removeIf[ dups.containsKey(it) ]
+            
+            for (k : dups.keySet) {
+                k.targetState = dups.get(k)
             }
         }
-
     }    
     
     // ---------------------------------------------------------------------------------------
