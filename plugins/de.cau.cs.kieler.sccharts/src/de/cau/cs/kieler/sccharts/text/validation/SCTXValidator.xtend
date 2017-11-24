@@ -104,6 +104,8 @@ class SCTXValidator extends AbstractSCTXValidator {
     static val String BROKEN_IMPORT = "Broken Import: There is no SCCharts model with the given name."
     static val String BROKEN_FOLDER_IMPORT = "Broken Import: There are no SCCharts models in the given directory."
 
+    static val String COUNT_DELAY_OF_0 = "A count delay of 0 is not allowed on a trigger"
+
     @Check
     def void checkImportPragma(StringPragma pragma) {
         if (SCTXResource.PRAGMA_IMPORT.equals(pragma.name) && pragma.eResource !== null) {
@@ -430,6 +432,16 @@ class SCTXValidator extends AbstractSCTXValidator {
                     }
                 }
             }
+        }
+    }
+    
+    /**
+     * Checks that no superfluous count delays are used.
+     */
+    @Check
+    public def void checkCountDelayGreaterThan1(Transition transition) {
+        if(transition.triggerDelay == 0) {
+            error(COUNT_DELAY_OF_0, transition.trigger, null)
         }
     }
     
