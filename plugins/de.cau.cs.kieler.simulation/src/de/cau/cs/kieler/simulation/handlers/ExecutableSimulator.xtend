@@ -315,7 +315,16 @@ class ExecutableSimulator extends DefaultSimulator {
                 throw new IOException("Process of simulation '" + processBuilder.command + "' in '" + processBuilder.directory + "'\n"
                                     + "is not responding with a JSON object.")
             }
-        } while(line == null || !line.startsWith("{") || !line.endsWith("}"))
+            
+            // If the program did a print, the message will stand in front of the {
+            if (line !== null && !line.startsWith("{") && line.contains("{")) {
+                val pos = line.indexOf("{")
+                val print = line.substring(0, pos)
+                System.out.print(print)
+                PromConsole.print(print)
+                line = line.substring(pos, line.length)
+            }
+        } while(line === null || !line.startsWith("{") || !line.endsWith("}"))
         
         return line
     }
