@@ -12,51 +12,94 @@
  */
 package de.cau.cs.kieler.esterel.processors.transformators.incremental
 
+import java.util.HashMap
 import com.google.inject.Inject
-import de.cau.cs.kieler.esterel.EsterelProgram
-import de.cau.cs.kieler.esterel.LocalSignalDeclaration
-import de.cau.cs.kieler.esterel.OutputDeclaration
-import de.cau.cs.kieler.esterel.Signal
-import de.cau.cs.kieler.esterel.SignalDeclaration
-import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
+import de.cau.cs.kieler.esterel.EsterelProgram
+import de.cau.cs.kieler.esterel.InputDeclaration
+import de.cau.cs.kieler.esterel.OutputDeclaration
+import de.cau.cs.kieler.esterel.InputOutputDeclaration
+import de.cau.cs.kieler.esterel.Signal
 import de.cau.cs.kieler.esterel.extensions.NewSignals
-import de.cau.cs.kieler.esterel.processors.EsterelProcessor
+import de.cau.cs.kieler.esterel.LocalSignalDeclaration
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.scl.Module
-import de.cau.cs.kieler.scl.ScopeStatement
-import java.util.HashMap
-import java.util.List
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * @author mrb
  *
  */
-class  SignalTransformation extends EsterelProcessor {
+class  SignalTransformation extends InplaceProcessor<EsterelProgram> {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
+    
+    public static val ID = "de.cau.cs.kieler.esterel.processors.signal"
+    
     override getId() {
-        return SCEstTransformation::SIGNAL_ID
+        return ID
     }
 
     override getName() {
-        return SCEstTransformation::SIGNAL_NAME
+        return "Signal"
     }
-
-//    override getExpandsFeatureId() {
-//        return SCEstFeature::SIGNAL_ID
-//    }
-//    
-//    override getNotHandlesFeatureIds() {
-//        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::RUN_ID)
-//    }
-
+    
     @Inject
     extension EsterelTransformationExtensions
-    @Inject
-    extension EsterelExtensions
+    
+    override process() {
+        model.eAllContents.filter(Module).toList.forEach[transform]
+    }
+    
+    def transform(Module module) {
+        val HashMap<Signal, NewSignals> newSignals = new HashMap<Signal, NewSignals>()
+        val inputSignals = module.declarations.filter(InputDeclaration).toList
+        val outputSignals = module.declarations.filter(OutputDeclaration).toList
+        val inputoutputSignals = module.declarations.filter(InputOutputDeclaration).toList
+        
+        for (inputDecl : inputSignals) {
+            for (signal : inputDecl.valuedObjects.filter(Signal)) {
+                val s = createSignalVariable(createFalse, null, signal.name)
+                signal.name = signal.name.createNewUniqueSignalName
+                val decl = createDeclaration(ValueType.BOOL, s)
+                var decl2 = createDeclaration(null, null)
+                if (signal.type !== null) {
+                    module.declarations.add(decl)
+                    if (signal.type == ValueType.PURE) {
+                        newSignals.put(signal, new NewSignals(s))
+                    }
+                    else {
+                        val s_set = createSignalVariable(createFalse, null, s.name + "_set")
+                        decl.valuedObjects.add(s_set)
+                        val s_cur = createSignalVariable(null, signal.combineOperator, s.name + "_cur")
+                        val s_val = createSignalVariable(signal.initialValue, signal.combineOperator, s.name + "_val")
+                        val tempType = if (signal.type == ValueType.DOUBLE) ValueType.FLOAT else signal.type
+                        decl2 = createDeclaration(tempType, null)
+                        decl2.valuedObjects.add(s_cur)
+                        decl2.valuedObjects.add(s_val)
+                        newSignals.put(signal, new NewSignals(s, s_set, s_cur, s_val))
+                        module.declarations.add(decl2)
+                    }
+                }
+                else { // shouldn't be possible
+                    throw new UnsupportedOperationException(
+                        "The following signal doesn't have a type! " + s.name)
+                }
+                
+// TODO the next four lines    
+
+//                decl.input = interfaceSD.input
+//                decl.output = interfaceSD.input
+//                decl2.input = interfaceSD.output
+//                decl2.output = interfaceSD.output
+            }
+        }
+        createParallelForSignals(module, newSignals)
+//        scope.transformReferences
+    }
     
     /*
      *  TODO only the signals with type != null will be transformed
@@ -71,57 +114,7 @@ class  SignalTransformation extends EsterelProcessor {
      * Therefore this transformation would also iterate over the local signals when "createParallelForSignals" is called.
      */
     
-    override EsterelProgram transform(EsterelProgram prog) {
-        for (m : prog.modules) { 
-            m.signalDeclarations.toList.transformSignals(m)
-//            transformStatements(m.statements)
-//            m.intSignalDecls.clear
-        }
-        return prog
-    }
-    
-    def transformSignals(List<SignalDeclaration> signalDecl, Module module) {
-        var ScopeStatement scope = module.getIScope
-        for (interfaceSD : signalDecl) {
-            for (signal : interfaceSD.signals) {
-                var s = createSignalVariable(createFalse, null, signal.name)
-                signal.name = signal.name.createNewUniqueSignalName
-                var decl = createDeclaration(ValueType.BOOL, s)
-                var decl2 = createDeclaration(null, null)
-                if (signal.type != null) {
-                    scope.declarations.add(decl)
-                    if (signal.type == ValueType.PURE) {
-                        newSignals.put(signal, new NewSignals(s))
-                    }
-                    else {
-                        var s_set = createSignalVariable(createFalse, null, s.name + "_set")
-                        decl.valuedObjects.add(s_set)
-                        var s_cur = createSignalVariable(null, signal.combineOperator, s.name + "_cur")
-                        var s_val = createSignalVariable(signal.initialValue, signal.combineOperator, s.name + "_val")
-                        var tempType = if (signal.type == ValueType.DOUBLE) ValueType.FLOAT else signal.type
-                        decl2 = createDeclaration(tempType, null)
-                        decl2.valuedObjects.add(s_cur)
-                        decl2.valuedObjects.add(s_val)
-                        newSignals.put(signal, new NewSignals(s, s_set, s_cur, s_val))
-                        scope.declarations.add(decl2)
-                    }
-                }
-                else { // shouldn't be possible
-                    throw new UnsupportedOperationException(
-                        "The following signal doesn't have a type! " + s.name)
-                }
-
-                decl.input = interfaceSD.input
-                decl.output = interfaceSD.input
-                decl2.input = interfaceSD.output
-                decl2.output = interfaceSD.output
-            }
-        }
-        createParallelForSignals(scope, newSignals)
-//        scope.transformReferences
-    }
-    
-    def createParallelForSignals(ScopeStatement scope, HashMap<Signal, NewSignals> signalsMap) {
+    def createParallelForSignals(Module module, HashMap<Signal, NewSignals> signalsMap) {
         var necessary = false
         var signals = signalsMap.keySet.iterator.toList
         var i = 0
@@ -139,10 +132,10 @@ class  SignalTransformation extends EsterelProcessor {
             var thread2 = createThread
             parallel.threads.add(thread1)
             parallel.threads.add(thread2)
-            thread2.statements.add(scope.statements)
+            thread2.statements.add(module.statements)
             thread2.statements.add(createAssignment(term, createTrue))
-            scope.statements.add(parallel)
-            scope.declarations.add(decl)
+            module.statements.add(parallel)
+            module.declarations.add(decl)
             
             // thread1 statements: the initializations of the output signals
             var label = createLabel
