@@ -24,9 +24,8 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
-import de.cau.cs.kieler.scl.ScopeStatement
-import de.cau.cs.kieler.scl.Statement
 import de.cau.cs.kieler.scl.Module
+import org.eclipse.emf.ecore.EObject
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
@@ -59,7 +58,6 @@ class SensorTransformation extends InplaceProcessor<EsterelProgram> {
     def transform(Module module) {
         // this map combines an Esterel sensor with the new SCL variable
         val HashMap<Sensor, ValuedObject> newVariables = new HashMap<Sensor, ValuedObject>()
-        val ScopeStatement scope = module.getIScope
         val sensorDeclarations = module.declarations.filter(SensorDeclaration).toList
         for (decl: sensorDeclarations) {
             for (s : decl.valuedObjects.filter(Sensor)) {
@@ -74,7 +72,7 @@ class SensorTransformation extends InplaceProcessor<EsterelProgram> {
                         throw new UnsupportedOperationException(
                         "The following sensor doesn't have a valid type for SCL! " + s.name)
                     }
-                    scope.declarations.add(createDeclaration(newType, variable))
+                    module.declarations.add(createDeclaration(newType, variable))
                 }
                 else { 
                     throw new UnsupportedOperationException(
@@ -82,12 +80,12 @@ class SensorTransformation extends InplaceProcessor<EsterelProgram> {
                 }
             }
         }
-        transformReferences(scope, newVariables)
+        transformReferences(module, newVariables)
         module.declarations.removeIf[it instanceof SensorDeclaration]
     }
     
-    def transformReferences(Statement statement, HashMap<Sensor, ValuedObject> newVariables) {
-        val references = statement.eAllContents.filter(SignalReference).toList
+    def transformReferences(EObject obj, HashMap<Sensor, ValuedObject> newVariables) {
+        val references = obj.eAllContents.filter(SignalReference).toList
         // iterate over all signal references contained in the scope
         // if a reference references a transformed sensor then set the reference to the new variable
         for (ref : references) {

@@ -25,7 +25,7 @@ import de.cau.cs.kieler.esterel.extensions.NewSignals
 import de.cau.cs.kieler.esterel.LocalSignalDeclaration
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.scl.Module
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.esterel.SignalDeclaration
 
 /**
  * @author mrb
@@ -56,12 +56,10 @@ class  SignalTransformation extends InplaceProcessor<EsterelProgram> {
     
     def transform(Module module) {
         val HashMap<Signal, NewSignals> newSignals = new HashMap<Signal, NewSignals>()
-        val inputSignals = module.declarations.filter(InputDeclaration).toList
-        val outputSignals = module.declarations.filter(OutputDeclaration).toList
-        val inputoutputSignals = module.declarations.filter(InputOutputDeclaration).toList
+        val declarations = module.declarations.filter(SignalDeclaration).toList
         
-        for (inputDecl : inputSignals) {
-            for (signal : inputDecl.valuedObjects.filter(Signal)) {
+        for (declaration : declarations) {
+            for (signal : declaration.valuedObjects.filter(Signal)) {
                 val s = createSignalVariable(createFalse, null, signal.name)
                 signal.name = signal.name.createNewUniqueSignalName
                 val decl = createDeclaration(ValueType.BOOL, s)
@@ -89,16 +87,17 @@ class  SignalTransformation extends InplaceProcessor<EsterelProgram> {
                         "The following signal doesn't have a type! " + s.name)
                 }
                 
-// TODO the next four lines    
-
-//                decl.input = interfaceSD.input
-//                decl.output = interfaceSD.input
-//                decl2.input = interfaceSD.output
-//                decl2.output = interfaceSD.output
+                val isInput = (declaration instanceof InputDeclaration) || (declaration instanceof InputOutputDeclaration)
+                val isOutput = (declaration instanceof OutputDeclaration) || (declaration instanceof InputOutputDeclaration)
+                decl.input = isInput
+                decl.output = isOutput
+                decl2.input = isInput
+                decl2.output = isOutput
             }
         }
         createParallelForSignals(module, newSignals)
-//        scope.transformReferences
+        transformReferences(module, newSignals)
+        module.declarations.removeIf[it instanceof SignalDeclaration]
     }
     
     /*
@@ -108,15 +107,9 @@ class  SignalTransformation extends InplaceProcessor<EsterelProgram> {
      *  see KExt.xtext => Declaration
     */
     
-    /*
-     * This transformation has to be done before the local signal transformation because the local signal transformation
-     * writes also in the end its signals to "newSignals" in EsterelTransformationExtensions.
-     * Therefore this transformation would also iterate over the local signals when "createParallelForSignals" is called.
-     */
-    
     def createParallelForSignals(Module module, HashMap<Signal, NewSignals> signalsMap) {
         var necessary = false
-        var signals = signalsMap.keySet.iterator.toList
+        val signals = signalsMap.keySet.iterator.toList
         var i = 0
         while (!necessary && i<signals.length) {
             var Signal signal = signals.get(i)
@@ -125,58 +118,54 @@ class  SignalTransformation extends InplaceProcessor<EsterelProgram> {
             i++
         }
         if (necessary) {
-            var term = createNewUniqueTermFlag(createFalse)
-            var decl = createDeclaration(ValueType.BOOL, term)
-            var parallel = createParallel
-            var thread1 = createThread
-            var thread2 = createThread
+            val term = createNewUniqueTermFlag(createFalse)
+            val decl = createDeclaration(ValueType.BOOL, term)
+            val parallel = createParallel
+            val thread1 = createThread
+            val thread2 = createThread
             parallel.threads.add(thread1)
             parallel.threads.add(thread2)
-            thread2.statements.add(module.statements)
+            thread2.statements.addAll(module.statements)
             thread2.statements.add(createAssignment(term, createTrue))
             module.statements.add(parallel)
             module.declarations.add(decl)
             
             // thread1 statements: the initializations of the output signals
-            var label = createLabel
+            val label = createLabel
             thread1.statements.add(label)
             for (signal : signals) {
-                var keyValue = signalsMap.get(signal)
-                var s = keyValue.s
+                val keyValue = signalsMap.get(signal)
+                val s = keyValue.s
                 if (signal.type != ValueType.PURE) {
-                    var s_set = keyValue.s_set
-                    var s_cur = keyValue.s_cur
-                    var s_val = keyValue.s_val
+                    val s_set = keyValue.s_set
+                    val s_cur = keyValue.s_cur
+                    val s_val = keyValue.s_val
                     if (signal.eContainer instanceof OutputDeclaration) {
-                        var assign1 = createAssignment(s, createFalse)
+                        val assign1 = createAssignment(s, createFalse)
                         thread1.statements.add(assign1)
                     }
                     else if (signal.eContainer instanceof LocalSignalDeclaration) {
                         var assign1 = createAssignment(s, createFalse)
                         thread1.statements.add(assign1)
                     }
-                    var assign2 = createAssignment(s_set, createFalse)
+                    val assign2 = createAssignment(s_set, createFalse)
                     thread1.statements.add(assign2)
-                    var conditional1 = createConditional(createNot(createValuedObjectReference(s_set)))
-                    var assign3 = createAssignment(s_cur, getNeutral(s_cur.combineOperator))
+                    val conditional1 = createConditional(createNot(createValuedObjectReference(s_set)))
+                    val assign3 = createAssignment(s_cur, getNeutral(s_cur.combineOperator))
                     conditional1.statements.add(assign3)
                     thread1.statements.add(conditional1)
-                    var conditional2 = createConditional(createValuedObjectReference(s))
-                    var assign4 = createAssignment(s_val, createValuedObjectReference(s_cur))
+                    val conditional2 = createConditional(createValuedObjectReference(s))
+                    val assign4 = createAssignment(s_val, createValuedObjectReference(s_cur))
                     conditional2.statements.add(assign4)
                     thread1.statements.add(conditional2)
                     
                 }
                 else if (signal.eContainer instanceof OutputDeclaration) {
-                    var assign1 = createAssignment(s, createFalse)
-                    thread1.statements.add(assign1)
-                }
-                else if (signal.eContainer instanceof LocalSignalDeclaration) {
-                    var assign1 = createAssignment(s, createFalse)
+                    val assign1 = createAssignment(s, createFalse)
                     thread1.statements.add(assign1)
                 }
             }
-            var conditional = newIfThenGoto(createNot(createValuedObjectReference(term)), label, true)
+            val conditional = newIfThenGoto(createNot(createValuedObjectReference(term)), label, true)
             thread1.statements.add(conditional)
         }
     }

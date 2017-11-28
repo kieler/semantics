@@ -84,7 +84,7 @@ class LocalSignalDeclTransformation extends InplaceProcessor<EsterelProgram> {
         }
         createParallelForSignals(scope, signalsMap)
         localSignals.replace(scope)
-        scope.transformReferences
+        transformReferences(scope, signalsMap)
     }
     
     def createParallelForSignals(ScopeStatement scope, HashMap<Signal, NewSignals> signalsMap) {

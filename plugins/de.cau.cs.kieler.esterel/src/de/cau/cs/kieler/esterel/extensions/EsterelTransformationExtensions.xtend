@@ -84,7 +84,7 @@ import java.util.LinkedList
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * Methods and static variables which are used by the transformations which
@@ -96,7 +96,6 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 class EsterelTransformationExtensions {
 
     @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension KEffectsExtensions
     @Inject extension EsterelExtensions
 
     var static labelSuffix = 0;
@@ -118,6 +117,8 @@ class EsterelTransformationExtensions {
     var static moduleSuffix = 0;
     
     final private static String s_cur = "s_cur"
+    
+    final private static String s_val = "s_val"
     
     final private static String s_set = "s_set"
     
@@ -559,7 +560,7 @@ class EsterelTransformationExtensions {
       * 
       * @param condition The condition
       * @param targetLabel The targetlabel
-      * @param isImmediate When false a pause statement is added prior to the jump
+      * @param isImmediate When true a pause statement is added prior to the jump
       */
     def Conditional newIfThenGoto(Expression condition, Label targetLabel, boolean isImmediate) {
         SCLFactory::eINSTANCE.createConditional => [
@@ -897,6 +898,22 @@ class EsterelTransformationExtensions {
     def createSetAssignment(SignalReference sigRef, Expression expression) {
         SCLFactory::eINSTANCE.createAssignment => [
             it.annotations += createAnnotation(s_set)
+            it.reference = sigRef
+            it.expression = EcoreUtil.copy(expression)
+        ]
+    }
+    
+    /**
+     * Creates an assignment for the 's_val' variable which does not exist yet
+     * therefore the signal is temporarily used for the assignment 
+     * 
+     * @param sigRef The SignalReference representing the signal to be assigned with something
+     * @param expression The expression that should be assigned
+     * @return An assignment instruction
+     */
+    def createValAssignment(SignalReference sigRef, Expression expression) {
+        SCLFactory::eINSTANCE.createAssignment => [
+            it.annotations += createAnnotation(s_val)
             it.reference = sigRef
             it.expression = EcoreUtil.copy(expression)
         ]
@@ -1475,67 +1492,88 @@ class EsterelTransformationExtensions {
     }
     
     /**
-     * Transform all references to ISignals in the scope of the given object.
+     * Transform all references to signals in the scope of the given EObject.
      * 
      * @param obj The object which contains references to signals
+     * @param newSignals A map for all transformed signals and their new representative
      */
-    def transformReferences(EObject obj) {
-        // iterate over all valued object references contained in the scope
-        // if a reference references a transformed signal then set the reference to the new signal
-        val references = obj.eAllContents.filter(ValuedObjectReference).toList
-        if (obj instanceof ValuedObjectReference) {
+    def transformReferences(EObject obj, HashMap<Signal, NewSignals> newSignals) {
+        
+        val references = obj.eAllContents.filter(SignalReference).toList
+        if (obj instanceof SignalReference) {
             references += obj
         }
         for (ref : references) {
-            if (ref.valuedObject instanceof Signal) {
-                var signal = ref.valuedObject as Signal
-                // if the valued object reference references a transformed signal
-                if (newSignals.containsKey(signal)) {
-                    var parent = ref.eContainer
-                    if (parent instanceof OperatorExpression) {
-                        if ( (parent as OperatorExpression).operator == OperatorType.VAL) {
-                            if (newSignals.get(signal).s_val === null) {
-                                throw new UnsupportedOperationException("The '?' expression is not valid because of a missing 's_val' valued object for the following Signal! " + signal.name)
-                            }
-                            ref.valuedObject = newSignals.get(signal).s_val
-                            removeValueTestOperator(parent)
-                        }
-                        else if ( (parent as OperatorExpression).operator == OperatorType.PRE) { 
-                            if (ref instanceof SignalReference){
-                                var list = ref.eContainer.eGet(ref.eContainingFeature) as EList<Expression>
-                                var pos = list.indexOf(ref)
-                                list.set(pos, createValuedObjectReference(newSignals.get(signal).s))
-                            }
-                            else {
-                                if (newSignals.get(signal).s_val === null) {
-                                    throw new UnsupportedOperationException("The 'pre()' expression is not valid because of a missing 's_val' valued object for the following Signal! " + signal.name)
-                                }
-                                ref.valuedObject = newSignals.get(signal).s_val 
-                            }
-                        }
-                        else {
-                            ref.valuedObject = newSignals.get(signal).s
-                        }
+            val signal = ref.valuedObject as Signal
+            // if the SignalReference references a transformed signal
+            if (newSignals.containsKey(signal)) {
+                val parent = ref.eContainer
+                if ( (parent instanceof OperatorExpression) && 
+                     ((parent as OperatorExpression).operator == OperatorType.VAL)
+                ) {
+                    if (newSignals.get(signal).s_val === null) {
+                        throw new UnsupportedOperationException("The '?' expression is not valid because of a missing 's_val' valued object for the following Signal! " + signal.name)
                     }
-                    else {
-                        ref.valuedObject = newSignals.get(signal).s
-                    }
+                    parent.replace(createValuedObjectReference(newSignals.get(signal).s_val))
                 }
-            }
-            // if "ref" is still a SignalReferenceExpr it must be transformed into a ValuedObjectReference
-            if (ref.eContainer !== null && ref instanceof SignalReference && ref.valuedObject !== null) {
-                if(ref.eContainer.eGet(ref.eContainingFeature) instanceof EList) {
-                    var list = ref.eContainer.eGet(ref.eContainingFeature) as EList<Expression>
-                    var pos = list.indexOf(ref)
-                    list.set(pos, createValuedObjectReference(ref.valuedObject))
+                else if (parent instanceof Assignment) {
+                    if (parent.isCurAssignment) {
+                        ref.replace(createValuedObjectReference(newSignals.get(signal).s_cur))
+                    }
+                    else if (parent.isSetAssignment) {
+                        ref.replace(createValuedObjectReference(newSignals.get(signal).s_set))
+                    }
+//                    else if (parent.isValAssignment) {
+//                        ref.replace(createValuedObjectReference(newSignals.get(signal).s_val))
+//                    }
+                    else {
+                        ref.replace(createValuedObjectReference(newSignals.get(signal).s))
+                    }
                 }
                 else {
-                    var voRef = createValuedObjectReference(ref.valuedObject)
-                    setExpression(voRef, ref.eContainer, true)
-                    System.out.println(voRef)
+                    ref.replace(createValuedObjectReference(newSignals.get(signal).s))
                 }
             }
         }
+    }
+    
+    /**
+     * Returns 'true' if the assignment was created for the 's_cur' value of a signal 's'.
+     * 
+     * @param assignment The assignment in question
+     * 
+     */
+    def isCurAssignment(Assignment assignment) {
+        for (a : assignment.annotations) {
+            if (a.name.equals(s_cur)) return true
+        }
+        return false
+    }    
+    
+    /**
+     * Returns 'true' if the assignment was created for the 's_val' value of a signal 's'.
+     * 
+     * @param assignment The assignment in question
+     * 
+     */
+    def isValAssignment(Assignment assignment) {
+        for (a : assignment.annotations) {
+            if (a.name.equals(s_val)) return true
+        }
+        return false
+    }
+    
+    /**
+     * Returns 'true' if the assignment was created for the 's_set' value of a signal 's'.
+     * 
+     * @param assignment The assignment in question
+     * 
+     */
+    def isSetAssignment(Assignment assignment) {
+        for (a : assignment.annotations) {
+            if (a.name.equals(s_set)) return true
+        }
+        return false
     }
     
     /**
@@ -1698,14 +1736,7 @@ class EsterelTransformationExtensions {
     def removeValueTestOperator(EObject expr) {
         if (expr instanceof OperatorExpression) {
             if (expr.operator == OperatorType.VAL) {
-                if(expr.eContainer.eGet(expr.eContainingFeature) instanceof EList) {
-                    var list = expr.eContainer.eGet(expr.eContainingFeature) as EList<Expression>
-                    var pos = list.indexOf(expr)
-                    list.set(pos, expr.subExpressions.get(0))
-                }
-                else {
-                    setExpression(expr.subExpressions.get(0), expr.eContainer, false)
-                }
+                expr.replace(expr.subExpressions.get(0))
             }
         }
     }
@@ -1926,15 +1957,7 @@ class EsterelTransformationExtensions {
         for (ref : references) {
             // if "ref" is still a SignalReferenceExpr it must be transformed into a ValuedObjectReference
             if (ref.eContainer !== null && ref instanceof SignalReference && ref.valuedObject !== null) {
-                if(ref.eContainer.eGet(ref.eContainingFeature) instanceof EList) {
-                    var list = ref.eContainer.eGet(ref.eContainingFeature) as EList<Expression>
-                    var pos = list.indexOf(ref)
-                    list.set(pos, createValuedObjectReference(ref.valuedObject))
-                }
-                else {
-                    var voRef = createValuedObjectReference(ref.valuedObject)
-                    setExpression(voRef, ref.eContainer, true)
-                }
+                ref.replace(createValuedObjectReference(ref.valuedObject))
             }
         }
     }

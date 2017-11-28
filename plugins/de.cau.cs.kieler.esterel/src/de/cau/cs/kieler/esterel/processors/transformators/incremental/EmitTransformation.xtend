@@ -60,7 +60,7 @@ class EmitTransformation extends InplaceProcessor<EsterelProgram> {
         emit.replace(createAssignment(signal.createSignalReference, expr))
         if (emit.expression !== null) {
             if (signal.type != ValueType.PURE) {
-                val assign2 = createAssignment(signal.createSignalReference, 
+                val assign2 = createCurAssignment(signal.createSignalReference, 
                     createOperatorExpression(signal.createSignalReference, 
                         emit.expression, signal.combineOperator.getOperator
                     ))

@@ -27,6 +27,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author mrb
@@ -59,7 +60,6 @@ class ConstantTransformation extends InplaceProcessor<EsterelProgram> {
         // this map combines an Esterel sensor with the new SCL variable
         val HashMap<Constant, ValuedObject> newVariables = new HashMap<Constant, ValuedObject>()
         val constantDeclarations = module.declarations.filter(ConstantDeclaration).toList
-        val ScopeStatement scope = module.getIScope
         for (decl: constantDeclarations) {
             for (c : decl.valuedObjects.filter(Constant)) {
                 var ValueType newType
@@ -74,16 +74,16 @@ class ConstantTransformation extends InplaceProcessor<EsterelProgram> {
                 val variable = createNewUniqueVariable(c.initialValue)
                 newVariables.put(c, variable)
                 newDecl.valuedObjects.add(variable)
-                scope.declarations.add(newDecl)
+                module.declarations.add(newDecl)
             }
         }
-        transformReferences(scope, newVariables)
-        transformConstantExpressions(scope, newVariables)
+        transformReferences(module, newVariables)
+        transformConstantExpressions(module, newVariables)
         module.declarations.removeIf[it instanceof ConstantDeclaration]
     }
     
-    def transformReferences(Statement statement, HashMap<Constant, ValuedObject> newVariables) {
-        val references = statement.eAllContents.filter(ValuedObjectReference).toList
+    def transformReferences(EObject obj, HashMap<Constant, ValuedObject> newVariables) {
+        val references = obj.eAllContents.filter(ValuedObjectReference).toList
         // iterate over all valued object references contained in the scope
         // if a reference references a transformed constant then set the reference to the new variable
         for (ref : references) {
@@ -96,8 +96,8 @@ class ConstantTransformation extends InplaceProcessor<EsterelProgram> {
         }
     }
     
-    def transformConstantExpressions(Statement statement, HashMap<Constant, ValuedObject> newVariables) {
-        val constantExpr = statement.eAllContents.filter(ConstantExpression).toList
+    def transformConstantExpressions(EObject obj, HashMap<Constant, ValuedObject> newVariables) {
+        val constantExpr = obj.eAllContents.filter(ConstantExpression).toList
         for (expr : constantExpr) {
             if (expr.constant !== null) {
                 val constant = expr.constant as Constant
