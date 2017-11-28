@@ -139,21 +139,23 @@ public class SCTXResource extends LazyLinkingResource {
         // Depending on the grammar and when using eOpposites, the opposite lists of the transitions sometimes include
         // the same reference more than once. Furthermore, removing one of these also automatically removes the opposite,
         // because these are managed by emf. Hence, we have to remember the target state, remove all references, and then
-        // set the target state again.  
-        val states = parseResult.rootASTElement.eAllContents.filter(State).filter[ incomingTransitions.toSet.size < incomingTransitions.size ].toIterable
-        for (state : states) {
-            val dups = <Transition, State> newHashMap
-            
-            for (t : state.incomingTransitions) {
-                if (state.incomingTransitions.filter[ it == t ].size > 1) {
-                    dups.put(t, t.targetState)
+        // set the target state again.
+        if (parseResult.rootASTElement !== null) {  
+            val states = parseResult.rootASTElement.eAllContents.filter(State).filter[ incomingTransitions.toSet.size < incomingTransitions.size ].toIterable
+            for (state : states) {
+                val dups = <Transition, State> newHashMap
+                
+                for (t : state.incomingTransitions) {
+                    if (state.incomingTransitions.filter[ it == t ].size > 1) {
+                        dups.put(t, t.targetState)
+                    }
                 }
-            }
-            
-            state.incomingTransitions.removeIf[ dups.containsKey(it) ]
-            
-            for (k : dups.keySet) {
-                k.targetState = dups.get(k)
+                
+                state.incomingTransitions.removeIf[ dups.containsKey(it) ]
+                
+                for (k : dups.keySet) {
+                    k.targetState = dups.get(k)
+                }
             }
         }
     }    
