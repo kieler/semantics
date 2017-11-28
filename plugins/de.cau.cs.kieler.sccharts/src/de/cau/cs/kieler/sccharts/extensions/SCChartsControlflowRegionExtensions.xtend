@@ -49,7 +49,6 @@ class SCChartsControlflowRegionExtensions {
     def ControlflowRegion createControlflowRegion(String id) {
         SCChartsFactory::eINSTANCE.createControlflowRegion => [
             setName(id)
-            setLabel("")
         ]
     }
 
