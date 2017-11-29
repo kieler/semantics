@@ -125,11 +125,11 @@ class KEffectsExtensions {
     }
     
     def ValuedObject getValuedObject(Assignment assignment) {
-        if (assignment.reference == null) null else assignment.reference.valuedObject
+        if (assignment.reference === null) null else assignment.reference.valuedObject
     }
     
     def EList<Expression> getIndices(Assignment assignment) {
-        if (assignment.reference == null) {
+        if (assignment.reference === null) {
             return null
         } else {
             return assignment.reference.indices

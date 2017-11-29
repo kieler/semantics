@@ -69,14 +69,30 @@ Parameter returns kexpressions::Parameter:
 // ------------------ //
 
 Transition returns sccharts::Transition:
+    {sccharts::Transition}
 	annotations+=RestrictedTypeAnnotation*
-	preemption=(PreemptionType | PreemptionTypeLegacy)
-	targetState=[sccharts::State|ID]
-	delay=DelayType?
-	deferred?='deferred'?
-	history=HistoryType?
-    //                      -> This alternative is only for the serializer to enable forcing of brackets
-	('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do' effects+=Effect (';' effects+=Effect)*)?
+	
+	((
+    	preemption=(PreemptionType | PreemptionTypeLegacy) 
+        targetState=[sccharts::State|ID]
+        delay=DelayType?
+        deferred?='deferred'?
+        history=HistoryType?
+        //                      -> This alternative is only for the serializer to enable forcing of brackets
+	   ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? 
+	   ('do' effects+=Effect (';' effects+=Effect)*)?
+	)
+	|
+	(
+        delay=DelayType?
+        ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))?
+        ('do' effects+=Effect (';' effects+=Effect)*)?
+        preemption=(PreemptionType | PreemptionTypeLegacy) 
+        targetState=[sccharts::State|ID]
+        deferred?='deferred'?
+        history=HistoryType?
+	))
+	
 	('label' label=STRING)?;
 	
 // -------------- //

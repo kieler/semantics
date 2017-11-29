@@ -19,7 +19,6 @@ import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.scg.SCGraph
-import java.util.HashMap
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.scg.SchedulingBlock
@@ -149,7 +148,7 @@ class SCGDeclarationExtensions {
             val newDeclaration = createDeclaration(declaration).trace(declaration)
             for(vo : declaration.valuedObjects) {
                 val sb = source.findSchedulingBlockByVO(vo)
-                if (sb == null || !sb.basicBlock.deadBlock) { 
+                if (sb === null || !sb.basicBlock.deadBlock) { 
                     vo.copyValuedObject(newDeclaration) 
                 }
             }
@@ -166,11 +165,11 @@ class SCGDeclarationExtensions {
     def ValuedObject getValuedObjectCopy(ValuedObject valuedObject, 
     	ValuedObjectMapping map
     ) {
-        if (valuedObject == null) {
+        if (valuedObject === null) {
             throw new IllegalArgumentException("Can't copy valued object. Valued object is null!")
         }
         val vo = map.get(valuedObject).peek
-        if (vo == null) {
+        if (vo === null) {
             return valuedObject // TODO: Remove
             //throw new Exception("Valued Object not found! ["+valuedObject.name+"]")
         }
@@ -180,11 +179,11 @@ class SCGDeclarationExtensions {
     def ValuedObject getValuedObjectCopyWNULL(ValuedObject valuedObject,
     	ValuedObjectMapping map
     ) {
-        if (valuedObject == null) {
+        if (valuedObject === null) {
             return null
         }
         val vo = map.get(valuedObject).peek
-        if (vo == null) {
+        if (vo === null) {
             throw new Exception("Valued Object not found! ["+valuedObject.name+"]")
         }
         vo
@@ -210,7 +209,7 @@ class SCGDeclarationExtensions {
         } else {
         	// Otherwise, query all references in the expression and replace the object with the new copy
         	// in the target SCG.
-        	if (newExpression != null)
+        	if (newExpression !== null)
                 newExpression.eAllContents.filter(typeof(ValuedObjectReference)).
             	   forEach[ valuedObject = valuedObject.getValuedObjectCopy(map) ]        
         }
@@ -226,7 +225,7 @@ class SCGDeclarationExtensions {
     		s.valuedObject = assignment.valuedObject.getValuedObjectCopyWNULL(map)
     		s.expression = assignment.expression.copySCGExpression(map)
     		s.operator = assignment.operator
-    		assignment.indices.forEach[
+    		assignment.indices?.forEach[
     			s.indices += it.copySCGExpression(map)
     		] 
     	]

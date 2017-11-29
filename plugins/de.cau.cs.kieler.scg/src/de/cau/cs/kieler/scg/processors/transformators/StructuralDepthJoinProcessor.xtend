@@ -75,6 +75,11 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
         if (loopData === null) {
             environment.warnings.add("This processor requires loop information, but no loop data was found.")
             return;
+        } else {
+            if (environment.getProperty(LoopAnalyzerV2.LOOP_ANALYZER_STOP_AFTER_FIRST_LOOP)) {
+                environment.warnings.add("The loop analyzer is configured to stop after the first loop. Hence, " + 
+                    "the schizophrenia curing might be incomplete!")
+            }
         }
                 
         val warningProperty = environment.getProperty(LoopAnalyzerV2.WARNING_ON_INSTANTANEOUS_LOOP)
@@ -157,7 +162,16 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
                             dependency.target = null
                         }
                     }
-                }                
+                }   
+                
+                for (sNode : schizoNodes) {
+                    // If the node is not reachable by the control flow, clean up all traces of it.
+                    if (sNode.incoming.filter(ControlFlow).empty) {
+                        sNode.dependencies.immutableCopy.forEach[ it.target = null it.remove ]
+                        sNode.eContents.filter(ControlFlow).toList.forEach[ it.target = null it.remove]
+                        sNode.remove
+                    }
+                }             
                 
                 curedForks += fork
                 return true
@@ -198,7 +212,14 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
         }
         
         var entrySchizo = schizoMapping.get(entry.next.target)
-        entry.next.target = entrySchizo
+        if (entrySchizo === null) {
+            // The next node must not necessarily be a schizo node. It can also e the surface node of a pause.
+            if (!(entry.next.target instanceof Surface)) {
+//                throw new IllegalStateException("We found a successor of a schizophrenic entry node that should not be present. " + entry.next.target.toString)
+            }
+        } else {
+            entry.next.target = entrySchizo
+        }
         resultNodes
     }    
     
@@ -249,11 +270,14 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
             }
             
             visited += head
-            val nextNodes = head.allNext.map[ target ].
+            val nextNodes = head.allNext?.map[ target ].
                 filter[ !(it instanceof Join) && !(it instanceof Surface) && !(it instanceof Exit) ].
-                filter[ !visited.contains(it) ]
+                filter[ !visited.contains(it) ].toList
+            if (nextNodes !== null && nextNodes.contains(null)) {
+                throw new IllegalStateException("The successor node list in the surface check has a null entry. This should not happen!")
+            }
             if (!nextNodes.empty) {
-                nextNodes.forEach[ searchStack.push(it) ]
+                nextNodes.forEach[ if (it !== null) searchStack.push(it) ]
             } 
         }
         
@@ -281,9 +305,15 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
             }
             
             visited += head
-            val nextNodes = head.allPrevious.map[ eContainer ].
-                filter(Node).
-                filter[ !visited.contains(it) ]
+            val nextNodes = <Node> newLinkedList
+            if (head instanceof Join) {
+                // Threads that a nested further down the road must be skipped.
+                nextNodes += head.fork    
+            } else {
+                nextNodes += head.allPrevious.map[ eContainer ].
+                    filter(Node).
+                    filter[ !visited.contains(it) ]
+            }
             if (!nextNodes.empty) {
                 nextNodes.forEach[ searchStack.push(it) ]
             }

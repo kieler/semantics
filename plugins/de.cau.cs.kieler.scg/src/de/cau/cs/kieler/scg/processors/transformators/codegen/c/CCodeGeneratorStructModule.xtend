@@ -30,8 +30,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
     
-    @Inject extension CCodeSerializeHRExtensions
     @Inject extension KExpressionsValuedObjectExtensions
+    @Accessors @Inject CCodeSerializeHRExtensions serializer
     
     public static val STRUCT_NAME = "TickData"
     public static val STRUCT_VARIABLE_NAME = "d"
@@ -56,7 +56,10 @@ class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
     }
     
     override generate() {
-        
+        generate(serializer)
+    }
+    
+    protected def generate(extension CCodeSerializeHRExtensions serializer) {
         // Add the declarations of the model.
         for (declaration : scg.declarations) {
             for (valuedObject : declaration.valuedObjects) {
