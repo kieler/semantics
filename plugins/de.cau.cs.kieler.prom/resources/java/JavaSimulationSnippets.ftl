@@ -22,7 +22,7 @@
       </#list>
       <#else>
       model.${varName} = jsonVar.<@value_getter />("value");
-      System.out.println("received ${varName}"+model.${varName});
+      //System.out.println("received ${varName}:"+model.${varName});
       </#if>
     }
     </@>
