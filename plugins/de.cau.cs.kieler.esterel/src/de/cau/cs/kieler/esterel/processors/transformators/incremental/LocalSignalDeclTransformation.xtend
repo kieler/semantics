@@ -34,7 +34,7 @@ class LocalSignalDeclTransformation extends InplaceProcessor<EsterelProgram> {
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
     
-    public static val ID = "de.cau.cs.kieler.esterel.processors.localSignal"
+    public static val ID = "de.cau.cs.kieler.esterel.processors.localsignal"
     
     override getId() {
         return ID

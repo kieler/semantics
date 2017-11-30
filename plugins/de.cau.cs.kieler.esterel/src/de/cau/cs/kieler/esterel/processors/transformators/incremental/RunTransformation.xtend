@@ -283,10 +283,10 @@ class RunTransformation extends EsterelProcessor {
         var statementList = run.containingList
         var pos = statementList.indexOf(run)
         var runCopy = EcoreUtil.copy(run)
-        var scope = createScopeStatement(null)
+        var scope = createScopeStatement
         var moduleRenaming = runCopy.module
         // give the new scope the modules name or the new name as an annotation
-        if (moduleRenaming.newName != null) {
+        if (moduleRenaming.newName !== null) {
             scope.annotations.add(createAnnotation(moduleRenaming.newName))
         }
         else {
@@ -348,7 +348,7 @@ class RunTransformation extends EsterelProcessor {
      * @param runCopy The run statement
      */
     def void initializeRenamingMaps(Run runCopy) {
-        if (runCopy.renamings != null && !runCopy.renamings.empty) {
+        if (runCopy.renamings !== null && !runCopy.renamings.empty) {
             for (oneTypeRenaming : runCopy.renamings) {
                 for (renaming : oneTypeRenaming.renamings) {
                     switch renaming {
@@ -387,10 +387,10 @@ class RunTransformation extends EsterelProcessor {
     def Signal checkIfSignalExistsByNameAndType(String name, ValueType type, String typeID) {
         var correspondingSignal = parentSignals.get(name)
         if (correspondingSignal instanceof Signal) {
-            if (type != null && correspondingSignal.type == type) {
+            if (type !== null && correspondingSignal.type == type) {
                 return correspondingSignal
             }
-            else if (typeID != null && correspondingSignal.idType == typeID) {
+            else if (typeID !== null && correspondingSignal.idType == typeID) {
                 return correspondingSignal
             }
         }
@@ -407,13 +407,13 @@ class RunTransformation extends EsterelProcessor {
         var correspondingSensor = parentSensors.get(name)
         if (correspondingSensor instanceof Signal) {
             var swt = correspondingSensor.eContainer as Sensor
-            if (typeIdent.type != null && swt.type?.type == typeIdent.type) {
+            if (typeIdent.type !== null && swt.type?.type == typeIdent.type) {
                 return correspondingSensor
             }
-            else if (typeIdent.idType != null && swt.type?.idType == typeIdent.idType) {
+            else if (typeIdent.idType !== null && swt.type?.idType == typeIdent.idType) {
                 return correspondingSensor
             }
-            else if (typeIdent.esterelType != null && swt.type?.esterelType.name == typeIdent.esterelType.name) {
+            else if (typeIdent.esterelType !== null && swt.type?.esterelType.name == typeIdent.esterelType.name) {
                 return correspondingSensor
             }
         }
@@ -548,7 +548,7 @@ class RunTransformation extends EsterelProcessor {
                     var ConstantRenaming relatedConstantRenaming
                     if (constantRenamings.containsKey(constant)) {
                         relatedConstantRenaming = constantRenamings.get(constant)
-                        if (relatedConstantRenaming.newName != null) {
+                        if (relatedConstantRenaming.newName !== null) {
                             updateReferences = true
                         }
                         else {
@@ -617,7 +617,7 @@ class RunTransformation extends EsterelProcessor {
                 var type = checkIfTypeExistsByName(oldType.name, parentModule)
                 if (type instanceof TypeDefinition) {
                     for (typeIdent : typeIdentifiers) {
-                        if (typeIdent.esterelType != null) {
+                        if (typeIdent.esterelType !== null) {
                             if (typeIdent.esterelType == oldType) {
                                 typeIdent.esterelType = type
                             }
@@ -700,9 +700,9 @@ class RunTransformation extends EsterelProcessor {
                         if (i<oldFunction.parameterTypes.length) {
                             var oldTypeIdent = oldFunction.parameterTypes.get(i)
                             // if one of type, typeID or estType is equal, "same" stays true
-                            if (!(     (typeIdent.type != null && oldTypeIdent.type == typeIdent.type)
-                                    || (typeIdent.idType != null && oldTypeIdent.idType == typeIdent.idType)
-                                    || (typeIdent.esterelType != null && oldTypeIdent.esterelType.name == typeIdent.esterelType.name) 
+                            if (!(     (typeIdent.type !== null && oldTypeIdent.type == typeIdent.type)
+                                    || (typeIdent.idType !== null && oldTypeIdent.idType == typeIdent.idType)
+                                    || (typeIdent.esterelType !== null && oldTypeIdent.esterelType.name == typeIdent.esterelType.name) 
                                )) {
                                 same =  false
                             }

@@ -1727,28 +1727,28 @@ class EsterelTransformationExtensions {
         ]
     }
     
-//    /**
-//     * Checks if the given annotation is named "generatedModuleForRun"
-//     * 
-//     * @param annotation The annotation in question
-//     */
-//    def isGeneratedModuleAnnotation(Annotation annotation) {
-//        annotation.name.equals(generatedModule)
-//    } 
-//    
-//    /**
-//     * Check whether in an annotation list there is an annotation named "generatedModuleForRun".
-//     * 
-//     * @param annotations
-//     * @return Is there an annotation which is named "generatedModuleForRun"?
-//     */
-//    def isGeneratedModule(EList<Annotation> annotations) {
-//        var generated = false
-//        for (a : annotations) {
-//            generated = generated || a.name.equals(generatedModule) 
-//        }
-//        return generated
-//    }
+    /**
+     * Checks if the given annotation is named "generatedModuleForRun"
+     * 
+     * @param annotation The annotation in question
+     */
+    def isGeneratedModuleAnnotation(Annotation annotation) {
+        annotation.name.equals(generatedModule)
+    } 
+    
+    /**
+     * Check whether in an annotation list there is an annotation named "generatedModuleForRun".
+     * 
+     * @param annotations
+     * @return Is there an annotation which is named "generatedModuleForRun"?
+     */
+    def isGeneratedModule(EList<Annotation> annotations) {
+        var generated = false
+        for (a : annotations) {
+            generated = generated || a.name.equals(generatedModule) 
+        }
+        return generated
+    }
     
     /**
      * Update the renamings of the run statement since a copy of the module was created
