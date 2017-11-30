@@ -291,15 +291,16 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	 *     (rule start) (ambiguity) 'extern' functionName=ID
 	 *     (rule start) (ambiguity) constant=[Constant|ID]
 	 *     (rule start) (ambiguity) function=[Function|ID]
+	 *     (rule start) (ambiguity) operator=EsterelPreOperator
 	 *     (rule start) (ambiguity) operator=EsterelSubOperator
-	 *     (rule start) (ambiguity) operator=PreOperator
-	 *     (rule start) (ambiguity) operator=ValOperator
+	 *     (rule start) (ambiguity) operator=EsterelValueTestOperator
 	 *     (rule start) (ambiguity) text=HOSTCODE
 	 *     (rule start) (ambiguity) value=AnyValue
 	 *     (rule start) (ambiguity) value=BOOLEAN
 	 *     (rule start) (ambiguity) value=FLOAT
 	 *     (rule start) (ambiguity) value=INT
 	 *     (rule start) (ambiguity) value=STRING
+	 *     (rule start) (ambiguity) valuedObject=[Signal|ID]
 	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|PrimeID]
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
@@ -328,11 +329,12 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	 *     (rule start) (ambiguity) 'extern' functionName=ID
 	 *     (rule start) (ambiguity) constant=[Constant|ID]
 	 *     (rule start) (ambiguity) function=[Function|ID]
-	 *     (rule start) (ambiguity) operator=PreOperator
-	 *     (rule start) (ambiguity) operator=ValOperator
+	 *     (rule start) (ambiguity) operator=EsterelPreOperator
+	 *     (rule start) (ambiguity) operator=EsterelValueTestOperator
 	 *     (rule start) (ambiguity) text=HOSTCODE
 	 *     (rule start) (ambiguity) value=AnyValue
 	 *     (rule start) (ambiguity) value=BOOLEAN
+	 *     (rule start) (ambiguity) valuedObject=[Signal|ID]
 	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|PrimeID]
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_5_0_LeftParenthesisKeyword_2_0_a__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {

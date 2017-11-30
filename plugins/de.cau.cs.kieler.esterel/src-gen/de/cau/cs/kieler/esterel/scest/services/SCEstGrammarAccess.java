@@ -32,8 +32,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cModulesAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cModulesEsterelModuleParserRuleCall_1_0 = (RuleCall)cModulesAssignment_1.eContents().get(0);
 		
-		////  root rule. a SCEst file can contain multiple modules
-		//EsterelProgram hidden(SL_COMMENT, ML_COMMENT, WS):
+		//@ Override EsterelProgram hidden(SL_COMMENT, ML_COMMENT, WS):
 		//	pragmas+=Pragma*
 		//	modules+=EsterelModule*;
 		@Override public ParserRule getRule() { return rule; }
@@ -76,10 +75,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cModuleKeyword_6_0_1 = (Keyword)cGroup_6_0.eContents().get(1);
 		private final Keyword cFullStopKeyword_6_1 = (Keyword)cAlternatives_6.eContents().get(1);
 		
-		///* ###################################################
-		// * ###                 7.2 Modules                 ###
-		// * ###################################################
-		// */ EsterelModule scl::Module:
+		//@ Override EsterelModule scl::Module:
 		//	annotations+=Annotation*
 		//	"module" name=ID ":" (declarations+=VariableDeclaration | declarations+=EsterelDeclaration)*
 		//	statements+=EsterelParallel? ("end" "module" | ".");
@@ -148,10 +144,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.Statement");
 		private final RuleCall cEsterelParallelParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
-		///* ###################################################
-		// * ###               7.5 Statements                ###
-		// * ###################################################
-		// */ Statement scl::Statement:
+		//@ Override Statement scl::Statement:
 		//	EsterelParallel;
 		@Override public ParserRule getRule() { return rule; }
 
@@ -166,7 +159,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cUnEmitParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cSetParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
-		//InstructionStatement scl::Statement:
+		//@ Override InstructionStatement scl::Statement:
 		//	super
 		//	// + SCEst
 		//	| UnEmit | Set;
@@ -248,7 +241,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cStatementsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
 		private final RuleCall cStatementsEsterelThreadParserRuleCall_1_1_1_0 = (RuleCall)cStatementsAssignment_1_1_1.eContents().get(0);
 		
-		//EsterelThread scl::Statement:
+		//@ Override EsterelThread scl::Statement:
 		//	InstructionStatement ({EsterelThread.statements+=current} (=> ";" statements+=EsterelThread))?
 		//	| SCLStatement ({EsterelThread.statements+=current} statements+=EsterelThread)?;
 		@Override public ParserRule getRule() { return rule; }
@@ -298,6 +291,59 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 
 		//EsterelThread
 		public RuleCall getStatementsEsterelThreadParserRuleCall_1_1_1_0() { return cStatementsEsterelThreadParserRuleCall_1_1_1_0; }
+	}
+
+	public class AssignmentElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.Assignment");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cReferenceAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cReferenceVariableOrSignalReferenceParserRuleCall_0_0 = (RuleCall)cReferenceAssignment_0.eContents().get(0);
+		private final Keyword cColonEqualsSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cExpressionAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cExpressionExpressionParserRuleCall_2_0 = (RuleCall)cExpressionAssignment_2.eContents().get(0);
+		
+		//@ Override Assignment scl::Assignment:
+		//	reference=VariableOrSignalReference ":=" expression=Expression;
+		@Override public ParserRule getRule() { return rule; }
+
+		//reference=VariableOrSignalReference ":=" expression=Expression
+		public Group getGroup() { return cGroup; }
+
+		//reference=VariableOrSignalReference
+		public Assignment getReferenceAssignment_0() { return cReferenceAssignment_0; }
+
+		//VariableOrSignalReference
+		public RuleCall getReferenceVariableOrSignalReferenceParserRuleCall_0_0() { return cReferenceVariableOrSignalReferenceParserRuleCall_0_0; }
+
+		//":="
+		public Keyword getColonEqualsSignKeyword_1() { return cColonEqualsSignKeyword_1; }
+
+		//expression=Expression
+		public Assignment getExpressionAssignment_2() { return cExpressionAssignment_2; }
+
+		//Expression
+		public RuleCall getExpressionExpressionParserRuleCall_2_0() { return cExpressionExpressionParserRuleCall_2_0; }
+	}
+
+	public class VariableOrSignalReferenceElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.VariableOrSignalReference");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cVariableReferenceParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cSignalReferenceExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//VariableOrSignalReference kexpressions::ValuedObjectReference:
+		//	VariableReference
+		//	| SignalReferenceExpression;
+		@Override public ParserRule getRule() { return rule; }
+
+		//VariableReference | SignalReferenceExpression
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//VariableReference
+		public RuleCall getVariableReferenceParserRuleCall_0() { return cVariableReferenceParserRuleCall_0; }
+
+		//SignalReferenceExpression
+		public RuleCall getSignalReferenceExpressionParserRuleCall_1() { return cSignalReferenceExpressionParserRuleCall_1; }
 	}
 
 	public class UnEmitElements extends AbstractParserRuleElementFinder {
@@ -409,7 +455,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEsterelFunctionCallParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cTrapExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cBoolValueParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cValuedObjectTestExpressionParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cValuedObjectPreExpressionParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cTextExpressionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		private final Group cGroup_5 = (Group)cAlternatives.eContents().get(5);
 		private final Keyword cLeftParenthesisKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
@@ -417,26 +463,22 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_5_2 = (Keyword)cGroup_5.eContents().get(2);
 		private final RuleCall cConstantExpressionParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 		private final RuleCall cFunctionCallParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		private final RuleCall cSignalReferenceExpressionParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
 		
-		///* ###################################################
-		// * ###               Expressions                   ###
-		// * ###################################################
-		// */ // Esterel is a bit richer than what is provided by kexpressions. 
-		//// These rules are introduced here.
-		//// Care about order of the rules! 
-		//AtomicExpression kexpressions::Expression:
+		//@ Override AtomicExpression kexpressions::Expression:
 		//	EsterelFunctionCall
 		//	| TrapExpression
 		//	| BoolValue
-		//	| ValuedObjectTestExpression
+		//	| ValuedObjectPreExpression
 		//	| TextExpression
 		//	| '(' BooleanExpression ')'
 		//	| ConstantExpression
-		//	| FunctionCall;
+		//	| FunctionCall
+		//	| SignalReferenceExpression;
 		@Override public ParserRule getRule() { return rule; }
 
-		//EsterelFunctionCall | TrapExpression | BoolValue | ValuedObjectTestExpression | TextExpression | '(' BooleanExpression
-		//')' | ConstantExpression | FunctionCall
+		//EsterelFunctionCall | TrapExpression | BoolValue | ValuedObjectPreExpression | TextExpression | '(' BooleanExpression
+		//')' | ConstantExpression | FunctionCall | SignalReferenceExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//EsterelFunctionCall
@@ -448,8 +490,8 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		//BoolValue
 		public RuleCall getBoolValueParserRuleCall_2() { return cBoolValueParserRuleCall_2; }
 
-		//ValuedObjectTestExpression
-		public RuleCall getValuedObjectTestExpressionParserRuleCall_3() { return cValuedObjectTestExpressionParserRuleCall_3; }
+		//ValuedObjectPreExpression
+		public RuleCall getValuedObjectPreExpressionParserRuleCall_3() { return cValuedObjectPreExpressionParserRuleCall_3; }
 
 		//TextExpression
 		public RuleCall getTextExpressionParserRuleCall_4() { return cTextExpressionParserRuleCall_4; }
@@ -471,6 +513,9 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 
 		//FunctionCall
 		public RuleCall getFunctionCallParserRuleCall_7() { return cFunctionCallParserRuleCall_7; }
+
+		//SignalReferenceExpression
+		public RuleCall getSignalReferenceExpressionParserRuleCall_8() { return cSignalReferenceExpressionParserRuleCall_8; }
 	}
 
 	public class AtomicValuedExpressionElements extends AbstractParserRuleElementFinder {
@@ -485,7 +530,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAtomicExpressionParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cStringValueParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
-		//AtomicValuedExpression kexpressions::Expression:
+		//@ Override AtomicValuedExpression kexpressions::Expression:
 		//	IntValue
 		//	| FloatValue
 		//	| '(' ValuedExpression ')'
@@ -528,6 +573,8 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	private final InstructionStatementElements pInstructionStatement;
 	private final SCLStatementElements pSCLStatement;
 	private final EsterelThreadElements pEsterelThread;
+	private final AssignmentElements pAssignment;
+	private final VariableOrSignalReferenceElements pVariableOrSignalReference;
 	private final UnEmitElements pUnEmit;
 	private final SetElements pSet;
 	private final TerminalRule tML_COMMENT;
@@ -574,6 +621,8 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		this.pInstructionStatement = new InstructionStatementElements();
 		this.pSCLStatement = new SCLStatementElements();
 		this.pEsterelThread = new EsterelThreadElements();
+		this.pAssignment = new AssignmentElements();
+		this.pVariableOrSignalReference = new VariableOrSignalReferenceElements();
 		this.pUnEmit = new UnEmitElements();
 		this.pSet = new SetElements();
 		this.tML_COMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.ML_COMMENT");
@@ -633,8 +682,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
-	////  root rule. a SCEst file can contain multiple modules
-	//EsterelProgram hidden(SL_COMMENT, ML_COMMENT, WS):
+	//@ Override EsterelProgram hidden(SL_COMMENT, ML_COMMENT, WS):
 	//	pragmas+=Pragma*
 	//	modules+=EsterelModule*;
 	public EsterelProgramElements getEsterelProgramAccess() {
@@ -645,10 +693,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getEsterelProgramAccess().getRule();
 	}
 
-	///* ###################################################
-	// * ###                 7.2 Modules                 ###
-	// * ###################################################
-	// */ EsterelModule scl::Module:
+	//@ Override EsterelModule scl::Module:
 	//	annotations+=Annotation*
 	//	"module" name=ID ":" (declarations+=VariableDeclaration | declarations+=EsterelDeclaration)*
 	//	statements+=EsterelParallel? ("end" "module" | ".");
@@ -660,10 +705,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getEsterelModuleAccess().getRule();
 	}
 
-	///* ###################################################
-	// * ###               7.5 Statements                ###
-	// * ###################################################
-	// */ Statement scl::Statement:
+	//@ Override Statement scl::Statement:
 	//	EsterelParallel;
 	public StatementElements getStatementAccess() {
 		return pStatement;
@@ -673,7 +715,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getStatementAccess().getRule();
 	}
 
-	//InstructionStatement scl::Statement:
+	//@ Override InstructionStatement scl::Statement:
 	//	super
 	//	// + SCEst
 	//	| UnEmit | Set;
@@ -695,7 +737,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getSCLStatementAccess().getRule();
 	}
 
-	//EsterelThread scl::Statement:
+	//@ Override EsterelThread scl::Statement:
 	//	InstructionStatement ({EsterelThread.statements+=current} (=> ";" statements+=EsterelThread))?
 	//	| SCLStatement ({EsterelThread.statements+=current} statements+=EsterelThread)?;
 	public EsterelThreadElements getEsterelThreadAccess() {
@@ -704,6 +746,27 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getEsterelThreadRule() {
 		return getEsterelThreadAccess().getRule();
+	}
+
+	//@ Override Assignment scl::Assignment:
+	//	reference=VariableOrSignalReference ":=" expression=Expression;
+	public AssignmentElements getAssignmentAccess() {
+		return pAssignment;
+	}
+	
+	public ParserRule getAssignmentRule() {
+		return getAssignmentAccess().getRule();
+	}
+
+	//VariableOrSignalReference kexpressions::ValuedObjectReference:
+	//	VariableReference
+	//	| SignalReferenceExpression;
+	public VariableOrSignalReferenceElements getVariableOrSignalReferenceAccess() {
+		return pVariableOrSignalReference;
+	}
+	
+	public ParserRule getVariableOrSignalReferenceRule() {
+		return getVariableOrSignalReferenceAccess().getRule();
 	}
 
 	///* ###################################################
@@ -737,33 +800,28 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getSetAccess().getRule();
 	}
 
-	//terminal ML_COMMENT:
+	//@ Override terminal ML_COMMENT:
 	//	('%' '{')->('}' '%') | ('/*' !'*')->'*/';
 	public TerminalRule getML_COMMENTRule() {
 		return tML_COMMENT;
 	} 
 
-	//terminal SL_COMMENT:
+	//@ Override terminal SL_COMMENT:
 	//	('//' | '%') !('\n' | '\r')* ('\r'? '\n')?;
 	public TerminalRule getSL_COMMENTRule() {
 		return tSL_COMMENT;
 	} 
 
-	///* ###################################################
-	// * ###               Expressions                   ###
-	// * ###################################################
-	// */ // Esterel is a bit richer than what is provided by kexpressions. 
-	//// These rules are introduced here.
-	//// Care about order of the rules! 
-	//AtomicExpression kexpressions::Expression:
+	//@ Override AtomicExpression kexpressions::Expression:
 	//	EsterelFunctionCall
 	//	| TrapExpression
 	//	| BoolValue
-	//	| ValuedObjectTestExpression
+	//	| ValuedObjectPreExpression
 	//	| TextExpression
 	//	| '(' BooleanExpression ')'
 	//	| ConstantExpression
-	//	| FunctionCall;
+	//	| FunctionCall
+	//	| SignalReferenceExpression;
 	public AtomicExpressionElements getAtomicExpressionAccess() {
 		return pAtomicExpression;
 	}
@@ -772,7 +830,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getAtomicExpressionAccess().getRule();
 	}
 
-	//AtomicValuedExpression kexpressions::Expression:
+	//@ Override AtomicValuedExpression kexpressions::Expression:
 	//	IntValue
 	//	| FloatValue
 	//	| '(' ValuedExpression ')'
@@ -2255,20 +2313,6 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getGotoRule() {
 		return getGotoAccess().getRule();
-	}
-
-	//Assignment:
-	//	annotations+=Annotation*
-	//	reference=ValuedObjectReference
-	//	operator=AssignOperator
-	//	expression=super::Expression ('schedule' schedule+=ScheduleObjectReference+)?
-	//	semicolon?=';'?;
-	public SCLGrammarAccess.AssignmentElements getAssignmentAccess() {
-		return gaSCL.getAssignmentAccess();
-	}
-	
-	public ParserRule getAssignmentRule() {
-		return getAssignmentAccess().getRule();
 	}
 
 	//Conditional:
