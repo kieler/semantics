@@ -70,7 +70,6 @@ class AwaitTransformation extends InplaceProcessor<EsterelProgram> {
                 conditional.statements.add(incrementInt(variable))
                 conditional.annotations.add(createAnnotation(0))
                 val conditional2 = newIfThenGoto(lt, label, false)
-                await.annotations.copyAnnotations(conditional2)
                 scope.statements.add(label)
                 scope.statements.add(createPause)
                 scope.statements.add(conditional)

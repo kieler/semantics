@@ -155,7 +155,7 @@ class TrapTransformation extends InplaceProcessor<EsterelProgram> {
         val conditional2 = copy(conditional)
         conditional2.statements.add(goto)
         if (statement instanceof Pause) {
-            statements.add(pos, conditional2)
+            insertConditionalAbove(statement, conditional2)
         }
         else {
             statements.add(pos+1, conditional2)

@@ -229,7 +229,7 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
                     if (abort.delay.isImmediate) {
                         val conditional = newIfThenGoto(abort.delay.expression, label2, false)
                         conditional.statements.add(0, createAssignment(abortFlag, createTrue))
-                        statements.add(pos, conditional)
+                        insertConditionalAbove(pause, conditional)
                     }
                     else {
                         // e.g. "weak abort when A"
@@ -238,14 +238,14 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
                             val conditional = newIfThenGoto(expr, label2, false)
                             conditional.statements.add(0, createAssignment(abortFlag, createTrue))
                             statements.add(pos+1, createAssignment(depthFlag, createTrue))
-                            statements.add(pos, conditional)
+                            insertConditionalAbove(pause, conditional)
                         }
                         // e.g. "weak abort when 3 A"
                         else {
                             var GEQExpr = createGEQ(createValuedObjectReference(countingVariables.get(0)), copy(abort.delay.expression))
                             var conditional = newIfThenGoto(GEQExpr, label2, false)
                             conditional.statements.add(0, createAssignment(abortFlag, createTrue))
-                            statements.add(pos, conditional)
+                            insertConditionalAbove(pause, conditional)
                         }
                     }
                 }
@@ -303,9 +303,8 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
             if (c.delay.expression !== null) {
                 val conditional = newIfThenGoto(createGEQ(createValuedObjectReference(countingVariables.get(i)), copy(c.delay.expression)), label, false)
                 conditional.statements.add(0, createAssignment(abortFlag, createTrue))
-                conditional.annotations.add(createAnnotation(getDepth(abort)))
                 if (abort.weak) {
-                    statements.add(pos, conditional)
+                    insertConditionalAbove(statement, conditional)
                     pos++
                 }
                 else {
@@ -323,9 +322,8 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
                     conditional = newIfThenGoto(copy(c.delay.expression), label, false)
                 }
                 conditional.statements.add(0, createAssignment(abortFlag, createTrue))
-                conditional.annotations.add(createAnnotation(getDepth(abort)))
                 if (abort.weak) {
-                    statements.add(pos, conditional)
+                    insertConditionalAbove(statement, conditional)
                     pos++
                 }
                 else {

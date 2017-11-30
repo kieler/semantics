@@ -85,6 +85,7 @@ import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scl.Pause
 
 /**
  * Methods and static variables which are used by the transformations which
@@ -121,6 +122,8 @@ class EsterelTransformationExtensions {
     final private static String s_val = "s_val"
     
     final private static String s_set = "s_set"
+    
+    final private static String conditionals_above = "conditional_above"
     
     final private static String generatedAnnotation = "depth"
     
@@ -1144,114 +1147,165 @@ class EsterelTransformationExtensions {
         ]
     }
     
+//    /**
+//     * Insert a Conditional at the right position after a pause/parallel statement.
+//     * 
+//     * @param statements The list of statements
+//     * @param conditional The conditional which has to be added after a pause/parallel
+//     * @param pos The position of the pause/parallel statement
+//     * @param depth The depth of statement which caused the transformation 
+//     */
+//    def void insertConditional(EList<Statement> statements, Conditional conditional, int pos, int depth) {
+//        // Look for already existing Conditionals after Pause.
+//        // Check whether they have a higher priority than the transformed statement.
+//        // Place the Conditional at the correct position.
+//        // Because there is no 'break' in Xtend "i = statements.length" is used to end the for loop.
+//        if (pos+1>=statements.length) {
+//            statements.add(conditional)
+//        }
+//        else {
+//            for (var i=1; pos+i<statements.length; i++) {
+//                if (statements.get(pos+i) instanceof Conditional) {
+//                    var ifTest2 = statements.get(pos+i) as Conditional
+//                    if (!ifTest2.annotations.empty) {
+//                        var deeper = false
+//                        for (var j=0; j<ifTest2.annotations.length; j++) {
+//                            var a = ifTest2.annotations.get(j)
+//                            if (a.name.equals(generatedAnnotation)) {
+//                                deeper = true
+//                                var layer = (a as IntAnnotation).value
+//                                if (depth<layer) {
+//                                    deeper = false
+//                                    j = ifTest2.annotations.length
+//                                }
+//                            }
+//                            
+//                        }
+//                        if (!deeper) {
+//                            statements.add(pos+i, conditional)
+//                            i = statements.length
+//                        }
+//                    }
+//                    else {
+//                        statements.add(pos+i, conditional)
+//                        i = statements.length
+//                    }
+//                }
+//                else {
+//                    statements.add(pos+i, conditional)
+//                    i = statements.length
+//                }
+//                if (pos+i+1==statements.length) {
+//                    statements.add(conditional)
+//                }
+//            }
+//        }
+//    }
+//    
+//    /**
+//     * Insert a Conditional at the right position above a pause statement.
+//     * 
+//     * @param statements The list of statements
+//     * @param conditional The conditional which has to be added above a pause
+//     * @param pos The position of the pause statement
+//     * @param depth The depth of statement which caused the pause transformation 
+//     */
+//    def void insertConditionalAbove(EList<Statement> statements, Conditional conditional, int pos, int depth) {
+//        // Look for already existing Conditionals above Pause.
+//        // Check whether they have a higher priority than the transformed statement.
+//        // Place the Conditional at the correct position.
+//        // Because there is no 'break' in Xtend "i = statements.length" is used to end the for loop.
+//        if (pos == 0) {
+//            statements.add(0, conditional)
+//        }
+//        else {
+//            for (var i=1; pos-i>=0; i++) {
+//                if (statements.get(pos-i) instanceof Conditional) {
+//                    var conditional2 = statements.get(pos-i) as Conditional
+//                    if (!conditional2.annotations.empty) {
+//                        var deeper = false
+//                        for (var j=0; j<conditional2.annotations.length; j++) {
+//                            var a = conditional2.annotations.get(j)
+//                            if (a.name.equals(generatedAnnotation)) {
+//                                deeper = true
+//                                var layer = (a as IntAnnotation).value
+//                                if (layer<=depth) {
+//                                    deeper = false
+//                                    j = conditional2.annotations.length
+//                                }
+//                            }
+//                            
+//                        }
+//                        if (!deeper) {
+//                            statements.add(pos+1-i, conditional)
+//                            i = statements.length
+//                        }
+//                    }
+//                    else {
+//                        statements.add(pos+1-i, conditional)
+//                        i = statements.length
+//                    }
+//                }
+//                else {
+//                    statements.add(pos+1-i, conditional)
+//                    i = statements.length
+//                }
+//                if (pos-i==0) {
+//                    statements.add(0, conditional)
+//                }
+//            }
+//        }
+//    }
+
     /**
-     * Insert a Conditional at the right position after a pause/parallel statement.
+     * Insert a conditional above a statement.
      * 
-     * @param statements The list of statements
-     * @param conditional The conditional which has to be added after a pause/parallel
-     * @param pos The position of the pause/parallel statement
-     * @param depth The depth of statement which caused the transformation 
+     * @param statement The statement
+     * @param conditional The conditional statement
      */
-    def void insertConditional(EList<Statement> statements, Conditional conditional, int pos, int depth) {
-        // Look for already existing Conditionals after Pause.
-        // Check whether they have a higher priority than the transformed statement.
-        // Place the Conditional at the correct position.
-        // Because there is no 'break' in Xtend "i = statements.length" is used to end the for loop.
-        if (pos+1>=statements.length) {
-            statements.add(conditional)
+    def insertConditionalAbove(Statement statement, Conditional conditional) {
+        val statements = statement.containingList
+        val pos = statements.indexOf(statement)
+        if (existsPauseScope(statement)) {
+            (statements.get(pos-1) as ScopeStatement).statements.add(0, conditional)
         }
         else {
-            for (var i=1; pos+i<statements.length; i++) {
-                if (statements.get(pos+i) instanceof Conditional) {
-                    var ifTest2 = statements.get(pos+i) as Conditional
-                    if (!ifTest2.annotations.empty) {
-                        var deeper = false
-                        for (var j=0; j<ifTest2.annotations.length; j++) {
-                            var a = ifTest2.annotations.get(j)
-                            if (a.name.equals(generatedAnnotation)) {
-                                deeper = true
-                                var layer = (a as IntAnnotation).value
-                                if (depth<layer) {
-                                    deeper = false
-                                    j = ifTest2.annotations.length
-                                }
-                            }
-                            
-                        }
-                        if (!deeper) {
-                            statements.add(pos+i, conditional)
-                            i = statements.length
-                        }
-                    }
-                    else {
-                        statements.add(pos+i, conditional)
-                        i = statements.length
-                    }
-                }
-                else {
-                    statements.add(pos+i, conditional)
-                    i = statements.length
-                }
-                if (pos+i+1==statements.length) {
-                    statements.add(conditional)
-                }
-            }
+            statements.add(pos, createPauseScope(statement, conditional))
         }
     }
     
     /**
-     * Insert a Conditional at the right position above a pause statement.
+     * Create a scope statement, including a conditional and 
+     * an annotations named 'conditionals_above',
+     * and insert it above a given statement.
      * 
-     * @param statements The list of statements
-     * @param conditional The conditional which has to be added above a pause
-     * @param pos The position of the pause statement
-     * @param depth The depth of statement which caused the pause transformation 
+     * @param statement The statement
+     * @param conditional The conditional statement
      */
-    def void insertConditionalAbove(EList<Statement> statements, Conditional conditional, int pos, int depth) {
-        // Look for already existing Conditionals above Pause.
-        // Check whether they have a higher priority than the transformed statement.
-        // Place the Conditional at the correct position.
-        // Because there is no 'break' in Xtend "i = statements.length" is used to end the for loop.
-        if (pos == 0) {
-            statements.add(0, conditional)
-        }
-        else {
-            for (var i=1; pos-i>=0; i++) {
-                if (statements.get(pos-i) instanceof Conditional) {
-                    var conditional2 = statements.get(pos-i) as Conditional
-                    if (!conditional2.annotations.empty) {
-                        var deeper = false
-                        for (var j=0; j<conditional2.annotations.length; j++) {
-                            var a = conditional2.annotations.get(j)
-                            if (a.name.equals(generatedAnnotation)) {
-                                deeper = true
-                                var layer = (a as IntAnnotation).value
-                                if (layer<=depth) {
-                                    deeper = false
-                                    j = conditional2.annotations.length
-                                }
-                            }
-                            
-                        }
-                        if (!deeper) {
-                            statements.add(pos+1-i, conditional)
-                            i = statements.length
-                        }
-                    }
-                    else {
-                        statements.add(pos+1-i, conditional)
-                        i = statements.length
-                    }
-                }
-                else {
-                    statements.add(pos+1-i, conditional)
-                    i = statements.length
-                }
-                if (pos-i==0) {
-                    statements.add(0, conditional)
+    def ScopeStatement createPauseScope(Statement statement, Conditional conditional) {
+        createScopeStatement => [
+            it.annotations.add(createAnnotation(conditionals_above))
+            it.statements.add(conditional)
+        ]
+    }
+    
+    /**
+     * Check if a scope before a given statement exists and if so
+     * if it has an annotation named 'conditionals_above'.
+     * 
+     * @param statement The statement
+     */
+    def existsPauseScope(Statement statement) {
+        val pos = statement.containingList.indexOf(statement)
+        if (pos > 0) {
+            val scope = statement.containingList.get(pos-1)
+            if (scope instanceof ScopeStatement) {
+                for (a : scope.annotations) {
+                    if (a.name.equals(conditionals_above)) return true
                 }
             }
         }
+        return false
     }
     
     /**
@@ -1329,34 +1383,34 @@ class EsterelTransformationExtensions {
         ]
     }
     
-    /**
-     * Copies the generated Annotations of the annotation list to a specific statement.
-     * 
-     * @param annotations The list of annotations
-     * @param statement The statement which will have a copy of the generated annotations.
-     */
-    def void copyAnnotations (EList<Annotation> annotations, Annotatable statement) {
-        for (a : annotations) {
-            if (isGenerated(a)) {
-                statement.annotations.add(EcoreUtil.copy(a))
-            }
-        }
-    }
-    
-    /**
-     * Returns the depth of the given statement, when it has one in its annotations.
-     * 
-     * @param statement The statement in question
-     * @return The depth of the given statement.
-     */
-    def int getDepth(Annotatable statement) {
-        for (Annotation a : statement.annotations) {
-            if (isGenerated(a)) {
-                return (a as IntAnnotation).value
-            }
-        }
-        return 0;
-    }
+//    /**
+//     * Copies the generated Annotations of the annotation list to a specific statement.
+//     * 
+//     * @param annotations The list of annotations
+//     * @param statement The statement which will have a copy of the generated annotations.
+//     */
+//    def void copyAnnotations (EList<Annotation> annotations, Annotatable statement) {
+//        for (a : annotations) {
+//            if (isGenerated(a)) {
+//                statement.annotations.add(EcoreUtil.copy(a))
+//            }
+//        }
+//    }
+//    
+//    /**
+//     * Returns the depth of the given statement, when it has one in its annotations.
+//     * 
+//     * @param statement The statement in question
+//     * @return The depth of the given statement.
+//     */
+//    def int getDepth(Annotatable statement) {
+//        for (Annotation a : statement.annotations) {
+//            if (isGenerated(a)) {
+//                return (a as IntAnnotation).value
+//            }
+//        }
+//        return 0;
+//    }
     
     /**
      * Check for every Goto statement if its target is still inside its Thread
@@ -1603,132 +1657,6 @@ class EsterelTransformationExtensions {
     }
     
     /**
-     * Set the given expression where it belongs in the given obj.
-     * If 'o' instanceof Signal => signal.expression = expr
-     * 
-     * @param expr The expression which needs to be placed somewhere
-     * @param o The object which should be able to hold an expression
-     * @param signalExpr set a previous signalExpression
-     */
-    def setExpression(Expression expr, EObject o, boolean signalExpr) {
-        if (o instanceof Signal) {
-            (o as Signal).initialValue = expr
-        }
-        else if (o instanceof Emit) {
-            (o as Emit).expression = expr
-        }
-        else if (o instanceof Sustain) {
-            (o as Sustain).expression = expr
-        }
-        else if (o instanceof Assignment) {
-            (o as Assignment).expression = expr
-        }
-        else if (o instanceof IfTest) {
-            (o as IfTest).expression = expr
-        }
-        else if (o instanceof ElsIf) {
-            (o as ElsIf).expression = expr
-        }
-        else if (o instanceof Repeat) {
-            (o as Repeat).expression = expr
-        }
-        else if (o instanceof Exit) {
-            (o as Exit).expression = expr
-        }
-        else if (o instanceof Variable) {
-            (o as Variable).initialValue = expr
-        }
-        else if (o instanceof DelayExpression) {
-            if (signalExpr) {
-                (o as DelayExpression).expression = expr                
-            }
-            else {
-                (o as DelayExpression).expression = expr
-            }
-        }
-        else if (o instanceof Conditional) {
-            (o as Conditional).expression = expr
-        }
-        else if (o instanceof Set) {
-            (o as Set).expression = expr
-        }
-        else if (o instanceof Present) {
-            (o as Present).expression = expr
-        }
-        else if (o instanceof TrapHandler) {
-            (o as TrapHandler).expression = expr
-        }
-        else {
-            throw new UnsupportedOperationException("The following expression will be homeless! " + expr.toString)
-        }
-        
-    }
-    
-    /**
-     * Checks if the given scope has the interfaceScope annotation
-     * 
-     * @param scope The scope in question
-     */
-    def isInterfaceScope(Statement statement) {
-        if (statement instanceof ScopeStatement) {
-            var scope = statement as ScopeStatement
-            for (a : scope.annotations) {
-                if (a.name.equals(interfaceScope)) {
-                    return true
-                }
-            }
-        }
-        return false
-    }
-    
-    /**
-     * Checks if the given annotation is named "IScope"
-     * 
-     * @param annotation The annotation in question
-     */
-    def isInterfaceAnnotation(Annotation annotation) {
-        annotation.name.equals(interfaceScope)
-    } 
-    
-    /**
-     * Adds the specific interfaceScope annotation to the given scope
-     * 
-     * @param scope The scope which needs an annotation
-     */
-    def markInterfaceScope(ScopeStatement scope) {
-        scope.annotations.add(createScopeAnnotation)
-    }
-    
-    /**
-     * Creates an annotation which has the specific interfaceScope name
-     */
-    def createScopeAnnotation() {
-        AnnotationsFactory::eINSTANCE.createAnnotation => [
-            it.name = interfaceScope
-        ]
-    }
-    
-    /**
-     * Returns a new interface scope or an already existing
-     * 
-     * @param module The module which is searched for the interface scope
-     */
-    def ScopeStatement getIScope(Module module) {
-        var ScopeStatement scope
-        // check whether there is already a scope for the interface declarations or not
-        if (module.statements.length == 1 && module.statements.get(0).isInterfaceScope() ) {
-            scope = module.statements.get(0) as ScopeStatement
-        }
-        else {
-            scope = createScopeStatement
-            scope.markInterfaceScope
-            scope.statements.add(module.statements)
-            module.statements.add(scope)
-        }
-        return scope
-    }
-    
-    /**
      * Removes the value test operator if the given operator expression is of type VAL
      * 
      * @param expr The operator expression in question 
@@ -1755,25 +1683,25 @@ class EsterelTransformationExtensions {
         SCLFactory::eINSTANCE.createModule
     }
         
-    /**
-     * Renames an interface scope to the module name
-     * 
-     * @param scope The scope which should be renamed
-     * @param name The name of the module 
-     */
-    def renameIScope(ScopeStatement scope, String name) {
-        var list = newLinkedList
-        for (a : scope.annotations) {
-            if (a.name.equals(interfaceScope)) {
-                list.add(a)
-            }
-        }
-        list.forEach[a | scope.annotations.remove(a)]
-        scope.annotations.add( 
-            AnnotationsFactory::eINSTANCE.createAnnotation => [
-                it.name = name
-            ])
-    } 
+//    /**
+//     * Renames an interface scope to the module name
+//     * 
+//     * @param scope The scope which should be renamed
+//     * @param name The name of the module 
+//     */
+//    def renameIScope(ScopeStatement scope, String name) {
+//        var list = newLinkedList
+//        for (a : scope.annotations) {
+//            if (a.name.equals(interfaceScope)) {
+//                list.add(a)
+//            }
+//        }
+//        list.forEach[a | scope.annotations.remove(a)]
+//        scope.annotations.add( 
+//            AnnotationsFactory::eINSTANCE.createAnnotation => [
+//                it.name = name
+//            ])
+//    } 
     
     /**
      * Create new constant declaration with a TypeIdentifier and Constant
@@ -1799,28 +1727,28 @@ class EsterelTransformationExtensions {
         ]
     }
     
-    /**
-     * Checks if the given annotation is named "generatedModuleForRun"
-     * 
-     * @param annotation The annotation in question
-     */
-    def isGeneratedModuleAnnotation(Annotation annotation) {
-        annotation.name.equals(generatedModule)
-    } 
-    
-    /**
-     * Check whether in an annotation list there is an annotation named "generatedModuleForRun".
-     * 
-     * @param annotations
-     * @return Is there an annotation which is named "generatedModuleForRun"?
-     */
-    def isGeneratedModule(EList<Annotation> annotations) {
-        var generated = false
-        for (a : annotations) {
-            generated = generated || a.name.equals(generatedModule) 
-        }
-        return generated
-    }
+//    /**
+//     * Checks if the given annotation is named "generatedModuleForRun"
+//     * 
+//     * @param annotation The annotation in question
+//     */
+//    def isGeneratedModuleAnnotation(Annotation annotation) {
+//        annotation.name.equals(generatedModule)
+//    } 
+//    
+//    /**
+//     * Check whether in an annotation list there is an annotation named "generatedModuleForRun".
+//     * 
+//     * @param annotations
+//     * @return Is there an annotation which is named "generatedModuleForRun"?
+//     */
+//    def isGeneratedModule(EList<Annotation> annotations) {
+//        var generated = false
+//        for (a : annotations) {
+//            generated = generated || a.name.equals(generatedModule) 
+//        }
+//        return generated
+//    }
     
     /**
      * Update the renamings of the run statement since a copy of the module was created
