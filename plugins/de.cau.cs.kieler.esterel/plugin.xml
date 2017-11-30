@@ -122,6 +122,9 @@
      <TransformationSystem
            system="system/de.cau.cs.kieler.esterel.kernel.scc.kico">
      </TransformationSystem>
+     <TransformationSystem
+           system="system/de.cau.cs.kieler.esterel.scest.scl.struct.incr.kico">
+     </TransformationSystem>
   </extension>
   <extension
         point="de.cau.cs.kieler.kicool.resource.extension">
