@@ -25,6 +25,7 @@ import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect
 import de.cau.cs.kieler.kexpressions.PrintCall
 import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
 import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect
 
 /**
  * Serialization of KEffects.
@@ -159,4 +160,9 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
         
         return "print " + paramStr.substring(1, paramStr.length - 1)
     }   
+    
+    def dispatch CharSequence serialize(RandomizeCallEffect randomizeCallEffect) {
+        return "randomize";
+    }   
+    
 }

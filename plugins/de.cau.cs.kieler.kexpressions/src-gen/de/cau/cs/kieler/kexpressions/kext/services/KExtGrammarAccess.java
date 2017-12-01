@@ -1473,7 +1473,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	//// An effect is either an assignment, a postfix effect, an emission, a hostcode effect or a 
 	//// function call effect.
 	//Effect keffects::Effect:
-	//	Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect | PrintCallEffect;
+	//	Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect | PrintCallEffect |
+	//	RandomizeCallEffect;
 	public KEffectsGrammarAccess.EffectElements getEffectAccess() {
 		return gaKEffects.getEffectAccess();
 	}
@@ -1582,15 +1583,29 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		return getFunctionCallEffectAccess().getRule();
 	}
 
+	//// Print Call Effect Rule
+	//// A print functions that enables target-independent prints in the model.    
 	//PrintCallEffect keffects::PrintCallEffect:
 	//	annotations+=Annotation*
-	//	'print' parameters+=Parameter (',' parameters+=Parameter)*;
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')');
 	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
 		return gaKEffects.getPrintCallEffectAccess();
 	}
 	
 	public ParserRule getPrintCallEffectRule() {
 		return getPrintCallEffectAccess().getRule();
+	}
+
+	//RandomizeCallEffect keffects::RandomizeCallEffect:
+	//	{keffects::RandomizeCallEffect} annotations+=Annotation*
+	//	'randomize' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	| '()');
+	public KEffectsGrammarAccess.RandomizeCallEffectElements getRandomizeCallEffectAccess() {
+		return gaKEffects.getRandomizeCallEffectAccess();
+	}
+	
+	public ParserRule getRandomizeCallEffectRule() {
+		return getRandomizeCallEffectAccess().getRule();
 	}
 
 	//enum AssignOperator returns keffects::AssignOperator:
@@ -1966,6 +1981,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	//	| '(' BoolExpression ')'
 	//	| ReferenceCall
 	//	| FunctionCall
+	//	| RandomCall
+	//	| RandomizeCall
 	//	| TextExpression;
 	public KExpressionsGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
 		return gaKExpressions.getAtomicExpressionAccess();
@@ -2056,9 +2073,34 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		return getReferenceCallAccess().getRule();
 	}
 
+	//// Random Call Rule
+	//// Calls the random function. 
+	//RandomCall:
+	//	{RandomCall}
+	//	'random' '()'?;
+	public KExpressionsGrammarAccess.RandomCallElements getRandomCallAccess() {
+		return gaKExpressions.getRandomCallAccess();
+	}
+	
+	public ParserRule getRandomCallRule() {
+		return getRandomCallAccess().getRule();
+	}
+
+	//// Random Call Rule
+	//// Calls the random function. 
+	//RandomizeCall:
+	//	{RandomizeCall}
+	//	'randomize' '()'?;
+	public KExpressionsGrammarAccess.RandomizeCallElements getRandomizeCallAccess() {
+		return gaKExpressions.getRandomizeCallAccess();
+	}
+	
+	public ParserRule getRandomizeCallRule() {
+		return getRandomizeCallAccess().getRule();
+	}
+
 	//// Function Call Rule
 	//// Calls to functions are indicated by angle brackets. They may include a parameter list. 
-	//// Deprecated?
 	//FunctionCall:
 	//	'extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
 	//	| '()');

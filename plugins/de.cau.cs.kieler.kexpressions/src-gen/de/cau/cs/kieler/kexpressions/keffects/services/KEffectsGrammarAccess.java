@@ -30,6 +30,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cReferenceCallEffectParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		private final RuleCall cFunctionCallEffectParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		private final RuleCall cPrintCallEffectParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cRandomizeCallEffectParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
 		
 		///**
 		// * @author ssm
@@ -46,10 +47,12 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//// An effect is either an assignment, a postfix effect, an emission, a hostcode effect or a 
 		//// function call effect.
 		//Effect keffects::Effect:
-		//	Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect | PrintCallEffect;
+		//	Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect | PrintCallEffect |
+		//	RandomizeCallEffect;
 		@Override public ParserRule getRule() { return rule; }
 
-		//Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect | PrintCallEffect
+		//Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect | PrintCallEffect |
+		//RandomizeCallEffect
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Assignment
@@ -72,6 +75,9 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//PrintCallEffect
 		public RuleCall getPrintCallEffectParserRuleCall_6() { return cPrintCallEffectParserRuleCall_6; }
+
+		//RandomizeCallEffect
+		public RuleCall getRandomizeCallEffectParserRuleCall_7() { return cRandomizeCallEffectParserRuleCall_7; }
 	}
 
 	public class EmissionElements extends AbstractParserRuleElementFinder {
@@ -553,19 +559,24 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
 		private final Keyword cPrintKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cParametersAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cParametersParameterParserRuleCall_2_0 = (RuleCall)cParametersAssignment_2.eContents().get(0);
-		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cCommaKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cParametersAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cParametersParameterParserRuleCall_3_1_0 = (RuleCall)cParametersAssignment_3_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cParametersAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_2_1_0 = (RuleCall)cParametersAssignment_2_1.eContents().get(0);
+		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
+		private final Keyword cCommaKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cParametersAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_2_2_1_0 = (RuleCall)cParametersAssignment_2_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
 		
+		//// Print Call Effect Rule
+		//// A print functions that enables target-independent prints in the model.    
 		//PrintCallEffect keffects::PrintCallEffect:
 		//	annotations+=Annotation*
-		//	'print' parameters+=Parameter (',' parameters+=Parameter)*;
+		//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')');
 		@Override public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* 'print' parameters+=Parameter (',' parameters+=Parameter)*
+		//annotations+=Annotation* 'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -577,23 +588,107 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//'print'
 		public Keyword getPrintKeyword_1() { return cPrintKeyword_1; }
 
+		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+		public Group getGroup_2() { return cGroup_2; }
+
+		//'('
+		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
+
 		//parameters+=Parameter
-		public Assignment getParametersAssignment_2() { return cParametersAssignment_2; }
+		public Assignment getParametersAssignment_2_1() { return cParametersAssignment_2_1; }
 
 		//Parameter
-		public RuleCall getParametersParameterParserRuleCall_2_0() { return cParametersParameterParserRuleCall_2_0; }
+		public RuleCall getParametersParameterParserRuleCall_2_1_0() { return cParametersParameterParserRuleCall_2_1_0; }
 
 		//(',' parameters+=Parameter)*
-		public Group getGroup_3() { return cGroup_3; }
+		public Group getGroup_2_2() { return cGroup_2_2; }
 
 		//','
-		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
+		public Keyword getCommaKeyword_2_2_0() { return cCommaKeyword_2_2_0; }
 
 		//parameters+=Parameter
-		public Assignment getParametersAssignment_3_1() { return cParametersAssignment_3_1; }
+		public Assignment getParametersAssignment_2_2_1() { return cParametersAssignment_2_2_1; }
 
 		//Parameter
-		public RuleCall getParametersParameterParserRuleCall_3_1_0() { return cParametersParameterParserRuleCall_3_1_0; }
+		public RuleCall getParametersParameterParserRuleCall_2_2_1_0() { return cParametersParameterParserRuleCall_2_2_1_0; }
+
+		//')'
+		public Keyword getRightParenthesisKeyword_2_3() { return cRightParenthesisKeyword_2_3; }
+	}
+
+	public class RandomizeCallEffectElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.keffects.KEffects.RandomizeCallEffect");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cRandomizeCallEffectAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cAnnotationsAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_1_0 = (RuleCall)cAnnotationsAssignment_1.eContents().get(0);
+		private final Keyword cRandomizeKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
+		private final Group cGroup_3_0 = (Group)cAlternatives_3.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_3_0_0 = (Keyword)cGroup_3_0.eContents().get(0);
+		private final Assignment cParametersAssignment_3_0_1 = (Assignment)cGroup_3_0.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_3_0_1_0 = (RuleCall)cParametersAssignment_3_0_1.eContents().get(0);
+		private final Group cGroup_3_0_2 = (Group)cGroup_3_0.eContents().get(2);
+		private final Keyword cCommaKeyword_3_0_2_0 = (Keyword)cGroup_3_0_2.eContents().get(0);
+		private final Assignment cParametersAssignment_3_0_2_1 = (Assignment)cGroup_3_0_2.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_3_0_2_1_0 = (RuleCall)cParametersAssignment_3_0_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_3_0_3 = (Keyword)cGroup_3_0.eContents().get(3);
+		private final Keyword cLeftParenthesisRightParenthesisKeyword_3_1 = (Keyword)cAlternatives_3.eContents().get(1);
+		
+		//RandomizeCallEffect keffects::RandomizeCallEffect:
+		//	{keffects::RandomizeCallEffect} annotations+=Annotation*
+		//	'randomize' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+		//	| '()');
+		@Override public ParserRule getRule() { return rule; }
+
+		//{keffects::RandomizeCallEffect} annotations+=Annotation* 'randomize' ('(' parameters+=Parameter (','
+		//parameters+=Parameter)* ')' | '()')
+		public Group getGroup() { return cGroup; }
+
+		//{keffects::RandomizeCallEffect}
+		public Action getRandomizeCallEffectAction_0() { return cRandomizeCallEffectAction_0; }
+
+		//annotations+=Annotation*
+		public Assignment getAnnotationsAssignment_1() { return cAnnotationsAssignment_1; }
+
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_1_0() { return cAnnotationsAnnotationParserRuleCall_1_0; }
+
+		//'randomize'
+		public Keyword getRandomizeKeyword_2() { return cRandomizeKeyword_2; }
+
+		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()'
+		public Alternatives getAlternatives_3() { return cAlternatives_3; }
+
+		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+		public Group getGroup_3_0() { return cGroup_3_0; }
+
+		//'('
+		public Keyword getLeftParenthesisKeyword_3_0_0() { return cLeftParenthesisKeyword_3_0_0; }
+
+		//parameters+=Parameter
+		public Assignment getParametersAssignment_3_0_1() { return cParametersAssignment_3_0_1; }
+
+		//Parameter
+		public RuleCall getParametersParameterParserRuleCall_3_0_1_0() { return cParametersParameterParserRuleCall_3_0_1_0; }
+
+		//(',' parameters+=Parameter)*
+		public Group getGroup_3_0_2() { return cGroup_3_0_2; }
+
+		//','
+		public Keyword getCommaKeyword_3_0_2_0() { return cCommaKeyword_3_0_2_0; }
+
+		//parameters+=Parameter
+		public Assignment getParametersAssignment_3_0_2_1() { return cParametersAssignment_3_0_2_1; }
+
+		//Parameter
+		public RuleCall getParametersParameterParserRuleCall_3_0_2_1_0() { return cParametersParameterParserRuleCall_3_0_2_1_0; }
+
+		//')'
+		public Keyword getRightParenthesisKeyword_3_0_3() { return cRightParenthesisKeyword_3_0_3; }
+
+		//'()'
+		public Keyword getLeftParenthesisRightParenthesisKeyword_3_1() { return cLeftParenthesisRightParenthesisKeyword_3_1; }
 	}
 	
 	
@@ -762,6 +857,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	private final ReferenceCallEffectElements pReferenceCallEffect;
 	private final FunctionCallEffectElements pFunctionCallEffect;
 	private final PrintCallEffectElements pPrintCallEffect;
+	private final RandomizeCallEffectElements pRandomizeCallEffect;
 	private final AssignOperatorElements eAssignOperator;
 	private final PostfixOperatorElements ePostfixOperator;
 	
@@ -790,6 +886,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pReferenceCallEffect = new ReferenceCallEffectElements();
 		this.pFunctionCallEffect = new FunctionCallEffectElements();
 		this.pPrintCallEffect = new PrintCallEffectElements();
+		this.pRandomizeCallEffect = new RandomizeCallEffectElements();
 		this.eAssignOperator = new AssignOperatorElements();
 		this.ePostfixOperator = new PostfixOperatorElements();
 	}
@@ -844,7 +941,8 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// An effect is either an assignment, a postfix effect, an emission, a hostcode effect or a 
 	//// function call effect.
 	//Effect keffects::Effect:
-	//	Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect | PrintCallEffect;
+	//	Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect | PrintCallEffect |
+	//	RandomizeCallEffect;
 	public EffectElements getEffectAccess() {
 		return pEffect;
 	}
@@ -953,15 +1051,29 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getFunctionCallEffectAccess().getRule();
 	}
 
+	//// Print Call Effect Rule
+	//// A print functions that enables target-independent prints in the model.    
 	//PrintCallEffect keffects::PrintCallEffect:
 	//	annotations+=Annotation*
-	//	'print' parameters+=Parameter (',' parameters+=Parameter)*;
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')');
 	public PrintCallEffectElements getPrintCallEffectAccess() {
 		return pPrintCallEffect;
 	}
 	
 	public ParserRule getPrintCallEffectRule() {
 		return getPrintCallEffectAccess().getRule();
+	}
+
+	//RandomizeCallEffect keffects::RandomizeCallEffect:
+	//	{keffects::RandomizeCallEffect} annotations+=Annotation*
+	//	'randomize' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	| '()');
+	public RandomizeCallEffectElements getRandomizeCallEffectAccess() {
+		return pRandomizeCallEffect;
+	}
+	
+	public ParserRule getRandomizeCallEffectRule() {
+		return getRandomizeCallEffectAccess().getRule();
 	}
 
 	//enum AssignOperator returns keffects::AssignOperator:
@@ -1337,6 +1449,8 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//	| '(' BoolExpression ')'
 	//	| ReferenceCall
 	//	| FunctionCall
+	//	| RandomCall
+	//	| RandomizeCall
 	//	| TextExpression;
 	public KExpressionsGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
 		return gaKExpressions.getAtomicExpressionAccess();
@@ -1427,9 +1541,34 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getReferenceCallAccess().getRule();
 	}
 
+	//// Random Call Rule
+	//// Calls the random function. 
+	//RandomCall:
+	//	{RandomCall}
+	//	'random' '()'?;
+	public KExpressionsGrammarAccess.RandomCallElements getRandomCallAccess() {
+		return gaKExpressions.getRandomCallAccess();
+	}
+	
+	public ParserRule getRandomCallRule() {
+		return getRandomCallAccess().getRule();
+	}
+
+	//// Random Call Rule
+	//// Calls the random function. 
+	//RandomizeCall:
+	//	{RandomizeCall}
+	//	'randomize' '()'?;
+	public KExpressionsGrammarAccess.RandomizeCallElements getRandomizeCallAccess() {
+		return gaKExpressions.getRandomizeCallAccess();
+	}
+	
+	public ParserRule getRandomizeCallRule() {
+		return getRandomizeCallAccess().getRule();
+	}
+
 	//// Function Call Rule
 	//// Calls to functions are indicated by angle brackets. They may include a parameter list. 
-	//// Deprecated?
 	//FunctionCall:
 	//	'extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
 	//	| '()');

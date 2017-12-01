@@ -28,6 +28,8 @@ import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.PrintCall
 import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.IgnoreValue
+import de.cau.cs.kieler.kexpressions.RandomCall
+import de.cau.cs.kieler.kexpressions.RandomizeCall
 
 /**
  * @author ssm
@@ -291,7 +293,15 @@ class KExpressionsCreateExtensions {
     def PrintCall createPrintCall() {
         KExpressionsFactory::eINSTANCE.createPrintCall
     }
+    
+    def RandomCall createRandomCall() {
+        KExpressionsFactory::eINSTANCE.createRandomCall
+    }
 
+    def RandomizeCall createRandomizeCall() {
+        KExpressionsFactory::eINSTANCE.createRandomizeCall
+    }
+    
     def Parameter createParameter() {
         KExpressionsFactory::eINSTANCE.createParameter
     }

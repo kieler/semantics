@@ -76,6 +76,15 @@ public interface KEffectsFactory extends EFactory {
     PrintCallEffect createPrintCallEffect();
 
     /**
+     * Returns a new object of class '<em>Randomize Call Effect</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Randomize Call Effect</em>'.
+     * @generated
+     */
+    RandomizeCallEffect createRandomizeCallEffect();
+
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

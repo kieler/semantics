@@ -8,6 +8,7 @@ import de.cau.cs.kieler.kexpressions.Call;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
 import de.cau.cs.kieler.kexpressions.PrintCall;
+import de.cau.cs.kieler.kexpressions.RandomizeCall;
 import de.cau.cs.kieler.kexpressions.ReferenceCall;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.TextExpression;
@@ -151,6 +152,18 @@ public class KEffectsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case KEffectsPackage.RANDOMIZE_CALL_EFFECT: {
+                RandomizeCallEffect randomizeCallEffect = (RandomizeCallEffect)theEObject;
+                T result = caseRandomizeCallEffect(randomizeCallEffect);
+                if (result == null) result = caseEffect(randomizeCallEffect);
+                if (result == null) result = caseRandomizeCall(randomizeCallEffect);
+                if (result == null) result = caseAnnotatable(randomizeCallEffect);
+                if (result == null) result = caseCall(randomizeCallEffect);
+                if (result == null) result = caseExpression(randomizeCallEffect);
+                if (result == null) result = caseSchedulable(randomizeCallEffect);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             default: return defaultCase(theEObject);
         }
     }
@@ -257,6 +270,21 @@ public class KEffectsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T casePrintCallEffect(PrintCallEffect object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Randomize Call Effect</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Randomize Call Effect</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseRandomizeCallEffect(RandomizeCallEffect object) {
         return null;
     }
 
@@ -392,6 +420,21 @@ public class KEffectsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T casePrintCall(PrintCall object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Randomize Call</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Randomize Call</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseRandomizeCall(RandomizeCall object) {
         return null;
     }
 

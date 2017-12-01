@@ -44,7 +44,8 @@ Effect returns keffects::Effect:
 	HostcodeEffect | 
 	ReferenceCallEffect |
 	FunctionCallEffect |
-	PrintCallEffect;
+	PrintCallEffect |
+	RandomizeCallEffect;
 
 // Emission Rule
 // An emission is a esterel like 'call' of a signal instance. A transition effect list may simply set
@@ -115,11 +116,21 @@ FunctionCallEffect returns keffects::FunctionCallEffect:
             (',' parameters += Parameter)* ')'
         ) | '()')
     '>');    
-    
+
+// Print Call Effect Rule
+// A print functions that enables target-independent prints in the model.    
 PrintCallEffect returns keffects::PrintCallEffect:
     (annotations+=Annotation)*
     'print' 
     ('(' parameters += Parameter (',' parameters += Parameter)* ')');
+
+RandomizeCallEffect returns keffects::RandomizeCallEffect:
+    {keffects::RandomizeCallEffect}
+    (annotations+=Annotation)*
+    'randomize' 
+        (('(' parameters += Parameter 
+            (',' parameters += Parameter)* ')'
+        ) | '()');
 
 // ---------------- //
 //  KEffects Enums  // 

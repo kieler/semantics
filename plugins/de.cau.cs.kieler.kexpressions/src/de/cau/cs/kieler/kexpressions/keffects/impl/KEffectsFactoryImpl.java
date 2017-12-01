@@ -63,6 +63,7 @@ public class KEffectsFactoryImpl extends EFactoryImpl implements KEffectsFactory
             case KEffectsPackage.REFERENCE_CALL_EFFECT: return createReferenceCallEffect();
             case KEffectsPackage.FUNCTION_CALL_EFFECT: return createFunctionCallEffect();
             case KEffectsPackage.PRINT_CALL_EFFECT: return createPrintCallEffect();
+            case KEffectsPackage.RANDOMIZE_CALL_EFFECT: return createRandomizeCallEffect();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -156,6 +157,16 @@ public class KEffectsFactoryImpl extends EFactoryImpl implements KEffectsFactory
     public PrintCallEffect createPrintCallEffect() {
         PrintCallEffectImpl printCallEffect = new PrintCallEffectImpl();
         return printCallEffect;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public RandomizeCallEffect createRandomizeCallEffect() {
+        RandomizeCallEffectImpl randomizeCallEffect = new RandomizeCallEffectImpl();
+        return randomizeCallEffect;
     }
 
     /**
