@@ -5388,6 +5388,10 @@ ruleFloateger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken
 
 
 
+
+
+
+
 // Rule AssignOperator
 ruleAssignOperator returns [Enumerator current=null] 
     @init { enterRule(); }

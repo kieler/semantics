@@ -984,7 +984,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     DuringAction returns DuringAction
 	 *
 	 * Constraint:
-	 *     (delay=DelayType? (triggerDelay=INT? trigger=BoolExpression)? (effects+=Effect effects+=Effect*)? label=STRING?)
+	 *     (delay=DelayType? (triggerDelay=INT? trigger=BoolExpression triggerProbability=Double?)? (effects+=Effect effects+=Effect*)? label=STRING?)
 	 */
 	protected void sequence_DuringAction(ISerializationContext context, DuringAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -997,7 +997,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     EntryAction returns EntryAction
 	 *
 	 * Constraint:
-	 *     (trigger=BoolExpression? (effects+=Effect effects+=Effect*)? label=STRING?)
+	 *     ((trigger=BoolExpression triggerProbability=Double?)? (effects+=Effect effects+=Effect*)? label=STRING?)
 	 */
 	protected void sequence_EntryAction(ISerializationContext context, EntryAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1010,7 +1010,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     ExitAction returns ExitAction
 	 *
 	 * Constraint:
-	 *     (trigger=BoolExpression? (effects+=Effect effects+=Effect*)? label=STRING?)
+	 *     ((trigger=BoolExpression triggerProbability=Double?)? (effects+=Effect effects+=Effect*)? label=STRING?)
 	 */
 	protected void sequence_ExitAction(ISerializationContext context, ExitAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1059,7 +1059,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     PrecedingAction returns PrecedingAction
 	 *
 	 * Constraint:
-	 *     (trigger=BoolExpression? (effects+=Effect effects+=Effect*)? label=STRING?)
+	 *     ((trigger=BoolExpression triggerProbability=Double?)? (effects+=Effect effects+=Effect*)? label=STRING?)
 	 */
 	protected void sequence_PrecedingAction(ISerializationContext context, PrecedingAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1137,7 +1137,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     SucceedingAction returns SucceedingAction
 	 *
 	 * Constraint:
-	 *     (trigger=BoolExpression? (effects+=Effect effects+=Effect*)? label=STRING?)
+	 *     ((trigger=BoolExpression triggerProbability=Double?)? (effects+=Effect effects+=Effect*)? label=STRING?)
 	 */
 	protected void sequence_SucceedingAction(ISerializationContext context, SucceedingAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1150,7 +1150,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     SuspendAction returns SuspendAction
 	 *
 	 * Constraint:
-	 *     (delay=DelayType? weak?='weak'? trigger=BoolExpression? label=STRING?)
+	 *     (delay=DelayType? weak?='weak'? (triggerDelay=INT? trigger=BoolExpression triggerProbability=Double?)? label=STRING?)
 	 */
 	protected void sequence_SuspendAction(ISerializationContext context, SuspendAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1171,7 +1171,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *                 delay=DelayType? 
 	 *                 deferred?='deferred'? 
 	 *                 history=HistoryType? 
-	 *                 (triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? 
+	 *                 (triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) triggerProbability=Double?)? 
 	 *                 (effects+=Effect effects+=Effect*)?
 	 *             ) | 
 	 *             (

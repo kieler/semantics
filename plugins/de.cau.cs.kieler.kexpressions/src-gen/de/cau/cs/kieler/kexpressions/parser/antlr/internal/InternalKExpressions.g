@@ -4281,6 +4281,10 @@ ruleFloateger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken
 
 
 
+
+
+
+
 // Rule CompareOperator
 ruleCompareOperator returns [Enumerator current=null] 
     @init { enterRule(); }

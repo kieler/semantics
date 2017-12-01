@@ -200,6 +200,7 @@ public class KEffectsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getQualifiedIDAccess().getGroup_1(), "rule__QualifiedID__Group_1__0");
 					put(grammarAccess.getIntegerAccess().getGroup(), "rule__Integer__Group__0");
 					put(grammarAccess.getFloategerAccess().getGroup(), "rule__Floateger__Group__0");
+					put(grammarAccess.getDoublegerAccess().getGroup(), "rule__Doubleger__Group__0");
 					put(grammarAccess.getEmissionAccess().getAnnotationsAssignment_0(), "rule__Emission__AnnotationsAssignment_0");
 					put(grammarAccess.getEmissionAccess().getReferenceAssignment_1(), "rule__Emission__ReferenceAssignment_1");
 					put(grammarAccess.getEmissionAccess().getNewValueAssignment_2_1(), "rule__Emission__NewValueAssignment_2_1");

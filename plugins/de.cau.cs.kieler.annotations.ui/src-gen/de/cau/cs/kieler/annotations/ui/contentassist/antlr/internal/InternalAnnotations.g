@@ -519,6 +519,10 @@ finally {
 
 
 
+
+
+
+
 rule__Annotation__Alternatives
     @init {
 		int stackSize = keepStackSize();
@@ -2725,6 +2729,7 @@ rule__Floateger__Group__1__Impl
 finally {
 	restoreStackSize(stackSize);
 }
+
 
 
 

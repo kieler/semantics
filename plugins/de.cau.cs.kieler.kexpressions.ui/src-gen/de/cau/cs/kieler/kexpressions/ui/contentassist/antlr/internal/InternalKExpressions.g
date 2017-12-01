@@ -1674,6 +1674,10 @@ finally {
 
 
 
+
+
+
+
 // Rule CompareOperator
 ruleCompareOperator
     @init {
@@ -10867,6 +10871,7 @@ rule__Floateger__Group__1__Impl
 finally {
 	restoreStackSize(stackSize);
 }
+
 
 
 
