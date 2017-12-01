@@ -118,7 +118,8 @@ FunctionCallEffect returns keffects::FunctionCallEffect:
     
 PrintCallEffect returns keffects::PrintCallEffect:
     (annotations+=Annotation)*
-    'print' parameters += Parameter (',' parameters += Parameter)*;
+    'print' 
+    ('(' parameters += Parameter (',' parameters += Parameter)* ')');
 
 // ---------------- //
 //  KEffects Enums  // 
