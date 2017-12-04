@@ -578,7 +578,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//	{sccharts::Transition} annotations+=RestrictedTypeAnnotation* (preemption=(PreemptionType | PreemptionTypeLegacy)
 		//	targetState=[sccharts::State] delay=DelayType?
 		//	deferred?='deferred'?
-		//	history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr'
+		//	history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr='
 		//	triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		//	| delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do'
 		//	effects+=Effect (';' effects+=Effect)*)?
@@ -588,7 +588,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 		//{sccharts::Transition} annotations+=RestrictedTypeAnnotation* (preemption=(PreemptionType | PreemptionTypeLegacy)
 		//targetState=[sccharts::State] delay=DelayType? deferred?='deferred'? history=HistoryType? ('if' triggerDelay=INT?
-		//(trigger=BoolExpression | trigger=AtomicExpression) ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';'
+		//(trigger=BoolExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=Double)?)? ('do' effects+=Effect (';'
 		//effects+=Effect)*)? | delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))?
 		//('do' effects+=Effect (';' effects+=Effect)*)? preemption=(PreemptionType | PreemptionTypeLegacy)
 		//targetState=[sccharts::State] deferred?='deferred'? history=HistoryType?) ('label' label=STRING)?
@@ -604,7 +604,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getAnnotationsRestrictedTypeAnnotationParserRuleCall_1_0() { return cAnnotationsRestrictedTypeAnnotationParserRuleCall_1_0; }
 
 		//preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] delay=DelayType? deferred?='deferred'?
-		//history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr'
+		//history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr='
 		//triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)? | delay=DelayType? ('if'
 		//triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do' effects+=Effect (';' effects+=Effect)*)?
 		//preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'?
@@ -612,7 +612,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 
 		//preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] delay=DelayType? deferred?='deferred'?
-		//history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr'
+		//history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr='
 		//triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup_2_0() { return cGroup_2_0; }
 
@@ -655,7 +655,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//HistoryType
 		public RuleCall getHistoryHistoryTypeEnumRuleCall_2_0_4_0() { return cHistoryHistoryTypeEnumRuleCall_2_0_4_0; }
 
-		//('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr' triggerProbability=Double)?)?
+		//('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=Double)?)?
 		public Group getGroup_2_0_5() { return cGroup_2_0_5; }
 
 		//'if'
@@ -682,10 +682,10 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//AtomicExpression
 		public RuleCall getTriggerAtomicExpressionParserRuleCall_2_0_5_2_1_0() { return cTriggerAtomicExpressionParserRuleCall_2_0_5_2_1_0; }
 
-		//('Pr' triggerProbability=Double)?
+		//('Pr=' triggerProbability=Double)?
 		public Group getGroup_2_0_5_3() { return cGroup_2_0_5_3; }
 
-		//'Pr'
+		//'Pr='
 		public Keyword getPrKeyword_2_0_5_3_0() { return cPrKeyword_2_0_5_3_0; }
 
 		//triggerProbability=Double
@@ -1365,11 +1365,11 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cLabelSTRINGTerminalRuleCall_5_1_0 = (RuleCall)cLabelAssignment_5_1.eContents().get(0);
 		
 		//DuringAction sccharts::DuringAction:
-		//	{sccharts::DuringAction} delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolExpression ('Pr'
+		//	{sccharts::DuringAction} delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolExpression ('Pr='
 		//	triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//{sccharts::DuringAction} delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolExpression ('Pr'
+		//{sccharts::DuringAction} delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolExpression ('Pr='
 		//triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
 		public Group getGroup() { return cGroup; }
 
@@ -1385,7 +1385,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'during'
 		public Keyword getDuringKeyword_2() { return cDuringKeyword_2; }
 
-		//('if' triggerDelay=INT? trigger=BoolExpression ('Pr' triggerProbability=Double)?)?
+		//('if' triggerDelay=INT? trigger=BoolExpression ('Pr=' triggerProbability=Double)?)?
 		public Group getGroup_3() { return cGroup_3; }
 
 		//'if'
@@ -1403,10 +1403,10 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//BoolExpression
 		public RuleCall getTriggerBoolExpressionParserRuleCall_3_2_0() { return cTriggerBoolExpressionParserRuleCall_3_2_0; }
 
-		//('Pr' triggerProbability=Double)?
+		//('Pr=' triggerProbability=Double)?
 		public Group getGroup_3_3() { return cGroup_3_3; }
 
-		//'Pr'
+		//'Pr='
 		public Keyword getPrKeyword_3_3_0() { return cPrKeyword_3_3_0; }
 
 		//triggerProbability=Double
@@ -1581,10 +1581,10 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//SuspendAction sccharts::SuspendAction:
 		//	{sccharts::SuspendAction} delay=DelayType? weak?='weak'? 'suspend' ('if' triggerDelay=INT? trigger=BoolExpression
-		//	('Pr' triggerProbability=Double)?)? ('label' label=STRING)?;
+		//	('Pr=' triggerProbability=Double)?)? ('label' label=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//{sccharts::SuspendAction} delay=DelayType? weak?='weak'? 'suspend' ('if' triggerDelay=INT? trigger=BoolExpression ('Pr'
+		//{sccharts::SuspendAction} delay=DelayType? weak?='weak'? 'suspend' ('if' triggerDelay=INT? trigger=BoolExpression ('Pr='
 		//triggerProbability=Double)?)? ('label' label=STRING)?
 		public Group getGroup() { return cGroup; }
 
@@ -1606,7 +1606,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'suspend'
 		public Keyword getSuspendKeyword_3() { return cSuspendKeyword_3; }
 
-		//('if' triggerDelay=INT? trigger=BoolExpression ('Pr' triggerProbability=Double)?)?
+		//('if' triggerDelay=INT? trigger=BoolExpression ('Pr=' triggerProbability=Double)?)?
 		public Group getGroup_4() { return cGroup_4; }
 
 		//'if'
@@ -1624,10 +1624,10 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//BoolExpression
 		public RuleCall getTriggerBoolExpressionParserRuleCall_4_2_0() { return cTriggerBoolExpressionParserRuleCall_4_2_0; }
 
-		//('Pr' triggerProbability=Double)?
+		//('Pr=' triggerProbability=Double)?
 		public Group getGroup_4_3() { return cGroup_4_3; }
 
-		//'Pr'
+		//'Pr='
 		public Keyword getPrKeyword_4_3_0() { return cPrKeyword_4_3_0; }
 
 		//triggerProbability=Double
@@ -2253,7 +2253,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	{sccharts::Transition} annotations+=RestrictedTypeAnnotation* (preemption=(PreemptionType | PreemptionTypeLegacy)
 	//	targetState=[sccharts::State] delay=DelayType?
 	//	deferred?='deferred'?
-	//	history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr'
+	//	history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr='
 	//	triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 	//	| delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do'
 	//	effects+=Effect (';' effects+=Effect)*)?
@@ -2369,7 +2369,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//DuringAction sccharts::DuringAction:
-	//	{sccharts::DuringAction} delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolExpression ('Pr'
+	//	{sccharts::DuringAction} delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolExpression ('Pr='
 	//	triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
 	public DuringActionElements getDuringActionAccess() {
 		return pDuringAction;
@@ -2393,7 +2393,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 	//SuspendAction sccharts::SuspendAction:
 	//	{sccharts::SuspendAction} delay=DelayType? weak?='weak'? 'suspend' ('if' triggerDelay=INT? trigger=BoolExpression
-	//	('Pr' triggerProbability=Double)?)? ('label' label=STRING)?;
+	//	('Pr=' triggerProbability=Double)?)? ('label' label=STRING)?;
 	public SuspendActionElements getSuspendActionAccess() {
 		return pSuspendAction;
 	}

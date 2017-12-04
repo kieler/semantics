@@ -24556,7 +24556,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSchedulePriorityType"
-    // InternalSCL.g:8541:1: ruleSchedulePriorityType returns [Enumerator current=null] : ( (enumLiteral_0= 'conflict' ) | (enumLiteral_1= 'confluent' ) ) ;
+    // InternalSCL.g:8545:1: ruleSchedulePriorityType returns [Enumerator current=null] : ( (enumLiteral_0= 'conflict' ) | (enumLiteral_1= 'confluent' ) ) ;
     public final Enumerator ruleSchedulePriorityType() throws RecognitionException {
         Enumerator current = null;
         int ruleSchedulePriorityType_StartIndex = input.index();
@@ -24566,10 +24566,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 195) ) { return current; }
-            // InternalSCL.g:8543:28: ( ( (enumLiteral_0= 'conflict' ) | (enumLiteral_1= 'confluent' ) ) )
-            // InternalSCL.g:8544:1: ( (enumLiteral_0= 'conflict' ) | (enumLiteral_1= 'confluent' ) )
+            // InternalSCL.g:8547:28: ( ( (enumLiteral_0= 'conflict' ) | (enumLiteral_1= 'confluent' ) ) )
+            // InternalSCL.g:8548:1: ( (enumLiteral_0= 'conflict' ) | (enumLiteral_1= 'confluent' ) )
             {
-            // InternalSCL.g:8544:1: ( (enumLiteral_0= 'conflict' ) | (enumLiteral_1= 'confluent' ) )
+            // InternalSCL.g:8548:1: ( (enumLiteral_0= 'conflict' ) | (enumLiteral_1= 'confluent' ) )
             int alt191=2;
             int LA191_0 = input.LA(1);
 
@@ -24588,10 +24588,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             }
             switch (alt191) {
                 case 1 :
-                    // InternalSCL.g:8544:2: (enumLiteral_0= 'conflict' )
+                    // InternalSCL.g:8548:2: (enumLiteral_0= 'conflict' )
                     {
-                    // InternalSCL.g:8544:2: (enumLiteral_0= 'conflict' )
-                    // InternalSCL.g:8544:4: enumLiteral_0= 'conflict'
+                    // InternalSCL.g:8548:2: (enumLiteral_0= 'conflict' )
+                    // InternalSCL.g:8548:4: enumLiteral_0= 'conflict'
                     {
                     enumLiteral_0=(Token)match(input,76,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -24607,10 +24607,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSCL.g:8550:6: (enumLiteral_1= 'confluent' )
+                    // InternalSCL.g:8554:6: (enumLiteral_1= 'confluent' )
                     {
-                    // InternalSCL.g:8550:6: (enumLiteral_1= 'confluent' )
-                    // InternalSCL.g:8550:8: enumLiteral_1= 'confluent'
+                    // InternalSCL.g:8554:6: (enumLiteral_1= 'confluent' )
+                    // InternalSCL.g:8554:8: enumLiteral_1= 'confluent'
                     {
                     enumLiteral_1=(Token)match(input,77,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -24649,7 +24649,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAssignOperator"
-    // InternalSCL.g:8560:1: ruleAssignOperator returns [Enumerator current=null] : ( (enumLiteral_0= '=' ) | (enumLiteral_1= '+=' ) | (enumLiteral_2= '-=' ) | (enumLiteral_3= '*=' ) | (enumLiteral_4= '/=' ) | (enumLiteral_5= '%=' ) | (enumLiteral_6= '&=' ) | (enumLiteral_7= '|=' ) | (enumLiteral_8= '^=' ) | (enumLiteral_9= '<<=' ) | (enumLiteral_10= '>>=' ) | (enumLiteral_11= '>>>=' ) | (enumLiteral_12= 'min=' ) | (enumLiteral_13= 'max=' ) ) ;
+    // InternalSCL.g:8564:1: ruleAssignOperator returns [Enumerator current=null] : ( (enumLiteral_0= '=' ) | (enumLiteral_1= '+=' ) | (enumLiteral_2= '-=' ) | (enumLiteral_3= '*=' ) | (enumLiteral_4= '/=' ) | (enumLiteral_5= '%=' ) | (enumLiteral_6= '&=' ) | (enumLiteral_7= '|=' ) | (enumLiteral_8= '^=' ) | (enumLiteral_9= '<<=' ) | (enumLiteral_10= '>>=' ) | (enumLiteral_11= '>>>=' ) | (enumLiteral_12= 'min=' ) | (enumLiteral_13= 'max=' ) ) ;
     public final Enumerator ruleAssignOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleAssignOperator_StartIndex = input.index();
@@ -24671,10 +24671,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 196) ) { return current; }
-            // InternalSCL.g:8562:28: ( ( (enumLiteral_0= '=' ) | (enumLiteral_1= '+=' ) | (enumLiteral_2= '-=' ) | (enumLiteral_3= '*=' ) | (enumLiteral_4= '/=' ) | (enumLiteral_5= '%=' ) | (enumLiteral_6= '&=' ) | (enumLiteral_7= '|=' ) | (enumLiteral_8= '^=' ) | (enumLiteral_9= '<<=' ) | (enumLiteral_10= '>>=' ) | (enumLiteral_11= '>>>=' ) | (enumLiteral_12= 'min=' ) | (enumLiteral_13= 'max=' ) ) )
-            // InternalSCL.g:8563:1: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '+=' ) | (enumLiteral_2= '-=' ) | (enumLiteral_3= '*=' ) | (enumLiteral_4= '/=' ) | (enumLiteral_5= '%=' ) | (enumLiteral_6= '&=' ) | (enumLiteral_7= '|=' ) | (enumLiteral_8= '^=' ) | (enumLiteral_9= '<<=' ) | (enumLiteral_10= '>>=' ) | (enumLiteral_11= '>>>=' ) | (enumLiteral_12= 'min=' ) | (enumLiteral_13= 'max=' ) )
+            // InternalSCL.g:8566:28: ( ( (enumLiteral_0= '=' ) | (enumLiteral_1= '+=' ) | (enumLiteral_2= '-=' ) | (enumLiteral_3= '*=' ) | (enumLiteral_4= '/=' ) | (enumLiteral_5= '%=' ) | (enumLiteral_6= '&=' ) | (enumLiteral_7= '|=' ) | (enumLiteral_8= '^=' ) | (enumLiteral_9= '<<=' ) | (enumLiteral_10= '>>=' ) | (enumLiteral_11= '>>>=' ) | (enumLiteral_12= 'min=' ) | (enumLiteral_13= 'max=' ) ) )
+            // InternalSCL.g:8567:1: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '+=' ) | (enumLiteral_2= '-=' ) | (enumLiteral_3= '*=' ) | (enumLiteral_4= '/=' ) | (enumLiteral_5= '%=' ) | (enumLiteral_6= '&=' ) | (enumLiteral_7= '|=' ) | (enumLiteral_8= '^=' ) | (enumLiteral_9= '<<=' ) | (enumLiteral_10= '>>=' ) | (enumLiteral_11= '>>>=' ) | (enumLiteral_12= 'min=' ) | (enumLiteral_13= 'max=' ) )
             {
-            // InternalSCL.g:8563:1: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '+=' ) | (enumLiteral_2= '-=' ) | (enumLiteral_3= '*=' ) | (enumLiteral_4= '/=' ) | (enumLiteral_5= '%=' ) | (enumLiteral_6= '&=' ) | (enumLiteral_7= '|=' ) | (enumLiteral_8= '^=' ) | (enumLiteral_9= '<<=' ) | (enumLiteral_10= '>>=' ) | (enumLiteral_11= '>>>=' ) | (enumLiteral_12= 'min=' ) | (enumLiteral_13= 'max=' ) )
+            // InternalSCL.g:8567:1: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '+=' ) | (enumLiteral_2= '-=' ) | (enumLiteral_3= '*=' ) | (enumLiteral_4= '/=' ) | (enumLiteral_5= '%=' ) | (enumLiteral_6= '&=' ) | (enumLiteral_7= '|=' ) | (enumLiteral_8= '^=' ) | (enumLiteral_9= '<<=' ) | (enumLiteral_10= '>>=' ) | (enumLiteral_11= '>>>=' ) | (enumLiteral_12= 'min=' ) | (enumLiteral_13= 'max=' ) )
             int alt192=14;
             switch ( input.LA(1) ) {
             case 52:
@@ -24757,10 +24757,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             switch (alt192) {
                 case 1 :
-                    // InternalSCL.g:8563:2: (enumLiteral_0= '=' )
+                    // InternalSCL.g:8567:2: (enumLiteral_0= '=' )
                     {
-                    // InternalSCL.g:8563:2: (enumLiteral_0= '=' )
-                    // InternalSCL.g:8563:4: enumLiteral_0= '='
+                    // InternalSCL.g:8567:2: (enumLiteral_0= '=' )
+                    // InternalSCL.g:8567:4: enumLiteral_0= '='
                     {
                     enumLiteral_0=(Token)match(input,52,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -24776,10 +24776,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSCL.g:8569:6: (enumLiteral_1= '+=' )
+                    // InternalSCL.g:8573:6: (enumLiteral_1= '+=' )
                     {
-                    // InternalSCL.g:8569:6: (enumLiteral_1= '+=' )
-                    // InternalSCL.g:8569:8: enumLiteral_1= '+='
+                    // InternalSCL.g:8573:6: (enumLiteral_1= '+=' )
+                    // InternalSCL.g:8573:8: enumLiteral_1= '+='
                     {
                     enumLiteral_1=(Token)match(input,78,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -24795,10 +24795,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalSCL.g:8575:6: (enumLiteral_2= '-=' )
+                    // InternalSCL.g:8579:6: (enumLiteral_2= '-=' )
                     {
-                    // InternalSCL.g:8575:6: (enumLiteral_2= '-=' )
-                    // InternalSCL.g:8575:8: enumLiteral_2= '-='
+                    // InternalSCL.g:8579:6: (enumLiteral_2= '-=' )
+                    // InternalSCL.g:8579:8: enumLiteral_2= '-='
                     {
                     enumLiteral_2=(Token)match(input,79,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -24814,10 +24814,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalSCL.g:8581:6: (enumLiteral_3= '*=' )
+                    // InternalSCL.g:8585:6: (enumLiteral_3= '*=' )
                     {
-                    // InternalSCL.g:8581:6: (enumLiteral_3= '*=' )
-                    // InternalSCL.g:8581:8: enumLiteral_3= '*='
+                    // InternalSCL.g:8585:6: (enumLiteral_3= '*=' )
+                    // InternalSCL.g:8585:8: enumLiteral_3= '*='
                     {
                     enumLiteral_3=(Token)match(input,80,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -24833,10 +24833,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalSCL.g:8587:6: (enumLiteral_4= '/=' )
+                    // InternalSCL.g:8591:6: (enumLiteral_4= '/=' )
                     {
-                    // InternalSCL.g:8587:6: (enumLiteral_4= '/=' )
-                    // InternalSCL.g:8587:8: enumLiteral_4= '/='
+                    // InternalSCL.g:8591:6: (enumLiteral_4= '/=' )
+                    // InternalSCL.g:8591:8: enumLiteral_4= '/='
                     {
                     enumLiteral_4=(Token)match(input,81,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -24852,10 +24852,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalSCL.g:8593:6: (enumLiteral_5= '%=' )
+                    // InternalSCL.g:8597:6: (enumLiteral_5= '%=' )
                     {
-                    // InternalSCL.g:8593:6: (enumLiteral_5= '%=' )
-                    // InternalSCL.g:8593:8: enumLiteral_5= '%='
+                    // InternalSCL.g:8597:6: (enumLiteral_5= '%=' )
+                    // InternalSCL.g:8597:8: enumLiteral_5= '%='
                     {
                     enumLiteral_5=(Token)match(input,82,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -24871,10 +24871,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalSCL.g:8599:6: (enumLiteral_6= '&=' )
+                    // InternalSCL.g:8603:6: (enumLiteral_6= '&=' )
                     {
-                    // InternalSCL.g:8599:6: (enumLiteral_6= '&=' )
-                    // InternalSCL.g:8599:8: enumLiteral_6= '&='
+                    // InternalSCL.g:8603:6: (enumLiteral_6= '&=' )
+                    // InternalSCL.g:8603:8: enumLiteral_6= '&='
                     {
                     enumLiteral_6=(Token)match(input,83,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -24890,10 +24890,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // InternalSCL.g:8605:6: (enumLiteral_7= '|=' )
+                    // InternalSCL.g:8609:6: (enumLiteral_7= '|=' )
                     {
-                    // InternalSCL.g:8605:6: (enumLiteral_7= '|=' )
-                    // InternalSCL.g:8605:8: enumLiteral_7= '|='
+                    // InternalSCL.g:8609:6: (enumLiteral_7= '|=' )
+                    // InternalSCL.g:8609:8: enumLiteral_7= '|='
                     {
                     enumLiteral_7=(Token)match(input,84,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -24909,10 +24909,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 9 :
-                    // InternalSCL.g:8611:6: (enumLiteral_8= '^=' )
+                    // InternalSCL.g:8615:6: (enumLiteral_8= '^=' )
                     {
-                    // InternalSCL.g:8611:6: (enumLiteral_8= '^=' )
-                    // InternalSCL.g:8611:8: enumLiteral_8= '^='
+                    // InternalSCL.g:8615:6: (enumLiteral_8= '^=' )
+                    // InternalSCL.g:8615:8: enumLiteral_8= '^='
                     {
                     enumLiteral_8=(Token)match(input,85,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -24928,10 +24928,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 10 :
-                    // InternalSCL.g:8617:6: (enumLiteral_9= '<<=' )
+                    // InternalSCL.g:8621:6: (enumLiteral_9= '<<=' )
                     {
-                    // InternalSCL.g:8617:6: (enumLiteral_9= '<<=' )
-                    // InternalSCL.g:8617:8: enumLiteral_9= '<<='
+                    // InternalSCL.g:8621:6: (enumLiteral_9= '<<=' )
+                    // InternalSCL.g:8621:8: enumLiteral_9= '<<='
                     {
                     enumLiteral_9=(Token)match(input,86,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -24947,10 +24947,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 11 :
-                    // InternalSCL.g:8623:6: (enumLiteral_10= '>>=' )
+                    // InternalSCL.g:8627:6: (enumLiteral_10= '>>=' )
                     {
-                    // InternalSCL.g:8623:6: (enumLiteral_10= '>>=' )
-                    // InternalSCL.g:8623:8: enumLiteral_10= '>>='
+                    // InternalSCL.g:8627:6: (enumLiteral_10= '>>=' )
+                    // InternalSCL.g:8627:8: enumLiteral_10= '>>='
                     {
                     enumLiteral_10=(Token)match(input,87,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -24966,10 +24966,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 12 :
-                    // InternalSCL.g:8629:6: (enumLiteral_11= '>>>=' )
+                    // InternalSCL.g:8633:6: (enumLiteral_11= '>>>=' )
                     {
-                    // InternalSCL.g:8629:6: (enumLiteral_11= '>>>=' )
-                    // InternalSCL.g:8629:8: enumLiteral_11= '>>>='
+                    // InternalSCL.g:8633:6: (enumLiteral_11= '>>>=' )
+                    // InternalSCL.g:8633:8: enumLiteral_11= '>>>='
                     {
                     enumLiteral_11=(Token)match(input,88,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -24985,10 +24985,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 13 :
-                    // InternalSCL.g:8635:6: (enumLiteral_12= 'min=' )
+                    // InternalSCL.g:8639:6: (enumLiteral_12= 'min=' )
                     {
-                    // InternalSCL.g:8635:6: (enumLiteral_12= 'min=' )
-                    // InternalSCL.g:8635:8: enumLiteral_12= 'min='
+                    // InternalSCL.g:8639:6: (enumLiteral_12= 'min=' )
+                    // InternalSCL.g:8639:8: enumLiteral_12= 'min='
                     {
                     enumLiteral_12=(Token)match(input,89,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -25004,10 +25004,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 14 :
-                    // InternalSCL.g:8641:6: (enumLiteral_13= 'max=' )
+                    // InternalSCL.g:8645:6: (enumLiteral_13= 'max=' )
                     {
-                    // InternalSCL.g:8641:6: (enumLiteral_13= 'max=' )
-                    // InternalSCL.g:8641:8: enumLiteral_13= 'max='
+                    // InternalSCL.g:8645:6: (enumLiteral_13= 'max=' )
+                    // InternalSCL.g:8645:8: enumLiteral_13= 'max='
                     {
                     enumLiteral_13=(Token)match(input,90,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -25046,7 +25046,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePostfixOperator"
-    // InternalSCL.g:8651:1: rulePostfixOperator returns [Enumerator current=null] : ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) ) ;
+    // InternalSCL.g:8655:1: rulePostfixOperator returns [Enumerator current=null] : ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) ) ;
     public final Enumerator rulePostfixOperator() throws RecognitionException {
         Enumerator current = null;
         int rulePostfixOperator_StartIndex = input.index();
@@ -25056,10 +25056,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 197) ) { return current; }
-            // InternalSCL.g:8653:28: ( ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) ) )
-            // InternalSCL.g:8654:1: ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) )
+            // InternalSCL.g:8657:28: ( ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) ) )
+            // InternalSCL.g:8658:1: ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) )
             {
-            // InternalSCL.g:8654:1: ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) )
+            // InternalSCL.g:8658:1: ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) )
             int alt193=2;
             int LA193_0 = input.LA(1);
 
@@ -25078,10 +25078,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             }
             switch (alt193) {
                 case 1 :
-                    // InternalSCL.g:8654:2: (enumLiteral_0= '++' )
+                    // InternalSCL.g:8658:2: (enumLiteral_0= '++' )
                     {
-                    // InternalSCL.g:8654:2: (enumLiteral_0= '++' )
-                    // InternalSCL.g:8654:4: enumLiteral_0= '++'
+                    // InternalSCL.g:8658:2: (enumLiteral_0= '++' )
+                    // InternalSCL.g:8658:4: enumLiteral_0= '++'
                     {
                     enumLiteral_0=(Token)match(input,91,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -25097,10 +25097,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSCL.g:8660:6: (enumLiteral_1= '--' )
+                    // InternalSCL.g:8664:6: (enumLiteral_1= '--' )
                     {
-                    // InternalSCL.g:8660:6: (enumLiteral_1= '--' )
-                    // InternalSCL.g:8660:8: enumLiteral_1= '--'
+                    // InternalSCL.g:8664:6: (enumLiteral_1= '--' )
+                    // InternalSCL.g:8664:8: enumLiteral_1= '--'
                     {
                     enumLiteral_1=(Token)match(input,92,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -25139,7 +25139,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCompareOperator"
-    // InternalSCL.g:8670:1: ruleCompareOperator returns [Enumerator current=null] : ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) ) ;
+    // InternalSCL.g:8674:1: ruleCompareOperator returns [Enumerator current=null] : ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) ) ;
     public final Enumerator ruleCompareOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleCompareOperator_StartIndex = input.index();
@@ -25153,10 +25153,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 198) ) { return current; }
-            // InternalSCL.g:8672:28: ( ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) ) )
-            // InternalSCL.g:8673:1: ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) )
+            // InternalSCL.g:8676:28: ( ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) ) )
+            // InternalSCL.g:8677:1: ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) )
             {
-            // InternalSCL.g:8673:1: ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) )
+            // InternalSCL.g:8677:1: ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) )
             int alt194=6;
             switch ( input.LA(1) ) {
             case 93:
@@ -25199,10 +25199,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             switch (alt194) {
                 case 1 :
-                    // InternalSCL.g:8673:2: (enumLiteral_0= '==' )
+                    // InternalSCL.g:8677:2: (enumLiteral_0= '==' )
                     {
-                    // InternalSCL.g:8673:2: (enumLiteral_0= '==' )
-                    // InternalSCL.g:8673:4: enumLiteral_0= '=='
+                    // InternalSCL.g:8677:2: (enumLiteral_0= '==' )
+                    // InternalSCL.g:8677:4: enumLiteral_0= '=='
                     {
                     enumLiteral_0=(Token)match(input,93,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -25218,10 +25218,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSCL.g:8679:6: (enumLiteral_1= '<' )
+                    // InternalSCL.g:8683:6: (enumLiteral_1= '<' )
                     {
-                    // InternalSCL.g:8679:6: (enumLiteral_1= '<' )
-                    // InternalSCL.g:8679:8: enumLiteral_1= '<'
+                    // InternalSCL.g:8683:6: (enumLiteral_1= '<' )
+                    // InternalSCL.g:8683:8: enumLiteral_1= '<'
                     {
                     enumLiteral_1=(Token)match(input,54,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -25237,10 +25237,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalSCL.g:8685:6: (enumLiteral_2= '<=' )
+                    // InternalSCL.g:8689:6: (enumLiteral_2= '<=' )
                     {
-                    // InternalSCL.g:8685:6: (enumLiteral_2= '<=' )
-                    // InternalSCL.g:8685:8: enumLiteral_2= '<='
+                    // InternalSCL.g:8689:6: (enumLiteral_2= '<=' )
+                    // InternalSCL.g:8689:8: enumLiteral_2= '<='
                     {
                     enumLiteral_2=(Token)match(input,94,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -25256,10 +25256,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalSCL.g:8691:6: (enumLiteral_3= '>' )
+                    // InternalSCL.g:8695:6: (enumLiteral_3= '>' )
                     {
-                    // InternalSCL.g:8691:6: (enumLiteral_3= '>' )
-                    // InternalSCL.g:8691:8: enumLiteral_3= '>'
+                    // InternalSCL.g:8695:6: (enumLiteral_3= '>' )
+                    // InternalSCL.g:8695:8: enumLiteral_3= '>'
                     {
                     enumLiteral_3=(Token)match(input,55,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -25275,10 +25275,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalSCL.g:8697:6: (enumLiteral_4= '>=' )
+                    // InternalSCL.g:8701:6: (enumLiteral_4= '>=' )
                     {
-                    // InternalSCL.g:8697:6: (enumLiteral_4= '>=' )
-                    // InternalSCL.g:8697:8: enumLiteral_4= '>='
+                    // InternalSCL.g:8701:6: (enumLiteral_4= '>=' )
+                    // InternalSCL.g:8701:8: enumLiteral_4= '>='
                     {
                     enumLiteral_4=(Token)match(input,95,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -25294,10 +25294,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalSCL.g:8703:6: (enumLiteral_5= '!=' )
+                    // InternalSCL.g:8707:6: (enumLiteral_5= '!=' )
                     {
-                    // InternalSCL.g:8703:6: (enumLiteral_5= '!=' )
-                    // InternalSCL.g:8703:8: enumLiteral_5= '!='
+                    // InternalSCL.g:8707:6: (enumLiteral_5= '!=' )
+                    // InternalSCL.g:8707:8: enumLiteral_5= '!='
                     {
                     enumLiteral_5=(Token)match(input,96,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -25336,7 +25336,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePreOperator"
-    // InternalSCL.g:8713:1: rulePreOperator returns [Enumerator current=null] : (enumLiteral_0= 'pre' ) ;
+    // InternalSCL.g:8717:1: rulePreOperator returns [Enumerator current=null] : (enumLiteral_0= 'pre' ) ;
     public final Enumerator rulePreOperator() throws RecognitionException {
         Enumerator current = null;
         int rulePreOperator_StartIndex = input.index();
@@ -25345,11 +25345,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 199) ) { return current; }
-            // InternalSCL.g:8715:28: ( (enumLiteral_0= 'pre' ) )
-            // InternalSCL.g:8716:1: (enumLiteral_0= 'pre' )
+            // InternalSCL.g:8719:28: ( (enumLiteral_0= 'pre' ) )
+            // InternalSCL.g:8720:1: (enumLiteral_0= 'pre' )
             {
-            // InternalSCL.g:8716:1: (enumLiteral_0= 'pre' )
-            // InternalSCL.g:8716:3: enumLiteral_0= 'pre'
+            // InternalSCL.g:8720:1: (enumLiteral_0= 'pre' )
+            // InternalSCL.g:8720:3: enumLiteral_0= 'pre'
             {
             enumLiteral_0=(Token)match(input,97,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -25382,7 +25382,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseNotOperator"
-    // InternalSCL.g:8726:1: ruleBitwiseNotOperator returns [Enumerator current=null] : (enumLiteral_0= '~' ) ;
+    // InternalSCL.g:8730:1: ruleBitwiseNotOperator returns [Enumerator current=null] : (enumLiteral_0= '~' ) ;
     public final Enumerator ruleBitwiseNotOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleBitwiseNotOperator_StartIndex = input.index();
@@ -25391,11 +25391,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 200) ) { return current; }
-            // InternalSCL.g:8728:28: ( (enumLiteral_0= '~' ) )
-            // InternalSCL.g:8729:1: (enumLiteral_0= '~' )
+            // InternalSCL.g:8732:28: ( (enumLiteral_0= '~' ) )
+            // InternalSCL.g:8733:1: (enumLiteral_0= '~' )
             {
-            // InternalSCL.g:8729:1: (enumLiteral_0= '~' )
-            // InternalSCL.g:8729:3: enumLiteral_0= '~'
+            // InternalSCL.g:8733:1: (enumLiteral_0= '~' )
+            // InternalSCL.g:8733:3: enumLiteral_0= '~'
             {
             enumLiteral_0=(Token)match(input,98,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -25428,7 +25428,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseXOrOperator"
-    // InternalSCL.g:8739:1: ruleBitwiseXOrOperator returns [Enumerator current=null] : (enumLiteral_0= '^' ) ;
+    // InternalSCL.g:8743:1: ruleBitwiseXOrOperator returns [Enumerator current=null] : (enumLiteral_0= '^' ) ;
     public final Enumerator ruleBitwiseXOrOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleBitwiseXOrOperator_StartIndex = input.index();
@@ -25437,11 +25437,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 201) ) { return current; }
-            // InternalSCL.g:8741:28: ( (enumLiteral_0= '^' ) )
-            // InternalSCL.g:8742:1: (enumLiteral_0= '^' )
+            // InternalSCL.g:8745:28: ( (enumLiteral_0= '^' ) )
+            // InternalSCL.g:8746:1: (enumLiteral_0= '^' )
             {
-            // InternalSCL.g:8742:1: (enumLiteral_0= '^' )
-            // InternalSCL.g:8742:3: enumLiteral_0= '^'
+            // InternalSCL.g:8746:1: (enumLiteral_0= '^' )
+            // InternalSCL.g:8746:3: enumLiteral_0= '^'
             {
             enumLiteral_0=(Token)match(input,61,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -25474,7 +25474,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseOrOperator"
-    // InternalSCL.g:8752:1: ruleBitwiseOrOperator returns [Enumerator current=null] : (enumLiteral_0= '|' ) ;
+    // InternalSCL.g:8756:1: ruleBitwiseOrOperator returns [Enumerator current=null] : (enumLiteral_0= '|' ) ;
     public final Enumerator ruleBitwiseOrOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleBitwiseOrOperator_StartIndex = input.index();
@@ -25483,11 +25483,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 202) ) { return current; }
-            // InternalSCL.g:8754:28: ( (enumLiteral_0= '|' ) )
-            // InternalSCL.g:8755:1: (enumLiteral_0= '|' )
+            // InternalSCL.g:8758:28: ( (enumLiteral_0= '|' ) )
+            // InternalSCL.g:8759:1: (enumLiteral_0= '|' )
             {
-            // InternalSCL.g:8755:1: (enumLiteral_0= '|' )
-            // InternalSCL.g:8755:3: enumLiteral_0= '|'
+            // InternalSCL.g:8759:1: (enumLiteral_0= '|' )
+            // InternalSCL.g:8759:3: enumLiteral_0= '|'
             {
             enumLiteral_0=(Token)match(input,60,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -25520,7 +25520,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseAndOperator"
-    // InternalSCL.g:8765:1: ruleBitwiseAndOperator returns [Enumerator current=null] : (enumLiteral_0= '&' ) ;
+    // InternalSCL.g:8769:1: ruleBitwiseAndOperator returns [Enumerator current=null] : (enumLiteral_0= '&' ) ;
     public final Enumerator ruleBitwiseAndOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleBitwiseAndOperator_StartIndex = input.index();
@@ -25529,11 +25529,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 203) ) { return current; }
-            // InternalSCL.g:8767:28: ( (enumLiteral_0= '&' ) )
-            // InternalSCL.g:8768:1: (enumLiteral_0= '&' )
+            // InternalSCL.g:8771:28: ( (enumLiteral_0= '&' ) )
+            // InternalSCL.g:8772:1: (enumLiteral_0= '&' )
             {
-            // InternalSCL.g:8768:1: (enumLiteral_0= '&' )
-            // InternalSCL.g:8768:3: enumLiteral_0= '&'
+            // InternalSCL.g:8772:1: (enumLiteral_0= '&' )
+            // InternalSCL.g:8772:3: enumLiteral_0= '&'
             {
             enumLiteral_0=(Token)match(input,38,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -25566,7 +25566,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleNotOperator"
-    // InternalSCL.g:8778:1: ruleNotOperator returns [Enumerator current=null] : (enumLiteral_0= '!' ) ;
+    // InternalSCL.g:8782:1: ruleNotOperator returns [Enumerator current=null] : (enumLiteral_0= '!' ) ;
     public final Enumerator ruleNotOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleNotOperator_StartIndex = input.index();
@@ -25575,11 +25575,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 204) ) { return current; }
-            // InternalSCL.g:8780:28: ( (enumLiteral_0= '!' ) )
-            // InternalSCL.g:8781:1: (enumLiteral_0= '!' )
+            // InternalSCL.g:8784:28: ( (enumLiteral_0= '!' ) )
+            // InternalSCL.g:8785:1: (enumLiteral_0= '!' )
             {
-            // InternalSCL.g:8781:1: (enumLiteral_0= '!' )
-            // InternalSCL.g:8781:3: enumLiteral_0= '!'
+            // InternalSCL.g:8785:1: (enumLiteral_0= '!' )
+            // InternalSCL.g:8785:3: enumLiteral_0= '!'
             {
             enumLiteral_0=(Token)match(input,37,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -25612,7 +25612,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAddOperator"
-    // InternalSCL.g:8791:1: ruleAddOperator returns [Enumerator current=null] : (enumLiteral_0= '+' ) ;
+    // InternalSCL.g:8795:1: ruleAddOperator returns [Enumerator current=null] : (enumLiteral_0= '+' ) ;
     public final Enumerator ruleAddOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleAddOperator_StartIndex = input.index();
@@ -25621,11 +25621,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 205) ) { return current; }
-            // InternalSCL.g:8793:28: ( (enumLiteral_0= '+' ) )
-            // InternalSCL.g:8794:1: (enumLiteral_0= '+' )
+            // InternalSCL.g:8797:28: ( (enumLiteral_0= '+' ) )
+            // InternalSCL.g:8798:1: (enumLiteral_0= '+' )
             {
-            // InternalSCL.g:8794:1: (enumLiteral_0= '+' )
-            // InternalSCL.g:8794:3: enumLiteral_0= '+'
+            // InternalSCL.g:8798:1: (enumLiteral_0= '+' )
+            // InternalSCL.g:8798:3: enumLiteral_0= '+'
             {
             enumLiteral_0=(Token)match(input,65,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -25658,7 +25658,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSubOperator"
-    // InternalSCL.g:8804:1: ruleSubOperator returns [Enumerator current=null] : (enumLiteral_0= '-' ) ;
+    // InternalSCL.g:8808:1: ruleSubOperator returns [Enumerator current=null] : (enumLiteral_0= '-' ) ;
     public final Enumerator ruleSubOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleSubOperator_StartIndex = input.index();
@@ -25667,11 +25667,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 206) ) { return current; }
-            // InternalSCL.g:8806:28: ( (enumLiteral_0= '-' ) )
-            // InternalSCL.g:8807:1: (enumLiteral_0= '-' )
+            // InternalSCL.g:8810:28: ( (enumLiteral_0= '-' ) )
+            // InternalSCL.g:8811:1: (enumLiteral_0= '-' )
             {
-            // InternalSCL.g:8807:1: (enumLiteral_0= '-' )
-            // InternalSCL.g:8807:3: enumLiteral_0= '-'
+            // InternalSCL.g:8811:1: (enumLiteral_0= '-' )
+            // InternalSCL.g:8811:3: enumLiteral_0= '-'
             {
             enumLiteral_0=(Token)match(input,66,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -25704,7 +25704,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMultOperator"
-    // InternalSCL.g:8817:1: ruleMultOperator returns [Enumerator current=null] : (enumLiteral_0= '*' ) ;
+    // InternalSCL.g:8821:1: ruleMultOperator returns [Enumerator current=null] : (enumLiteral_0= '*' ) ;
     public final Enumerator ruleMultOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleMultOperator_StartIndex = input.index();
@@ -25713,11 +25713,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 207) ) { return current; }
-            // InternalSCL.g:8819:28: ( (enumLiteral_0= '*' ) )
-            // InternalSCL.g:8820:1: (enumLiteral_0= '*' )
+            // InternalSCL.g:8823:28: ( (enumLiteral_0= '*' ) )
+            // InternalSCL.g:8824:1: (enumLiteral_0= '*' )
             {
-            // InternalSCL.g:8820:1: (enumLiteral_0= '*' )
-            // InternalSCL.g:8820:3: enumLiteral_0= '*'
+            // InternalSCL.g:8824:1: (enumLiteral_0= '*' )
+            // InternalSCL.g:8824:3: enumLiteral_0= '*'
             {
             enumLiteral_0=(Token)match(input,67,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -25750,7 +25750,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleModOperator"
-    // InternalSCL.g:8830:1: ruleModOperator returns [Enumerator current=null] : (enumLiteral_0= '%' ) ;
+    // InternalSCL.g:8834:1: ruleModOperator returns [Enumerator current=null] : (enumLiteral_0= '%' ) ;
     public final Enumerator ruleModOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleModOperator_StartIndex = input.index();
@@ -25759,11 +25759,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 208) ) { return current; }
-            // InternalSCL.g:8832:28: ( (enumLiteral_0= '%' ) )
-            // InternalSCL.g:8833:1: (enumLiteral_0= '%' )
+            // InternalSCL.g:8836:28: ( (enumLiteral_0= '%' ) )
+            // InternalSCL.g:8837:1: (enumLiteral_0= '%' )
             {
-            // InternalSCL.g:8833:1: (enumLiteral_0= '%' )
-            // InternalSCL.g:8833:3: enumLiteral_0= '%'
+            // InternalSCL.g:8837:1: (enumLiteral_0= '%' )
+            // InternalSCL.g:8837:3: enumLiteral_0= '%'
             {
             enumLiteral_0=(Token)match(input,69,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -25796,7 +25796,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDivOperator"
-    // InternalSCL.g:8843:1: ruleDivOperator returns [Enumerator current=null] : (enumLiteral_0= '/' ) ;
+    // InternalSCL.g:8847:1: ruleDivOperator returns [Enumerator current=null] : (enumLiteral_0= '/' ) ;
     public final Enumerator ruleDivOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleDivOperator_StartIndex = input.index();
@@ -25805,11 +25805,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 209) ) { return current; }
-            // InternalSCL.g:8845:28: ( (enumLiteral_0= '/' ) )
-            // InternalSCL.g:8846:1: (enumLiteral_0= '/' )
+            // InternalSCL.g:8849:28: ( (enumLiteral_0= '/' ) )
+            // InternalSCL.g:8850:1: (enumLiteral_0= '/' )
             {
-            // InternalSCL.g:8846:1: (enumLiteral_0= '/' )
-            // InternalSCL.g:8846:3: enumLiteral_0= '/'
+            // InternalSCL.g:8850:1: (enumLiteral_0= '/' )
+            // InternalSCL.g:8850:3: enumLiteral_0= '/'
             {
             enumLiteral_0=(Token)match(input,68,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -25842,7 +25842,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleValOperator"
-    // InternalSCL.g:8856:1: ruleValOperator returns [Enumerator current=null] : (enumLiteral_0= 'val' ) ;
+    // InternalSCL.g:8860:1: ruleValOperator returns [Enumerator current=null] : (enumLiteral_0= 'val' ) ;
     public final Enumerator ruleValOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleValOperator_StartIndex = input.index();
@@ -25851,11 +25851,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 210) ) { return current; }
-            // InternalSCL.g:8858:28: ( (enumLiteral_0= 'val' ) )
-            // InternalSCL.g:8859:1: (enumLiteral_0= 'val' )
+            // InternalSCL.g:8862:28: ( (enumLiteral_0= 'val' ) )
+            // InternalSCL.g:8863:1: (enumLiteral_0= 'val' )
             {
-            // InternalSCL.g:8859:1: (enumLiteral_0= 'val' )
-            // InternalSCL.g:8859:3: enumLiteral_0= 'val'
+            // InternalSCL.g:8863:1: (enumLiteral_0= 'val' )
+            // InternalSCL.g:8863:3: enumLiteral_0= 'val'
             {
             enumLiteral_0=(Token)match(input,99,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -25888,7 +25888,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLogicalOrOperator"
-    // InternalSCL.g:8869:1: ruleLogicalOrOperator returns [Enumerator current=null] : (enumLiteral_0= '||' ) ;
+    // InternalSCL.g:8873:1: ruleLogicalOrOperator returns [Enumerator current=null] : (enumLiteral_0= '||' ) ;
     public final Enumerator ruleLogicalOrOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleLogicalOrOperator_StartIndex = input.index();
@@ -25897,11 +25897,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 211) ) { return current; }
-            // InternalSCL.g:8871:28: ( (enumLiteral_0= '||' ) )
-            // InternalSCL.g:8872:1: (enumLiteral_0= '||' )
+            // InternalSCL.g:8875:28: ( (enumLiteral_0= '||' ) )
+            // InternalSCL.g:8876:1: (enumLiteral_0= '||' )
             {
-            // InternalSCL.g:8872:1: (enumLiteral_0= '||' )
-            // InternalSCL.g:8872:3: enumLiteral_0= '||'
+            // InternalSCL.g:8876:1: (enumLiteral_0= '||' )
+            // InternalSCL.g:8876:3: enumLiteral_0= '||'
             {
             enumLiteral_0=(Token)match(input,58,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -25934,7 +25934,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLogicalAndOperator"
-    // InternalSCL.g:8882:1: ruleLogicalAndOperator returns [Enumerator current=null] : (enumLiteral_0= '&&' ) ;
+    // InternalSCL.g:8886:1: ruleLogicalAndOperator returns [Enumerator current=null] : (enumLiteral_0= '&&' ) ;
     public final Enumerator ruleLogicalAndOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleLogicalAndOperator_StartIndex = input.index();
@@ -25943,11 +25943,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 212) ) { return current; }
-            // InternalSCL.g:8884:28: ( (enumLiteral_0= '&&' ) )
-            // InternalSCL.g:8885:1: (enumLiteral_0= '&&' )
+            // InternalSCL.g:8888:28: ( (enumLiteral_0= '&&' ) )
+            // InternalSCL.g:8889:1: (enumLiteral_0= '&&' )
             {
-            // InternalSCL.g:8885:1: (enumLiteral_0= '&&' )
-            // InternalSCL.g:8885:3: enumLiteral_0= '&&'
+            // InternalSCL.g:8889:1: (enumLiteral_0= '&&' )
+            // InternalSCL.g:8889:3: enumLiteral_0= '&&'
             {
             enumLiteral_0=(Token)match(input,59,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -25980,7 +25980,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleShiftLeftOperator"
-    // InternalSCL.g:8895:1: ruleShiftLeftOperator returns [Enumerator current=null] : (enumLiteral_0= '<<' ) ;
+    // InternalSCL.g:8899:1: ruleShiftLeftOperator returns [Enumerator current=null] : (enumLiteral_0= '<<' ) ;
     public final Enumerator ruleShiftLeftOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleShiftLeftOperator_StartIndex = input.index();
@@ -25989,11 +25989,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 213) ) { return current; }
-            // InternalSCL.g:8897:28: ( (enumLiteral_0= '<<' ) )
-            // InternalSCL.g:8898:1: (enumLiteral_0= '<<' )
+            // InternalSCL.g:8901:28: ( (enumLiteral_0= '<<' ) )
+            // InternalSCL.g:8902:1: (enumLiteral_0= '<<' )
             {
-            // InternalSCL.g:8898:1: (enumLiteral_0= '<<' )
-            // InternalSCL.g:8898:3: enumLiteral_0= '<<'
+            // InternalSCL.g:8902:1: (enumLiteral_0= '<<' )
+            // InternalSCL.g:8902:3: enumLiteral_0= '<<'
             {
             enumLiteral_0=(Token)match(input,62,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -26026,7 +26026,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleShiftRightOperator"
-    // InternalSCL.g:8908:1: ruleShiftRightOperator returns [Enumerator current=null] : (enumLiteral_0= '>>' ) ;
+    // InternalSCL.g:8912:1: ruleShiftRightOperator returns [Enumerator current=null] : (enumLiteral_0= '>>' ) ;
     public final Enumerator ruleShiftRightOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleShiftRightOperator_StartIndex = input.index();
@@ -26035,11 +26035,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 214) ) { return current; }
-            // InternalSCL.g:8910:28: ( (enumLiteral_0= '>>' ) )
-            // InternalSCL.g:8911:1: (enumLiteral_0= '>>' )
+            // InternalSCL.g:8914:28: ( (enumLiteral_0= '>>' ) )
+            // InternalSCL.g:8915:1: (enumLiteral_0= '>>' )
             {
-            // InternalSCL.g:8911:1: (enumLiteral_0= '>>' )
-            // InternalSCL.g:8911:3: enumLiteral_0= '>>'
+            // InternalSCL.g:8915:1: (enumLiteral_0= '>>' )
+            // InternalSCL.g:8915:3: enumLiteral_0= '>>'
             {
             enumLiteral_0=(Token)match(input,63,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -26072,7 +26072,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleShiftRightUnsignedOperator"
-    // InternalSCL.g:8921:1: ruleShiftRightUnsignedOperator returns [Enumerator current=null] : (enumLiteral_0= '>>>' ) ;
+    // InternalSCL.g:8925:1: ruleShiftRightUnsignedOperator returns [Enumerator current=null] : (enumLiteral_0= '>>>' ) ;
     public final Enumerator ruleShiftRightUnsignedOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleShiftRightUnsignedOperator_StartIndex = input.index();
@@ -26081,11 +26081,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 215) ) { return current; }
-            // InternalSCL.g:8923:28: ( (enumLiteral_0= '>>>' ) )
-            // InternalSCL.g:8924:1: (enumLiteral_0= '>>>' )
+            // InternalSCL.g:8927:28: ( (enumLiteral_0= '>>>' ) )
+            // InternalSCL.g:8928:1: (enumLiteral_0= '>>>' )
             {
-            // InternalSCL.g:8924:1: (enumLiteral_0= '>>>' )
-            // InternalSCL.g:8924:3: enumLiteral_0= '>>>'
+            // InternalSCL.g:8928:1: (enumLiteral_0= '>>>' )
+            // InternalSCL.g:8928:3: enumLiteral_0= '>>>'
             {
             enumLiteral_0=(Token)match(input,64,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -26118,7 +26118,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleConditionalOperator"
-    // InternalSCL.g:8938:1: ruleConditionalOperator returns [Enumerator current=null] : (enumLiteral_0= '?' ) ;
+    // InternalSCL.g:8942:1: ruleConditionalOperator returns [Enumerator current=null] : (enumLiteral_0= '?' ) ;
     public final Enumerator ruleConditionalOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleConditionalOperator_StartIndex = input.index();
@@ -26127,11 +26127,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 216) ) { return current; }
-            // InternalSCL.g:8940:28: ( (enumLiteral_0= '?' ) )
-            // InternalSCL.g:8941:1: (enumLiteral_0= '?' )
+            // InternalSCL.g:8944:28: ( (enumLiteral_0= '?' ) )
+            // InternalSCL.g:8945:1: (enumLiteral_0= '?' )
             {
-            // InternalSCL.g:8941:1: (enumLiteral_0= '?' )
-            // InternalSCL.g:8941:3: enumLiteral_0= '?'
+            // InternalSCL.g:8945:1: (enumLiteral_0= '?' )
+            // InternalSCL.g:8945:3: enumLiteral_0= '?'
             {
             enumLiteral_0=(Token)match(input,100,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -26164,7 +26164,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleValueType"
-    // InternalSCL.g:8951:1: ruleValueType returns [Enumerator current=null] : ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) ) ;
+    // InternalSCL.g:8955:1: ruleValueType returns [Enumerator current=null] : ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) ) ;
     public final Enumerator ruleValueType() throws RecognitionException {
         Enumerator current = null;
         int ruleValueType_StartIndex = input.index();
@@ -26179,10 +26179,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 217) ) { return current; }
-            // InternalSCL.g:8953:28: ( ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) ) )
-            // InternalSCL.g:8954:1: ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) )
+            // InternalSCL.g:8957:28: ( ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) ) )
+            // InternalSCL.g:8958:1: ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) )
             {
-            // InternalSCL.g:8954:1: ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) )
+            // InternalSCL.g:8958:1: ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) )
             int alt195=7;
             switch ( input.LA(1) ) {
             case 101:
@@ -26230,10 +26230,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             switch (alt195) {
                 case 1 :
-                    // InternalSCL.g:8954:2: (enumLiteral_0= 'pure' )
+                    // InternalSCL.g:8958:2: (enumLiteral_0= 'pure' )
                     {
-                    // InternalSCL.g:8954:2: (enumLiteral_0= 'pure' )
-                    // InternalSCL.g:8954:4: enumLiteral_0= 'pure'
+                    // InternalSCL.g:8958:2: (enumLiteral_0= 'pure' )
+                    // InternalSCL.g:8958:4: enumLiteral_0= 'pure'
                     {
                     enumLiteral_0=(Token)match(input,101,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -26249,10 +26249,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSCL.g:8960:6: (enumLiteral_1= 'bool' )
+                    // InternalSCL.g:8964:6: (enumLiteral_1= 'bool' )
                     {
-                    // InternalSCL.g:8960:6: (enumLiteral_1= 'bool' )
-                    // InternalSCL.g:8960:8: enumLiteral_1= 'bool'
+                    // InternalSCL.g:8964:6: (enumLiteral_1= 'bool' )
+                    // InternalSCL.g:8964:8: enumLiteral_1= 'bool'
                     {
                     enumLiteral_1=(Token)match(input,102,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -26268,10 +26268,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalSCL.g:8966:6: (enumLiteral_2= 'unsigned' )
+                    // InternalSCL.g:8970:6: (enumLiteral_2= 'unsigned' )
                     {
-                    // InternalSCL.g:8966:6: (enumLiteral_2= 'unsigned' )
-                    // InternalSCL.g:8966:8: enumLiteral_2= 'unsigned'
+                    // InternalSCL.g:8970:6: (enumLiteral_2= 'unsigned' )
+                    // InternalSCL.g:8970:8: enumLiteral_2= 'unsigned'
                     {
                     enumLiteral_2=(Token)match(input,103,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -26287,10 +26287,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalSCL.g:8972:6: (enumLiteral_3= 'int' )
+                    // InternalSCL.g:8976:6: (enumLiteral_3= 'int' )
                     {
-                    // InternalSCL.g:8972:6: (enumLiteral_3= 'int' )
-                    // InternalSCL.g:8972:8: enumLiteral_3= 'int'
+                    // InternalSCL.g:8976:6: (enumLiteral_3= 'int' )
+                    // InternalSCL.g:8976:8: enumLiteral_3= 'int'
                     {
                     enumLiteral_3=(Token)match(input,104,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -26306,10 +26306,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalSCL.g:8978:6: (enumLiteral_4= 'float' )
+                    // InternalSCL.g:8982:6: (enumLiteral_4= 'float' )
                     {
-                    // InternalSCL.g:8978:6: (enumLiteral_4= 'float' )
-                    // InternalSCL.g:8978:8: enumLiteral_4= 'float'
+                    // InternalSCL.g:8982:6: (enumLiteral_4= 'float' )
+                    // InternalSCL.g:8982:8: enumLiteral_4= 'float'
                     {
                     enumLiteral_4=(Token)match(input,105,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -26325,10 +26325,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalSCL.g:8984:6: (enumLiteral_5= 'string' )
+                    // InternalSCL.g:8988:6: (enumLiteral_5= 'string' )
                     {
-                    // InternalSCL.g:8984:6: (enumLiteral_5= 'string' )
-                    // InternalSCL.g:8984:8: enumLiteral_5= 'string'
+                    // InternalSCL.g:8988:6: (enumLiteral_5= 'string' )
+                    // InternalSCL.g:8988:8: enumLiteral_5= 'string'
                     {
                     enumLiteral_5=(Token)match(input,106,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -26344,10 +26344,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalSCL.g:8990:6: (enumLiteral_6= 'host' )
+                    // InternalSCL.g:8994:6: (enumLiteral_6= 'host' )
                     {
-                    // InternalSCL.g:8990:6: (enumLiteral_6= 'host' )
-                    // InternalSCL.g:8990:8: enumLiteral_6= 'host'
+                    // InternalSCL.g:8994:6: (enumLiteral_6= 'host' )
+                    // InternalSCL.g:8994:8: enumLiteral_6= 'host'
                     {
                     enumLiteral_6=(Token)match(input,107,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -26386,7 +26386,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCombineOperator"
-    // InternalSCL.g:9002:1: ruleCombineOperator returns [Enumerator current=null] : ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) ) ;
+    // InternalSCL.g:9006:1: ruleCombineOperator returns [Enumerator current=null] : ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) ) ;
     public final Enumerator ruleCombineOperator() throws RecognitionException {
         Enumerator current = null;
         int ruleCombineOperator_StartIndex = input.index();
@@ -26402,10 +26402,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 218) ) { return current; }
-            // InternalSCL.g:9004:28: ( ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) ) )
-            // InternalSCL.g:9005:1: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
+            // InternalSCL.g:9008:28: ( ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) ) )
+            // InternalSCL.g:9009:1: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
             {
-            // InternalSCL.g:9005:1: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
+            // InternalSCL.g:9009:1: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
             int alt196=8;
             switch ( input.LA(1) ) {
             case 108:
@@ -26458,10 +26458,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             switch (alt196) {
                 case 1 :
-                    // InternalSCL.g:9005:2: (enumLiteral_0= 'none' )
+                    // InternalSCL.g:9009:2: (enumLiteral_0= 'none' )
                     {
-                    // InternalSCL.g:9005:2: (enumLiteral_0= 'none' )
-                    // InternalSCL.g:9005:4: enumLiteral_0= 'none'
+                    // InternalSCL.g:9009:2: (enumLiteral_0= 'none' )
+                    // InternalSCL.g:9009:4: enumLiteral_0= 'none'
                     {
                     enumLiteral_0=(Token)match(input,108,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -26477,10 +26477,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSCL.g:9011:6: (enumLiteral_1= '+' )
+                    // InternalSCL.g:9015:6: (enumLiteral_1= '+' )
                     {
-                    // InternalSCL.g:9011:6: (enumLiteral_1= '+' )
-                    // InternalSCL.g:9011:8: enumLiteral_1= '+'
+                    // InternalSCL.g:9015:6: (enumLiteral_1= '+' )
+                    // InternalSCL.g:9015:8: enumLiteral_1= '+'
                     {
                     enumLiteral_1=(Token)match(input,65,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -26496,10 +26496,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalSCL.g:9017:6: (enumLiteral_2= '*' )
+                    // InternalSCL.g:9021:6: (enumLiteral_2= '*' )
                     {
-                    // InternalSCL.g:9017:6: (enumLiteral_2= '*' )
-                    // InternalSCL.g:9017:8: enumLiteral_2= '*'
+                    // InternalSCL.g:9021:6: (enumLiteral_2= '*' )
+                    // InternalSCL.g:9021:8: enumLiteral_2= '*'
                     {
                     enumLiteral_2=(Token)match(input,67,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -26515,10 +26515,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalSCL.g:9023:6: (enumLiteral_3= 'max' )
+                    // InternalSCL.g:9027:6: (enumLiteral_3= 'max' )
                     {
-                    // InternalSCL.g:9023:6: (enumLiteral_3= 'max' )
-                    // InternalSCL.g:9023:8: enumLiteral_3= 'max'
+                    // InternalSCL.g:9027:6: (enumLiteral_3= 'max' )
+                    // InternalSCL.g:9027:8: enumLiteral_3= 'max'
                     {
                     enumLiteral_3=(Token)match(input,109,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -26534,10 +26534,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalSCL.g:9029:6: (enumLiteral_4= 'min' )
+                    // InternalSCL.g:9033:6: (enumLiteral_4= 'min' )
                     {
-                    // InternalSCL.g:9029:6: (enumLiteral_4= 'min' )
-                    // InternalSCL.g:9029:8: enumLiteral_4= 'min'
+                    // InternalSCL.g:9033:6: (enumLiteral_4= 'min' )
+                    // InternalSCL.g:9033:8: enumLiteral_4= 'min'
                     {
                     enumLiteral_4=(Token)match(input,110,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -26553,10 +26553,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalSCL.g:9035:6: (enumLiteral_5= '|' )
+                    // InternalSCL.g:9039:6: (enumLiteral_5= '|' )
                     {
-                    // InternalSCL.g:9035:6: (enumLiteral_5= '|' )
-                    // InternalSCL.g:9035:8: enumLiteral_5= '|'
+                    // InternalSCL.g:9039:6: (enumLiteral_5= '|' )
+                    // InternalSCL.g:9039:8: enumLiteral_5= '|'
                     {
                     enumLiteral_5=(Token)match(input,60,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -26572,10 +26572,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalSCL.g:9041:6: (enumLiteral_6= '&' )
+                    // InternalSCL.g:9045:6: (enumLiteral_6= '&' )
                     {
-                    // InternalSCL.g:9041:6: (enumLiteral_6= '&' )
-                    // InternalSCL.g:9041:8: enumLiteral_6= '&'
+                    // InternalSCL.g:9045:6: (enumLiteral_6= '&' )
+                    // InternalSCL.g:9045:8: enumLiteral_6= '&'
                     {
                     enumLiteral_6=(Token)match(input,38,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -26591,10 +26591,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // InternalSCL.g:9047:6: (enumLiteral_7= 'host' )
+                    // InternalSCL.g:9051:6: (enumLiteral_7= 'host' )
                     {
-                    // InternalSCL.g:9047:6: (enumLiteral_7= 'host' )
-                    // InternalSCL.g:9047:8: enumLiteral_7= 'host'
+                    // InternalSCL.g:9051:6: (enumLiteral_7= 'host' )
+                    // InternalSCL.g:9051:8: enumLiteral_7= 'host'
                     {
                     enumLiteral_7=(Token)match(input,107,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {

@@ -1009,7 +1009,7 @@ ruleTransition returns [EObject current=null]
 	    }
 
 )
-))(	otherlv_11='Pr' 
+))(	otherlv_11='Pr=' 
     {
     	newLeafNode(otherlv_11, grammarAccess.getTransitionAccess().getPrKeyword_2_0_5_3_0());
     }
@@ -2269,7 +2269,7 @@ ruleDuringAction returns [EObject current=null]
 	    }
 
 )
-)(	otherlv_6='Pr' 
+)(	otherlv_6='Pr=' 
     {
     	newLeafNode(otherlv_6, grammarAccess.getDuringActionAccess().getPrKeyword_3_3_0());
     }
@@ -2608,7 +2608,7 @@ ruleSuspendAction returns [EObject current=null]
 	    }
 
 )
-)(	otherlv_7='Pr' 
+)(	otherlv_7='Pr=' 
     {
     	newLeafNode(otherlv_7, grammarAccess.getSuspendActionAccess().getPrKeyword_4_3_0());
     }

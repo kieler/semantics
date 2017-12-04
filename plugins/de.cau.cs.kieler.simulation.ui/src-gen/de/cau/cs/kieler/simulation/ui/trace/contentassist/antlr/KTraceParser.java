@@ -255,6 +255,7 @@ public class KTraceParser extends AbstractContentAssistParser {
 					put(grammarAccess.getQualifiedIDAccess().getGroup_1(), "rule__QualifiedID__Group_1__0");
 					put(grammarAccess.getIntegerAccess().getGroup(), "rule__Integer__Group__0");
 					put(grammarAccess.getFloategerAccess().getGroup(), "rule__Floateger__Group__0");
+					put(grammarAccess.getDoublegerAccess().getGroup(), "rule__Doubleger__Group__0");
 					put(grammarAccess.getEsoTracesAccess().getTracesAssignment(), "rule__EsoTraces__TracesAssignment");
 					put(grammarAccess.getEsoTraceAccess().getTicksAssignment_3(), "rule__EsoTrace__TicksAssignment_3");
 					put(grammarAccess.getEsoTickAccess().getInputsAssignment_1(), "rule__EsoTick__InputsAssignment_1");

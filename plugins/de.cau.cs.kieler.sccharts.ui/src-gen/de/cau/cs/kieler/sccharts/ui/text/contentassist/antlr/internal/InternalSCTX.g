@@ -7390,7 +7390,7 @@ rule__Transition__Group_2_0_5_3__0__Impl
 (
 { before(grammarAccess.getTransitionAccess().getPrKeyword_2_0_5_3_0()); }
 
-	'Pr' 
+	'Pr=' 
 
 { after(grammarAccess.getTransitionAccess().getPrKeyword_2_0_5_3_0()); }
 )
@@ -10226,7 +10226,7 @@ rule__DuringAction__Group_3_3__0__Impl
 (
 { before(grammarAccess.getDuringActionAccess().getPrKeyword_3_3_0()); }
 
-	'Pr' 
+	'Pr=' 
 
 { after(grammarAccess.getDuringActionAccess().getPrKeyword_3_3_0()); }
 )
@@ -11358,7 +11358,7 @@ rule__SuspendAction__Group_4_3__0__Impl
 (
 { before(grammarAccess.getSuspendActionAccess().getPrKeyword_4_3_0()); }
 
-	'Pr' 
+	'Pr=' 
 
 { after(grammarAccess.getSuspendActionAccess().getPrKeyword_4_3_0()); }
 )

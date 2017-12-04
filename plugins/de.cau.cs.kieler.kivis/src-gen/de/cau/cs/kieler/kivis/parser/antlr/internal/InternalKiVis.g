@@ -6588,6 +6588,10 @@ ruleFloateger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken
 
 
 
+
+
+
+
 // Rule DOMEvent
 ruleDOMEvent returns [Enumerator current=null] 
     @init { enterRule(); }

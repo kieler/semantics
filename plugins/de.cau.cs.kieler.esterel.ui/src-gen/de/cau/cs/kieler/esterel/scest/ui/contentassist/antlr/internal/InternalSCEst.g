@@ -5222,6 +5222,10 @@ finally {
 
 
 
+
+
+
+
 // Rule EsterelCompareOperator
 ruleEsterelCompareOperator
     @init {
@@ -44444,6 +44448,7 @@ rule__Floateger__Group__1__Impl
 finally {
 	restoreStackSize(stackSize);
 }
+
 
 
 

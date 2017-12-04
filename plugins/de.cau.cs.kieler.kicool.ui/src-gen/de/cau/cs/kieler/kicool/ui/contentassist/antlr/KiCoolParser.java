@@ -92,6 +92,7 @@ public class KiCoolParser extends AbstractContentAssistParser {
 					put(grammarAccess.getQualifiedIDAccess().getGroup_1(), "rule__QualifiedID__Group_1__0");
 					put(grammarAccess.getIntegerAccess().getGroup(), "rule__Integer__Group__0");
 					put(grammarAccess.getFloategerAccess().getGroup(), "rule__Floateger__Group__0");
+					put(grammarAccess.getDoublegerAccess().getGroup(), "rule__Doubleger__Group__0");
 					put(grammarAccess.getSystemAccess().getIdAssignment_1(), "rule__System__IdAssignment_1");
 					put(grammarAccess.getSystemAccess().getVersionAssignment_3(), "rule__System__VersionAssignment_3");
 					put(grammarAccess.getSystemAccess().getLabelAssignment_5(), "rule__System__LabelAssignment_5");

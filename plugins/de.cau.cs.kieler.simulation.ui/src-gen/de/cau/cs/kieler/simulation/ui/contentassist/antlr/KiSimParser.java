@@ -192,6 +192,7 @@ public class KiSimParser extends AbstractContentAssistParser {
 					put(grammarAccess.getQualifiedIDAccess().getGroup_1(), "rule__QualifiedID__Group_1__0");
 					put(grammarAccess.getIntegerAccess().getGroup(), "rule__Integer__Group__0");
 					put(grammarAccess.getFloategerAccess().getGroup(), "rule__Floateger__Group__0");
+					put(grammarAccess.getDoublegerAccess().getGroup(), "rule__Doubleger__Group__0");
 					put(grammarAccess.getSimulationConfigurationAccess().getAttributesAssignment_0(), "rule__SimulationConfiguration__AttributesAssignment_0");
 					put(grammarAccess.getSimulationConfigurationAccess().getHandlersAssignment_1(), "rule__SimulationConfiguration__HandlersAssignment_1");
 					put(grammarAccess.getSimulationConfigurationAccess().getInitializationAssignment_2(), "rule__SimulationConfiguration__InitializationAssignment_2");

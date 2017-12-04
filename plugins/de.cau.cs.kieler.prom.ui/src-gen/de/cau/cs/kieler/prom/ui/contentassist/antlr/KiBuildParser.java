@@ -187,6 +187,7 @@ public class KiBuildParser extends AbstractContentAssistParser {
 					put(grammarAccess.getQualifiedIDAccess().getGroup_1(), "rule__QualifiedID__Group_1__0");
 					put(grammarAccess.getIntegerAccess().getGroup(), "rule__Integer__Group__0");
 					put(grammarAccess.getFloategerAccess().getGroup(), "rule__Floateger__Group__0");
+					put(grammarAccess.getDoublegerAccess().getGroup(), "rule__Doubleger__Group__0");
 					put(grammarAccess.getBuildConfigurationAccess().getAttributesAssignment_0(), "rule__BuildConfiguration__AttributesAssignment_0");
 					put(grammarAccess.getBuildConfigurationAccess().getModelCompilersAssignment_1(), "rule__BuildConfiguration__ModelCompilersAssignment_1");
 					put(grammarAccess.getBuildConfigurationAccess().getSimulationCompilersAssignment_2(), "rule__BuildConfiguration__SimulationCompilersAssignment_2");

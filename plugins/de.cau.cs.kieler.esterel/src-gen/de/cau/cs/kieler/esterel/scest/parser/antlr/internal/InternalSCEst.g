@@ -17134,6 +17134,10 @@ ruleFloateger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken
 
 
 
+
+
+
+
 // Rule EsterelCompareOperator
 ruleEsterelCompareOperator returns [Enumerator current=null] 
     @init { enterRule(); }

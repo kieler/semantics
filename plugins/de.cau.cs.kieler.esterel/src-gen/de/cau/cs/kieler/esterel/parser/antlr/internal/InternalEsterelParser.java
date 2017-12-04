@@ -48444,7 +48444,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEsterelCompareOperator"
-    // InternalEsterel.g:16805:1: ruleEsterelCompareOperator returns [Enumerator current=null] : ( (enumLiteral_0= '=' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '<>' ) ) ;
+    // InternalEsterel.g:16809:1: ruleEsterelCompareOperator returns [Enumerator current=null] : ( (enumLiteral_0= '=' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '<>' ) ) ;
     public final Enumerator ruleEsterelCompareOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -48457,10 +48457,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalEsterel.g:16807:28: ( ( (enumLiteral_0= '=' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '<>' ) ) )
-            // InternalEsterel.g:16808:1: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '<>' ) )
+            // InternalEsterel.g:16811:28: ( ( (enumLiteral_0= '=' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '<>' ) ) )
+            // InternalEsterel.g:16812:1: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '<>' ) )
             {
-            // InternalEsterel.g:16808:1: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '<>' ) )
+            // InternalEsterel.g:16812:1: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '<>' ) )
             int alt389=6;
             switch ( input.LA(1) ) {
             case 27:
@@ -48503,10 +48503,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             switch (alt389) {
                 case 1 :
-                    // InternalEsterel.g:16808:2: (enumLiteral_0= '=' )
+                    // InternalEsterel.g:16812:2: (enumLiteral_0= '=' )
                     {
-                    // InternalEsterel.g:16808:2: (enumLiteral_0= '=' )
-                    // InternalEsterel.g:16808:4: enumLiteral_0= '='
+                    // InternalEsterel.g:16812:2: (enumLiteral_0= '=' )
+                    // InternalEsterel.g:16812:4: enumLiteral_0= '='
                     {
                     enumLiteral_0=(Token)match(input,27,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -48522,10 +48522,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalEsterel.g:16814:6: (enumLiteral_1= '<' )
+                    // InternalEsterel.g:16818:6: (enumLiteral_1= '<' )
                     {
-                    // InternalEsterel.g:16814:6: (enumLiteral_1= '<' )
-                    // InternalEsterel.g:16814:8: enumLiteral_1= '<'
+                    // InternalEsterel.g:16818:6: (enumLiteral_1= '<' )
+                    // InternalEsterel.g:16818:8: enumLiteral_1= '<'
                     {
                     enumLiteral_1=(Token)match(input,86,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -48541,10 +48541,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalEsterel.g:16820:6: (enumLiteral_2= '<=' )
+                    // InternalEsterel.g:16824:6: (enumLiteral_2= '<=' )
                     {
-                    // InternalEsterel.g:16820:6: (enumLiteral_2= '<=' )
-                    // InternalEsterel.g:16820:8: enumLiteral_2= '<='
+                    // InternalEsterel.g:16824:6: (enumLiteral_2= '<=' )
+                    // InternalEsterel.g:16824:8: enumLiteral_2= '<='
                     {
                     enumLiteral_2=(Token)match(input,87,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -48560,10 +48560,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalEsterel.g:16826:6: (enumLiteral_3= '>' )
+                    // InternalEsterel.g:16830:6: (enumLiteral_3= '>' )
                     {
-                    // InternalEsterel.g:16826:6: (enumLiteral_3= '>' )
-                    // InternalEsterel.g:16826:8: enumLiteral_3= '>'
+                    // InternalEsterel.g:16830:6: (enumLiteral_3= '>' )
+                    // InternalEsterel.g:16830:8: enumLiteral_3= '>'
                     {
                     enumLiteral_3=(Token)match(input,85,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -48579,10 +48579,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalEsterel.g:16832:6: (enumLiteral_4= '>=' )
+                    // InternalEsterel.g:16836:6: (enumLiteral_4= '>=' )
                     {
-                    // InternalEsterel.g:16832:6: (enumLiteral_4= '>=' )
-                    // InternalEsterel.g:16832:8: enumLiteral_4= '>='
+                    // InternalEsterel.g:16836:6: (enumLiteral_4= '>=' )
+                    // InternalEsterel.g:16836:8: enumLiteral_4= '>='
                     {
                     enumLiteral_4=(Token)match(input,88,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -48598,10 +48598,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalEsterel.g:16838:6: (enumLiteral_5= '<>' )
+                    // InternalEsterel.g:16842:6: (enumLiteral_5= '<>' )
                     {
-                    // InternalEsterel.g:16838:6: (enumLiteral_5= '<>' )
-                    // InternalEsterel.g:16838:8: enumLiteral_5= '<>'
+                    // InternalEsterel.g:16842:6: (enumLiteral_5= '<>' )
+                    // InternalEsterel.g:16842:8: enumLiteral_5= '<>'
                     {
                     enumLiteral_5=(Token)match(input,84,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -48639,7 +48639,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEsterelPreOperator"
-    // InternalEsterel.g:16848:1: ruleEsterelPreOperator returns [Enumerator current=null] : (enumLiteral_0= 'pre' ) ;
+    // InternalEsterel.g:16852:1: ruleEsterelPreOperator returns [Enumerator current=null] : (enumLiteral_0= 'pre' ) ;
     public final Enumerator ruleEsterelPreOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -48647,11 +48647,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalEsterel.g:16850:28: ( (enumLiteral_0= 'pre' ) )
-            // InternalEsterel.g:16851:1: (enumLiteral_0= 'pre' )
+            // InternalEsterel.g:16854:28: ( (enumLiteral_0= 'pre' ) )
+            // InternalEsterel.g:16855:1: (enumLiteral_0= 'pre' )
             {
-            // InternalEsterel.g:16851:1: (enumLiteral_0= 'pre' )
-            // InternalEsterel.g:16851:3: enumLiteral_0= 'pre'
+            // InternalEsterel.g:16855:1: (enumLiteral_0= 'pre' )
+            // InternalEsterel.g:16855:3: enumLiteral_0= 'pre'
             {
             enumLiteral_0=(Token)match(input,125,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -48683,7 +48683,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEsterelOrOperator"
-    // InternalEsterel.g:16861:1: ruleEsterelOrOperator returns [Enumerator current=null] : (enumLiteral_0= 'or' ) ;
+    // InternalEsterel.g:16865:1: ruleEsterelOrOperator returns [Enumerator current=null] : (enumLiteral_0= 'or' ) ;
     public final Enumerator ruleEsterelOrOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -48691,11 +48691,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalEsterel.g:16863:28: ( (enumLiteral_0= 'or' ) )
-            // InternalEsterel.g:16864:1: (enumLiteral_0= 'or' )
+            // InternalEsterel.g:16867:28: ( (enumLiteral_0= 'or' ) )
+            // InternalEsterel.g:16868:1: (enumLiteral_0= 'or' )
             {
-            // InternalEsterel.g:16864:1: (enumLiteral_0= 'or' )
-            // InternalEsterel.g:16864:3: enumLiteral_0= 'or'
+            // InternalEsterel.g:16868:1: (enumLiteral_0= 'or' )
+            // InternalEsterel.g:16868:3: enumLiteral_0= 'or'
             {
             enumLiteral_0=(Token)match(input,91,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -48727,7 +48727,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEsterelAndOperator"
-    // InternalEsterel.g:16874:1: ruleEsterelAndOperator returns [Enumerator current=null] : (enumLiteral_0= 'and' ) ;
+    // InternalEsterel.g:16878:1: ruleEsterelAndOperator returns [Enumerator current=null] : (enumLiteral_0= 'and' ) ;
     public final Enumerator ruleEsterelAndOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -48735,11 +48735,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalEsterel.g:16876:28: ( (enumLiteral_0= 'and' ) )
-            // InternalEsterel.g:16877:1: (enumLiteral_0= 'and' )
+            // InternalEsterel.g:16880:28: ( (enumLiteral_0= 'and' ) )
+            // InternalEsterel.g:16881:1: (enumLiteral_0= 'and' )
             {
-            // InternalEsterel.g:16877:1: (enumLiteral_0= 'and' )
-            // InternalEsterel.g:16877:3: enumLiteral_0= 'and'
+            // InternalEsterel.g:16881:1: (enumLiteral_0= 'and' )
+            // InternalEsterel.g:16881:3: enumLiteral_0= 'and'
             {
             enumLiteral_0=(Token)match(input,90,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -48771,7 +48771,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEsterelNotOperator"
-    // InternalEsterel.g:16887:1: ruleEsterelNotOperator returns [Enumerator current=null] : (enumLiteral_0= 'not' ) ;
+    // InternalEsterel.g:16891:1: ruleEsterelNotOperator returns [Enumerator current=null] : (enumLiteral_0= 'not' ) ;
     public final Enumerator ruleEsterelNotOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -48779,11 +48779,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalEsterel.g:16889:28: ( (enumLiteral_0= 'not' ) )
-            // InternalEsterel.g:16890:1: (enumLiteral_0= 'not' )
+            // InternalEsterel.g:16893:28: ( (enumLiteral_0= 'not' ) )
+            // InternalEsterel.g:16894:1: (enumLiteral_0= 'not' )
             {
-            // InternalEsterel.g:16890:1: (enumLiteral_0= 'not' )
-            // InternalEsterel.g:16890:3: enumLiteral_0= 'not'
+            // InternalEsterel.g:16894:1: (enumLiteral_0= 'not' )
+            // InternalEsterel.g:16894:3: enumLiteral_0= 'not'
             {
             enumLiteral_0=(Token)match(input,89,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -48815,7 +48815,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEsterelAddOperator"
-    // InternalEsterel.g:16900:1: ruleEsterelAddOperator returns [Enumerator current=null] : (enumLiteral_0= '+' ) ;
+    // InternalEsterel.g:16904:1: ruleEsterelAddOperator returns [Enumerator current=null] : (enumLiteral_0= '+' ) ;
     public final Enumerator ruleEsterelAddOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -48823,11 +48823,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalEsterel.g:16902:28: ( (enumLiteral_0= '+' ) )
-            // InternalEsterel.g:16903:1: (enumLiteral_0= '+' )
+            // InternalEsterel.g:16906:28: ( (enumLiteral_0= '+' ) )
+            // InternalEsterel.g:16907:1: (enumLiteral_0= '+' )
             {
-            // InternalEsterel.g:16903:1: (enumLiteral_0= '+' )
-            // InternalEsterel.g:16903:3: enumLiteral_0= '+'
+            // InternalEsterel.g:16907:1: (enumLiteral_0= '+' )
+            // InternalEsterel.g:16907:3: enumLiteral_0= '+'
             {
             enumLiteral_0=(Token)match(input,81,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -48859,7 +48859,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEsterelSubOperator"
-    // InternalEsterel.g:16913:1: ruleEsterelSubOperator returns [Enumerator current=null] : (enumLiteral_0= '-' ) ;
+    // InternalEsterel.g:16917:1: ruleEsterelSubOperator returns [Enumerator current=null] : (enumLiteral_0= '-' ) ;
     public final Enumerator ruleEsterelSubOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -48867,11 +48867,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalEsterel.g:16915:28: ( (enumLiteral_0= '-' ) )
-            // InternalEsterel.g:16916:1: (enumLiteral_0= '-' )
+            // InternalEsterel.g:16919:28: ( (enumLiteral_0= '-' ) )
+            // InternalEsterel.g:16920:1: (enumLiteral_0= '-' )
             {
-            // InternalEsterel.g:16916:1: (enumLiteral_0= '-' )
-            // InternalEsterel.g:16916:3: enumLiteral_0= '-'
+            // InternalEsterel.g:16920:1: (enumLiteral_0= '-' )
+            // InternalEsterel.g:16920:3: enumLiteral_0= '-'
             {
             enumLiteral_0=(Token)match(input,82,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -48903,7 +48903,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEsterelMultOperator"
-    // InternalEsterel.g:16926:1: ruleEsterelMultOperator returns [Enumerator current=null] : (enumLiteral_0= '*' ) ;
+    // InternalEsterel.g:16930:1: ruleEsterelMultOperator returns [Enumerator current=null] : (enumLiteral_0= '*' ) ;
     public final Enumerator ruleEsterelMultOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -48911,11 +48911,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalEsterel.g:16928:28: ( (enumLiteral_0= '*' ) )
-            // InternalEsterel.g:16929:1: (enumLiteral_0= '*' )
+            // InternalEsterel.g:16932:28: ( (enumLiteral_0= '*' ) )
+            // InternalEsterel.g:16933:1: (enumLiteral_0= '*' )
             {
-            // InternalEsterel.g:16929:1: (enumLiteral_0= '*' )
-            // InternalEsterel.g:16929:3: enumLiteral_0= '*'
+            // InternalEsterel.g:16933:1: (enumLiteral_0= '*' )
+            // InternalEsterel.g:16933:3: enumLiteral_0= '*'
             {
             enumLiteral_0=(Token)match(input,80,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -48947,7 +48947,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEsterelModOperator"
-    // InternalEsterel.g:16939:1: ruleEsterelModOperator returns [Enumerator current=null] : (enumLiteral_0= 'mod' ) ;
+    // InternalEsterel.g:16943:1: ruleEsterelModOperator returns [Enumerator current=null] : (enumLiteral_0= 'mod' ) ;
     public final Enumerator ruleEsterelModOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -48955,11 +48955,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalEsterel.g:16941:28: ( (enumLiteral_0= 'mod' ) )
-            // InternalEsterel.g:16942:1: (enumLiteral_0= 'mod' )
+            // InternalEsterel.g:16945:28: ( (enumLiteral_0= 'mod' ) )
+            // InternalEsterel.g:16946:1: (enumLiteral_0= 'mod' )
             {
-            // InternalEsterel.g:16942:1: (enumLiteral_0= 'mod' )
-            // InternalEsterel.g:16942:3: enumLiteral_0= 'mod'
+            // InternalEsterel.g:16946:1: (enumLiteral_0= 'mod' )
+            // InternalEsterel.g:16946:3: enumLiteral_0= 'mod'
             {
             enumLiteral_0=(Token)match(input,83,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -48991,7 +48991,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEsterelDivOperator"
-    // InternalEsterel.g:16952:1: ruleEsterelDivOperator returns [Enumerator current=null] : (enumLiteral_0= '/' ) ;
+    // InternalEsterel.g:16956:1: ruleEsterelDivOperator returns [Enumerator current=null] : (enumLiteral_0= '/' ) ;
     public final Enumerator ruleEsterelDivOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -48999,11 +48999,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalEsterel.g:16954:28: ( (enumLiteral_0= '/' ) )
-            // InternalEsterel.g:16955:1: (enumLiteral_0= '/' )
+            // InternalEsterel.g:16958:28: ( (enumLiteral_0= '/' ) )
+            // InternalEsterel.g:16959:1: (enumLiteral_0= '/' )
             {
-            // InternalEsterel.g:16955:1: (enumLiteral_0= '/' )
-            // InternalEsterel.g:16955:3: enumLiteral_0= '/'
+            // InternalEsterel.g:16959:1: (enumLiteral_0= '/' )
+            // InternalEsterel.g:16959:3: enumLiteral_0= '/'
             {
             enumLiteral_0=(Token)match(input,79,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -49035,7 +49035,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEsterelValueTestOperator"
-    // InternalEsterel.g:16965:1: ruleEsterelValueTestOperator returns [Enumerator current=null] : (enumLiteral_0= '?' ) ;
+    // InternalEsterel.g:16969:1: ruleEsterelValueTestOperator returns [Enumerator current=null] : (enumLiteral_0= '?' ) ;
     public final Enumerator ruleEsterelValueTestOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -49043,11 +49043,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalEsterel.g:16967:28: ( (enumLiteral_0= '?' ) )
-            // InternalEsterel.g:16968:1: (enumLiteral_0= '?' )
+            // InternalEsterel.g:16971:28: ( (enumLiteral_0= '?' ) )
+            // InternalEsterel.g:16972:1: (enumLiteral_0= '?' )
             {
-            // InternalEsterel.g:16968:1: (enumLiteral_0= '?' )
-            // InternalEsterel.g:16968:3: enumLiteral_0= '?'
+            // InternalEsterel.g:16972:1: (enumLiteral_0= '?' )
+            // InternalEsterel.g:16972:3: enumLiteral_0= '?'
             {
             enumLiteral_0=(Token)match(input,126,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -49079,7 +49079,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEsterelValueType"
-    // InternalEsterel.g:16978:1: ruleEsterelValueType returns [Enumerator current=null] : ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'boolean' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'integer' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'double' ) | (enumLiteral_6= 'string' ) | (enumLiteral_7= 'host' ) ) ;
+    // InternalEsterel.g:16982:1: ruleEsterelValueType returns [Enumerator current=null] : ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'boolean' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'integer' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'double' ) | (enumLiteral_6= 'string' ) | (enumLiteral_7= 'host' ) ) ;
     public final Enumerator ruleEsterelValueType() throws RecognitionException {
         Enumerator current = null;
 
@@ -49094,10 +49094,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalEsterel.g:16980:28: ( ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'boolean' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'integer' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'double' ) | (enumLiteral_6= 'string' ) | (enumLiteral_7= 'host' ) ) )
-            // InternalEsterel.g:16981:1: ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'boolean' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'integer' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'double' ) | (enumLiteral_6= 'string' ) | (enumLiteral_7= 'host' ) )
+            // InternalEsterel.g:16984:28: ( ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'boolean' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'integer' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'double' ) | (enumLiteral_6= 'string' ) | (enumLiteral_7= 'host' ) ) )
+            // InternalEsterel.g:16985:1: ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'boolean' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'integer' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'double' ) | (enumLiteral_6= 'string' ) | (enumLiteral_7= 'host' ) )
             {
-            // InternalEsterel.g:16981:1: ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'boolean' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'integer' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'double' ) | (enumLiteral_6= 'string' ) | (enumLiteral_7= 'host' ) )
+            // InternalEsterel.g:16985:1: ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'boolean' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'integer' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'double' ) | (enumLiteral_6= 'string' ) | (enumLiteral_7= 'host' ) )
             int alt390=8;
             switch ( input.LA(1) ) {
             case 127:
@@ -49150,10 +49150,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             switch (alt390) {
                 case 1 :
-                    // InternalEsterel.g:16981:2: (enumLiteral_0= 'pure' )
+                    // InternalEsterel.g:16985:2: (enumLiteral_0= 'pure' )
                     {
-                    // InternalEsterel.g:16981:2: (enumLiteral_0= 'pure' )
-                    // InternalEsterel.g:16981:4: enumLiteral_0= 'pure'
+                    // InternalEsterel.g:16985:2: (enumLiteral_0= 'pure' )
+                    // InternalEsterel.g:16985:4: enumLiteral_0= 'pure'
                     {
                     enumLiteral_0=(Token)match(input,127,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49169,10 +49169,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalEsterel.g:16987:6: (enumLiteral_1= 'boolean' )
+                    // InternalEsterel.g:16991:6: (enumLiteral_1= 'boolean' )
                     {
-                    // InternalEsterel.g:16987:6: (enumLiteral_1= 'boolean' )
-                    // InternalEsterel.g:16987:8: enumLiteral_1= 'boolean'
+                    // InternalEsterel.g:16991:6: (enumLiteral_1= 'boolean' )
+                    // InternalEsterel.g:16991:8: enumLiteral_1= 'boolean'
                     {
                     enumLiteral_1=(Token)match(input,128,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49188,10 +49188,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalEsterel.g:16993:6: (enumLiteral_2= 'unsigned' )
+                    // InternalEsterel.g:16997:6: (enumLiteral_2= 'unsigned' )
                     {
-                    // InternalEsterel.g:16993:6: (enumLiteral_2= 'unsigned' )
-                    // InternalEsterel.g:16993:8: enumLiteral_2= 'unsigned'
+                    // InternalEsterel.g:16997:6: (enumLiteral_2= 'unsigned' )
+                    // InternalEsterel.g:16997:8: enumLiteral_2= 'unsigned'
                     {
                     enumLiteral_2=(Token)match(input,129,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49207,10 +49207,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalEsterel.g:16999:6: (enumLiteral_3= 'integer' )
+                    // InternalEsterel.g:17003:6: (enumLiteral_3= 'integer' )
                     {
-                    // InternalEsterel.g:16999:6: (enumLiteral_3= 'integer' )
-                    // InternalEsterel.g:16999:8: enumLiteral_3= 'integer'
+                    // InternalEsterel.g:17003:6: (enumLiteral_3= 'integer' )
+                    // InternalEsterel.g:17003:8: enumLiteral_3= 'integer'
                     {
                     enumLiteral_3=(Token)match(input,130,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49226,10 +49226,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalEsterel.g:17005:6: (enumLiteral_4= 'float' )
+                    // InternalEsterel.g:17009:6: (enumLiteral_4= 'float' )
                     {
-                    // InternalEsterel.g:17005:6: (enumLiteral_4= 'float' )
-                    // InternalEsterel.g:17005:8: enumLiteral_4= 'float'
+                    // InternalEsterel.g:17009:6: (enumLiteral_4= 'float' )
+                    // InternalEsterel.g:17009:8: enumLiteral_4= 'float'
                     {
                     enumLiteral_4=(Token)match(input,131,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49245,10 +49245,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalEsterel.g:17011:6: (enumLiteral_5= 'double' )
+                    // InternalEsterel.g:17015:6: (enumLiteral_5= 'double' )
                     {
-                    // InternalEsterel.g:17011:6: (enumLiteral_5= 'double' )
-                    // InternalEsterel.g:17011:8: enumLiteral_5= 'double'
+                    // InternalEsterel.g:17015:6: (enumLiteral_5= 'double' )
+                    // InternalEsterel.g:17015:8: enumLiteral_5= 'double'
                     {
                     enumLiteral_5=(Token)match(input,132,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49264,10 +49264,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalEsterel.g:17017:6: (enumLiteral_6= 'string' )
+                    // InternalEsterel.g:17021:6: (enumLiteral_6= 'string' )
                     {
-                    // InternalEsterel.g:17017:6: (enumLiteral_6= 'string' )
-                    // InternalEsterel.g:17017:8: enumLiteral_6= 'string'
+                    // InternalEsterel.g:17021:6: (enumLiteral_6= 'string' )
+                    // InternalEsterel.g:17021:8: enumLiteral_6= 'string'
                     {
                     enumLiteral_6=(Token)match(input,133,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49283,10 +49283,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // InternalEsterel.g:17023:6: (enumLiteral_7= 'host' )
+                    // InternalEsterel.g:17027:6: (enumLiteral_7= 'host' )
                     {
-                    // InternalEsterel.g:17023:6: (enumLiteral_7= 'host' )
-                    // InternalEsterel.g:17023:8: enumLiteral_7= 'host'
+                    // InternalEsterel.g:17027:6: (enumLiteral_7= 'host' )
+                    // InternalEsterel.g:17027:8: enumLiteral_7= 'host'
                     {
                     enumLiteral_7=(Token)match(input,134,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49324,7 +49324,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEsterelCombineOperator"
-    // InternalEsterel.g:17033:1: ruleEsterelCombineOperator returns [Enumerator current=null] : ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= 'or' ) | (enumLiteral_6= 'and' ) | (enumLiteral_7= 'host' ) ) ;
+    // InternalEsterel.g:17037:1: ruleEsterelCombineOperator returns [Enumerator current=null] : ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= 'or' ) | (enumLiteral_6= 'and' ) | (enumLiteral_7= 'host' ) ) ;
     public final Enumerator ruleEsterelCombineOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -49339,10 +49339,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalEsterel.g:17035:28: ( ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= 'or' ) | (enumLiteral_6= 'and' ) | (enumLiteral_7= 'host' ) ) )
-            // InternalEsterel.g:17036:1: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= 'or' ) | (enumLiteral_6= 'and' ) | (enumLiteral_7= 'host' ) )
+            // InternalEsterel.g:17039:28: ( ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= 'or' ) | (enumLiteral_6= 'and' ) | (enumLiteral_7= 'host' ) ) )
+            // InternalEsterel.g:17040:1: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= 'or' ) | (enumLiteral_6= 'and' ) | (enumLiteral_7= 'host' ) )
             {
-            // InternalEsterel.g:17036:1: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= 'or' ) | (enumLiteral_6= 'and' ) | (enumLiteral_7= 'host' ) )
+            // InternalEsterel.g:17040:1: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= 'or' ) | (enumLiteral_6= 'and' ) | (enumLiteral_7= 'host' ) )
             int alt391=8;
             switch ( input.LA(1) ) {
             case 135:
@@ -49395,10 +49395,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             switch (alt391) {
                 case 1 :
-                    // InternalEsterel.g:17036:2: (enumLiteral_0= 'none' )
+                    // InternalEsterel.g:17040:2: (enumLiteral_0= 'none' )
                     {
-                    // InternalEsterel.g:17036:2: (enumLiteral_0= 'none' )
-                    // InternalEsterel.g:17036:4: enumLiteral_0= 'none'
+                    // InternalEsterel.g:17040:2: (enumLiteral_0= 'none' )
+                    // InternalEsterel.g:17040:4: enumLiteral_0= 'none'
                     {
                     enumLiteral_0=(Token)match(input,135,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49414,10 +49414,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalEsterel.g:17042:6: (enumLiteral_1= '+' )
+                    // InternalEsterel.g:17046:6: (enumLiteral_1= '+' )
                     {
-                    // InternalEsterel.g:17042:6: (enumLiteral_1= '+' )
-                    // InternalEsterel.g:17042:8: enumLiteral_1= '+'
+                    // InternalEsterel.g:17046:6: (enumLiteral_1= '+' )
+                    // InternalEsterel.g:17046:8: enumLiteral_1= '+'
                     {
                     enumLiteral_1=(Token)match(input,81,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49433,10 +49433,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalEsterel.g:17048:6: (enumLiteral_2= '*' )
+                    // InternalEsterel.g:17052:6: (enumLiteral_2= '*' )
                     {
-                    // InternalEsterel.g:17048:6: (enumLiteral_2= '*' )
-                    // InternalEsterel.g:17048:8: enumLiteral_2= '*'
+                    // InternalEsterel.g:17052:6: (enumLiteral_2= '*' )
+                    // InternalEsterel.g:17052:8: enumLiteral_2= '*'
                     {
                     enumLiteral_2=(Token)match(input,80,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49452,10 +49452,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalEsterel.g:17054:6: (enumLiteral_3= 'max' )
+                    // InternalEsterel.g:17058:6: (enumLiteral_3= 'max' )
                     {
-                    // InternalEsterel.g:17054:6: (enumLiteral_3= 'max' )
-                    // InternalEsterel.g:17054:8: enumLiteral_3= 'max'
+                    // InternalEsterel.g:17058:6: (enumLiteral_3= 'max' )
+                    // InternalEsterel.g:17058:8: enumLiteral_3= 'max'
                     {
                     enumLiteral_3=(Token)match(input,136,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49471,10 +49471,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalEsterel.g:17060:6: (enumLiteral_4= 'min' )
+                    // InternalEsterel.g:17064:6: (enumLiteral_4= 'min' )
                     {
-                    // InternalEsterel.g:17060:6: (enumLiteral_4= 'min' )
-                    // InternalEsterel.g:17060:8: enumLiteral_4= 'min'
+                    // InternalEsterel.g:17064:6: (enumLiteral_4= 'min' )
+                    // InternalEsterel.g:17064:8: enumLiteral_4= 'min'
                     {
                     enumLiteral_4=(Token)match(input,137,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49490,10 +49490,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalEsterel.g:17066:6: (enumLiteral_5= 'or' )
+                    // InternalEsterel.g:17070:6: (enumLiteral_5= 'or' )
                     {
-                    // InternalEsterel.g:17066:6: (enumLiteral_5= 'or' )
-                    // InternalEsterel.g:17066:8: enumLiteral_5= 'or'
+                    // InternalEsterel.g:17070:6: (enumLiteral_5= 'or' )
+                    // InternalEsterel.g:17070:8: enumLiteral_5= 'or'
                     {
                     enumLiteral_5=(Token)match(input,91,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49509,10 +49509,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalEsterel.g:17072:6: (enumLiteral_6= 'and' )
+                    // InternalEsterel.g:17076:6: (enumLiteral_6= 'and' )
                     {
-                    // InternalEsterel.g:17072:6: (enumLiteral_6= 'and' )
-                    // InternalEsterel.g:17072:8: enumLiteral_6= 'and'
+                    // InternalEsterel.g:17076:6: (enumLiteral_6= 'and' )
+                    // InternalEsterel.g:17076:8: enumLiteral_6= 'and'
                     {
                     enumLiteral_6=(Token)match(input,90,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49528,10 +49528,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // InternalEsterel.g:17078:6: (enumLiteral_7= 'host' )
+                    // InternalEsterel.g:17082:6: (enumLiteral_7= 'host' )
                     {
-                    // InternalEsterel.g:17078:6: (enumLiteral_7= 'host' )
-                    // InternalEsterel.g:17078:8: enumLiteral_7= 'host'
+                    // InternalEsterel.g:17082:6: (enumLiteral_7= 'host' )
+                    // InternalEsterel.g:17082:8: enumLiteral_7= 'host'
                     {
                     enumLiteral_7=(Token)match(input,134,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49569,7 +49569,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSchedulePriorityType"
-    // InternalEsterel.g:17088:1: ruleSchedulePriorityType returns [Enumerator current=null] : ( (enumLiteral_0= 'conflict' ) | (enumLiteral_1= 'confluent' ) ) ;
+    // InternalEsterel.g:17092:1: ruleSchedulePriorityType returns [Enumerator current=null] : ( (enumLiteral_0= 'conflict' ) | (enumLiteral_1= 'confluent' ) ) ;
     public final Enumerator ruleSchedulePriorityType() throws RecognitionException {
         Enumerator current = null;
 
@@ -49578,10 +49578,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalEsterel.g:17090:28: ( ( (enumLiteral_0= 'conflict' ) | (enumLiteral_1= 'confluent' ) ) )
-            // InternalEsterel.g:17091:1: ( (enumLiteral_0= 'conflict' ) | (enumLiteral_1= 'confluent' ) )
+            // InternalEsterel.g:17094:28: ( ( (enumLiteral_0= 'conflict' ) | (enumLiteral_1= 'confluent' ) ) )
+            // InternalEsterel.g:17095:1: ( (enumLiteral_0= 'conflict' ) | (enumLiteral_1= 'confluent' ) )
             {
-            // InternalEsterel.g:17091:1: ( (enumLiteral_0= 'conflict' ) | (enumLiteral_1= 'confluent' ) )
+            // InternalEsterel.g:17095:1: ( (enumLiteral_0= 'conflict' ) | (enumLiteral_1= 'confluent' ) )
             int alt392=2;
             int LA392_0 = input.LA(1);
 
@@ -49600,10 +49600,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt392) {
                 case 1 :
-                    // InternalEsterel.g:17091:2: (enumLiteral_0= 'conflict' )
+                    // InternalEsterel.g:17095:2: (enumLiteral_0= 'conflict' )
                     {
-                    // InternalEsterel.g:17091:2: (enumLiteral_0= 'conflict' )
-                    // InternalEsterel.g:17091:4: enumLiteral_0= 'conflict'
+                    // InternalEsterel.g:17095:2: (enumLiteral_0= 'conflict' )
+                    // InternalEsterel.g:17095:4: enumLiteral_0= 'conflict'
                     {
                     enumLiteral_0=(Token)match(input,138,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49619,10 +49619,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalEsterel.g:17097:6: (enumLiteral_1= 'confluent' )
+                    // InternalEsterel.g:17101:6: (enumLiteral_1= 'confluent' )
                     {
-                    // InternalEsterel.g:17097:6: (enumLiteral_1= 'confluent' )
-                    // InternalEsterel.g:17097:8: enumLiteral_1= 'confluent'
+                    // InternalEsterel.g:17101:6: (enumLiteral_1= 'confluent' )
+                    // InternalEsterel.g:17101:8: enumLiteral_1= 'confluent'
                     {
                     enumLiteral_1=(Token)match(input,139,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49660,7 +49660,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAssignOperator"
-    // InternalEsterel.g:17107:1: ruleAssignOperator returns [Enumerator current=null] : ( (enumLiteral_0= '=' ) | (enumLiteral_1= '+=' ) | (enumLiteral_2= '-=' ) | (enumLiteral_3= '*=' ) | (enumLiteral_4= '/=' ) | (enumLiteral_5= '%=' ) | (enumLiteral_6= '&=' ) | (enumLiteral_7= '|=' ) | (enumLiteral_8= '^=' ) | (enumLiteral_9= '<<=' ) | (enumLiteral_10= '>>=' ) | (enumLiteral_11= '>>>=' ) | (enumLiteral_12= 'min=' ) | (enumLiteral_13= 'max=' ) ) ;
+    // InternalEsterel.g:17111:1: ruleAssignOperator returns [Enumerator current=null] : ( (enumLiteral_0= '=' ) | (enumLiteral_1= '+=' ) | (enumLiteral_2= '-=' ) | (enumLiteral_3= '*=' ) | (enumLiteral_4= '/=' ) | (enumLiteral_5= '%=' ) | (enumLiteral_6= '&=' ) | (enumLiteral_7= '|=' ) | (enumLiteral_8= '^=' ) | (enumLiteral_9= '<<=' ) | (enumLiteral_10= '>>=' ) | (enumLiteral_11= '>>>=' ) | (enumLiteral_12= 'min=' ) | (enumLiteral_13= 'max=' ) ) ;
     public final Enumerator ruleAssignOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -49681,10 +49681,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalEsterel.g:17109:28: ( ( (enumLiteral_0= '=' ) | (enumLiteral_1= '+=' ) | (enumLiteral_2= '-=' ) | (enumLiteral_3= '*=' ) | (enumLiteral_4= '/=' ) | (enumLiteral_5= '%=' ) | (enumLiteral_6= '&=' ) | (enumLiteral_7= '|=' ) | (enumLiteral_8= '^=' ) | (enumLiteral_9= '<<=' ) | (enumLiteral_10= '>>=' ) | (enumLiteral_11= '>>>=' ) | (enumLiteral_12= 'min=' ) | (enumLiteral_13= 'max=' ) ) )
-            // InternalEsterel.g:17110:1: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '+=' ) | (enumLiteral_2= '-=' ) | (enumLiteral_3= '*=' ) | (enumLiteral_4= '/=' ) | (enumLiteral_5= '%=' ) | (enumLiteral_6= '&=' ) | (enumLiteral_7= '|=' ) | (enumLiteral_8= '^=' ) | (enumLiteral_9= '<<=' ) | (enumLiteral_10= '>>=' ) | (enumLiteral_11= '>>>=' ) | (enumLiteral_12= 'min=' ) | (enumLiteral_13= 'max=' ) )
+            // InternalEsterel.g:17113:28: ( ( (enumLiteral_0= '=' ) | (enumLiteral_1= '+=' ) | (enumLiteral_2= '-=' ) | (enumLiteral_3= '*=' ) | (enumLiteral_4= '/=' ) | (enumLiteral_5= '%=' ) | (enumLiteral_6= '&=' ) | (enumLiteral_7= '|=' ) | (enumLiteral_8= '^=' ) | (enumLiteral_9= '<<=' ) | (enumLiteral_10= '>>=' ) | (enumLiteral_11= '>>>=' ) | (enumLiteral_12= 'min=' ) | (enumLiteral_13= 'max=' ) ) )
+            // InternalEsterel.g:17114:1: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '+=' ) | (enumLiteral_2= '-=' ) | (enumLiteral_3= '*=' ) | (enumLiteral_4= '/=' ) | (enumLiteral_5= '%=' ) | (enumLiteral_6= '&=' ) | (enumLiteral_7= '|=' ) | (enumLiteral_8= '^=' ) | (enumLiteral_9= '<<=' ) | (enumLiteral_10= '>>=' ) | (enumLiteral_11= '>>>=' ) | (enumLiteral_12= 'min=' ) | (enumLiteral_13= 'max=' ) )
             {
-            // InternalEsterel.g:17110:1: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '+=' ) | (enumLiteral_2= '-=' ) | (enumLiteral_3= '*=' ) | (enumLiteral_4= '/=' ) | (enumLiteral_5= '%=' ) | (enumLiteral_6= '&=' ) | (enumLiteral_7= '|=' ) | (enumLiteral_8= '^=' ) | (enumLiteral_9= '<<=' ) | (enumLiteral_10= '>>=' ) | (enumLiteral_11= '>>>=' ) | (enumLiteral_12= 'min=' ) | (enumLiteral_13= 'max=' ) )
+            // InternalEsterel.g:17114:1: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '+=' ) | (enumLiteral_2= '-=' ) | (enumLiteral_3= '*=' ) | (enumLiteral_4= '/=' ) | (enumLiteral_5= '%=' ) | (enumLiteral_6= '&=' ) | (enumLiteral_7= '|=' ) | (enumLiteral_8= '^=' ) | (enumLiteral_9= '<<=' ) | (enumLiteral_10= '>>=' ) | (enumLiteral_11= '>>>=' ) | (enumLiteral_12= 'min=' ) | (enumLiteral_13= 'max=' ) )
             int alt393=14;
             switch ( input.LA(1) ) {
             case 27:
@@ -49767,10 +49767,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             switch (alt393) {
                 case 1 :
-                    // InternalEsterel.g:17110:2: (enumLiteral_0= '=' )
+                    // InternalEsterel.g:17114:2: (enumLiteral_0= '=' )
                     {
-                    // InternalEsterel.g:17110:2: (enumLiteral_0= '=' )
-                    // InternalEsterel.g:17110:4: enumLiteral_0= '='
+                    // InternalEsterel.g:17114:2: (enumLiteral_0= '=' )
+                    // InternalEsterel.g:17114:4: enumLiteral_0= '='
                     {
                     enumLiteral_0=(Token)match(input,27,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49786,10 +49786,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalEsterel.g:17116:6: (enumLiteral_1= '+=' )
+                    // InternalEsterel.g:17120:6: (enumLiteral_1= '+=' )
                     {
-                    // InternalEsterel.g:17116:6: (enumLiteral_1= '+=' )
-                    // InternalEsterel.g:17116:8: enumLiteral_1= '+='
+                    // InternalEsterel.g:17120:6: (enumLiteral_1= '+=' )
+                    // InternalEsterel.g:17120:8: enumLiteral_1= '+='
                     {
                     enumLiteral_1=(Token)match(input,140,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49805,10 +49805,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalEsterel.g:17122:6: (enumLiteral_2= '-=' )
+                    // InternalEsterel.g:17126:6: (enumLiteral_2= '-=' )
                     {
-                    // InternalEsterel.g:17122:6: (enumLiteral_2= '-=' )
-                    // InternalEsterel.g:17122:8: enumLiteral_2= '-='
+                    // InternalEsterel.g:17126:6: (enumLiteral_2= '-=' )
+                    // InternalEsterel.g:17126:8: enumLiteral_2= '-='
                     {
                     enumLiteral_2=(Token)match(input,141,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49824,10 +49824,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalEsterel.g:17128:6: (enumLiteral_3= '*=' )
+                    // InternalEsterel.g:17132:6: (enumLiteral_3= '*=' )
                     {
-                    // InternalEsterel.g:17128:6: (enumLiteral_3= '*=' )
-                    // InternalEsterel.g:17128:8: enumLiteral_3= '*='
+                    // InternalEsterel.g:17132:6: (enumLiteral_3= '*=' )
+                    // InternalEsterel.g:17132:8: enumLiteral_3= '*='
                     {
                     enumLiteral_3=(Token)match(input,142,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49843,10 +49843,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalEsterel.g:17134:6: (enumLiteral_4= '/=' )
+                    // InternalEsterel.g:17138:6: (enumLiteral_4= '/=' )
                     {
-                    // InternalEsterel.g:17134:6: (enumLiteral_4= '/=' )
-                    // InternalEsterel.g:17134:8: enumLiteral_4= '/='
+                    // InternalEsterel.g:17138:6: (enumLiteral_4= '/=' )
+                    // InternalEsterel.g:17138:8: enumLiteral_4= '/='
                     {
                     enumLiteral_4=(Token)match(input,143,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49862,10 +49862,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalEsterel.g:17140:6: (enumLiteral_5= '%=' )
+                    // InternalEsterel.g:17144:6: (enumLiteral_5= '%=' )
                     {
-                    // InternalEsterel.g:17140:6: (enumLiteral_5= '%=' )
-                    // InternalEsterel.g:17140:8: enumLiteral_5= '%='
+                    // InternalEsterel.g:17144:6: (enumLiteral_5= '%=' )
+                    // InternalEsterel.g:17144:8: enumLiteral_5= '%='
                     {
                     enumLiteral_5=(Token)match(input,144,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49881,10 +49881,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalEsterel.g:17146:6: (enumLiteral_6= '&=' )
+                    // InternalEsterel.g:17150:6: (enumLiteral_6= '&=' )
                     {
-                    // InternalEsterel.g:17146:6: (enumLiteral_6= '&=' )
-                    // InternalEsterel.g:17146:8: enumLiteral_6= '&='
+                    // InternalEsterel.g:17150:6: (enumLiteral_6= '&=' )
+                    // InternalEsterel.g:17150:8: enumLiteral_6= '&='
                     {
                     enumLiteral_6=(Token)match(input,145,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49900,10 +49900,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // InternalEsterel.g:17152:6: (enumLiteral_7= '|=' )
+                    // InternalEsterel.g:17156:6: (enumLiteral_7= '|=' )
                     {
-                    // InternalEsterel.g:17152:6: (enumLiteral_7= '|=' )
-                    // InternalEsterel.g:17152:8: enumLiteral_7= '|='
+                    // InternalEsterel.g:17156:6: (enumLiteral_7= '|=' )
+                    // InternalEsterel.g:17156:8: enumLiteral_7= '|='
                     {
                     enumLiteral_7=(Token)match(input,146,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49919,10 +49919,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 9 :
-                    // InternalEsterel.g:17158:6: (enumLiteral_8= '^=' )
+                    // InternalEsterel.g:17162:6: (enumLiteral_8= '^=' )
                     {
-                    // InternalEsterel.g:17158:6: (enumLiteral_8= '^=' )
-                    // InternalEsterel.g:17158:8: enumLiteral_8= '^='
+                    // InternalEsterel.g:17162:6: (enumLiteral_8= '^=' )
+                    // InternalEsterel.g:17162:8: enumLiteral_8= '^='
                     {
                     enumLiteral_8=(Token)match(input,147,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49938,10 +49938,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 10 :
-                    // InternalEsterel.g:17164:6: (enumLiteral_9= '<<=' )
+                    // InternalEsterel.g:17168:6: (enumLiteral_9= '<<=' )
                     {
-                    // InternalEsterel.g:17164:6: (enumLiteral_9= '<<=' )
-                    // InternalEsterel.g:17164:8: enumLiteral_9= '<<='
+                    // InternalEsterel.g:17168:6: (enumLiteral_9= '<<=' )
+                    // InternalEsterel.g:17168:8: enumLiteral_9= '<<='
                     {
                     enumLiteral_9=(Token)match(input,148,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49957,10 +49957,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 11 :
-                    // InternalEsterel.g:17170:6: (enumLiteral_10= '>>=' )
+                    // InternalEsterel.g:17174:6: (enumLiteral_10= '>>=' )
                     {
-                    // InternalEsterel.g:17170:6: (enumLiteral_10= '>>=' )
-                    // InternalEsterel.g:17170:8: enumLiteral_10= '>>='
+                    // InternalEsterel.g:17174:6: (enumLiteral_10= '>>=' )
+                    // InternalEsterel.g:17174:8: enumLiteral_10= '>>='
                     {
                     enumLiteral_10=(Token)match(input,149,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49976,10 +49976,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 12 :
-                    // InternalEsterel.g:17176:6: (enumLiteral_11= '>>>=' )
+                    // InternalEsterel.g:17180:6: (enumLiteral_11= '>>>=' )
                     {
-                    // InternalEsterel.g:17176:6: (enumLiteral_11= '>>>=' )
-                    // InternalEsterel.g:17176:8: enumLiteral_11= '>>>='
+                    // InternalEsterel.g:17180:6: (enumLiteral_11= '>>>=' )
+                    // InternalEsterel.g:17180:8: enumLiteral_11= '>>>='
                     {
                     enumLiteral_11=(Token)match(input,150,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49995,10 +49995,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 13 :
-                    // InternalEsterel.g:17182:6: (enumLiteral_12= 'min=' )
+                    // InternalEsterel.g:17186:6: (enumLiteral_12= 'min=' )
                     {
-                    // InternalEsterel.g:17182:6: (enumLiteral_12= 'min=' )
-                    // InternalEsterel.g:17182:8: enumLiteral_12= 'min='
+                    // InternalEsterel.g:17186:6: (enumLiteral_12= 'min=' )
+                    // InternalEsterel.g:17186:8: enumLiteral_12= 'min='
                     {
                     enumLiteral_12=(Token)match(input,151,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -50014,10 +50014,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 14 :
-                    // InternalEsterel.g:17188:6: (enumLiteral_13= 'max=' )
+                    // InternalEsterel.g:17192:6: (enumLiteral_13= 'max=' )
                     {
-                    // InternalEsterel.g:17188:6: (enumLiteral_13= 'max=' )
-                    // InternalEsterel.g:17188:8: enumLiteral_13= 'max='
+                    // InternalEsterel.g:17192:6: (enumLiteral_13= 'max=' )
+                    // InternalEsterel.g:17192:8: enumLiteral_13= 'max='
                     {
                     enumLiteral_13=(Token)match(input,152,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -50055,7 +50055,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePostfixOperator"
-    // InternalEsterel.g:17198:1: rulePostfixOperator returns [Enumerator current=null] : ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) ) ;
+    // InternalEsterel.g:17202:1: rulePostfixOperator returns [Enumerator current=null] : ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) ) ;
     public final Enumerator rulePostfixOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -50064,10 +50064,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalEsterel.g:17200:28: ( ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) ) )
-            // InternalEsterel.g:17201:1: ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) )
+            // InternalEsterel.g:17204:28: ( ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) ) )
+            // InternalEsterel.g:17205:1: ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) )
             {
-            // InternalEsterel.g:17201:1: ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) )
+            // InternalEsterel.g:17205:1: ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) )
             int alt394=2;
             int LA394_0 = input.LA(1);
 
@@ -50086,10 +50086,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt394) {
                 case 1 :
-                    // InternalEsterel.g:17201:2: (enumLiteral_0= '++' )
+                    // InternalEsterel.g:17205:2: (enumLiteral_0= '++' )
                     {
-                    // InternalEsterel.g:17201:2: (enumLiteral_0= '++' )
-                    // InternalEsterel.g:17201:4: enumLiteral_0= '++'
+                    // InternalEsterel.g:17205:2: (enumLiteral_0= '++' )
+                    // InternalEsterel.g:17205:4: enumLiteral_0= '++'
                     {
                     enumLiteral_0=(Token)match(input,153,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -50105,10 +50105,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalEsterel.g:17207:6: (enumLiteral_1= '--' )
+                    // InternalEsterel.g:17211:6: (enumLiteral_1= '--' )
                     {
-                    // InternalEsterel.g:17207:6: (enumLiteral_1= '--' )
-                    // InternalEsterel.g:17207:8: enumLiteral_1= '--'
+                    // InternalEsterel.g:17211:6: (enumLiteral_1= '--' )
+                    // InternalEsterel.g:17211:8: enumLiteral_1= '--'
                     {
                     enumLiteral_1=(Token)match(input,154,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -50146,7 +50146,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseNotOperator"
-    // InternalEsterel.g:17221:1: ruleBitwiseNotOperator returns [Enumerator current=null] : (enumLiteral_0= '~' ) ;
+    // InternalEsterel.g:17225:1: ruleBitwiseNotOperator returns [Enumerator current=null] : (enumLiteral_0= '~' ) ;
     public final Enumerator ruleBitwiseNotOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -50154,11 +50154,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalEsterel.g:17223:28: ( (enumLiteral_0= '~' ) )
-            // InternalEsterel.g:17224:1: (enumLiteral_0= '~' )
+            // InternalEsterel.g:17227:28: ( (enumLiteral_0= '~' ) )
+            // InternalEsterel.g:17228:1: (enumLiteral_0= '~' )
             {
-            // InternalEsterel.g:17224:1: (enumLiteral_0= '~' )
-            // InternalEsterel.g:17224:3: enumLiteral_0= '~'
+            // InternalEsterel.g:17228:1: (enumLiteral_0= '~' )
+            // InternalEsterel.g:17228:3: enumLiteral_0= '~'
             {
             enumLiteral_0=(Token)match(input,155,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -50190,7 +50190,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseXOrOperator"
-    // InternalEsterel.g:17234:1: ruleBitwiseXOrOperator returns [Enumerator current=null] : (enumLiteral_0= '^' ) ;
+    // InternalEsterel.g:17238:1: ruleBitwiseXOrOperator returns [Enumerator current=null] : (enumLiteral_0= '^' ) ;
     public final Enumerator ruleBitwiseXOrOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -50198,11 +50198,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalEsterel.g:17236:28: ( (enumLiteral_0= '^' ) )
-            // InternalEsterel.g:17237:1: (enumLiteral_0= '^' )
+            // InternalEsterel.g:17240:28: ( (enumLiteral_0= '^' ) )
+            // InternalEsterel.g:17241:1: (enumLiteral_0= '^' )
             {
-            // InternalEsterel.g:17237:1: (enumLiteral_0= '^' )
-            // InternalEsterel.g:17237:3: enumLiteral_0= '^'
+            // InternalEsterel.g:17241:1: (enumLiteral_0= '^' )
+            // InternalEsterel.g:17241:3: enumLiteral_0= '^'
             {
             enumLiteral_0=(Token)match(input,119,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -50234,7 +50234,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseOrOperator"
-    // InternalEsterel.g:17247:1: ruleBitwiseOrOperator returns [Enumerator current=null] : (enumLiteral_0= '|' ) ;
+    // InternalEsterel.g:17251:1: ruleBitwiseOrOperator returns [Enumerator current=null] : (enumLiteral_0= '|' ) ;
     public final Enumerator ruleBitwiseOrOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -50242,11 +50242,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalEsterel.g:17249:28: ( (enumLiteral_0= '|' ) )
-            // InternalEsterel.g:17250:1: (enumLiteral_0= '|' )
+            // InternalEsterel.g:17253:28: ( (enumLiteral_0= '|' ) )
+            // InternalEsterel.g:17254:1: (enumLiteral_0= '|' )
             {
-            // InternalEsterel.g:17250:1: (enumLiteral_0= '|' )
-            // InternalEsterel.g:17250:3: enumLiteral_0= '|'
+            // InternalEsterel.g:17254:1: (enumLiteral_0= '|' )
+            // InternalEsterel.g:17254:3: enumLiteral_0= '|'
             {
             enumLiteral_0=(Token)match(input,118,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -50278,7 +50278,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseAndOperator"
-    // InternalEsterel.g:17260:1: ruleBitwiseAndOperator returns [Enumerator current=null] : (enumLiteral_0= '&' ) ;
+    // InternalEsterel.g:17264:1: ruleBitwiseAndOperator returns [Enumerator current=null] : (enumLiteral_0= '&' ) ;
     public final Enumerator ruleBitwiseAndOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -50286,11 +50286,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalEsterel.g:17262:28: ( (enumLiteral_0= '&' ) )
-            // InternalEsterel.g:17263:1: (enumLiteral_0= '&' )
+            // InternalEsterel.g:17266:28: ( (enumLiteral_0= '&' ) )
+            // InternalEsterel.g:17267:1: (enumLiteral_0= '&' )
             {
-            // InternalEsterel.g:17263:1: (enumLiteral_0= '&' )
-            // InternalEsterel.g:17263:3: enumLiteral_0= '&'
+            // InternalEsterel.g:17267:1: (enumLiteral_0= '&' )
+            // InternalEsterel.g:17267:3: enumLiteral_0= '&'
             {
             enumLiteral_0=(Token)match(input,106,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -50322,7 +50322,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLogicalOrOperator"
-    // InternalEsterel.g:17287:1: ruleLogicalOrOperator returns [Enumerator current=null] : (enumLiteral_0= '||' ) ;
+    // InternalEsterel.g:17291:1: ruleLogicalOrOperator returns [Enumerator current=null] : (enumLiteral_0= '||' ) ;
     public final Enumerator ruleLogicalOrOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -50330,11 +50330,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalEsterel.g:17289:28: ( (enumLiteral_0= '||' ) )
-            // InternalEsterel.g:17290:1: (enumLiteral_0= '||' )
+            // InternalEsterel.g:17293:28: ( (enumLiteral_0= '||' ) )
+            // InternalEsterel.g:17294:1: (enumLiteral_0= '||' )
             {
-            // InternalEsterel.g:17290:1: (enumLiteral_0= '||' )
-            // InternalEsterel.g:17290:3: enumLiteral_0= '||'
+            // InternalEsterel.g:17294:1: (enumLiteral_0= '||' )
+            // InternalEsterel.g:17294:3: enumLiteral_0= '||'
             {
             enumLiteral_0=(Token)match(input,43,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -50366,7 +50366,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLogicalAndOperator"
-    // InternalEsterel.g:17300:1: ruleLogicalAndOperator returns [Enumerator current=null] : (enumLiteral_0= '&&' ) ;
+    // InternalEsterel.g:17304:1: ruleLogicalAndOperator returns [Enumerator current=null] : (enumLiteral_0= '&&' ) ;
     public final Enumerator ruleLogicalAndOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -50374,11 +50374,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalEsterel.g:17302:28: ( (enumLiteral_0= '&&' ) )
-            // InternalEsterel.g:17303:1: (enumLiteral_0= '&&' )
+            // InternalEsterel.g:17306:28: ( (enumLiteral_0= '&&' ) )
+            // InternalEsterel.g:17307:1: (enumLiteral_0= '&&' )
             {
-            // InternalEsterel.g:17303:1: (enumLiteral_0= '&&' )
-            // InternalEsterel.g:17303:3: enumLiteral_0= '&&'
+            // InternalEsterel.g:17307:1: (enumLiteral_0= '&&' )
+            // InternalEsterel.g:17307:3: enumLiteral_0= '&&'
             {
             enumLiteral_0=(Token)match(input,117,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -50410,7 +50410,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleShiftLeftOperator"
-    // InternalEsterel.g:17313:1: ruleShiftLeftOperator returns [Enumerator current=null] : (enumLiteral_0= '<<' ) ;
+    // InternalEsterel.g:17317:1: ruleShiftLeftOperator returns [Enumerator current=null] : (enumLiteral_0= '<<' ) ;
     public final Enumerator ruleShiftLeftOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -50418,11 +50418,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalEsterel.g:17315:28: ( (enumLiteral_0= '<<' ) )
-            // InternalEsterel.g:17316:1: (enumLiteral_0= '<<' )
+            // InternalEsterel.g:17319:28: ( (enumLiteral_0= '<<' ) )
+            // InternalEsterel.g:17320:1: (enumLiteral_0= '<<' )
             {
-            // InternalEsterel.g:17316:1: (enumLiteral_0= '<<' )
-            // InternalEsterel.g:17316:3: enumLiteral_0= '<<'
+            // InternalEsterel.g:17320:1: (enumLiteral_0= '<<' )
+            // InternalEsterel.g:17320:3: enumLiteral_0= '<<'
             {
             enumLiteral_0=(Token)match(input,156,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -50454,7 +50454,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleShiftRightOperator"
-    // InternalEsterel.g:17326:1: ruleShiftRightOperator returns [Enumerator current=null] : (enumLiteral_0= '>>' ) ;
+    // InternalEsterel.g:17330:1: ruleShiftRightOperator returns [Enumerator current=null] : (enumLiteral_0= '>>' ) ;
     public final Enumerator ruleShiftRightOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -50462,11 +50462,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalEsterel.g:17328:28: ( (enumLiteral_0= '>>' ) )
-            // InternalEsterel.g:17329:1: (enumLiteral_0= '>>' )
+            // InternalEsterel.g:17332:28: ( (enumLiteral_0= '>>' ) )
+            // InternalEsterel.g:17333:1: (enumLiteral_0= '>>' )
             {
-            // InternalEsterel.g:17329:1: (enumLiteral_0= '>>' )
-            // InternalEsterel.g:17329:3: enumLiteral_0= '>>'
+            // InternalEsterel.g:17333:1: (enumLiteral_0= '>>' )
+            // InternalEsterel.g:17333:3: enumLiteral_0= '>>'
             {
             enumLiteral_0=(Token)match(input,120,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -50498,7 +50498,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleShiftRightUnsignedOperator"
-    // InternalEsterel.g:17339:1: ruleShiftRightUnsignedOperator returns [Enumerator current=null] : (enumLiteral_0= '>>>' ) ;
+    // InternalEsterel.g:17343:1: ruleShiftRightUnsignedOperator returns [Enumerator current=null] : (enumLiteral_0= '>>>' ) ;
     public final Enumerator ruleShiftRightUnsignedOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -50506,11 +50506,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalEsterel.g:17341:28: ( (enumLiteral_0= '>>>' ) )
-            // InternalEsterel.g:17342:1: (enumLiteral_0= '>>>' )
+            // InternalEsterel.g:17345:28: ( (enumLiteral_0= '>>>' ) )
+            // InternalEsterel.g:17346:1: (enumLiteral_0= '>>>' )
             {
-            // InternalEsterel.g:17342:1: (enumLiteral_0= '>>>' )
-            // InternalEsterel.g:17342:3: enumLiteral_0= '>>>'
+            // InternalEsterel.g:17346:1: (enumLiteral_0= '>>>' )
+            // InternalEsterel.g:17346:3: enumLiteral_0= '>>>'
             {
             enumLiteral_0=(Token)match(input,121,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -50542,7 +50542,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleConditionalOperator"
-    // InternalEsterel.g:17356:1: ruleConditionalOperator returns [Enumerator current=null] : (enumLiteral_0= '?' ) ;
+    // InternalEsterel.g:17360:1: ruleConditionalOperator returns [Enumerator current=null] : (enumLiteral_0= '?' ) ;
     public final Enumerator ruleConditionalOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -50550,11 +50550,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalEsterel.g:17358:28: ( (enumLiteral_0= '?' ) )
-            // InternalEsterel.g:17359:1: (enumLiteral_0= '?' )
+            // InternalEsterel.g:17362:28: ( (enumLiteral_0= '?' ) )
+            // InternalEsterel.g:17363:1: (enumLiteral_0= '?' )
             {
-            // InternalEsterel.g:17359:1: (enumLiteral_0= '?' )
-            // InternalEsterel.g:17359:3: enumLiteral_0= '?'
+            // InternalEsterel.g:17363:1: (enumLiteral_0= '?' )
+            // InternalEsterel.g:17363:3: enumLiteral_0= '?'
             {
             enumLiteral_0=(Token)match(input,126,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -50586,7 +50586,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleValueType"
-    // InternalEsterel.g:17369:1: ruleValueType returns [Enumerator current=null] : ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) ) ;
+    // InternalEsterel.g:17373:1: ruleValueType returns [Enumerator current=null] : ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) ) ;
     public final Enumerator ruleValueType() throws RecognitionException {
         Enumerator current = null;
 
@@ -50600,10 +50600,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalEsterel.g:17371:28: ( ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) ) )
-            // InternalEsterel.g:17372:1: ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) )
+            // InternalEsterel.g:17375:28: ( ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) ) )
+            // InternalEsterel.g:17376:1: ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) )
             {
-            // InternalEsterel.g:17372:1: ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) )
+            // InternalEsterel.g:17376:1: ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'int' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'string' ) | (enumLiteral_6= 'host' ) )
             int alt395=7;
             switch ( input.LA(1) ) {
             case 127:
@@ -50651,10 +50651,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             switch (alt395) {
                 case 1 :
-                    // InternalEsterel.g:17372:2: (enumLiteral_0= 'pure' )
+                    // InternalEsterel.g:17376:2: (enumLiteral_0= 'pure' )
                     {
-                    // InternalEsterel.g:17372:2: (enumLiteral_0= 'pure' )
-                    // InternalEsterel.g:17372:4: enumLiteral_0= 'pure'
+                    // InternalEsterel.g:17376:2: (enumLiteral_0= 'pure' )
+                    // InternalEsterel.g:17376:4: enumLiteral_0= 'pure'
                     {
                     enumLiteral_0=(Token)match(input,127,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -50670,10 +50670,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalEsterel.g:17378:6: (enumLiteral_1= 'bool' )
+                    // InternalEsterel.g:17382:6: (enumLiteral_1= 'bool' )
                     {
-                    // InternalEsterel.g:17378:6: (enumLiteral_1= 'bool' )
-                    // InternalEsterel.g:17378:8: enumLiteral_1= 'bool'
+                    // InternalEsterel.g:17382:6: (enumLiteral_1= 'bool' )
+                    // InternalEsterel.g:17382:8: enumLiteral_1= 'bool'
                     {
                     enumLiteral_1=(Token)match(input,157,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -50689,10 +50689,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalEsterel.g:17384:6: (enumLiteral_2= 'unsigned' )
+                    // InternalEsterel.g:17388:6: (enumLiteral_2= 'unsigned' )
                     {
-                    // InternalEsterel.g:17384:6: (enumLiteral_2= 'unsigned' )
-                    // InternalEsterel.g:17384:8: enumLiteral_2= 'unsigned'
+                    // InternalEsterel.g:17388:6: (enumLiteral_2= 'unsigned' )
+                    // InternalEsterel.g:17388:8: enumLiteral_2= 'unsigned'
                     {
                     enumLiteral_2=(Token)match(input,129,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -50708,10 +50708,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalEsterel.g:17390:6: (enumLiteral_3= 'int' )
+                    // InternalEsterel.g:17394:6: (enumLiteral_3= 'int' )
                     {
-                    // InternalEsterel.g:17390:6: (enumLiteral_3= 'int' )
-                    // InternalEsterel.g:17390:8: enumLiteral_3= 'int'
+                    // InternalEsterel.g:17394:6: (enumLiteral_3= 'int' )
+                    // InternalEsterel.g:17394:8: enumLiteral_3= 'int'
                     {
                     enumLiteral_3=(Token)match(input,158,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -50727,10 +50727,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalEsterel.g:17396:6: (enumLiteral_4= 'float' )
+                    // InternalEsterel.g:17400:6: (enumLiteral_4= 'float' )
                     {
-                    // InternalEsterel.g:17396:6: (enumLiteral_4= 'float' )
-                    // InternalEsterel.g:17396:8: enumLiteral_4= 'float'
+                    // InternalEsterel.g:17400:6: (enumLiteral_4= 'float' )
+                    // InternalEsterel.g:17400:8: enumLiteral_4= 'float'
                     {
                     enumLiteral_4=(Token)match(input,131,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -50746,10 +50746,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalEsterel.g:17402:6: (enumLiteral_5= 'string' )
+                    // InternalEsterel.g:17406:6: (enumLiteral_5= 'string' )
                     {
-                    // InternalEsterel.g:17402:6: (enumLiteral_5= 'string' )
-                    // InternalEsterel.g:17402:8: enumLiteral_5= 'string'
+                    // InternalEsterel.g:17406:6: (enumLiteral_5= 'string' )
+                    // InternalEsterel.g:17406:8: enumLiteral_5= 'string'
                     {
                     enumLiteral_5=(Token)match(input,133,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -50765,10 +50765,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalEsterel.g:17408:6: (enumLiteral_6= 'host' )
+                    // InternalEsterel.g:17412:6: (enumLiteral_6= 'host' )
                     {
-                    // InternalEsterel.g:17408:6: (enumLiteral_6= 'host' )
-                    // InternalEsterel.g:17408:8: enumLiteral_6= 'host'
+                    // InternalEsterel.g:17412:6: (enumLiteral_6= 'host' )
+                    // InternalEsterel.g:17412:8: enumLiteral_6= 'host'
                     {
                     enumLiteral_6=(Token)match(input,134,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -50806,7 +50806,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCombineOperator"
-    // InternalEsterel.g:17420:1: ruleCombineOperator returns [Enumerator current=null] : ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) ) ;
+    // InternalEsterel.g:17424:1: ruleCombineOperator returns [Enumerator current=null] : ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) ) ;
     public final Enumerator ruleCombineOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -50821,10 +50821,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalEsterel.g:17422:28: ( ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) ) )
-            // InternalEsterel.g:17423:1: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
+            // InternalEsterel.g:17426:28: ( ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) ) )
+            // InternalEsterel.g:17427:1: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
             {
-            // InternalEsterel.g:17423:1: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
+            // InternalEsterel.g:17427:1: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
             int alt396=8;
             switch ( input.LA(1) ) {
             case 135:
@@ -50877,10 +50877,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             switch (alt396) {
                 case 1 :
-                    // InternalEsterel.g:17423:2: (enumLiteral_0= 'none' )
+                    // InternalEsterel.g:17427:2: (enumLiteral_0= 'none' )
                     {
-                    // InternalEsterel.g:17423:2: (enumLiteral_0= 'none' )
-                    // InternalEsterel.g:17423:4: enumLiteral_0= 'none'
+                    // InternalEsterel.g:17427:2: (enumLiteral_0= 'none' )
+                    // InternalEsterel.g:17427:4: enumLiteral_0= 'none'
                     {
                     enumLiteral_0=(Token)match(input,135,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -50896,10 +50896,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalEsterel.g:17429:6: (enumLiteral_1= '+' )
+                    // InternalEsterel.g:17433:6: (enumLiteral_1= '+' )
                     {
-                    // InternalEsterel.g:17429:6: (enumLiteral_1= '+' )
-                    // InternalEsterel.g:17429:8: enumLiteral_1= '+'
+                    // InternalEsterel.g:17433:6: (enumLiteral_1= '+' )
+                    // InternalEsterel.g:17433:8: enumLiteral_1= '+'
                     {
                     enumLiteral_1=(Token)match(input,81,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -50915,10 +50915,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalEsterel.g:17435:6: (enumLiteral_2= '*' )
+                    // InternalEsterel.g:17439:6: (enumLiteral_2= '*' )
                     {
-                    // InternalEsterel.g:17435:6: (enumLiteral_2= '*' )
-                    // InternalEsterel.g:17435:8: enumLiteral_2= '*'
+                    // InternalEsterel.g:17439:6: (enumLiteral_2= '*' )
+                    // InternalEsterel.g:17439:8: enumLiteral_2= '*'
                     {
                     enumLiteral_2=(Token)match(input,80,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -50934,10 +50934,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalEsterel.g:17441:6: (enumLiteral_3= 'max' )
+                    // InternalEsterel.g:17445:6: (enumLiteral_3= 'max' )
                     {
-                    // InternalEsterel.g:17441:6: (enumLiteral_3= 'max' )
-                    // InternalEsterel.g:17441:8: enumLiteral_3= 'max'
+                    // InternalEsterel.g:17445:6: (enumLiteral_3= 'max' )
+                    // InternalEsterel.g:17445:8: enumLiteral_3= 'max'
                     {
                     enumLiteral_3=(Token)match(input,136,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -50953,10 +50953,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalEsterel.g:17447:6: (enumLiteral_4= 'min' )
+                    // InternalEsterel.g:17451:6: (enumLiteral_4= 'min' )
                     {
-                    // InternalEsterel.g:17447:6: (enumLiteral_4= 'min' )
-                    // InternalEsterel.g:17447:8: enumLiteral_4= 'min'
+                    // InternalEsterel.g:17451:6: (enumLiteral_4= 'min' )
+                    // InternalEsterel.g:17451:8: enumLiteral_4= 'min'
                     {
                     enumLiteral_4=(Token)match(input,137,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -50972,10 +50972,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalEsterel.g:17453:6: (enumLiteral_5= '|' )
+                    // InternalEsterel.g:17457:6: (enumLiteral_5= '|' )
                     {
-                    // InternalEsterel.g:17453:6: (enumLiteral_5= '|' )
-                    // InternalEsterel.g:17453:8: enumLiteral_5= '|'
+                    // InternalEsterel.g:17457:6: (enumLiteral_5= '|' )
+                    // InternalEsterel.g:17457:8: enumLiteral_5= '|'
                     {
                     enumLiteral_5=(Token)match(input,118,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -50991,10 +50991,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalEsterel.g:17459:6: (enumLiteral_6= '&' )
+                    // InternalEsterel.g:17463:6: (enumLiteral_6= '&' )
                     {
-                    // InternalEsterel.g:17459:6: (enumLiteral_6= '&' )
-                    // InternalEsterel.g:17459:8: enumLiteral_6= '&'
+                    // InternalEsterel.g:17463:6: (enumLiteral_6= '&' )
+                    // InternalEsterel.g:17463:8: enumLiteral_6= '&'
                     {
                     enumLiteral_6=(Token)match(input,106,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -51010,10 +51010,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // InternalEsterel.g:17465:6: (enumLiteral_7= 'host' )
+                    // InternalEsterel.g:17469:6: (enumLiteral_7= 'host' )
                     {
-                    // InternalEsterel.g:17465:6: (enumLiteral_7= 'host' )
-                    // InternalEsterel.g:17465:8: enumLiteral_7= 'host'
+                    // InternalEsterel.g:17469:6: (enumLiteral_7= 'host' )
+                    // InternalEsterel.g:17469:8: enumLiteral_7= 'host'
                     {
                     enumLiteral_7=(Token)match(input,134,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
