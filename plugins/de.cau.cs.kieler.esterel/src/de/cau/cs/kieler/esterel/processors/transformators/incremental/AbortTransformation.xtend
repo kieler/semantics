@@ -70,7 +70,7 @@ class AbortTransformation extends InplaceProcessor<EsterelProgram> {
         // check if its just a single abort delay or if this abort includes cases
         if (abort.delay !== null) {
             // abort with a count delay, e.g. "abort when 3 A" or "weak abort when 3 A"
-            if (abort.delay.expression !== null) {
+            if (abort.delay.delay !== null) {
                 val termFlag = createNewUniqueTermFlag(createFalse)
                 decl.valuedObjects.add(termFlag)
                 scope.declarations.add(decl)

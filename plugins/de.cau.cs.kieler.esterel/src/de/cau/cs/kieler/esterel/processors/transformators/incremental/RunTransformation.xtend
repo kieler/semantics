@@ -47,7 +47,6 @@ import de.cau.cs.kieler.esterel.TypeRenaming
 import de.cau.cs.kieler.esterel.UnEmit
 import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
-import de.cau.cs.kieler.esterel.processors.EsterelProcessor
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.scl.Conditional
@@ -60,36 +59,48 @@ import java.util.LinkedList
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
+import de.cau.cs.kieler.esterel.EsterelThread
 
 /**
  * @author mrb
  *
  */
-class RunTransformation extends EsterelProcessor {
+class RunTransformation extends InplaceProcessor<EsterelProgram> {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
+    
+    public static val ID = "de.cau.cs.kieler.esterel.processors.run"
+    
     override getId() {
-        return SCEstTransformation::RUN_ID
+        return ID
     }
 
     override getName() {
-        return SCEstTransformation::RUN_NAME
+        return "Run"
     }
-
-//    override getExpandsFeatureId() {
-//        return SCEstFeature::RUN_ID
-//    }
-//        
-//    override getNotHandlesFeatureIds() {
-//        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID)
-//    }
     
     @Inject
     extension EsterelTransformationExtensions
     @Inject
     extension EsterelExtensions
+    
+    override process() {
+//        model.eAllContents.filter(Run).toList.forEach[ r |
+//            transformRunStatement(r, r.findParentModule)
+//        ]
+        transform(model)
+    }
+    
+    def Module findParentModule(Run run) {
+        var parent = run.eContainer
+        while (!(parent instanceof Module)) {
+            parent = parent.eContainer
+        }
+        parent as Module
+    }
         
     // sorted renamings    
     var signalRenamings = new HashMap<Signal, Signal>
@@ -117,7 +128,7 @@ class RunTransformation extends EsterelProcessor {
     var relationImplications = new LinkedList<RelationImplication>
     var relationIncompatibilities = new LinkedList<RelationIncompatibility>
     
-    override EsterelProgram transform(EsterelProgram prog) {
+    def EsterelProgram transform(EsterelProgram prog) {
         prog.moveGeneratedModulesToEnd
         for (var i=0; i<prog.modules.length; i++) {
             var m = prog.modules.get(i) as Module
@@ -234,8 +245,8 @@ class RunTransformation extends EsterelProcessor {
             transformStatements((statement as IfTest).elseStatements, parentModule)
         }
         else if (statement instanceof EsterelParallel) {
-            (statement as EsterelParallel).threads.forEach [ t |
-                transformStatements(t.statements, parentModule)
+            (statement as EsterelParallel).statements.forEach [ t |
+                transformStatements((t as EsterelThread).statements, parentModule)
             ]
         }
         else if (statement instanceof StatementContainer) {
@@ -353,7 +364,7 @@ class RunTransformation extends EsterelProcessor {
                 for (renaming : oneTypeRenaming.renamings) {
                     switch renaming {
                         SignalRenaming: {
-                            signalRenamings.put(renaming.oldName, renaming.newName)
+                            signalRenamings.put(renaming.oldName.valuedObject as Signal, renaming.newName.valuedObject as Signal)
                         }
                         ConstantRenaming: {
                             constantRenamings.put(renaming.oldName, renaming)
