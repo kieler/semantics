@@ -208,6 +208,14 @@
             name="Data Pool"
             restorable="true">
       </view>
+      <view
+            category="de.cau.cs.kieler.sim"
+            class="de.cau.cs.kieler.simulation.ui.views.dataview.DataView"
+            icon="icons/signalsViewIcon.png"
+            id="de.cau.cs.kieler.simulation.ui.views.dataview"
+            name="Data View"
+            restorable="true">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
