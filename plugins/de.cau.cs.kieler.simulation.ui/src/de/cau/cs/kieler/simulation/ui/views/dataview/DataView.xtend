@@ -14,6 +14,17 @@ package de.cau.cs.kieler.simulation.ui.views.dataview
 
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.swt.widgets.Composite
+import org.eclipse.swt.dnd.DropTarget
+import org.eclipse.swt.dnd.DND
+import org.eclipse.swt.dnd.DropTargetListener
+import org.eclipse.swt.dnd.DropTargetEvent
+import org.eclipse.swt.dnd.TextTransfer
+import org.eclipse.swt.widgets.Control
+import de.cau.cs.kieler.simulation.core.DataPool
+import de.cau.cs.kieler.simulation.ui.views.DataPoolView
+import org.eclipse.swt.layout.GridLayout
+import org.eclipse.swt.layout.GridData
+import org.eclipse.swt.layout.RowLayout
 
 /**
  * Displays the data of a running simulation in graphical canvas panels.
@@ -24,9 +35,19 @@ import org.eclipse.swt.widgets.Composite
  */
 class DataView extends ViewPart {
     
+    protected var DataPool dataPool
+    
+    protected val dataObservers = <DataObserver> newLinkedList
+    
     override createPartControl(Composite parent) {
         createMenu
-        createToolbar        
+        createToolbar
+        
+        val gridLayout = new RowLayout 
+        parent.setLayout(gridLayout)
+//        parent.setLayoutData(new GridData())
+        
+        createDropTarget(parent, parent)
     }
     
     override setFocus() {
@@ -39,4 +60,47 @@ class DataView extends ViewPart {
     protected def void createToolbar() {
         val mgr = getViewSite.getActionBars.getToolBarManager
     }    
+    
+    protected def void createDataObserver(DataPool pool, String name, Composite parent) {
+        println(name)
+        
+        val dataObserver = new DataObserver(parent)
+        dataObserver.variables += pool.getVariable(name)
+        
+        dataObservers += dataObserver
+        parent.layout(true)
+    }
+    
+    protected def void createDropTarget(Control dropControl, Composite parent) {
+        val DropTarget dndTarget = new DropTarget(dropControl, DND.DROP_MOVE + DND.DROP_COPY + DND.DROP_DEFAULT)
+        dndTarget.setTransfer(#[TextTransfer.getInstance])
+        
+        dndTarget.addDropListener(new DropTargetListener () {
+            
+            override dragEnter(DropTargetEvent event) {
+            }
+            
+            override dragLeave(DropTargetEvent event) {
+            }
+            
+            override dragOperationChanged(DropTargetEvent event) {
+            }
+            
+            override dragOver(DropTargetEvent event) {
+            }
+            
+            override drop(DropTargetEvent event) {
+                if (event.data instanceof String) {
+                    dataPool = DataPoolView.instance.internalDataPool
+                    for (varName : (event.data as String).split(",")) {
+                        createDataObserver(dataPool, varName, parent)
+                    }
+                }
+            }
+            
+            override dropAccept(DropTargetEvent event) {
+            }
+            
+        })
+    }
 }
