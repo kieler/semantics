@@ -51,6 +51,7 @@ public class ColorStore {
         TRANSITION_ABORT_DECORATOR(Colors.RED),
         TRANSITION_TERMINATION_DECORATOR(Colors.GREEN),
         TRANSITION_SELECTION(Colors.BLUE),
+        TRANSITION_PROBABILITY(Colors.STEEL_BLUE_2),
         
         REGION_FOREGROND(Colors.GRAY),
         REGION_BACKGROUND(Colors.WHITE),

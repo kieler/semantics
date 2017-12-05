@@ -7872,6 +7872,7 @@ rule__Transition__Group_2_1_1__2
     }
 :
 	rule__Transition__Group_2_1_1__2__Impl
+	rule__Transition__Group_2_1_1__3
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -7894,6 +7895,99 @@ finally {
 }
 
 
+rule__Transition__Group_2_1_1__3
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__Transition__Group_2_1_1__3__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Transition__Group_2_1_1__3__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getTransitionAccess().getGroup_2_1_1_3()); }
+(rule__Transition__Group_2_1_1_3__0)?
+{ after(grammarAccess.getTransitionAccess().getGroup_2_1_1_3()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+
+
+
+
+
+
+
+
+rule__Transition__Group_2_1_1_3__0
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__Transition__Group_2_1_1_3__0__Impl
+	rule__Transition__Group_2_1_1_3__1
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Transition__Group_2_1_1_3__0__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getTransitionAccess().getPrKeyword_2_1_1_3_0()); }
+
+	'Pr=' 
+
+{ after(grammarAccess.getTransitionAccess().getPrKeyword_2_1_1_3_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+rule__Transition__Group_2_1_1_3__1
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__Transition__Group_2_1_1_3__1__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Transition__Group_2_1_1_3__1__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getTransitionAccess().getTriggerProbabilityAssignment_2_1_1_3_1()); }
+(rule__Transition__TriggerProbabilityAssignment_2_1_1_3_1)
+{ after(grammarAccess.getTransitionAccess().getTriggerProbabilityAssignment_2_1_1_3_1()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
 
 
 
@@ -27163,6 +27257,21 @@ rule__Transition__TriggerAssignment_2_1_1_2_1
 (
 { before(grammarAccess.getTransitionAccess().getTriggerAtomicExpressionParserRuleCall_2_1_1_2_1_0()); }
 	ruleAtomicExpression{ after(grammarAccess.getTransitionAccess().getTriggerAtomicExpressionParserRuleCall_2_1_1_2_1_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Transition__TriggerProbabilityAssignment_2_1_1_3_1
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getTransitionAccess().getTriggerProbabilityDoubleParserRuleCall_2_1_1_3_1_0()); }
+	ruleDouble{ after(grammarAccess.getTransitionAccess().getTriggerProbabilityDoubleParserRuleCall_2_1_1_3_1_0()); }
 )
 
 ;

@@ -92,6 +92,16 @@ class TransitionStyles {
             lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
         ]
     }
+    
+    /**
+     * Sets the style of the line to immediate.
+     */
+    def setProbabilityStyle(KEdge edge) {
+        edge.line => [
+            foreground = TRANSITION_PROBABILITY.color
+        ]
+    }
+    
 
     /**
      * Sets the selection style of the edge.

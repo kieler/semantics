@@ -1176,7 +1176,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *             ) | 
 	 *             (
 	 *                 delay=DelayType? 
-	 *                 (triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? 
+	 *                 (triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) triggerProbability=Double?)? 
 	 *                 (effects+=Effect effects+=Effect*)? 
 	 *                 (preemption=PreemptionType | preemption=PreemptionTypeLegacy) 
 	 *                 targetState=[State|ID] 

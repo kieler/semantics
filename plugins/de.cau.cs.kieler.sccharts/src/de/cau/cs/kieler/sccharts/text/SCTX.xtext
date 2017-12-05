@@ -85,7 +85,7 @@ Transition returns sccharts::Transition:
 	|
 	(
         delay=DelayType?
-        ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))?
+        ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=Double)?)?
         ('do' effects+=Effect (';' effects+=Effect)*)?
         preemption=(PreemptionType | PreemptionTypeLegacy) 
         targetState=[sccharts::State|ID]
