@@ -841,6 +841,16 @@ class EsterelTransformationExtensions {
     def getContainingList(Annotation annotation) {
         annotation.eContainer.eGet(annotation.eContainingFeature) as EList<Annotation>
     }
+    
+        /**
+     * Returns the list in which the given Statement is contained.
+     * 
+     * @param statement A Statement which is in the returned list 
+     * @return The Statement list which includes the given Statement
+     */
+    def getContainingList(Thread thread) {
+        thread.eContainer.eGet(thread.eContainingFeature) as EList<Thread>
+    }
 
     /**
      * Creates an assignment
