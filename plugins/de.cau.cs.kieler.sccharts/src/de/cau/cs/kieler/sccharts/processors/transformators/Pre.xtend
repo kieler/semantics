@@ -41,11 +41,12 @@ import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.sccharts.Transition
 
 /**
  * SCCharts Pre Transformation.
  * 
- * @author cmot
+ * @author cmot, aas
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
@@ -264,21 +265,41 @@ class Pre extends SCChartsProcessor implements Traceable {
             val replacementExpression = preVariable.reference
             replacementExpression.indices.addAll(valuedObjectReference.indices)
             replacementExpression.trace(pre)
+            var isReplaced = false
             switch(container) {
                 Assignment : {
                     // The pre expression was used in an assignment
                     container.expression = replacementExpression
+                    isReplaced = true
                 }
                 OperatorExpression : {
-                    if(container.operator == OperatorType.PRE) {
-                        // The pre expression was used in another pre expression
-                        container.subExpressions.clear
-                        container.subExpressions.add(replacementExpression)
+                    // Construct the same sub expressions without using any pre statement
+                    val subExpressionsWithoutPre = <Expression>newArrayList
+                    for(e : container.subExpressions) {
+                        if(e == pre) {
+                            subExpressionsWithoutPre.add(replacementExpression)
+                        } else {
+                            subExpressionsWithoutPre.add(e)
+                        }
+                    }
+                    container.subExpressions.clear
+                    container.subExpressions.addAll(subExpressionsWithoutPre)
+                    isReplaced = true
+                }
+                Transition : {
+                    if(container.trigger == pre) {
+                        container.trigger = replacementExpression
+                        isReplaced = true
                     }
                 }
                 default: {
-                    environment.errors.add(new Exception("Pre expressions are only supported in assignments and other pre expressions, but got "+container))
+                    environment.errors.add(new Exception("Pre expressions are only supported in assignments, triggers and other pre expressions, but got "+container))
+                    // Don't show the generic error that the expression could not be replaced. It would be redundant
+                    isReplaced = true
                 }
+            }
+            if(!isReplaced) {
+                environment.errors.add(new Exception("Pre expression could not be substituted in "+container))
             }
         }
     }
