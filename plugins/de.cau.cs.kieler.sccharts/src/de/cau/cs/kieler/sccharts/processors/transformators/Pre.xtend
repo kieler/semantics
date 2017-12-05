@@ -39,6 +39,7 @@ import java.util.List
 import java.util.Stack
 import org.eclipse.emf.ecore.EObject
 
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
@@ -120,14 +121,14 @@ class Pre extends SCChartsProcessor implements Traceable {
         if(valuedObjectRef !== null) {
             val valuedObject = valuedObjectRef.valuedObject
             if(valuedObject !== null && !transformedVariables.containsKey(valuedObject)) {
-                valuedObject.transform(transformedVariables)
+                pre.transform(valuedObject, transformedVariables)
             }
             pre.replaceWithTransformedVariable(valuedObjectRef, transformedVariables)
         }
     }
     
-    private def transform(ValuedObject valuedObject, HashMap<ValuedObject, ValuedObject> transformedVariables) {
-        // TODO: Tracing
+    private def transform(OperatorExpression pre, ValuedObject valuedObject, HashMap<ValuedObject, ValuedObject> transformedVariables) {
+        pre.setDefaultTrace // All following newly created objects are traced to this pre operator
 
         // Create a register variable
         val state = valuedObject.parentState
@@ -262,6 +263,7 @@ class Pre extends SCChartsProcessor implements Traceable {
             val container = pre.eContainer
             val replacementExpression = preVariable.reference
             replacementExpression.indices.addAll(valuedObjectReference.indices)
+            replacementExpression.trace(pre)
             switch(container) {
                 Assignment : {
                     // The pre expression was used in an assignment
