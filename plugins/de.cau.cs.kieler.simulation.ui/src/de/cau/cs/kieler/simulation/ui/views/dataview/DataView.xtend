@@ -25,6 +25,8 @@ import de.cau.cs.kieler.simulation.ui.views.DataPoolView
 import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.layout.RowLayout
+import org.eclipse.swt.SWT
+import org.eclipse.swt.layout.RowData
 
 /**
  * Displays the data of a running simulation in graphical canvas panels.
@@ -35,6 +37,8 @@ import org.eclipse.swt.layout.RowLayout
  */
 class DataView extends ViewPart {
     
+    public static val BORDER_MARGIN = 4
+    
     protected var DataPool dataPool
     
     protected val dataObservers = <DataObserver> newLinkedList
@@ -43,9 +47,11 @@ class DataView extends ViewPart {
         createMenu
         createToolbar
         
-        val gridLayout = new RowLayout 
-        parent.setLayout(gridLayout)
-//        parent.setLayoutData(new GridData())
+        val rowLayout = new RowLayout(SWT.VERTICAL) => [
+            marginTop = marginBottom = marginRight = marginLeft = BORDER_MARGIN
+            spacing = BORDER_MARGIN
+        ] 
+        parent.setLayout(rowLayout)
         
         createDropTarget(parent, parent)
     }
@@ -61,13 +67,21 @@ class DataView extends ViewPart {
         val mgr = getViewSite.getActionBars.getToolBarManager
     }    
     
-    protected def void createDataObserver(DataPool pool, String name, Composite parent) {
+    public def void createDataObserver(DataPool pool, String name, Composite parent) {
         println(name)
         
-        val dataObserver = new DataObserver(parent)
+        val dataObserver = new DataObserver(parent, this)
         dataObserver.variables += pool.getVariable(name)
         
+        dataObserver.createCanvas
+        
         dataObservers += dataObserver
+    }
+    
+    public def void deleteDataObserver(DataObserver observer) {
+        val parent = observer.canvas.parent
+        dataObservers.remove(observer)
+        observer.canvas.dispose 
         parent.layout(true)
     }
     

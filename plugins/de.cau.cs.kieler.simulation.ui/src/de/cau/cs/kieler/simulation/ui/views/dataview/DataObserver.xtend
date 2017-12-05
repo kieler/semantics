@@ -19,25 +19,38 @@ import org.eclipse.swt.widgets.Display
 import org.eclipse.swt.widgets.Canvas
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.simulation.core.Variable
+import org.eclipse.swt.layout.RowData
+import org.eclipse.swt.widgets.Button
 import org.eclipse.swt.graphics.Rectangle
+import org.eclipse.swt.events.SelectionListener
+import org.eclipse.swt.events.SelectionEvent
 
 /**
  * @author ssm
  * @kieler.design 2017-12-04 proposed
  * @kieler.rating 2017-12-04 proposed yellow  
  */
-class DataObserver extends Canvas {
+class DataObserver {
 
-    private static val MARGIN = 5
-    private static val HEIGHT = 50
-
-    @Accessors val variables = <Variable> newLinkedList 
+    @Accessors val variables = <Variable> newLinkedList
     
-    new(Composite parent) {
-        super(parent, SWT.BORDER)
+    @Accessors var DataCanvas canvas 
+    
+    protected var DataView dataView
+    protected var Composite compositeParent
+    protected val DataObserver instance
+    
+    new(Composite parent, DataView dataView) {
+        this.compositeParent = parent
+        this.dataView = dataView
+        instance = this
+    }
         
-        bounds = new Rectangle(MARGIN, MARGIN, parent.bounds.width - MARGIN * 2, HEIGHT)
-        background = new Color(Display.getCurrent, 160, 160, 160)
+    def createCanvas() {
+        canvas = new DataCanvas(compositeParent, SWT.NONE, dataView, this)
+        
+        compositeParent.layout(true)
+        compositeParent.update        
     }
     
 }
