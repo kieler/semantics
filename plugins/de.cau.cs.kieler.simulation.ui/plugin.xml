@@ -12,6 +12,8 @@
        <simulationParticipant
              class="de.cau.cs.kieler.simulation.ui.RegisterVariablesFinder">
        </simulationParticipant>
+       <simulationParticipant
+             class="de.cau.cs.kieler.simulation.ui.views.dataview.DataView"></simulationParticipant>
     </extension>
    <extension
          point="org.eclipse.debug.ui.launchShortcuts">

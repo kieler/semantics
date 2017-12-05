@@ -14,16 +14,10 @@ package de.cau.cs.kieler.simulation.ui.views.dataview
 
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.SWT
-import org.eclipse.swt.graphics.Color
-import org.eclipse.swt.widgets.Display
-import org.eclipse.swt.widgets.Canvas
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.simulation.core.Variable
-import org.eclipse.swt.layout.RowData
-import org.eclipse.swt.widgets.Button
-import org.eclipse.swt.graphics.Rectangle
-import org.eclipse.swt.events.SelectionListener
-import org.eclipse.swt.events.SelectionEvent
+import de.cau.cs.kieler.simulation.core.VariableType
+import de.cau.cs.kieler.simulation.core.DataPool
 
 /**
  * @author ssm
@@ -32,13 +26,19 @@ import org.eclipse.swt.events.SelectionEvent
  */
 class DataObserver {
 
-    @Accessors val variables = <Variable> newLinkedList
+    @Accessors val variables = <Variable> newLinkedHashSet
+    @Accessors val liveVariables = <Variable> newLinkedHashSet
+    @Accessors val originMap = <Variable, Variable> newHashMap
     
     @Accessors var DataCanvas canvas 
+    @Accessors var VariableType domain
     
     protected var DataView dataView
     protected var Composite compositeParent
     protected val DataObserver instance
+    
+    public var maxValue = 1
+    public var minValue = 0
     
     new(Composite parent, DataView dataView) {
         this.compositeParent = parent
@@ -53,4 +53,62 @@ class DataObserver {
         compositeParent.update        
     }
     
+    def addVariable(Variable variable) {
+        if (variable === null) return;
+        variables += variable
+        
+        canvas.addVariable(variable)
+        compositeParent.layout(true)
+        compositeParent.update
+    }
+    
+    def hasVariable(Variable variable) {
+        variables.contains(variable)
+    }
+    
+    def hasDomain(VariableType type) {
+        variables.exists[ it.type == type ]
+    }
+    
+    def resetValues(DataPool pool) {
+        maxValue = 1
+        minValue = 0
+    }
+    
+    def updateValues(DataPool pool) {
+        liveVariables.clear
+        originMap.clear
+        for (v : variables) {
+            val live = pool.getVariable(v.name)
+            liveVariables += live
+            originMap.put(live, v)
+            checkMinMaxValues(live)
+        }
+        
+        canvas.redraw
+    }
+    
+    def double getVariableValue(Variable variable) {
+        var double value = 0
+        switch(variable.value) {
+        Integer: value = (variable.value as Integer).intValue
+        Double: value = (variable.value as Double).doubleValue as double
+        Float: value = (variable.value as Float).floatValue as float
+        Boolean: value = if ((variable.value as Boolean).booleanValue) 1 else 0
+        default: value = 1
+        }        
+        return value
+    }
+    
+    def getVariableIntValue(Variable variable) {
+        variable.getVariableValue as int
+    }
+    
+    protected def checkMinMaxValues(Variable variable) {
+        if (!(domain == VariableType.INT || domain == VariableType.FLOAT)) return
+        val value = variable.getVariableIntValue
+        
+        if (value > maxValue) maxValue = value
+        if (value < minValue) minValue = value
+    }
 }
