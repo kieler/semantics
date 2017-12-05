@@ -169,6 +169,10 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
         return "((float) rand() / RAND_MAX)"
     }
     
+    override dispatch CharSequence serializeHR(RandomCall randomCall) {
+        return "((float) rand() / RAND_MAX)"
+    }
+    
     override dispatch CharSequence serialize(RandomizeCallEffect randomizeCallEffect) {
         return "srand(0)"
     }

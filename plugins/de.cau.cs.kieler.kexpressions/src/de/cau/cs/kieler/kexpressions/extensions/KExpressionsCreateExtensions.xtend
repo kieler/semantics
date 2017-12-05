@@ -56,6 +56,10 @@ class KExpressionsCreateExtensions {
         createOperatorExpression(OperatorType::LEQ) 
     }
 
+    def OperatorExpression createLEExpression() {
+        createOperatorExpression(OperatorType::LT) 
+    }
+
     def OperatorExpression createGEQExpression() {
         createOperatorExpression(OperatorType::GEQ) 
     }
@@ -83,6 +87,13 @@ class KExpressionsCreateExtensions {
     // Create an LEQ Expression add expressionFirst and expressionSecond as sub expressions.
     def OperatorExpression createLEQExpression(Expression firstSubExpression, Expression secondSubExpression) {
         createLEQExpression() => [
+            it.safeAddToSubExpression(firstSubExpression)
+            it.safeAddToSubExpression(secondSubExpression)
+        ]
+    }
+
+    def OperatorExpression createLEExpression(Expression firstSubExpression, Expression secondSubExpression) {
+        createLEExpression() => [
             it.safeAddToSubExpression(firstSubExpression)
             it.safeAddToSubExpression(secondSubExpression)
         ]
