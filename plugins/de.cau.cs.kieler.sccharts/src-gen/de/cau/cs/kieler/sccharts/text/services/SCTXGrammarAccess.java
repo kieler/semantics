@@ -527,6 +527,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cPrKeyword_2_0_5_3_0 = (Keyword)cGroup_2_0_5_3.eContents().get(0);
 		private final Assignment cTriggerProbabilityAssignment_2_0_5_3_1 = (Assignment)cGroup_2_0_5_3.eContents().get(1);
 		private final RuleCall cTriggerProbabilityDoubleParserRuleCall_2_0_5_3_1_0 = (RuleCall)cTriggerProbabilityAssignment_2_0_5_3_1.eContents().get(0);
+		private final Assignment cNondeterministicAssignment_2_0_5_4 = (Assignment)cGroup_2_0_5.eContents().get(4);
+		private final Keyword cNondeterministicNondeterministicKeyword_2_0_5_4_0 = (Keyword)cNondeterministicAssignment_2_0_5_4.eContents().get(0);
 		private final Group cGroup_2_0_6 = (Group)cGroup_2_0.eContents().get(6);
 		private final Keyword cDoKeyword_2_0_6_0 = (Keyword)cGroup_2_0_6.eContents().get(0);
 		private final Assignment cEffectsAssignment_2_0_6_1 = (Assignment)cGroup_2_0_6.eContents().get(1);
@@ -551,6 +553,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cPrKeyword_2_1_1_3_0 = (Keyword)cGroup_2_1_1_3.eContents().get(0);
 		private final Assignment cTriggerProbabilityAssignment_2_1_1_3_1 = (Assignment)cGroup_2_1_1_3.eContents().get(1);
 		private final RuleCall cTriggerProbabilityDoubleParserRuleCall_2_1_1_3_1_0 = (RuleCall)cTriggerProbabilityAssignment_2_1_1_3_1.eContents().get(0);
+		private final Assignment cNondeterministicAssignment_2_1_1_4 = (Assignment)cGroup_2_1_1.eContents().get(4);
+		private final Keyword cNondeterministicNondeterministicKeyword_2_1_1_4_0 = (Keyword)cNondeterministicAssignment_2_1_1_4.eContents().get(0);
 		private final Group cGroup_2_1_2 = (Group)cGroup_2_1.eContents().get(2);
 		private final Keyword cDoKeyword_2_1_2_0 = (Keyword)cGroup_2_1_2.eContents().get(0);
 		private final Assignment cEffectsAssignment_2_1_2_1 = (Assignment)cGroup_2_1_2.eContents().get(1);
@@ -583,18 +587,19 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//	targetState=[sccharts::State] delay=DelayType?
 		//	deferred?='deferred'?
 		//	history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr='
-		//	triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+		//	triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		//	| delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr='
-		//	triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+		//	triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		//	preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'?
 		//	history=HistoryType?) ('label' label=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
 		//{sccharts::Transition} annotations+=RestrictedTypeAnnotation* (preemption=(PreemptionType | PreemptionTypeLegacy)
 		//targetState=[sccharts::State] delay=DelayType? deferred?='deferred'? history=HistoryType? ('if' triggerDelay=INT?
-		//(trigger=BoolExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=Double)?)? ('do' effects+=Effect (';'
-		//effects+=Effect)*)? | delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression)
-		//('Pr=' triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)? preemption=(PreemptionType |
+		//(trigger=BoolExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=Double)?
+		//nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)? | delay=DelayType? ('if'
+		//triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=Double)?
+		//nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)? preemption=(PreemptionType |
 		//PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'? history=HistoryType?) ('label'
 		//label=STRING)?
 		public Group getGroup() { return cGroup; }
@@ -610,15 +615,16 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 		//preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] delay=DelayType? deferred?='deferred'?
 		//history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr='
-		//triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)? | delay=DelayType? ('if'
-		//triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=Double)?)? ('do'
-		//effects+=Effect (';' effects+=Effect)*)? preemption=(PreemptionType | PreemptionTypeLegacy)
-		//targetState=[sccharts::State] deferred?='deferred'? history=HistoryType?
+		//triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)? |
+		//delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr='
+		//triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+		//preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'?
+		//history=HistoryType?
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 
 		//preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] delay=DelayType? deferred?='deferred'?
 		//history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr='
-		//triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+		//triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup_2_0() { return cGroup_2_0; }
 
 		//preemption=(PreemptionType | PreemptionTypeLegacy)
@@ -660,7 +666,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//HistoryType
 		public RuleCall getHistoryHistoryTypeEnumRuleCall_2_0_4_0() { return cHistoryHistoryTypeEnumRuleCall_2_0_4_0; }
 
-		//('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=Double)?)?
+		//('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=Double)?
+		//nondeterministic?='nondeterministic'?)?
 		public Group getGroup_2_0_5() { return cGroup_2_0_5; }
 
 		//'if'
@@ -699,6 +706,12 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//Double
 		public RuleCall getTriggerProbabilityDoubleParserRuleCall_2_0_5_3_1_0() { return cTriggerProbabilityDoubleParserRuleCall_2_0_5_3_1_0; }
 
+		//nondeterministic?='nondeterministic'?
+		public Assignment getNondeterministicAssignment_2_0_5_4() { return cNondeterministicAssignment_2_0_5_4; }
+
+		//'nondeterministic'
+		public Keyword getNondeterministicNondeterministicKeyword_2_0_5_4_0() { return cNondeterministicNondeterministicKeyword_2_0_5_4_0; }
+
 		//('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup_2_0_6() { return cGroup_2_0_6; }
 
@@ -724,8 +737,9 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getEffectsEffectParserRuleCall_2_0_6_2_1_0() { return cEffectsEffectParserRuleCall_2_0_6_2_1_0; }
 
 		//delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr='
-		//triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)? preemption=(PreemptionType |
-		//PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'? history=HistoryType?
+		//triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+		//preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'?
+		//history=HistoryType?
 		public Group getGroup_2_1() { return cGroup_2_1; }
 
 		//delay=DelayType?
@@ -734,7 +748,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//DelayType
 		public RuleCall getDelayDelayTypeEnumRuleCall_2_1_0_0() { return cDelayDelayTypeEnumRuleCall_2_1_0_0; }
 
-		//('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=Double)?)?
+		//('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=Double)?
+		//nondeterministic?='nondeterministic'?)?
 		public Group getGroup_2_1_1() { return cGroup_2_1_1; }
 
 		//'if'
@@ -772,6 +787,12 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 		//Double
 		public RuleCall getTriggerProbabilityDoubleParserRuleCall_2_1_1_3_1_0() { return cTriggerProbabilityDoubleParserRuleCall_2_1_1_3_1_0; }
+
+		//nondeterministic?='nondeterministic'?
+		public Assignment getNondeterministicAssignment_2_1_1_4() { return cNondeterministicAssignment_2_1_1_4; }
+
+		//'nondeterministic'
+		public Keyword getNondeterministicNondeterministicKeyword_2_1_1_4_0() { return cNondeterministicNondeterministicKeyword_2_1_1_4_0; }
 
 		//('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup_2_1_2() { return cGroup_2_1_2; }
@@ -2271,9 +2292,9 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	targetState=[sccharts::State] delay=DelayType?
 	//	deferred?='deferred'?
 	//	history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr='
-	//	triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+	//	triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 	//	| delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) ('Pr='
-	//	triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+	//	triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 	//	preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'?
 	//	history=HistoryType?) ('label' label=STRING)?;
 	public TransitionElements getTransitionAccess() {

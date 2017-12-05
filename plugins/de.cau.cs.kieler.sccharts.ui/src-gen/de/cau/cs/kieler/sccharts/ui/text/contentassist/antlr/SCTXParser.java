@@ -366,6 +366,7 @@ public class SCTXParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTransitionAccess().getTriggerAssignment_2_0_5_2_0(), "rule__Transition__TriggerAssignment_2_0_5_2_0");
 					put(grammarAccess.getTransitionAccess().getTriggerAssignment_2_0_5_2_1(), "rule__Transition__TriggerAssignment_2_0_5_2_1");
 					put(grammarAccess.getTransitionAccess().getTriggerProbabilityAssignment_2_0_5_3_1(), "rule__Transition__TriggerProbabilityAssignment_2_0_5_3_1");
+					put(grammarAccess.getTransitionAccess().getNondeterministicAssignment_2_0_5_4(), "rule__Transition__NondeterministicAssignment_2_0_5_4");
 					put(grammarAccess.getTransitionAccess().getEffectsAssignment_2_0_6_1(), "rule__Transition__EffectsAssignment_2_0_6_1");
 					put(grammarAccess.getTransitionAccess().getEffectsAssignment_2_0_6_2_1(), "rule__Transition__EffectsAssignment_2_0_6_2_1");
 					put(grammarAccess.getTransitionAccess().getDelayAssignment_2_1_0(), "rule__Transition__DelayAssignment_2_1_0");
@@ -373,6 +374,7 @@ public class SCTXParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTransitionAccess().getTriggerAssignment_2_1_1_2_0(), "rule__Transition__TriggerAssignment_2_1_1_2_0");
 					put(grammarAccess.getTransitionAccess().getTriggerAssignment_2_1_1_2_1(), "rule__Transition__TriggerAssignment_2_1_1_2_1");
 					put(grammarAccess.getTransitionAccess().getTriggerProbabilityAssignment_2_1_1_3_1(), "rule__Transition__TriggerProbabilityAssignment_2_1_1_3_1");
+					put(grammarAccess.getTransitionAccess().getNondeterministicAssignment_2_1_1_4(), "rule__Transition__NondeterministicAssignment_2_1_1_4");
 					put(grammarAccess.getTransitionAccess().getEffectsAssignment_2_1_2_1(), "rule__Transition__EffectsAssignment_2_1_2_1");
 					put(grammarAccess.getTransitionAccess().getEffectsAssignment_2_1_2_2_1(), "rule__Transition__EffectsAssignment_2_1_2_2_1");
 					put(grammarAccess.getTransitionAccess().getPreemptionAssignment_2_1_3(), "rule__Transition__PreemptionAssignment_2_1_3");

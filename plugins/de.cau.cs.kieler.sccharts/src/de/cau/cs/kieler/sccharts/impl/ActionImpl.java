@@ -49,6 +49,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#getTriggerProbability <em>Trigger Probability</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#getDelay <em>Delay</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#isNondeterministic <em>Nondeterministic</em>}</li>
  * </ul>
  *
  * @generated
@@ -160,6 +161,26 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * @ordered
      */
     protected DelayType delay = DELAY_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isNondeterministic() <em>Nondeterministic</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isNondeterministic()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean NONDETERMINISTIC_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isNondeterministic() <em>Nondeterministic</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isNondeterministic()
+     * @generated
+     * @ordered
+     */
+    protected boolean nondeterministic = NONDETERMINISTIC_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -303,6 +324,27 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isNondeterministic() {
+        return nondeterministic;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setNondeterministic(boolean newNondeterministic) {
+        boolean oldNondeterministic = nondeterministic;
+        nondeterministic = newNondeterministic;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.ACTION__NONDETERMINISTIC, oldNondeterministic, nondeterministic));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public String getLabel() {
         return label;
     }
@@ -355,6 +397,8 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
                 return getLabel();
             case SCChartsPackage.ACTION__DELAY:
                 return getDelay();
+            case SCChartsPackage.ACTION__NONDETERMINISTIC:
+                return isNondeterministic();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -387,6 +431,9 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
             case SCChartsPackage.ACTION__DELAY:
                 setDelay((DelayType)newValue);
                 return;
+            case SCChartsPackage.ACTION__NONDETERMINISTIC:
+                setNondeterministic((Boolean)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -417,6 +464,9 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
             case SCChartsPackage.ACTION__DELAY:
                 setDelay(DELAY_EDEFAULT);
                 return;
+            case SCChartsPackage.ACTION__NONDETERMINISTIC:
+                setNondeterministic(NONDETERMINISTIC_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -441,6 +491,8 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
                 return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
             case SCChartsPackage.ACTION__DELAY:
                 return delay != DELAY_EDEFAULT;
+            case SCChartsPackage.ACTION__NONDETERMINISTIC:
+                return nondeterministic != NONDETERMINISTIC_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -463,6 +515,8 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
         result.append(label);
         result.append(", delay: ");
         result.append(delay);
+        result.append(", nondeterministic: ");
+        result.append(nondeterministic);
         result.append(')');
         return result.toString();
     }

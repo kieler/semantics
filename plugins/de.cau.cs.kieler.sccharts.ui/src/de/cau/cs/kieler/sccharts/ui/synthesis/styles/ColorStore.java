@@ -52,6 +52,7 @@ public class ColorStore {
         TRANSITION_TERMINATION_DECORATOR(Colors.GREEN),
         TRANSITION_SELECTION(Colors.BLUE),
         TRANSITION_PROBABILITY(Colors.STEEL_BLUE_2),
+        TRANSITION_NONDETERMINISTIC(234, 154, 86),          // darker SANDY_BROWN
         
         REGION_FOREGROND(Colors.GRAY),
         REGION_BACKGROUND(Colors.WHITE),

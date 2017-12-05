@@ -72,7 +72,10 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         if (transition.isImplicitlyImmediate) {
             edge.setImmediateStyle
         }
-        if (transition.triggerProbability > 0) {
+        if (transition.nondeterministic) {
+            edge.setNondeterministicStyle
+        }
+        else if (transition.triggerProbability > 0) {
             edge.setProbabilityStyle
         }
 

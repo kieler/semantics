@@ -308,13 +308,22 @@ public interface SCChartsPackage extends EPackage {
     int ACTION__DELAY = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
 
     /**
+     * The feature id for the '<em><b>Nondeterministic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ACTION__NONDETERMINISTIC = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
+
+    /**
      * The number of structural features of the '<em>Action</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ACTION_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
+    int ACTION_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.LocalActionImpl <em>Local Action</em>}' class.
@@ -388,6 +397,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int LOCAL_ACTION__DELAY = ACTION__DELAY;
+
+    /**
+     * The feature id for the '<em><b>Nondeterministic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LOCAL_ACTION__NONDETERMINISTIC = ACTION__NONDETERMINISTIC;
 
     /**
      * The number of structural features of the '<em>Local Action</em>' class.
@@ -962,6 +980,15 @@ public interface SCChartsPackage extends EPackage {
     int TRANSITION__DELAY = ACTION__DELAY;
 
     /**
+     * The feature id for the '<em><b>Nondeterministic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TRANSITION__NONDETERMINISTIC = ACTION__NONDETERMINISTIC;
+
+    /**
      * The feature id for the '<em><b>Preemption</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1089,6 +1116,15 @@ public interface SCChartsPackage extends EPackage {
     int ENTRY_ACTION__DELAY = LOCAL_ACTION__DELAY;
 
     /**
+     * The feature id for the '<em><b>Nondeterministic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENTRY_ACTION__NONDETERMINISTIC = LOCAL_ACTION__NONDETERMINISTIC;
+
+    /**
      * The number of structural features of the '<em>Entry Action</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1169,6 +1205,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int DURING_ACTION__DELAY = LOCAL_ACTION__DELAY;
+
+    /**
+     * The feature id for the '<em><b>Nondeterministic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DURING_ACTION__NONDETERMINISTIC = LOCAL_ACTION__NONDETERMINISTIC;
 
     /**
      * The feature id for the '<em><b>Reset</b></em>' attribute.
@@ -1262,6 +1307,15 @@ public interface SCChartsPackage extends EPackage {
     int EXIT_ACTION__DELAY = LOCAL_ACTION__DELAY;
 
     /**
+     * The feature id for the '<em><b>Nondeterministic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXIT_ACTION__NONDETERMINISTIC = LOCAL_ACTION__NONDETERMINISTIC;
+
+    /**
      * The number of structural features of the '<em>Exit Action</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1342,6 +1396,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int SUSPEND_ACTION__DELAY = LOCAL_ACTION__DELAY;
+
+    /**
+     * The feature id for the '<em><b>Nondeterministic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SUSPEND_ACTION__NONDETERMINISTIC = LOCAL_ACTION__NONDETERMINISTIC;
 
     /**
      * The feature id for the '<em><b>Weak</b></em>' attribute.
@@ -1435,6 +1498,15 @@ public interface SCChartsPackage extends EPackage {
     int PRECEDING_ACTION__DELAY = LOCAL_ACTION__DELAY;
 
     /**
+     * The feature id for the '<em><b>Nondeterministic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRECEDING_ACTION__NONDETERMINISTIC = LOCAL_ACTION__NONDETERMINISTIC;
+
+    /**
      * The number of structural features of the '<em>Preceding Action</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1515,6 +1587,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int SUCCEEDING_ACTION__DELAY = LOCAL_ACTION__DELAY;
+
+    /**
+     * The feature id for the '<em><b>Nondeterministic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SUCCEEDING_ACTION__NONDETERMINISTIC = LOCAL_ACTION__NONDETERMINISTIC;
 
     /**
      * The number of structural features of the '<em>Succeeding Action</em>' class.
@@ -1716,6 +1797,17 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EAttribute getAction_Delay();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Action#isNondeterministic <em>Nondeterministic</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Nondeterministic</em>'.
+     * @see de.cau.cs.kieler.sccharts.Action#isNondeterministic()
+     * @see #getAction()
+     * @generated
+     */
+    EAttribute getAction_Nondeterministic();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.LocalAction <em>Local Action</em>}'.
@@ -2247,6 +2339,14 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EAttribute ACTION__DELAY = eINSTANCE.getAction_Delay();
+
+        /**
+         * The meta object literal for the '<em><b>Nondeterministic</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute ACTION__NONDETERMINISTIC = eINSTANCE.getAction_Nondeterministic();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.LocalActionImpl <em>Local Action</em>}' class.
