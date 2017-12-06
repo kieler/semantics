@@ -68,6 +68,9 @@
             class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.HideAnnotationHook">
       </hook>
       <hook
+            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.LabelPlacementSideHook">
+      </hook>
+      <hook
             class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.LabelShorteningHook">
       </hook>
       <hook
