@@ -34,6 +34,8 @@ import java.awt.Color
 import org.eclipse.elk.alg.layered.options.EdgeLabelSideSelection
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 
+import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
+
 /**
  * Allows users to choose a label side. They may also switch to on-edge labels, either with or without
  * directional indicators.
@@ -64,12 +66,12 @@ class LabelPlacementSideHook extends SynthesisHook {
             STRATEGY_DIRECTIONAL,
             STRATEGY_ON_EDGE,
             STRATEGY_ON_EDGE_DIRECTIONAL),
-        STRATEGY_ON_EDGE_DIRECTIONAL).setCategory(LABEL_SIDE_CATEGORY);
+        STRATEGY_CONSISTENT).setCategory(LABEL_SIDE_CATEGORY);
     
     @Inject
     extension TransitionStyles;
     @Inject
-    private ColorStore colorStore;
+    extension ColorStore
     
     
     override getDisplayedSynthesisOptions() {
@@ -85,7 +87,7 @@ class LabelPlacementSideHook extends SynthesisHook {
         }
         
         // Colors we shall use
-        val foregroundKColor = colorStore.getColor(ColorStore.Color.REGION_FOREGROND);
+        val foregroundKColor = REGION_FOREGROUND.color
         val foreground = new Color(foregroundKColor.red, foregroundKColor.green, foregroundKColor.blue);
         val background = new Color(255, 255, 255, 220);
         
