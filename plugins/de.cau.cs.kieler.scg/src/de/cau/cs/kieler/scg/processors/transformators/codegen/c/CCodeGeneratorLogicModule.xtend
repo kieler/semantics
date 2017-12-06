@@ -39,6 +39,8 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.IgnoreValue
 import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.PrintCall
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * C Code Generator Logic Module
@@ -55,7 +57,8 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KEffectsExtensions
-    @Inject extension CCodeSerializeHRExtensions
+//    @Inject extension CCodeSerializeHRExtensions
+    @Accessors @Inject CCodeSerializeHRExtensions serializer
     
     static val LOGIC_NAME = "logic"
     
@@ -111,7 +114,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         while(!nodes.empty) {
             val node = nodes.pop
             if (!processedNodes.contains(node)) {
-                node.generate(nodes)
+                node.generate(nodes, serializer)
                 processedNodes += node
             }
         }
@@ -122,7 +125,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         code.append("}\n")
     }
     
-    protected def dispatch void generate(Assignment assignment, Deque<Node> nodes) {
+    protected def dispatch void generate(Assignment assignment, Deque<Node> nodes, extension CCodeSerializeHRExtensions serializer) {
         if (!conditionalStack.empty) {
             // Apparently, we are in a nested conditional. Handle it if necessary. 
             assignment.handleConditionalNesting
@@ -132,6 +135,9 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
             if (assignment.expression instanceof TextExpression) {
                 indent(conditionalStack.size + 1)
                 code.append((assignment.expression as TextExpression).text).append("\n")
+            } else if (assignment.expression instanceof PrintCall) {
+                indent(conditionalStack.size + 1)
+                code.append((assignment.expression as PrintCall).serializeHR).append(";\n")                    
             } else {
                 throw new NullPointerException("Assigned valued object is null")
             }
@@ -152,16 +158,16 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         }
         
         // Handle pre variable if necessary.
-        if (assignment.expression != null && assignment.expression instanceof OperatorExpression &&
+        if (assignment.expression !== null && assignment.expression instanceof OperatorExpression &&
             (assignment.expression as OperatorExpression).operator == OperatorType.PRE) {
-            (assignment.expression as OperatorExpression).addPreVariable                    
+            (assignment.expression as OperatorExpression).addPreVariable(serializer)                    
         }
         
         // If a new statement follows, add it to the node list.
-        if (assignment.next != null) nodes.push(assignment.next.target)
+        if (assignment.next !== null) nodes.push(assignment.next.target)
     }
         
-    protected def dispatch void generate(Conditional conditional, Deque<Node> nodes) {
+    protected def dispatch void generate(Conditional conditional, Deque<Node> nodes, extension CCodeSerializeHRExtensions serializer) {
         valuedObjectPrefix = struct.getVariableName + struct.separator
         prePrefix = CCodeGeneratorStructModule.STRUCT_PRE_PREFIX
 
@@ -172,8 +178,8 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         
         conditionalStack.push(conditional)
         
-        if (conditional.^else != null) nodes.push(conditional.^else.target)        
-        if (conditional.^then != null) nodes.push(conditional.^then.target)
+        if (conditional.^else !== null) nodes.push(conditional.^else.target)        
+        if (conditional.^then !== null) nodes.push(conditional.^then.target)
     }
     
     protected def void handleConditionalNesting(Assignment assignment) {
@@ -182,7 +188,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         // (In the latter case we can omit the "else" in C.)
         val conditional = conditionalStack.peek
         val incomingControlFlows = assignment.incoming.filter(ControlFlow).toList
-        if (conditional.^else != null && conditional.^else.target == assignment) {
+        if (conditional.^else !== null && conditional.^else.target == assignment) {
             if (incomingControlFlows.size == 1) {
                 // Apparently, it is the first assignment of a dedicated else branch. Handle it. 
                 indent(conditionalStack.size)
@@ -197,11 +203,11 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         }            
     }
     
-    protected def dispatch void generate(Entry entry, List<Node> nodes) {
+    protected def dispatch void generate(Entry entry, List<Node> nodes, extension CCodeSerializeHRExtensions serializer) {
         nodes += entry.next?.target
     }
     
-    protected def dispatch void generate(Exit exit, List<Node> nodes) {
+    protected def dispatch void generate(Exit exit, List<Node> nodes, extension CCodeSerializeHRExtensions serializer) {
         if (!conditionalStack.empty) {
             while(conditionalStack.size > 0) {
                 indent(conditionalStack.size)
@@ -211,7 +217,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         }
     }
     
-    protected def void addPreVariable(OperatorExpression operatorExpression) {
+    protected def void addPreVariable(OperatorExpression operatorExpression, extension CCodeSerializeHRExtensions serializer) {
         valuedObjectPrefix = ""
         prePrefix = CCodeGeneratorStructModule.STRUCT_PRE_PREFIX
         val name = operatorExpression.serializeHR 

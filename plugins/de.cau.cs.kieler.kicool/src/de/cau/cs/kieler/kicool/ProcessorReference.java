@@ -18,6 +18,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.kicool.ProcessorReference#getMetric <em>Metric</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.ProcessorReference#getPreprocesses <em>Preprocesses</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.ProcessorReference#getPostprocesses <em>Postprocesses</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.ProcessorReference#isSilent <em>Silent</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.kicool.KiCoolPackage#getProcessorReference()
@@ -114,5 +115,31 @@ public interface ProcessorReference extends ProcessorEntry {
      * @generated
      */
     EList<ProcessorReference> getPostprocesses();
+
+    /**
+     * Returns the value of the '<em><b>Silent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Silent</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Silent</em>' attribute.
+     * @see #setSilent(boolean)
+     * @see de.cau.cs.kieler.kicool.KiCoolPackage#getProcessorReference_Silent()
+     * @model
+     * @generated
+     */
+    boolean isSilent();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.kicool.ProcessorReference#isSilent <em>Silent</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Silent</em>' attribute.
+     * @see #isSilent()
+     * @generated
+     */
+    void setSilent(boolean value);
 
 } // ProcessorReference

@@ -21,11 +21,13 @@ import de.cau.cs.kieler.kicool.compilation.observer.ProcessorSnapshot
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.environments.EnvironmentPair
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.core.model.Pair
 
 import static de.cau.cs.kieler.kicool.environments.Environment.*
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
+import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 
 /**
  * The abstract class of a processor. Every invokable unit in kico is a processor.
@@ -218,7 +220,19 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
         val nameCache = environment.getProperty(UNIQUE_NAME_CACHE)
         namedObject.name = nameCache.getNewUniqueName(namedObject.name)
         return namedObject
-    }       
+    }  
+    
+    /**
+     * Convenient eObject copy method that also returns the copier.
+     * This method does not support tracing and should not be used in the model chain.
+     * Let the environment handle m2m mappings.
+     */
+    def <T extends EObject> Pair<T, Copier> copyEObjectAndReturnCopier(T model) {
+        val copier = new Copier()
+        val EObject result = copier.copy(model)
+        copier.copyReferences
+        return new Pair(result as T, copier)
+    }     
     
     
     /**

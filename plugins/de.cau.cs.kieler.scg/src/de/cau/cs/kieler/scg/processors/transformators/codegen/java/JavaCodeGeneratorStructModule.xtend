@@ -24,6 +24,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kicool.compilation.Processor
 import java.util.Map
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeSerializeHRExtensions
 
 /**
  * Java Code Generator Struct Module
@@ -37,8 +38,8 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
  */
 class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
     
-    @Inject extension JavaCodeSerializeHRExtensions
     @Inject extension KExpressionsValuedObjectExtensions
+    @Accessors @Inject JavaCodeSerializeHRExtensions javaSerializer
     
     @Accessors String className
     
@@ -50,6 +51,7 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
         super.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename, parent)
         
         className = codeFilename.substring(0, codeFilename.length - 5)
+        serializer = javaSerializer
         
         return this
     }     
@@ -69,7 +71,7 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
     override generateInit() {
     }
     
-    override generate() {
+    override generate(extension CCodeSerializeHRExtensions serializer) {
         
         // Add the declarations of the model.
         for (declaration : scg.declarations.filter(VariableDeclaration)) {
@@ -91,29 +93,29 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
     }
     
     override generateDone() {
-        if (hasArrays) createConstructor
+        if (hasArrays) createConstructor(serializer)
     }
     
-    protected def createConstructor() {
+    protected def createConstructor(extension CCodeSerializeHRExtensions serializer) {
         code.append("\n" + indentation)
         code.append("public " + className + "() {\n")
         
         for (declaration : scg.declarations.filter(VariableDeclaration)) {
             for (valuedObject : declaration.valuedObjects.filter[ isArray ]) {
-                valuedObject.createArrayForCardinalityIndex(0)
+                valuedObject.createArrayForCardinalityIndex(0, serializer)
             }
         }
         
         code.append(indentation + "}\n")
     }
     
-    protected def createArrayForCardinalityIndex(ValuedObject valuedObject, int index) {
+    protected def createArrayForCardinalityIndex(ValuedObject valuedObject, int index, extension CCodeSerializeHRExtensions serializer) {
         val declaration = valuedObject.variableDeclaration
 
-        valuedObject.createArrayForCardinalityIndexHelper(index, valuedObject.name, " = new " + declaration.type.serializeHR)
+        valuedObject.createArrayForCardinalityIndexHelper(index, valuedObject.name, " = new " + declaration.type.serializeHR, serializer)
     }
     
-    protected def void createArrayForCardinalityIndexHelper(ValuedObject valuedObject, int index, String assignmentPart, String expressionPart) {
+    protected def void createArrayForCardinalityIndexHelper(ValuedObject valuedObject, int index, String assignmentPart, String expressionPart, extension CCodeSerializeHRExtensions serializer) {
         val declaration = valuedObject.variableDeclaration
         val cardinality = valuedObject.cardinalities.get(index)
         
@@ -129,7 +131,8 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
             code.append("for (int " + i + " = 0; " + i + " < " + cardinality.serializeHR + "; " + i + "++) {\n")
             valuedObject.createArrayForCardinalityIndexHelper(index + 1, 
                 assignmentPart + "[" + i + "]",
-                " = new " + declaration.type.serializeHR 
+                " = new " + declaration.type.serializeHR,
+                serializer
             )
             indent(2 + index)
             code.append("}\n")

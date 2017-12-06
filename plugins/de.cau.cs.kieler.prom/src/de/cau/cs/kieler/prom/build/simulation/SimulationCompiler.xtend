@@ -34,6 +34,7 @@ import org.eclipse.core.runtime.Assert
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Path
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.prom.data.FileData
 
 /**
  * Compiles generated code to an executable for use in the simulation.
@@ -67,7 +68,7 @@ abstract class SimulationCompiler extends Configurable {
      * If the compilation takes longer than this, the process is terminated and an exception is thrown. 
      */
     public val timeout = new ConfigurableAttribute("timeout", 10, #[Integer])
-    
+        
     /**
      * Placeholder for the file to be compiled.
      */
@@ -100,10 +101,23 @@ abstract class SimulationCompiler extends Configurable {
             return project.getFolder(libFolder.stringValue)
         }
     }
+    
+    /**
+     * Returns the library folders that should be created before compilation.
+     * 
+     * @return the list of libraries that should be created before compilation.
+     */
+    protected def List<FileData> getLibFolderDatas() {
+        val libFolderData = new FileData(libFolder.stringValue, libFolderOrigin)
+        return newArrayList(libFolderData)
+    }
+    
     /**
      * A list of all placeholders
      */
-    protected val substitutions = #[fileSubstitution, execFileSubstitution, outputFolderSubstitution, libFolderSubstitution]
+    protected def List<Substitution> getSubstitutions() {
+        return newArrayList(fileSubstitution, execFileSubstitution, outputFolderSubstitution, libFolderSubstitution)    
+    }
     
     /**
      * The result of the compilation.
@@ -280,17 +294,19 @@ abstract class SimulationCompiler extends Configurable {
     }
     
     /**
-     * Initializes the lib folder by copying some origin
+     * Initializes the lib folders by copying their origin.
      * @param project the project to copy the files into
      */
     protected def void createLibrary(IProject project) {
-        val libFolderOrigin = getLibFolderOrigin
-        if(!libFolderOrigin.isNullOrEmpty) {
-            val libPath = new Path(libFolder.stringValue)
-            val libFolder = project.getFolder(libPath)
-            if(!libFolder.exists) {
-                PromPlugin.initializeFolder(project, libPath.toOSString, libFolderOrigin)
-                libFolder.parent.refreshLocal(1, null)
+        for(libFolderData : libFolderDatas) {
+            val origin = libFolderData.origin
+            if(!origin.isNullOrEmpty) {
+                val libPath = new Path(libFolderData.projectRelativePath)
+                val libFolder = project.getFolder(libPath)
+                if(!libFolder.exists) {
+                    PromPlugin.initializeFolder(project, libPath.toOSString, origin)
+                    libFolder.parent.refreshLocal(1, null)
+                }
             }
         }
     }

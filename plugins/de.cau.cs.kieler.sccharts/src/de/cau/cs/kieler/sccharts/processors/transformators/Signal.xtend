@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.sccharts.processors.transformators
 
-import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.OperatorExpression
@@ -21,32 +20,29 @@ import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsArrayExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Emission
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
-import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
-import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
+import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * SCCharts Signal Transformation.
@@ -100,6 +96,7 @@ class Signal extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsUniqueNameExtensions
     @Inject extension ValuedObjectRise
+    @Inject extension KExpressionsArrayExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -162,9 +159,11 @@ class Signal extends SCChartsProcessor implements Traceable {
         // Go thru all signals
         for (ValuedObject signal : allSignals) {
             signal.setDefaultTrace;
-
+            
             val presentVariable = signal
-
+            val combineOperator = presentVariable.combineOperator
+            val arrayIndexIterator = signal.cardinalities.indexIterable
+            
             // If this is a valued signal we need a second signal for the value
             if (!signal.pureSignal) {
                 val valueDecl = createVariableDeclaration(signal.type)
@@ -179,16 +178,35 @@ class Signal extends SCChartsProcessor implements Traceable {
 
                 // Add an immediate during action that updates the value (in case of an emission)
                 // to the current value
-                val updateDuringAction = state.createImmediateDuringAction
-                updateDuringAction.createAssignment(valueVariable, currentValueVariable.reference)
-                updateDuringAction.setTrigger(presentVariable.reference)
-
+                if(arrayIndexIterator === null) {
+                    val updateDuringAction = state.createImmediateDuringAction
+                    updateDuringAction.createAssignment(valueVariable, currentValueVariable.reference)
+                    updateDuringAction.setTrigger(presentVariable.reference)
+                } else {
+                    for(arrayIndex : arrayIndexIterator) {
+                        val updateDuringAction = state.createImmediateDuringAction
+                        val currentValueWithIndex = currentValueVariable.reference.copy
+                        currentValueWithIndex.indices.addAll(arrayIndex.convert)
+                        val assignment = updateDuringAction.createAssignment(valueVariable, currentValueWithIndex)
+                        assignment.indices.addAll(arrayIndex.convert)
+                        val trigger = presentVariable.reference.copy
+                        trigger.indices.addAll(arrayIndex.convert)
+                        updateDuringAction.setTrigger(trigger)
+                    }
+                } 
+                
                 // Add an immediate during action that resets the current value
                 // in each tick to the neutral element of the type w.r.t. combination function
                 val resetDuringAction = state.createImmediateDuringAction
-                resetDuringAction.createAssignment(currentValueVariable, signal.neutralElement)
                 resetDuringAction.setImmediate(true)
-
+                if(arrayIndexIterator === null) {
+                    resetDuringAction.createAssignment(currentValueVariable, signal.neutralElement)
+                } else {
+                    for(arrayIndex : arrayIndexIterator) {
+                        val assignment = resetDuringAction.createAssignment(currentValueVariable, signal.neutralElement)
+                        assignment.indices.addAll(arrayIndex.convert)
+                    }
+                } 
 
                 val allActions = state.eAllContents.filter(typeof(Action)).toList
                 for (Action action : allActions) {
@@ -199,8 +217,9 @@ class Signal extends SCChartsProcessor implements Traceable {
                         if (signalEmission.newValue != null) {
 
                             // Assign the emitted valued and combine!
-                            val variableAssignment = currentValueVariable.createCombinedAssignment(signalEmission.newValue)
-
+                            val variableAssignment = currentValueVariable.createAssignment(signalEmission.newValue, combineOperator)
+                            variableAssignment.reference.applyIndices(signalEmission.reference)
+                            
                             // Put it in right order
                             val index = action.effects.indexOf(signalEmission);
                             action.effects.add(index, variableAssignment);
@@ -220,16 +239,12 @@ class Signal extends SCChartsProcessor implements Traceable {
                         signalRef.setValuedObject(valueVariable);
                         signalTest.replace(signalRef);
                     }
-// TODO: Not need to trim any more?                    
-//                    if (action.trigger != null) {
-//                        action.setTrigger(action.trigger.trim)
-//                    }
                 }
                 
                 currentValueVariable.combineOperator = null
                 valueVariable.combineOperator = null
             } // ValuedObject
-
+        
             // Change signal to variable
             val newDecl = createBoolDeclaration
             newDecl.setInput(presentVariable.isInput)
@@ -237,12 +252,12 @@ class Signal extends SCChartsProcessor implements Traceable {
             val declarationScope = presentVariable.declarationScope
             presentVariable.removeFromContainmentAndCleanup
             declarationScope.addValuedObject(presentVariable, newDecl)
-                
+            
             // Reset initial value and combine operator because we want to reset
             // the signal manually in every
             presentVariable.setInitialValue(null)
             presentVariable.setCombineOperator(null)
-
+            
             // Modify signal emission & presence test
             val allActions = state.eAllContents.filter(typeof(Action)).toList
             for (Action action : allActions) {
@@ -253,6 +268,7 @@ class Signal extends SCChartsProcessor implements Traceable {
 
                     // Assign the emitted valued
                     val variableAssignment = presentVariable.createRelativeAssignmentWithOr(TRUE)
+                    variableAssignment.reference.applyIndices(signalEmission.reference)
                     variableAssignment.trace(signalEmission)
 
                     // Remove the signal emission value (because it will be the presentValue emission)
@@ -271,6 +287,7 @@ class Signal extends SCChartsProcessor implements Traceable {
                 ).toList
                 for (ValuedObjectReference signalTest : allSignalTests.immutableCopy) {
                     val presentVariableTest = signalTest.valuedObject.reference // .isEqual(TRUE);
+                    presentVariableTest.applyIndices(signalTest)
                     action.replace(signalTest, presentVariableTest)
                 }
             }
@@ -286,7 +303,14 @@ class Signal extends SCChartsProcessor implements Traceable {
                 
                 // duringAction.setTrigger(TRUE) (implicit true)
                 // create AND add an absent-reset-assignment
-                absentDuringAction.createAssignment(presentVariable, FALSE)
+                if(arrayIndexIterator === null) {
+                    absentDuringAction.createAssignment(presentVariable, FALSE)
+                } else {
+                    for(arrayIndex : arrayIndexIterator) {
+                        val assignment = absentDuringAction.createAssignment(presentVariable, FALSE)
+                        assignment.indices.addAll(arrayIndex.convert)
+                    }
+                } 
             }
         }
     }

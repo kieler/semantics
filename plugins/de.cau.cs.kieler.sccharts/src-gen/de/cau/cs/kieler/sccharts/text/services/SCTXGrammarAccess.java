@@ -36,7 +36,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//// ---------------- //
 		//SCCharts sccharts::SCCharts:
 		//	pragmas+=Pragma*
-		//	rootStates+=RootState*
+		//	rootStates+=RootState*;
 		@Override public ParserRule getRule() { return rule; }
 
 		//pragmas+=Pragma* rootStates+=RootState*
@@ -86,7 +86,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//	'{'
 		//	declarations+=DeclarationWOSemicolon*
 		//	actions+=LocalAction* (regions+=ImplicitControlflowRegion | regions+=Region*)
-		//	'}'
+		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* 'scchart' name=ExtendedID label=STRING? '{' declarations+=DeclarationWOSemicolon*
@@ -129,7 +129,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//LocalAction
 		public RuleCall getActionsLocalActionParserRuleCall_6_0() { return cActionsLocalActionParserRuleCall_6_0; }
 
-		//(regions+=ImplicitControlflowRegion | regions+=Region*)
+		//regions+=ImplicitControlflowRegion | regions+=Region*
 		public Alternatives getAlternatives_7() { return cAlternatives_7; }
 
 		//regions+=ImplicitControlflowRegion
@@ -197,7 +197,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//	declarations+=DeclarationWOSemicolon*
 		//	actions+=LocalAction* (regions+=ImplicitControlflowRegion | regions+=Region*)
 		//	'}')?
-		//	outgoingTransitions+=Transition*
+		//	outgoingTransitions+=Transition*;
 		@Override public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* initial?='initial'? final?='final'? violation?='violation'? connector?='connector'? => 'state'
@@ -285,7 +285,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//LocalAction
 		public RuleCall getActionsLocalActionParserRuleCall_8_1_2_0() { return cActionsLocalActionParserRuleCall_8_1_2_0; }
 
-		//(regions+=ImplicitControlflowRegion | regions+=Region*)
+		//regions+=ImplicitControlflowRegion | regions+=Region*
 		public Alternatives getAlternatives_8_1_3() { return cAlternatives_8_1_3; }
 
 		//regions+=ImplicitControlflowRegion
@@ -318,7 +318,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cRegionsRegionParserRuleCall_1_0 = (RuleCall)cRegionsAssignment_1.eContents().get(0);
 		
 		//ImplicitState sccharts::State:
-		//	{sccharts::State} regions+=Region+
+		//	{sccharts::State} regions+=Region+;
 		@Override public ParserRule getRule() { return rule; }
 
 		//{sccharts::State} regions+=Region+
@@ -355,7 +355,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_1_1_1 = (Keyword)cGroup_1_1.eContents().get(1);
 		
 		//ScopeCall sccharts::ScopeCall:
-		//	scope=[sccharts::State] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '(' ')')?
+		//	scope=[sccharts::State] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '(' ')')?;
 		@Override public ParserRule getRule() { return rule; }
 
 		//scope=[sccharts::State] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '(' ')')?
@@ -434,7 +434,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//Parameter kexpressions::Parameter:
 		//	(pureOutput?='!'? callByReference?='&')?
 		//	expression=Expression ('to' explicitBinding=[kexpressions::ValuedObject] ('[' explicitBindingIndices+=Expression
-		//	']')*)?
+		//	']')*)?;
 		@Override public ParserRule getRule() { return rule; }
 
 		//(pureOutput?='!'? callByReference?='&')? expression=Expression ('to' explicitBinding=[kexpressions::ValuedObject] ('['
@@ -498,55 +498,95 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cAnnotationsRestrictedTypeAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
-		private final Assignment cPreemptionAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Alternatives cPreemptionAlternatives_1_0 = (Alternatives)cPreemptionAssignment_1.eContents().get(0);
-		private final RuleCall cPreemptionPreemptionTypeEnumRuleCall_1_0_0 = (RuleCall)cPreemptionAlternatives_1_0.eContents().get(0);
-		private final RuleCall cPreemptionPreemptionTypeLegacyEnumRuleCall_1_0_1 = (RuleCall)cPreemptionAlternatives_1_0.eContents().get(1);
-		private final Assignment cTargetStateAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final CrossReference cTargetStateStateCrossReference_2_0 = (CrossReference)cTargetStateAssignment_2.eContents().get(0);
-		private final RuleCall cTargetStateStateIDTerminalRuleCall_2_0_1 = (RuleCall)cTargetStateStateCrossReference_2_0.eContents().get(1);
-		private final Assignment cDelayAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cDelayDelayTypeEnumRuleCall_3_0 = (RuleCall)cDelayAssignment_3.eContents().get(0);
-		private final Assignment cDeferredAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final Keyword cDeferredDeferredKeyword_4_0 = (Keyword)cDeferredAssignment_4.eContents().get(0);
-		private final Assignment cHistoryAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cHistoryHistoryTypeEnumRuleCall_5_0 = (RuleCall)cHistoryAssignment_5.eContents().get(0);
-		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
-		private final Keyword cIfKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
-		private final Assignment cTriggerDelayAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
-		private final RuleCall cTriggerDelayINTTerminalRuleCall_6_1_0 = (RuleCall)cTriggerDelayAssignment_6_1.eContents().get(0);
-		private final Alternatives cAlternatives_6_2 = (Alternatives)cGroup_6.eContents().get(2);
-		private final Assignment cTriggerAssignment_6_2_0 = (Assignment)cAlternatives_6_2.eContents().get(0);
-		private final RuleCall cTriggerBoolExpressionParserRuleCall_6_2_0_0 = (RuleCall)cTriggerAssignment_6_2_0.eContents().get(0);
-		private final Assignment cTriggerAssignment_6_2_1 = (Assignment)cAlternatives_6_2.eContents().get(1);
-		private final RuleCall cTriggerAtomicExpressionParserRuleCall_6_2_1_0 = (RuleCall)cTriggerAssignment_6_2_1.eContents().get(0);
-		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
-		private final Keyword cDoKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
-		private final Assignment cEffectsAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
-		private final RuleCall cEffectsEffectParserRuleCall_7_1_0 = (RuleCall)cEffectsAssignment_7_1.eContents().get(0);
-		private final Group cGroup_7_2 = (Group)cGroup_7.eContents().get(2);
-		private final Keyword cSemicolonKeyword_7_2_0 = (Keyword)cGroup_7_2.eContents().get(0);
-		private final Assignment cEffectsAssignment_7_2_1 = (Assignment)cGroup_7_2.eContents().get(1);
-		private final RuleCall cEffectsEffectParserRuleCall_7_2_1_0 = (RuleCall)cEffectsAssignment_7_2_1.eContents().get(0);
-		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
-		private final Keyword cLabelKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
-		private final Assignment cLabelAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
-		private final RuleCall cLabelSTRINGTerminalRuleCall_8_1_0 = (RuleCall)cLabelAssignment_8_1.eContents().get(0);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
+		private final Group cGroup_1_0 = (Group)cAlternatives_1.eContents().get(0);
+		private final Assignment cPreemptionAssignment_1_0_0 = (Assignment)cGroup_1_0.eContents().get(0);
+		private final Alternatives cPreemptionAlternatives_1_0_0_0 = (Alternatives)cPreemptionAssignment_1_0_0.eContents().get(0);
+		private final RuleCall cPreemptionPreemptionTypeEnumRuleCall_1_0_0_0_0 = (RuleCall)cPreemptionAlternatives_1_0_0_0.eContents().get(0);
+		private final RuleCall cPreemptionPreemptionTypeLegacyEnumRuleCall_1_0_0_0_1 = (RuleCall)cPreemptionAlternatives_1_0_0_0.eContents().get(1);
+		private final Assignment cTargetStateAssignment_1_0_1 = (Assignment)cGroup_1_0.eContents().get(1);
+		private final CrossReference cTargetStateStateCrossReference_1_0_1_0 = (CrossReference)cTargetStateAssignment_1_0_1.eContents().get(0);
+		private final RuleCall cTargetStateStateIDTerminalRuleCall_1_0_1_0_1 = (RuleCall)cTargetStateStateCrossReference_1_0_1_0.eContents().get(1);
+		private final Assignment cDelayAssignment_1_0_2 = (Assignment)cGroup_1_0.eContents().get(2);
+		private final RuleCall cDelayDelayTypeEnumRuleCall_1_0_2_0 = (RuleCall)cDelayAssignment_1_0_2.eContents().get(0);
+		private final Assignment cDeferredAssignment_1_0_3 = (Assignment)cGroup_1_0.eContents().get(3);
+		private final Keyword cDeferredDeferredKeyword_1_0_3_0 = (Keyword)cDeferredAssignment_1_0_3.eContents().get(0);
+		private final Assignment cHistoryAssignment_1_0_4 = (Assignment)cGroup_1_0.eContents().get(4);
+		private final RuleCall cHistoryHistoryTypeEnumRuleCall_1_0_4_0 = (RuleCall)cHistoryAssignment_1_0_4.eContents().get(0);
+		private final Group cGroup_1_0_5 = (Group)cGroup_1_0.eContents().get(5);
+		private final Keyword cIfKeyword_1_0_5_0 = (Keyword)cGroup_1_0_5.eContents().get(0);
+		private final Assignment cTriggerDelayAssignment_1_0_5_1 = (Assignment)cGroup_1_0_5.eContents().get(1);
+		private final RuleCall cTriggerDelayINTTerminalRuleCall_1_0_5_1_0 = (RuleCall)cTriggerDelayAssignment_1_0_5_1.eContents().get(0);
+		private final Alternatives cAlternatives_1_0_5_2 = (Alternatives)cGroup_1_0_5.eContents().get(2);
+		private final Assignment cTriggerAssignment_1_0_5_2_0 = (Assignment)cAlternatives_1_0_5_2.eContents().get(0);
+		private final RuleCall cTriggerBoolExpressionParserRuleCall_1_0_5_2_0_0 = (RuleCall)cTriggerAssignment_1_0_5_2_0.eContents().get(0);
+		private final Assignment cTriggerAssignment_1_0_5_2_1 = (Assignment)cAlternatives_1_0_5_2.eContents().get(1);
+		private final RuleCall cTriggerAtomicExpressionParserRuleCall_1_0_5_2_1_0 = (RuleCall)cTriggerAssignment_1_0_5_2_1.eContents().get(0);
+		private final Group cGroup_1_0_6 = (Group)cGroup_1_0.eContents().get(6);
+		private final Keyword cDoKeyword_1_0_6_0 = (Keyword)cGroup_1_0_6.eContents().get(0);
+		private final Assignment cEffectsAssignment_1_0_6_1 = (Assignment)cGroup_1_0_6.eContents().get(1);
+		private final RuleCall cEffectsEffectParserRuleCall_1_0_6_1_0 = (RuleCall)cEffectsAssignment_1_0_6_1.eContents().get(0);
+		private final Group cGroup_1_0_6_2 = (Group)cGroup_1_0_6.eContents().get(2);
+		private final Keyword cSemicolonKeyword_1_0_6_2_0 = (Keyword)cGroup_1_0_6_2.eContents().get(0);
+		private final Assignment cEffectsAssignment_1_0_6_2_1 = (Assignment)cGroup_1_0_6_2.eContents().get(1);
+		private final RuleCall cEffectsEffectParserRuleCall_1_0_6_2_1_0 = (RuleCall)cEffectsAssignment_1_0_6_2_1.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cAlternatives_1.eContents().get(1);
+		private final Assignment cDelayAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
+		private final RuleCall cDelayDelayTypeEnumRuleCall_1_1_0_0 = (RuleCall)cDelayAssignment_1_1_0.eContents().get(0);
+		private final Group cGroup_1_1_1 = (Group)cGroup_1_1.eContents().get(1);
+		private final Keyword cIfKeyword_1_1_1_0 = (Keyword)cGroup_1_1_1.eContents().get(0);
+		private final Assignment cTriggerDelayAssignment_1_1_1_1 = (Assignment)cGroup_1_1_1.eContents().get(1);
+		private final RuleCall cTriggerDelayINTTerminalRuleCall_1_1_1_1_0 = (RuleCall)cTriggerDelayAssignment_1_1_1_1.eContents().get(0);
+		private final Alternatives cAlternatives_1_1_1_2 = (Alternatives)cGroup_1_1_1.eContents().get(2);
+		private final Assignment cTriggerAssignment_1_1_1_2_0 = (Assignment)cAlternatives_1_1_1_2.eContents().get(0);
+		private final RuleCall cTriggerBoolExpressionParserRuleCall_1_1_1_2_0_0 = (RuleCall)cTriggerAssignment_1_1_1_2_0.eContents().get(0);
+		private final Assignment cTriggerAssignment_1_1_1_2_1 = (Assignment)cAlternatives_1_1_1_2.eContents().get(1);
+		private final RuleCall cTriggerAtomicExpressionParserRuleCall_1_1_1_2_1_0 = (RuleCall)cTriggerAssignment_1_1_1_2_1.eContents().get(0);
+		private final Group cGroup_1_1_2 = (Group)cGroup_1_1.eContents().get(2);
+		private final Keyword cDoKeyword_1_1_2_0 = (Keyword)cGroup_1_1_2.eContents().get(0);
+		private final Assignment cEffectsAssignment_1_1_2_1 = (Assignment)cGroup_1_1_2.eContents().get(1);
+		private final RuleCall cEffectsEffectParserRuleCall_1_1_2_1_0 = (RuleCall)cEffectsAssignment_1_1_2_1.eContents().get(0);
+		private final Group cGroup_1_1_2_2 = (Group)cGroup_1_1_2.eContents().get(2);
+		private final Keyword cSemicolonKeyword_1_1_2_2_0 = (Keyword)cGroup_1_1_2_2.eContents().get(0);
+		private final Assignment cEffectsAssignment_1_1_2_2_1 = (Assignment)cGroup_1_1_2_2.eContents().get(1);
+		private final RuleCall cEffectsEffectParserRuleCall_1_1_2_2_1_0 = (RuleCall)cEffectsAssignment_1_1_2_2_1.eContents().get(0);
+		private final Assignment cPreemptionAssignment_1_1_3 = (Assignment)cGroup_1_1.eContents().get(3);
+		private final Alternatives cPreemptionAlternatives_1_1_3_0 = (Alternatives)cPreemptionAssignment_1_1_3.eContents().get(0);
+		private final RuleCall cPreemptionPreemptionTypeEnumRuleCall_1_1_3_0_0 = (RuleCall)cPreemptionAlternatives_1_1_3_0.eContents().get(0);
+		private final RuleCall cPreemptionPreemptionTypeLegacyEnumRuleCall_1_1_3_0_1 = (RuleCall)cPreemptionAlternatives_1_1_3_0.eContents().get(1);
+		private final Assignment cTargetStateAssignment_1_1_4 = (Assignment)cGroup_1_1.eContents().get(4);
+		private final CrossReference cTargetStateStateCrossReference_1_1_4_0 = (CrossReference)cTargetStateAssignment_1_1_4.eContents().get(0);
+		private final RuleCall cTargetStateStateIDTerminalRuleCall_1_1_4_0_1 = (RuleCall)cTargetStateStateCrossReference_1_1_4_0.eContents().get(1);
+		private final Assignment cDeferredAssignment_1_1_5 = (Assignment)cGroup_1_1.eContents().get(5);
+		private final Keyword cDeferredDeferredKeyword_1_1_5_0 = (Keyword)cDeferredAssignment_1_1_5.eContents().get(0);
+		private final Assignment cHistoryAssignment_1_1_6 = (Assignment)cGroup_1_1.eContents().get(6);
+		private final RuleCall cHistoryHistoryTypeEnumRuleCall_1_1_6_0 = (RuleCall)cHistoryAssignment_1_1_6.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cLabelKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cLabelAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cLabelSTRINGTerminalRuleCall_2_1_0 = (RuleCall)cLabelAssignment_2_1.eContents().get(0);
 		
 		//// ------------------ //
 		////  Transition Rules  // 
 		//// ------------------ //
 		//Transition sccharts::Transition:
-		//	annotations+=RestrictedTypeAnnotation*
-		//	preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] delay=DelayType?
+		//	annotations+=RestrictedTypeAnnotation* (preemption=(PreemptionType | PreemptionTypeLegacy)
+		//	targetState=[sccharts::State] delay=DelayType?
 		//	deferred?='deferred'?
 		//	history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do'
-		//	effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
+		//	effects+=Effect (';' effects+=Effect)*)?
+		//	| delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do'
+		//	effects+=Effect (';' effects+=Effect)*)?
+		//	preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'?
+		//	history=HistoryType?) ('label' label=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//annotations+=RestrictedTypeAnnotation* preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State]
+		//annotations+=RestrictedTypeAnnotation* (preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State]
 		//delay=DelayType? deferred?='deferred'? history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolExpression |
-		//trigger=AtomicExpression))? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
+		//trigger=AtomicExpression))? ('do' effects+=Effect (';' effects+=Effect)*)? | delay=DelayType? ('if' triggerDelay=INT?
+		//(trigger=BoolExpression | trigger=AtomicExpression))? ('do' effects+=Effect (';' effects+=Effect)*)?
+		//preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'?
+		//history=HistoryType?) ('label' label=STRING)?
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=RestrictedTypeAnnotation*
@@ -555,107 +595,214 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//RestrictedTypeAnnotation
 		public RuleCall getAnnotationsRestrictedTypeAnnotationParserRuleCall_0_0() { return cAnnotationsRestrictedTypeAnnotationParserRuleCall_0_0; }
 
+		//preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] delay=DelayType? deferred?='deferred'?
+		//history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do'
+		//effects+=Effect (';' effects+=Effect)*)? | delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolExpression |
+		//trigger=AtomicExpression))? ('do' effects+=Effect (';' effects+=Effect)*)? preemption=(PreemptionType |
+		//PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'? history=HistoryType?
+		public Alternatives getAlternatives_1() { return cAlternatives_1; }
+
+		//preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] delay=DelayType? deferred?='deferred'?
+		//history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do'
+		//effects+=Effect (';' effects+=Effect)*)?
+		public Group getGroup_1_0() { return cGroup_1_0; }
+
 		//preemption=(PreemptionType | PreemptionTypeLegacy)
-		public Assignment getPreemptionAssignment_1() { return cPreemptionAssignment_1; }
+		public Assignment getPreemptionAssignment_1_0_0() { return cPreemptionAssignment_1_0_0; }
 
 		//(PreemptionType | PreemptionTypeLegacy)
-		public Alternatives getPreemptionAlternatives_1_0() { return cPreemptionAlternatives_1_0; }
+		public Alternatives getPreemptionAlternatives_1_0_0_0() { return cPreemptionAlternatives_1_0_0_0; }
 
 		//PreemptionType
-		public RuleCall getPreemptionPreemptionTypeEnumRuleCall_1_0_0() { return cPreemptionPreemptionTypeEnumRuleCall_1_0_0; }
+		public RuleCall getPreemptionPreemptionTypeEnumRuleCall_1_0_0_0_0() { return cPreemptionPreemptionTypeEnumRuleCall_1_0_0_0_0; }
 
 		//PreemptionTypeLegacy
-		public RuleCall getPreemptionPreemptionTypeLegacyEnumRuleCall_1_0_1() { return cPreemptionPreemptionTypeLegacyEnumRuleCall_1_0_1; }
+		public RuleCall getPreemptionPreemptionTypeLegacyEnumRuleCall_1_0_0_0_1() { return cPreemptionPreemptionTypeLegacyEnumRuleCall_1_0_0_0_1; }
 
 		//targetState=[sccharts::State]
-		public Assignment getTargetStateAssignment_2() { return cTargetStateAssignment_2; }
+		public Assignment getTargetStateAssignment_1_0_1() { return cTargetStateAssignment_1_0_1; }
 
 		//[sccharts::State]
-		public CrossReference getTargetStateStateCrossReference_2_0() { return cTargetStateStateCrossReference_2_0; }
+		public CrossReference getTargetStateStateCrossReference_1_0_1_0() { return cTargetStateStateCrossReference_1_0_1_0; }
 
 		//ID
-		public RuleCall getTargetStateStateIDTerminalRuleCall_2_0_1() { return cTargetStateStateIDTerminalRuleCall_2_0_1; }
+		public RuleCall getTargetStateStateIDTerminalRuleCall_1_0_1_0_1() { return cTargetStateStateIDTerminalRuleCall_1_0_1_0_1; }
 
 		//delay=DelayType?
-		public Assignment getDelayAssignment_3() { return cDelayAssignment_3; }
+		public Assignment getDelayAssignment_1_0_2() { return cDelayAssignment_1_0_2; }
 
 		//DelayType
-		public RuleCall getDelayDelayTypeEnumRuleCall_3_0() { return cDelayDelayTypeEnumRuleCall_3_0; }
+		public RuleCall getDelayDelayTypeEnumRuleCall_1_0_2_0() { return cDelayDelayTypeEnumRuleCall_1_0_2_0; }
 
 		//deferred?='deferred'?
-		public Assignment getDeferredAssignment_4() { return cDeferredAssignment_4; }
+		public Assignment getDeferredAssignment_1_0_3() { return cDeferredAssignment_1_0_3; }
 
 		//'deferred'
-		public Keyword getDeferredDeferredKeyword_4_0() { return cDeferredDeferredKeyword_4_0; }
+		public Keyword getDeferredDeferredKeyword_1_0_3_0() { return cDeferredDeferredKeyword_1_0_3_0; }
 
 		//history=HistoryType?
-		public Assignment getHistoryAssignment_5() { return cHistoryAssignment_5; }
+		public Assignment getHistoryAssignment_1_0_4() { return cHistoryAssignment_1_0_4; }
 
 		//HistoryType
-		public RuleCall getHistoryHistoryTypeEnumRuleCall_5_0() { return cHistoryHistoryTypeEnumRuleCall_5_0; }
+		public RuleCall getHistoryHistoryTypeEnumRuleCall_1_0_4_0() { return cHistoryHistoryTypeEnumRuleCall_1_0_4_0; }
 
 		//('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))?
-		public Group getGroup_6() { return cGroup_6; }
+		public Group getGroup_1_0_5() { return cGroup_1_0_5; }
 
 		//'if'
-		public Keyword getIfKeyword_6_0() { return cIfKeyword_6_0; }
+		public Keyword getIfKeyword_1_0_5_0() { return cIfKeyword_1_0_5_0; }
 
 		//triggerDelay=INT?
-		public Assignment getTriggerDelayAssignment_6_1() { return cTriggerDelayAssignment_6_1; }
+		public Assignment getTriggerDelayAssignment_1_0_5_1() { return cTriggerDelayAssignment_1_0_5_1; }
 
 		//INT
-		public RuleCall getTriggerDelayINTTerminalRuleCall_6_1_0() { return cTriggerDelayINTTerminalRuleCall_6_1_0; }
+		public RuleCall getTriggerDelayINTTerminalRuleCall_1_0_5_1_0() { return cTriggerDelayINTTerminalRuleCall_1_0_5_1_0; }
 
-		//(trigger=BoolExpression | trigger=AtomicExpression)
-		public Alternatives getAlternatives_6_2() { return cAlternatives_6_2; }
+		//trigger=BoolExpression | trigger=AtomicExpression
+		public Alternatives getAlternatives_1_0_5_2() { return cAlternatives_1_0_5_2; }
 
 		//trigger=BoolExpression
-		public Assignment getTriggerAssignment_6_2_0() { return cTriggerAssignment_6_2_0; }
+		public Assignment getTriggerAssignment_1_0_5_2_0() { return cTriggerAssignment_1_0_5_2_0; }
 
 		//BoolExpression
-		public RuleCall getTriggerBoolExpressionParserRuleCall_6_2_0_0() { return cTriggerBoolExpressionParserRuleCall_6_2_0_0; }
+		public RuleCall getTriggerBoolExpressionParserRuleCall_1_0_5_2_0_0() { return cTriggerBoolExpressionParserRuleCall_1_0_5_2_0_0; }
 
 		//trigger=AtomicExpression
-		public Assignment getTriggerAssignment_6_2_1() { return cTriggerAssignment_6_2_1; }
+		public Assignment getTriggerAssignment_1_0_5_2_1() { return cTriggerAssignment_1_0_5_2_1; }
 
 		//AtomicExpression
-		public RuleCall getTriggerAtomicExpressionParserRuleCall_6_2_1_0() { return cTriggerAtomicExpressionParserRuleCall_6_2_1_0; }
+		public RuleCall getTriggerAtomicExpressionParserRuleCall_1_0_5_2_1_0() { return cTriggerAtomicExpressionParserRuleCall_1_0_5_2_1_0; }
 
 		//('do' effects+=Effect (';' effects+=Effect)*)?
-		public Group getGroup_7() { return cGroup_7; }
+		public Group getGroup_1_0_6() { return cGroup_1_0_6; }
 
 		//'do'
-		public Keyword getDoKeyword_7_0() { return cDoKeyword_7_0; }
+		public Keyword getDoKeyword_1_0_6_0() { return cDoKeyword_1_0_6_0; }
 
 		//effects+=Effect
-		public Assignment getEffectsAssignment_7_1() { return cEffectsAssignment_7_1; }
+		public Assignment getEffectsAssignment_1_0_6_1() { return cEffectsAssignment_1_0_6_1; }
 
 		//Effect
-		public RuleCall getEffectsEffectParserRuleCall_7_1_0() { return cEffectsEffectParserRuleCall_7_1_0; }
+		public RuleCall getEffectsEffectParserRuleCall_1_0_6_1_0() { return cEffectsEffectParserRuleCall_1_0_6_1_0; }
 
 		//(';' effects+=Effect)*
-		public Group getGroup_7_2() { return cGroup_7_2; }
+		public Group getGroup_1_0_6_2() { return cGroup_1_0_6_2; }
 
 		//';'
-		public Keyword getSemicolonKeyword_7_2_0() { return cSemicolonKeyword_7_2_0; }
+		public Keyword getSemicolonKeyword_1_0_6_2_0() { return cSemicolonKeyword_1_0_6_2_0; }
 
 		//effects+=Effect
-		public Assignment getEffectsAssignment_7_2_1() { return cEffectsAssignment_7_2_1; }
+		public Assignment getEffectsAssignment_1_0_6_2_1() { return cEffectsAssignment_1_0_6_2_1; }
 
 		//Effect
-		public RuleCall getEffectsEffectParserRuleCall_7_2_1_0() { return cEffectsEffectParserRuleCall_7_2_1_0; }
+		public RuleCall getEffectsEffectParserRuleCall_1_0_6_2_1_0() { return cEffectsEffectParserRuleCall_1_0_6_2_1_0; }
+
+		//delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do' effects+=Effect
+		//(';' effects+=Effect)*)? preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State]
+		//deferred?='deferred'? history=HistoryType?
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
+		//delay=DelayType?
+		public Assignment getDelayAssignment_1_1_0() { return cDelayAssignment_1_1_0; }
+
+		//DelayType
+		public RuleCall getDelayDelayTypeEnumRuleCall_1_1_0_0() { return cDelayDelayTypeEnumRuleCall_1_1_0_0; }
+
+		//('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))?
+		public Group getGroup_1_1_1() { return cGroup_1_1_1; }
+
+		//'if'
+		public Keyword getIfKeyword_1_1_1_0() { return cIfKeyword_1_1_1_0; }
+
+		//triggerDelay=INT?
+		public Assignment getTriggerDelayAssignment_1_1_1_1() { return cTriggerDelayAssignment_1_1_1_1; }
+
+		//INT
+		public RuleCall getTriggerDelayINTTerminalRuleCall_1_1_1_1_0() { return cTriggerDelayINTTerminalRuleCall_1_1_1_1_0; }
+
+		//trigger=BoolExpression | trigger=AtomicExpression
+		public Alternatives getAlternatives_1_1_1_2() { return cAlternatives_1_1_1_2; }
+
+		//trigger=BoolExpression
+		public Assignment getTriggerAssignment_1_1_1_2_0() { return cTriggerAssignment_1_1_1_2_0; }
+
+		//BoolExpression
+		public RuleCall getTriggerBoolExpressionParserRuleCall_1_1_1_2_0_0() { return cTriggerBoolExpressionParserRuleCall_1_1_1_2_0_0; }
+
+		//trigger=AtomicExpression
+		public Assignment getTriggerAssignment_1_1_1_2_1() { return cTriggerAssignment_1_1_1_2_1; }
+
+		//AtomicExpression
+		public RuleCall getTriggerAtomicExpressionParserRuleCall_1_1_1_2_1_0() { return cTriggerAtomicExpressionParserRuleCall_1_1_1_2_1_0; }
+
+		//('do' effects+=Effect (';' effects+=Effect)*)?
+		public Group getGroup_1_1_2() { return cGroup_1_1_2; }
+
+		//'do'
+		public Keyword getDoKeyword_1_1_2_0() { return cDoKeyword_1_1_2_0; }
+
+		//effects+=Effect
+		public Assignment getEffectsAssignment_1_1_2_1() { return cEffectsAssignment_1_1_2_1; }
+
+		//Effect
+		public RuleCall getEffectsEffectParserRuleCall_1_1_2_1_0() { return cEffectsEffectParserRuleCall_1_1_2_1_0; }
+
+		//(';' effects+=Effect)*
+		public Group getGroup_1_1_2_2() { return cGroup_1_1_2_2; }
+
+		//';'
+		public Keyword getSemicolonKeyword_1_1_2_2_0() { return cSemicolonKeyword_1_1_2_2_0; }
+
+		//effects+=Effect
+		public Assignment getEffectsAssignment_1_1_2_2_1() { return cEffectsAssignment_1_1_2_2_1; }
+
+		//Effect
+		public RuleCall getEffectsEffectParserRuleCall_1_1_2_2_1_0() { return cEffectsEffectParserRuleCall_1_1_2_2_1_0; }
+
+		//preemption=(PreemptionType | PreemptionTypeLegacy)
+		public Assignment getPreemptionAssignment_1_1_3() { return cPreemptionAssignment_1_1_3; }
+
+		//(PreemptionType | PreemptionTypeLegacy)
+		public Alternatives getPreemptionAlternatives_1_1_3_0() { return cPreemptionAlternatives_1_1_3_0; }
+
+		//PreemptionType
+		public RuleCall getPreemptionPreemptionTypeEnumRuleCall_1_1_3_0_0() { return cPreemptionPreemptionTypeEnumRuleCall_1_1_3_0_0; }
+
+		//PreemptionTypeLegacy
+		public RuleCall getPreemptionPreemptionTypeLegacyEnumRuleCall_1_1_3_0_1() { return cPreemptionPreemptionTypeLegacyEnumRuleCall_1_1_3_0_1; }
+
+		//targetState=[sccharts::State]
+		public Assignment getTargetStateAssignment_1_1_4() { return cTargetStateAssignment_1_1_4; }
+
+		//[sccharts::State]
+		public CrossReference getTargetStateStateCrossReference_1_1_4_0() { return cTargetStateStateCrossReference_1_1_4_0; }
+
+		//ID
+		public RuleCall getTargetStateStateIDTerminalRuleCall_1_1_4_0_1() { return cTargetStateStateIDTerminalRuleCall_1_1_4_0_1; }
+
+		//deferred?='deferred'?
+		public Assignment getDeferredAssignment_1_1_5() { return cDeferredAssignment_1_1_5; }
+
+		//'deferred'
+		public Keyword getDeferredDeferredKeyword_1_1_5_0() { return cDeferredDeferredKeyword_1_1_5_0; }
+
+		//history=HistoryType?
+		public Assignment getHistoryAssignment_1_1_6() { return cHistoryAssignment_1_1_6; }
+
+		//HistoryType
+		public RuleCall getHistoryHistoryTypeEnumRuleCall_1_1_6_0() { return cHistoryHistoryTypeEnumRuleCall_1_1_6_0; }
 
 		//('label' label=STRING)?
-		public Group getGroup_8() { return cGroup_8; }
+		public Group getGroup_2() { return cGroup_2; }
 
 		//'label'
-		public Keyword getLabelKeyword_8_0() { return cLabelKeyword_8_0; }
+		public Keyword getLabelKeyword_2_0() { return cLabelKeyword_2_0; }
 
 		//label=STRING
-		public Assignment getLabelAssignment_8_1() { return cLabelAssignment_8_1; }
+		public Assignment getLabelAssignment_2_1() { return cLabelAssignment_2_1; }
 
 		//STRING
-		public RuleCall getLabelSTRINGTerminalRuleCall_8_1_0() { return cLabelSTRINGTerminalRuleCall_8_1_0; }
+		public RuleCall getLabelSTRINGTerminalRuleCall_2_1_0() { return cLabelSTRINGTerminalRuleCall_2_1_0; }
 	}
 
 	public class RegionElements extends AbstractParserRuleElementFinder {
@@ -668,7 +815,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		////  Region Rules  // 
 		//// -------------- //
 		//Region sccharts::Region:
-		//	ControlflowRegion | DataflowRegion
+		//	ControlflowRegion | DataflowRegion;
 		@Override public ParserRule getRule() { return rule; }
 
 		//ControlflowRegion | DataflowRegion
@@ -689,7 +836,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cStatesStateParserRuleCall_1_0 = (RuleCall)cStatesAssignment_1.eContents().get(0);
 		
 		//ImplicitControlflowRegion sccharts::ControlflowRegion:
-		//	{sccharts::ControlflowRegion} states+=State+
+		//	{sccharts::ControlflowRegion} states+=State+;
 		@Override public ParserRule getRule() { return rule; }
 
 		//{sccharts::ControlflowRegion} states+=State+
@@ -754,7 +901,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//	|
 		//	'{'
 		//	declarations+=DeclarationWOSemicolon* (states+=ImplicitState | states+=State+)
-		//	'}')
+		//	'}');
 		@Override public ParserRule getRule() { return rule; }
 
 		//{sccharts::ControlflowRegion} annotations+=Annotation* 'region' name=ExtendedID? label=STRING? ('for'
@@ -820,8 +967,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//IntOrReference
 		public RuleCall getForEndIntOrReferenceParserRuleCall_5_4_1_0() { return cForEndIntOrReferenceParserRuleCall_5_4_1_0; }
 
-		//(':' declarations+=DeclarationWOSemicolon* states+=State* | '{' declarations+=DeclarationWOSemicolon*
-		//(states+=ImplicitState | states+=State+) '}')
+		//':' declarations+=DeclarationWOSemicolon* states+=State* | '{' declarations+=DeclarationWOSemicolon*
+		//(states+=ImplicitState | states+=State+) '}'
 		public Alternatives getAlternatives_6() { return cAlternatives_6; }
 
 		//':' declarations+=DeclarationWOSemicolon* states+=State*
@@ -854,7 +1001,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//DeclarationWOSemicolon
 		public RuleCall getDeclarationsDeclarationWOSemicolonParserRuleCall_6_1_1_0() { return cDeclarationsDeclarationWOSemicolonParserRuleCall_6_1_1_0; }
 
-		//(states+=ImplicitState | states+=State+)
+		//states+=ImplicitState | states+=State+
 		public Alternatives getAlternatives_6_1_2() { return cAlternatives_6_1_2; }
 
 		//states+=ImplicitState
@@ -907,7 +1054,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//	forEnd=IntOrReference)?)?
 		//	':'
 		//	declarations+=DeclarationWOSemicolon*
-		//	equations+=Assignment*
+		//	equations+=Assignment*;
 		@Override public ParserRule getRule() { return rule; }
 
 		//{sccharts::DataflowRegion} annotations+=Annotation* 'dataflow' name=ExtendedID? label=STRING? ('for'
@@ -995,7 +1142,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValuedObjectReferenceParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//IntOrReference kexpressions::Expression:
-		//	IntValue | ValuedObjectReference
+		//	IntValue | ValuedObjectReference;
 		@Override public ParserRule getRule() { return rule; }
 
 		//IntValue | ValuedObjectReference
@@ -1014,7 +1161,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNamePrimeIDParserRuleCall_0 = (RuleCall)cNameAssignment.eContents().get(0);
 		
 		//CounterVariable kexpressions::ValuedObject:
-		//	name=PrimeID
+		//	name=PrimeID;
 		@Override public ParserRule getRule() { return rule; }
 
 		//name=PrimeID
@@ -1038,7 +1185,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		////  Action Rules  // 
 		//// -------------- //
 		//LocalAction sccharts::LocalAction:
-		//	EntryAction | DuringAction | ExitAction | SuspendAction | PrecedingAction | SucceedingAction
+		//	EntryAction | DuringAction | ExitAction | SuspendAction | PrecedingAction | SucceedingAction;
 		@Override public ParserRule getRule() { return rule; }
 
 		//EntryAction | DuringAction | ExitAction | SuspendAction | PrecedingAction | SucceedingAction
@@ -1087,7 +1234,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//EntryAction sccharts::EntryAction:
 		//	{sccharts::EntryAction}
-		//	'entry' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
+		//	'entry' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
 		//{sccharts::EntryAction} 'entry' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label'
@@ -1177,7 +1324,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//DuringAction sccharts::DuringAction:
 		//	{sccharts::DuringAction} delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolExpression)? ('do'
-		//	effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
+		//	effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
 		//{sccharts::DuringAction} delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolExpression)? ('do'
@@ -1275,7 +1422,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ExitAction sccharts::ExitAction:
 		//	{sccharts::ExitAction}
-		//	'exit' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
+		//	'exit' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
 		//{sccharts::ExitAction} 'exit' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label'
@@ -1357,7 +1504,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//SuspendAction sccharts::SuspendAction:
 		//	{sccharts::SuspendAction} delay=DelayType? weak?='weak'? 'suspend' ('if' trigger=BoolExpression)? ('label'
-		//	label=STRING)?
+		//	label=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
 		//{sccharts::SuspendAction} delay=DelayType? weak?='weak'? 'suspend' ('if' trigger=BoolExpression)? ('label'
@@ -1431,7 +1578,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//PrecedingAction sccharts::PrecedingAction:
 		//	{sccharts::PrecedingAction}
-		//	'preceding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
+		//	'preceding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
 		//{sccharts::PrecedingAction} 'preceding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
@@ -1517,7 +1664,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//SucceedingAction sccharts::SucceedingAction:
 		//	{sccharts::SucceedingAction}
-		//	'succeeding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
+		//	'succeeding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
 		//{sccharts::SucceedingAction} 'succeeding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
@@ -1891,7 +2038,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// ---------------- //
 	//SCCharts sccharts::SCCharts:
 	//	pragmas+=Pragma*
-	//	rootStates+=RootState*
+	//	rootStates+=RootState*;
 	public SCChartsElements getSCChartsAccess() {
 		return pSCCharts;
 	}
@@ -1909,7 +2056,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	'{'
 	//	declarations+=DeclarationWOSemicolon*
 	//	actions+=LocalAction* (regions+=ImplicitControlflowRegion | regions+=Region*)
-	//	'}'
+	//	'}';
 	public RootStateElements getRootStateAccess() {
 		return pRootState;
 	}
@@ -1929,7 +2076,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	declarations+=DeclarationWOSemicolon*
 	//	actions+=LocalAction* (regions+=ImplicitControlflowRegion | regions+=Region*)
 	//	'}')?
-	//	outgoingTransitions+=Transition*
+	//	outgoingTransitions+=Transition*;
 	public StateElements getStateAccess() {
 		return pState;
 	}
@@ -1939,7 +2086,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ImplicitState sccharts::State:
-	//	{sccharts::State} regions+=Region+
+	//	{sccharts::State} regions+=Region+;
 	public ImplicitStateElements getImplicitStateAccess() {
 		return pImplicitState;
 	}
@@ -1949,7 +2096,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ScopeCall sccharts::ScopeCall:
-	//	scope=[sccharts::State] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '(' ')')?
+	//	scope=[sccharts::State] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '(' ')')?;
 	public ScopeCallElements getScopeCallAccess() {
 		return pScopeCall;
 	}
@@ -1961,7 +2108,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//Parameter kexpressions::Parameter:
 	//	(pureOutput?='!'? callByReference?='&')?
 	//	expression=Expression ('to' explicitBinding=[kexpressions::ValuedObject] ('[' explicitBindingIndices+=Expression
-	//	']')*)?
+	//	']')*)?;
 	public ParameterElements getParameterAccess() {
 		return pParameter;
 	}
@@ -1974,11 +2121,15 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	////  Transition Rules  // 
 	//// ------------------ //
 	//Transition sccharts::Transition:
-	//	annotations+=RestrictedTypeAnnotation*
-	//	preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] delay=DelayType?
+	//	annotations+=RestrictedTypeAnnotation* (preemption=(PreemptionType | PreemptionTypeLegacy)
+	//	targetState=[sccharts::State] delay=DelayType?
 	//	deferred?='deferred'?
 	//	history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do'
-	//	effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
+	//	effects+=Effect (';' effects+=Effect)*)?
+	//	| delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do'
+	//	effects+=Effect (';' effects+=Effect)*)?
+	//	preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] deferred?='deferred'?
+	//	history=HistoryType?) ('label' label=STRING)?;
 	public TransitionElements getTransitionAccess() {
 		return pTransition;
 	}
@@ -1991,7 +2142,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	////  Region Rules  // 
 	//// -------------- //
 	//Region sccharts::Region:
-	//	ControlflowRegion | DataflowRegion
+	//	ControlflowRegion | DataflowRegion;
 	public RegionElements getRegionAccess() {
 		return pRegion;
 	}
@@ -2001,7 +2152,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ImplicitControlflowRegion sccharts::ControlflowRegion:
-	//	{sccharts::ControlflowRegion} states+=State+
+	//	{sccharts::ControlflowRegion} states+=State+;
 	public ImplicitControlflowRegionElements getImplicitControlflowRegionAccess() {
 		return pImplicitControlflowRegion;
 	}
@@ -2019,7 +2170,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	|
 	//	'{'
 	//	declarations+=DeclarationWOSemicolon* (states+=ImplicitState | states+=State+)
-	//	'}')
+	//	'}');
 	public ControlflowRegionElements getControlflowRegionAccess() {
 		return pControlflowRegion;
 	}
@@ -2034,7 +2185,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	forEnd=IntOrReference)?)?
 	//	':'
 	//	declarations+=DeclarationWOSemicolon*
-	//	equations+=Assignment*
+	//	equations+=Assignment*;
 	public DataflowRegionElements getDataflowRegionAccess() {
 		return pDataflowRegion;
 	}
@@ -2044,7 +2195,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//IntOrReference kexpressions::Expression:
-	//	IntValue | ValuedObjectReference
+	//	IntValue | ValuedObjectReference;
 	public IntOrReferenceElements getIntOrReferenceAccess() {
 		return pIntOrReference;
 	}
@@ -2054,7 +2205,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//CounterVariable kexpressions::ValuedObject:
-	//	name=PrimeID
+	//	name=PrimeID;
 	public CounterVariableElements getCounterVariableAccess() {
 		return pCounterVariable;
 	}
@@ -2067,7 +2218,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	////  Action Rules  // 
 	//// -------------- //
 	//LocalAction sccharts::LocalAction:
-	//	EntryAction | DuringAction | ExitAction | SuspendAction | PrecedingAction | SucceedingAction
+	//	EntryAction | DuringAction | ExitAction | SuspendAction | PrecedingAction | SucceedingAction;
 	public LocalActionElements getLocalActionAccess() {
 		return pLocalAction;
 	}
@@ -2078,7 +2229,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 	//EntryAction sccharts::EntryAction:
 	//	{sccharts::EntryAction}
-	//	'entry' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
+	//	'entry' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
 	public EntryActionElements getEntryActionAccess() {
 		return pEntryAction;
 	}
@@ -2089,7 +2240,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 	//DuringAction sccharts::DuringAction:
 	//	{sccharts::DuringAction} delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolExpression)? ('do'
-	//	effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
+	//	effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
 	public DuringActionElements getDuringActionAccess() {
 		return pDuringAction;
 	}
@@ -2100,7 +2251,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ExitAction sccharts::ExitAction:
 	//	{sccharts::ExitAction}
-	//	'exit' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
+	//	'exit' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
 	public ExitActionElements getExitActionAccess() {
 		return pExitAction;
 	}
@@ -2111,7 +2262,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 	//SuspendAction sccharts::SuspendAction:
 	//	{sccharts::SuspendAction} delay=DelayType? weak?='weak'? 'suspend' ('if' trigger=BoolExpression)? ('label'
-	//	label=STRING)?
+	//	label=STRING)?;
 	public SuspendActionElements getSuspendActionAccess() {
 		return pSuspendAction;
 	}
@@ -2122,7 +2273,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 	//PrecedingAction sccharts::PrecedingAction:
 	//	{sccharts::PrecedingAction}
-	//	'preceding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
+	//	'preceding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
 	public PrecedingActionElements getPrecedingActionAccess() {
 		return pPrecedingAction;
 	}
@@ -2133,7 +2284,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 	//SucceedingAction sccharts::SucceedingAction:
 	//	{sccharts::SucceedingAction}
-	//	'succeeding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
+	//	'succeeding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
 	public SucceedingActionElements getSucceedingActionAccess() {
 		return pSucceedingAction;
 	}
@@ -2196,22 +2347,22 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return getHiddenKeywordsAccess().getRule();
 	}
 
-	/// **
+	///**
 	// * @author ssm
 	// * @kieler.design 2015-08-23 proposed 
 	// * @kieler.rating 2015-08-23 proposed yellow
-	// * / / *
+	// */ /*
 	// * KEXT (KText) provides a general stub for subsequent grammars that will use kexpressions, keffects
 	// * and need some kind of declaration mechanism. It is also used to generate the textual KEXT language 
 	// * that is used for testing kexpressions and keffects.  
-	// * / // ------------ //
+	// */ // ------------ //
 	////  KEXT Rules  // 
 	//// ------------ //
 	//// KEXT Rule
 	//// The KEXT lagnuages starts with an optional declaration part. Then, an arbitrary number of 
 	//// test entities may follow.
 	//Kext kext::Kext:
-	//	scopes+=RootScope
+	//	scopes+=RootScope;
 	public KExtGrammarAccess.KextElements getKextAccess() {
 		return gaKExt.getKextAccess();
 	}
@@ -2222,7 +2373,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 	//RootScope kext::KExtScope:
 	//	{kext::KExtScope} declarations+=Declaration*
-	//	entities+=TestEntity* ('scope' scopes+=Scope)*
+	//	entities+=TestEntity* ('scope' scopes+=Scope)*;
 	public KExtGrammarAccess.RootScopeElements getRootScopeAccess() {
 		return gaKExt.getRootScopeAccess();
 	}
@@ -2234,7 +2385,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//Scope kext::KExtScope:
 	//	{kext::KExtScope} name=ID? '{'
 	//	declarations+=Declaration*
-	//	entities+=TestEntity* ('scope' scopes+=Scope)* '}'
+	//	entities+=TestEntity* ('scope' scopes+=Scope)* '}';
 	public KExtGrammarAccess.ScopeElements getScopeAccess() {
 		return gaKExt.getScopeAccess();
 	}
@@ -2246,7 +2397,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// Test Entity Rule
 	//// A test entity is either an annotation expression or an effect.
 	//TestEntity kext::TestEntity:
-	//	expression=AnnotatedExpression | effect=Effect
+	//	expression=AnnotatedExpression | effect=Effect;
 	public KExtGrammarAccess.TestEntityElements getTestEntityAccess() {
 		return gaKExt.getTestEntityAccess();
 	}
@@ -2261,7 +2412,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//AnnotatedExpression kext::AnnotatedExpression:
 	//	annotations+=Annotation*
 	//	'expression'
-	//	expression=Expression
+	//	expression=Expression;
 	public KExtGrammarAccess.AnnotatedExpressionElements getAnnotatedExpressionAccess() {
 		return gaKExt.getAnnotatedExpressionAccess();
 	}
@@ -2277,7 +2428,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// valued objects that follow.
 	//// Examples: const float pi = 3.14, input signal I, output bool z  
 	//Declaration kexpressions::Declaration:
-	//	VariableDeclaration | ReferenceDeclaration | ScheduleDeclaration
+	//	VariableDeclaration | ReferenceDeclaration | ScheduleDeclaration;
 	public KExtGrammarAccess.DeclarationElements getDeclarationAccess() {
 		return gaKExt.getDeclarationAccess();
 	}
@@ -2287,7 +2438,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//DeclarationWOSemicolon kexpressions::Declaration:
-	//	VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon | ScheduleDeclarationWOSemicolon
+	//	VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon | ScheduleDeclarationWOSemicolon;
 	public KExtGrammarAccess.DeclarationWOSemicolonElements getDeclarationWOSemicolonAccess() {
 		return gaKExt.getDeclarationWOSemicolonAccess();
 	}
@@ -2303,7 +2454,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	output?='output'?
 	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal') valuedObjects+=ValuedObject (','
 	//	valuedObjects+=ValuedObject)* ';'
-	//	annotations+=CommentAnnotatonSL?
+	//	annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.VariableDeclarationElements getVariableDeclarationAccess() {
 		return gaKExt.getVariableDeclarationAccess();
 	}
@@ -2319,7 +2470,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	output?='output'?
 	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal') valuedObjects+=ValuedObject (','
 	//	valuedObjects+=ValuedObject)*
-	//	annotations+=CommentAnnotatonSL?
+	//	annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.VariableDeclarationWOSemicolonElements getVariableDeclarationWOSemicolonAccess() {
 		return gaKExt.getVariableDeclarationWOSemicolonAccess();
 	}
@@ -2341,7 +2492,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//ReferenceDeclaration kexpressions::ReferenceDeclaration:
 	//	annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] |
 	//	'extern' extern=STRING) valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
-	//	annotations+=CommentAnnotatonSL?
+	//	annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.ReferenceDeclarationElements getReferenceDeclarationAccess() {
 		return gaKExt.getReferenceDeclarationAccess();
 	}
@@ -2353,7 +2504,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//ReferenceDeclarationWOSemicolon kexpressions::ReferenceDeclaration:
 	//	annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] |
 	//	'extern' extern=STRING) valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
-	//	annotations+=CommentAnnotatonSL?
+	//	annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.ReferenceDeclarationWOSemicolonElements getReferenceDeclarationWOSemicolonAccess() {
 		return gaKExt.getReferenceDeclarationWOSemicolonAccess();
 	}
@@ -2368,7 +2519,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	global=SchedulePriorityType?
 	//	priorities+=SchedulePriority*
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
-	//	annotations+=CommentAnnotatonSL?
+	//	annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.ScheduleDeclarationElements getScheduleDeclarationAccess() {
 		return gaKExt.getScheduleDeclarationAccess();
 	}
@@ -2383,7 +2534,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	global=SchedulePriorityType?
 	//	priorities+=SchedulePriority*
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
-	//	annotations+=CommentAnnotatonSL?
+	//	annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.ScheduleDeclarationWOSemicolonElements getScheduleDeclarationWOSemicolonAccess() {
 		return gaKExt.getScheduleDeclarationWOSemicolonAccess();
 	}
@@ -2393,7 +2544,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//SchedulePriority kexpressions::SchedulePriority:
-	//	'prio' priority=INT type=SchedulePriorityType
+	//	'prio' priority=INT type=SchedulePriorityType;
 	public KExtGrammarAccess.SchedulePriorityElements getSchedulePriorityAccess() {
 		return gaKExt.getSchedulePriorityAccess();
 	}
@@ -2441,7 +2592,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//ValuedObject kexpressions::ValuedObject:
 	//	annotations+=QuotedStringAnnotation*
 	//	name=PrimeID ('[' cardinalities+=Expression ']')* ('=' initialValue=Expression)? ('combine'
-	//	combineOperator=CombineOperator)?
+	//	combineOperator=CombineOperator)?;
 	public KExtGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
 		return gaKExt.getValuedObjectAccess();
 	}
@@ -2450,22 +2601,22 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedObjectAccess().getRule();
 	}
 
-	/// **
+	///**
 	// * @author ssm
 	// * @kieler.design 2015-08-23 proposed 
 	// * @kieler.rating 2015-08-23 proposed yellow
-	// * / / *
+	// */ /*
 	// * KEffects allow deriving grammars to use a range of different effects, namely assignments,
 	// * postfix effects, esterel like emissions, host code and function call effects.
 	// * Of course other grammars may extend this list.
-	// * / // ---------------- //
+	// */ // ---------------- //
 	////  KEffects Rules  // 
 	//// ---------------- //
 	//// Effect Rule
 	//// An effect is either an assignment, a postfix effect, an emission, a hostcode effect or a 
 	//// function call effect.
 	//Effect keffects::Effect:
-	//	Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect | PrintCallEffect
+	//	Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect | PrintCallEffect;
 	public KEffectsGrammarAccess.EffectElements getEffectAccess() {
 		return gaKEffects.getEffectAccess();
 	}
@@ -2483,7 +2634,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// annotations defined in the annotations grammar.		
 	//Emission keffects::Emission:
 	//	annotations+=QuotedStringAnnotation*
-	//	reference=ValuedObjectReference ("(" newValue=Expression ")")? ('schedule' schedule+=ScheduleObjectReference+)?
+	//	reference=ValuedObjectReference ("(" newValue=Expression ")")? ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.EmissionElements getEmissionAccess() {
 		return gaKEffects.getEmissionAccess();
 	}
@@ -2500,7 +2651,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//Assignment keffects::Assignment:
 	//	annotations+=Annotation*
 	//	reference=ValuedObjectReference
-	//	operator=AssignOperator expression=Expression ('schedule' schedule+=ScheduleObjectReference+)?
+	//	operator=AssignOperator expression=Expression ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.AssignmentElements getAssignmentAccess() {
 		return gaKEffects.getAssignmentAccess();
 	}
@@ -2521,7 +2672,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//PostfixEffect keffects::Assignment:
 	//	annotations+=Annotation*
 	//	reference=ValuedObjectReference
-	//	operator=PostfixOperator ('schedule' schedule+=ScheduleObjectReference+)?
+	//	operator=PostfixOperator ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PostfixEffectElements getPostfixEffectAccess() {
 		return gaKEffects.getPostfixEffectAccess();
 	}
@@ -2534,7 +2685,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// A hostcode effect is an effect that include hostcode. It may be preceded by a list of annotations.
 	//HostcodeEffect keffects::HostcodeEffect:
 	//	annotations+=Annotation*
-	//	text=HOSTCODE
+	//	text=HOSTCODE;
 	public KEffectsGrammarAccess.HostcodeEffectElements getHostcodeEffectAccess() {
 		return gaKEffects.getHostcodeEffectAccess();
 	}
@@ -2549,7 +2700,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//ReferenceCallEffect keffects::ReferenceCallEffect:
 	//	annotations+=Annotation*
 	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=super::Parameter (','
-	//	parameters+=super::Parameter)* ')' | '()')
+	//	parameters+=super::Parameter)* ')' | '()');
 	public KEffectsGrammarAccess.ReferenceCallEffectElements getReferenceCallEffectAccess() {
 		return gaKEffects.getReferenceCallEffectAccess();
 	}
@@ -2566,7 +2717,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	parameters+=super::Parameter)* ')'
 	//	| '()')) | '<' functionName=ID ('(' parameters+=super::Parameter (',' parameters+=super::Parameter)* ')'
 	//	| '()')
-	//	'>'
+	//	'>';
 	public KEffectsGrammarAccess.FunctionCallEffectElements getFunctionCallEffectAccess() {
 		return gaKEffects.getFunctionCallEffectAccess();
 	}
@@ -2577,7 +2728,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 	//PrintCallEffect keffects::PrintCallEffect:
 	//	annotations+=Annotation*
-	//	'print' parameters+=super::Parameter (',' parameters+=super::Parameter)*
+	//	'print' parameters+=super::Parameter (',' parameters+=super::Parameter)*;
 	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
 		return gaKEffects.getPrintCallEffectAccess();
 	}
@@ -2609,14 +2760,14 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return getPostfixOperatorAccess().getRule();
 	}
 
-	/// **
+	///**
 	// * @author ssm
 	// * @kieler.design 2015-08-21 proposed 
 	// * @kieler.rating 2015-08-21 proposed yellow
-	// * / // -------------------- //
+	// */ // -------------------- //
 	////  KExpressions Rules  // 
 	//// -------------------- //
-	/// * Expression rules are organized in a chain. They pass the actual instance to the next rule but may 
+	///* Expression rules are organized in a chain. They pass the actual instance to the next rule but may 
 	// * consume tokens to create a specific expression element. Following this pattern, complex constructs
 	// * can be created. This also implies an order of precedence.
 	// *
@@ -2648,10 +2799,10 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	// *                 + FloatValue
 	// *                 + StringValue
 	// *                 + AtomicExpression
-	// * / // Root Rule
+	// */ // Root Rule
 	//// Always return an expression.
 	//Root ecore::EObject:
-	//	Expression
+	//	Expression;
 	public KExpressionsGrammarAccess.RootElements getRootAccess() {
 		return gaKExpressions.getRootAccess();
 	}
@@ -2676,7 +2827,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// Boolean expression directs to logical or expression and kept for overview (and legacy) reason. 
 	//// One could skip directly to the next rule.
 	//BoolExpression Expression:
-	//	LogicalOrExpression
+	//	LogicalOrExpression;
 	public KExpressionsGrammarAccess.BoolExpressionElements getBoolExpressionAccess() {
 		return gaKExpressions.getBoolExpressionAccess();
 	}
@@ -2690,7 +2841,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//LogicalOrExpression Expression:
 	//	LogicalAndExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator
-	//	subExpressions+=LogicalAndExpression) ('||' subExpressions+=LogicalAndExpression)*)?
+	//	subExpressions+=LogicalAndExpression) ('||' subExpressions+=LogicalAndExpression)*)?;
 	public KExpressionsGrammarAccess.LogicalOrExpressionElements getLogicalOrExpressionAccess() {
 		return gaKExpressions.getLogicalOrExpressionAccess();
 	}
@@ -2704,7 +2855,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//LogicalAndExpression Expression:
 	//	BitwiseOrExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalAndOperator
-	//	subExpressions+=BitwiseOrExpression) ('&&' subExpressions+=BitwiseOrExpression)*)?
+	//	subExpressions+=BitwiseOrExpression) ('&&' subExpressions+=BitwiseOrExpression)*)?;
 	public KExpressionsGrammarAccess.LogicalAndExpressionElements getLogicalAndExpressionAccess() {
 		return gaKExpressions.getLogicalAndExpressionAccess();
 	}
@@ -2718,7 +2869,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//BitwiseOrExpression Expression:
 	//	BitwiseXOrExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator
-	//	subExpressions+=BitwiseXOrExpression) ('|' subExpressions+=BitwiseXOrExpression)*)?
+	//	subExpressions+=BitwiseXOrExpression) ('|' subExpressions+=BitwiseXOrExpression)*)?;
 	public KExpressionsGrammarAccess.BitwiseOrExpressionElements getBitwiseOrExpressionAccess() {
 		return gaKExpressions.getBitwiseOrExpressionAccess();
 	}
@@ -2729,7 +2880,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 	//BitwiseXOrExpression Expression:
 	//	BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseXOrOperator
-	//	subExpressions+=BitwiseAndExpression) ('^' subExpressions+=BitwiseAndExpression)*)?
+	//	subExpressions+=BitwiseAndExpression) ('^' subExpressions+=BitwiseAndExpression)*)?;
 	public KExpressionsGrammarAccess.BitwiseXOrExpressionElements getBitwiseXOrExpressionAccess() {
 		return gaKExpressions.getBitwiseXOrExpressionAccess();
 	}
@@ -2743,7 +2894,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//BitwiseAndExpression Expression:
 	//	CompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
-	//	subExpressions+=CompareOperation) ('&' subExpressions+=CompareOperation)*)?
+	//	subExpressions+=CompareOperation) ('&' subExpressions+=CompareOperation)*)?;
 	public KExpressionsGrammarAccess.BitwiseAndExpressionElements getBitwiseAndExpressionAccess() {
 		return gaKExpressions.getBitwiseAndExpressionAccess();
 	}
@@ -2757,7 +2908,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: 42 <= val(A)
 	//CompareOperation Expression:
 	//	NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator
-	//	subExpressions+=NotOrValuedExpression)?
+	//	subExpressions+=NotOrValuedExpression)?;
 	public KExpressionsGrammarAccess.CompareOperationElements getCompareOperationAccess() {
 		return gaKExpressions.getCompareOperationAccess();
 	}
@@ -2770,7 +2921,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// ORDER IS IMPORTANT!
 	//NotOrValuedExpression Expression:
 	//	ValuedExpression
-	//	| NotExpression
+	//	| NotExpression;
 	public KExpressionsGrammarAccess.NotOrValuedExpressionElements getNotOrValuedExpressionAccess() {
 		return gaKExpressions.getNotOrValuedExpressionAccess();
 	}
@@ -2780,7 +2931,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//BitwiseNotExpression Expression:
-	//	{OperatorExpression} operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression | AtomicExpression
+	//	{OperatorExpression} operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression | AtomicExpression;
 	public KExpressionsGrammarAccess.BitwiseNotExpressionElements getBitwiseNotExpressionAccess() {
 		return gaKExpressions.getBitwiseNotExpressionAccess();
 	}
@@ -2794,7 +2945,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// At the latter we need the parents to indicate the right binding.
 	//// A 'not expression' can also redirect to an 'atomic expression' to maintain the rule chain.
 	//NotExpression Expression:
-	//	{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | BitwiseNotExpression
+	//	{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | BitwiseNotExpression;
 	public KExpressionsGrammarAccess.NotExpressionElements getNotExpressionAccess() {
 		return gaKExpressions.getNotExpressionAccess();
 	}
@@ -2807,7 +2958,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// Everything that evaluates to a primitive number value.
 	//// Similar to the boolean rule this rule is there for overview reasons.
 	//ValuedExpression Expression:
-	//	ShiftLeftExpression
+	//	ShiftLeftExpression;
 	public KExpressionsGrammarAccess.ValuedExpressionElements getValuedExpressionAccess() {
 		return gaKExpressions.getValuedExpressionAccess();
 	}
@@ -2818,7 +2969,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ShiftLeftExpression Expression:
 	//	ShiftRightExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
-	//	subExpressions+=ShiftRightExpression) ('<<' subExpressions+=ShiftRightExpression)*)?
+	//	subExpressions+=ShiftRightExpression) ('<<' subExpressions+=ShiftRightExpression)*)?;
 	public KExpressionsGrammarAccess.ShiftLeftExpressionElements getShiftLeftExpressionAccess() {
 		return gaKExpressions.getShiftLeftExpressionAccess();
 	}
@@ -2829,7 +2980,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ShiftRightExpression Expression:
 	//	ShiftRightUnsignedExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
-	//	subExpressions+=ShiftRightUnsignedExpression) ('>>' subExpressions+=ShiftRightUnsignedExpression)*)?
+	//	subExpressions+=ShiftRightUnsignedExpression) ('>>' subExpressions+=ShiftRightUnsignedExpression)*)?;
 	public KExpressionsGrammarAccess.ShiftRightExpressionElements getShiftRightExpressionAccess() {
 		return gaKExpressions.getShiftRightExpressionAccess();
 	}
@@ -2840,7 +2991,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ShiftRightUnsignedExpression Expression:
 	//	AddExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
-	//	subExpressions+=AddExpression) ('>>>' subExpressions+=AddExpression)*)?
+	//	subExpressions+=AddExpression) ('>>>' subExpressions+=AddExpression)*)?;
 	public KExpressionsGrammarAccess.ShiftRightUnsignedExpressionElements getShiftRightUnsignedExpressionAccess() {
 		return gaKExpressions.getShiftRightUnsignedExpressionAccess();
 	}
@@ -2855,7 +3006,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: 1 + 2
 	//AddExpression Expression:
 	//	SubExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression) ('+'
-	//	subExpressions+=SubExpression)*)?
+	//	subExpressions+=SubExpression)*)?;
 	public KExpressionsGrammarAccess.AddExpressionElements getAddExpressionAccess() {
 		return gaKExpressions.getAddExpressionAccess();
 	}
@@ -2870,7 +3021,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: var(A) - i
 	//SubExpression Expression:
 	//	MultExpression ({OperatorExpression.subExpressions+=current} (operator=SubOperator subExpressions+=MultExpression)
-	//	('-' subExpressions+=MultExpression)*)?
+	//	('-' subExpressions+=MultExpression)*)?;
 	public KExpressionsGrammarAccess.SubExpressionElements getSubExpressionAccess() {
 		return gaKExpressions.getSubExpressionAccess();
 	}
@@ -2885,7 +3036,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: 2 * 4
 	//MultExpression Expression:
 	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)
-	//	('*' subExpressions+=DivExpression)*)?
+	//	('*' subExpressions+=DivExpression)*)?;
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}
@@ -2900,7 +3051,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: 2 / 4
 	//DivExpression Expression:
 	//	ModExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=ModExpression) ('/'
-	//	subExpressions+=ModExpression)*)?
+	//	subExpressions+=ModExpression)*)?;
 	public KExpressionsGrammarAccess.DivExpressionElements getDivExpressionAccess() {
 		return gaKExpressions.getDivExpressionAccess();
 	}
@@ -2915,7 +3066,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: i % j
 	//ModExpression Expression:
 	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=ModOperator
-	//	subExpressions+=AtomicValuedExpression) ('%' subExpressions+=AtomicValuedExpression)*)?
+	//	subExpressions+=AtomicValuedExpression) ('%' subExpressions+=AtomicValuedExpression)*)?;
 	public KExpressionsGrammarAccess.ModExpressionElements getModExpressionAccess() {
 		return gaKExpressions.getModExpressionAccess();
 	}
@@ -2928,7 +3079,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// The rule negates the actual instance or directs the atomic value expression rule if necessary. 
 	//// Example: -i, -2
 	//NegExpression Expression:
-	//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | TernaryOperation
+	//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | TernaryOperation;
 	public KExpressionsGrammarAccess.NegExpressionElements getNegExpressionAccess() {
 		return gaKExpressions.getNegExpressionAccess();
 	}
@@ -2940,7 +3091,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//TernaryOperation Expression:
 	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
 	//	subExpressions+=AtomicValuedExpression ':' subExpressions+=AtomicValuedExpression
-	//	| AtomicValuedExpression
+	//	| AtomicValuedExpression;
 	public KExpressionsGrammarAccess.TernaryOperationElements getTernaryOperationAccess() {
 		return gaKExpressions.getTernaryOperationAccess();
 	}
@@ -2959,7 +3110,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	| '(' BoolExpression ')'
 	//	| ReferenceCall
 	//	| FunctionCall
-	//	| TextExpression
+	//	| TextExpression;
 	public KExpressionsGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
 		return gaKExpressions.getAtomicExpressionAccess();
 	}
@@ -2978,7 +3129,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	| StringValue
 	//	| VectorValue
 	//	| '(' ValuedExpression ')'
-	//	| AtomicExpression
+	//	| AtomicExpression;
 	public KExpressionsGrammarAccess.AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
 		return gaKExpressions.getAtomicValuedExpressionAccess();
 	}
@@ -2993,7 +3144,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: pre(pre(val(A))), pre(val(pre(A))), val(A)
 	//ValuedObjectTestExpression Expression:
 	//	{OperatorExpression} operator=(PreOperator | ValOperator) '(' subExpressions+=ValuedObjectTestExpression ')'
-	//	| ValuedObjectReference
+	//	| ValuedObjectReference;
 	public KExpressionsGrammarAccess.ValuedObjectTestExpressionElements getValuedObjectTestExpressionAccess() {
 		return gaKExpressions.getValuedObjectTestExpressionAccess();
 	}
@@ -3127,7 +3278,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//VectorValueMember Expression:
-	//	BoolExpression | ValuedExpression | IgnoreValue
+	//	BoolExpression | ValuedExpression | IgnoreValue;
 	public KExpressionsGrammarAccess.VectorValueMemberElements getVectorValueMemberAccess() {
 		return gaKExpressions.getVectorValueMemberAccess();
 	}
@@ -3160,7 +3311,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AnyValue Value:
-	//	IntValue | FloatValue | BoolValue | StringValue
+	//	IntValue | FloatValue | BoolValue | StringValue;
 	public KExpressionsGrammarAccess.AnyValueElements getAnyValueAccess() {
 		return gaKExpressions.getAnyValueAccess();
 	}
@@ -3418,11 +3569,11 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return gaKExpressions.getHOSTCODERule();
 	} 
 
-	/// **
+	///**
 	// * @author ssm
 	// * @kieler.design 2015-08-21 proposed 
 	// * @kieler.rating 2015-08-21 proposed yellow
-	// * / // ------------------ //
+	// */ // ------------------ //
 	////  Annotation Rules  // 
 	//// ------------------ //
 	//// General rule for annotations
@@ -3454,7 +3605,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// Derived grammars may use this rule if the general annotation rules compromises the grammar
 	//// due to ambiguities.
 	//ValuedAnnotation Annotation:
-	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation
+	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation;
 	public AnnotationsGrammarAccess.ValuedAnnotationElements getValuedAnnotationAccess() {
 		return gaAnnotations.getValuedAnnotationAccess();
 	}
@@ -3467,7 +3618,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// The restricted type annotation rule does not allow typed string annotations. 
 	//// You can use this rule in derived grammars if you don't want to permit typed strings. 
 	//RestrictedTypeAnnotation Annotation:
-	//	CommentAnnotation | RestrictedKeyStringValueAnnotation | RestrictedTypedKeyStringValueAnnotation | TagAnnotation
+	//	CommentAnnotation | RestrictedKeyStringValueAnnotation | RestrictedTypedKeyStringValueAnnotation | TagAnnotation;
 	public AnnotationsGrammarAccess.RestrictedTypeAnnotationElements getRestrictedTypeAnnotationAccess() {
 		return gaAnnotations.getRestrictedTypeAnnotationAccess();
 	}
@@ -3482,7 +3633,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// (If you are looking for an example, the keffects grammar uses this rule for their emission
 	//// rule and to avoid grammar ambiguities.)  
 	//QuotedStringAnnotation Annotation:
-	//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | TagAnnotation
+	//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | TagAnnotation;
 	public AnnotationsGrammarAccess.QuotedStringAnnotationElements getQuotedStringAnnotationAccess() {
 		return gaAnnotations.getQuotedStringAnnotationAccess();
 	}
@@ -3492,7 +3643,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// CommentAnnotation
-	//// e.g.: / ** semantic comment * /
+	//// e.g.: /** semantic comment */
 	//CommentAnnotation:
 	//	values+=COMMENT_ANNOTATION;
 	public AnnotationsGrammarAccess.CommentAnnotationElements getCommentAnnotationAccess() {
@@ -3504,7 +3655,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//CommentAnnotatonSL CommentAnnotation:
-	//	values+=SL_COMMENT_ANNOTATION
+	//	values+=SL_COMMENT_ANNOTATION;
 	public AnnotationsGrammarAccess.CommentAnnotatonSLElements getCommentAnnotatonSLAccess() {
 		return gaAnnotations.getCommentAnnotatonSLAccess();
 	}
@@ -3516,7 +3667,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// TagAnnotation
 	//// e.g.: @HVlayout
 	//TagAnnotation Annotation:
-	//	'@' name=ExtendedID
+	//	'@' name=ExtendedID;
 	public AnnotationsGrammarAccess.TagAnnotationElements getTagAnnotationAccess() {
 		return gaAnnotations.getTagAnnotationAccess();
 	}
@@ -3526,7 +3677,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//PragmaTag Pragma:
-	//	'#' name=ExtendedID
+	//	'#' name=ExtendedID;
 	public AnnotationsGrammarAccess.PragmaTagElements getPragmaTagAccess() {
 		return gaAnnotations.getPragmaTagAccess();
 	}
@@ -3539,7 +3690,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// e.g.: @layouter dot
 	//// You may separate different values via comma.   
 	//KeyStringValueAnnotation StringAnnotation:
-	//	'@' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*
+	//	'@' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*;
 	public AnnotationsGrammarAccess.KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getKeyStringValueAnnotationAccess();
 	}
@@ -3549,7 +3700,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//RestrictedKeyStringValueAnnotation StringAnnotation:
-	//	'@' name=ExtendedID values+=EStringBoolean (',' values+=EStringBoolean)*
+	//	'@' name=ExtendedID values+=EStringBoolean (',' values+=EStringBoolean)*;
 	public AnnotationsGrammarAccess.RestrictedKeyStringValueAnnotationElements getRestrictedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getRestrictedKeyStringValueAnnotationAccess();
 	}
@@ -3571,7 +3722,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// TypedKeyStringValueAnnotation
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 	//TypedKeyStringValueAnnotation TypedStringAnnotation:
-	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringAllTypes (',' values+=EStringAllTypes)*
+	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringAllTypes (',' values+=EStringAllTypes)*;
 	public AnnotationsGrammarAccess.TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getTypedKeyStringValueAnnotationAccess();
 	}
@@ -3581,7 +3732,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//RestrictedTypedKeyStringValueAnnotation TypedStringAnnotation:
-	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*
+	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*;
 	public AnnotationsGrammarAccess.RestrictedTypedKeyStringValueAnnotationElements getRestrictedTypedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getRestrictedTypedKeyStringValueAnnotationAccess();
 	}
@@ -3594,7 +3745,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// The quoted key string value annotation is a replacement derived grammars may use
 	//// if they want to disallow quote-less strings in a key string annotation. 
 	//QuotedKeyStringValueAnnotation StringAnnotation:
-	//	'@' name=ExtendedID values+=STRING (',' values+=STRING)*
+	//	'@' name=ExtendedID values+=STRING (',' values+=STRING)*;
 	public AnnotationsGrammarAccess.QuotedKeyStringValueAnnotationElements getQuotedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getQuotedKeyStringValueAnnotationAccess();
 	}
@@ -3607,7 +3758,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// The quoted typed key string value annotation is a replacement derived grammars may use
 	//// if they want to disallow quote-less strings in a key string annotation. 
 	//QuotedTypedKeyStringValueAnnotation TypedStringAnnotation:
-	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=STRING (',' values+=STRING)*
+	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=STRING (',' values+=STRING)*;
 	public AnnotationsGrammarAccess.QuotedTypedKeyStringValueAnnotationElements getQuotedTypedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getQuotedTypedKeyStringValueAnnotationAccess();
 	}
@@ -3675,7 +3826,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// Integer
 	//// The integer rule extends the EInt terminal by an optional sign for negative numbers.
 	//Integer ecore::EInt:
-	//	'-'? INT
+	//	'-'? INT;
 	public AnnotationsGrammarAccess.IntegerElements getIntegerAccess() {
 		return gaAnnotations.getIntegerAccess();
 	}
@@ -3687,7 +3838,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// Floateger
 	//// The floateger rule extends the EFloat terminal by an optional sign for negative numbers.
 	//Floateger ecore::EFloat:
-	//	'-'? FLOAT
+	//	'-'? FLOAT;
 	public AnnotationsGrammarAccess.FloategerElements getFloategerAccess() {
 		return gaAnnotations.getFloategerAccess();
 	}
@@ -3697,19 +3848,19 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//terminal COMMENT_ANNOTATION:
-	//	'/ **'->'* /';
+	//	'/**'->'*/';
 	public TerminalRule getCOMMENT_ANNOTATIONRule() {
 		return gaAnnotations.getCOMMENT_ANNOTATIONRule();
 	} 
 
 	//terminal ML_COMMENT:
-	//	'/ *' !'*'->'* /';
+	//	'/*' !'*'->'*/';
 	public TerminalRule getML_COMMENTRule() {
 		return gaAnnotations.getML_COMMENTRule();
 	} 
 
 	//terminal SL_COMMENT_ANNOTATION:
-	//	'// *' !('\n' | '\r')* ('\r'? '\n')?;
+	//	'//*' !('\n' | '\r')* ('\r'? '\n')?;
 	public TerminalRule getSL_COMMENT_ANNOTATIONRule() {
 		return gaAnnotations.getSL_COMMENT_ANNOTATIONRule();
 	} 

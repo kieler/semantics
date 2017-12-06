@@ -53,47 +53,47 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
         
         // support legacy transitions
         if (legacyTransitionSyntax) {
-            feeder.accept(tg.getPreemptionPreemptionTypeLegacyEnumRuleCall_1_0_1, transition.preemption)
+            feeder.accept(tg.preemptionPreemptionTypeLegacyEnumRuleCall_1_0_0_0_1, transition.preemption)
         } else {
-            feeder.accept(tg.preemptionPreemptionTypeEnumRuleCall_1_0_0, transition.preemption)
+            feeder.accept(tg.preemptionPreemptionTypeEnumRuleCall_1_0_0_0_0, transition.preemption)
         }
         
-        feeder.accept(tg.targetStateStateIDTerminalRuleCall_2_0_1, transition.targetState)
+        feeder.accept(tg.targetStateStateIDTerminalRuleCall_1_0_1_0_1 , transition.targetState)
         
         if (transition.delay != DelayType.UNDEFINED) {
-            feeder.accept(tg.delayDelayTypeEnumRuleCall_3_0, transition.delay)
+            feeder.accept(tg.delayDelayTypeEnumRuleCall_1_0_2_0, transition.delay)
         }
         
         if (transition.deferred) {
-            feeder.accept(tg.deferredDeferredKeyword_4_0)
+            feeder.accept(tg.deferredDeferredKeyword_1_0_3_0)
         }
         
         if (transition.history != HistoryType.RESET) {
-            feeder.accept(tg.historyHistoryTypeEnumRuleCall_5_0, transition.history)
+            feeder.accept(tg.historyHistoryTypeEnumRuleCall_1_0_4_0, transition.history)
         }
         
         if (transition.trigger != null) {
             if (transition.triggerDelay > 1) {
-                feeder.accept(tg.getTriggerDelayINTTerminalRuleCall_6_1_0, transition.triggerDelay)
+                feeder.accept(tg.triggerDelayINTTerminalRuleCall_1_0_5_1_0, transition.triggerDelay)
             }
             
             // This handles separation of count delay together with expressions starting with an integer
             if (transition.triggerDelay == 1 && transition.trigger.requiresParentheses) {
-                feeder.accept(tg.getTriggerAtomicExpressionParserRuleCall_6_2_1_0, transition.trigger)
+                feeder.accept(tg.triggerAtomicExpressionParserRuleCall_1_0_5_2_1_0, transition.trigger)
             } else {
-                feeder.accept(tg.getTriggerBoolExpressionParserRuleCall_6_2_0_0, transition.trigger)
+                feeder.accept(tg.triggerBoolExpressionParserRuleCall_1_0_5_2_0_0, transition.trigger)
             }
         }
         for (idxEffect : transition.effects.indexed) {
             if (idxEffect.key == 0) {
-                feeder.accept(tg.getEffectsEffectParserRuleCall_7_1_0, idxEffect.value, idxEffect.key)
+                feeder.accept(tg.effectsEffectParserRuleCall_1_0_6_1_0, idxEffect.value, idxEffect.key)
             } else {
-                feeder.accept(tg.getEffectsEffectParserRuleCall_7_2_1_0, idxEffect.value, idxEffect.key)
+                feeder.accept(tg.effectsEffectParserRuleCall_1_0_6_2_1_0, idxEffect.value, idxEffect.key)
             }
         }
         
         if (!transition.label.nullOrEmpty) {
-            feeder.accept(tg.getLabelSTRINGTerminalRuleCall_8_1_0, transition.label)
+            feeder.accept(tg.labelSTRINGTerminalRuleCall_2_1_0, transition.label)
         } 
                 
         feeder.finish

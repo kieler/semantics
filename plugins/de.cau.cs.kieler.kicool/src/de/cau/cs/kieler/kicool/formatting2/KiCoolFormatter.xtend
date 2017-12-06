@@ -11,6 +11,7 @@ import de.cau.cs.kieler.kicool.ProcessorGroup;
 import de.cau.cs.kieler.kicool.services.KiCoolGrammarAccess;
 import org.eclipse.xtext.formatting2.IFormattableDocument;
 import de.cau.cs.kieler.kicool.IntermediateReference
+import de.cau.cs.kieler.kicool.ProcessorReference
 
 class KiCoolFormatter extends AnnotationsFormatter {
 	
@@ -41,6 +42,9 @@ class KiCoolFormatter extends AnnotationsFormatter {
 	
 	def dispatch void format(IntermediateReference intermediate, extension IFormattableDocument document) {
 	    intermediate.regionFor.keyword("intermediate").prepend[ newLine ]
-	    
 	}
+	
+    def dispatch void format(ProcessorReference reference, extension IFormattableDocument document) {
+        reference.regionFor.keyword("pre").prepend[ newLine noIndentation ]    
+    }	
 }
