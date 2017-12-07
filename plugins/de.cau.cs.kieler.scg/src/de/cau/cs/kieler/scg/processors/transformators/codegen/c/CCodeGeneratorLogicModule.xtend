@@ -262,7 +262,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
                     val newAssignment = ScgFactory.eINSTANCE.createAssignment
                     newAssignment.valuedObject = vo
                     for (is : indexStack) {
-                        newAssignment.indices.add(createIntValue(is))
+                        newAssignment.indices.add(0, createIntValue(is))
                     }
                     newAssignment.indices.add(createIntValue(index))
                     newAssignment.expression = v.copy
