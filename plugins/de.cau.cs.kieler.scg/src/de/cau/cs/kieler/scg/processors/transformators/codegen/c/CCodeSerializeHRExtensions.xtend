@@ -53,6 +53,8 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     override dispatch CharSequence serialize(ValueType valueType) {
         if (valueType == ValueType.BOOL) {
             return "char"
+        } else if (valueType == ValueType.STRING) {
+            return "char*"
         } else {
             return valueType.literal
         }
