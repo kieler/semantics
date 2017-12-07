@@ -86,6 +86,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scl.Pause
+import de.cau.cs.kieler.esterel.PresentCase
 
 /**
  * Methods and static variables which are used by the transformations which
@@ -842,14 +843,54 @@ class EsterelTransformationExtensions {
         annotation.eContainer.eGet(annotation.eContainingFeature) as EList<Annotation>
     }
     
-        /**
-     * Returns the list in which the given Statement is contained.
+    /**
+     * Returns the list in which the given thread is contained.
      * 
-     * @param statement A Statement which is in the returned list 
-     * @return The Statement list which includes the given Statement
+     * @param thread A thread which is in the returned list 
+     * @return The thread list which includes the given thread
      */
     def getContainingList(Thread thread) {
         thread.eContainer.eGet(thread.eContainingFeature) as EList<Thread>
+    }
+    
+    /**
+     * Returns the list in which the given PresentCase is contained.
+     * 
+     * @param pCase A PresentCase which is in the returned list 
+     * @return The cases list which includes the given case
+     */
+    def getContainingList(PresentCase pCase) {
+        pCase.eContainer.eGet(pCase.eContainingFeature) as EList<PresentCase>
+    }
+    
+    /**
+     * Returns the list in which the given Elsif is contained.
+     * 
+     * @param elsif A ElsIf which is in the returned list 
+     * @return The ElsIf list which includes the given ElsIf
+     */
+    def getContainingList(ElsIf elsif) {
+        elsif.eContainer.eGet(elsif.eContainingFeature) as EList<ElsIf>
+    }
+    
+    /**
+     * Returns the list in which the given EObject is contained.
+     * 
+     * @param obj A EObject which is in the returned list 
+     * @return The EObject list which includes the given EObject
+     */
+    def getContainingList(EObject obj) {
+        obj.eContainer.eGet(obj.eContainingFeature) as EList<EObject>
+    }
+    
+    /**
+     * Returns the list in which the given TrapHandler is contained.
+     * 
+     * @param handler A TrapHandler which is in the returned list 
+     * @return The Handler list which includes the given TrapHandler
+     */
+    def getContainingList(TrapHandler handler) {
+        handler.eContainer.eGet(handler.eContainingFeature) as EList<TrapHandler>
     }
 
     /**
