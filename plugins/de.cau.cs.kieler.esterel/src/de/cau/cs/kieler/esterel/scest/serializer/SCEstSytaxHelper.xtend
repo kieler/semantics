@@ -66,7 +66,7 @@ class SCEstSytaxHelper extends EsterelSytaxHelper {
     }
     
     private def chainSatements(List<Statement> stms) {
-        if (stms.size > 1) {
+        if (stms.size > 2) {
             val t = createEsterelThread
             t.statements.addAll(stms.drop(1).toList)
             t.statements.chainSatements
