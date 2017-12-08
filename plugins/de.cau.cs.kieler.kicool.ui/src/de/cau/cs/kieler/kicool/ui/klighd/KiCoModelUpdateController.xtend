@@ -61,6 +61,7 @@ import org.eclipse.ui.dialogs.SaveAsDialog
 import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtext.ui.util.ResourceUtil
 import org.eclipse.xtext.util.StringInputStream
+import de.cau.cs.kieler.kicool.registration.ResourceExtension
 
 /**
  * Controller for the ModelView to handle models interacting with KiCo.
@@ -576,9 +577,9 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                 filename = filename.substring(0, filename.lastIndexOf('.'))
             }
             // Adding correct file extension if available
-            val ext = KiCoolActivator.getInstance().getResourceExtension(model)
+            val ext = ResourceExtension.getResourceExtension(model)
             if (ext != null) {
-                filename += "." + ext.getExtension()
+                filename += "." + ext.getFileExtension()
             }
             return filename
         }

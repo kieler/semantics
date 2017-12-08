@@ -25,6 +25,7 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.resource.XtextResourceSet
+import de.cau.cs.kieler.kicool.registration.ResourceExtension
 
 /**
  * Diagram synthesis for Ecore models based on a XText grammar.
@@ -54,9 +55,9 @@ class XtextSerializationSynthesis extends AbstractDiagramSynthesis<EObject> {
             val outputStream = new ByteArrayOutputStream
             model.eResource?.save(outputStream, emptyMap)
             serialized = outputStream.toString
-        } else if (KiCoolActivator.instance.getResourceExtension(model) !== null){
+        } else if (ResourceExtension.getResourceExtension(model) !== null){
             val outputStream = new ByteArrayOutputStream
-            val ext = KiCoolActivator.instance.getResourceExtension(model).extension
+            val ext = ResourceExtension.getResourceExtension(model).fileExtension
             val uri = URI.createURI(#["inmemory:/", model.hashCode, ".", ext].join)
             val provider = xtextRegistry.getResourceServiceProvider(uri)
             val rset = provider.get(XtextResourceSet)
@@ -80,10 +81,10 @@ class XtextSerializationSynthesis extends AbstractDiagramSynthesis<EObject> {
             } else if (model.eResource != null && model.eResource.getURI != null) {
                 title = model.eResource.getURI.lastSegment;
             }
-            val resourceExtension = KiCoolActivator.getInstance().getResourceExtension(model);
+            val resourceExtension = ResourceExtension.getResourceExtension(model);
             var fileExtension = "txt";
             if (resourceExtension != null) {
-                fileExtension = resourceExtension.getExtension();
+                fileExtension = resourceExtension.getFileExtension();
             }
             // TODO Cannot open xtext editor because it fails to create a resource for
             // the special StringEditorInput because it has no path
