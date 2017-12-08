@@ -109,7 +109,7 @@ class DominatorTree {
             val bb = i.dfvertex
             val parent = bb.dfparent
             var semiCandidate = parent
-            for (predecessor : predecessors(bb)) {
+            for (predecessor : predecessors(bb).filter[dfNum.containsKey(it)]) {
                 val newSemiCandidate = if (predecessor.dfnum <= bb.dfnum) {
                     predecessor
                 } else {
@@ -140,18 +140,6 @@ class DominatorTree {
                 idom.put(bb, bb.samedom.idom)
             }
         }
-        
-        // Fix all BBs that have a predecessor and are reachable but have no dominator
-        for (bb : scg.basicBlocks.filter[!it.predecessors.empty && dfNum.containsValue(it) && it.idom === null ]) {
-            val firstNode = bb.schedulingBlocks.head?.nodes.head
-            // A join is always dominated by its fork
-            if (firstNode instanceof Join) {
-                idom.put(bb, bbNodes.get(firstNode.fork))
-            } else {
-                println("WRONG!")
-            }
-        }
-        
         
         // Calculate Dominance Frontiers
         calculateDominanceFrontiers(entryBB)
