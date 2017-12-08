@@ -121,6 +121,22 @@ class KExpressionsValuedObjectExtensions {
     def boolean isArrayReference(ValuedObjectReference valuedObjectReference) {
         !valuedObjectReference.indices.nullOrEmpty
     }
+    
+    def void applyIndices(ValuedObjectReference target, ValuedObjectReference source) {
+        if (target !== null && source !== null && !source.indices.nullOrEmpty) {
+            for (i : source.indices) {
+                target.indices.add(i.copy);
+            }
+        }    
+    }
+    
+    def void applyCardinalities(ValuedObject target, ValuedObject source) {
+        if (target !== null && source !== null && !source.cardinalities.nullOrEmpty) {
+            for (card : source.cardinalities) {
+                target.cardinalities.add(card.copy);
+            }
+        }    
+    }
 
     def boolean isSignal(ValuedObject valuedObject) {
         if (valuedObject.isModelReference) return false
@@ -143,7 +159,16 @@ class KExpressionsValuedObjectExtensions {
         createValuedObject() => [
             setName(valuedObjectName)
         ]
+    }
+    
+    def ValuedObject createValuedObject(Declaration declaration, String valuedObjectName) {
+        val vo = createValuedObject() => [
+            setName(valuedObjectName)
+        ]
+        declaration.attach(vo)
+        vo
     }     
+         
 
     def Declaration attach(Declaration declaration, ValuedObject valuedObject) {
         declaration => [ valuedObjects += valuedObject ]
@@ -161,11 +186,7 @@ class KExpressionsValuedObjectExtensions {
         if (valuedObjectWithAttributes.combineOperator != null) {
             valuedObject.setCombineOperator(valuedObjectWithAttributes.combineOperator)
         }
-        if (!valuedObjectWithAttributes.cardinalities.nullOrEmpty) {
-            for (card : valuedObjectWithAttributes.cardinalities) {
-                valuedObject.cardinalities.add(card);
-            }
-        }        
+        valuedObject.applyCardinalities(valuedObjectWithAttributes)
         valuedObject
     }
     

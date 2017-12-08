@@ -291,6 +291,7 @@ class ExecutableSimulator extends DefaultSimulator {
         // Wait until output has been generated
         var String line
         var startTime = System.currentTimeMillis
+        var isJSON = false
         do {
             // Call readLine with a timeout of 1 second
             val callable = new Callable<String>(){ 
@@ -315,9 +316,32 @@ class ExecutableSimulator extends DefaultSimulator {
                 throw new IOException("Process of simulation '" + processBuilder.command + "' in '" + processBuilder.directory + "'\n"
                                     + "is not responding with a JSON object.")
             }
-        } while(line == null || !line.startsWith("{") || !line.endsWith("}"))
+            
+            // If the program did a print, the message will stand in front of the {
+            if (line !== null && !line.startsWith("{") && line.contains("{")) {
+                val pos = line.indexOf("{")
+                val printed = line.substring(0, pos)
+                printFromSimulation(printed)
+                line = line.substring(pos, line.length)
+            }
+            // Delegate non-JSON text to the Prom Console so the user can see it
+            isJSON = line.startsWith("{") && line.endsWith("}") 
+            if(!isJSON) {
+                printFromSimulation(line)
+            }
+        } while(line === null || !isJSON)
         
         return line
+    }
+    
+    /**
+     * Prints text to the user visible console.
+     * This is intended for non-JSON text from the simulation.
+     * 
+     * @param txt The text 
+     */
+    private def void printFromSimulation(String txt) {
+        PromConsole.print("Simulation:"+txt)
     }
     
     /**

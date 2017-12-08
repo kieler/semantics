@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.esterel.extensions
 
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import javax.xml.ws.Action
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**

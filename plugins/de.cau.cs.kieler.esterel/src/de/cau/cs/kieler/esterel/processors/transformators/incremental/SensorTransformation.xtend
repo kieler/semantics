@@ -12,77 +12,67 @@
  */
 package de.cau.cs.kieler.esterel.processors.transformators.incremental
 
+import java.util.HashMap
 import com.google.inject.Inject
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
+import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
 import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.Sensor
 import de.cau.cs.kieler.esterel.SensorDeclaration
-import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
-import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
-import de.cau.cs.kieler.esterel.processors.EsterelProcessor
-import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.esterel.SignalReference
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.scl.Module
-import de.cau.cs.kieler.scl.ScopeStatement
-import de.cau.cs.kieler.scl.Statement
-import java.util.HashMap
-import java.util.Map
+import org.eclipse.emf.ecore.EObject
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * @author mrb
  *
  */
-class SensorTransformation extends EsterelProcessor {
+class SensorTransformation extends InplaceProcessor<EsterelProgram> {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
+    
+    public static val ID = "de.cau.cs.kieler.esterel.processors.sensor"
+    
     override getId() {
-        return SCEstTransformation::SENSOR_ID
+        return ID
     }
 
     override getName() {
-        return SCEstTransformation::SENSOR_NAME
+        return "Sensor"
     }
-
-//    override getExpandsFeatureId() {
-//        return SCEstFeature::SENSOR_ID
-//    }
-//        
-//    override getNotHandlesFeatureIds() {
-//        return Sets.newHashSet( SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::RUN_ID)
-//    }
-
+    
     @Inject
     extension EsterelTransformationExtensions
-    @Inject
-    extension EsterelExtensions
     
-    override EsterelProgram transform(EsterelProgram prog) {
-        prog.modules.forEach [ m | m.transformSensors]
-        return prog
+    override process() {
+        model.eAllContents.filter(Module).toList.forEach[transform]
     }
     
-    def transformSensors(Module module) {
+    def transform(Module module) {
         // this map combines an Esterel sensor with the new SCL variable
-        var HashMap<Sensor, ValuedObject> newVariables = new HashMap<Sensor, ValuedObject>()
-        var ScopeStatement scope = module.getIScope
-        for (decl: module.sensorDeclarations) {
-            for (s : decl.sensors) {
-                if (s.type != null) {
-                    var variable = createNewUniqueVariable(null)
+        val HashMap<Sensor, ValuedObject> newVariables = new HashMap<Sensor, ValuedObject>()
+        val sensorDeclarations = module.declarations.filter(SensorDeclaration).toList
+        for (decl: sensorDeclarations) {
+            for (s : decl.valuedObjects.filter(Sensor)) {
+                if (s.type.type !== null) {
+                    val variable = createNewUniqueVariable(null)
                     var ValueType newType
-                    if (s.type != ValueType.PURE) {
-                        newType = if (s.type == ValueType.DOUBLE) ValueType.FLOAT else s.type.type
+                    if (s.type.type != ValueType.PURE) {
+                        newType = if (s.type.type == ValueType.DOUBLE) ValueType.FLOAT else s.type.type
                         newVariables.put(s, variable)
                     }
                     else {
                         throw new UnsupportedOperationException(
                         "The following sensor doesn't have a valid type for SCL! " + s.name)
                     }
-                    var newDecl = createDeclaration(newType, variable)
-                    newDecl.valuedObjects.add(variable)
-                    scope.declarations.add(newDecl)
+                    module.declarations.add(createDeclaration(newType, variable))
                 }
                 else { 
                     throw new UnsupportedOperationException(
@@ -90,20 +80,28 @@ class SensorTransformation extends EsterelProcessor {
                 }
             }
         }
-        transformReferences(scope, newVariables)
+        transformReferences(module, newVariables)
         module.declarations.removeIf[it instanceof SensorDeclaration]
     }
     
-    def transformReferences(Statement statement, Map<Sensor, ValuedObject> newVariables) {
-        var references = statement.eAllContents.filter(ValuedObjectReference).toList
-        // iterate over all valued object references contained in the scope
+    def transformReferences(EObject obj, HashMap<Sensor, ValuedObject> newVariables) {
+        val references = obj.eAllContents.filter(SignalReference).toList
+        // iterate over all signal references contained in the scope
         // if a reference references a transformed sensor then set the reference to the new variable
         for (ref : references) {
             if (ref.valuedObject instanceof Sensor) {
-                var vObject = ref.valuedObject as Sensor
-                if (newVariables.containsKey(vObject)) {
-                    ref.valuedObject = newVariables.get(vObject)
-                    removeValueTestOperator(ref.eContainer)
+                val sensor = ref.valuedObject as Sensor
+                if (newVariables.containsKey(sensor)) {
+                    val newRef = newVariables.get(sensor).createValuedObjectReference
+                    val expr = ref.eContainer
+                    if ( (expr instanceof OperatorExpression) && 
+                         ((expr as OperatorExpression).operator == OperatorType.VAL)
+                    ) {
+                        expr.replace(newRef)
+                    }
+                    else {
+                        ref.replace(newRef)
+                    }
                 }
             }
         }

@@ -21,6 +21,7 @@ import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect
 import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
+import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect
 
 /**
  * Serialization of KEffects in human readable form.
@@ -75,6 +76,10 @@ class KEffectsSerializeHRExtensions extends KEffectsSerializeExtensions {
         var paramStr = referenceCallEffect.parameters.serializeHRParameters.toString
         
         return "print " + paramStr.substring(1, paramStr.length - 1)
+    }
+    
+    def dispatch CharSequence serializeHR(RandomizeCallEffect randomizeCallEffect) {
+        return "randomize";
     }   
     
     

@@ -618,10 +618,10 @@ ruleCoProcessor returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(
+((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getCoProcessorAccess().getIdQualifiedIDParserRuleCall_0()); 
+	        newCompositeNode(grammarAccess.getCoProcessorAccess().getIdQualifiedIDParserRuleCall_0_0()); 
 	    }
 		lv_id_0_0=ruleQualifiedID		{
 	        if ($current==null) {
@@ -636,7 +636,22 @@ ruleCoProcessor returns [EObject current=null]
 	    }
 
 )
+)(
+(
+		lv_silent_1_0=	'silent' 
+    {
+        newLeafNode(lv_silent_1_0, grammarAccess.getCoProcessorAccess().getSilentSilentKeyword_1_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getCoProcessorRule());
+	        }
+       		setWithLastConsumed($current, "silent", true, "silent");
+	    }
+
 )
+)?)
 ;
 
 
@@ -1958,6 +1973,10 @@ ruleFloateger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken
     }
 )
     ;
+
+
+
+
 
 
 

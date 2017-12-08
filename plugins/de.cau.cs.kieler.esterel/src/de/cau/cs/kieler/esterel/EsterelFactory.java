@@ -643,6 +643,15 @@ public interface EsterelFactory extends EFactory {
     TickReference createTickReference();
 
     /**
+     * Returns a new object of class '<em>Variable Reference</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Variable Reference</em>'.
+     * @generated
+     */
+    VariableReference createVariableReference();
+
+    /**
      * Returns a new object of class '<em>SC Est Statement</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

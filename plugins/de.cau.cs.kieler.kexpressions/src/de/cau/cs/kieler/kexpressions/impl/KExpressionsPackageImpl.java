@@ -23,6 +23,8 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.kexpressions.OperatorType;
 import de.cau.cs.kieler.kexpressions.Parameter;
 import de.cau.cs.kieler.kexpressions.PrintCall;
+import de.cau.cs.kieler.kexpressions.RandomCall;
+import de.cau.cs.kieler.kexpressions.RandomizeCall;
 import de.cau.cs.kieler.kexpressions.ReferenceCall;
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration;
 import de.cau.cs.kieler.kexpressions.Referenceable;
@@ -173,6 +175,20 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     private EClass printCallEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass randomCallEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass randomizeCallEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -768,6 +784,24 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getRandomCall() {
+        return randomCallEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getRandomizeCall() {
+        return randomizeCallEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getReferenceable() {
         return referenceableEClass;
     }
@@ -1066,6 +1100,10 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         printCallEClass = createEClass(PRINT_CALL);
 
+        randomCallEClass = createEClass(RANDOM_CALL);
+
+        randomizeCallEClass = createEClass(RANDOMIZE_CALL);
+
         referenceableEClass = createEClass(REFERENCEABLE);
 
         schedulableEClass = createEClass(SCHEDULABLE);
@@ -1133,6 +1171,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         referenceCallEClass.getESuperTypes().add(this.getCall());
         functionCallEClass.getESuperTypes().add(this.getCall());
         printCallEClass.getESuperTypes().add(this.getCall());
+        randomCallEClass.getESuperTypes().add(this.getCall());
+        randomizeCallEClass.getESuperTypes().add(this.getCall());
 
         // Initialize classes and features; add operations and parameters
         initEClass(expressionEClass, Expression.class, "Expression", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1220,6 +1260,10 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEAttribute(getFunctionCall_FunctionName(), ecorePackage.getEString(), "functionName", null, 0, 1, FunctionCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(printCallEClass, PrintCall.class, "PrintCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(randomCallEClass, RandomCall.class, "RandomCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(randomizeCallEClass, RandomizeCall.class, "RandomizeCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(referenceableEClass, Referenceable.class, "Referenceable", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

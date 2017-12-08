@@ -21,6 +21,7 @@ import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeGeneratorLogicModule
 import java.util.Map
+import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeSerializeHRExtensions
 
 /**
  * Java Code Generator Logic Module
@@ -34,7 +35,7 @@ import java.util.Map
  */
 class JavaCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
     
-    @Inject extension JavaCodeSerializeHRExtensions
+    @Inject JavaCodeSerializeHRExtensions javaSerializer
     
     var JavaCodeGeneratorStructModule struct 
     var JavaCodeGeneratorResetModule reset
@@ -50,6 +51,7 @@ class JavaCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
         tick = (parent as JavaCodeGeneratorModule).tick as JavaCodeGeneratorTickModule
         
         indentationModifier = 1
+        serializer = javaSerializer
         
         return this
     }
@@ -65,7 +67,7 @@ class JavaCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
         code.append(" {\n")
     }
     
-    override def void addPreVariable(OperatorExpression operatorExpression) {
+    override def void addPreVariable(OperatorExpression operatorExpression, extension CCodeSerializeHRExtensions serializer) {
         valuedObjectPrefix = ""
         prePrefix = JavaCodeGeneratorStructModule.STRUCT_PRE_PREFIX
         val name = operatorExpression.serializeHR 

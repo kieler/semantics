@@ -15,10 +15,14 @@ package de.cau.cs.kieler.prom.build.simulation
 import com.google.common.io.Files
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.configurable.ConfigurableAttribute
+import de.cau.cs.kieler.prom.configurable.ResourceSubstitution
 import de.cau.cs.kieler.prom.configurable.Substitution
+import de.cau.cs.kieler.prom.data.FileData
 import org.eclipse.core.resources.IFile
+import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Path
+import org.eclipse.jdt.core.JavaCore
 
 /**
  * Compiles Java code for the simulation.
@@ -43,6 +47,20 @@ class JavaSimulationCompiler extends SimulationCompiler {
     public val jarCommand = new ConfigurableAttribute("jarCommand", null, #[String])
     
     /**
+     * The library directory in which the SJ library should be saved.
+     */
+    public val sjLibFolder = new ConfigurableAttribute("sjLibFolder", null, #[String])
+    
+    /**
+     * Placeholder for the SJ library folder.
+     */
+    private val sjLibFolderSubstitution = new ResourceSubstitution("sjLibFolder") {
+        override getValue() {
+            return project.getFolder(libFolder.stringValue)
+        }
+    }
+
+    /**
      * Constructor
      */
     new() {
@@ -50,6 +68,8 @@ class JavaSimulationCompiler extends SimulationCompiler {
         jarCommand.value = DEFAULT_JAR_COMMAND
         // The directory structure of the json lib must follow its package declaration
         libFolder.value = "kieler-gen/org/json"
+        // Same for the SJ library folder
+        sjLibFolder.value = "kieler-gen/de/cau/cs/kieler/scg/processors/transformators/priority"
     }
     
     /**
@@ -121,6 +141,46 @@ class JavaSimulationCompiler extends SimulationCompiler {
      */
     override getLibFolderOrigin() {
         return "platform:/plugin/de.cau.cs.kieler.prom/resources/java/org/json"
+    }
+    
+    /**
+     * The origin of the SJ library.
+     */
+    private def getSJLibFolderOrigin() {
+        return "platform:/plugin/de.cau.cs.kieler.prom/resources/java/lib"
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override getLibFolderDatas() {
+        val sjLibFolderData = new FileData(sjLibFolder.stringValue, getSJLibFolderOrigin)
+        val list = super.getLibFolderDatas
+        list.add(sjLibFolderData)
+        return list
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override getSubstitutions() {
+        val list = super.getSubstitutions
+        list.add(sjLibFolderSubstitution)
+        return list
+    }
+    
+    override createLibrary(IProject project) {
+        super.createLibrary(project)
+        // Exclude the sim folder from beeing built.
+        // The files of the simulation are compiled independent of the Java project builder
+        // and some projects (e.g. Mindstorms NXT) have issues in these files.
+        if(PromPlugin.isJavaProject(project)) {
+            val jProject = JavaCore.create(project);
+            val simFolder = project.getFolder(new Path("kieler-gen/sim"))
+            val libFolder = project.getFolder(new Path(libFolder.stringValue))
+            PromPlugin.excludeFolderFromJavaClasspath(jProject, simFolder)
+            PromPlugin.excludeFolderFromJavaClasspath(jProject, libFolder)
+        }
     }
     
     /**

@@ -21,6 +21,7 @@ import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import com.google.inject.Injector
 
 /** 
  * @author ssm
@@ -31,6 +32,7 @@ class ThreadAnalyzer extends InplaceProcessor<SCGraphs> {
 	
 	@Inject extension AnnotationsExtensions
 	@Inject extension SCGThreadExtensions
+	@Inject Injector injector
 	
     public static val IProperty<ThreadData> THREAD_DATA = 
         new Property<ThreadData>("de.cau.cs.kieler.scg.processors.threadAnalyzer.data", null)	
@@ -47,7 +49,7 @@ class ThreadAnalyzer extends InplaceProcessor<SCGraphs> {
     
     override process() {
         val model = getModel
-        val threadData = new ThreadData 
+        val threadData = injector.getInstance(ThreadData) 
         environment.setProperty(THREAD_DATA, threadData)
         
         for (scg : model.scgs) {
@@ -61,6 +63,8 @@ class ThreadAnalyzer extends InplaceProcessor<SCGraphs> {
                 }                
             }            
         }
+        
+        threadData.createForkMap
     }	
 	
 }

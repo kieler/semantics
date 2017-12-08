@@ -37,7 +37,7 @@ class ShadowHook extends SynthesisHook {
     extension KRenderingExtensions
     
     /** The related synthesis option */
-    public static final SynthesisOption SHOW_SHADOW = SynthesisOption.createCheckOption("Shadow",
+    public static final SynthesisOption SHOW_SHADOW = SynthesisOption.createCheckOption("Shadows",
             true).setCategory(GeneralSynthesisOptions::APPEARANCE);
 
     override getDisplayedSynthesisOptions() {

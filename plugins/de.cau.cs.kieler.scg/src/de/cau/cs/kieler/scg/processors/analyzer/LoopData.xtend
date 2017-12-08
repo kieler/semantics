@@ -22,9 +22,9 @@ import org.eclipse.emf.ecore.util.EcoreUtil.Copier
  * @author ssm
  *
  */
-class LoopData implements IKiCoolCloneable {
+class LoopData extends SingleLoop implements IKiCoolCloneable {
     
-    @Accessors var Set<Node> criticalNodes = <Node> newLinkedHashSet
+    @Accessors var Set<SingleLoop> loops = <SingleLoop> newLinkedHashSet
     
     override isMutable() {
         false
@@ -33,6 +33,9 @@ class LoopData implements IKiCoolCloneable {
     override cloneObject() {
         new LoopData => [ ld |
             ld.criticalNodes.addAll(criticalNodes)
+            loops.forEach[ loop |
+                ld.loops.add(loop.cloneObject as SingleLoop)
+            ]
         ] 
     }
     
@@ -43,6 +46,7 @@ class LoopData implements IKiCoolCloneable {
             resolvedLoopdData.add(newNode)
         } 
         criticalNodes = resolvedLoopdData
+        loops.forEach[ resolveCopiedObjects(copier) ]
     } 
     
 }

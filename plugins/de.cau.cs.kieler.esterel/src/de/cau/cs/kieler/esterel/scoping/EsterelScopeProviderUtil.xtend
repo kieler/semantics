@@ -136,10 +136,10 @@ class EsterelScopeProviderUtil {
         val scopeElems = new ArrayList<IEObjectDescription>();
         var parent = context.eContainer();
         // get this scope's module interface
-        while (!(parent instanceof Module) && parent != null) {
+        while (!(parent instanceof Module) && parent !== null) {
             parent = parent.eContainer();
         }
-        if (parent != null) function.collect(parent as Module, scopeElems);
+        if (parent !== null) function.collect(parent as Module, scopeElems);
         return scopeElems;
     }
 
@@ -158,10 +158,10 @@ class EsterelScopeProviderUtil {
         val scopeElems = new ArrayList<IEObjectDescription>();
         var parent = context.eContainer();
         // get this scope's module interface
-        while (!(parent instanceof Module) && parent != null) {
+        while (!(parent instanceof Module) && parent !== null) {
             parent = parent.eContainer();
         }
-        if (parent != null) {
+        if (parent !== null) {
             function.collect(parent as Module, scopeElems);
             // collect from possible other modules
             val p = (parent as Module).eContainer() as EsterelProgram;
@@ -170,6 +170,74 @@ class EsterelScopeProviderUtil {
             }
         }
         return scopeElems;
+    }
+    
+    /**
+     * collect all signals (including local signals) and sensors AND the valued object "tick"
+     * 
+     * @param context context
+     * 
+     * @return list with scope elements
+     */
+    public static def List<IEObjectDescription> getSignalsAndSensors(EObject context) {
+        val scopeElems = getAllSignals(context)
+        scopeElems.addAll(getAllElements(context, COLLECT_SENSORS))
+
+        return scopeElems;
+        
+    }
+    
+    /**
+     * collect everything of type 'valuedObject' (signals, variables, traps ...)
+     * 
+     * @param context context
+     * 
+     * @return list with scope elements
+     */
+    public static def List<IEObjectDescription> getValuedObjects(EObject context) {
+        val scopeElems = new ArrayList<IEObjectDescription>();
+        
+        scopeElems.addAll(getLocalVariables(context))
+        scopeElems.addAll(getAllElements(context, COLLECT_CONSTANTS))
+
+        return scopeElems;
+
+//        var parent = context.eContainer();
+//        // Go up in the Structure until Module/MainModule
+//        while (!(parent instanceof Module) && parent != null) {
+//            switch (parent) {
+//                LocalVariableDeclaration : {
+//                    val decl = (parent as LocalVariableDeclaration).getDeclarations();
+//                    for (EsterelVariableDeclaration vdecl : decl) {
+//                        for (Variable varSingle : vdecl.valuedObjects.filter(Variable)) {
+//                            scopeElems.add(new EObjectDescription(QualifiedName.create(varSingle
+//                                    .getName()), varSingle, emptyMap));
+//                        }
+//                    }
+//                }
+//                LocalSignalDeclaration : {
+//                    val signals = (parent as LocalSignalDeclaration).getValuedObjects();
+//                    for (s : signals) {
+//                        scopeElems.add(new EObjectDescription(QualifiedName.create(s.getName()), s, emptyMap));
+//                    }
+//                }
+//                Trap : {
+//                    val trapDecl = (parent as Trap).getTrapSignals();
+//                    // add Trap to the scope
+//                    for (Signal trap : trapDecl) {
+//                        scopeElems.add(new EObjectDescription(QualifiedName.create(trap.getName()),
+//                                trap, emptyMap));
+//                    }                    
+//                }
+//                
+//            }
+//            parent = parent.eContainer();
+//        }
+//        scopeElems.addAll(getAllElements(context, COLLECT_CONSTANTS))
+//        scopeElems.addAll(getAllElements(context, COLLECT_SENSORS))
+//        scopeElems.addAll(getAllElements(context, COLLECT_SIGNALS))
+//
+//        return scopeElems;
     }
 
     /**
@@ -184,7 +252,7 @@ class EsterelScopeProviderUtil {
 
         var parent = context.eContainer();
         // Go up in the Structure until Module/MainModule
-        while (!(parent instanceof Module) && parent != null) {
+        while (!(parent instanceof Module) && parent !== null) {
             // Get the local signals into the scope
             if (parent instanceof LocalSignalDeclaration) {
                 val signals = (parent as LocalSignalDeclaration).getValuedObjects();
@@ -210,7 +278,7 @@ class EsterelScopeProviderUtil {
 
         var parent = context.eContainer();
         // Go up in the Structure until Module/MainModule
-        while (!(parent instanceof Module) && parent != null) {
+        while (!(parent instanceof Module) && parent !== null) {
             // Get the local variables into the scope
             if (parent instanceof LocalVariableDeclaration) {
                 val decl = (parent as LocalVariableDeclaration).getDeclarations();
@@ -239,7 +307,7 @@ class EsterelScopeProviderUtil {
 
         var parent = context.eContainer();
         // find all Traps
-        while (!(parent instanceof Module) && parent != null) {
+        while (!(parent instanceof Module) && parent !== null) {
             if (parent instanceof Trap) {
                 val trapDecl = (parent as Trap).getTrapSignals();
                 // add Trap to the scope
@@ -266,7 +334,7 @@ class EsterelScopeProviderUtil {
 
         var parent = context.eContainer();
         // find all Modules
-        while (parent != null) {
+        while (parent !== null) {
             if (parent instanceof EsterelProgram) {
                 val p = parent;
                 // add Trap to the scope

@@ -144,16 +144,10 @@ public abstract class AbstractKiCoolSemanticSequencer extends AnnotationsSemanti
 	 *     CoProcessor returns ProcessorReference
 	 *
 	 * Constraint:
-	 *     id=QualifiedID
+	 *     (id=QualifiedID silent?='silent'?)
 	 */
 	protected void sequence_CoProcessor(ISerializationContext context, ProcessorReference semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KiCoolPackage.Literals.PROCESSOR_ENTRY__ID) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KiCoolPackage.Literals.PROCESSOR_ENTRY__ID));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getCoProcessorAccess().getIdQualifiedIDParserRuleCall_0(), semanticObject.getId());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

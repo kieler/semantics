@@ -30,26 +30,29 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cReferenceCallEffectParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		private final RuleCall cFunctionCallEffectParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		private final RuleCall cPrintCallEffectParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cRandomizeCallEffectParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
 		
-		/// **
+		///**
 		// * @author ssm
 		// * @kieler.design 2015-08-23 proposed 
 		// * @kieler.rating 2015-08-23 proposed yellow
-		// * / / *
+		// */ /*
 		// * KEffects allow deriving grammars to use a range of different effects, namely assignments,
 		// * postfix effects, esterel like emissions, host code and function call effects.
 		// * Of course other grammars may extend this list.
-		// * / // ---------------- //
+		// */ // ---------------- //
 		////  KEffects Rules  // 
 		//// ---------------- //
 		//// Effect Rule
 		//// An effect is either an assignment, a postfix effect, an emission, a hostcode effect or a 
 		//// function call effect.
 		//Effect keffects::Effect:
-		//	Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect | PrintCallEffect
+		//	Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect | PrintCallEffect |
+		//	RandomizeCallEffect;
 		@Override public ParserRule getRule() { return rule; }
 
-		//Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect | PrintCallEffect
+		//Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect | PrintCallEffect |
+		//RandomizeCallEffect
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Assignment
@@ -72,6 +75,9 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//PrintCallEffect
 		public RuleCall getPrintCallEffectParserRuleCall_6() { return cPrintCallEffectParserRuleCall_6; }
+
+		//RandomizeCallEffect
+		public RuleCall getRandomizeCallEffectParserRuleCall_7() { return cRandomizeCallEffectParserRuleCall_7; }
 	}
 
 	public class EmissionElements extends AbstractParserRuleElementFinder {
@@ -100,7 +106,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//// annotations defined in the annotations grammar.		
 		//Emission keffects::Emission:
 		//	annotations+=QuotedStringAnnotation*
-		//	reference=ValuedObjectReference ("(" newValue=Expression ")")? ('schedule' schedule+=ScheduleObjectReference+)?
+		//	reference=ValuedObjectReference ("(" newValue=Expression ")")? ('schedule' schedule+=ScheduleObjectReference+)?;
 		@Override public ParserRule getRule() { return rule; }
 
 		//annotations+=QuotedStringAnnotation* reference=ValuedObjectReference ("(" newValue=Expression ")")? ('schedule'
@@ -171,7 +177,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//Assignment keffects::Assignment:
 		//	annotations+=Annotation*
 		//	reference=ValuedObjectReference
-		//	operator=AssignOperator expression=Expression ('schedule' schedule+=ScheduleObjectReference+)?
+		//	operator=AssignOperator expression=Expression ('schedule' schedule+=ScheduleObjectReference+)?;
 		@Override public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* reference=ValuedObjectReference operator=AssignOperator expression=Expression ('schedule'
@@ -241,7 +247,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//PostfixEffect keffects::Assignment:
 		//	annotations+=Annotation*
 		//	reference=ValuedObjectReference
-		//	operator=PostfixOperator ('schedule' schedule+=ScheduleObjectReference+)?
+		//	operator=PostfixOperator ('schedule' schedule+=ScheduleObjectReference+)?;
 		@Override public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* reference=ValuedObjectReference operator=PostfixOperator ('schedule'
@@ -291,7 +297,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//// A hostcode effect is an effect that include hostcode. It may be preceded by a list of annotations.
 		//HostcodeEffect keffects::HostcodeEffect:
 		//	annotations+=Annotation*
-		//	text=HOSTCODE
+		//	text=HOSTCODE;
 		@Override public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* text=HOSTCODE
@@ -335,7 +341,8 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//// preceded by a list of annotations.
 		//ReferenceCallEffect keffects::ReferenceCallEffect:
 		//	annotations+=Annotation*
-		//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
+		//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' |
+		//	'()');
 		@Override public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (','
@@ -357,7 +364,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//PrimeID
 		public RuleCall getValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1() { return cValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1; }
 
-		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
+		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()'
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 
 		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')'
@@ -436,7 +443,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//	annotations+=Annotation* ('extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
 		//	| '()')) | '<' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
 		//	| '()')
-		//	'>'
+		//	'>';
 		@Override public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* ('extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()'))
@@ -452,7 +459,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0_0; }
 
-		//('extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()'))
+		//'extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
 		public Group getGroup_0_1() { return cGroup_0_1; }
 
 		//'extern'
@@ -464,7 +471,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getFunctionNameIDTerminalRuleCall_0_1_1_0() { return cFunctionNameIDTerminalRuleCall_0_1_1_0; }
 
-		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
+		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()'
 		public Alternatives getAlternatives_0_1_2() { return cAlternatives_0_1_2; }
 
 		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')'
@@ -509,7 +516,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getFunctionNameIDTerminalRuleCall_1_1_0() { return cFunctionNameIDTerminalRuleCall_1_1_0; }
 
-		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
+		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()'
 		public Alternatives getAlternatives_1_2() { return cAlternatives_1_2; }
 
 		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')'
@@ -552,19 +559,24 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
 		private final Keyword cPrintKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cParametersAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cParametersParameterParserRuleCall_2_0 = (RuleCall)cParametersAssignment_2.eContents().get(0);
-		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cCommaKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cParametersAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cParametersParameterParserRuleCall_3_1_0 = (RuleCall)cParametersAssignment_3_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cParametersAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_2_1_0 = (RuleCall)cParametersAssignment_2_1.eContents().get(0);
+		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
+		private final Keyword cCommaKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cParametersAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_2_2_1_0 = (RuleCall)cParametersAssignment_2_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
 		
+		//// Print Call Effect Rule
+		//// A print functions that enables target-independent prints in the model.    
 		//PrintCallEffect keffects::PrintCallEffect:
 		//	annotations+=Annotation*
-		//	'print' parameters+=Parameter (',' parameters+=Parameter)*
+		//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')');
 		@Override public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* 'print' parameters+=Parameter (',' parameters+=Parameter)*
+		//annotations+=Annotation* 'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -576,23 +588,107 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//'print'
 		public Keyword getPrintKeyword_1() { return cPrintKeyword_1; }
 
+		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+		public Group getGroup_2() { return cGroup_2; }
+
+		//'('
+		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
+
 		//parameters+=Parameter
-		public Assignment getParametersAssignment_2() { return cParametersAssignment_2; }
+		public Assignment getParametersAssignment_2_1() { return cParametersAssignment_2_1; }
 
 		//Parameter
-		public RuleCall getParametersParameterParserRuleCall_2_0() { return cParametersParameterParserRuleCall_2_0; }
+		public RuleCall getParametersParameterParserRuleCall_2_1_0() { return cParametersParameterParserRuleCall_2_1_0; }
 
 		//(',' parameters+=Parameter)*
-		public Group getGroup_3() { return cGroup_3; }
+		public Group getGroup_2_2() { return cGroup_2_2; }
 
 		//','
-		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
+		public Keyword getCommaKeyword_2_2_0() { return cCommaKeyword_2_2_0; }
 
 		//parameters+=Parameter
-		public Assignment getParametersAssignment_3_1() { return cParametersAssignment_3_1; }
+		public Assignment getParametersAssignment_2_2_1() { return cParametersAssignment_2_2_1; }
 
 		//Parameter
-		public RuleCall getParametersParameterParserRuleCall_3_1_0() { return cParametersParameterParserRuleCall_3_1_0; }
+		public RuleCall getParametersParameterParserRuleCall_2_2_1_0() { return cParametersParameterParserRuleCall_2_2_1_0; }
+
+		//')'
+		public Keyword getRightParenthesisKeyword_2_3() { return cRightParenthesisKeyword_2_3; }
+	}
+
+	public class RandomizeCallEffectElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.keffects.KEffects.RandomizeCallEffect");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cRandomizeCallEffectAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cAnnotationsAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_1_0 = (RuleCall)cAnnotationsAssignment_1.eContents().get(0);
+		private final Keyword cRandomizeKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
+		private final Group cGroup_3_0 = (Group)cAlternatives_3.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_3_0_0 = (Keyword)cGroup_3_0.eContents().get(0);
+		private final Assignment cParametersAssignment_3_0_1 = (Assignment)cGroup_3_0.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_3_0_1_0 = (RuleCall)cParametersAssignment_3_0_1.eContents().get(0);
+		private final Group cGroup_3_0_2 = (Group)cGroup_3_0.eContents().get(2);
+		private final Keyword cCommaKeyword_3_0_2_0 = (Keyword)cGroup_3_0_2.eContents().get(0);
+		private final Assignment cParametersAssignment_3_0_2_1 = (Assignment)cGroup_3_0_2.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_3_0_2_1_0 = (RuleCall)cParametersAssignment_3_0_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_3_0_3 = (Keyword)cGroup_3_0.eContents().get(3);
+		private final Keyword cLeftParenthesisRightParenthesisKeyword_3_1 = (Keyword)cAlternatives_3.eContents().get(1);
+		
+		//RandomizeCallEffect keffects::RandomizeCallEffect:
+		//	{keffects::RandomizeCallEffect} annotations+=Annotation*
+		//	'randomize' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+		//	| '()');
+		@Override public ParserRule getRule() { return rule; }
+
+		//{keffects::RandomizeCallEffect} annotations+=Annotation* 'randomize' ('(' parameters+=Parameter (','
+		//parameters+=Parameter)* ')' | '()')
+		public Group getGroup() { return cGroup; }
+
+		//{keffects::RandomizeCallEffect}
+		public Action getRandomizeCallEffectAction_0() { return cRandomizeCallEffectAction_0; }
+
+		//annotations+=Annotation*
+		public Assignment getAnnotationsAssignment_1() { return cAnnotationsAssignment_1; }
+
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_1_0() { return cAnnotationsAnnotationParserRuleCall_1_0; }
+
+		//'randomize'
+		public Keyword getRandomizeKeyword_2() { return cRandomizeKeyword_2; }
+
+		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()'
+		public Alternatives getAlternatives_3() { return cAlternatives_3; }
+
+		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+		public Group getGroup_3_0() { return cGroup_3_0; }
+
+		//'('
+		public Keyword getLeftParenthesisKeyword_3_0_0() { return cLeftParenthesisKeyword_3_0_0; }
+
+		//parameters+=Parameter
+		public Assignment getParametersAssignment_3_0_1() { return cParametersAssignment_3_0_1; }
+
+		//Parameter
+		public RuleCall getParametersParameterParserRuleCall_3_0_1_0() { return cParametersParameterParserRuleCall_3_0_1_0; }
+
+		//(',' parameters+=Parameter)*
+		public Group getGroup_3_0_2() { return cGroup_3_0_2; }
+
+		//','
+		public Keyword getCommaKeyword_3_0_2_0() { return cCommaKeyword_3_0_2_0; }
+
+		//parameters+=Parameter
+		public Assignment getParametersAssignment_3_0_2_1() { return cParametersAssignment_3_0_2_1; }
+
+		//Parameter
+		public RuleCall getParametersParameterParserRuleCall_3_0_2_1_0() { return cParametersParameterParserRuleCall_3_0_2_1_0; }
+
+		//')'
+		public Keyword getRightParenthesisKeyword_3_0_3() { return cRightParenthesisKeyword_3_0_3; }
+
+		//'()'
+		public Keyword getLeftParenthesisRightParenthesisKeyword_3_1() { return cLeftParenthesisRightParenthesisKeyword_3_1; }
 	}
 	
 	
@@ -761,6 +857,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	private final ReferenceCallEffectElements pReferenceCallEffect;
 	private final FunctionCallEffectElements pFunctionCallEffect;
 	private final PrintCallEffectElements pPrintCallEffect;
+	private final RandomizeCallEffectElements pRandomizeCallEffect;
 	private final AssignOperatorElements eAssignOperator;
 	private final PostfixOperatorElements ePostfixOperator;
 	
@@ -789,6 +886,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pReferenceCallEffect = new ReferenceCallEffectElements();
 		this.pFunctionCallEffect = new FunctionCallEffectElements();
 		this.pPrintCallEffect = new PrintCallEffectElements();
+		this.pRandomizeCallEffect = new RandomizeCallEffectElements();
 		this.eAssignOperator = new AssignOperatorElements();
 		this.ePostfixOperator = new PostfixOperatorElements();
 	}
@@ -828,22 +926,23 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
-	/// **
+	///**
 	// * @author ssm
 	// * @kieler.design 2015-08-23 proposed 
 	// * @kieler.rating 2015-08-23 proposed yellow
-	// * / / *
+	// */ /*
 	// * KEffects allow deriving grammars to use a range of different effects, namely assignments,
 	// * postfix effects, esterel like emissions, host code and function call effects.
 	// * Of course other grammars may extend this list.
-	// * / // ---------------- //
+	// */ // ---------------- //
 	////  KEffects Rules  // 
 	//// ---------------- //
 	//// Effect Rule
 	//// An effect is either an assignment, a postfix effect, an emission, a hostcode effect or a 
 	//// function call effect.
 	//Effect keffects::Effect:
-	//	Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect | PrintCallEffect
+	//	Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect | PrintCallEffect |
+	//	RandomizeCallEffect;
 	public EffectElements getEffectAccess() {
 		return pEffect;
 	}
@@ -861,7 +960,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// annotations defined in the annotations grammar.		
 	//Emission keffects::Emission:
 	//	annotations+=QuotedStringAnnotation*
-	//	reference=ValuedObjectReference ("(" newValue=Expression ")")? ('schedule' schedule+=ScheduleObjectReference+)?
+	//	reference=ValuedObjectReference ("(" newValue=Expression ")")? ('schedule' schedule+=ScheduleObjectReference+)?;
 	public EmissionElements getEmissionAccess() {
 		return pEmission;
 	}
@@ -878,7 +977,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//Assignment keffects::Assignment:
 	//	annotations+=Annotation*
 	//	reference=ValuedObjectReference
-	//	operator=AssignOperator expression=Expression ('schedule' schedule+=ScheduleObjectReference+)?
+	//	operator=AssignOperator expression=Expression ('schedule' schedule+=ScheduleObjectReference+)?;
 	public AssignmentElements getAssignmentAccess() {
 		return pAssignment;
 	}
@@ -899,7 +998,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//PostfixEffect keffects::Assignment:
 	//	annotations+=Annotation*
 	//	reference=ValuedObjectReference
-	//	operator=PostfixOperator ('schedule' schedule+=ScheduleObjectReference+)?
+	//	operator=PostfixOperator ('schedule' schedule+=ScheduleObjectReference+)?;
 	public PostfixEffectElements getPostfixEffectAccess() {
 		return pPostfixEffect;
 	}
@@ -912,7 +1011,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// A hostcode effect is an effect that include hostcode. It may be preceded by a list of annotations.
 	//HostcodeEffect keffects::HostcodeEffect:
 	//	annotations+=Annotation*
-	//	text=HOSTCODE
+	//	text=HOSTCODE;
 	public HostcodeEffectElements getHostcodeEffectAccess() {
 		return pHostcodeEffect;
 	}
@@ -926,7 +1025,8 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// preceded by a list of annotations.
 	//ReferenceCallEffect keffects::ReferenceCallEffect:
 	//	annotations+=Annotation*
-	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' |
+	//	'()');
 	public ReferenceCallEffectElements getReferenceCallEffectAccess() {
 		return pReferenceCallEffect;
 	}
@@ -942,7 +1042,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//	annotations+=Annotation* ('extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
 	//	| '()')) | '<' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
 	//	| '()')
-	//	'>'
+	//	'>';
 	public FunctionCallEffectElements getFunctionCallEffectAccess() {
 		return pFunctionCallEffect;
 	}
@@ -951,15 +1051,29 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getFunctionCallEffectAccess().getRule();
 	}
 
+	//// Print Call Effect Rule
+	//// A print functions that enables target-independent prints in the model.    
 	//PrintCallEffect keffects::PrintCallEffect:
 	//	annotations+=Annotation*
-	//	'print' parameters+=Parameter (',' parameters+=Parameter)*
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')');
 	public PrintCallEffectElements getPrintCallEffectAccess() {
 		return pPrintCallEffect;
 	}
 	
 	public ParserRule getPrintCallEffectRule() {
 		return getPrintCallEffectAccess().getRule();
+	}
+
+	//RandomizeCallEffect keffects::RandomizeCallEffect:
+	//	{keffects::RandomizeCallEffect} annotations+=Annotation*
+	//	'randomize' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	| '()');
+	public RandomizeCallEffectElements getRandomizeCallEffectAccess() {
+		return pRandomizeCallEffect;
+	}
+	
+	public ParserRule getRandomizeCallEffectRule() {
+		return getRandomizeCallEffectAccess().getRule();
 	}
 
 	//enum AssignOperator returns keffects::AssignOperator:
@@ -985,14 +1099,14 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getPostfixOperatorAccess().getRule();
 	}
 
-	/// **
+	///**
 	// * @author ssm
 	// * @kieler.design 2015-08-21 proposed 
 	// * @kieler.rating 2015-08-21 proposed yellow
-	// * / // -------------------- //
+	// */ // -------------------- //
 	////  KExpressions Rules  // 
 	//// -------------------- //
-	/// * Expression rules are organized in a chain. They pass the actual instance to the next rule but may 
+	///* Expression rules are organized in a chain. They pass the actual instance to the next rule but may 
 	// * consume tokens to create a specific expression element. Following this pattern, complex constructs
 	// * can be created. This also implies an order of precedence.
 	// *
@@ -1024,10 +1138,10 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	// *                 + FloatValue
 	// *                 + StringValue
 	// *                 + AtomicExpression
-	// * / // Root Rule
+	// */ // Root Rule
 	//// Always return an expression.
 	//Root ecore::EObject:
-	//	Expression
+	//	Expression;
 	public KExpressionsGrammarAccess.RootElements getRootAccess() {
 		return gaKExpressions.getRootAccess();
 	}
@@ -1052,7 +1166,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Boolean expression directs to logical or expression and kept for overview (and legacy) reason. 
 	//// One could skip directly to the next rule.
 	//BoolExpression Expression:
-	//	LogicalOrExpression
+	//	LogicalOrExpression;
 	public KExpressionsGrammarAccess.BoolExpressionElements getBoolExpressionAccess() {
 		return gaKExpressions.getBoolExpressionAccess();
 	}
@@ -1066,7 +1180,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//LogicalOrExpression Expression:
 	//	LogicalAndExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator
-	//	subExpressions+=LogicalAndExpression) ('||' subExpressions+=LogicalAndExpression)*)?
+	//	subExpressions+=LogicalAndExpression) ('||' subExpressions+=LogicalAndExpression)*)?;
 	public KExpressionsGrammarAccess.LogicalOrExpressionElements getLogicalOrExpressionAccess() {
 		return gaKExpressions.getLogicalOrExpressionAccess();
 	}
@@ -1080,7 +1194,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//LogicalAndExpression Expression:
 	//	BitwiseOrExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalAndOperator
-	//	subExpressions+=BitwiseOrExpression) ('&&' subExpressions+=BitwiseOrExpression)*)?
+	//	subExpressions+=BitwiseOrExpression) ('&&' subExpressions+=BitwiseOrExpression)*)?;
 	public KExpressionsGrammarAccess.LogicalAndExpressionElements getLogicalAndExpressionAccess() {
 		return gaKExpressions.getLogicalAndExpressionAccess();
 	}
@@ -1094,7 +1208,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//BitwiseOrExpression Expression:
 	//	BitwiseXOrExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator
-	//	subExpressions+=BitwiseXOrExpression) ('|' subExpressions+=BitwiseXOrExpression)*)?
+	//	subExpressions+=BitwiseXOrExpression) ('|' subExpressions+=BitwiseXOrExpression)*)?;
 	public KExpressionsGrammarAccess.BitwiseOrExpressionElements getBitwiseOrExpressionAccess() {
 		return gaKExpressions.getBitwiseOrExpressionAccess();
 	}
@@ -1105,7 +1219,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//BitwiseXOrExpression Expression:
 	//	BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseXOrOperator
-	//	subExpressions+=BitwiseAndExpression) ('^' subExpressions+=BitwiseAndExpression)*)?
+	//	subExpressions+=BitwiseAndExpression) ('^' subExpressions+=BitwiseAndExpression)*)?;
 	public KExpressionsGrammarAccess.BitwiseXOrExpressionElements getBitwiseXOrExpressionAccess() {
 		return gaKExpressions.getBitwiseXOrExpressionAccess();
 	}
@@ -1119,7 +1233,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//BitwiseAndExpression Expression:
 	//	CompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
-	//	subExpressions+=CompareOperation) ('&' subExpressions+=CompareOperation)*)?
+	//	subExpressions+=CompareOperation) ('&' subExpressions+=CompareOperation)*)?;
 	public KExpressionsGrammarAccess.BitwiseAndExpressionElements getBitwiseAndExpressionAccess() {
 		return gaKExpressions.getBitwiseAndExpressionAccess();
 	}
@@ -1133,7 +1247,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: 42 <= val(A)
 	//CompareOperation Expression:
 	//	NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator
-	//	subExpressions+=NotOrValuedExpression)?
+	//	subExpressions+=NotOrValuedExpression)?;
 	public KExpressionsGrammarAccess.CompareOperationElements getCompareOperationAccess() {
 		return gaKExpressions.getCompareOperationAccess();
 	}
@@ -1146,7 +1260,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// ORDER IS IMPORTANT!
 	//NotOrValuedExpression Expression:
 	//	ValuedExpression
-	//	| NotExpression
+	//	| NotExpression;
 	public KExpressionsGrammarAccess.NotOrValuedExpressionElements getNotOrValuedExpressionAccess() {
 		return gaKExpressions.getNotOrValuedExpressionAccess();
 	}
@@ -1156,7 +1270,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//BitwiseNotExpression Expression:
-	//	{OperatorExpression} operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression | AtomicExpression
+	//	{OperatorExpression} operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression | AtomicExpression;
 	public KExpressionsGrammarAccess.BitwiseNotExpressionElements getBitwiseNotExpressionAccess() {
 		return gaKExpressions.getBitwiseNotExpressionAccess();
 	}
@@ -1170,7 +1284,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// At the latter we need the parents to indicate the right binding.
 	//// A 'not expression' can also redirect to an 'atomic expression' to maintain the rule chain.
 	//NotExpression Expression:
-	//	{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | BitwiseNotExpression
+	//	{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | BitwiseNotExpression;
 	public KExpressionsGrammarAccess.NotExpressionElements getNotExpressionAccess() {
 		return gaKExpressions.getNotExpressionAccess();
 	}
@@ -1183,7 +1297,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Everything that evaluates to a primitive number value.
 	//// Similar to the boolean rule this rule is there for overview reasons.
 	//ValuedExpression Expression:
-	//	ShiftLeftExpression
+	//	ShiftLeftExpression;
 	public KExpressionsGrammarAccess.ValuedExpressionElements getValuedExpressionAccess() {
 		return gaKExpressions.getValuedExpressionAccess();
 	}
@@ -1194,7 +1308,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ShiftLeftExpression Expression:
 	//	ShiftRightExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
-	//	subExpressions+=ShiftRightExpression) ('<<' subExpressions+=ShiftRightExpression)*)?
+	//	subExpressions+=ShiftRightExpression) ('<<' subExpressions+=ShiftRightExpression)*)?;
 	public KExpressionsGrammarAccess.ShiftLeftExpressionElements getShiftLeftExpressionAccess() {
 		return gaKExpressions.getShiftLeftExpressionAccess();
 	}
@@ -1205,7 +1319,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ShiftRightExpression Expression:
 	//	ShiftRightUnsignedExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
-	//	subExpressions+=ShiftRightUnsignedExpression) ('>>' subExpressions+=ShiftRightUnsignedExpression)*)?
+	//	subExpressions+=ShiftRightUnsignedExpression) ('>>' subExpressions+=ShiftRightUnsignedExpression)*)?;
 	public KExpressionsGrammarAccess.ShiftRightExpressionElements getShiftRightExpressionAccess() {
 		return gaKExpressions.getShiftRightExpressionAccess();
 	}
@@ -1216,7 +1330,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ShiftRightUnsignedExpression Expression:
 	//	AddExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
-	//	subExpressions+=AddExpression) ('>>>' subExpressions+=AddExpression)*)?
+	//	subExpressions+=AddExpression) ('>>>' subExpressions+=AddExpression)*)?;
 	public KExpressionsGrammarAccess.ShiftRightUnsignedExpressionElements getShiftRightUnsignedExpressionAccess() {
 		return gaKExpressions.getShiftRightUnsignedExpressionAccess();
 	}
@@ -1231,7 +1345,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: 1 + 2
 	//AddExpression Expression:
 	//	SubExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression) ('+'
-	//	subExpressions+=SubExpression)*)?
+	//	subExpressions+=SubExpression)*)?;
 	public KExpressionsGrammarAccess.AddExpressionElements getAddExpressionAccess() {
 		return gaKExpressions.getAddExpressionAccess();
 	}
@@ -1246,7 +1360,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: var(A) - i
 	//SubExpression Expression:
 	//	MultExpression ({OperatorExpression.subExpressions+=current} (operator=SubOperator subExpressions+=MultExpression)
-	//	('-' subExpressions+=MultExpression)*)?
+	//	('-' subExpressions+=MultExpression)*)?;
 	public KExpressionsGrammarAccess.SubExpressionElements getSubExpressionAccess() {
 		return gaKExpressions.getSubExpressionAccess();
 	}
@@ -1261,7 +1375,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: 2 * 4
 	//MultExpression Expression:
 	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)
-	//	('*' subExpressions+=DivExpression)*)?
+	//	('*' subExpressions+=DivExpression)*)?;
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}
@@ -1276,7 +1390,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: 2 / 4
 	//DivExpression Expression:
 	//	ModExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=ModExpression) ('/'
-	//	subExpressions+=ModExpression)*)?
+	//	subExpressions+=ModExpression)*)?;
 	public KExpressionsGrammarAccess.DivExpressionElements getDivExpressionAccess() {
 		return gaKExpressions.getDivExpressionAccess();
 	}
@@ -1291,7 +1405,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: i % j
 	//ModExpression Expression:
 	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=ModOperator
-	//	subExpressions+=AtomicValuedExpression) ('%' subExpressions+=AtomicValuedExpression)*)?
+	//	subExpressions+=AtomicValuedExpression) ('%' subExpressions+=AtomicValuedExpression)*)?;
 	public KExpressionsGrammarAccess.ModExpressionElements getModExpressionAccess() {
 		return gaKExpressions.getModExpressionAccess();
 	}
@@ -1304,7 +1418,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// The rule negates the actual instance or directs the atomic value expression rule if necessary. 
 	//// Example: -i, -2
 	//NegExpression Expression:
-	//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | TernaryOperation
+	//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | TernaryOperation;
 	public KExpressionsGrammarAccess.NegExpressionElements getNegExpressionAccess() {
 		return gaKExpressions.getNegExpressionAccess();
 	}
@@ -1316,7 +1430,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//TernaryOperation Expression:
 	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
 	//	subExpressions+=AtomicValuedExpression ':' subExpressions+=AtomicValuedExpression
-	//	| AtomicValuedExpression
+	//	| AtomicValuedExpression;
 	public KExpressionsGrammarAccess.TernaryOperationElements getTernaryOperationAccess() {
 		return gaKExpressions.getTernaryOperationAccess();
 	}
@@ -1335,7 +1449,9 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//	| '(' BoolExpression ')'
 	//	| ReferenceCall
 	//	| FunctionCall
-	//	| TextExpression
+	//	| RandomCall
+	//	| RandomizeCall
+	//	| TextExpression;
 	public KExpressionsGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
 		return gaKExpressions.getAtomicExpressionAccess();
 	}
@@ -1354,7 +1470,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//	| StringValue
 	//	| VectorValue
 	//	| '(' ValuedExpression ')'
-	//	| AtomicExpression
+	//	| AtomicExpression;
 	public KExpressionsGrammarAccess.AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
 		return gaKExpressions.getAtomicValuedExpressionAccess();
 	}
@@ -1369,7 +1485,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: pre(pre(val(A))), pre(val(pre(A))), val(A)
 	//ValuedObjectTestExpression Expression:
 	//	{OperatorExpression} operator=(PreOperator | ValOperator) '(' subExpressions+=ValuedObjectTestExpression ')'
-	//	| ValuedObjectReference
+	//	| ValuedObjectReference;
 	public KExpressionsGrammarAccess.ValuedObjectTestExpressionElements getValuedObjectTestExpressionAccess() {
 		return gaKExpressions.getValuedObjectTestExpressionAccess();
 	}
@@ -1425,9 +1541,34 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getReferenceCallAccess().getRule();
 	}
 
+	//// Random Call Rule
+	//// Calls the random function. 
+	//RandomCall:
+	//	{RandomCall}
+	//	'random' '()'?;
+	public KExpressionsGrammarAccess.RandomCallElements getRandomCallAccess() {
+		return gaKExpressions.getRandomCallAccess();
+	}
+	
+	public ParserRule getRandomCallRule() {
+		return getRandomCallAccess().getRule();
+	}
+
+	//// Random Call Rule
+	//// Calls the random function. 
+	//RandomizeCall:
+	//	{RandomizeCall}
+	//	'randomize' '()'?;
+	public KExpressionsGrammarAccess.RandomizeCallElements getRandomizeCallAccess() {
+		return gaKExpressions.getRandomizeCallAccess();
+	}
+	
+	public ParserRule getRandomizeCallRule() {
+		return getRandomizeCallAccess().getRule();
+	}
+
 	//// Function Call Rule
 	//// Calls to functions are indicated by angle brackets. They may include a parameter list. 
-	//// Deprecated?
 	//FunctionCall:
 	//	'extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
 	//	| '()');
@@ -1518,7 +1659,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//VectorValueMember Expression:
-	//	BoolExpression | ValuedExpression | IgnoreValue
+	//	BoolExpression | ValuedExpression | IgnoreValue;
 	public KExpressionsGrammarAccess.VectorValueMemberElements getVectorValueMemberAccess() {
 		return gaKExpressions.getVectorValueMemberAccess();
 	}
@@ -1551,7 +1692,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AnyValue Value:
-	//	IntValue | FloatValue | BoolValue | StringValue
+	//	IntValue | FloatValue | BoolValue | StringValue;
 	public KExpressionsGrammarAccess.AnyValueElements getAnyValueAccess() {
 		return gaKExpressions.getAnyValueAccess();
 	}
@@ -1809,11 +1950,11 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return gaKExpressions.getHOSTCODERule();
 	} 
 
-	/// **
+	///**
 	// * @author ssm
 	// * @kieler.design 2015-08-21 proposed 
 	// * @kieler.rating 2015-08-21 proposed yellow
-	// * / // ------------------ //
+	// */ // ------------------ //
 	////  Annotation Rules  // 
 	//// ------------------ //
 	//// General rule for annotations
@@ -1845,7 +1986,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Derived grammars may use this rule if the general annotation rules compromises the grammar
 	//// due to ambiguities.
 	//ValuedAnnotation Annotation:
-	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation
+	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation;
 	public AnnotationsGrammarAccess.ValuedAnnotationElements getValuedAnnotationAccess() {
 		return gaAnnotations.getValuedAnnotationAccess();
 	}
@@ -1858,7 +1999,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// The restricted type annotation rule does not allow typed string annotations. 
 	//// You can use this rule in derived grammars if you don't want to permit typed strings. 
 	//RestrictedTypeAnnotation Annotation:
-	//	CommentAnnotation | RestrictedKeyStringValueAnnotation | RestrictedTypedKeyStringValueAnnotation | TagAnnotation
+	//	CommentAnnotation | RestrictedKeyStringValueAnnotation | RestrictedTypedKeyStringValueAnnotation | TagAnnotation;
 	public AnnotationsGrammarAccess.RestrictedTypeAnnotationElements getRestrictedTypeAnnotationAccess() {
 		return gaAnnotations.getRestrictedTypeAnnotationAccess();
 	}
@@ -1873,7 +2014,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// (If you are looking for an example, the keffects grammar uses this rule for their emission
 	//// rule and to avoid grammar ambiguities.)  
 	//QuotedStringAnnotation Annotation:
-	//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | TagAnnotation
+	//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | TagAnnotation;
 	public AnnotationsGrammarAccess.QuotedStringAnnotationElements getQuotedStringAnnotationAccess() {
 		return gaAnnotations.getQuotedStringAnnotationAccess();
 	}
@@ -1883,7 +2024,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// CommentAnnotation
-	//// e.g.: / ** semantic comment * /
+	//// e.g.: /** semantic comment */
 	//CommentAnnotation:
 	//	values+=COMMENT_ANNOTATION;
 	public AnnotationsGrammarAccess.CommentAnnotationElements getCommentAnnotationAccess() {
@@ -1895,7 +2036,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//CommentAnnotatonSL CommentAnnotation:
-	//	values+=SL_COMMENT_ANNOTATION
+	//	values+=SL_COMMENT_ANNOTATION;
 	public AnnotationsGrammarAccess.CommentAnnotatonSLElements getCommentAnnotatonSLAccess() {
 		return gaAnnotations.getCommentAnnotatonSLAccess();
 	}
@@ -1907,7 +2048,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// TagAnnotation
 	//// e.g.: @HVlayout
 	//TagAnnotation Annotation:
-	//	'@' name=ExtendedID
+	//	'@' name=ExtendedID;
 	public AnnotationsGrammarAccess.TagAnnotationElements getTagAnnotationAccess() {
 		return gaAnnotations.getTagAnnotationAccess();
 	}
@@ -1917,7 +2058,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//PragmaTag Pragma:
-	//	'#' name=ExtendedID
+	//	'#' name=ExtendedID;
 	public AnnotationsGrammarAccess.PragmaTagElements getPragmaTagAccess() {
 		return gaAnnotations.getPragmaTagAccess();
 	}
@@ -1930,7 +2071,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// e.g.: @layouter dot
 	//// You may separate different values via comma.   
 	//KeyStringValueAnnotation StringAnnotation:
-	//	'@' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*
+	//	'@' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*;
 	public AnnotationsGrammarAccess.KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getKeyStringValueAnnotationAccess();
 	}
@@ -1940,7 +2081,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//RestrictedKeyStringValueAnnotation StringAnnotation:
-	//	'@' name=ExtendedID values+=EStringBoolean (',' values+=EStringBoolean)*
+	//	'@' name=ExtendedID values+=EStringBoolean (',' values+=EStringBoolean)*;
 	public AnnotationsGrammarAccess.RestrictedKeyStringValueAnnotationElements getRestrictedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getRestrictedKeyStringValueAnnotationAccess();
 	}
@@ -1962,7 +2103,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// TypedKeyStringValueAnnotation
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 	//TypedKeyStringValueAnnotation TypedStringAnnotation:
-	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringAllTypes (',' values+=EStringAllTypes)*
+	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringAllTypes (',' values+=EStringAllTypes)*;
 	public AnnotationsGrammarAccess.TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getTypedKeyStringValueAnnotationAccess();
 	}
@@ -1972,7 +2113,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//RestrictedTypedKeyStringValueAnnotation TypedStringAnnotation:
-	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*
+	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*;
 	public AnnotationsGrammarAccess.RestrictedTypedKeyStringValueAnnotationElements getRestrictedTypedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getRestrictedTypedKeyStringValueAnnotationAccess();
 	}
@@ -1985,7 +2126,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// The quoted key string value annotation is a replacement derived grammars may use
 	//// if they want to disallow quote-less strings in a key string annotation. 
 	//QuotedKeyStringValueAnnotation StringAnnotation:
-	//	'@' name=ExtendedID values+=STRING (',' values+=STRING)*
+	//	'@' name=ExtendedID values+=STRING (',' values+=STRING)*;
 	public AnnotationsGrammarAccess.QuotedKeyStringValueAnnotationElements getQuotedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getQuotedKeyStringValueAnnotationAccess();
 	}
@@ -1998,7 +2139,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// The quoted typed key string value annotation is a replacement derived grammars may use
 	//// if they want to disallow quote-less strings in a key string annotation. 
 	//QuotedTypedKeyStringValueAnnotation TypedStringAnnotation:
-	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=STRING (',' values+=STRING)*
+	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=STRING (',' values+=STRING)*;
 	public AnnotationsGrammarAccess.QuotedTypedKeyStringValueAnnotationElements getQuotedTypedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getQuotedTypedKeyStringValueAnnotationAccess();
 	}
@@ -2066,7 +2207,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Integer
 	//// The integer rule extends the EInt terminal by an optional sign for negative numbers.
 	//Integer ecore::EInt:
-	//	'-'? INT
+	//	'-'? INT;
 	public AnnotationsGrammarAccess.IntegerElements getIntegerAccess() {
 		return gaAnnotations.getIntegerAccess();
 	}
@@ -2078,7 +2219,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Floateger
 	//// The floateger rule extends the EFloat terminal by an optional sign for negative numbers.
 	//Floateger ecore::EFloat:
-	//	'-'? FLOAT
+	//	'-'? FLOAT;
 	public AnnotationsGrammarAccess.FloategerElements getFloategerAccess() {
 		return gaAnnotations.getFloategerAccess();
 	}
@@ -2087,20 +2228,40 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getFloategerAccess().getRule();
 	}
 
+	//Double ecore::EDouble:
+	//	FLOAT;
+	public AnnotationsGrammarAccess.DoubleElements getDoubleAccess() {
+		return gaAnnotations.getDoubleAccess();
+	}
+	
+	public ParserRule getDoubleRule() {
+		return getDoubleAccess().getRule();
+	}
+
+	//Doubleger ecore::EDouble:
+	//	'-'? FLOAT;
+	public AnnotationsGrammarAccess.DoublegerElements getDoublegerAccess() {
+		return gaAnnotations.getDoublegerAccess();
+	}
+	
+	public ParserRule getDoublegerRule() {
+		return getDoublegerAccess().getRule();
+	}
+
 	//terminal COMMENT_ANNOTATION:
-	//	'/ **'->'* /';
+	//	'/**'->'*/';
 	public TerminalRule getCOMMENT_ANNOTATIONRule() {
 		return gaAnnotations.getCOMMENT_ANNOTATIONRule();
 	} 
 
 	//terminal ML_COMMENT:
-	//	'/ *' !'*'->'* /';
+	//	'/*' !'*'->'*/';
 	public TerminalRule getML_COMMENTRule() {
 		return gaAnnotations.getML_COMMENTRule();
 	} 
 
 	//terminal SL_COMMENT_ANNOTATION:
-	//	'// *' !('\n' | '\r')* ('\r'? '\n')?;
+	//	'//*' !('\n' | '\r')* ('\r'? '\n')?;
 	public TerminalRule getSL_COMMENT_ANNOTATIONRule() {
 		return gaAnnotations.getSL_COMMENT_ANNOTATIONRule();
 	} 
@@ -2123,7 +2284,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return gaAnnotations.getINTRule();
 	} 
 
-	//terminal FLOAT returns ecore::EFloatObject:
+	//terminal FLOAT returns ecore::EFloat:
 	//	NUMBER+ ('.' NUMBER*) (("e" | "E") ("+" | "-")? NUMBER+)? 'f'? | NUMBER+ 'f';
 	public TerminalRule getFLOATRule() {
 		return gaAnnotations.getFLOATRule();

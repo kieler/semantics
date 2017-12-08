@@ -11,6 +11,7 @@ import de.cau.cs.kieler.esterel.TickReference
 import de.cau.cs.kieler.esterel.services.EsterelGrammarAccess
 import org.eclipse.xtext.serializer.ISerializationContext
 import de.cau.cs.kieler.esterel.SignalReference
+import de.cau.cs.kieler.kexpressions.OperatorExpression
 
 class EsterelSemanticSequencer extends AbstractEsterelSemanticSequencer {
 
@@ -103,37 +104,39 @@ class EsterelSemanticSequencer extends AbstractEsterelSemanticSequencer {
         feeder.finish
     }
     
-    /**
-     * Contexts:
-     *     DelayExpr returns DelayExpr
-     *
-     * Constraint:
-     *     ((delay=IntValue | immediate?='immediate')? (expression=SignalReferenceExpr | expression=SignalExpression))
-     */
-    protected override sequence_DelayExpression(ISerializationContext context, DelayExpression semanticObject) {
-        val feeder = createSequencerFeeder(semanticObject, createNodeProvider(semanticObject))
-        
-        val g = grammarAccess.delayExpressionAccess
-        
-        if (semanticObject.delay !== null) {
-            feeder.accept(g.getDelayIntValueParserRuleCall_0_0_0, semanticObject.delay)
-        }
-        
-        if (semanticObject.delay === null && semanticObject.immediate) {
-            feeder.accept(g.immediateImmediateKeyword_0_1_0)
-        }
-        
-        if (semanticObject.expression !== null) {
-            if (semanticObject.expression instanceof TickReference) {
-                feeder.accept(g.getExpressionSignalReferenceExprParserRuleCall_1_0_0, semanticObject.expression)
-            } else if (semanticObject.expression instanceof SignalReference) {
-                feeder.accept(g.getExpressionSignalReferenceExprParserRuleCall_1_0_0, semanticObject.expression)
-            } else {
-                feeder.accept(g.expressionSignalExpressionParserRuleCall_1_1_1_0, semanticObject.expression)
-            }
-            
-        }
-        
-        feeder.finish
-    }
+//    /**
+//     * Contexts:
+//     *     DelayExpr returns DelayExpr
+//     *
+//     * Constraint:
+//     *     ((delay=IntValue | immediate?='immediate')? (expression=SignalReferenceExpr | expression=SignalExpression))
+//     */
+//    protected override sequence_DelayExpression(ISerializationContext context, DelayExpression semanticObject) {
+//        val feeder = createSequencerFeeder(semanticObject, createNodeProvider(semanticObject))
+//        
+//        val g = grammarAccess.delayExpressionAccess
+//        
+//        if (semanticObject.delay !== null) {
+//            feeder.accept(g.getDelayExpressionParserRuleCall_0_0_0, semanticObject.delay)
+//        }
+//        
+//        if (semanticObject.delay === null && semanticObject.immediate) {
+//            feeder.accept(g.immediateImmediateKeyword_0_1_0)
+//        }
+//        
+//        if (semanticObject.expression !== null) {
+//            if (semanticObject.expression instanceof TickReference) {
+//                feeder.accept(g.getExpressionSignalReferenceExprParserRuleCall_1_0_0, semanticObject.expression)
+//            } else if (semanticObject.expression instanceof SignalReference) {
+//                feeder.accept(g.getExpressionSignalReferenceExprParserRuleCall_1_0_0, semanticObject.expression)
+//            } else if (semanticObject.expression instanceof OperatorExpression) {
+//                feeder.accept(g.expressionSignalPreExpressionParserRuleCall_1_1_0, semanticObject.expression)
+//            } else {
+//                feeder.accept(g.expressionSignalExpressionParserRuleCall_1_2_1_0, semanticObject.expression)
+//            }
+//            
+//        }
+//        
+//        feeder.finish
+//    }
 }

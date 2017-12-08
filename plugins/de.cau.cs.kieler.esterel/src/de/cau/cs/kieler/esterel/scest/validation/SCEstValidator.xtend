@@ -15,7 +15,6 @@ package de.cau.cs.kieler.esterel.scest.validation
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.esterel.Constant
-import de.cau.cs.kieler.esterel.ConstantDeclaration
 import de.cau.cs.kieler.esterel.DelayExpression
 import de.cau.cs.kieler.esterel.ElsIf
 import de.cau.cs.kieler.esterel.Emit
@@ -70,12 +69,12 @@ class SCEstValidator extends AbstractSCEstValidator {
     @Check
     def void emitSignal(Emit emit) {
         if ((emit.signal as Signal).type.isPure) {
-            if (emit.expression != null) {
+            if (emit.expression !== null) {
                 error(emit.signal.name + " is not a valued signal!", emit, null, -1)
             }
         }
         else {
-            if (emit.expression == null) {
+            if (emit.expression === null) {
                 error("Must be a valued emit since " + emit.signal.name + " is a valued signal!", emit, null, -1)
             }
         }
@@ -83,7 +82,7 @@ class SCEstValidator extends AbstractSCEstValidator {
     
     @Check
     def void annotation(Annotation annotation) {
-        if (annotation.isGenerated || annotation.isInterfaceAnnotation || annotation.isGeneratedModuleAnnotation) {
+        if (annotation.isGenerated  || annotation.isGeneratedModuleAnnotation) {
             error("Annotations of name '" + interfaceScope + "', '" + generatedModule + "' or '" + generatedAnnotation + "' are forbidden!", annotation, null, -1)
         }
     }
@@ -108,7 +107,6 @@ class SCEstValidator extends AbstractSCEstValidator {
     
     @Check
     def void combineOperatorConstant(Constant constant) {
-        var parent = constant.eContainer as ConstantDeclaration
         if (!combineOperatorFitsType(constant.type?.type, constant.type?.operator)) {
             error("The combine operator '" + constant.type?.operator + "' does not fit the constants type '" + constant.type?.type + "'!", constant, null, -1)
         }
@@ -143,7 +141,7 @@ class SCEstValidator extends AbstractSCEstValidator {
     
     @Check(CheckType.EXPENSIVE)
     def void expressionISignal(Signal signal) {
-        if (signal.initialValue != null) {
+        if (signal.initialValue !== null) {
             if (signal.type.isBool && !signal.initialValue.isBoolExpr) {
                 warning(BOOLEAN_EXPRESSION, null)
             }
@@ -155,7 +153,7 @@ class SCEstValidator extends AbstractSCEstValidator {
     
     @Check(CheckType.EXPENSIVE)
     def void expressionTrapSignal(TrapSignal trap) {
-        if (trap.initialValue != null) {
+        if (trap.initialValue !== null) {
             if (trap.type.isBool && !trap.initialValue.isBoolExpr) {
                 warning(BOOLEAN_EXPRESSION, null)
             }
@@ -167,7 +165,7 @@ class SCEstValidator extends AbstractSCEstValidator {
     
     @Check(CheckType.EXPENSIVE)
     def void expressionEmit(Emit emit) {
-        if (emit.expression != null) {
+        if (emit.expression !== null) {
             if ((emit.signal as Signal).type.isBool && !emit.expression.isBoolExpr) {
                 warning(BOOLEAN_EXPRESSION, null)
             }
@@ -179,7 +177,7 @@ class SCEstValidator extends AbstractSCEstValidator {
     
     @Check(CheckType.EXPENSIVE)
     def void expressionSustain(Sustain sustain) {
-        if (sustain.expression != null) {
+        if (sustain.expression !== null) {
             if ((sustain.signal as Signal).type.isBool && !sustain.expression.isBoolExpr) {
                 warning(BOOLEAN_EXPRESSION, null)
             }
@@ -215,7 +213,7 @@ class SCEstValidator extends AbstractSCEstValidator {
     
     @Check(CheckType.EXPENSIVE)
     def void expressionDelayExpr(DelayExpression delay) {
-        if (delay.expression != null && !delay.expression.isCalculationExpr) {
+        if (delay.expression !== null && !delay.expression.isCalculationExpr) {
             warning(CALCULATION_EXPRESSION, null)
         }
     }
@@ -229,7 +227,7 @@ class SCEstValidator extends AbstractSCEstValidator {
     
     @Check(CheckType.EXPENSIVE)
     def void expressionExit(Exit exit) {
-        if (exit.expression != null) {
+        if (exit.expression !== null) {
             if (exit.trap.type.isBool && !exit.expression.isBoolExpr) {
                 warning(BOOLEAN_EXPRESSION, null)
             }
@@ -489,7 +487,7 @@ class SCEstValidator extends AbstractSCEstValidator {
      * @param type The ValueType in question
      */
     def isBoolOrPure(ValueType type) {
-        type == null || type == ValueType.BOOL || type == ValueType.PURE
+        type === null || type == ValueType.BOOL || type == ValueType.PURE
     }
     
     /**
@@ -576,7 +574,7 @@ class SCEstValidator extends AbstractSCEstValidator {
              ) {
                  if (operator == CombineOperator.ADD || operator == CombineOperator.MULT ||
                      operator == CombineOperator.MIN || operator == CombineOperator.MAX  ||
-                     operator == CombineOperator.NONE || operator == null
+                     operator == CombineOperator.NONE || operator === null
                  ) {
                      return true
                  }
@@ -586,7 +584,7 @@ class SCEstValidator extends AbstractSCEstValidator {
          }
          else if (type == ValueType.BOOL) {
              if (operator == CombineOperator.AND || operator == CombineOperator.OR ||
-                     operator == CombineOperator.NONE || operator == null
+                     operator == CombineOperator.NONE || operator === null
                  ) {
                      return true
                  }

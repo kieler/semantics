@@ -31,11 +31,11 @@ de.cau.cs.kieler.sccharts.processors.transformators.surfaceDepth
 de.cau.cs.kieler.sccharts.scg.processors.transformators.SCG
 post process de.cau.cs.kieler.scg.processors.threadAnalyzer
 [ label "SCG"
-    pre set de.cau.cs.kieler.scg.processors.loopAnalyzer.errorOnInstantaneousLoop true
+    pre set de.cau.cs.kieler.scg.processors.loopAnalyzer.infoOnInstantaneousLoop true
 	de.cau.cs.kieler.scg.processors.transformators.dependency
 	post process de.cau.cs.kieler.scg.processors.loopAnalyzerV2
 	de.cau.cs.kieler.scg.processors.transformators.basicBlocks
-	de.cau.cs.kieler.scg.processors.transformators.expressions
+	post process de.cau.cs.kieler.scg.processors.transformators.expressions
 	de.cau.cs.kieler.scg.processors.transformators.guards
 	de.cau.cs.kieler.scg.processors.transformators.scheduler
 	de.cau.cs.kieler.scg.processors.transformators.sequentializer

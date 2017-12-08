@@ -28,6 +28,11 @@ import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.impl.SimpleScope
 
 import static de.cau.cs.kieler.esterel.scoping.EsterelScopeProviderUtil.*
+import de.cau.cs.kieler.esterel.SignalReference
+import de.cau.cs.kieler.esterel.VariableReference
+import de.cau.cs.kieler.esterel.TrapExpression
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
 
 /**
  * This class contains custom scoping description.
@@ -42,10 +47,37 @@ class EsterelScopeProvider extends SCLScopeProvider {
      * {@inheritDoc}
      */
     override getScope(EObject context, EReference reference) {
-        var scope = polymorphicFindScopeForReferenceName(context, reference);
-        if (scope == null) {
+        var IScope scope
+        switch (context) {
+            SignalReference : {
+                if ( (context.eContainer instanceof OperatorExpression) && 
+                     (context.eContainer as OperatorExpression).operator === OperatorType.VAL) {
+                     scope = new SimpleScope(getSignalsAndSensors(context))
+                }
+                else if (context.eContainer instanceof SignalRenaming) {
+                    scope = new SimpleScope(getSignalsAndSensors(context))
+                }
+                else {
+                    scope = new SimpleScope(getAllSignals(context))
+                }
+            }   
+            TrapReference ,
+            TrapExpression : {
+                scope = new SimpleScope(getLocalTraps(context))
+            }
+            VariableReference : {
+                scope = new SimpleScope(getLocalVariables(context))
+            }
+            ValuedObjectReference : {
+                scope = new SimpleScope(getValuedObjects(context))
+            }
+            default : {
+                scope = polymorphicFindScopeForReferenceName(context, reference);
+            }
+        }
+        if (scope === null) {
             scope = polymorphicFindScopeForClassName(context, reference);
-            if (scope == null) {
+            if (scope === null) {
                 return super.getScope(context, reference);
             }
         }
@@ -75,7 +107,7 @@ class EsterelScopeProvider extends SCLScopeProvider {
     def IScope scope_Sustain_signal(Sustain context, EReference ref) {
         return new SimpleScope(getAllSignals(context));
     }
-
+    
     def IScope scope_ValuedObjectReference_valuedObject(ValuedObjectReference context, EReference ref) {
         var ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
         // there are several elements which are scoped as valued object

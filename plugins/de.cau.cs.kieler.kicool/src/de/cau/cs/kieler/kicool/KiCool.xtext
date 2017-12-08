@@ -62,7 +62,7 @@ Processor returns kicool::ProcessorReference:
 ;
 
 CoProcessor returns kicool::ProcessorReference: 
-    id = QualifiedID
+    id = QualifiedID silent?='silent'? 
 ;
 
 ProcessorSystem returns kicool::ProcessorSystem:

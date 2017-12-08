@@ -13,22 +13,6 @@
             id="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.LabelShorteningHook">
       </action>
       <action
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.StateActionsHook"
-            id="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.StateActionsHook">
-      </action>
-      <action
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.DeclarationsHook"
-            id="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.DeclarationsHook">
-      </action>
-      <action
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SCGDependencyHook"
-            id="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SCGDependencyHook">
-      </action>
-      <action
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SCGLoopHook"
-            id="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SCGLoopHook">
-      </action>
-      <action
             class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.LayoutHook"
             id="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.LayoutHook">
       </action>
@@ -84,6 +68,9 @@
             class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.HideAnnotationHook">
       </hook>
       <hook
+            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.LabelPlacementSideHook">
+      </hook>
+      <hook
             class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.LabelShorteningHook">
       </hook>
       <hook
@@ -111,7 +98,7 @@
     <extension
             point="org.eclipse.ui.editors">
         <editor
-            class="de.cau.cs.kieler.sccharts.ui.text.SCTXExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
+            class="de.cau.cs.kieler.sccharts.ui.text.SCTXExecutableExtensionFactory:de.cau.cs.kieler.sccharts.ui.text.SCTXEditor"
             contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
             default="true"
             extensions="sctx"

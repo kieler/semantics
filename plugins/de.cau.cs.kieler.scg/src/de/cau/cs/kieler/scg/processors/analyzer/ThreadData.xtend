@@ -18,6 +18,10 @@ import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import java.util.Map
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
+import de.cau.cs.kieler.scg.Fork
+import com.google.common.collect.Multimap
+import com.google.common.collect.LinkedHashMultimap
+import de.cau.cs.kieler.scg.ControlFlow
 
 /**
  * @author ssm
@@ -26,6 +30,18 @@ import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 class ThreadData implements IKiCoolCloneable {
     
     @Accessors var Map<Entry, ThreadPathType> data = <Entry, ThreadPathType> newLinkedHashMap
+    @Accessors var Multimap<Fork, Entry> forkMap = LinkedHashMultimap.create
+    
+    def createForkMap() {
+        for (entry : data.keySet) {
+            if (entry !== null) {
+                val parentFork = entry.incoming.filter(ControlFlow)?.map[eContainer].filter(Fork)?.head
+                if (parentFork !== null) {
+                    forkMap.put(parentFork, entry)
+                }
+            }
+        }
+    }
     
     override isMutable() {
         false
@@ -34,6 +50,7 @@ class ThreadData implements IKiCoolCloneable {
     override cloneObject() {
         new ThreadData => [ td |
             td.data.putAll(data)
+            td.forkMap.putAll(forkMap)
         ] 
     }
     
@@ -44,6 +61,8 @@ class ThreadData implements IKiCoolCloneable {
             resolvedThreadData.put(newKey, data.get(key))
         } 
         data = resolvedThreadData
+        forkMap.clear
+        createForkMap
     }    
     
 }

@@ -255,6 +255,8 @@ AtomicExpression returns Expression:
     | '(' BoolExpression ')'
     | ReferenceCall
     | FunctionCall
+    | RandomCall
+    | RandomizeCall
     | TextExpression;
 
 // Atomic Valued Expression Rule
@@ -305,22 +307,27 @@ ReferenceCall returns ReferenceCall:
         ) | '()'
     );
     
+// Random Call Rule
+// Calls the random function. 
+RandomCall returns RandomCall:
+    {RandomCall}
+    'random' ('()')?;
+    
+// Random Call Rule
+// Calls the random function. 
+RandomizeCall returns RandomizeCall:
+    {RandomizeCall}
+    'randomize' ('()')?;    
+    
+    
 // Function Call Rule
 // Calls to functions are indicated by angle brackets. They may include a parameter list. 
-// Deprecated?
 FunctionCall returns FunctionCall:
     ('extern' functionName = ID 
         (('(' parameters += Parameter 
             (',' parameters += Parameter)* ')'
         ) | '()')
-    )
-//    |
-//    ('<' functionName = ID 
-//        (('(' parameters += Parameter 
-//            (',' parameters += Parameter)* ')'
-//        ) | '()')
-//    '>')
-    ;    
+    );        
 
 // Parameter Rule
 // The parameter rule is used by the function call rule. Every expression may be a paramter.

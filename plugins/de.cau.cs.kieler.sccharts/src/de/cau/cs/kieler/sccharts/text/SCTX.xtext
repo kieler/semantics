@@ -69,14 +69,34 @@ Parameter returns kexpressions::Parameter:
 // ------------------ //
 
 Transition returns sccharts::Transition:
+    {sccharts::Transition}
 	annotations+=RestrictedTypeAnnotation*
-	preemption=(PreemptionType | PreemptionTypeLegacy)
-	targetState=[sccharts::State|ID]
-	delay=DelayType?
-	deferred?='deferred'?
-	history=HistoryType?
-    //                      -> This alternative is only for the serializer to enable forcing of brackets
-	('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do' effects+=Effect (';' effects+=Effect)*)?
+	
+	((
+    	preemption=(PreemptionType | PreemptionTypeLegacy) 
+        targetState=[sccharts::State|ID]
+        delay=DelayType?
+        deferred?='deferred'?
+        history=HistoryType?
+        //                      -> This alternative is only for the serializer to enable forcing of brackets
+	   ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) 
+	       ('Pr=' triggerProbability=Double)? nondeterministic?='nondeterministic'?
+	   )? 
+	   ('do' effects+=Effect (';' effects+=Effect)*)?
+	)
+	|
+	(
+        delay=DelayType?
+        ('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) 
+            ('Pr=' triggerProbability=Double)? nondeterministic?='nondeterministic'?
+        )?
+        ('do' effects+=Effect (';' effects+=Effect)*)?
+        preemption=(PreemptionType | PreemptionTypeLegacy) 
+        targetState=[sccharts::State|ID]
+        deferred?='deferred'?
+        history=HistoryType?
+	))
+	
 	('label' label=STRING)?;
 	
 // -------------- //
@@ -133,32 +153,32 @@ LocalAction returns sccharts::LocalAction:
 
 EntryAction returns sccharts::EntryAction:
 	{sccharts::EntryAction}
-   'entry' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
+   'entry' ('if' trigger=BoolExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
    ('label' label=STRING)?;
          
 DuringAction returns sccharts::DuringAction:
 	{sccharts::DuringAction}
-    delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
+    delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolExpression ('Pr=' triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
     ('label' label=STRING)?;
          
 ExitAction returns sccharts::ExitAction:
 	{sccharts::ExitAction}
-	'exit' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
+	'exit' ('if' trigger=BoolExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 	('label' label=STRING)?;  
        
 SuspendAction returns sccharts::SuspendAction:
 	{sccharts::SuspendAction}
-	delay=DelayType? weak?='weak'? 'suspend' ('if' trigger=BoolExpression)?
+	delay=DelayType? weak?='weak'? 'suspend' ('if' triggerDelay=INT? trigger=BoolExpression ('Pr=' triggerProbability=Double)?)?
 	('label' label=STRING)?;
       
 PrecedingAction returns sccharts::PrecedingAction:
 	{sccharts::PrecedingAction}
-   'preceding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
+   'preceding' ('if' trigger=BoolExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
    ('label' label=STRING)?;
          
 SucceedingAction returns sccharts::SucceedingAction:
 	{sccharts::SucceedingAction}
-	'succeeding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
+	'succeeding' ('if' trigger=BoolExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 	('label' label=STRING)?;  
 
 

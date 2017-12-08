@@ -125,6 +125,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
             case EsterelPackage.TRAP_REFERENCE: return createTrapReference();
             case EsterelPackage.SIGNAL_REFERENCE: return createSignalReference();
             case EsterelPackage.TICK_REFERENCE: return createTickReference();
+            case EsterelPackage.VARIABLE_REFERENCE: return createVariableReference();
             case EsterelPackage.SC_EST_STATEMENT: return createSCEstStatement();
             case EsterelPackage.UN_EMIT: return createUnEmit();
             case EsterelPackage.SET: return createSet();
@@ -821,6 +822,16 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
     public TickReference createTickReference() {
         TickReferenceImpl tickReference = new TickReferenceImpl();
         return tickReference;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public VariableReference createVariableReference() {
+        VariableReferenceImpl variableReference = new VariableReferenceImpl();
+        return variableReference;
     }
 
     /**

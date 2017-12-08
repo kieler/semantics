@@ -51,11 +51,7 @@ class CCodeGenerator extends Processor<SCGraphs, CodeContainer> {
     override getType() {
         ProcessorType.EXOGENOUS_TRANSFORMATOR
     }
-    
-    protected def SCGCodeGeneratorModule createCodeGenetatorModule() {
-        return injector.getInstance(CCodeGeneratorModule)
-    }
-    
+        
     override process() {
         val graphs = getModel
         val result = new CodeContainer
@@ -95,6 +91,14 @@ class CCodeGenerator extends Processor<SCGraphs, CodeContainer> {
         setModel(result)
     }
     
+    /**
+     * Creates a generator module via the injector. 
+     * Override this if you need to create specialized generator modules of a certain type.
+     */
+    protected def SCGCodeGeneratorModule createCodeGenetatorModule() {
+        return injector.getInstance(CCodeGeneratorModule)
+    }
+
     protected def hostcodeSafeName(String string) {
         if (string == null) return ""
         string.replaceAll("[\\s-]","_")

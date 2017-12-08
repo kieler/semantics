@@ -49,6 +49,7 @@ public class KExtParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFunctionCallEffectAccess().getAlternatives(), "rule__FunctionCallEffect__Alternatives");
 					put(grammarAccess.getFunctionCallEffectAccess().getAlternatives_0_1_2(), "rule__FunctionCallEffect__Alternatives_0_1_2");
 					put(grammarAccess.getFunctionCallEffectAccess().getAlternatives_1_2(), "rule__FunctionCallEffect__Alternatives_1_2");
+					put(grammarAccess.getRandomizeCallEffectAccess().getAlternatives_3(), "rule__RandomizeCallEffect__Alternatives_3");
 					put(grammarAccess.getExpressionAccess().getAlternatives_0(), "rule__Expression__Alternatives_0");
 					put(grammarAccess.getNotOrValuedExpressionAccess().getAlternatives(), "rule__NotOrValuedExpression__Alternatives");
 					put(grammarAccess.getBitwiseNotExpressionAccess().getAlternatives(), "rule__BitwiseNotExpression__Alternatives");
@@ -128,7 +129,11 @@ public class KExtParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFunctionCallEffectAccess().getGroup_1_2_0(), "rule__FunctionCallEffect__Group_1_2_0__0");
 					put(grammarAccess.getFunctionCallEffectAccess().getGroup_1_2_0_2(), "rule__FunctionCallEffect__Group_1_2_0_2__0");
 					put(grammarAccess.getPrintCallEffectAccess().getGroup(), "rule__PrintCallEffect__Group__0");
-					put(grammarAccess.getPrintCallEffectAccess().getGroup_3(), "rule__PrintCallEffect__Group_3__0");
+					put(grammarAccess.getPrintCallEffectAccess().getGroup_2(), "rule__PrintCallEffect__Group_2__0");
+					put(grammarAccess.getPrintCallEffectAccess().getGroup_2_2(), "rule__PrintCallEffect__Group_2_2__0");
+					put(grammarAccess.getRandomizeCallEffectAccess().getGroup(), "rule__RandomizeCallEffect__Group__0");
+					put(grammarAccess.getRandomizeCallEffectAccess().getGroup_3_0(), "rule__RandomizeCallEffect__Group_3_0__0");
+					put(grammarAccess.getRandomizeCallEffectAccess().getGroup_3_0_2(), "rule__RandomizeCallEffect__Group_3_0_2__0");
 					put(grammarAccess.getExpressionAccess().getGroup(), "rule__Expression__Group__0");
 					put(grammarAccess.getExpressionAccess().getGroup_1(), "rule__Expression__Group_1__0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getGroup(), "rule__LogicalOrExpression__Group__0");
@@ -200,6 +205,8 @@ public class KExtParser extends AbstractContentAssistParser {
 					put(grammarAccess.getReferenceCallAccess().getGroup(), "rule__ReferenceCall__Group__0");
 					put(grammarAccess.getReferenceCallAccess().getGroup_1_0(), "rule__ReferenceCall__Group_1_0__0");
 					put(grammarAccess.getReferenceCallAccess().getGroup_1_0_2(), "rule__ReferenceCall__Group_1_0_2__0");
+					put(grammarAccess.getRandomCallAccess().getGroup(), "rule__RandomCall__Group__0");
+					put(grammarAccess.getRandomizeCallAccess().getGroup(), "rule__RandomizeCall__Group__0");
 					put(grammarAccess.getFunctionCallAccess().getGroup(), "rule__FunctionCall__Group__0");
 					put(grammarAccess.getFunctionCallAccess().getGroup_2_0(), "rule__FunctionCall__Group_2_0__0");
 					put(grammarAccess.getFunctionCallAccess().getGroup_2_0_2(), "rule__FunctionCall__Group_2_0_2__0");
@@ -231,6 +238,7 @@ public class KExtParser extends AbstractContentAssistParser {
 					put(grammarAccess.getQualifiedIDAccess().getGroup_1(), "rule__QualifiedID__Group_1__0");
 					put(grammarAccess.getIntegerAccess().getGroup(), "rule__Integer__Group__0");
 					put(grammarAccess.getFloategerAccess().getGroup(), "rule__Floateger__Group__0");
+					put(grammarAccess.getDoublegerAccess().getGroup(), "rule__Doubleger__Group__0");
 					put(grammarAccess.getKextAccess().getScopesAssignment(), "rule__Kext__ScopesAssignment");
 					put(grammarAccess.getRootScopeAccess().getDeclarationsAssignment_1(), "rule__RootScope__DeclarationsAssignment_1");
 					put(grammarAccess.getRootScopeAccess().getEntitiesAssignment_2(), "rule__RootScope__EntitiesAssignment_2");
@@ -325,8 +333,11 @@ public class KExtParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFunctionCallEffectAccess().getParametersAssignment_1_2_0_1(), "rule__FunctionCallEffect__ParametersAssignment_1_2_0_1");
 					put(grammarAccess.getFunctionCallEffectAccess().getParametersAssignment_1_2_0_2_1(), "rule__FunctionCallEffect__ParametersAssignment_1_2_0_2_1");
 					put(grammarAccess.getPrintCallEffectAccess().getAnnotationsAssignment_0(), "rule__PrintCallEffect__AnnotationsAssignment_0");
-					put(grammarAccess.getPrintCallEffectAccess().getParametersAssignment_2(), "rule__PrintCallEffect__ParametersAssignment_2");
-					put(grammarAccess.getPrintCallEffectAccess().getParametersAssignment_3_1(), "rule__PrintCallEffect__ParametersAssignment_3_1");
+					put(grammarAccess.getPrintCallEffectAccess().getParametersAssignment_2_1(), "rule__PrintCallEffect__ParametersAssignment_2_1");
+					put(grammarAccess.getPrintCallEffectAccess().getParametersAssignment_2_2_1(), "rule__PrintCallEffect__ParametersAssignment_2_2_1");
+					put(grammarAccess.getRandomizeCallEffectAccess().getAnnotationsAssignment_1(), "rule__RandomizeCallEffect__AnnotationsAssignment_1");
+					put(grammarAccess.getRandomizeCallEffectAccess().getParametersAssignment_3_0_1(), "rule__RandomizeCallEffect__ParametersAssignment_3_0_1");
+					put(grammarAccess.getRandomizeCallEffectAccess().getParametersAssignment_3_0_2_1(), "rule__RandomizeCallEffect__ParametersAssignment_3_0_2_1");
 					put(grammarAccess.getExpressionAccess().getScheduleAssignment_1_1(), "rule__Expression__ScheduleAssignment_1_1");
 					put(grammarAccess.getLogicalOrExpressionAccess().getOperatorAssignment_1_1_0(), "rule__LogicalOrExpression__OperatorAssignment_1_1_0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getSubExpressionsAssignment_1_1_1(), "rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1");

@@ -38,9 +38,6 @@ class VariableSerializer implements JsonSerializer<Variable> , JsonDeserializer<
     override serialize(Variable src, Type typeOfSrc, JsonSerializationContext context) {
         val object = new JsonObject()
         object.add("value", context.serialize(src.value))
-//        object.addProperty("name", src.name)
-//        object.add("type", context.serialize(src.type))
-//        object.addProperty("interface", VariableInterfaceType.getBitmask(src.interfaceTypes))
         return object
     }
     
@@ -51,16 +48,19 @@ class VariableSerializer implements JsonSerializer<Variable> , JsonDeserializer<
         val object = json.asJsonObject
         
         val name = object.get("name")?.getAsString()
-        val jsonValue = object.get("value")
-        val value = context.deserialize(jsonValue, jsonValue.class)
         val interface = object.get("interface")
+        val jsonValue = object.get("value")
+        var Object value = null
+        if(jsonValue !== null) {
+            value = context.deserialize(jsonValue, jsonValue.class)
+        }
         
         val variable = new Variable
-        if(name != null) {
+        if(name !== null) {
             variable.name = name
         }
-        if(value instanceof JsonPrimitive) {
-            if(value != null) {
+        if(value !== null) {
+            if(value instanceof JsonPrimitive) {
                 val primitive = JsonManager.jsonAsObject(value)
                 variable.value = primitive
                 // Use Integer instead Double if possible
@@ -69,12 +69,33 @@ class VariableSerializer implements JsonSerializer<Variable> , JsonDeserializer<
                         variable.value = primitive.intValue
                     }
                 }
+            } else if (value instanceof JsonObject){
+                val array = context.deserialize(value, typeof(NDimensionalArray))
+                variable.value = array
             }
-        } else if (value instanceof JsonObject){
-            val array = context.deserialize(value, typeof(NDimensionalArray))
-            variable.value = array
+        } else {
+            // Set a default value for the variable
+            val type = object.get("type")?.getAsString()
+            if(type !== null) {
+                switch(type) {
+                    case "bool" : {
+                        variable.value = false
+                    }
+                    case "string" : {
+                        variable.value = ""
+                    }
+                    case "int" : {
+                        variable.value = 0
+                    }
+                    case "float" : {
+                        variable.value = 0f
+                    }
+                }
+            } else {
+                throw new Exception("The variable '"+name+"' does not have a value and no type specified. Cannot create a variable without any value.")
+            }
         }
-        if(interface != null) {
+        if(interface !== null) {
             val interfaceTypes = VariableInterfaceType.getInterfaceTypes(interface.asInt)
             variable.interfaceTypes = interfaceTypes
         }

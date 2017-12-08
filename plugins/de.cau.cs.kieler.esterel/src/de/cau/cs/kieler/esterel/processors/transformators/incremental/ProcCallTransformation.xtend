@@ -13,151 +13,56 @@
 package de.cau.cs.kieler.esterel.processors.transformators.incremental
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.esterel.Abort
-import de.cau.cs.kieler.esterel.Await
-import de.cau.cs.kieler.esterel.Do
-import de.cau.cs.kieler.esterel.EsterelParallel
-import de.cau.cs.kieler.esterel.EsterelProgram
-import de.cau.cs.kieler.esterel.Exec
-import de.cau.cs.kieler.esterel.IfTest
-import de.cau.cs.kieler.esterel.Present
-import de.cau.cs.kieler.esterel.ProcedureCall
-import de.cau.cs.kieler.esterel.ProcedureDeclaration
-import de.cau.cs.kieler.esterel.Run
-import de.cau.cs.kieler.esterel.Trap
-import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
-import de.cau.cs.kieler.esterel.processors.EsterelProcessor
-import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.scl.Conditional
-import de.cau.cs.kieler.scl.Parallel
-import de.cau.cs.kieler.scl.Statement
-import de.cau.cs.kieler.scl.StatementContainer
-import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.esterel.EsterelProgram
+import de.cau.cs.kieler.esterel.ProcedureCall
 import org.eclipse.emf.ecore.util.EcoreUtil
+import de.cau.cs.kieler.kexpressions.ValueType
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * @author mrb
  *
  */
-class ProcCallTransformation extends EsterelProcessor {
+class ProcCallTransformation extends InplaceProcessor<EsterelProgram> {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
+    public static val ID = "de.cau.cs.kieler.esterel.processors.proccall"
+    
     override getId() {
-        return SCEstTransformation::PROCCALL_ID
+        return ID
     }
 
     override getName() {
-        return SCEstTransformation::PROCCALL_NAME
+        return "ProcCall"
     }
-
-//    override getExpandsFeatureId() {
-//        return SCEstFeature::PROCCALL_ID
-//    }
-//        
-//    override getNotHandlesFeatureIds() {
-//        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::RUN_ID)
-//    }
 
     @Inject
     extension EsterelTransformationExtensions
-    @Inject
-    extension EsterelExtensions
     
-    override EsterelProgram transform(EsterelProgram prog) {
-        prog.modules.forEach [ m | 
-            transformStatements(m.statements)
-            m.declarations.removeIf[it instanceof ProcedureDeclaration]
-        ]
-        return prog
+    override process() {
+        model.eAllContents.filter(ProcedureCall).toList.forEach[transform]
     }
     
-    def EList<Statement> transformStatements(EList<Statement> statements) {
-        for (var i=0; i<statements?.length; i++) {
-            statements.get(i).transformStatement
-        }
-        return statements
-    }
-    
-    def Statement transformStatement(Statement statement) {
-        if (statement instanceof ProcedureCall) {
-            statement.transformProcCallArguments
-        }
-        else if (statement instanceof Present) {
-            transformStatements((statement as Present).statements)
-            if ((statement as Present).cases != null) {
-                (statement as Present).cases.forEach[ c | transformStatements(c.statements)]
-            }
-            transformStatements((statement as Present).elseStatements)
-        }
-        else if (statement instanceof IfTest) {
-            transformStatements((statement as IfTest).statements)
-            if ((statement as IfTest).elseif != null) {
-                (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.statements)]
-            }
-            transformStatements((statement as IfTest).elseStatements)
-        }
-        else if (statement instanceof EsterelParallel) {
-            (statement as EsterelParallel).threads.forEach [ t |
-                transformStatements(t.statements)
-            ]
-        }
-        else if (statement instanceof StatementContainer) {
-            
-            transformStatements((statement as StatementContainer).statements)
-            
-            if (statement instanceof Trap) {
-                (statement as Trap).trapHandler?.forEach[h | transformStatements(h.statements)]
-            }
-            else if (statement instanceof Abort) {
-                transformStatements((statement as Abort).doStatements)
-                (statement as Abort).cases?.forEach[ c | transformStatements(c.statements)]
-            }
-            else if (statement instanceof Await) {
-                (statement as Await).cases?.forEach[ c | transformStatements(c.statements)]
-            }
-            else if (statement instanceof Exec) {
-                (statement as Exec).execCaseList?.forEach[ c | transformStatements(c.statements)]
-            }
-            else if (statement instanceof Do) {
-                transformStatements((statement as Do).watchingStatements)
-            }
-            else if (statement instanceof Conditional) {
-                transformStatements((statement as Conditional).getElse()?.statements)
-            }
-        }
-        else if (statement instanceof Parallel) {
-            (statement as Parallel).threads.forEach [ t |
-                transformStatements(t.statements)
-            ]
-        }
-        else if (statement instanceof Run) {
-            statement.module?.module?.statements.transformStatements    
-        }
-        return statement
-    }
-    
-    def transformProcCallArguments(Statement statement) {
-        var procedure = statement as ProcedureCall
-        var function = createFunction(procedure.procedure.name)
-        // create Parameter for call by reference parameters of procedure
-        for (v : procedure.referenceArguments) {
+    def transform(ProcedureCall procCall) {
+        val function = createFunction(procCall.procedure.name)
+        // create 'Parameter' for call by reference parameters of procedure
+        for (v : procCall.referenceArguments) {
            function.parameters.add(createParameter(createValuedObjectReference(v), true))
         }
-        // create Parameter for call by value parameters of procedure
-        for (expr : procedure.valueArguments) {
+        // create 'Parameter' for call by value parameters of procedure
+        for (expr : procCall.valueArguments) {
            function.parameters.add(createParameter(EcoreUtil.copy(expr), false))
         }
-        var statements = statement.getContainingList
-        var pos = statements.indexOf(statement)
         // dummy variable since a function call is an expression and not a statement in SCL
-        var variable = createNewUniqueVariable(null)
-        var decl = createDeclaration(ValueType.BOOL, variable)
-        var scope = createScopeStatement(decl)
+        val variable = createNewUniqueVariable(null)
+        val decl = createDeclaration(ValueType.BOOL, variable)
+        val scope = createScopeStatement(decl)
         scope.statements.add(createAssignment(variable, function))
-        statements.set(pos, scope)
+        procCall.replace(scope)
     }
     
 }

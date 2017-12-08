@@ -61,12 +61,12 @@ public interface SignedFloat extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Value</em>' attribute.
-   * @see #setValue(Float)
+   * @see #setValue(float)
    * @see de.cau.cs.kieler.prom.kibuild.KibuildPackage#getSignedFloat_Value()
    * @model
    * @generated
    */
-  Float getValue();
+  float getValue();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.prom.kibuild.SignedFloat#getValue <em>Value</em>}' attribute.
@@ -76,6 +76,6 @@ public interface SignedFloat extends EObject
    * @see #getValue()
    * @generated
    */
-  void setValue(Float value);
+  void setValue(float value);
 
 } // SignedFloat

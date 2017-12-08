@@ -10,6 +10,8 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeHRExtensions
 import de.cau.cs.kieler.scg.Assignment
 import java.util.List
+import de.cau.cs.kieler.kexpressions.RandomCall
+import de.cau.cs.kieler.kexpressions.RandomizeCall
 
 /**
  * @author ssm
@@ -44,6 +46,10 @@ class SCGSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             serialize(assignment.expression) 
         } else if (assignment.expression instanceof PrintCall) {
             (assignment.expression as PrintCall).serialize
+        } else if (assignment.expression instanceof RandomCall) {
+            (assignment.expression as RandomCall).serialize
+        } else if (assignment.expression instanceof RandomizeCall) {
+            (assignment.expression as RandomizeCall).serialize
         }
     }
     
@@ -70,6 +76,10 @@ class SCGSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             (assignment.expression as ReferenceCall).serializeHR
         } else if (assignment.expression instanceof PrintCall) {
             (assignment.expression as PrintCall).serializeHR
+        } else if (assignment.expression instanceof RandomCall) {
+            (assignment.expression as RandomCall).serializeHR
+        } else if (assignment.expression instanceof RandomizeCall) {
+            (assignment.expression as RandomizeCall).serializeHR
         }
     }
     

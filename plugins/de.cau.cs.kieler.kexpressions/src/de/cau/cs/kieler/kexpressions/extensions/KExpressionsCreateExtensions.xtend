@@ -28,6 +28,8 @@ import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.PrintCall
 import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.IgnoreValue
+import de.cau.cs.kieler.kexpressions.RandomCall
+import de.cau.cs.kieler.kexpressions.RandomizeCall
 
 /**
  * @author ssm
@@ -52,6 +54,10 @@ class KExpressionsCreateExtensions {
 
     def OperatorExpression createLEQExpression() {
         createOperatorExpression(OperatorType::LEQ) 
+    }
+
+    def OperatorExpression createLEExpression() {
+        createOperatorExpression(OperatorType::LT) 
     }
 
     def OperatorExpression createGEQExpression() {
@@ -81,6 +87,13 @@ class KExpressionsCreateExtensions {
     // Create an LEQ Expression add expressionFirst and expressionSecond as sub expressions.
     def OperatorExpression createLEQExpression(Expression firstSubExpression, Expression secondSubExpression) {
         createLEQExpression() => [
+            it.safeAddToSubExpression(firstSubExpression)
+            it.safeAddToSubExpression(secondSubExpression)
+        ]
+    }
+
+    def OperatorExpression createLEExpression(Expression firstSubExpression, Expression secondSubExpression) {
+        createLEExpression() => [
             it.safeAddToSubExpression(firstSubExpression)
             it.safeAddToSubExpression(secondSubExpression)
         ]
@@ -291,7 +304,15 @@ class KExpressionsCreateExtensions {
     def PrintCall createPrintCall() {
         KExpressionsFactory::eINSTANCE.createPrintCall
     }
+    
+    def RandomCall createRandomCall() {
+        KExpressionsFactory::eINSTANCE.createRandomCall
+    }
 
+    def RandomizeCall createRandomizeCall() {
+        KExpressionsFactory::eINSTANCE.createRandomizeCall
+    }
+    
     def Parameter createParameter() {
         KExpressionsFactory::eINSTANCE.createParameter
     }

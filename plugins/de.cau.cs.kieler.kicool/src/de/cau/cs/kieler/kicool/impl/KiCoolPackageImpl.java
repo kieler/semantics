@@ -296,6 +296,15 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getProcessorReference_Silent() {
+        return (EAttribute)processorReferenceEClass.getEStructuralFeatures().get(5);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getProcessorSystem() {
         return processorSystemEClass;
     }
@@ -436,6 +445,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
         createEReference(processorReferenceEClass, PROCESSOR_REFERENCE__METRIC);
         createEReference(processorReferenceEClass, PROCESSOR_REFERENCE__PREPROCESSES);
         createEReference(processorReferenceEClass, PROCESSOR_REFERENCE__POSTPROCESSES);
+        createEAttribute(processorReferenceEClass, PROCESSOR_REFERENCE__SILENT);
 
         processorSystemEClass = createEClass(PROCESSOR_SYSTEM);
 
@@ -507,6 +517,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
         initEReference(getProcessorReference_Metric(), this.getIntermediateReference(), null, "metric", null, 0, 1, ProcessorReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getProcessorReference_Preprocesses(), this.getProcessorReference(), null, "preprocesses", null, 0, -1, ProcessorReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getProcessorReference_Postprocesses(), this.getProcessorReference(), null, "postprocesses", null, 0, -1, ProcessorReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getProcessorReference_Silent(), ecorePackage.getEBoolean(), "silent", null, 0, 1, ProcessorReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(processorSystemEClass, ProcessorSystem.class, "ProcessorSystem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

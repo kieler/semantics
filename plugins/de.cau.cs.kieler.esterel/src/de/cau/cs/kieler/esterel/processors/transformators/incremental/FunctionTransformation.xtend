@@ -13,69 +13,45 @@
 package de.cau.cs.kieler.esterel.processors.transformators.incremental
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.esterel.EsterelFunctionCall
-import de.cau.cs.kieler.esterel.EsterelProgram
-import de.cau.cs.kieler.esterel.FunctionDeclaration
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
-import de.cau.cs.kieler.esterel.processors.EsterelProcessor
-import de.cau.cs.kieler.kexpressions.Expression
-import java.util.Iterator
-import org.eclipse.emf.common.util.EList
-import org.eclipse.emf.ecore.util.EcoreUtil
+import de.cau.cs.kieler.esterel.EsterelProgram
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.esterel.EsterelFunctionCall
 
 /**
  * @author mrb
  *
  */
-class FunctionTransformation extends EsterelProcessor {
+class FunctionTransformation extends InplaceProcessor<EsterelProgram> {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
+    
+    public static val ID = "de.cau.cs.kieler.esterel.processors.function"
+    
     override getId() {
-        return SCEstTransformation::FUNCTION_ID
+        return ID
     }
 
     override getName() {
-        return SCEstTransformation::FUNCTION_NAME
+        return "Function"
     }
-
-//    override getExpandsFeatureId() {
-//        return SCEstFeature::FUNCTION_ID
-//    }
-//
-//    override getNotHandlesFeatureIds() {
-//        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::RUN_ID)
-//    }
-
+    
     @Inject
     extension EsterelTransformationExtensions
     
-    override EsterelProgram transform(EsterelProgram prog) {
-        prog.modules.forEach [ m | 
-            var functions = m.eAllContents.filter(EsterelFunctionCall)
-            functions.transformFunctions
-            m.declarations.removeIf[it instanceof FunctionDeclaration]
-        ]
-        return prog
+    override process() {
+        model.eAllContents.filter(EsterelFunctionCall).toList.forEach[transform]
     }
     
-    def transformFunctions(Iterator<EsterelFunctionCall> functions) {
-        while(functions.hasNext) {
-            var f = functions.next
-            var newF = createFunction(f.function.name)
-            for (e : f.parameter) {
-                newF.parameters.add(createParameter(EcoreUtil.copy(e), false))
-            }
-            if(f.eContainer.eGet(f.eContainingFeature) instanceof EList) {
-                var list = f.eContainer.eGet(f.eContainingFeature) as EList<Expression>
-                var pos = list.indexOf(f)
-                list.set(pos, newF)
-            }
-            else {
-                setExpression(newF, f.eContainer, false)
-            }
+    def transform(EsterelFunctionCall function) {
+        var newF = createFunction(function.function.name)
+        for (e : function.parameter) {
+            newF.parameters.add(createParameter(copy(e), false))
         }
+        function.replace(newF)
     }
     
 }
